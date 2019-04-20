@@ -27,157 +27,131 @@ DAMAGE.
 #ifndef TAETL_TYPETRAITS_H
 #define TAETL_TYPETRAITS_H
 
-#include <stddef.h>
-#include <stdint.h>
+// TAETL
+#include "definitions.h"
 
 namespace taetl
 {
-
 // integral_constant
-template <typename Type, Type val>
-struct integral_constant
+template <typename Type, Type val> struct integral_constant
 {
-  static constexpr Type value = val;
-  typedef Type value_type;
-  typedef integral_constant<Type, val> type;
-  constexpr operator value_type() const noexcept { return value; }
-  constexpr value_type operator()() const noexcept { return value; }
+    static constexpr Type value = val;
+    typedef Type value_type;
+    typedef integral_constant<Type, val> type;
+    constexpr operator value_type() const noexcept { return value; }
+    constexpr value_type operator()() const noexcept { return value; }
 };
 
-template <typename Type, Type val>
-constexpr Type integral_constant<Type, val>::value;
+template <typename Type, Type val> constexpr Type integral_constant<Type, val>::value;
 
 typedef integral_constant<bool, true> true_type;
 typedef integral_constant<bool, false> false_type;
 
 // remove_const
-template <typename Type>
-struct remove_const
+template <typename Type> struct remove_const
 {
-  typedef Type type;
+    typedef Type type;
 };
 
-template <typename Type>
-struct remove_const<Type const>
+template <typename Type> struct remove_const<Type const>
 {
-  typedef Type type;
+    typedef Type type;
 };
 
 // remove_volatile
-template <typename Type>
-struct remove_volatile
+template <typename Type> struct remove_volatile
 {
-  typedef Type type;
+    typedef Type type;
 };
 
-template <typename Type>
-struct remove_volatile<Type volatile>
+template <typename Type> struct remove_volatile<Type volatile>
 {
-  typedef Type type;
+    typedef Type type;
 };
 
 // remove_cv
-template <typename Type>
-struct remove_cv
+template <typename Type> struct remove_cv
 {
-  typedef typename remove_const<typename remove_volatile<Type>::type>::type type;
+    typedef typename remove_const<typename remove_volatile<Type>::type>::type type;
 };
 
-template <typename>
-struct _is_integral_helper : public false_type
+template <typename> struct _is_integral_helper : public false_type
 {
 };
 
-template <>
-struct _is_integral_helper<bool> : public true_type
+template <> struct _is_integral_helper<bool> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<char> : public true_type
+template <> struct _is_integral_helper<char> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<signed char> : public true_type
+template <> struct _is_integral_helper<signed char> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<unsigned char> : public true_type
+template <> struct _is_integral_helper<unsigned char> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<char16_t> : public true_type
+template <> struct _is_integral_helper<char16_t> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<char32_t> : public true_type
+template <> struct _is_integral_helper<char32_t> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<short> : public true_type
+template <> struct _is_integral_helper<short> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<unsigned short> : public true_type
+template <> struct _is_integral_helper<unsigned short> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<int> : public true_type
+template <> struct _is_integral_helper<int> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<unsigned int> : public true_type
+template <> struct _is_integral_helper<unsigned int> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<long> : public true_type
+template <> struct _is_integral_helper<long> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<unsigned long> : public true_type
+template <> struct _is_integral_helper<unsigned long> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<long long> : public true_type
+template <> struct _is_integral_helper<long long> : public true_type
 {
 };
 
-template <>
-struct _is_integral_helper<unsigned long long> : public true_type
+template <> struct _is_integral_helper<unsigned long long> : public true_type
 {
 };
 
 // is_integral
-template <typename Type>
-struct is_integral : public _is_integral_helper<typename remove_cv<Type>::type>::type
+template <typename Type> struct is_integral : public _is_integral_helper<typename remove_cv<Type>::type>::type
 {
 };
 
 // Primary template.
 // Define a member typedef @c type only if a boolean constant is true.
-template <bool, typename Type = void>
-struct enable_if
+template <bool, typename Type = void> struct enable_if
 {
 };
 
 // Partial specialization for true.
-template <typename Type>
-struct enable_if<true, Type>
+template <typename Type> struct enable_if<true, Type>
 {
-  typedef Type type;
+    typedef Type type;
 };
 
-} // namespace taetl
+}  // namespace taetl
 
-#endif // TAETL_TYPETRAITS_H
+#endif  // TAETL_TYPETRAITS_H

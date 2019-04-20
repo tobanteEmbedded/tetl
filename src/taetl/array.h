@@ -27,21 +27,20 @@ DAMAGE.
 #ifndef TAETL_ARRAY_H
 #define TAETL_ARRAY_H
 
-#include <stddef.h>
-#include <stdint.h>
+// TAETL
+#include "definitions.h"
 
 namespace taetl
 {
-template <class Type, uint32_t Size>
-class Array
+template <class Type, uint32_t Size> class Array
 {
 public:
-  void push_back(const Type &item);
+    void push_back(const Type& item);
 
 private:
-  Type data[Size];
+    Type data[Size];
 };
 
-} // namespace taetl
+}  // namespace taetl
 
-#endif // TAETL_ARRAY_H
+#endif  // TAETL_ARRAY_H
