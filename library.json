@@ -14,8 +14,11 @@
       "maintainer": true
     }
   ],
-  "dependencies": {},
+  "license": "BSD-2-Clause",
   "version": "0.1.0",
-  "frameworks": "arduino",
-  "platforms": "*"
+  "frameworks": "*",
+  "platforms": "*",
+  "export": {
+    "include": ["include/*", "src/*"]
+  }
 }
