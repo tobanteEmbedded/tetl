@@ -24,10 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#pragma once
+#ifndef TAETL_DEFINITONS_H
+#define TAETL_DEFINITONS_H
 
 // CLIB
 #include <stddef.h>
 #include <stdint.h>
 
 #define TAETL_NOEXCEPT noexcept
+
+#endif // TAETL_DEFINITONS_H

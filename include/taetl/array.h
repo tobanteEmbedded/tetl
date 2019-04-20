@@ -24,41 +24,24 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_HARDWARE_H
-#define TAETL_HARDWARE_H
+#ifndef TAETL_ARRAY_H
+#define TAETL_ARRAY_H
 
-// TAETL
-#include "definitions.h"
+#include <stddef.h>
+#include <stdint.h>
 
 namespace taetl
 {
-namespace hardware
+template <class Type, uint32_t Size>
+class Array
 {
-class Pin
-{
-  private:
-    const uint8_t id;
+public:
+  void push_back(const Type &item);
 
-  protected:
-    constexpr Pin(uint8_t i) TAETL_NOEXCEPT : id(i) {}
-
-  public:
-    constexpr inline uint8_t getID() const TAETL_NOEXCEPT { return id; }
+private:
+  Type data[Size];
 };
 
-class DigitalPin : public Pin
-{
-  public:
-    constexpr DigitalPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
-};
-
-class AnalogPin : public Pin
-{
-  public:
-    constexpr AnalogPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
-};
-
-} // namespace hardware
 } // namespace taetl
 
-#endif // TAETL_HARDWARE_H
+#endif // TAETL_ARRAY_H
