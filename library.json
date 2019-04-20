@@ -19,6 +19,6 @@
   "frameworks": "*",
   "platforms": "*",
   "export": {
-    "include": ["include/*", "src/*"]
+    "include": ["src/*"]
   }
 }
