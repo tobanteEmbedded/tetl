@@ -32,5 +32,6 @@ DAMAGE.
 #include <stdint.h>
 
 #define TAETL_NOEXCEPT noexcept
+#define TAETL_INLINE inline
 
 #endif // TAETL_DEFINITONS_H

@@ -36,26 +36,26 @@ namespace hardware
 {
 class Pin
 {
-  private:
-    const uint8_t id;
+private:
+  const uint8_t id;
 
-  protected:
-    constexpr Pin(uint8_t i) TAETL_NOEXCEPT : id(i) {}
+protected:
+  constexpr TAETL_INLINE Pin(uint8_t i) TAETL_NOEXCEPT : id(i) {}
 
-  public:
-    constexpr inline uint8_t getID() const TAETL_NOEXCEPT { return id; }
+public:
+  constexpr TAETL_INLINE uint8_t getID() const TAETL_NOEXCEPT { return id; }
 };
 
 class DigitalPin : public Pin
 {
-  public:
-    constexpr DigitalPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
+public:
+  constexpr TAETL_INLINE DigitalPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
 };
 
 class AnalogPin : public Pin
 {
-  public:
-    constexpr AnalogPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
+public:
+  constexpr TAETL_INLINE AnalogPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
 };
 
 } // namespace hardware
