@@ -1,0 +1,21 @@
+{
+  "name": "taetl",
+  "keywords": "etl, stl, container, io, pins",
+  "description": "tobanteAudio ETL (Embedded Template Library)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tobanteAudio/taetl.git"
+  },
+  "authors": [
+    {
+      "name": "Tobias Hienzsch",
+      "email": "post@tobias-hienzsch.de",
+      "url": "https://github.com/tobanteAudio",
+      "maintainer": true
+    }
+  ],
+  "dependencies": {},
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
