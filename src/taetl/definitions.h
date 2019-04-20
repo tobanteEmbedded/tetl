@@ -31,7 +31,10 @@ DAMAGE.
 #include <stddef.h>
 #include <stdint.h>
 
+// TAETL
+#include "version.h"
+
 #define TAETL_NOEXCEPT noexcept
 #define TAETL_INLINE inline
 
-#endif // TAETL_DEFINITONS_H
+#endif  // TAETL_DEFINITONS_H
