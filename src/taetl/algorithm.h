@@ -24,69 +24,32 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_ARRAY_H
-#define TAETL_ARRAY_H
+#ifndef TAETL_ALGORITHM_H
+#define TAETL_ALGORITHM_H
 
 // TAETL
 #include "definitions.h"
 
 namespace taetl
 {
-template <class Type, taetl::size_t Size> class Array
+template <class InputIt, class UnaryFunction>
+constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
 {
-private:
-    taetl::size_t _size{};
-    taetl::size_t _capacity{Size};
-    Type _data[Size];
-
-public:
-    typedef Type value_type;
-    typedef Type* pointer;
-    typedef const Type* const_pointer;
-    typedef Type& reference;
-    typedef const Type& const_reference;
-    typedef Type* iterator;
-    typedef const Type* const_iterator;
-
-    iterator begin() TAETL_NOEXCEPT { return _data; }
-    const_iterator cbegin() const TAETL_NOEXCEPT { return _data; }
-
-    iterator end() TAETL_NOEXCEPT { return _data + size(); }
-    const_iterator cend() const TAETL_NOEXCEPT { return _data + size(); }
-
-    reference front() { return _data[0]; }
-    reference back() { return _data[_size - 1]; }
-
-    void push_back(const Type& value)
+    for (; first != last; ++first)
     {
-        if (_size >= _capacity)
-        {
-            return;
-        }
-
-        _data[_size++] = value;
+        f(*first);
     }
+    return f;
+}
 
-    void pop_back() { _size--; }
-
-    bool empty() const TAETL_NOEXCEPT
+template <class InputIt, class Size, class UnaryFunction> InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
+{
+    for (Size i = 0; i < n; ++first, (void)++i)
     {
-        if (_size == 0)
-        {
-            return true;
-        }
-
-        return false;
+        f(*first);
     }
-
-    taetl::size_t size() const TAETL_NOEXCEPT { return _size; }
-    taetl::size_t capacity() const TAETL_NOEXCEPT { return _capacity; }
-
-    Type& operator[](taetl::size_t index) { return _data[index]; }
-
-    void clear() { _size = 0; }
-};
-
+    return first;
+}
 }  // namespace taetl
 
-#endif  // TAETL_ARRAY_H
+#endif  // TAETL_ALGORITHM_H
