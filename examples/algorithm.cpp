@@ -46,7 +46,8 @@ int main()
     auto print = [](auto& x) { printf("%f\n", x); };
 
     taetl::for_each(t_array.begin(), t_array.end(), print);
-    taetl::for_each_n(t_array.begin(), 3, [](const auto& x) { printf("%f\n", x * 2); });
+    taetl::for_each_n(t_array.begin(), 3,
+                      [](const auto& x) { printf("%f\n", x * 2); });
 
     // FIND FIND_IF
     double n1 = 3.0;

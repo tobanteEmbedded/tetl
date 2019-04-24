@@ -32,7 +32,8 @@ DAMAGE.
 
 namespace taetl
 {
-template <class Type, taetl::size_t Size> class Array
+template <class Type, taetl::size_t Size>
+class Array
 {
 private:
     taetl::size_t _size{};

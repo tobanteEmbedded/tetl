@@ -32,6 +32,17 @@ DAMAGE.
 
 namespace taetl
 {
+/**
+ * @brief Applies the given function object f to the result of dereferencing
+ * every iterator in the range [first, last), in order
+ *
+ * @tparam InputIt
+ * @tparam UnaryFunction
+ * @param first
+ * @param last
+ * @param f
+ * @return UnaryFunction
+ */
 template <class InputIt, class UnaryFunction>
 constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
 {
@@ -52,7 +63,8 @@ InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
     return first;
 }
 
-template <class InputIt, class T> constexpr InputIt find(InputIt first, InputIt last, const T& value)
+template <class InputIt, class T>
+constexpr InputIt find(InputIt first, InputIt last, const T& value)
 {
     for (; first != last; ++first)
     {

@@ -33,7 +33,8 @@ DAMAGE.
 
 taetl::Array<int, 16> t_array;
 
-template <typename T> typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
+template <typename T>
+typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
 {
     return val;
 }
