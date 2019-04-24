@@ -37,4 +37,8 @@ DAMAGE.
 #define TAETL_NOEXCEPT noexcept
 #define TAETL_INLINE inline
 
+namespace taetl
+{
+using size_t = size_t;
+}
 #endif  // TAETL_DEFINITONS_H

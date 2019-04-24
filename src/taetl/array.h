@@ -32,11 +32,11 @@ DAMAGE.
 
 namespace taetl
 {
-template <class Type, uint32_t Size> class Array
+template <class Type, taetl::size_t Size> class Array
 {
 private:
-    uint32_t _size{};
-    uint32_t _capacity{Size};
+    taetl::size_t _size{};
+    taetl::size_t _capacity{Size};
     Type _data[Size];
 
 public:
@@ -48,84 +48,44 @@ public:
     typedef Type* iterator;
     typedef const Type* const_iterator;
 
-    iterator begin() TAETL_NOEXCEPT;
-    const_iterator cbegin() const TAETL_NOEXCEPT;
+    iterator begin() TAETL_NOEXCEPT { return _data; }
+    const_iterator cbegin() const TAETL_NOEXCEPT { return _data; }
 
-    iterator end() TAETL_NOEXCEPT;
-    const_iterator cend() const TAETL_NOEXCEPT;
+    iterator end() TAETL_NOEXCEPT { return _data + size(); }
+    const_iterator cend() const TAETL_NOEXCEPT { return _data + size(); }
 
-    reference front();
-    reference back();
+    reference front() { return _data[0]; }
+    reference back() { return _data[_size - 1]; }
 
-    void push_back(const Type& value);
-    void pop_back();
+    void push_back(const Type& value)
+    {
+        if (_size >= _capacity)
+        {
+            return;
+        }
 
-    bool empty() const TAETL_NOEXCEPT;
-    uint32_t size() const TAETL_NOEXCEPT;
-    uint32_t capacity() const TAETL_NOEXCEPT { return _capacity; }
+        _data[_size++] = value;
+    }
 
-    Type& operator[](uint32_t index);
-    void clear();
+    void pop_back() { _size--; }
+
+    bool empty() const TAETL_NOEXCEPT
+    {
+        if (_size == 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    taetl::size_t size() const TAETL_NOEXCEPT { return _size; }
+    taetl::size_t capacity() const TAETL_NOEXCEPT { return _capacity; }
+
+    Type& operator[](taetl::size_t index) { return _data[index]; }
+
+    void clear() { _size = 0; }
 };
 
-template <class Type, uint32_t Size> typename Array<Type, Size>::iterator Array<Type, Size>::begin() TAETL_NOEXCEPT
-{
-    return _data;
-}
-
-template <class Type, uint32_t Size> typename Array<Type, Size>::iterator Array<Type, Size>::end() TAETL_NOEXCEPT
-{
-    return _data + size();
-}
-
-template <class Type, uint32_t Size>
-typename Array<Type, Size>::const_iterator Array<Type, Size>::cbegin() const TAETL_NOEXCEPT
-{
-    return _data;
-}
-
-template <class Type, uint32_t Size>
-typename Array<Type, Size>::const_iterator Array<Type, Size>::cend() const TAETL_NOEXCEPT
-{
-    return _data + size();
-}
-
-template <class Type, uint32_t Size> typename Array<Type, Size>::reference Array<Type, Size>::front()
-{
-    return _data[0];
-}
-
-template <class Type, uint32_t Size> typename Array<Type, Size>::reference Array<Type, Size>::back()
-{
-    return _data[_size - 1];
-}
-
-template <class Type, uint32_t Size> void Array<Type, Size>::push_back(const Type& v)
-{
-    if (_size >= _capacity)
-    {
-        return;
-    }
-
-    _data[_size++] = v;
-}
-
-template <class Type, uint32_t Size> void Array<Type, Size>::pop_back() { _size--; }
-
-template <class Type, uint32_t Size> bool Array<Type, Size>::empty() const TAETL_NOEXCEPT
-{
-    if (_size == 0)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-template <class Type, uint32_t Size> uint32_t Array<Type, Size>::size() const TAETL_NOEXCEPT { return _size; }
-
-template <class Type, uint32_t Size> Type& Array<Type, Size>::operator[](uint32_t index) { return _data[index]; }
-
-template <class Type, uint32_t Size> void Array<Type, Size>::clear() { _size = 0; }
 }  // namespace taetl
 #endif  // TAETL_ARRAY_H
