@@ -83,6 +83,7 @@ struct remove_cv
         typename remove_const<typename remove_volatile<Type>::type>::type type;
 };
 
+/// @cond
 template <typename>
 struct _is_integral_helper : public false_type
 {
@@ -157,6 +158,8 @@ template <>
 struct _is_integral_helper<unsigned long long> : public true_type
 {
 };
+
+/// @endcond
 
 // is_integral
 template <typename Type>

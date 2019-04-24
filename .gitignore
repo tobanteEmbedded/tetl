@@ -6,6 +6,7 @@
 
 # PROJECT
 build/
+doc-build/
 
 # CMAKE
 CMakeLists.txt.user

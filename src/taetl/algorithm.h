@@ -34,14 +34,7 @@ namespace taetl
 {
 /**
  * @brief Applies the given function object f to the result of dereferencing
- * every iterator in the range [first, last), in order
- *
- * @tparam InputIt
- * @tparam UnaryFunction
- * @param first
- * @param last
- * @param f
- * @return UnaryFunction
+ * every iterator in the range [first, last] in order.
  */
 template <class InputIt, class UnaryFunction>
 constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
@@ -53,8 +46,12 @@ constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
     return f;
 }
 
+/**
+ * @brief Applies the given function object f to the result of dereferencing
+ * every iterator in the range [first, first+n] in order.
+ */
 template <class InputIt, class Size, class UnaryFunction>
-InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
+constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
 {
     for (Size i = 0; i < n; ++first, (void)++i)
     {
@@ -63,6 +60,9 @@ InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
     return first;
 }
 
+/**
+ * @brief Searches for an element equal to value.
+ */
 template <class InputIt, class T>
 constexpr InputIt find(InputIt first, InputIt last, const T& value)
 {
@@ -76,6 +76,9 @@ constexpr InputIt find(InputIt first, InputIt last, const T& value)
     return last;
 }
 
+/**
+ * @brief Searches for an element for which predicate p returns true
+ */
 template <class InputIt, class UnaryPredicate>
 constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
 {
@@ -89,6 +92,9 @@ constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
     return last;
 }
 
+/**
+ * @brief Searches for an element for which predicate q returns false
+ */
 template <class InputIt, class UnaryPredicate>
 constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
 {
