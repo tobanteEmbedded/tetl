@@ -1,5 +1,7 @@
 # tobanteAudio - ETL
 
+[![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl)
+
 Embedded template library intended for micro controller where the STL is not available. This library does not depend on the `Arduino.h` header.
 
 ## Goals
@@ -50,6 +52,5 @@ cmake --build  .
 - Type Traits
   - float
 - CI
-  - Travis
   - AppVeyor
   - AVR-GCC
