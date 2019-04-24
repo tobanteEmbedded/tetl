@@ -42,7 +42,8 @@ constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
     return f;
 }
 
-template <class InputIt, class Size, class UnaryFunction> InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
+template <class InputIt, class Size, class UnaryFunction>
+InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
 {
     for (Size i = 0; i < n; ++first, (void)++i)
     {
@@ -63,7 +64,8 @@ template <class InputIt, class T> constexpr InputIt find(InputIt first, InputIt 
     return last;
 }
 
-template <class InputIt, class UnaryPredicate> constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
+template <class InputIt, class UnaryPredicate>
+constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
 {
     for (; first != last; ++first)
     {

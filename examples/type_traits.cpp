@@ -33,7 +33,10 @@ DAMAGE.
 
 taetl::Array<int, 16> t_array;
 
-template <typename T> typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val) { return val; }
+template <typename T> typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
+{
+    return val;
+}
 float func(float val) { return 1; }
 
 template <typename Type> void foo(Type& type) { (type); }

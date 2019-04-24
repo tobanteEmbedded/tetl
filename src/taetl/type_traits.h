@@ -136,7 +136,8 @@ template <> struct _is_integral_helper<unsigned long long> : public true_type
 };
 
 // is_integral
-template <typename Type> struct is_integral : public _is_integral_helper<typename remove_cv<Type>::type>::type
+template <typename Type>
+struct is_integral : public _is_integral_helper<typename remove_cv<Type>::type>::type
 {
 };
 
