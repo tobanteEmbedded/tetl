@@ -10,7 +10,7 @@ project(taetl)
 
 # Options
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES "Build examples" ON)
-# option(TOBANTEAUDIO_ETL_BUILD_TESTS    "Build the unit tests with Catch2" ON)
+option(TOBANTEAUDIO_ETL_BUILD_TESTS    "Build unit tests" ON)
 option(TOBANTEAUDIO_ETL_BUILD_DOCS     "Build documentation" ON)
 
 # Main Project
@@ -21,11 +21,11 @@ if(TOBANTEAUDIO_ETL_BUILD_DOCS)
   buildDocs()
 endif()
 
-# # Testing
-# if(TOBANTEAUDIO_ETL_BUILD_TESTS)
-#   enable_testing()
-#   add_subdirectory(tests)
-# endif()
+# Testing
+if(TOBANTEAUDIO_ETL_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
 
 # Examples
 if(TOBANTEAUDIO_ETL_BUILD_EXAMPLES)

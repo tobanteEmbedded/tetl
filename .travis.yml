@@ -11,13 +11,15 @@ script-anchors:
     - cd build
     - cmake ..
     - cmake --build . 
+    - ctest
     
   - &script-macOS
     - cd $TRAVIS_BUILD_DIR
     - mkdir build 
     - cd build
     - cmake ..
-    - cmake --build . 
+    - cmake --build .
+    - ctest 
 
 
 matrix:

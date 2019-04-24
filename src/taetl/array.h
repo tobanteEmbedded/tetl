@@ -34,6 +34,11 @@ namespace taetl
 {
 template <class Type, uint32_t Size> class Array
 {
+private:
+    uint32_t _size{};
+    uint32_t _capacity{Size};
+    Type _data[Size];
+
 public:
     typedef Type value_type;
     typedef Type* pointer;
@@ -57,15 +62,10 @@ public:
 
     bool empty() const TAETL_NOEXCEPT;
     uint32_t size() const TAETL_NOEXCEPT;
-    uint32_t capacity() const TAETL_NOEXCEPT;
+    uint32_t capacity() const TAETL_NOEXCEPT { return _capacity; }
 
     Type& operator[](uint32_t index);
     void clear();
-
-private:
-    uint32_t _size{};
-    uint32_t _capacity{Size};
-    Type _data[Size];
 };
 
 template <class Type, uint32_t Size> typename Array<Type, Size>::iterator Array<Type, Size>::begin() TAETL_NOEXCEPT
