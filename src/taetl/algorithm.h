@@ -50,6 +50,44 @@ template <class InputIt, class Size, class UnaryFunction> InputIt for_each_n(Inp
     }
     return first;
 }
+
+template <class InputIt, class T> constexpr InputIt find(InputIt first, InputIt last, const T& value)
+{
+    for (; first != last; ++first)
+    {
+        if (*first == value)
+        {
+            return first;
+        }
+    }
+    return last;
+}
+
+template <class InputIt, class UnaryPredicate> constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
+{
+    for (; first != last; ++first)
+    {
+        if (p(*first))
+        {
+            return first;
+        }
+    }
+    return last;
+}
+
+template <class InputIt, class UnaryPredicate>
+constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
+{
+    for (; first != last; ++first)
+    {
+        if (!q(*first))
+        {
+            return first;
+        }
+    }
+    return last;
+}
+
 }  // namespace taetl
 
 #endif  // TAETL_ALGORITHM_H

@@ -36,16 +36,42 @@ int main()
     // Create array with capacity of 16 and size of 0
     taetl::Array<double, 16> t_array;
 
-    // Add 2 elements to the back
+    // Add elements to the back
     t_array.push_back(1.0);
     t_array.push_back(2.0);
     t_array.push_back(3.0);
     t_array.push_back(4.0);
 
+    // FOR_EACH
     auto print = [](auto& x) { printf("%f\n", x); };
 
     taetl::for_each(t_array.begin(), t_array.end(), print);
     taetl::for_each_n(t_array.begin(), 3, [](const auto& x) { printf("%f\n", x * 2); });
+
+    // FIND FIND_IF
+    double n1 = 3.0;
+    double n2 = 5;
+
+    auto result1 = taetl::find(t_array.begin(), t_array.end(), n1);
+    auto result2 = taetl::find(t_array.begin(), t_array.end(), n2);
+
+    if (result1 != t_array.end())
+    {
+        printf("v contains: %f\n", n1);
+    }
+    else
+    {
+        printf("v does not contain: %f\n", n1);
+    }
+
+    if (result2 != t_array.end())
+    {
+        printf("v contains: %f\n", n2);
+    }
+    else
+    {
+        printf("v does not contain: %f\n", n2);
+    }
 
     return 0;
 }
