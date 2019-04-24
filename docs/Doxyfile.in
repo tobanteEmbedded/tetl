@@ -1,0 +1,21 @@
+# Project setup
+PROJECT_NAME           = taetl
+PROJECT_NUMBER         = 0.1.0
+
+# Main page and input dirs
+USE_MDFILE_AS_MAINPAGE = README.md
+INPUT                  = ../README.md \
+                        ../src \
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.h *.md
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES # document private members & functions
+EXTRACT_STATIC         = YES # document static members & functions
+
+# Generate html output
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+
+# Set output directory
+OUTPUT_DIRECTORY       = ./doc-build
