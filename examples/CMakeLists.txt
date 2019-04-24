@@ -1,6 +1,12 @@
+# EXAMPLES
 project(taetl-examples)
 
-# Define executable
-add_executable(${PROJECT_NAME} main.cpp)
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
-target_link_libraries(${PROJECT_NAME} tobanteAudio::CompilerWarnings tobanteAudio::etl)
+# ARRAY
+add_executable(taetl-example-array array.cpp)
+target_compile_features(taetl-example-array PUBLIC cxx_std_17)
+target_link_libraries(taetl-example-array tobanteAudio::CompilerWarnings tobanteAudio::etl)
+
+# TYPE TRAITS
+add_executable(taetl-example-type_traits type_traits.cpp)
+target_compile_features(taetl-example-type_traits PUBLIC cxx_std_17)
+target_link_libraries(taetl-example-type_traits tobanteAudio::CompilerWarnings tobanteAudio::etl)
