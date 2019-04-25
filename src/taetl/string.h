@@ -56,23 +56,57 @@ public:
     typedef const CharType* const_iterator;
 
     /**
-     * @brief Default constructor
+     * @brief Default constructor.
      */
-    constexpr String() { _data[_size] = 0; };
+    constexpr String() = default;
 
-    iterator begin() noexcept { return _data; }
-    const_iterator cbegin() const noexcept { return _data; }
+    /**
+     * @brief Returns an iterator to the beginning.
+     */
+    constexpr iterator begin() noexcept { return _data; }
 
-    iterator end() noexcept { return _data + size(); }
-    const_iterator cend() const noexcept { return _data + size(); }
+    /**
+     * @brief Returns an const iterator to the beginning.
+     */
+    constexpr const_iterator cbegin() const noexcept { return _data; }
 
-    reference front() { return _data[0]; }
-    reference back() { return _data[_size - 1]; }
+    /**
+     * @brief Returns an iterator to the end.
+     */
+    constexpr iterator end() noexcept { return _data + size(); }
 
-    taetl::size_t size() const noexcept { return _size; }
-    taetl::size_t capacity() const noexcept { return _capacity; }
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    constexpr const_iterator cend() const noexcept { return _data + size(); }
 
-    CharType& operator[](taetl::size_t index) noexcept { return _data[index]; }
+    /**
+     * @brief Accesses the first character.
+     */
+    constexpr reference front() { return _data[0]; }
+
+    /**
+     * @brief Accesses the last character.
+     */
+    constexpr reference back() { return _data[_size - 1]; }
+
+    /**
+     * @brief Returns the number of characters.
+     */
+    constexpr taetl::size_t size() const noexcept { return _size; }
+
+    /**
+     * @brief Returns the number of characters.
+     */
+    constexpr taetl::size_t length() const noexcept { return _size; }
+
+    /**
+     * @brief Returns the number of characters that can be held in allocated
+     * storage.
+     */
+    constexpr taetl::size_t capacity() const noexcept { return _capacity; }
+
+    reference operator[](taetl::size_t index) noexcept { return _data[index]; }
 
     /**
      * @brief Returns a pointer to a null-terminated character array.

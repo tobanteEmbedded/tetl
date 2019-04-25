@@ -46,5 +46,9 @@ int main()
         printf("%c", c);
     }
 
+    printf("\nSize: %d\n", t_string.size());
+    printf("Length: %d\n", t_string.length());
+    printf("Capacity: %d\n", t_string.capacity());
+
     return 0;
 }
