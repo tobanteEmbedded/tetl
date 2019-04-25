@@ -5,7 +5,7 @@ PROJECT_NUMBER         = 0.1.0
 # Main page and input dirs
 USE_MDFILE_AS_MAINPAGE = README.md
 INPUT                  = ../README.md \
-                        ../src \
+                        ../src
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.h *.md
 RECURSIVE              = YES
