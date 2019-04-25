@@ -43,7 +43,7 @@ class String
 {
 private:
     taetl::size_t _size{0};
-    taetl::size_t _capacity{Size};
+    const taetl::size_t _capacity{Size};
     CharType _data[Size]{};
 
 public:
