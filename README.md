@@ -6,13 +6,11 @@ Embedded template library intended for micro controller where the STL is not ava
 git clone https://github.com/tobanteAudio/taetl.git
 ```
 
-[**Documentation**](https://tobanteaudio.github.io/taetl/)
-
 ## Status
 
-|                                                           LICENSE                                                           |                                                      Linux / macOS                                                      |                                                                  Windows                                                                  |
-| :-------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/taetl.svg)](https://ci.appveyor.com/project/tobanteAudio/taetl) |
+|                                                           LICENSE                                                           |                                                      Linux / macOS                                                      |                                                                  Windows                                                                  | Documentation |
+| :-------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------: |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/taetl.svg)](https://ci.appveyor.com/project/tobanteAudio/taetl) |  **Doxygen**  |
 
 ## Goals
 
@@ -22,6 +20,22 @@ git clone https://github.com/tobanteAudio/taetl.git
 - No dynamic memory
 - Arduino IDE / PlatformIO compatible
 - Easy desktop development (cmake)
+
+## Documentation
+
+If you build this repo with `cmake`, html documentation will be created automatically.
+
+```sh
+firefox build/doc-build/html/index.html       # Open in Firefox
+```
+
+You can build the documentation with `doxygen`:
+
+```sh
+cd $PROJECTROOT
+doxygen docs/Doxyfile.in
+firefox docs/doc-build/html/index.html       # Open in Firefox
+```
 
 ## Install
 
