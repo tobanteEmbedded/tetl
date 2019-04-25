@@ -6,6 +6,8 @@ Embedded template library intended for micro controller where the STL is not ava
 git clone https://github.com/tobanteAudio/taetl.git
 ```
 
+[**Documentation**](https://tobanteaudio.github.io/taetl/)
+
 ## Status
 
 |                                                           LICENSE                                                           |                                                      Linux / macOS                                                      |                                                                  Windows                                                                  |
