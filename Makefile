@@ -6,3 +6,6 @@ all:
 
 test:
 	cd $(BUILD_DIR) && ctest 
+
+clean:
+	rm -rf $(BUILD_DIR)/*
