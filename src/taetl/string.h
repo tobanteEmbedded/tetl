@@ -169,7 +169,19 @@ public:
     constexpr const CharType* c_str() const noexcept { return &_data[0]; };
 
     /**
-     * @brief Appends count copies of character s
+     * @brief Removes all characters from the string.
+     */
+    constexpr void clear() noexcept
+    {
+        for (auto c : _data)
+        {
+            c = 0;
+        }
+        _size = 0;
+    }
+
+    /**
+     * @brief Appends count copies of character s.
      */
     constexpr String& append(taetl::size_t count, CharType s) noexcept
     {

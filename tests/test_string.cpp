@@ -63,5 +63,16 @@ int main()
     assert(t_string[7] == 'b');
     assert(t_string[8] == 'b');
 
+    // CLEAR
+    t_string.clear();
+    assert(t_string.capacity() == 16);
+    assert(t_string.empty());
+    assert(t_string.size() == 0);
+
+    for (const auto& c : t_string)
+    {
+        assert(c == 0);
+    }
+
     return 0;
 }
