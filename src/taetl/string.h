@@ -61,6 +61,54 @@ public:
     constexpr String() = default;
 
     /**
+     * @brief Accesses the specified character with bounds checking.
+     */
+    constexpr reference at(taetl::size_t index) noexcept
+    {
+        if (index < _size)
+        {
+            return _data[index];
+        }
+        return _data[_size];
+    }
+
+    /**
+     * @brief Accesses the specified character with bounds checking.
+     */
+    constexpr const_reference at(taetl::size_t index) const noexcept
+    {
+        if (index < _size)
+        {
+            return _data[index];
+        }
+        return _data[_size];
+    }
+
+    /**
+     * @brief Accesses the specified character with bounds checking.
+     */
+    constexpr reference operator[](taetl::size_t index) noexcept
+    {
+        if (index < _size)
+        {
+            return _data[index];
+        }
+        return _data[_size];
+    }
+
+    /**
+     * @brief Accesses the specified character with bounds checking.
+     */
+    constexpr const_reference operator[](taetl::size_t index) const noexcept
+    {
+        if (index < _size)
+        {
+            return _data[index];
+        }
+        return _data[_size];
+    }
+
+    /**
      * @brief Returns an iterator to the beginning.
      */
     constexpr iterator begin() noexcept { return _data; }
@@ -83,13 +131,17 @@ public:
     /**
      * @brief Accesses the first character.
      */
-    constexpr reference front() { return _data[0]; }
+    constexpr reference front() noexcept { return _data[0]; }
 
     /**
      * @brief Accesses the last character.
      */
-    constexpr reference back() { return _data[_size - 1]; }
+    constexpr reference back() noexcept { return _data[_size - 1]; }
 
+    /**
+     * @brief Checks whether the string is empty.
+     */
+    constexpr bool empty() const noexcept { return _size == 0; }
     /**
      * @brief Returns the number of characters.
      */
@@ -106,8 +158,6 @@ public:
      */
     constexpr taetl::size_t capacity() const noexcept { return _capacity; }
 
-    reference operator[](taetl::size_t index) noexcept { return _data[index]; }
-
     /**
      * @brief Returns a pointer to a null-terminated character array.
      *
@@ -121,7 +171,17 @@ public:
     /**
      * @brief Appends count copies of character s
      */
-    constexpr String& append(taetl::size_t count, CharType s) { return *this; };
+    constexpr String& append(taetl::size_t count, CharType s) noexcept
+    {
+        for (taetl::size_t i = 0; i < count; i++)
+        {
+            _data[_size + i] = s;
+        }
+        _size += count;
+        _data[_size] = 0;
+
+        return *this;
+    };
 
     /**
      * @brief Appends the null-terminated character string pointed to by s. The
@@ -139,8 +199,9 @@ public:
         {
             _data[_size + i] = s[i];
         }
-        _data[_size + count] = 0;
         _size += count;
+        _data[_size] = 0;
+
         return *this;
     };
 };
