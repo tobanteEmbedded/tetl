@@ -30,6 +30,12 @@ DAMAGE.
 // TAETL
 #include "taetl/array.h"
 
+/** Handy function for avoiding unused variables warning. */
+template <typename... Types>
+void ignoreUnused(Types&&...) noexcept
+{
+}
+
 int main()
 {
     // Create array with capacity of 16 and size of 0
@@ -39,7 +45,7 @@ int main()
     t_array.push_back(1);
     t_array.push_back(2);
 
-    auto foo = [](auto x) {};
+    auto foo = [](auto x) { ignoreUnused(x); };
 
     for (auto& item : t_array)
     {
