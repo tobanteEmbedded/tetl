@@ -36,7 +36,6 @@ int main()
     taetl::String<char, 16> t_string{};
 
     const char* cptr = "C-string";
-    // t_string.append(cptr);
     t_string.append(cptr, 4);
 
     printf("\"%s\"\n", t_string.c_str());

@@ -38,9 +38,13 @@ typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
 {
     return val;
 }
-float func(float val) { return 1; }
+float func(float val) { return 0; }
 
-template <typename Type> void foo(Type& type) { (type); }
+template <typename Type>
+void foo(Type& type)
+{
+    (type);
+}
 
 int main()
 {
@@ -52,5 +56,6 @@ int main()
         foo(item);
     }
 
-    return func(uint16_t{1});
+    func(uint16_t{1});
+    return 0;
 }
