@@ -91,11 +91,11 @@ lib_deps =
      taetl
 
      # Depend on specific version
-     taetl@0.1.0
+     taetl@0.2.0
      # Semantic Versioning Rules
-     taetl@^0.1.0
-     taetl@~0.1.0
-     taetl@>=0.1.0
+     taetl@^0.2.0
+     taetl@~0.2.0
+     taetl@>=0.2.0
 ```
 
 #### CLI
@@ -108,8 +108,8 @@ platformio lib install 6337
 platformio lib install "taetl"
 
 # Install specific version
-platformio lib install 6337@0.1.0
-platformio lib install "taetl@0.1.0"
+platformio lib install 6337@0.2.0
+platformio lib install "taetl@0.2.0"
 ```
 
 ### Arduino IDE
