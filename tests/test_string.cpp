@@ -5,6 +5,12 @@
 #include "taetl/algorithm.hpp"
 #include "taetl/string.hpp"
 
+/** Handy function for avoiding unused variables warning. */
+template <typename... Types>
+constexpr void ignoreUnused(Types&&...) noexcept
+{
+}
+
 int main()
 {
     // Create array with capacity of 16 and size of 0
@@ -18,6 +24,7 @@ int main()
 
     for (const auto& c : t_string)
     {
+        ignoreUnused(c);
         assert(c == 0);
     }
 
@@ -71,6 +78,7 @@ int main()
 
     for (const auto& c : t_string)
     {
+        ignoreUnused(c);
         assert(c == 0);
     }
 
