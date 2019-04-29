@@ -13,6 +13,14 @@ option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES "Build examples" ON)
 option(TOBANTEAUDIO_ETL_BUILD_TESTS    "Build unit tests" ON)
 option(TOBANTEAUDIO_ETL_BUILD_DOCS     "Build documentation" ON)
 
+# Coverage
+if(CMAKE_COMPILER_IS_GNUCC)
+  option(TOBANTEAUDIO_ETL_ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+  if(TOBANTEAUDIO_ETL_ENABLE_COVERAGE)
+    add_compile_options(--coverage -O0)
+  endif()
+endif()
+
 # Main Project
 add_subdirectory(src)
 
