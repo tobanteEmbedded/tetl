@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_ALGORITHM_H
-#define TAETL_ALGORITHM_H
+#ifndef TAETL_ALGORITHM_HPP
+#define TAETL_ALGORITHM_HPP
 
 // TAETL
-#include "definitions.h"
+#include "definitions.hpp"
 
 namespace taetl
 {
@@ -110,4 +110,4 @@ constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
 
 }  // namespace taetl
 
-#endif  // TAETL_ALGORITHM_H
+#endif  // TAETL_ALGORITHM_HPP

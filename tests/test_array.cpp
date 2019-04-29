@@ -3,7 +3,7 @@
 #include <stdio.h>  /* printf */
 
 // TAETL
-#include "taetl/array.h"
+#include "taetl/array.hpp"
 
 int main()
 {

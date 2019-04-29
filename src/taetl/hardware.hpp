@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_HARDWARE_H
-#define TAETL_HARDWARE_H
+#ifndef TAETL_HARDWARE_HPP
+#define TAETL_HARDWARE_HPP
 
 // TAETL
-#include "definitions.h"
+#include "definitions.hpp"
 
 namespace taetl
 {
@@ -61,4 +61,4 @@ public:
 }  // namespace hardware
 }  // namespace taetl
 
-#endif  // TAETL_HARDWARE_H
+#endif  // TAETL_HARDWARE_HPP

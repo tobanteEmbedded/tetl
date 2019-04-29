@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_ARRAY_H
-#define TAETL_ARRAY_H
+#ifndef TAETL_ARRAY_HPP
+#define TAETL_ARRAY_HPP
 
 // TAETL
-#include "definitions.h"
+#include "definitions.hpp"
 
 namespace taetl
 {
@@ -90,4 +90,4 @@ public:
 
 }  // namespace taetl
 
-#endif  // TAETL_ARRAY_H
+#endif  // TAETL_ARRAY_HPP

@@ -1,7 +1,7 @@
 #include <assert.h>
 
 // TAETL
-#include "taetl/definitions.h"
+#include "taetl/definitions.hpp"
 
 int main()
 {

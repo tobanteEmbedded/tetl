@@ -24,21 +24,12 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_DEFINITONS_H
-#define TAETL_DEFINITONS_H
+#ifndef TAETL_VERSION_HPP
+#define TAETL_VERSION_HPP
 
-// CLIB
-#include <stddef.h>
-#include <stdint.h>
+#define TAETL_REVISION_MAJOR 0
+#define TAETL_REVISION_MINOR 1
+#define TAETL_REVISION_PATCH 0
+#define TAETL_REVISION_STRING "0.1.0"
 
-// TAETL
-#include "version.h"
-
-#define TAETL_NOEXCEPT noexcept
-#define TAETL_INLINE inline
-
-namespace taetl
-{
-using size_t = size_t;
-}
-#endif  // TAETL_DEFINITONS_H
+#endif  // TAETL_VERSION_HPP

@@ -28,8 +28,8 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/array.h"
-#include "taetl/type_traits.h"
+#include "taetl/array.hpp"
+#include "taetl/type_traits.hpp"
 
 taetl::Array<int, 16> t_array;
 

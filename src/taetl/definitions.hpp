@@ -24,28 +24,21 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_NUMERIC_H
-#define TAETL_NUMERIC_H
+#ifndef TAETL_DEFINITONS_HPP
+#define TAETL_DEFINITONS_HPP
+
+// CLIB
+#include <stddef.h>
+#include <stdint.h>
 
 // TAETL
-#include "definitions.h"
+#include "version.hpp"
+
+#define TAETL_NOEXCEPT noexcept
+#define TAETL_INLINE inline
 
 namespace taetl
 {
-/**
- * @brief Computes the sum of the given value init and the elements in the range
- * [first, last). Uses operator+ to sum up the elements.
- */
-template <class InputIt, class T>
-T accumulate(InputIt first, InputIt last, T init)
-{
-    for (; first != last; ++first)
-    {
-        init = init + *first;  // std::move since C++20
-    }
-    return init;
+using size_t = size_t;
 }
-
-}  // namespace taetl
-
-#endif  // TAETL_NUMERIC_H
+#endif  // TAETL_DEFINITONS_HPP

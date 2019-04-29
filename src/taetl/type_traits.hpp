@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_TYPETRAITS_H
-#define TAETL_TYPETRAITS_H
+#ifndef TAETL_TYPETRAITS_HPP
+#define TAETL_TYPETRAITS_HPP
 
 // TAETL
-#include "definitions.h"
+#include "definitions.hpp"
 
 namespace taetl
 {
@@ -184,4 +184,4 @@ struct enable_if<true, Type>
 
 }  // namespace taetl
 
-#endif  // TAETL_TYPETRAITS_H
+#endif  // TAETL_TYPETRAITS_HPP

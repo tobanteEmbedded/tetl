@@ -2,8 +2,8 @@
 #include <stdio.h>  /* printf */
 
 // TAETL
-#include "taetl/algorithm.h"
-#include "taetl/string.h"
+#include "taetl/algorithm.hpp"
+#include "taetl/string.hpp"
 
 int main()
 {

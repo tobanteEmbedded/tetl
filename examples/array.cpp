@@ -28,7 +28,7 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/array.h"
+#include "taetl/array.hpp"
 
 /** Handy function for avoiding unused variables warning. */
 template <typename... Types>

@@ -28,8 +28,8 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/algorithm.h"
-#include "taetl/array.h"
+#include "taetl/algorithm.hpp"
+#include "taetl/array.hpp"
 
 int main()
 {

@@ -28,7 +28,7 @@ DAMAGE.
 #include <assert.h>
 #include <stdio.h>
 // TAETL
-#include "taetl/string.h"
+#include "taetl/string.hpp"
 
 int main()
 {

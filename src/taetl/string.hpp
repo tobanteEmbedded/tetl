@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_STRING_H
-#define TAETL_STRING_H
+#ifndef TAETL_STRING_HPP
+#define TAETL_STRING_HPP
 
 // TAETL
-#include "definitions.h"
+#include "definitions.hpp"
 
 namespace taetl
 {
@@ -219,4 +219,4 @@ public:
 };
 }  // namespace taetl
 
-#endif  // TAETL_STRING_H
+#endif  // TAETL_STRING_HPP
