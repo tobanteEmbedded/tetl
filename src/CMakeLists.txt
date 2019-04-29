@@ -1,7 +1,6 @@
 # Name
 project(taetl)
 
-
 # Define library
 set(TAETL_LIB taetl-lib)
 set(TAETL_HEADERS
@@ -13,9 +12,8 @@ set(TAETL_HEADERS
     taetl/version.h
 )
 
-add_library(${TAETL_LIB} INTERFACE) #${TAETL_HEADERS}
+add_library(${TAETL_LIB} INTERFACE)
 add_library(tobanteAudio::etl ALIAS ${TAETL_LIB})
 
 target_include_directories(${TAETL_LIB} INTERFACE ${PROJECT_SOURCE_DIR})
 target_compile_features(${TAETL_LIB} INTERFACE cxx_std_17)
-# target_link_libraries(${TAETL_LIB} tobanteAudio::CompilerWarnings)

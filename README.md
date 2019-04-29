@@ -12,11 +12,22 @@ git clone https://github.com/tobanteAudio/taetl.git
 | :-------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/taetl.svg)](https://ci.appveyor.com/project/tobanteAudio/taetl) | ![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/master/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/taetl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/taetl&utm_campaign=Badge_Grade_Dashboard) |
 
-## Goals
+## Table of Contents
+
+1. [Design Goals](#design-goals)
+2. [Documentation](#documentation)
+3. [Project Integration](#project-integration)
+   - [CMake](#cmake)
+   - [PlatformIO](#platformio)
+   - [Arduino IDE](#arduino-ide)
+4. [Examples](#examples)
+5. [ToDo](#todo)
+
+## Design Goals
 
 - 100% portable
-- Modern C++ (17)
-- Replacement for the STL
+- Modern C++17
+- Similar api to the STL
 - No dynamic memory
 - Arduino IDE / PlatformIO compatible
 - Easy desktop development (cmake)
@@ -37,7 +48,7 @@ doxygen docs/Doxyfile.in
 firefox docs/doc-build/html/index.html       # Open in Firefox
 ```
 
-## Install
+## Project Integration
 
 The following steps explain how to add `taetl` to your project. Embedded or desktop.
 
@@ -111,9 +122,15 @@ cmake --build  .
 
 ## ToDo
 
-- Algorithm
+- README
+  - Simple Examples
+- Examples
+  - Hardware Pins (PORT & ID)
+- Warnings
+  - MSVC
+    - `LNK4044: unrecognized option '/-coverage';`
 - Type Traits
   - float
 - CI
-  - AppVeyor
   - AVR-GCC
+  - Coverage on templates?
