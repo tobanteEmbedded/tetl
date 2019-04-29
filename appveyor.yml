@@ -14,10 +14,10 @@ build_script:
 
     cd build
 
-    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Release
+    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Debug
     
-    cmake --build . --config "Release"
+    cmake --build . --config "Debug"
 
 # TEST    
 test_script:
-- cmd: ctest -C Release
+- cmd: ctest -C Debug
