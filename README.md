@@ -21,7 +21,13 @@ git clone https://github.com/tobanteAudio/taetl.git
    - [PlatformIO](#platformio)
    - [Arduino IDE](#arduino-ide)
 4. [Examples](#examples)
-5. [ToDo](#todo)
+5. [Usage](#usage)
+   - [Algorithm](#algorithm)
+   - [Array](#array)
+   - [Numeric](#numeric)
+   - [String](#string)
+   - [Type Traits](#type-traits)
+6. [ToDo](#todo)
 
 ## Design Goals
 
@@ -29,6 +35,7 @@ git clone https://github.com/tobanteAudio/taetl.git
 - Modern C++17
 - Similar api to the STL
 - No dynamic memory
+- `constexpr` all the things
 - Arduino IDE / PlatformIO compatible
 - Easy desktop development (cmake)
 
@@ -111,6 +118,8 @@ Coming soon...
 
 ## Examples
 
+Examples can be found in the `examples` directory.
+
 ### Build on Desktop
 
 ```sh
@@ -120,17 +129,171 @@ cmake ..
 cmake --build  .
 ```
 
+## Usage
+
+Below are some simple examples for most of the headers in `taetl`. For more detailed examples look at the `examples` subdirectory. Building the [documentation](#documentation) with `Doxygen` will give details about the complete API.
+
+### Algorithm
+
+```cpp
+// C STANDARD
+#include <stdio.h>
+
+// TAETL
+#include "taetl/algorithm.hpp"
+#include "taetl/array.hpp"
+
+int main()
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::Array<double, 16> t_array;
+
+    // Add elements to the back
+    t_array.push_back(1.0);
+    t_array.push_back(2.0);
+    t_array.push_back(3.0);
+    t_array.push_back(4.0);
+
+
+    auto print = [](auto& x) { printf("%f\n", x); };
+
+    // FOR_EACH
+    taetl::for_each(t_array.begin(), t_array.end(), print);
+    // FOR_EACH_N with lambda
+    taetl::for_each_n(t_array.begin(), 3,
+                      [](const auto& x) { printf("%f\n", x * 2); });
+}
+```
+
+### Array
+
+```cpp
+// TAETL
+#include "taetl/array.hpp"
+
+int main()
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::Array<int, 16> t_array;
+
+    // Add 2 elements to the back
+    t_array.push_back(1);
+    t_array.push_back(2);
+
+
+    for (auto& item : t_array)
+    {
+        printf("%d", item);
+    }
+
+    return 0;
+}
+```
+
+### Numeric
+
+```cpp
+// C STANDARD
+#include <stdio.h>
+
+// TAETL
+#include "taetl/array.hpp"
+#include "taetl/numeric.hpp"
+
+int main()
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::Array<double, 16> t_array;
+
+    // Add elements to the back
+    t_array.push_back(1.0);
+    t_array.push_back(2.0);
+    t_array.push_back(3.0);
+    t_array.push_back(4.0);
+
+    // ACCUMULATE
+    auto sum = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
+
+    printf("%f", sum);
+
+    return 0;
+}
+```
+
+### String
+
+```cpp
+// C STANDARD
+#include <stdio.h>
+// TAETL
+#include "taetl/string.hpp"
+
+int main()
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::String<char, 16> t_string{};
+
+    const char* cptr = "C-string";
+    t_string.append(cptr, 4);
+
+    printf("\"%s\"\n", t_string.c_str());
+
+    for (auto& c : t_string)
+    {
+        printf("%c", c);
+    }
+
+    printf("\nSize: %zu\n", t_string.size());
+    printf("Length: %zu\n", t_string.length());
+    printf("Capacity: %zu\n", t_string.capacity());
+
+    return 0;
+}
+```
+
+### Type Traits
+
+```cpp
+// C STANDARD
+#include <stdio.h>
+
+// TAETL
+#include "taetl/array.hpp"
+#include "taetl/type_traits.hpp"
+
+template <typename T>
+typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
+{
+    return val;
+}
+
+float func(float val) { return val; }
+
+int main()
+{
+    taetl::Array<int, 16> t_array;
+
+    t_array.push_back(1);
+    t_array.push_back(2);
+
+    for (auto& item : t_array)
+    {
+        func(item);
+    }
+
+    func(uint16_t{1});
+    func(3.0f);  // Does not call template
+    return 0;
+}
+```
+
 ## ToDo
 
 - README
   - Simple Examples
 - Examples
   - Hardware Pins (PORT & ID)
-- Warnings
-  - MSVC
-    - `LNK4044: unrecognized option '/-coverage';`
 - Type Traits
   - float
 - CI
   - AVR-GCC
-  - Coverage on templates?

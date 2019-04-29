@@ -31,8 +31,6 @@ DAMAGE.
 #include "taetl/array.hpp"
 #include "taetl/type_traits.hpp"
 
-taetl::Array<int, 16> t_array;
-
 template <typename T>
 typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
 {
@@ -41,22 +39,19 @@ typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
 
 float func(float val) { return val; }
 
-template <typename Type>
-void foo(Type& type)
-{
-    (type);
-}
-
 int main()
 {
+    taetl::Array<int, 16> t_array;
+
     t_array.push_back(1);
     t_array.push_back(2);
 
     for (auto& item : t_array)
     {
-        foo(item);
+        func(item);
     }
 
     func(uint16_t{1});
+    func(3.0f);  // Does not call template
     return 0;
 }
