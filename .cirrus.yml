@@ -1,0 +1,5 @@
+container:
+  image: gcc-cmake:latest
+task:
+  build_script: make
+  tests_script: make tests
