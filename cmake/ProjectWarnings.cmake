@@ -47,7 +47,7 @@
                             -Wmisleading-indentation # warn if identation implies blocks where blocks
                                                     # do not exist
                             -Wduplicated-cond # warn if if / else chain has duplicated conditions
-                            -Wduplicated-branches # warn if if / else branches have duplicated code
+                            # -Wduplicated-branches # warn if if / else branches have duplicated code
                             -Wlogical-op # warn about logical operations being used where bitwise were
                                         # probably wanted
                             -Wnull-dereference # warn if a null dereference is detected
