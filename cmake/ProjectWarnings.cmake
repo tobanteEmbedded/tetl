@@ -57,5 +57,5 @@
                                       # (ie printf)
       )
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-      target_compile_options(project_warnings INTERFACE /W4)
+      target_compile_options(project_warnings INTERFACE /W4 /WX "/permissive-")
     endif()
