@@ -6,7 +6,7 @@ BUILD_DIR = build
 BUILD_OPTIONS = --std=c++17 -O0 -g
 BUILD_WARNINGS = -Wall -Wextra
 
-AVR_GCC = avr-gcc
+AVR_GCC = C:\Users\tobante\.platformio\packages\toolchain-atmelavr\bin\avr-gcc.exe
 AVR_BUILD_DIR = build_avr
 
 all:
@@ -26,6 +26,7 @@ avr:
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-array -I$(INCLUDE_DIR) $(TEST_DIR)/test_array.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-definitions -I$(INCLUDE_DIR) $(TEST_DIR)/test_definitions.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-string -I$(INCLUDE_DIR) $(TEST_DIR)/test_string.cpp
+	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-constexpr_string -I$(INCLUDE_DIR) $(TEST_DIR)/test_constexpr_string.cpp
 
 test:
 	cd $(BUILD_DIR) && ctest 
