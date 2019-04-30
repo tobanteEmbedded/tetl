@@ -173,7 +173,7 @@ public:
      */
     constexpr void clear() noexcept
     {
-        for (auto c : _data)
+        for (auto& c : _data)
         {
             c = 0;
         }

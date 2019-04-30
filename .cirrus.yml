@@ -1,5 +1,5 @@
 container:
-  image: rikorose/gcc-cmake:latest
+  image: opthomasprime/avr-gcc:latest
 task:
-  build_script: make
-  tests_script: make test
+  # build_script: make
+  tests_script: make avr
