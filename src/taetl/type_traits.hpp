@@ -168,8 +168,9 @@ struct is_integral
 {
 };
 
-// Primary template.
-// Define a member typedef @c type only if a boolean constant is true.
+/**
+ * @brief Define a member typedef @c type only if a boolean constant is true.
+ */
 template <bool, typename Type = void>
 struct enable_if
 {

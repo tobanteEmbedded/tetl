@@ -32,30 +32,42 @@ DAMAGE.
 
 namespace taetl
 {
+/**
+ * @brief Namespace for the hardware classes & functions.
+ */
 namespace hardware
 {
+/**
+ * @brief Represents a physical pin on a micro controller.
+ */
 class Pin
 {
 private:
     const uint8_t id;
 
 protected:
-    constexpr TAETL_INLINE Pin(uint8_t i) TAETL_NOEXCEPT : id(i) {}
+    constexpr inline Pin(uint8_t i) noexcept : id(i) {}
 
 public:
-    constexpr TAETL_INLINE uint8_t getID() const TAETL_NOEXCEPT { return id; }
+    constexpr inline uint8_t getID() const noexcept { return id; }
 };
 
+/**
+ * @brief Represents a digital physical pin on a micro controller.
+ */
 class DigitalPin : public Pin
 {
 public:
-    constexpr TAETL_INLINE DigitalPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
+    constexpr inline DigitalPin(uint8_t i) noexcept : Pin(i) {}
 };
 
+/**
+ * @brief Represents an analog physical pin on a micro controller.
+ */
 class AnalogPin : public Pin
 {
 public:
-    constexpr TAETL_INLINE AnalogPin(uint8_t i) TAETL_NOEXCEPT : Pin(i) {}
+    constexpr inline AnalogPin(uint8_t i) noexcept : Pin(i) {}
 };
 
 }  // namespace hardware

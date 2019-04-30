@@ -34,9 +34,9 @@ DAMAGE.
 // TAETL
 #include "version.hpp"
 
-#define TAETL_NOEXCEPT noexcept
-#define TAETL_INLINE inline
-
+/**
+ * @brief Namespace for the taetl library.
+ */
 namespace taetl
 {
 using size_t = size_t;

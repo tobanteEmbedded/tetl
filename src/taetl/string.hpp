@@ -142,6 +142,7 @@ public:
      * @brief Checks whether the string is empty.
      */
     constexpr bool empty() const noexcept { return _size == 0; }
+
     /**
      * @brief Returns the number of characters.
      */

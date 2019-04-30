@@ -32,6 +32,12 @@ DAMAGE.
 
 namespace taetl
 {
+/**
+ * @brief Array class with fixed size capacity.
+ *
+ * @tparam Type Type to hold in container
+ * @tparam Size Capacity for Array
+ */
 template <class Type, taetl::size_t Size>
 class Array
 {
@@ -49,16 +55,42 @@ public:
     typedef Type* iterator;
     typedef const Type* const_iterator;
 
-    iterator begin() TAETL_NOEXCEPT { return _data; }
-    const_iterator cbegin() const TAETL_NOEXCEPT { return _data; }
+    /**
+     * @brief Default constructor.
+     */
+    constexpr Array() = default;
 
-    iterator end() TAETL_NOEXCEPT { return _data + size(); }
-    const_iterator cend() const TAETL_NOEXCEPT { return _data + size(); }
+    /**
+     * @brief Returns an iterator to the beginning.
+     */
+    constexpr iterator begin() noexcept { return _data; }
 
-    reference front() { return _data[0]; }
-    reference back() { return _data[_size - 1]; }
+    /**
+     * @brief Returns an const iterator to the beginning.
+     */
+    constexpr const_iterator cbegin() const noexcept { return _data; }
 
-    void push_back(const Type& value)
+    /**
+     * @brief Returns an iterator to the end.
+     */
+    constexpr iterator end() noexcept { return _data + size(); }
+
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    constexpr const_iterator cend() const noexcept { return _data + size(); }
+
+    /**
+     * @brief Accesses the first item.
+     */
+    constexpr reference front() noexcept { return _data[0]; }
+
+    /**
+     * @brief Accesses the last item.
+     */
+    constexpr reference back() noexcept { return _data[_size - 1]; }
+
+    constexpr void push_back(const Type& value) noexcept
     {
         if (_size >= _capacity)
         {
@@ -68,9 +100,9 @@ public:
         _data[_size++] = value;
     }
 
-    void pop_back() { _size--; }
+    constexpr void pop_back() noexcept { _size--; }
 
-    bool empty() const TAETL_NOEXCEPT
+    constexpr bool empty() const noexcept
     {
         if (_size == 0)
         {
@@ -80,12 +112,30 @@ public:
         return false;
     }
 
-    taetl::size_t size() const TAETL_NOEXCEPT { return _size; }
-    taetl::size_t capacity() const TAETL_NOEXCEPT { return _capacity; }
+    /**
+     * @brief Returns the number of items.
+     */
+    constexpr taetl::size_t size() const noexcept { return _size; }
 
-    Type& operator[](taetl::size_t index) { return _data[index]; }
+    /**
+     * @brief Returns the number of items that can be held in allocated
+     * storage.
+     */
+    constexpr taetl::size_t capacity() const noexcept { return _capacity; }
 
-    void clear() { _size = 0; }
+    /**
+     * @brief Accesses the specified item with bounds checking.
+     */
+    constexpr Type& operator[](taetl::size_t index) noexcept
+    {
+        if (index < _size)
+        {
+            return _data[index];
+        }
+        return _data[_size];
+    }
+
+    constexpr void clear() noexcept { _size = 0; }
 };
 
 }  // namespace taetl
