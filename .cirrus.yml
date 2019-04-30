@@ -2,4 +2,4 @@ container:
   image: rikorose/gcc-cmake:latest
 task:
   build_script: make
-  tests_script: make tests
+  tests_script: make test
