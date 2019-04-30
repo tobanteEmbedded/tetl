@@ -1,6 +1,6 @@
-# tobanteAudio - ETL
+# TAETL
 
-Embedded template library intended for micro controller where the STL is not available. This library does not depend on the `Arduino.h` header.
+The tobanteAudio embedded template library is intended for micro controller where the `STL` is not available. Designed to have a similar API. This library supports `AVR/Arduino` micro controllers.
 
 ```sh
 git clone https://github.com/tobanteAudio/taetl.git
@@ -14,21 +14,23 @@ git clone https://github.com/tobanteAudio/taetl.git
 
 ## Table of Contents
 
-1. [Design Goals](#design-goals)
-2. [Documentation](#documentation)
-3. [Project Integration](#project-integration)
+1. [Intro](#taetl)
+2. [Status](#status)
+3. [Design Goals](#design-goals)
+4. [Documentation](#documentation)
+5. [Project Integration](#project-integration)
    - [CMake](#cmake)
    - [PlatformIO](#platformio)
    - [Arduino IDE](#arduino-ide)
    - [Avr-gcc](#avr-gcc)
-4. [Examples](#examples)
-5. [Usage](#usage)
+6. [Examples](#examples)
+7. [Usage](#usage)
    - [Algorithm](#algorithm)
    - [Array](#array)
    - [Numeric](#numeric)
    - [String](#string)
    - [Type Traits](#type-traits)
-6. [ToDo](#todo)
+8. [ToDo](#todo)
 
 ## Design Goals
 
