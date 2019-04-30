@@ -9,10 +9,10 @@ script-anchors:
     - cd $TRAVIS_BUILD_DIR
     - mkdir build 
     - cd build
-    - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake -D TOBANTEAUDIO_ETL_ENABLE_COVERAGE:BOOL=TRUE ..
-    - cmake --build . -- -j2
+    - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake -D TOBANTEAUDIO_ETL_ENABLE_COVERAGE:BOOL=TRUE ..
+    - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake --build . -- -j2
     - ctest -j2
-    - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-6
+    - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-7
     
   - &script-macOS
     - cd $TRAVIS_BUILD_DIR
@@ -36,6 +36,5 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - gcc-6
-            - g++-6
+            - g++-7
       script: *script-linux
