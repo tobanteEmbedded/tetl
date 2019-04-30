@@ -41,5 +41,16 @@ matrix:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
       script: *script-linux
 
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+      script: *script-linux
+
 before_install:
     - eval "${MATRIX_EVAL}"
