@@ -10,7 +10,7 @@ INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.hpp *.h *.md
 RECURSIVE              = YES
 EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = YES # document private members & functions
+EXTRACT_PRIVATE        = NO # document private members & functions
 EXTRACT_STATIC         = YES # document static members & functions
 
 # Generate html output
