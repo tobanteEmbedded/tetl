@@ -10,8 +10,8 @@ AVR_GCC = avr-gcc
 AVR_BUILD_DIR = build_avr
 
 all:
-	cmake -B$(BUILD_DIR) -H.
-	cmake --build $(BUILD_DIR)/
+	cmake -B$(BUILD_DIR) -H. -DCMAKE_BUILD_TYPE:STRING=Debug
+	cmake --build $(BUILD_DIR) --config "Debug"
 
 avr:
 	# CREATE BUILD DIR
@@ -26,10 +26,10 @@ avr:
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-array -I$(INCLUDE_DIR) $(TEST_DIR)/test_array.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-definitions -I$(INCLUDE_DIR) $(TEST_DIR)/test_definitions.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-string -I$(INCLUDE_DIR) $(TEST_DIR)/test_string.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-constexpr_string -I$(INCLUDE_DIR) $(TEST_DIR)/test_constexpr_string.cpp
+	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-string_constexpr -I$(INCLUDE_DIR) $(TEST_DIR)/test_string_constexpr.cpp
 
 test:
-	cd $(BUILD_DIR) && ctest 
+	cd $(BUILD_DIR) && ctest -C Debug
 
 clean:
 	rm -rf $(BUILD_DIR)/*	
