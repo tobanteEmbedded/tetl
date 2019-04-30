@@ -6,7 +6,7 @@ BUILD_DIR = build
 BUILD_OPTIONS = --std=c++17 -O0 -g
 BUILD_WARNINGS = -Wall -Wextra
 
-AVR_GCC = /c/Users/tobante/.platformio/packages/toolchain-atmelavr/bin/avr-g++.exe
+AVR_GCC = avr-gcc
 AVR_BUILD_DIR = build_avr
 
 all:
