@@ -36,8 +36,8 @@ namespace taetl
  * @brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses operator+ to sum up the elements.
  */
-template <class InputIt, class T>
-T accumulate(InputIt first, InputIt last, T init)
+template <class InputIt, class Type>
+constexpr Type accumulate(InputIt first, InputIt last, Type init)
 {
     for (; first != last; ++first)
     {
