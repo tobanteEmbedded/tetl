@@ -20,6 +20,7 @@ git clone https://github.com/tobanteAudio/taetl.git
    - [CMake](#cmake)
    - [PlatformIO](#platformio)
    - [Arduino IDE](#arduino-ide)
+   - [Avr-gcc](#avr-gcc)
 4. [Examples](#examples)
 5. [Usage](#usage)
    - [Algorithm](#algorithm)
@@ -115,6 +116,15 @@ platformio lib install "taetl@0.2.0"
 ### Arduino IDE
 
 Coming soon...
+
+### Avr-gcc
+
+An example on how to build the `algorithm.cpp` file with `avr-gcc`. C++17 is required.
+
+```sh
+cd $PROJECT_ROOT
+avr-gcc --std=c++17 -O3 -Wall -Wextra -o example_algorithm -Isrc examples/algorithm.cpp
+```
 
 ## Examples
 
