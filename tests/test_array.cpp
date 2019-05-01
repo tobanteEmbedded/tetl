@@ -1,6 +1,5 @@
-/* assert example */
-#include <assert.h> /* assert */
-#include <stdio.h>  /* printf */
+#include <assert.h>  // assert
+#include <stdio.h>   // printf
 
 // TAETL
 #include "taetl/array.hpp"
@@ -14,8 +13,25 @@ int main()
     t_array.push_back(1);
     t_array.push_back(2);
 
+    // Test const iterators
+    for (const auto& item : t_array)
+    {
+        assert(item != 0);
+    }
+
     assert(t_array[0] == 1);
     assert(t_array[1] == 2);
+    assert(t_array.capacity() == 16);
+    assert(t_array.size() == 2);
+
+    // Test non-const iterators
+    for (auto& item : t_array)
+    {
+        item += 1;
+    }
+
+    assert(t_array[0] == 2);
+    assert(t_array[1] == 3);
     assert(t_array.capacity() == 16);
     assert(t_array.size() == 2);
 
