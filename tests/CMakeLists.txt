@@ -1,6 +1,11 @@
 # TESTS
 project(taetl-tests)
 
+# ALGORITHM
+add_executable(taetl-test-algorithm test_algorithm.cpp)
+target_link_libraries(taetl-test-algorithm tobanteAudio::CompilerWarnings tobanteAudio::CodeCoverage tobanteAudio::etl)
+add_test(Test_algorithm taetl-test-algorithm)
+
 # ARRAY
 add_executable(taetl-test-array test_array.cpp)
 target_link_libraries(taetl-test-array tobanteAudio::CompilerWarnings tobanteAudio::CodeCoverage tobanteAudio::etl)
