@@ -24,9 +24,6 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include <assert.h>  // assert
-#include <stdio.h>   // printf
-
 // MICROCATCH
 #include "micro_catch/micro_catch.hpp"
 

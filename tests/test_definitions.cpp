@@ -24,13 +24,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include <assert.h>
+// MICROCATCH
+#include "micro_catch/micro_catch.hpp"
 
 // TAETL
 #include "taetl/definitions.hpp"
 
 int main()
 {
-    assert(sizeof(taetl::size_t) == sizeof(size_t));
+    microcatch::EQUAL(sizeof(taetl::size_t), sizeof(size_t));
     return 0;
 }

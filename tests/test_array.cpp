@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include <assert.h>  // assert
-#include <stdio.h>   // printf
+// MICROCATCH
+#include "micro_catch/micro_catch.hpp"
 
 // TAETL
 #include "taetl/array.hpp"
@@ -36,7 +36,7 @@ int main()
     taetl::Array<int, 16> t_array;
 
     // Empty
-    assert(t_array.empty());
+    microcatch::EQUAL(t_array.empty(), true);
 
     // Add 2 elements to the back
     t_array.push_back(1);
@@ -45,14 +45,14 @@ int main()
     // Test const iterators
     for (const auto& item : t_array)
     {
-        assert(item != 0);
+        microcatch::NOT_EQUAL(item, 0);
     }
 
-    assert(t_array.empty() == false);
-    assert(t_array[0] == 1);
-    assert(t_array[1] == 2);
-    assert(t_array.capacity() == 16);
-    assert(t_array.size() == 2);
+    microcatch::EQUAL(t_array.empty(), false);
+    microcatch::EQUAL(t_array[0], 1);
+    microcatch::EQUAL(t_array[1], 2);
+    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
+    microcatch::EQUAL(t_array.size(), taetl::size_t(2));
 
     // Test non-const iterators
     for (auto& item : t_array)
@@ -60,26 +60,26 @@ int main()
         item += 1;
     }
 
-    assert(t_array.empty() == false);
-    assert(t_array[0] == 2);
-    assert(t_array[1] == 3);
-    assert(t_array.capacity() == 16);
-    assert(t_array.size() == 2);
+    microcatch::EQUAL(t_array.empty(), false);
+    microcatch::EQUAL(t_array[0], 2);
+    microcatch::EQUAL(t_array[1], 3);
+    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
+    microcatch::EQUAL(t_array.size(), taetl::size_t(2));
 
     // POP BACK
     t_array.pop_back();
 
-    assert(t_array.empty() == false);
-    assert(t_array[0] == 2);
-    assert(t_array.capacity() == 16);
-    assert(t_array.size() == 1);
+    microcatch::EQUAL(t_array.empty(), false);
+    microcatch::EQUAL(t_array[0], 2);
+    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
+    microcatch::EQUAL(t_array.size(), taetl::size_t(1));
 
     // CLEAR
     t_array.clear();
 
-    assert(t_array.empty() == true);
-    assert(t_array.capacity() == 16);
-    assert(t_array.size() == 0);
+    microcatch::EQUAL(t_array.empty(), true);
+    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
+    microcatch::EQUAL(t_array.size(), taetl::size_t(0));
 
     return 0;
 }
