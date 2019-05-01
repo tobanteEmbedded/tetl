@@ -29,7 +29,6 @@ DAMAGE.
 
 int main()
 {
-    // Create array with capacity of 16 and size of 0
     constexpr taetl::String<char, 16> t_string{};
 
     static_assert(t_string.empty() == true, "String empty");
@@ -37,7 +36,6 @@ int main()
     static_assert(t_string.size() == 0, "String size");
     static_assert(t_string.length() == 0, "String length");
 
-    // Create array with capacity of 16 and size of 0
     constexpr auto t_string_2 = []() {
         taetl::String<char, 16> str{};
         // APPEND 4 CHARACTERS
