@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include <assert.h>  // assert
-#include <stdio.h>   // printf
+// MICROCATCH
+#include "micro_catch/micro_catch.hpp"
 
 // TAETL
 #include "taetl/algorithm.hpp"
@@ -49,12 +49,12 @@ int main()
 
     // for_each
     taetl::for_each(t_array.begin(), t_array.end(), increment_counter);
-    assert(counter == 4);
+    microcatch::EQUAL(counter, 4);
 
     // for_each_n
     counter = 0;
     taetl::for_each_n(t_array.begin(), 2, increment_counter);
-    assert(counter == 2);
+    microcatch::EQUAL(counter, 2);
 
     // -------------------------- FIND --------------------------
     taetl::Array<int, 16> t_array_2;
@@ -66,32 +66,32 @@ int main()
 
     // find
     auto result1 = taetl::find(t_array_2.begin(), t_array_2.end(), 3);
-    assert(result1 != t_array_2.end());
+    microcatch::NOT_EQUAL(result1, t_array_2.end());
 
     auto result2 = taetl::find(t_array_2.begin(), t_array_2.end(), 5);
-    assert(result2 == t_array_2.end());
+    microcatch::EQUAL(result2, t_array_2.end());
 
     // find_if
     auto result3
         = taetl::find_if(t_array_2.begin(), t_array_2.end(),
                          [](auto& x) -> bool { return x % 2 ? true : false; });
-    assert(result3 != t_array_2.end());
+    microcatch::NOT_EQUAL(result3, t_array_2.end());
 
     auto result4 = taetl::find_if(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x == 100 ? true : false; });
-    assert(result4 == t_array_2.end());
+    microcatch::EQUAL(result4, t_array_2.end());
 
     // find_if_not
     auto result5 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x % 2 ? true : false; });
-    assert(result5 != t_array_2.end());
+    microcatch::NOT_EQUAL(result5, t_array_2.end());
 
     auto result6 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x == 100 ? true : false; });
-    assert(result6 != t_array_2.end());
+    microcatch::NOT_EQUAL(result6, t_array_2.end());
 
     return 0;
 }
