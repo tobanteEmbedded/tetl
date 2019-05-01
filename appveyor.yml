@@ -10,14 +10,39 @@ clone_folder: c:\projects\source
 # BUILD
 build_script:
 - cmd: >-
-    mkdir build
+    # DEBUG
+    mkdir build_debug
 
-    cd build
+    cd build_debug
 
     cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Debug
     
     cmake --build . --config "Debug"
 
+    cd ..
+
+    # RELEASE
+    mkdir build_release
+
+    cd build_release
+
+    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Release
+    
+    cmake --build . --config "Release"
+
+    cd ..
+
 # TEST    
 test_script:
-- cmd: ctest -C Debug
+- cmd: >-
+    # DEBUG
+    cd build_debug
+    
+    ctest -C Debug
+
+    cd ..
+
+    # RELEASE
+    cd build_release
+
+    ctest -C Release
