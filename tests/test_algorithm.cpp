@@ -64,11 +64,23 @@ int main()
     t_array_2.push_back(3);
     t_array_2.push_back(4);
 
+    // find
     auto result1 = taetl::find(t_array_2.begin(), t_array_2.end(), 3);
     assert(result1 != t_array_2.end());
 
     auto result2 = taetl::find(t_array_2.begin(), t_array_2.end(), 5);
     assert(result2 == t_array_2.end());
+
+    // find_if
+    auto result3
+        = taetl::find_if(t_array_2.begin(), t_array_2.end(),
+                         [](auto& x) -> bool { return x % 2 ? true : false; });
+    assert(result3 != t_array_2.end());
+
+    auto result4 = taetl::find_if(
+        t_array_2.begin(), t_array_2.end(),
+        [](auto& x) -> bool { return x == 100 ? true : false; });
+    assert(result4 == t_array_2.end());
 
     return 0;
 }
