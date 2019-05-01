@@ -48,5 +48,12 @@ int main()
     assert(t_array.capacity() == 16);
     assert(t_array.size() == 1);
 
+    // CLEAR
+    t_array.clear();
+
+    assert(t_array.empty() == true);
+    assert(t_array.capacity() == 16);
+    assert(t_array.size() == 0);
+
     return 0;
 }
