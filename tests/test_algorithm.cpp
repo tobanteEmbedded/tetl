@@ -82,5 +82,16 @@ int main()
         [](auto& x) -> bool { return x == 100 ? true : false; });
     assert(result4 == t_array_2.end());
 
+    // find_if_not
+    auto result5 = taetl::find_if_not(
+        t_array_2.begin(), t_array_2.end(),
+        [](auto& x) -> bool { return x % 2 ? true : false; });
+    assert(result5 != t_array_2.end());
+
+    auto result6 = taetl::find_if_not(
+        t_array_2.begin(), t_array_2.end(),
+        [](auto& x) -> bool { return x == 100 ? true : false; });
+    assert(result6 != t_array_2.end());
+
     return 0;
 }
