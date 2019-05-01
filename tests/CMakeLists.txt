@@ -39,6 +39,16 @@ target_link_libraries(taetl-test-definitions
 )
 add_test(Test_definitions taetl-test-definitions)
 
+# NUMERIC
+add_executable(taetl-test-numeric test_numeric.cpp)
+target_link_libraries(taetl-test-numeric 
+    tobanteAudio::CompilerWarnings 
+    tobanteAudio::CodeCoverage 
+    tobanteAudio::MicroCatch 
+    tobanteAudio::etl
+)
+add_test(Test_numeric taetl-test-numeric)
+
 # STRING
 add_executable(taetl-test-strings test_string.cpp)
 target_link_libraries(taetl-test-strings 

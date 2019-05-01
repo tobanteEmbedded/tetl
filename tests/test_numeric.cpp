@@ -24,42 +24,34 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_NUMERIC_HPP
-#define TAETL_NUMERIC_HPP
+// MICROCATCH
+#include "micro_catch/micro_catch.hpp"
 
 // TAETL
-#include "definitions.hpp"
+#include "taetl/array.hpp"
+#include "taetl/numeric.hpp"
 
-namespace taetl
+int main()
 {
-/**
- * @brief Computes the sum of the given value init and the elements in the range
- * [first, last). Uses operator+ to sum up the elements.
- */
-template <class InputIt, class Type>
-constexpr Type accumulate(InputIt first, InputIt last, Type init)
-{
-    for (; first != last; ++first)
-    {
-        init = init + *first;  // std::move since C++20
-    }
-    return init;
+    // -------------------------- ACCUMULATE --------------------------
+    // Create array with capacity of 16 and size of 0
+    taetl::Array<double, 16> t_array;
+
+    // Add elements to the back
+    t_array.push_back(1.0);
+    t_array.push_back(2.0);
+    t_array.push_back(3.0);
+    t_array.push_back(4.0);
+
+    // accumulate
+    double collector = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
+    microcatch::EQUAL(collector, 10.0);
+
+    // accumulate binary function op
+    auto collector_func = [](double a, double b) { return a + (b * 2); };
+    double sum          = taetl::accumulate(t_array.begin(), t_array.end(), 0.0,
+                                   collector_func);
+    microcatch::EQUAL(sum, 20.0);
+
+    return 0;
 }
-
-/**
- * @brief Computes the sum of the given value init and the elements in the range
- * [first, last). Uses the BinaryOperation to sum up the elements.
- */
-template <class InputIt, class T, class BinaryOperation>
-T accumulate(InputIt first, InputIt last, T init, BinaryOperation op)
-{
-    for (; first != last; ++first)
-    {
-        init = op(init, *first);  // std::move since C++20
-    }
-    return init;
-}
-
-}  // namespace taetl
-
-#endif  // TAETL_NUMERIC_HPP
