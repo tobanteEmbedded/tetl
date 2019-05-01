@@ -10,7 +10,6 @@ clone_folder: c:\projects\source
 # BUILD
 build_script:
 - cmd: >-
-    # DEBUG
     mkdir build_debug
 
     cd build_debug
@@ -21,7 +20,6 @@ build_script:
 
     cd ..
 
-    # RELEASE
     mkdir build_release
 
     cd build_release
@@ -35,14 +33,12 @@ build_script:
 # TEST    
 test_script:
 - cmd: >-
-    # DEBUG
     cd build_debug
     
     ctest -C Debug
 
     cd ..
 
-    # RELEASE
     cd build_release
 
     ctest -C Release
