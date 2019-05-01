@@ -16,6 +16,7 @@ all:
 avr:
 	# CREATE BUILD DIR
 	mkdir -p $(AVR_BUILD_DIR)
+	$(AVR_GCC) --version
 	# BUILD EXAMPLES
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-algorithm -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/algorithm.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-array -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/array.cpp
