@@ -75,7 +75,8 @@ int main()
 
     // APPEND 5X SAME CHARACTER
     t_string.append(5, 'a');
-    const char first_char = t_string[0];
+    const char& first_char  = t_string[0];
+    const char& second_char = t_string.at(1);
 
     microcatch::EQUAL(t_string.empty(), false);
     microcatch::EQUAL(t_string.capacity(), taetl::size_t(16));
@@ -83,6 +84,7 @@ int main()
     microcatch::EQUAL(t_string.length(), taetl::size_t(9));
     microcatch::EQUAL(first_char, 'C');
     microcatch::EQUAL(t_string[0], 'C');
+    microcatch::EQUAL(second_char, '-');
     microcatch::EQUAL(t_string[1], '-');
     microcatch::EQUAL(t_string[2], 's');
     microcatch::EQUAL(t_string[3], 't');
@@ -96,11 +98,13 @@ int main()
 
     // APPLY ALGORITHM
     taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) { c += 1; });
-    microcatch::EQUAL(t_string[4], 'b');
-    microcatch::EQUAL(t_string[5], 'b');
-    microcatch::EQUAL(t_string[6], 'b');
-    microcatch::EQUAL(t_string[7], 'b');
-    microcatch::EQUAL(t_string[8], 'b');
+    microcatch::EQUAL(t_string.at(4), 'b');
+    microcatch::EQUAL(t_string.at(5), 'b');
+    microcatch::EQUAL(t_string.at(6), 'b');
+    microcatch::EQUAL(t_string.at(7), 'b');
+    microcatch::EQUAL(t_string.at(8), 'b');
+    microcatch::EQUAL(t_string.front(), 'D');
+    microcatch::EQUAL(t_string.back(), 'b');
 
     // CLEAR
     t_string.clear();
