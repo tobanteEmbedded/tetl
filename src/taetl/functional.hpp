@@ -24,22 +24,21 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_DEFINITONS_HPP
-#define TAETL_DEFINITONS_HPP
-
-// CLIB
-#include <assert.h>
-#include <stddef.h>
-#include <stdint.h>
+#ifndef TAETL_FUNCTIONAL_HPP
+#define TAETL_FUNCTIONAL_HPP
 
 // TAETL
-#include "version.hpp"
+#include "definitions.hpp"
 
-/**
- * @brief Namespace for the taetl library.
- */
 namespace taetl
 {
-using size_t = size_t;
-}
-#endif  // TAETL_DEFINITONS_HPP
+template <class Type>
+struct less
+{
+    constexpr bool operator()(const Type& lhs, const Type& rhs) const
+    {
+        return lhs < rhs;
+    }
+};
+}  // namespace taetl
+#endif  // TAETL_FUNCTIONAL_HPP

@@ -29,6 +29,7 @@ DAMAGE.
 
 // TAETL
 #include "definitions.hpp"
+#include "functional.hpp"
 
 namespace taetl
 {
@@ -233,6 +234,25 @@ constexpr ForwardIterator min_element(ForwardIterator first,
         }
     }
     return smallest;
+}
+
+/**
+ * @brief If v compares less than lo, returns lo; otherwise if hi compares less
+ * than v, returns hi; otherwise returns v. Uses operator< to compare the
+ * values.
+ */
+template <class Type>
+constexpr const Type& clamp(const Type& v, const Type& lo,
+                            const Type& hi) noexcept
+{
+    return clamp(v, lo, hi, taetl::less<Type>());
+}
+
+template <class Type, class Compare>
+constexpr const Type& clamp(const Type& v, const Type& lo, const Type& hi,
+                            Compare comp)
+{
+    return assert(!comp(hi, lo)), comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
 }  // namespace taetl
 

@@ -38,6 +38,7 @@ void test_max();
 void test_max_element();
 void test_min();
 void test_min_element();
+void test_clamp();
 
 int main()
 {
@@ -47,6 +48,7 @@ int main()
     test_max_element();
     test_min();
     test_min_element();
+    test_clamp();
 
     return 0;
 }
@@ -183,4 +185,10 @@ void test_min_element()
                                                       < taetl::abs(b));
                                           }),
                       1);
+}
+
+void test_clamp()
+{
+    microcatch::EQUAL(taetl::clamp(55, 0, 20), 20);
+    microcatch::EQUAL(taetl::clamp(55, 0, 100), 55);
 }
