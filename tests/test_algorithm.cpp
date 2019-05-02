@@ -65,8 +65,8 @@ int main()
     t_array_2.push_back(4);
 
     // find
-    auto result1 = taetl::find(t_array_2.begin(), t_array_2.end(), 3);
-    microcatch::NOT_EQUAL(result1, t_array_2.end());
+    auto result1 = taetl::find(t_array_2.cbegin(), t_array_2.cend(), 3);
+    microcatch::NOT_EQUAL(result1, t_array_2.cend());
 
     auto result2 = taetl::find(t_array_2.begin(), t_array_2.end(), 5);
     microcatch::EQUAL(result2, t_array_2.end());

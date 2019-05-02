@@ -132,7 +132,7 @@ public:
         {
             return _data[index];
         }
-        return _data[_size];
+        return _data[_size - 1];
     }
 
     constexpr void clear() noexcept { _size = 0; }

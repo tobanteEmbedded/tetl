@@ -51,6 +51,8 @@ int main()
     microcatch::EQUAL(t_array.empty(), false);
     microcatch::EQUAL(t_array[0], 1);
     microcatch::EQUAL(t_array[1], 2);
+    microcatch::EQUAL(t_array.front(), 1);
+    microcatch::EQUAL(t_array.back(), 2);
     microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
     microcatch::EQUAL(t_array.size(), taetl::size_t(2));
 
@@ -71,6 +73,7 @@ int main()
 
     microcatch::EQUAL(t_array.empty(), false);
     microcatch::EQUAL(t_array[0], 2);
+    microcatch::EQUAL(t_array[100], 2);  // Out of bounds, return last item.
     microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
     microcatch::EQUAL(t_array.size(), taetl::size_t(1));
 
