@@ -48,16 +48,6 @@ constexpr void EQUAL(Type x, Type y) noexcept
     return;
 }
 
-template <typename TypeA, typename TypeB>
-constexpr void EQUAL(TypeA x, TypeB y) noexcept
-{
-    if (x != y)
-    {
-        exit(1);
-    }
-    return;
-}
-
 template <typename Type>
 constexpr void NOT_EQUAL(Type x, Type y) noexcept
 {
@@ -68,15 +58,6 @@ constexpr void NOT_EQUAL(Type x, Type y) noexcept
     return;
 }
 
-template <typename TypeA, typename TypeB>
-constexpr void NOT_EQUAL(TypeA x, TypeB y) noexcept
-{
-    if (x == y)
-    {
-        exit(1);
-    }
-    return;
-}
 }  // namespace microcatch
 
 #endif  // TAETL_MICROCATCH_HPP

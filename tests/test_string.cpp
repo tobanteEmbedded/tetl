@@ -44,18 +44,18 @@ int main()
 
     taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) {
         microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, 0);
+        microcatch::EQUAL(c, char(0));
     });
 
     taetl::for_each(t_string.cbegin(), t_string.cend(), [](const auto& c) {
         microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, 0);
+        microcatch::EQUAL(c, char(0));
     });
 
     for (const auto& c : t_string)
     {
         microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, 0);
+        microcatch::EQUAL(c, char(0));
     }
 
     // APPEND 4 CHARACTERS
@@ -70,8 +70,8 @@ int main()
     microcatch::EQUAL(t_string[1], '-');
     microcatch::EQUAL(t_string[2], 's');
     microcatch::EQUAL(t_string[3], 't');
-    microcatch::EQUAL(t_string[4], 0);
-    microcatch::EQUAL(t_string.at(4), 0);
+    microcatch::EQUAL(t_string[4], char(0));
+    microcatch::EQUAL(t_string.at(4), char(0));
 
     // APPEND 5X SAME CHARACTER
     t_string.append(5, 'a');
@@ -93,8 +93,8 @@ int main()
     microcatch::EQUAL(t_string[6], 'a');
     microcatch::EQUAL(t_string[7], 'a');
     microcatch::EQUAL(t_string[8], 'a');
-    microcatch::EQUAL(t_string[9], 0);
-    microcatch::EQUAL(t_string.at(9), 0);
+    microcatch::EQUAL(t_string[9], char(0));
+    microcatch::EQUAL(t_string.at(9), char(0));
 
     // APPLY ALGORITHM
     taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) { c += 1; });
@@ -115,7 +115,7 @@ int main()
     for (const auto& c : t_string)
     {
         microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, 0);
+        microcatch::EQUAL(c, char(0));
     }
 
     return 0;
