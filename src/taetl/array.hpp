@@ -90,6 +90,10 @@ public:
      */
     constexpr reference back() noexcept { return _data[_size - 1]; }
 
+    /**
+     * @brief Adds one element to the back. It fails silently if the Array is
+     * full
+     */
     constexpr void push_back(const Type& value) noexcept
     {
         if (_size >= _capacity)
@@ -100,8 +104,20 @@ public:
         _data[_size++] = value;
     }
 
-    constexpr void pop_back() noexcept { _size--; }
+    /**
+     * @brief Decrements the size by 1.
+     */
+    constexpr void pop_back() noexcept
+    {
+        if (_size > 0)
+        {
+            _size--;
+        }
+    }
 
+    /**
+     * @brief Returns true if the size is 0.
+     */
     constexpr bool empty() const noexcept
     {
         if (_size == 0)
@@ -128,6 +144,11 @@ public:
      */
     constexpr Type& operator[](taetl::size_t index) noexcept
     {
+        if (_size == 0)
+        {
+            return _data[_size];
+        }
+
         if (index < _size)
         {
             return _data[index];
@@ -135,6 +156,9 @@ public:
         return _data[_size - 1];
     }
 
+    /**
+     * @brief Resets the size to 0.
+     */
     constexpr void clear() noexcept { _size = 0; }
 };
 
