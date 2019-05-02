@@ -44,7 +44,7 @@ class Array
 private:
     taetl::size_t _size{};
     taetl::size_t _capacity{Size};
-    Type _data[Size];
+    Type _data[Size]{};
 
 public:
     typedef Type value_type;

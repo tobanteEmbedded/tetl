@@ -37,6 +37,7 @@ int main()
 
     // Empty
     microcatch::EQUAL(t_array.empty(), true);
+    microcatch::EQUAL(t_array[0], 0);
 
     // Add 2 elements to the back
     t_array.push_back(1);
