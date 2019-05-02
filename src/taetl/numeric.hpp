@@ -37,7 +37,7 @@ namespace taetl
  * [first, last). Uses operator+ to sum up the elements.
  */
 template <class InputIt, class Type>
-constexpr Type accumulate(InputIt first, InputIt last, Type init)
+constexpr Type accumulate(InputIt first, InputIt last, Type init) noexcept
 {
     for (; first != last; ++first)
     {
@@ -50,8 +50,9 @@ constexpr Type accumulate(InputIt first, InputIt last, Type init)
  * @brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses the BinaryOperation to sum up the elements.
  */
-template <class InputIt, class T, class BinaryOperation>
-T accumulate(InputIt first, InputIt last, T init, BinaryOperation op)
+template <class InputIt, class Type, class BinaryOperation>
+constexpr Type accumulate(InputIt first, InputIt last, Type init,
+                          BinaryOperation op) noexcept
 {
     for (; first != last; ++first)
     {

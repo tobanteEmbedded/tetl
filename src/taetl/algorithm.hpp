@@ -37,7 +37,8 @@ namespace taetl
  * every iterator in the range [first, last] in order.
  */
 template <class InputIt, class UnaryFunction>
-constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
+constexpr UnaryFunction for_each(InputIt first, InputIt last,
+                                 UnaryFunction f) noexcept
 {
     for (; first != last; ++first)
     {
@@ -51,7 +52,7 @@ constexpr UnaryFunction for_each(InputIt first, InputIt last, UnaryFunction f)
  * every iterator in the range [first, first+n] in order.
  */
 template <class InputIt, class Size, class UnaryFunction>
-constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
+constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
 {
     for (Size i = 0; i < n; ++first, (void)++i)
     {
@@ -64,7 +65,7 @@ constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f)
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>
-constexpr InputIt find(InputIt first, InputIt last, const T& value)
+constexpr InputIt find(InputIt first, InputIt last, const T& value) noexcept
 {
     for (; first != last; ++first)
     {
@@ -80,7 +81,8 @@ constexpr InputIt find(InputIt first, InputIt last, const T& value)
  * @brief Searches for an element for which predicate p returns true
  */
 template <class InputIt, class UnaryPredicate>
-constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
+constexpr InputIt find_if(InputIt first, InputIt last,
+                          UnaryPredicate p) noexcept
 {
     for (; first != last; ++first)
     {
@@ -96,7 +98,8 @@ constexpr InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
  * @brief Searches for an element for which predicate q returns false
  */
 template <class InputIt, class UnaryPredicate>
-constexpr InputIt find_if_not(InputIt first, InputIt last, UnaryPredicate q)
+constexpr InputIt find_if_not(InputIt first, InputIt last,
+                              UnaryPredicate q) noexcept
 {
     for (; first != last; ++first)
     {
