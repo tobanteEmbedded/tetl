@@ -111,6 +111,23 @@ constexpr InputIt find_if_not(InputIt first, InputIt last,
     return last;
 }
 
+/**
+ * @brief Returns the greater of a and b.
+ */
+template <class Type>
+constexpr const Type& max(const Type& a, const Type& b) noexcept
+{
+    return (a < b) ? b : a;
+}
+
+/**
+ * @brief Returns the greater of a and b, using a compare function.
+ */
+template <class T, class Compare>
+constexpr const T& max(const T& a, const T& b, Compare comp) noexcept
+{
+    return (comp(a, b)) ? b : a;
+}
 }  // namespace taetl
 
 #endif  // TAETL_ALGORITHM_HPP

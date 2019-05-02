@@ -98,5 +98,22 @@ int main()
         [](auto& x) -> bool { return x != 100 ? true : false; });
     microcatch::EQUAL(result7, t_array_2.end());
 
+    // -------------------------- MAX --------------------------
+    microcatch::EQUAL(taetl::max(1, 5), 5);
+    microcatch::EQUAL(taetl::max(-10, 5), 5);
+    microcatch::EQUAL(taetl::max(-10, -20), -10);
+
+    // Compare absolute values
+    auto cmp = [](auto x, auto y) {
+        auto new_x = x;
+        auto new_y = y;
+        if (x < 0) new_x = new_x * -1;
+        if (y < 0) new_y = new_y * -1;
+
+        return (new_x < new_y) ? y : x;
+    };
+    microcatch::EQUAL(taetl::max(-10, -20, cmp), -20);
+    microcatch::EQUAL(taetl::max(10, -20, cmp), -20);
+
     return 0;
 }

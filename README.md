@@ -30,7 +30,7 @@ git clone https://github.com/tobanteAudio/taetl.git
    - [Numeric](#numeric)
    - [String](#string)
    - [Type Traits](#type-traits)
-8. [ToDo](#todo)
+8. [Roadmap](#roadmap)
 
 ## Design Goals
 
@@ -299,13 +299,19 @@ int main()
 }
 ```
 
-## ToDo
+## Roadmap
 
-- README
-  - Simple Examples
 - Examples
   - Hardware Pins (PORT & ID)
+- Algorithm
+  - [all_of](https://en.cppreference.com/w/cpp/algorithm/all_any_none_of)
+  - [count](https://en.cppreference.com/w/cpp/algorithm/count)
+  - [equal](https://en.cppreference.com/w/cpp/algorithm/equal)
+  - [mismatch](https://en.cppreference.com/w/cpp/algorithm/mismatch)
+  - [find_end](https://en.cppreference.com/w/cpp/algorithm/find_end)
+  - [find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+  - [adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
+  - [search](https://en.cppreference.com/w/cpp/algorithm/search)
+  - [search_n](https://en.cppreference.com/w/cpp/algorithm/search_n)
 - Type Traits
   - float
-- CI
-  - AVR-GCC
