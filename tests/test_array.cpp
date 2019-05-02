@@ -84,5 +84,30 @@ int main()
     microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
     microcatch::EQUAL(t_array.size(), taetl::size_t(0));
 
+    // Add more elements then capacity
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1);
+    t_array.push_back(1000);  // Should fail silently
+    t_array.push_back(1000);  // Should fail silently
+
+    for (const auto& item : t_array)
+    {
+        microcatch::EQUAL(item, 1);
+    }
+
     return 0;
 }
