@@ -128,6 +128,50 @@ constexpr const T& max(const T& a, const T& b, Compare comp) noexcept
 {
     return (comp(a, b)) ? b : a;
 }
+
+/**
+ * @brief Finds the greatest element in the range [first, last). Elements are
+ * compared using operator<.
+ */
+template <class ForwardIterator>
+constexpr ForwardIterator max_element(ForwardIterator first,
+                                      ForwardIterator last) noexcept
+{
+    if (first == last) return last;
+
+    ForwardIterator largest = first;
+    ++first;
+    for (; first != last; ++first)
+    {
+        if (*largest < *first)
+        {
+            largest = first;
+        }
+    }
+    return largest;
+}
+
+/**
+ * @brief Finds the greatest element in the range [first, last). Elements are
+ * compared using the given binary comparison function comp.
+ */
+template <class ForwardIterator, class Compare>
+ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
+                            Compare comp)
+{
+    if (first == last) return last;
+
+    ForwardIterator largest = first;
+    ++first;
+    for (; first != last; ++first)
+    {
+        if (comp(*largest, *first))
+        {
+            largest = first;
+        }
+    }
+    return largest;
+}
 }  // namespace taetl
 
 #endif  // TAETL_ALGORITHM_HPP

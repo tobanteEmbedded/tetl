@@ -30,6 +30,7 @@ DAMAGE.
 // TAETL
 #include "taetl/algorithm.hpp"
 #include "taetl/array.hpp"
+#include "taetl/numeric.hpp"
 
 int main()
 {
@@ -114,6 +115,22 @@ int main()
     };
     microcatch::EQUAL(taetl::max(-10, -20, cmp), -20);
     microcatch::EQUAL(taetl::max(10, -20, cmp), -20);
+
+    // -------------------------- MAX_ELEMENT --------------------------
+    taetl::Array<int, 16> arr1;
+    arr1.push_back(1);
+    arr1.push_back(2);
+    arr1.push_back(3);
+    arr1.push_back(4);
+    arr1.push_back(-5);
+
+    microcatch::EQUAL(*taetl::max_element(arr1.begin(), arr1.end()), 4);
+    microcatch::EQUAL(*taetl::max_element(arr1.begin(), arr1.end(),
+                                          [](auto a, auto b) -> bool {
+                                              return (taetl::abs(a)
+                                                      < taetl::abs(b));
+                                          }),
+                      -5);
 
     return 0;
 }
