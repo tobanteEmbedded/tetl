@@ -93,5 +93,10 @@ int main()
         [](auto& x) -> bool { return x == 100 ? true : false; });
     microcatch::NOT_EQUAL(result6, t_array_2.end());
 
+    auto result7 = taetl::find_if_not(
+        t_array_2.begin(), t_array_2.end(),
+        [](auto& x) -> bool { return x != 100 ? true : false; });
+    microcatch::EQUAL(result7, t_array_2.end());
+
     return 0;
 }
