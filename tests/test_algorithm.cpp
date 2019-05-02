@@ -32,10 +32,25 @@ DAMAGE.
 #include "taetl/array.hpp"
 #include "taetl/numeric.hpp"
 
+void test_for_each();
+void test_find();
+void test_max();
+void test_max_element();
+void test_min();
+
 int main()
 {
-    // -------------------------- FOR_EACH --------------------------
-    // Create array with capacity of 16 and size of 0
+    test_for_each();
+    test_find();
+    test_max();
+    test_max_element();
+    test_min();
+
+    return 0;
+}
+
+void test_for_each()
+{  // Create array with capacity of 16 and size of 0
     taetl::Array<double, 16> t_array;
 
     // Add elements to the back
@@ -56,8 +71,10 @@ int main()
     counter = 0;
     taetl::for_each_n(t_array.begin(), 2, increment_counter);
     microcatch::EQUAL(counter, 2);
+}
 
-    // -------------------------- FIND --------------------------
+void test_find()
+{
     taetl::Array<int, 16> t_array_2;
     // Add elements to the back
     t_array_2.push_back(1);
@@ -98,8 +115,9 @@ int main()
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x != 100 ? true : false; });
     microcatch::EQUAL(result7, t_array_2.end());
-
-    // -------------------------- MAX --------------------------
+}
+void test_max()
+{
     microcatch::EQUAL(taetl::max(1, 5), 5);
     microcatch::EQUAL(taetl::max(-10, 5), 5);
     microcatch::EQUAL(taetl::max(-10, -20), -10);
@@ -115,8 +133,9 @@ int main()
     };
     microcatch::EQUAL(taetl::max(-10, -20, cmp), -20);
     microcatch::EQUAL(taetl::max(10, -20, cmp), -20);
-
-    // -------------------------- MAX_ELEMENT --------------------------
+}
+void test_max_element()
+{
     taetl::Array<int, 16> arr1;
     arr1.push_back(1);
     arr1.push_back(2);
@@ -131,6 +150,15 @@ int main()
                                                       < taetl::abs(b));
                                           }),
                       -5);
+}
+void test_min()
+{
+    microcatch::EQUAL(taetl::min(1, 5), 1);
+    microcatch::EQUAL(taetl::min(-10, 5), -10);
+    microcatch::EQUAL(taetl::min(-10, -20), -20);
 
-    return 0;
+    // Compare absolute values
+    auto cmp = [](auto x, auto y) { return (taetl::abs(x) < taetl::abs(y)); };
+    microcatch::EQUAL(taetl::min(-10, -20, cmp), -10);
+    microcatch::EQUAL(taetl::min(10, -20, cmp), 10);
 }

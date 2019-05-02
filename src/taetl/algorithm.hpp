@@ -123,8 +123,8 @@ constexpr const Type& max(const Type& a, const Type& b) noexcept
 /**
  * @brief Returns the greater of a and b, using a compare function.
  */
-template <class T, class Compare>
-constexpr const T& max(const T& a, const T& b, Compare comp) noexcept
+template <class Type, class Compare>
+constexpr const Type& max(const Type& a, const Type& b, Compare comp) noexcept
 {
     return (comp(a, b)) ? b : a;
 }
@@ -171,6 +171,24 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
         }
     }
     return largest;
+}
+
+/**
+ * @brief Returns the smaller of a and b.
+ */
+template <class Type>
+constexpr const Type& min(const Type& a, const Type& b) noexcept
+{
+    return (b < a) ? b : a;
+}
+
+/**
+ * @brief Returns the smaller of a and b, using a compare function.
+ */
+template <class Type, class Compare>
+constexpr const Type& min(const Type& a, const Type& b, Compare comp) noexcept
+{
+    return (comp(b, a)) ? b : a;
 }
 }  // namespace taetl
 
