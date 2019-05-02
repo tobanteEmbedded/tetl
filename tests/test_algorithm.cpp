@@ -37,6 +37,7 @@ void test_find();
 void test_max();
 void test_max_element();
 void test_min();
+void test_min_element();
 
 int main()
 {
@@ -45,6 +46,7 @@ int main()
     test_max();
     test_max_element();
     test_min();
+    test_min_element();
 
     return 0;
 }
@@ -134,6 +136,7 @@ void test_max()
     microcatch::EQUAL(taetl::max(-10, -20, cmp), -20);
     microcatch::EQUAL(taetl::max(10, -20, cmp), -20);
 }
+
 void test_max_element()
 {
     taetl::Array<int, 16> arr1;
@@ -151,6 +154,7 @@ void test_max_element()
                                           }),
                       -5);
 }
+
 void test_min()
 {
     microcatch::EQUAL(taetl::min(1, 5), 1);
@@ -161,4 +165,22 @@ void test_min()
     auto cmp = [](auto x, auto y) { return (taetl::abs(x) < taetl::abs(y)); };
     microcatch::EQUAL(taetl::min(-10, -20, cmp), -10);
     microcatch::EQUAL(taetl::min(10, -20, cmp), 10);
+}
+
+void test_min_element()
+{
+    taetl::Array<int, 16> arr1;
+    arr1.push_back(1);
+    arr1.push_back(2);
+    arr1.push_back(3);
+    arr1.push_back(4);
+    arr1.push_back(-5);
+
+    microcatch::EQUAL(*taetl::min_element(arr1.begin(), arr1.end()), -5);
+    microcatch::EQUAL(*taetl::min_element(arr1.begin(), arr1.end(),
+                                          [](auto a, auto b) -> bool {
+                                              return (taetl::abs(a)
+                                                      < taetl::abs(b));
+                                          }),
+                      1);
 }

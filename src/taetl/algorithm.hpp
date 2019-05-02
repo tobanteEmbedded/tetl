@@ -190,6 +190,50 @@ constexpr const Type& min(const Type& a, const Type& b, Compare comp) noexcept
 {
     return (comp(b, a)) ? b : a;
 }
+
+/**
+ * @brief Finds the smallest element in the range [first, last). Elements are
+ * compared using operator<.
+ */
+template <class ForwardIterator>
+constexpr ForwardIterator min_element(ForwardIterator first,
+                                      ForwardIterator last) noexcept
+{
+    if (first == last) return last;
+
+    ForwardIterator smallest = first;
+    ++first;
+    for (; first != last; ++first)
+    {
+        if (*first < *smallest)
+        {
+            smallest = first;
+        }
+    }
+    return smallest;
+}
+
+/**
+ * @brief Finds the smallest element in the range [first, last). Elements are
+ * compared using the given binary comparison function comp.
+ */
+template <class ForwardIterator, class Compare>
+constexpr ForwardIterator min_element(ForwardIterator first,
+                                      ForwardIterator last, Compare comp)
+{
+    if (first == last) return last;
+
+    ForwardIterator smallest = first;
+    ++first;
+    for (; first != last; ++first)
+    {
+        if (comp(*first, *smallest))
+        {
+            smallest = first;
+        }
+    }
+    return smallest;
+}
 }  // namespace taetl
 
 #endif  // TAETL_ALGORITHM_HPP
