@@ -33,6 +33,13 @@ DAMAGE.
 
 int main()
 {
+    // -------------------------- ABS --------------------------
+    microcatch::EQUAL(taetl::abs(10), 10);
+    microcatch::EQUAL(taetl::abs(0), 0);
+    microcatch::EQUAL(taetl::abs(-10), 10);
+    microcatch::EQUAL(taetl::abs(1.0), 1.0);
+    microcatch::EQUAL(taetl::abs(-1.0), 1.0);
+
     // -------------------------- ACCUMULATE --------------------------
     // Create array with capacity of 16 and size of 0
     taetl::Array<double, 16> t_array;

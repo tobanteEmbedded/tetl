@@ -61,6 +61,19 @@ constexpr Type accumulate(InputIt first, InputIt last, Type init,
     return init;
 }
 
+/**
+ * @brief Returns the absolute value.
+ */
+template <typename Type>
+constexpr Type abs(Type input) noexcept
+{
+    if (input < 0)
+    {
+        return input * -1;
+    }
+    return input;
+}
+
 }  // namespace taetl
 
 #endif  // TAETL_NUMERIC_HPP
