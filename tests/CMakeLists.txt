@@ -28,6 +28,15 @@ target_link_libraries(taetl-test-array
     tobanteAudio::etl
 )
 add_test(Test_array taetl-test-array)
+# ARRAY CONSTEXPR
+add_executable(taetl-test-array_constexpr test_array_constexpr.cpp)
+target_link_libraries(taetl-test-array_constexpr 
+    tobanteAudio::CompilerWarnings 
+    tobanteAudio::CodeCoverage 
+    tobanteAudio::MicroCatch 
+    tobanteAudio::etl
+)
+add_test(Test_array_constexpr taetl-test-array_constexpr)
 
 # DEFINITIONS
 add_executable(taetl-test-definitions test_definitions.cpp)
