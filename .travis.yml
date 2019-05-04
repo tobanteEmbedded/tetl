@@ -54,7 +54,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-            - doxygen
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
       script: *script-linux
@@ -70,15 +69,15 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
       script: *script-linux
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        local_dir: build/doc-build/html
+        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep_history: true
+        on:
+          branch: master
 
 before_install:
     - eval "${MATRIX_EVAL}"
 
-deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: build/doc-build/html
-  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  on:
-    branch: master
