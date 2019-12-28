@@ -22,6 +22,7 @@ avr:
 	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-array -I src/ examples/array.cpp
 	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-numeric -I src/ examples/numeric.cpp
 	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-string -I src/ examples/string.cpp
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-tuple -I src/ examples/tuple.cpp
 	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-type_traits -I src/ examples/type_traits.cpp
 
 .PHONY: test
