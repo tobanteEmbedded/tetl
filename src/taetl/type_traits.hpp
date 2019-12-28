@@ -248,6 +248,23 @@ struct is_array<T[N]> : true_type
 template <class T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
+template <class T>
+struct is_pointer_helper : false_type
+{
+};
+template <class T>
+struct is_pointer_helper<T*> : true_type
+{
+};
+
+template <class T>
+struct is_pointer : is_pointer_helper<typename remove_cv<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_pointer_v = is_pointer<T>::value;
+
 /**
  * @brief Define a member typedef only if a boolean constant is true.
  */
