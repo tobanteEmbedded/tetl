@@ -142,3 +142,25 @@ TEST_CASE("type_traits: is_pointer", "[type_traits]")
     REQUIRE(taetl::is_pointer_v<double> == false);
     REQUIRE(taetl::is_pointer_v<struct T> == false);
 }
+
+TEST_CASE("type_traits: is_class", "[type_traits]")
+{
+    struct S
+    {
+    };
+
+    class C
+    {
+    };
+
+    // true
+    REQUIRE(taetl::is_class_v<S> == true);
+    REQUIRE(taetl::is_class_v<C> == true);
+    REQUIRE(taetl::is_class_v<struct X> == true);
+
+    // false
+    REQUIRE(taetl::is_class_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_class_v<double> == false);
+    REQUIRE(taetl::is_class_v<S*> == false);
+    REQUIRE(taetl::is_class_v<C*> == false);
+}

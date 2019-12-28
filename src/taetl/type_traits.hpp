@@ -29,6 +29,7 @@ DAMAGE.
 
 // TAETL
 #include "definitions.hpp"
+#include "intrinsics.hpp"
 
 namespace taetl
 {
@@ -264,6 +265,14 @@ struct is_pointer : is_pointer_helper<typename remove_cv<T>::type>
 
 template <class T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;
+
+template <class T>
+struct is_class : taetl::integral_constant<bool, TAETL_IS_CLASS(T)>
+{
+};
+
+template <class T>
+inline constexpr bool is_class_v = is_class<T>::value;
 
 /**
  * @brief Define a member typedef only if a boolean constant is true.
