@@ -27,19 +27,28 @@ DAMAGE.
 #ifndef TAETL_DEFINITONS_HPP
 #define TAETL_DEFINITONS_HPP
 
-// CLIB
-#include <assert.h>
-#include <stddef.h>
-#include <stdint.h>
-
-// TAETL
 #include "version.hpp"
+
+#include <cassert>
+#include <cstddef>
+#include <cstdint>
 
 /**
  * @brief Namespace for the taetl library.
  */
 namespace taetl
 {
+using int8_t  = int8_t;
+using int16_t = int16_t;
+using int32_t = int32_t;
+using int64_t = int64_t;
+
+using uint8_t  = uint8_t;
+using uint16_t = uint16_t;
+using uint32_t = uint32_t;
+using uint64_t = uint64_t;
+
 using size_t = size_t;
-}
+
+}  // namespace taetl
 #endif  // TAETL_DEFINITONS_HPP
