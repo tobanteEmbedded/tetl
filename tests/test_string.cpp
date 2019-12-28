@@ -39,103 +39,101 @@ TEST_CASE("string: strlen", "[string]")
 
 TEST_CASE("string: ctor - default", "[string]")
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::String t_string {};
+    taetl::String str {};
 
-    // INIT
-    REQUIRE(t_string.empty() == true);
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(0));
-    REQUIRE(t_string.length() == taetl::size_t(0));
+    REQUIRE(str.empty() == true);
+    REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.size() == taetl::size_t(0));
+    REQUIRE(str.length() == taetl::size_t(0));
 }
 
 TEST_CASE("string: ctor - char const*", "[string]")
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::String t_string {"abc"};
+    taetl::String str {"abc"};
 
-    // INIT
-    REQUIRE(t_string.empty() == false);
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(3));
-    REQUIRE(t_string.length() == taetl::size_t(3));
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.size() == taetl::size_t(3));
+    REQUIRE(str.length() == taetl::size_t(3));
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'b');
+    REQUIRE(str[2] == 'c');
+    REQUIRE(str[3] == char(0));
 }
 
 TEST_CASE("string: ctor - char const*, size_t", "[string]")
 {
-    taetl::String t_string {"abc", 3};
+    taetl::String str {"abc", 3};
 
     // INIT
-    REQUIRE(t_string.empty() == false);
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(3));
-    REQUIRE(t_string.length() == taetl::size_t(3));
-    REQUIRE(t_string[0] == 'a');
-    REQUIRE(t_string[1] == 'b');
-    REQUIRE(t_string[2] == 'c');
-    REQUIRE(t_string[3] == char(0));
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.size() == taetl::size_t(3));
+    REQUIRE(str.length() == taetl::size_t(3));
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'b');
+    REQUIRE(str[2] == 'c');
+    REQUIRE(str[3] == char(0));
 }
 
 TEST_CASE("string: begin/end", "[string]")
 {
-    taetl::String t_string {};
+    taetl::String str {};
 
-    taetl::for_each(t_string.begin(), t_string.end(),
+    taetl::for_each(str.begin(), str.end(),
                     [](auto& c) { REQUIRE(c == char(0)); });
 }
 
 TEST_CASE("string: cbegin/cend", "[string]")
 {
-    taetl::String t_string {};
+    taetl::String str {};
 
-    taetl::for_each(t_string.cbegin(), t_string.cend(),
+    taetl::for_each(str.cbegin(), str.cend(),
                     [](auto const& c) { REQUIRE(c == char(0)); });
 }
 
 TEST_CASE("string: append", "[string]")
 {
-    taetl::String t_string {};
+    taetl::String str {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
-    t_string.append(cptr, 4);
+    str.append(cptr, 4);
 
-    REQUIRE(t_string.empty() == false);
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(4));
-    REQUIRE(t_string.length() == taetl::size_t(4));
-    REQUIRE(t_string[0] == 'C');
-    REQUIRE(t_string[1] == '-');
-    REQUIRE(t_string[2] == 's');
-    REQUIRE(t_string[3] == 't');
-    REQUIRE(t_string[4] == char(0));
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.size() == taetl::size_t(4));
+    REQUIRE(str.length() == taetl::size_t(4));
+    REQUIRE(str[0] == 'C');
+    REQUIRE(str[1] == '-');
+    REQUIRE(str[2] == 's');
+    REQUIRE(str[3] == 't');
+    REQUIRE(str[4] == char(0));
 }
 
 TEST_CASE("string: algorithms", "[string]")
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string {};
-    t_string.append(5, 'a');
+    // setup
+    taetl::String str {"aaaaaa"};
+    taetl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
-    // APPLY ALGORITHM
-    taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) { c++; });
-    REQUIRE(t_string.at(0) == 'b');
-    REQUIRE(t_string.at(1) == 'b');
-    REQUIRE(t_string.at(2) == 'b');
-    REQUIRE(t_string.at(3) == 'b');
-    REQUIRE(t_string.at(4) == 'b');
-    REQUIRE(t_string.front() == 'b');
-    REQUIRE(t_string.back() == 'b');
+    // test
+    taetl::for_each(str.cbegin(), str.cend(),
+                    [](auto const& c) { REQUIRE(c == 'b'); });
+
+    REQUIRE(str.front() == 'b');
+    REQUIRE(str.back() == 'b');
 }
 
 TEST_CASE("string: clear", "[string]")
 {
-    taetl::String<char, 16> t_string {};
-    t_string.append(5, 'a');
-    REQUIRE(t_string.empty() == false);
+    // setup
+    taetl::String str {"junk"};
+    REQUIRE(str.empty() == false);
 
-    t_string.clear();
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.empty() == true);
-    REQUIRE(t_string.size() == taetl::size_t(0));
+    // test
+    str.clear();
+    REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.empty() == true);
+    REQUIRE(str.size() == taetl::size_t(0));
 }
