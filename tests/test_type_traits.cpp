@@ -164,3 +164,45 @@ TEST_CASE("type_traits: is_class", "[type_traits]")
     REQUIRE(taetl::is_class_v<S*> == false);
     REQUIRE(taetl::is_class_v<C*> == false);
 }
+
+TEST_CASE("type_traits: is_enum", "[type_traits]")
+{
+    enum E
+    {
+        one,
+    };
+
+    enum class EC
+    {
+        nop,
+    };
+
+    // true
+    REQUIRE(taetl::is_enum_v<E> == true);
+    REQUIRE(taetl::is_enum_v<EC> == true);
+
+    // false
+    REQUIRE(taetl::is_enum_v<struct X> == false);
+    REQUIRE(taetl::is_enum_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_enum_v<double> == false);
+    REQUIRE(taetl::is_enum_v<struct S*> == false);
+    REQUIRE(taetl::is_enum_v<struct C*> == false);
+}
+
+TEST_CASE("type_traits: is_union", "[type_traits]")
+{
+    typedef union {
+        int a;
+        float b;
+    } B;
+
+    // true
+    REQUIRE(taetl::is_union_v<B> == true);
+
+    // false
+    REQUIRE(taetl::is_union_v<struct X> == false);
+    REQUIRE(taetl::is_union_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_union_v<double> == false);
+    REQUIRE(taetl::is_union_v<struct S*> == false);
+    REQUIRE(taetl::is_union_v<struct C*> == false);
+}

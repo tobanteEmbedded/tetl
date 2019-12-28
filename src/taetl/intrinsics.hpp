@@ -27,7 +27,8 @@ DAMAGE.
 #ifndef TAETL_INTRINSICS_HPP
 #define TAETL_INTRINSICS_HPP
 
-#define TAETL_IS_UNION(Type) __is_union(Type)
 #define TAETL_IS_CLASS(Type) __is_class(Type)
+#define TAETL_IS_ENUM(Type) __is_enum(Type)
+#define TAETL_IS_UNION(Type) __is_union(Type)
 
 #endif  // TAETL_INTRINSICS_HPP
