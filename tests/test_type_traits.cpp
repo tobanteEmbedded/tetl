@@ -102,3 +102,14 @@ TEST_CASE("type_traits: is_floating_point", "[type_traits]")
     REQUIRE(taetl::is_floating_point_v<taetl::int64_t> == false);
     REQUIRE(taetl::is_floating_point_v<struct S> == false);
 }
+
+TEST_CASE("type_traits: is_null_pointer", "[type_traits]")
+{
+    // true
+    REQUIRE(taetl::is_null_pointer_v<decltype(nullptr)> == true);
+
+    // false
+    REQUIRE(taetl::is_null_pointer_v<int*> == false);
+    REQUIRE(taetl::is_null_pointer_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_null_pointer_v<double*> == false);
+}

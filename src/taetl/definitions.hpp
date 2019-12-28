@@ -48,7 +48,8 @@ using uint16_t = uint16_t;
 using uint32_t = uint32_t;
 using uint64_t = uint64_t;
 
-using size_t = size_t;
+using size_t    = size_t;
+using nullptr_t = decltype(nullptr);
 
 }  // namespace taetl
 #endif  // TAETL_DEFINITONS_HPP

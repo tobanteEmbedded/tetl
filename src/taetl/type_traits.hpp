@@ -61,6 +61,9 @@ struct remove_const<Type const>
     typedef Type type;
 };
 
+template <class T>
+using remove_const_t = typename remove_const<T>::type;
+
 // remove_volatile
 template <typename Type>
 struct remove_volatile
@@ -74,6 +77,9 @@ struct remove_volatile<Type volatile>
     typedef Type type;
 };
 
+template <class T>
+using remove_volatile_t = typename remove_volatile<T>::type;
+
 // remove_cv
 template <typename Type>
 struct remove_cv
@@ -81,6 +87,9 @@ struct remove_cv
     typedef
         typename remove_const<typename remove_volatile<Type>::type>::type type;
 };
+
+template <class T>
+using remove_cv_t = typename remove_cv<T>::type;
 
 /**
  * @brief If T and U name the same type (taking into account const/volatile
@@ -212,6 +221,14 @@ struct is_floating_point
 
 template <class T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
+
+template <class T>
+struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>>
+{
+};
+
+template <class T>
+inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 
 /**
  * @brief Define a member typedef only if a boolean constant is true.
