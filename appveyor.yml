@@ -3,42 +3,51 @@ version: 0.2.0.{build}
 branches:
   only:
     - master
-image:
-  - Visual Studio 2017
+
+image: Visual Studio 2019
+platform: x64
+
 clone_folder: c:\projects\source
+
+install:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - git submodule update --init --recursive
+
+build:
+  parallel: true
 
 # BUILD
 build_script:
-- cmd: >-
-    mkdir build_debug
+  - cmd: >-
+      mkdir build_debug
 
-    cd build_debug
+      cd build_debug
 
-    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Debug
-    
-    cmake --build . --config "Debug"
+      cmake .. -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Debug
 
-    cd ..
+      cmake --build . --config "Debug"
 
-    mkdir build_release
+      cd ..
 
-    cd build_release
+      mkdir build_release
 
-    cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE:STRING=Release
-    
-    cmake --build . --config "Release"
+      cd build_release
 
-    cd ..
+      cmake .. -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
 
-# TEST    
+      cmake --build . --config "Release"
+
+      cd ..
+
+# TEST
 test_script:
-- cmd: >-
-    cd build_debug
-    
-    ctest -C Debug
+  - cmd: >-
+      cd build_debug
 
-    cd ..
+      ctest -C Debug
 
-    cd build_release
+      cd ..
 
-    ctest -C Release
+      cd build_release
+
+      ctest -C Release
