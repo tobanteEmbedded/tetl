@@ -254,6 +254,36 @@ constexpr const Type& clamp(const Type& v, const Type& lo, const Type& hi,
 {
     return assert(!comp(hi, lo)), comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
+
+/**
+ * @brief Checks if unary predicate p returns true for all elements in the range
+ * [first, last).
+ */
+template <class InputIt, class UnaryPredicate>
+constexpr bool all_of(InputIt first, InputIt last, UnaryPredicate p)
+{
+    return taetl::find_if_not(first, last, p) == last;
+}
+
+/**
+ * @brief Checks if unary predicate p returns true for at least one element in
+ * the range [first, last).
+ */
+template <class InputIt, class UnaryPredicate>
+constexpr bool any_of(InputIt first, InputIt last, UnaryPredicate p)
+{
+    return taetl::find_if(first, last, p) != last;
+}
+
+/**
+ * @brief Checks if unary predicate p returns true for no elements in the range
+ * [first, last).
+ */
+template <class InputIt, class UnaryPredicate>
+constexpr bool none_of(InputIt first, InputIt last, UnaryPredicate p)
+{
+    return taetl::find_if(first, last, p) == last;
+}
 }  // namespace taetl
 
 #endif  // TAETL_ALGORITHM_HPP

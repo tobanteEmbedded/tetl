@@ -185,3 +185,66 @@ TEST_CASE("algorithm: clamp", "[algorithm]")
     REQUIRE(taetl::clamp(55, 0, 20) == 20);
     REQUIRE(taetl::clamp(55, 0, 100) == 55);
 }
+
+TEST_CASE("algorithm: all_of", "[algorithm]")
+{
+    taetl::Array<int, 16> input;
+    input.push_back(1);
+    input.push_back(2);
+    input.push_back(3);
+    input.push_back(4);
+
+    SECTION("true")
+    {
+        auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
+        REQUIRE(taetl::all_of(input.begin(), input.end(), predicate) == true);
+    }
+
+    SECTION("false")
+    {
+        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
+        REQUIRE(taetl::all_of(input.begin(), input.end(), predicate) == false);
+    }
+}
+
+TEST_CASE("algorithm: any_of", "[algorithm]")
+{
+    taetl::Array<int, 16> input;
+    input.push_back(1);
+    input.push_back(2);
+    input.push_back(3);
+    input.push_back(4);
+
+    SECTION("true")
+    {
+        auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
+        REQUIRE(taetl::any_of(input.begin(), input.end(), predicate) == true);
+    }
+
+    SECTION("false")
+    {
+        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
+        REQUIRE(taetl::any_of(input.begin(), input.end(), predicate) == false);
+    }
+}
+
+TEST_CASE("algorithm: none_of", "[algorithm]")
+{
+    taetl::Array<int, 16> input;
+    input.push_back(1);
+    input.push_back(2);
+    input.push_back(3);
+    input.push_back(4);
+
+    SECTION("true")
+    {
+        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
+        REQUIRE(taetl::none_of(input.begin(), input.end(), predicate) == true);
+    }
+
+    SECTION("false")
+    {
+        auto const predicate = [](auto a) { return a < 10; };
+        REQUIRE(taetl::none_of(input.begin(), input.end(), predicate) == false);
+    }
+}
