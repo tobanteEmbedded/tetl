@@ -33,32 +33,57 @@ DAMAGE.
 namespace taetl
 {
 /**
+ * @brief Returns the length of the C string str.
+ */
+constexpr inline auto strlen(const char* str) -> taetl::size_t
+{
+    const char* s {};
+    for (s = str; *s; ++s)
+        ;
+    return taetl::size_t(s - str);
+}
+
+/**
  * @brief String class with fixed size capacity.
  *
  * @tparam CharType Build in type for character size (mostly 'char')
  * @tparam Size Capacity for string
  */
-template <class CharType, taetl::size_t Size>
+template <typename CharType = char, taetl::size_t Size = 16>
 class String
 {
 private:
-    taetl::size_t _size{0};
-    const taetl::size_t _capacity{Size};
-    CharType _data[Size]{};
+    taetl::size_t _size {0};
+    taetl::size_t const _capacity {Size};
+    CharType _data[Size] {};
 
 public:
-    typedef CharType value_type;
-    typedef CharType* pointer;
-    typedef const CharType* const_pointer;
-    typedef CharType& reference;
-    typedef const CharType& const_reference;
-    typedef CharType* iterator;
-    typedef const CharType* const_iterator;
+    using value_type      = CharType;
+    using pointer         = CharType*;
+    using const_pointer   = const CharType*;
+    using reference       = CharType&;
+    using const_reference = const CharType&;
+    using iterator        = CharType*;
+    using const_iterator  = const CharType*;
 
     /**
      * @brief Default constructor.
      */
     constexpr String() = default;
+
+    constexpr String(const char* c_string) noexcept
+    {
+        if (c_string)
+        {
+            auto size = taetl::strlen(c_string) + 1;
+            if (size <= _capacity)
+            {
+                memset(_data, 0, size);
+                _size = size;
+                memcpy(_data, c_string, strlen(c_string));
+            }
+        }
+    }
 
     /**
      * @brief Accesses the specified character with bounds checking.

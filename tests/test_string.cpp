@@ -29,10 +29,18 @@ DAMAGE.
 #include "taetl/algorithm.hpp"
 #include "taetl/string.hpp"
 
-TEST_CASE("string: defaults", "[string]")
+TEST_CASE("string: strlen", "[string]")
+{
+    REQUIRE(taetl::strlen("") == 0);
+    REQUIRE(taetl::strlen("a") == 1);
+    REQUIRE(taetl::strlen("to") == 2);
+    REQUIRE(taetl::strlen("xxxxxxxxxx") == 10);
+}
+
+TEST_CASE("string: ctor - default", "[string]")
 {
     // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string {};
+    taetl::String t_string {};
 
     // INIT
     REQUIRE(t_string.empty() == true);
@@ -41,9 +49,21 @@ TEST_CASE("string: defaults", "[string]")
     REQUIRE(t_string.length() == taetl::size_t(0));
 }
 
+TEST_CASE("string: ctor - char const*", "[string]")
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::String t_string {"abc"};
+
+    // INIT
+    REQUIRE(t_string.empty() == false);
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.size() == taetl::size_t(4));
+    REQUIRE(t_string.length() == taetl::size_t(4));
+}
+
 TEST_CASE("string: begin/end", "[string]")
 {
-    taetl::String<char, 16> t_string {};
+    taetl::String t_string {};
 
     taetl::for_each(t_string.begin(), t_string.end(),
                     [](auto& c) { REQUIRE(c == char(0)); });
@@ -51,7 +71,7 @@ TEST_CASE("string: begin/end", "[string]")
 
 TEST_CASE("string: cbegin/cend", "[string]")
 {
-    taetl::String<char, 16> t_string {};
+    taetl::String t_string {};
 
     taetl::for_each(t_string.cbegin(), t_string.cend(),
                     [](auto const& c) { REQUIRE(c == char(0)); });
@@ -59,7 +79,7 @@ TEST_CASE("string: cbegin/cend", "[string]")
 
 TEST_CASE("string: append", "[string]")
 {
-    taetl::String<char, 16> t_string {};
+    taetl::String t_string {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
