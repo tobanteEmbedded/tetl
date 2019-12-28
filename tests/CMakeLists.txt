@@ -12,9 +12,11 @@ set(TEST_SRC
     test_string.cpp
     test_string_constexpr.cpp
     test_tuple.cpp
+    test_type_traits.cpp
 )
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_SRC})
 add_executable(${PROJECT_NAME} ${TEST_SRC})
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tobanteAudio::etl

@@ -45,9 +45,8 @@ struct integral_constant
 
 template <typename Type, Type val>
 constexpr Type integral_constant<Type, val>::value;
-
-typedef integral_constant<bool, true> true_type;
-typedef integral_constant<bool, false> false_type;
+using true_type  = integral_constant<bool, true>;
+using false_type = integral_constant<bool, false>;
 
 // remove_const
 template <typename Type>
@@ -82,6 +81,35 @@ struct remove_cv
     typedef
         typename remove_const<typename remove_volatile<Type>::type>::type type;
 };
+
+/**
+ * @brief If T and U name the same type (taking into account const/volatile
+ * qualifications), provides the member constant value equal to true. Otherwise
+ * value is false.
+ */
+template <class T, class U>
+struct is_same : false_type
+{
+};
+
+template <class T>
+struct is_same<T, T> : true_type
+{
+};
+
+template <class T, class U>
+inline constexpr bool is_same_v = is_same<T, U>::value;
+
+/**
+ * @brief Define a member typedef only if a boolean constant is true.
+ */
+template <class T>
+struct is_void : is_same<void, typename remove_cv<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_void_v = is_void<T>::value;
 
 /// @cond
 template <typename>
@@ -168,8 +196,11 @@ struct is_integral
 {
 };
 
+template <class T>
+inline constexpr bool is_integral_v = is_integral<T>::value;
+
 /**
- * @brief Define a member typedef @c type only if a boolean constant is true.
+ * @brief Define a member typedef only if a boolean constant is true.
  */
 template <bool, typename Type = void>
 struct enable_if

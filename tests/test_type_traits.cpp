@@ -1,0 +1,95 @@
+/*
+Copyright (c) 2019, Tobias Hienzsch
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGE.
+*/
+
+#include "taetl/type_traits.hpp"
+
+#include "catch2/catch.hpp"
+
+TEST_CASE("type_traits: true_type", "[type_traits]")
+{
+    REQUIRE(taetl::true_type::value == true);
+}
+
+TEST_CASE("type_traits: false_type", "[type_traits]")
+{
+    REQUIRE(taetl::false_type::value == false);
+}
+
+TEST_CASE("type_traits: is_same", "[type_traits]")
+{
+    REQUIRE(taetl::is_same<int, int>::value == true);
+    REQUIRE(taetl::is_same<int, float>::value == false);
+
+    REQUIRE(taetl::is_same_v<double, double> == true);
+    REQUIRE(taetl::is_same_v<double, float> == false);
+}
+
+TEST_CASE("type_traits: is_void", "[type_traits]")
+{
+    REQUIRE(taetl::is_void<void>::value == true);
+    REQUIRE(taetl::is_void<int>::value == false);
+
+    REQUIRE(taetl::is_void_v<void> == true);
+    REQUIRE(taetl::is_void_v<double> == false);
+}
+
+TEST_CASE("type_traits: is_integral", "[type_traits]")
+{
+    // true
+    REQUIRE(taetl::is_integral_v<char> == true);
+    REQUIRE(taetl::is_integral_v<unsigned char> == true);
+
+    REQUIRE(taetl::is_integral_v<short> == true);
+    REQUIRE(taetl::is_integral_v<unsigned short> == true);
+
+    REQUIRE(taetl::is_integral_v<int> == true);
+    REQUIRE(taetl::is_integral_v<unsigned int> == true);
+
+    REQUIRE(taetl::is_integral_v<long> == true);
+    REQUIRE(taetl::is_integral_v<unsigned long> == true);
+
+    REQUIRE(taetl::is_integral_v<long long> == true);
+    REQUIRE(taetl::is_integral_v<unsigned long long> == true);
+
+    REQUIRE(taetl::is_integral_v<taetl::int8_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::int16_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::int32_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::int64_t> == true);
+
+    REQUIRE(taetl::is_integral_v<taetl::uint8_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::uint16_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::uint32_t> == true);
+    REQUIRE(taetl::is_integral_v<taetl::uint64_t> == true);
+
+    // false
+    struct S
+    {
+    };
+
+    REQUIRE(taetl::is_integral_v<float> == false);
+    REQUIRE(taetl::is_integral_v<double> == false);
+    REQUIRE(taetl::is_integral_v<S> == false);
+}
