@@ -33,7 +33,7 @@ DAMAGE.
 int main()
 {
     // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string{};
+    taetl::String<char, 16> t_string {};
 
     const char* cptr = "C-string";
     t_string.append(cptr, 4);

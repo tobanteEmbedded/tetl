@@ -51,7 +51,7 @@ int main()
         func(item);
     }
 
-    func(uint16_t{1});
+    func(uint16_t {1});
     func(3.0f);  // Does not call template
     return 0;
 }

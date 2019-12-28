@@ -32,3 +32,13 @@ test:
 clean:
 	rm -rf $(BUILD_DIR)	
 	rm -rf build_avr
+
+.PHONY: stats
+stats:
+	cloc examples src tests
+
+.PHONY: format
+format:
+	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+	find src -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
