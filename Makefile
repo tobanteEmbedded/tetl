@@ -35,7 +35,7 @@ clean:
 
 .PHONY: stats
 stats:
-	cloc examples src tests
+	cloc --exclude-dir=3rd_party,build_Debug,build_Release,.vscode .
 
 .PHONY: format
 format:
