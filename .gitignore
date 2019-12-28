@@ -6,7 +6,8 @@
 
 # PROJECT
 build/
-build_avr/
+build-*/
+build_*/
 doc-build/
 
 # CMAKE

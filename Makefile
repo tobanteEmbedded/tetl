@@ -1,32 +1,34 @@
-EXAMPLE_DIR = examples
-TEST_DIR = tests
-INCLUDE_DIR = src
+CONFIG ?= Release
+BUILD_DIR = build_$(CONFIG)
 
-BUILD_DIR = build
-BUILD_OPTIONS = --std=c++17 -O0 -g
-BUILD_WARNINGS = -Wall -Wextra
+CM_GENERATOR ?= Ninja 
 
-AVR_GCC = avr-gcc
-AVR_BUILD_DIR = build_avr
+.PHONY: all
+all: config build test
 
-all:
-	cmake -B$(BUILD_DIR) -H. -DCMAKE_BUILD_TYPE:STRING=Debug
-	cmake --build $(BUILD_DIR) --config "Debug"
+.PHONY: config
+config:
+	cmake -H. -B$(BUILD_DIR) -G$(CM_GENERATOR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG)
 
+.PHONY: build
+build:
+	cmake --build $(BUILD_DIR) --config $(CONFIG)
+
+.PHONY: avr
 avr:
-	# CREATE BUILD DIR
-	mkdir -p $(AVR_BUILD_DIR)
-	$(AVR_GCC) --version
-	# BUILD EXAMPLES
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-algorithm -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/algorithm.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-array -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/array.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-numeric -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/numeric.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-string -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/string.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-type_traits -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/type_traits.cpp
+	mkdir -p build_avr
+	avr-gcc --version
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-algorithm -I src/ examples/algorithm.cpp
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-array -I src/ examples/array.cpp
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-numeric -I src/ examples/numeric.cpp
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-string -I src/ examples/string.cpp
+	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-type_traits -I src/ examples/type_traits.cpp
 
+.PHONY: test
 test:
 	cd $(BUILD_DIR) && ctest -C Debug
 
+.PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)/*	
-	rm -rf $(AVR_BUILD_DIR)/*
+	rm -rf $(BUILD_DIR)	
+	rm -rf build_avr
