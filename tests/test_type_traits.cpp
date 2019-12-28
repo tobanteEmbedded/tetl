@@ -206,3 +206,20 @@ TEST_CASE("type_traits: is_union", "[type_traits]")
     STATIC_REQUIRE(taetl::is_union_v<struct S*> == false);
     STATIC_REQUIRE(taetl::is_union_v<struct C*> == false);
 }
+
+TEST_CASE("type_traits: conditional", "[type_traits]")
+{
+    using taetl::conditional;
+    using taetl::conditional_t;
+    using Type1 = conditional<true, int, double>::type;
+    using Type2 = conditional<false, int, double>::type;
+
+    // true
+    REQUIRE(typeid(Type1) == typeid(int));
+    REQUIRE(typeid(Type2) == typeid(double));
+    REQUIRE(typeid(conditional_t<false, int, double>) == typeid(double));
+
+    // false
+    REQUIRE_FALSE(typeid(Type1) == typeid(double));
+    REQUIRE_FALSE(typeid(Type2) == typeid(int));
+}

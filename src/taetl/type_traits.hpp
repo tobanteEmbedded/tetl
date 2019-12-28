@@ -291,6 +291,25 @@ template <class T>
 inline constexpr bool is_union_v = is_union<T>::value;
 
 /**
+ * @brief Provides member typedef type, which is defined as T if B is true at
+ * compile time, or as F if B is false.
+ */
+template <bool B, class T, class F>
+struct conditional
+{
+    typedef T type;
+};
+
+template <class T, class F>
+struct conditional<false, T, F>
+{
+    typedef F type;
+};
+
+template <bool B, class T, class F>
+using conditional_t = typename conditional<B, T, F>::type;
+
+/**
  * @brief Define a member typedef only if a boolean constant is true.
  */
 template <bool, typename Type = void>
