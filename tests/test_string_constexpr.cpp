@@ -32,10 +32,10 @@ TEST_CASE("string: constexpr", "[string]")
 {
     constexpr taetl::String<char, 16> t_string {};
 
-    static_assert(t_string.empty() == true, "String empty");
-    static_assert(t_string.capacity() == 16, "String capacity");
-    static_assert(t_string.size() == 0, "String size");
-    static_assert(t_string.length() == 0, "String length");
+    STATIC_REQUIRE(t_string.empty() == true);
+    STATIC_REQUIRE(t_string.capacity() == 16);
+    STATIC_REQUIRE(t_string.size() == 0);
+    STATIC_REQUIRE(t_string.length() == 0);
 
     constexpr auto t_string_2 = []() {
         taetl::String<char, 16> str {};
@@ -45,14 +45,14 @@ TEST_CASE("string: constexpr", "[string]")
         return str;
     }();
 
-    static_assert(t_string_2.empty() == false, "String empty");
-    static_assert(t_string_2.capacity() == 16, "String capacity");
-    static_assert(t_string_2.size() == 4, "String size");
-    static_assert(t_string_2.length() == 4, "String length");
-    static_assert(t_string_2[0] == 'C', "String element");
-    static_assert(t_string_2[1] == '-', "String element");
-    static_assert(t_string_2[2] == 's', "String element");
-    static_assert(t_string_2[3] == 't', "String element");
-    static_assert(t_string_2[4] == 0, "String element");
-    static_assert(t_string_2.at(4) == 0, "String element");
+    STATIC_REQUIRE(t_string_2.empty() == false);
+    STATIC_REQUIRE(t_string_2.capacity() == 16);
+    STATIC_REQUIRE(t_string_2.size() == 4);
+    STATIC_REQUIRE(t_string_2.length() == 4);
+    STATIC_REQUIRE(t_string_2[0] == 'C');
+    STATIC_REQUIRE(t_string_2[1] == '-');
+    STATIC_REQUIRE(t_string_2[2] == 's');
+    STATIC_REQUIRE(t_string_2[3] == 't');
+    STATIC_REQUIRE(t_string_2[4] == 0);
+    STATIC_REQUIRE(t_string_2.at(4) == 0);
 }

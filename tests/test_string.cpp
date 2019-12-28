@@ -31,10 +31,10 @@ DAMAGE.
 
 TEST_CASE("string: strlen", "[string]")
 {
-    REQUIRE(taetl::strlen("") == 0);
-    REQUIRE(taetl::strlen("a") == 1);
-    REQUIRE(taetl::strlen("to") == 2);
-    REQUIRE(taetl::strlen("xxxxxxxxxx") == 10);
+    STATIC_REQUIRE(taetl::strlen("") == 0);
+    STATIC_REQUIRE(taetl::strlen("a") == 1);
+    STATIC_REQUIRE(taetl::strlen("to") == 2);
+    STATIC_REQUIRE(taetl::strlen("xxxxxxxxxx") == 10);
 }
 
 TEST_CASE("string: ctor - default", "[string]")

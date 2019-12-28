@@ -36,9 +36,9 @@ TEST_CASE("array: constexpr", "[array]")
         return arr;
     }();
 
-    static_assert(arr_empty.empty() == true, "Array empty");
-    static_assert(arr_empty.size() == 0, "Array size");
-    static_assert(arr_empty.capacity() == 16, "Array capacity");
+    STATIC_REQUIRE(arr_empty.empty() == true);
+    STATIC_REQUIRE(arr_empty.size() == 0);
+    STATIC_REQUIRE(arr_empty.capacity() == 16);
 
     constexpr auto arr1 = []() {
         taetl::Array<int, 16> arr {};
@@ -49,9 +49,9 @@ TEST_CASE("array: constexpr", "[array]")
         return arr;
     }();
 
-    static_assert(arr1.empty() == false, "Array empty");
-    static_assert(arr1.size() == 4, "Array size");
-    static_assert(arr1.capacity() == 16, "Array capacity");
+    STATIC_REQUIRE(arr1.empty() == false);
+    STATIC_REQUIRE(arr1.size() == 4);
+    STATIC_REQUIRE(arr1.capacity() == 16);
 
     constexpr auto arr2 = []() {
         taetl::Array<int, 8> arr {};
@@ -72,7 +72,7 @@ TEST_CASE("array: constexpr", "[array]")
         return arr;
     }();
 
-    static_assert(arr2.empty() == false, "Array empty");
-    static_assert(arr2.size() == 8, "Array size");
-    static_assert(arr2.capacity() == 8, "Array capacity");
+    STATIC_REQUIRE(arr2.empty() == false);
+    STATIC_REQUIRE(arr2.size() == 8);
+    STATIC_REQUIRE(arr2.capacity() == 8);
 }
