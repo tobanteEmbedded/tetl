@@ -85,11 +85,20 @@ TEST_CASE("type_traits: is_integral", "[type_traits]")
     REQUIRE(taetl::is_integral_v<taetl::uint64_t> == true);
 
     // false
-    struct S
-    {
-    };
-
     REQUIRE(taetl::is_integral_v<float> == false);
     REQUIRE(taetl::is_integral_v<double> == false);
-    REQUIRE(taetl::is_integral_v<S> == false);
+    REQUIRE(taetl::is_integral_v<struct S> == false);
+}
+
+TEST_CASE("type_traits: is_floating_point", "[type_traits]")
+{
+    // true
+    REQUIRE(taetl::is_floating_point_v<float> == true);
+    REQUIRE(taetl::is_floating_point_v<double> == true);
+    REQUIRE(taetl::is_floating_point_v<long double> == true);
+
+    // false
+    REQUIRE(taetl::is_floating_point_v<int> == false);
+    REQUIRE(taetl::is_floating_point_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_floating_point_v<struct S> == false);
 }

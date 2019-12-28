@@ -199,6 +199,20 @@ struct is_integral
 template <class T>
 inline constexpr bool is_integral_v = is_integral<T>::value;
 
+template <class T>
+struct is_floating_point
+    : taetl::integral_constant<
+          bool, taetl::is_same<float, typename taetl::remove_cv<T>::type>::value
+                    || taetl::is_same<double,
+                                      typename taetl::remove_cv<T>::type>::value
+                    || taetl::is_same<
+                        long double, typename taetl::remove_cv<T>::type>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
+
 /**
  * @brief Define a member typedef only if a boolean constant is true.
  */
