@@ -21,6 +21,11 @@ add_executable(taetl-example-strings string.cpp)
 target_link_libraries(taetl-example-strings tobanteAudio::CompilerWarnings tobanteAudio::CodeCoverage tobanteAudio::etl)
 add_test(example_strings taetl-example-strings)
 
+# TUPLE
+add_executable(taetl-example-tuple tuple.cpp)
+target_link_libraries(taetl-example-tuple tobanteAudio::CompilerWarnings tobanteAudio::CodeCoverage tobanteAudio::etl)
+add_test(example_tuple taetl-example-tuple)
+
 # TYPE TRAITS
 add_executable(taetl-example-type_traits type_traits.cpp)
 target_link_libraries(taetl-example-type_traits tobanteAudio::CompilerWarnings tobanteAudio::CodeCoverage tobanteAudio::etl)

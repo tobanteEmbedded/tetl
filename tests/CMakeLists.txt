@@ -11,6 +11,7 @@ set(TEST_SRC
     test_numeric.cpp
     test_string.cpp
     test_string_constexpr.cpp
+    test_tuple.cpp
 )
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_SRC})
 add_executable(${PROJECT_NAME} ${TEST_SRC})
