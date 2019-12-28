@@ -26,12 +26,12 @@ DAMAGE.
 
 #include "taetl/tuple.hpp"
 
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(int, char**)
 {
     taetl::tuple<int, int, double> c(3, 5, 1.1);
-    std::printf("%d\n", taetl::get<1>(c));
+    printf("%d\n", taetl::get<1>(c));
     return EXIT_SUCCESS;
 }
