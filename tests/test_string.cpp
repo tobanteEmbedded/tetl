@@ -57,8 +57,8 @@ TEST_CASE("string: ctor - char const*", "[string]")
     // INIT
     REQUIRE(t_string.empty() == false);
     REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(4));
-    REQUIRE(t_string.length() == taetl::size_t(4));
+    REQUIRE(t_string.size() == taetl::size_t(3));
+    REQUIRE(t_string.length() == taetl::size_t(3));
 }
 
 TEST_CASE("string: ctor - char const*, size_t", "[string]")
@@ -68,8 +68,8 @@ TEST_CASE("string: ctor - char const*, size_t", "[string]")
     // INIT
     REQUIRE(t_string.empty() == false);
     REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(4));
-    REQUIRE(t_string.length() == taetl::size_t(4));
+    REQUIRE(t_string.size() == taetl::size_t(3));
+    REQUIRE(t_string.length() == taetl::size_t(3));
     REQUIRE(t_string[0] == 'a');
     REQUIRE(t_string[1] == 'b');
     REQUIRE(t_string[2] == 'c');
@@ -109,30 +109,6 @@ TEST_CASE("string: append", "[string]")
     REQUIRE(t_string[2] == 's');
     REQUIRE(t_string[3] == 't');
     REQUIRE(t_string[4] == char(0));
-    REQUIRE(t_string.at(4) == char(0));
-
-    // APPEND 5X SAME CHARACTER
-    t_string.append(5, 'a');
-    const char& first_char  = t_string[0];
-    const char& second_char = t_string.at(1);
-
-    REQUIRE(t_string.empty() == false);
-    REQUIRE(t_string.capacity() == taetl::size_t(16));
-    REQUIRE(t_string.size() == taetl::size_t(9));
-    REQUIRE(t_string.length() == taetl::size_t(9));
-    REQUIRE(first_char == 'C');
-    REQUIRE(t_string[0] == 'C');
-    REQUIRE(second_char == '-');
-    REQUIRE(t_string[1] == '-');
-    REQUIRE(t_string[2] == 's');
-    REQUIRE(t_string[3] == 't');
-    REQUIRE(t_string[4] == 'a');
-    REQUIRE(t_string[5] == 'a');
-    REQUIRE(t_string[6] == 'a');
-    REQUIRE(t_string[7] == 'a');
-    REQUIRE(t_string[8] == 'a');
-    REQUIRE(t_string[9] == char(0));
-    REQUIRE(t_string.at(9) == char(0));
 }
 
 TEST_CASE("string: algorithms", "[string]")

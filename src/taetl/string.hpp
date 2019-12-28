@@ -79,13 +79,11 @@ public:
     {
         if (c_string)
         {
-            // length + null terminator
-            auto size = length + 1;
-            if (size <= _capacity)
+            if (length < _capacity)
             {
-                ::memset(_data, 0, size);
-                _size = size;
-                ::memcpy(_data, c_string, size - 1);
+                ::memset(_data, 0, length + 1);
+                _size = length;
+                ::memcpy(_data, c_string, length);
             }
         }
     }
