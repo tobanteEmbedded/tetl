@@ -29,9 +29,9 @@ DAMAGE.
 
 #include "version.hpp"
 
-#include <cassert>
-#include <cstddef>
-#include <cstdint>
+#include <assert.h>
+#include <stddef.h>
+#include <stdint.h>
 
 /**
  * @brief Namespace for the taetl library.
