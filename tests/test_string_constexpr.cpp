@@ -24,12 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// TAETL
+#include "catch2/catch.hpp"
+
 #include "taetl/string.hpp"
 
-int main()
+TEST_CASE("string: constexpr", "[string]")
 {
-    constexpr taetl::String<char, 16> t_string{};
+    constexpr taetl::String<char, 16> t_string {};
 
     static_assert(t_string.empty() == true, "String empty");
     static_assert(t_string.capacity() == 16, "String capacity");
@@ -37,7 +38,7 @@ int main()
     static_assert(t_string.length() == 0, "String length");
 
     constexpr auto t_string_2 = []() {
-        taetl::String<char, 16> str{};
+        taetl::String<char, 16> str {};
         // APPEND 4 CHARACTERS
         const char* cptr = "C-string";
         str.append(cptr, 4);
@@ -54,6 +55,4 @@ int main()
     static_assert(t_string_2[3] == 't', "String element");
     static_assert(t_string_2[4] == 0, "String element");
     static_assert(t_string_2.at(4) == 0, "String element");
-
-    return 0;
 }

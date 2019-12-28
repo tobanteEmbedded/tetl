@@ -24,99 +24,107 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
+#include "catch2/catch.hpp"
 
-// TAETL
 #include "taetl/algorithm.hpp"
 #include "taetl/string.hpp"
 
-int main()
+TEST_CASE("string: defaults", "[string]")
 {
     // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string{};
+    taetl::String<char, 16> t_string {};
 
     // INIT
-    microcatch::EQUAL(t_string.empty(), true);
-    microcatch::EQUAL(t_string.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_string.size(), taetl::size_t(0));
-    microcatch::EQUAL(t_string.length(), taetl::size_t(0));
+    REQUIRE(t_string.empty() == true);
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.size() == taetl::size_t(0));
+    REQUIRE(t_string.length() == taetl::size_t(0));
+}
 
-    taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) {
-        microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, char(0));
-    });
+TEST_CASE("string: begin/end", "[string]")
+{
+    taetl::String<char, 16> t_string {};
 
-    taetl::for_each(t_string.cbegin(), t_string.cend(), [](const auto& c) {
-        microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, char(0));
-    });
+    taetl::for_each(t_string.begin(), t_string.end(),
+                    [](auto& c) { REQUIRE(c == char(0)); });
+}
 
-    for (const auto& c : t_string)
-    {
-        microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, char(0));
-    }
+TEST_CASE("string: cbegin/cend", "[string]")
+{
+    taetl::String<char, 16> t_string {};
+
+    taetl::for_each(t_string.cbegin(), t_string.cend(),
+                    [](auto const& c) { REQUIRE(c == char(0)); });
+}
+
+TEST_CASE("string: append", "[string]")
+{
+    taetl::String<char, 16> t_string {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
     t_string.append(cptr, 4);
 
-    microcatch::EQUAL(t_string.empty(), false);
-    microcatch::EQUAL(t_string.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_string.size(), taetl::size_t(4));
-    microcatch::EQUAL(t_string.length(), taetl::size_t(4));
-    microcatch::EQUAL(t_string[0], 'C');
-    microcatch::EQUAL(t_string[1], '-');
-    microcatch::EQUAL(t_string[2], 's');
-    microcatch::EQUAL(t_string[3], 't');
-    microcatch::EQUAL(t_string[4], char(0));
-    microcatch::EQUAL(t_string.at(4), char(0));
+    REQUIRE(t_string.empty() == false);
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.size() == taetl::size_t(4));
+    REQUIRE(t_string.length() == taetl::size_t(4));
+    REQUIRE(t_string[0] == 'C');
+    REQUIRE(t_string[1] == '-');
+    REQUIRE(t_string[2] == 's');
+    REQUIRE(t_string[3] == 't');
+    REQUIRE(t_string[4] == char(0));
+    REQUIRE(t_string.at(4) == char(0));
 
     // APPEND 5X SAME CHARACTER
     t_string.append(5, 'a');
     const char& first_char  = t_string[0];
     const char& second_char = t_string.at(1);
 
-    microcatch::EQUAL(t_string.empty(), false);
-    microcatch::EQUAL(t_string.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_string.size(), taetl::size_t(9));
-    microcatch::EQUAL(t_string.length(), taetl::size_t(9));
-    microcatch::EQUAL(first_char, 'C');
-    microcatch::EQUAL(t_string[0], 'C');
-    microcatch::EQUAL(second_char, '-');
-    microcatch::EQUAL(t_string[1], '-');
-    microcatch::EQUAL(t_string[2], 's');
-    microcatch::EQUAL(t_string[3], 't');
-    microcatch::EQUAL(t_string[4], 'a');
-    microcatch::EQUAL(t_string[5], 'a');
-    microcatch::EQUAL(t_string[6], 'a');
-    microcatch::EQUAL(t_string[7], 'a');
-    microcatch::EQUAL(t_string[8], 'a');
-    microcatch::EQUAL(t_string[9], char(0));
-    microcatch::EQUAL(t_string.at(9), char(0));
+    REQUIRE(t_string.empty() == false);
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.size() == taetl::size_t(9));
+    REQUIRE(t_string.length() == taetl::size_t(9));
+    REQUIRE(first_char == 'C');
+    REQUIRE(t_string[0] == 'C');
+    REQUIRE(second_char == '-');
+    REQUIRE(t_string[1] == '-');
+    REQUIRE(t_string[2] == 's');
+    REQUIRE(t_string[3] == 't');
+    REQUIRE(t_string[4] == 'a');
+    REQUIRE(t_string[5] == 'a');
+    REQUIRE(t_string[6] == 'a');
+    REQUIRE(t_string[7] == 'a');
+    REQUIRE(t_string[8] == 'a');
+    REQUIRE(t_string[9] == char(0));
+    REQUIRE(t_string.at(9) == char(0));
+}
+
+TEST_CASE("string: algorithms", "[string]")
+{
+    // Create array with capacity of 16 and size of 0
+    taetl::String<char, 16> t_string {};
+    t_string.append(5, 'a');
 
     // APPLY ALGORITHM
-    taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) { c += 1; });
-    microcatch::EQUAL(t_string.at(4), 'b');
-    microcatch::EQUAL(t_string.at(5), 'b');
-    microcatch::EQUAL(t_string.at(6), 'b');
-    microcatch::EQUAL(t_string.at(7), 'b');
-    microcatch::EQUAL(t_string.at(8), 'b');
-    microcatch::EQUAL(t_string.front(), 'D');
-    microcatch::EQUAL(t_string.back(), 'b');
+    taetl::for_each(t_string.begin(), t_string.end(), [](auto& c) { c++; });
+    REQUIRE(t_string.at(0) == 'b');
+    REQUIRE(t_string.at(1) == 'b');
+    REQUIRE(t_string.at(2) == 'b');
+    REQUIRE(t_string.at(3) == 'b');
+    REQUIRE(t_string.at(4) == 'b');
+    REQUIRE(t_string.front() == 'b');
+    REQUIRE(t_string.back() == 'b');
+}
 
-    // CLEAR
+TEST_CASE("string: clear", "[string]")
+{
+    taetl::String<char, 16> t_string {};
+    t_string.append(5, 'a');
+    REQUIRE(t_string.empty() == false);
+
     t_string.clear();
-    microcatch::EQUAL(t_string.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_string.empty(), true);
-    microcatch::EQUAL(t_string.size(), taetl::size_t(0));
-
-    for (const auto& c : t_string)
-    {
-        microcatch::ignoreUnused(c);
-        microcatch::EQUAL(c, char(0));
-    }
-
-    return 0;
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.empty() == true);
+    REQUIRE(t_string.size() == taetl::size_t(0));
 }

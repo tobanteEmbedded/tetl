@@ -23,15 +23,11 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
-
-// TAETL
 #include "taetl/definitions.hpp"
 
-int main()
+#include "catch2/catch.hpp"
+
+TEST_CASE("definitions: size_t", "[definitions]")
 {
-    microcatch::EQUAL(sizeof(taetl::size_t), sizeof(size_t));
-    return 0;
+    REQUIRE(sizeof(taetl::size_t) == sizeof(size_t));
 }

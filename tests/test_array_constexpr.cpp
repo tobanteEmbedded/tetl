@@ -24,17 +24,15 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
-
-// TAETL
 #include "taetl/array.hpp"
 
-int main()
+#include "catch2/catch.hpp"
+
+TEST_CASE("array: constexpr", "[array]")
 {
     // Create empty array
     constexpr auto arr_empty = []() {
-        taetl::Array<int, 16> arr{};
+        taetl::Array<int, 16> arr {};
         return arr;
     }();
 
@@ -43,7 +41,7 @@ int main()
     static_assert(arr_empty.capacity() == 16, "Array capacity");
 
     constexpr auto arr1 = []() {
-        taetl::Array<int, 16> arr{};
+        taetl::Array<int, 16> arr {};
         arr.push_back(1);
         arr.push_back(2);
         arr.push_back(3);
@@ -56,7 +54,7 @@ int main()
     static_assert(arr1.capacity() == 16, "Array capacity");
 
     constexpr auto arr2 = []() {
-        taetl::Array<int, 8> arr{};
+        taetl::Array<int, 8> arr {};
         arr.push_back(1);
         arr.push_back(2);
         arr.push_back(3);
@@ -77,6 +75,4 @@ int main()
     static_assert(arr2.empty() == false, "Array empty");
     static_assert(arr2.size() == 8, "Array size");
     static_assert(arr2.capacity() == 8, "Array capacity");
-
-    return 0;
 }

@@ -24,20 +24,24 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
-
 // TAETL
 #include "taetl/array.hpp"
 
-int main()
+#include "catch2/catch.hpp"
+
+TEST_CASE("array: defaults", "[array]")
 {
     // Create array with capacity of 16 and size of 0
     taetl::Array<int, 16> t_array;
 
     // Empty
-    microcatch::EQUAL(t_array.empty(), true);
-    microcatch::EQUAL(t_array[0], 0);
+    REQUIRE(t_array.empty() == true);
+    REQUIRE(t_array[0] == 0);
+}
+
+TEST_CASE("array: push_back", "[array]")
+{
+    taetl::Array<int, 16> t_array;
 
     // Add 2 elements to the back
     t_array.push_back(1);
@@ -46,44 +50,68 @@ int main()
     // Test const iterators
     for (const auto& item : t_array)
     {
-        microcatch::NOT_EQUAL(item, 0);
+        REQUIRE_FALSE(item == 0);
     }
 
-    microcatch::EQUAL(t_array.empty(), false);
-    microcatch::EQUAL(t_array[0], 1);
-    microcatch::EQUAL(t_array[1], 2);
-    microcatch::EQUAL(t_array.front(), 1);
-    microcatch::EQUAL(t_array.back(), 2);
-    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_array.size(), taetl::size_t(2));
+    REQUIRE(t_array.empty() == false);
+    REQUIRE(t_array[0] == 1);
+    REQUIRE(t_array[1] == 2);
+    REQUIRE(t_array.front() == 1);
+    REQUIRE(t_array.back() == 2);
+    REQUIRE(t_array.capacity() == taetl::size_t(16));
+    REQUIRE(t_array.size() == taetl::size_t(2));
 
-    // Test non-const iterators
     for (auto& item : t_array)
     {
         item += 1;
     }
 
-    microcatch::EQUAL(t_array.empty(), false);
-    microcatch::EQUAL(t_array[0], 2);
-    microcatch::EQUAL(t_array[1], 3);
-    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_array.size(), taetl::size_t(2));
+    REQUIRE(t_array.empty() == false);
+    REQUIRE(t_array[0] == 2);
+    REQUIRE(t_array[1] == 3);
+    REQUIRE(t_array.capacity() == taetl::size_t(16));
+    REQUIRE(t_array.size() == taetl::size_t(2));
+}
+
+TEST_CASE("array: pop_back", "[array]")
+{
+    taetl::Array<int, 16> t_array;
+
+    // Add 2 elements to the back
+    t_array.push_back(1);
+    t_array.push_back(2);
+
+    for (auto& item : t_array)
+    {
+        item += 1;
+    }
 
     // POP BACK
     t_array.pop_back();
 
-    microcatch::EQUAL(t_array.empty(), false);
-    microcatch::EQUAL(t_array[0], 2);
-    microcatch::EQUAL(t_array[100], 2);  // Out of bounds, return last item.
-    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_array.size(), taetl::size_t(1));
+    REQUIRE(t_array.empty() == false);
+    REQUIRE(t_array[0] == 2);
+    REQUIRE(t_array[100] == 2);  // Out of bounds, return last item.
+    REQUIRE(t_array.capacity() == taetl::size_t(16));
+    REQUIRE(t_array.size() == taetl::size_t(1));
+}
 
-    // CLEAR
+TEST_CASE("array: clear", "[array]")
+{
+    taetl::Array<int, 16> t_array;
+    t_array.push_back(1);
+    t_array.push_back(2);
+
     t_array.clear();
 
-    microcatch::EQUAL(t_array.empty(), true);
-    microcatch::EQUAL(t_array.capacity(), taetl::size_t(16));
-    microcatch::EQUAL(t_array.size(), taetl::size_t(0));
+    REQUIRE(t_array.empty() == true);
+    REQUIRE(t_array.capacity() == taetl::size_t(16));
+    REQUIRE(t_array.size() == taetl::size_t(0));
+}
+
+TEST_CASE("array: outofbounds", "[array]")
+{
+    taetl::Array<int, 16> t_array;
 
     // Add more elements then capacity
     t_array.push_back(1);
@@ -107,8 +135,6 @@ int main()
 
     for (const auto& item : t_array)
     {
-        microcatch::EQUAL(item, 1);
+        REQUIRE(item == 1);
     }
-
-    return 0;
 }

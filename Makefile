@@ -23,11 +23,6 @@ avr:
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-numeric -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/numeric.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-string -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/string.cpp
 	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/example-avr-type_traits -I$(INCLUDE_DIR) $(EXAMPLE_DIR)/type_traits.cpp
-	# BUILD TESTS
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-array -I$(INCLUDE_DIR) $(TEST_DIR)/test_array.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-definitions -I$(INCLUDE_DIR) $(TEST_DIR)/test_definitions.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-string -I$(INCLUDE_DIR) $(TEST_DIR)/test_string.cpp
-	$(AVR_GCC) $(BUILD_OPTIONS) $(BUILD_WARNINGS) -o $(AVR_BUILD_DIR)/test-avr-string_constexpr -I$(INCLUDE_DIR) $(TEST_DIR)/test_string_constexpr.cpp
 
 test:
 	cd $(BUILD_DIR) && ctest -C Debug

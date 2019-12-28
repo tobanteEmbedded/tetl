@@ -24,37 +24,15 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
-
 // TAETL
 #include "taetl/algorithm.hpp"
 #include "taetl/array.hpp"
 #include "taetl/numeric.hpp"
 
-void test_for_each();
-void test_find();
-void test_max();
-void test_max_element();
-void test_min();
-void test_min_element();
-void test_clamp();
+#include "catch2/catch.hpp"
 
-int main()
+TEST_CASE("algorithm: for_each", "[algorithm]")
 {
-    test_for_each();
-    test_find();
-    test_max();
-    test_max_element();
-    test_min();
-    test_min_element();
-    test_clamp();
-
-    return 0;
-}
-
-void test_for_each()
-{  // Create array with capacity of 16 and size of 0
     taetl::Array<double, 16> t_array;
 
     // Add elements to the back
@@ -64,20 +42,20 @@ void test_for_each()
     t_array.push_back(4.0);
 
     // Check how often for_each calls the unary function
-    int counter{};
+    int counter {};
     auto increment_counter = [&counter](auto&) { counter += 1; };
 
     // for_each
     taetl::for_each(t_array.begin(), t_array.end(), increment_counter);
-    microcatch::EQUAL(counter, 4);
+    REQUIRE(counter == 4);
 
     // for_each_n
     counter = 0;
     taetl::for_each_n(t_array.begin(), 2, increment_counter);
-    microcatch::EQUAL(counter, 2);
+    REQUIRE(counter == 2);
 }
 
-void test_find()
+TEST_CASE("algorithm: find", "[algorithm]")
 {
     taetl::Array<int, 16> t_array_2;
     // Add elements to the back
@@ -86,45 +64,62 @@ void test_find()
     t_array_2.push_back(3);
     t_array_2.push_back(4);
 
-    // find
     auto result1 = taetl::find(t_array_2.cbegin(), t_array_2.cend(), 3);
-    microcatch::NOT_EQUAL(result1, t_array_2.cend());
+    REQUIRE_FALSE(result1 == t_array_2.cend());
 
     auto result2 = taetl::find(t_array_2.begin(), t_array_2.end(), 5);
-    microcatch::EQUAL(result2, t_array_2.end());
+    REQUIRE(result2 == t_array_2.end());
+}
 
+TEST_CASE("algorithm: find_if", "[algorithm]")
+{
+    taetl::Array<int, 16> t_array_2;
+    // Add elements to the back
+    t_array_2.push_back(1);
+    t_array_2.push_back(2);
+    t_array_2.push_back(3);
+    t_array_2.push_back(4);
     // find_if
     auto result3
         = taetl::find_if(t_array_2.begin(), t_array_2.end(),
                          [](auto& x) -> bool { return x % 2 ? true : false; });
-    microcatch::NOT_EQUAL(result3, t_array_2.end());
+    REQUIRE_FALSE(result3 == t_array_2.end());
 
     auto result4 = taetl::find_if(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x == 100 ? true : false; });
-    microcatch::EQUAL(result4, t_array_2.end());
-
+    REQUIRE(result4 == t_array_2.end());
+}
+TEST_CASE("algorithm: find_if_not", "[algorithm]")
+{
+    taetl::Array<int, 16> t_array_2;
+    // Add elements to the back
+    t_array_2.push_back(1);
+    t_array_2.push_back(2);
+    t_array_2.push_back(3);
+    t_array_2.push_back(4);
     // find_if_not
     auto result5 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x % 2 ? true : false; });
-    microcatch::NOT_EQUAL(result5, t_array_2.end());
+    REQUIRE_FALSE(result5 == t_array_2.end());
 
     auto result6 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x == 100 ? true : false; });
-    microcatch::NOT_EQUAL(result6, t_array_2.end());
+    REQUIRE_FALSE(result6 == t_array_2.end());
 
     auto result7 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
         [](auto& x) -> bool { return x != 100 ? true : false; });
-    microcatch::EQUAL(result7, t_array_2.end());
+    REQUIRE(result7 == t_array_2.end());
 }
-void test_max()
+
+TEST_CASE("algorithm: max", "[algorithm]")
 {
-    microcatch::EQUAL(taetl::max(1, 5), 5);
-    microcatch::EQUAL(taetl::max(-10, 5), 5);
-    microcatch::EQUAL(taetl::max(-10, -20), -10);
+    REQUIRE(taetl::max(1, 5) == 5);
+    REQUIRE(taetl::max(-10, 5) == 5);
+    REQUIRE(taetl::max(-10, -20) == -10);
 
     // Compare absolute values
     auto cmp = [](auto x, auto y) {
@@ -135,11 +130,11 @@ void test_max()
 
         return (new_x < new_y) ? y : x;
     };
-    microcatch::EQUAL(taetl::max(-10, -20, cmp), -20);
-    microcatch::EQUAL(taetl::max(10, -20, cmp), -20);
+    REQUIRE(taetl::max(-10, -20, cmp) == -20);
+    REQUIRE(taetl::max(10, -20, cmp) == -20);
 }
 
-void test_max_element()
+TEST_CASE("algorithm: max_element", "[algorithm]")
 {
     taetl::Array<int, 16> arr1;
     arr1.push_back(1);
@@ -148,28 +143,27 @@ void test_max_element()
     arr1.push_back(4);
     arr1.push_back(-5);
 
-    microcatch::EQUAL(*taetl::max_element(arr1.begin(), arr1.end()), 4);
-    microcatch::EQUAL(*taetl::max_element(arr1.begin(), arr1.end(),
-                                          [](auto a, auto b) -> bool {
-                                              return (taetl::abs(a)
-                                                      < taetl::abs(b));
-                                          }),
-                      -5);
+    auto const functor = [](auto a, auto b) -> bool {
+        return (taetl::abs(a) < taetl::abs(b));
+    };
+
+    REQUIRE(*taetl::max_element(arr1.begin(), arr1.end()) == 4);
+    REQUIRE(*taetl::max_element(arr1.begin(), arr1.end(), functor) == -5);
 }
 
-void test_min()
+TEST_CASE("algorithm: min", "[algorithm]")
 {
-    microcatch::EQUAL(taetl::min(1, 5), 1);
-    microcatch::EQUAL(taetl::min(-10, 5), -10);
-    microcatch::EQUAL(taetl::min(-10, -20), -20);
+    REQUIRE(taetl::min(1, 5) == 1);
+    REQUIRE(taetl::min(-10, 5) == -10);
+    REQUIRE(taetl::min(-10, -20) == -20);
 
     // Compare absolute values
     auto cmp = [](auto x, auto y) { return (taetl::abs(x) < taetl::abs(y)); };
-    microcatch::EQUAL(taetl::min(-10, -20, cmp), -10);
-    microcatch::EQUAL(taetl::min(10, -20, cmp), 10);
+    REQUIRE(taetl::min(-10, -20, cmp) == -10);
+    REQUIRE(taetl::min(10, -20, cmp) == 10);
 }
 
-void test_min_element()
+TEST_CASE("algorithm: min_element", "[algorithm]")
 {
     taetl::Array<int, 16> arr1;
     arr1.push_back(1);
@@ -178,17 +172,16 @@ void test_min_element()
     arr1.push_back(4);
     arr1.push_back(-5);
 
-    microcatch::EQUAL(*taetl::min_element(arr1.begin(), arr1.end()), -5);
-    microcatch::EQUAL(*taetl::min_element(arr1.begin(), arr1.end(),
-                                          [](auto a, auto b) -> bool {
-                                              return (taetl::abs(a)
-                                                      < taetl::abs(b));
-                                          }),
-                      1);
+    auto const functor = [](auto a, auto b) -> bool {
+        return (taetl::abs(a) < taetl::abs(b));
+    };
+
+    REQUIRE(*taetl::min_element(arr1.begin(), arr1.end()) == -5);
+    REQUIRE(*taetl::min_element(arr1.begin(), arr1.end(), functor) == 1);
 }
 
-void test_clamp()
+TEST_CASE("algorithm: clamp", "[algorithm]")
 {
-    microcatch::EQUAL(taetl::clamp(55, 0, 20), 20);
-    microcatch::EQUAL(taetl::clamp(55, 0, 100), 55);
+    REQUIRE(taetl::clamp(55, 0, 20) == 20);
+    REQUIRE(taetl::clamp(55, 0, 100) == 55);
 }

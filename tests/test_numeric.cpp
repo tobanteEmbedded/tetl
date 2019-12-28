@@ -24,23 +24,23 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// MICROCATCH
-#include "micro_catch/micro_catch.hpp"
-
 // TAETL
 #include "taetl/array.hpp"
 #include "taetl/numeric.hpp"
 
-int main()
-{
-    // -------------------------- ABS --------------------------
-    microcatch::EQUAL(taetl::abs(10), 10);
-    microcatch::EQUAL(taetl::abs(0), 0);
-    microcatch::EQUAL(taetl::abs(-10), 10);
-    microcatch::EQUAL(taetl::abs(1.0), 1.0);
-    microcatch::EQUAL(taetl::abs(-1.0), 1.0);
+#include "catch2/catch.hpp"
 
-    // -------------------------- ACCUMULATE --------------------------
+TEST_CASE("numeric: abs", "[numeric]")
+{
+    REQUIRE(taetl::abs(10) == 10);
+    REQUIRE(taetl::abs(0) == 0);
+    REQUIRE(taetl::abs(-10) == 10);
+    REQUIRE(taetl::abs(1.0) == 1.0);
+    REQUIRE(taetl::abs(-1.0) == 1.0);
+}
+
+TEST_CASE("numeric: accumulate", "[numeric]")
+{
     // Create array with capacity of 16 and size of 0
     taetl::Array<double, 16> t_array;
 
@@ -52,13 +52,11 @@ int main()
 
     // accumulate
     double collector = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
-    microcatch::EQUAL(collector, 10.0);
+    REQUIRE(collector == 10.0);
 
     // accumulate binary function op
     auto collector_func = [](double a, double b) { return a + (b * 2); };
     double sum          = taetl::accumulate(t_array.begin(), t_array.end(), 0.0,
                                    collector_func);
-    microcatch::EQUAL(sum, 20.0);
-
-    return 0;
+    REQUIRE(sum == 20.0);
 }
