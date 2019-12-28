@@ -61,6 +61,21 @@ TEST_CASE("string: ctor - char const*", "[string]")
     REQUIRE(t_string.length() == taetl::size_t(4));
 }
 
+TEST_CASE("string: ctor - char const*, size_t", "[string]")
+{
+    taetl::String t_string {"abc", 3};
+
+    // INIT
+    REQUIRE(t_string.empty() == false);
+    REQUIRE(t_string.capacity() == taetl::size_t(16));
+    REQUIRE(t_string.size() == taetl::size_t(4));
+    REQUIRE(t_string.length() == taetl::size_t(4));
+    REQUIRE(t_string[0] == 'a');
+    REQUIRE(t_string[1] == 'b');
+    REQUIRE(t_string[2] == 'c');
+    REQUIRE(t_string[3] == char(0));
+}
+
 TEST_CASE("string: begin/end", "[string]")
 {
     taetl::String t_string {};

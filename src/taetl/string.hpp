@@ -71,18 +71,32 @@ public:
      */
     constexpr String() = default;
 
-    constexpr String(const char* c_string) noexcept
+    /**
+     * @brief Charater Pointer constant constructor.
+     * Fails silently if input length is greater then capacity.
+     */
+    constexpr String(const char* c_string, taetl::size_t length) noexcept
     {
         if (c_string)
         {
-            auto size = taetl::strlen(c_string) + 1;
+            // length + null terminator
+            auto size = length + 1;
             if (size <= _capacity)
             {
-                memset(_data, 0, size);
+                ::memset(_data, 0, size);
                 _size = size;
-                memcpy(_data, c_string, strlen(c_string));
+                ::memcpy(_data, c_string, size - 1);
             }
         }
+    }
+
+    /**
+     * @brief Charater Pointer constant constructor. Calls taetl::strlen.
+     * Fails silently if input length is greater then capacity.
+     */
+    constexpr String(const char* c_string) noexcept
+        : String(c_string, taetl::strlen(c_string))
+    {
     }
 
     /**
