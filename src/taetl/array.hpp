@@ -42,18 +42,18 @@ template <class Type, taetl::size_t Size>
 class Array
 {
 private:
-    taetl::size_t _size{};
-    taetl::size_t _capacity{Size};
-    Type _data[Size]{};
+    taetl::size_t _size {};
+    taetl::size_t _capacity {Size};
+    Type _data[Size] {};
 
 public:
-    typedef Type value_type;
-    typedef Type* pointer;
-    typedef const Type* const_pointer;
-    typedef Type& reference;
-    typedef const Type& const_reference;
-    typedef Type* iterator;
-    typedef const Type* const_iterator;
+    using value_type      = Type;
+    using pointer         = Type*;
+    using const_pointer   = const Type*;
+    using reference       = Type&;
+    using const_reference = const Type&;
+    using iterator        = Type*;
+    using const_iterator  = const Type*;
 
     /**
      * @brief Default constructor.
