@@ -113,3 +113,19 @@ TEST_CASE("type_traits: is_null_pointer", "[type_traits]")
     REQUIRE(taetl::is_null_pointer_v<taetl::int64_t> == false);
     REQUIRE(taetl::is_null_pointer_v<double*> == false);
 }
+
+TEST_CASE("type_traits: is_array", "[type_traits]")
+{
+    // true
+    REQUIRE(taetl::is_array_v<int[]> == true);
+    REQUIRE(taetl::is_array_v<int[4]> == true);
+
+    REQUIRE(taetl::is_array_v<double[]> == true);
+    REQUIRE(taetl::is_array_v<double[4]> == true);
+
+    // false
+    REQUIRE(taetl::is_array_v<decltype(nullptr)> == false);
+    REQUIRE(taetl::is_array_v<int*> == false);
+    REQUIRE(taetl::is_array_v<taetl::int64_t> == false);
+    REQUIRE(taetl::is_array_v<double*> == false);
+}

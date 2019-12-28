@@ -230,6 +230,24 @@ struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>>
 template <class T>
 inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 
+template <class T>
+struct is_array : false_type
+{
+};
+
+template <class T>
+struct is_array<T[]> : true_type
+{
+};
+
+template <class T, size_t N>
+struct is_array<T[N]> : true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_array_v = is_array<T>::value;
+
 /**
  * @brief Define a member typedef only if a boolean constant is true.
  */
