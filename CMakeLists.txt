@@ -1,16 +1,31 @@
 cmake_minimum_required(VERSION 3.8)
-
-# Project
 project(TobanteAudioEmbeddedTemplateLibrary LANGUAGES CXX)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(BUILD_SHARED_LIBS OFF)
+# Only do these if this is the main project, 
+# and not if it is included through add_subdirectory.
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
+    set(CMAKE_CXX_STANDARD_REQUIRED YES)
+    set(CMAKE_CXX_EXTENSIONS NO)
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    set(BUILD_SHARED_LIBS OFF)
+    
+    # Let's nicely support folders in IDE's
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+    # Install directory
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+endif()
 
 # Options
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TOBANTEAUDIO_ETL_BUILD_TESTS     "Build unit tests" ON)
 option(TOBANTEAUDIO_ETL_BUILD_DOCS      "Build documentation" ON)
 option(TOBANTEAUDIO_ETL_ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+option(TOBANTEAUDIO_ETL_ENABLE_TIDY     "Run clang-tidy at compile time" OFF)
 
 # Cmake setup
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -18,13 +33,40 @@ include(ProjectWarnings)
 include(CodeCoverage)
 include(BuildDoxygen)
 
+# tidy, has to be enabled for each target.
+if(TOBANTEAUDIO_ETL_ENABLE_TIDY)
+  if(CMake_SOURCE_DIR STREQUAL CMake_BINARY_DIR)
+    message(FATAL_ERROR "TOBANTEAUDIO_ETL_ENABLE_TIDY requires an out-of-source build!")
+  endif()
+
+  find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+  if(NOT CLANG_TIDY_EXE)
+    message(WARNING "TOBANTEAUDIO_ETL_ENABLE_TIDY is ON but clang-tidy is not found!")
+    set(DO_CLANG_TIDY "")
+  else()
+    set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}")
+  endif()
+  
+  # Create a preprocessor definition that depends on .clang-tidy content so
+  # the compile command will change when .clang-tidy changes.  This ensures
+  # that a subsequent build re-runs clang-tidy on all sources even if they
+  # do not otherwise need to be recompiled.  Nothing actually uses this
+  # definition.  We add it to targets on which we run clang-tidy just to
+  # get the build dependency on the .clang-tidy file.
+  file(SHA1 ${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy clang_tidy_sha1)
+  set(CLANG_TIDY_DEFINITIONS "CLANG_TIDY_SHA1=${clang_tidy_sha1}")
+  unset(clang_tidy_sha1)
+endif(TOBANTEAUDIO_ETL_ENABLE_TIDY)
+configure_file(.clang-tidy .clang-tidy COPYONLY)
+
+
 # Main Project
 add_subdirectory(src)
 
 # Documentation (doxygen)
-if(TOBANTEAUDIO_ETL_BUILD_DOCS)
-  buildDocs()
-endif()
+# if(TOBANTEAUDIO_ETL_BUILD_DOCS)
+#   buildDocs()
+# endif()
 
 # Testing
 if(TOBANTEAUDIO_ETL_BUILD_TESTS)
@@ -41,10 +83,3 @@ if(TOBANTEAUDIO_ETL_BUILD_EXAMPLES)
   add_subdirectory(examples)
 endif()
 
-# Default Build Mode
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message("Setting build type to 'Debug' as none was specified.")
-  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
-    "MinSizeRel" "RelWithDebInfo")
-endif()

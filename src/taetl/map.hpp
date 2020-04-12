@@ -60,12 +60,12 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    [[nodiscard]] constexpr iterator begin() noexcept { return data_; }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
     {
         return data_;
     }
@@ -73,7 +73,7 @@ public:
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
         return data_;
     }
@@ -81,12 +81,7 @@ public:
     /**
      * @brief Returns an iterator to the end.
      */
-    [[nodiscard]] constexpr iterator end() noexcept { return data_ + size(); }
-
-    /**
-     * @brief Returns an const iterator to the end.
-     */
-    [[nodiscard]] constexpr const_iterator end() const noexcept
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
     {
         return data_ + size();
     }
@@ -94,7 +89,15 @@ public:
     /**
      * @brief Returns an const iterator to the end.
      */
-    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return data_ + size();
+    }
+
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
         return data_ + size();
     }
@@ -154,7 +157,7 @@ public:
     /**
      * @brief Returns an element with key equivalent to key.
      */
-    auto find(KeyType const& key) noexcept -> iterator
+    [[nodiscard]] auto find(KeyType const& key) noexcept -> iterator
     {
         for (auto i = begin(); i != end(); ++i)
         {
@@ -166,7 +169,7 @@ public:
     /**
      * @brief Returns an element with key equivalent to key.
      */
-    auto find(KeyType const& key) const noexcept -> const_iterator
+    [[nodiscard]] auto find(KeyType const& key) const noexcept -> const_iterator
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {

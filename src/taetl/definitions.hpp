@@ -39,7 +39,7 @@ DAMAGE.
  */
 namespace taetl
 {
-using int8_t  = int8_t;
+using int8_t = int8_t;
 static_assert(sizeof(taetl::int8_t) == 1, "int8 size should be 1");
 
 using int16_t = int16_t;
@@ -51,7 +51,7 @@ static_assert(sizeof(taetl::int32_t) == 4, "int32 size should be 4");
 using int64_t = int64_t;
 static_assert(sizeof(taetl::int64_t) == 8, "int64 size should be 8");
 
-using uint8_t  = uint8_t;
+using uint8_t = uint8_t;
 static_assert(sizeof(taetl::uint8_t) == 1, "uint8 size should be 1");
 
 using uint16_t = uint16_t;

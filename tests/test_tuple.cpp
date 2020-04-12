@@ -29,12 +29,12 @@ DAMAGE.
 
 TEST_CASE("tuple: constructor", "[tuple]")
 {
-    taetl::tuple<int, float> t1 {1, 2.0f};
+    taetl::tuple<int, float> t1 {1, 2.0F};
 }
 
 TEST_CASE("tuple: get", "[tuple]")
 {
-    auto t1 = taetl::tuple<int, float> {1, 2.0f};
+    auto t1 = taetl::tuple<int, float> {1, 2.0F};
     REQUIRE(taetl::get<0>(t1) == 1);
-    REQUIRE(taetl::get<1>(t1) == 2.0f);
+    REQUIRE(taetl::get<1>(t1) == 2.0F);
 }

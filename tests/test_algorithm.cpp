@@ -43,7 +43,7 @@ TEST_CASE("algorithm: for_each", "[algorithm]")
 
     // Check how often for_each calls the unary function
     int counter {};
-    auto increment_counter = [&counter](auto&) { counter += 1; };
+    auto increment_counter = [&counter](auto& /*unused*/) { counter += 1; };
 
     // for_each
     taetl::for_each(t_array.begin(), t_array.end(), increment_counter);
@@ -80,14 +80,14 @@ TEST_CASE("algorithm: find_if", "[algorithm]")
     t_array_2.push_back(3);
     t_array_2.push_back(4);
     // find_if
-    auto result3
-        = taetl::find_if(t_array_2.begin(), t_array_2.end(),
-                         [](auto& x) -> bool { return x % 2 ? true : false; });
+    auto result3 = taetl::find_if(
+        t_array_2.begin(), t_array_2.end(),
+        [](auto& x) -> bool { return static_cast<bool>(x % 2); });
     REQUIRE_FALSE(result3 == t_array_2.end());
 
     auto result4 = taetl::find_if(
         t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return x == 100 ? true : false; });
+        [](auto& x) -> bool { return static_cast<bool>(x == 100); });
     REQUIRE(result4 == t_array_2.end());
 }
 TEST_CASE("algorithm: find_if_not", "[algorithm]")
@@ -101,17 +101,17 @@ TEST_CASE("algorithm: find_if_not", "[algorithm]")
     // find_if_not
     auto result5 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return x % 2 ? true : false; });
+        [](auto& x) -> bool { return static_cast<bool>(x % 2); });
     REQUIRE_FALSE(result5 == t_array_2.end());
 
     auto result6 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return x == 100 ? true : false; });
+        [](auto& x) -> bool { return static_cast<bool>(x == 100); });
     REQUIRE_FALSE(result6 == t_array_2.end());
 
     auto result7 = taetl::find_if_not(
         t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return x != 100 ? true : false; });
+        [](auto& x) -> bool { return static_cast<bool>(x != 100); });
     REQUIRE(result7 == t_array_2.end());
 }
 
@@ -125,8 +125,8 @@ TEST_CASE("algorithm: max", "[algorithm]")
     auto cmp = [](auto x, auto y) {
         auto new_x = x;
         auto new_y = y;
-        if (x < 0) new_x = new_x * -1;
-        if (y < 0) new_y = new_y * -1;
+        if (x < 0) { new_x = new_x * -1; }
+        if (y < 0) { new_y = new_y * -1; }
 
         return (new_x < new_y) ? y : x;
     };

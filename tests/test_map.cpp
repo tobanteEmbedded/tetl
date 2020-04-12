@@ -29,7 +29,7 @@ DAMAGE.
 #include "catch2/catch.hpp"
 
 template <class... Args>
-auto IgnoreUnused(Args&&...) noexcept -> void
+auto IgnoreUnused(Args&&... /*ignore*/) noexcept -> void
 {
 }
 

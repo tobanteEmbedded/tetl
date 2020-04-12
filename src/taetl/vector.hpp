@@ -99,7 +99,7 @@ public:
     /**
      * @brief Returns an const iterator to the end.
      */
-    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
         return data_ + size();
     }
@@ -107,12 +107,15 @@ public:
     /**
      * @brief Accesses the first item.
      */
-    [[nodiscard]] constexpr reference front() noexcept { return data_[0]; }
+    [[nodiscard]] constexpr auto front() noexcept -> reference
+    {
+        return data_[0];
+    }
 
     /**
      * @brief Accesses the last item.
      */
-    [[nodiscard]] constexpr reference back() noexcept
+    [[nodiscard]] constexpr auto back() noexcept -> reference
     {
         return data_[size_ - 1];
     }
