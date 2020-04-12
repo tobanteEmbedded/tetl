@@ -38,8 +38,8 @@ namespace taetl
  * every iterator in the range [first, last] in order.
  */
 template <class InputIt, class UnaryFunction>
-constexpr UnaryFunction for_each(InputIt first, InputIt last,
-                                 UnaryFunction f) noexcept
+constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
+    -> UnaryFunction
 {
     for (; first != last; ++first) { f(*first); }
     return f;
@@ -50,7 +50,8 @@ constexpr UnaryFunction for_each(InputIt first, InputIt last,
  * every iterator in the range [first, first+n] in order.
  */
 template <class InputIt, class Size, class UnaryFunction>
-constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
+constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
+    -> InputIt
 {
     for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
     return first;
@@ -60,7 +61,8 @@ constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>
-constexpr InputIt find(InputIt first, InputIt last, const T& value) noexcept
+[[nodiscard]] constexpr auto find(InputIt first, InputIt last,
+                                  const T& value) noexcept -> InputIt
 {
     for (; first != last; ++first)
     {
@@ -73,8 +75,8 @@ constexpr InputIt find(InputIt first, InputIt last, const T& value) noexcept
  * @brief Searches for an element for which predicate p returns true
  */
 template <class InputIt, class UnaryPredicate>
-constexpr InputIt find_if(InputIt first, InputIt last,
-                          UnaryPredicate p) noexcept
+[[nodiscard]] constexpr auto find_if(InputIt first, InputIt last,
+                                     UnaryPredicate p) noexcept -> InputIt
 {
     for (; first != last; ++first)
     {
@@ -87,8 +89,8 @@ constexpr InputIt find_if(InputIt first, InputIt last,
  * @brief Searches for an element for which predicate q returns false
  */
 template <class InputIt, class UnaryPredicate>
-constexpr InputIt find_if_not(InputIt first, InputIt last,
-                              UnaryPredicate q) noexcept
+[[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last,
+                                         UnaryPredicate q) noexcept -> InputIt
 {
     for (; first != last; ++first)
     {
@@ -101,7 +103,8 @@ constexpr InputIt find_if_not(InputIt first, InputIt last,
  * @brief Returns the greater of a and b.
  */
 template <class Type>
-constexpr const Type& max(const Type& a, const Type& b) noexcept
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept
+    -> Type const&
 {
     return (a < b) ? b : a;
 }
@@ -110,7 +113,8 @@ constexpr const Type& max(const Type& a, const Type& b) noexcept
  * @brief Returns the greater of a and b, using a compare function.
  */
 template <class Type, class Compare>
-constexpr const Type& max(const Type& a, const Type& b, Compare comp) noexcept
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b,
+                                 Compare comp) noexcept -> Type const&
 {
     return (comp(a, b)) ? b : a;
 }
@@ -120,10 +124,11 @@ constexpr const Type& max(const Type& a, const Type& b, Compare comp) noexcept
  * compared using operator<.
  */
 template <class ForwardIterator>
-constexpr ForwardIterator max_element(ForwardIterator first,
-                                      ForwardIterator last) noexcept
+[[nodiscard]] constexpr auto max_element(ForwardIterator first,
+                                         ForwardIterator last) noexcept
+    -> ForwardIterator
 {
-    if (first == last) return last;
+    if (first == last) { return last; }
 
     ForwardIterator largest = first;
     ++first;
@@ -139,10 +144,11 @@ constexpr ForwardIterator max_element(ForwardIterator first,
  * compared using the given binary comparison function comp.
  */
 template <class ForwardIterator, class Compare>
-ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
-                            Compare comp)
+[[nodiscard]] constexpr auto max_element(ForwardIterator first,
+                                         ForwardIterator last, Compare comp)
+    -> ForwardIterator
 {
-    if (first == last) return last;
+    if (first == last) { return last; }
 
     ForwardIterator largest = first;
     ++first;
@@ -157,7 +163,7 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
  * @brief Returns the smaller of a and b.
  */
 template <class Type>
-constexpr const Type& min(const Type& a, const Type& b) noexcept
+[[nodiscard]] constexpr Type const& min(Type const& a, Type const& b) noexcept
 {
     return (b < a) ? b : a;
 }
@@ -166,7 +172,8 @@ constexpr const Type& min(const Type& a, const Type& b) noexcept
  * @brief Returns the smaller of a and b, using a compare function.
  */
 template <class Type, class Compare>
-constexpr const Type& min(const Type& a, const Type& b, Compare comp) noexcept
+[[nodiscard]] constexpr Type const& min(Type const& a, Type const& b,
+                                        Compare comp) noexcept
 {
     return (comp(b, a)) ? b : a;
 }
@@ -176,10 +183,11 @@ constexpr const Type& min(const Type& a, const Type& b, Compare comp) noexcept
  * compared using operator<.
  */
 template <class ForwardIterator>
-constexpr ForwardIterator min_element(ForwardIterator first,
-                                      ForwardIterator last) noexcept
+[[nodiscard]] constexpr auto min_element(ForwardIterator first,
+                                         ForwardIterator last) noexcept
+    -> ForwardIterator
 {
-    if (first == last) return last;
+    if (first == last) { return last; }
 
     ForwardIterator smallest = first;
     ++first;
@@ -195,10 +203,11 @@ constexpr ForwardIterator min_element(ForwardIterator first,
  * compared using the given binary comparison function comp.
  */
 template <class ForwardIterator, class Compare>
-constexpr ForwardIterator min_element(ForwardIterator first,
-                                      ForwardIterator last, Compare comp)
+[[nodiscard]] constexpr auto min_element(ForwardIterator first,
+                                         ForwardIterator last, Compare comp)
+    -> ForwardIterator
 {
-    if (first == last) return last;
+    if (first == last) { return last; }
 
     ForwardIterator smallest = first;
     ++first;
@@ -215,15 +224,15 @@ constexpr ForwardIterator min_element(ForwardIterator first,
  * values.
  */
 template <class Type>
-constexpr const Type& clamp(const Type& v, const Type& lo,
-                            const Type& hi) noexcept
+[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
+                                   Type const& hi) noexcept -> Type const&
 {
     return clamp(v, lo, hi, taetl::less<Type>());
 }
 
 template <class Type, class Compare>
-constexpr const Type& clamp(const Type& v, const Type& lo, const Type& hi,
-                            Compare comp)
+[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
+                                   Type const& hi, Compare comp) -> Type const&
 {
     return assert(!comp(hi, lo)), comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
@@ -233,7 +242,8 @@ constexpr const Type& clamp(const Type& v, const Type& lo, const Type& hi,
  * [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-constexpr bool all_of(InputIt first, InputIt last, UnaryPredicate p)
+[[nodiscard]] constexpr auto all_of(InputIt first, InputIt last,
+                                    UnaryPredicate p) -> bool
 {
     return taetl::find_if_not(first, last, p) == last;
 }
@@ -243,7 +253,8 @@ constexpr bool all_of(InputIt first, InputIt last, UnaryPredicate p)
  * the range [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-constexpr bool any_of(InputIt first, InputIt last, UnaryPredicate p)
+[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last,
+                                    UnaryPredicate p) -> bool
 {
     return taetl::find_if(first, last, p) != last;
 }
@@ -253,7 +264,8 @@ constexpr bool any_of(InputIt first, InputIt last, UnaryPredicate p)
  * [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-constexpr bool none_of(InputIt first, InputIt last, UnaryPredicate p)
+[[nodiscard]] constexpr auto none_of(InputIt first, InputIt last,
+                                     UnaryPredicate p) -> bool
 {
     return taetl::find_if(first, last, p) == last;
 }

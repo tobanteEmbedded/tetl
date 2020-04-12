@@ -81,12 +81,12 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    [[nodiscard]] constexpr iterator begin() noexcept { return data_; }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
         return data_;
     }
@@ -94,7 +94,10 @@ public:
     /**
      * @brief Returns an iterator to the end.
      */
-    [[nodiscard]] constexpr iterator end() noexcept { return data_ + size(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return data_ + size();
+    }
 
     /**
      * @brief Returns an const iterator to the end.

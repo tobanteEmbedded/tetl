@@ -4,19 +4,15 @@ project(TobanteAudioEmbeddedTemplateLibrary LANGUAGES CXX)
 # Only do these if this is the main project, 
 # and not if it is included through add_subdirectory.
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    # Standard
     set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
     set(CMAKE_CXX_STANDARD_REQUIRED YES)
     set(CMAKE_CXX_EXTENSIONS NO)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     set(BUILD_SHARED_LIBS OFF)
-    
     # Let's nicely support folders in IDE's
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-    # Install directory
-    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 endif()
 
