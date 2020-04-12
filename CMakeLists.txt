@@ -56,13 +56,12 @@ endif(TOBANTEAUDIO_ETL_ENABLE_TIDY)
 configure_file(.clang-tidy .clang-tidy COPYONLY)
 
 
-# Main Project
-add_subdirectory(src)
-
-Documentation (doxygen)
 if(TOBANTEAUDIO_ETL_BUILD_DOCS)
   buildDocs()
 endif()
+
+# Main Project
+add_subdirectory(src)
 
 # Testing
 if(TOBANTEAUDIO_ETL_BUILD_TESTS)
