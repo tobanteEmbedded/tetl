@@ -1,0 +1,3 @@
+---
+Checks:          '*,-fuchsia-*,-google-*,-hicpp-*,-zircon-*,-abseil-*,-llvm-*,-bugprone-exception-escape,-cppcoreguidelines-avoid-magic-numbers,-cppcoreguidelines-macro-usage,-misc-non-private-member-variables-in-classes'
+WarningsAsErrors: '-*'

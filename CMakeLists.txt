@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.8)
 # Project
 project(TobanteAudioEmbeddedTemplateLibrary LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(BUILD_SHARED_LIBS OFF)
+
 # Options
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TOBANTEAUDIO_ETL_BUILD_TESTS     "Build unit tests" ON)
