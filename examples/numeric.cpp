@@ -28,13 +28,13 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 #include "taetl/numeric.hpp"
 
 int main()
 {
     // Create array with capacity of 16 and size of 0
-    taetl::Array<double, 16> t_array;
+    taetl::make::vector<double, 16> t_array;
 
     // Add elements to the back
     t_array.push_back(1.0);

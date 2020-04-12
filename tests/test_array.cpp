@@ -29,100 +29,48 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("array: defaults", "[array]")
+TEST_CASE("array: construct default", "[array]")
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::Array<int, 16> t_array;
+    taetl::Array<int, 2> arr {};
 
-    // Empty
-    REQUIRE(t_array.empty() == true);
-    REQUIRE(t_array[0] == 0);
+    REQUIRE(arr.empty() == false);
+    REQUIRE(arr[0] == 0);
+    REQUIRE(arr[1] == 0);
 }
 
-TEST_CASE("array: push_back", "[array]")
+TEST_CASE("array: size", "[array]")
 {
-    taetl::Array<int, 16> t_array;
-
-    // Add 2 elements to the back
-    t_array.push_back(1);
-    t_array.push_back(2);
-
-    // Test const iterators
-    for (const auto& item : t_array) { REQUIRE_FALSE(item == 0); }
-
-    REQUIRE(t_array.empty() == false);
-    REQUIRE(t_array[0] == 1);
-    REQUIRE(t_array[1] == 2);
-    REQUIRE(t_array.front() == 1);
-    REQUIRE(t_array.back() == 2);
-    REQUIRE(t_array.capacity() == taetl::size_t(16));
-    REQUIRE(t_array.size() == taetl::size_t(2));
-
-    for (auto& item : t_array) { item += 1; }
-
-    REQUIRE(t_array.empty() == false);
-    REQUIRE(t_array[0] == 2);
-    REQUIRE(t_array[1] == 3);
-    REQUIRE(t_array.capacity() == taetl::size_t(16));
-    REQUIRE(t_array.size() == taetl::size_t(2));
+    taetl::Array<int, 4> arr {};
+    REQUIRE(arr.size() == arr.max_size());
+    REQUIRE(arr.size() == 4);
 }
 
-TEST_CASE("array: pop_back", "[array]")
+TEST_CASE("array: range-for", "[array]")
 {
-    taetl::Array<int, 16> t_array;
-
-    // Add 2 elements to the back
-    t_array.push_back(1);
-    t_array.push_back(2);
-
-    for (auto& item : t_array) { item += 1; }
-
-    // POP BACK
-    t_array.pop_back();
-
-    REQUIRE(t_array.empty() == false);
-    REQUIRE(t_array[0] == 2);
-    REQUIRE(t_array[100] == 2);  // Out of bounds, return last item.
-    REQUIRE(t_array.capacity() == taetl::size_t(16));
-    REQUIRE(t_array.size() == taetl::size_t(1));
+    taetl::Array<int, 4> arr {};
+    arr[0] = 0;
+    arr[1] = 1;
+    arr[2] = 2;
+    arr[3] = 3;
+    
+    auto counter = 0;
+    for (auto& x : arr)
+    {
+        REQUIRE(x == counter++);
+    }
 }
 
-TEST_CASE("array: clear", "[array]")
+TEST_CASE("array: range-for-const", "[array]")
 {
-    taetl::Array<int, 16> t_array;
-    t_array.push_back(1);
-    t_array.push_back(2);
+    taetl::Array<int, 4> arr {};
+    arr[0] = 0;
+    arr[1] = 1;
+    arr[2] = 2;
+    arr[3] = 3;
 
-    t_array.clear();
-
-    REQUIRE(t_array.empty() == true);
-    REQUIRE(t_array.capacity() == taetl::size_t(16));
-    REQUIRE(t_array.size() == taetl::size_t(0));
-}
-
-TEST_CASE("array: outofbounds", "[array]")
-{
-    taetl::Array<int, 16> t_array;
-
-    // Add more elements then capacity
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1);
-    t_array.push_back(1000);  // Should fail silently
-    t_array.push_back(1000);  // Should fail silently
-
-    for (const auto& item : t_array) { REQUIRE(item == 1); }
+    auto counter = 0;
+    for (auto const& x : arr)
+    {
+        REQUIRE(x == counter++);
+    }
 }

@@ -28,7 +28,7 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 
 /** Handy function for avoiding unused variables warning. */
 template <typename... Types>
@@ -39,7 +39,7 @@ void ignoreUnused(Types&&...) noexcept
 int main()
 {
     // Create array with capacity of 16 and size of 0
-    taetl::Array<int, 16> t_array;
+    taetl::make::vector<int, 16> t_array;
 
     // Add 2 elements to the back
     t_array.push_back(1);

@@ -42,12 +42,12 @@ template <class Type, taetl::size_t Size>
 class Array
 {
 private:
-    taetl::size_t _size {};
-    taetl::size_t _capacity {Size};
     Type _data[Size] {};
 
 public:
     using value_type      = Type;
+    using size_type       = taetl::size_t;
+    using difference_type = taetl::ptrdiff_t;
     using pointer         = Type*;
     using const_pointer   = const Type*;
     using reference       = Type&;
@@ -59,6 +59,116 @@ public:
      * @brief Default constructor.
      */
     constexpr Array() = default;
+
+    /**
+     * @brief Accesses the specified item with bounds checking.
+     */
+    constexpr auto at(size_type pos) noexcept -> reference
+    {
+        if (Size == 0)
+        {
+            return _data[Size];
+        }
+
+        if (pos < Size)
+        {
+            return _data[pos];
+        }
+        return _data[Size - 1];
+    }
+
+    /**
+     * @brief Accesses the specified const item with bounds checking.
+     */
+    constexpr auto at(size_type pos) const noexcept -> const_reference
+    {
+        if (Size == 0)
+        {
+            return _data[Size];
+        }
+
+        if (pos < Size)
+        {
+            return _data[pos];
+        }
+        return _data[Size - 1];
+    }
+
+    /**
+     * @brief Accesses the specified item with bounds checking.
+     */
+    constexpr auto operator[](size_type pos) noexcept -> reference
+    {
+        if (Size == 0)
+        {
+            return _data[Size];
+        }
+
+        if (pos < Size)
+        {
+            return _data[pos];
+        }
+        return _data[Size - 1];
+    }
+
+    /**
+     * @brief Accesses the specified item with bounds checking.
+     */
+    constexpr auto operator[](size_type pos) const noexcept -> const_reference
+    {
+        if (Size == 0)
+        {
+            return _data[Size];
+        }
+
+        if (pos < Size)
+        {
+            return _data[pos];
+        }
+        return _data[Size - 1];
+    }
+
+    /**
+     * @brief Accesses the first item.
+     */
+    constexpr auto front() noexcept -> reference { return _data[0]; }
+
+    /**
+     * @brief Accesses the first item.
+     */
+    constexpr auto front() const noexcept -> const_reference
+    {
+        return _data[0];
+    }
+
+    /**
+     * @brief Accesses the last item.
+     */
+    constexpr auto back() noexcept -> reference { return _data[Size - 1]; }
+
+    /**
+     * @brief Accesses the last item.
+     */
+    constexpr auto back() const noexcept -> const_reference
+    {
+        return _data[Size - 1];
+    }
+
+    /**
+     * @brief Returns pointer to the underlying array serving as element
+     * storage. The pointer is such that range [data(); data() + size()) is
+     * always a valid range, even if the container is empty (data() is not
+     * dereferenceable in that case).
+     */
+    constexpr auto data() noexcept -> pointer { return _data; }
+
+    /**
+     * @brief Returns pointer to the underlying array serving as element
+     * storage. The pointer is such that range [data(); data() + size()) is
+     * always a valid range, even if the container is empty (data() is not
+     * dereferenceable in that case).
+     */
+    constexpr auto data() const noexcept -> const_pointer { return _data; }
 
     /**
      * @brief Returns an iterator to the beginning.
@@ -83,34 +193,6 @@ public:
         return _data + size();
     }
 
-    /**
-     * @brief Accesses the first item.
-     */
-    constexpr auto front() noexcept -> reference { return _data[0]; }
-
-    /**
-     * @brief Accesses the last item.
-     */
-    constexpr auto back() noexcept -> reference { return _data[_size - 1]; }
-
-    /**
-     * @brief Adds one element to the back. It fails silently if the Array is
-     * full
-     */
-    constexpr auto push_back(const Type& value) noexcept -> void
-    {
-        if (_size >= _capacity) { return; }
-
-        _data[_size++] = value;
-    }
-
-    /**
-     * @brief Decrements the size by 1.
-     */
-    constexpr auto pop_back() noexcept -> void
-    {
-        if (_size > 0) { _size--; }
-    }
 
     /**
      * @brief Returns true if the size is 0.
@@ -123,32 +205,14 @@ public:
     /**
      * @brief Returns the number of items.
      */
-    constexpr auto size() const noexcept -> taetl::size_t { return _size; }
+    constexpr auto size() const noexcept -> size_type { return Size; }
 
     /**
      * @brief Returns the number of items that can be held in allocated
      * storage.
      */
-    constexpr auto capacity() const noexcept -> taetl::size_t
-    {
-        return _capacity;
-    }
+    constexpr auto max_size() const noexcept -> size_type { return Size; }
 
-    /**
-     * @brief Accesses the specified item with bounds checking.
-     */
-    constexpr auto operator[](taetl::size_t index) noexcept -> Type&
-    {
-        if (_size == 0) { return _data[_size]; }
-
-        if (index < _size) { return _data[index]; }
-        return _data[_size - 1];
-    }
-
-    /**
-     * @brief Resets the size to 0.
-     */
-    constexpr auto clear() noexcept -> void { _size = 0; }
 };
 
 }  // namespace taetl

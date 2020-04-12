@@ -26,14 +26,14 @@ DAMAGE.
 
 // TAETL
 #include "taetl/algorithm.hpp"
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 #include "taetl/numeric.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("algorithm: for_each", "[algorithm]")
 {
-    taetl::Array<double, 16> t_array;
+    taetl::make::vector<double, 16> t_array;
 
     // Add elements to the back
     t_array.push_back(1.0);
@@ -57,7 +57,7 @@ TEST_CASE("algorithm: for_each", "[algorithm]")
 
 TEST_CASE("algorithm: find", "[algorithm]")
 {
-    taetl::Array<int, 16> t_array_2;
+    taetl::make::vector<int, 16> t_array_2;
     // Add elements to the back
     t_array_2.push_back(1);
     t_array_2.push_back(2);
@@ -73,7 +73,7 @@ TEST_CASE("algorithm: find", "[algorithm]")
 
 TEST_CASE("algorithm: find_if", "[algorithm]")
 {
-    taetl::Array<int, 16> t_array_2;
+    taetl::make::vector<int, 16> t_array_2;
     // Add elements to the back
     t_array_2.push_back(1);
     t_array_2.push_back(2);
@@ -92,7 +92,7 @@ TEST_CASE("algorithm: find_if", "[algorithm]")
 }
 TEST_CASE("algorithm: find_if_not", "[algorithm]")
 {
-    taetl::Array<int, 16> t_array_2;
+    taetl::make::vector<int, 16> t_array_2;
     // Add elements to the back
     t_array_2.push_back(1);
     t_array_2.push_back(2);
@@ -136,7 +136,7 @@ TEST_CASE("algorithm: max", "[algorithm]")
 
 TEST_CASE("algorithm: max_element", "[algorithm]")
 {
-    taetl::Array<int, 16> arr1;
+    taetl::make::vector<int, 16> arr1;
     arr1.push_back(1);
     arr1.push_back(2);
     arr1.push_back(3);
@@ -165,7 +165,7 @@ TEST_CASE("algorithm: min", "[algorithm]")
 
 TEST_CASE("algorithm: min_element", "[algorithm]")
 {
-    taetl::Array<int, 16> arr1;
+    taetl::make::vector<int, 16> arr1;
     arr1.push_back(1);
     arr1.push_back(2);
     arr1.push_back(3);
@@ -188,7 +188,7 @@ TEST_CASE("algorithm: clamp", "[algorithm]")
 
 TEST_CASE("algorithm: all_of", "[algorithm]")
 {
-    taetl::Array<int, 16> input;
+    taetl::make::vector<int, 16> input;
     input.push_back(1);
     input.push_back(2);
     input.push_back(3);
@@ -209,7 +209,7 @@ TEST_CASE("algorithm: all_of", "[algorithm]")
 
 TEST_CASE("algorithm: any_of", "[algorithm]")
 {
-    taetl::Array<int, 16> input;
+    taetl::make::vector<int, 16> input;
     input.push_back(1);
     input.push_back(2);
     input.push_back(3);
@@ -230,7 +230,7 @@ TEST_CASE("algorithm: any_of", "[algorithm]")
 
 TEST_CASE("algorithm: none_of", "[algorithm]")
 {
-    taetl::Array<int, 16> input;
+    taetl::make::vector<int, 16> input;
     input.push_back(1);
     input.push_back(2);
     input.push_back(3);

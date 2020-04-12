@@ -25,7 +25,7 @@ DAMAGE.
 */
 
 // TAETL
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 #include "taetl/numeric.hpp"
 
 #include "catch2/catch.hpp"
@@ -42,7 +42,7 @@ TEST_CASE("numeric: abs", "[numeric]")
 TEST_CASE("numeric: accumulate", "[numeric]")
 {
     // Create array with capacity of 16 and size of 0
-    taetl::Array<double, 16> t_array;
+    taetl::make::vector<double, 16> t_array;
 
     // Add elements to the back
     t_array.push_back(1.0);

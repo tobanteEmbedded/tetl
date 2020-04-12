@@ -28,7 +28,7 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 #include "taetl/type_traits.hpp"
 
 template <typename T>
@@ -41,7 +41,7 @@ float func(float val) { return val; }
 
 int main()
 {
-    taetl::Array<int, 16> t_array;
+    taetl::make::vector<int, 16> t_array;
 
     t_array.push_back(1);
     t_array.push_back(2);
