@@ -76,24 +76,25 @@ struct pair
 
     pair(pair const& p) = default;
 
-    pair& operator=(pair const& p)
+    auto operator=(pair const& p) -> pair&
     {
+        if (&p == this) { return *this; }
         first  = p.first;
         second = p.second;
         return *this;
     }
 
     template <class U1, class U2>
-    pair& operator=(pair<U1, U2>& p)
+    auto operator=(pair<U1, U2>& p) -> pair&
     {
         first  = p.first;
         second = p.second;
         return *this;
     }
 
-    pair(pair&& p) = default;
+    pair(pair&& p) noexcept = default;
 
-    pair& operator=(pair&& __p)
+    auto operator=(pair&& __p) noexcept -> pair&
     {
         first  = taetl::move(__p.first);
         second = taetl::move(__p.second);
@@ -101,12 +102,14 @@ struct pair
     }
 
     template <class _U1, class _U2>
-    pair& operator=(pair<_U1, _U2>&& __p)
+    auto operator=(pair<_U1, _U2>&& __p) -> pair&
     {
         first  = taetl::move(__p.first);
         second = taetl::move(__p.second);
         return *this;
     }
+
+    ~pair() noexcept = default;
 
     T1 first;
     T2 second;
