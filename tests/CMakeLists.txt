@@ -6,7 +6,6 @@ set(TEST_SRC
     
     test_algorithm.cpp
     test_array.cpp
-    test_array_constexpr.cpp
     test_definitions.cpp
     test_numeric.cpp
     test_map.cpp

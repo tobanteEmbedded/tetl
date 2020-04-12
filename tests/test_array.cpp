@@ -31,7 +31,7 @@ DAMAGE.
 
 TEST_CASE("array: construct default", "[array]")
 {
-    taetl::Array<int, 2> arr {};
+    taetl::array<int, 2> arr {};
 
     REQUIRE(arr.empty() == false);
     REQUIRE(arr[0] == 0);
@@ -40,19 +40,19 @@ TEST_CASE("array: construct default", "[array]")
 
 TEST_CASE("array: size", "[array]")
 {
-    taetl::Array<int, 4> arr {};
+    taetl::array<int, 4> arr {};
     REQUIRE(arr.size() == arr.max_size());
     REQUIRE(arr.size() == 4);
 }
 
 TEST_CASE("array: range-for", "[array]")
 {
-    taetl::Array<int, 4> arr {};
+    taetl::array<int, 4> arr {};
     arr[0] = 0;
     arr[1] = 1;
     arr[2] = 2;
     arr[3] = 3;
-    
+
     auto counter = 0;
     for (auto& x : arr)
     {
@@ -62,7 +62,7 @@ TEST_CASE("array: range-for", "[array]")
 
 TEST_CASE("array: range-for-const", "[array]")
 {
-    taetl::Array<int, 4> arr {};
+    taetl::array<int, 4> arr {};
     arr[0] = 0;
     arr[1] = 1;
     arr[2] = 2;
@@ -74,3 +74,4 @@ TEST_CASE("array: range-for-const", "[array]")
         REQUIRE(x == counter++);
     }
 }
+

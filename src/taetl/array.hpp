@@ -33,13 +33,13 @@ DAMAGE.
 namespace taetl
 {
 /**
- * @brief Array class with fixed size capacity.
+ * @brief array class with fixed size capacity.
  *
  * @tparam Type Type to hold in container
  * @tparam Size Capacity for Array
  */
 template <class Type, taetl::size_t Size>
-class Array
+class array
 {
 private:
     Type _data[Size] {};
@@ -58,7 +58,7 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr Array() = default;
+    constexpr array() = default;
 
     /**
      * @brief Accesses the specified item with bounds checking.
@@ -193,7 +193,6 @@ public:
         return _data + size();
     }
 
-
     /**
      * @brief Returns true if the size is 0.
      */
@@ -212,8 +211,10 @@ public:
      * storage.
      */
     constexpr auto max_size() const noexcept -> size_type { return Size; }
-
 };
+
+template <class T, class... U>
+array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 }  // namespace taetl
 
