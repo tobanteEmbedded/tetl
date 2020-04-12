@@ -50,6 +50,7 @@ using uint32_t = uint32_t;
 using uint64_t = uint64_t;
 
 using size_t    = size_t;
+using ptrdiff_t = ptrdiff_t;
 using nullptr_t = decltype(nullptr);
 
 }  // namespace taetl
