@@ -133,6 +133,25 @@ public:
     }
 
     /**
+     * @brief Inserts a value pair into the map. Returns a pair consisting of an
+     * iterator to the inserted element (or to the element that prevented the
+     * insertion) and a bool denoting whether the insertion took place.
+     */
+    auto insert(value_type const& value) noexcept -> taetl::pair<iterator, bool>
+    {
+        if (size_ == capacity_) { return {end(), false}; }
+
+        if (size_ == 0)
+        {
+            auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
+            ::new (addr) value_type {value};
+            return {&data_[size_], true};
+        }
+
+        return {end(), false};
+    }
+
+    /**
      * @brief Returns an element with key equivalent to key.
      */
     auto find(KeyType const& key) noexcept -> iterator

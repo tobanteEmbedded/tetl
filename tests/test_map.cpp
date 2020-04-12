@@ -54,3 +54,21 @@ TEST_CASE("map: ConstructDefault", "[map]")
 
     func(test);
 }
+
+TEST_CASE("map: Insert", "[map]")
+{
+    taetl::make::map<int, int, 4> test {};
+
+    auto func = [](taetl::map<int, int>& m) {
+        REQUIRE(m.max_size() == 4);
+        REQUIRE(m.empty() == true);
+        REQUIRE(m.size() == 0);
+        m.insert({1, 143});
+        REQUIRE(m.max_size() == 4);
+        REQUIRE(m.empty() == false);
+        REQUIRE(m.size() == 1);
+        REQUIRE(m.count(1) == 1);
+    };
+
+    func(test);
+}

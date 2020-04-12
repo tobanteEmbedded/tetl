@@ -31,6 +31,23 @@ DAMAGE.
 
 namespace taetl
 {
+/**
+ * @brief taetl::move is used to indicate that an object t may be "moved from",
+ * i.e. allowing the efficient transfer of resources from t to another object.
+ * In particular, std::move produces an xvalue expression that identifies its
+ * argument t. It is exactly equivalent to a static_cast to an rvalue reference
+ * type.
+ * @tparam T
+ * @param t
+ * @return static_cast<typename taetl::remove_reference<T>::type&&>(t)
+ */
+template <class T>
+constexpr auto move(T&& t) noexcept ->
+    typename taetl::remove_reference<T>::type&&
+{
+    return static_cast<typename taetl::remove_reference<T>::type&&>(t);
+}
+
 template <class T>
 constexpr auto forward(taetl::remove_reference_t<T>& param) noexcept -> T&&
 {
@@ -49,7 +66,48 @@ struct pair
     using first_type  = T1;
     using second_type = T2;
 
-    pair() : first {}, second {} { }
+    constexpr pair() : first {}, second {} { }
+    constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
+
+    template <class U1, class U2>
+    constexpr pair(const pair<U1, U2>& p) : first {p.first}, second {p.second}
+    {
+    }
+
+    pair(pair const& p) = default;
+
+    pair& operator=(pair const& p)
+    {
+        first  = p.first;
+        second = p.second;
+        return *this;
+    }
+
+    template <class U1, class U2>
+    pair& operator=(pair<U1, U2>& p)
+    {
+        first  = p.first;
+        second = p.second;
+        return *this;
+    }
+
+    pair(pair&& p) = default;
+
+    pair& operator=(pair&& __p)
+    {
+        first  = taetl::move(__p.first);
+        second = taetl::move(__p.second);
+        return *this;
+    }
+
+    template <class _U1, class _U2>
+    pair& operator=(pair<_U1, _U2>&& __p)
+    {
+        first  = taetl::move(__p.first);
+        second = taetl::move(__p.second);
+        return *this;
+    }
+
     T1 first;
     T2 second;
 };
