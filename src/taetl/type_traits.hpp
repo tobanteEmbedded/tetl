@@ -92,6 +92,27 @@ struct remove_cv
 template <class T>
 using remove_cv_t = typename remove_cv<T>::type;
 
+template <class T>
+struct remove_reference
+{
+    typedef T type;
+};
+
+template <class T>
+struct remove_reference<T&>
+{
+    typedef T type;
+};
+
+template <class T>
+struct remove_reference<T&&>
+{
+    typedef T type;
+};
+
+template <class T>
+using remove_reference_t = typename remove_reference<T>::type;
+
 /**
  * @brief If T and U name the same type (taking into account const/volatile
  * qualifications), provides the member constant value equal to true. Otherwise

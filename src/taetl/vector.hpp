@@ -2,6 +2,7 @@
 #define TAETL_VECTOR_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/utility.hpp"
 
 namespace taetl
 {
@@ -59,7 +60,10 @@ public:
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    [[nodiscard]] constexpr const_iterator cbegin() const noexcept { return data_; }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return data_;
+    }
 
     /**
      * @brief Returns an iterator to the end.
@@ -69,7 +73,10 @@ public:
     /**
      * @brief Returns an const iterator to the end.
      */
-    [[nodiscard]] constexpr const_iterator cend() const noexcept { return data_ + size(); }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return data_ + size();
+    }
 
     /**
      * @brief Accesses the first item.
@@ -79,13 +86,16 @@ public:
     /**
      * @brief Accesses the last item.
      */
-    [[nodiscard]] constexpr reference back() noexcept { return data_[size_ - 1]; }
+    [[nodiscard]] constexpr reference back() noexcept
+    {
+        return data_[size_ - 1];
+    }
 
     /**
      * @brief Adds one element to the back. It fails silently if the Array is
      * full
      */
-    constexpr auto push_back( ValueType const& value) noexcept -> void
+    constexpr auto push_back(ValueType const& value) noexcept -> void
     {
         if (size_ >= capacity_)
         {
@@ -106,8 +116,27 @@ public:
         }
     }
 
+    /**
+     * @brief Construct element inplace at the end of the vector. The behavior
+     * is undefined if the size == capacity.
+     * @returns Reference to constructed element.
+     */
+    template <class... Args>
+    auto emplace_back(Args&&... args) noexcept -> reference
+    {
+        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
+        return *::new (addr) ValueType {taetl::forward<Args>(args)...};
+    }
+
+    /**
+     * @brief Deleted, since the buffer size is constant.
+     */
     auto reserve(size_type new_cap) -> void = delete;
-    auto shrink_to_fit() -> void            = delete;
+    
+    /**
+     * @brief Deleted, since the buffer size is constant.
+     */
+    auto shrink_to_fit() -> void = delete;
 
 protected:
     explicit vector(ValueType* data, size_t size, size_t capacity)

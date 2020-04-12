@@ -128,3 +128,19 @@ TEST_CASE("vector: PopBack", "[vector]")
     REQUIRE(vec.empty());
 
 }
+
+TEST_CASE("vector: EmplaceBack", "[vector]")
+{
+    taetl::make::vector<int, 4> vec;
+    REQUIRE(vec.empty() == true);
+    REQUIRE(vec.size() == 0);
+
+    vec.emplace_back(1);
+    REQUIRE(vec.empty() == false);
+    REQUIRE(vec.size() == 1);
+    REQUIRE(vec.back() == 1);
+
+    vec.emplace_back(2);
+    REQUIRE(vec.size() == 2);
+    REQUIRE(vec.back() == 2);
+}
