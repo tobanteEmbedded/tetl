@@ -59,10 +59,10 @@ configure_file(.clang-tidy .clang-tidy COPYONLY)
 # Main Project
 add_subdirectory(src)
 
-# Documentation (doxygen)
-# if(TOBANTEAUDIO_ETL_BUILD_DOCS)
-#   buildDocs()
-# endif()
+Documentation (doxygen)
+if(TOBANTEAUDIO_ETL_BUILD_DOCS)
+  buildDocs()
+endif()
 
 # Testing
 if(TOBANTEAUDIO_ETL_BUILD_TESTS)
