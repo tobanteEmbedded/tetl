@@ -176,6 +176,7 @@ private:
     size_t const capacity_;
 };
 
+
 namespace make
 {
 template <typename ValueType, size_t Size>

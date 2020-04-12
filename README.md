@@ -312,7 +312,10 @@ int main()
   - [search](https://en.cppreference.com/w/cpp/algorithm/search)
   - [search_n](https://en.cppreference.com/w/cpp/algorithm/search_n)
 - Array
-  - Delete vector like methods
+  - Deduction guide
+  - Aggregate init
+- Deduction guides for containers
+  - Requires iterator traits
 - Map
   - Sorted insert
   - Add missing methods
