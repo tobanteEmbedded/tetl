@@ -63,38 +63,41 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    constexpr iterator begin() noexcept { return _data; }
+    constexpr auto begin() noexcept -> iterator { return _data; }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    constexpr const_iterator cbegin() const noexcept { return _data; }
+    constexpr auto cbegin() const noexcept -> const_iterator { return _data; }
 
     /**
      * @brief Returns an iterator to the end.
      */
-    constexpr iterator end() noexcept { return _data + size(); }
+    constexpr auto end() noexcept -> iterator { return _data + size(); }
 
     /**
      * @brief Returns an const iterator to the end.
      */
-    constexpr const_iterator cend() const noexcept { return _data + size(); }
+    constexpr auto cend() const noexcept -> const_iterator
+    {
+        return _data + size();
+    }
 
     /**
      * @brief Accesses the first item.
      */
-    constexpr reference front() noexcept { return _data[0]; }
+    constexpr auto front() noexcept -> reference { return _data[0]; }
 
     /**
      * @brief Accesses the last item.
      */
-    constexpr reference back() noexcept { return _data[_size - 1]; }
+    constexpr auto back() noexcept -> reference { return _data[_size - 1]; }
 
     /**
      * @brief Adds one element to the back. It fails silently if the Array is
      * full
      */
-    constexpr void push_back(const Type& value) noexcept
+    constexpr auto push_back(const Type& value) noexcept -> void
     {
         if (_size >= _capacity) { return; }
 
@@ -104,7 +107,7 @@ public:
     /**
      * @brief Decrements the size by 1.
      */
-    constexpr void pop_back() noexcept
+    constexpr auto pop_back() noexcept -> void
     {
         if (_size > 0) { _size--; }
     }
@@ -112,28 +115,29 @@ public:
     /**
      * @brief Returns true if the size is 0.
      */
-    constexpr bool empty() const noexcept
+    constexpr auto empty() const noexcept -> bool
     {
-        if (_size == 0) { return true; }
-
-        return false;
+        return static_cast<bool>(size() == 0);
     }
 
     /**
      * @brief Returns the number of items.
      */
-    constexpr taetl::size_t size() const noexcept { return _size; }
+    constexpr auto size() const noexcept -> taetl::size_t { return _size; }
 
     /**
      * @brief Returns the number of items that can be held in allocated
      * storage.
      */
-    constexpr taetl::size_t capacity() const noexcept { return _capacity; }
+    constexpr auto capacity() const noexcept -> taetl::size_t
+    {
+        return _capacity;
+    }
 
     /**
      * @brief Accesses the specified item with bounds checking.
      */
-    constexpr Type& operator[](taetl::size_t index) noexcept
+    constexpr auto operator[](taetl::size_t index) noexcept -> Type&
     {
         if (_size == 0) { return _data[_size]; }
 
@@ -144,7 +148,7 @@ public:
     /**
      * @brief Resets the size to 0.
      */
-    constexpr void clear() noexcept { _size = 0; }
+    constexpr auto clear() noexcept -> void { _size = 0; }
 };
 
 }  // namespace taetl

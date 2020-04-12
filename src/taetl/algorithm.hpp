@@ -27,7 +27,6 @@ DAMAGE.
 #ifndef TAETL_ALGORITHM_HPP
 #define TAETL_ALGORITHM_HPP
 
-// TAETL
 #include "definitions.hpp"
 #include "functional.hpp"
 
@@ -163,7 +162,8 @@ template <class ForwardIterator, class Compare>
  * @brief Returns the smaller of a and b.
  */
 template <class Type>
-[[nodiscard]] constexpr Type const& min(Type const& a, Type const& b) noexcept
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept
+    -> Type const&
 {
     return (b < a) ? b : a;
 }
@@ -172,8 +172,8 @@ template <class Type>
  * @brief Returns the smaller of a and b, using a compare function.
  */
 template <class Type, class Compare>
-[[nodiscard]] constexpr Type const& min(Type const& a, Type const& b,
-                                        Compare comp) noexcept
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b,
+                                 Compare comp) noexcept -> Type const&
 {
     return (comp(b, a)) ? b : a;
 }

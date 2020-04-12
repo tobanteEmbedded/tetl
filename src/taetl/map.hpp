@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
-#define TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
+#ifndef TAETL_MAP_HPP
+#define TAETL_MAP_HPP
 
 #include "taetl/definitions.hpp"
 #include "taetl/functional.hpp"
@@ -208,4 +208,4 @@ private:
 };
 }  // namespace make
 }  // namespace taetl
-#endif  // TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
+#endif  // TAETL_MAP_HPP

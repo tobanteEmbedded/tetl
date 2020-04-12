@@ -31,9 +31,6 @@ DAMAGE.
 
 namespace taetl
 {
-/**
- * @brief Namespace for the taetl library.
- */
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...>
 {
@@ -63,13 +60,16 @@ struct GetImpl
 template <typename First, typename... Rest>
 struct GetImpl<0, First, Rest...>
 {
-    static First value(const tuple<First, Rest...>* t) { return t->first; }
+    static auto value(const tuple<First, Rest...>* t) -> First
+    {
+        return t->first;
+    }
 };
 
 template <int index, typename First, typename... Rest>
 auto get(const tuple<First, Rest...>& t)
     -> decltype(GetImpl<index, First, Rest...>::value(&t))
-{  // typename Type<index, First, Rest...>::value {
+{
     return GetImpl<index, First, Rest...>::value(&t);
 }
 }  // namespace taetl
