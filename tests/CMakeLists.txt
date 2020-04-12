@@ -9,6 +9,7 @@ set(TEST_SRC
     test_array_constexpr.cpp
     test_definitions.cpp
     test_numeric.cpp
+    test_map.cpp
     test_string.cpp
     test_string_constexpr.cpp
     test_tuple.cpp

@@ -1,0 +1,163 @@
+#ifndef TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
+#define TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
+
+#include "taetl/definitions.hpp"
+#include "taetl/functional.hpp"
+#include "taetl/utility.hpp"
+
+namespace taetl
+{
+template <typename KeyType, typename ValueType,
+          typename Compare = taetl::less<KeyType>>
+class map
+{
+public:
+    using key_type        = KeyType;
+    using mapped_type     = ValueType;
+    using value_type      = taetl::pair<const KeyType, ValueType>;
+    using size_type       = taetl::size_t;
+    using difference_type = taetl::ptrdiff_t;
+    using key_compare     = Compare;
+    using reference       = value_type&;
+    using const_reference = value_type const&;
+    using pointer         = value_type*;
+    using const_pointer   = value_type const*;
+    using iterator        = value_type*;
+    using const_iterator  = value_type const*;
+
+    // TODO: Reverse iterators & node type
+    // reverse_iterator std::reverse_iterator<iterator>
+    // const_reverse_iterator std::reverse_iterator<const_iterator>
+    // node_type a specialization of node handle representing a container node
+    // insert_return_type
+public:
+    /**
+     * @brief Returns an iterator to the beginning.
+     */
+    [[nodiscard]] constexpr iterator begin() noexcept { return data_; }
+
+    /**
+     * @brief Returns an const iterator to the beginning.
+     */
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return data_;
+    }
+
+    /**
+     * @brief Returns an const iterator to the beginning.
+     */
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return data_;
+    }
+
+    /**
+     * @brief Returns an iterator to the end.
+     */
+    [[nodiscard]] constexpr iterator end() noexcept { return data_ + size(); }
+
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    [[nodiscard]] constexpr const_iterator end() const noexcept
+    {
+        return data_ + size();
+    }
+
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return data_ + size();
+    }
+
+    /**
+     * @brief Returns the current element count.
+     */
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return size_;
+    }
+
+    /**
+     * @brief Returns the capacity.
+     */
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return capacity_;
+    }
+
+    /**
+     * @brief Returns true if the size == 0.
+     */
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size_ == 0;
+    }
+
+    /**
+     * @brief Returns 1 if the key is present, otherwise 0.
+     */
+    [[nodiscard]] constexpr auto count(KeyType const& key) const noexcept
+        -> size_type
+    {
+        return find(key) != nullptr ? 1 : 0;
+    }
+
+    /**
+     * @brief Returns an element with key equivalent to key.
+     */
+    auto find(KeyType const& key) noexcept -> iterator
+    {
+        for (auto i = begin(); i != end(); ++i)
+        {
+            if (i->first == key) { return i; }
+        }
+        return nullptr;
+    }
+
+    /**
+     * @brief Returns an element with key equivalent to key.
+     */
+    auto find(KeyType const& key) const noexcept -> const_iterator
+    {
+        for (auto i = cbegin(); i != cend(); ++i)
+        {
+            if (i->first == key) { return i; }
+        }
+
+        return nullptr;
+    }
+
+protected:
+    explicit map(pointer data, size_t capacity)
+        : data_(data), size_(0), capacity_(capacity)
+    {
+    }
+
+private:
+    pointer data_;
+    size_type size_;
+    size_type const capacity_;
+};
+
+namespace make
+{
+template <typename KeyType, typename ValueType, size_t Capacity,
+          typename Compare = taetl::less<KeyType>>
+class map : public ::taetl::map<KeyType, ValueType, Compare>
+{
+public:
+    explicit map() : ::taetl::map<KeyType, ValueType, Compare> {data_, Capacity}
+    {
+    }
+
+private:
+    typename ::taetl::map<KeyType, ValueType, Compare>::value_type
+        data_[Capacity];
+};
+}  // namespace make
+}  // namespace taetl
+#endif  // TOBANTEAUDIOEMBEDDEDTEMPLATELIBRARY_MAP_HPP
