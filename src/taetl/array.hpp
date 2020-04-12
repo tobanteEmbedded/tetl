@@ -96,10 +96,7 @@ public:
      */
     constexpr void push_back(const Type& value) noexcept
     {
-        if (_size >= _capacity)
-        {
-            return;
-        }
+        if (_size >= _capacity) { return; }
 
         _data[_size++] = value;
     }
@@ -109,10 +106,7 @@ public:
      */
     constexpr void pop_back() noexcept
     {
-        if (_size > 0)
-        {
-            _size--;
-        }
+        if (_size > 0) { _size--; }
     }
 
     /**
@@ -120,10 +114,7 @@ public:
      */
     constexpr bool empty() const noexcept
     {
-        if (_size == 0)
-        {
-            return true;
-        }
+        if (_size == 0) { return true; }
 
         return false;
     }
@@ -144,15 +135,9 @@ public:
      */
     constexpr Type& operator[](taetl::size_t index) noexcept
     {
-        if (_size == 0)
-        {
-            return _data[_size];
-        }
+        if (_size == 0) { return _data[_size]; }
 
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size - 1];
     }
 

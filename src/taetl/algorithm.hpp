@@ -41,10 +41,7 @@ template <class InputIt, class UnaryFunction>
 constexpr UnaryFunction for_each(InputIt first, InputIt last,
                                  UnaryFunction f) noexcept
 {
-    for (; first != last; ++first)
-    {
-        f(*first);
-    }
+    for (; first != last; ++first) { f(*first); }
     return f;
 }
 
@@ -55,10 +52,7 @@ constexpr UnaryFunction for_each(InputIt first, InputIt last,
 template <class InputIt, class Size, class UnaryFunction>
 constexpr InputIt for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
 {
-    for (Size i = 0; i < n; ++first, (void)++i)
-    {
-        f(*first);
-    }
+    for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
     return first;
 }
 
@@ -70,10 +64,7 @@ constexpr InputIt find(InputIt first, InputIt last, const T& value) noexcept
 {
     for (; first != last; ++first)
     {
-        if (*first == value)
-        {
-            return first;
-        }
+        if (*first == value) { return first; }
     }
     return last;
 }
@@ -87,10 +78,7 @@ constexpr InputIt find_if(InputIt first, InputIt last,
 {
     for (; first != last; ++first)
     {
-        if (p(*first))
-        {
-            return first;
-        }
+        if (p(*first)) { return first; }
     }
     return last;
 }
@@ -104,10 +92,7 @@ constexpr InputIt find_if_not(InputIt first, InputIt last,
 {
     for (; first != last; ++first)
     {
-        if (!q(*first))
-        {
-            return first;
-        }
+        if (!q(*first)) { return first; }
     }
     return last;
 }
@@ -144,10 +129,7 @@ constexpr ForwardIterator max_element(ForwardIterator first,
     ++first;
     for (; first != last; ++first)
     {
-        if (*largest < *first)
-        {
-            largest = first;
-        }
+        if (*largest < *first) { largest = first; }
     }
     return largest;
 }
@@ -166,10 +148,7 @@ ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
     ++first;
     for (; first != last; ++first)
     {
-        if (comp(*largest, *first))
-        {
-            largest = first;
-        }
+        if (comp(*largest, *first)) { largest = first; }
     }
     return largest;
 }
@@ -206,10 +185,7 @@ constexpr ForwardIterator min_element(ForwardIterator first,
     ++first;
     for (; first != last; ++first)
     {
-        if (*first < *smallest)
-        {
-            smallest = first;
-        }
+        if (*first < *smallest) { smallest = first; }
     }
     return smallest;
 }
@@ -228,10 +204,7 @@ constexpr ForwardIterator min_element(ForwardIterator first,
     ++first;
     for (; first != last; ++first)
     {
-        if (comp(*first, *smallest))
-        {
-            smallest = first;
-        }
+        if (comp(*first, *smallest)) { smallest = first; }
     }
     return smallest;
 }

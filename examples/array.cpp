@@ -47,10 +47,7 @@ int main()
 
     auto foo = [](auto x) { ignoreUnused(x); };
 
-    for (auto& item : t_array)
-    {
-        foo(item);
-    }
+    for (auto& item : t_array) { foo(item); }
 
     return 0;
 }

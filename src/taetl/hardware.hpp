@@ -46,7 +46,7 @@ private:
     const uint8_t id;
 
 protected:
-    constexpr inline Pin(uint8_t i) noexcept : id(i) {}
+    constexpr inline Pin(uint8_t i) noexcept : id(i) { }
 
 public:
     constexpr inline uint8_t getID() const noexcept { return id; }
@@ -58,7 +58,7 @@ public:
 class DigitalPin : public Pin
 {
 public:
-    constexpr inline DigitalPin(uint8_t i) noexcept : Pin(i) {}
+    constexpr inline DigitalPin(uint8_t i) noexcept : Pin(i) { }
 };
 
 /**
@@ -67,7 +67,7 @@ public:
 class AnalogPin : public Pin
 {
 public:
-    constexpr inline AnalogPin(uint8_t i) noexcept : Pin(i) {}
+    constexpr inline AnalogPin(uint8_t i) noexcept : Pin(i) { }
 };
 
 }  // namespace hardware

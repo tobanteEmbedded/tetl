@@ -48,10 +48,7 @@ TEST_CASE("array: push_back", "[array]")
     t_array.push_back(2);
 
     // Test const iterators
-    for (const auto& item : t_array)
-    {
-        REQUIRE_FALSE(item == 0);
-    }
+    for (const auto& item : t_array) { REQUIRE_FALSE(item == 0); }
 
     REQUIRE(t_array.empty() == false);
     REQUIRE(t_array[0] == 1);
@@ -61,10 +58,7 @@ TEST_CASE("array: push_back", "[array]")
     REQUIRE(t_array.capacity() == taetl::size_t(16));
     REQUIRE(t_array.size() == taetl::size_t(2));
 
-    for (auto& item : t_array)
-    {
-        item += 1;
-    }
+    for (auto& item : t_array) { item += 1; }
 
     REQUIRE(t_array.empty() == false);
     REQUIRE(t_array[0] == 2);
@@ -81,10 +75,7 @@ TEST_CASE("array: pop_back", "[array]")
     t_array.push_back(1);
     t_array.push_back(2);
 
-    for (auto& item : t_array)
-    {
-        item += 1;
-    }
+    for (auto& item : t_array) { item += 1; }
 
     // POP BACK
     t_array.pop_back();
@@ -133,8 +124,5 @@ TEST_CASE("array: outofbounds", "[array]")
     t_array.push_back(1000);  // Should fail silently
     t_array.push_back(1000);  // Should fail silently
 
-    for (const auto& item : t_array)
-    {
-        REQUIRE(item == 1);
-    }
+    for (const auto& item : t_array) { REQUIRE(item == 1); }
 }

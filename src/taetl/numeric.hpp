@@ -67,10 +67,7 @@ constexpr Type accumulate(InputIt first, InputIt last, Type init,
 template <typename Type>
 constexpr Type abs(Type input) noexcept
 {
-    if (input < 0)
-    {
-        return input * -1;
-    }
+    if (input < 0) { return input * -1; }
     return input;
 }
 

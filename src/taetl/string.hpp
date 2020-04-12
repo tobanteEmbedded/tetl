@@ -102,10 +102,7 @@ public:
      */
     constexpr reference at(taetl::size_t index) noexcept
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -114,10 +111,7 @@ public:
      */
     constexpr const_reference at(taetl::size_t index) const noexcept
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -126,10 +120,7 @@ public:
      */
     constexpr reference operator[](taetl::size_t index) noexcept
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -138,10 +129,7 @@ public:
      */
     constexpr const_reference operator[](taetl::size_t index) const noexcept
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -211,10 +199,7 @@ public:
      */
     constexpr void clear() noexcept
     {
-        for (auto& c : _data)
-        {
-            c = 0;
-        }
+        for (auto& c : _data) { c = 0; }
         _size = 0;
     }
 
@@ -223,10 +208,7 @@ public:
      */
     constexpr String& append(taetl::size_t count, CharType s) noexcept
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            _data[_size + i] = s;
-        }
+        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s; }
         _size += count;
         _data[_size] = 0;
 
@@ -245,10 +227,7 @@ public:
      */
     constexpr String& append(const CharType* s, taetl::size_t count) noexcept
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            _data[_size + i] = s[i];
-        }
+        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s[i]; }
         _size += count;
         _data[_size] = 0;
 

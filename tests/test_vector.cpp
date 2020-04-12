@@ -60,10 +60,7 @@ TEST_CASE("vector: RangeBasedFor", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    for (auto const& item : vec)
-    {
-        REQUIRE(item == ++counter);
-    }
+    for (auto const& item : vec) { REQUIRE(item == ++counter); }
 }
 
 TEST_CASE("vector: Iterators", "[vector]")
@@ -76,8 +73,9 @@ TEST_CASE("vector: Iterators", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    taetl::for_each(vec.begin(), vec.end(),
-                    [&counter](auto const& item)  { REQUIRE(item == ++counter); });
+    taetl::for_each(vec.begin(), vec.end(), [&counter](auto const& item) {
+        REQUIRE(item == ++counter);
+    });
 }
 
 TEST_CASE("vector: PushBack", "[vector]")
@@ -126,7 +124,6 @@ TEST_CASE("vector: PopBack", "[vector]")
     vec.pop_back();
 
     REQUIRE(vec.empty());
-
 }
 
 TEST_CASE("vector: EmplaceBack", "[vector]")

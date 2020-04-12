@@ -12,7 +12,7 @@ constexpr auto forward(taetl::remove_reference_t<T>& param) noexcept -> T&&
 }
 
 template <class T>
-constexpr auto forward(taetl::remove_reference_t<T>&& param) noexcept ->T&&
+constexpr auto forward(taetl::remove_reference_t<T>&& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
 }

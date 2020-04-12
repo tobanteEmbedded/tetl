@@ -65,10 +65,7 @@ TEST_CASE("array: constexpr", "[array]")
         arr.push_back(8);
         arr.push_back(9);  // Will fail silently.
 
-        for (auto& item : arr)
-        {
-            item += 1;
-        }
+        for (auto& item : arr) { item += 1; }
         return arr;
     }();
 
