@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project
-project(taetl LANGUAGES CXX)
+project(TobanteAudioEmbeddedTemplateLibrary LANGUAGES CXX)
 
 # Options
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES  "Build examples" ON)
