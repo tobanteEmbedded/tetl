@@ -33,8 +33,8 @@ TEST_CASE("array: construct default", "[array]")
     taetl::array<int, 2> arr {};
 
     REQUIRE(arr.empty() == false);
-    REQUIRE(arr[0] == 0);
-    REQUIRE(arr[1] == 0);
+    REQUIRE(*arr[0] == 0);
+    REQUIRE(*arr[1] == 0);
 }
 
 TEST_CASE("array: size", "[array]")
@@ -47,10 +47,10 @@ TEST_CASE("array: size", "[array]")
 TEST_CASE("array: range-for", "[array]")
 {
     taetl::array<int, 4> arr {};
-    arr[0] = 0;
-    arr[1] = 1;
-    arr[2] = 2;
-    arr[3] = 3;
+    *arr[0] = 0;
+    *arr[1] = 1;
+    *arr[2] = 2;
+    *arr[3] = 3;
 
     auto counter = 0;
     for (auto& x : arr)
@@ -62,10 +62,10 @@ TEST_CASE("array: range-for", "[array]")
 TEST_CASE("array: range-for-const", "[array]")
 {
     taetl::array<int, 4> arr {};
-    arr.at(0) = 0;
-    arr.at(1) = 1;
-    arr.at(2) = 2;
-    arr.at(3) = 3;
+    *arr.at(0) = 0;
+    *arr.at(1) = 1;
+    *arr.at(2) = 2;
+    *arr.at(3) = 3;
 
     REQUIRE(*arr.data() == 0);
     REQUIRE(arr.front() == 0);
@@ -82,10 +82,10 @@ TEST_CASE("array: begin/end const", "[array]")
 {
     auto const arr = []() {
         taetl::array<int, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        *a.at(0) = 0;
+        *a.at(1) = 1;
+        *a.at(2) = 2;
+        *a.at(3) = 3;
         return a;
     }();
 
@@ -103,44 +103,44 @@ TEST_CASE("array: at", "[array]")
 {
     auto arr = []() {
         taetl::array<int, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        *a.at(0) = 0;
+        *a.at(1) = 1;
+        *a.at(2) = 2;
+        *a.at(3) = 3;
         return a;
     }();
 
-    REQUIRE(arr.at(0) == 0);
-    REQUIRE(arr.at(1) == 1);
-    REQUIRE(arr.at(2) == 2);
-    REQUIRE(arr.at(3) == 3);
+    REQUIRE(*arr.at(0) == 0);
+    REQUIRE(*arr.at(1) == 1);
+    REQUIRE(*arr.at(2) == 2);
+    REQUIRE(*arr.at(3) == 3);
 }
 
 TEST_CASE("array: at const", "[array]")
 {
     auto const arr = []() {
         taetl::array<int, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        *a.at(0) = 0;
+        *a.at(1) = 1;
+        *a.at(2) = 2;
+        *a.at(3) = 3;
         return a;
     }();
 
-    REQUIRE(arr.at(0) == 0);
-    REQUIRE(arr.at(1) == 1);
-    REQUIRE(arr.at(2) == 2);
-    REQUIRE(arr.at(3) == 3);
+    REQUIRE(*arr.at(0) == 0);
+    REQUIRE(*arr.at(1) == 1);
+    REQUIRE(*arr.at(2) == 2);
+    REQUIRE(*arr.at(3) == 3);
 }
 
 TEST_CASE("array: front/back ", "[array]")
 {
     auto arr = []() {
         taetl::array<int, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        *a.at(0) = 0;
+        *a.at(1) = 1;
+        *a.at(2) = 2;
+        *a.at(3) = 3;
         return a;
     }();
 
@@ -152,10 +152,10 @@ TEST_CASE("array: front/back const", "[array]")
 {
     auto const arr = []() {
         taetl::array<int, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        *a.at(0) = 0;
+        *a.at(1) = 1;
+        *a.at(2) = 2;
+        *a.at(3) = 3;
         return a;
     }();
 
