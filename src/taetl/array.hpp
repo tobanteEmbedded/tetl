@@ -176,6 +176,11 @@ public:
     constexpr auto begin() noexcept -> iterator { return _data; }
 
     /**
+     * @brief Returns an iterator to the beginning.
+     */
+    constexpr auto begin() const noexcept -> const_iterator { return _data; }
+
+    /**
      * @brief Returns an const iterator to the beginning.
      */
     constexpr auto cbegin() const noexcept -> const_iterator { return _data; }
@@ -184,6 +189,11 @@ public:
      * @brief Returns an iterator to the end.
      */
     constexpr auto end() noexcept -> iterator { return _data + size(); }
+
+    /**
+     * @brief Returns an iterator to the end.
+     */
+    constexpr auto end() const noexcept -> const_iterator { return _data + size(); }
 
     /**
      * @brief Returns an const iterator to the end.

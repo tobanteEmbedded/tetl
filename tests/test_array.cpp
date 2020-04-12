@@ -24,7 +24,6 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// TAETL
 #include "taetl/array.hpp"
 
 #include "catch2/catch.hpp"
@@ -63,10 +62,10 @@ TEST_CASE("array: range-for", "[array]")
 TEST_CASE("array: range-for-const", "[array]")
 {
     taetl::array<int, 4> arr {};
-    arr[0] = 0;
-    arr[1] = 1;
-    arr[2] = 2;
-    arr[3] = 3;
+    arr.at(0) = 0;
+    arr.at(1) = 1;
+    arr.at(2) = 2;
+    arr.at(3) = 3;
 
     auto counter = 0;
     for (auto const& x : arr)
@@ -75,3 +74,25 @@ TEST_CASE("array: range-for-const", "[array]")
     }
 }
 
+TEST_CASE("array: begin/end const", "[array]")
+{
+    auto const arr = []() {
+        taetl::array<int, 4> a {};
+        a.at(0) = 0;
+        a.at(1) = 1;
+        a.at(2) = 2;
+        a.at(3) = 3;
+        return a;
+    }();
+
+    auto counter = 0;
+    for (auto const& x : arr)
+    {
+        REQUIRE(x == counter++);
+    }
+
+    REQUIRE(arr.at(0) == 0);
+    REQUIRE(arr.at(1) == 1);
+    REQUIRE(arr.at(2) == 2);
+    REQUIRE(arr.at(3) == 3);
+}
