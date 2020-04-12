@@ -301,8 +301,6 @@ int main()
 
 ## Roadmap
 
-- Examples
-  - Hardware Pins (PORT & ID)
 - Algorithm
   - [all_of](https://en.cppreference.com/w/cpp/algorithm/all_any_none_of)
   - [count](https://en.cppreference.com/w/cpp/algorithm/count)
@@ -313,5 +311,16 @@ int main()
   - [adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
   - [search](https://en.cppreference.com/w/cpp/algorithm/search)
   - [search_n](https://en.cppreference.com/w/cpp/algorithm/search_n)
+- Array
+  - Delete vector like methods
+- Map
+  - Sorted insert
+  - Add missing methods
+- Unorderered Map
+- Pair
+  - Write tests
+- Set
 - Type Traits
   - float
+- Vector
+  - Add examples
