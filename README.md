@@ -319,10 +319,13 @@ int main()
 - Map
   - Sorted insert
   - Add missing methods
-- Unorderered Map
+- Unordered Map
 - Pair
   - Write tests
 - Set
+- Testing
+  - Sanitizer build in CI
+  - CppCheck
 - Type Traits
   - float
 - Vector
