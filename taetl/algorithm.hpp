@@ -40,10 +40,7 @@ template <class InputIt, class UnaryFunction>
 constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
     -> UnaryFunction
 {
-    for (; first != last; ++first)
-    {
-        f(*first);
-    }
+    for (; first != last; ++first) { f(*first); }
     return f;
 }
 
@@ -55,10 +52,7 @@ template <class InputIt, class Size, class UnaryFunction>
 constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
     -> InputIt
 {
-    for (Size i = 0; i < n; ++first, (void)++i)
-    {
-        f(*first);
-    }
+    for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
     return first;
 }
 
@@ -71,10 +65,7 @@ template <class InputIt, class T>
 {
     for (; first != last; ++first)
     {
-        if (*first == value)
-        {
-            return first;
-        }
+        if (*first == value) { return first; }
     }
     return last;
 }
@@ -88,10 +79,7 @@ template <class InputIt, class UnaryPredicate>
 {
     for (; first != last; ++first)
     {
-        if (p(*first))
-        {
-            return first;
-        }
+        if (p(*first)) { return first; }
     }
     return last;
 }
@@ -105,10 +93,7 @@ template <class InputIt, class UnaryPredicate>
 {
     for (; first != last; ++first)
     {
-        if (!q(*first))
-        {
-            return first;
-        }
+        if (!q(*first)) { return first; }
     }
     return last;
 }
@@ -142,19 +127,13 @@ template <class ForwardIterator>
                                          ForwardIterator last) noexcept
     -> ForwardIterator
 {
-    if (first == last)
-    {
-        return last;
-    }
+    if (first == last) { return last; }
 
     ForwardIterator largest = first;
     ++first;
     for (; first != last; ++first)
     {
-        if (*largest < *first)
-        {
-            largest = first;
-        }
+        if (*largest < *first) { largest = first; }
     }
     return largest;
 }
@@ -168,19 +147,13 @@ template <class ForwardIterator, class Compare>
                                          ForwardIterator last, Compare comp)
     -> ForwardIterator
 {
-    if (first == last)
-    {
-        return last;
-    }
+    if (first == last) { return last; }
 
     ForwardIterator largest = first;
     ++first;
     for (; first != last; ++first)
     {
-        if (comp(*largest, *first))
-        {
-            largest = first;
-        }
+        if (comp(*largest, *first)) { largest = first; }
     }
     return largest;
 }
@@ -214,19 +187,13 @@ template <class ForwardIterator>
                                          ForwardIterator last) noexcept
     -> ForwardIterator
 {
-    if (first == last)
-    {
-        return last;
-    }
+    if (first == last) { return last; }
 
     ForwardIterator smallest = first;
     ++first;
     for (; first != last; ++first)
     {
-        if (*first < *smallest)
-        {
-            smallest = first;
-        }
+        if (*first < *smallest) { smallest = first; }
     }
     return smallest;
 }
@@ -240,19 +207,13 @@ template <class ForwardIterator, class Compare>
                                          ForwardIterator last, Compare comp)
     -> ForwardIterator
 {
-    if (first == last)
-    {
-        return last;
-    }
+    if (first == last) { return last; }
 
     ForwardIterator smallest = first;
     ++first;
     for (; first != last; ++first)
     {
-        if (comp(*first, *smallest))
-        {
-            smallest = first;
-        }
+        if (comp(*first, *smallest)) { smallest = first; }
     }
     return smallest;
 }

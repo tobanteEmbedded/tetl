@@ -53,19 +53,13 @@ int main()
     auto result1 = taetl::find(vec.begin(), vec.end(), n1);
     auto result2 = taetl::find(vec.begin(), vec.end(), n2);
 
-    if (result1 != vec.end())
-    {
-        printf("v contains: %f\n", n1);
-    }
+    if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
     else
     {
         printf("v does not contain: %f\n", n1);
     }
 
-    if (result2 != vec.end())
-    {
-        printf("v contains: %f\n", n2);
-    }
+    if (result2 != vec.end()) { printf("v contains: %f\n", n2); }
     else
     {
         printf("v does not contain: %f\n", n2);

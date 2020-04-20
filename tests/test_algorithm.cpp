@@ -125,14 +125,8 @@ TEST_CASE("algorithm: max", "[algorithm]")
     auto cmp = [](auto x, auto y) {
         auto new_x = x;
         auto new_y = y;
-        if (x < 0)
-        {
-            new_x = new_x * -1;
-        }
-        if (y < 0)
-        {
-            new_y = new_y * -1;
-        }
+        if (x < 0) { new_x = new_x * -1; }
+        if (y < 0) { new_y = new_y * -1; }
 
         return (new_x < new_y) ? y : x;
     };

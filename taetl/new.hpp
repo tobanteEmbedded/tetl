@@ -28,7 +28,12 @@ DAMAGE.
 #define TAETL_NEW_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/warning.hpp"
 
-void* operator new(taetl::size_t n, void* ptr) { return ptr; }
+auto operator new(taetl::size_t n, void* ptr) -> void*
+{
+    taetl::ignoreUnused(n);
+    return ptr;
+}
 
 #endif  // TAETL_NEW_HPP

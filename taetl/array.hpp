@@ -63,10 +63,7 @@ public:
      */
     [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> pointer
     {
-        if (pos < Size)
-        {
-            return &_data[pos];
-        }
+        if (pos < Size) { return &_data[pos]; }
         return nullptr;
     }
 
@@ -76,10 +73,7 @@ public:
     [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
         -> const_pointer
     {
-        if (pos < Size)
-        {
-            return &_data[pos];
-        }
+        if (pos < Size) { return &_data[pos]; }
         return nullptr;
     }
 
@@ -89,10 +83,7 @@ public:
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
         -> pointer
     {
-        if (pos < Size)
-        {
-            return &_data[pos];
-        }
+        if (pos < Size) { return &_data[pos]; }
         return nullptr;
     }
 
@@ -102,10 +93,7 @@ public:
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
         -> const_pointer
     {
-        if (pos < Size)
-        {
-            return &_data[pos];
-        }
+        if (pos < Size) { return &_data[pos]; }
         return nullptr;
     }
 
@@ -235,7 +223,7 @@ private:
 };
 
 template <class T, class... U>
-array(T, U...)->array<T, 1 + sizeof...(U)>;
+array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 }  // namespace taetl
 

@@ -24,27 +24,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
-#include <stdio.h>
-
-// TAETL
-#include "taetl/string.hpp"
-
-int main()
+#ifndef TAETL_WARNING_HPP
+#define TAETL_WARNING_HPP
+namespace taetl
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string {};
-
-    const char* cptr = "C-string";
-    t_string.append(cptr, 4);
-
-    printf("\"%s\"\n", t_string.c_str());
-
-    for (auto& c : t_string) { printf("%c", c); }
-
-    printf("\nSize: %zu\n", t_string.size());
-    printf("Length: %zu\n", t_string.length());
-    printf("Capacity: %zu\n", t_string.capacity());
-
-    return 0;
+template <typename... Types>
+auto ignoreUnused(Types&&... /*unused*/) -> void
+{
 }
+}  // namespace taetl
+
+#endif  // TAETL_WARNING_HPP

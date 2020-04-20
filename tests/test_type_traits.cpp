@@ -191,7 +191,8 @@ TEST_CASE("type_traits: is_enum", "[type_traits]")
 
 TEST_CASE("type_traits: is_union", "[type_traits]")
 {
-    typedef union {
+    typedef union
+    {
         int a;
         float b;
     } B;

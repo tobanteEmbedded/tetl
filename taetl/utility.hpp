@@ -66,8 +66,8 @@ struct pair
     using first_type  = T1;
     using second_type = T2;
 
-    constexpr pair() : first {}, second {} {}
-    constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} {}
+    constexpr pair() : first {}, second {} { }
+    constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
     template <class U1, class U2>
     constexpr pair(const pair<U1, U2>& p) : first {p.first}, second {p.second}
@@ -78,10 +78,7 @@ struct pair
 
     auto operator=(pair const& p) -> pair&
     {
-        if (&p == this)
-        {
-            return *this;
-        }
+        if (&p == this) { return *this; }
         first  = p.first;
         second = p.second;
         return *this;

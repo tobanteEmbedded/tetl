@@ -60,10 +60,7 @@ TEST_CASE("vector: RangeBasedFor", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    for (auto const& item : vec)
-    {
-        REQUIRE(item == ++counter);
-    }
+    for (auto const& item : vec) { REQUIRE(item == ++counter); }
 }
 
 TEST_CASE("vector: Iterators", "[vector]")

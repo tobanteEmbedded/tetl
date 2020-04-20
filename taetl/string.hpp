@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_STRING_HPP
 #define TAETL_STRING_HPP
 
-// TAETL
-#include "definitions.hpp"
+#include "taetl/definitions.hpp"
+#include "taetl/warning.hpp"
 
 namespace taetl
 {
@@ -73,17 +73,17 @@ public:
 
     /**
      * @brief Charater Pointer constant constructor.
-     * Fails silently if input length is greater then capacity.
+     * Fails silently if input len is greater then capacity.
      */
-    constexpr String(const char* c_string, taetl::size_t length) noexcept
+    constexpr String(const char* str, taetl::size_t const len) noexcept
     {
-        if (c_string)
+        if (str != nullptr)
         {
-            if (length < _capacity)
+            if (len < _capacity)
             {
-                ::memset(_data, 0, length + 1);
-                _size = length;
-                ::memcpy(_data, c_string, length);
+                ::memset(_data, 0, len + 1);
+                _size = len;
+                ::memcpy(_data, str, len);
             }
         }
     }
@@ -102,10 +102,7 @@ public:
      */
     constexpr auto at(taetl::size_t index) noexcept -> reference
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -114,10 +111,7 @@ public:
      */
     constexpr auto at(taetl::size_t index) const noexcept -> const_reference
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -126,10 +120,7 @@ public:
      */
     constexpr auto operator[](taetl::size_t index) noexcept -> reference
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -139,10 +130,7 @@ public:
     constexpr auto operator[](taetl::size_t index) const noexcept
         -> const_reference
     {
-        if (index < _size)
-        {
-            return _data[index];
-        }
+        if (index < _size) { return _data[index]; }
         return _data[_size];
     }
 
@@ -221,10 +209,7 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : _data)
-        {
-            c = 0;
-        }
+        for (auto& c : _data) { c = 0; }
         _size = 0;
     }
 
@@ -233,10 +218,7 @@ public:
      */
     constexpr auto append(taetl::size_t count, CharType s) noexcept -> String&
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            _data[_size + i] = s;
-        }
+        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s; }
         _size += count;
         _data[_size] = 0;
 
@@ -249,6 +231,7 @@ public:
      */
     constexpr auto append(const CharType* s) noexcept -> String&
     {
+        taetl::ignoreUnused(s);
         return *this;
     };
 
@@ -259,10 +242,7 @@ public:
     constexpr auto append(const CharType* s, taetl::size_t count) noexcept
         -> String&
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            _data[_size + i] = s[i];
-        }
+        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s[i]; }
         _size += count;
         _data[_size] = 0;
 

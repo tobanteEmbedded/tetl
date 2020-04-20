@@ -142,10 +142,7 @@ public:
      */
     auto insert(value_type const& value) noexcept -> taetl::pair<iterator, bool>
     {
-        if (size_ == capacity_)
-        {
-            return {end(), false};
-        }
+        if (size_ == capacity_) { return {end(), false}; }
 
         if (size_ == 0)
         {
@@ -164,10 +161,7 @@ public:
     {
         for (auto i = begin(); i != end(); ++i)
         {
-            if (i->first == key)
-            {
-                return i;
-            }
+            if (i->first == key) { return i; }
         }
         return nullptr;
     }
@@ -179,10 +173,7 @@ public:
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {
-            if (i->first == key)
-            {
-                return i;
-            }
+            if (i->first == key) { return i; }
         }
 
         return nullptr;

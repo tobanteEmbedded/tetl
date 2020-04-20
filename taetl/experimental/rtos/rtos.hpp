@@ -34,7 +34,7 @@ namespace taetl
 {
 namespace rtos
 {
-inline auto delay(taetl::size_t) -> void {}
+inline auto delay(taetl::size_t) -> void { }
 
 struct never
 {
@@ -60,14 +60,14 @@ template <typename TaskType>
 auto rtos_task(void* task) -> void
 {
     static_cast<TaskType*>(task)->run();
-};
+}
 
 template <typename TaskType>
 auto create_task(TaskType* task, char const* const name, int stack) -> void
 {
     xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(task), 0,
                 nullptr);
-};
+}
 
 }  // namespace rtos
 }  // namespace taetl

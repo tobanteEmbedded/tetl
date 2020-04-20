@@ -87,8 +87,8 @@ struct port
     port& operator=(port const&) = delete;
 
     [[nodiscard]] pin_state read(taetl::uint16_t) const { return {}; }
-    void write(taetl::uint16_t, pin_state) {}
-    void toggle_pin(taetl::uint16_t) {}
+    void write(taetl::uint16_t, pin_state) { }
+    void toggle_pin(taetl::uint16_t) { }
 
     [[nodiscard]] static port& place_at(void* addr) { return *new (addr) port; }
 

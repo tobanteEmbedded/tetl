@@ -27,12 +27,16 @@ DAMAGE.
 #ifndef TAETL_RTOS_STUBS_HPP
 #define TAETL_RTOS_STUBS_HPP
 
+#include "taetl/warning.hpp"
+
 using TaskFunction_t = void (*)(void*);
 
 inline int xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
                        int usStackDepth, void* pvParameters, int uxPriority,
                        int* pxCreatedTask)
 {
+    taetl::ignoreUnused(pvTaskCode, pcName, usStackDepth, pvParameters,
+                        uxPriority, pxCreatedTask);
     return 0;
 }
 
