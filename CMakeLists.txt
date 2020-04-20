@@ -18,6 +18,10 @@ endif()
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TOBANTEAUDIO_ETL_BUILD_TESTS     "Build unit tests" ON)
 option(TOBANTEAUDIO_ETL_BUILD_DOCS      "Build documentation" ON)
+option(TOBANTEAUDIO_ETL_BUILD_ASAN      "Build with address sanitizer enabled" OFF)
+option(TOBANTEAUDIO_ETL_BUILD_UBSAN     "Build with undefined behavior sanitizer enabled" OFF)
+option(TOBANTEAUDIO_ETL_BUILD_MSAN      "Build with memory sanitizer enabled" OFF)
+option(TOBANTEAUDIO_ETL_BUILD_TSAN      "Build with thread sanitizer enabled" OFF)
 option(TOBANTEAUDIO_ETL_ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
 option(TOBANTEAUDIO_ETL_ENABLE_TIDY     "Run clang-tidy at compile time" OFF)
 
@@ -25,6 +29,7 @@ option(TOBANTEAUDIO_ETL_ENABLE_TIDY     "Run clang-tidy at compile time" OFF)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(ProjectWarnings)
 include(CodeCoverage)
+include(CompilerOptions)
 include(BuildDoxygen)
 
 # tidy, has to be enabled for each target.

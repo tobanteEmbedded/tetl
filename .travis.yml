@@ -10,15 +10,14 @@ script-anchors:
     - mkdir build
     - cd build
     # RELEASE BUILD
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON
     - cmake --build . -- -j2
     - ctest -j2
     - rm -rf *
-    # DEBUG BUILD
+    # COVERAGE BUILD
     - cmake -D TOBANTEAUDIO_ETL_ENABLE_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug
     - cmake --build . -- -j2
     - ctest -j2
-    # COVERAGE REPORT
     - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-7
 
   - &script-macOS
