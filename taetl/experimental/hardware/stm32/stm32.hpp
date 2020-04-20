@@ -30,11 +30,7 @@ DAMAGE.
 #include "taetl/definitions.hpp"
 #include "taetl/new.hpp"
 
-namespace taetl
-{
-namespace hardware
-{
-namespace stm32
+namespace taetl::hardware::stm32
 {
 enum class pin_number : taetl::uint16_t
 {
@@ -77,27 +73,37 @@ struct gpio_memory_layout
     taetl::uint32_t bit_set;
     taetl::uint32_t lock;
 };
+
 struct port
 {
-    explicit port() = default;
+    explicit port()   = default;
+    port(port&&)      = delete;
+    port(port const&) = delete;
+    auto operator=(port&&) -> port& = delete;
+    auto operator=(port const&) -> port& = delete;
 
-    port(port&&)  = delete;
-    port& operator=(port&&) = delete;
-    port(port const&)       = delete;
-    port& operator=(port const&) = delete;
+    [[nodiscard]] auto read(taetl::uint16_t const pin) const -> pin_state
+    {
+        ignoreUnused(pin);
+        return {};
+    }
 
-    [[nodiscard]] pin_state read(taetl::uint16_t) const { return {}; }
-    void write(taetl::uint16_t, pin_state) { }
-    void toggle_pin(taetl::uint16_t) { }
+    void write(taetl::uint16_t const pin, pin_state const state)
+    {
+        ignoreUnused(state);
+        memory.bit_set = pin;
+    }
 
-    [[nodiscard]] static port& place_at(void* addr) { return *new (addr) port; }
+    void toggle_pin(taetl::uint16_t const pin) { ignoreUnused(pin); }
+
+    [[nodiscard]] static auto place_at(void* addr) -> port&
+    {
+        return *new (addr) port;
+    }
 
 private:
     gpio_memory_layout memory;
 };
-}  // namespace stm32
-
-}  // namespace hardware
-}  // namespace taetl
+}  // namespace taetl::hardware::stm32
 
 #endif  // TAETL_HARDWARE_STM32_STM32_HPP

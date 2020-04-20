@@ -28,13 +28,15 @@ DAMAGE.
 #define TAETL_RTOS_RTOS_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/warning.hpp"
+
 #include "taetl/experimental/rtos/stubs.hpp"
 
 namespace taetl
 {
 namespace rtos
 {
-inline auto delay(taetl::size_t) -> void { }
+inline auto delay(taetl::size_t time) -> void { taetl::ignoreUnused(time); }
 
 struct never
 {

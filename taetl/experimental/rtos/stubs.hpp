@@ -31,9 +31,9 @@ DAMAGE.
 
 using TaskFunction_t = void (*)(void*);
 
-inline int xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
-                       int usStackDepth, void* pvParameters, int uxPriority,
-                       int* pxCreatedTask)
+inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
+                        int usStackDepth, void* pvParameters, int uxPriority,
+                        int* pxCreatedTask) -> int
 {
     taetl::ignoreUnused(pvTaskCode, pcName, usStackDepth, pvParameters,
                         uxPriority, pxCreatedTask);
