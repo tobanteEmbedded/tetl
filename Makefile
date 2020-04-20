@@ -18,12 +18,12 @@ build:
 avr:
 	mkdir -p build_avr
 	avr-gcc --version
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-algorithm -I src/ examples/algorithm.cpp
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-array -I src/ examples/array.cpp
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-numeric -I src/ examples/numeric.cpp
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-string -I src/ examples/string.cpp
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-tuple -I src/ examples/tuple.cpp
-	avr-gcc --std=c++17 -O3 -Wall -Wextra -o build_avr/example-avr-type_traits -I src/ examples/type_traits.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-algorithm -I. examples/algorithm.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-array -I. examples/array.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-string -I. examples/string.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-tuple -I. examples/tuple.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/example-avr-type_traits -I. examples/type_traits.cpp
 
 .PHONY: test
 test:
