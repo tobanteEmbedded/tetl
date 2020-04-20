@@ -148,31 +148,26 @@ Below are some simple examples for most of the headers in `taetl`. For more deta
 ### Algorithm
 
 ```cpp
-// C STANDARD
 #include <stdio.h>
 
-// TAETL
 #include "taetl/algorithm.hpp"
-#include "taetl/array.hpp"
+#include "taetl/vector.hpp"
 
 int main()
 {
     // Create array with capacity of 16 and size of 0
-    taetl::Array<double, 16> t_array;
-
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
-
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
     auto print = [](auto& x) { printf("%f\n", x); };
 
     // FOR_EACH
-    taetl::for_each(t_array.begin(), t_array.end(), print);
+    taetl::for_each(vec.begin(), vec.end(), print);
     // FOR_EACH_N with lambda
-    taetl::for_each_n(t_array.begin(), 3,
+    taetl::for_each_n(vec.begin(), 3,
                       [](const auto& x) { printf("%f\n", x * 2); });
 }
 ```
@@ -180,20 +175,17 @@ int main()
 ### Array
 
 ```cpp
-// TAETL
+#include <stdio.h>
+
 #include "taetl/array.hpp"
 
 int main()
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::Array<int, 16> t_array;
+    taetl::array<int, 16> arr;
+    arr.at(0) = 1;
+    arr[1]    = 2;
 
-    // Add 2 elements to the back
-    t_array.push_back(1);
-    t_array.push_back(2);
-
-
-    for (auto& item : t_array)
+    for (auto& item : arr)
     {
         printf("%d", item);
     }
@@ -205,26 +197,20 @@ int main()
 ### Numeric
 
 ```cpp
-// C STANDARD
 #include <stdio.h>
 
-// TAETL
-#include "taetl/array.hpp"
 #include "taetl/numeric.hpp"
+#include "taetl/vector.hpp"
 
 int main()
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::Array<double, 16> t_array;
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
-
-    // ACCUMULATE
-    auto sum = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
+    auto sum = taetl::accumulate(vec.begin(), vec.end(), 0.0);
 
     printf("%f", sum);
 
@@ -235,9 +221,8 @@ int main()
 ### String
 
 ```cpp
-// C STANDARD
 #include <stdio.h>
-// TAETL
+
 #include "taetl/string.hpp"
 
 int main()
@@ -266,11 +251,6 @@ int main()
 ### Type Traits
 
 ```cpp
-// C STANDARD
-#include <stdio.h>
-
-// TAETL
-#include "taetl/array.hpp"
 #include "taetl/type_traits.hpp"
 
 template <typename T>
@@ -283,18 +263,37 @@ float func(float val) { return val; }
 
 int main()
 {
-    taetl::Array<int, 16> t_array;
+    func(42);           // Calls template
+    func(uint16_t{1});  // Calls template
+    func(3.0f);         // Does not call template
+    return 0;
+}
+```
 
-    t_array.push_back(1);
-    t_array.push_back(2);
+### Vector
 
-    for (auto& item : t_array)
+```cpp
+#include <stdio.h>
+
+#include "taetl/vector.hpp"
+
+int main()
+{
+    taetl::make::vector<double, 16> vec1;
+    vec1.push_back(1.0);
+    vec1.push_back(2.0);
+    vec1.push_back(3.0);
+    vec1.push_back(4.0);
+
+    for(auto item: vec1){ printf("%f\n", item); }
+
+    auto foo = [](taet::vector<double>& vec2)
     {
-        func(item);
-    }
+      for(auto item : vec2){ printf("%f\n", item); }
+    };
 
-    func(uint16_t{1});
-    func(3.0f);  // Does not call template
+    foo(vec1);
+
     return 0;
 }
 ```

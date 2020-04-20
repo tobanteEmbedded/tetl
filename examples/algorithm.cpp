@@ -33,30 +33,27 @@ DAMAGE.
 
 int main()
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::make::vector<double, 16> t_array;
-
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
     // FOR_EACH
     auto print = [](auto& x) { printf("%f\n", x); };
 
-    taetl::for_each(t_array.begin(), t_array.end(), print);
-    taetl::for_each_n(t_array.begin(), 3,
+    taetl::for_each(vec.begin(), vec.end(), print);
+    taetl::for_each_n(vec.begin(), 3,
                       [](const auto& x) { printf("%f\n", x * 2); });
 
     // FIND FIND_IF
     double n1 = 3.0;
     double n2 = 5;
 
-    auto result1 = taetl::find(t_array.begin(), t_array.end(), n1);
-    auto result2 = taetl::find(t_array.begin(), t_array.end(), n2);
+    auto result1 = taetl::find(vec.begin(), vec.end(), n1);
+    auto result2 = taetl::find(vec.begin(), vec.end(), n2);
 
-    if (result1 != t_array.end())
+    if (result1 != vec.end())
     {
         printf("v contains: %f\n", n1);
     }
@@ -65,7 +62,7 @@ int main()
         printf("v does not contain: %f\n", n1);
     }
 
-    if (result2 != t_array.end())
+    if (result2 != vec.end())
     {
         printf("v contains: %f\n", n2);
     }

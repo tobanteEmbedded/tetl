@@ -23,28 +23,22 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-
-// C STANDARD
 #include <stdio.h>
 
-// TAETL
 #include "taetl/numeric.hpp"
 #include "taetl/vector.hpp"
 
 int main()
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::make::vector<double, 16> t_array;
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
+    auto sum = taetl::accumulate(vec.begin(), vec.end(), 0.0);
 
-    auto sum = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
-
-    printf("%f", sum);
+    printf("%f\n", sum);
 
     return 0;
 }

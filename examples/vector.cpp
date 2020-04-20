@@ -23,20 +23,35 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+
+// C STANDARD
 #include <stdio.h>
 
-#include "taetl/array.hpp"
+#include <stdio.h>
+
+#include "taetl/vector.hpp"
 
 int main()
 {
-    taetl::array<int, 4> arr {};
-    *arr.at(0) = 1;
-    *arr[1]    = 2;
+    taetl::make::vector<double, 16> vec1;
+    vec1.push_back(1.0);
+    vec1.push_back(2.0);
+    vec1.push_back(3.0);
+    vec1.push_back(4.0);
 
-    for (auto& item : arr)
+    for (auto item : vec1)
     {
-        printf("%d\n", item);
+        printf("%f\n", item);
     }
+
+    auto foo = [](taetl::vector<double>& vec2) {
+        for (auto item : vec2)
+        {
+            printf("%f\n", item);
+        }
+    };
+
+    foo(vec1);
 
     return 0;
 }
