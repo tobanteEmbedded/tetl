@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(TobanteAudioEmbeddedTemplateLibrary LANGUAGES CXX)
+project(taetl LANGUAGES CXX)
 
 # Only do these if this is the main project, 
 # and not if it is included through add_subdirectory.
@@ -12,8 +12,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(BUILD_SHARED_LIBS OFF)
     # Let's nicely support folders in IDE's
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-
 endif()
 
 # Options
@@ -61,7 +59,9 @@ if(TOBANTEAUDIO_ETL_BUILD_DOCS)
 endif()
 
 # Main Project
-add_subdirectory(src)
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(tobanteAudio::etl ALIAS ${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
 
 # Testing
 if(TOBANTEAUDIO_ETL_BUILD_TESTS)
