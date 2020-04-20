@@ -24,53 +24,16 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_HARDWARE_HPP
-#define TAETL_HARDWARE_HPP
+#ifndef TAETL_RTOS_STUBS_HPP
+#define TAETL_RTOS_STUBS_HPP
 
-// TAETL
-#include "definitions.hpp"
+using TaskFunction_t = void (*)(void*);
 
-namespace taetl
+inline int xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
+                       int usStackDepth, void* pvParameters, int uxPriority,
+                       int* pxCreatedTask)
 {
-/**
- * @brief Namespace for the hardware classes & functions.
- */
-namespace hardware
-{
-/**
- * @brief Represents a physical pin on a micro controller.
- */
-class Pin
-{
-private:
-    const uint8_t id;
+    return 0;
+}
 
-protected:
-    constexpr inline Pin(uint8_t i) noexcept : id(i) { }
-
-public:
-    constexpr inline uint8_t getID() const noexcept { return id; }
-};
-
-/**
- * @brief Represents a digital physical pin on a micro controller.
- */
-class DigitalPin : public Pin
-{
-public:
-    constexpr inline DigitalPin(uint8_t i) noexcept : Pin(i) { }
-};
-
-/**
- * @brief Represents an analog physical pin on a micro controller.
- */
-class AnalogPin : public Pin
-{
-public:
-    constexpr inline AnalogPin(uint8_t i) noexcept : Pin(i) { }
-};
-
-}  // namespace hardware
-}  // namespace taetl
-
-#endif  // TAETL_HARDWARE_HPP
+#endif  // TAETL_RTOS_STUBS_HPP
