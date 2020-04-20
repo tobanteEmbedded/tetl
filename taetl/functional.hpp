@@ -35,7 +35,7 @@ namespace taetl
 template <class Type>
 struct less
 {
-    constexpr bool operator()(const Type& lhs, const Type& rhs) const
+    constexpr auto operator()(const Type& lhs, const Type& rhs) const -> bool
     {
         return lhs < rhs;
     }

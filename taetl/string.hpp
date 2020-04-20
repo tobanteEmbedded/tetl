@@ -38,8 +38,7 @@ namespace taetl
 constexpr inline auto strlen(const char* str) -> taetl::size_t
 {
     const char* s {};
-    for (s = str; *s; ++s)
-        ;
+    for (s = str; *s; ++s) { ; }
     return taetl::size_t(s - str);
 }
 
