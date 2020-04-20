@@ -102,7 +102,10 @@ public:
      */
     constexpr auto at(taetl::size_t index) noexcept -> reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -111,7 +114,10 @@ public:
      */
     constexpr auto at(taetl::size_t index) const noexcept -> const_reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -120,7 +126,10 @@ public:
      */
     constexpr auto operator[](taetl::size_t index) noexcept -> reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -130,7 +139,10 @@ public:
     constexpr auto operator[](taetl::size_t index) const noexcept
         -> const_reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -209,7 +221,10 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : _data) { c = 0; }
+        for (auto& c : _data)
+        {
+            c = 0;
+        }
         _size = 0;
     }
 
@@ -218,7 +233,10 @@ public:
      */
     constexpr auto append(taetl::size_t count, CharType s) noexcept -> String&
     {
-        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s; }
+        for (taetl::size_t i = 0; i < count; i++)
+        {
+            _data[_size + i] = s;
+        }
         _size += count;
         _data[_size] = 0;
 
@@ -241,7 +259,10 @@ public:
     constexpr auto append(const CharType* s, taetl::size_t count) noexcept
         -> String&
     {
-        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s[i]; }
+        for (taetl::size_t i = 0; i < count; i++)
+        {
+            _data[_size + i] = s[i];
+        }
         _size += count;
         _data[_size] = 0;
 

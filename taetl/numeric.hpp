@@ -68,7 +68,10 @@ template <class InputIt, class Type, class BinaryOperation>
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {
-    if (input < 0) { return input * -1; }
+    if (input < 0)
+    {
+        return input * -1;
+    }
     return input;
 }
 

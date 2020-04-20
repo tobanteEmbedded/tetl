@@ -129,7 +129,10 @@ public:
      */
     constexpr auto push_back(ValueType const& value) noexcept -> void
     {
-        if (size_ >= capacity_) { return; }
+        if (size_ >= capacity_)
+        {
+            return;
+        }
 
         data_[size_++] = value;
     }
@@ -139,7 +142,10 @@ public:
      */
     constexpr void pop_back() noexcept
     {
-        if (size_ > 0) { size_--; }
+        if (size_ > 0)
+        {
+            size_--;
+        }
     }
 
     /**
@@ -176,14 +182,13 @@ private:
     size_t const capacity_;
 };
 
-
 namespace make
 {
 template <typename ValueType, size_t Size>
 class vector : public ::taetl::vector<ValueType>
 {
 public:
-    explicit vector() : ::taetl::vector<ValueType> {data_, 0, Size} { }
+    explicit vector() : ::taetl::vector<ValueType> {data_, 0, Size} {}
 
 private:
     ValueType data_[Size];
