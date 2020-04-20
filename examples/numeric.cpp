@@ -28,8 +28,8 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/vector.hpp"
 #include "taetl/numeric.hpp"
+#include "taetl/vector.hpp"
 
 int main()
 {

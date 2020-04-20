@@ -96,7 +96,6 @@ TEST_CASE("array: begin/end const", "[array]")
     {
         REQUIRE(x == counter++);
     }
-
 }
 
 TEST_CASE("array: at", "[array]")

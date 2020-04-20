@@ -40,7 +40,10 @@ int main()
 
     printf("\"%s\"\n", t_string.c_str());
 
-    for (auto& c : t_string) { printf("%c", c); }
+    for (auto& c : t_string)
+    {
+        printf("%c", c);
+    }
 
     printf("\nSize: %zu\n", t_string.size());
     printf("Length: %zu\n", t_string.length());

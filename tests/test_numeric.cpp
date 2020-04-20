@@ -25,8 +25,8 @@ DAMAGE.
 */
 
 // TAETL
-#include "taetl/vector.hpp"
 #include "taetl/numeric.hpp"
+#include "taetl/vector.hpp"
 
 #include "catch2/catch.hpp"
 

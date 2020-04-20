@@ -28,8 +28,8 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/vector.hpp"
 #include "taetl/type_traits.hpp"
+#include "taetl/vector.hpp"
 
 template <typename T>
 typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
@@ -46,7 +46,10 @@ int main()
     t_array.push_back(1);
     t_array.push_back(2);
 
-    for (auto& item : t_array) { func(item); }
+    for (auto& item : t_array)
+    {
+        func(item);
+    }
 
     func(uint16_t {1});
     func(3.0f);  // Does not call template
