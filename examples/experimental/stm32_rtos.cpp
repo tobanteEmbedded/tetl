@@ -48,7 +48,7 @@ struct idle_task
     }
 };
 
-auto foo(idle_task<rtos::forever> task) -> void
+auto foo(idle_task<rtos::once> task) -> void
 {
     rtos::create_task(&task, "test", 15);
     task.run();
