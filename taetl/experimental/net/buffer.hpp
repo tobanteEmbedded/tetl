@@ -27,82 +27,21 @@ DAMAGE.
 #ifndef TAETL_NET_BUFFER_HPP
 #define TAETL_NET_BUFFER_HPP
 
-#include "taetl/array.hpp"
-#include "taetl/definitions.hpp"
+#include "taetl/experimental/net/buffer_const.hpp"
+#include "taetl/experimental/net/buffer_mutable.hpp"
 
 namespace taetl
 {
 namespace net
 {
-class mutable_buffer
-{
-public:
-    /**
-     * @brief Construct an empty buffer.
-     */
-    mutable_buffer() noexcept = default;
-
-    /**
-     * @brief Construct a buffer to represent a given memory range.
-     */
-    mutable_buffer(void* data, taetl::size_t size) : data_ {data}, size_ {size}
-    {
-    }
-
-    /**
-     * @brief Get a pointer to the beginning of the memory range.
-     */
-    auto data() const noexcept -> void* { return data_; }
-
-    /**
-     * @brief Get the size of the memory range.
-     */
-    auto size() const noexcept -> taetl::size_t { return size_; }
-
-    /**
-     * @brief Move the start of the buffer by the specified number of bytes.
-     */
-    auto operator+=(taetl::size_t n) noexcept -> mutable_buffer&
-    {
-        auto const offset = n < size_ ? n : size_;
-        data_             = static_cast<char*>(data_) + offset;
-        size_ -= offset;
-        return *this;
-    }
-
-private:
-    void* data_         = nullptr;
-    taetl::size_t size_ = 0;
-};
-
-/**
- * @brief Create a new modifiable buffer that is offset from the start of
- * another.
- * @relates mutable_buffer
- */
-inline auto operator+(mutable_buffer const& b, taetl::size_t const n) noexcept
-    -> mutable_buffer
-{
-    auto offset = n < b.size() ? n : b.size();
-    auto* data  = static_cast<char*>(b.data()) + offset;
-    auto size   = b.size() - offset;
-    return mutable_buffer {data, size};
-}
-
-/**
- * @brief Create a new modifiable buffer that is offset from the start of
- * another.
- * @relates mutable_buffer
- */
-inline auto operator+(taetl::size_t const n, mutable_buffer const& b) noexcept
-    -> mutable_buffer
-{
-    return b + n;
-}
-
 auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer
 {
     return mutable_buffer {data, size};
+}
+
+auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
+{
+    return const_buffer {data, size};
 }
 }  // namespace net
 }  // namespace taetl

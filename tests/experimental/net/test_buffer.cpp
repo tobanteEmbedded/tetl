@@ -69,3 +69,44 @@ TEST_CASE("mutable_buffer: operator+", "[experimental][net]")
         REQUIRE(newBuf.size() == buffer.size() - 8);
     }
 }
+
+TEST_CASE("const_buffer: construct empty", "[experimental][net]")
+{
+    auto const buffer = taetl::net::const_buffer {};
+    REQUIRE(buffer.data() == nullptr);
+    REQUIRE(buffer.size() == 0);
+}
+
+TEST_CASE("const_buffer: construct range", "[experimental][net]")
+{
+    auto const mem = taetl::array<char, 512> {};
+    auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
+    REQUIRE(mem.data() == buffer.data());
+    REQUIRE(mem.size() == buffer.size());
+}
+
+TEST_CASE("const_buffer: operator+=", "[experimental][net]")
+{
+    auto const mem = taetl::array<char, 512> {};
+    auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
+    buffer += 4;
+    REQUIRE(mem.data() != buffer.data());
+}
+
+TEST_CASE("const_buffer: operator+", "[experimental][net]")
+{
+    auto const mem = taetl::array<char, 512> {};
+    auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
+
+    WHEN("offset is on rhs")
+    {
+        auto newBuf = buffer + 4;
+        REQUIRE(newBuf.size() == buffer.size() - 4);
+    }
+
+    WHEN("offset is on lhs")
+    {
+        auto newBuf = 8 + buffer;
+        REQUIRE(newBuf.size() == buffer.size() - 8);
+    }
+}
