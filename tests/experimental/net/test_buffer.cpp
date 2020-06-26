@@ -38,7 +38,7 @@ TEST_CASE("mutable_buffer: construct empty", "[experimental][net]")
 
 TEST_CASE("mutable_buffer: construct range", "[experimental][net]")
 {
-    auto mem    = taetl::array<char, 512> {};
+    auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
     REQUIRE(mem.data() == buffer.data());
     REQUIRE(mem.size() == buffer.size());
@@ -46,7 +46,7 @@ TEST_CASE("mutable_buffer: construct range", "[experimental][net]")
 
 TEST_CASE("mutable_buffer: operator+=", "[experimental][net]")
 {
-    auto mem    = taetl::array<char, 512> {};
+    auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
     buffer += 4;
     REQUIRE(mem.data() != buffer.data());
@@ -54,7 +54,7 @@ TEST_CASE("mutable_buffer: operator+=", "[experimental][net]")
 
 TEST_CASE("mutable_buffer: operator+", "[experimental][net]")
 {
-    auto mem    = taetl::array<char, 512> {};
+    auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
 
     WHEN("offset is on rhs")
@@ -79,7 +79,7 @@ TEST_CASE("const_buffer: construct empty", "[experimental][net]")
 
 TEST_CASE("const_buffer: construct range", "[experimental][net]")
 {
-    auto const mem = taetl::array<char, 512> {};
+    auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
     REQUIRE(mem.data() == buffer.data());
     REQUIRE(mem.size() == buffer.size());
@@ -87,15 +87,16 @@ TEST_CASE("const_buffer: construct range", "[experimental][net]")
 
 TEST_CASE("const_buffer: operator+=", "[experimental][net]")
 {
-    auto const mem = taetl::array<char, 512> {};
+    auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
     buffer += 4;
     REQUIRE(mem.data() != buffer.data());
+    REQUIRE(mem.size() - 4 == buffer.size());
 }
 
 TEST_CASE("const_buffer: operator+", "[experimental][net]")
 {
-    auto const mem = taetl::array<char, 512> {};
+    auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
 
     WHEN("offset is on rhs")

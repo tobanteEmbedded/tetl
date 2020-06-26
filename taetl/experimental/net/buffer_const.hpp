@@ -66,7 +66,7 @@ public:
     auto operator+=(taetl::size_t n) noexcept -> const_buffer&
     {
         auto const offset = n < size_ ? n : size_;
-        data_             = static_cast<char const*>(data_) + offset;
+        data_             = static_cast<const char*>(data_) + offset;
         size_ -= offset;
         return *this;
     }
