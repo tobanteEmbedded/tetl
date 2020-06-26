@@ -51,3 +51,21 @@ TEST_CASE("mutable_buffer: operator+=", "[experimental][net]")
     buffer += 4;
     REQUIRE(mem.data() != buffer.data());
 }
+
+TEST_CASE("mutable_buffer: operator+", "[experimental][net]")
+{
+    auto mem    = taetl::array<char, 512> {};
+    auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
+
+    WHEN("offset is on rhs")
+    {
+        auto newBuf = buffer + 4;
+        REQUIRE(newBuf.size() == buffer.size() - 4);
+    }
+
+    WHEN("offset is on lhs")
+    {
+        auto newBuf = 8 + buffer;
+        REQUIRE(newBuf.size() == buffer.size() - 8);
+    }
+}

@@ -75,6 +75,31 @@ private:
     taetl::size_t size_ = 0;
 };
 
+/**
+ * @brief Create a new modifiable buffer that is offset from the start of
+ * another.
+ * @relates mutable_buffer
+ */
+inline auto operator+(mutable_buffer const& b, taetl::size_t const n) noexcept
+    -> mutable_buffer
+{
+    auto offset = n < b.size() ? n : b.size();
+    auto* data  = static_cast<char*>(b.data()) + offset;
+    auto size   = b.size() - offset;
+    return mutable_buffer {data, size};
+}
+
+/**
+ * @brief Create a new modifiable buffer that is offset from the start of
+ * another.
+ * @relates mutable_buffer
+ */
+inline auto operator+(taetl::size_t const n, mutable_buffer const& b) noexcept
+    -> mutable_buffer
+{
+    return b + n;
+}
+
 auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer
 {
     return mutable_buffer {data, size};
