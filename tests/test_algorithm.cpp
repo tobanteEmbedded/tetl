@@ -33,86 +33,87 @@ DAMAGE.
 
 TEST_CASE("algorithm: for_each", "[algorithm]")
 {
-    taetl::make::vector<double, 16> t_array;
-
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
     // Check how often for_each calls the unary function
     int counter {};
-    auto increment_counter = [&counter](auto& /*unused*/) { counter += 1; };
+    auto increment_counter = [&counter](auto&) { counter += 1; };
 
     // for_each
-    taetl::for_each(t_array.begin(), t_array.end(), increment_counter);
+    taetl::for_each(vec.begin(), vec.end(), increment_counter);
     REQUIRE(counter == 4);
 
     // for_each_n
     counter = 0;
-    taetl::for_each_n(t_array.begin(), 2, increment_counter);
+    taetl::for_each_n(vec.begin(), 2, increment_counter);
     REQUIRE(counter == 2);
 }
 
 TEST_CASE("algorithm: find", "[algorithm]")
 {
-    taetl::make::vector<int, 16> t_array_2;
+    taetl::make::vector<int, 16> vec;
     // Add elements to the back
-    t_array_2.push_back(1);
-    t_array_2.push_back(2);
-    t_array_2.push_back(3);
-    t_array_2.push_back(4);
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
 
-    auto result1 = taetl::find(t_array_2.cbegin(), t_array_2.cend(), 3);
-    REQUIRE_FALSE(result1 == t_array_2.cend());
+    auto result1 = taetl::find(vec.cbegin(), vec.cend(), 3);
+    REQUIRE_FALSE(result1 == vec.cend());
 
-    auto result2 = taetl::find(t_array_2.begin(), t_array_2.end(), 5);
-    REQUIRE(result2 == t_array_2.end());
+    auto result2 = taetl::find(vec.begin(), vec.end(), 5);
+    REQUIRE(result2 == vec.end());
 }
 
 TEST_CASE("algorithm: find_if", "[algorithm]")
 {
-    taetl::make::vector<int, 16> t_array_2;
+    taetl::make::vector<int, 16> vec;
     // Add elements to the back
-    t_array_2.push_back(1);
-    t_array_2.push_back(2);
-    t_array_2.push_back(3);
-    t_array_2.push_back(4);
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
     // find_if
-    auto result3 = taetl::find_if(
-        t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return static_cast<bool>(x % 2); });
-    REQUIRE_FALSE(result3 == t_array_2.end());
+    auto result3 = taetl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+        return static_cast<bool>(x % 2);
+    });
+    REQUIRE_FALSE(result3 == vec.end());
 
-    auto result4 = taetl::find_if(
-        t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return static_cast<bool>(x == 100); });
-    REQUIRE(result4 == t_array_2.end());
+    auto result4 = taetl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+        return static_cast<bool>(x == 100);
+    });
+    REQUIRE(result4 == vec.end());
 }
 TEST_CASE("algorithm: find_if_not", "[algorithm]")
 {
-    taetl::make::vector<int, 16> t_array_2;
+    taetl::make::vector<int, 16> vec;
     // Add elements to the back
-    t_array_2.push_back(1);
-    t_array_2.push_back(2);
-    t_array_2.push_back(3);
-    t_array_2.push_back(4);
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
     // find_if_not
-    auto result5 = taetl::find_if_not(
-        t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return static_cast<bool>(x % 2); });
-    REQUIRE_FALSE(result5 == t_array_2.end());
+    auto result5
+        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+              return static_cast<bool>(x % 2);
+          });
+    REQUIRE_FALSE(result5 == vec.end());
 
-    auto result6 = taetl::find_if_not(
-        t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return static_cast<bool>(x == 100); });
-    REQUIRE_FALSE(result6 == t_array_2.end());
+    auto result6
+        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+              return static_cast<bool>(x == 100);
+          });
+    REQUIRE_FALSE(result6 == vec.end());
 
-    auto result7 = taetl::find_if_not(
-        t_array_2.begin(), t_array_2.end(),
-        [](auto& x) -> bool { return static_cast<bool>(x != 100); });
-    REQUIRE(result7 == t_array_2.end());
+    auto result7
+        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+              return static_cast<bool>(x != 100);
+          });
+    REQUIRE(result7 == vec.end());
 }
 
 TEST_CASE("algorithm: max", "[algorithm]")
@@ -136,19 +137,19 @@ TEST_CASE("algorithm: max", "[algorithm]")
 
 TEST_CASE("algorithm: max_element", "[algorithm]")
 {
-    taetl::make::vector<int, 16> arr1;
-    arr1.push_back(1);
-    arr1.push_back(2);
-    arr1.push_back(3);
-    arr1.push_back(4);
-    arr1.push_back(-5);
+    taetl::make::vector<int, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
+    vec.push_back(-5);
 
     auto const functor = [](auto a, auto b) -> bool {
         return (taetl::abs(a) < taetl::abs(b));
     };
 
-    REQUIRE(*taetl::max_element(arr1.begin(), arr1.end()) == 4);
-    REQUIRE(*taetl::max_element(arr1.begin(), arr1.end(), functor) == -5);
+    REQUIRE(*taetl::max_element(vec.begin(), vec.end()) == 4);
+    REQUIRE(*taetl::max_element(vec.begin(), vec.end(), functor) == -5);
 }
 
 TEST_CASE("algorithm: min", "[algorithm]")
@@ -165,19 +166,19 @@ TEST_CASE("algorithm: min", "[algorithm]")
 
 TEST_CASE("algorithm: min_element", "[algorithm]")
 {
-    taetl::make::vector<int, 16> arr1;
-    arr1.push_back(1);
-    arr1.push_back(2);
-    arr1.push_back(3);
-    arr1.push_back(4);
-    arr1.push_back(-5);
+    taetl::make::vector<int, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
+    vec.push_back(-5);
 
     auto const functor = [](auto a, auto b) -> bool {
         return (taetl::abs(a) < taetl::abs(b));
     };
 
-    REQUIRE(*taetl::min_element(arr1.begin(), arr1.end()) == -5);
-    REQUIRE(*taetl::min_element(arr1.begin(), arr1.end(), functor) == 1);
+    REQUIRE(*taetl::min_element(vec.begin(), vec.end()) == -5);
+    REQUIRE(*taetl::min_element(vec.begin(), vec.end(), functor) == 1);
 }
 
 TEST_CASE("algorithm: clamp", "[algorithm]")
@@ -188,63 +189,63 @@ TEST_CASE("algorithm: clamp", "[algorithm]")
 
 TEST_CASE("algorithm: all_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> input;
-    input.push_back(1);
-    input.push_back(2);
-    input.push_back(3);
-    input.push_back(4);
+    taetl::make::vector<int, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
 
     SECTION("true")
     {
         auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
-        REQUIRE(taetl::all_of(input.begin(), input.end(), predicate) == true);
+        REQUIRE(taetl::all_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
         auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::all_of(input.begin(), input.end(), predicate) == false);
+        REQUIRE(taetl::all_of(vec.begin(), vec.end(), predicate) == false);
     }
 }
 
 TEST_CASE("algorithm: any_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> input;
-    input.push_back(1);
-    input.push_back(2);
-    input.push_back(3);
-    input.push_back(4);
+    taetl::make::vector<int, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
 
     SECTION("true")
     {
         auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
-        REQUIRE(taetl::any_of(input.begin(), input.end(), predicate) == true);
+        REQUIRE(taetl::any_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
         auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::any_of(input.begin(), input.end(), predicate) == false);
+        REQUIRE(taetl::any_of(vec.begin(), vec.end(), predicate) == false);
     }
 }
 
 TEST_CASE("algorithm: none_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> input;
-    input.push_back(1);
-    input.push_back(2);
-    input.push_back(3);
-    input.push_back(4);
+    taetl::make::vector<int, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
 
     SECTION("true")
     {
         auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::none_of(input.begin(), input.end(), predicate) == true);
+        REQUIRE(taetl::none_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
         auto const predicate = [](auto a) { return a < 10; };
-        REQUIRE(taetl::none_of(input.begin(), input.end(), predicate) == false);
+        REQUIRE(taetl::none_of(vec.begin(), vec.end(), predicate) == false);
     }
 }

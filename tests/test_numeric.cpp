@@ -41,22 +41,16 @@ TEST_CASE("numeric: abs", "[numeric]")
 
 TEST_CASE("numeric: accumulate", "[numeric]")
 {
-    // Create array with capacity of 16 and size of 0
-    taetl::make::vector<double, 16> t_array;
-
-    // Add elements to the back
-    t_array.push_back(1.0);
-    t_array.push_back(2.0);
-    t_array.push_back(3.0);
-    t_array.push_back(4.0);
+    taetl::make::vector<double, 16> vec;
+    vec.push_back(1.0);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
     // accumulate
-    double collector = taetl::accumulate(t_array.begin(), t_array.end(), 0.0);
-    REQUIRE(collector == 10.0);
+    REQUIRE(taetl::accumulate(vec.begin(), vec.end(), 0.0) == 10.0);
 
     // accumulate binary function op
-    auto collector_func = [](double a, double b) { return a + (b * 2); };
-    double sum          = taetl::accumulate(t_array.begin(), t_array.end(), 0.0,
-                                   collector_func);
-    REQUIRE(sum == 20.0);
+    auto func = [](double a, double b) { return a + (b * 2); };
+    REQUIRE(taetl::accumulate(vec.begin(), vec.end(), 0.0, func) == 20.0);
 }
