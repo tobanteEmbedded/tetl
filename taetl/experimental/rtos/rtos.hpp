@@ -65,10 +65,11 @@ auto rtos_task(void* task) -> void
 }
 
 template <typename TaskType>
-auto create_task(TaskType* task, char const* const name, int stack) -> void
+auto create_task(TaskType* task, char const* const name, int stack,
+                 int prio = 0, int* handle = nullptr) -> void
 {
-    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(task), 0,
-                nullptr);
+    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(task),
+                prio, handle);
 }
 
 }  // namespace rtos
