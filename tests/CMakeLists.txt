@@ -16,6 +16,7 @@ set(TEST_SRC
     test_vector.cpp
 
     experimental/net/test_buffer.cpp
+    experimental/net/test_byte_order.cpp
 )
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_SRC})
 add_executable(${PROJECT_NAME} ${TEST_SRC})
