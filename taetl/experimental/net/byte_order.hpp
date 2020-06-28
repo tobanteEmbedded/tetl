@@ -38,27 +38,15 @@ constexpr T ntoh(T) = delete;
 constexpr char ntoh(char v) noexcept { return v; }
 constexpr uint8_t ntoh(uint8_t v) noexcept { return v; }
 constexpr int8_t ntoh(int8_t v) noexcept { return v; }
-
-constexpr uint16_t ntoh(uint16_t v) noexcept
-{
-    // clang-format off
-    return static_cast<uint16_t>(
-            ((static_cast<uint16_t>(v)) << 8) 
-        |   ((static_cast<uint16_t>(v)) >> 8)
-    );
-    // clang-format on
-}
-
+constexpr uint16_t ntoh(uint16_t v) noexcept { return (v << 8) | (v >> 8); }
 constexpr uint32_t ntoh(uint32_t v) noexcept
 {
-    // clang-format off
-    return static_cast<taetl::uint32_t>(                         
-            (static_cast<taetl::uint32_t>(v << 24))                  
-        |   (static_cast<taetl::uint32_t>((v & 0x0000FF00) << 8))  
-        |   (static_cast<taetl::uint32_t>((v & 0x00FF0000) >> 8))  
-        |   (static_cast<taetl::uint32_t>(v >> 24))                
-    );
-    // clang-format on
+    auto const a = v << 24;
+    auto const b = (v & 0x0000FF00) << 8;
+    auto const c = (v & 0x00FF0000) >> 8;
+    auto const d = v >> 24;
+
+    return a | b | c | d;
 }
 
 template <class T>
