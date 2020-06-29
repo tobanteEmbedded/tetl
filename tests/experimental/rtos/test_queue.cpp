@@ -48,3 +48,10 @@ TEST_CASE("rtos/queue: capacity", "[experimental][rtos]")
     rtos::queue<taetl::uint64_t, 128> q3 {};
     REQUIRE(q3.capacity() == 128);
 }
+
+TEST_CASE("rtos/queue: send", "[experimental][rtos]")
+{
+    rtos::queue<int, 1> q1 {};
+    // stub always returns false
+    REQUIRE(q1.send(1, 0) == false);
+}

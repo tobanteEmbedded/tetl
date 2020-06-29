@@ -29,14 +29,21 @@ DAMAGE.
 
 #include "taetl/warning.hpp"
 
-// TASK
-struct tskTaskControlBlock;
-
-using TaskHandle_t           = tskTaskControlBlock*;
-using TaskFunction_t         = void (*)(void*);
+// BASE
 using BaseType_t             = long;
 using UBaseType_t            = unsigned long;
 using configSTACK_DEPTH_TYPE = taetl::uint16_t;
+#define pdFALSE ((BaseType_t)0)
+#define pdTRUE ((BaseType_t)1)
+
+// TICK
+using TickType_t = uint32_t;
+
+// TASK
+struct tskTaskControlBlock;
+
+using TaskHandle_t   = tskTaskControlBlock*;
+using TaskFunction_t = void (*)(void*);
 
 inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
                         configSTACK_DEPTH_TYPE usStackDepth,
@@ -45,7 +52,7 @@ inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
 {
     taetl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters,
                          uxPriority, pxCreatedTask);
-    return 0;
+    return pdFALSE;
 }
 
 inline auto vTaskStartScheduler() -> void { }
@@ -64,6 +71,13 @@ inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
 auto vQueueDelete(QueueHandle_t xQueue) -> void
 {
     taetl::ignore_unused(xQueue);
+}
+
+auto xQueueSend(QueueHandle_t xQueue, const void* pvItemToQueue,
+                TickType_t xTicksToWait) -> BaseType_t
+{
+    taetl::ignore_unused(xQueue, pvItemToQueue, xTicksToWait);
+    return pdFALSE;
 }
 
 #endif  // TAETL_RTOS_STUBS_HPP

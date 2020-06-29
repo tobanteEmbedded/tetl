@@ -54,9 +54,19 @@ public:
     auto operator=(queue &&) -> queue& = delete;
     auto operator=(queue const&) -> queue& = delete;
 
-    ~queue() { vQueueDelete(handle_); }
+    ~queue()
+    {
+        if (handle_ != nullptr) { vQueueDelete(handle_); }
+    }
 
     auto capacity() const -> size_type { return Size; }
+
+    auto send(ValueType const& data, TickType_t ticksToWait = 0) const -> bool
+    {
+        auto const rawData = static_cast<const void*>(&data);
+        auto const success = xQueueSend(handle_, rawData, ticksToWait);
+        return static_cast<bool>(success);
+    }
 
 private:
     QueueHandle_t handle_ = nullptr;
