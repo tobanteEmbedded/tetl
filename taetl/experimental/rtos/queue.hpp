@@ -68,6 +68,13 @@ public:
         return static_cast<bool>(success);
     }
 
+    auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
+    {
+        auto const rawData = static_cast<void*>(&data);
+        auto const success = xQueueReceive(handle_, rawData, ticksToWait);
+        return static_cast<bool>(success);
+    }
+
 private:
     QueueHandle_t handle_ = nullptr;
 };

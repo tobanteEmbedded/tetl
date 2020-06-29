@@ -68,15 +68,22 @@ inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
     return nullptr;
 }
 
-auto vQueueDelete(QueueHandle_t xQueue) -> void
+inline auto vQueueDelete(QueueHandle_t xQueue) -> void
 {
     taetl::ignore_unused(xQueue);
 }
 
-auto xQueueSend(QueueHandle_t xQueue, const void* pvItemToQueue,
-                TickType_t xTicksToWait) -> BaseType_t
+inline auto xQueueSend(QueueHandle_t xQueue, const void* pvItemToQueue,
+                       TickType_t xTicksToWait) -> BaseType_t
 {
     taetl::ignore_unused(xQueue, pvItemToQueue, xTicksToWait);
+    return pdFALSE;
+}
+
+inline auto xQueueReceive(QueueHandle_t xQueue, void* pvBuffer,
+                          TickType_t xTicksToWait) -> BaseType_t
+{
+    taetl::ignore_unused(xQueue, pvBuffer, xTicksToWait);
     return pdFALSE;
 }
 

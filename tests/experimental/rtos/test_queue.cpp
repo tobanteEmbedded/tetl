@@ -55,3 +55,11 @@ TEST_CASE("rtos/queue: send", "[experimental][rtos]")
     // stub always returns false
     REQUIRE(q1.send(1, 0) == false);
 }
+
+TEST_CASE("rtos/queue: receive", "[experimental][rtos]")
+{
+    rtos::queue<int, 1> q1 {};
+    // stub always returns false
+    auto i = int {0};
+    REQUIRE(q1.receive(i, 0) == false);
+}
