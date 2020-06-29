@@ -29,7 +29,7 @@ DAMAGE.
 #include "catch2/catch.hpp"
 
 template <class... Args>
-auto IgnoreUnused(Args&&... /*ignore*/) noexcept -> void
+auto ignore_unused(Args&&... /*ignore*/) noexcept -> void
 {
 }
 
@@ -47,7 +47,7 @@ TEST_CASE("map: ConstructDefault", "[map]")
         // there should be no elements
         for (auto const& item : m)
         {
-            IgnoreUnused(item);
+            ignore_unused(item);
             REQUIRE(false);
         }
     };

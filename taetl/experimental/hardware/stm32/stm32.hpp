@@ -79,22 +79,22 @@ struct port
     explicit port()   = default;
     port(port&&)      = delete;
     port(port const&) = delete;
-    auto operator=(port&&) -> port& = delete;
+    auto operator=(port &&) -> port& = delete;
     auto operator=(port const&) -> port& = delete;
 
     [[nodiscard]] auto read(taetl::uint16_t const pin) const -> pin_state
     {
-        ignoreUnused(pin);
+        ignore_unused(pin);
         return {};
     }
 
     void write(taetl::uint16_t const pin, pin_state const state)
     {
-        ignoreUnused(state);
+        ignore_unused(state);
         memory.bit_set = pin;
     }
 
-    void toggle_pin(taetl::uint16_t const pin) { ignoreUnused(pin); }
+    void toggle_pin(taetl::uint16_t const pin) { ignore_unused(pin); }
 
     [[nodiscard]] static auto place_at(void* addr) -> port&
     {

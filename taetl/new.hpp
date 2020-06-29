@@ -32,7 +32,7 @@ DAMAGE.
 
 auto operator new(taetl::size_t n, void* ptr) -> void*
 {
-    taetl::ignoreUnused(n);
+    taetl::ignore_unused(n);
     return ptr;
 }
 

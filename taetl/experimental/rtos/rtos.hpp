@@ -38,7 +38,7 @@ namespace taetl
 {
 namespace rtos
 {
-inline auto delay(taetl::size_t time) -> void { taetl::ignoreUnused(time); }
+inline auto delay(taetl::size_t time) -> void { taetl::ignore_unused(time); }
 
 struct never
 {

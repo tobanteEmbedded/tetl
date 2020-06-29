@@ -42,8 +42,8 @@ inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
                         void* const pvParameters, UBaseType_t uxPriority,
                         TaskHandle_t* const pxCreatedTask) -> BaseType_t
 {
-    taetl::ignoreUnused(pvTaskCode, pcName, usStackDepth, pvParameters,
-                        uxPriority, pxCreatedTask);
+    taetl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters,
+                         uxPriority, pxCreatedTask);
     return 0;
 }
 

@@ -230,7 +230,7 @@ public:
      */
     constexpr auto append(const CharType* s) noexcept -> String&
     {
-        taetl::ignoreUnused(s);
+        taetl::ignore_unused(s);
         return *this;
     };
 

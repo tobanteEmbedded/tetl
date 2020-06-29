@@ -29,7 +29,7 @@ DAMAGE.
 namespace taetl
 {
 template <typename... Types>
-auto ignoreUnused(Types&&... /*unused*/) -> void
+auto ignore_unused(Types&&... /*unused*/) -> void
 {
 }
 }  // namespace taetl
