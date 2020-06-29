@@ -54,7 +54,7 @@ static example_task<rtos::once> task {};
 
 int main()
 {
-    rtos::create_task(&task, "test", 255);
+    rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
     return 0;
 }
