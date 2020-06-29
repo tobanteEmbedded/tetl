@@ -40,16 +40,25 @@ namespace rtos
 {
 inline auto delay(taetl::size_t time) -> void { taetl::ignore_unused(time); }
 
+/**
+ * @brief Runs the task loop 0 times.
+ */
 struct never
 {
     [[nodiscard]] auto operator()() const -> bool { return false; }
 };
 
+/**
+ * @brief Runs the task loop forever.
+ */
 struct forever
 {
     [[nodiscard]] auto operator()() const -> bool { return true; }
 };
 
+/**
+ * @brief Runs the task loop Count times.
+ */
 template <taetl::size_t Count>
 struct times
 {
@@ -57,9 +66,19 @@ struct times
     [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
 };
 
-using once  = times<1>;
+/**
+ * @brief Runs the task loop once.
+ */
+using once = times<1>;
+
+/**
+ * @brief Runs the task loop twice.
+ */
 using twice = times<2>;
 
+/**
+ * @brief Wrapper for an rtos task struct. Calls the run() member.
+ */
 template <typename TaskType>
 auto rtos_task(void* task) -> void
 {
