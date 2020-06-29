@@ -30,8 +30,8 @@ DAMAGE.
 #include "taetl/definitions.hpp"
 #include "taetl/warning.hpp"
 
-#include "taetl/experimental/rtos/stubs.hpp"
 #if defined(TAETL_RTOS_USE_STUBS)
+#include "taetl/experimental/rtos/stubs.hpp"
 #endif
 
 namespace taetl
