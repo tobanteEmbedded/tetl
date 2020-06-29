@@ -25,6 +25,7 @@ DAMAGE.
 */
 #include <stdio.h>
 
+#define TAETL_RTOS_USE_STUBS
 #include "taetl/experimental/hardware/stm32/stm32.hpp"
 #include "taetl/experimental/rtos/rtos.hpp"
 

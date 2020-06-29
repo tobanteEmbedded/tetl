@@ -2,14 +2,12 @@ CONFIG ?= Release
 BUILD_DIR_BASE = build
 BUILD_DIR = $(BUILD_DIR_BASE)_$(CONFIG)
 
-CM_GENERATOR ?= Ninja 
-
 .PHONY: all
 all: config build test
 
 .PHONY: config
 config:
-	cmake -H. -B$(BUILD_DIR) -G$(CM_GENERATOR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG)
+	cmake -S. -B$(BUILD_DIR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG)
 
 .PHONY: build
 build:
@@ -29,7 +27,7 @@ avr:
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -C Debug
+	cd $(BUILD_DIR) && ctest -C $(CONFIG)
 
 .PHONY: coverage
 coverage:

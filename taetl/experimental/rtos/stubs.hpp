@@ -29,11 +29,18 @@ DAMAGE.
 
 #include "taetl/warning.hpp"
 
-using TaskFunction_t = void (*)(void*);
+struct tskTaskControlBlock;
+
+using TaskHandle_t           = tskTaskControlBlock*;
+using TaskFunction_t         = void (*)(void*);
+using BaseType_t             = long;
+using UBaseType_t            = unsigned long;
+using configSTACK_DEPTH_TYPE = taetl::uint16_t;
 
 inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
-                        int usStackDepth, void* pvParameters, int uxPriority,
-                        int* pxCreatedTask) -> int
+                        configSTACK_DEPTH_TYPE usStackDepth,
+                        void* const pvParameters, UBaseType_t uxPriority,
+                        TaskHandle_t* const pxCreatedTask) -> BaseType_t
 {
     taetl::ignoreUnused(pvTaskCode, pcName, usStackDepth, pvParameters,
                         uxPriority, pxCreatedTask);

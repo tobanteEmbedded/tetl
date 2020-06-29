@@ -30,7 +30,9 @@ DAMAGE.
 #include "taetl/definitions.hpp"
 #include "taetl/warning.hpp"
 
+#if defined(TAETL_RTOS_USE_STUBS)
 #include "taetl/experimental/rtos/stubs.hpp"
+#endif
 
 namespace taetl
 {
@@ -65,8 +67,9 @@ auto rtos_task(void* task) -> void
 }
 
 template <typename TaskType>
-auto create_task(TaskType* task, char const* const name, int stack,
-                 int prio = 0, int* handle = nullptr) -> void
+auto create_task(TaskType* task, char const* const name, uint16_t stack,
+                 UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
+    -> void
 {
     xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(task),
                 prio, handle);
