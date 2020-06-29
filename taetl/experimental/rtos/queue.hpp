@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_RTOS_RTOS_HPP
-#define TAETL_RTOS_RTOS_HPP
+#ifndef TAETL_RTOS_QUEUE_HPP
+#define TAETL_RTOS_QUEUE_HPP
 
 #include "taetl/definitions.hpp"
 #include "taetl/warning.hpp"
@@ -81,4 +81,4 @@ private:
 }  // namespace rtos
 }  // namespace taetl
 
-#endif  // TAETL_RTOS_RTOS_HPP
+#endif  // TAETL_RTOS_QUEUE_HPP
