@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_RTOS_RTOS_HPP
-#define TAETL_RTOS_RTOS_HPP
+#ifndef TAETL_RTOS_DELAY_HPP
+#define TAETL_RTOS_DELAY_HPP
 
 #include "taetl/definitions.hpp"
 #include "taetl/warning.hpp"
@@ -40,69 +40,7 @@ namespace rtos
 {
 inline auto delay(taetl::size_t time) -> void { taetl::ignore_unused(time); }
 
-/**
- * @brief Runs the task loop 0 times.
- */
-struct never
-{
-    [[nodiscard]] auto operator()() const -> bool { return false; }
-};
-
-/**
- * @brief Runs the task loop forever.
- */
-struct forever
-{
-    [[nodiscard]] auto operator()() const -> bool { return true; }
-};
-
-/**
- * @brief Runs the task loop Count times.
- */
-template <taetl::size_t Count>
-struct times
-{
-    taetl::size_t run_count = Count;
-    [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
-};
-
-/**
- * @brief Runs the task loop once.
- */
-using once = times<1>;
-
-/**
- * @brief Runs the task loop twice.
- */
-using twice = times<2>;
-
-/**
- * @brief Wrapper for an rtos task struct. Calls the run() member.
- */
-template <typename TaskType>
-auto rtos_task(void* task) -> void
-{
-    static_cast<TaskType*>(task)->run();
-}
-
-/**
- * @brief Create a rtos task. TaskType needs a `void run()` public method.
- */
-template <typename TaskType>
-auto create_task(TaskType* task, char const* const name, uint16_t stack,
-                 UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
-    -> void
-{
-    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(task),
-                prio, handle);
-}
-
-/**
- * @brief Start the RTOS, this function will never return and will schedule the
- * tasks.
- */
-auto start_scheduler() -> void { vTaskStartScheduler(); }
 }  // namespace rtos
 }  // namespace taetl
 
-#endif  // TAETL_RTOS_RTOS_HPP
+#endif  // TAETL_RTOS_DELAY_HPP

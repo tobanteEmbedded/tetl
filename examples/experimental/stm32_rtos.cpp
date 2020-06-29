@@ -27,7 +27,8 @@ DAMAGE.
 
 #define TAETL_RTOS_USE_STUBS
 #include "taetl/experimental/hardware/stm32/stm32.hpp"
-#include "taetl/experimental/rtos/rtos.hpp"
+#include "taetl/experimental/rtos/delay.hpp"
+#include "taetl/experimental/rtos/task.hpp"
 
 namespace rtos  = taetl::rtos;
 namespace stm32 = taetl::hardware::stm32;
