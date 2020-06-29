@@ -23,47 +23,28 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#define TAETL_RTOS_USE_STUBS
+#include "taetl/experimental/rtos/queue.hpp"
 
-#ifndef TAETL_RTOS_STUBS_HPP
-#define TAETL_RTOS_STUBS_HPP
+#include "catch2/catch.hpp"
 
-#include "taetl/warning.hpp"
+namespace rtos = taetl::rtos;
 
-// TASK
-struct tskTaskControlBlock;
-
-using TaskHandle_t           = tskTaskControlBlock*;
-using TaskFunction_t         = void (*)(void*);
-using BaseType_t             = long;
-using UBaseType_t            = unsigned long;
-using configSTACK_DEPTH_TYPE = taetl::uint16_t;
-
-inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
-                        configSTACK_DEPTH_TYPE usStackDepth,
-                        void* const pvParameters, UBaseType_t uxPriority,
-                        TaskHandle_t* const pxCreatedTask) -> BaseType_t
+TEST_CASE("rtos/queue: construct", "[experimental][rtos]")
 {
-    taetl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters,
-                         uxPriority, pxCreatedTask);
-    return 0;
+    rtos::queue<char, 100> q1 {};
+    rtos::queue<int, 100> q2 {};
+    rtos::queue<float, 100> q3 {};
+    rtos::queue<double, 100> q4 {};
+    rtos::queue<void*, 100> q5 {};
 }
 
-inline auto vTaskStartScheduler() -> void { }
-
-// QUEUE
-struct QueueDefinition;
-using QueueHandle_t = QueueDefinition*;
-
-inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
-    -> QueueHandle_t
+TEST_CASE("rtos/queue: capacity", "[experimental][rtos]")
 {
-    taetl::ignore_unused(uxQueueLength, uxItemSize);
-    return nullptr;
+    rtos::queue<int, 1> q1 {};
+    REQUIRE(q1.capacity() == 1);
+    rtos::queue<float, 32> q2 {};
+    REQUIRE(q2.capacity() == 32);
+    rtos::queue<taetl::uint64_t, 128> q3 {};
+    REQUIRE(q3.capacity() == 128);
 }
-
-auto vQueueDelete(QueueHandle_t xQueue) -> void
-{
-    taetl::ignore_unused(xQueue);
-}
-
-#endif  // TAETL_RTOS_STUBS_HPP

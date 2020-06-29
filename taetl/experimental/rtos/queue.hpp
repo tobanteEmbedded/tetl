@@ -24,46 +24,44 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_RTOS_STUBS_HPP
-#define TAETL_RTOS_STUBS_HPP
+#ifndef TAETL_RTOS_RTOS_HPP
+#define TAETL_RTOS_RTOS_HPP
 
+#include "taetl/definitions.hpp"
 #include "taetl/warning.hpp"
 
-// TASK
-struct tskTaskControlBlock;
+#include "taetl/experimental/rtos/stubs.hpp"
+#if defined(TAETL_RTOS_USE_STUBS)
+#endif
 
-using TaskHandle_t           = tskTaskControlBlock*;
-using TaskFunction_t         = void (*)(void*);
-using BaseType_t             = long;
-using UBaseType_t            = unsigned long;
-using configSTACK_DEPTH_TYPE = taetl::uint16_t;
-
-inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
-                        configSTACK_DEPTH_TYPE usStackDepth,
-                        void* const pvParameters, UBaseType_t uxPriority,
-                        TaskHandle_t* const pxCreatedTask) -> BaseType_t
+namespace taetl
 {
-    taetl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters,
-                         uxPriority, pxCreatedTask);
-    return 0;
-}
-
-inline auto vTaskStartScheduler() -> void { }
-
-// QUEUE
-struct QueueDefinition;
-using QueueHandle_t = QueueDefinition*;
-
-inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
-    -> QueueHandle_t
+namespace rtos
 {
-    taetl::ignore_unused(uxQueueLength, uxItemSize);
-    return nullptr;
-}
-
-auto vQueueDelete(QueueHandle_t xQueue) -> void
+template <typename ValueType, taetl::uint32_t Size>
+class queue
 {
-    taetl::ignore_unused(xQueue);
-}
+public:
+    using value_type = ValueType;
+    using size_type  = taetl::uint32_t;
 
-#endif  // TAETL_RTOS_STUBS_HPP
+    queue() : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }())
+    {
+    }
+
+    queue(queue&&)      = delete;
+    queue(queue const&) = delete;
+    auto operator=(queue &&) -> queue& = delete;
+    auto operator=(queue const&) -> queue& = delete;
+
+    ~queue() { vQueueDelete(handle_); }
+
+    auto capacity() const -> size_type { return Size; }
+
+private:
+    QueueHandle_t handle_ = nullptr;
+};
+}  // namespace rtos
+}  // namespace taetl
+
+#endif  // TAETL_RTOS_RTOS_HPP
