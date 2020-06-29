@@ -47,4 +47,6 @@ inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
     return 0;
 }
 
+inline auto vTaskStartScheduler() -> void { }
+
 #endif  // TAETL_RTOS_STUBS_HPP

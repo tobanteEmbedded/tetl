@@ -33,7 +33,7 @@ namespace rtos  = taetl::rtos;
 namespace stm32 = taetl::hardware::stm32;
 
 template <typename LoopType = rtos::forever>
-struct idle_task
+struct example_task
 {
     auto run() -> void
     {
@@ -49,14 +49,11 @@ struct idle_task
     }
 };
 
-auto foo(idle_task<rtos::once> task) -> void
-{
-    rtos::create_task(&task, "test", 15);
-    task.run();
-}
+static example_task<rtos::once> task {};
 
 int main()
 {
-    foo({});
+    rtos::create_task(&task, "test", 255);
+    rtos::start_scheduler();
     return 0;
 }

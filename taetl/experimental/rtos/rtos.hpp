@@ -66,6 +66,9 @@ auto rtos_task(void* task) -> void
     static_cast<TaskType*>(task)->run();
 }
 
+/**
+ * @brief Create a rtos task. TaskType needs a `void run()` public method.
+ */
 template <typename TaskType>
 auto create_task(TaskType* task, char const* const name, uint16_t stack,
                  UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
@@ -75,6 +78,11 @@ auto create_task(TaskType* task, char const* const name, uint16_t stack,
                 prio, handle);
 }
 
+/**
+ * @brief Start the RTOS, this function will never return and will schedule the
+ * tasks.
+ */
+auto start_scheduler() -> void { vTaskStartScheduler(); }
 }  // namespace rtos
 }  // namespace taetl
 
