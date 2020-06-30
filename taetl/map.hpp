@@ -139,7 +139,7 @@ public:
      * @brief Erases all elements from the container. After this call, size()
      * returns zero.
      */
-    auto clear() noexcept -> void
+    constexpr auto clear() noexcept -> void
     {
         ::memset(data_, 0, capacity_ * sizeof(value_type));
         size_ = 0;
@@ -150,7 +150,8 @@ public:
      * iterator to the inserted element (or to the element that prevented the
      * insertion) and a bool denoting whether the insertion took place.
      */
-    auto insert(value_type const& value) noexcept -> taetl::pair<iterator, bool>
+    constexpr auto insert(value_type const& value) noexcept
+        -> taetl::pair<iterator, bool>
     {
         if (size_ == capacity_)
         {
@@ -167,7 +168,7 @@ public:
      * iterator to the inserted element (or to the element that prevented the
      * insertion) and a bool denoting whether the insertion took place.
      */
-    auto insert(value_type&& value) -> taetl::pair<iterator, bool>
+    constexpr auto insert(value_type&& value) -> taetl::pair<iterator, bool>
     {
         if (size_ == capacity_)
         {
@@ -182,7 +183,7 @@ public:
     /**
      * @brief Returns an element with key equivalent to key.
      */
-    [[nodiscard]] auto find(KeyType const& key) noexcept -> iterator
+    [[nodiscard]] constexpr auto find(KeyType const& key) noexcept -> iterator
     {
         for (auto i = begin(); i != end(); ++i)
         {
@@ -197,7 +198,8 @@ public:
     /**
      * @brief Returns an element with key equivalent to key.
      */
-    [[nodiscard]] auto find(KeyType const& key) const noexcept -> const_iterator
+    [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept
+        -> const_iterator
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {
@@ -211,7 +213,7 @@ public:
     }
 
 protected:
-    explicit map(pointer data, size_t capacity)
+    explicit constexpr map(pointer data, size_t capacity)
         : data_(data), size_(0), capacity_(capacity)
     {
     }
