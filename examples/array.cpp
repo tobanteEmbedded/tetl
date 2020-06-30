@@ -30,10 +30,13 @@ DAMAGE.
 int main()
 {
     taetl::array<int, 4> arr {};
-    *arr.at(0) = 1;
-    *arr[1]    = 2;
+    arr.at(0) = 1;
+    arr[1]    = 2;
 
-    for (auto& item : arr) { printf("%d\n", item); }
+    for (auto& item : arr)
+    {
+        printf("%d\n", item);
+    }
 
     return 0;
 }

@@ -61,40 +61,40 @@ public:
     /**
      * @brief Accesses the specified item with bounds checking.
      */
-    [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> pointer
+    [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
     {
-        if (pos < Size) { return &_data[pos]; }
-        return nullptr;
+        assert(pos < Size);
+        return _data[pos];
     }
 
     /**
      * @brief Accesses the specified const item with bounds checking.
      */
     [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
-        -> const_pointer
+        -> const_reference
     {
-        if (pos < Size) { return &_data[pos]; }
-        return nullptr;
+        assert(pos < Size);
+        return _data[pos];
     }
 
     /**
      * @brief Accesses the specified item with bounds checking.
      */
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
-        -> pointer
+        -> reference
     {
-        if (pos < Size) { return &_data[pos]; }
-        return nullptr;
+        assert(pos < Size);
+        return _data[pos];
     }
 
     /**
      * @brief Accesses the specified item with bounds checking.
      */
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
-        -> const_pointer
+        -> const_reference
     {
-        if (pos < Size) { return &_data[pos]; }
-        return nullptr;
+        assert(pos < Size);
+        return _data[pos];
     }
 
     /**
@@ -223,7 +223,7 @@ private:
 };
 
 template <class T, class... U>
-array(T, U...) -> array<T, 1 + sizeof...(U)>;
+array(T, U...)->array<T, 1 + sizeof...(U)>;
 
 }  // namespace taetl
 
