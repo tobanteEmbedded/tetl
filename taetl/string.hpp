@@ -49,9 +49,9 @@ constexpr inline auto strlen(const char* str) -> taetl::size_t
  * @brief basic_string class with fixed size capacity.
  *
  * @tparam CharType Build in type for character size (mostly 'char')
- * @tparam Size Capacity for basic_string
+ * @tparam Capacity Capacity for basic_string
  */
-template <typename CharType, taetl::size_t Size>
+template <typename CharType, taetl::size_t Capacity>
 class basic_string
 {
 public:
@@ -76,7 +76,7 @@ public:
     {
         if (str != nullptr)
         {
-            if (len < Size)
+            if (len < Capacity)
             {
                 ::memset(data_, 0, len + 1);
                 size_ = len;
@@ -195,7 +195,19 @@ public:
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    constexpr auto capacity() const noexcept -> taetl::size_t { return Size; }
+    constexpr auto capacity() const noexcept -> taetl::size_t
+    {
+        return Capacity;
+    }
+
+    /**
+     * @brief Returns the number of characters that can be held in allocated
+     * storage.
+     */
+    constexpr auto max_size() const noexcept -> taetl::size_t
+    {
+        return Capacity;
+    }
 
     /**
      * @brief Returns a pointer to a null-terminated character array.
@@ -266,12 +278,12 @@ public:
     };
 
 private:
-    taetl::size_t size_  = 0;
-    CharType data_[Size] = {};
+    taetl::size_t size_      = 0;
+    CharType data_[Capacity] = {};
 };
 
-template <taetl::size_t Size>
-using string = basic_string<char, Size>;
+template <taetl::size_t Capacity>
+using string = basic_string<char, Capacity>;
 
 using small_string = basic_string<char, 32>;
 

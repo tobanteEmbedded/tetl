@@ -42,6 +42,7 @@ TEST_CASE("string: ctor - default", "[string]")
     taetl::string<16> str {};
 
     REQUIRE(str.empty() == true);
+    REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(0));
     REQUIRE(str.length() == taetl::size_t(0));
@@ -52,6 +53,7 @@ TEST_CASE("string: ctor - char const*", "[string]")
     taetl::string<16> str {"abc"};
 
     REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(3));
     REQUIRE(str.length() == taetl::size_t(3));
@@ -67,6 +69,7 @@ TEST_CASE("string: ctor - char const*, size_t", "[string]")
 
     // INIT
     REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(3));
     REQUIRE(str.length() == taetl::size_t(3));
@@ -101,6 +104,7 @@ TEST_CASE("string: append", "[string]")
     str.append(cptr, 4);
 
     REQUIRE(str.empty() == false);
+    REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(4));
     REQUIRE(str.length() == taetl::size_t(4));
@@ -134,6 +138,7 @@ TEST_CASE("string: clear", "[string]")
     // test
     str.clear();
     REQUIRE(str.capacity() == taetl::size_t(16));
+    REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.empty() == true);
     REQUIRE(str.size() == taetl::size_t(0));
 }
