@@ -39,22 +39,20 @@ TEST_CASE("string: strlen", "[string]")
 
 TEST_CASE("string: ctor - default", "[string]")
 {
-    taetl::string<16> str {};
+    taetl::small_string str {};
 
     REQUIRE(str.empty() == true);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(0));
     REQUIRE(str.length() == taetl::size_t(0));
 }
 
 TEST_CASE("string: ctor - char const*", "[string]")
 {
-    taetl::string<16> str {"abc"};
+    taetl::small_string str {"abc"};
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(3));
     REQUIRE(str.length() == taetl::size_t(3));
     REQUIRE(str[0] == 'a');
@@ -65,12 +63,10 @@ TEST_CASE("string: ctor - char const*", "[string]")
 
 TEST_CASE("string: ctor - char const*, size_t", "[string]")
 {
-    taetl::string<16> str {"abc", 3};
+    taetl::small_string str {"abc", 3};
 
-    // INIT
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(3));
     REQUIRE(str.length() == taetl::size_t(3));
     REQUIRE(str[0] == 'a');
@@ -83,7 +79,7 @@ TEST_CASE("string: at", "[string]")
 {
     WHEN("mutable")
     {
-        auto str = taetl::string<16> {"abc"};
+        auto str = taetl::small_string {"abc"};
         REQUIRE(str.at(0) == 'a');
         REQUIRE(str.at(1) == 'b');
         REQUIRE(str.at(2) == 'c');
@@ -92,7 +88,7 @@ TEST_CASE("string: at", "[string]")
 
     WHEN("const")
     {
-        auto const str = taetl::string<16> {"abc"};
+        auto const str = taetl::small_string {"abc"};
         REQUIRE(str.at(0) == 'a');
         REQUIRE(str.at(1) == 'b');
         REQUIRE(str.at(2) == 'c');
@@ -104,7 +100,7 @@ TEST_CASE("string: operator[]", "[string]")
 {
     WHEN("mutable")
     {
-        auto str = taetl::string<16> {"abc"};
+        auto str = taetl::small_string {"abc"};
         REQUIRE(str[0] == 'a');
         REQUIRE(str[1] == 'b');
         REQUIRE(str[2] == 'c');
@@ -113,7 +109,7 @@ TEST_CASE("string: operator[]", "[string]")
 
     WHEN("const")
     {
-        auto const str = taetl::string<16> {"abc"};
+        auto const str = taetl::small_string {"abc"};
         REQUIRE(str[0] == 'a');
         REQUIRE(str[1] == 'b');
         REQUIRE(str[2] == 'c');
@@ -123,7 +119,7 @@ TEST_CASE("string: operator[]", "[string]")
 
 TEST_CASE("string: begin/end", "[string]")
 {
-    taetl::string<16> str {};
+    taetl::small_string str {};
 
     taetl::for_each(str.begin(), str.end(),
                     [](auto& c) { REQUIRE(c == char(0)); });
@@ -131,15 +127,29 @@ TEST_CASE("string: begin/end", "[string]")
 
 TEST_CASE("string: cbegin/cend", "[string]")
 {
-    taetl::string<16> str {};
+    taetl::small_string str {};
 
     taetl::for_each(str.cbegin(), str.cend(),
                     [](auto const& c) { REQUIRE(c == char(0)); });
 }
 
-TEST_CASE("string: append", "[string]")
+TEST_CASE("string: append(count, CharType)", "[string]")
 {
-    taetl::string<16> str {};
+    auto str = taetl::small_string {};
+    str.append(4, 'a');
+
+    REQUIRE(str.size() == taetl::size_t(4));
+    REQUIRE(str.length() == taetl::size_t(4));
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'a');
+    REQUIRE(str[2] == 'a');
+    REQUIRE(str[3] == 'a');
+    REQUIRE(str[4] == char(0));
+}
+
+TEST_CASE("string: append(const_pointer, count)", "[string]")
+{
+    taetl::small_string str {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
@@ -147,7 +157,6 @@ TEST_CASE("string: append", "[string]")
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.size() == taetl::size_t(4));
     REQUIRE(str.length() == taetl::size_t(4));
     REQUIRE(str[0] == 'C');
@@ -160,7 +169,7 @@ TEST_CASE("string: append", "[string]")
 TEST_CASE("string: algorithms", "[string]")
 {
     // setup
-    taetl::string<16> str {"aaaaaa"};
+    taetl::small_string str {"aaaaaa"};
     taetl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
     // test
@@ -174,12 +183,11 @@ TEST_CASE("string: algorithms", "[string]")
 TEST_CASE("string: clear", "[string]")
 {
     // setup
-    taetl::string<16> str {"junk"};
+    taetl::small_string str {"junk"};
     REQUIRE(str.empty() == false);
 
     // test
     str.clear();
-    REQUIRE(str.capacity() == taetl::size_t(16));
     REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.empty() == true);
     REQUIRE(str.size() == taetl::size_t(0));
