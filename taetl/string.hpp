@@ -255,7 +255,7 @@ public:
      * @brief Appends the null-terminated character string pointed to by s. The
      * length of the string is determined by the first null character using
      */
-    constexpr auto append(const CharType* s) noexcept -> basic_string&
+    constexpr auto append(const_pointer s) noexcept -> basic_string&
     {
         taetl::ignore_unused(s);
         return *this;
@@ -265,7 +265,7 @@ public:
      * @brief Appends characters in the range [s, s + count). This range can
      * contain null characters.
      */
-    constexpr auto append(const CharType* s, taetl::size_t count) noexcept
+    constexpr auto append(const_pointer s, taetl::size_t count) noexcept
         -> basic_string&
     {
         for (taetl::size_t i = 0; i < count; i++)
@@ -289,6 +289,28 @@ public:
             data_[size_ + i] = ch;
         }
         size_ += count;
+        data_[size_] = 0;
+        return *this;
+    }
+
+    /**
+     * @brief Inserts null-terminated character string pointed to by s at the
+     * position index.
+     */
+    constexpr auto insert(size_type index, const_pointer s) noexcept
+        -> basic_string&
+    {
+        auto const len = taetl::strlen(s);
+        for (size_type i = 0; i < len; i++)
+        {
+            if (len < Capacity)
+            {
+                auto const pos = index + i;
+                data_[pos]     = s[i];
+                size_ += 1;
+            }
+        }
+
         data_[size_] = 0;
         return *this;
     }

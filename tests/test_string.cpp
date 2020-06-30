@@ -143,7 +143,7 @@ TEST_CASE("string: clear", "[string]")
     REQUIRE(str.size() == taetl::size_t(0));
 }
 
-TEST_CASE("string: insert(index,count,CharType)", "[string]")
+TEST_CASE("string: insert(index, count, CharType)", "[string]")
 {
     auto str = taetl::small_string {};
     REQUIRE(str.empty() == true);
@@ -151,4 +151,24 @@ TEST_CASE("string: insert(index,count,CharType)", "[string]")
     str.insert(0, 4, 'a');
     REQUIRE(str.empty() == false);
     REQUIRE(str.size() == 4);
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'a');
+    REQUIRE(str[2] == 'a');
+    REQUIRE(str[3] == 'a');
+    REQUIRE(str[4] == 0);
+}
+
+TEST_CASE("string: insert(index, CharType const*)", "[string]")
+{
+    auto str = taetl::small_string {};
+    REQUIRE(str.empty() == true);
+
+    str.insert(0, "abcd");
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.size() == 4);
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'b');
+    REQUIRE(str[2] == 'c');
+    REQUIRE(str[3] == 'd');
+    REQUIRE(str[4] == 0);
 }
