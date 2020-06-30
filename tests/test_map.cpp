@@ -51,6 +51,41 @@ TEST_CASE("map: construct empty", "[map]")
     func(test);
 }
 
+TEST_CASE("map: empty", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    REQUIRE(map.empty() == true);
+    map.insert({1, 143});
+    REQUIRE(map.empty() == false);
+}
+
+TEST_CASE("map: size", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    REQUIRE(map.size() == 0);
+    map.insert({1, 143});
+    REQUIRE(map.size() == 1);
+    map.insert({2, 143});
+    REQUIRE(map.size() == 2);
+    map.insert({3, 143});
+    REQUIRE(map.size() == 3);
+}
+
+TEST_CASE("map: begin/cbegin", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    REQUIRE(map.begin() == map.cbegin());
+    REQUIRE(map.begin()->second == 143);
+}
+
+TEST_CASE("map: end/cend", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    REQUIRE(map.end() == map.cend());
+}
+
 TEST_CASE("map: insert(value_type const&)", "[map]")
 {
     auto map        = taetl::make::map<int, int, 4> {};
@@ -64,8 +99,14 @@ TEST_CASE("map: insert(value_type const&)", "[map]")
 TEST_CASE("map: insert(value_type &&)", "[map]")
 {
     auto map = taetl::make::map<int, float, 4> {};
+
     map.insert(taetl::pair<int, float> {2, 143.0f});
     REQUIRE(map.size() == 1);
     REQUIRE(map.count(2) == 1);
     REQUIRE(map.find(2)->second == 143.0f);
+
+    map.insert(taetl::pair<int, float> {3, 42.0f});
+    REQUIRE(map.size() == 2);
+    REQUIRE(map.count(3) == 1);
+    REQUIRE(map.find(3)->second == 42.0f);
 }
