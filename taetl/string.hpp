@@ -46,19 +46,14 @@ constexpr inline auto strlen(const char* str) -> taetl::size_t
 }
 
 /**
- * @brief string class with fixed size capacity.
+ * @brief basic_string class with fixed size capacity.
  *
  * @tparam CharType Build in type for character size (mostly 'char')
- * @tparam Size Capacity for string
+ * @tparam Size Capacity for basic_string
  */
-template <typename CharType = char, taetl::size_t Size = 16>
-class string
+template <typename CharType, taetl::size_t Size>
+class basic_string
 {
-private:
-    taetl::size_t _size {0};
-    taetl::size_t const _capacity {Size};
-    CharType _data[Size] {};
-
 public:
     using value_type      = CharType;
     using pointer         = CharType*;
@@ -71,21 +66,21 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr string() = default;
+    constexpr basic_string() = default;
 
     /**
      * @brief Charater Pointer constant constructor.
      * Fails silently if input len is greater then capacity.
      */
-    constexpr string(const char* str, taetl::size_t const len) noexcept
+    constexpr basic_string(const char* str, taetl::size_t const len) noexcept
     {
         if (str != nullptr)
         {
-            if (len < _capacity)
+            if (len < Size)
             {
-                ::memset(_data, 0, len + 1);
-                _size = len;
-                ::memcpy(_data, str, len);
+                ::memset(data_, 0, len + 1);
+                size_ = len;
+                ::memcpy(data_, str, len);
             }
         }
     }
@@ -94,8 +89,8 @@ public:
      * @brief Charater Pointer constant constructor. Calls taetl::strlen.
      * Fails silently if input length is greater then capacity.
      */
-    constexpr string(const char* c_string) noexcept
-        : string(c_string, taetl::strlen(c_string))
+    constexpr basic_string(const char* c_string) noexcept
+        : basic_string(c_string, taetl::strlen(c_string))
     {
     }
 
@@ -104,11 +99,11 @@ public:
      */
     constexpr auto at(taetl::size_t index) noexcept -> reference
     {
-        if (index < _size)
+        if (index < size_)
         {
-            return _data[index];
+            return data_[index];
         }
-        return _data[_size];
+        return data_[size_];
     }
 
     /**
@@ -116,11 +111,11 @@ public:
      */
     constexpr auto at(taetl::size_t index) const noexcept -> const_reference
     {
-        if (index < _size)
+        if (index < size_)
         {
-            return _data[index];
+            return data_[index];
         }
-        return _data[_size];
+        return data_[size_];
     }
 
     /**
@@ -128,11 +123,11 @@ public:
      */
     constexpr auto operator[](taetl::size_t index) noexcept -> reference
     {
-        if (index < _size)
+        if (index < size_)
         {
-            return _data[index];
+            return data_[index];
         }
-        return _data[_size];
+        return data_[size_];
     }
 
     /**
@@ -141,69 +136,66 @@ public:
     constexpr auto operator[](taetl::size_t index) const noexcept
         -> const_reference
     {
-        if (index < _size)
+        if (index < size_)
         {
-            return _data[index];
+            return data_[index];
         }
-        return _data[_size];
+        return data_[size_];
     }
 
     /**
      * @brief Returns an iterator to the beginning.
      */
-    constexpr auto begin() noexcept -> iterator { return _data; }
+    constexpr auto begin() noexcept -> iterator { return data_; }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    constexpr auto cbegin() const noexcept -> const_iterator { return _data; }
+    constexpr auto cbegin() const noexcept -> const_iterator { return data_; }
 
     /**
      * @brief Returns an iterator to the end.
      */
-    constexpr auto end() noexcept -> iterator { return _data + size(); }
+    constexpr auto end() noexcept -> iterator { return data_ + size(); }
 
     /**
      * @brief Returns an const iterator to the end.
      */
     constexpr auto cend() const noexcept -> const_iterator
     {
-        return _data + size();
+        return data_ + size();
     }
 
     /**
      * @brief Accesses the first character.
      */
-    constexpr auto front() noexcept -> reference { return _data[0]; }
+    constexpr auto front() noexcept -> reference { return data_[0]; }
 
     /**
      * @brief Accesses the last character.
      */
-    constexpr auto back() noexcept -> reference { return _data[_size - 1]; }
+    constexpr auto back() noexcept -> reference { return data_[size_ - 1]; }
 
     /**
      * @brief Checks whether the string is empty.
      */
-    constexpr auto empty() const noexcept -> bool { return _size == 0; }
+    constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
     /**
      * @brief Returns the number of characters.
      */
-    constexpr auto size() const noexcept -> taetl::size_t { return _size; }
+    constexpr auto size() const noexcept -> taetl::size_t { return size_; }
 
     /**
      * @brief Returns the number of characters.
      */
-    constexpr auto length() const noexcept -> taetl::size_t { return _size; }
+    constexpr auto length() const noexcept -> taetl::size_t { return size_; }
 
     /**
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    constexpr auto capacity() const noexcept -> taetl::size_t
-    {
-        return _capacity;
-    }
+    constexpr auto capacity() const noexcept -> taetl::size_t { return Size; }
 
     /**
      * @brief Returns a pointer to a null-terminated character array.
@@ -215,7 +207,7 @@ public:
      */
     constexpr auto c_str() const noexcept -> const CharType*
     {
-        return &_data[0];
+        return &data_[0];
     };
 
     /**
@@ -223,24 +215,25 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : _data)
+        for (auto& c : data_)
         {
             c = 0;
         }
-        _size = 0;
+        size_ = 0;
     }
 
     /**
      * @brief Appends count copies of character s.
      */
-    constexpr auto append(taetl::size_t count, CharType s) noexcept -> string&
+    constexpr auto append(taetl::size_t count, CharType s) noexcept
+        -> basic_string&
     {
         for (taetl::size_t i = 0; i < count; i++)
         {
-            _data[_size + i] = s;
+            data_[size_ + i] = s;
         }
-        _size += count;
-        _data[_size] = 0;
+        size_ += count;
+        data_[size_] = 0;
 
         return *this;
     };
@@ -249,7 +242,7 @@ public:
      * @brief Appends the null-terminated character string pointed to by s. The
      * length of the string is determined by the first null character using
      */
-    constexpr auto append(const CharType* s) noexcept -> string&
+    constexpr auto append(const CharType* s) noexcept -> basic_string&
     {
         taetl::ignore_unused(s);
         return *this;
@@ -260,18 +253,28 @@ public:
      * contain null characters.
      */
     constexpr auto append(const CharType* s, taetl::size_t count) noexcept
-        -> string&
+        -> basic_string&
     {
         for (taetl::size_t i = 0; i < count; i++)
         {
-            _data[_size + i] = s[i];
+            data_[size_ + i] = s[i];
         }
-        _size += count;
-        _data[_size] = 0;
+        size_ += count;
+        data_[size_] = 0;
 
         return *this;
     };
+
+private:
+    taetl::size_t size_  = 0;
+    CharType data_[Size] = {};
 };
+
+template <taetl::size_t Size>
+using string = basic_string<char, Size>;
+
+using small_string = basic_string<char, 32>;
+
 }  // namespace taetl
 
 #endif  // TAETL_STRING_HPP

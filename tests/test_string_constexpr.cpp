@@ -30,29 +30,29 @@ DAMAGE.
 
 TEST_CASE("string: constexpr", "[string]")
 {
-    constexpr taetl::string<char, 16> t_string {};
+    constexpr taetl::string<16> str1 {};
 
-    STATIC_REQUIRE(t_string.empty() == true);
-    STATIC_REQUIRE(t_string.capacity() == 16);
-    STATIC_REQUIRE(t_string.size() == 0);
-    STATIC_REQUIRE(t_string.length() == 0);
+    STATIC_REQUIRE(str1.empty() == true);
+    STATIC_REQUIRE(str1.capacity() == 16);
+    STATIC_REQUIRE(str1.size() == 0);
+    STATIC_REQUIRE(str1.length() == 0);
 
-    constexpr auto t_string_2 = []() {
-        taetl::string<char, 16> str {};
+    constexpr auto str2 = []() {
+        taetl::string<16> str {};
         // APPEND 4 CHARACTERS
         const char* cptr = "C-string";
         str.append(cptr, 4);
         return str;
     }();
 
-    STATIC_REQUIRE(t_string_2.empty() == false);
-    STATIC_REQUIRE(t_string_2.capacity() == 16);
-    STATIC_REQUIRE(t_string_2.size() == 4);
-    STATIC_REQUIRE(t_string_2.length() == 4);
-    STATIC_REQUIRE(t_string_2[0] == 'C');
-    STATIC_REQUIRE(t_string_2[1] == '-');
-    STATIC_REQUIRE(t_string_2[2] == 's');
-    STATIC_REQUIRE(t_string_2[3] == 't');
-    STATIC_REQUIRE(t_string_2[4] == 0);
-    STATIC_REQUIRE(t_string_2.at(4) == 0);
+    STATIC_REQUIRE(str2.empty() == false);
+    STATIC_REQUIRE(str2.capacity() == 16);
+    STATIC_REQUIRE(str2.size() == 4);
+    STATIC_REQUIRE(str2.length() == 4);
+    STATIC_REQUIRE(str2[0] == 'C');
+    STATIC_REQUIRE(str2[1] == '-');
+    STATIC_REQUIRE(str2[2] == 's');
+    STATIC_REQUIRE(str2[3] == 't');
+    STATIC_REQUIRE(str2[4] == 0);
+    STATIC_REQUIRE(str2.at(4) == 0);
 }
