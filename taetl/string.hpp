@@ -56,6 +56,7 @@ class basic_string
 {
 public:
     using value_type      = CharType;
+    using size_type       = taetl::size_t;
     using pointer         = CharType*;
     using const_pointer   = const CharType*;
     using reference       = CharType&;
@@ -276,6 +277,21 @@ public:
 
         return *this;
     };
+
+    /**
+     * @brief Inserts count copies of character ch at the position index.
+     */
+    constexpr auto insert(size_type index, size_type count,
+                          CharType ch) noexcept -> basic_string&
+    {
+        for (size_type i = index; i < count; i++)
+        {
+            data_[size_ + i] = ch;
+        }
+        size_ += count;
+        data_[size_] = 0;
+        return *this;
+    }
 
 private:
     taetl::size_t size_      = 0;

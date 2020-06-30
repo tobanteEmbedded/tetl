@@ -142,3 +142,13 @@ TEST_CASE("string: clear", "[string]")
     REQUIRE(str.empty() == true);
     REQUIRE(str.size() == taetl::size_t(0));
 }
+
+TEST_CASE("string: insert(index,count,CharType)", "[string]")
+{
+    auto str = taetl::small_string {};
+    REQUIRE(str.empty() == true);
+
+    str.insert(0, 4, 'a');
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.size() == 4);
+}
