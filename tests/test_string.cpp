@@ -79,6 +79,31 @@ TEST_CASE("string: ctor - char const*, size_t", "[string]")
     REQUIRE(str[3] == char(0));
 }
 
+TEST_CASE("string: at", "[string]")
+{
+    taetl::string<16> str {"abc"};
+
+    WHEN("mutable")
+    {
+        REQUIRE(str.at(0) == 'a');
+        REQUIRE(str.at(1) == 'b');
+        REQUIRE(str.at(2) == 'c');
+        REQUIRE(str.at(3) == 0);
+    }
+
+    WHEN("const")
+    {
+        auto const& a = str.at(0);
+        REQUIRE(a == 'a');
+        auto const& b = str.at(1);
+        REQUIRE(b == 'b');
+        auto const& c = str.at(2);
+        REQUIRE(c == 'c');
+        auto const& null = str.at(3);
+        REQUIRE(null == 0);
+    }
+}
+
 TEST_CASE("string: begin/end", "[string]")
 {
     taetl::string<16> str {};
