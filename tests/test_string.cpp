@@ -39,7 +39,7 @@ TEST_CASE("string: strlen", "[string]")
 
 TEST_CASE("string: ctor - default", "[string]")
 {
-    taetl::String str {};
+    taetl::string str {};
 
     REQUIRE(str.empty() == true);
     REQUIRE(str.capacity() == taetl::size_t(16));
@@ -49,7 +49,7 @@ TEST_CASE("string: ctor - default", "[string]")
 
 TEST_CASE("string: ctor - char const*", "[string]")
 {
-    taetl::String str {"abc"};
+    taetl::string str {"abc"};
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == taetl::size_t(16));
@@ -63,7 +63,7 @@ TEST_CASE("string: ctor - char const*", "[string]")
 
 TEST_CASE("string: ctor - char const*, size_t", "[string]")
 {
-    taetl::String str {"abc", 3};
+    taetl::string str {"abc", 3};
 
     // INIT
     REQUIRE(str.empty() == false);
@@ -78,7 +78,7 @@ TEST_CASE("string: ctor - char const*, size_t", "[string]")
 
 TEST_CASE("string: begin/end", "[string]")
 {
-    taetl::String str {};
+    taetl::string str {};
 
     taetl::for_each(str.begin(), str.end(),
                     [](auto& c) { REQUIRE(c == char(0)); });
@@ -86,7 +86,7 @@ TEST_CASE("string: begin/end", "[string]")
 
 TEST_CASE("string: cbegin/cend", "[string]")
 {
-    taetl::String str {};
+    taetl::string str {};
 
     taetl::for_each(str.cbegin(), str.cend(),
                     [](auto const& c) { REQUIRE(c == char(0)); });
@@ -94,7 +94,7 @@ TEST_CASE("string: cbegin/cend", "[string]")
 
 TEST_CASE("string: append", "[string]")
 {
-    taetl::String str {};
+    taetl::string str {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
@@ -114,7 +114,7 @@ TEST_CASE("string: append", "[string]")
 TEST_CASE("string: algorithms", "[string]")
 {
     // setup
-    taetl::String str {"aaaaaa"};
+    taetl::string str {"aaaaaa"};
     taetl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
     // test
@@ -128,7 +128,7 @@ TEST_CASE("string: algorithms", "[string]")
 TEST_CASE("string: clear", "[string]")
 {
     // setup
-    taetl::String str {"junk"};
+    taetl::string str {"junk"};
     REQUIRE(str.empty() == false);
 
     // test

@@ -30,7 +30,7 @@ DAMAGE.
 
 TEST_CASE("string: constexpr", "[string]")
 {
-    constexpr taetl::String<char, 16> t_string {};
+    constexpr taetl::string<char, 16> t_string {};
 
     STATIC_REQUIRE(t_string.empty() == true);
     STATIC_REQUIRE(t_string.capacity() == 16);
@@ -38,7 +38,7 @@ TEST_CASE("string: constexpr", "[string]")
     STATIC_REQUIRE(t_string.length() == 0);
 
     constexpr auto t_string_2 = []() {
-        taetl::String<char, 16> str {};
+        taetl::string<char, 16> str {};
         // APPEND 4 CHARACTERS
         const char* cptr = "C-string";
         str.append(cptr, 4);

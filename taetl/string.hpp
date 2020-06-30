@@ -38,18 +38,21 @@ namespace taetl
 constexpr inline auto strlen(const char* str) -> taetl::size_t
 {
     const char* s {};
-    for (s = str; *s; ++s) { ; }
+    for (s = str; *s; ++s)
+    {
+        ;
+    }
     return taetl::size_t(s - str);
 }
 
 /**
- * @brief String class with fixed size capacity.
+ * @brief string class with fixed size capacity.
  *
  * @tparam CharType Build in type for character size (mostly 'char')
  * @tparam Size Capacity for string
  */
 template <typename CharType = char, taetl::size_t Size = 16>
-class String
+class string
 {
 private:
     taetl::size_t _size {0};
@@ -68,13 +71,13 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr String() = default;
+    constexpr string() = default;
 
     /**
      * @brief Charater Pointer constant constructor.
      * Fails silently if input len is greater then capacity.
      */
-    constexpr String(const char* str, taetl::size_t const len) noexcept
+    constexpr string(const char* str, taetl::size_t const len) noexcept
     {
         if (str != nullptr)
         {
@@ -91,8 +94,8 @@ public:
      * @brief Charater Pointer constant constructor. Calls taetl::strlen.
      * Fails silently if input length is greater then capacity.
      */
-    constexpr String(const char* c_string) noexcept
-        : String(c_string, taetl::strlen(c_string))
+    constexpr string(const char* c_string) noexcept
+        : string(c_string, taetl::strlen(c_string))
     {
     }
 
@@ -101,7 +104,10 @@ public:
      */
     constexpr auto at(taetl::size_t index) noexcept -> reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -110,7 +116,10 @@ public:
      */
     constexpr auto at(taetl::size_t index) const noexcept -> const_reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -119,7 +128,10 @@ public:
      */
     constexpr auto operator[](taetl::size_t index) noexcept -> reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -129,7 +141,10 @@ public:
     constexpr auto operator[](taetl::size_t index) const noexcept
         -> const_reference
     {
-        if (index < _size) { return _data[index]; }
+        if (index < _size)
+        {
+            return _data[index];
+        }
         return _data[_size];
     }
 
@@ -208,16 +223,22 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : _data) { c = 0; }
+        for (auto& c : _data)
+        {
+            c = 0;
+        }
         _size = 0;
     }
 
     /**
      * @brief Appends count copies of character s.
      */
-    constexpr auto append(taetl::size_t count, CharType s) noexcept -> String&
+    constexpr auto append(taetl::size_t count, CharType s) noexcept -> string&
     {
-        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s; }
+        for (taetl::size_t i = 0; i < count; i++)
+        {
+            _data[_size + i] = s;
+        }
         _size += count;
         _data[_size] = 0;
 
@@ -228,7 +249,7 @@ public:
      * @brief Appends the null-terminated character string pointed to by s. The
      * length of the string is determined by the first null character using
      */
-    constexpr auto append(const CharType* s) noexcept -> String&
+    constexpr auto append(const CharType* s) noexcept -> string&
     {
         taetl::ignore_unused(s);
         return *this;
@@ -239,9 +260,12 @@ public:
      * contain null characters.
      */
     constexpr auto append(const CharType* s, taetl::size_t count) noexcept
-        -> String&
+        -> string&
     {
-        for (taetl::size_t i = 0; i < count; i++) { _data[_size + i] = s[i]; }
+        for (taetl::size_t i = 0; i < count; i++)
+        {
+            _data[_size + i] = s[i];
+        }
         _size += count;
         _data[_size] = 0;
 

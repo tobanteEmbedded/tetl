@@ -33,18 +33,21 @@ DAMAGE.
 int main()
 {
     // Create array with capacity of 16 and size of 0
-    taetl::String<char, 16> t_string {};
+    taetl::string<char, 16> str {};
 
     const char* cptr = "C-string";
-    t_string.append(cptr, 4);
+    str.append(cptr, 4);
 
-    printf("\"%s\"\n", t_string.c_str());
+    printf("\"%s\"\n", str.c_str());
 
-    for (auto& c : t_string) { printf("%c", c); }
+    for (auto& c : str)
+    {
+        printf("%c", c);
+    }
 
-    printf("\nSize: %zu\n", t_string.size());
-    printf("Length: %zu\n", t_string.length());
-    printf("Capacity: %zu\n", t_string.capacity());
+    printf("\nSize: %zu\n", str.size());
+    printf("Length: %zu\n", str.length());
+    printf("Capacity: %zu\n", str.capacity());
 
     return 0;
 }
