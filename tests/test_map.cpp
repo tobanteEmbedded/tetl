@@ -64,6 +64,18 @@ TEST_CASE("map: at", "[map]")
     REQUIRE(map2.at(2) == 42);
 }
 
+TEST_CASE("map: operator[]", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    map.insert({2, 42});
+    REQUIRE(map[1] == 143);
+    REQUIRE(map[2] == 42);
+    REQUIRE(map.contains(3) == false);
+    REQUIRE(map[3] == 0);
+    REQUIRE(map.contains(3) == true);
+}
+
 TEST_CASE("map: begin/cbegin", "[map]")
 {
     auto map = taetl::make::map<int, int, 4> {};

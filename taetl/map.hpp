@@ -79,6 +79,22 @@ public:
     }
 
     /**
+     * @brief Returns a reference to the value that is mapped to a key
+     * equivalent to key, performing an insertion if such key does not already
+     * exist.
+     */
+    [[nodiscard]] constexpr auto operator[](key_type const& key) -> mapped_type&
+    {
+        auto const item = find(key);
+        if (item == nullptr)
+        {
+            auto const res = insert(value_type {key, {}});
+            return res.first->second;
+        }
+        return item->second;
+    }
+
+    /**
      * @brief Returns an iterator to the beginning.
      */
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
