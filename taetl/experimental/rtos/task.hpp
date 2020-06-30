@@ -96,6 +96,11 @@ inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
 }
 
 /**
+ * @brief Yield is used to request a context switch to another task.
+ */
+inline auto yield_task() -> void { taskYIELD(); }
+
+/**
  * @brief Delete a rtos task. If handle is nullptr, the current task will be
  * deleted.
  */

@@ -42,9 +42,11 @@ struct example_task
         while (loopControl())
         {
             stm32::gpio_memory_layout memory {};
-            auto& gpio_port = stm32::port::place_at(&memory);
-            gpio_port.write(val(stm32::pin_number::pin_3),
-                            stm32::pin_state::reset);
+            auto& gpio_port  = stm32::port::place_at(&memory);
+            auto const value = val(stm32::pin_number::pin_3);
+            gpio_port.write(value, stm32::pin_state::reset);
+
+            rtos::yield_task();
             rtos::delay(1);
             rtos::delay_until(1, 1);
         }
@@ -59,5 +61,9 @@ int main()
 {
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
+
+    // Run would normally be called by rtos::start_scheduler(). Only used for
+    // stubs.
+    task.run();
     return 0;
 }

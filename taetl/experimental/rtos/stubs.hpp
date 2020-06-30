@@ -43,6 +43,11 @@ using configSTACK_DEPTH_TYPE = taetl::uint16_t;
 // TICK
 using TickType_t = uint32_t;
 
+// SCHEDULER
+inline auto vPortYield(void) -> void {}
+#define portYIELD() vPortYield()
+#define taskYIELD() portYIELD()
+
 // TASK
 struct tskTaskControlBlock;
 
@@ -64,7 +69,7 @@ inline auto vTaskDelete(TaskHandle_t xTask) -> void
     taetl::ignore_unused(xTask);
 }
 
-inline auto vTaskStartScheduler() -> void { }
+inline auto vTaskStartScheduler() -> void {}
 
 inline auto vTaskDelay(const TickType_t xTicksToDelay) -> void
 {
