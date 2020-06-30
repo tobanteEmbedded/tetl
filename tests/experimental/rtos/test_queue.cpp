@@ -56,12 +56,21 @@ TEST_CASE("rtos/queue: send", "[experimental][rtos]")
     REQUIRE(q1.send(1, 0) == false);
 }
 
-TEST_CASE("rtos/queue: receive", "[experimental][rtos]")
+TEST_CASE("rtos/queue: receive io/out argument", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false
     auto i = int {0};
     REQUIRE(q1.receive(i, 0) == false);
+}
+
+TEST_CASE("rtos/queue: receive pair<bool,T>", "[experimental][rtos]")
+{
+    rtos::queue<int, 1> q1 {};
+    // stub always returns false
+    auto [success, value] = q1.receive(0);
+    REQUIRE(success == false);
+    REQUIRE(value == 0);
 }
 
 TEST_CASE("rtos/queue: reset", "[experimental][rtos]")

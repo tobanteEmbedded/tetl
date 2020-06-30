@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_RTOS_QUEUE_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/utility.hpp"
 #include "taetl/warning.hpp"
 
 #if defined(TAETL_RTOS_USE_STUBS)
@@ -56,7 +57,10 @@ public:
 
     ~queue()
     {
-        if (handle_ != nullptr) { vQueueDelete(handle_); }
+        if (handle_ != nullptr)
+        {
+            vQueueDelete(handle_);
+        }
     }
 
     auto capacity() const -> size_type { return Size; }
@@ -73,6 +77,14 @@ public:
         auto const rawData = static_cast<void*>(&data);
         auto const success = xQueueReceive(handle_, rawData, ticksToWait);
         return static_cast<bool>(success);
+    }
+
+    auto receive(TickType_t ticksToWait = 0) const -> pair<bool, ValueType>
+    {
+        auto value         = ValueType {};
+        auto const rawData = static_cast<void*>(&value);
+        auto const success = xQueueReceive(handle_, rawData, ticksToWait);
+        return {static_cast<bool>(success), value};
     }
 
     auto reset() const -> bool
