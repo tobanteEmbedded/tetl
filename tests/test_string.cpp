@@ -166,6 +166,20 @@ TEST_CASE("string: append(const_pointer, count)", "[string]")
     REQUIRE(str[4] == char(0));
 }
 
+TEST_CASE("string: append(const_pointer)", "[string]")
+{
+    taetl::small_string str {};
+    const char* cptr = "C-string";
+    str.append(cptr);
+
+    REQUIRE(str.size() == taetl::size_t(taetl::strlen(cptr)));
+    REQUIRE(str.length() == taetl::size_t(taetl::strlen(cptr)));
+    REQUIRE(str[0] == 'C');
+    REQUIRE(str[1] == '-');
+    REQUIRE(str[2] == 's');
+    REQUIRE(str[3] == 't');
+}
+
 TEST_CASE("string: algorithms", "[string]")
 {
     // setup

@@ -257,8 +257,8 @@ public:
      */
     constexpr auto append(const_pointer s) noexcept -> basic_string&
     {
-        taetl::ignore_unused(s);
-        return *this;
+        auto const len = taetl::strlen(s);
+        return append(s, len);
     };
 
     /**
