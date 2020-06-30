@@ -81,10 +81,9 @@ TEST_CASE("string: ctor - char const*, size_t", "[string]")
 
 TEST_CASE("string: at", "[string]")
 {
-    taetl::string<16> str {"abc"};
-
     WHEN("mutable")
     {
+        auto str = taetl::string<16> {"abc"};
         REQUIRE(str.at(0) == 'a');
         REQUIRE(str.at(1) == 'b');
         REQUIRE(str.at(2) == 'c');
@@ -93,14 +92,32 @@ TEST_CASE("string: at", "[string]")
 
     WHEN("const")
     {
-        auto const& a = str.at(0);
-        REQUIRE(a == 'a');
-        auto const& b = str.at(1);
-        REQUIRE(b == 'b');
-        auto const& c = str.at(2);
-        REQUIRE(c == 'c');
-        auto const& null = str.at(3);
-        REQUIRE(null == 0);
+        auto const str = taetl::string<16> {"abc"};
+        REQUIRE(str.at(0) == 'a');
+        REQUIRE(str.at(1) == 'b');
+        REQUIRE(str.at(2) == 'c');
+        REQUIRE(str.at(3) == 0);
+    }
+}
+
+TEST_CASE("string: operator[]", "[string]")
+{
+    WHEN("mutable")
+    {
+        auto str = taetl::string<16> {"abc"};
+        REQUIRE(str[0] == 'a');
+        REQUIRE(str[1] == 'b');
+        REQUIRE(str[2] == 'c');
+        REQUIRE(str[3] == 0);
+    }
+
+    WHEN("const")
+    {
+        auto const str = taetl::string<16> {"abc"};
+        REQUIRE(str[0] == 'a');
+        REQUIRE(str[1] == 'b');
+        REQUIRE(str[2] == 'c');
+        REQUIRE(str[3] == 0);
     }
 }
 
