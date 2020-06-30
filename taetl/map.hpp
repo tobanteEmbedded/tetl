@@ -58,6 +58,27 @@ public:
     // insert_return_type
 public:
     /**
+     * @brief Returns a reference to the mapped value of the element with key
+     * equivalent to key. If no such element exists, you are in UB land.
+     */
+    [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&
+    {
+        assert(find(key) != nullptr);
+        return find(key)->second;
+    }
+
+    /**
+     * @brief Returns a reference to the mapped value of the element with key
+     * equivalent to key. If no such element exists, you are in UB land.
+     */
+    [[nodiscard]] constexpr auto at(key_type const& key) const
+        -> mapped_type const&
+    {
+        assert(find(key) != nullptr);
+        return find(key)->second;
+    }
+
+    /**
      * @brief Returns an iterator to the beginning.
      */
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }

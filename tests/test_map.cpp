@@ -51,38 +51,17 @@ TEST_CASE("map: construct", "[map]")
     func(test);
 }
 
-TEST_CASE("map: empty", "[map]")
+TEST_CASE("map: at", "[map]")
 {
     auto map = taetl::make::map<int, int, 4> {};
-    REQUIRE(map.empty() == true);
     map.insert({1, 143});
-    REQUIRE(map.empty() == false);
-}
+    map.insert({2, 42});
+    REQUIRE(map.at(1) == 143);
+    REQUIRE(map.at(2) == 42);
 
-TEST_CASE("map: size", "[map]")
-{
-    auto map = taetl::make::map<int, int, 4> {};
-    REQUIRE(map.size() == 0);
-    map.insert({1, 143});
-    REQUIRE(map.size() == 1);
-    map.insert({2, 143});
-    REQUIRE(map.size() == 2);
-    map.insert({3, 143});
-    REQUIRE(map.size() == 3);
-}
-
-TEST_CASE("map: count/contains", "[map]")
-{
-    auto map = taetl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    map.insert({2, 143});
-    map.insert({3, 143});
-    REQUIRE(map.contains(1) == true);
-    REQUIRE(map.count(1) == 1);
-    REQUIRE(map.contains(3) == true);
-    REQUIRE(map.count(3) == 1);
-    REQUIRE(map.contains(42) == false);
-    REQUIRE(map.count(42) == 0);
+    auto const map2 = map;
+    REQUIRE(map2.at(1) == 143);
+    REQUIRE(map2.at(2) == 42);
 }
 
 TEST_CASE("map: begin/cbegin", "[map]")
@@ -137,6 +116,40 @@ TEST_CASE("map: ranged-based-for", "[map]")
 
         REQUIRE(result == 42 * 4);
     }
+}
+
+TEST_CASE("map: empty", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    REQUIRE(map.empty() == true);
+    map.insert({1, 143});
+    REQUIRE(map.empty() == false);
+}
+
+TEST_CASE("map: size", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    REQUIRE(map.size() == 0);
+    map.insert({1, 143});
+    REQUIRE(map.size() == 1);
+    map.insert({2, 143});
+    REQUIRE(map.size() == 2);
+    map.insert({3, 143});
+    REQUIRE(map.size() == 3);
+}
+
+TEST_CASE("map: count/contains", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    map.insert({2, 143});
+    map.insert({3, 143});
+    REQUIRE(map.contains(1) == true);
+    REQUIRE(map.count(1) == 1);
+    REQUIRE(map.contains(3) == true);
+    REQUIRE(map.count(3) == 1);
+    REQUIRE(map.contains(42) == false);
+    REQUIRE(map.count(42) == 0);
 }
 
 TEST_CASE("map: clear", "[map]")
