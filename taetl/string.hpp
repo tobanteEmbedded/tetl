@@ -303,10 +303,29 @@ public:
         auto const len = taetl::strlen(s);
         for (size_type i = 0; i < len; i++)
         {
-            if (len < Capacity)
+            if (auto const pos = index + i; pos < Capacity)
             {
-                auto const pos = index + i;
-                data_[pos]     = s[i];
+                data_[pos] = s[i];
+                size_ += 1;
+            }
+        }
+
+        data_[size_] = 0;
+        return *this;
+    }
+
+    /**
+     * @brief Inserts the characters in the range [s, s+count) at the position
+     * index. The range can contain null characters.
+     */
+    constexpr auto insert(size_type const index, const_pointer s,
+                          size_type const count) noexcept -> basic_string&
+    {
+        for (size_type i = 0; i < count; i++)
+        {
+            if (auto const pos = index + i; pos < Capacity)
+            {
+                data_[pos] = s[i];
                 size_ += 1;
             }
         }

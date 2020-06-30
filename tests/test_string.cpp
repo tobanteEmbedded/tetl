@@ -172,3 +172,18 @@ TEST_CASE("string: insert(index, CharType const*)", "[string]")
     REQUIRE(str[3] == 'd');
     REQUIRE(str[4] == 0);
 }
+
+TEST_CASE("string: insert(index, CharType const*, count)", "[string]")
+{
+    auto str = taetl::small_string {};
+    REQUIRE(str.empty() == true);
+
+    str.insert(0, "abcd", 3);
+    REQUIRE(str.empty() == false);
+    REQUIRE(str.size() == 3);
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'b');
+    REQUIRE(str[2] == 'c');
+    REQUIRE(str[3] == 0);
+    REQUIRE(str[4] == 0);
+}
