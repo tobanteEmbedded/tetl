@@ -25,15 +25,11 @@ DAMAGE.
 */
 
 #include "taetl/map.hpp"
+#include "taetl/warning.hpp"
 
 #include "catch2/catch.hpp"
 
-template <class... Args>
-auto ignore_unused(Args&&... /*ignore*/) noexcept -> void
-{
-}
-
-TEST_CASE("map: ConstructDefault", "[map]")
+TEST_CASE("map: construct empty", "[map]")
 {
     taetl::make::map<int, int, 4> test {};
 
@@ -47,7 +43,7 @@ TEST_CASE("map: ConstructDefault", "[map]")
         // there should be no elements
         for (auto const& item : m)
         {
-            ignore_unused(item);
+            taetl::ignore_unused(item);
             REQUIRE(false);
         }
     };
@@ -55,20 +51,21 @@ TEST_CASE("map: ConstructDefault", "[map]")
     func(test);
 }
 
-TEST_CASE("map: Insert", "[map]")
+TEST_CASE("map: insert(value_type const&)", "[map]")
 {
-    taetl::make::map<int, int, 4> test {};
+    auto map        = taetl::make::map<int, int, 4> {};
+    auto const pair = taetl::pair<int, int> {1, 143};
+    map.insert(pair);
+    REQUIRE(map.size() == 1);
+    REQUIRE(map.count(1) == 1);
+    REQUIRE(map.find(1)->second == 143);
+}
 
-    auto func = [](taetl::map<int, int>& m) {
-        REQUIRE(m.max_size() == 4);
-        REQUIRE(m.empty() == true);
-        REQUIRE(m.size() == 0);
-        m.insert({1, 143});
-        REQUIRE(m.max_size() == 4);
-        REQUIRE(m.empty() == false);
-        REQUIRE(m.size() == 1);
-        REQUIRE(m.count(1) == 1);
-    };
-
-    func(test);
+TEST_CASE("map: insert(value_type &&)", "[map]")
+{
+    auto map = taetl::make::map<int, float, 4> {};
+    map.insert(taetl::pair<int, float> {2, 143.0f});
+    REQUIRE(map.size() == 1);
+    REQUIRE(map.count(2) == 1);
+    REQUIRE(map.find(2)->second == 143.0f);
 }

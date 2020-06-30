@@ -142,16 +142,31 @@ public:
      */
     auto insert(value_type const& value) noexcept -> taetl::pair<iterator, bool>
     {
-        if (size_ == capacity_) { return {end(), false}; }
-
-        if (size_ == 0)
+        if (size_ == capacity_)
         {
-            auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
-            ::new (addr) value_type {value};
-            return {&data_[size_], true};
+            return {end(), false};
         }
 
-        return {end(), false};
+        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
+        ::new (addr) value_type {value};
+        return {&data_[size_], true};
+    }
+
+    /**
+     * @brief Inserts a value pair into the map. Returns a pair consisting of an
+     * iterator to the inserted element (or to the element that prevented the
+     * insertion) and a bool denoting whether the insertion took place.
+     */
+    auto insert(value_type&& value) -> taetl::pair<iterator, bool>
+    {
+        if (size_ == capacity_)
+        {
+            return {end(), false};
+        }
+
+        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
+        ::new (addr) value_type {value};
+        return {&data_[size_], true};
     }
 
     /**
@@ -161,7 +176,10 @@ public:
     {
         for (auto i = begin(); i != end(); ++i)
         {
-            if (i->first == key) { return i; }
+            if (i->first == key)
+            {
+                return i;
+            }
         }
         return nullptr;
     }
@@ -173,7 +191,10 @@ public:
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {
-            if (i->first == key) { return i; }
+            if (i->first == key)
+            {
+                return i;
+            }
         }
 
         return nullptr;
