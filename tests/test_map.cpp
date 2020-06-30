@@ -88,12 +88,16 @@ TEST_CASE("map: end/cend", "[map]")
 
 TEST_CASE("map: insert(value_type const&)", "[map]")
 {
-    auto map        = taetl::make::map<int, int, 4> {};
-    auto const pair = taetl::pair<int, int> {1, 143};
-    map.insert(pair);
-    REQUIRE(map.size() == 1);
-    REQUIRE(map.count(1) == 1);
-    REQUIRE(map.find(1)->second == 143);
+    auto map  = taetl::make::map<int, int, 4> {};
+    auto pair = taetl::pair<int, int> {1, 143};
+    auto func = [&](auto const& p) {
+        map.insert(p);
+        REQUIRE(map.size() == 1);
+        REQUIRE(map.count(1) == 1);
+        REQUIRE(map.find(1)->second == 143);
+    };
+
+    func(pair);
 }
 
 TEST_CASE("map: insert(value_type &&)", "[map]")
