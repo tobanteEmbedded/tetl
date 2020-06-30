@@ -46,6 +46,7 @@ struct example_task
             gpio_port.write(val(stm32::pin_number::pin_3),
                             stm32::pin_state::reset);
             rtos::delay(1);
+            rtos::delay_until(1, 1);
         }
 
         rtos::delete_task(nullptr);

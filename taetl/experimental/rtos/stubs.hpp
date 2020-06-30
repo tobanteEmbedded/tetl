@@ -71,6 +71,11 @@ inline auto vTaskDelay(const TickType_t xTicksToDelay) -> void
     taetl::ignore_unused(xTicksToDelay);
 }
 
+inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime,
+                            const TickType_t xTimeIncrement) -> void
+{
+    taetl::ignore_unused(pxPreviousWakeTime, xTimeIncrement);
+}
 // QUEUE
 struct QueueDefinition;
 using QueueHandle_t = QueueDefinition*;

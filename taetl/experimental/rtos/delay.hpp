@@ -38,7 +38,13 @@ namespace taetl
 {
 namespace rtos
 {
-inline auto delay(taetl::uint32_t time) -> void { vTaskDelay(time); }
+inline auto delay(taetl::uint32_t ticks) -> void { vTaskDelay(ticks); }
+
+inline auto delay_until(taetl::uint32_t previous, taetl::uint32_t increment)
+    -> void
+{
+    vTaskDelayUntil(&previous, increment);
+}
 
 }  // namespace rtos
 }  // namespace taetl
