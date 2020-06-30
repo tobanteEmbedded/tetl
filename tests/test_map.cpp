@@ -71,6 +71,20 @@ TEST_CASE("map: size", "[map]")
     REQUIRE(map.size() == 3);
 }
 
+TEST_CASE("map: count/contains", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    map.insert({2, 143});
+    map.insert({3, 143});
+    REQUIRE(map.contains(1) == true);
+    REQUIRE(map.count(1) == 1);
+    REQUIRE(map.contains(3) == true);
+    REQUIRE(map.count(3) == 1);
+    REQUIRE(map.contains(42) == false);
+    REQUIRE(map.count(42) == 0);
+}
+
 TEST_CASE("map: begin/cbegin", "[map]")
 {
     auto map = taetl::make::map<int, int, 4> {};

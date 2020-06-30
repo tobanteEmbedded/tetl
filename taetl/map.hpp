@@ -129,10 +129,19 @@ public:
     /**
      * @brief Returns 1 if the key is present, otherwise 0.
      */
-    [[nodiscard]] constexpr auto count(KeyType const& key) const noexcept
+    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
         -> size_type
     {
         return find(key) != nullptr ? 1 : 0;
+    }
+
+    /**
+     * @brief  Checks if there is an element with key equivalent to key in the
+     * container.
+     */
+    [[nodiscard]] constexpr auto contains(key_type const& key) const -> bool
+    {
+        return find(key) != nullptr;
     }
 
     /**
