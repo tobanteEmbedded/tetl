@@ -136,6 +136,16 @@ public:
     }
 
     /**
+     * @brief Erases all elements from the container. After this call, size()
+     * returns zero.
+     */
+    auto clear() noexcept -> void
+    {
+        ::memset(data_, 0, capacity_ * sizeof(value_type));
+        size_ = 0;
+    }
+
+    /**
      * @brief Inserts a value pair into the map. Returns a pair consisting of an
      * iterator to the inserted element (or to the element that prevented the
      * insertion) and a bool denoting whether the insertion took place.

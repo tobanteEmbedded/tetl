@@ -29,7 +29,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("map: construct empty", "[map]")
+TEST_CASE("map: construct", "[map]")
 {
     taetl::make::map<int, int, 4> test {};
 
@@ -84,6 +84,61 @@ TEST_CASE("map: end/cend", "[map]")
     auto map = taetl::make::map<int, int, 4> {};
     map.insert({1, 143});
     REQUIRE(map.end() == map.cend());
+}
+
+TEST_CASE("map: ranged-based-for", "[map]")
+{
+    WHEN("mutable")
+    {
+        auto map = taetl::make::map<int, int, 4> {};
+        map.insert({1, 143});
+        map.insert({2, 143});
+        map.insert({3, 143});
+
+        auto result = 0;
+        for (auto const& item : map)
+        {
+            result += item.second;
+        }
+
+        REQUIRE(result == 143 * 3);
+    }
+
+    WHEN("const")
+    {
+        auto const map = []() {
+            auto map = taetl::make::map<int, int, 4> {};
+            map.insert({1, 42});
+            map.insert({2, 42});
+            map.insert({3, 42});
+            map.insert({4, 42});
+            return map;
+        }();
+
+        auto result = 0;
+        for (auto const& item : map)
+        {
+            result += item.second;
+        }
+
+        REQUIRE(result == 42 * 4);
+    }
+}
+
+TEST_CASE("map: clear", "[map]")
+{
+    auto map = taetl::make::map<int, int, 4> {};
+    map.insert({1, 143});
+    map.insert({2, 143});
+    map.insert({3, 143});
+    REQUIRE(map.empty() == false);
+    REQUIRE(map.size() == 3);
+    REQUIRE(map.count(1) == 1);
+
+    map.clear();
+    REQUIRE(map.empty() == true);
+    REQUIRE(map.size() == 0);
+    REQUIRE(map.count(1) == 0);
 }
 
 TEST_CASE("map: insert(value_type const&)", "[map]")
