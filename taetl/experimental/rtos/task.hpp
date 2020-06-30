@@ -78,7 +78,7 @@ using twice = times<2>;
  * @brief Wrapper for an rtos task struct. Calls the run() member.
  */
 template <typename TaskType>
-auto rtos_task(void* task) -> void
+inline auto rtos_task(void* task) -> void
 {
     static_cast<TaskType*>(task)->run();
 }
@@ -87,9 +87,9 @@ auto rtos_task(void* task) -> void
  * @brief Create a rtos task. TaskType needs a `void run()` public method.
  */
 template <typename TaskType>
-auto create_task(TaskType& task, char const* const name, uint16_t stack,
-                 UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
-    -> void
+inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
+                        UBaseType_t prio           = 0,
+                        TaskHandle_t* const handle = nullptr) -> void
 {
     xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task),
                 prio, handle);
@@ -99,13 +99,13 @@ auto create_task(TaskType& task, char const* const name, uint16_t stack,
  * @brief Delete a rtos task. If handle is nullptr, the current task will be
  * deleted.
  */
-auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
+inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
 
 /**
  * @brief Start the RTOS, this function will never return and will schedule the
  * tasks.
  */
-auto start_scheduler() -> void { vTaskStartScheduler(); }
+inline auto start_scheduler() -> void { vTaskStartScheduler(); }
 }  // namespace rtos
 }  // namespace taetl
 
