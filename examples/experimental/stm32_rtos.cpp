@@ -47,6 +47,8 @@ struct example_task
                             stm32::pin_state::reset);
             rtos::delay(1);
         }
+
+        rtos::delete_task(nullptr);
     }
 };
 

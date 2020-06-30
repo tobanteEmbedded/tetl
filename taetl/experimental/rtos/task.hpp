@@ -96,6 +96,12 @@ auto create_task(TaskType& task, char const* const name, uint16_t stack,
 }
 
 /**
+ * @brief Delete a rtos task. If handle is nullptr, the current task will be
+ * deleted.
+ */
+auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
+
+/**
  * @brief Start the RTOS, this function will never return and will schedule the
  * tasks.
  */

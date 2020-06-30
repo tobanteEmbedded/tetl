@@ -59,6 +59,11 @@ inline auto xTaskCreate(TaskFunction_t pvTaskCode, const char* const pcName,
     return pdFALSE;
 }
 
+inline auto vTaskDelete(TaskHandle_t xTask) -> void
+{
+    taetl::ignore_unused(xTask);
+}
+
 inline auto vTaskStartScheduler() -> void { }
 
 // QUEUE
