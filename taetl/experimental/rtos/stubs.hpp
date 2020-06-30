@@ -66,6 +66,11 @@ inline auto vTaskDelete(TaskHandle_t xTask) -> void
 
 inline auto vTaskStartScheduler() -> void { }
 
+inline auto vTaskDelay(const TickType_t xTicksToDelay) -> void
+{
+    taetl::ignore_unused(xTicksToDelay);
+}
+
 // QUEUE
 struct QueueDefinition;
 using QueueHandle_t = QueueDefinition*;

@@ -38,7 +38,7 @@ namespace taetl
 {
 namespace rtos
 {
-inline auto delay(taetl::size_t time) -> void { taetl::ignore_unused(time); }
+inline auto delay(taetl::uint32_t time) -> void { vTaskDelay(time); }
 
 }  // namespace rtos
 }  // namespace taetl
