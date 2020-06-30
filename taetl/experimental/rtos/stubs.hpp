@@ -35,6 +35,10 @@ using UBaseType_t            = unsigned long;
 using configSTACK_DEPTH_TYPE = taetl::uint16_t;
 #define pdFALSE ((BaseType_t)0)
 #define pdTRUE ((BaseType_t)1)
+#define pdPASS (pdTRUE)
+#define pdFAIL (pdFALSE)
+#define errQUEUE_EMPTY ((BaseType_t)0)
+#define errQUEUE_FULL ((BaseType_t)0)
 
 // TICK
 using TickType_t = uint32_t;
@@ -85,6 +89,18 @@ inline auto xQueueReceive(QueueHandle_t xQueue, void* pvBuffer,
 {
     taetl::ignore_unused(xQueue, pvBuffer, xTicksToWait);
     return pdFALSE;
+}
+
+inline auto xQueueReset(QueueHandle_t xQueue) -> BaseType_t
+{
+    taetl::ignore_unused(xQueue);
+    return pdPASS;
+}
+
+inline auto uxQueueMessagesWaiting(QueueHandle_t xQueue) -> UBaseType_t
+{
+    taetl::ignore_unused(xQueue);
+    return 0;
 }
 
 #endif  // TAETL_RTOS_STUBS_HPP

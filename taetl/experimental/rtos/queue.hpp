@@ -75,6 +75,18 @@ public:
         return static_cast<bool>(success);
     }
 
+    auto reset() const -> bool
+    {
+        auto const result = xQueueReset(handle_);
+        return static_cast<bool>(result);
+    }
+
+    auto messages_waiting() const -> taetl::uint32_t
+    {
+        auto const result = uxQueueMessagesWaiting(handle_);
+        return static_cast<taetl::uint32_t>(result);
+    }
+
 private:
     QueueHandle_t handle_ = nullptr;
 };

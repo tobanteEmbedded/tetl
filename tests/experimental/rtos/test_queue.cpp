@@ -63,3 +63,16 @@ TEST_CASE("rtos/queue: receive", "[experimental][rtos]")
     auto i = int {0};
     REQUIRE(q1.receive(i, 0) == false);
 }
+
+TEST_CASE("rtos/queue: reset", "[experimental][rtos]")
+{
+    rtos::queue<int, 1> q1 {};
+    REQUIRE(q1.reset() == true);
+}
+
+TEST_CASE("rtos/queue: messages_waiting", "[experimental][rtos]")
+{
+    rtos::queue<int, 1> q1 {};
+    // stub always returns 0
+    REQUIRE(q1.messages_waiting() == 0);
+}
