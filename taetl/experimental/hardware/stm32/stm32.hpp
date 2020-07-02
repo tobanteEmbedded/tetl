@@ -65,13 +65,13 @@ inline auto val(pin_number pin) -> taetl::uint16_t
 
 struct gpio_memory_layout
 {
-    taetl::uint32_t control_low;
-    taetl::uint32_t control_high;
-    taetl::uint32_t input_data;
-    taetl::uint32_t output_data;
-    taetl::uint32_t bit_set_reset;
-    taetl::uint32_t bit_set;
-    taetl::uint32_t lock;
+    volatile taetl::uint32_t control_low;
+    volatile taetl::uint32_t control_high;
+    volatile taetl::uint32_t input_data;
+    volatile taetl::uint32_t output_data;
+    volatile taetl::uint32_t bit_set_reset;
+    volatile taetl::uint32_t bit_set;
+    volatile taetl::uint32_t lock;
 };
 
 struct port
@@ -79,7 +79,7 @@ struct port
     explicit port()   = default;
     port(port&&)      = delete;
     port(port const&) = delete;
-    auto operator=(port &&) -> port& = delete;
+    auto operator=(port&&) -> port& = delete;
     auto operator=(port const&) -> port& = delete;
 
     [[nodiscard]] auto read(taetl::uint16_t const pin) const -> pin_state
@@ -88,10 +88,14 @@ struct port
         return {};
     }
 
-    void write(taetl::uint16_t const pin, pin_state const state)
+    void write(pin_number const pin, pin_state const state)
     {
-        ignore_unused(state);
-        memory.bit_set = pin;
+        if (auto const raw_pin = val(pin); state == pin_state::set)
+        { memory.bit_set_reset = (1u << raw_pin); }
+        else
+        {
+            memory.bit_set_reset = (1u << (raw_pin + 16u));
+        }
     }
 
     void toggle_pin(taetl::uint16_t const pin) { ignore_unused(pin); }

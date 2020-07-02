@@ -42,9 +42,8 @@ struct example_task
         while (loopControl())
         {
             stm32::gpio_memory_layout memory {};
-            auto& gpio_port  = stm32::port::place_at(&memory);
-            auto const value = val(stm32::pin_number::pin_3);
-            gpio_port.write(value, stm32::pin_state::reset);
+            auto& gpio_port = stm32::port::place_at(&memory);
+            gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
 
             rtos::yield_task();
             rtos::delay(1);
