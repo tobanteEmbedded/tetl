@@ -33,18 +33,18 @@ DAMAGE.
 using BaseType_t             = long;
 using UBaseType_t            = unsigned long;
 using configSTACK_DEPTH_TYPE = taetl::uint16_t;
-#define pdFALSE ((BaseType_t)0)
-#define pdTRUE ((BaseType_t)1)
+#define pdFALSE (static_cast<BaseType_t>(0))
+#define pdTRUE (static_cast<BaseType_t>(1))
 #define pdPASS (pdTRUE)
 #define pdFAIL (pdFALSE)
-#define errQUEUE_EMPTY ((BaseType_t)0)
-#define errQUEUE_FULL ((BaseType_t)0)
+#define errQUEUE_EMPTY (static_cast<BaseType_t>(0))
+#define errQUEUE_FULL (static_cast<BaseType_t>(0))
 
 // TICK
 using TickType_t = uint32_t;
 
 // SCHEDULER
-inline auto vPortYield(void) -> void {}
+inline auto vPortYield(void) -> void { }
 #define portYIELD() vPortYield()
 #define taskYIELD() portYIELD()
 
@@ -69,7 +69,7 @@ inline auto vTaskDelete(TaskHandle_t xTask) -> void
     taetl::ignore_unused(xTask);
 }
 
-inline auto vTaskStartScheduler() -> void {}
+inline auto vTaskStartScheduler() -> void { }
 
 inline auto vTaskDelay(const TickType_t xTicksToDelay) -> void
 {
