@@ -77,31 +77,31 @@ struct gpio_memory_layout
 struct port
 {
     explicit port()   = default;
+    ~port()           = default;
     port(port&&)      = delete;
     port(port const&) = delete;
     auto operator=(port&&) -> port& = delete;
     auto operator=(port const&) -> port& = delete;
 
-    [[nodiscard]] auto read(taetl::uint16_t const pin) const -> pin_state
+    [[nodiscard]] auto read(pin_number const pin) const -> pin_state
     {
-        ignore_unused(pin);
+        ignore_unused(val(pin));
         return {};
     }
 
     void write(pin_number const pin, pin_state const state)
     {
-        if (auto const raw_pin = val(pin); state == pin_state::reset)
-        { memory.bit_set_reset = (1u << raw_pin); }
-        else
+        if (state == pin_state::reset)
         {
-            memory.bit_set_reset = (1u << (raw_pin + 16u));
+            memory.bit_set_reset = (1u << val(pin));
+            return;
         }
+        memory.bit_set_reset = (1u << (val(pin) + 16u));
     }
 
     void toggle_pin(pin_number const pin)
     {
-        auto const raw_pin = val(pin);
-        memory.output_data ^= (1u << raw_pin);
+        memory.output_data ^= (1u << val(pin));
     }
 
     [[nodiscard]] static auto place_at(void* addr) -> port&
