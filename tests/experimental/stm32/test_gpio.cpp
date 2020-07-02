@@ -26,7 +26,7 @@ DAMAGE.
 
 #include <bitset>
 
-#include "taetl/experimental/hardware/stm32/stm32.hpp"
+#include "taetl/experimental/hardware/stm32/gpio.hpp"
 
 #include "catch2/catch.hpp"
 

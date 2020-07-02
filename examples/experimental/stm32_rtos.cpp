@@ -28,7 +28,7 @@ DAMAGE.
 #include "taetl/new.hpp"
 
 #define TAETL_RTOS_USE_STUBS
-#include "taetl/experimental/hardware/stm32/stm32.hpp"
+#include "taetl/experimental/hardware/stm32/gpio.hpp"
 #include "taetl/experimental/rtos/delay.hpp"
 #include "taetl/experimental/rtos/task.hpp"
 
