@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_HARDWARE_STM32_STM32_HPP
 
 #include "taetl/definitions.hpp"
-#include "taetl/new.hpp"
+#include "taetl/warning.hpp"
 
 namespace taetl::hardware::stm32
 {
@@ -90,7 +90,7 @@ struct port
 
     void write(pin_number const pin, pin_state const state)
     {
-        if (auto const raw_pin = val(pin); state == pin_state::set)
+        if (auto const raw_pin = val(pin); state == pin_state::reset)
         { memory.bit_set_reset = (1u << raw_pin); }
         else
         {

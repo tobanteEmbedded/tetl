@@ -23,49 +23,43 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
 
-#include "taetl/new.hpp"
+#include <bitset>
 
-#define TAETL_RTOS_USE_STUBS
 #include "taetl/experimental/hardware/stm32/stm32.hpp"
-#include "taetl/experimental/rtos/delay.hpp"
-#include "taetl/experimental/rtos/task.hpp"
 
-namespace rtos  = taetl::rtos;
-namespace stm32 = taetl::hardware::stm32;
+#include "catch2/catch.hpp"
 
-template <typename LoopType = rtos::forever>
-struct example_task
+using namespace taetl::hardware;
+using register_bits = std::bitset<32>;
+
+TEST_CASE("stm32: gpio", "[stm32][hardware]")
 {
-    auto run() -> void
+    auto memory          = stm32::gpio_memory_layout {};
+    memory.bit_set_reset = 0x0;
+    auto& gpio           = stm32::port::place_at(&memory);
+
+    SECTION("When pin is set to low, sets bits in BSRR lower word")
     {
-        auto loopControl = LoopType {};
-        while (loopControl())
-        {
-            stm32::gpio_memory_layout memory {};
-            auto& gpio_port = stm32::port::place_at(&memory);
-            gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
-            gpio_port.toggle_pin(stm32::pin_number::pin_13);
+        gpio.write(stm32::pin_number::pin_1, stm32::pin_state::reset);
+        REQUIRE(register_bits(memory.bit_set_reset).test(1));
 
-            rtos::yield_task();
-            rtos::delay(1);
-            rtos::delay_until(1, 1);
-        }
+        gpio.write(stm32::pin_number::pin_3, stm32::pin_state::reset);
+        REQUIRE(register_bits(memory.bit_set_reset).test(3));
 
-        rtos::delete_task(nullptr);
+        gpio.write(stm32::pin_number::pin_15, stm32::pin_state::reset);
+        REQUIRE(register_bits(memory.bit_set_reset).test(15));
     }
-};
 
-static example_task<rtos::once> task {};
+    SECTION("When pin is set to high, sets bits in BSRR upper word")
+    {
+        gpio.write(stm32::pin_number::pin_1, stm32::pin_state::set);
+        REQUIRE(register_bits(memory.bit_set_reset).test(1 + 16));
 
-int main()
-{
-    rtos::create_task(task, "test", 255);
-    rtos::start_scheduler();
+        gpio.write(stm32::pin_number::pin_3, stm32::pin_state::set);
+        REQUIRE(register_bits(memory.bit_set_reset).test(3 + 16));
 
-    // Run would normally be called by rtos::start_scheduler(). Only used for
-    // stubs.
-    task.run();
-    return 0;
+        gpio.write(stm32::pin_number::pin_15, stm32::pin_state::set);
+        REQUIRE(register_bits(memory.bit_set_reset).test(15 + 16));
+    }
 }
