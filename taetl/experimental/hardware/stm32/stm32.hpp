@@ -98,7 +98,11 @@ struct port
         }
     }
 
-    void toggle_pin(taetl::uint16_t const pin) { ignore_unused(pin); }
+    void toggle_pin(pin_number const pin)
+    {
+        auto const raw_pin = val(pin);
+        memory.output_data ^= (1u << raw_pin);
+    }
 
     [[nodiscard]] static auto place_at(void* addr) -> port&
     {

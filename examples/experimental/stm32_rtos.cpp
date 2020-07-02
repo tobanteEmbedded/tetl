@@ -44,6 +44,7 @@ struct example_task
             stm32::gpio_memory_layout memory {};
             auto& gpio_port = stm32::port::place_at(&memory);
             gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
+            gpio_port.toggle_pin(stm32::pin_number::pin_13);
 
             rtos::yield_task();
             rtos::delay(1);
