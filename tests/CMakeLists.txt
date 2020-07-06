@@ -21,6 +21,8 @@ set(TEST_SRC
     experimental/rtos/test_queue.cpp
     
     experimental/stm32/test_gpio.cpp
+
+    experimental/mcp23017/test_mcp23017.cpp
 )
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_SRC})
 add_executable(${PROJECT_NAME} ${TEST_SRC})
