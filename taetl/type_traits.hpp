@@ -312,6 +312,52 @@ template <class T>
 inline constexpr bool is_union_v = is_union<T>::value;
 
 /**
+ * @brief If T is an arithmetic type (that is, an integral type or a
+ * floating-point type) or a cv-qualified version thereof, provides the member
+ * constant value equal true. For any other type, value is false. The behavior
+ * of a program that adds specializations for is_arithmetic or is_arithmetic_v
+ * (since C++17) is undefined.
+ */
+template <class T>
+struct is_arithmetic
+    : taetl::integral_constant<bool, taetl::is_integral<T>::value
+                                         || taetl::is_floating_point<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+
+namespace detail
+{
+template <typename T, bool = taetl::is_arithmetic<T>::value>
+struct is_unsigned : taetl::integral_constant<bool, T(0) < T(-1)>
+{
+};
+
+template <typename T>
+struct is_unsigned<T, false> : taetl::false_type
+{
+};
+}  // namespace detail
+
+/**
+ * @brief If T is an arithmetic type, provides the member constant value equal
+ * to true if T(0) < T(-1): this results in true for the unsigned integer types
+ * and the type bool and in false for the signed integer types and the
+ * floating-point types. For any other type, value is false. The behavior of a
+ * program that adds specializations for is_unsigned or is_unsigned_v (since
+ * C++17) is undefined.
+ */
+template <typename T>
+struct is_unsigned : detail::is_unsigned<T>::type
+{
+};
+
+template <class T>
+inline constexpr bool is_unsigned_v = is_unsigned<T>::value;
+
+/**
  * @brief Provides member typedef type, which is defined as T if B is true at
  * compile time, or as F if B is false.
  */

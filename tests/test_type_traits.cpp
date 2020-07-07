@@ -208,6 +208,24 @@ TEST_CASE("type_traits: is_union", "[type_traits]")
     STATIC_REQUIRE(taetl::is_union_v<struct C*> == false);
 }
 
+TEST_CASE("type_traits: is_arithmetic", "[type_traits]")
+{
+    STATIC_REQUIRE(taetl::is_arithmetic<bool>::value);
+    STATIC_REQUIRE(taetl::is_arithmetic<int>::value);
+    STATIC_REQUIRE(taetl::is_arithmetic<int const>::value);
+    STATIC_REQUIRE(taetl::is_arithmetic_v<float>);
+    STATIC_REQUIRE(taetl::is_arithmetic_v<float const>);
+    STATIC_REQUIRE(taetl::is_arithmetic_v<char>);
+    STATIC_REQUIRE(taetl::is_arithmetic_v<char const>);
+
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<int&>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<int*>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<float&>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<float*>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<char&>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<char*>::value);
+}
+
 TEST_CASE("type_traits: conditional", "[type_traits]")
 {
     using taetl::conditional;
