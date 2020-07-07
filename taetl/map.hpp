@@ -187,6 +187,7 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
+        // TODO: Replace with calls to destructor
         ::memset(data_, 0, capacity_ * sizeof(value_type));
         size_ = 0;
     }
@@ -199,10 +200,7 @@ public:
     constexpr auto insert(value_type const& value) noexcept
         -> taetl::pair<iterator, bool>
     {
-        if (size_ == capacity_)
-        {
-            return {end(), false};
-        }
+        if (size_ == capacity_) { return {end(), false}; }
 
         auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
         ::new (addr) value_type {value};
@@ -216,10 +214,7 @@ public:
      */
     constexpr auto insert(value_type&& value) -> taetl::pair<iterator, bool>
     {
-        if (size_ == capacity_)
-        {
-            return {end(), false};
-        }
+        if (size_ == capacity_) { return {end(), false}; }
 
         auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
         ::new (addr) value_type {value};
@@ -233,10 +228,7 @@ public:
     {
         for (auto i = begin(); i != end(); ++i)
         {
-            if (i->first == key)
-            {
-                return i;
-            }
+            if (i->first == key) { return i; }
         }
         return nullptr;
     }
@@ -249,10 +241,7 @@ public:
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {
-            if (i->first == key)
-            {
-                return i;
-            }
+            if (i->first == key) { return i; }
         }
 
         return nullptr;

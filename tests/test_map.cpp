@@ -78,53 +78,47 @@ TEST_CASE("map: operator[]", "[map]")
 
 TEST_CASE("map: begin/cbegin", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    REQUIRE(map.begin() == map.cbegin());
-    REQUIRE(map.begin()->second == 143);
+    auto m = taetl::make::map<int, int, 4> {};
+    m.insert({1, 143});
+    REQUIRE(m.begin() == m.cbegin());
+    REQUIRE(m.begin()->second == 143);
 }
 
 TEST_CASE("map: end/cend", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    REQUIRE(map.end() == map.cend());
+    auto m = taetl::make::map<int, int, 4> {};
+    m.insert({1, 143});
+    REQUIRE(m.end() == m.cend());
 }
 
 TEST_CASE("map: ranged-based-for", "[map]")
 {
     WHEN("mutable")
     {
-        auto map = taetl::make::map<int, int, 4> {};
-        map.insert({1, 143});
-        map.insert({2, 143});
-        map.insert({3, 143});
+        auto m = taetl::make::map<int, int, 4> {};
+        m.insert({1, 143});
+        m.insert({2, 143});
+        m.insert({3, 143});
 
         auto result = 0;
-        for (auto const& item : map)
-        {
-            result += item.second;
-        }
+        for (auto const& item : m) { result += item.second; }
 
         REQUIRE(result == 143 * 3);
     }
 
     WHEN("const")
     {
-        auto const map = []() {
-            auto map = taetl::make::map<int, int, 4> {};
-            map.insert({1, 42});
-            map.insert({2, 42});
-            map.insert({3, 42});
-            map.insert({4, 42});
-            return map;
+        auto const m = []() {
+            auto r = taetl::make::map<int, int, 4> {};
+            r.insert({1, 42});
+            r.insert({2, 42});
+            r.insert({3, 42});
+            r.insert({4, 42});
+            return r;
         }();
 
         auto result = 0;
-        for (auto const& item : map)
-        {
-            result += item.second;
-        }
+        for (auto const& item : m) { result += item.second; }
 
         REQUIRE(result == 42 * 4);
     }
