@@ -7,6 +7,7 @@ set(TEST_SRC
     test_algorithm.cpp
     test_array.cpp
     test_bit.cpp
+    test_bitset.cpp
     test_definitions.cpp
     test_numeric.cpp
     test_map.cpp

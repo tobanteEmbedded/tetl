@@ -24,49 +24,23 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_DEFINITONS_HPP
-#define TAETL_DEFINITONS_HPP
+#include "taetl/bitset.hpp"
 
-#include "version.hpp"
+#include "catch2/catch.hpp"
 
-#include <assert.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-
-/**
- * @brief Namespace for the taetl library.
- */
-namespace taetl
+TEST_CASE("bitset: construct default", "[bit]")
 {
-using int8_t = int8_t;
-static_assert(sizeof(taetl::int8_t) == 1, "int8 size should be 1");
+    auto set = taetl::bitset<10> {};
+    REQUIRE_FALSE(set.test(0));
+}
 
-using int16_t = int16_t;
-static_assert(sizeof(taetl::int16_t) == 2, "int16 size should be 2");
-
-using int32_t = int32_t;
-static_assert(sizeof(taetl::int32_t) == 4, "int32 size should be 4");
-
-using int64_t = int64_t;
-static_assert(sizeof(taetl::int64_t) == 8, "int64 size should be 8");
-
-using uint8_t = uint8_t;
-static_assert(sizeof(taetl::uint8_t) == 1, "uint8 size should be 1");
-
-using uint16_t = uint16_t;
-static_assert(sizeof(taetl::uint16_t) == 2, "uint16 size should be 2");
-
-using uint32_t = uint32_t;
-static_assert(sizeof(taetl::uint32_t) == 4, "uint32 size should be 4");
-
-using uint64_t = uint64_t;
-static_assert(sizeof(taetl::uint64_t) == 8, "uint64 size should be 8");
-
-using size_t    = size_t;
-using ptrdiff_t = ptrdiff_t;
-using nullptr_t = decltype(nullptr);
-
-}  // namespace taetl
-#endif  // TAETL_DEFINITONS_HPP
+TEST_CASE("bitset: set/reset/flip", "[bit]")
+{
+    auto b = taetl::bitset<10> {};
+    b.set(100);
+    REQUIRE(b.test(100) >= 1);
+    b.reset(100);
+    REQUIRE(b.test(100) == 0);
+    b.flip(100);
+    REQUIRE(b.test(100) >= 1);
+}
