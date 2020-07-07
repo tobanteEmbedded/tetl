@@ -42,14 +42,14 @@ template <taetl::size_t N>
 class bitset
 {
 public:
-    bitset();
+    constexpr bitset();
 
-    auto operator[](taetl::size_t bit) const -> bool;
-    auto test(taetl::size_t bit) const -> bool;
+    constexpr auto operator[](taetl::size_t bit) const -> bool;
+    constexpr auto test(taetl::size_t bit) const -> bool;
 
-    auto set(taetl::size_t bit) -> void;
-    auto reset(taetl::size_t bit) -> void;
-    auto flip(taetl::size_t bit) -> void;
+    constexpr auto set(taetl::size_t bit) -> void;
+    constexpr auto reset(taetl::size_t bit) -> void;
+    constexpr auto flip(taetl::size_t bit) -> void;
 
 private:
     static constexpr taetl::size_t bits_in_int = CHAR_BIT * sizeof(unsigned);
@@ -57,36 +57,36 @@ private:
 };
 
 template <taetl::size_t N>
-bitset<N>::bitset() : data_()
+constexpr bitset<N>::bitset() : data_()
 {
 }
 
 template <taetl::size_t N>
-auto bitset<N>::operator[](taetl::size_t bit) const -> bool
+constexpr auto bitset<N>::operator[](taetl::size_t bit) const -> bool
 {
     return test(bit);
 }
 
 template <taetl::size_t N>
-auto bitset<N>::test(taetl::size_t bit) const -> bool
+constexpr auto bitset<N>::test(taetl::size_t bit) const -> bool
 {
     return ((data_[bit / bits_in_int] & (1U << (bit % bits_in_int))) != 0);
 }
 
 template <taetl::size_t N>
-void bitset<N>::set(taetl::size_t bit)
+constexpr auto bitset<N>::set(taetl::size_t bit) -> void
 {
     data_[bit / bits_in_int] |= (1U << (bit % bits_in_int));
 }
 
 template <taetl::size_t N>
-void bitset<N>::reset(taetl::size_t bit)
+constexpr auto bitset<N>::reset(taetl::size_t bit) -> void
 {
     data_[bit / bits_in_int] &= ~(1U << (bit % bits_in_int));
 }
 
 template <taetl::size_t N>
-void bitset<N>::flip(taetl::size_t bit)
+constexpr auto bitset<N>::flip(taetl::size_t bit) -> void
 {
     data_[bit / bits_in_int] ^= (1U << (bit % bits_in_int));
 }
