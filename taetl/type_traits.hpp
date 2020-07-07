@@ -38,10 +38,10 @@ template <typename Type, Type val>
 struct integral_constant
 {
     static constexpr Type value = val;
-    typedef Type value_type;
-    typedef integral_constant<Type, val> type;
+    using value_type            = Type;
+    using type                  = integral_constant<Type, val>;
     constexpr operator value_type() const noexcept { return value; }
-    constexpr value_type operator()() const noexcept { return value; }
+    constexpr auto operator()() const noexcept -> value_type { return value; }
 };
 
 template <typename Type, Type val>
@@ -53,13 +53,13 @@ using false_type = integral_constant<bool, false>;
 template <typename Type>
 struct remove_const
 {
-    typedef Type type;
+    using type = Type;
 };
 
 template <typename Type>
 struct remove_const<Type const>
 {
-    typedef Type type;
+    using type = Type;
 };
 
 template <class T>
@@ -69,13 +69,13 @@ using remove_const_t = typename remove_const<T>::type;
 template <typename Type>
 struct remove_volatile
 {
-    typedef Type type;
+    using type = Type;
 };
 
 template <typename Type>
 struct remove_volatile<Type volatile>
 {
-    typedef Type type;
+    using type = Type;
 };
 
 template <class T>
@@ -95,19 +95,19 @@ using remove_cv_t = typename remove_cv<T>::type;
 template <class T>
 struct remove_reference
 {
-    typedef T type;
+    using type = T;
 };
 
 template <class T>
 struct remove_reference<T&>
 {
-    typedef T type;
+    using type = T;
 };
 
 template <class T>
 struct remove_reference<T&&>
 {
-    typedef T type;
+    using type = T;
 };
 
 template <class T>
@@ -318,13 +318,13 @@ inline constexpr bool is_union_v = is_union<T>::value;
 template <bool B, class T, class F>
 struct conditional
 {
-    typedef T type;
+    using type = T;
 };
 
 template <class T, class F>
 struct conditional<false, T, F>
 {
-    typedef F type;
+    using type = F;
 };
 
 template <bool B, class T, class F>
@@ -342,7 +342,7 @@ struct enable_if
 template <typename Type>
 struct enable_if<true, Type>
 {
-    typedef Type type;
+    using type = Type;
 };
 
 }  // namespace taetl
