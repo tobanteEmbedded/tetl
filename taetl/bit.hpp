@@ -35,7 +35,7 @@ namespace taetl
 /**
  * @brief Indicates the endianness of all scalar types.
  *
- * @detail: If all scalar types are little-endian, taetl::endian::native equals
+ * @details If all scalar types are little-endian, taetl::endian::native equals
  * taetl::endian::little. If all scalar types are big-endian,
  * taetl::endian::native equals taetl::endian::big
  */
@@ -52,6 +52,25 @@ enum class endian
 #endif
 };
 
+/**
+ * @brief Returns the number of 1 bits in the value of x.
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ */
+template <class T>
+[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
+{
+    // TODO: Limit (SFINAE) to unsigned types. Fix conversion warnings.
+    T count = 0;
+    while (input)
+    {
+        count = count + (input & 1);
+        input = input >> 1;
+    }
+    return static_cast<int>(count);
+}
 }  // namespace taetl
 
 #endif  // TAETL_BIT_HPP

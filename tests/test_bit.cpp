@@ -33,3 +33,43 @@ TEST_CASE("bit: endian", "[bit]")
     REQUIRE(taetl::endian::native == taetl::endian::little);
     REQUIRE(taetl::endian::big != taetl::endian::little);
 }
+
+TEST_CASE("bit: popcount constexpr", "[bit]")
+{
+    STATIC_REQUIRE(taetl::popcount(uint8_t {1}) == 1);
+    STATIC_REQUIRE(taetl::popcount(uint8_t {2}) == 1);
+    STATIC_REQUIRE(taetl::popcount(uint8_t {3}) == 2);
+    STATIC_REQUIRE(taetl::popcount(uint8_t {0xFF}) == 8);
+}
+
+TEST_CASE("bit: popcount(uint8)", "[bit]")
+{
+    REQUIRE(taetl::popcount(uint8_t {1}) == 1);
+    REQUIRE(taetl::popcount(uint8_t {2}) == 1);
+    REQUIRE(taetl::popcount(uint8_t {3}) == 2);
+    REQUIRE(taetl::popcount(uint8_t {0xFF}) == 8);
+}
+
+TEST_CASE("bit: popcount(uint16)", "[bit]")
+{
+    REQUIRE(taetl::popcount(uint16_t {1}) == 1);
+    REQUIRE(taetl::popcount(uint16_t {2}) == 1);
+    REQUIRE(taetl::popcount(uint16_t {3}) == 2);
+    REQUIRE(taetl::popcount(uint16_t {0xFFFF}) == 16);
+}
+
+TEST_CASE("bit: popcount(uint32)", "[bit]")
+{
+    REQUIRE(taetl::popcount(uint32_t {1}) == 1);
+    REQUIRE(taetl::popcount(uint32_t {2}) == 1);
+    REQUIRE(taetl::popcount(uint32_t {3}) == 2);
+    REQUIRE(taetl::popcount(uint32_t {0xFFFFFFFF}) == 32);
+}
+
+TEST_CASE("bit: popcount(uint64)", "[bit]")
+{
+    REQUIRE(taetl::popcount(uint64_t {1}) == 1);
+    REQUIRE(taetl::popcount(uint64_t {2}) == 1);
+    REQUIRE(taetl::popcount(uint64_t {3}) == 2);
+    REQUIRE(taetl::popcount(uint64_t {0xFFFFFFFFFFFFFFFF}) == 64);
+}
