@@ -40,7 +40,7 @@ constexpr uint8_t ntoh(uint8_t v) noexcept { return v; }
 constexpr int8_t ntoh(int8_t v) noexcept { return v; }
 constexpr uint16_t ntoh(uint16_t v) noexcept
 {
-    return (v << uint16_t {8}) | (v >> uint16_t {8});
+    return uint16_t(v << uint16_t {8}) | uint16_t(v >> uint16_t {8});
 }
 constexpr uint32_t ntoh(uint32_t v) noexcept
 {
