@@ -226,6 +226,27 @@ TEST_CASE("type_traits: is_arithmetic", "[type_traits]")
     STATIC_REQUIRE_FALSE(taetl::is_arithmetic<char*>::value);
 }
 
+TEST_CASE("type_traits: is_unsigned", "[type_traits]")
+{
+    class A
+    {
+    };
+    enum B : unsigned
+    {
+    };
+    enum class C : unsigned
+    {
+    };
+
+    STATIC_REQUIRE(taetl::is_unsigned<unsigned int>::value);
+
+    STATIC_REQUIRE_FALSE(taetl::is_unsigned<A>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_unsigned<float>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_unsigned<signed int>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_unsigned<B>::value);
+    STATIC_REQUIRE_FALSE(taetl::is_unsigned<C>::value);
+}
+
 TEST_CASE("type_traits: conditional", "[type_traits]")
 {
     using taetl::conditional;
