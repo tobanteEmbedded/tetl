@@ -38,58 +38,32 @@ namespace taetl
  *
  * @todo Converted to and from strings and integers. Add operators & more docs.
  */
-template <taetl::size_t N>
+template <size_t NumberOfBits>
 class bitset
 {
 public:
-    constexpr bitset();
+    constexpr bitset() noexcept = default;
 
-    constexpr auto operator[](taetl::size_t bit) const -> bool;
-    constexpr auto test(taetl::size_t bit) const -> bool;
+    constexpr auto set(size_t const pos) -> void
+    {
+        bits_[pos >> 3] |= (1 << (pos & 0x7));
+    }
 
-    constexpr auto set(taetl::size_t bit) -> void;
-    constexpr auto reset(taetl::size_t bit) -> void;
-    constexpr auto flip(taetl::size_t bit) -> void;
+    [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
+    {
+        return (bits_[pos >> 3] & (1 << (pos & 0x7))) != 0;
+    }
+
+    [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
+    {
+        return test(pos);
+    }
 
 private:
-    static constexpr taetl::size_t bits_in_int = CHAR_BIT * sizeof(unsigned);
-    array<unsigned, N> data_;
+    static constexpr size_t size_          = NumberOfBits;
+    static constexpr size_t allocated_     = NumberOfBits >> 3;
+    array<unsigned char, allocated_> bits_ = {};
 };
-
-template <taetl::size_t N>
-constexpr bitset<N>::bitset() : data_()
-{
-}
-
-template <taetl::size_t N>
-constexpr auto bitset<N>::operator[](taetl::size_t bit) const -> bool
-{
-    return test(bit);
-}
-
-template <taetl::size_t N>
-constexpr auto bitset<N>::test(taetl::size_t bit) const -> bool
-{
-    return ((data_[bit / bits_in_int] & (1U << (bit % bits_in_int))) != 0);
-}
-
-template <taetl::size_t N>
-constexpr auto bitset<N>::set(taetl::size_t bit) -> void
-{
-    data_[bit / bits_in_int] |= (1U << (bit % bits_in_int));
-}
-
-template <taetl::size_t N>
-constexpr auto bitset<N>::reset(taetl::size_t bit) -> void
-{
-    data_[bit / bits_in_int] &= ~(1U << (bit % bits_in_int));
-}
-
-template <taetl::size_t N>
-constexpr auto bitset<N>::flip(taetl::size_t bit) -> void
-{
-    data_[bit / bits_in_int] ^= (1U << (bit % bits_in_int));
-}
 
 }  // namespace taetl
 

@@ -39,64 +39,17 @@ TEST_CASE("bitset: set", "[bit]")
     WHEN("b is mutable")
     {
         auto b = taetl::bitset<10> {};
-        b.set(100);
-        REQUIRE(b.test(100));
+        b.set(1);
+        REQUIRE(b.test(1));
     }
 
     WHEN("b is constexpr")
     {
         auto b = []() {
             auto b = taetl::bitset<10> {};
-            b.set(100);
+            b.set(1);
             return b;
         }();
-        REQUIRE(b[100]);
-    }
-}
-
-TEST_CASE("bitset: reset", "[bit]")
-{
-    WHEN("b is mutable")
-    {
-        auto b = taetl::bitset<10> {};
-        b.set(100);
-        REQUIRE(b.test(100));
-        b.reset(100);
-        REQUIRE_FALSE(b.test(100));
-    }
-
-    WHEN("b is constexpr")
-    {
-        auto b = []() {
-            auto b = taetl::bitset<10> {};
-            b.set(100);
-            b.reset(100);
-            return b;
-        }();
-        REQUIRE_FALSE(b[100]);
-    }
-}
-
-TEST_CASE("bitset: flip", "[bit]")
-{
-    WHEN("b is mutable")
-    {
-        auto b = taetl::bitset<10> {};
-        b.set(100);
-        REQUIRE(b.test(100));
-        b.flip(100);
-        REQUIRE_FALSE(b.test(100));
-    }
-
-    WHEN("b is constexpr")
-    {
-        auto b = []() {
-            auto b = taetl::bitset<10> {};
-            b.set(100);
-            REQUIRE(b.test(100));
-            b.flip(100);
-            return b;
-        }();
-        REQUIRE_FALSE(b[100]);
+        REQUIRE(b[1]);
     }
 }
