@@ -67,7 +67,7 @@ TEST_CASE("ratio: ratio_add", "[ratio]")
 
 TEST_CASE("ratio: ratio_subtract", "[ratio]")
 {
-    WHEN("1/4 - 1/6 = 3/12")
+    WHEN("1/4 - 1/6 = 1/12")
     {
         using one_fourth = taetl::ratio<1, 4>;
         using one_sixth  = taetl::ratio<1, 6>;
