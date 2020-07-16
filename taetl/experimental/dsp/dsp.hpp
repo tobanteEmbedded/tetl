@@ -29,6 +29,7 @@ DAMAGE.
 
 #include "taetl/array.hpp"
 #include "taetl/definitions.hpp"
+#include "taetl/tuple.hpp"
 #include "taetl/utility.hpp"
 
 namespace taetl
@@ -132,6 +133,47 @@ constexpr auto Z(T val = T {})
 {
     static_assert(I <= 0, "Delay should be negative");
     return delay<T, I * -1> {val};
+}
+
+namespace internal
+{
+// TODO: Implement index_sequence & tuple_size
+
+// template <typename Tuple, taetl::size_t... Indices, typename... Tn>
+// void for_each_fork_impl(Tuple&& tuple, taetl::index_sequence<Indices...>,
+//                         Tn... val)
+// {
+//     (taetl::get<Indices>(taetl::forward<Tuple>(tuple))(val...), ...);
+// }
+template <typename Tuple, typename... Tn>
+void for_each_fork(Tuple&& tuple, Tn... val)
+{
+    // constexpr taetl::size_t N
+    //     = taetl::tuple_size<taetl::remove_reference_t<Tuple>>::value;
+    // for_each_fork_impl(taetl::forward<Tuple>(tuple),
+    //                    taetl::make_index_sequence<N> {}, val...);
+}
+
+template <typename... T>
+struct fork_impl
+{
+    fork_impl(T&&... val) : nodes_ {taetl::forward<T>(val)...} { }
+
+    template <typename... Tn>
+    void operator()(Tn... val) const
+    {
+        for_each_fork(nodes_, val...);
+    }
+
+private:
+    taetl::tuple<T...> nodes_;
+};
+}  // namespace internal
+
+template <typename... T>
+auto fork(T&&... val)
+{
+    return internal::fork_impl<T...> {taetl::forward<T>(val)...};
 }
 
 }  // namespace dsp
