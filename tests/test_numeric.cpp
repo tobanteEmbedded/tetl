@@ -54,3 +54,14 @@ TEST_CASE("numeric: accumulate", "[numeric]")
     auto func = [](double a, double b) { return a + (b * 2); };
     REQUIRE(taetl::accumulate(vec.begin(), vec.end(), 0.0, func) == 20.0);
 }
+
+TEST_CASE("numeric: gcd", "[numeric]")
+{
+    REQUIRE(taetl::gcd(5, 10) == 5);
+    REQUIRE(taetl::gcd(10, 5) == 5);
+    STATIC_REQUIRE(taetl::gcd(10, 5) == 5);
+
+    REQUIRE(taetl::gcd(30, 105) == 15);
+    REQUIRE(taetl::gcd(105, 30) == 15);
+    STATIC_REQUIRE(taetl::gcd(105, 30) == 15);
+}

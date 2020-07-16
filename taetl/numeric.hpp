@@ -72,6 +72,18 @@ template <typename Type>
     return input;
 }
 
+/**
+ * @brief Computes the greatest common divisor of the integers m and n.
+ *
+ * @todo Actual return type is taetl::common_type. Needs to be implemented.
+ */
+template <typename M, typename N>
+[[nodiscard]] constexpr auto gcd(M m, N n) noexcept
+{
+    if (n == 0) { return m; }
+    return gcd(n, m % n);
+}
+
 }  // namespace taetl
 
 #endif  // TAETL_NUMERIC_HPP
