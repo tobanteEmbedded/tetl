@@ -29,14 +29,16 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("experimental/net/mutable_buffer: construct empty", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: construct empty",
+          "[experimental][net]")
 {
     auto const buffer = taetl::net::mutable_buffer {};
     REQUIRE(buffer.data() == nullptr);
     REQUIRE(buffer.size() == 0);
 }
 
-TEST_CASE("experimental/net/mutable_buffer: construct range", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: construct range",
+          "[experimental][net]")
 {
     auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
@@ -70,14 +72,16 @@ TEST_CASE("experimental/net/mutable_buffer: operator+", "[experimental][net]")
     }
 }
 
-TEST_CASE("experimental/net/const_buffer: construct empty", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: construct empty",
+          "[experimental][net]")
 {
     auto const buffer = taetl::net::const_buffer {};
     REQUIRE(buffer.data() == nullptr);
     REQUIRE(buffer.size() == 0);
 }
 
-TEST_CASE("experimental/net/const_buffer: construct range", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: construct range",
+          "[experimental][net]")
 {
     auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
