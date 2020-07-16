@@ -41,3 +41,22 @@ TEST_CASE("dsp: constant", "[dsp]")
     REQUIRE(constant {0.0}() == 0.0);
     REQUIRE(constant {42}() == 42);
 }
+
+TEST_CASE("dsp: constant literal", "[dsp]")
+{
+    using namespace taetl::dsp::literals;
+    REQUIRE(0.0_K() == 0.0);
+    REQUIRE(42_K() == 42);
+}
+
+TEST_CASE("dsp: pipe", "[dsp]")
+{
+    auto in  = identity {};
+    auto foo = [](int v) -> int { return v * 3; };
+    auto bar = [](int v) -> int { return v / 2; };
+    auto f   = in | foo | bar;
+
+    REQUIRE(f(0) == 0);
+    REQUIRE(f(2) == 3);
+    REQUIRE(f(3) == 4);
+}

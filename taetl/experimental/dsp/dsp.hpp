@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_DSP_DSP_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/utility.hpp"
 
 namespace taetl
 {
@@ -41,7 +42,7 @@ struct identity
     constexpr auto operator()(T val) const
     {
         return val;
-    };
+    }
 };
 
 template <typename T = float>
@@ -53,7 +54,7 @@ struct constant
     constexpr auto operator()(Args...) const
     {
         return val_;
-    };
+    }
 
 private:
     T const val_;
@@ -71,6 +72,34 @@ constexpr auto operator""_K(unsigned long long val)
     return constant {val};
 }
 }  // namespace literals
+
+template <typename L, typename R>
+struct pipe
+{
+    constexpr pipe(L lhs, R rhs) : lhs_ {lhs}, rhs_ {rhs} { }
+
+    template <typename... T>
+    constexpr auto operator()(T... val)
+    {
+        return call_rhs(lhs_(val...));
+    }
+
+private:
+    template <typename... T>
+    constexpr auto call_rhs(T... val)
+    {
+        return rhs_(taetl::forward<T>(val)...);
+    }
+
+    L lhs_;
+    R rhs_;
+};
+
+template <typename L, typename R>
+constexpr auto operator|(L lhs, R rhs)
+{
+    return pipe<L, R> {lhs, rhs};
+}
 }  // namespace dsp
 }  // namespace taetl
 
