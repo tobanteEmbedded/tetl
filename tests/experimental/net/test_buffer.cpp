@@ -29,14 +29,14 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("mutable_buffer: construct empty", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: construct empty", "[experimental][net]")
 {
     auto const buffer = taetl::net::mutable_buffer {};
     REQUIRE(buffer.data() == nullptr);
     REQUIRE(buffer.size() == 0);
 }
 
-TEST_CASE("mutable_buffer: construct range", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: construct range", "[experimental][net]")
 {
     auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
@@ -44,7 +44,7 @@ TEST_CASE("mutable_buffer: construct range", "[experimental][net]")
     REQUIRE(mem.size() == buffer.size());
 }
 
-TEST_CASE("mutable_buffer: operator+=", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: operator+=", "[experimental][net]")
 {
     auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
@@ -52,7 +52,7 @@ TEST_CASE("mutable_buffer: operator+=", "[experimental][net]")
     REQUIRE(mem.data() != buffer.data());
 }
 
-TEST_CASE("mutable_buffer: operator+", "[experimental][net]")
+TEST_CASE("experimental/net/mutable_buffer: operator+", "[experimental][net]")
 {
     auto mem    = taetl::array<char, 32> {};
     auto buffer = taetl::net::make_buffer(mem.data(), mem.size());
@@ -70,14 +70,14 @@ TEST_CASE("mutable_buffer: operator+", "[experimental][net]")
     }
 }
 
-TEST_CASE("const_buffer: construct empty", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: construct empty", "[experimental][net]")
 {
     auto const buffer = taetl::net::const_buffer {};
     REQUIRE(buffer.data() == nullptr);
     REQUIRE(buffer.size() == 0);
 }
 
-TEST_CASE("const_buffer: construct range", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: construct range", "[experimental][net]")
 {
     auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
@@ -85,7 +85,7 @@ TEST_CASE("const_buffer: construct range", "[experimental][net]")
     REQUIRE(mem.size() == buffer.size());
 }
 
-TEST_CASE("const_buffer: operator+=", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: operator+=", "[experimental][net]")
 {
     auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());
@@ -94,7 +94,7 @@ TEST_CASE("const_buffer: operator+=", "[experimental][net]")
     REQUIRE(mem.size() - 4 == buffer.size());
 }
 
-TEST_CASE("const_buffer: operator+", "[experimental][net]")
+TEST_CASE("experimental/net/const_buffer: operator+", "[experimental][net]")
 {
     auto const mem = taetl::array<char, 32> {};
     auto buffer    = taetl::net::make_buffer(mem.data(), mem.size());

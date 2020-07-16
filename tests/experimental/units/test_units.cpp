@@ -30,7 +30,7 @@ DAMAGE.
 
 using namespace taetl::experimental;
 
-TEST_CASE("units: add", "[units]")
+TEST_CASE("experimental/units: add", "[units][experimental]")
 {
     auto const t1 = units::quantity<int, units::time> {3};
     auto const t2 = units::quantity<int, units::time> {143};
@@ -38,7 +38,7 @@ TEST_CASE("units: add", "[units]")
     REQUIRE(t3.value() == 146);
 }
 
-TEST_CASE("units: add constexpr", "[units]")
+TEST_CASE("experimental/units: add constexpr", "[units][experimental]")
 {
     constexpr auto t1 = units::quantity<int, units::mass> {3};
     constexpr auto t2 = units::quantity<int, units::mass> {143};

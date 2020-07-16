@@ -30,7 +30,7 @@ DAMAGE.
 
 namespace rtos = taetl::rtos;
 
-TEST_CASE("rtos/queue: construct", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]")
 {
     rtos::queue<char, 100> q1 {};
     rtos::queue<int, 100> q2 {};
@@ -39,7 +39,7 @@ TEST_CASE("rtos/queue: construct", "[experimental][rtos]")
     rtos::queue<void*, 100> q5 {};
 }
 
-TEST_CASE("rtos/queue: capacity", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     REQUIRE(q1.capacity() == 1);
@@ -49,14 +49,14 @@ TEST_CASE("rtos/queue: capacity", "[experimental][rtos]")
     REQUIRE(q3.capacity() == 128);
 }
 
-TEST_CASE("rtos/queue: send", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: send", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false
     REQUIRE(q1.send(1, 0) == false);
 }
 
-TEST_CASE("rtos/queue: receive io/out argument", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: receive io/out argument", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false
@@ -64,7 +64,7 @@ TEST_CASE("rtos/queue: receive io/out argument", "[experimental][rtos]")
     REQUIRE(q1.receive(i, 0) == false);
 }
 
-TEST_CASE("rtos/queue: receive pair<bool,T>", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: receive pair<bool,T>", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false
@@ -73,13 +73,13 @@ TEST_CASE("rtos/queue: receive pair<bool,T>", "[experimental][rtos]")
     REQUIRE(value == 0);
 }
 
-TEST_CASE("rtos/queue: reset", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: reset", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     REQUIRE(q1.reset() == true);
 }
 
-TEST_CASE("rtos/queue: messages_waiting", "[experimental][rtos]")
+TEST_CASE("experimental/rtos/queue: messages_waiting", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns 0

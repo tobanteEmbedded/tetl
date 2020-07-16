@@ -34,7 +34,7 @@ struct driver
 {
 };
 
-TEST_CASE("mcp23017: init", "[mcp23017][hardware]")
+TEST_CASE("experimental/mcp23017: init", "[hardware][experimental]")
 {
     mcp23017::device<driver> device {};
     REQUIRE(device.init() == true);

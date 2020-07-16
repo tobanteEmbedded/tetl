@@ -33,7 +33,7 @@ DAMAGE.
 using namespace taetl::hardware;
 using register_bits = std::bitset<32>;
 
-TEST_CASE("stm32: gpio", "[stm32][hardware]")
+TEST_CASE("experimental/stm32: gpio", "[stm32][hardware][experimental]")
 {
     auto memory          = stm32::gpio_memory_layout {};
     memory.bit_set_reset = 0x0;

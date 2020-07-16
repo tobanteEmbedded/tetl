@@ -28,26 +28,26 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("dsp: identity", "[dsp]")
+TEST_CASE("experimental/dsp: identity", "[dsp][experimental]")
 {
     auto id = taetl::dsp::identity {};
     REQUIRE(id(0) == 0);
 }
 
-TEST_CASE("dsp: constant", "[dsp]")
+TEST_CASE("experimental/dsp: constant", "[dsp][experimental]")
 {
     REQUIRE(taetl::dsp::constant {0.0}() == 0.0);
     REQUIRE(taetl::dsp::constant {42}() == 42);
 }
 
-TEST_CASE("dsp: constant literal", "[dsp]")
+TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
 {
     using namespace taetl::dsp::literals;
     REQUIRE(0.0_K() == 0.0);
     REQUIRE(42_K() == 42);
 }
 
-TEST_CASE("dsp: pipe", "[dsp]")
+TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]")
 {
     auto in  = taetl::dsp::identity {};
     auto foo = [](int v) -> int { return v * 3; };
@@ -59,7 +59,7 @@ TEST_CASE("dsp: pipe", "[dsp]")
     REQUIRE(f(3) == 4);
 }
 
-TEST_CASE("dsp: delay", "[dsp]")
+TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
 {
     WHEN("by zero (no delay)")
     {
