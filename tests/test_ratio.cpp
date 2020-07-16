@@ -33,3 +33,13 @@ TEST_CASE("ratio: construct", "[ratio]")
     taetl::ratio<1, 1> r {};
     taetl::ignore_unused(r);
 }
+
+TEST_CASE("ratio: num/den", "[ratio]")
+{
+    STATIC_REQUIRE(taetl::ratio<1, 2>::type::num == 1);
+    STATIC_REQUIRE(taetl::ratio<1, 2>::type::den == 2);
+    STATIC_REQUIRE(taetl::ratio<3, 6>::type::num == 1);
+    STATIC_REQUIRE(taetl::ratio<3, 6>::type::den == 2);
+    STATIC_REQUIRE(taetl::ratio<2, 8>::type::num == 1);
+    STATIC_REQUIRE(taetl::ratio<2, 8>::type::den == 4);
+}

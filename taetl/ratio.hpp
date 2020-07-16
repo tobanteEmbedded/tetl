@@ -29,36 +29,51 @@ DAMAGE.
 
 // TAETL
 #include "definitions.hpp"
+#include "numeric.hpp"
 
 namespace taetl
 {
+namespace internal
+{
+template <typename T>
+[[nodiscard]] constexpr auto sign(T val)
+{
+    if (val < 0) { return T(-1); }
+    return T(1);
+}
+}  // namespace internal
 /**
  * @brief The class template provides compile-time rational
  * arithmetic support. Each instantiation of this template exactly represents
  * any finite rational number as long as its numerator Num and denominator Denom
- * are representable as compile-time constants of type taetl::intmax_t.
+ * are representable as compile-time constants of type intmax_t.
  */
-template <taetl::intmax_t Num, taetl::intmax_t Denom = 1>
-class ratio
+template <intmax_t Num, intmax_t Denom = 1>
+struct ratio
 {
+    static constexpr intmax_t num = internal::sign(Num) * internal::sign(Denom)
+                                    * abs(Num) / gcd(Num, Denom);
+    static constexpr intmax_t den = abs(Denom) / gcd(Num, Denom);
+
+    using type = ratio<num, den>;
 };
 
-using atto  = taetl::ratio<1, 1000000000000000000>;
-using femto = taetl::ratio<1, 1000000000000000>;
-using pico  = taetl::ratio<1, 1000000000000>;
-using nano  = taetl::ratio<1, 1000000000>;
-using micro = taetl::ratio<1, 1000000>;
-using milli = taetl::ratio<1, 1000>;
-using centi = taetl::ratio<1, 100>;
-using deci  = taetl::ratio<1, 10>;
-using deca  = taetl::ratio<10, 1>;
-using hecto = taetl::ratio<100, 1>;
-using kilo  = taetl::ratio<1000, 1>;
-using mega  = taetl::ratio<1000000, 1>;
-using giga  = taetl::ratio<1000000000, 1>;
-using tera  = taetl::ratio<1000000000000, 1>;
-using peta  = taetl::ratio<1000000000000000, 1>;
-using exa   = taetl::ratio<1000000000000000000, 1>;
+using atto  = ratio<1, 1000000000000000000>;
+using femto = ratio<1, 1000000000000000>;
+using pico  = ratio<1, 1000000000000>;
+using nano  = ratio<1, 1000000000>;
+using micro = ratio<1, 1000000>;
+using milli = ratio<1, 1000>;
+using centi = ratio<1, 100>;
+using deci  = ratio<1, 10>;
+using deca  = ratio<10, 1>;
+using hecto = ratio<100, 1>;
+using kilo  = ratio<1000, 1>;
+using mega  = ratio<1000000, 1>;
+using giga  = ratio<1000000000, 1>;
+using tera  = ratio<1000000000000, 1>;
+using peta  = ratio<1000000000000000, 1>;
+using exa   = ratio<1000000000000000000, 1>;
 
 }  // namespace taetl
 
