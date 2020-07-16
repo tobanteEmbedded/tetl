@@ -87,6 +87,18 @@ template <class R1, class R2>
 using ratio_add
     = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
 
+/**
+ * @brief The alias template taetl::ratio_subtract denotes the result of
+ * subtracting two exact rational fractions represented by the taetl::ratio
+ * specializations R1 and R2. The result is a taetl::ratio specialization
+ * taetl::ratio<U, V>, such that given Num == R1::num * R2::den - R2::num *
+ * R1::den and Denom == R1::den * R2::den (computed without arithmetic
+ * overflow), U is taetl::ratio<Num, Denom>::num and V is taetl::ratio<Num,
+ * Denom>::den.
+ */
+template <class R1, class R2>
+using ratio_subtract
+    = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
 }  // namespace taetl
 
 #endif  // TAETL_RATIO_HPP

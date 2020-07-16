@@ -49,8 +49,8 @@ TEST_CASE("ratio: ratio_add", "[ratio]")
     WHEN("1/4 + 1/6 = 5/12")
     {
         using one_fourth = taetl::ratio<1, 4>;
-        using one_sixth = taetl::ratio<1, 6>;
-        using sum       = taetl::ratio_add<one_fourth, one_sixth>;
+        using one_sixth  = taetl::ratio<1, 6>;
+        using sum        = taetl::ratio_add<one_fourth, one_sixth>;
         STATIC_REQUIRE(sum::num == 5);
         STATIC_REQUIRE(sum::den == 12);
     }
@@ -62,5 +62,26 @@ TEST_CASE("ratio: ratio_add", "[ratio]")
         using sum       = taetl::ratio_add<two_third, one_sixth>;
         STATIC_REQUIRE(sum::num == 5);
         STATIC_REQUIRE(sum::den == 6);
+    }
+}
+
+TEST_CASE("ratio: ratio_subtract", "[ratio]")
+{
+    WHEN("1/4 - 1/6 = 3/12")
+    {
+        using one_fourth = taetl::ratio<1, 4>;
+        using one_sixth  = taetl::ratio<1, 6>;
+        using sum        = taetl::ratio_subtract<one_fourth, one_sixth>;
+        STATIC_REQUIRE(sum::num == 1);
+        STATIC_REQUIRE(sum::den == 12);
+    }
+
+    WHEN("2/3 - 1/6 = 3/6 = 1/2")
+    {
+        using two_third = taetl::ratio<2, 3>;
+        using one_sixth = taetl::ratio<1, 6>;
+        using sum       = taetl::ratio_subtract<two_third, one_sixth>;
+        STATIC_REQUIRE(sum::num == 1);
+        STATIC_REQUIRE(sum::den == 2);
     }
 }
