@@ -43,3 +43,24 @@ TEST_CASE("ratio: num/den", "[ratio]")
     STATIC_REQUIRE(taetl::ratio<2, 8>::type::num == 1);
     STATIC_REQUIRE(taetl::ratio<2, 8>::type::den == 4);
 }
+
+TEST_CASE("ratio: ratio_add", "[ratio]")
+{
+    WHEN("1/4 + 1/6 = 5/12")
+    {
+        using one_fourth = taetl::ratio<1, 4>;
+        using one_sixth = taetl::ratio<1, 6>;
+        using sum       = taetl::ratio_add<one_fourth, one_sixth>;
+        STATIC_REQUIRE(sum::num == 5);
+        STATIC_REQUIRE(sum::den == 12);
+    }
+
+    WHEN("2/3 + 1/6 = 5/6")
+    {
+        using two_third = taetl::ratio<2, 3>;
+        using one_sixth = taetl::ratio<1, 6>;
+        using sum       = taetl::ratio_add<two_third, one_sixth>;
+        STATIC_REQUIRE(sum::num == 5);
+        STATIC_REQUIRE(sum::den == 6);
+    }
+}
