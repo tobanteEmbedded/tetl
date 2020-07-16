@@ -28,18 +28,16 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-using namespace taetl::dsp;
-
 TEST_CASE("dsp: identity", "[dsp]")
 {
-    auto id = identity {};
+    auto id = taetl::dsp::identity {};
     REQUIRE(id(0) == 0);
 }
 
 TEST_CASE("dsp: constant", "[dsp]")
 {
-    REQUIRE(constant {0.0}() == 0.0);
-    REQUIRE(constant {42}() == 42);
+    REQUIRE(taetl::dsp::constant {0.0}() == 0.0);
+    REQUIRE(taetl::dsp::constant {42}() == 42);
 }
 
 TEST_CASE("dsp: constant literal", "[dsp]")
@@ -51,7 +49,7 @@ TEST_CASE("dsp: constant literal", "[dsp]")
 
 TEST_CASE("dsp: pipe", "[dsp]")
 {
-    auto in  = identity {};
+    auto in  = taetl::dsp::identity {};
     auto foo = [](int v) -> int { return v * 3; };
     auto bar = [](int v) -> int { return v / 2; };
     auto f   = in | foo | bar;
@@ -59,4 +57,36 @@ TEST_CASE("dsp: pipe", "[dsp]")
     REQUIRE(f(0) == 0);
     REQUIRE(f(2) == 3);
     REQUIRE(f(3) == 4);
+}
+
+TEST_CASE("dsp: delay", "[dsp]")
+{
+    WHEN("by zero (no delay)")
+    {
+        auto in = taetl::dsp::identity {};
+        auto f  = in | taetl::dsp::Z<0, int>();
+        REQUIRE(f(0) == 0);
+        REQUIRE(f(2) == 2);
+        REQUIRE(f(3) == 3);
+    }
+
+    WHEN("by one")
+    {
+        auto in = taetl::dsp::identity {};
+        auto f  = in | taetl::dsp::Z<-1, int>();
+        REQUIRE(f(0) == 0);
+        REQUIRE(f(2) == 0);
+        REQUIRE(f(3) == 2);
+        REQUIRE(f(4) == 3);
+    }
+
+    WHEN("by two")
+    {
+        auto in = taetl::dsp::identity {};
+        auto f  = in | taetl::dsp::Z<-2, int>();
+        REQUIRE(f(0) == 0);
+        REQUIRE(f(2) == 0);
+        REQUIRE(f(3) == 0);
+        REQUIRE(f(4) == 2);
+    }
 }

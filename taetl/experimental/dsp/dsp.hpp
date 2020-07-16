@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_DSP_DSP_HPP
 #define TAETL_DSP_DSP_HPP
 
+#include "taetl/array.hpp"
 #include "taetl/definitions.hpp"
 #include "taetl/utility.hpp"
 
@@ -100,6 +101,39 @@ constexpr auto operator|(L lhs, R rhs)
 {
     return pipe<L, R> {lhs, rhs};
 }
+
+template <typename T, int Z>
+struct delay
+{
+    constexpr delay() = default;
+    constexpr delay(T v)
+    {
+        for (auto& val : z_buffer_) { val = v; }
+    }
+
+    constexpr auto operator()(T const& val)
+    {
+        z_buffer_[head_] = val;
+        if (++head_ > Z) { head_ = 0; }
+
+        if (++tail_ > Z) { tail_ = 0; }
+        return z_buffer_[tail_];
+    };
+
+private:
+    using z_buffer_t = taetl::array<T, static_cast<size_t>(Z) + 1>;
+    typename z_buffer_t::size_type head_ = 0;
+    typename z_buffer_t::size_type tail_ = 0;
+    z_buffer_t z_buffer_                 = {};
+};
+
+template <int I, typename T = float>
+constexpr auto Z(T val = T {})
+{
+    static_assert(I <= 0, "Delay should be negative");
+    return delay<T, I * -1> {val};
+}
+
 }  // namespace dsp
 }  // namespace taetl
 
