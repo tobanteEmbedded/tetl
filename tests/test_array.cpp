@@ -53,10 +53,7 @@ TEST_CASE("array: range-for", "[array]")
     arr[3] = 3;
 
     auto counter = 0;
-    for (auto& x : arr)
-    {
-        REQUIRE(x == counter++);
-    }
+    for (auto& x : arr) { REQUIRE(x == counter++); }
 }
 
 TEST_CASE("array: range-for-const", "[array]")
@@ -72,10 +69,7 @@ TEST_CASE("array: range-for-const", "[array]")
     REQUIRE(arr.back() == 3);
 
     auto counter = 0;
-    for (auto const& x : arr)
-    {
-        REQUIRE(x == counter++);
-    }
+    for (auto const& x : arr) { REQUIRE(x == counter++); }
 }
 
 TEST_CASE("array: begin/end const", "[array]")
@@ -92,10 +86,7 @@ TEST_CASE("array: begin/end const", "[array]")
     REQUIRE(*arr.data() == 0);
 
     auto counter = 0;
-    for (auto const& x : arr)
-    {
-        REQUIRE(x == counter++);
-    }
+    for (auto const& x : arr) { REQUIRE(x == counter++); }
 }
 
 TEST_CASE("array: at", "[array]")

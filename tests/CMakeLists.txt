@@ -17,6 +17,8 @@ set(TEST_SRC
     test_type_traits.cpp
     test_vector.cpp
 
+    experimental/dsp/test_dsp.cpp
+
     experimental/net/test_buffer.cpp
     experimental/net/test_byte_order.cpp
 

@@ -24,26 +24,20 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
-#include <stdio.h>
+#include "taetl/experimental/dsp/dsp.hpp"
 
-// TAETL
-#include "taetl/string.hpp"
+#include "catch2/catch.hpp"
 
-int main()
+using namespace taetl::dsp;
+
+TEST_CASE("dsp: identity", "[dsp]")
 {
-    taetl::small_string str {};
+    auto id = identity {};
+    REQUIRE(id(0) == 0);
+}
 
-    const char* cptr = "C-string";
-    str.append(cptr, 4);
-
-    printf("\"%s\"\n", str.c_str());
-
-    for (auto& c : str) { printf("%c", c); }
-
-    printf("\nSize: %zu\n", str.size());
-    printf("Length: %zu\n", str.length());
-    printf("Capacity: %zu\n", str.capacity());
-
-    return 0;
+TEST_CASE("dsp: constant", "[dsp]")
+{
+    REQUIRE(constant {0.0}() == 0.0);
+    REQUIRE(constant {42}() == 42);
 }

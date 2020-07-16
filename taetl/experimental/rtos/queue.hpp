@@ -52,15 +52,12 @@ public:
 
     queue(queue&&)      = delete;
     queue(queue const&) = delete;
-    auto operator=(queue &&) -> queue& = delete;
+    auto operator=(queue&&) -> queue& = delete;
     auto operator=(queue const&) -> queue& = delete;
 
     ~queue()
     {
-        if (handle_ != nullptr)
-        {
-            vQueueDelete(handle_);
-        }
+        if (handle_ != nullptr) { vQueueDelete(handle_); }
     }
 
     auto capacity() const -> size_type { return Size; }

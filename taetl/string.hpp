@@ -38,10 +38,7 @@ namespace taetl
 constexpr inline auto strlen(const char* str) -> taetl::size_t
 {
     const char* s {};
-    for (s = str; *s; ++s)
-    {
-        ;
-    }
+    for (s = str; *s; ++s) { ; }
     return taetl::size_t(s - str);
 }
 
@@ -100,10 +97,7 @@ public:
      */
     constexpr auto at(taetl::size_t index) noexcept -> reference
     {
-        if (index < size_)
-        {
-            return data_[index];
-        }
+        if (index < size_) { return data_[index]; }
         return data_[size_];
     }
 
@@ -112,10 +106,7 @@ public:
      */
     constexpr auto at(taetl::size_t index) const noexcept -> const_reference
     {
-        if (index < size_)
-        {
-            return data_[index];
-        }
+        if (index < size_) { return data_[index]; }
         return data_[size_];
     }
 
@@ -124,10 +115,7 @@ public:
      */
     constexpr auto operator[](taetl::size_t index) noexcept -> reference
     {
-        if (index < size_)
-        {
-            return data_[index];
-        }
+        if (index < size_) { return data_[index]; }
         return data_[size_];
     }
 
@@ -137,10 +125,7 @@ public:
     constexpr auto operator[](taetl::size_t index) const noexcept
         -> const_reference
     {
-        if (index < size_)
-        {
-            return data_[index];
-        }
+        if (index < size_) { return data_[index]; }
         return data_[size_];
     }
 
@@ -228,10 +213,7 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : data_)
-        {
-            c = 0;
-        }
+        for (auto& c : data_) { c = 0; }
         size_ = 0;
     }
 
@@ -241,10 +223,7 @@ public:
     constexpr auto append(taetl::size_t count, CharType s) noexcept
         -> basic_string&
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            data_[size_ + i] = s;
-        }
+        for (taetl::size_t i = 0; i < count; i++) { data_[size_ + i] = s; }
         size_ += count;
         data_[size_] = 0;
 
@@ -268,10 +247,7 @@ public:
     constexpr auto append(const_pointer s, taetl::size_t count) noexcept
         -> basic_string&
     {
-        for (taetl::size_t i = 0; i < count; i++)
-        {
-            data_[size_ + i] = s[i];
-        }
+        for (taetl::size_t i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
         size_ += count;
         data_[size_] = 0;
 
@@ -284,10 +260,7 @@ public:
     constexpr auto insert(size_type index, size_type count,
                           CharType ch) noexcept -> basic_string&
     {
-        for (size_type i = index; i < count; i++)
-        {
-            data_[size_ + i] = ch;
-        }
+        for (size_type i = index; i < count; i++) { data_[size_ + i] = ch; }
         size_ += count;
         data_[size_] = 0;
         return *this;

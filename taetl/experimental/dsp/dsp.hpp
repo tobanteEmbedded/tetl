@@ -24,26 +24,54 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
-#include <stdio.h>
+#ifndef TAETL_DSP_DSP_HPP
+#define TAETL_DSP_DSP_HPP
 
-// TAETL
-#include "taetl/string.hpp"
+#include "taetl/definitions.hpp"
 
-int main()
+namespace taetl
 {
-    taetl::small_string str {};
+namespace dsp
+{
+struct identity
+{
+    constexpr identity() = default;
 
-    const char* cptr = "C-string";
-    str.append(cptr, 4);
+    template <typename T>
+    constexpr auto operator()(T val) const
+    {
+        return val;
+    };
+};
 
-    printf("\"%s\"\n", str.c_str());
+template <typename T = float>
+struct constant
+{
+    constexpr constant(T val) : val_ {val} { }
 
-    for (auto& c : str) { printf("%c", c); }
+    template <typename... Args>
+    constexpr auto operator()(Args...) const
+    {
+        return val_;
+    };
 
-    printf("\nSize: %zu\n", str.size());
-    printf("Length: %zu\n", str.length());
-    printf("Capacity: %zu\n", str.capacity());
+private:
+    T const val_;
+};
 
-    return 0;
+namespace literals
+{
+constexpr auto operator""_K(long double val) -> constant<long double>
+{
+    return constant {val};
 }
+constexpr auto operator""_K(unsigned long long val)
+    -> constant<unsigned long long>
+{
+    return constant {val};
+}
+}  // namespace literals
+}  // namespace dsp
+}  // namespace taetl
+
+#endif  // TAETL_DSP_DSP_HPP
