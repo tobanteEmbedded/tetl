@@ -24,51 +24,42 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_DEFINITONS_HPP
-#define TAETL_DEFINITONS_HPP
+#ifndef TAETL_RATIO_HPP
+#define TAETL_RATIO_HPP
 
-#include "version.hpp"
+// TAETL
+#include "definitions.hpp"
 
-#include <assert.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-
-/**
- * @brief Namespace for the taetl library.
- */
 namespace taetl
 {
-using int8_t = int8_t;
-static_assert(sizeof(taetl::int8_t) == 1, "int8 size should be 1");
+/**
+ * @brief The class template provides compile-time rational
+ * arithmetic support. Each instantiation of this template exactly represents
+ * any finite rational number as long as its numerator Num and denominator Denom
+ * are representable as compile-time constants of type taetl::intmax_t.
+ */
+template <taetl::intmax_t Num, taetl::intmax_t Denom = 1>
+class ratio
+{
+};
 
-using int16_t = int16_t;
-static_assert(sizeof(taetl::int16_t) == 2, "int16 size should be 2");
-
-using int32_t = int32_t;
-static_assert(sizeof(taetl::int32_t) == 4, "int32 size should be 4");
-
-using int64_t = int64_t;
-static_assert(sizeof(taetl::int64_t) == 8, "int64 size should be 8");
-
-using uint8_t = uint8_t;
-static_assert(sizeof(taetl::uint8_t) == 1, "uint8 size should be 1");
-
-using uint16_t = uint16_t;
-static_assert(sizeof(taetl::uint16_t) == 2, "uint16 size should be 2");
-
-using uint32_t = uint32_t;
-static_assert(sizeof(taetl::uint32_t) == 4, "uint32 size should be 4");
-
-using uint64_t = uint64_t;
-static_assert(sizeof(taetl::uint64_t) == 8, "uint64 size should be 8");
-
-using intmax_t  = intmax_t;
-using uintmax_t = uintmax_t;
-using size_t    = size_t;
-using ptrdiff_t = ptrdiff_t;
-using nullptr_t = decltype(nullptr);
+using atto  = taetl::ratio<1, 1000000000000000000>;
+using femto = taetl::ratio<1, 1000000000000000>;
+using pico  = taetl::ratio<1, 1000000000000>;
+using nano  = taetl::ratio<1, 1000000000>;
+using micro = taetl::ratio<1, 1000000>;
+using milli = taetl::ratio<1, 1000>;
+using centi = taetl::ratio<1, 100>;
+using deci  = taetl::ratio<1, 10>;
+using deca  = taetl::ratio<10, 1>;
+using hecto = taetl::ratio<100, 1>;
+using kilo  = taetl::ratio<1000, 1>;
+using mega  = taetl::ratio<1000000, 1>;
+using giga  = taetl::ratio<1000000000, 1>;
+using tera  = taetl::ratio<1000000000000, 1>;
+using peta  = taetl::ratio<1000000000000000, 1>;
+using exa   = taetl::ratio<1000000000000000000, 1>;
 
 }  // namespace taetl
-#endif  // TAETL_DEFINITONS_HPP
+
+#endif  // TAETL_RATIO_HPP

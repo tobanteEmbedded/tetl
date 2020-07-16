@@ -9,8 +9,9 @@ set(TEST_SRC
     test_bit.cpp
     test_bitset.cpp
     test_definitions.cpp
-    test_numeric.cpp
     test_map.cpp
+    test_numeric.cpp
+    test_ratio.cpp
     test_string.cpp
     test_string_constexpr.cpp
     test_tuple.cpp

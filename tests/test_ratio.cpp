@@ -23,52 +23,13 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#include "taetl/ratio.hpp"
+#include "taetl/warning.hpp"
 
-#ifndef TAETL_DEFINITONS_HPP
-#define TAETL_DEFINITONS_HPP
+#include "catch2/catch.hpp"
 
-#include "version.hpp"
-
-#include <assert.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-
-/**
- * @brief Namespace for the taetl library.
- */
-namespace taetl
+TEST_CASE("ratio: construct", "[ratio]")
 {
-using int8_t = int8_t;
-static_assert(sizeof(taetl::int8_t) == 1, "int8 size should be 1");
-
-using int16_t = int16_t;
-static_assert(sizeof(taetl::int16_t) == 2, "int16 size should be 2");
-
-using int32_t = int32_t;
-static_assert(sizeof(taetl::int32_t) == 4, "int32 size should be 4");
-
-using int64_t = int64_t;
-static_assert(sizeof(taetl::int64_t) == 8, "int64 size should be 8");
-
-using uint8_t = uint8_t;
-static_assert(sizeof(taetl::uint8_t) == 1, "uint8 size should be 1");
-
-using uint16_t = uint16_t;
-static_assert(sizeof(taetl::uint16_t) == 2, "uint16 size should be 2");
-
-using uint32_t = uint32_t;
-static_assert(sizeof(taetl::uint32_t) == 4, "uint32 size should be 4");
-
-using uint64_t = uint64_t;
-static_assert(sizeof(taetl::uint64_t) == 8, "uint64 size should be 8");
-
-using intmax_t  = intmax_t;
-using uintmax_t = uintmax_t;
-using size_t    = size_t;
-using ptrdiff_t = ptrdiff_t;
-using nullptr_t = decltype(nullptr);
-
-}  // namespace taetl
-#endif  // TAETL_DEFINITONS_HPP
+    taetl::ratio<1, 1> r {};
+    taetl::ignore_unused(r);
+}
