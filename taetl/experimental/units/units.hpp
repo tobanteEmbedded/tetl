@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_UNITS_UNITS_HPP
 
 #include "taetl/definitions.hpp"
+#include "taetl/ratio.hpp"
 
 namespace taetl::experimental::units
 {
@@ -41,9 +42,11 @@ struct length
 {
 };
 
-template <typename T, typename Dimensions>
+template <typename T, typename Dimensions, typename Ratio = ratio<1, 1>>
 struct quantity
 {
+    using ratio_type = Ratio;
+
     constexpr explicit quantity(T v) : val_ {v} { }
     constexpr auto value() const { return val_; }
 
