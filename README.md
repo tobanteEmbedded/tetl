@@ -3,18 +3,18 @@
 The tobanteAudio embedded template library is intended for micro controller where the `STL` is not available. Designed to have a similar API. This library supports `AVR/Arduino` micro controllers.
 
 ```sh
-git clone https://github.com/tobanteAudio/etl.git
+git clone https://github.com/tobanteAudio/taetl.git
 ```
 
 ## Status
 
-|                                                           LICENSE                                                           |                                                    Linux / macOS                                                    |                                                                Windows                                                                |                                                                AVR                                                                |                                   Issues                                    |                                                       Code Coverage                                                        |                                                                                                                        Codacy                                                                                                                         |
-| :-------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/etl.svg?branch=master)](https://travis-ci.org/tobanteAudio/etl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/etl.svg)](https://ci.appveyor.com/project/tobanteAudio/etl) | [![Cirrus CI Build Status](https://api.cirrus-ci.com/github/tobanteAudio/etl.svg)](https://cirrus-ci.com/github/tobanteAudio/etl) | ![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/etl.svg) | [![codecov](https://codecov.io/gh/tobanteAudio/etl/branch/master/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/etl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/etl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/etl&utm_campaign=Badge_Grade_Dashboard) |
+|                                                           LICENSE                                                           |                                                      Linux / macOS                                                      |                                                                  Windows                                                                  |                                                                  AVR                                                                  |                                    Issues                                     |                                                         Code Coverage                                                          |                                                                                                                          Codacy                                                                                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/taetl.svg)](https://ci.appveyor.com/project/tobanteAudio/taetl) | [![Cirrus CI Build Status](https://api.cirrus-ci.com/github/tobanteAudio/taetl.svg)](https://cirrus-ci.com/github/tobanteAudio/taetl) | ![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/master/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/taetl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/taetl&utm_campaign=Badge_Grade_Dashboard) |
 
 ## Table of Contents
 
-1. [Intro](#etl)
+1. [Intro](#taetl)
 2. [Status](#status)
 3. [Design Goals](#design-goals)
 4. [Documentation](#documentation)
@@ -64,12 +64,12 @@ The following steps explain how to add `etl` to your project. Embedded or deskto
 
 ### CMake
 
-Add `etl` as a git submodule or plain folder, then add these lines to your `CMakeLists.txt`:
+Add `taetl` as a git submodule or plain folder, then add these lines to your `CMakeLists.txt`:
 
 ```sh
 cd $YOUR_CMAKE_PROJECT
 mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/etl.git 3rd_party/etl
+git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/etl
 ```
 
 ```cmake
@@ -91,14 +91,14 @@ lib_deps =
      6337
 
      # Using library Name
-     etl
+     taetl
 
      # Depend on specific version
-     etl@0.2.0
+     taetl@0.2.0
      # Semantic Versioning Rules
-     etl@^0.2.0
-     etl@~0.2.0
-     etl@>=0.2.0
+     taetl@^0.2.0
+     taetl@~0.2.0
+     taetl@>=0.2.0
 ```
 
 #### CLI
@@ -108,11 +108,11 @@ lib_deps =
 platformio lib install 6337
 
 # Using library Name
-platformio lib install "etl"
+platformio lib install "taetl"
 
 # Install specific version
 platformio lib install 6337@0.2.0
-platformio lib install "etl@0.2.0"
+platformio lib install "taetl@0.2.0"
 ```
 
 ### Arduino IDE

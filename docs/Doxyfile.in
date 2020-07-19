@@ -1,5 +1,5 @@
 # Project setup
-PROJECT_NAME           = etl
+PROJECT_NAME           = taetl
 PROJECT_NUMBER         = 0.2.0
 
 # Main page and input dirs
