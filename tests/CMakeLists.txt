@@ -10,6 +10,7 @@ set(TEST_SRC
     test_bitset.cpp
     test_definitions.cpp
     test_map.cpp
+    test_mutex.cpp
     test_numeric.cpp
     test_ratio.cpp
     test_string.cpp
