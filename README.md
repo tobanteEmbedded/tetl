@@ -12,35 +12,23 @@ git clone https://github.com/tobanteAudio/taetl.git
 | :-------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![Build Status](https://travis-ci.org/tobanteAudio/taetl.svg?branch=master)](https://travis-ci.org/tobanteAudio/taetl) | [![AppVeyor Build status](https://img.shields.io/appveyor/ci/tobanteAudio/taetl.svg)](https://ci.appveyor.com/project/tobanteAudio/taetl) | [![Cirrus CI Build Status](https://api.cirrus-ci.com/github/tobanteAudio/taetl.svg)](https://cirrus-ci.com/github/tobanteAudio/taetl) | ![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/master/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/taetl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/taetl&utm_campaign=Badge_Grade_Dashboard) |
 
-## Table of Contents
-
-1. [Intro](#taetl)
-2. [Status](#status)
-3. [Design Goals](#design-goals)
-4. [Documentation](#documentation)
-5. [Project Integration](#project-integration)
-   - [CMake](#cmake)
-   - [PlatformIO](#platformio)
-   - [Arduino IDE](#arduino-ide)
-   - [Avr-gcc](#avr-gcc)
-6. [Examples](#examples)
-7. [Usage](#usage)
-   - [Algorithm](#algorithm)
-   - [Array](#array)
-   - [Numeric](#numeric)
-   - [String](#string)
-   - [Type Traits](#type-traits)
-8. [Roadmap](#roadmap)
-
 ## Design Goals
 
 - 100% portable
-- Modern C++17
+  - C++ core language + libc (e.g. newlib)
+- Header only
+- C++17
 - Similar api to the STL
 - No dynamic memory
 - `constexpr` all the things
-- Arduino IDE / PlatformIO compatible
 - Easy desktop development (cmake)
+  - Stubs for external dependencies (FreeRTOS)
+- Experimental headers
+  - Units
+  - Networking (buffers, ntoh, ...)
+  - FreeRTOS Abstraction
+  - STM32 HAL
+  - DSP DSL via Template Meta Programming
 
 ## Documentation
 
@@ -64,60 +52,35 @@ The following steps explain how to add `etl` to your project. Embedded or deskto
 
 ### CMake
 
-Add `taetl` as a git submodule or plain folder, then add these lines to your `CMakeLists.txt`:
+Add `taetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```sh
 cd $YOUR_CMAKE_PROJECT
 mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/etl
+git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ```
 
 ```cmake
-add_subdirectory(${PATH_TO_TAETL})
+add_subdirectory(3rd_party/taetl)
 target_link_libraries(${YOUR_TARGET} tobanteAudio::etl)
 ```
 
 ### PlatformIO
 
-#### platformio.ini
-
-```ini
-[env:myenv]
-platform = atmelavr
-framework = arduino
-build_flags = -std=c++17
-lib_deps =
-     # Using library Id
-     6337
-
-     # Using library Name
-     taetl
-
-     # Depend on specific version
-     taetl@0.2.0
-     # Semantic Versioning Rules
-     taetl@^0.2.0
-     taetl@~0.2.0
-     taetl@>=0.2.0
-```
-
-#### CLI
+Add `taetl` as a git submodule, then add these lines to your `platformio.ini`:
 
 ```sh
-# Using library Id
-platformio lib install 6337
-
-# Using library Name
-platformio lib install "taetl"
-
-# Install specific version
-platformio lib install 6337@0.2.0
-platformio lib install "taetl@0.2.0"
+cd $YOUR_CMAKE_PROJECT
+mkdir 3rd_party
+git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ```
 
-### Arduino IDE
-
-Coming soon...
+```ini
+[env:yourenv]
+; ...
+build_unflags = -std=gnu++11
+build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
+```
 
 ### Avr-gcc
 
@@ -125,7 +88,9 @@ An example on how to build the `algorithm.cpp` file with `avr-gcc`. C++17 is req
 
 ```sh
 cd $PROJECT_ROOT
-avr-gcc --std=c++17 -O3 -Wall -Wextra -o example_algorithm -Isrc examples/algorithm.cpp
+mkdir 3rd_party
+git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
+avr-gcc --std=c++17 -O3 -Wall -Wextra -o example_algorithm -I3rd_party/taetl examples/algorithm.cpp
 ```
 
 ## Examples
@@ -143,7 +108,7 @@ cmake --build  .
 
 ## Usage
 
-For detailed examples look at the `examples` subdirectory or the test files in `tests`. Building the [documentation](#documentation) with `Doxygen` will give details about the complete API.
+For detailed examples look at the `examples` subdirectory or the test files in `tests`. Building the [documentation](#documentation) with `doxygen` will give details about the complete API.
 
 ## Roadmap
 
@@ -166,7 +131,8 @@ For detailed examples look at the `examples` subdirectory or the test files in `
   - Sorted insert
   - Add missing methods
 - Unordered Map
-- Pair
+- Pair/Tuple
+  - Tuple Size
   - Write tests
 - Set
 - Testing
@@ -176,3 +142,6 @@ For detailed examples look at the `examples` subdirectory or the test files in `
   - float
 - Vector
   - Add examples
+- Misc
+  - Swap
+  - Hash
