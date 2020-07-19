@@ -24,46 +24,46 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/experimental/net/byte_order.hpp"
+#include "etl/experimental/net/byte_order.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("experimental/net: ntoh/hton char", "[experimental][net]")
 {
-    using namespace taetl::net;
+    using namespace etl::net;
     REQUIRE(ntoh(hton(char {0})) == 0);
     REQUIRE(ntoh(hton(char {1})) == 1);
     REQUIRE(ntoh(hton(char {42})) == 42);
 }
 
-TEST_CASE("experimental/net: ntoh/hton taetl::int8_t", "[experimental][net]")
+TEST_CASE("experimental/net: ntoh/hton etl::int8_t", "[experimental][net]")
 {
-    using namespace taetl::net;
-    REQUIRE(ntoh(hton(taetl::int8_t {0})) == 0);
-    REQUIRE(ntoh(hton(taetl::int8_t {1})) == 1);
-    REQUIRE(ntoh(hton(taetl::int8_t {42})) == 42);
+    using namespace etl::net;
+    REQUIRE(ntoh(hton(etl::int8_t {0})) == 0);
+    REQUIRE(ntoh(hton(etl::int8_t {1})) == 1);
+    REQUIRE(ntoh(hton(etl::int8_t {42})) == 42);
 }
 
-TEST_CASE("experimental/net: ntoh/hton taetl::uint8_t", "[experimental][net]")
+TEST_CASE("experimental/net: ntoh/hton etl::uint8_t", "[experimental][net]")
 {
-    using namespace taetl::net;
-    REQUIRE(ntoh(hton(taetl::uint8_t {0})) == 0);
-    REQUIRE(ntoh(hton(taetl::uint8_t {1})) == 1);
-    REQUIRE(ntoh(hton(taetl::uint8_t {42})) == 42);
+    using namespace etl::net;
+    REQUIRE(ntoh(hton(etl::uint8_t {0})) == 0);
+    REQUIRE(ntoh(hton(etl::uint8_t {1})) == 1);
+    REQUIRE(ntoh(hton(etl::uint8_t {42})) == 42);
 }
 
-TEST_CASE("experimental/net: ntoh/hton taetl::uint16_t", "[experimental][net]")
+TEST_CASE("experimental/net: ntoh/hton etl::uint16_t", "[experimental][net]")
 {
-    using namespace taetl::net;
-    REQUIRE(ntoh(hton(taetl::uint16_t {0})) == 0);
-    REQUIRE(ntoh(hton(taetl::uint16_t {1})) == 1);
-    REQUIRE(ntoh(hton(taetl::uint16_t {42})) == 42);
+    using namespace etl::net;
+    REQUIRE(ntoh(hton(etl::uint16_t {0})) == 0);
+    REQUIRE(ntoh(hton(etl::uint16_t {1})) == 1);
+    REQUIRE(ntoh(hton(etl::uint16_t {42})) == 42);
 }
 
-TEST_CASE("experimental/net: ntoh/hton taetl::uint32_t", "[experimental][net]")
+TEST_CASE("experimental/net: ntoh/hton etl::uint32_t", "[experimental][net]")
 {
-    using namespace taetl::net;
-    REQUIRE(ntoh(hton(taetl::uint32_t {0})) == 0);
-    REQUIRE(ntoh(hton(taetl::uint32_t {1})) == 1);
-    REQUIRE(ntoh(hton(taetl::uint32_t {42})) == 42);
+    using namespace etl::net;
+    REQUIRE(ntoh(hton(etl::uint32_t {0})) == 0);
+    REQUIRE(ntoh(hton(etl::uint32_t {1})) == 1);
+    REQUIRE(ntoh(hton(etl::uint32_t {42})) == 42);
 }

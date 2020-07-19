@@ -24,16 +24,16 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/map.hpp"
-#include "taetl/warning.hpp"
+#include "etl/map.hpp"
+#include "etl/warning.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("map: construct", "[map]")
 {
-    taetl::make::map<int, int, 4> test {};
+    etl::make::map<int, int, 4> test {};
 
-    auto func = [](taetl::map<int, int> const& m) {
+    auto func = [](etl::map<int, int> const& m) {
         REQUIRE(m.empty() == true);
         REQUIRE(m.size() == 0);
         REQUIRE(m.max_size() == 4);
@@ -43,7 +43,7 @@ TEST_CASE("map: construct", "[map]")
         // there should be no elements
         for (auto const& item : m)
         {
-            taetl::ignore_unused(item);
+            etl::ignore_unused(item);
             REQUIRE(false);
         }
     };
@@ -53,7 +53,7 @@ TEST_CASE("map: construct", "[map]")
 
 TEST_CASE("map: at", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     map.insert({1, 143});
     map.insert({2, 42});
     REQUIRE(map.at(1) == 143);
@@ -66,7 +66,7 @@ TEST_CASE("map: at", "[map]")
 
 TEST_CASE("map: operator[]", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     map.insert({1, 143});
     map.insert({2, 42});
     REQUIRE(map[1] == 143);
@@ -78,7 +78,7 @@ TEST_CASE("map: operator[]", "[map]")
 
 TEST_CASE("map: begin/cbegin", "[map]")
 {
-    auto m = taetl::make::map<int, int, 4> {};
+    auto m = etl::make::map<int, int, 4> {};
     m.insert({1, 143});
     REQUIRE(m.begin() == m.cbegin());
     REQUIRE(m.begin()->second == 143);
@@ -86,7 +86,7 @@ TEST_CASE("map: begin/cbegin", "[map]")
 
 TEST_CASE("map: end/cend", "[map]")
 {
-    auto m = taetl::make::map<int, int, 4> {};
+    auto m = etl::make::map<int, int, 4> {};
     m.insert({1, 143});
     REQUIRE(m.end() == m.cend());
 }
@@ -95,7 +95,7 @@ TEST_CASE("map: ranged-based-for", "[map]")
 {
     WHEN("mutable")
     {
-        auto m = taetl::make::map<int, int, 4> {};
+        auto m = etl::make::map<int, int, 4> {};
         m.insert({1, 143});
         m.insert({2, 143});
         m.insert({3, 143});
@@ -109,7 +109,7 @@ TEST_CASE("map: ranged-based-for", "[map]")
     WHEN("const")
     {
         auto const m = []() {
-            auto r = taetl::make::map<int, int, 4> {};
+            auto r = etl::make::map<int, int, 4> {};
             r.insert({1, 42});
             r.insert({2, 42});
             r.insert({3, 42});
@@ -126,7 +126,7 @@ TEST_CASE("map: ranged-based-for", "[map]")
 
 TEST_CASE("map: empty", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     REQUIRE(map.empty() == true);
     map.insert({1, 143});
     REQUIRE(map.empty() == false);
@@ -134,7 +134,7 @@ TEST_CASE("map: empty", "[map]")
 
 TEST_CASE("map: size", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     REQUIRE(map.size() == 0);
     map.insert({1, 143});
     REQUIRE(map.size() == 1);
@@ -146,7 +146,7 @@ TEST_CASE("map: size", "[map]")
 
 TEST_CASE("map: count/contains", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     map.insert({1, 143});
     map.insert({2, 143});
     map.insert({3, 143});
@@ -160,7 +160,7 @@ TEST_CASE("map: count/contains", "[map]")
 
 TEST_CASE("map: clear", "[map]")
 {
-    auto map = taetl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, int, 4> {};
     map.insert({1, 143});
     map.insert({2, 143});
     map.insert({3, 143});
@@ -176,8 +176,8 @@ TEST_CASE("map: clear", "[map]")
 
 TEST_CASE("map: insert(value_type const&)", "[map]")
 {
-    auto map  = taetl::make::map<int, int, 4> {};
-    auto pair = taetl::pair<int, int> {1, 143};
+    auto map  = etl::make::map<int, int, 4> {};
+    auto pair = etl::pair<int, int> {1, 143};
     auto func = [&](auto const& p) {
         map.insert(p);
         REQUIRE(map.size() == 1);
@@ -190,14 +190,14 @@ TEST_CASE("map: insert(value_type const&)", "[map]")
 
 TEST_CASE("map: insert(value_type &&)", "[map]")
 {
-    auto map = taetl::make::map<int, float, 4> {};
+    auto map = etl::make::map<int, float, 4> {};
 
-    map.insert(taetl::pair<int, float> {2, 143.0f});
+    map.insert(etl::pair<int, float> {2, 143.0f});
     REQUIRE(map.size() == 1);
     REQUIRE(map.count(2) == 1);
     REQUIRE(map.find(2)->second == 143.0f);
 
-    map.insert(taetl::pair<int, float> {3, 42.0f});
+    map.insert(etl::pair<int, float> {3, 42.0f});
     REQUIRE(map.size() == 2);
     REQUIRE(map.count(3) == 1);
     REQUIRE(map.find(3)->second == 42.0f);

@@ -23,18 +23,18 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "taetl/tuple.hpp"
+#include "etl/tuple.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("tuple: constructor", "[tuple]")
 {
-    taetl::tuple<int, float> t1 {1, 2.0F};
+    etl::tuple<int, float> t1 {1, 2.0F};
 }
 
 TEST_CASE("tuple: get", "[tuple]")
 {
-    auto t1 = taetl::tuple<int, float> {1, 2.0F};
-    REQUIRE(taetl::get<0>(t1) == 1);
-    REQUIRE(taetl::get<1>(t1) == 2.0F);
+    auto t1 = etl::tuple<int, float> {1, 2.0F};
+    REQUIRE(etl::get<0>(t1) == 1);
+    REQUIRE(etl::get<1>(t1) == 2.0F);
 }

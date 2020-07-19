@@ -26,11 +26,11 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "taetl/string.hpp"
+#include "etl/string.hpp"
 
 TEST_CASE("string: constexpr", "[string]")
 {
-    constexpr taetl::string<16> str1 {};
+    constexpr etl::string<16> str1 {};
 
     STATIC_REQUIRE(str1.empty() == true);
     STATIC_REQUIRE(str1.capacity() == 16);
@@ -38,7 +38,7 @@ TEST_CASE("string: constexpr", "[string]")
     STATIC_REQUIRE(str1.length() == 0);
 
     constexpr auto str2 = []() {
-        taetl::string<16> str {};
+        etl::string<16> str {};
         // APPEND 4 CHARACTERS
         const char* cptr = "C-string";
         str.append(cptr, 4);

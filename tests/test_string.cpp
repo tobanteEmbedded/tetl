@@ -26,35 +26,35 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "taetl/algorithm.hpp"
-#include "taetl/string.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/string.hpp"
 
 TEST_CASE("string: strlen", "[string]")
 {
-    STATIC_REQUIRE(taetl::strlen("") == 0);
-    STATIC_REQUIRE(taetl::strlen("a") == 1);
-    STATIC_REQUIRE(taetl::strlen("to") == 2);
-    STATIC_REQUIRE(taetl::strlen("xxxxxxxxxx") == 10);
+    STATIC_REQUIRE(etl::strlen("") == 0);
+    STATIC_REQUIRE(etl::strlen("a") == 1);
+    STATIC_REQUIRE(etl::strlen("to") == 2);
+    STATIC_REQUIRE(etl::strlen("xxxxxxxxxx") == 10);
 }
 
 TEST_CASE("string: ctor - default", "[string]")
 {
-    taetl::small_string str {};
+    etl::small_string str {};
 
     REQUIRE(str.empty() == true);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == taetl::size_t(0));
-    REQUIRE(str.length() == taetl::size_t(0));
+    REQUIRE(str.size() == etl::size_t(0));
+    REQUIRE(str.length() == etl::size_t(0));
 }
 
 TEST_CASE("string: ctor - char const*", "[string]")
 {
-    taetl::small_string str {"abc"};
+    etl::small_string str {"abc"};
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == taetl::size_t(3));
-    REQUIRE(str.length() == taetl::size_t(3));
+    REQUIRE(str.size() == etl::size_t(3));
+    REQUIRE(str.length() == etl::size_t(3));
     REQUIRE(str[0] == 'a');
     REQUIRE(str[1] == 'b');
     REQUIRE(str[2] == 'c');
@@ -63,12 +63,12 @@ TEST_CASE("string: ctor - char const*", "[string]")
 
 TEST_CASE("string: ctor - char const*, size_t", "[string]")
 {
-    taetl::small_string str {"abc", 3};
+    etl::small_string str {"abc", 3};
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == taetl::size_t(3));
-    REQUIRE(str.length() == taetl::size_t(3));
+    REQUIRE(str.size() == etl::size_t(3));
+    REQUIRE(str.length() == etl::size_t(3));
     REQUIRE(str[0] == 'a');
     REQUIRE(str[1] == 'b');
     REQUIRE(str[2] == 'c');
@@ -79,7 +79,7 @@ TEST_CASE("string: at", "[string]")
 {
     WHEN("mutable")
     {
-        auto str = taetl::small_string {"abc"};
+        auto str = etl::small_string {"abc"};
         REQUIRE(str.at(0) == 'a');
         REQUIRE(str.at(1) == 'b');
         REQUIRE(str.at(2) == 'c');
@@ -88,7 +88,7 @@ TEST_CASE("string: at", "[string]")
 
     WHEN("const")
     {
-        auto const str = taetl::small_string {"abc"};
+        auto const str = etl::small_string {"abc"};
         REQUIRE(str.at(0) == 'a');
         REQUIRE(str.at(1) == 'b');
         REQUIRE(str.at(2) == 'c');
@@ -100,7 +100,7 @@ TEST_CASE("string: operator[]", "[string]")
 {
     WHEN("mutable")
     {
-        auto str = taetl::small_string {"abc"};
+        auto str = etl::small_string {"abc"};
         REQUIRE(str[0] == 'a');
         REQUIRE(str[1] == 'b');
         REQUIRE(str[2] == 'c');
@@ -109,7 +109,7 @@ TEST_CASE("string: operator[]", "[string]")
 
     WHEN("const")
     {
-        auto const str = taetl::small_string {"abc"};
+        auto const str = etl::small_string {"abc"};
         REQUIRE(str[0] == 'a');
         REQUIRE(str[1] == 'b');
         REQUIRE(str[2] == 'c');
@@ -119,27 +119,27 @@ TEST_CASE("string: operator[]", "[string]")
 
 TEST_CASE("string: begin/end", "[string]")
 {
-    taetl::small_string str {};
+    etl::small_string str {};
 
-    taetl::for_each(str.begin(), str.end(),
-                    [](auto& c) { REQUIRE(c == char(0)); });
+    etl::for_each(str.begin(), str.end(),
+                  [](auto& c) { REQUIRE(c == char(0)); });
 }
 
 TEST_CASE("string: cbegin/cend", "[string]")
 {
-    taetl::small_string str {};
+    etl::small_string str {};
 
-    taetl::for_each(str.cbegin(), str.cend(),
-                    [](auto const& c) { REQUIRE(c == char(0)); });
+    etl::for_each(str.cbegin(), str.cend(),
+                  [](auto const& c) { REQUIRE(c == char(0)); });
 }
 
 TEST_CASE("string: append(count, CharType)", "[string]")
 {
-    auto str = taetl::small_string {};
+    auto str = etl::small_string {};
     str.append(4, 'a');
 
-    REQUIRE(str.size() == taetl::size_t(4));
-    REQUIRE(str.length() == taetl::size_t(4));
+    REQUIRE(str.size() == etl::size_t(4));
+    REQUIRE(str.length() == etl::size_t(4));
     REQUIRE(str[0] == 'a');
     REQUIRE(str[1] == 'a');
     REQUIRE(str[2] == 'a');
@@ -149,7 +149,7 @@ TEST_CASE("string: append(count, CharType)", "[string]")
 
 TEST_CASE("string: append(const_pointer, count)", "[string]")
 {
-    taetl::small_string str {};
+    etl::small_string str {};
 
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
@@ -157,8 +157,8 @@ TEST_CASE("string: append(const_pointer, count)", "[string]")
 
     REQUIRE(str.empty() == false);
     REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == taetl::size_t(4));
-    REQUIRE(str.length() == taetl::size_t(4));
+    REQUIRE(str.size() == etl::size_t(4));
+    REQUIRE(str.length() == etl::size_t(4));
     REQUIRE(str[0] == 'C');
     REQUIRE(str[1] == '-');
     REQUIRE(str[2] == 's');
@@ -168,12 +168,12 @@ TEST_CASE("string: append(const_pointer, count)", "[string]")
 
 TEST_CASE("string: append(const_pointer)", "[string]")
 {
-    taetl::small_string str {};
+    etl::small_string str {};
     const char* cptr = "C-string";
     str.append(cptr);
 
-    REQUIRE(str.size() == taetl::strlen(cptr));
-    REQUIRE(str.length() == taetl::strlen(cptr));
+    REQUIRE(str.size() == etl::strlen(cptr));
+    REQUIRE(str.length() == etl::strlen(cptr));
     REQUIRE(str[0] == 'C');
     REQUIRE(str[1] == '-');
     REQUIRE(str[2] == 's');
@@ -183,12 +183,12 @@ TEST_CASE("string: append(const_pointer)", "[string]")
 TEST_CASE("string: algorithms", "[string]")
 {
     // setup
-    taetl::small_string str {"aaaaaa"};
-    taetl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
+    etl::small_string str {"aaaaaa"};
+    etl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
     // test
-    taetl::for_each(str.cbegin(), str.cend(),
-                    [](auto const& c) { REQUIRE(c == 'b'); });
+    etl::for_each(str.cbegin(), str.cend(),
+                  [](auto const& c) { REQUIRE(c == 'b'); });
 
     REQUIRE(str.front() == 'b');
     REQUIRE(str.back() == 'b');
@@ -197,19 +197,19 @@ TEST_CASE("string: algorithms", "[string]")
 TEST_CASE("string: clear", "[string]")
 {
     // setup
-    taetl::small_string str {"junk"};
+    etl::small_string str {"junk"};
     REQUIRE(str.empty() == false);
 
     // test
     str.clear();
     REQUIRE(str.capacity() == str.max_size());
     REQUIRE(str.empty() == true);
-    REQUIRE(str.size() == taetl::size_t(0));
+    REQUIRE(str.size() == etl::size_t(0));
 }
 
 TEST_CASE("string: insert(index, count, CharType)", "[string]")
 {
-    auto str = taetl::small_string {};
+    auto str = etl::small_string {};
     REQUIRE(str.empty() == true);
 
     str.insert(0, 4, 'a');
@@ -224,7 +224,7 @@ TEST_CASE("string: insert(index, count, CharType)", "[string]")
 
 TEST_CASE("string: insert(index, CharType const*)", "[string]")
 {
-    auto str = taetl::small_string {};
+    auto str = etl::small_string {};
     REQUIRE(str.empty() == true);
 
     str.insert(0, "abcd");
@@ -239,7 +239,7 @@ TEST_CASE("string: insert(index, CharType const*)", "[string]")
 
 TEST_CASE("string: insert(index, CharType const*, count)", "[string]")
 {
-    auto str = taetl::small_string {};
+    auto str = etl::small_string {};
     REQUIRE(str.empty() == true);
 
     str.insert(0, "abcd", 3);

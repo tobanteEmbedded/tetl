@@ -24,14 +24,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/algorithm.hpp"
-#include "taetl/vector.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("vector: ConstructDefault", "[vector]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
 
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
@@ -39,7 +39,7 @@ TEST_CASE("vector: ConstructDefault", "[vector]")
     REQUIRE(vec.capacity() == 16);
     REQUIRE(vec.data() != nullptr);
 
-    auto func = [](taetl::vector<int> const& v) {
+    auto func = [](etl::vector<int> const& v) {
         REQUIRE(v.empty() == true);
         REQUIRE(v.size() == 0);
         REQUIRE(v.max_size() == 16);
@@ -52,7 +52,7 @@ TEST_CASE("vector: ConstructDefault", "[vector]")
 
 TEST_CASE("vector: RangeBasedFor", "[vector]")
 {
-    taetl::make::vector<int, 5> vec;
+    etl::make::vector<int, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -65,7 +65,7 @@ TEST_CASE("vector: RangeBasedFor", "[vector]")
 
 TEST_CASE("vector: Iterators", "[vector]")
 {
-    taetl::make::vector<int, 5> vec;
+    etl::make::vector<int, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -73,14 +73,13 @@ TEST_CASE("vector: Iterators", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    taetl::for_each(vec.begin(), vec.end(), [&counter](auto const& item) {
-        REQUIRE(item == ++counter);
-    });
+    etl::for_each(vec.begin(), vec.end(),
+                  [&counter](auto const& item) { REQUIRE(item == ++counter); });
 }
 
 TEST_CASE("vector: PushBack", "[vector]")
 {
-    taetl::make::vector<int, 2> vec;
+    etl::make::vector<int, 2> vec;
 
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
@@ -105,7 +104,7 @@ TEST_CASE("vector: PushBack", "[vector]")
 
 TEST_CASE("vector: PopBack", "[vector]")
 {
-    taetl::make::vector<int, 5> vec;
+    etl::make::vector<int, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -128,7 +127,7 @@ TEST_CASE("vector: PopBack", "[vector]")
 
 TEST_CASE("vector: EmplaceBack", "[vector]")
 {
-    taetl::make::vector<int, 4> vec;
+    etl::make::vector<int, 4> vec;
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
 

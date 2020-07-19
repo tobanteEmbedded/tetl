@@ -25,11 +25,11 @@ DAMAGE.
 */
 #include <stdio.h>
 
-#include "taetl/array.hpp"
+#include "etl/array.hpp"
 
 int main()
 {
-    taetl::array<int, 4> arr {};
+    etl::array<int, 4> arr {};
     arr.at(0) = 1;
     arr[1]    = 2;
 

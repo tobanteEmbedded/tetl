@@ -24,32 +24,32 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/experimental/dsp/dsp.hpp"
+#include "etl/experimental/dsp/dsp.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("experimental/dsp: identity", "[dsp][experimental]")
 {
-    auto id = taetl::dsp::identity {};
+    auto id = etl::dsp::identity {};
     REQUIRE(id(0) == 0);
 }
 
 TEST_CASE("experimental/dsp: constant", "[dsp][experimental]")
 {
-    REQUIRE(taetl::dsp::constant {0.0}() == 0.0);
-    REQUIRE(taetl::dsp::constant {42}() == 42);
+    REQUIRE(etl::dsp::constant {0.0}() == 0.0);
+    REQUIRE(etl::dsp::constant {42}() == 42);
 }
 
 TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
 {
-    using namespace taetl::dsp::literals;
+    using namespace etl::dsp::literals;
     REQUIRE(0.0_K() == 0.0);
     REQUIRE(42_K() == 42);
 }
 
 TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]")
 {
-    auto in  = taetl::dsp::identity {};
+    auto in  = etl::dsp::identity {};
     auto foo = [](int v) -> int { return v * 3; };
     auto bar = [](int v) -> int { return v / 2; };
     auto f   = in | foo | bar;
@@ -63,8 +63,8 @@ TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
 {
     WHEN("by zero (no delay)")
     {
-        auto in = taetl::dsp::identity {};
-        auto f  = in | taetl::dsp::Z<0, int>();
+        auto in = etl::dsp::identity {};
+        auto f  = in | etl::dsp::Z<0, int>();
         REQUIRE(f(0) == 0);
         REQUIRE(f(2) == 2);
         REQUIRE(f(3) == 3);
@@ -72,8 +72,8 @@ TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
 
     WHEN("by one")
     {
-        auto in = taetl::dsp::identity {};
-        auto f  = in | taetl::dsp::Z<-1, int>();
+        auto in = etl::dsp::identity {};
+        auto f  = in | etl::dsp::Z<-1, int>();
         REQUIRE(f(0) == 0);
         REQUIRE(f(2) == 0);
         REQUIRE(f(3) == 2);
@@ -82,8 +82,8 @@ TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
 
     WHEN("by two")
     {
-        auto in = taetl::dsp::identity {};
-        auto f  = in | taetl::dsp::Z<-2, int>();
+        auto in = etl::dsp::identity {};
+        auto f  = in | etl::dsp::Z<-2, int>();
         REQUIRE(f(0) == 0);
         REQUIRE(f(2) == 0);
         REQUIRE(f(3) == 0);

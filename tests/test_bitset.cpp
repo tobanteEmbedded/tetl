@@ -24,13 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/bitset.hpp"
+#include "etl/bitset.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("bitset: construct default", "[bit]")
 {
-    auto set = taetl::bitset<10> {};
+    auto set = etl::bitset<10> {};
     REQUIRE_FALSE(set.test(0));
 }
 
@@ -38,7 +38,7 @@ TEST_CASE("bitset: set", "[bit]")
 {
     WHEN("b is mutable")
     {
-        auto b = taetl::bitset<10> {};
+        auto b = etl::bitset<10> {};
         b.set(1);
         REQUIRE(b.test(1));
     }
@@ -46,7 +46,7 @@ TEST_CASE("bitset: set", "[bit]")
     WHEN("b is constexpr")
     {
         auto b = []() {
-            auto b = taetl::bitset<10> {};
+            auto b = etl::bitset<10> {};
             b.set(1);
             return b;
         }();

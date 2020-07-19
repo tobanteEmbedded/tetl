@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <cstdlib>
 
-#include "taetl/algorithm.hpp"
+#include "etl/algorithm.hpp"
 
 extern "C" int LLVMFuzzerTestOneInput(uint8_t const* data, size_t size)
 {
@@ -10,7 +10,7 @@ extern "C" int LLVMFuzzerTestOneInput(uint8_t const* data, size_t size)
     auto value        = data[0];
     auto const* first = data + 1;
     auto const* last  = data + size;
-    auto const* pos   = taetl::find_if(
+    auto const* pos   = etl::find_if(
         first, last, [&](auto const item) { return item == value; });
 
     if (pos != last) { assert(*pos == value); }

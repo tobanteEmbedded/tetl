@@ -28,12 +28,12 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/algorithm.hpp"
-#include "taetl/vector.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/vector.hpp"
 
 int main()
 {
-    taetl::make::vector<double, 16> vec;
+    etl::make::vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);
@@ -42,16 +42,16 @@ int main()
     // FOR_EACH
     auto print = [](auto& x) { printf("%f\n", x); };
 
-    taetl::for_each(vec.begin(), vec.end(), print);
-    taetl::for_each_n(vec.begin(), 3,
-                      [](const auto& x) { printf("%f\n", x * 2); });
+    etl::for_each(vec.begin(), vec.end(), print);
+    etl::for_each_n(vec.begin(), 3,
+                    [](const auto& x) { printf("%f\n", x * 2); });
 
     // FIND FIND_IF
     double n1 = 3.0;
     double n2 = 5;
 
-    auto result1 = taetl::find(vec.begin(), vec.end(), n1);
-    auto result2 = taetl::find(vec.begin(), vec.end(), n2);
+    auto result1 = etl::find(vec.begin(), vec.end(), n1);
+    auto result2 = etl::find(vec.begin(), vec.end(), n2);
 
     if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
     else

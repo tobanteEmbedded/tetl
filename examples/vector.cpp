@@ -29,11 +29,11 @@ DAMAGE.
 
 #include <stdio.h>
 
-#include "taetl/vector.hpp"
+#include "etl/vector.hpp"
 
 int main()
 {
-    taetl::make::vector<double, 16> vec1;
+    etl::make::vector<double, 16> vec1;
     vec1.push_back(1.0);
     vec1.push_back(2.0);
     vec1.push_back(3.0);
@@ -41,7 +41,7 @@ int main()
 
     for (auto item : vec1) { printf("%f\n", item); }
 
-    auto foo = [](taetl::vector<double>& vec2) {
+    auto foo = [](etl::vector<double>& vec2) {
         for (auto item : vec2) { printf("%f\n", item); }
     };
 

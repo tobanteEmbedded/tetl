@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/experimental/units/units.hpp"
+#include "etl/experimental/units/units.hpp"
 
 #include "catch2/catch.hpp"
 
-using namespace taetl::experimental;
+using namespace etl::experimental;
 
 TEST_CASE("experimental/units: add", "[units][experimental]")
 {

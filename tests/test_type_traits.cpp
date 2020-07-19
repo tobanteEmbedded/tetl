@@ -24,123 +24,123 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/type_traits.hpp"
+#include "etl/type_traits.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("type_traits: true_type", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::true_type::value == true);
+    STATIC_REQUIRE(etl::true_type::value == true);
 }
 
 TEST_CASE("type_traits: false_type", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::false_type::value == false);
+    STATIC_REQUIRE(etl::false_type::value == false);
 }
 
 TEST_CASE("type_traits: is_same", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::is_same<int, int>::value == true);
-    STATIC_REQUIRE(taetl::is_same<int, float>::value == false);
+    STATIC_REQUIRE(etl::is_same<int, int>::value == true);
+    STATIC_REQUIRE(etl::is_same<int, float>::value == false);
 
-    STATIC_REQUIRE(taetl::is_same_v<double, double> == true);
-    STATIC_REQUIRE(taetl::is_same_v<double, float> == false);
+    STATIC_REQUIRE(etl::is_same_v<double, double> == true);
+    STATIC_REQUIRE(etl::is_same_v<double, float> == false);
 }
 
 TEST_CASE("type_traits: is_void", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::is_void<void>::value == true);
-    STATIC_REQUIRE(taetl::is_void<int>::value == false);
+    STATIC_REQUIRE(etl::is_void<void>::value == true);
+    STATIC_REQUIRE(etl::is_void<int>::value == false);
 
-    STATIC_REQUIRE(taetl::is_void_v<void> == true);
-    STATIC_REQUIRE(taetl::is_void_v<double> == false);
+    STATIC_REQUIRE(etl::is_void_v<void> == true);
+    STATIC_REQUIRE(etl::is_void_v<double> == false);
 }
 
 TEST_CASE("type_traits: is_integral", "[type_traits]")
 {
     // true
-    STATIC_REQUIRE(taetl::is_integral_v<char> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<unsigned char> == true);
+    STATIC_REQUIRE(etl::is_integral_v<char> == true);
+    STATIC_REQUIRE(etl::is_integral_v<unsigned char> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<short> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<unsigned short> == true);
+    STATIC_REQUIRE(etl::is_integral_v<short> == true);
+    STATIC_REQUIRE(etl::is_integral_v<unsigned short> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<int> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<unsigned int> == true);
+    STATIC_REQUIRE(etl::is_integral_v<int> == true);
+    STATIC_REQUIRE(etl::is_integral_v<unsigned int> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<long> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<unsigned long> == true);
+    STATIC_REQUIRE(etl::is_integral_v<long> == true);
+    STATIC_REQUIRE(etl::is_integral_v<unsigned long> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<long long> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<unsigned long long> == true);
+    STATIC_REQUIRE(etl::is_integral_v<long long> == true);
+    STATIC_REQUIRE(etl::is_integral_v<unsigned long long> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::int8_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::int16_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::int32_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::int64_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::int8_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::int16_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::int32_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::int64_t> == true);
 
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::uint8_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::uint16_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::uint32_t> == true);
-    STATIC_REQUIRE(taetl::is_integral_v<taetl::uint64_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::uint8_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::uint16_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::uint32_t> == true);
+    STATIC_REQUIRE(etl::is_integral_v<etl::uint64_t> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_integral_v<float> == false);
-    STATIC_REQUIRE(taetl::is_integral_v<double> == false);
-    STATIC_REQUIRE(taetl::is_integral_v<struct S> == false);
+    STATIC_REQUIRE(etl::is_integral_v<float> == false);
+    STATIC_REQUIRE(etl::is_integral_v<double> == false);
+    STATIC_REQUIRE(etl::is_integral_v<struct S> == false);
 }
 
 TEST_CASE("type_traits: is_floating_point", "[type_traits]")
 {
     // true
-    STATIC_REQUIRE(taetl::is_floating_point_v<float> == true);
-    STATIC_REQUIRE(taetl::is_floating_point_v<double> == true);
-    STATIC_REQUIRE(taetl::is_floating_point_v<long double> == true);
+    STATIC_REQUIRE(etl::is_floating_point_v<float> == true);
+    STATIC_REQUIRE(etl::is_floating_point_v<double> == true);
+    STATIC_REQUIRE(etl::is_floating_point_v<long double> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_floating_point_v<int> == false);
-    STATIC_REQUIRE(taetl::is_floating_point_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_floating_point_v<struct S> == false);
+    STATIC_REQUIRE(etl::is_floating_point_v<int> == false);
+    STATIC_REQUIRE(etl::is_floating_point_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_floating_point_v<struct S> == false);
 }
 
 TEST_CASE("type_traits: is_null_pointer", "[type_traits]")
 {
     // true
-    STATIC_REQUIRE(taetl::is_null_pointer_v<decltype(nullptr)> == true);
+    STATIC_REQUIRE(etl::is_null_pointer_v<decltype(nullptr)> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_null_pointer_v<int*> == false);
-    STATIC_REQUIRE(taetl::is_null_pointer_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_null_pointer_v<double*> == false);
+    STATIC_REQUIRE(etl::is_null_pointer_v<int*> == false);
+    STATIC_REQUIRE(etl::is_null_pointer_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_null_pointer_v<double*> == false);
 }
 
 TEST_CASE("type_traits: is_array", "[type_traits]")
 {
     // true
-    STATIC_REQUIRE(taetl::is_array_v<int[]> == true);
-    STATIC_REQUIRE(taetl::is_array_v<int[4]> == true);
+    STATIC_REQUIRE(etl::is_array_v<int[]> == true);
+    STATIC_REQUIRE(etl::is_array_v<int[4]> == true);
 
-    STATIC_REQUIRE(taetl::is_array_v<double[]> == true);
-    STATIC_REQUIRE(taetl::is_array_v<double[4]> == true);
+    STATIC_REQUIRE(etl::is_array_v<double[]> == true);
+    STATIC_REQUIRE(etl::is_array_v<double[4]> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_array_v<decltype(nullptr)> == false);
-    STATIC_REQUIRE(taetl::is_array_v<int*> == false);
-    STATIC_REQUIRE(taetl::is_array_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_array_v<double*> == false);
+    STATIC_REQUIRE(etl::is_array_v<decltype(nullptr)> == false);
+    STATIC_REQUIRE(etl::is_array_v<int*> == false);
+    STATIC_REQUIRE(etl::is_array_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_array_v<double*> == false);
 }
 
 TEST_CASE("type_traits: is_pointer", "[type_traits]")
 {
     // true
-    STATIC_REQUIRE(taetl::is_pointer_v<int*> == true);
-    STATIC_REQUIRE(taetl::is_pointer_v<double*> == true);
-    STATIC_REQUIRE(taetl::is_pointer_v<struct S*> == true);
+    STATIC_REQUIRE(etl::is_pointer_v<int*> == true);
+    STATIC_REQUIRE(etl::is_pointer_v<double*> == true);
+    STATIC_REQUIRE(etl::is_pointer_v<struct S*> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_pointer_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_pointer_v<double> == false);
-    STATIC_REQUIRE(taetl::is_pointer_v<struct T> == false);
+    STATIC_REQUIRE(etl::is_pointer_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_pointer_v<double> == false);
+    STATIC_REQUIRE(etl::is_pointer_v<struct T> == false);
 }
 
 TEST_CASE("type_traits: is_class", "[type_traits]")
@@ -154,15 +154,15 @@ TEST_CASE("type_traits: is_class", "[type_traits]")
     };
 
     // true
-    STATIC_REQUIRE(taetl::is_class_v<S> == true);
-    STATIC_REQUIRE(taetl::is_class_v<C> == true);
-    STATIC_REQUIRE(taetl::is_class_v<struct X> == true);
+    STATIC_REQUIRE(etl::is_class_v<S> == true);
+    STATIC_REQUIRE(etl::is_class_v<C> == true);
+    STATIC_REQUIRE(etl::is_class_v<struct X> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_class_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_class_v<double> == false);
-    STATIC_REQUIRE(taetl::is_class_v<S*> == false);
-    STATIC_REQUIRE(taetl::is_class_v<C*> == false);
+    STATIC_REQUIRE(etl::is_class_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_class_v<double> == false);
+    STATIC_REQUIRE(etl::is_class_v<S*> == false);
+    STATIC_REQUIRE(etl::is_class_v<C*> == false);
 }
 
 TEST_CASE("type_traits: is_enum", "[type_traits]")
@@ -178,15 +178,15 @@ TEST_CASE("type_traits: is_enum", "[type_traits]")
     };
 
     // true
-    STATIC_REQUIRE(taetl::is_enum_v<E> == true);
-    STATIC_REQUIRE(taetl::is_enum_v<EC> == true);
+    STATIC_REQUIRE(etl::is_enum_v<E> == true);
+    STATIC_REQUIRE(etl::is_enum_v<EC> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_enum_v<struct X> == false);
-    STATIC_REQUIRE(taetl::is_enum_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_enum_v<double> == false);
-    STATIC_REQUIRE(taetl::is_enum_v<struct S*> == false);
-    STATIC_REQUIRE(taetl::is_enum_v<struct C*> == false);
+    STATIC_REQUIRE(etl::is_enum_v<struct X> == false);
+    STATIC_REQUIRE(etl::is_enum_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_enum_v<double> == false);
+    STATIC_REQUIRE(etl::is_enum_v<struct S*> == false);
+    STATIC_REQUIRE(etl::is_enum_v<struct C*> == false);
 }
 
 TEST_CASE("type_traits: is_union", "[type_traits]")
@@ -198,32 +198,32 @@ TEST_CASE("type_traits: is_union", "[type_traits]")
     } B;
 
     // true
-    STATIC_REQUIRE(taetl::is_union_v<B> == true);
+    STATIC_REQUIRE(etl::is_union_v<B> == true);
 
     // false
-    STATIC_REQUIRE(taetl::is_union_v<struct X> == false);
-    STATIC_REQUIRE(taetl::is_union_v<taetl::int64_t> == false);
-    STATIC_REQUIRE(taetl::is_union_v<double> == false);
-    STATIC_REQUIRE(taetl::is_union_v<struct S*> == false);
-    STATIC_REQUIRE(taetl::is_union_v<struct C*> == false);
+    STATIC_REQUIRE(etl::is_union_v<struct X> == false);
+    STATIC_REQUIRE(etl::is_union_v<etl::int64_t> == false);
+    STATIC_REQUIRE(etl::is_union_v<double> == false);
+    STATIC_REQUIRE(etl::is_union_v<struct S*> == false);
+    STATIC_REQUIRE(etl::is_union_v<struct C*> == false);
 }
 
 TEST_CASE("type_traits: is_arithmetic", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::is_arithmetic<bool>::value);
-    STATIC_REQUIRE(taetl::is_arithmetic<int>::value);
-    STATIC_REQUIRE(taetl::is_arithmetic<int const>::value);
-    STATIC_REQUIRE(taetl::is_arithmetic_v<float>);
-    STATIC_REQUIRE(taetl::is_arithmetic_v<float const>);
-    STATIC_REQUIRE(taetl::is_arithmetic_v<char>);
-    STATIC_REQUIRE(taetl::is_arithmetic_v<char const>);
+    STATIC_REQUIRE(etl::is_arithmetic<bool>::value);
+    STATIC_REQUIRE(etl::is_arithmetic<int>::value);
+    STATIC_REQUIRE(etl::is_arithmetic<int const>::value);
+    STATIC_REQUIRE(etl::is_arithmetic_v<float>);
+    STATIC_REQUIRE(etl::is_arithmetic_v<float const>);
+    STATIC_REQUIRE(etl::is_arithmetic_v<char>);
+    STATIC_REQUIRE(etl::is_arithmetic_v<char const>);
 
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<int&>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<int*>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<float&>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<float*>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<char&>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_arithmetic<char*>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<int&>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<int*>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<float&>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<float*>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<char&>::value);
+    STATIC_REQUIRE_FALSE(etl::is_arithmetic<char*>::value);
 }
 
 TEST_CASE("type_traits: is_unsigned", "[type_traits]")
@@ -238,19 +238,19 @@ TEST_CASE("type_traits: is_unsigned", "[type_traits]")
     {
     };
 
-    STATIC_REQUIRE(taetl::is_unsigned<unsigned int>::value);
+    STATIC_REQUIRE(etl::is_unsigned<unsigned int>::value);
 
-    STATIC_REQUIRE_FALSE(taetl::is_unsigned<A>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_unsigned<float>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_unsigned<signed int>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_unsigned<B>::value);
-    STATIC_REQUIRE_FALSE(taetl::is_unsigned<C>::value);
+    STATIC_REQUIRE_FALSE(etl::is_unsigned<A>::value);
+    STATIC_REQUIRE_FALSE(etl::is_unsigned<float>::value);
+    STATIC_REQUIRE_FALSE(etl::is_unsigned<signed int>::value);
+    STATIC_REQUIRE_FALSE(etl::is_unsigned<B>::value);
+    STATIC_REQUIRE_FALSE(etl::is_unsigned<C>::value);
 }
 
 TEST_CASE("type_traits: conditional", "[type_traits]")
 {
-    using taetl::conditional;
-    using taetl::conditional_t;
+    using etl::conditional;
+    using etl::conditional_t;
     using Type1 = conditional<true, int, double>::type;
     using Type2 = conditional<false, int, double>::type;
 
@@ -266,10 +266,10 @@ TEST_CASE("type_traits: conditional", "[type_traits]")
 
 TEST_CASE("type_traits: rank", "[type_traits]")
 {
-    STATIC_REQUIRE(taetl::rank<int>::value == 0);
-    STATIC_REQUIRE(taetl::rank_v<int> == 0);
+    STATIC_REQUIRE(etl::rank<int>::value == 0);
+    STATIC_REQUIRE(etl::rank_v<int> == 0);
 
-    STATIC_REQUIRE(taetl::rank<int[5]>::value == 1);
-    STATIC_REQUIRE(taetl::rank<int[5][5]>::value == 2);
-    STATIC_REQUIRE(taetl::rank<int[][5][5]>::value == 3);
+    STATIC_REQUIRE(etl::rank<int[5]>::value == 1);
+    STATIC_REQUIRE(etl::rank<int[5][5]>::value == 2);
+    STATIC_REQUIRE(etl::rank<int[][5][5]>::value == 3);
 }

@@ -25,15 +25,15 @@ DAMAGE.
 */
 
 // TAETL
-#include "taetl/algorithm.hpp"
-#include "taetl/numeric.hpp"
-#include "taetl/vector.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/numeric.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("algorithm: for_each", "[algorithm]")
 {
-    taetl::make::vector<double, 16> vec;
+    etl::make::vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);
@@ -44,53 +44,53 @@ TEST_CASE("algorithm: for_each", "[algorithm]")
     auto increment_counter = [&counter](auto&) { counter += 1; };
 
     // for_each
-    taetl::for_each(vec.begin(), vec.end(), increment_counter);
+    etl::for_each(vec.begin(), vec.end(), increment_counter);
     REQUIRE(counter == 4);
 
     // for_each_n
     counter = 0;
-    taetl::for_each_n(vec.begin(), 2, increment_counter);
+    etl::for_each_n(vec.begin(), 2, increment_counter);
     REQUIRE(counter == 2);
 }
 
 TEST_CASE("algorithm: find", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     // Add elements to the back
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
     vec.push_back(4);
 
-    auto result1 = taetl::find(vec.cbegin(), vec.cend(), 3);
+    auto result1 = etl::find(vec.cbegin(), vec.cend(), 3);
     REQUIRE_FALSE(result1 == vec.cend());
 
-    auto result2 = taetl::find(vec.begin(), vec.end(), 5);
+    auto result2 = etl::find(vec.begin(), vec.end(), 5);
     REQUIRE(result2 == vec.end());
 }
 
 TEST_CASE("algorithm: find_if", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     // Add elements to the back
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
     vec.push_back(4);
     // find_if
-    auto result3 = taetl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+    auto result3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
         return static_cast<bool>(x % 2);
     });
     REQUIRE_FALSE(result3 == vec.end());
 
-    auto result4 = taetl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+    auto result4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
         return static_cast<bool>(x == 100);
     });
     REQUIRE(result4 == vec.end());
 }
 TEST_CASE("algorithm: find_if_not", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     // Add elements to the back
     vec.push_back(1);
     vec.push_back(2);
@@ -98,19 +98,19 @@ TEST_CASE("algorithm: find_if_not", "[algorithm]")
     vec.push_back(4);
     // find_if_not
     auto result5
-        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
               return static_cast<bool>(x % 2);
           });
     REQUIRE_FALSE(result5 == vec.end());
 
     auto result6
-        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
               return static_cast<bool>(x == 100);
           });
     REQUIRE_FALSE(result6 == vec.end());
 
     auto result7
-        = taetl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
               return static_cast<bool>(x != 100);
           });
     REQUIRE(result7 == vec.end());
@@ -118,9 +118,9 @@ TEST_CASE("algorithm: find_if_not", "[algorithm]")
 
 TEST_CASE("algorithm: max", "[algorithm]")
 {
-    REQUIRE(taetl::max(1, 5) == 5);
-    REQUIRE(taetl::max(-10, 5) == 5);
-    REQUIRE(taetl::max(-10, -20) == -10);
+    REQUIRE(etl::max(1, 5) == 5);
+    REQUIRE(etl::max(-10, 5) == 5);
+    REQUIRE(etl::max(-10, -20) == -10);
 
     // Compare absolute values
     auto cmp = [](auto x, auto y) {
@@ -131,65 +131,63 @@ TEST_CASE("algorithm: max", "[algorithm]")
 
         return (new_x < new_y) ? y : x;
     };
-    REQUIRE(taetl::max(-10, -20, cmp) == -20);
-    REQUIRE(taetl::max(10, -20, cmp) == -20);
+    REQUIRE(etl::max(-10, -20, cmp) == -20);
+    REQUIRE(etl::max(10, -20, cmp) == -20);
 }
 
 TEST_CASE("algorithm: max_element", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
     vec.push_back(4);
     vec.push_back(-5);
 
-    auto const functor = [](auto a, auto b) -> bool {
-        return (taetl::abs(a) < taetl::abs(b));
-    };
+    auto const functor
+        = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
 
-    REQUIRE(*taetl::max_element(vec.begin(), vec.end()) == 4);
-    REQUIRE(*taetl::max_element(vec.begin(), vec.end(), functor) == -5);
+    REQUIRE(*etl::max_element(vec.begin(), vec.end()) == 4);
+    REQUIRE(*etl::max_element(vec.begin(), vec.end(), functor) == -5);
 }
 
 TEST_CASE("algorithm: min", "[algorithm]")
 {
-    REQUIRE(taetl::min(1, 5) == 1);
-    REQUIRE(taetl::min(-10, 5) == -10);
-    REQUIRE(taetl::min(-10, -20) == -20);
+    REQUIRE(etl::min(1, 5) == 1);
+    REQUIRE(etl::min(-10, 5) == -10);
+    REQUIRE(etl::min(-10, -20) == -20);
 
     // Compare absolute values
-    auto cmp = [](auto x, auto y) { return (taetl::abs(x) < taetl::abs(y)); };
-    REQUIRE(taetl::min(-10, -20, cmp) == -10);
-    REQUIRE(taetl::min(10, -20, cmp) == 10);
+    auto cmp = [](auto x, auto y) { return (etl::abs(x) < etl::abs(y)); };
+    REQUIRE(etl::min(-10, -20, cmp) == -10);
+    REQUIRE(etl::min(10, -20, cmp) == 10);
 }
 
 TEST_CASE("algorithm: min_element", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
     vec.push_back(4);
     vec.push_back(-5);
 
-    auto const functor = [](auto a, auto b) -> bool {
-        return (taetl::abs(a) < taetl::abs(b));
-    };
+    auto const functor
+        = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
 
-    REQUIRE(*taetl::min_element(vec.begin(), vec.end()) == -5);
-    REQUIRE(*taetl::min_element(vec.begin(), vec.end(), functor) == 1);
+    REQUIRE(*etl::min_element(vec.begin(), vec.end()) == -5);
+    REQUIRE(*etl::min_element(vec.begin(), vec.end(), functor) == 1);
 }
 
 TEST_CASE("algorithm: clamp", "[algorithm]")
 {
-    REQUIRE(taetl::clamp(55, 0, 20) == 20);
-    REQUIRE(taetl::clamp(55, 0, 100) == 55);
+    REQUIRE(etl::clamp(55, 0, 20) == 20);
+    REQUIRE(etl::clamp(55, 0, 100) == 55);
 }
 
 TEST_CASE("algorithm: all_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -197,20 +195,20 @@ TEST_CASE("algorithm: all_of", "[algorithm]")
 
     SECTION("true")
     {
-        auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
-        REQUIRE(taetl::all_of(vec.begin(), vec.end(), predicate) == true);
+        auto const predicate = [](auto a) { return etl::abs(a) > 0; };
+        REQUIRE(etl::all_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
-        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::all_of(vec.begin(), vec.end(), predicate) == false);
+        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
+        REQUIRE(etl::all_of(vec.begin(), vec.end(), predicate) == false);
     }
 }
 
 TEST_CASE("algorithm: any_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -218,20 +216,20 @@ TEST_CASE("algorithm: any_of", "[algorithm]")
 
     SECTION("true")
     {
-        auto const predicate = [](auto a) { return taetl::abs(a) > 0; };
-        REQUIRE(taetl::any_of(vec.begin(), vec.end(), predicate) == true);
+        auto const predicate = [](auto a) { return etl::abs(a) > 0; };
+        REQUIRE(etl::any_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
-        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::any_of(vec.begin(), vec.end(), predicate) == false);
+        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
+        REQUIRE(etl::any_of(vec.begin(), vec.end(), predicate) == false);
     }
 }
 
 TEST_CASE("algorithm: none_of", "[algorithm]")
 {
-    taetl::make::vector<int, 16> vec;
+    etl::make::vector<int, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -239,13 +237,13 @@ TEST_CASE("algorithm: none_of", "[algorithm]")
 
     SECTION("true")
     {
-        auto const predicate = [](auto a) { return taetl::abs(a) > 10; };
-        REQUIRE(taetl::none_of(vec.begin(), vec.end(), predicate) == true);
+        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
+        REQUIRE(etl::none_of(vec.begin(), vec.end(), predicate) == true);
     }
 
     SECTION("false")
     {
         auto const predicate = [](auto a) { return a < 10; };
-        REQUIRE(taetl::none_of(vec.begin(), vec.end(), predicate) == false);
+        REQUIRE(etl::none_of(vec.begin(), vec.end(), predicate) == false);
     }
 }

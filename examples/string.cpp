@@ -28,11 +28,11 @@ DAMAGE.
 #include <stdio.h>
 
 // TAETL
-#include "taetl/string.hpp"
+#include "etl/string.hpp"
 
 int main()
 {
-    taetl::small_string str {};
+    etl::small_string str {};
 
     const char* cptr = "C-string";
     str.append(cptr, 4);

@@ -26,11 +26,11 @@ DAMAGE.
 
 #include <bitset>
 
-#include "taetl/experimental/hardware/stm32/gpio.hpp"
+#include "etl/experimental/hardware/stm32/gpio.hpp"
 
 #include "catch2/catch.hpp"
 
-using namespace taetl::hardware;
+using namespace etl::hardware;
 using register_bits = std::bitset<32>;
 
 TEST_CASE("experimental/stm32: gpio", "[stm32][hardware][experimental]")

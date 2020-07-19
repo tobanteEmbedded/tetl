@@ -25,18 +25,18 @@ DAMAGE.
 */
 #include <stdio.h>
 
-#include "taetl/numeric.hpp"
-#include "taetl/vector.hpp"
+#include "etl/numeric.hpp"
+#include "etl/vector.hpp"
 
 int main()
 {
-    taetl::make::vector<double, 16> vec;
+    etl::make::vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);
     vec.push_back(4.0);
 
-    auto sum = taetl::accumulate(vec.begin(), vec.end(), 0.0);
+    auto sum = etl::accumulate(vec.begin(), vec.end(), 0.0);
 
     printf("%f\n", sum);
 

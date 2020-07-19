@@ -1,5 +1,5 @@
 # TESTS
-project(taetl-tests)
+project(etl-tests)
 
 set(TEST_SRC
     test_main.cpp

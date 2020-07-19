@@ -25,10 +25,10 @@ DAMAGE.
 */
 
 // C STANDARD
-#include "taetl/type_traits.hpp"
+#include "etl/type_traits.hpp"
 
 template <typename T>
-typename taetl::enable_if<taetl::is_integral<T>::value, int>::type func(T val)
+typename etl::enable_if<etl::is_integral<T>::value, int>::type func(T val)
 {
     return val;
 }

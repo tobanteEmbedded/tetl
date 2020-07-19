@@ -25,15 +25,15 @@ DAMAGE.
 */
 #include <stdio.h>
 
-#include "taetl/new.hpp"
+#include "etl/new.hpp"
 
 #define TAETL_RTOS_USE_STUBS
-#include "taetl/experimental/hardware/stm32/gpio.hpp"
-#include "taetl/experimental/rtos/delay.hpp"
-#include "taetl/experimental/rtos/task.hpp"
+#include "etl/experimental/hardware/stm32/gpio.hpp"
+#include "etl/experimental/rtos/delay.hpp"
+#include "etl/experimental/rtos/task.hpp"
 
-namespace rtos  = taetl::rtos;
-namespace stm32 = taetl::hardware::stm32;
+namespace rtos  = etl::rtos;
+namespace stm32 = etl::hardware::stm32;
 
 template <typename LoopType = rtos::forever>
 struct example_task

@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/experimental/hardware/mcp23017/mcp23017.hpp"
+#include "etl/experimental/hardware/mcp23017/mcp23017.hpp"
 
 #include "catch2/catch.hpp"
 
-using namespace taetl::hardware;
+using namespace etl::hardware;
 
 struct driver
 {

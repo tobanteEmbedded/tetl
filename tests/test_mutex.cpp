@@ -23,8 +23,8 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "taetl/mutex.hpp"
-#include "taetl/warning.hpp"
+#include "etl/mutex.hpp"
+#include "etl/warning.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -55,9 +55,9 @@ private:
 TEST_CASE("mutex: construct", "[mutex]")
 {
     dummy_mutex mtx {};
-    taetl::scoped_lock lock {mtx};
+    etl::scoped_lock lock {mtx};
     REQUIRE(mtx.is_locked());
-    taetl::ignore_unused(lock);
+    etl::ignore_unused(lock);
 }
 
 TEST_CASE("mutex: lock/unlock", "[mutex]")
@@ -65,7 +65,7 @@ TEST_CASE("mutex: lock/unlock", "[mutex]")
     dummy_mutex mtx {};
     REQUIRE_FALSE(mtx.is_locked());
     {
-        taetl::scoped_lock lock {mtx};
+        etl::scoped_lock lock {mtx};
         REQUIRE(mtx.is_locked());
     }
     REQUIRE_FALSE(mtx.is_locked());

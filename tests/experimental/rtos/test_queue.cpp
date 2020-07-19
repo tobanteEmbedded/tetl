@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 #define TAETL_RTOS_USE_STUBS
-#include "taetl/experimental/rtos/queue.hpp"
+#include "etl/experimental/rtos/queue.hpp"
 
 #include "catch2/catch.hpp"
 
-namespace rtos = taetl::rtos;
+namespace rtos = etl::rtos;
 
 TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]")
 {
@@ -45,7 +45,7 @@ TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]")
     REQUIRE(q1.capacity() == 1);
     rtos::queue<float, 32> q2 {};
     REQUIRE(q2.capacity() == 32);
-    rtos::queue<taetl::uint64_t, 128> q3 {};
+    rtos::queue<etl::uint64_t, 128> q3 {};
     REQUIRE(q3.capacity() == 128);
 }
 

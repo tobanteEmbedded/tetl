@@ -1,10 +1,10 @@
 {
-  "name": "taetl",
+  "name": "etl",
   "keywords": "etl, stl, container, io, pins",
   "description": "tobanteAudio ETL (Embedded Template Library)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tobanteAudio/taetl.git"
+    "url": "https://github.com/tobanteAudio/etl.git"
   },
   "authors": [
     {

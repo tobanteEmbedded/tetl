@@ -23,51 +23,51 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "taetl/definitions.hpp"
+#include "etl/definitions.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("definitions: int8_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::int8_t) == sizeof(int8_t));
+    REQUIRE(sizeof(etl::int8_t) == sizeof(int8_t));
 }
 
 TEST_CASE("definitions: int16_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::int16_t) == sizeof(int16_t));
+    REQUIRE(sizeof(etl::int16_t) == sizeof(int16_t));
 }
 
 TEST_CASE("definitions: int32_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::int32_t) == sizeof(int32_t));
+    REQUIRE(sizeof(etl::int32_t) == sizeof(int32_t));
 }
 
 TEST_CASE("definitions: int64_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::int64_t) == sizeof(int64_t));
+    REQUIRE(sizeof(etl::int64_t) == sizeof(int64_t));
 }
 
 TEST_CASE("definitions: uint8_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::uint8_t) == sizeof(uint8_t));
+    REQUIRE(sizeof(etl::uint8_t) == sizeof(uint8_t));
 }
 
 TEST_CASE("definitions: uint16_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::uint16_t) == sizeof(uint16_t));
+    REQUIRE(sizeof(etl::uint16_t) == sizeof(uint16_t));
 }
 
 TEST_CASE("definitions: uint32_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::uint32_t) == sizeof(uint32_t));
+    REQUIRE(sizeof(etl::uint32_t) == sizeof(uint32_t));
 }
 
 TEST_CASE("definitions: uint64_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::uint64_t) == sizeof(uint64_t));
+    REQUIRE(sizeof(etl::uint64_t) == sizeof(uint64_t));
 }
 
 TEST_CASE("definitions: size_t", "[definitions]")
 {
-    REQUIRE(sizeof(taetl::size_t) == sizeof(size_t));
+    REQUIRE(sizeof(etl::size_t) == sizeof(size_t));
 }

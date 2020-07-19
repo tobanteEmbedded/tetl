@@ -24,13 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "taetl/array.hpp"
+#include "etl/array.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("array: construct default", "[array]")
 {
-    taetl::array<int, 2> arr {};
+    etl::array<int, 2> arr {};
 
     REQUIRE(arr.empty() == false);
     REQUIRE(arr[0] == 0);
@@ -39,14 +39,14 @@ TEST_CASE("array: construct default", "[array]")
 
 TEST_CASE("array: size", "[array]")
 {
-    taetl::array<int, 4> arr {};
+    etl::array<int, 4> arr {};
     REQUIRE(arr.size() == arr.max_size());
     REQUIRE(arr.size() == 4);
 }
 
 TEST_CASE("array: range-for", "[array]")
 {
-    taetl::array<int, 4> arr {};
+    etl::array<int, 4> arr {};
     arr[0] = 0;
     arr[1] = 1;
     arr[2] = 2;
@@ -58,7 +58,7 @@ TEST_CASE("array: range-for", "[array]")
 
 TEST_CASE("array: range-for-const", "[array]")
 {
-    taetl::array<int, 4> arr {};
+    etl::array<int, 4> arr {};
     arr.at(0) = 0;
     arr.at(1) = 1;
     arr.at(2) = 2;
@@ -75,7 +75,7 @@ TEST_CASE("array: range-for-const", "[array]")
 TEST_CASE("array: begin/end const", "[array]")
 {
     auto const arr = []() {
-        taetl::array<int, 4> a {};
+        etl::array<int, 4> a {};
         a.at(0) = 0;
         a.at(1) = 1;
         a.at(2) = 2;
@@ -92,7 +92,7 @@ TEST_CASE("array: begin/end const", "[array]")
 TEST_CASE("array: at", "[array]")
 {
     auto arr = []() {
-        taetl::array<int, 4> a {};
+        etl::array<int, 4> a {};
         a.at(0) = 0;
         a.at(1) = 1;
         a.at(2) = 2;
@@ -109,7 +109,7 @@ TEST_CASE("array: at", "[array]")
 TEST_CASE("array: at const", "[array]")
 {
     auto const arr = []() {
-        taetl::array<int, 4> a {};
+        etl::array<int, 4> a {};
         a.at(0) = 0;
         a.at(1) = 1;
         a.at(2) = 2;
@@ -126,7 +126,7 @@ TEST_CASE("array: at const", "[array]")
 TEST_CASE("array: front/back ", "[array]")
 {
     auto arr = []() {
-        taetl::array<int, 4> a {};
+        etl::array<int, 4> a {};
         a.at(0) = 0;
         a.at(1) = 1;
         a.at(2) = 2;
@@ -141,7 +141,7 @@ TEST_CASE("array: front/back ", "[array]")
 TEST_CASE("array: front/back const", "[array]")
 {
     auto const arr = []() {
-        taetl::array<int, 4> a {};
+        etl::array<int, 4> a {};
         a.at(0) = 0;
         a.at(1) = 1;
         a.at(2) = 2;

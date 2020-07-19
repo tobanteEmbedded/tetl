@@ -25,43 +25,43 @@ DAMAGE.
 */
 
 // TAETL
-#include "taetl/numeric.hpp"
-#include "taetl/vector.hpp"
+#include "etl/numeric.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
 TEST_CASE("numeric: abs", "[numeric]")
 {
-    REQUIRE(taetl::abs(10) == 10);
-    REQUIRE(taetl::abs(0) == 0);
-    REQUIRE(taetl::abs(-10) == 10);
-    REQUIRE(taetl::abs(1.0) == 1.0);
-    REQUIRE(taetl::abs(-1.0) == 1.0);
+    REQUIRE(etl::abs(10) == 10);
+    REQUIRE(etl::abs(0) == 0);
+    REQUIRE(etl::abs(-10) == 10);
+    REQUIRE(etl::abs(1.0) == 1.0);
+    REQUIRE(etl::abs(-1.0) == 1.0);
 }
 
 TEST_CASE("numeric: accumulate", "[numeric]")
 {
-    taetl::make::vector<double, 16> vec;
+    etl::make::vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);
     vec.push_back(4.0);
 
     // accumulate
-    REQUIRE(taetl::accumulate(vec.begin(), vec.end(), 0.0) == 10.0);
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), 0.0) == 10.0);
 
     // accumulate binary function op
     auto func = [](double a, double b) { return a + (b * 2); };
-    REQUIRE(taetl::accumulate(vec.begin(), vec.end(), 0.0, func) == 20.0);
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), 0.0, func) == 20.0);
 }
 
 TEST_CASE("numeric: gcd", "[numeric]")
 {
-    REQUIRE(taetl::gcd(5, 10) == 5);
-    REQUIRE(taetl::gcd(10, 5) == 5);
-    STATIC_REQUIRE(taetl::gcd(10, 5) == 5);
+    REQUIRE(etl::gcd(5, 10) == 5);
+    REQUIRE(etl::gcd(10, 5) == 5);
+    STATIC_REQUIRE(etl::gcd(10, 5) == 5);
 
-    REQUIRE(taetl::gcd(30, 105) == 15);
-    REQUIRE(taetl::gcd(105, 30) == 15);
-    STATIC_REQUIRE(taetl::gcd(105, 30) == 15);
+    REQUIRE(etl::gcd(30, 105) == 15);
+    REQUIRE(etl::gcd(105, 30) == 15);
+    STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
