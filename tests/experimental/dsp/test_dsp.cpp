@@ -109,8 +109,45 @@ TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]")
         REQUIRE(drain(0.0f) == 1.0f);
     }
 }
-// auto in = etl::dsp::identity {};
-// auto tap = etl::dsp::feedback_tap {drain};
-// auto fb  = in | drain | tap;
-// REQUIRE(fb(1.0f) == 1.0f);
-// REQUIRE(fb(0.0f) == 1.0f);
+
+TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]")
+{
+    WHEN("Pass Through")
+    {
+        auto drain = etl::dsp::feedback_drain {};
+        auto tap   = etl::dsp::feedback_tap {drain};
+        REQUIRE(tap(0.0f) == 0.0f);
+        REQUIRE(tap(0.5f) == 0.5f);
+        REQUIRE(tap(0.75f) == 0.75f);
+        REQUIRE(tap(1.0f) == 1.0f);
+    }
+
+    WHEN("Pass to drain")
+    {
+        auto drain = etl::dsp::feedback_drain {};
+        auto tap   = etl::dsp::feedback_tap {drain};
+
+        REQUIRE(tap(1.0f) == 1.0f);
+        REQUIRE(drain(0.0f) == 1.0f);
+
+        REQUIRE(tap(0.0f) == 0.0f);
+        REQUIRE(drain(0.0f) == 0.0f);
+
+        REQUIRE(tap(0.5f) == 0.5f);
+        REQUIRE(drain(0.0f) == 0.5f);
+    }
+}
+
+// TODO
+// TEST_CASE("experimental/dsp: feedback chain", "[dsp][experimental]")
+// {
+//     auto in    = etl::dsp::identity {};
+//     auto drain = etl::dsp::feedback_drain {};
+//     // auto tap   = etl::dsp::feedback_tap {drain};
+//     auto chain = in | drain;  // | tap;
+//     REQUIRE(chain(1.0f) == 1.0f);
+//     REQUIRE(chain(0.0f) == 0.0f);
+
+//     drain.push(0.5f);
+//     REQUIRE(chain(0.0f) == 0.5f);
+// }
