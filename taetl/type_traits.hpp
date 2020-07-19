@@ -391,6 +391,31 @@ struct enable_if<true, Type>
     using type = Type;
 };
 
+/**
+ * @brief If Type is an array type, provides the member constant value equal to
+ * the number of dimensions of the array. For any other type, value is 0. The
+ * behavior of a program that adds specializations for rank or rank_v is
+ * undefined.
+ */
+template <class T>
+struct rank : public taetl::integral_constant<taetl::size_t, 0>
+{
+};
+
+template <class T>
+struct rank<T[]>
+    : public taetl::integral_constant<taetl::size_t, rank<T>::value + 1>
+{
+};
+
+template <class T, taetl::size_t N>
+struct rank<T[N]>
+    : public taetl::integral_constant<taetl::size_t, rank<T>::value + 1>
+{
+};
+
+template <class Type>
+inline constexpr taetl::size_t rank_v = rank<Type>::value;
 }  // namespace taetl
 
 #endif  // TAETL_TYPETRAITS_HPP

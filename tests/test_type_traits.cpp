@@ -263,3 +263,13 @@ TEST_CASE("type_traits: conditional", "[type_traits]")
     REQUIRE_FALSE(typeid(Type1) == typeid(double));
     REQUIRE_FALSE(typeid(Type2) == typeid(int));
 }
+
+TEST_CASE("type_traits: rank", "[type_traits]")
+{
+    STATIC_REQUIRE(taetl::rank<int>::value == 0);
+    STATIC_REQUIRE(taetl::rank_v<int> == 0);
+
+    STATIC_REQUIRE(taetl::rank<int[5]>::value == 1);
+    STATIC_REQUIRE(taetl::rank<int[5][5]>::value == 2);
+    STATIC_REQUIRE(taetl::rank<int[][5][5]>::value == 3);
+}
