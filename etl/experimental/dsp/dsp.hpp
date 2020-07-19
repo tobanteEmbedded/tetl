@@ -135,6 +135,36 @@ constexpr auto Z(T val = T {})
     return delay<T, I * -1> {val};
 }
 
+template <typename T = float>
+struct feedback_drain
+{
+    constexpr feedback_drain() = default;
+    constexpr auto operator()(T const& in)
+    {
+        auto const out = in + feedback_;
+        feedback_      = T {0};
+        return out;
+    }
+    constexpr auto push(T const& val) { feedback_ = val; }
+
+private:
+    T feedback_ = {};
+};
+
+template <typename T = float>
+struct feedback_tap
+{
+    constexpr feedback_tap(feedback_drain<T>& d) : drain_ {d} { }
+    constexpr auto operator()(T const& in) const
+    {
+        drain_.push(in);
+        return in;
+    }
+
+private:
+    feedback_drain<T>& drain_;
+};
+
 namespace internal
 {
 // TODO: Implement index_sequence & tuple_size

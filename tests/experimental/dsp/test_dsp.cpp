@@ -90,3 +90,27 @@ TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
         REQUIRE(f(4) == 2);
     }
 }
+
+TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]")
+{
+    WHEN("No feedback is applied")
+    {
+        auto drain = etl::dsp::feedback_drain {};
+        REQUIRE(drain(0.0f) == 0.0f);
+        REQUIRE(drain(0.5f) == 0.5f);
+        REQUIRE(drain(0.75f) == 0.75f);
+        REQUIRE(drain(1.0f) == 1.0f);
+    }
+
+    WHEN("Feedback is applied")
+    {
+        auto drain = etl::dsp::feedback_drain {};
+        drain.push(1.0f);
+        REQUIRE(drain(0.0f) == 1.0f);
+    }
+}
+// auto in = etl::dsp::identity {};
+// auto tap = etl::dsp::feedback_tap {drain};
+// auto fb  = in | drain | tap;
+// REQUIRE(fb(1.0f) == 1.0f);
+// REQUIRE(fb(0.0f) == 1.0f);
