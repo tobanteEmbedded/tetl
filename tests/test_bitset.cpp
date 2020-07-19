@@ -45,11 +45,11 @@ TEST_CASE("bitset: set", "[bit]")
 
     WHEN("b is constexpr")
     {
-        auto b = []() {
-            auto b = etl::bitset<10> {};
-            b.set(1);
-            return b;
+        constexpr auto b = []() {
+            auto ret = etl::bitset<10> {};
+            ret.set(1);
+            return ret;
         }();
-        REQUIRE(b[1]);
+        STATIC_REQUIRE(b[1]);
     }
 }
