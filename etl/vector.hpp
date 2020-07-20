@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_VECTOR_HPP
 #define TAETL_VECTOR_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/array.hpp"
 #include "etl/utility.hpp"
 
 namespace etl
@@ -164,8 +164,8 @@ public:
     auto shrink_to_fit() -> void = delete;
 
 protected:
-    explicit vector(ValueType* data, size_t size, size_t capacity)
-        : data_(data), size_(size), capacity_(capacity)
+    explicit vector(ValueType* data, size_t sz, size_t cap)
+        : data_ {data}, size_ {sz}, capacity_ {cap}
     {
     }
 
@@ -181,10 +181,10 @@ template <typename ValueType, size_t Size>
 class vector : public ::etl::vector<ValueType>
 {
 public:
-    explicit vector() : ::etl::vector<ValueType> {data_, 0, Size} { }
+    explicit vector() : ::etl::vector<ValueType> {mem_.data(), 0, Size} { }
 
 private:
-    ValueType data_[Size];
+    typename etl::array<ValueType, Size> mem_ = {};
 };
 }  // namespace make
 }  // namespace etl

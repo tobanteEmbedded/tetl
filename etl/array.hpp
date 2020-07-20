@@ -134,7 +134,10 @@ public:
      * always a valid range, even if the container is empty (data() is not
      * dereferenceable in that case).
      */
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return _data; }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer
+    {
+        return &_data[0];
+    }
 
     /**
      * @brief Returns pointer to the underlying array serving as element

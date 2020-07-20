@@ -1,4 +1,4 @@
 ---
-Checks:          '*,-fuchsia-*,-google-*,-hicpp-*,-zircon-*,-abseil-*,-llvm-*,-clang-diagnostic-c++17-extensions,-readability-convert-member-functions-to-static,-modernize-deprecated-headers,-bugprone-exception-escape,-cppcoreguidelines-avoid-magic-numbers,-cppcoreguidelines-macro-usage,-misc-non-private-member-variables-in-classes,-readability-magic-numbers,-readability-container-size-empty'
+Checks:          '*,-fuchsia-*,-google-*,-hicpp-*,-zircon-*,-abseil-*,-llvm-*,-clang-diagnostic-c++17-extensions,-readability-convert-member-functions-to-static,-modernize-deprecated-headers,-bugprone-exception-escape,-cppcoreguidelines-avoid-magic-numbers,-cppcoreguidelines-macro-usage,-misc-non-private-member-variables-in-classes,-readability-magic-numbers,-readability-container-size-empty,-modernize-avoid-c-arrays,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-avoid-c-arrays'
 WarningsAsErrors: '-*'
 HeaderFilterRegex: '(etl|src|examples)'
