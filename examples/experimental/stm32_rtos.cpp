@@ -63,7 +63,7 @@ struct example_task
 
 static example_task<rtos::once> task {};
 
-int main()
+auto main() -> int
 {
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();

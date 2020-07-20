@@ -27,7 +27,7 @@ DAMAGE.
 
 #include "etl/array.hpp"
 
-int main()
+auto main() -> int
 {
     etl::array<int, 4> arr {};
     arr.at(0) = 1;

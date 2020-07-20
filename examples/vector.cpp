@@ -31,7 +31,7 @@ DAMAGE.
 
 #include "etl/vector.hpp"
 
-int main()
+auto main() -> int
 {
     etl::make::vector<double, 16> vec1;
     vec1.push_back(1.0);

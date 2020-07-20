@@ -28,7 +28,7 @@ DAMAGE.
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
-int main()
+auto main() -> int
 {
     etl::make::vector<double, 16> vec;
     vec.push_back(1.0);

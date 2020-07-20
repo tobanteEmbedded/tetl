@@ -31,7 +31,7 @@ DAMAGE.
 #include "etl/algorithm.hpp"
 #include "etl/vector.hpp"
 
-int main()
+auto main() -> int
 {
     etl::make::vector<double, 16> vec;
     vec.push_back(1.0);
@@ -50,8 +50,8 @@ int main()
     double n1 = 3.0;
     double n2 = 5;
 
-    auto result1 = etl::find(vec.begin(), vec.end(), n1);
-    auto result2 = etl::find(vec.begin(), vec.end(), n2);
+    auto *result1 = etl::find(vec.begin(), vec.end(), n1);
+    auto *result2 = etl::find(vec.begin(), vec.end(), n2);
 
     if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
     else

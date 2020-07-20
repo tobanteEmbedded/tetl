@@ -30,7 +30,7 @@ DAMAGE.
 // TAETL
 #include "etl/string.hpp"
 
-int main()
+auto main() -> int
 {
     etl::small_string str {};
 

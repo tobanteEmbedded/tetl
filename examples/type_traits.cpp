@@ -28,17 +28,17 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 
 template <typename T>
-typename etl::enable_if<etl::is_integral<T>::value, int>::type func(T val)
+auto func(T val) -> typename etl::enable_if<etl::is_integral<T>::value, int>::type
 {
     return val;
 }
 
-float func(float val) { return val; }
+auto func(float val) -> float { return val; }
 
-int main()
+auto main() -> int
 {
     func(42);            // Calls template
     func(uint16_t {1});  // Calls template
-    func(3.0f);          // Does not call template
+    func(3.0F);          // Does not call template
     return 0;
 }
