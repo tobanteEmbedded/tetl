@@ -46,6 +46,11 @@ coverage:
 report:
 	cd $(BUILD_DIR_BASE)_coverage && genhtml cov.info --output-directory lcov
 
+.PHONY: tidy
+tidy:
+	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../tests -p . -fix -header-filter="etl/.*"
+	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../etl -p . -fix -header-filter="etl/.*"
+
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR)	

@@ -96,17 +96,17 @@ TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]")
     WHEN("No feedback is applied")
     {
         auto drain = etl::dsp::feedback_drain {};
-        REQUIRE(drain(0.0f) == 0.0f);
-        REQUIRE(drain(0.5f) == 0.5f);
-        REQUIRE(drain(0.75f) == 0.75f);
-        REQUIRE(drain(1.0f) == 1.0f);
+        REQUIRE(drain(0.0F) == 0.0F);
+        REQUIRE(drain(0.5F) == 0.5F);
+        REQUIRE(drain(0.75F) == 0.75F);
+        REQUIRE(drain(1.0F) == 1.0F);
     }
 
     WHEN("Feedback is applied")
     {
         auto drain = etl::dsp::feedback_drain {};
-        drain.push(1.0f);
-        REQUIRE(drain(0.0f) == 1.0f);
+        drain.push(1.0F);
+        REQUIRE(drain(0.0F) == 1.0F);
     }
 }
 
@@ -116,10 +116,10 @@ TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]")
     {
         auto drain = etl::dsp::feedback_drain {};
         auto tap   = etl::dsp::feedback_tap {drain};
-        REQUIRE(tap(0.0f) == 0.0f);
-        REQUIRE(tap(0.5f) == 0.5f);
-        REQUIRE(tap(0.75f) == 0.75f);
-        REQUIRE(tap(1.0f) == 1.0f);
+        REQUIRE(tap(0.0F) == 0.0F);
+        REQUIRE(tap(0.5F) == 0.5F);
+        REQUIRE(tap(0.75F) == 0.75F);
+        REQUIRE(tap(1.0F) == 1.0F);
     }
 
     WHEN("Pass to drain")
@@ -127,14 +127,14 @@ TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]")
         auto drain = etl::dsp::feedback_drain {};
         auto tap   = etl::dsp::feedback_tap {drain};
 
-        REQUIRE(tap(1.0f) == 1.0f);
-        REQUIRE(drain(0.0f) == 1.0f);
+        REQUIRE(tap(1.0F) == 1.0F);
+        REQUIRE(drain(0.0F) == 1.0F);
 
-        REQUIRE(tap(0.0f) == 0.0f);
-        REQUIRE(drain(0.0f) == 0.0f);
+        REQUIRE(tap(0.0F) == 0.0F);
+        REQUIRE(drain(0.0F) == 0.0F);
 
-        REQUIRE(tap(0.5f) == 0.5f);
-        REQUIRE(drain(0.0f) == 0.5f);
+        REQUIRE(tap(0.5F) == 0.5F);
+        REQUIRE(drain(0.0F) == 0.5F);
     }
 }
 

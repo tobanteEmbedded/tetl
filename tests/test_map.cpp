@@ -192,13 +192,13 @@ TEST_CASE("map: insert(value_type &&)", "[map]")
 {
     auto map = etl::make::map<int, float, 4> {};
 
-    map.insert(etl::pair<int, float> {2, 143.0f});
+    map.insert(etl::pair<int, float> {2, 143.0F});
     REQUIRE(map.size() == 1);
     REQUIRE(map.count(2) == 1);
-    REQUIRE(map.find(2)->second == 143.0f);
+    REQUIRE(map.find(2)->second == 143.0F);
 
-    map.insert(etl::pair<int, float> {3, 42.0f});
+    map.insert(etl::pair<int, float> {3, 42.0F});
     REQUIRE(map.size() == 2);
     REQUIRE(map.count(3) == 1);
-    REQUIRE(map.find(3)->second == 42.0f);
+    REQUIRE(map.find(3)->second == 42.0F);
 }

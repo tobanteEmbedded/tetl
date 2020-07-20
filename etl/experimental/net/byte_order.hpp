@@ -34,15 +34,15 @@ namespace etl
 namespace net
 {
 template <class T>
-constexpr T ntoh(T) = delete;
-constexpr char ntoh(char v) noexcept { return v; }
-constexpr uint8_t ntoh(uint8_t v) noexcept { return v; }
-constexpr int8_t ntoh(int8_t v) noexcept { return v; }
-constexpr uint16_t ntoh(uint16_t v) noexcept
+constexpr auto ntoh(T) -> T = delete;
+constexpr auto ntoh(char v) noexcept -> char { return v; }
+constexpr auto ntoh(uint8_t v) noexcept -> uint8_t { return v; }
+constexpr auto ntoh(int8_t v) noexcept -> int8_t { return v; }
+constexpr auto ntoh(uint16_t v) noexcept -> uint16_t
 {
     return uint16_t(v << uint16_t {8}) | uint16_t(v >> uint16_t {8});
 }
-constexpr uint32_t ntoh(uint32_t v) noexcept
+constexpr auto ntoh(uint32_t v) noexcept -> uint32_t
 {
     auto const a = v << 24;
     auto const b = (v & 0x0000FF00) << 8;
@@ -53,12 +53,12 @@ constexpr uint32_t ntoh(uint32_t v) noexcept
 }
 
 template <class T>
-constexpr T hton(T) = delete;
-constexpr char hton(char v) noexcept { return v; }
-constexpr int8_t hton(int8_t v) noexcept { return v; }
-constexpr uint8_t hton(uint8_t v) noexcept { return v; }
-constexpr uint16_t hton(uint16_t v) noexcept { return ntoh(v); }
-constexpr uint32_t hton(uint32_t v) noexcept { return ntoh(v); }
+constexpr auto hton(T) -> T = delete;
+constexpr auto hton(char v) noexcept -> char { return v; }
+constexpr auto hton(int8_t v) noexcept -> int8_t { return v; }
+constexpr auto hton(uint8_t v) noexcept -> uint8_t { return v; }
+constexpr auto hton(uint16_t v) noexcept -> uint16_t { return ntoh(v); }
+constexpr auto hton(uint32_t v) noexcept -> uint32_t { return ntoh(v); }
 
 }  // namespace net
 }  // namespace etl

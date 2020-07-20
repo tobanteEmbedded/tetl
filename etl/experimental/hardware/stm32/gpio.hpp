@@ -83,7 +83,7 @@ struct port
     auto operator=(port&&) -> port& = delete;
     auto operator=(port const&) -> port& = delete;
 
-    [[nodiscard]] auto read(pin_number const pin) const -> pin_state
+    [[nodiscard]] auto read(pin_number const pin) -> pin_state
     {
         ignore_unused(val(pin));
         return {};
@@ -93,15 +93,15 @@ struct port
     {
         if (state == pin_state::reset)
         {
-            memory.bit_set_reset = (1u << val(pin));
+            memory.bit_set_reset = (1U << val(pin));
             return;
         }
-        memory.bit_set_reset = (1u << (val(pin) + 16u));
+        memory.bit_set_reset = (1U << (val(pin) + 16U));
     }
 
     void toggle_pin(pin_number const pin)
     {
-        memory.output_data ^= (1u << val(pin));
+        memory.output_data ^= (1U << val(pin));
     }
 
     [[nodiscard]] static auto place_at(void* addr) -> port&

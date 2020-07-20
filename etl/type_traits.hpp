@@ -44,8 +44,7 @@ struct integral_constant
     constexpr auto operator()() const noexcept -> value_type { return value; }
 };
 
-template <typename Type, Type val>
-constexpr Type integral_constant<Type, val>::value;
+
 using true_type  = integral_constant<bool, true>;
 using false_type = integral_constant<bool, false>;
 
@@ -85,8 +84,7 @@ using remove_volatile_t = typename remove_volatile<T>::type;
 template <typename Type>
 struct remove_cv
 {
-    typedef
-        typename remove_const<typename remove_volatile<Type>::type>::type type;
+    using type = typename remove_const<typename remove_volatile<Type>::type>::type;
 };
 
 template <class T>

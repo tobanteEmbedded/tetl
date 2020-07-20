@@ -60,37 +60,37 @@ public:
         if (handle_ != nullptr) { vQueueDelete(handle_); }
     }
 
-    auto capacity() const -> size_type { return Size; }
+    [[nodiscard]] auto capacity() const -> size_type { return Size; }
 
-    auto send(ValueType const& data, TickType_t ticksToWait = 0) const -> bool
+    [[nodiscard]] auto send(ValueType const& data, TickType_t ticksToWait = 0) const -> bool
     {
-        auto const rawData = static_cast<const void*>(&data);
+        const auto *const rawData = static_cast<const void*>(&data);
         auto const success = xQueueSend(handle_, rawData, ticksToWait);
         return static_cast<bool>(success);
     }
 
     auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
     {
-        auto const rawData = static_cast<void*>(&data);
+        auto *const rawData = static_cast<void*>(&data);
         auto const success = xQueueReceive(handle_, rawData, ticksToWait);
         return static_cast<bool>(success);
     }
 
-    auto receive(TickType_t ticksToWait = 0) const -> pair<bool, ValueType>
+    [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const -> pair<bool, ValueType>
     {
         auto value         = ValueType {};
-        auto const rawData = static_cast<void*>(&value);
+        auto *const rawData = static_cast<void*>(&value);
         auto const success = xQueueReceive(handle_, rawData, ticksToWait);
         return {static_cast<bool>(success), value};
     }
 
-    auto reset() const -> bool
+    [[nodiscard]] auto reset() const -> bool
     {
         auto const result = xQueueReset(handle_);
         return static_cast<bool>(result);
     }
 
-    auto messages_waiting() const -> etl::uint32_t
+    [[nodiscard]] auto messages_waiting() const -> etl::uint32_t
     {
         auto const result = uxQueueMessagesWaiting(handle_);
         return static_cast<etl::uint32_t>(result);

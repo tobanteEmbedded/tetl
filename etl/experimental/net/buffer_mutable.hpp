@@ -51,12 +51,12 @@ public:
     /**
      * @brief Get a pointer to the beginning of the memory range.
      */
-    auto data() const noexcept -> void* { return data_; }
+    [[nodiscard]] auto data() const noexcept -> void* { return data_; }
 
     /**
      * @brief Get the size of the memory range.
      */
-    auto size() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] auto size() const noexcept -> etl::size_t { return size_; }
 
     /**
      * @brief Move the start of the buffer by the specified number of bytes.

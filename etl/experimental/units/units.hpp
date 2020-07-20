@@ -48,7 +48,7 @@ struct quantity
     using ratio_type = Ratio;
 
     constexpr explicit quantity(T v) : val_ {v} { }
-    constexpr auto value() const { return val_; }
+    [[nodiscard]] constexpr auto value() const { return val_; }
 
 private:
     T val_;

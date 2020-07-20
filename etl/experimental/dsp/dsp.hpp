@@ -53,7 +53,7 @@ struct constant
     constexpr constant(T val) : val_ {val} { }
 
     template <typename... Args>
-    constexpr auto operator()(Args...) const
+    constexpr auto operator()(Args... /*unused*/) const
     {
         return val_;
     }

@@ -53,12 +53,12 @@ public:
     /**
      * @brief Get a pointer to the beginning of the memory range.
      */
-    auto data() const noexcept -> void const* { return data_; }
+    [[nodiscard]] auto data() const noexcept -> void const* { return data_; }
 
     /**
      * @brief Get the size of the memory range.
      */
-    auto size() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] auto size() const noexcept -> etl::size_t { return size_; }
 
     /**
      * @brief Move the start of the buffer by the specified number of bytes.
@@ -85,7 +85,7 @@ inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
     -> const_buffer
 {
     auto offset = n < b.size() ? n : b.size();
-    auto* data  = static_cast<char const*>(b.data()) + offset;
+    const auto * data  = static_cast<char const*>(b.data()) + offset;
     auto size   = b.size() - offset;
     return const_buffer {data, size};
 }

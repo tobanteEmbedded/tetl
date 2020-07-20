@@ -45,7 +45,7 @@ public:
     auto lock() noexcept { data_ = true; }
     auto unlock() noexcept { data_ = false; }
 
-    auto is_locked() const noexcept { return data_; }
+    [[nodiscard]] auto is_locked() const noexcept { return data_; }
 
 private:
     bool data_ = false;

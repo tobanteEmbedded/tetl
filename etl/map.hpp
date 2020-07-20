@@ -56,7 +56,7 @@ public:
     // const_reverse_iterator std::reverse_iterator<const_iterator>
     // node_type a specialization of node handle representing a container node
     // insert_return_type
-public:
+
     /**
      * @brief Returns a reference to the mapped value of the element with key
      * equivalent to key. If no such element exists, you are in UB land.

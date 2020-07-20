@@ -44,7 +44,7 @@ using configSTACK_DEPTH_TYPE = etl::uint16_t;
 using TickType_t = uint32_t;
 
 // SCHEDULER
-inline auto vPortYield(void) -> void { }
+inline auto vPortYield() -> void { }
 #define portYIELD() vPortYield()
 #define taskYIELD() portYIELD()
 
