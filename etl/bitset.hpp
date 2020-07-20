@@ -46,7 +46,7 @@ public:
 
     constexpr auto set(size_t const pos) -> void
     {
-        bits_[pos >> 3] |= (1 << (pos & 0x7));
+        bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7));
     }
 
     [[nodiscard]] constexpr auto test(size_t const pos) const -> bool

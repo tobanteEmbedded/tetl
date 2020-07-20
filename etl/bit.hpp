@@ -66,8 +66,8 @@ template <class T>
     T count = 0;
     while (input)
     {
-        count = count + (input & 1);
-        input = input >> 1;
+        count = count + (input & T {1});
+        input = input >> T {1};
     }
     return static_cast<int>(count);
 }
