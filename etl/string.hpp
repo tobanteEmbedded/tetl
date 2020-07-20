@@ -104,7 +104,8 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    [[nodiscard]] constexpr auto at(etl::size_t index) const noexcept -> const_reference
+    [[nodiscard]] constexpr auto at(etl::size_t index) const noexcept
+        -> const_reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -137,7 +138,10 @@ public:
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return data_; }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return data_;
+    }
 
     /**
      * @brief Returns an iterator to the end.
@@ -165,29 +169,44 @@ public:
     /**
      * @brief Checks whether the string is empty.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size_ == 0;
+    }
 
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
+    {
+        return size_;
+    }
 
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto length() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] constexpr auto length() const noexcept -> etl::size_t
+    {
+        return size_;
+    }
 
     /**
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    [[nodiscard]] constexpr auto capacity() const noexcept -> etl::size_t { return Capacity; }
+    [[nodiscard]] constexpr auto capacity() const noexcept -> etl::size_t
+    {
+        return Capacity;
+    }
 
     /**
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    [[nodiscard]] constexpr auto max_size() const noexcept -> etl::size_t { return Capacity; }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> etl::size_t
+    {
+        return Capacity;
+    }
 
     /**
      * @brief Returns a pointer to a null-terminated character array.

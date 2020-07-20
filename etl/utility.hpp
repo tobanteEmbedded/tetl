@@ -65,7 +65,7 @@ struct pair
     using first_type  = T1;
     using second_type = T2;
 
-    constexpr pair()  = default;
+    constexpr pair() = default;
     constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
     template <class U1, class U2>
@@ -110,8 +110,8 @@ struct pair
 
     ~pair() noexcept = default;
 
-    T1 first{};
-    T2 second{};
+    T1 first {};
+    T2 second {};
 };
 }  // namespace etl
 

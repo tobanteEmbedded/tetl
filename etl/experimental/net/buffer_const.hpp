@@ -84,9 +84,9 @@ private:
 inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
     -> const_buffer
 {
-    auto offset = n < b.size() ? n : b.size();
-    const auto * data  = static_cast<char const*>(b.data()) + offset;
-    auto size   = b.size() - offset;
+    auto offset      = n < b.size() ? n : b.size();
+    const auto* data = static_cast<char const*>(b.data()) + offset;
+    auto size        = b.size() - offset;
     return const_buffer {data, size};
 }
 

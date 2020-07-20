@@ -50,7 +50,6 @@ public:
     using iterator       = ValueType*;
     using const_iterator = const ValueType*;
 
-
     [[nodiscard]] constexpr auto empty() const noexcept -> bool
     {
         return size_ == 0;

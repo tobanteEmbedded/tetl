@@ -52,7 +52,6 @@ public:
     using iterator        = Type*;
     using const_iterator  = const Type*;
 
-
     /**
      * @brief Default constructor.
      */

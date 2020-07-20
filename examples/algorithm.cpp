@@ -50,8 +50,8 @@ auto main() -> int
     double n1 = 3.0;
     double n2 = 5;
 
-    auto *result1 = etl::find(vec.begin(), vec.end(), n1);
-    auto *result2 = etl::find(vec.begin(), vec.end(), n2);
+    auto* result1 = etl::find(vec.begin(), vec.end(), n1);
+    auto* result2 = etl::find(vec.begin(), vec.end(), n2);
 
     if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
     else
