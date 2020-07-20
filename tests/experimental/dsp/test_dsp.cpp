@@ -43,7 +43,7 @@ TEST_CASE("experimental/dsp: constant", "[dsp][experimental]")
 TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
 {
     using namespace etl::dsp::literals;
-    REQUIRE(0.0_K() == 0.0);
+    REQUIRE(0.0_K() == 0.0L);
     REQUIRE(42_K() == 42);
 }
 

@@ -176,7 +176,7 @@ namespace internal
 //     (etl::get<Indices>(etl::forward<Tuple>(tuple))(val...), ...);
 // }
 template <typename Tuple, typename... Tn>
-void for_each_fork(Tuple&& tuple, Tn... val)
+void for_each_fork(Tuple&& /*tuple*/, Tn... /*val*/)
 {
     // constexpr etl::size_t N
     //     = etl::tuple_size<etl::remove_reference_t<Tuple>>::value;

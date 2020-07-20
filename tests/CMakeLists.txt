@@ -24,6 +24,7 @@ set(TEST_SRC
     experimental/net/test_buffer.cpp
     experimental/net/test_byte_order.cpp
 
+    experimental/rtos/test_task.cpp
     experimental/rtos/test_queue.cpp
     
     experimental/stm32/test_gpio.cpp

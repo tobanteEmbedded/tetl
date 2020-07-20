@@ -23,53 +23,33 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
-
-#if __has_include(<new>)
-#include <new>
-#else
-#include "etl/new.hpp"
-#endif
-
 #define TAETL_RTOS_USE_STUBS
-#include "etl/experimental/hardware/stm32/gpio.hpp"
-#include "etl/experimental/rtos/delay.hpp"
 #include "etl/experimental/rtos/task.hpp"
 
-namespace rtos  = etl::rtos;
-namespace stm32 = etl::hardware::stm32;
+#include "catch2/catch.hpp"
 
-template <typename LoopType = rtos::forever>
+namespace rtos = etl::rtos;
+
+template <typename LoopType = rtos::once>
 struct example_task
 {
     auto run() -> void
     {
         auto loopControl = LoopType {};
-        while (loopControl())
-        {
-            stm32::gpio_memory_layout memory {};
-            auto& gpio_port = stm32::port::place_at(&memory);
-            gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
-            gpio_port.toggle_pin(stm32::pin_number::pin_13);
-
-            rtos::yield_task();
-            rtos::delay(1);
-            rtos::delay_until(1, 1);
-        }
+        while (loopControl()) { rtos::yield_task(); }
 
         rtos::delete_task(nullptr);
     }
 };
 
-static example_task<rtos::once> task {};
-
-int main()
+TEST_CASE("experimental/rtos/task: create", "[experimental][rtos]")
 {
+    auto task = example_task<rtos::once> {};
+
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
 
     // Run would normally be called by rtos::start_scheduler(). Only used for
     // stubs.
     task.run();
-    return 0;
 }
