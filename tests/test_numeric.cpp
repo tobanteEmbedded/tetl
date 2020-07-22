@@ -66,7 +66,7 @@ TEST_CASE("numeric: gcd", "[numeric]")
     STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
 
-TEST_CASE("numeric: midpoint", "[numeric]")
+TEST_CASE("numeric: midpoint(integer)", "[numeric]")
 {
     SECTION("short")
     {
@@ -96,5 +96,27 @@ TEST_CASE("numeric: midpoint", "[numeric]")
         REQUIRE(etl::midpoint(b, a) == 3);
         STATIC_REQUIRE(etl::midpoint(a, b) == 2);
         STATIC_REQUIRE(etl::midpoint(b, a) == 3);
+    }
+}
+
+TEST_CASE("numeric: midpoint(pointer)", "[numeric]")
+{
+    SECTION("even")
+    {
+        constexpr int data[] = {1, 2, 3, 4};
+        REQUIRE(*etl::midpoint(&data[0], &data[2]) == 2);
+        REQUIRE(*etl::midpoint(&data[2], &data[0]) == 2);
+        STATIC_REQUIRE(*etl::midpoint(&data[0], &data[2]) == 2);
+        STATIC_REQUIRE(*etl::midpoint(&data[2], &data[0]) == 2);
+    }
+
+    SECTION("even")
+    {
+        constexpr short data[] = {1, 2, 3, 4, 5};
+        REQUIRE(*etl::midpoint(&data[0], &data[3]) == 2);
+        STATIC_REQUIRE(*etl::midpoint(&data[0], &data[3]) == 2);
+
+        REQUIRE(*etl::midpoint(&data[3], &data[0]) == 3);
+        STATIC_REQUIRE(*etl::midpoint(&data[3], &data[0]) == 3);
     }
 }
