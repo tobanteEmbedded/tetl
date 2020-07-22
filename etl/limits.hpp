@@ -40,6 +40,13 @@ enum float_round_style
     round_toward_neg_infinity = 3
 };
 
+enum float_denorm_style
+{
+    denorm_indeterminate = -1,
+    denorm_absent        = 0,
+    denorm_present       = 1
+};
+
 template <class T>
 struct numeric_limits
 {
@@ -66,7 +73,18 @@ struct numeric_limits
     static constexpr int max_exponent10            = 0;
     static constexpr bool traps                    = false;
     static constexpr bool tinyness_before          = false;
+
+    static constexpr auto min() noexcept { return T(); }
+    static constexpr auto lowest() noexcept { return T(); }
+    static constexpr auto max() noexcept { return T(); }
+    static constexpr auto epsilon() noexcept { return T(); }
+    static constexpr auto round_error() noexcept { return T(); }
+    static constexpr auto infinity() noexcept { return T(); }
+    static constexpr auto quiet_NaN() noexcept { return T(); }
+    static constexpr auto signaling_NaN() noexcept { return T(); }
+    static constexpr auto denorm_min() noexcept { return T(); }
 };
+
 }  // namespace etl
 
 #endif  // TAETL_LIMITS_HPP

@@ -41,6 +41,20 @@ TEST_CASE("limits: numeric_limits<T>", "[limits]")
 {
     struct S
     {
+        int i = 42;
     };
     STATIC_REQUIRE(etl::numeric_limits<S>::is_specialized == false);
+    STATIC_REQUIRE(etl::numeric_limits<S>::is_signed == false);
+    STATIC_REQUIRE(etl::numeric_limits<S>::is_integer == false);
+    STATIC_REQUIRE(etl::numeric_limits<S>::is_bounded == false);
+
+    STATIC_REQUIRE(etl::numeric_limits<S>::min().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::max().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::lowest().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::epsilon().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::round_error().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::infinity().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::quiet_NaN().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::signaling_NaN().i == 42);
+    STATIC_REQUIRE(etl::numeric_limits<S>::denorm_min().i == 42);
 }
