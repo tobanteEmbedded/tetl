@@ -463,6 +463,9 @@ struct enable_if<true, Type>
     using type = Type;
 };
 
+template <bool B, class T = void>
+using enable_if_t = typename enable_if<B, T>::type;
+
 /**
  * @brief If Type is an array type, provides the member constant value equal to
  * the number of dimensions of the array. For any other type, value is 0. The

@@ -29,6 +29,7 @@ DAMAGE.
 
 // TAETL
 #include "definitions.hpp"
+#include "type_traits.hpp"
 
 namespace etl
 {
@@ -82,6 +83,51 @@ template <typename M, typename N>
 {
     if (n == 0) { return m; }
     return gcd(n, m % n);
+}
+
+/**
+ * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * rounded towards a.
+ * @detail T is arithmentic type other than bool
+ */
+template <typename Integer>
+constexpr auto midpoint(Integer a, Integer b) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer>, Integer>
+{
+    using U  = etl::make_unsigned_t<Integer>;
+    int sign = 1;
+    auto m   = static_cast<U>(a);
+    auto M   = static_cast<U>(b);
+    if (a > b)
+    {
+        sign = -1;
+        m    = static_cast<U>(b);
+        M    = static_cast<U>(a);
+    }
+    return a + sign * static_cast<Integer>(U(M - m) >> 1);
+}
+
+// template <typename Float>
+// constexpr auto midpoint(Float a, Float b) noexcept
+//     -> etl::enable_if_t<etl::is_floating_point_v<Float>, Float>
+// {
+//     auto const lo = etl::numeric_limits<Float>::min() * 2;
+//     auto const hi = etl::numeric_limits<Float>::max() / 2;
+
+//     if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
+
+//     if (etl::abs(a) < lo) { return a + b / 2; }
+
+//     if (etl::abs(b) < lo) { return a / 2 + b; }
+
+//     return a / 2 + b / 2;
+// }
+
+template <typename Pointer>
+constexpr auto midpoint(Pointer a, Pointer b) noexcept
+    -> enable_if_t<is_pointer_v<Pointer>, Pointer>
+{
+    return a + midpoint(ptrdiff_t {0}, b - a);
 }
 
 }  // namespace etl

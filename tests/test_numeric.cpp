@@ -65,3 +65,36 @@ TEST_CASE("numeric: gcd", "[numeric]")
     REQUIRE(etl::gcd(105, 30) == 15);
     STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
+
+TEST_CASE("numeric: midpoint", "[numeric]")
+{
+    SECTION("short")
+    {
+        constexpr signed short a = -3;
+        constexpr signed short b = -4;
+        REQUIRE(etl::midpoint(a, b) == -3);
+        REQUIRE(etl::midpoint(b, a) == -4);
+        STATIC_REQUIRE(etl::midpoint(a, b) == -3);
+        STATIC_REQUIRE(etl::midpoint(b, a) == -4);
+    }
+
+    SECTION("char")
+    {
+        constexpr signed char a = -3;
+        constexpr signed char b = 4;
+        REQUIRE(etl::midpoint(a, b) == 0);
+        REQUIRE(etl::midpoint(b, a) == 1);
+        STATIC_REQUIRE(etl::midpoint(a, b) == 0);
+        STATIC_REQUIRE(etl::midpoint(b, a) == 1);
+    }
+
+    SECTION("int")
+    {
+        constexpr signed int a = 1;
+        constexpr signed int b = 4;
+        REQUIRE(etl::midpoint(a, b) == 2);
+        REQUIRE(etl::midpoint(b, a) == 3);
+        STATIC_REQUIRE(etl::midpoint(a, b) == 2);
+        STATIC_REQUIRE(etl::midpoint(b, a) == 3);
+    }
+}
