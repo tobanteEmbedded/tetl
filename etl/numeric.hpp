@@ -29,6 +29,7 @@ DAMAGE.
 
 // TAETL
 #include "definitions.hpp"
+#include "limits.hpp"
 #include "type_traits.hpp"
 
 namespace etl
@@ -107,21 +108,21 @@ constexpr auto midpoint(Integer a, Integer b) noexcept
     return a + sign * static_cast<Integer>(U(M - m) >> 1);
 }
 
-// template <typename Float>
-// constexpr auto midpoint(Float a, Float b) noexcept
-//     -> etl::enable_if_t<etl::is_floating_point_v<Float>, Float>
-// {
-//     auto const lo = etl::numeric_limits<Float>::min() * 2;
-//     auto const hi = etl::numeric_limits<Float>::max() / 2;
+template <typename Float>
+constexpr auto midpoint(Float a, Float b) noexcept
+    -> etl::enable_if_t<etl::is_floating_point_v<Float>, Float>
+{
+    auto const lo = etl::numeric_limits<Float>::min() * 2;
+    auto const hi = etl::numeric_limits<Float>::max() / 2;
 
-//     if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
+    if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
 
-//     if (etl::abs(a) < lo) { return a + b / 2; }
+    if (etl::abs(a) < lo) { return a + b / 2; }
 
-//     if (etl::abs(b) < lo) { return a / 2 + b; }
+    if (etl::abs(b) < lo) { return a / 2 + b; }
 
-//     return a / 2 + b / 2;
-// }
+    return a / 2 + b / 2;
+}
 
 template <typename Pointer>
 constexpr auto midpoint(Pointer a, Pointer b) noexcept

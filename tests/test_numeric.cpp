@@ -99,6 +99,29 @@ TEST_CASE("numeric: midpoint(integer)", "[numeric]")
     }
 }
 
+TEST_CASE("numeric: midpoint(floating_point)", "[numeric]")
+{
+    SECTION("float")
+    {
+        constexpr float a = -3.0f;
+        constexpr float b = -4.0f;
+        REQUIRE(etl::midpoint(a, b) == -3.5f);
+        REQUIRE(etl::midpoint(b, a) == -3.5f);
+        STATIC_REQUIRE(etl::midpoint(a, b) == -3.5f);
+        STATIC_REQUIRE(etl::midpoint(b, a) == -3.5f);
+    }
+
+    SECTION("double")
+    {
+        constexpr double a = -3.0;
+        constexpr double b = -4.0;
+        REQUIRE(etl::midpoint(a, b) == -3.5);
+        REQUIRE(etl::midpoint(b, a) == -3.5);
+        STATIC_REQUIRE(etl::midpoint(a, b) == -3.5);
+        STATIC_REQUIRE(etl::midpoint(b, a) == -3.5);
+    }
+}
+
 TEST_CASE("numeric: midpoint(pointer)", "[numeric]")
 {
     SECTION("even")
