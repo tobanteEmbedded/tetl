@@ -27,6 +27,9 @@ DAMAGE.
 #ifndef TAETL_LIMITS_HPP
 #define TAETL_LIMITS_HPP
 
+#include <float.h>
+#include <math.h>
+
 #include "definitions.hpp"
 
 namespace etl
@@ -129,6 +132,51 @@ public:
     static constexpr auto denorm_min() noexcept -> bool { return false; }
 
     static constexpr bool is_iec559  = false;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = false;
+
+    static constexpr bool traps                    = false;
+    static constexpr bool tinyness_before          = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+};
+
+template <>
+class numeric_limits<float>
+{
+public:
+    static constexpr bool is_specialized = true;
+
+    static constexpr auto min() noexcept { return FLT_MIN; }
+    static constexpr auto max() noexcept { return FLT_MAX; }
+    static constexpr auto lowest() noexcept { return -FLT_MAX; }
+
+    static constexpr int digits       = FLT_MANT_DIG;
+    static constexpr int digits10     = FLT_DIG;
+    static constexpr int max_digits10 = FLT_DECIMAL_DIG;
+
+    static constexpr bool is_signed  = true;
+    static constexpr bool is_integer = false;
+    static constexpr bool is_exact   = false;
+    static constexpr int radix       = FLT_RADIX;
+    static constexpr auto epsilon() noexcept -> float { return FLT_EPSILON; }
+    static constexpr auto round_error() noexcept -> float { return 0.5F; }
+
+    static constexpr int min_exponent   = FLT_MIN_EXP;
+    static constexpr int min_exponent10 = FLT_MIN_10_EXP;
+    static constexpr int max_exponent   = FLT_MAX_EXP;
+    static constexpr int max_exponent10 = FLT_MAX_10_EXP;
+
+    static constexpr bool has_infinity             = true;
+    static constexpr bool has_quiet_NaN            = true;
+    static constexpr bool has_signaling_NaN        = true;
+    static constexpr float_denorm_style has_denorm = denorm_present;
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
+    static constexpr auto quiet_NaN() noexcept -> float { return NAN; }
+    static constexpr auto signaling_NaN() noexcept -> float { return NAN; }
+    static constexpr auto denorm_min() noexcept -> float { return 0; }
+
+    static constexpr bool is_iec559  = true;
     static constexpr bool is_bounded = true;
     static constexpr bool is_modulo  = false;
 
