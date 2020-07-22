@@ -273,3 +273,38 @@ TEST_CASE("type_traits: rank", "[type_traits]")
     STATIC_REQUIRE(etl::rank<int[5][5]>::value == 2);
     STATIC_REQUIRE(etl::rank<int[][5][5]>::value == 3);
 }
+
+TEST_CASE("type_traits: make_unsigned", "[type_traits]")
+{
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int8_t>, uint8_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int16_t>, uint16_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int32_t>, uint32_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int64_t>, uint64_t>);
+
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint8_t>, uint8_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint16_t>, uint16_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint32_t>, uint32_t>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint64_t>, uint64_t>);
+
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<signed char>, unsigned char>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<signed short>, unsigned short>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<signed int>, unsigned int>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<signed long>, unsigned long>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<signed long long>,
+                                  unsigned long long>);
+
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<unsigned char>, unsigned char>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<unsigned short>, unsigned short>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<unsigned int>, unsigned int>);
+    STATIC_REQUIRE(
+        etl::is_same_v<etl::make_unsigned_t<unsigned long>, unsigned long>);
+    STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<unsigned long long>,
+                                  unsigned long long>);
+}
