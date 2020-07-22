@@ -181,10 +181,10 @@ template <typename ValueType, size_t Size>
 class vector : public ::etl::vector<ValueType>
 {
 public:
-    explicit vector() : ::etl::vector<ValueType> {mem_.data(), 0, Size} { }
+    explicit vector() : ::etl::vector<ValueType> {&mem_[0], 0, Size} { }
 
 private:
-    typename etl::array<ValueType, Size> mem_ = {};
+    ValueType mem_[Size] = {};
 };
 }  // namespace make
 }  // namespace etl

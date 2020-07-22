@@ -29,6 +29,7 @@ DAMAGE.
 
 #include <float.h>
 #include <math.h>
+#include <stdint.h>
 
 #include "definitions.hpp"
 
@@ -152,7 +153,7 @@ public:
 
     static constexpr int digits       = FLT_MANT_DIG;
     static constexpr int digits10     = FLT_DIG;
-    static constexpr int max_digits10 = FLT_DECIMAL_DIG;
+    static constexpr int max_digits10 = DECIMAL_DIG;
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = false;
@@ -197,7 +198,7 @@ public:
 
     static constexpr int digits       = DBL_MANT_DIG;
     static constexpr int digits10     = DBL_DIG;
-    static constexpr int max_digits10 = DBL_DECIMAL_DIG;
+    static constexpr int max_digits10 = DECIMAL_DIG;
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = false;
@@ -216,9 +217,18 @@ public:
     static constexpr bool has_signaling_NaN        = true;
     static constexpr float_denorm_style has_denorm = denorm_present;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> double { return HUGE_VAL; }
-    static constexpr auto quiet_NaN() noexcept -> double { return NAN; }
-    static constexpr auto signaling_NaN() noexcept -> double { return NAN; }
+    static constexpr auto infinity() noexcept -> double
+    {
+        return static_cast<double>(HUGE_VAL);
+    }
+    static constexpr auto quiet_NaN() noexcept -> double
+    {
+        return static_cast<double>(NAN);
+    }
+    static constexpr auto signaling_NaN() noexcept -> double
+    {
+        return static_cast<double>(NAN);
+    }
     static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 
     static constexpr bool is_iec559  = true;
