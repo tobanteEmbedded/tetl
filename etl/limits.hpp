@@ -172,7 +172,7 @@ public:
     static constexpr bool has_signaling_NaN        = true;
     static constexpr float_denorm_style has_denorm = denorm_present;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
+    // static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
     static constexpr auto quiet_NaN() noexcept -> float { return NAN; }
     static constexpr auto signaling_NaN() noexcept -> float { return NAN; }
     static constexpr auto denorm_min() noexcept -> float { return 0.0f; }
@@ -217,18 +217,9 @@ public:
     static constexpr bool has_signaling_NaN        = true;
     static constexpr float_denorm_style has_denorm = denorm_present;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> double
-    {
-        return static_cast<double>(HUGE_VAL);
-    }
-    static constexpr auto quiet_NaN() noexcept -> double
-    {
-        return static_cast<double>(NAN);
-    }
-    static constexpr auto signaling_NaN() noexcept -> double
-    {
-        return static_cast<double>(NAN);
-    }
+    // static constexpr auto infinity() noexcept -> double { return HUGE_VAL; }
+    static constexpr auto quiet_NaN() noexcept -> double { return NAN; }
+    static constexpr auto signaling_NaN() noexcept -> double { return NAN; }
     static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 
     static constexpr bool is_iec559  = true;
