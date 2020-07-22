@@ -58,3 +58,21 @@ TEST_CASE("limits: numeric_limits<T>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<S>::signaling_NaN().i == 42);
     STATIC_REQUIRE(etl::numeric_limits<S>::denorm_min().i == 42);
 }
+
+TEST_CASE("limits: numeric_limits<bool>", "[limits]")
+{
+    STATIC_REQUIRE(etl::numeric_limits<bool>::is_specialized == true);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::is_signed == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::is_integer == true);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::is_bounded == true);
+
+    STATIC_REQUIRE(etl::numeric_limits<bool>::min() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::max() == true);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::lowest() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::epsilon() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::round_error() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::infinity() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::quiet_NaN() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::signaling_NaN() == false);
+    STATIC_REQUIRE(etl::numeric_limits<bool>::denorm_min() == false);
+}
