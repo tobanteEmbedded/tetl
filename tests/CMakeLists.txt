@@ -9,6 +9,7 @@ set(TEST_SRC
     test_bit.cpp
     test_bitset.cpp
     test_definitions.cpp
+    test_limits.cpp
     test_map.cpp
     test_mutex.cpp
     test_numeric.cpp
