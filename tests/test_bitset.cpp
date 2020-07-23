@@ -28,17 +28,19 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("bitset: construct default", "[bit]")
+TEMPLATE_TEST_CASE_SIG("bitset: construct default", "[bit]", ((int Num), Num),
+                       8, 15, 16, 31, 32, 63, 64, 127, 128)
 {
-    auto set = etl::bitset<10> {};
+    auto set = etl::bitset<Num> {};
     REQUIRE_FALSE(set.test(0));
 }
 
-TEST_CASE("bitset: set", "[bit]")
+TEMPLATE_TEST_CASE_SIG("bitset: set", "[bit]", ((int Num), Num), 8, 15, 16, 31,
+                       32, 63, 64, 127, 128)
 {
     WHEN("b is mutable")
     {
-        auto b = etl::bitset<10> {};
+        auto b = etl::bitset<Num> {};
         b.set(1);
         REQUIRE(b.test(1));
     }
@@ -46,7 +48,7 @@ TEST_CASE("bitset: set", "[bit]")
     WHEN("b is constexpr")
     {
         constexpr auto b = []() {
-            auto ret = etl::bitset<10> {};
+            auto ret = etl::bitset<Num> {};
             ret.set(1);
             return ret;
         }();
