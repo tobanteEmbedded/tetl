@@ -38,7 +38,8 @@ TEST_CASE("string: strlen", "[string]")
 }
 
 TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<12>,
-                   etl::small_string)
+                   etl::small_string, etl::string<12> const,
+                   etl::small_string const)
 {
     TestType str {};
 
@@ -49,7 +50,8 @@ TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<12>,
 }
 
 TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::string<12>,
-                   etl::small_string)
+                   etl::small_string, etl::string<12> const,
+                   etl::small_string const)
 {
     TestType str {"abc"};
 
@@ -64,7 +66,8 @@ TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::string<12>,
 }
 
 TEMPLATE_TEST_CASE("string: ctor - char const*, size_t", "[string]",
-                   etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string, etl::string<12> const,
+                   etl::small_string const)
 {
     TestType str {"abc", 3};
 
@@ -78,47 +81,25 @@ TEMPLATE_TEST_CASE("string: ctor - char const*, size_t", "[string]",
     REQUIRE(str[3] == char(0));
 }
 
-TEMPLATE_TEST_CASE("string: at", "[string]", etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: at", "[string]", etl::string<12>, etl::small_string,
+                   etl::string<12> const, etl::small_string const)
 {
-    WHEN("mutable")
-    {
-        auto str = TestType {"abc"};
-        REQUIRE(str.at(0) == 'a');
-        REQUIRE(str.at(1) == 'b');
-        REQUIRE(str.at(2) == 'c');
-        REQUIRE(str.at(3) == 0);
-    }
-
-    WHEN("const")
-    {
-        auto const str = TestType {"abc"};
-        REQUIRE(str.at(0) == 'a');
-        REQUIRE(str.at(1) == 'b');
-        REQUIRE(str.at(2) == 'c');
-        REQUIRE(str.at(3) == 0);
-    }
+    TestType str {"abc"};
+    REQUIRE(str.at(0) == 'a');
+    REQUIRE(str.at(1) == 'b');
+    REQUIRE(str.at(2) == 'c');
+    REQUIRE(str.at(3) == 0);
 }
 
 TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::string<12>,
-                   etl::small_string)
+                   etl::small_string, etl::string<12> const,
+                   etl::small_string const)
 {
-    WHEN("mutable")
-    {
-        auto str = TestType {"abc"};
-        REQUIRE(str[0] == 'a');
-        REQUIRE(str[1] == 'b');
-        REQUIRE(str[2] == 'c');
-        REQUIRE(str[3] == 0);
-    }
-
-    WHEN("const")
-    {
-        auto const str = TestType {"abc"};
-        REQUIRE(str[0] == 'a');
-        REQUIRE(str[1] == 'b');
-        REQUIRE(str[2] == 'c');
-        REQUIRE(str[3] == 0);
-    }
+    TestType str {"abc"};
+    REQUIRE(str[0] == 'a');
+    REQUIRE(str[1] == 'b');
+    REQUIRE(str[2] == 'c');
+    REQUIRE(str[3] == 0);
 }
 
 TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::string<12>,
@@ -131,7 +112,8 @@ TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::string<12>,
 }
 
 TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::string<12>,
-                   etl::small_string)
+                   etl::small_string, etl::string<12> const,
+                   etl::small_string const)
 {
     TestType str {};
 
