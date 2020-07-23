@@ -160,7 +160,7 @@ public:
     static constexpr bool is_exact   = false;
     static constexpr int radix       = FLT_RADIX;
     static constexpr auto epsilon() noexcept -> float { return FLT_EPSILON; }
-    static constexpr auto round_error() noexcept -> float { return 0.5f; }
+    static constexpr auto round_error() noexcept -> float { return 0.5F; }
 
     static constexpr int min_exponent   = FLT_MIN_EXP;
     static constexpr int min_exponent10 = FLT_MIN_10_EXP;
@@ -175,7 +175,7 @@ public:
     // static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
     static constexpr auto quiet_NaN() noexcept -> float { return NAN; }
     static constexpr auto signaling_NaN() noexcept -> float { return NAN; }
-    static constexpr auto denorm_min() noexcept -> float { return 0.0f; }
+    static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
     static constexpr bool is_iec559  = true;
     static constexpr bool is_bounded = true;

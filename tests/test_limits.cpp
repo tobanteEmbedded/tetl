@@ -88,7 +88,7 @@ TEST_CASE("limits: numeric_limits<float>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<float>::max() == FLT_MAX);
     STATIC_REQUIRE(etl::numeric_limits<float>::lowest() == -FLT_MAX);
     STATIC_REQUIRE(etl::numeric_limits<float>::epsilon() == FLT_EPSILON);
-    STATIC_REQUIRE(etl::numeric_limits<float>::round_error() == 0.5f);
+    STATIC_REQUIRE(etl::numeric_limits<float>::round_error() == 0.5F);
     // STATIC_REQUIRE(etl::numeric_limits<float>::infinity() == HUGE_VALF);
 }
 
