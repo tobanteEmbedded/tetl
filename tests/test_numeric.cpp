@@ -30,29 +30,41 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("numeric: abs", "[numeric]")
+TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int16_t,
+                   etl::int32_t, etl::int64_t)
 {
-    REQUIRE(etl::abs(10) == 10);
-    REQUIRE(etl::abs(0) == 0);
-    REQUIRE(etl::abs(-10) == 10);
-    REQUIRE(etl::abs(1.0) == 1.0);
-    REQUIRE(etl::abs(-1.0) == 1.0);
+    REQUIRE(etl::abs<TestType>(0) == TestType {0});
+    REQUIRE(etl::abs<TestType>(1) == TestType {1});
+    REQUIRE(etl::abs<TestType>(-1) == TestType {1});
+    REQUIRE(etl::abs<TestType>(10) == TestType {10});
+    REQUIRE(etl::abs<TestType>(-10) == TestType {10});
 }
 
-TEST_CASE("numeric: accumulate", "[numeric]")
+TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double)
 {
-    etl::make::vector<double, 16> vec;
-    vec.push_back(1.0);
-    vec.push_back(2.0);
-    vec.push_back(3.0);
-    vec.push_back(4.0);
+    REQUIRE(etl::abs<TestType>(0.0) == TestType {0.0});
+    REQUIRE(etl::abs<TestType>(1.0) == TestType {1.0});
+    REQUIRE(etl::abs<TestType>(-1.0) == TestType {1.0});
+    REQUIRE(etl::abs<TestType>(10.0) == TestType {10.0});
+    REQUIRE(etl::abs<TestType>(-10.0) == TestType {10.0});
+}
+
+TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
+                   etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t, float, double)
+{
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    vec.push_back(4);
 
     // accumulate
-    REQUIRE(etl::accumulate(vec.begin(), vec.end(), 0.0) == 10.0);
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), TestType {0}) == 10);
 
     // accumulate binary function op
-    auto func = [](double a, double b) { return a + (b * 2); };
-    REQUIRE(etl::accumulate(vec.begin(), vec.end(), 0.0, func) == 20.0);
+    auto func = [](TestType a, TestType b) { return a + (b * 2); };
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), TestType {0}, func) == 20);
 }
 
 TEST_CASE("numeric: gcd", "[numeric]")
@@ -66,124 +78,79 @@ TEST_CASE("numeric: gcd", "[numeric]")
     STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
 
-TEST_CASE("numeric: midpoint(integer)", "[numeric]")
+TEMPLATE_TEST_CASE("numeric: midpoint(integer)", "[numeric]", signed char,
+                   signed short, signed int, signed long)
 {
-    SECTION("short")
+    REQUIRE(etl::midpoint<TestType>(-3, -4) == -3);
+    REQUIRE(etl::midpoint<TestType>(-4, -3) == -4);
+    STATIC_REQUIRE(etl::midpoint<TestType>(-3, -4) == -3);
+    STATIC_REQUIRE(etl::midpoint<TestType>(-4, -3) == -4);
+
+    REQUIRE(etl::midpoint<TestType>(0, 2) == 1);
+    REQUIRE(etl::midpoint<TestType>(2, 0) == 1);
+    STATIC_REQUIRE(etl::midpoint<TestType>(0, 2) == 1);
+    STATIC_REQUIRE(etl::midpoint<TestType>(2, 0) == 1);
+}
+
+TEMPLATE_TEST_CASE("numeric: midpoint(floating_point)", "[numeric]", float,
+                   double, long double)
+{
+    using T = TestType;
+
+    SECTION("normal")
     {
-        constexpr signed short a = -3;
-        constexpr signed short b = -4;
-        REQUIRE(etl::midpoint(a, b) == -3);
-        REQUIRE(etl::midpoint(b, a) == -4);
-        STATIC_REQUIRE(etl::midpoint(a, b) == -3);
-        STATIC_REQUIRE(etl::midpoint(b, a) == -4);
+        constexpr T a = T(-3.0);
+        constexpr T b = T(-4.0);
+        REQUIRE(etl::midpoint(a, b) == T(-3.5));
+        REQUIRE(etl::midpoint(b, a) == T(-3.5));
+        STATIC_REQUIRE(etl::midpoint(a, b) == T(-3.5));
+        STATIC_REQUIRE(etl::midpoint(b, a) == T(-3.5));
     }
 
-    SECTION("char")
+    SECTION("small numbers")
     {
-        constexpr signed char a = -3;
-        constexpr signed char b = 4;
-        REQUIRE(etl::midpoint(a, b) == 0);
-        REQUIRE(etl::midpoint(b, a) == 1);
-        STATIC_REQUIRE(etl::midpoint(a, b) == 0);
-        STATIC_REQUIRE(etl::midpoint(b, a) == 1);
+        auto const small = etl::numeric_limits<T>::min();
+        REQUIRE(etl::midpoint(small, small) == small);
     }
 
-    SECTION("int")
+    SECTION("large numbers")
     {
-        constexpr signed int a = 1;
-        constexpr signed int b = 4;
-        REQUIRE(etl::midpoint(a, b) == 2);
-        REQUIRE(etl::midpoint(b, a) == 3);
-        STATIC_REQUIRE(etl::midpoint(a, b) == 2);
-        STATIC_REQUIRE(etl::midpoint(b, a) == 3);
+        auto const halfMax = etl::numeric_limits<T>::max() / TestType(2.0);
+        auto const x       = halfMax + TestType(4.0);
+        auto const y       = halfMax + TestType(8.0);
+        REQUIRE(etl::midpoint(x, y) == halfMax + TestType(6.0));
+    }
+
+    SECTION("large negative numbers")
+    {
+        auto const halfMax = etl::numeric_limits<T>::max() / TestType(2.0);
+        auto const x       = -halfMax + TestType(4.0);
+        auto const y       = -halfMax + TestType(8.0);
+        REQUIRE(etl::midpoint(x, y) == -halfMax + TestType(6.0));
     }
 }
 
-TEST_CASE("numeric: midpoint(floating_point)", "[numeric]")
+TEMPLATE_TEST_CASE("numeric: midpoint(pointer)", "[numeric]", char, short, int,
+                   long, float, double)
 {
-    SECTION("float")
-    {
-        constexpr float a = -3.0f;
-        constexpr float b = -4.0f;
-        REQUIRE(etl::midpoint(a, b) == -3.5f);
-        REQUIRE(etl::midpoint(b, a) == -3.5f);
-        STATIC_REQUIRE(etl::midpoint(a, b) == -3.5f);
-        STATIC_REQUIRE(etl::midpoint(b, a) == -3.5f);
+    using T = TestType;
 
-        SECTION("small numbers")
-        {
-            auto const small = etl::numeric_limits<float>::min();
-            REQUIRE(etl::midpoint(small, small) == small);
-        }
-
-        SECTION("large numbers")
-        {
-            auto const halfMax = etl::numeric_limits<float>::max() / 2.0f;
-            auto const x       = halfMax + 4.0f;
-            auto const y       = halfMax + 8.0f;
-            REQUIRE(etl::midpoint(x, y) == halfMax + 6.0f);
-        }
-
-        SECTION("large negative numbers")
-        {
-            auto const halfMax = etl::numeric_limits<float>::max() / 2.0f;
-            auto const x       = -halfMax + 4.0f;
-            auto const y       = -halfMax + 8.0f;
-            REQUIRE(etl::midpoint(x, y) == -halfMax + 6.0f);
-        }
-    }
-
-    SECTION("double")
-    {
-        constexpr double a = -3.0;
-        constexpr double b = -4.0;
-        REQUIRE(etl::midpoint(a, b) == -3.5);
-        REQUIRE(etl::midpoint(b, a) == -3.5);
-        STATIC_REQUIRE(etl::midpoint(a, b) == -3.5);
-        STATIC_REQUIRE(etl::midpoint(b, a) == -3.5);
-
-        SECTION("small numbers")
-        {
-            auto const small = etl::numeric_limits<double>::min();
-            REQUIRE(etl::midpoint(small, small) == small);
-        }
-
-        SECTION("large numbers")
-        {
-            auto const halfMax = etl::numeric_limits<double>::max() / 2.0;
-            auto const x       = halfMax + 4.0;
-            auto const y       = halfMax + 8.0;
-            REQUIRE(etl::midpoint(x, y) == halfMax + 6.0);
-        }
-
-        SECTION("large negative numbers")
-        {
-            auto const halfMax = etl::numeric_limits<double>::max() / 2.0;
-            auto const x       = -halfMax + 4.0;
-            auto const y       = -halfMax + 8.0;
-            REQUIRE(etl::midpoint(x, y) == -halfMax + 6.0);
-        }
-    }
-}
-
-TEST_CASE("numeric: midpoint(pointer)", "[numeric]")
-{
     SECTION("even")
     {
-        constexpr int data[] = {1, 2, 3, 4};
+        constexpr T data[] = {T(1), T(2), T(3), T(4)};
         REQUIRE(*etl::midpoint(&data[0], &data[2]) == 2);
         REQUIRE(*etl::midpoint(&data[2], &data[0]) == 2);
         STATIC_REQUIRE(*etl::midpoint(&data[0], &data[2]) == 2);
         STATIC_REQUIRE(*etl::midpoint(&data[2], &data[0]) == 2);
     }
 
-    SECTION("even")
+    SECTION("odd")
     {
-        constexpr short data[] = {1, 2, 3, 4, 5};
-        REQUIRE(*etl::midpoint(&data[0], &data[3]) == 2);
-        STATIC_REQUIRE(*etl::midpoint(&data[0], &data[3]) == 2);
+        constexpr T data[] = {T(1), T(2), T(3), T(4), T(5)};
+        REQUIRE(*etl::midpoint(&data[0], &data[3]) == T(2));
+        STATIC_REQUIRE(*etl::midpoint(&data[0], &data[3]) == T(2));
 
-        REQUIRE(*etl::midpoint(&data[3], &data[0]) == 3);
-        STATIC_REQUIRE(*etl::midpoint(&data[3], &data[0]) == 3);
+        REQUIRE(*etl::midpoint(&data[3], &data[0]) == T(3));
+        STATIC_REQUIRE(*etl::midpoint(&data[3], &data[0]) == T(3));
     }
 }

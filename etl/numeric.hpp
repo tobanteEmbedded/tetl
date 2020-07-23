@@ -70,7 +70,7 @@ template <class InputIt, class Type, class BinaryOperation>
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {
-    if (input < 0) { return input * -1; }
+    if (input < 0) { return static_cast<Type>(-input); }
     return input;
 }
 
@@ -105,7 +105,8 @@ constexpr auto midpoint(Integer a, Integer b) noexcept
         m    = static_cast<U>(b);
         M    = static_cast<U>(a);
     }
-    return a + sign * static_cast<Integer>(U(M - m) >> 1);
+    return static_cast<Integer>(
+        a + static_cast<Integer>(sign * static_cast<Integer>(U(M - m) >> 1)));
 }
 
 template <typename Float>
