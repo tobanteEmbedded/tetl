@@ -29,16 +29,18 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("map: construct", "[map]")
+TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::map<int, int, 4> test {};
+    etl::make::map<TestType, TestType, 4> test {};
 
-    auto func = [](etl::map<int, int> const& m) {
+    auto func = [](etl::map<TestType, TestType> const& m) {
         REQUIRE(m.empty() == true);
         REQUIRE(m.size() == 0);
         REQUIRE(m.max_size() == 4);
-        REQUIRE(m.find(1) == nullptr);
-        REQUIRE(m.count(1) == 0);
+        REQUIRE(m.find(TestType {1}) == nullptr);
+        REQUIRE(m.count(TestType {1}) == 0);
 
         // there should be no elements
         for (auto const& item : m)
@@ -51,43 +53,51 @@ TEST_CASE("map: construct", "[map]")
     func(test);
 }
 
-TEST_CASE("map: at", "[map]")
+TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    map.insert({2, 42});
-    REQUIRE(map.at(1) == 143);
+    auto map = etl::make::map<TestType, TestType, 4> {};
+    map.insert({TestType {1}, TestType {125}});
+    map.insert({TestType {2}, TestType {42}});
+    REQUIRE(map.at(1) == 125);
     REQUIRE(map.at(2) == 42);
 
     auto const map2 = map;
-    REQUIRE(map2.at(1) == 143);
+    REQUIRE(map2.at(1) == 125);
     REQUIRE(map2.at(2) == 42);
 }
 
-TEST_CASE("map: operator[]", "[map]")
+TEMPLATE_TEST_CASE("map: operator[]", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
-    map.insert({1, 143});
+    auto map = etl::make::map<TestType, TestType, 4> {};
+    map.insert({1, 125});
     map.insert({2, 42});
-    REQUIRE(map[1] == 143);
+    REQUIRE(map[1] == 125);
     REQUIRE(map[2] == 42);
     REQUIRE(map.contains(3) == false);
     REQUIRE(map[3] == 0);
     REQUIRE(map.contains(3) == true);
 }
 
-TEST_CASE("map: begin/cbegin", "[map]")
+TEMPLATE_TEST_CASE("map: begin/cbegin", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto m = etl::make::map<int, int, 4> {};
-    m.insert({1, 143});
+    auto m = etl::make::map<TestType, TestType, 4> {};
+    m.insert({1, 125});
     REQUIRE(m.begin() == m.cbegin());
-    REQUIRE(m.begin()->second == 143);
+    REQUIRE(m.begin()->second == 125);
 }
 
-TEST_CASE("map: end/cend", "[map]")
+TEMPLATE_TEST_CASE("map: end/cend", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto m = etl::make::map<int, int, 4> {};
-    m.insert({1, 143});
+    auto m = etl::make::map<TestType, TestType, 4> {};
+    m.insert({1, 125});
     REQUIRE(m.end() == m.cend());
 }
 
@@ -96,14 +106,14 @@ TEST_CASE("map: ranged-based-for", "[map]")
     WHEN("mutable")
     {
         auto m = etl::make::map<int, int, 4> {};
-        m.insert({1, 143});
-        m.insert({2, 143});
-        m.insert({3, 143});
+        m.insert({1, 125});
+        m.insert({2, 125});
+        m.insert({3, 125});
 
         auto result = 0;
         for (auto const& item : m) { result += item.second; }
 
-        REQUIRE(result == 143 * 3);
+        REQUIRE(result == 125 * 3);
     }
 
     WHEN("const")

@@ -34,42 +34,33 @@ TEST_CASE("bit: endian", "[bit]")
     REQUIRE(etl::endian::big != etl::endian::little);
 }
 
-TEST_CASE("bit: popcount constexpr", "[bit]")
+TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
-    STATIC_REQUIRE(etl::popcount(uint8_t {1}) == 1);
-    STATIC_REQUIRE(etl::popcount(uint8_t {2}) == 1);
-    STATIC_REQUIRE(etl::popcount(uint8_t {3}) == 2);
-    STATIC_REQUIRE(etl::popcount(uint8_t {0xFF}) == 8);
+    REQUIRE(etl::popcount(TestType {1}) == 1);
+    REQUIRE(etl::popcount(TestType {2}) == 1);
+    REQUIRE(etl::popcount(TestType {3}) == 2);
 }
 
-TEST_CASE("bit: popcount(uint8)", "[bit]")
+TEMPLATE_TEST_CASE("bit: popcount(unsigned) constexpr", "[bit]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
-    REQUIRE(etl::popcount(uint8_t {1}) == 1);
-    REQUIRE(etl::popcount(uint8_t {2}) == 1);
-    REQUIRE(etl::popcount(uint8_t {3}) == 2);
-    REQUIRE(etl::popcount(uint8_t {0xFF}) == 8);
+    STATIC_REQUIRE(etl::popcount(TestType {1}) == 1);
+    STATIC_REQUIRE(etl::popcount(TestType {2}) == 1);
+    STATIC_REQUIRE(etl::popcount(TestType {3}) == 2);
 }
 
 TEST_CASE("bit: popcount(uint16)", "[bit]")
 {
-    REQUIRE(etl::popcount(uint16_t {1}) == 1);
-    REQUIRE(etl::popcount(uint16_t {2}) == 1);
-    REQUIRE(etl::popcount(uint16_t {3}) == 2);
     REQUIRE(etl::popcount(uint16_t {0xFFFF}) == 16);
 }
 
 TEST_CASE("bit: popcount(uint32)", "[bit]")
 {
-    REQUIRE(etl::popcount(uint32_t {1}) == 1);
-    REQUIRE(etl::popcount(uint32_t {2}) == 1);
-    REQUIRE(etl::popcount(uint32_t {3}) == 2);
     REQUIRE(etl::popcount(uint32_t {0xFFFFFFFF}) == 32);
 }
 
 TEST_CASE("bit: popcount(uint64)", "[bit]")
 {
-    REQUIRE(etl::popcount(uint64_t {1}) == 1);
-    REQUIRE(etl::popcount(uint64_t {2}) == 1);
-    REQUIRE(etl::popcount(uint64_t {3}) == 2);
     REQUIRE(etl::popcount(uint64_t {0xFFFFFFFFFFFFFFFF}) == 64);
 }
