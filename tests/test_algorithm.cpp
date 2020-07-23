@@ -175,31 +175,40 @@ TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
     REQUIRE(etl::min<TestType>(10, -20, cmp) == 10);
 }
 
-TEST_CASE("algorithm: min_element", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(-5);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType {1});
+    vec.push_back(TestType {2});
+    vec.push_back(TestType {3});
+    vec.push_back(TestType {4});
+    vec.push_back(TestType {-5});
 
     auto const functor
         = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
 
-    REQUIRE(*etl::min_element(vec.begin(), vec.end()) == -5);
-    REQUIRE(*etl::min_element(vec.begin(), vec.end(), functor) == 1);
+    REQUIRE(*etl::min_element(vec.begin(), vec.end()) == TestType {-5});
+    REQUIRE(*etl::min_element(vec.begin(), vec.end(), functor) == TestType {1});
 }
 
-TEST_CASE("algorithm: clamp", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: clamp", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    REQUIRE(etl::clamp(55, 0, 20) == 20);
-    REQUIRE(etl::clamp(55, 0, 100) == 55);
+    REQUIRE(etl::clamp<TestType>(55, 0, 20) == TestType {20});
+    REQUIRE(etl::clamp<TestType>(55, 0, 100) == TestType {55});
+    STATIC_REQUIRE(etl::clamp<TestType>(55, 0, 20) == TestType {20});
+    STATIC_REQUIRE(etl::clamp<TestType>(55, 0, 100) == TestType {55});
 }
 
-TEST_CASE("algorithm: all_of", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
+    etl::make::vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -218,9 +227,12 @@ TEST_CASE("algorithm: all_of", "[algorithm]")
     }
 }
 
-TEST_CASE("algorithm: any_of", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
+    etl::make::vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -239,9 +251,12 @@ TEST_CASE("algorithm: any_of", "[algorithm]")
     }
 }
 
-TEST_CASE("algorithm: none_of", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
+    etl::make::vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
