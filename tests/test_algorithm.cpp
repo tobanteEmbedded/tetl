@@ -31,13 +31,16 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("algorithm: for_each", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<double, 16> vec;
-    vec.push_back(1.0);
-    vec.push_back(2.0);
-    vec.push_back(3.0);
-    vec.push_back(4.0);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType(1));
+    vec.push_back(TestType(2));
+    vec.push_back(TestType(3));
+    vec.push_back(TestType(4));
 
     // Check how often for_each calls the unary function
     int counter {};
@@ -53,30 +56,33 @@ TEST_CASE("algorithm: for_each", "[algorithm]")
     REQUIRE(counter == 2);
 }
 
-TEST_CASE("algorithm: find", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<int, 16> vec;
-    // Add elements to the back
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType(1));
+    vec.push_back(TestType(2));
+    vec.push_back(TestType(3));
+    vec.push_back(TestType(4));
 
-    const auto* result1 = etl::find(vec.cbegin(), vec.cend(), 3);
+    const auto* result1 = etl::find(vec.cbegin(), vec.cend(), TestType(3));
     REQUIRE_FALSE(result1 == vec.cend());
 
-    auto* result2 = etl::find(vec.begin(), vec.end(), 5);
+    auto* result2 = etl::find(vec.begin(), vec.end(), TestType(5));
     REQUIRE(result2 == vec.end());
 }
 
-TEST_CASE("algorithm: find_if", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-    etl::make::vector<int, 16> vec;
-    // Add elements to the back
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType(1));
+    vec.push_back(TestType(2));
+    vec.push_back(TestType(3));
+    vec.push_back(TestType(4));
+
     // find_if
     auto* result3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
         return static_cast<bool>(x % 2);
@@ -88,14 +94,16 @@ TEST_CASE("algorithm: find_if", "[algorithm]")
     });
     REQUIRE(result4 == vec.end());
 }
-TEST_CASE("algorithm: find_if_not", "[algorithm]")
+
+TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-    etl::make::vector<int, 16> vec;
-    // Add elements to the back
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType(1));
+    vec.push_back(TestType(2));
+    vec.push_back(TestType(3));
+    vec.push_back(TestType(4));
     // find_if_not
     auto* result5
         = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
@@ -116,11 +124,12 @@ TEST_CASE("algorithm: find_if_not", "[algorithm]")
     REQUIRE(result7 == vec.end());
 }
 
-TEST_CASE("algorithm: max", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: max", "[algorithm]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double, long double)
 {
-    REQUIRE(etl::max(1, 5) == 5);
-    REQUIRE(etl::max(-10, 5) == 5);
-    REQUIRE(etl::max(-10, -20) == -10);
+    REQUIRE(etl::max<TestType>(1, 5) == 5);
+    REQUIRE(etl::max<TestType>(-10, 5) == 5);
+    REQUIRE(etl::max<TestType>(-10, -20) == -10);
 
     // Compare absolute values
     auto cmp = [](auto x, auto y) {
@@ -131,36 +140,39 @@ TEST_CASE("algorithm: max", "[algorithm]")
 
         return (new_x < new_y) ? y : x;
     };
-    REQUIRE(etl::max(-10, -20, cmp) == -20);
-    REQUIRE(etl::max(10, -20, cmp) == -20);
+    REQUIRE(etl::max<TestType>(-10, -20, cmp) == -20);
+    REQUIRE(etl::max<TestType>(10, -20, cmp) == -20);
 }
 
-TEST_CASE("algorithm: max_element", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(-5);
+    etl::make::vector<TestType, 16> vec;
+    vec.push_back(TestType(1));
+    vec.push_back(TestType(2));
+    vec.push_back(TestType(3));
+    vec.push_back(TestType(4));
+    vec.push_back(TestType(-5));
 
     auto const functor
         = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
 
-    REQUIRE(*etl::max_element(vec.begin(), vec.end()) == 4);
-    REQUIRE(*etl::max_element(vec.begin(), vec.end(), functor) == -5);
+    REQUIRE(*etl::max_element(vec.begin(), vec.end()) == TestType(4));
+    REQUIRE(*etl::max_element(vec.begin(), vec.end(), functor) == TestType(-5));
 }
 
-TEST_CASE("algorithm: min", "[algorithm]")
+TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double, long double)
 {
-    REQUIRE(etl::min(1, 5) == 1);
-    REQUIRE(etl::min(-10, 5) == -10);
-    REQUIRE(etl::min(-10, -20) == -20);
+    REQUIRE(etl::min<TestType>(1, 5) == 1);
+    REQUIRE(etl::min<TestType>(-10, 5) == -10);
+    REQUIRE(etl::min<TestType>(-10, -20) == -20);
 
     // Compare absolute values
     auto cmp = [](auto x, auto y) { return (etl::abs(x) < etl::abs(y)); };
-    REQUIRE(etl::min(-10, -20, cmp) == -10);
-    REQUIRE(etl::min(10, -20, cmp) == 10);
+    REQUIRE(etl::min<TestType>(-10, -20, cmp) == -10);
+    REQUIRE(etl::min<TestType>(10, -20, cmp) == 10);
 }
 
 TEST_CASE("algorithm: min_element", "[algorithm]")
