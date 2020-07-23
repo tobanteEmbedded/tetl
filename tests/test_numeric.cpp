@@ -30,8 +30,8 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int16_t,
-                   etl::int32_t, etl::int64_t)
+TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t)
 {
     REQUIRE(etl::abs<TestType>(0) == TestType {0});
     REQUIRE(etl::abs<TestType>(1) == TestType {1});
@@ -40,7 +40,8 @@ TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int16_t,
     REQUIRE(etl::abs<TestType>(-10) == TestType {10});
 }
 
-TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double)
+TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double,
+                   long double)
 {
     REQUIRE(etl::abs<TestType>(0.0) == TestType {0.0});
     REQUIRE(etl::abs<TestType>(1.0) == TestType {1.0});
@@ -51,7 +52,7 @@ TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double)
 
 TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
                    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-                   etl::uint64_t, float, double)
+                   etl::uint64_t, float, double, long double)
 {
     etl::make::vector<TestType, 16> vec;
     vec.push_back(1);
@@ -67,7 +68,9 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
     REQUIRE(etl::accumulate(vec.begin(), vec.end(), TestType {0}, func) == 20);
 }
 
-TEST_CASE("numeric: gcd", "[numeric]")
+TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
 {
     REQUIRE(etl::gcd(5, 10) == 5);
     REQUIRE(etl::gcd(10, 5) == 5);

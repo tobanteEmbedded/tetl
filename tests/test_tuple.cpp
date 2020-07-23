@@ -24,17 +24,25 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 #include "etl/tuple.hpp"
+#include "etl/warning.hpp"
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("tuple: constructor", "[tuple]")
+TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
 {
-    etl::tuple<int, float> t1 {1, 2.0F};
+    etl::tuple<TestType, float> t1 {TestType {1}, 2.0F};
+    etl::ignore_unused(t1);
 }
 
-TEST_CASE("tuple: get", "[tuple]")
+TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto t1 = etl::tuple<int, float> {1, 2.0F};
-    REQUIRE(etl::get<0>(t1) == 1);
+    auto t1 = etl::tuple<TestType, float> {TestType {1}, 2.0F};
+    REQUIRE(etl::get<0>(t1) == TestType {1});
     REQUIRE(etl::get<1>(t1) == 2.0F);
 }
