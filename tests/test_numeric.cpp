@@ -109,6 +109,28 @@ TEST_CASE("numeric: midpoint(floating_point)", "[numeric]")
         REQUIRE(etl::midpoint(b, a) == -3.5f);
         STATIC_REQUIRE(etl::midpoint(a, b) == -3.5f);
         STATIC_REQUIRE(etl::midpoint(b, a) == -3.5f);
+
+        SECTION("small numbers")
+        {
+            auto const small = etl::numeric_limits<float>::min();
+            REQUIRE(etl::midpoint(small, small) == small);
+        }
+
+        SECTION("large numbers")
+        {
+            auto const halfMax = etl::numeric_limits<float>::max() / 2.0f;
+            auto const x       = halfMax + 4.0f;
+            auto const y       = halfMax + 8.0f;
+            REQUIRE(etl::midpoint(x, y) == halfMax + 6.0f);
+        }
+
+        SECTION("large negative numbers")
+        {
+            auto const halfMax = etl::numeric_limits<float>::max() / 2.0f;
+            auto const x       = -halfMax + 4.0f;
+            auto const y       = -halfMax + 8.0f;
+            REQUIRE(etl::midpoint(x, y) == -halfMax + 6.0f);
+        }
     }
 
     SECTION("double")
@@ -119,6 +141,28 @@ TEST_CASE("numeric: midpoint(floating_point)", "[numeric]")
         REQUIRE(etl::midpoint(b, a) == -3.5);
         STATIC_REQUIRE(etl::midpoint(a, b) == -3.5);
         STATIC_REQUIRE(etl::midpoint(b, a) == -3.5);
+
+        SECTION("small numbers")
+        {
+            auto const small = etl::numeric_limits<double>::min();
+            REQUIRE(etl::midpoint(small, small) == small);
+        }
+
+        SECTION("large numbers")
+        {
+            auto const halfMax = etl::numeric_limits<double>::max() / 2.0;
+            auto const x       = halfMax + 4.0;
+            auto const y       = halfMax + 8.0;
+            REQUIRE(etl::midpoint(x, y) == halfMax + 6.0);
+        }
+
+        SECTION("large negative numbers")
+        {
+            auto const halfMax = etl::numeric_limits<double>::max() / 2.0;
+            auto const x       = -halfMax + 4.0;
+            auto const y       = -halfMax + 8.0;
+            REQUIRE(etl::midpoint(x, y) == -halfMax + 6.0);
+        }
     }
 }
 
