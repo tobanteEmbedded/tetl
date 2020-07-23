@@ -188,7 +188,7 @@ public:
     constexpr auto clear() noexcept -> void
     {
         // TODO: Replace with calls to destructor
-        ::memset(data_, 0, capacity_ * sizeof(value_type));
+        // ::memset(data_, 0, capacity_ * sizeof(value_type));
         size_ = 0;
     }
 
