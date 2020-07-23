@@ -57,13 +57,13 @@ private:
 template <typename T, typename D>
 constexpr auto operator+(quantity<T, D> x, quantity<T, D> y) -> quantity<T, D>
 {
-    return quantity<T, D> {x.value() + y.value()};
+    return quantity<T, D> {static_cast<T>(x.value() + y.value())};
 }
 
 template <typename T, typename D>
 constexpr auto operator-(quantity<T, D> x, quantity<T, D> y) -> quantity<T, D>
 {
-    return quantity<T, D> {x.value() - y.value()};
+    return quantity<T, D> {static_cast<T>(x.value() - y.value())};
 }
 
 }  // namespace etl::experimental::units
