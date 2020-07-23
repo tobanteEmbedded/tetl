@@ -147,20 +147,23 @@ public:
      */
     [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
     {
-        return _data;
+        return &_data[0];
     }
 
     /**
      * @brief Returns an iterator to the beginning.
      */
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _data; }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return &_data[0];
+    }
 
     /**
      * @brief Returns an iterator to the beginning.
      */
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
     {
-        return _data;
+        return &_data[0];
     }
 
     /**
@@ -168,7 +171,7 @@ public:
      */
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
-        return _data;
+        return &_data[0];
     }
 
     /**
@@ -176,7 +179,7 @@ public:
      */
     [[nodiscard]] constexpr auto end() noexcept -> iterator
     {
-        return _data + size();
+        return &_data[0] + size();
     }
 
     /**
@@ -184,7 +187,7 @@ public:
      */
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
     {
-        return _data + size();
+        return &_data[0] + size();
     }
 
     /**
@@ -192,7 +195,7 @@ public:
      */
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
-        return _data + size();
+        return &_data[0] + size();
     }
 
     /**
@@ -200,7 +203,7 @@ public:
      */
     [[nodiscard]] constexpr auto empty() const noexcept -> bool
     {
-        return static_cast<bool>(size() == 0);
+        return size() == 0;
     }
 
     /**

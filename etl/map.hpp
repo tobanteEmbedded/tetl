@@ -266,7 +266,8 @@ template <typename KeyType, typename ValueType, size_t Capacity,
 class map : public ::etl::map<KeyType, ValueType, Compare>
 {
 public:
-    explicit map() : ::etl::map<KeyType, ValueType, Compare> {data_, Capacity}
+    explicit map()
+        : ::etl::map<KeyType, ValueType, Compare> {&data_[0], Capacity}
     {
     }
 

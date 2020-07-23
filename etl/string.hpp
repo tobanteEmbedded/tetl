@@ -76,9 +76,9 @@ public:
         {
             if (len < Capacity)
             {
-                ::memset(data_, 0, len + 1);
+                ::memset(&data_[0], 0, len + 1);
                 size_ = len;
-                ::memcpy(data_, str, len);
+                ::memcpy(&data_[0], str, len);
             }
         }
     }
@@ -133,27 +133,27 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    constexpr auto begin() noexcept -> iterator { return data_; }
+    constexpr auto begin() noexcept -> iterator { return &data_[0]; }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
-        return data_;
+        return &data_[0];
     }
 
     /**
      * @brief Returns an iterator to the end.
      */
-    constexpr auto end() noexcept -> iterator { return data_ + size(); }
+    constexpr auto end() noexcept -> iterator { return &data_[0] + size(); }
 
     /**
      * @brief Returns an const iterator to the end.
      */
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
-        return data_ + size();
+        return &data_[0] + size();
     }
 
     /**
@@ -233,7 +233,7 @@ public:
     /**
      * @brief Appends count copies of character s.
      */
-    constexpr auto append(etl::size_t count, CharType s) noexcept
+    constexpr auto append(etl::size_t const count, CharType const s) noexcept
         -> basic_string&
     {
         for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s; }

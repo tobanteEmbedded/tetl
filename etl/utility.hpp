@@ -69,13 +69,13 @@ struct pair
     constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
     template <class U1, class U2>
-    constexpr pair(const pair<U1, U2>& p) : first {p.first}, second {p.second}
+    constexpr pair(pair<U1, U2> const& p) : first {p.first}, second {p.second}
     {
     }
 
-    pair(pair const& p) = default;
+    constexpr pair(pair const& p) = default;
 
-    auto operator=(pair const& p) -> pair&
+    constexpr auto operator=(pair const& p) -> pair&
     {
         if (&p == this) { return *this; }
         first  = p.first;
@@ -84,27 +84,27 @@ struct pair
     }
 
     template <class U1, class U2>
-    auto operator=(pair<U1, U2>& p) -> pair&
+    constexpr auto operator=(pair<U1, U2> const& p) -> pair&
     {
         first  = p.first;
         second = p.second;
         return *this;
     }
 
-    pair(pair&& p) noexcept = default;
+    constexpr pair(pair&& p) noexcept = default;
 
-    auto operator=(pair&& __p) noexcept -> pair&
+    constexpr auto operator=(pair&& p) noexcept -> pair&
     {
-        first  = etl::move(__p.first);
-        second = etl::move(__p.second);
+        first  = etl::move(p.first);
+        second = etl::move(p.second);
         return *this;
     }
 
-    template <class _U1, class _U2>
-    auto operator=(pair<_U1, _U2>&& __p) -> pair&
+    template <class U1, class U2>
+    constexpr auto operator=(pair<U1, U2>&& p) -> pair&
     {
-        first  = etl::move(__p.first);
-        second = etl::move(__p.second);
+        first  = etl::move(p.first);
+        second = etl::move(p.second);
         return *this;
     }
 
