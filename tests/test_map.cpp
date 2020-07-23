@@ -134,32 +134,38 @@ TEST_CASE("map: ranged-based-for", "[map]")
     }
 }
 
-TEST_CASE("map: empty", "[map]")
+TEMPLATE_TEST_CASE("map: empty", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, TestType, 4> {};
     REQUIRE(map.empty() == true);
-    map.insert({1, 143});
+    map.insert({1, TestType {125}});
     REQUIRE(map.empty() == false);
 }
 
-TEST_CASE("map: size", "[map]")
+TEMPLATE_TEST_CASE("map: size", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
+    auto map = etl::make::map<int, TestType, 4> {};
     REQUIRE(map.size() == 0);
-    map.insert({1, 143});
+    map.insert({1, TestType {100}});
     REQUIRE(map.size() == 1);
-    map.insert({2, 143});
+    map.insert({2, TestType {100}});
     REQUIRE(map.size() == 2);
-    map.insert({3, 143});
+    map.insert({3, TestType {100}});
     REQUIRE(map.size() == 3);
 }
 
-TEST_CASE("map: count/contains", "[map]")
+TEMPLATE_TEST_CASE("map: count/contains", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    map.insert({2, 143});
-    map.insert({3, 143});
+    auto map = etl::make::map<int, TestType, 4> {};
+    map.insert({1, TestType {125}});
+    map.insert({2, TestType {125}});
+    map.insert({3, TestType {125}});
     REQUIRE(map.contains(1) == true);
     REQUIRE(map.count(1) == 1);
     REQUIRE(map.contains(3) == true);
@@ -168,12 +174,14 @@ TEST_CASE("map: count/contains", "[map]")
     REQUIRE(map.count(42) == 0);
 }
 
-TEST_CASE("map: clear", "[map]")
+TEMPLATE_TEST_CASE("map: clear", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto map = etl::make::map<int, int, 4> {};
-    map.insert({1, 143});
-    map.insert({2, 143});
-    map.insert({3, 143});
+    auto map = etl::make::map<int, TestType, 4> {};
+    map.insert({1, TestType {100}});
+    map.insert({2, TestType {100}});
+    map.insert({3, TestType {100}});
     REQUIRE(map.empty() == false);
     REQUIRE(map.size() == 3);
     REQUIRE(map.count(1) == 1);
@@ -184,31 +192,37 @@ TEST_CASE("map: clear", "[map]")
     REQUIRE(map.count(1) == 0);
 }
 
-TEST_CASE("map: insert(value_type const&)", "[map]")
+TEMPLATE_TEST_CASE("map: insert(value_type const&)", "[map]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    auto map  = etl::make::map<int, int, 4> {};
-    auto pair = etl::pair<int, int> {1, 143};
+    auto map  = etl::make::map<int, TestType, 4> {};
+    auto pair = etl::pair<int, TestType> {1, TestType {100}};
     auto func = [&](auto const& p) {
         map.insert(p);
         REQUIRE(map.size() == 1);
         REQUIRE(map.count(1) == 1);
-        REQUIRE(map.find(1)->second == 143);
+        REQUIRE(map.find(1)->second == 100);
     };
 
     func(pair);
 }
 
-TEST_CASE("map: insert(value_type &&)", "[map]")
+TEMPLATE_TEST_CASE("map: insert(value_type &&)", "[map]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    auto map = etl::make::map<int, float, 4> {};
+    auto map = etl::make::map<int, TestType, 4> {};
 
-    map.insert(etl::pair<int, float> {2, 143.0F});
+    map.insert(etl::pair<int, TestType> {2, TestType {125}});
     REQUIRE(map.size() == 1);
     REQUIRE(map.count(2) == 1);
-    REQUIRE(map.find(2)->second == 143.0F);
+    REQUIRE(map.find(2)->second == TestType {125});
 
-    map.insert(etl::pair<int, float> {3, 42.0F});
+    map.insert(etl::pair<int, TestType> {3, TestType {42}});
     REQUIRE(map.size() == 2);
     REQUIRE(map.count(3) == 1);
-    REQUIRE(map.find(3)->second == 42.0F);
+    REQUIRE(map.find(3)->second == TestType {42});
 }
