@@ -28,16 +28,22 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("experimental/dsp: identity", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: identity", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
     auto id = etl::dsp::identity {};
-    REQUIRE(id(0) == 0);
+    REQUIRE(id(TestType {0}) == TestType {0});
 }
 
-TEST_CASE("experimental/dsp: constant", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: constant", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    REQUIRE(etl::dsp::constant {0.0}() == 0.0);
-    REQUIRE(etl::dsp::constant {42}() == 42);
+    REQUIRE(etl::dsp::constant {TestType {0}}() == TestType {0});
+    REQUIRE(etl::dsp::constant {TestType {42}}() == TestType {42});
 }
 
 TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
@@ -47,94 +53,105 @@ TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
     REQUIRE(42_K() == 42);
 }
 
-TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
+    using T  = TestType;
     auto in  = etl::dsp::identity {};
-    auto foo = [](int v) -> int { return v * 3; };
-    auto bar = [](int v) -> int { return v / 2; };
+    auto foo = [](T v) -> T { return static_cast<T>(v * 3); };
+    auto bar = [](T v) -> T { return static_cast<T>(v * 2); };
     auto f   = in | foo | bar;
 
-    REQUIRE(f(0) == 0);
-    REQUIRE(f(2) == 3);
-    REQUIRE(f(3) == 4);
+    REQUIRE(f(T(0)) == T(0));
+    REQUIRE(f(T(2)) == T(12));
+    REQUIRE(f(T(3)) == T(18));
 }
 
-TEST_CASE("experimental/dsp: delay", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: delay", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
     WHEN("by zero (no delay)")
     {
         auto in = etl::dsp::identity {};
-        auto f  = in | etl::dsp::Z<0, int>();
-        REQUIRE(f(0) == 0);
-        REQUIRE(f(2) == 2);
-        REQUIRE(f(3) == 3);
+        auto f  = in | etl::dsp::Z<0, TestType>();
+        REQUIRE(f(TestType {0}) == TestType {0});
+        REQUIRE(f(TestType {2}) == TestType {2});
+        REQUIRE(f(TestType {3}) == TestType {3});
     }
 
     WHEN("by one")
     {
         auto in = etl::dsp::identity {};
-        auto f  = in | etl::dsp::Z<-1, int>();
-        REQUIRE(f(0) == 0);
-        REQUIRE(f(2) == 0);
-        REQUIRE(f(3) == 2);
-        REQUIRE(f(4) == 3);
+        auto f  = in | etl::dsp::Z<-1, TestType>();
+        REQUIRE(f(TestType {0}) == TestType {0});
+        REQUIRE(f(TestType {2}) == TestType {0});
+        REQUIRE(f(TestType {3}) == TestType {2});
+        REQUIRE(f(TestType {4}) == TestType {3});
     }
 
     WHEN("by two")
     {
         auto in = etl::dsp::identity {};
-        auto f  = in | etl::dsp::Z<-2, int>();
-        REQUIRE(f(0) == 0);
-        REQUIRE(f(2) == 0);
-        REQUIRE(f(3) == 0);
-        REQUIRE(f(4) == 2);
+        auto f  = in | etl::dsp::Z<-2, TestType>();
+        REQUIRE(f(TestType {0}) == TestType {0});
+        REQUIRE(f(TestType {2}) == TestType {0});
+        REQUIRE(f(TestType {3}) == TestType {0});
+        REQUIRE(f(TestType {4}) == TestType {2});
     }
 }
 
-TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
     WHEN("No feedback is applied")
     {
-        auto drain = etl::dsp::feedback_drain {};
-        REQUIRE(drain(0.0F) == 0.0F);
-        REQUIRE(drain(0.5F) == 0.5F);
-        REQUIRE(drain(0.75F) == 0.75F);
-        REQUIRE(drain(1.0F) == 1.0F);
+        auto drain = etl::dsp::feedback_drain<TestType> {};
+        REQUIRE(drain(TestType {0}) == TestType {0});
+        REQUIRE(drain(TestType {1}) == TestType {1});
+        REQUIRE(drain(TestType {2}) == TestType {2});
+        REQUIRE(drain(TestType {3}) == TestType {3});
     }
 
     WHEN("Feedback is applied")
     {
-        auto drain = etl::dsp::feedback_drain {};
-        drain.push(1.0F);
-        REQUIRE(drain(0.0F) == 1.0F);
+        auto drain = etl::dsp::feedback_drain<TestType> {};
+        drain.push(TestType {1});
+        REQUIRE(drain(TestType {0}) == TestType {1});
     }
 }
 
-TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]")
+TEMPLATE_TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
     WHEN("Pass Through")
     {
-        auto drain = etl::dsp::feedback_drain {};
-        auto tap   = etl::dsp::feedback_tap {drain};
-        REQUIRE(tap(0.0F) == 0.0F);
-        REQUIRE(tap(0.5F) == 0.5F);
-        REQUIRE(tap(0.75F) == 0.75F);
-        REQUIRE(tap(1.0F) == 1.0F);
+        auto drain = etl::dsp::feedback_drain<TestType> {};
+        auto tap   = etl::dsp::feedback_tap<TestType> {drain};
+        REQUIRE(tap(TestType {0}) == TestType {0});
+        REQUIRE(tap(TestType {1}) == TestType {1});
     }
 
     WHEN("Pass to drain")
     {
-        auto drain = etl::dsp::feedback_drain {};
-        auto tap   = etl::dsp::feedback_tap {drain};
+        auto drain = etl::dsp::feedback_drain<TestType> {};
+        auto tap   = etl::dsp::feedback_tap<TestType> {drain};
 
-        REQUIRE(tap(1.0F) == 1.0F);
-        REQUIRE(drain(0.0F) == 1.0F);
+        REQUIRE(tap(TestType {1}) == TestType {1});
+        REQUIRE(drain(TestType {0}) == TestType {1});
 
-        REQUIRE(tap(0.0F) == 0.0F);
-        REQUIRE(drain(0.0F) == 0.0F);
+        REQUIRE(tap(TestType {0}) == TestType {0});
+        REQUIRE(drain(TestType {0}) == TestType {0});
 
-        REQUIRE(tap(0.5F) == 0.5F);
-        REQUIRE(drain(0.0F) == 0.5F);
+        REQUIRE(tap(TestType {2}) == TestType {2});
+        REQUIRE(drain(TestType {0}) == TestType {2});
     }
 }
 

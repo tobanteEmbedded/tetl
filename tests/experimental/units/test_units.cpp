@@ -30,18 +30,24 @@ DAMAGE.
 
 using namespace etl::experimental;
 
-TEST_CASE("experimental/units: add", "[units][experimental]")
+TEMPLATE_TEST_CASE("experimental/units: add", "[units][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    auto const t1 = units::quantity<int, units::time> {3};
-    auto const t2 = units::quantity<int, units::time> {143};
+    auto const t1 = units::quantity<TestType, units::time> {TestType {3}};
+    auto const t2 = units::quantity<TestType, units::time> {TestType {10}};
     auto const t3 = t1 + t2;
-    REQUIRE(t3.value() == 146);
+    REQUIRE(t3.value() == TestType {13});
 }
 
-TEST_CASE("experimental/units: add constexpr", "[units][experimental]")
+TEMPLATE_TEST_CASE("experimental/units: add constexpr", "[units][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    constexpr auto t1 = units::quantity<int, units::mass> {3};
-    constexpr auto t2 = units::quantity<int, units::mass> {143};
+    constexpr auto t1 = units::quantity<TestType, units::time> {TestType {3}};
+    constexpr auto t2 = units::quantity<TestType, units::time> {TestType {10}};
     constexpr auto t3 = t1 + t2;
-    STATIC_REQUIRE(t3.value() == 146);
+    REQUIRE(t3.value() == TestType {13});
 }

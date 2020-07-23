@@ -30,28 +30,33 @@ DAMAGE.
 
 namespace rtos = etl::rtos;
 
-TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]")
+TEMPLATE_TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    rtos::queue<char, 100> q1 {};
-    rtos::queue<int, 100> q2 {};
-    rtos::queue<float, 100> q3 {};
-    rtos::queue<double, 100> q4 {};
-    rtos::queue<void*, 100> q5 {};
+    rtos::queue<TestType, 100> q1 {};
 }
 
-TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]")
+TEMPLATE_TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    rtos::queue<int, 1> q1 {};
+    rtos::queue<TestType, 1> q1 {};
     REQUIRE(q1.capacity() == 1);
-    rtos::queue<float, 32> q2 {};
+    rtos::queue<TestType, 32> q2 {};
     REQUIRE(q2.capacity() == 32);
-    rtos::queue<etl::uint64_t, 128> q3 {};
+    rtos::queue<TestType, 128> q3 {};
     REQUIRE(q3.capacity() == 128);
 }
 
-TEST_CASE("experimental/rtos/queue: send", "[experimental][rtos]")
+TEMPLATE_TEST_CASE("experimental/rtos/queue: send", "[experimental][rtos]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
-    rtos::queue<int, 1> q1 {};
+    rtos::queue<TestType, 1> q1 {};
     // stub always returns false
     REQUIRE(q1.send(1, 0) == false);
 }
