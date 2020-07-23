@@ -28,17 +28,18 @@ DAMAGE.
 
 #include "etl/string.hpp"
 
-TEST_CASE("string: constexpr", "[string]")
+TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::string<8>,
+                   etl::string<12>, etl::small_string)
 {
-    constexpr etl::string<16> str1 {};
+    constexpr TestType str1 {};
 
     STATIC_REQUIRE(str1.empty() == true);
-    STATIC_REQUIRE(str1.capacity() == 16);
+    STATIC_REQUIRE(str1.capacity() == str1.max_size());
     STATIC_REQUIRE(str1.size() == 0);
     STATIC_REQUIRE(str1.length() == 0);
 
     constexpr auto str2 = []() {
-        etl::string<16> str {};
+        TestType str {};
         // APPEND 4 CHARACTERS
         const char* cptr = "C-string";
         str.append(cptr, 4);
@@ -46,7 +47,7 @@ TEST_CASE("string: constexpr", "[string]")
     }();
 
     STATIC_REQUIRE(str2.empty() == false);
-    STATIC_REQUIRE(str2.capacity() == 16);
+    STATIC_REQUIRE(str2.capacity() == str1.max_size());
     STATIC_REQUIRE(str2.size() == 4);
     STATIC_REQUIRE(str2.length() == 4);
     STATIC_REQUIRE(str2[0] == 'C');
