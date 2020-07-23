@@ -29,9 +29,12 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("vector: ConstructDefault", "[vector]")
+TEMPLATE_TEST_CASE("vector: ConstructDefault", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 16> vec;
+    etl::make::vector<TestType, 16> vec;
 
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
@@ -39,7 +42,7 @@ TEST_CASE("vector: ConstructDefault", "[vector]")
     REQUIRE(vec.capacity() == 16);
     REQUIRE(vec.data() != nullptr);
 
-    auto func = [](etl::vector<int> const& v) {
+    auto func = [](etl::vector<TestType> const& v) {
         REQUIRE(v.empty() == true);
         REQUIRE(v.size() == 0);
         REQUIRE(v.max_size() == 16);
@@ -50,9 +53,12 @@ TEST_CASE("vector: ConstructDefault", "[vector]")
     func(vec);
 }
 
-TEST_CASE("vector: RangeBasedFor", "[vector]")
+TEMPLATE_TEST_CASE("vector: RangeBasedFor", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-    etl::make::vector<int, 5> vec;
+    etl::make::vector<TestType, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -60,12 +66,15 @@ TEST_CASE("vector: RangeBasedFor", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    for (auto const& item : vec) { REQUIRE(item == ++counter); }
+    for (auto const& item : vec)
+    { REQUIRE(item == static_cast<TestType>(++counter)); }
 }
 
-TEST_CASE("vector: Iterators", "[vector]")
+TEMPLATE_TEST_CASE("vector: Iterators", "[vector]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<int, 5> vec;
+    etl::make::vector<TestType, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -73,13 +82,16 @@ TEST_CASE("vector: Iterators", "[vector]")
     vec.push_back(5);
 
     auto counter = 0;
-    etl::for_each(vec.begin(), vec.end(),
-                  [&counter](auto const& item) { REQUIRE(item == ++counter); });
+    etl::for_each(vec.begin(), vec.end(), [&counter](auto const& item) {
+        REQUIRE(item == static_cast<TestType>(++counter));
+    });
 }
 
-TEST_CASE("vector: PushBack", "[vector]")
+TEMPLATE_TEST_CASE("vector: PushBack", "[vector]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<int, 2> vec;
+    etl::make::vector<TestType, 2> vec;
 
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
@@ -87,14 +99,14 @@ TEST_CASE("vector: PushBack", "[vector]")
     REQUIRE(vec.capacity() == 2);
     REQUIRE(vec.data() != nullptr);
 
-    vec.push_back(1);
+    vec.push_back(TestType {1});
     REQUIRE(vec.empty() == false);
     REQUIRE(vec.size() == 1);
     REQUIRE(vec.max_size() == 2);
     REQUIRE(vec.capacity() == 2);
     REQUIRE(vec.data() != nullptr);
 
-    vec.push_back(2);
+    vec.push_back(TestType {2});
     REQUIRE(vec.empty() == false);
     REQUIRE(vec.size() == 2);
     REQUIRE(vec.max_size() == 2);
@@ -102,9 +114,11 @@ TEST_CASE("vector: PushBack", "[vector]")
     REQUIRE(vec.data() != nullptr);
 }
 
-TEST_CASE("vector: PopBack", "[vector]")
+TEMPLATE_TEST_CASE("vector: PopBack", "[vector]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<int, 5> vec;
+    etl::make::vector<TestType, 5> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -125,18 +139,20 @@ TEST_CASE("vector: PopBack", "[vector]")
     REQUIRE(vec.empty());
 }
 
-TEST_CASE("vector: EmplaceBack", "[vector]")
+TEMPLATE_TEST_CASE("vector: EmplaceBack", "[vector]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<int, 4> vec;
+    etl::make::vector<TestType, 4> vec;
     REQUIRE(vec.empty() == true);
     REQUIRE(vec.size() == 0);
 
-    vec.emplace_back(1);
+    vec.emplace_back(TestType {1});
     REQUIRE(vec.empty() == false);
     REQUIRE(vec.size() == 1);
     REQUIRE(vec.back() == 1);
 
-    vec.emplace_back(2);
+    vec.emplace_back(TestType {2});
     REQUIRE(vec.size() == 2);
     REQUIRE(vec.back() == 2);
 }
