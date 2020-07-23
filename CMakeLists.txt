@@ -17,7 +17,7 @@ endif()
 # Options
 option(TOBANTEAUDIO_ETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TOBANTEAUDIO_ETL_BUILD_TESTS     "Build unit tests" ON)
-option(TOBANTEAUDIO_ETL_BUILD_DOCS      "Build documentation" ON)
+option(TOBANTEAUDIO_ETL_BUILD_DOCS      "Build documentation" OFF)
 option(TOBANTEAUDIO_ETL_BUILD_ASAN      "Build with address sanitizer enabled" OFF)
 option(TOBANTEAUDIO_ETL_BUILD_UBSAN     "Build with undefined behavior sanitizer enabled" OFF)
 option(TOBANTEAUDIO_ETL_BUILD_MSAN      "Build with memory sanitizer enabled" OFF)

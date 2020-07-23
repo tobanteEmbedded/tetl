@@ -11,7 +11,7 @@ config:
 
 .PHONY: build
 build:
-	cmake --build $(BUILD_DIR) --config $(CONFIG)
+	cmake --build $(BUILD_DIR) --config $(CONFIG) -- -j
 
 .PHONY: avr
 avr:
