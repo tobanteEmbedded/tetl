@@ -37,8 +37,8 @@ TEST_CASE("string: strlen", "[string]")
     STATIC_REQUIRE(etl::strlen("xxxxxxxxxx") == 10);
 }
 
-TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     TestType str {};
 
@@ -48,8 +48,8 @@ TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<8>,
     REQUIRE(str.length() == etl::size_t(0));
 }
 
-TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     TestType str {"abc"};
 
@@ -64,7 +64,7 @@ TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::string<8>,
 }
 
 TEMPLATE_TEST_CASE("string: ctor - char const*, size_t", "[string]",
-                   etl::string<8>, etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string)
 {
     TestType str {"abc", 3};
 
@@ -78,34 +78,33 @@ TEMPLATE_TEST_CASE("string: ctor - char const*, size_t", "[string]",
     REQUIRE(str[3] == char(0));
 }
 
-TEMPLATE_TEST_CASE("string: at", "[string]", etl::string<8>, etl::string<12>,
+TEMPLATE_TEST_CASE("string: at", "[string]", etl::string<12>, etl::small_string)
+{
+    WHEN("mutable")
+    {
+        auto str = TestType {"abc"};
+        REQUIRE(str.at(0) == 'a');
+        REQUIRE(str.at(1) == 'b');
+        REQUIRE(str.at(2) == 'c');
+        REQUIRE(str.at(3) == 0);
+    }
+
+    WHEN("const")
+    {
+        auto const str = TestType {"abc"};
+        REQUIRE(str.at(0) == 'a');
+        REQUIRE(str.at(1) == 'b');
+        REQUIRE(str.at(2) == 'c');
+        REQUIRE(str.at(3) == 0);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::string<12>,
                    etl::small_string)
 {
     WHEN("mutable")
     {
         auto str = TestType {"abc"};
-        REQUIRE(str.at(0) == 'a');
-        REQUIRE(str.at(1) == 'b');
-        REQUIRE(str.at(2) == 'c');
-        REQUIRE(str.at(3) == 0);
-    }
-
-    WHEN("const")
-    {
-        auto const str = TestType {"abc"};
-        REQUIRE(str.at(0) == 'a');
-        REQUIRE(str.at(1) == 'b');
-        REQUIRE(str.at(2) == 'c');
-        REQUIRE(str.at(3) == 0);
-    }
-}
-
-TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
-{
-    WHEN("mutable")
-    {
-        auto str = TestType {"abc"};
         REQUIRE(str[0] == 'a');
         REQUIRE(str[1] == 'b');
         REQUIRE(str[2] == 'c');
@@ -122,8 +121,8 @@ TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::string<8>,
     }
 }
 
-TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     TestType str {};
 
@@ -131,8 +130,8 @@ TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::string<8>,
                   [](auto& c) { REQUIRE(c == char(0)); });
 }
 
-TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     TestType str {};
 
@@ -141,7 +140,7 @@ TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::string<8>,
 }
 
 TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]",
-                   etl::string<8>, etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string)
 {
     auto str = TestType {};
     str.append(4, 'a');
@@ -175,8 +174,8 @@ TEMPLATE_TEST_CASE("string: append(const_pointer, count)", "[string]",
     REQUIRE(str[4] == char(0));
 }
 
-TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     TestType str {};
     const char* cptr = "C-string";
@@ -190,8 +189,8 @@ TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]", etl::string<8>,
     REQUIRE(str[3] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::string<12>,
+                   etl::small_string)
 {
     // setup
     TestType str {"aaaaaa"};
@@ -205,7 +204,7 @@ TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::string<8>,
     REQUIRE(str.back() == 'b');
 }
 
-TEMPLATE_TEST_CASE("string: clear", "[string]", etl::string<8>, etl::string<12>,
+TEMPLATE_TEST_CASE("string: clear", "[string]", etl::string<12>,
                    etl::small_string)
 {
     // setup
@@ -220,7 +219,7 @@ TEMPLATE_TEST_CASE("string: clear", "[string]", etl::string<8>, etl::string<12>,
 }
 
 TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
-                   etl::string<8>, etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string)
 {
     auto str = TestType {};
     REQUIRE(str.empty() == true);
@@ -236,7 +235,7 @@ TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
 }
 
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
-                   etl::string<8>, etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string)
 {
     auto str = TestType {};
     REQUIRE(str.empty() == true);
@@ -252,7 +251,7 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
 }
 
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
-                   etl::string<8>, etl::string<12>, etl::small_string)
+                   etl::string<12>, etl::small_string)
 {
     auto str = TestType {};
     REQUIRE(str.empty() == true);
