@@ -26,9 +26,9 @@ option(TOBANTEAUDIO_ETL_ENABLE_COVERAGE "Enable coverage reporting for gcc/clang
 
 # Cmake setup
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(ProjectWarnings)
 include(CodeCoverage)
 include(CompilerOptions)
+include(CompilerWarnings)
 
 # Main Project
 add_library(${PROJECT_NAME} INTERFACE)
