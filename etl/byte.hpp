@@ -76,7 +76,7 @@ template <class Integer>
  * in overload resolution if etl::is_integral_v<Integer> is true.
  */
 template <class Integer>
-[[nodiscard]] constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
+constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
     -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
 
 {
@@ -88,7 +88,7 @@ template <class Integer>
  * in overload resolution if etl::is_integral_v<Integer> is true.
  */
 template <class Integer>
-[[nodiscard]] constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
+constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
     -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
 {
     return b = b >> shift;
@@ -138,8 +138,7 @@ template <class Integer>
 /**
  * @brief Equivalent to: return l = l | r;
  */
-[[nodiscard]] constexpr auto operator|=(etl::byte& l, etl::byte r) noexcept
-    -> etl::byte&
+constexpr auto operator|=(etl::byte& l, etl::byte r) noexcept -> etl::byte&
 {
     return l = l | r;
 }
@@ -147,8 +146,7 @@ template <class Integer>
 /**
  * @brief Equivalent to: return l = l & r;
  */
-[[nodiscard]] constexpr auto operator&=(etl::byte& l, etl::byte r) noexcept
-    -> etl::byte&
+constexpr auto operator&=(etl::byte& l, etl::byte r) noexcept -> etl::byte&
 {
     return l = l & r;
 }
@@ -156,8 +154,7 @@ template <class Integer>
 /**
  * @brief Equivalent to: return l = l ^ r;
  */
-[[nodiscard]] constexpr auto operator^=(etl::byte& l, etl::byte r) noexcept
-    -> etl::byte&
+constexpr auto operator^=(etl::byte& l, etl::byte r) noexcept -> etl::byte&
 {
     return l = l ^ r;
 }
