@@ -8,6 +8,7 @@ set(TEST_SRC
     test_array.cpp
     test_bit.cpp
     test_bitset.cpp
+    test_byte.cpp
     test_definitions.cpp
     test_limits.cpp
     test_map.cpp
