@@ -48,29 +48,6 @@ template <typename Integer>
 }
 
 /**
- * @brief Equivalent to: return b = b << shift; This overload only participates
- * in overload resolution if etl::is_integral_v<Integer> is true.
- */
-template <class Integer>
-[[nodiscard]] constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
-
-{
-    return b = byte(static_cast<uint8_t>(b) << shift);
-}
-
-/**
- * @brief Equivalent to: return b = b >> shift; This overload only participates
- * in overload resolution if etl::is_integral_v<Integer> is true.
- */
-template <class Integer>
-[[nodiscard]] constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
-{
-    return b = byte(static_cast<uint8_t>(b) >> shift);
-}
-
-/**
  * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(b) <<
  * shift); This overload only participates in overload resolution if
  * etl::is_integral_v<Integer> is true.
@@ -92,6 +69,97 @@ template <class Integer>
     -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte>
 {
     return etl::byte(static_cast<unsigned int>(b) >> shift);
+}
+
+/**
+ * @brief Equivalent to: return b = b << shift; This overload only participates
+ * in overload resolution if etl::is_integral_v<Integer> is true.
+ */
+template <class Integer>
+[[nodiscard]] constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+
+{
+    return b = b << shift;
+}
+
+/**
+ * @brief Equivalent to: return b = b >> shift; This overload only participates
+ * in overload resolution if etl::is_integral_v<Integer> is true.
+ */
+template <class Integer>
+[[nodiscard]] constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+{
+    return b = b >> shift;
+}
+
+/**
+ * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) |
+ * static_cast<unsigned int>(r));
+ */
+[[nodiscard]] constexpr auto operator|(etl::byte l, etl::byte r) noexcept
+    -> etl::byte
+{
+    return etl::byte(static_cast<unsigned int>(l)
+                     | static_cast<unsigned int>(r));
+}
+
+/**
+ * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) &
+ * static_cast<unsigned int>(r));
+ */
+[[nodiscard]] constexpr auto operator&(etl::byte l, etl::byte r) noexcept
+    -> etl::byte
+{
+    return etl::byte(static_cast<unsigned int>(l)
+                     & static_cast<unsigned int>(r));
+}
+
+/**
+ * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) ^
+ * static_cast<unsigned int>(r));
+ */
+[[nodiscard]] constexpr auto operator^(etl::byte l, etl::byte r) noexcept
+    -> etl::byte
+{
+    return etl::byte(static_cast<unsigned int>(l)
+                     ^ static_cast<unsigned int>(r));
+}
+
+/**
+ * @brief Equivalent to: return etl::byte(~static_cast<unsigned int>(b));
+ */
+[[nodiscard]] constexpr auto operator~(etl::byte b) noexcept -> etl::byte
+{
+    return etl::byte(~static_cast<unsigned int>(b));
+}
+
+/**
+ * @brief Equivalent to: return l = l | r;
+ */
+[[nodiscard]] constexpr auto operator|=(etl::byte& l, etl::byte r) noexcept
+    -> etl::byte&
+{
+    return l = l | r;
+}
+
+/**
+ * @brief Equivalent to: return l = l & r;
+ */
+[[nodiscard]] constexpr auto operator&=(etl::byte& l, etl::byte r) noexcept
+    -> etl::byte&
+{
+    return l = l & r;
+}
+
+/**
+ * @brief Equivalent to: return l = l ^ r;
+ */
+[[nodiscard]] constexpr auto operator^=(etl::byte& l, etl::byte r) noexcept
+    -> etl::byte&
+{
+    return l = l ^ r;
 }
 
 }  // namespace etl

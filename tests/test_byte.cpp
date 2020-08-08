@@ -35,7 +35,7 @@ TEMPLATE_TEST_CASE("byte: to_integer", "[byte]", etl::uint8_t, etl::uint16_t,
     REQUIRE(etl::to_integer<TestType>(b) == TestType {42});
 }
 
-TEMPLATE_TEST_CASE("byte: <<=", "[byte]", etl::uint8_t, etl::uint16_t,
+TEMPLATE_TEST_CASE("byte: operator <<=", "[byte]", etl::uint8_t, etl::uint16_t,
                    etl::uint32_t, etl::uint64_t)
 {
     {
@@ -55,7 +55,7 @@ TEMPLATE_TEST_CASE("byte: <<=", "[byte]", etl::uint8_t, etl::uint16_t,
     }
 }
 
-TEMPLATE_TEST_CASE("byte: >>=", "[byte]", etl::uint8_t, etl::uint16_t,
+TEMPLATE_TEST_CASE("byte: operator >>=", "[byte]", etl::uint8_t, etl::uint16_t,
                    etl::uint32_t, etl::uint64_t)
 {
     auto b = etl::byte {2};
@@ -63,7 +63,7 @@ TEMPLATE_TEST_CASE("byte: >>=", "[byte]", etl::uint8_t, etl::uint16_t,
     REQUIRE(etl::to_integer<TestType>(b) == TestType {1});
 }
 
-TEST_CASE("byte: <<", "[byte]")
+TEST_CASE("byte: operator <<", "[byte]")
 {
     auto b = etl::byte {1};
     REQUIRE(etl::to_integer<int>(b << 1) == 2);
@@ -71,11 +71,53 @@ TEST_CASE("byte: <<", "[byte]")
     REQUIRE(etl::to_integer<int>(b << 3) == 8);
 }
 
-TEST_CASE("byte: >>", "[byte]")
+TEST_CASE("byte: operator >>", "[byte]")
 {
     auto b = etl::byte {8};
     REQUIRE(etl::to_integer<int>(b >> 0) == 8);
     REQUIRE(etl::to_integer<int>(b >> 1) == 4);
     REQUIRE(etl::to_integer<int>(b >> 2) == 2);
     REQUIRE(etl::to_integer<int>(b >> 3) == 1);
+}
+
+TEST_CASE("byte: operator |", "[byte]")
+{
+    REQUIRE(etl::to_integer<int>(etl::byte {1} | etl::byte {0}) == 1);
+    REQUIRE(etl::to_integer<int>(etl::byte {1} | etl::byte {1}) == 1);
+    REQUIRE(etl::to_integer<int>(etl::byte {2} | etl::byte {1}) == 3);
+}
+
+TEST_CASE("byte: operator |=", "[byte]")
+{
+    auto b1 = etl::byte {1};
+    b1 |= etl::byte {0};
+    REQUIRE(etl::to_integer<int>(b1) == 1);
+}
+
+TEST_CASE("byte: operator &", "[byte]")
+{
+    REQUIRE(etl::to_integer<int>(etl::byte {1} & etl::byte {0}) == 0);
+    REQUIRE(etl::to_integer<int>(etl::byte {1} & etl::byte {1}) == 1);
+    REQUIRE(etl::to_integer<int>(etl::byte {2} & etl::byte {1}) == 0);
+}
+
+TEST_CASE("byte: operator &=", "[byte]")
+{
+    auto b1 = etl::byte {1};
+    b1 &= etl::byte {1};
+    REQUIRE(etl::to_integer<int>(b1) == 1);
+}
+
+TEST_CASE("byte: operator ^", "[byte]")
+{
+    REQUIRE(etl::to_integer<int>(etl::byte {1} ^ etl::byte {0}) == 1);
+    REQUIRE(etl::to_integer<int>(etl::byte {1} ^ etl::byte {1}) == 0);
+    REQUIRE(etl::to_integer<int>(etl::byte {2} ^ etl::byte {1}) == 3);
+}
+
+TEST_CASE("byte: operator ^=", "[byte]")
+{
+    auto b1 = etl::byte {2};
+    b1 ^= etl::byte {1};
+    REQUIRE(etl::to_integer<int>(b1) == 3);
 }
