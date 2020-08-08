@@ -34,3 +34,23 @@ TEMPLATE_TEST_CASE("byte: to_integer", "[byte]", etl::uint8_t, etl::uint16_t,
     auto const b = etl::byte {42};
     REQUIRE(etl::to_integer<TestType>(b) == TestType {42});
 }
+
+TEMPLATE_TEST_CASE("byte: <<=", "[byte]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
+{
+    {
+        auto b = etl::byte {1};
+        b <<= 1;
+        REQUIRE(etl::to_integer<TestType>(b) == TestType {2});
+    }
+    {
+        auto b = etl::byte {1};
+        b <<= 2;
+        REQUIRE(etl::to_integer<TestType>(b) == TestType {4});
+    }
+    {
+        auto b = etl::byte {1};
+        b <<= 3;
+        REQUIRE(etl::to_integer<TestType>(b) == TestType {8});
+    }
+}

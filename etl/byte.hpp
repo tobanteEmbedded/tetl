@@ -37,14 +37,37 @@ enum class byte : uint8_t
 };
 
 /**
- * @brief Equivalent to: return IntegerType(b); This overload only participates
- * in overload resolution if etl::is_integral_v<IntegerType> is true.
+ * @brief Equivalent to: return Integer(b); This overload only participates
+ * in overload resolution if etl::is_integral_v<Integer> is true.
  */
 template <typename Integer>
-constexpr auto to_integer(etl::byte b) noexcept
+[[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept
     -> etl::enable_if_t<etl::is_integral_v<Integer>, Integer>
 {
     return static_cast<Integer>(b);
+}
+
+/**
+ * @brief Equivalent to: return b = b << shift; This overload only participates
+ * in overload resolution if etl::is_integral_v<Integer> is true.
+ */
+template <class Integer>
+constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+
+{
+    return b = byte(static_cast<uint8_t>(b) << shift);
+}
+
+/**
+ * @brief Equivalent to: return b = b >> shift; This overload only participates
+ * in overload resolution if etl::is_integral_v<Integer> is true.
+ */
+template <class Integer>
+constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+{
+    return b = byte(static_cast<uint8_t>(b) >> shift);
 }
 
 }  // namespace etl
