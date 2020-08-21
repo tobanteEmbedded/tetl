@@ -27,8 +27,11 @@ DAMAGE.
 #ifndef TAETL_FUNCTIONAL_HPP
 #define TAETL_FUNCTIONAL_HPP
 
-// TAETL
+#include "array.hpp"
+#include "byte.hpp"
 #include "definitions.hpp"
+#include "new.hpp"
+#include "utility.hpp"
 
 namespace etl
 {
@@ -40,5 +43,80 @@ struct less
         return lhs < rhs;
     }
 };
+
+template <class>
+class function;
+template <class Result, class... Arguments>
+class function<Result(Arguments...)>
+{
+public:
+    using result_type = Result;
+
+    template <typename Functor>
+    function(Functor f)
+        : invokePtr {reinterpret_cast<invokePtr_t>(invoke<Functor>)}
+        , createPtr {reinterpret_cast<createPtr_t>(create<Functor>)}
+        , destroyPtr {reinterpret_cast<destroyPtr_t>(destroy<Functor>)}
+    {
+        static_assert(sizeof(Functor) <= sizeof(storage_));
+        createPtr(storage_.data(), &f);
+    }
+
+    function(function const& other) { }
+
+    auto operator=(function const& other) -> function&
+    {
+        if (&other == this) { return *this; }
+        if (createPtr != nullptr) { destroyPtr(storage_.data()); }
+        if (other.createPtr != nullptr)
+        {
+            invokePtr  = other.invokePtr;
+            createPtr  = other.createPtr;
+            destroyPtr = other.destroyPtr;
+            createPtr(storage_.data(), other.storage_.data());
+        }
+
+        return *this;
+    }
+
+    ~function() noexcept { destroyPtr(storage_.data()); }
+
+    [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
+    {
+        return invokePtr(const_cast<etl::byte*>(storage_.data()),
+                         std::forward<Arguments>(args)...);
+    }
+
+private:
+    template <typename Functor>
+    static auto invoke(Functor* f, Arguments&&... args) -> Result
+    {
+        return (*f)(etl::forward<Arguments>(args)...);
+    }
+
+    template <typename Functor>
+    static auto create(Functor* destination, Functor* source) -> void
+    {
+        new (destination) Functor(*source);
+    }
+
+    template <typename Functor>
+    static auto destroy(Functor* f) -> void
+    {
+        f->~Functor();
+    }
+
+    using invokePtr_t  = Result (*)(void*, Arguments&&...);
+    using createPtr_t  = void (*)(void*, void*);
+    using destroyPtr_t = void (*)(void*);
+
+    invokePtr_t invokePtr   = nullptr;
+    createPtr_t createPtr   = nullptr;
+    destroyPtr_t destroyPtr = nullptr;
+
+    etl::array<etl::byte, 32> storage_ {};
+};
+
 }  // namespace etl
+
 #endif  // TAETL_FUNCTIONAL_HPP
