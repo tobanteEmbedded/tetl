@@ -27,13 +27,18 @@ DAMAGE.
 #ifndef TAETL_NEW_HPP
 #define TAETL_NEW_HPP
 
+#if __has_include(<new>)
+#include <new>
+#else
+
 #include "etl/definitions.hpp"
 #include "etl/warning.hpp"
 
-auto operator new(etl::size_t n, void* ptr) -> void*
+auto operator new(etl::size_t n, void* ptr) noexcept -> void*
 {
     etl::ignore_unused(n);
     return ptr;
 }
+#endif
 
 #endif  // TAETL_NEW_HPP

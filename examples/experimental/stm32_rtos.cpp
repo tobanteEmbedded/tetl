@@ -25,11 +25,7 @@ DAMAGE.
 */
 #include <stdio.h>
 
-#if __has_include(<new>)
-#include <new>
-#else
 #include "etl/new.hpp"
-#endif
 
 #define TAETL_RTOS_USE_STUBS
 #include "etl/experimental/hardware/stm32/gpio.hpp"
