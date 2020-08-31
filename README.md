@@ -24,7 +24,7 @@ git clone https://github.com/tobanteAudio/taetl.git
 - Easy desktop development (cmake)
   - Stubs for external dependencies (FreeRTOS)
 - Experimental headers
-  - Units
+  - Strong types
   - Networking (buffers, ntoh, ...)
   - FreeRTOS Abstraction
   - STM32 HAL
