@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_HARDWARE_STM32_STM32_HPP
-#define TAETL_HARDWARE_STM32_STM32_HPP
+#ifndef TAETL_HARDWARE_STM32_GPIO_HPP
+#define TAETL_HARDWARE_STM32_GPIO_HPP
 
 #include "etl/definitions.hpp"
 #include "etl/warning.hpp"
@@ -114,4 +114,4 @@ private:
 };
 }  // namespace etl::hardware::stm32
 
-#endif  // TAETL_HARDWARE_STM32_STM32_HPP
+#endif  // TAETL_HARDWARE_STM32_GPIO_HPP
