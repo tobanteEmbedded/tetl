@@ -15,7 +15,7 @@ git clone https://github.com/tobanteAudio/taetl.git
 ## Design Goals
 
 - 100% portable
-  - C++ core language + libc (e.g. newlib)
+  - C++ freestanding
 - Header only
 - C++17
 - Similar api to the STL
@@ -50,6 +50,19 @@ firefox docs/doc-build/html/index.html       # Open in Firefox
 
 The following steps explain how to add `etl` to your project. Embedded or desktop.
 
+### Required Headers
+
+The following headers are required for building the library:
+
+```cpp
+#include <assert.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <float.h>
+#include <math.h>
+```
+
 ### CMake
 
 Add `taetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
@@ -70,7 +83,7 @@ target_link_libraries(${YOUR_TARGET} tobanteAudio::etl)
 Add `taetl` as a git submodule, then add these lines to your `platformio.ini`:
 
 ```sh
-cd $YOUR_CMAKE_PROJECT
+cd $YOUR_PLATFORMIO_PROJECT
 mkdir 3rd_party
 git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ```
@@ -80,17 +93,6 @@ git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ; ...
 build_unflags = -std=gnu++11
 build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
-```
-
-### Avr-gcc
-
-An example on how to build the `algorithm.cpp` file with `avr-gcc`. C++17 is required.
-
-```sh
-cd $PROJECT_ROOT
-mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
-avr-gcc --std=c++17 -O3 -Wall -Wextra -o example_algorithm -I3rd_party/taetl examples/algorithm.cpp
 ```
 
 ## Examples
