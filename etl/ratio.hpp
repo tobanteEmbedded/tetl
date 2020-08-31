@@ -33,7 +33,7 @@ DAMAGE.
 
 namespace etl
 {
-namespace internal
+namespace detail
 {
 template <typename T>
 [[nodiscard]] constexpr auto sign(T val)
@@ -41,7 +41,7 @@ template <typename T>
     if (val < 0) { return T(-1); }
     return T(1);
 }
-}  // namespace internal
+}  // namespace detail
 /**
  * @brief The class template provides compile-time rational
  * arithmetic support. Each instantiation of this template exactly represents
@@ -51,8 +51,8 @@ template <typename T>
 template <intmax_t Num, intmax_t Denom = 1>
 struct ratio
 {
-    static constexpr intmax_t num = internal::sign(Num) * internal::sign(Denom)
-                                    * abs(Num) / gcd(Num, Denom);
+    static constexpr intmax_t num
+        = detail::sign(Num) * detail::sign(Denom) * abs(Num) / gcd(Num, Denom);
     static constexpr intmax_t den = abs(Denom) / gcd(Num, Denom);
 
     using type = ratio<num, den>;

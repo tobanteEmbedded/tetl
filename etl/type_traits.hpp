@@ -47,24 +47,26 @@ struct integral_constant
 using true_type  = integral_constant<bool, true>;
 using false_type = integral_constant<bool, false>;
 
-namespace detail
-{
+template <class...>
+using void_t = void;
+
 template <class T>
 struct type_identity
 {
-    // or use etl::type_identity (since C++20)
     using type = T;
 };
 
+namespace detail
+{
 template <class T>
-auto try_add_lvalue_reference(int) -> type_identity<T&>;
+auto try_add_lvalue_reference(int) -> etl::type_identity<T&>;
 template <class T>
-auto try_add_lvalue_reference(...) -> type_identity<T>;
+auto try_add_lvalue_reference(...) -> etl::type_identity<T>;
 
 template <class T>
-auto try_add_rvalue_reference(int) -> type_identity<T&&>;
+auto try_add_rvalue_reference(int) -> etl::type_identity<T&&>;
 template <class T>
-auto try_add_rvalue_reference(...) -> type_identity<T>;
+auto try_add_rvalue_reference(...) -> etl::type_identity<T>;
 
 }  // namespace detail
 
@@ -86,8 +88,6 @@ using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 
 template <typename T>
 auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
-template <class...>
-using void_t = void;
 
 // remove_const
 template <typename Type>
@@ -183,87 +183,90 @@ template <class T>
 inline constexpr bool is_void_v = is_void<T>::value;
 
 /// @cond
+namespace detail
+{
 template <typename>
-struct _is_integral_helper : public false_type
+struct is_integral_helper : public false_type
 {
 };
 
 template <>
-struct _is_integral_helper<bool> : public true_type
+struct is_integral_helper<bool> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<char> : public true_type
+struct is_integral_helper<char> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<signed char> : public true_type
+struct is_integral_helper<signed char> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<unsigned char> : public true_type
+struct is_integral_helper<unsigned char> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<char16_t> : public true_type
+struct is_integral_helper<char16_t> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<char32_t> : public true_type
+struct is_integral_helper<char32_t> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<short> : public true_type
+struct is_integral_helper<short> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<unsigned short> : public true_type
+struct is_integral_helper<unsigned short> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<int> : public true_type
+struct is_integral_helper<int> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<unsigned int> : public true_type
+struct is_integral_helper<unsigned int> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<long> : public true_type
+struct is_integral_helper<long> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<unsigned long> : public true_type
+struct is_integral_helper<unsigned long> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<long long> : public true_type
+struct is_integral_helper<long long> : public true_type
 {
 };
 
 template <>
-struct _is_integral_helper<unsigned long long> : public true_type
+struct is_integral_helper<unsigned long long> : public true_type
 {
 };
+}  // namespace detail
 
 /// @endcond
 
 // is_integral
 template <typename Type>
 struct is_integral
-    : public _is_integral_helper<typename remove_cv<Type>::type>::type
+    : public detail::is_integral_helper<typename remove_cv<Type>::type>::type
 {
 };
 
@@ -384,17 +387,20 @@ struct is_array<T[N]> : true_type
 template <class T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
+namespace detail
+{
 template <class T>
-struct is_pointer_helper : false_type
+struct is_pointer_helper : etl::false_type
 {
 };
 template <class T>
-struct is_pointer_helper<T*> : true_type
+struct is_pointer_helper<T*> : etl::true_type
 {
 };
+}  // namespace detail
 
 template <class T>
-struct is_pointer : is_pointer_helper<typename remove_cv<T>::type>
+struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type>
 {
 };
 
@@ -442,19 +448,22 @@ struct is_arithmetic
 template <class T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
 
+namespace detail
+{
 template <class, class T, class... Args>
-struct _is_constructible_helper : etl::false_type
+struct is_constructible_helper : etl::false_type
 {
 };
 
 template <class T, class... Args>
-struct _is_constructible_helper<void_t<decltype(T(declval<Args>()...))>, T,
-                                Args...> : etl::true_type
+struct is_constructible_helper<void_t<decltype(T(declval<Args>()...))>, T,
+                               Args...> : etl::true_type
 {
 };
+}  // namespace detail
 
 template <class T, class... Args>
-using is_constructible = _is_constructible_helper<void_t<>, T, Args...>;
+using is_constructible = detail::is_constructible_helper<void_t<>, T, Args...>;
 
 template <class T, class... Args>
 inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;

@@ -165,7 +165,7 @@ private:
     feedback_drain<T>& drain_;
 };
 
-namespace internal
+namespace detail
 {
 // TODO: Implement index_sequence & tuple_size
 
@@ -198,12 +198,12 @@ struct fork_impl
 private:
     etl::tuple<T...> nodes_;
 };
-}  // namespace internal
+}  // namespace detail
 
 template <typename... T>
 auto fork(T&&... val)
 {
-    return internal::fork_impl<T...> {etl::forward<T>(val)...};
+    return detail::fork_impl<T...> {etl::forward<T>(val)...};
 }
 
 }  // namespace dsp
