@@ -29,6 +29,19 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEMPLATE_TEST_CASE("experimental/strong_type: construct", "[experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    using namespace etl::experimental;
+    using Kilogram = strong_type<TestType, struct Kilogram_tag>;
+    auto kilo      = Kilogram {};
+    kilo           = Kilogram {0};
+
+    REQUIRE(kilo.raw_value() == TestType {0});
+}
+
 TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
@@ -130,4 +143,28 @@ TEMPLATE_TEST_CASE("experimental/strong_type: skill::divisible",
     auto const rhs = Kilo(2);
     auto const sum = lhs / rhs;
     REQUIRE(sum.raw_value() == TestType(1));
+}
+
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::comparable",
+                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
+{
+    using namespace etl::experimental;
+
+    using Hertz    = strong_type<TestType, struct Hertz_tag, skill::comparable>;
+    auto const lhs = Hertz {typename Hertz::value_type(44)};
+    auto const rhs = Hertz {typename Hertz::value_type(48)};
+
+    REQUIRE(lhs.raw_value() == typename Hertz::value_type(44));
+    REQUIRE(rhs.raw_value() == typename Hertz::value_type(48));
+
+    REQUIRE(lhs < rhs);
+    REQUIRE(!(lhs > rhs));
+
+    REQUIRE(lhs <= rhs);
+    REQUIRE(!(lhs >= rhs));
+
+    REQUIRE(lhs != rhs);
+    REQUIRE(!(lhs == rhs));
 }
