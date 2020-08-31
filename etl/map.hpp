@@ -52,8 +52,8 @@ public:
     using const_iterator  = value_type const*;
 
     // TODO: Reverse iterators & node type
-    // reverse_iterator std::reverse_iterator<iterator>
-    // const_reverse_iterator std::reverse_iterator<const_iterator>
+    // reverse_iterator etl::reverse_iterator<iterator>
+    // const_reverse_iterator etl::reverse_iterator<const_iterator>
     // node_type a specialization of node handle representing a container node
     // insert_return_type
 

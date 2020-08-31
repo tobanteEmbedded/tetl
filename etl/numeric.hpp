@@ -44,7 +44,7 @@ template <class InputIt, class Type>
 {
     for (; first != last; ++first)
     {
-        init = init + *first;  // std::move since C++20
+        init = init + *first;  // etl::move since C++20
     }
     return init;
 }
@@ -59,7 +59,7 @@ template <class InputIt, class Type, class BinaryOperation>
 {
     for (; first != last; ++first)
     {
-        init = op(init, *first);  // std::move since C++20
+        init = op(init, *first);  // etl::move since C++20
     }
     return init;
 }

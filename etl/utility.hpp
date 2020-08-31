@@ -34,7 +34,7 @@ namespace etl
 /**
  * @brief etl::move is used to indicate that an object t may be "moved from",
  * i.e. allowing the efficient transfer of resources from t to another object.
- * In particular, std::move produces an xvalue expression that identifies its
+ * In particular, etl::move produces an xvalue expression that identifies its
  * argument t. It is exactly equivalent to a static_cast to an rvalue reference
  * type.
  * @tparam T
