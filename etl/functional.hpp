@@ -97,7 +97,7 @@ public:
     [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
     {
         return invokePtr(const_cast<etl::byte*>(storage_.data()),
-                         std::forward<Arguments>(args)...);
+                         etl::forward<Arguments>(args)...);
     }
 
 private:
