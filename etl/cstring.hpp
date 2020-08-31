@@ -58,13 +58,36 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 }
 
 /**
+ * @brief The memmove() function shall copy the first n bytes pointed to by src
+ * to the buffer pointed to by dest. Source and destination may overlap.
+ * @todo Check original implementation. They use __np_anyptrlt which is not
+ * portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
+ */
+constexpr auto memmove(void* dest, const void* src, etl::size_t n) -> void*
+{
+    auto const* ps = static_cast<etl::byte const*>(src);
+    auto* pd       = static_cast<etl::byte*>(dest);
+
+    if (ps < pd)
+    {
+        for (pd += n, ps += n; n-- != 0;) { *--pd = *--ps; }
+    }
+    else
+    {
+        while (n-- != 0) { *pd++ = *ps++; }
+    }
+
+    return dest;
+}
+
+/**
  * @brief Returns the length of the C string str.
  */
 constexpr auto strlen(const char* str) -> etl::size_t
 {
-    const char* s {};
+    const char* s = nullptr;
     for (s = str; *s != 0; ++s) { ; }
-    return etl::size_t(s - str);
+    return static_cast<etl::size_t>(s - str);
 }
 
 }  // namespace etl
