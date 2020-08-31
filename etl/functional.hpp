@@ -62,7 +62,19 @@ public:
         createPtr(storage_.data(), &f);
     }
 
-    function(function const& other) { }
+    function(function const& other)
+    {
+        if (&other == this) { return; }
+        if (createPtr != nullptr) { destroyPtr(storage_.data()); }
+        if (other.createPtr != nullptr)
+        {
+            invokePtr  = other.invokePtr;
+            createPtr  = other.createPtr;
+            destroyPtr = other.destroyPtr;
+            createPtr(storage_.data(),
+                      const_cast<etl::byte*>(other.storage_.data()));
+        }
+    }
 
     auto operator=(function const& other) -> function&
     {
@@ -73,7 +85,8 @@ public:
             invokePtr  = other.invokePtr;
             createPtr  = other.createPtr;
             destroyPtr = other.destroyPtr;
-            createPtr(storage_.data(), other.storage_.data());
+            createPtr(storage_.data(),
+                      const_cast<etl::byte*>(other.storage_.data()));
         }
 
         return *this;

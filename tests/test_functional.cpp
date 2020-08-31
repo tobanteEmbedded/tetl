@@ -28,9 +28,30 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("functional: function - ctor", "[functional]")
+TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float,
+                   double)
 {
-    auto func = etl::function<int(void)> {[]() { return 1; }};
-    REQUIRE(func() == 1);
-    REQUIRE(func() == 1);
+    auto func = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    REQUIRE(func() == TestType {1});
+    REQUIRE(func() == TestType {1});
+}
+
+TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
+                   float, double)
+{
+    auto func  = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    auto func2 = func;
+    func       = func2;
+    REQUIRE(func() == TestType {1});
+    REQUIRE(func() == TestType {1});
+}
+
+TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int,
+                   float, double)
+{
+    auto func  = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    auto func2 = func;
+    REQUIRE(func() == TestType {1});
+    REQUIRE(func2() == TestType {1});
+    REQUIRE(func2() == TestType {1});
 }
