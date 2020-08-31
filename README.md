@@ -1,4 +1,4 @@
-# TAETL
+# TAETL - Embedded Template Library
 
 The tobanteAudio embedded template library is intended for micro controller where the `STL` is not available. Designed to have a similar API. This library supports `AVR/Arduino` micro controllers.
 
@@ -29,6 +29,24 @@ git clone https://github.com/tobanteAudio/taetl.git
   - FreeRTOS Abstraction
   - STM32 HAL
   - DSP DSL via Template Meta Programming
+
+## Usage
+
+For detailed examples look at the `examples` subdirectory or the test files in `tests`. Building the [documentation](#documentation) with `doxygen` will give details about the complete API.
+
+## Examples
+
+Examples can be found in the `examples` & `tests` directory.
+
+### Build on Desktop
+
+```sh
+cd $PROJECT_ROOT
+mkdir build && cd build
+cmake ..
+cmake --build  .
+ctest
+```
 
 ## Documentation
 
@@ -74,7 +92,7 @@ git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ```
 
 ```cmake
-add_subdirectory(3rd_party/taetl)
+add_subdirectory(3rd_party/taetl EXCLUDE_FROM_ALL)
 target_link_libraries(${YOUR_TARGET} tobanteAudio::etl)
 ```
 
@@ -94,56 +112,3 @@ git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 build_unflags = -std=gnu++11
 build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 ```
-
-## Examples
-
-Examples can be found in the `examples` directory.
-
-### Build on Desktop
-
-```sh
-cd $PROJECT_ROOT
-mkdir build && cd build
-cmake ..
-cmake --build  .
-```
-
-## Usage
-
-For detailed examples look at the `examples` subdirectory or the test files in `tests`. Building the [documentation](#documentation) with `doxygen` will give details about the complete API.
-
-## Roadmap
-
-- Algorithm
-  - [all_of](https://en.cppreference.com/w/cpp/algorithm/all_any_none_of)
-  - [count](https://en.cppreference.com/w/cpp/algorithm/count)
-  - [equal](https://en.cppreference.com/w/cpp/algorithm/equal)
-  - [mismatch](https://en.cppreference.com/w/cpp/algorithm/mismatch)
-  - [find_end](https://en.cppreference.com/w/cpp/algorithm/find_end)
-  - [find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
-  - [adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
-  - [search](https://en.cppreference.com/w/cpp/algorithm/search)
-  - [search_n](https://en.cppreference.com/w/cpp/algorithm/search_n)
-- Array
-  - Deduction guide
-  - Aggregate init
-- Deduction guides for containers
-  - Requires iterator traits
-- Map
-  - Sorted insert
-  - Add missing methods
-- Unordered Map
-- Pair/Tuple
-  - Tuple Size
-  - Write tests
-- Set
-- Testing
-  - Sanitizer build in CI
-  - CppCheck
-- Type Traits
-  - float
-- Vector
-  - Add examples
-- Misc
-  - Swap
-  - Hash
