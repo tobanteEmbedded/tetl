@@ -33,6 +33,8 @@ set(TEST_SRC
     experimental/stm32/test_gpio.cpp
     experimental/stm32/test_interrupt.cpp
 
+    experimental/strong_type/test_strong_type.cpp
+
     experimental/mcp23017/test_mcp23017.cpp
 
     experimental/units/test_units.cpp
