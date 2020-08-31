@@ -38,40 +38,96 @@ TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
 
     using Kilogram = strong_type<TestType, struct Kilogram_tag>;
 
-    static_assert(sizeof(Kilogram) == sizeof(typename Kilogram::value_type));
+    STATIC_REQUIRE(sizeof(Kilogram) == sizeof(typename Kilogram::value_type));
 
-    static_assert(std::is_constructible_v<Kilogram>);
-    static_assert(std::is_trivially_constructible_v<Kilogram>);
-    static_assert(std::is_nothrow_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_constructible_v<Kilogram>);
 
-    static_assert(std::is_destructible_v<Kilogram>);
-    static_assert(std::is_trivially_destructible_v<Kilogram>);
-    static_assert(std::is_nothrow_destructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_destructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_destructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_destructible_v<Kilogram>);
 
-    static_assert(std::is_assignable_v<Kilogram, Kilogram>);
-    static_assert(std::is_trivially_assignable_v<Kilogram, Kilogram>);
-    static_assert(std::is_nothrow_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(std::is_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_assignable_v<Kilogram, Kilogram>);
 
-    static_assert(std::is_copy_constructible_v<Kilogram>);
-    static_assert(std::is_trivially_copy_constructible_v<Kilogram>);
-    static_assert(std::is_nothrow_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_copy_constructible_v<Kilogram>);
 
-    static_assert(std::is_copy_assignable_v<Kilogram>);
-    static_assert(std::is_trivially_copy_assignable_v<Kilogram>);
-    static_assert(std::is_nothrow_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_copy_assignable_v<Kilogram>);
 
-    static_assert(std::is_move_constructible_v<Kilogram>);
-    static_assert(std::is_trivially_move_constructible_v<Kilogram>);
-    static_assert(std::is_nothrow_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_move_constructible_v<Kilogram>);
 
-    static_assert(std::is_move_assignable_v<Kilogram>);
-    static_assert(std::is_trivially_move_assignable_v<Kilogram>);
-    static_assert(std::is_nothrow_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivially_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_move_assignable_v<Kilogram>);
 
-    static_assert(std::is_swappable_v<Kilogram>);
-    static_assert(std::is_nothrow_swappable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_swappable_v<Kilogram>);
+    STATIC_REQUIRE(std::is_nothrow_swappable_v<Kilogram>);
 
-    static_assert(std::is_trivial_v<Kilogram>);
+    STATIC_REQUIRE(std::is_trivial_v<Kilogram>);
 
-    static_assert(!std::has_virtual_destructor_v<Kilogram>);
+    STATIC_REQUIRE(!std::has_virtual_destructor_v<Kilogram>);
+}
+
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::addable", "[experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    using namespace etl::experimental;
+
+    using Kilo     = strong_type<TestType, struct Kilo_tag, skill::addable>;
+    auto const lhs = Kilo(1);
+    auto const rhs = Kilo(2);
+    auto const sum = lhs + rhs;
+    REQUIRE(sum.raw_value() == TestType(3));
+}
+
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::subtractable",
+                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
+{
+    using namespace etl::experimental;
+
+    using Kilo = strong_type<TestType, struct Kilo_tag, skill::subtractable>;
+    auto const lhs = Kilo(2);
+    auto const rhs = Kilo(1);
+    auto const sum = lhs - rhs;
+    REQUIRE(sum.raw_value() == TestType(1));
+}
+
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::multipliable",
+                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
+{
+    using namespace etl::experimental;
+
+    using Kilo = strong_type<TestType, struct Kilo_tag, skill::multipliable>;
+    auto const lhs = Kilo(2);
+    auto const rhs = Kilo(2);
+    auto const sum = lhs * rhs;
+    REQUIRE(sum.raw_value() == TestType(4));
+}
+
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::divisible",
+                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
+{
+    using namespace etl::experimental;
+
+    using Kilo     = strong_type<TestType, struct Kilo_tag, skill::divisible>;
+    auto const lhs = Kilo(2);
+    auto const rhs = Kilo(2);
+    auto const sum = lhs / rhs;
+    REQUIRE(sum.raw_value() == TestType(1));
 }

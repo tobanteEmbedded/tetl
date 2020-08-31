@@ -54,7 +54,9 @@ struct skill
         [[nodiscard]] constexpr auto
         operator+(StrongType const& other) const noexcept -> StrongType
         {
-            return this->underlying().raw_value() + other.raw_value();
+            auto const tmp = StrongType(this->underlying().raw_value()
+                                        + other.raw_value());
+            return tmp;
         }
     };
 
@@ -64,7 +66,9 @@ struct skill
         [[nodiscard]] constexpr auto
         operator-(StrongType const& other) const noexcept -> StrongType
         {
-            return this->underlying().raw_value() - other.raw_value();
+            auto const tmp = StrongType(this->underlying().raw_value()
+                                        - other.raw_value());
+            return tmp;
         }
     };
 
@@ -74,7 +78,9 @@ struct skill
         [[nodiscard]] constexpr auto
         operator*(StrongType const& other) const noexcept -> StrongType
         {
-            return this->underlying().raw_value() * other.raw_value();
+            auto const tmp = StrongType(this->underlying().raw_value()
+                                        * other.raw_value());
+            return tmp;
         }
     };
 
@@ -84,7 +90,9 @@ struct skill
         [[nodiscard]] constexpr auto
         operator/(StrongType const& other) const noexcept -> StrongType
         {
-            return this->underlying().raw_value() / other.raw_value();
+            auto const tmp = StrongType(this->underlying().raw_value()
+                                        / other.raw_value());
+            return tmp;
         }
     };
 
@@ -139,7 +147,7 @@ struct skill
  * https://www.youtube.com/watch?v=fWcnp7Bulc8&t=264s
  */
 template <typename ValueType, typename Tag, template <typename> class... Skills>
-class strong_type : Skills<strong_type<ValueType, Tag, Skills...>>...
+struct strong_type : Skills<strong_type<ValueType, Tag, Skills...>>...
 {
 public:
     using value_type = ValueType;
