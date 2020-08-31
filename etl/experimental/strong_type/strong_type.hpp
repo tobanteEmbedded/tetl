@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_STRONG_TYPES_STRONG_TYPES_HPP
 #define TAETL_STRONG_TYPES_STRONG_TYPES_HPP
 
+#include "etl/crtp.hpp"
 #include "etl/definitions.hpp"
 #include "etl/utility.hpp"
 
@@ -34,20 +35,6 @@ namespace etl::experimental
 {
 struct skill
 {
-    template <typename Type, template <typename> typename CrtpTag>
-    struct crtp
-    {
-        [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
-        {
-            return static_cast<Type const&>(*this);
-        }
-
-        [[nodiscard]] constexpr auto underlying() noexcept -> Type&
-        {
-            return static_cast<Type&>(*this);
-        }
-    };
-
     template <typename StrongType>
     struct addable : crtp<StrongType, addable>
     {
