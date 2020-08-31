@@ -27,21 +27,12 @@ DAMAGE.
 #ifndef TAETL_STRING_HPP
 #define TAETL_STRING_HPP
 
+#include "etl/cstring.hpp"
 #include "etl/definitions.hpp"
 #include "etl/warning.hpp"
 
 namespace etl
 {
-/**
- * @brief Returns the length of the C string str.
- */
-constexpr inline auto strlen(const char* str) -> etl::size_t
-{
-    const char* s {};
-    for (s = str; *s != 0; ++s) { ; }
-    return etl::size_t(s - str);
-}
-
 /**
  * @brief basic_string class with fixed size capacity.
  *
@@ -76,9 +67,9 @@ public:
         {
             if (len < Capacity)
             {
-                ::memset(&data_[0], 0, len + 1);
+                etl::memset(&data_[0], 0, len + 1);
                 size_ = len;
-                ::memcpy(&data_[0], str, len);
+                etl::memcpy(&data_[0], str, len);
             }
         }
     }

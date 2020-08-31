@@ -1,3 +1,4 @@
+
 /*
 Copyright (c) 2019-2020, Tobias Hienzsch
 All rights reserved.
@@ -24,50 +25,47 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_DEFINITONS_HPP
-#define TAETL_DEFINITONS_HPP
+#ifndef TAETL_CSTRING_HPP
+#define TAETL_CSTRING_HPP
 
-#include "version.hpp"
+#include "byte.hpp"
+#include "definitions.hpp"
 
-#include <assert.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
-
-/**
- * @brief Namespace for the etl library.
- */
 namespace etl
 {
-using int8_t = int8_t;
-static_assert(sizeof(etl::int8_t) == 1, "int8 size should be 1");
+/**
+ * @brief The memcpy() function shall copy the first n bytes pointed to by src
+ * to the buffer pointed to by dest. Source and destination may not overlap. If
+ * source and destination might overlap, memmove() must be used instead.
+ */
+constexpr auto memcpy(void* dest, const void* src, etl::size_t n) -> void*
+{
+    auto* dp       = static_cast<etl::byte*>(dest);
+    auto const* sp = static_cast<etl::byte const*>(src);
+    while (n-- != 0) { *dp++ = *sp++; }
+    return dest;
+}
 
-using int16_t = int16_t;
-static_assert(sizeof(etl::int16_t) == 2, "int16 size should be 2");
+/**
+ * @brief The memset function copies the value of c (converted to an unsigned
+ * char) into each of the ﬁrst n characters of the object pointed to by s.
+ */
+constexpr auto memset(void* s, int c, etl::size_t n) -> void*
+{
+    auto* p = static_cast<etl::byte*>(s);
+    while (n-- != 0) { *p++ = static_cast<etl::byte>(c); }
+    return s;
+}
 
-using int32_t = int32_t;
-static_assert(sizeof(etl::int32_t) == 4, "int32 size should be 4");
-
-using int64_t = int64_t;
-static_assert(sizeof(etl::int64_t) == 8, "int64 size should be 8");
-
-using uint8_t = uint8_t;
-static_assert(sizeof(etl::uint8_t) == 1, "uint8 size should be 1");
-
-using uint16_t = uint16_t;
-static_assert(sizeof(etl::uint16_t) == 2, "uint16 size should be 2");
-
-using uint32_t = uint32_t;
-static_assert(sizeof(etl::uint32_t) == 4, "uint32 size should be 4");
-
-using uint64_t = uint64_t;
-static_assert(sizeof(etl::uint64_t) == 8, "uint64 size should be 8");
-
-using intmax_t  = intmax_t;
-using uintmax_t = uintmax_t;
-using size_t    = size_t;
-using ptrdiff_t = ptrdiff_t;
-using nullptr_t = decltype(nullptr);
+/**
+ * @brief Returns the length of the C string str.
+ */
+constexpr auto strlen(const char* str) -> etl::size_t
+{
+    const char* s {};
+    for (s = str; *s != 0; ++s) { ; }
+    return etl::size_t(s - str);
+}
 
 }  // namespace etl
-#endif  // TAETL_DEFINITONS_HPP
+#endif  // TAETL_CSTRING_HPP
