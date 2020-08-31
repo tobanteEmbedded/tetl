@@ -59,6 +59,9 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
     return static_cast<T&&>(param);
 }
 
+template <class T>
+typename etl::add_rvalue_reference<T>::type declval() noexcept;
+
 template <class T1, class T2>
 struct pair
 {

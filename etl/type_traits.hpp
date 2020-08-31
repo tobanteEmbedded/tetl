@@ -47,6 +47,48 @@ struct integral_constant
 using true_type  = integral_constant<bool, true>;
 using false_type = integral_constant<bool, false>;
 
+namespace detail
+{
+template <class T>
+struct type_identity
+{
+    // or use etl::type_identity (since C++20)
+    using type = T;
+};
+
+template <class T>
+auto try_add_lvalue_reference(int) -> type_identity<T&>;
+template <class T>
+auto try_add_lvalue_reference(...) -> type_identity<T>;
+
+template <class T>
+auto try_add_rvalue_reference(int) -> type_identity<T&&>;
+template <class T>
+auto try_add_rvalue_reference(...) -> type_identity<T>;
+
+}  // namespace detail
+
+template <class T>
+struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0))
+{
+};
+
+template <class T>
+struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0))
+{
+};
+
+template <class T>
+using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
+
+template <class T>
+using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
+
+template <typename T>
+auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
+template <class...>
+using void_t = void;
+
 // remove_const
 template <typename Type>
 struct remove_const
@@ -399,6 +441,23 @@ struct is_arithmetic
 
 template <class T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+
+template <class, class T, class... Args>
+struct _is_constructible_helper : etl::false_type
+{
+};
+
+template <class T, class... Args>
+struct _is_constructible_helper<void_t<decltype(T(declval<Args>()...))>, T,
+                                Args...> : etl::true_type
+{
+};
+
+template <class T, class... Args>
+using is_constructible = _is_constructible_helper<void_t<>, T, Args...>;
+
+template <class T, class... Args>
+inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
 
 namespace detail
 {
