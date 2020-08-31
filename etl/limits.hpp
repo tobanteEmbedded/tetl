@@ -29,7 +29,6 @@ DAMAGE.
 
 #include <float.h>
 #include <math.h>
-#include <stdint.h>
 
 #include "definitions.hpp"
 
