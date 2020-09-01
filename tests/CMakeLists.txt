@@ -8,6 +8,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_bit.cpp
     test_bitset.cpp
     test_byte.cpp
+    test_cstring.cpp
     test_concepts.cpp
     test_definitions.cpp
     test_functional.cpp
