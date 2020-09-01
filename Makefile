@@ -31,7 +31,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	cmake -S . -G Ninja -B$(BUILD_DIR_BASE)_coverage -DTOBANTEAUDIO_ETL_ENABLE_COVERAGE=ON
+	cmake -S . -G Ninja -B$(BUILD_DIR_BASE)_coverage -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON
 	cmake --build $(BUILD_DIR_BASE)_coverage
 	cd $(BUILD_DIR_BASE)_coverage && lcov -c -i -d . --base-directory . -o base_cov.info
 	cd $(BUILD_DIR_BASE)_coverage && ctest

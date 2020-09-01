@@ -1,9 +1,8 @@
-# TESTS
 project(etl-tests)
 
-set(TEST_SRC
-    test_main.cpp
-    
+add_executable(${PROJECT_NAME} test_main.cpp)
+
+target_sources(${PROJECT_NAME} PRIVATE
     test_algorithm.cpp
     test_array.cpp
     test_bit.cpp
@@ -29,19 +28,15 @@ set(TEST_SRC
 
     experimental/rtos/test_task.cpp
     experimental/rtos/test_queue.cpp
-    
+
     experimental/stm32/test_gpio.cpp
     experimental/stm32/test_interrupt.cpp
 
     experimental/strong_type/test_strong_type.cpp
 
     experimental/mcp23017/test_mcp23017.cpp
-
 )
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_SRC})
-add_executable(${PROJECT_NAME} ${TEST_SRC})
-# set_target_properties(${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${DO_CLANG_TIDY}")
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tobanteAudio::etl

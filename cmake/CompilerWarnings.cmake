@@ -3,7 +3,14 @@ add_library(tobanteAudio::CompilerWarnings ALIAS compiler_warnings)
 
 if(MSVC)
   target_compile_options(compiler_warnings INTERFACE /W3 "/permissive-")
+  if(TOBANTEAUDIO_ETL_BUILD_WERROR)
+    target_compile_options(compiler_warnings INTERFACE /WX)
+  endif(TOBANTEAUDIO_ETL_BUILD_WERROR)
 else()
+  if(TOBANTEAUDIO_ETL_BUILD_WERROR)
+    target_compile_options(compiler_warnings INTERFACE -Werror)
+  endif(TOBANTEAUDIO_ETL_BUILD_WERROR)
+
   # GCC & CLANG
   target_compile_options(
     compiler_warnings
@@ -16,6 +23,7 @@ else()
         # -Wconversion
         # -Wdouble-promotion
   )
+
   # GCC 
   target_compile_options(
     compiler_warnings
