@@ -58,11 +58,12 @@ enum class endian
  * @details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @todo Limit (SFINAE) to unsigned types. Fix conversion warnings.
  */
 template <class T>
 [[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
-    // TODO: Limit (SFINAE) to unsigned types. Fix conversion warnings.
     T count = 0;
     while (input)
     {

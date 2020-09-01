@@ -167,8 +167,6 @@ private:
 
 namespace detail
 {
-// TODO: Implement index_sequence & tuple_size
-
 // template <typename Tuple, etl::size_t... Indices, typename... Tn>
 // void for_each_fork_impl(Tuple&& tuple, etl::index_sequence<Indices...>,
 //                         Tn... val)

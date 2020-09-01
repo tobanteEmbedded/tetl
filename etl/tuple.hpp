@@ -31,6 +31,11 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief
+ *
+ * @todo Implement index_sequence & tuple_size
+ */
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...>
 {
@@ -47,18 +52,20 @@ struct tuple<First>
     First first;
 };
 
+namespace detail
+{
 template <int index, typename First, typename... Rest>
-struct GetImpl
+struct get_impl
 {
     static auto value(const tuple<First, Rest...>* t)
-        -> decltype(GetImpl<index - 1, Rest...>::value(t))
+        -> decltype(get_impl<index - 1, Rest...>::value(t))
     {
-        return GetImpl<index - 1, Rest...>::value(t);
+        return get_impl<index - 1, Rest...>::value(t);
     }
 };
 
 template <typename First, typename... Rest>
-struct GetImpl<0, First, Rest...>
+struct get_impl<0, First, Rest...>
 {
     static auto value(const tuple<First, Rest...>* t) -> First
     {
@@ -66,11 +73,13 @@ struct GetImpl<0, First, Rest...>
     }
 };
 
+}  // namespace detail
+
 template <int index, typename First, typename... Rest>
 auto get(const tuple<First, Rest...>& t)
-    -> decltype(GetImpl<index, First, Rest...>::value(&t))
+    -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
 {
-    return GetImpl<index, First, Rest...>::value(&t);
+    return detail::get_impl<index, First, Rest...>::value(&t);
 }
 }  // namespace etl
 

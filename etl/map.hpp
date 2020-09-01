@@ -51,11 +51,12 @@ public:
     using iterator        = value_type*;
     using const_iterator  = value_type const*;
 
-    // TODO: Reverse iterators & node type
-    // reverse_iterator etl::reverse_iterator<iterator>
-    // const_reverse_iterator etl::reverse_iterator<const_iterator>
-    // node_type a specialization of node handle representing a container node
-    // insert_return_type
+    /**
+     * @todo Reverse iterators & node type. reverse_iterator
+     * etl::reverse_iterator<iterator> const_reverse_iterator
+     * etl::reverse_iterator<const_iterator> node_type a specialization of node
+     * handle representing a container node insert_return_type
+     */
 
     /**
      * @brief Returns a reference to the mapped value of the element with key
@@ -184,11 +185,12 @@ public:
     /**
      * @brief Erases all elements from the container. After this call, size()
      * returns zero.
+     *
+     * @todo Replace with calls to destructor
      */
     constexpr auto clear() noexcept -> void
     {
-        // TODO: Replace with calls to destructor
-        // ::memset(data_, 0, capacity_ * sizeof(value_type));
+        // etl::memset(data_, 0, capacity_ * sizeof(value_type));
         size_ = 0;
     }
 

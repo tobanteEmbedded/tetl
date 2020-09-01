@@ -34,9 +34,9 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief The memcpy() function shall copy the first n bytes pointed to by src
- * to the buffer pointed to by dest. Source and destination may not overlap. If
- * source and destination might overlap, memmove() must be used instead.
+ * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
+ * dest. Source and destination may not overlap. If source and destination might
+ * overlap, memmove() must be used instead.
  */
 constexpr auto memcpy(void* dest, const void* src, etl::size_t n) -> void*
 {
@@ -47,8 +47,8 @@ constexpr auto memcpy(void* dest, const void* src, etl::size_t n) -> void*
 }
 
 /**
- * @brief The memset function copies the value of c (converted to an unsigned
- * char) into each of the ﬁrst n characters of the object pointed to by s.
+ * @brief Copies the value of c (converted to an unsigned char) into each of the
+ * ﬁrst n characters of the object pointed to by s.
  */
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
@@ -58,8 +58,9 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 }
 
 /**
- * @brief The memmove() function shall copy the first n bytes pointed to by src
- * to the buffer pointed to by dest. Source and destination may overlap.
+ * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
+ * dest. Source and destination may overlap.
+ *
  * @todo Check original implementation. They use __np_anyptrlt which is not
  * portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
  */
