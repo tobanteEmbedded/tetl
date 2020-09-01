@@ -29,10 +29,159 @@ DAMAGE.
 
 #include "etl/cstring.hpp"
 #include "etl/definitions.hpp"
+#include "etl/ios.hpp"
 #include "etl/warning.hpp"
 
 namespace etl
 {
+template <class charT>
+struct char_traits;
+
+template <>
+struct char_traits<char>
+{
+    using char_type = char;
+    using int_type  = int;
+    using off_type  = streamoff;
+    // using pos_type            = streampos;
+    // using state_type          = mbstate_t;
+    // using comparison_category = strong_ordering;
+
+    /**
+     * @brief Assigns character a to character r.
+     */
+    static constexpr auto assign(char_type& a, char_type const& b) noexcept
+        -> void
+    {
+        a = b;
+    }
+
+    /**
+     * @brief Returns true if a and b are equal, false otherwise.
+     */
+    static constexpr auto eq(char_type a, char_type b) noexcept -> bool
+    {
+        return a == b;
+    }
+
+    /**
+     * @brief Returns true if a is less than b, false otherwise.
+     */
+    static constexpr auto lt(char_type a, char_type b) noexcept -> bool
+    {
+        return a < b;
+    }
+
+    /**
+     * @brief Compares the first count characters of the character strings s1
+     * and s2. The comparison is done lexicographically. If count is zero,
+     * strings are considered equal.
+     */
+    static constexpr auto compare(char_type const* lhs, char_type const* rhs,
+                                  size_t count) -> int
+    {
+        if (count == 0) { return 0; }
+
+        for (size_t i = 0; i < count; ++i)
+        {
+            if (lhs[i] < rhs[i]) { return -1; }
+            if (lhs[i] > rhs[i]) { return 1; }
+        }
+
+        return 0;
+    }
+
+    /**
+     * @brief Returns the length of the character sequence pointed to by s, that
+     * is, the position of the terminating null character (CharT()).
+     */
+    static constexpr auto length(char_type const* str) -> size_t
+    {
+        return etl::strlen(str);
+    }
+
+    /**
+     * @brief Searches for character ch within the first count characters of the
+     * sequence pointed to by p.
+     *
+     * @return A pointer to the first character in the range specified by [p, p
+     * + count) that compares equal to ch, or a null pointer if not found.
+     */
+    static constexpr auto find(char_type const* str, size_t count,
+                               char_type const& token) -> char_type const*
+    {
+        for (size_t i = 0; i < count; ++i)
+        {
+            if (str[i] == token) { return &str[i]; }
+        }
+
+        return nullptr;
+    }
+
+    /**
+     * @brief Copies count characters from the character string pointed to by
+     * src to the character string pointed to by dest. Performs correctly even
+     * if the copied character ranges overlap, i.e. src is in [dest, dest +
+     * count).
+     */
+    static constexpr auto move(char_type* dest, char_type const* source,
+                               size_t count) -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
+        return dest;
+    }
+
+    /**
+     * @brief Copies count characters from the character string pointed to by
+     * src to the character string pointed to by dest. Formally, for each i in
+     * [0, count), performs assign(src[i], dest[i]). The behavior is undefined
+     * if copied character ranges overlap, i.e. src is in [dest, dest + count).
+     */
+    static constexpr auto copy(char_type* dest, char_type const* source,
+                               size_t count) -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
+        return dest;
+    }
+
+    /**
+     * @brief Assigns character a to each character in count characters in the
+     * character sequence pointed to by p.
+     */
+    static constexpr auto assign(char_type* str, size_t count, char_type token)
+        -> char_type*
+    {
+        for (size_t i = 0; i < count; ++i) { assign(str[i], token); }
+        return str;
+    }
+
+    /**
+     * @brief
+     */
+    static constexpr auto not_eof(int_type c) noexcept -> int_type;
+
+    /**
+     * @brief
+     */
+    static constexpr auto to_char_type(int_type c) noexcept -> char_type;
+
+    /**
+     * @brief
+     */
+    static constexpr auto to_int_type(char_type c) noexcept -> int_type;
+
+    /**
+     * @brief
+     */
+    static constexpr auto eq_int_type(int_type c1, int_type c2) noexcept
+        -> bool;
+
+    /**
+     * @brief
+     */
+    static constexpr auto eof() noexcept -> int_type;
+};
+
 /**
  * @brief basic_string class with fixed size capacity.
  *

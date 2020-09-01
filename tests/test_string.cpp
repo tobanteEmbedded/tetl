@@ -29,6 +29,39 @@ DAMAGE.
 #include "etl/algorithm.hpp"
 #include "etl/string.hpp"
 
+TEST_CASE("string/char_traits: <char>::length", "[string]")
+{
+    STATIC_REQUIRE(etl::char_traits<char>::length("") == 0);
+    STATIC_REQUIRE(etl::char_traits<char>::length("a") == 1);
+    STATIC_REQUIRE(etl::char_traits<char>::length("to") == 2);
+    STATIC_REQUIRE(etl::char_traits<char>::length("xxxxxxxxxx") == 10);
+}
+
+TEST_CASE("string/char_traits: <char>::eq", "[string]")
+{
+    STATIC_REQUIRE(etl::char_traits<char>::eq('a', 'a') == true);
+    STATIC_REQUIRE(etl::char_traits<char>::eq('a', 'b') == false);
+    STATIC_REQUIRE(etl::char_traits<char>::eq('b', 'a') == false);
+}
+
+TEST_CASE("string/char_traits: <char>::lt", "[string]")
+{
+    STATIC_REQUIRE(etl::char_traits<char>::lt('a', 'a') == false);
+    STATIC_REQUIRE(etl::char_traits<char>::lt('a', 'b') == true);
+    STATIC_REQUIRE(etl::char_traits<char>::lt('b', 'a') == false);
+}
+
+TEST_CASE("string/char_traits: <char>::assign(char,char)", "[string]")
+{
+    auto ch = [](char const& b) {
+        auto a = 'a';
+        etl::char_traits<char>::assign(a, b);
+        return a;
+    };
+
+    STATIC_REQUIRE(ch('b') == 'b');
+}
+
 TEST_CASE("string: strlen", "[string]")
 {
     STATIC_REQUIRE(etl::strlen("") == 0);
