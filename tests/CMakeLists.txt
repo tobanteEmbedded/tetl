@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_tuple.cpp
     test_type_traits.cpp
     test_vector.cpp
+    test_version.cpp
 
     experimental/dsp/test_dsp.cpp
 
@@ -37,6 +38,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     experimental/mcp23017/test_mcp23017.cpp
 )
 
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tobanteAudio::etl

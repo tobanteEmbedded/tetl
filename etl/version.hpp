@@ -34,26 +34,39 @@ DAMAGE.
 
 namespace etl
 {
-enum class LanugageStandard
+enum class language_standard
 {
-    Cpp98 = 199711L,
-    Cpp11 = 201103L,
-    Cpp14 = 201402L,
-    Cpp17 = 201703L,
-    Cpp20 = 201704L,  // Todo: Replace with actual standard macro value
+    cpp_98 = 1998,
+    cpp_11 = 2011,
+    cpp_14 = 2014,
+    cpp_17 = 2017,
+    cpp_20 = 2020,
 };
 
-#if __cplusplus < 201703L
-#error "C++17 or newer is required"
-#endif
+// #if __cplusplus < 201703L
+// #error "C++17 or newer is required"
+// #endif
 
 #if __cplusplus == 201703L
-constexpr auto kLanguageStandard = LanugageStandard::Cpp17;
+#define TAEL_CPP_STANDARD_17
+constexpr auto current_standard = language_standard::cpp_17;
 #endif
 
 #if __cplusplus > 201703L
-constexpr auto kLanguageStandard = LanugageStandard::Cpp20;
+#define TAEL_CPP_STANDARD_20
+constexpr auto current_standard = language_standard::cpp_20;
 #endif
+
+[[nodiscard]] constexpr auto is_language_standard(language_standard ls) -> bool
+{
+    return ls == current_standard;
+}
+
+[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls)
+    -> bool
+{
+    return static_cast<long>(ls) > static_cast<long>(current_standard);
+}
 }  // namespace etl
 
 #endif  // TAETL_VERSION_HPP
