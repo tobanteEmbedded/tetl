@@ -60,7 +60,7 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 }
 
 template <class T>
-typename etl::add_rvalue_reference<T>::type declval() noexcept;
+auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
 
 template <class T1, class T2>
 struct pair

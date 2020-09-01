@@ -49,8 +49,8 @@ TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
 TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int,
                    float, double)
 {
-    auto func  = etl::function<TestType(void)> {[]() { return TestType {1}; }};
-    auto func2 = func;
+    auto func = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    auto const& func2 = func;
     REQUIRE(func() == TestType {1});
     REQUIRE(func2() == TestType {1});
     REQUIRE(func2() == TestType {1});
