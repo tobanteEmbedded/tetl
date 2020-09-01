@@ -32,4 +32,28 @@ DAMAGE.
 #define TAETL_REVISION_PATCH 0
 #define TAETL_REVISION_STRING "0.2.0"
 
+namespace etl
+{
+enum class LanugageStandard
+{
+    Cpp98 = 199711L,
+    Cpp11 = 201103L,
+    Cpp14 = 201402L,
+    Cpp17 = 201703L,
+    Cpp20 = 201704L,  // Todo: Replace with actual standard macro value
+};
+
+#if __cplusplus < 201703L
+#error "C++17 or newer is required"
+#endif
+
+#if __cplusplus == 201703L
+constexpr auto kLanguageStandard = LanugageStandard::Cpp17;
+#endif
+
+#if __cplusplus > 201703L
+constexpr auto kLanguageStandard = LanugageStandard::Cpp20;
+#endif
+}  // namespace etl
+
 #endif  // TAETL_VERSION_HPP
