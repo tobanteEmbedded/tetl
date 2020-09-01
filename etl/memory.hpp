@@ -64,8 +64,7 @@ public:
         : value_ {[ptr]() -> StorageType {
             auto const obj    = reinterpret_cast<intptr_t>(ptr);
             auto const offset = obj - BaseAddress;
-            if (offset <= mask) { return StorageType(offset & mask); }
-            return 0;
+            return StorageType(offset);
         }()}
     {
     }
@@ -87,7 +86,7 @@ public:
 
 private:
     StorageType value_;
-    constexpr static StorageType mask = etl::numeric_limits<StorageType>::max();
+    constexpr static StorageType max = etl::numeric_limits<StorageType>::max();
 };
 
 /**

@@ -43,9 +43,27 @@ TEMPLATE_TEST_CASE("memory/small_ptr: size", "[memory]", uint8_t, uint16_t,
     STATIC_REQUIRE(sizeof(ptr) == sizeof(TestType));
 }
 
-// TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long)
-// {
-//     using Ptr = etl::small_ptr<TestType, 10, uint16_t>;
-//     auto ptr  = Ptr {(TestType*)(intptr_t)(20)};
-//     REQUIRE(ptr.data() == 10);
-// }
+namespace
+{
+struct SomeStruct
+{
+    float x, y;
+    int a, b;
+};
+
+}  // namespace
+TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long,
+                   SomeStruct)
+{
+    using namespace Catch::Generators;
+    using ptr_t = etl::small_ptr<TestType const, 16, uint16_t>;
+    auto [addr] = GENERATE(table<int>({
+        {32},
+        {2048},
+        {4100},
+    }));
+    auto ptr    = ptr_t {reinterpret_cast<TestType*>(addr)};
+    REQUIRE(ptr.data() == addr - 16);
+    REQUIRE(reinterpret_cast<intptr_t>(ptr.operator->())
+            == static_cast<intptr_t>(addr));
+}
