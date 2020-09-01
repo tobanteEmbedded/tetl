@@ -1,5 +1,3 @@
-
-
 /*
 Copyright (c) 2019-2020, Tobias Hienzsch
 All rights reserved.
