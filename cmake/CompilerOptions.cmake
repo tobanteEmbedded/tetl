@@ -1,6 +1,10 @@
 add_library(compiler_options INTERFACE)
 add_library(tobanteAudio::CompilerOptions ALIAS compiler_options)
 
+if(MSVC)
+  target_compile_options(compiler_options INTERFACE "/permissive-" "/Zc:__cplusplus")
+endif(MSVC)
+
 # Sanitizers
 set(SANITIZERS "")
 # Address

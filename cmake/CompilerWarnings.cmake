@@ -2,7 +2,7 @@ add_library(compiler_warnings INTERFACE)
 add_library(tobanteAudio::CompilerWarnings ALIAS compiler_warnings)
 
 if(MSVC)
-  target_compile_options(compiler_warnings INTERFACE /W3 "/permissive-" "Zc:__cplusplus")
+  target_compile_options(compiler_warnings INTERFACE /W3)
   if(TOBANTEAUDIO_ETL_BUILD_WERROR)
     target_compile_options(compiler_warnings INTERFACE /WX)
   endif(TOBANTEAUDIO_ETL_BUILD_WERROR)
