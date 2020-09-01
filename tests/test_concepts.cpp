@@ -24,24 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_CONCEPTS_HPP
-#define TAETL_CONCEPTS_HPP
+#include "etl/concepts.hpp"
 
-#include "definitions.hpp"
-#include "type_traits.hpp"
+#include "catch2/catch.hpp"
 
 #if defined(TAETL_CPP_STANDARD_20)
-namespace etl
-{
-namespace detail
-{
-template <class T, class U>
-concept same_as_helper = etl::is_same_v<T, U>;
-}
-
-template <class T, class U>
-concept same_as = detail::same_as_helper<T, U>&& detail::same_as_helper<U, T>;
-}  // namespace etl
+TEST_CASE("concepts: same_as", "[concepts]") { }
 #endif
-
-#endif  // TAETL_CONCEPTS_HPP

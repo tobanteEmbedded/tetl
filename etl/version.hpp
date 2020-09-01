@@ -55,12 +55,12 @@ enum class language_standard
 // #endif
 
 #if __cplusplus == 201703L
-#define TAEL_CPP_STANDARD_17
+#define TAETL_CPP_STANDARD_17
 constexpr auto current_standard = language_standard::cpp_17;
 #endif
 
 #if __cplusplus > 201703L
-#define TAEL_CPP_STANDARD_20
+#define TAETL_CPP_STANDARD_20
 constexpr auto current_standard = language_standard::cpp_20;
 #endif
 
