@@ -59,33 +59,110 @@ public:
     /**
      * @brief Construct from raw pointer.
      */
-    explicit small_ptr(Type* ptr)
-        : value_ {[ptr]() -> StorageType {
-            auto const obj    = reinterpret_cast<intptr_t>(ptr);
-            auto const offset = obj - BaseAddress;
-            return StorageType(offset);
-        }()}
+    small_ptr(Type* ptr) : value_ {compress(ptr)} { }
+
+    /**
+     * @brief Returns a raw pointer to Type.
+     */
+    [[nodiscard]] auto get() noexcept -> Type*
     {
+        return reinterpret_cast<Type*>(BaseAddress + value_);
     }
 
     /**
-     * @brief Returns the underlying integer address.
+     * @brief Returns a raw pointer to const Type.
      */
-    [[nodiscard]] auto data() const -> StorageType { return value_; }
-
-    [[nodiscard]] auto operator->() const -> Type* { return get(); }
-    [[nodiscard]] auto operator*() -> Type& { return *get(); }
-    [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
-
-    [[nodiscard]] auto get() -> Type* { return (Type*)(BaseAddress + value_); }
-    [[nodiscard]] auto get() const -> Type const*
+    [[nodiscard]] auto get() const noexcept -> Type const*
     {
-        return (Type const*)(BaseAddress + value_);
+        return reinterpret_cast<Type const*>(BaseAddress + value_);
     }
 
+    /**
+     * @brief Returns the compressed underlying integer address.
+     */
+    [[nodiscard]] auto compressed_value() const noexcept -> StorageType
+    {
+        return value_;
+    }
+
+    /**
+     * @brief Returns a raw pointer to Type.
+     */
+    [[nodiscard]] auto operator->() const -> Type* { return get(); }
+
+    /**
+     * @brief Dereference pointer to Type&.
+     */
+    [[nodiscard]] auto operator*() -> Type& { return *get(); }
+
+    /**
+     * @brief Dereference pointer to Type const&.
+     */
+    [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
+
+    /**
+     * @brief Pre increment of pointer.
+     */
+    [[nodiscard]] auto operator++(int) noexcept -> small_ptr
+    {
+        auto temp = *this;
+        auto* ptr = get();
+        ++ptr;
+        value_ = compress(ptr);
+        return temp;
+    }
+
+    /**
+     * @brief Post increment of pointer.
+     */
+    [[nodiscard]] auto operator++() noexcept -> small_ptr&
+    {
+        value_ = offset(get()++);
+        return *this;
+    }
+
+    /**
+     * @brief Pre increment of pointer.
+     */
+    [[nodiscard]] auto operator--(int) noexcept -> small_ptr
+    {
+        auto temp = *this;
+        auto* ptr = get();
+        --ptr;
+        value_ = compress(ptr);
+        return temp;
+    }
+
+    /**
+     * @brief Post increment of pointer.
+     */
+    [[nodiscard]] auto operator--() noexcept -> small_ptr&
+    {
+        value_ = offset(get()--);
+        return *this;
+    }
+
+    /**
+     * @brief Returns distance from this to other.
+     */
+    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
+    {
+        return get() - other.get();
+    }
+
+    /**
+     * @brief Implicit conversion to raw pointer.
+     */
+    [[nodiscard]] operator Type*() { return get(); }
+
 private:
+    [[nodiscard]] static auto compress(Type* ptr) -> StorageType
+    {
+        auto const obj = reinterpret_cast<intptr_t>(ptr);
+        return StorageType(obj - BaseAddress);
+    }
+
     StorageType value_;
-    constexpr static StorageType max = etl::numeric_limits<StorageType>::max();
 };
 
 /**

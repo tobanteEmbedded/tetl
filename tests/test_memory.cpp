@@ -32,7 +32,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct", "[memory]", int, float, long)
 {
     using Ptr = etl::small_ptr<TestType, 0, uint64_t>;
     auto ptr  = Ptr {nullptr};
-    REQUIRE(ptr.data() == 0);
+    REQUIRE(ptr.compressed_value() == 0);
 }
 
 TEMPLATE_TEST_CASE("memory/small_ptr: size", "[memory]", uint8_t, uint16_t,
@@ -63,7 +63,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long,
         {4100},
     }));
     auto ptr    = ptr_t {reinterpret_cast<TestType*>(addr)};
-    REQUIRE(ptr.data() == addr - 16);
+    REQUIRE(ptr.compressed_value() == addr - 16);
     REQUIRE(reinterpret_cast<intptr_t>(ptr.operator->())
             == static_cast<intptr_t>(addr));
 }
