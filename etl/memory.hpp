@@ -39,7 +39,8 @@ namespace etl
  * replacement for native pointers.
  *
  * @details Uses the base address to calculate an offset, which will be stored
- * internally.
+ * internally. If used on micro controllers, the base address should be set to
+ * the start of RAM. See your linker script.
  */
 template <typename Type, intptr_t BaseAddress = 0,
           typename StorageType = uint16_t>
@@ -117,12 +118,14 @@ public:
      */
     [[nodiscard]] auto operator++() noexcept -> small_ptr&
     {
-        value_ = offset(get()++);
+        auto* ptr = get();
+        ptr++;
+        value_ = compress(ptr);
         return *this;
     }
 
     /**
-     * @brief Pre increment of pointer.
+     * @brief Pre decrement of pointer.
      */
     [[nodiscard]] auto operator--(int) noexcept -> small_ptr
     {
@@ -134,11 +137,13 @@ public:
     }
 
     /**
-     * @brief Post increment of pointer.
+     * @brief Post decrement of pointer.
      */
     [[nodiscard]] auto operator--() noexcept -> small_ptr&
     {
-        value_ = offset(get()--);
+        auto* ptr = get();
+        ptr--;
+        value_ = compress(ptr);
         return *this;
     }
 
@@ -151,9 +156,14 @@ public:
     }
 
     /**
-     * @brief Implicit conversion to raw pointer.
+     * @brief Implicit conversion to raw pointer to mutable.
      */
-    [[nodiscard]] operator Type*() { return get(); }
+    [[nodiscard]] operator Type*() noexcept { return get(); }
+
+    /**
+     * @brief Implicit conversion to raw pointer to const.
+     */
+    [[nodiscard]] operator Type const *() const noexcept { return get(); }
 
 private:
     [[nodiscard]] static auto compress(Type* ptr) -> StorageType
@@ -163,32 +173,6 @@ private:
     }
 
     StorageType value_;
-};
-
-/**
- * @brief Compressed pointer to specified size. Intended to be used as a drop in
- * replacement for native pointers.
- *
- * @details Only useful if the memory range starts at 0, since the near_ptr
- * doesn't use a base address offset.
- */
-template <class Type, typename StorageType = uint16_t>
-class near_ptr
-{
-    StorageType ptr_;
-
-public:
-    near_ptr() = default;
-    near_ptr(nullptr_t null) { ignore_unused(null); }
-
-    explicit near_ptr(Type* p) : ptr_((StorageType)(intptr_t)p) { }
-
-    template <class Other>
-    explicit near_ptr(const near_ptr<Other>& rhs) : ptr_(rhs.ptr_)
-    {
-    }
-
-    auto operator*() const -> Type& { return *(Type*)(intptr_t)ptr_; }
 };
 
 }  // namespace etl

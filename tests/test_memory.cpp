@@ -24,46 +24,157 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "etl/array.hpp"
 #include "etl/memory.hpp"
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("memory/small_ptr: construct", "[memory]", int, float, long)
-{
-    using Ptr = etl::small_ptr<TestType, 0, uint64_t>;
-    auto ptr  = Ptr {nullptr};
-    REQUIRE(ptr.compressed_value() == 0);
-}
-
-TEMPLATE_TEST_CASE("memory/small_ptr: size", "[memory]", uint8_t, uint16_t,
+TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t,
                    uint32_t, uint64_t)
 {
-    using Ptr = etl::small_ptr<int, 0, TestType>;
-    auto ptr  = Ptr {nullptr};
-    STATIC_REQUIRE(sizeof(ptr) == sizeof(TestType));
+    using int_ptr_t = etl::small_ptr<int, 0, TestType>;
+    STATIC_REQUIRE(sizeof(int_ptr_t) == sizeof(TestType));
+
+    using float_ptr_t = etl::small_ptr<float, 0, TestType>;
+    STATIC_REQUIRE(sizeof(float_ptr_t) == sizeof(TestType));
 }
 
-namespace
+TEMPLATE_TEST_CASE("memory/small_ptr: construct()", "[memory]", int, float,
+                   long)
 {
-struct SomeStruct
-{
-    float x, y;
-    int a, b;
-};
+    using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
+    auto ptr    = ptr_t {nullptr};
+    etl::ignore_unused(ptr);
+    REQUIRE(true);
+}
 
-}  // namespace
-TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long,
-                   SomeStruct)
+TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int,
+                   float, long)
+{
+    using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
+    REQUIRE(ptr_t {nullptr}.compressed_value() == 0u);
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long)
 {
     using namespace Catch::Generators;
-    using ptr_t = etl::small_ptr<TestType const, 16, uint16_t>;
+    using ptr_t = etl::small_ptr<TestType const, 16, uintptr_t>;
     auto [addr] = GENERATE(table<int>({
         {32},
         {2048},
         {4100},
     }));
     auto ptr    = ptr_t {reinterpret_cast<TestType*>(addr)};
-    REQUIRE(ptr.compressed_value() == addr - 16);
-    REQUIRE(reinterpret_cast<intptr_t>(ptr.operator->())
-            == static_cast<intptr_t>(addr));
+    REQUIRE(ptr.compressed_value() == static_cast<uintptr_t>(addr - 16));
+    REQUIRE(reinterpret_cast<uintptr_t>(ptr.operator->())
+            == static_cast<uintptr_t>(addr));
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: get", "[memory]", int, float, long)
+{
+    using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
+
+    WHEN("mutable")
+    {
+        auto val = TestType(1.43);
+        auto ptr = ptr_t {&val};
+        REQUIRE(ptr.get() == &val);
+    }
+
+    WHEN("const")
+    {
+        auto const val = TestType(1.43);
+        auto const ptr = ptr_t {&val};
+        REQUIRE(ptr.get() == &val);
+    }
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator*", "[memory]", int, float, long)
+{
+    WHEN("mutable")
+    {
+        using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
+        auto val    = TestType(1.43);
+        auto ptr    = ptr_t {&val};
+        REQUIRE(*ptr == val);
+    }
+
+    WHEN("const")
+    {
+        using ptr_t    = etl::small_ptr<TestType const, 0, uintptr_t>;
+        auto const val = TestType(1.43);
+        auto const ptr = ptr_t {&val};
+        REQUIRE(*ptr == val);
+    }
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator Type*", "[memory]", int, float,
+                   long)
+{
+    using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
+
+    auto val  = TestType(1.43);
+    auto ptr  = ptr_t {&val};
+    auto func = [&val](TestType* p) { REQUIRE(*p == val); };
+    func(ptr);
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator Type const*", "[memory]", int,
+                   float, long)
+{
+    using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
+
+    auto const val = TestType(1.43);
+    auto const ptr = ptr_t {&val};
+    auto func      = [&val](TestType const* p) { REQUIRE(*p == val); };
+    func(ptr);
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator-", "[memory]", int, float, long)
+{
+    using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
+    auto data   = etl::array<TestType, 4> {};
+    REQUIRE(ptr_t {&data[1]} - ptr_t {&data[0]} == 1);
+    REQUIRE(ptr_t {&data[2]} - ptr_t {&data[0]} == 2);
+    REQUIRE(ptr_t {&data[3]} - ptr_t {&data[0]} == 3);
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator--", "[memory]", int, float, long)
+{
+    using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
+
+    WHEN("pre")
+    {
+        auto const data = etl::array<TestType, 4> {};
+        auto ptr        = ptr_t {&data[1]};
+        REQUIRE((--ptr).get() == ptr_t {&data[0]}.get());
+    }
+
+    WHEN("post")
+    {
+        auto const data = etl::array<TestType, 4> {};
+        auto ptr        = ptr_t {&data[1]};
+        REQUIRE((ptr--).get() == ptr_t {&data[1]}.get());
+        REQUIRE(ptr.get() == ptr_t {&data[0]}.get());
+    }
+}
+
+TEMPLATE_TEST_CASE("memory/small_ptr: operator++", "[memory]", int, float, long)
+{
+    using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
+
+    WHEN("pre")
+    {
+        auto const data = etl::array<TestType, 4> {};
+        auto ptr        = ptr_t {&data[1]};
+        REQUIRE((++ptr).get() == ptr_t {&data[2]}.get());
+    }
+
+    WHEN("post")
+    {
+        auto const data = etl::array<TestType, 4> {};
+        auto ptr        = ptr_t {&data[1]};
+        REQUIRE((ptr++).get() == ptr_t {&data[1]}.get());
+        REQUIRE(ptr.get() == ptr_t {&data[2]}.get());
+    }
 }
