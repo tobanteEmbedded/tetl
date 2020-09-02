@@ -34,9 +34,24 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief The char_traits class is a traits class template that abstracts basic
+ * character and string operations for a given character type. The defined
+ * operation set is such that generic algorithms almost always can be
+ * implemented in terms of it. It is thus possible to use such algorithms with
+ * almost any possible character or string type, just by supplying a customized
+ * char_traits class. The char_traits class template serves as a basis for
+ * explicit instantiations. The user can provide a specialization for any custom
+ * character types. Several specializations are defined for the standard
+ * character types. If an operation on traits emits an exception, the behavior
+ * is undefined.
+ */
 template <class charT>
 struct char_traits;
 
+/**
+ * @brief Specializations of char_traits for type char.
+ */
 template <>
 struct char_traits<char>
 {
@@ -156,30 +171,57 @@ struct char_traits<char>
     }
 
     /**
-     * @brief
-     */
-    static constexpr auto not_eof(int_type c) noexcept -> int_type;
-
-    /**
-     * @brief
+     * @brief Converts a value of int_type to char_type. If there are no
+     * equivalent value (such as when c is a copy of the eof() value), the
+     * result is unspecified. Formally, returns the value x such that
+     * char_type<char>::eq_int_type(c, char_type<char>::to_int_type(x)) is true,
+     * and an unspecified value if no such x exists.
      */
     static constexpr auto to_char_type(int_type c) noexcept -> char_type;
 
     /**
-     * @brief
+     * @brief Converts a value of char_type to int_type.
      */
-    static constexpr auto to_int_type(char_type c) noexcept -> int_type;
+    static constexpr auto to_int_type(char_type c) noexcept -> int_type
+    {
+        return int_type {static_cast<uint8_t>(c)};
+    }
 
     /**
-     * @brief
+     * @brief Checks whether two values of type int_type are equal.
+     *
+     * @details https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
      */
-    static constexpr auto eq_int_type(int_type c1, int_type c2) noexcept
-        -> bool;
+    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept
+        -> bool
+    {
+        if (lhs == rhs) { return true; }
+        if ((lhs == eof()) && (rhs == eof())) { return true; }
+        if ((lhs == eof()) || (rhs == eof())) { return false; }
+        return false;
+    }
 
     /**
-     * @brief
+     * @brief Returns a value not equivalent to any valid value of type
+     * char_type. Formally, returns a value e such that
+     * char_type<char>::eq_int_type(e, char_type<char>::to_int_type(c)) is false
+     * for all values c
      */
-    static constexpr auto eof() noexcept -> int_type;
+    static constexpr auto eof() noexcept -> int_type { return -1; }
+
+    /**
+     * @brief Checks whether e is not equivalent to eof value.
+     *
+     * @details Formally if char_type<char>::eq_int_type(e,
+     * char_type<char>::eof()) is false, returns e otherwise, returns a value f
+     * such that char_type<char>::eq_int_type(f, char_type<char>::eof()) is
+     * false
+     */
+    static constexpr auto not_eof(int_type c) noexcept -> int_type
+    {
+        if (!eq_int_type(c, eof())) { return c; }
+        return 0;
+    }
 };
 
 /**
