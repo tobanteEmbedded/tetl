@@ -149,8 +149,7 @@ public:
     }
 
 private:
-    etl::byte storage_[Capacity];  // NOLINT: Allow implicit conversion from
-                                   // `char`, because <some valid reason>.
+    etl::byte storage_[Capacity] {};
 };
 
 }  // namespace etl

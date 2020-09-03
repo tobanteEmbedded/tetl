@@ -29,6 +29,8 @@ DAMAGE.
 
 #include <assert.h>
 
-#define ETL_ASSERT(X) assert(X);
+#define ETL_ASSERT(X)                                                          \
+    do {                                                                       \
+    } while (false)
 
 #endif  // TAETL_CASSERT_HPP
