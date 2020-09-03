@@ -46,6 +46,7 @@ struct less
 
 template <class>
 class function_view;
+
 template <class Result, class... Arguments>
 class function_view<Result(Arguments...)>
 {
@@ -129,22 +130,26 @@ private:
     etl::byte* storage_ = nullptr;
 };
 
+template <size_t, class>
+class function;
+
 template <size_t Capacity, class Result, class... Arguments>
-class function : public function_view<Result, Arguments...>
+class function<Capacity, Result(Arguments...)>
+    : public function_view<Result(Arguments...)>
 {
 public:
     template <typename Functor>
     function(Functor f)
-        : function_view<Result, Arguments...> {
+        : function_view<Result(Arguments...)> {
             etl::forward<Functor>(f),
-            storage_.data(),
+            storage_,
         }
     {
         static_assert(sizeof(Functor) <= sizeof(storage_));
     }
 
 private:
-    etl::array<etl::byte, Capacity> storage_ {};
+    etl::byte storage_[Capacity];
 };
 
 }  // namespace etl
