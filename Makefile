@@ -65,7 +65,7 @@ clean:
 
 .PHONY: stats
 stats:
-	cloc --exclude-dir=3rd_party,build_Debug,build_Release,build,venv,.vscode .
+	cloc --by-file --json cmake docs etl examples fuzzing tests README.md
 
 .PHONY: format
 format:
