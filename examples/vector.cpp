@@ -24,12 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
-#include <stdio.h>
-
-#include <stdio.h>
-
-#include "etl/vector.hpp"
+#include "etl/vector.hpp"  // for vector
+#include <stdio.h>         // for printf
 
 auto main() -> int
 {

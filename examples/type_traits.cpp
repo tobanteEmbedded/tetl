@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
 #include "etl/type_traits.hpp"
+#include "etl/definitions.hpp"  // for uint16_t
 
 template <typename T>
 auto func(T val) ->
@@ -38,8 +38,8 @@ auto func(float val) -> float { return val; }
 
 auto main() -> int
 {
-    func(42);            // Calls template
-    func(uint16_t {1});  // Calls template
-    func(3.0F);          // Does not call template
+    func(42);                 // Calls template
+    func(etl::uint16_t {1});  // Calls template
+    func(3.0F);               // Does not call template
     return 0;
 }

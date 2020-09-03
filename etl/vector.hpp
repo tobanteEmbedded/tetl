@@ -31,8 +31,9 @@ DAMAGE.
 #ifndef TAETL_VECTOR_HPP
 #define TAETL_VECTOR_HPP
 
-#include "etl/array.hpp"
-#include "etl/utility.hpp"
+#include "etl/definitions.hpp"  // for size_t, ptrdiff_t
+#include "etl/new.hpp"          // for operator new
+#include "etl/utility.hpp"      // for forward
 
 namespace etl
 {
