@@ -253,7 +253,7 @@ TEST_CASE("memory: destroy_n", "[memory]")
 
     auto counter = 0;
     for (auto i = 0U; i < 8; ++i)
-    { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+    { new (&buffer[0] + sizeof(Counter) * i) Counter {counter}; }
     REQUIRE(counter == 0);
 
     auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);

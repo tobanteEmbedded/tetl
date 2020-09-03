@@ -86,7 +86,7 @@ public:
     [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
     {
         return invoke_ptr_(const_cast<etl::byte*>(storage_),
-                           etl::forward<Arguments>(args)...);
+                           etl::forward<Arguments>(args)...);  // NOLINT
     }
 
 protected:
@@ -149,7 +149,8 @@ public:
     }
 
 private:
-    etl::byte storage_[Capacity];
+    etl::byte storage_[Capacity];  // NOLINT: Allow implicit conversion from
+                                   // `char`, because <some valid reason>.
 };
 
 }  // namespace etl

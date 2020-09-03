@@ -53,6 +53,7 @@ docs:
 
 .PHONY: tidy
 tidy:
+	cp .clang-tidy $(BUILD_DIR)/
 	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../tests -p . -fix -header-filter="etl/.*"
 	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../examples -p . -fix -header-filter="etl/.*"
 
