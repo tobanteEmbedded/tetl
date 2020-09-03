@@ -60,7 +60,7 @@ tidy:
 clean:
 	rm -rf $(BUILD_DIR)	
 	rm -rf build_avr
-	rm -rf doc-build
+	rm -rf build-doc
 
 .PHONY: stats
 stats:

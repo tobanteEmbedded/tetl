@@ -17,4 +17,4 @@ GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 
 # Set output directory
-OUTPUT_DIRECTORY       = ./doc-build
+OUTPUT_DIRECTORY       = ./build-doc

@@ -8,7 +8,6 @@
 build/
 build-*/
 build_*/
-doc-build/
 
 # CMAKE
 CMakeLists.txt.user

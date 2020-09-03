@@ -25,6 +25,6 @@ You can build the documentation with `doxygen`:
 
 ```sh
 cd $PROJECTROOT/docs
-doxygen Doxyfile.in
-firefox doc-build/html/index.html
+make docs
+firefox build-doc/html/index.html
 ```
