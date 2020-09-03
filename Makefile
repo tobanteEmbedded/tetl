@@ -47,6 +47,10 @@ coverage:
 report:
 	cd $(BUILD_DIR_BASE)_coverage && genhtml cov.info --output-directory lcov
 
+.PHONY: docs
+docs:
+	doxygen Doxyfile.in
+
 .PHONY: tidy
 tidy:
 	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../tests -p . -fix -header-filter="etl/.*"
@@ -56,6 +60,7 @@ tidy:
 clean:
 	rm -rf $(BUILD_DIR)	
 	rm -rf build_avr
+	rm -rf doc-build
 
 .PHONY: stats
 stats:

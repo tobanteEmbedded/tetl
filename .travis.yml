@@ -5,24 +5,26 @@ branches:
 language: cpp
 
 script-anchors:
-  - &script-linux
+  - &script-coverage
     - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_DOCS=OFF
+    - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug
     - cmake --build . -- -j
     - ctest -j
     - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-7
 
   - &script-docs
     - cd $TRAVIS_BUILD_DIR
+    - doxygen Doxyfile.in
+
+  - &script-sanitizers
+    - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON -DTOBANTEAUDIO_ETL_BUILD_DOCS=ON
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON
     - cmake --build . -- -j
     - ctest -j
-    - cd $TRAVIS_BUILD_DIR
-    - doxygen Doxyfile.in
 
   - &script-macOS
     - cd $TRAVIS_BUILD_DIR
@@ -54,7 +56,22 @@ matrix:
             - ninja-build
       env:
         - MATRIX_EVAL="CC=gcc && CXX=g++"
-      script: *script-linux
+      script: *script-coverage
+
+    - os: linux
+      dist: bionic
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:ubuntu-toolchain-r/test"
+            - sourceline: "deb https://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main"
+              key_url: "https://apt.llvm.org/llvm-snapshot.gpg.key"
+          packages:
+            - ninja-build
+            - clang++-9
+      env:
+        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
+      script: *script-sanitizers
 
     - os: linux
       dist: bionic
@@ -68,15 +85,14 @@ matrix:
             - ninja-build
             - doxygen
             - graphviz
-            - clang++-9
       env:
-        - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
+        - MATRIX_EVAL="CC=gcc && CXX=g++"
       script: *script-docs
       deploy:
         provider: pages
         skip_cleanup: true
         local_dir: doc-build/html
-        github_token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
+        github_token: $GITHUB_TOKEN
         keep_history: true
         on:
           branch: master
