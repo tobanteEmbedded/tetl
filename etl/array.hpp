@@ -31,6 +31,7 @@ DAMAGE.
 #ifndef TAETL_ARRAY_HPP
 #define TAETL_ARRAY_HPP
 
+#include "cassert.hpp"
 #include "definitions.hpp"
 
 namespace etl
@@ -65,7 +66,7 @@ public:
      */
     [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
     {
-        assert(pos < Size);
+        ETL_ASSERT(pos < Size);
         return _data[pos];
     }
 
@@ -75,7 +76,7 @@ public:
     [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
         -> const_reference
     {
-        assert(pos < Size);
+        ETL_ASSERT(pos < Size);
         return _data[pos];
     }
 
@@ -85,7 +86,7 @@ public:
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
         -> reference
     {
-        assert(pos < Size);
+        ETL_ASSERT(pos < Size);
         return _data[pos];
     }
 
@@ -95,7 +96,7 @@ public:
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
         -> const_reference
     {
-        assert(pos < Size);
+        ETL_ASSERT(pos < Size);
         return _data[pos];
     }
 

@@ -31,6 +31,7 @@ DAMAGE.
 #ifndef TAETL_ALGORITHM_HPP
 #define TAETL_ALGORITHM_HPP
 
+#include "cassert.hpp"
 #include "definitions.hpp"
 #include "functional.hpp"
 
@@ -238,7 +239,8 @@ template <class Type, class Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
                                    Type const& hi, Compare comp) -> Type const&
 {
-    return assert(!comp(hi, lo)), comp(v, lo) ? lo : comp(hi, v) ? hi : v;
+    ETL_ASSERT(!comp(hi, lo));
+    return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
 
 /**

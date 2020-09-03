@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_MAP_HPP
 #define TAETL_MAP_HPP
 
+#include "etl/cassert.hpp"
 #include "etl/definitions.hpp"
 #include "etl/functional.hpp"
 #include "etl/utility.hpp"
@@ -64,7 +65,7 @@ public:
      */
     [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&
     {
-        assert(find(key) != nullptr);
+        ETL_ASSERT(find(key) != nullptr);
         return find(key)->second;
     }
 
@@ -75,7 +76,7 @@ public:
     [[nodiscard]] constexpr auto at(key_type const& key) const
         -> mapped_type const&
     {
-        assert(find(key) != nullptr);
+        ETL_ASSERT(find(key) != nullptr);
         return find(key)->second;
     }
 
