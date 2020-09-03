@@ -44,7 +44,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct()", "[memory]", int, float,
                    long)
 {
     using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
-    auto ptr    = ptr_t {nullptr};
+    auto ptr    = ptr_t {};
     etl::ignore_unused(ptr);
     REQUIRE(true);
 }
