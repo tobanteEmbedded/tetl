@@ -24,10 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+/**
+ * @example numeric.cpp
+ */
+
 #ifndef TAETL_NUMERIC_HPP
 #define TAETL_NUMERIC_HPP
 
-// TAETL
 #include "definitions.hpp"
 #include "limits.hpp"
 #include "type_traits.hpp"

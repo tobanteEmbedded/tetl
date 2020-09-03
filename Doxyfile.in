@@ -12,6 +12,10 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = NO # document private members & functions
 EXTRACT_STATIC         = YES # document static members & functions
 
+EXAMPLE_PATH           = ./examples
+EXAMPLE_PATTERNS       = *.cpp
+EXAMPLE_RECURSIVE      = NO
+
 # Generate html output
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
