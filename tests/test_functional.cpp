@@ -31,7 +31,8 @@ DAMAGE.
 TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float,
                    double)
 {
-    auto func = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    using function_t = etl::function<16, TestType(void)>;
+    auto func        = function_t {[]() { return TestType {1}; }};
     REQUIRE(func() == TestType {1});
     REQUIRE(func() == TestType {1});
 }
@@ -39,9 +40,10 @@ TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float,
 TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
                    float, double)
 {
-    auto func  = etl::function<TestType(void)> {[]() { return TestType {1}; }};
-    auto func2 = func;
-    func       = func2;
+    using function_t = etl::function<16, TestType(void)>;
+    auto func        = function_t {[]() { return TestType {1}; }};
+    auto func2       = func;
+    func             = func2;
     REQUIRE(func() == TestType {1});
     REQUIRE(func() == TestType {1});
 }
@@ -49,9 +51,23 @@ TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
 TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int,
                    float, double)
 {
-    auto func = etl::function<TestType(void)> {[]() { return TestType {1}; }};
+    using function_t  = etl::function<16, TestType(void)>;
+    auto func         = function_t {[]() { return TestType {1}; }};
     auto const& func2 = func;
     REQUIRE(func() == TestType {1});
     REQUIRE(func2() == TestType {1});
     REQUIRE(func2() == TestType {1});
+}
+
+TEMPLATE_TEST_CASE("functional: function_view - ctor", "[functional]", int,
+                   float, double)
+{
+    using function_t = etl::function<16, TestType(TestType)>;
+    auto func        = function_t {[](TestType val) { return TestType {val}; }};
+    auto handler     = [](etl::function_view<TestType(TestType)> f) {
+        REQUIRE(f(1) == TestType {1});
+        REQUIRE(f(2) == TestType {2});
+    };
+
+    handler(func);
 }

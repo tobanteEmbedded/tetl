@@ -45,59 +45,58 @@ struct less
 };
 
 template <class>
-class function;
+class function_view;
 template <class Result, class... Arguments>
-class function<Result(Arguments...)>
+class function_view<Result(Arguments...)>
 {
 public:
     using result_type = Result;
 
-    template <typename Functor>
-    function(Functor f)
-        : invokePtr {reinterpret_cast<invokePtr_t>(invoke<Functor>)}
-        , createPtr {reinterpret_cast<createPtr_t>(create<Functor>)}
-        , destroyPtr {reinterpret_cast<destroyPtr_t>(destroy<Functor>)}
-    {
-        static_assert(sizeof(Functor) <= sizeof(storage_));
-        createPtr(storage_.data(), &f);
-    }
-
-    function(function const& other)
+    function_view(function_view const& other)
     {
         if (&other == this) { return; }
-        if (createPtr != nullptr) { destroyPtr(storage_.data()); }
-        if (other.createPtr != nullptr)
+        if (create_ptr_ != nullptr) { destroy_ptr_(storage_); }
+        if (other.create_ptr_ != nullptr)
         {
-            invokePtr  = other.invokePtr;
-            createPtr  = other.createPtr;
-            destroyPtr = other.destroyPtr;
-            createPtr(storage_.data(),
-                      const_cast<etl::byte*>(other.storage_.data()));
+            invoke_ptr_  = other.invoke_ptr_;
+            create_ptr_  = other.create_ptr_;
+            destroy_ptr_ = other.destroy_ptr_;
+            create_ptr_(storage_, const_cast<etl::byte*>(other.storage_));
         }
     }
 
-    auto operator=(function const& other) -> function&
+    auto operator=(function_view const& other) -> function_view&
     {
         if (&other == this) { return *this; }
-        if (createPtr != nullptr) { destroyPtr(storage_.data()); }
-        if (other.createPtr != nullptr)
+        if (create_ptr_ != nullptr) { destroy_ptr_(storage_); }
+        if (other.create_ptr_ != nullptr)
         {
-            invokePtr  = other.invokePtr;
-            createPtr  = other.createPtr;
-            destroyPtr = other.destroyPtr;
-            createPtr(storage_.data(),
-                      const_cast<etl::byte*>(other.storage_.data()));
+            invoke_ptr_  = other.invoke_ptr_;
+            create_ptr_  = other.create_ptr_;
+            destroy_ptr_ = other.destroy_ptr_;
+            create_ptr_(storage_, const_cast<etl::byte*>(other.storage_));
         }
 
         return *this;
     }
 
-    ~function() noexcept { destroyPtr(storage_.data()); }
+    ~function_view() noexcept { destroy_ptr_(storage_); }
 
     [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
     {
-        return invokePtr(const_cast<etl::byte*>(storage_.data()),
-                         etl::forward<Arguments>(args)...);
+        return invoke_ptr_(const_cast<etl::byte*>(storage_),
+                           etl::forward<Arguments>(args)...);
+    }
+
+protected:
+    template <typename Functor>
+    function_view(Functor f, etl::byte* storage)
+        : invoke_ptr_ {reinterpret_cast<invoke_pointer_t>(invoke<Functor>)}
+        , create_ptr_ {reinterpret_cast<create_pointer_t>(create<Functor>)}
+        , destroy_ptr_ {reinterpret_cast<destroy_pointer_t>(destroy<Functor>)}
+        , storage_ {storage}
+    {
+        create_ptr_(storage_, &f);
     }
 
 private:
@@ -119,15 +118,33 @@ private:
         f->~Functor();
     }
 
-    using invokePtr_t  = Result (*)(void*, Arguments&&...);
-    using createPtr_t  = void (*)(void*, void*);
-    using destroyPtr_t = void (*)(void*);
+    using invoke_pointer_t  = Result (*)(void*, Arguments&&...);
+    using create_pointer_t  = void (*)(void*, void*);
+    using destroy_pointer_t = void (*)(void*);
 
-    invokePtr_t invokePtr   = nullptr;
-    createPtr_t createPtr   = nullptr;
-    destroyPtr_t destroyPtr = nullptr;
+    invoke_pointer_t invoke_ptr_   = nullptr;
+    create_pointer_t create_ptr_   = nullptr;
+    destroy_pointer_t destroy_ptr_ = nullptr;
 
-    etl::array<etl::byte, 32> storage_ {};
+    etl::byte* storage_ = nullptr;
+};
+
+template <size_t Capacity, class Result, class... Arguments>
+class function : public function_view<Result, Arguments...>
+{
+public:
+    template <typename Functor>
+    function(Functor f)
+        : function_view<Result, Arguments...> {
+            etl::forward<Functor>(f),
+            storage_.data(),
+        }
+    {
+        static_assert(sizeof(Functor) <= sizeof(storage_));
+    }
+
+private:
+    etl::array<etl::byte, Capacity> storage_ {};
 };
 
 }  // namespace etl
