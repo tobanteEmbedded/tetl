@@ -53,7 +53,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int,
                    float, long)
 {
     using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
-    REQUIRE(ptr_t {nullptr}.compressed_value() == 0u);
+    REQUIRE(ptr_t {nullptr}.compressed_value() == 0U);
 }
 
 TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long)
@@ -208,12 +208,12 @@ TEST_CASE("memory: destroy_at", "[memory]")
     alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
     auto counter = 0;
-    for (auto i = 0u; i < 8; ++i)
+    for (auto i = 0U; i < 8; ++i)
     { new (buffer + sizeof(Counter) * i) Counter {counter}; }
     REQUIRE(counter == 0);
 
     auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
-    for (auto i = 0u; i < 8; ++i) { etl::destroy_at(ptr + i); }
+    for (auto i = 0U; i < 8; ++i) { etl::destroy_at(ptr + i); }
 
     REQUIRE(counter == 8);
 }
@@ -230,7 +230,7 @@ TEST_CASE("memory: destroy", "[memory]")
     alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
     auto counter = 0;
-    for (auto i = 0u; i < 8; ++i)
+    for (auto i = 0U; i < 8; ++i)
     { new (buffer + sizeof(Counter) * i) Counter {counter}; }
     REQUIRE(counter == 0);
 
@@ -252,7 +252,7 @@ TEST_CASE("memory: destroy_n", "[memory]")
     alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
     auto counter = 0;
-    for (auto i = 0u; i < 8; ++i)
+    for (auto i = 0U; i < 8; ++i)
     { new (buffer + sizeof(Counter) * i) Counter {counter}; }
     REQUIRE(counter == 0);
 
