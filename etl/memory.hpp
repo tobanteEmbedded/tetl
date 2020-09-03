@@ -175,5 +175,74 @@ private:
     StorageType value_;
 };
 
+/**
+ * @brief Obtains the actual address of the object or function arg, even in
+ * presence of overloaded operator&.
+ */
+template <class T>
+auto addressof(T& arg) noexcept ->
+    typename etl::enable_if_t<etl::is_object_v<T>, T*>
+{
+    return reinterpret_cast<T*>(
+        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+}
+
+/**
+ * @brief Obtains the actual address of the object or function arg, even in
+ * presence of overloaded operator&.
+ */
+template <class T>
+auto addressof(T& arg) noexcept ->
+    typename etl::enable_if_t<!etl::is_object_v<T>, T*>
+{
+    return &arg;
+}
+
+/**
+ * @brief Rvalue overload is deleted to prevent taking the address of const
+ * rvalues.
+ */
+template <class T>
+auto addressof(T const&&) = delete;
+
+/**
+ * @brief If T is not an array type, calls the destructor of the object pointed
+ * to by p, as if by p->~T(). If T is an array type, recursively destroys
+ * elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
+ * etl::end(*p)).
+ */
+template <class T>
+constexpr auto destroy_at(T* p) -> void
+{
+    if constexpr (etl::is_array_v<T>)
+    {
+        for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
+    }
+    else
+    {
+        p->~T();
+    }
+}
+
+/**
+ * @brief Destroys the objects in the range [first, last).
+ */
+template <class ForwardIt>
+constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
+{
+    for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
+}
+
+/**
+ * @brief Destroys the n objects in the range starting at first.
+ */
+template <class ForwardIt, class Size>
+constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
+{
+    for (; n > 0; (void)++first, --n)
+    { etl::destroy_at(etl::addressof(*first)); }
+    return first;
+}
+
 }  // namespace etl
 #endif  // TAETL_MEMORY_HPP

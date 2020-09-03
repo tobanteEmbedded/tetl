@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 #include "etl/array.hpp"
+#include "etl/byte.hpp"
 #include "etl/memory.hpp"
 
 #include "catch2/catch.hpp"
@@ -177,4 +178,86 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator++", "[memory]", int, float, long)
         REQUIRE((ptr++).get() == ptr_t {&data[1]}.get());
         REQUIRE(ptr.get() == ptr_t {&data[2]}.get());
     }
+}
+
+TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)
+{
+    auto val = TestType(14.3);
+    REQUIRE(etl::addressof(val) == &val);
+}
+
+namespace
+{
+auto some_function() -> void { }
+}  // namespace
+
+TEST_CASE("memory: addressof(function)", "[memory]")
+{
+    REQUIRE(etl::addressof(some_function) == &some_function);
+}
+
+TEST_CASE("memory: destroy_at", "[memory]")
+{
+    struct Counter
+    {
+        int& value;
+        Counter(int& v) : value(v) { }
+        ~Counter() { value++; }
+    };
+
+    alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
+
+    auto counter = 0;
+    for (auto i = 0u; i < 8; ++i)
+    { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+    REQUIRE(counter == 0);
+
+    auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
+    for (auto i = 0u; i < 8; ++i) { etl::destroy_at(ptr + i); }
+
+    REQUIRE(counter == 8);
+}
+
+TEST_CASE("memory: destroy", "[memory]")
+{
+    struct Counter
+    {
+        int& value;
+        Counter(int& v) : value(v) { }
+        ~Counter() { value++; }
+    };
+
+    alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
+
+    auto counter = 0;
+    for (auto i = 0u; i < 8; ++i)
+    { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+    REQUIRE(counter == 0);
+
+    auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
+    etl::destroy(ptr, ptr + 8);
+
+    REQUIRE(counter == 8);
+}
+
+TEST_CASE("memory: destroy_n", "[memory]")
+{
+    struct Counter
+    {
+        int& value;
+        Counter(int& v) : value(v) { }
+        ~Counter() { value++; }
+    };
+
+    alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
+
+    auto counter = 0;
+    for (auto i = 0u; i < 8; ++i)
+    { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+    REQUIRE(counter == 0);
+
+    auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
+    etl::destroy_n(ptr, 4);
+
+    REQUIRE(counter == 4);
 }

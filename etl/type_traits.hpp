@@ -431,6 +431,34 @@ struct is_union : etl::integral_constant<bool, TAETL_IS_UNION(T)>
 template <class T>
 inline constexpr bool is_union_v = is_union<T>::value;
 
+namespace detail
+{
+template <class T>
+struct is_member_pointer_helper : etl::false_type
+{
+};
+
+template <class T, class U>
+struct is_member_pointer_helper<T U::*> : etl::true_type
+{
+};
+}  // namespace detail
+
+/**
+ * @brief If T is pointer to non-static member object or a pointer to non-static
+ * member function, provides the member constant value equal true. For any other
+ * type, value is false. The behavior of a program that adds specializations for
+ * is_member_pointer or is_member_pointer_v (since C++17) is undefined.
+ */
+template <class T>
+struct is_member_pointer
+    : detail::is_member_pointer_helper<typename etl::remove_cv<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_member_pointer_v = is_member_pointer<T>::value;
+
 /**
  * @brief If T is an arithmetic type (that is, an integral type or a
  * floating-point type) or a cv-qualified version thereof, provides the member
@@ -447,6 +475,30 @@ struct is_arithmetic
 
 template <class T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+
+template <class T>
+struct is_scalar
+    : etl::integral_constant<bool, etl::is_arithmetic<T>::value
+                                       || etl::is_enum<T>::value
+                                       || etl::is_pointer<T>::value
+                                       || etl::is_member_pointer<T>::value
+                                       || etl::is_null_pointer<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_scalar_v = is_scalar<T>::value;
+
+template <class T>
+struct is_object
+    : etl::integral_constant<
+          bool, etl::is_scalar<T>::value || etl::is_array<T>::value
+                    || etl::is_union<T>::value || etl::is_class<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_object_v = is_object<T>::value;
 
 namespace detail
 {
