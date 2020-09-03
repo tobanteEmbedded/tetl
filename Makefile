@@ -28,7 +28,7 @@ avr:
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -C $(CONFIG)
+	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
 
 .PHONY: coverage
 coverage:

@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_ratio.cpp
     test_string.cpp
     test_string_constexpr.cpp
+    test_string_view.cpp
     test_tuple.cpp
     test_type_traits.cpp
     test_vector.cpp
