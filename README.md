@@ -30,85 +30,12 @@ git clone https://github.com/tobanteAudio/taetl.git
   - STM32 HAL
   - DSP DSL via Template Meta Programming
 
+## Quick Start
+
+- [Project Integration](docs/project_integration.md)
+- [Building Tests & Documentation](docs/building.md)
+- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
+
 ## Usage
 
-For detailed examples look at the `examples` subdirectory or the test files in `tests`. Building the [documentation](#documentation) with `doxygen` will give details about the complete API.
-
-## Examples
-
-Examples can be found in the `examples` & `tests` directory.
-
-### Build on Desktop
-
-```sh
-cd $PROJECT_ROOT
-mkdir build && cd build
-cmake ..
-cmake --build  .
-ctest
-```
-
-## Documentation
-
-If you build this repo with `cmake`, html documentation will be created automatically.
-
-```sh
-firefox build/doc-build/html/index.html       # Open in Firefox
-```
-
-You can build the documentation with `doxygen`:
-
-```sh
-cd $PROJECTROOT
-doxygen docs/Doxyfile.in
-firefox docs/doc-build/html/index.html       # Open in Firefox
-```
-
-## Project Integration
-
-The following steps explain how to add `etl` to your project. Embedded or desktop.
-
-### Required Headers
-
-The following headers are required for building the library:
-
-```cpp
-#include <assert.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <float.h>
-#include <math.h>
-```
-
-### CMake
-
-Add `taetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
-
-```sh
-cd $YOUR_CMAKE_PROJECT
-mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
-```
-
-```cmake
-add_subdirectory(3rd_party/taetl EXCLUDE_FROM_ALL)
-target_link_libraries(${YOUR_TARGET} tobanteAudio::etl)
-```
-
-### PlatformIO
-
-Add `taetl` as a git submodule, then add these lines to your `platformio.ini`:
-
-```sh
-cd $YOUR_PLATFORMIO_PROJECT
-mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
-```
-
-```ini
-[env:yourenv]
-; ...
-build_unflags = -std=gnu++11
-build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
-```
+For detailed examples look at the `examples` subdirectory or the test files in `tests`.

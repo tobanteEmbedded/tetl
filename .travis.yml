@@ -21,6 +21,8 @@ script-anchors:
     - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON -DTOBANTEAUDIO_ETL_BUILD_DOCS=ON
     - cmake --build . -- -j
     - ctest -j
+    - cd $TRAVIS_BUILD_DIR
+    - doxygen Doxyfile.in
 
   - &script-macOS
     - cd $TRAVIS_BUILD_DIR
@@ -65,6 +67,7 @@ matrix:
           packages:
             - ninja-build
             - doxygen
+            - graphviz
             - clang++-9
       env:
         - MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
@@ -72,7 +75,7 @@ matrix:
       deploy:
         provider: pages
         skip_cleanup: true
-        local_dir: build/doc-build/html
+        local_dir: doc-build/html
         github_token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
         keep_history: true
         on:
