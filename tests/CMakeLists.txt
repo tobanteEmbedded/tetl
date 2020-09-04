@@ -12,6 +12,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_concepts.cpp
     test_definitions.cpp
     test_functional.cpp
+    test_iterator.cpp
     test_limits.cpp
     test_map.cpp
     test_memory.cpp
