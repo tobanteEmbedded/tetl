@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_mutex.cpp
     test_numeric.cpp
     test_ratio.cpp
+    test_span.cpp
     test_string.cpp
     test_string_constexpr.cpp
     test_string_view.cpp
