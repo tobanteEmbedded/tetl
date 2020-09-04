@@ -237,9 +237,9 @@ class numeric_limits<unsigned char>
 public:
     static constexpr bool is_specialized = true;
 
+    static constexpr auto lowest() noexcept { return 0; }
     static constexpr auto min() noexcept { return 0; }
     static constexpr auto max() noexcept { return UCHAR_MAX; }
-    static constexpr auto lowest() noexcept { return 0; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -269,6 +269,102 @@ public:
         return 0;
     }
     static constexpr auto denorm_min() noexcept -> unsigned char { return 0; }
+
+    static constexpr bool is_iec559  = false;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = true;
+
+    static constexpr bool traps                    = true;
+    static constexpr bool tinyness_before          = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+};
+
+template <>
+class numeric_limits<short>
+{
+public:
+    static constexpr bool is_specialized = true;
+
+    static constexpr auto lowest() noexcept { return SHRT_MIN; }
+    static constexpr auto min() noexcept { return SHRT_MIN; }
+    static constexpr auto max() noexcept { return SHRT_MAX; }
+
+    static constexpr bool is_signed  = true;
+    static constexpr bool is_integer = true;
+    static constexpr bool is_exact   = true;
+    static constexpr int radix       = 2;
+    static constexpr auto epsilon() noexcept { return short {}; }
+    static constexpr auto round_error() noexcept { return short {}; }
+
+    static constexpr int digits = CHAR_BIT * sizeof(short) - 1;
+    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int max_digits10 = 0;
+
+    static constexpr int min_exponent   = 0;
+    static constexpr int min_exponent10 = 0;
+    static constexpr int max_exponent   = 0;
+    static constexpr int max_exponent10 = 0;
+
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr auto infinity() noexcept { return short {}; }
+    static constexpr auto quiet_NaN() noexcept { return short {}; }
+    static constexpr auto signaling_NaN() noexcept { return short {}; }
+    static constexpr auto denorm_min() noexcept { return short {}; }
+
+    static constexpr bool is_iec559  = false;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = false;
+
+    static constexpr bool traps                    = true;
+    static constexpr bool tinyness_before          = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+};
+
+template <>
+class numeric_limits<unsigned short>
+{
+public:
+    static constexpr bool is_specialized = true;
+
+    static constexpr auto lowest() noexcept { return 0; }
+    static constexpr auto min() noexcept { return 0; }
+    static constexpr auto max() noexcept { return USHRT_MAX; }
+
+    static constexpr bool is_signed  = false;
+    static constexpr bool is_integer = true;
+    static constexpr bool is_exact   = true;
+    static constexpr int radix       = 2;
+    static constexpr auto epsilon() noexcept -> unsigned short { return {}; }
+    static constexpr auto round_error() noexcept -> unsigned short
+    {
+        return {};
+    }
+
+    static constexpr int digits = CHAR_BIT * sizeof(short);
+    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int max_digits10 = 0;
+
+    static constexpr int min_exponent   = 0;
+    static constexpr int min_exponent10 = 0;
+    static constexpr int max_exponent   = 0;
+    static constexpr int max_exponent10 = 0;
+
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr auto infinity() noexcept -> unsigned short { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned short { return 0; }
+    static constexpr auto signaling_NaN() noexcept -> unsigned short
+    {
+        return 0;
+    }
+    static constexpr auto denorm_min() noexcept -> unsigned short { return 0; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;

@@ -78,12 +78,32 @@ TEST_CASE("limits: numeric_limits<bool>", "[limits]")
 }
 
 TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char,
-                   signed char)
+                   signed char, signed short)
 {
     using l = etl::numeric_limits<TestType>;
 
     STATIC_REQUIRE(l::is_specialized == true);
     STATIC_REQUIRE(l::is_signed == true);
+    STATIC_REQUIRE(l::is_integer == true);
+    STATIC_REQUIRE(l::is_bounded == true);
+
+    REQUIRE(l::lowest() == l::min());
+    REQUIRE(l::max() > l::min());
+    REQUIRE(l::epsilon() == TestType {});
+    REQUIRE(l::round_error() == TestType {});
+    REQUIRE(l::infinity() == TestType {});
+    REQUIRE(l::quiet_NaN() == TestType {});
+    REQUIRE(l::signaling_NaN() == TestType {});
+    REQUIRE(l::denorm_min() == TestType {});
+}
+
+TEMPLATE_TEST_CASE("limits: numeric_limits<unsigned T>", "[limits]",
+                   unsigned char, unsigned short)
+{
+    using l = etl::numeric_limits<TestType>;
+
+    STATIC_REQUIRE(l::is_specialized == true);
+    STATIC_REQUIRE(l::is_signed == false);
     STATIC_REQUIRE(l::is_integer == true);
     STATIC_REQUIRE(l::is_bounded == true);
 
