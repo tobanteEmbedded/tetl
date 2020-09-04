@@ -607,3 +607,11 @@ TEST_CASE("string_view: operator>=", "[string_view]")
     REQUIRE(sv >= sv.substr(0, 1));
     REQUIRE(sv >= etl::string_view {"abc"});
 }
+
+TEST_CASE("string_view: operator\"\"", "[string_view]")
+{
+    using namespace etl::literals;
+    auto const sv = "test"_sv;
+    REQUIRE(sv.size() >= 4);
+    REQUIRE(sv.at(0) >= 't');
+}
