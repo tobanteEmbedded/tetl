@@ -800,6 +800,71 @@ operator!=(etl::basic_string_view<CharType, Traits> lhs,
 }
 
 /**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details The ordering comparisons are done lexicographically -- the
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator<(etl::basic_string_view<CharType, Traits> lhs,
+          etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                        rhs.end());
+}
+
+/**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details The ordering comparisons are done lexicographically -- the
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator<=(etl::basic_string_view<CharType, Traits> lhs,
+           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    return (lhs < rhs) || (lhs == rhs);
+}
+
+/**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details The ordering comparisons are done lexicographically -- the
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator>(etl::basic_string_view<CharType, Traits> lhs,
+          etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    return !(lhs < rhs) && !(lhs == rhs);
+}
+
+/**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details The ordering comparisons are done lexicographically -- the
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator>=(etl::basic_string_view<CharType, Traits> lhs,
+           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    return (lhs > rhs) || (lhs == rhs);
+}
+
+/**
  * @brief Typedefs for common character type
  */
 using string_view = basic_string_view<char, etl::char_traits<char>>;
