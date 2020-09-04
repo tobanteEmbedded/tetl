@@ -612,6 +612,80 @@ public:
     }
 
     /**
+     * @brief Finds the last character equal to one of characters in the given
+     * character sequence. Exact search algorithm is not specified. The search
+     * considers only the interval [0; pos]. If the character is not present in
+     * the interval, npos will be returned. Finds the last occurence of any of
+     * the characters of v in this view, ending at position pos.
+     *
+     * @return Position of the last occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_last_of(basic_string_view v,
+                                size_type pos = npos) const noexcept
+        -> size_type
+    {
+        auto offset = etl::clamp<size_type>(pos, 0, size());
+        do {
+            auto const current = at(offset);
+            for (auto const ch : v)
+            {
+                if (ch == current) { return offset; }
+            }
+        } while (offset-- != 0);
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the last character equal to one of characters in the given
+     * character sequence. Exact search algorithm is not specified. The search
+     * considers only the interval [0; pos]. If the character is not present in
+     * the interval, npos will be returned. Equivalent to
+     * find_last_of(basic_string_view(etl::addressof(c), 1), pos).
+     *
+     * @return Position of the last occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_last_of(CharType c, size_type pos = npos) const noexcept
+        -> size_type
+    {
+        return find_last_of(basic_string_view(etl::addressof(c), 1), pos);
+    }
+
+    /**
+     * @brief Finds the last character equal to one of characters in the given
+     * character sequence. Exact search algorithm is not specified. The search
+     * considers only the interval [0; pos]. If the character is not present in
+     * the interval, npos will be returned. Equivalent to
+     * find_last_of(basic_string_view(s, count), pos).
+     *
+     * @return Position of the last occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_last_of(CharType const* s, size_type pos,
+                                size_type count) const -> size_type
+    {
+        return find_last_of(basic_string_view(s, count), pos);
+    }
+
+    /**
+     * @brief Finds the last character equal to one of characters in the given
+     * character sequence. Exact search algorithm is not specified. The search
+     * considers only the interval [0; pos]. If the character is not present in
+     * the interval, npos will be returned. Equivalent to
+     * find_last_of(basic_string_view(s), pos).
+     *
+     * @return Position of the last occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_last_of(CharType const* s, size_type pos = npos) const
+        -> size_type
+    {
+        return find_last_of(basic_string_view(s), pos);
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable
      * by the type size_type.
      *
