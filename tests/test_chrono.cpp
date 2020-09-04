@@ -52,9 +52,44 @@ TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
     REQUIRE(etl::chrono::seconds {}.count() == 0);
 }
 
-TEST_CASE("chrono/duration: operator\"\"", "[chrono]")
+TEST_CASE("chrono/duration: operator\"\"_h (hour)", "[chrono]")
 {
     using namespace etl::literals;
     auto const hour = 1_h;
     REQUIRE(hour.count() == etl::chrono::hours {1}.count());
+}
+
+TEST_CASE("chrono/duration: operator\"\"_min (minute)", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const minute = 1_min;
+    REQUIRE(minute.count() == etl::chrono::minutes {1}.count());
+}
+
+TEST_CASE("chrono/duration: operator\"\"_s (seconds)", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const seconds = 1_s;
+    REQUIRE(seconds.count() == etl::chrono::seconds {1}.count());
+}
+
+TEST_CASE("chrono/duration: operator\"\"_ms (milliseconds)", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const milliseconds = 1_ms;
+    REQUIRE(milliseconds.count() == etl::chrono::milliseconds {1}.count());
+}
+
+TEST_CASE("chrono/duration: operator\"\"_ns (microseconds)", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const microseconds = 10_us;
+    REQUIRE(microseconds.count() == etl::chrono::microseconds {10}.count());
+}
+
+TEST_CASE("chrono/duration: operator\"\"_ns (nanoseconds)", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const nanoseconds = 10_ns;
+    REQUIRE(nanoseconds.count() == etl::chrono::nanoseconds {10}.count());
 }
