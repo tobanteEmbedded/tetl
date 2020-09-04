@@ -157,16 +157,16 @@ private:
     rep data_ {};
 };
 
-using nanoseconds  = duration<ssize_t, etl::nano>;
-using microseconds = duration<ssize_t, etl::micro>;
-using milliseconds = duration<ssize_t, etl::milli>;
-using seconds      = duration<ssize_t>;
-using minutes      = duration<ssize_t, etl::ratio<60>>;
-using hours        = duration<ssize_t, etl::ratio<3600>>;
-using days         = duration<ssize_t, etl::ratio<86400>>;
-using weeks        = duration<ssize_t, etl::ratio<604800>>;
-using months       = duration<ssize_t, etl::ratio<2629746>>;
-using years        = duration<ssize_t, etl::ratio<31556952>>;
+using nanoseconds  = duration<etl::intptr_t, etl::nano>;
+using microseconds = duration<etl::intptr_t, etl::micro>;
+using milliseconds = duration<etl::intptr_t, etl::milli>;
+using seconds      = duration<etl::intptr_t>;
+using minutes      = duration<etl::intptr_t, etl::ratio<60>>;
+using hours        = duration<etl::intptr_t, etl::ratio<3600>>;
+using days         = duration<etl::intptr_t, etl::ratio<86400>>;
+using weeks        = duration<etl::intptr_t, etl::ratio<604800>>;
+using months       = duration<etl::intptr_t, etl::ratio<2629746>>;
+using years        = duration<etl::intptr_t, etl::ratio<31556952>>;
 
 }  // namespace etl::chrono
 

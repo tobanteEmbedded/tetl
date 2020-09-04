@@ -61,6 +61,8 @@ static_assert(sizeof(etl::uint32_t) == 4, "uint32 size should be 4");
 using uint64_t = uint64_t;
 static_assert(sizeof(etl::uint64_t) == 8, "uint64 size should be 8");
 
+using intptr_t  = intptr_t;
+using uintptr_t = uintptr_t;
 using intmax_t  = intmax_t;
 using uintmax_t = uintmax_t;
 using size_t    = size_t;
