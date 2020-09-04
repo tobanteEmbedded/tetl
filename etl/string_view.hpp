@@ -95,6 +95,88 @@ public:
     }
 
     /**
+     * @brief Replaces the view with that of view.
+     */
+    [[nodiscard]] constexpr auto
+    operator                  =(const basic_string_view& view) noexcept
+        -> basic_string_view& = default;
+
+    /**
+     * @brief Returns an iterator to the first character of the view.
+     */
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return begin_;
+    }
+
+    /**
+     * @brief Returns an iterator to the first character of the view.
+     */
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin_;
+    }
+
+    /**
+     * @brief Returns an iterator to the character following the last character
+     * of the view. This character acts as a placeholder, attempting to access
+     * it results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return begin_ + size_;
+    }
+
+    /**
+     * @brief Returns an iterator to the character following the last character
+     * of the view. This character acts as a placeholder, attempting to access
+     * it results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return begin_ + size_;
+    }
+
+    /**
+     * @brief Returns a const reference to the character at specified location
+     * pos. No bounds checking is performed: the behavior is undefined if pos >=
+     * size().
+     */
+    [[nodiscard]] constexpr auto at(size_type pos) const -> const_reference
+    {
+        return begin_[pos];
+    }
+
+    /**
+     * @brief Returns a const reference to the character at specified location
+     * pos. No bounds checking is performed: the behavior is undefined if pos >=
+     * size().
+     */
+    [[nodiscard]] constexpr auto operator[](size_type pos) const
+        -> const_reference
+    {
+        return at(pos);
+    }
+
+    /**
+     * @brief Returns reference to the first character in the view. The behavior
+     * is undefined if empty() == true.
+     */
+    [[nodiscard]] constexpr auto front() const -> const_reference
+    {
+        return *begin_;
+    }
+
+    /**
+     * @brief Returns reference to the last character in the view. The behavior
+     * is undefined if empty() == true.
+     */
+    [[nodiscard]] constexpr auto back() const -> const_reference
+    {
+        return begin_[size_ - 1];
+    }
+
+    /**
      * @brief Returns a pointer to the underlying character array. The pointer
      * is such that the range [data(); data() + size()) is valid and the values
      * in it correspond to the values of the view.
@@ -120,6 +202,23 @@ public:
     [[nodiscard]] constexpr auto length() const noexcept -> size_type
     {
         return size_;
+    }
+
+    /**
+     * @brief The largest possible number of char-like objects that can be
+     * referred to by a basic_string_view.
+     */
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+    {
+        return size_type(-1);
+    }
+
+    /**
+     * @brief Checks if the view has no characters, i.e. whether size() == 0.
+     */
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return size_ == 0;
     }
 
 private:
