@@ -25,39 +25,29 @@ DAMAGE.
 */
 
 #include "etl/chrono.hpp"
+#include "etl/warning.hpp"
 
 #include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
-    using namespace etl;
-
-    auto d1 = chrono::duration<TestType> {};
-    REQUIRE(d1.count() == 0);
+    auto d1 = etl::chrono::duration<TestType> {};
+    etl::ignore_unused(d1);
 }
 
-TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", float, double)
+TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
-    using namespace etl;
-
-    auto d1 = chrono::duration<TestType> {};
-    REQUIRE(d1.max().count() > d1.min().count());
+    using duration_t = etl::chrono::duration<TestType>;
+    REQUIRE(duration_t::max().count() > duration_t::min().count());
 }
 
-TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", int)
+TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
-    using namespace etl;
-
-    auto d1 = chrono::duration<TestType> {};
-    REQUIRE(d1.count() == 0);
-
-    auto d2 = chrono::nanoseconds {};
-    REQUIRE(d2.count() == 0);
-
-    auto d3 = chrono::milliseconds {};
-    REQUIRE(d3.count() == 0);
-
-    auto d4 = chrono::seconds {};
-    REQUIRE(d4.count() == 0);
+    REQUIRE(etl::chrono::duration<TestType> {}.count() == 0);
+    REQUIRE(etl::chrono::nanoseconds {}.count() == 0);
+    REQUIRE(etl::chrono::milliseconds {}.count() == 0);
+    REQUIRE(etl::chrono::seconds {}.count() == 0);
 }
