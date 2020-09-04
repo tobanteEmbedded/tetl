@@ -496,6 +496,45 @@ TEST_CASE("string_view: find_last_of", "[string_view]")
     }
 }
 
+TEST_CASE("string_view: find_last_not_of", "[string_view]")
+{
+    WHEN("rhs == string_view")
+    {
+        auto const sv = etl::string_view {"test"};
+        REQUIRE(sv.find_last_not_of(etl::string_view {"t"}) == 2);
+        REQUIRE(sv.find_last_not_of(etl::string_view {"est"}) == sv.npos);
+        REQUIRE(sv.find_last_not_of(etl::string_view {"s"}, 2) == 1);
+    }
+
+    WHEN("rhs == char")
+    {
+        auto const sv = etl::string_view {"test"};
+        REQUIRE(sv.find_last_not_of('t') == 2);
+        REQUIRE(sv.find_last_not_of('e') == 3);
+        REQUIRE(sv.find_last_not_of('s') == 3);
+    }
+
+    WHEN("rhs == const char* s, size_type pos, size_type count")
+    {
+        auto const npos = etl::string_view::npos;
+        auto const sv   = etl::string_view {"test"};
+        REQUIRE(sv.find_last_not_of("t", npos, 1) == 2);
+        REQUIRE(sv.find_last_not_of("es", npos, 2) == 3);
+        REQUIRE(sv.find_last_not_of("est", npos, 4) == npos);
+        REQUIRE(sv.find_last_not_of("tes", npos, 4) == npos);
+    }
+
+    WHEN("rhs == const char* s, size_type pos")
+    {
+        auto const sv = etl::string_view {"test"};
+        REQUIRE(sv.find_last_not_of("t") == 2);
+        REQUIRE(sv.find_last_not_of("es") == 3);
+
+        REQUIRE(sv.find_last_not_of("tes") == etl::string_view::npos);
+        REQUIRE(sv.find_last_not_of("est") == etl::string_view::npos);
+    }
+}
+
 TEST_CASE("string_view: substr", "[string_view]")
 {
     auto const sv = etl::string_view {"test"};

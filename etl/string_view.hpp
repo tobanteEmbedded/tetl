@@ -686,12 +686,78 @@ public:
     }
 
     /**
-     * @brief This is a special value equal to the maximum value representable
-     * by the type size_type.
+     * @brief Finds the last character not equal to any of the characters of v
+     * in this view, starting at position pos.
      *
-     * @details The exact meaning depends on context, but it is generally used
-     * either as end of view indicator by the functions that expect a view index
-     * or as the error indicator by the functions that return a view index.
+     * @return Position of the last character not equal to any of the characters
+     * in the given string, or npos if no such character is found.
+     */
+    [[nodiscard]] constexpr auto
+    find_last_not_of(basic_string_view v, size_type pos = npos) const noexcept
+        -> size_type
+    {
+        auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
+        do {
+            if (etl::none_of(v.begin(), v.end(),
+                             [&](auto ch) { return ch == at(offset); }))
+            { return offset; }
+        } while (offset-- != 0);
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the last character not equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_last_not_of(basic_string_view(etl::addressof(c), 1), pos).
+     *
+     * @return Position of the last character not equal to any of the characters
+     * in the given string, or npos if no such character is found.
+     */
+    [[nodiscard]] constexpr auto
+    find_last_not_of(CharType c, size_type pos = npos) const noexcept
+        -> size_type
+    {
+        return find_last_not_of(basic_string_view(etl::addressof(c), 1), pos);
+    }
+
+    /**
+     * @brief Finds the last character not equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_last_not_of(basic_string_view(s, count), pos).
+     *
+     * @return Position of the last character not equal to any of the characters
+     * in the given string, or npos if no such character is found.
+     */
+    [[nodiscard]] constexpr auto
+    find_last_not_of(const CharType* s, size_type pos, size_type count) const
+        -> size_type
+    {
+        return find_last_not_of(basic_string_view(s, count), pos);
+    }
+    /**
+     * @brief Finds the last character not equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_last_not_of(basic_string_view(s), pos)
+     *
+     * @return Position of the last character not equal to any of the characters
+     * in the given string, or npos if no such character is found.
+     */
+    [[nodiscard]] constexpr auto find_last_not_of(const CharType* s,
+                                                  size_type pos = npos) const
+        -> size_type
+    {
+        return find_last_not_of(basic_string_view(s), pos);
+    }
+
+    /**
+     * @brief This is a special value equal to the maximum value
+     * representable by the type size_type.
+     *
+     * @details The exact meaning depends on context, but it is generally
+     * used either as end of view indicator by the functions that expect a
+     * view index or as the error indicator by the functions that return a
+     * view index.
      */
     static constexpr size_type npos = size_type(-1);
 
