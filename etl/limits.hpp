@@ -558,113 +558,113 @@ public:
     static constexpr float_round_style round_style = round_toward_zero;
 };
 
-template <>
-class numeric_limits<long long>
-{
-public:
-    static constexpr bool is_specialized = true;
+// template <>
+// class numeric_limits<long long>
+// {
+// public:
+//     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return LLONG_MIN; }
-    static constexpr auto min() noexcept { return LLONG_MIN; }
-    static constexpr auto max() noexcept { return LLONG_MAX; }
+//     static constexpr auto lowest() noexcept { return LLONG_MIN; }
+//     static constexpr auto min() noexcept { return LLONG_MIN; }
+//     static constexpr auto max() noexcept { return LLONG_MAX; }
 
-    static constexpr bool is_signed  = true;
-    static constexpr bool is_integer = true;
-    static constexpr bool is_exact   = true;
-    static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept -> long long { return 0; }
-    static constexpr auto round_error() noexcept -> long long { return 0; }
+//     static constexpr bool is_signed  = true;
+//     static constexpr bool is_integer = true;
+//     static constexpr bool is_exact   = true;
+//     static constexpr int radix       = 2;
+//     static constexpr auto epsilon() noexcept -> long long { return 0; }
+//     static constexpr auto round_error() noexcept -> long long { return 0; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(long long) - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
-    static constexpr int max_digits10 = 0;
+//     static constexpr int digits = CHAR_BIT * sizeof(long long) - 1;
+//     // static constexpr int digits10     = digits * etl::log10(2);
+//     static constexpr int max_digits10 = 0;
 
-    static constexpr int min_exponent   = 0;
-    static constexpr int min_exponent10 = 0;
-    static constexpr int max_exponent   = 0;
-    static constexpr int max_exponent10 = 0;
+//     static constexpr int min_exponent   = 0;
+//     static constexpr int min_exponent10 = 0;
+//     static constexpr int max_exponent   = 0;
+//     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false;
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
-    static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> long long { return 0; }
-    static constexpr auto quiet_NaN() noexcept -> long long { return 0; }
-    static constexpr auto signaling_NaN() noexcept -> long long { return 0; }
-    static constexpr auto denorm_min() noexcept -> long long { return 0; }
+//     static constexpr bool has_infinity             = false;
+//     static constexpr bool has_quiet_NaN            = false;
+//     static constexpr bool has_signaling_NaN        = false;
+//     static constexpr float_denorm_style has_denorm = denorm_absent;
+//     static constexpr bool has_denorm_loss          = false;
+//     static constexpr auto infinity() noexcept -> long long { return 0; }
+//     static constexpr auto quiet_NaN() noexcept -> long long { return 0; }
+//     static constexpr auto signaling_NaN() noexcept -> long long { return 0; }
+//     static constexpr auto denorm_min() noexcept -> long long { return 0; }
 
-    static constexpr bool is_iec559  = false;
-    static constexpr bool is_bounded = true;
-    static constexpr bool is_modulo  = false;
+//     static constexpr bool is_iec559  = false;
+//     static constexpr bool is_bounded = true;
+//     static constexpr bool is_modulo  = false;
 
-    static constexpr bool traps                    = true;
-    static constexpr bool tinyness_before          = false;
-    static constexpr float_round_style round_style = round_toward_zero;
-};
+//     static constexpr bool traps                    = true;
+//     static constexpr bool tinyness_before          = false;
+//     static constexpr float_round_style round_style = round_toward_zero;
+// };
 
-template <>
-class numeric_limits<unsigned long long>
-{
-public:
-    static constexpr bool is_specialized = true;
+// template <>
+// class numeric_limits<unsigned long long>
+// {
+// public:
+//     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return ULLONG_MAX; }
+//     static constexpr auto lowest() noexcept { return 0; }
+//     static constexpr auto min() noexcept { return 0; }
+//     static constexpr auto max() noexcept { return ULLONG_MAX; }
 
-    static constexpr bool is_signed  = false;
-    static constexpr bool is_integer = true;
-    static constexpr bool is_exact   = true;
-    static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept -> unsigned long long
-    {
-        return {};
-    }
-    static constexpr auto round_error() noexcept -> unsigned long long
-    {
-        return {};
-    }
+//     static constexpr bool is_signed  = false;
+//     static constexpr bool is_integer = true;
+//     static constexpr bool is_exact   = true;
+//     static constexpr int radix       = 2;
+//     static constexpr auto epsilon() noexcept -> unsigned long long
+//     {
+//         return {};
+//     }
+//     static constexpr auto round_error() noexcept -> unsigned long long
+//     {
+//         return {};
+//     }
 
-    static constexpr int digits = CHAR_BIT * sizeof(int);
-    // static constexpr int digits10     = digits * etl::log10(2);
-    static constexpr int max_digits10 = 0;
+//     static constexpr int digits = CHAR_BIT * sizeof(int);
+//     // static constexpr int digits10     = digits * etl::log10(2);
+//     static constexpr int max_digits10 = 0;
 
-    static constexpr int min_exponent   = 0;
-    static constexpr int min_exponent10 = 0;
-    static constexpr int max_exponent   = 0;
-    static constexpr int max_exponent10 = 0;
+//     static constexpr int min_exponent   = 0;
+//     static constexpr int min_exponent10 = 0;
+//     static constexpr int max_exponent   = 0;
+//     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false;
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
-    static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned long long
-    {
-        return 0;
-    }
-    static constexpr auto quiet_NaN() noexcept -> unsigned long long
-    {
-        return 0;
-    }
-    static constexpr auto signaling_NaN() noexcept -> unsigned long long
-    {
-        return 0;
-    }
-    static constexpr auto denorm_min() noexcept -> unsigned long long
-    {
-        return 0;
-    }
+//     static constexpr bool has_infinity             = false;
+//     static constexpr bool has_quiet_NaN            = false;
+//     static constexpr bool has_signaling_NaN        = false;
+//     static constexpr float_denorm_style has_denorm = denorm_absent;
+//     static constexpr bool has_denorm_loss          = false;
+//     static constexpr auto infinity() noexcept -> unsigned long long
+//     {
+//         return 0;
+//     }
+//     static constexpr auto quiet_NaN() noexcept -> unsigned long long
+//     {
+//         return 0;
+//     }
+//     static constexpr auto signaling_NaN() noexcept -> unsigned long long
+//     {
+//         return 0;
+//     }
+//     static constexpr auto denorm_min() noexcept -> unsigned long long
+//     {
+//         return 0;
+//     }
 
-    static constexpr bool is_iec559  = false;
-    static constexpr bool is_bounded = true;
-    static constexpr bool is_modulo  = true;
+//     static constexpr bool is_iec559  = false;
+//     static constexpr bool is_bounded = true;
+//     static constexpr bool is_modulo  = true;
 
-    static constexpr bool traps                    = true;
-    static constexpr bool tinyness_before          = false;
-    static constexpr float_round_style round_style = round_toward_zero;
-};
+//     static constexpr bool traps                    = true;
+//     static constexpr bool tinyness_before          = false;
+//     static constexpr float_round_style round_style = round_toward_zero;
+// };
 
 template <>
 class numeric_limits<float>

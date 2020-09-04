@@ -78,8 +78,8 @@ TEST_CASE("limits: numeric_limits<bool>", "[limits]")
 }
 
 TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
-                   int, long, long long, signed char, signed short, signed int,
-                   signed long, signed long long)
+                   int, long, signed char, signed short, signed int,
+                   signed long)
 {
     using l = etl::numeric_limits<TestType>;
 
@@ -99,8 +99,7 @@ TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
 }
 
 TEMPLATE_TEST_CASE("limits: numeric_limits<unsigned T>", "[limits]",
-                   unsigned char, unsigned short, unsigned int, unsigned long,
-                   unsigned long long)
+                   unsigned char, unsigned short, unsigned int, unsigned long)
 {
     using l = etl::numeric_limits<TestType>;
 
