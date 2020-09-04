@@ -38,6 +38,34 @@ DAMAGE.
 namespace etl
 {
 /**
+ * @brief Exchanges the given values. Swaps the values a and b. This overload
+ * does not participate in overload resolution unless
+ * etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
+ *
+ * @todo Fix noexcept specifier.
+ * @ref https://en.cppreference.com/w/cpp/algorithm/swap
+ */
+template <class T>
+constexpr auto swap(T& a, T& b) noexcept -> void
+{
+    auto temp = a;
+    a         = b;
+    b         = temp;
+}
+
+/**
+ * @brief Swaps the values of the elements the given iterators are pointing to.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/iter_swap
+ */
+template <class ForwardIt1, class ForwardIt2>
+constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
+{
+    using etl::swap;
+    swap(*a, *b);
+}
+
+/**
  * @brief Applies the given function object f to the result of dereferencing
  * every iterator in the range [first, last] in order.
  */
@@ -277,9 +305,59 @@ template <class InputIt, class UnaryPredicate>
 }
 
 /**
- * @brief Checks if the first range [first1, last1) is lexicographically less
- * than the second range [first2, last2). Elements are compared using the given
- * binary comparison function comp.
+ * @brief Performs a left rotation on a range of elements.
+ *
+ * @details Specifically, etl::rotate swaps the elements in the range [first,
+ * last) in such a way that the element n_first becomes the first element of the
+ * new range and n_first - 1 becomes the last element. A precondition of this
+ * function is that [first, n_first) and [n_first, last) are valid ranges.
+ */
+template <class ForwardIt>
+constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last)
+    -> ForwardIt
+{
+    if (first == n_first) { return last; }
+    if (n_first == last) { return first; }
+
+    ForwardIt read      = n_first;
+    ForwardIt write     = first;
+    ForwardIt next_read = first;  // read position for when "read" hits "last"
+
+    while (read != last)
+    {
+        if (write == next_read)
+        {
+            next_read = read;  // track where "first" went
+        }
+        etl::iter_swap(write++, read++);
+    }
+
+    // rotate the remaining sequence into place
+    (rotate)(write, next_read, last);
+    return write;
+}
+
+/**
+ * @brief  Reorders the elements in the range [first, last) in such a way
+ * that all elements for which the predicate p returns true precede the
+ * elements for which predicate p returns false. Relative order of the
+ * elements is preserved.
+ */
+template <class BidirIt, class UnaryPredicate>
+constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p)
+    -> BidirIt
+{
+    auto const n = l - f;
+    if (n == 0) { return f; }
+    if (n == 1) { return f + p(*f); }
+    auto const m = f + (n / 2);
+    return rotate(stable_partition(f, m, p), m, stable_partition(m, l, p));
+}
+
+/**
+ * @brief Checks if the first range [first1, last1) is lexicographically
+ * less than the second range [first2, last2). Elements are compared using
+ * the given binary comparison function comp.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
@@ -297,8 +375,9 @@ lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 }
 
 /**
- * @brief Checks if the first range [first1, last1) is lexicographically less
- * than the second range [first2, last2). Elements are compared using operator<.
+ * @brief Checks if the first range [first1, last1) is lexicographically
+ * less than the second range [first2, last2). Elements are compared using
+ * operator<.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */

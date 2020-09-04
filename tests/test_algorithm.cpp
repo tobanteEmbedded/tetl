@@ -274,3 +274,40 @@ TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t,
         REQUIRE(etl::none_of(vec.begin(), vec.end(), predicate) == false);
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+    etl::array<TestType, 16> arr;
+    arr[0] = 1;
+    arr[1] = 2;
+    arr[2] = 3;
+    arr[3] = 4;
+
+    REQUIRE(arr[0] == 1);
+    etl::rotate(arr.begin(), arr.begin() + 1, arr.end());
+    REQUIRE(arr[0] == 2);
+}
+
+TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+    etl::array<TestType, 6> arr;
+    arr[0] = 0;
+    arr[1] = 1;
+    arr[2] = 0;
+    arr[3] = 2;
+    arr[4] = 3;
+    arr[5] = 4;
+
+    REQUIRE(arr[0] == 0);
+    etl::stable_partition(arr.begin(), arr.end(), [](auto n) { return n > 0; });
+    REQUIRE(arr[0] == 1);
+    REQUIRE(arr[1] == 2);
+    REQUIRE(arr[2] == 3);
+    REQUIRE(arr[3] == 4);
+}
