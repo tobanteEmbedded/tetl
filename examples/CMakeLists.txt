@@ -3,6 +3,7 @@ project(examples)
 foreach(_target 
   "algorithm"
   "array"
+  "chrono"
   "numeric"
   "string"
   "tuple"
