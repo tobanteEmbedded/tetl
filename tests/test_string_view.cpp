@@ -175,3 +175,50 @@ TEST_CASE("string_view: empty", "[string_view]")
     auto const f = etl::string_view {"test"};
     REQUIRE_FALSE(f.empty());
 }
+
+TEST_CASE("string_view: remove_prefix", "[string_view]")
+{
+    WHEN("empty")
+    {
+        auto sv = etl::string_view {};
+        REQUIRE(sv.empty());
+        sv.remove_prefix(0);
+        REQUIRE(sv.empty());
+    }
+
+    WHEN("not empty")
+    {
+        auto sv = etl::string_view {"test"};
+        REQUIRE(sv.size() == 4);
+        sv.remove_prefix(1);
+        REQUIRE(sv.size() == 3);
+        REQUIRE(sv.at(0) == 'e');
+    }
+}
+
+TEST_CASE("string_view: remove_suffix", "[string_view]")
+{
+    WHEN("empty")
+    {
+        auto sv = etl::string_view {};
+        REQUIRE(sv.empty());
+        sv.remove_suffix(0);
+        REQUIRE(sv.empty());
+    }
+
+    WHEN("not empty")
+    {
+        auto sv = etl::string_view {"test"};
+        REQUIRE(sv.size() == 4);
+
+        sv.remove_suffix(1);
+        REQUIRE(sv.size() == 3);
+        REQUIRE(sv.at(0) == 't');
+        REQUIRE(sv.at(1) == 'e');
+        REQUIRE(sv.at(2) == 's');
+
+        sv.remove_suffix(2);
+        REQUIRE(sv.size() == 1);
+        REQUIRE(sv.at(0) == 't');
+    }
+}

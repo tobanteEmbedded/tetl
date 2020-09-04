@@ -221,6 +221,22 @@ public:
         return size_ == 0;
     }
 
+    /**
+     * @brief Moves the start of the view forward by n characters. The behavior
+     * is undefined if n > size().
+     */
+    constexpr auto remove_prefix(size_type n) -> void
+    {
+        begin_ += n;
+        size_ -= n;
+    }
+
+    /**
+     * @brief Moves the end of the view back by n characters. The behavior is
+     * undefined if n > size().
+     */
+    constexpr auto remove_suffix(size_type n) -> void { size_ = size_ - n; }
+
 private:
     const_pointer begin_ = nullptr;
     size_type size_      = 0;
