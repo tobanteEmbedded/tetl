@@ -222,3 +222,58 @@ TEST_CASE("string_view: remove_suffix", "[string_view]")
         REQUIRE(sv.at(0) == 't');
     }
 }
+
+TEST_CASE("string_view: copy", "[string_view]")
+{
+    WHEN("offset = 0")
+    {
+        char buffer[4] = {};
+        auto sv        = etl::string_view {"test"};
+        REQUIRE(sv.copy(&buffer[0], 2, 0) == 2);
+        REQUIRE(buffer[0] == 't');
+        REQUIRE(buffer[1] == 'e');
+        REQUIRE(buffer[2] == 0);
+        REQUIRE(buffer[3] == 0);
+    }
+
+    WHEN("offset = 1")
+    {
+        char buffer[4] = {};
+        auto sv        = etl::string_view {"test"};
+        REQUIRE(sv.copy(&buffer[0], 2, 1) == 2);
+        REQUIRE(buffer[0] == 'e');
+        REQUIRE(buffer[1] == 's');
+        REQUIRE(buffer[2] == 0);
+        REQUIRE(buffer[3] == 0);
+    }
+
+    WHEN("offset = 3")
+    {
+        char buffer[4] = {};
+        auto sv        = etl::string_view {"test"};
+        REQUIRE(sv.copy(&buffer[0], 2, 3) == 1);
+        REQUIRE(buffer[0] == 't');
+        REQUIRE(buffer[1] == 0);
+        REQUIRE(buffer[2] == 0);
+        REQUIRE(buffer[3] == 0);
+    }
+}
+
+TEST_CASE("string_view: substr", "[string_view]")
+{
+    auto const sv = etl::string_view {"test"};
+
+    auto const sub1 = sv.substr(0, 1);
+    REQUIRE(sub1.size() == 1);
+    REQUIRE(sub1.at(0) == 't');
+
+    auto const sub2 = sv.substr(0, 2);
+    REQUIRE(sub2.size() == 2);
+    REQUIRE(sub2.at(0) == 't');
+    REQUIRE(sub2.at(1) == 'e');
+
+    auto const sub3 = sv.substr(2, 2);
+    REQUIRE(sub3.size() == 2);
+    REQUIRE(sub3.at(0) == 's');
+    REQUIRE(sub3.at(1) == 't');
+}

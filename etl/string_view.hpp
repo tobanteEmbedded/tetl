@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_STRING_VIEW_HPP
 #define TAETL_STRING_VIEW_HPP
 
+#include "algorithm.hpp"
 #include "definitions.hpp"
 #include "string.hpp"
 
@@ -236,6 +237,40 @@ public:
      * undefined if n > size().
      */
     constexpr auto remove_suffix(size_type n) -> void { size_ = size_ - n; }
+
+    /**
+     * @brief Copies the substring [pos, pos + rcount) to the character array
+     * pointed to by dest, where rcount is the smaller of count and size() -
+     * pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
+     */
+    [[nodiscard]] constexpr auto copy(CharType* dest, size_type count,
+                                      size_type pos = 0) const -> size_type
+    {
+        auto const rcount = etl::min(count, size() - pos);
+        traits_type::copy(dest, data() + pos, rcount);
+        return rcount;
+    }
+
+    /**
+     * @brief Returns a view of the substring [pos, pos + rcount), where rcount
+     * is the smaller of count and size() - pos.
+     */
+    constexpr auto substr(size_type pos = 0, size_type count = npos) const
+        -> basic_string_view
+    {
+        auto const rcount = etl::min(count, size() - pos);
+        return basic_string_view {begin_ + pos, rcount};
+    }
+
+    /**
+     * @brief This is a special value equal to the maximum value representable
+     * by the type size_type.
+     *
+     * @details The exact meaning depends on context, but it is generally used
+     * either as end of view indicator by the functions that expect a view index
+     * or as the error indicator by the functions that return a view index.
+     */
+    static constexpr size_type npos = size_type(-1);
 
 private:
     const_pointer begin_ = nullptr;
