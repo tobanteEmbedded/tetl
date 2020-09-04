@@ -475,6 +475,79 @@ public:
     }
 
     /**
+     * @brief Finds the last substring equal to the given character sequence.
+     * Finds the last occurence of v in this view, starting at position pos.
+     *
+     * @return Position of the first character of the found substring or npos if
+     * no such substring is found.
+     */
+    constexpr auto rfind(basic_string_view v,
+                         size_type pos = npos) const noexcept -> size_type
+    {
+        auto const offset = etl::clamp<size_type>(pos, 0, size());
+        if (v.size() > size()) { return npos; }
+
+        size_type outer = offset;
+        do {
+            if (at(outer) == v.front())
+            {
+                auto found = [&] {
+                    for (size_type inner = 0; inner < v.size(); ++inner)
+                    {
+                        if (at(outer + inner) != v.at(inner)) { return false; }
+                    }
+
+                    return true;
+                }();
+
+                if (found) { return outer; }
+            }
+        } while (outer-- != 0);
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence.
+     * Equivalent to rfind(basic_string_view(etl::addressof(c), 1), pos).
+     *
+     * @return Position of the first character of the found substring or npos if
+     * no such substring is found.
+     */
+    constexpr auto rfind(CharType c, size_type pos = npos) const noexcept
+        -> size_type
+
+    {
+        return rfind(basic_string_view(etl::addressof(c), 1), pos);
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence.
+     * Equivalent to rfind(basic_string_view(s, count), pos).
+     *
+     * @return Position of the first character of the found substring or npos if
+     * no such substring is found.
+     */
+    constexpr auto rfind(const CharType* s, size_type pos,
+                         size_type count) const -> size_type
+    {
+        return rfind(basic_string_view(s, count), pos);
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence.
+     * Equivalent to rfind(basic_string_view(s), pos).
+     *
+     * @return Position of the first character of the found substring or npos if
+     * no such substring is found.
+     */
+    constexpr auto rfind(const CharType* s, size_type pos = npos) const
+        -> size_type
+    {
+        return rfind(basic_string_view {s}, pos);
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable
      * by the type size_type.
      *
