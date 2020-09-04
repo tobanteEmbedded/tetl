@@ -29,7 +29,14 @@ DAMAGE.
 
 auto main() -> int
 {
-    auto hour = etl::chrono::hours {1};
-    printf("%d\n", hour.count());
+    using namespace etl::literals;
+    {
+        auto hour = etl::chrono::hours {1};
+        printf("%ld\n", (long)hour.count());
+    }
+    {
+        auto const hour = 1_h;
+        printf("%ld\n", (long)hour.count());
+    }
     return 0;
 }
