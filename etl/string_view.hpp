@@ -263,6 +263,39 @@ public:
     }
 
     /**
+     * @brief Checks if the string view begins with the given prefix, where the
+     * prefix is a string view.
+     *
+     * @details Effectively returns substr(0, sv.size()) == sv
+     */
+    constexpr auto starts_with(basic_string_view sv) const noexcept -> bool
+    {
+        return substr(0, sv.size()) == sv;
+    }
+
+    /**
+     * @brief Checks if the string view begins with the given prefix, where the
+     * prefix is a single character.
+     *
+     * @details Effectively returns !empty() && Traits::eq(front(), c)
+     */
+    constexpr auto starts_with(CharType c) const noexcept -> bool
+    {
+        return !empty() && traits_type::eq(front(), c);
+    }
+
+    /**
+     * @brief Checks if the string view begins with the given prefix, where the
+     * the prefix is a null-terminated character string.
+     *
+     * @details Effectively returns starts_with(basic_string_view(s))
+     */
+    constexpr auto starts_with(const CharType* s) const -> bool
+    {
+        return starts_with(basic_string_view(s));
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable
      * by the type size_type.
      *
@@ -276,6 +309,39 @@ private:
     const_pointer begin_ = nullptr;
     size_type size_      = 0;
 };
+
+/**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details Two views are equal if both the size of lhs and rhs are equal and
+ * each character in lhs has an equivalent character in rhs at the same
+ * position.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator==(etl::basic_string_view<CharType, Traits> lhs,
+           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    if (lhs.size() != rhs.size()) { return false; }
+    return Traits::compare(lhs.data(), rhs.data(), lhs.size()) == 0;
+}
+
+/**
+ * @brief Compares two views. All comparisons are done via the compare() member
+ * function (which itself is defined in terms of Traits::compare()):
+ *
+ * @details Two views are equal if both the size of lhs and rhs are equal and
+ * each character in lhs has an equivalent character in rhs at the same
+ * position.
+ */
+template <class CharType, class Traits>
+[[nodiscard]] constexpr auto
+operator!=(etl::basic_string_view<CharType, Traits> lhs,
+           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+    return !(lhs == rhs);
+}
 
 /**
  * @brief Typedefs for common character type

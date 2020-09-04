@@ -277,3 +277,17 @@ TEST_CASE("string_view: substr", "[string_view]")
     REQUIRE(sub3.at(0) == 's');
     REQUIRE(sub3.at(1) == 't');
 }
+
+TEST_CASE("string_view: operotr==", "[string_view]")
+{
+    auto const sv = etl::string_view {"test"};
+    REQUIRE(sv == sv);
+    REQUIRE(sv == etl::string_view {"test"});
+    REQUIRE_FALSE(sv != sv);
+    REQUIRE_FALSE(sv != etl::string_view {"test"});
+
+    REQUIRE(sv != sv.substr(0, 1));
+    REQUIRE(sv != etl::string_view {"abc"});
+    REQUIRE_FALSE(sv == sv.substr(0, 1));
+    REQUIRE_FALSE(sv == etl::string_view {"abc"});
+}
