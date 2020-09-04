@@ -877,7 +877,7 @@ inline namespace string_view_literals
  * @brief Forms a string view of a character literal. Returns
  * etl::string_view{str, len}
  */
-constexpr auto operator"" _sv(const char* str, std::size_t len) noexcept
+constexpr auto operator"" _sv(const char* str, etl::size_t len) noexcept
     -> etl::string_view
 {
     return {str, len};
