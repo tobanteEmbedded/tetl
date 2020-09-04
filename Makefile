@@ -19,6 +19,7 @@ avr:
 	avr-gcc --version
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/algorithm -I. examples/algorithm.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/array -I. examples/array.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/chrono -I. examples/chrono.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/numeric -I. examples/numeric.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/string -I. examples/string.cpp
