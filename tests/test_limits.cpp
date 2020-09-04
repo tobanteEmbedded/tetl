@@ -48,15 +48,15 @@ TEST_CASE("limits: numeric_limits<T>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<S>::is_integer == false);
     STATIC_REQUIRE(etl::numeric_limits<S>::is_bounded == false);
 
-    STATIC_REQUIRE(etl::numeric_limits<S>::min().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::max().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::lowest().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::epsilon().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::round_error().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::infinity().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::quiet_NaN().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::signaling_NaN().i == 42);
-    STATIC_REQUIRE(etl::numeric_limits<S>::denorm_min().i == 42);
+    REQUIRE(etl::numeric_limits<S>::min().i == 42);
+    REQUIRE(etl::numeric_limits<S>::max().i == 42);
+    REQUIRE(etl::numeric_limits<S>::lowest().i == 42);
+    REQUIRE(etl::numeric_limits<S>::epsilon().i == 42);
+    REQUIRE(etl::numeric_limits<S>::round_error().i == 42);
+    REQUIRE(etl::numeric_limits<S>::infinity().i == 42);
+    REQUIRE(etl::numeric_limits<S>::quiet_NaN().i == 42);
+    REQUIRE(etl::numeric_limits<S>::signaling_NaN().i == 42);
+    REQUIRE(etl::numeric_limits<S>::denorm_min().i == 42);
 }
 
 TEST_CASE("limits: numeric_limits<bool>", "[limits]")
@@ -66,15 +66,35 @@ TEST_CASE("limits: numeric_limits<bool>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<bool>::is_integer == true);
     STATIC_REQUIRE(etl::numeric_limits<bool>::is_bounded == true);
 
-    STATIC_REQUIRE(etl::numeric_limits<bool>::min() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::max() == true);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::lowest() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::epsilon() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::round_error() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::infinity() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::quiet_NaN() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::signaling_NaN() == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::denorm_min() == false);
+    REQUIRE(etl::numeric_limits<bool>::min() == false);
+    REQUIRE(etl::numeric_limits<bool>::max() == true);
+    REQUIRE(etl::numeric_limits<bool>::lowest() == false);
+    REQUIRE(etl::numeric_limits<bool>::epsilon() == false);
+    REQUIRE(etl::numeric_limits<bool>::round_error() == false);
+    REQUIRE(etl::numeric_limits<bool>::infinity() == false);
+    REQUIRE(etl::numeric_limits<bool>::quiet_NaN() == false);
+    REQUIRE(etl::numeric_limits<bool>::signaling_NaN() == false);
+    REQUIRE(etl::numeric_limits<bool>::denorm_min() == false);
+}
+
+TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char,
+                   signed char)
+{
+    using l = etl::numeric_limits<TestType>;
+
+    STATIC_REQUIRE(l::is_specialized == true);
+    STATIC_REQUIRE(l::is_signed == true);
+    STATIC_REQUIRE(l::is_integer == true);
+    STATIC_REQUIRE(l::is_bounded == true);
+
+    REQUIRE(l::lowest() == l::min());
+    REQUIRE(l::max() > l::min());
+    REQUIRE(l::epsilon() == TestType {});
+    REQUIRE(l::round_error() == TestType {});
+    REQUIRE(l::infinity() == TestType {});
+    REQUIRE(l::quiet_NaN() == TestType {});
+    REQUIRE(l::signaling_NaN() == TestType {});
+    REQUIRE(l::denorm_min() == TestType {});
 }
 
 TEST_CASE("limits: numeric_limits<float>", "[limits]")
@@ -84,12 +104,12 @@ TEST_CASE("limits: numeric_limits<float>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<float>::is_integer == false);
     STATIC_REQUIRE(etl::numeric_limits<float>::is_bounded == true);
 
-    STATIC_REQUIRE(etl::numeric_limits<float>::min() == FLT_MIN);
-    STATIC_REQUIRE(etl::numeric_limits<float>::max() == FLT_MAX);
-    STATIC_REQUIRE(etl::numeric_limits<float>::lowest() == -FLT_MAX);
-    STATIC_REQUIRE(etl::numeric_limits<float>::epsilon() == FLT_EPSILON);
-    STATIC_REQUIRE(etl::numeric_limits<float>::round_error() == 0.5F);
-    // STATIC_REQUIRE(etl::numeric_limits<float>::infinity() == HUGE_VALF);
+    REQUIRE(etl::numeric_limits<float>::min() == FLT_MIN);
+    REQUIRE(etl::numeric_limits<float>::max() == FLT_MAX);
+    REQUIRE(etl::numeric_limits<float>::lowest() == -FLT_MAX);
+    REQUIRE(etl::numeric_limits<float>::epsilon() == FLT_EPSILON);
+    REQUIRE(etl::numeric_limits<float>::round_error() == 0.5F);
+    // REQUIRE(etl::numeric_limits<float>::infinity() == HUGE_VALF);
 }
 
 TEST_CASE("limits: numeric_limits<double>", "[limits]")
@@ -99,10 +119,10 @@ TEST_CASE("limits: numeric_limits<double>", "[limits]")
     STATIC_REQUIRE(etl::numeric_limits<double>::is_integer == false);
     STATIC_REQUIRE(etl::numeric_limits<double>::is_bounded == true);
 
-    STATIC_REQUIRE(etl::numeric_limits<double>::min() == DBL_MIN);
-    STATIC_REQUIRE(etl::numeric_limits<double>::max() == DBL_MAX);
-    STATIC_REQUIRE(etl::numeric_limits<double>::lowest() == -DBL_MAX);
-    STATIC_REQUIRE(etl::numeric_limits<double>::epsilon() == DBL_EPSILON);
-    STATIC_REQUIRE(etl::numeric_limits<double>::round_error() == 0.5);
-    // STATIC_REQUIRE(etl::numeric_limits<double>::infinity() == HUGE_VAL);
+    REQUIRE(etl::numeric_limits<double>::min() == DBL_MIN);
+    REQUIRE(etl::numeric_limits<double>::max() == DBL_MAX);
+    REQUIRE(etl::numeric_limits<double>::lowest() == -DBL_MAX);
+    REQUIRE(etl::numeric_limits<double>::epsilon() == DBL_EPSILON);
+    REQUIRE(etl::numeric_limits<double>::round_error() == 0.5);
+    // REQUIRE(etl::numeric_limits<double>::infinity() == HUGE_VAL);
 }
