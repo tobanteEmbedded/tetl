@@ -29,6 +29,7 @@ DAMAGE.
 
 #include "algorithm.hpp"
 #include "definitions.hpp"
+#include "memory.hpp"
 #include "string.hpp"
 
 namespace etl
@@ -263,6 +264,77 @@ public:
     }
 
     /**
+     * @brief Compares two character sequences.
+     *
+     * @ref https://en.cppreference.com/w/cpp/string/basic_string_view/compare
+     */
+    [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept
+        -> int
+    {
+        auto const rlen = etl::min(size(), v.size());
+        auto const res  = traits_type::compare(data(), v.data(), rlen);
+
+        if (res < 0) { return -1; }
+        if (res > 0) { return 1; }
+
+        if (size() < v.size()) { return -1; }
+        if (size() > v.size()) { return 1; }
+
+        return 0;
+    }
+
+    /**
+     * @brief Compares two character sequences. Equivalent to substr(pos1,
+     * count1).compare(v).
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         basic_string_view v) const -> int
+    {
+        return substr(pos1, count1).compare(v);
+    }
+
+    /**
+     * @brief Compares two character sequences. Equivalent to substr(pos1,
+     * count1).compare(v.substr(pos2, count2))
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         basic_string_view v, size_type pos2,
+                                         size_type count2) const -> int
+    {
+        return substr(pos1, count1).compare(v.substr(pos2, count2));
+    }
+
+    /**
+     * @brief Compares two character sequences. Equivalent to
+     * compare(basic_string_view(s)).
+     */
+    [[nodiscard]] constexpr auto compare(const CharType* s) const -> int
+    {
+        return compare(basic_string_view(s));
+    }
+
+    /**
+     * @brief Compares two character sequences. Equivalent to substr(pos1,
+     * count1).compare(basic_string_view(s)).
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         const CharType* s) const -> int
+    {
+        return substr(pos1, count1).compare(basic_string_view(s));
+    }
+
+    /**
+     * @brief Compares two character sequences. Equivalent to substr(pos1,
+     * count1).compare(basic_string_view(s, count2)).
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         const CharType* s,
+                                         size_type count2) const -> int
+    {
+        return substr(pos1, count1).compare(basic_string_view(s, count2));
+    }
+
+    /**
      * @brief Checks if the string view begins with the given prefix, where the
      * prefix is a string view.
      *
@@ -290,9 +362,116 @@ public:
      *
      * @details Effectively returns starts_with(basic_string_view(s))
      */
-    constexpr auto starts_with(const CharType* s) const -> bool
+    constexpr auto starts_with(CharType const* str) const -> bool
     {
-        return starts_with(basic_string_view(s));
+        return starts_with(basic_string_view(str));
+    }
+
+    /**
+     * @brief Checks if the string view ends with the given suffix, where the
+     * prefix is a string view.
+     *
+     * @details Effectively returns size() >= sv.size() && compare(size() -
+     * sv.size(), npos, sv) == 0
+     */
+    constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
+    {
+        return size() >= sv.size()
+               && compare(size() - sv.size(), npos, sv) == 0;
+    }
+
+    /**
+     * @brief Checks if the string view ends with the given suffix, where the
+     * prefix is a single character.
+     *
+     * @details Effectively returns !empty() && Traits::eq(back(), c)
+     */
+    constexpr auto ends_with(CharType c) const noexcept -> bool
+    {
+        return !empty() && Traits::eq(back(), c);
+    }
+
+    /**
+     * @brief Checks if the string view ends with the given suffix, where the
+     * the prefix is a null-terminated character string.
+     *
+     * @details Effectively returns ends_with(basic_string_view(s))
+     */
+    constexpr auto ends_with(CharType const* str) const -> bool
+    {
+        return ends_with(basic_string_view(str));
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * Finds the first occurence of v in this view, starting at position pos.
+     *
+     * @return Position of the first character of the found substring, or npos
+     * if no such substring is found.
+     */
+    constexpr auto find(basic_string_view v, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        if (v.size() > size() - pos) { return npos; }
+
+        for (size_type outerIdx = pos; outerIdx < size(); ++outerIdx)
+        {
+            if (at(outerIdx) == v.front())
+            {
+                auto found = [&] {
+                    for (size_type innerIdx = 0; innerIdx < v.size();
+                         ++innerIdx)
+                    {
+                        auto offset = outerIdx + innerIdx;
+                        if (at(offset) != v.at(innerIdx)) { return false; }
+                    }
+
+                    return true;
+                }();
+
+                if (found) { return outerIdx; }
+            }
+        }
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * Equivalent to find(basic_string_view(etl::addressof(ch), 1), pos)
+     *
+     * @return Position of the first character of the found substring, or npos
+     * if no such substring is found.
+     */
+    constexpr auto find(CharType ch, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return find(basic_string_view(etl::addressof(ch), 1), pos);
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * Equivalent to find(basic_string_view(s, count), pos)
+     *
+     * @return Position of the first character of the found substring, or npos
+     * if no such substring is found.
+     */
+    constexpr auto find(const CharType* s, size_type pos, size_type count) const
+        -> size_type
+    {
+        return find(basic_string_view(s, count), pos);
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * Equivalent to find(basic_string_view(s), pos)
+     *
+     * @return Position of the first character of the found substring, or npos
+     * if no such substring is found.
+     */
+    constexpr auto find(const CharType* s, size_type pos = 0) const -> size_type
+    {
+        return find(basic_string_view(s), pos);
     }
 
     /**
