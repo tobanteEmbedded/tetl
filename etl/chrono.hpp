@@ -103,12 +103,14 @@ public:
      */
     duration(const duration&) = default;
 
-    // /**
-    //  * @brief Constructs a new duration from one of several optional data
-    //  * sources.
-    //  */
-    // template <class Rep2>
-    // constexpr explicit duration(const Rep2& r);
+    /**
+     * @brief Constructs a new duration from one of several optional data
+     * sources.
+     */
+    template <class Rep2>
+    constexpr explicit duration(const Rep2& r) : data_ {r}
+    {
+    }
 
     // /**
     //  * @brief Constructs a new duration from one of several optional data
@@ -116,6 +118,11 @@ public:
     //  */
     // template <class Rep2, class Period2>
     // constexpr duration(const duration<Rep2, Period2>& d)
+
+    /**
+     * @brief Assigns the contents of one duration to another.
+     */
+    auto operator=(const duration& other) -> duration& = default;
 
     /**
      * @brief Returns the number of ticks for this duration.

@@ -28,7 +28,24 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("chrono: size", "[chrono]", int)
+TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
+{
+    using namespace etl;
+
+    auto d1 = chrono::duration<TestType> {};
+    REQUIRE(d1.count() == 0);
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", float, double)
+{
+    using namespace etl;
+
+    auto d1 = chrono::duration<TestType> {};
+    REQUIRE(d1.max().count() > d1.min().count());
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", int)
 {
     using namespace etl;
 
