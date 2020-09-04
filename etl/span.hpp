@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_SPAN_HPP
 #define TAETL_SPAN_HPP
 
+#include "etl/array.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
@@ -67,12 +68,93 @@ public:
     // using reverse_iterator = etl::reverse_iterator<iterator>;
 
     /**
-     * @brief The number of elements in the sequence, or std::dynamic_extent
+     * @brief The number of elements in the sequence, or etl::dynamic_extent
      * if dynamic.
      */
     static constexpr size_type extent = Extent;
 
+    /**
+     * @brief Constructs a span. Constructs an empty span whose
+     * data() == nullptr and size() == 0.
+     *
+     * @details This overload only participates in overload resolution
+     * if extent == 0 || extent == etl::dynamic_extent.
+     *
+     * @todo Remove from overload with concepts once available.
+     */
+    constexpr span() noexcept = default;
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class It>
+    // explicit(extent != etl::dynamic_extent) constexpr span(It first,
+    //                                                        size_type count);
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class It, class End>
+    // explicit(extent != etl::dynamic_extent) constexpr span(It first, End
+    // last);
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <etl::size_t N>
+    // constexpr span(element_type (&arr)[N]) noexcept;
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class U, etl::size_t N>
+    // constexpr span(etl::array<U, N>& arr) noexcept;
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class U, etl::size_t N>
+    // constexpr span(const etl::array<U, N>& arr) noexcept;
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class R>
+    // explicit(extent != etl::dynamic_extent) constexpr span(R&& r);
+
+    // /**
+    //  * @brief Constructs a span.
+    //  */
+    // template <class U, etl::size_t N>
+    // explicit(extent != etl::dynamic_extent
+    //          && N == etl::dynamic_extent) constexpr span(const etl::span<U,
+    //          N>&
+    //                                                          s) noexcept;
+
+    /**
+     * @brief Constructs a span.
+     */
+    constexpr span(const span& other) noexcept = default;
+
+    /**
+     * @brief Returns a pointer to the beginning of the sequence.
+     */
+    [[nodiscard]] constexpr auto data() const noexcept -> pointer
+    {
+        return data_;
+    }
+
+    /**
+     * @brief Returns the number of elements in the span.
+     */
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return size_;
+    }
+
 private:
+    ElementType* data_ = nullptr;
+    size_type size_    = 0;
 };
 }  // namespace etl
 

@@ -28,8 +28,9 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("span: construct", "[span]")
+TEST_CASE("span: construct - default", "[span]")
 {
-    etl::span<char> sp {};
-    etl::ignore_unused(sp);
+    auto sp = etl::span<char> {};
+    REQUIRE(sp.data() == nullptr);
+    REQUIRE(sp.size() == 0);
 }
