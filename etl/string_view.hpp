@@ -308,7 +308,7 @@ public:
      * @brief Compares two character sequences. Equivalent to
      * compare(basic_string_view(s)).
      */
-    [[nodiscard]] constexpr auto compare(const CharType* s) const -> int
+    [[nodiscard]] constexpr auto compare(CharType const* s) const -> int
     {
         return compare(basic_string_view(s));
     }
@@ -318,7 +318,7 @@ public:
      * count1).compare(basic_string_view(s)).
      */
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         const CharType* s) const -> int
+                                         CharType const* s) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s));
     }
@@ -328,7 +328,7 @@ public:
      * count1).compare(basic_string_view(s, count2)).
      */
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         const CharType* s,
+                                         CharType const* s,
                                          size_type count2) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s, count2));
@@ -456,7 +456,7 @@ public:
      * @return Position of the first character of the found substring, or npos
      * if no such substring is found.
      */
-    constexpr auto find(const CharType* s, size_type pos, size_type count) const
+    constexpr auto find(CharType const* s, size_type pos, size_type count) const
         -> size_type
     {
         return find(basic_string_view(s, count), pos);
@@ -469,7 +469,7 @@ public:
      * @return Position of the first character of the found substring, or npos
      * if no such substring is found.
      */
-    constexpr auto find(const CharType* s, size_type pos = 0) const -> size_type
+    constexpr auto find(CharType const* s, size_type pos = 0) const -> size_type
     {
         return find(basic_string_view(s), pos);
     }
@@ -528,7 +528,7 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(const CharType* s, size_type pos,
+    constexpr auto rfind(CharType const* s, size_type pos,
                          size_type count) const -> size_type
     {
         return rfind(basic_string_view(s, count), pos);
@@ -541,10 +541,74 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(const CharType* s, size_type pos = npos) const
+    constexpr auto rfind(CharType const* s, size_type pos = npos) const
         -> size_type
     {
         return rfind(basic_string_view {s}, pos);
+    }
+
+    /**
+     * @brief Finds the first character equal to any of the characters in the
+     * given character sequence. Finds the first occurence of any of the
+     * characters of v in this view, starting at position pos.
+     *
+     * @return Position of the first occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_first_of(basic_string_view v,
+                                 size_type pos = 0) const noexcept -> size_type
+    {
+        for (size_type idx = pos; idx < size(); ++idx)
+        {
+            for (auto const c : v)
+            {
+                if (c == at(idx)) { return idx; }
+            }
+        }
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the first character equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_first_of(basic_string_view(etl::addressof(c), 1), pos)
+     *
+     * @return Position of the first occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_first_of(CharType c, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return find_first_of(basic_string_view(etl::addressof(c), 1), pos);
+    }
+
+    /**
+     * @brief Finds the first character equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_first_of(basic_string_view(s, count), pos)
+     *
+     * @return Position of the first occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_first_of(CharType const* s, size_type pos,
+                                 size_type count) const -> size_type
+    {
+        return find_first_of(basic_string_view(s, count), pos);
+    }
+
+    /**
+     * @brief Finds the first character equal to any of the characters in the
+     * given character sequence. Equivalent to
+     * find_first_of(basic_string_view(s), pos)
+     *
+     * @return Position of the first occurrence of any character of the
+     * substring, or npos if no such character is found.
+     */
+    constexpr auto find_first_of(CharType const* s, size_type pos = 0) const
+        -> size_type
+    {
+        return find_first_of(basic_string_view(s), pos);
     }
 
     /**
