@@ -51,3 +51,10 @@ TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
     REQUIRE(etl::chrono::milliseconds {}.count() == 0);
     REQUIRE(etl::chrono::seconds {}.count() == 0);
 }
+
+TEST_CASE("chrono/duration: operator\"\"", "[chrono]")
+{
+    using namespace etl::literals;
+    auto const hour = 1_h;
+    REQUIRE(hour.count() == etl::chrono::hours {1}.count());
+}

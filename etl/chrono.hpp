@@ -108,7 +108,7 @@ public:
      * sources.
      */
     template <class Rep2>
-    constexpr explicit duration(const Rep2& r) : data_ {r}
+    constexpr explicit duration(const Rep2& r) : data_(r)
     {
     }
 
@@ -157,17 +157,78 @@ private:
     rep data_ {};
 };
 
-using nanoseconds  = duration<etl::intptr_t, etl::nano>;
-using microseconds = duration<etl::intptr_t, etl::micro>;
-using milliseconds = duration<etl::intptr_t, etl::milli>;
-using seconds      = duration<etl::intptr_t>;
-using minutes      = duration<etl::intptr_t, etl::ratio<60>>;
-using hours        = duration<etl::intptr_t, etl::ratio<3600>>;
-using days         = duration<etl::intptr_t, etl::ratio<86400>>;
-using weeks        = duration<etl::intptr_t, etl::ratio<604800>>;
-using months       = duration<etl::intptr_t, etl::ratio<2629746>>;
-using years        = duration<etl::intptr_t, etl::ratio<31556952>>;
+/**
+ * @brief Signed integer type of at least 64 bits.
+ */
+using nanoseconds = duration<etl::int64_t, etl::nano>;
+
+/**
+ * @brief Signed integer type of at least 55 bits.
+ */
+using microseconds = duration<etl::int64_t, etl::micro>;
+
+/**
+ * @brief Signed integer type of at least 45 bits.
+ */
+using milliseconds = duration<etl::int64_t, etl::milli>;
+
+/**
+ * @brief Signed integer type of at least 35 bits.
+ */
+using seconds = duration<etl::int64_t>;
+
+/**
+ * @brief Signed integer type of at least 29 bits.
+ */
+using minutes = duration<etl::int32_t, etl::ratio<60>>;
+
+/**
+ * @brief Signed integer type of at least 23 bits.
+ */
+using hours = duration<etl::int32_t, etl::ratio<3600>>;
+
+/**
+ * @brief Signed integer type of at least 25 bits.
+ */
+using days = duration<etl::int32_t, etl::ratio<86400>>;
+
+/**
+ * @brief Signed integer type of at least 22 bits.
+ */
+using weeks = duration<etl::int32_t, etl::ratio<604800>>;
+
+/**
+ * @brief Signed integer type of at least 20 bits.
+ */
+using months = duration<etl::int32_t, etl::ratio<2629746>>;
+
+/**
+ * @brief Signed integer type of at least 17 bits.
+ */
+using years = duration<etl::int32_t, etl::ratio<31556952>>;
 
 }  // namespace etl::chrono
 
+namespace etl
+{
+inline namespace literals
+{
+inline namespace chrono_literals
+{
+constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
+{
+    return etl::chrono::hours(h);
+}
+constexpr auto operator""_h(long double h)
+    -> etl::chrono::duration<long double, ratio<3600, 1>>
+{
+    return etl::chrono::duration<long double, etl::ratio<3600, 1>>(h);
+}
+}  // namespace chrono_literals
+}  // namespace literals
+namespace chrono
+{
+using namespace ::etl::literals::chrono_literals;
+}
+}  // namespace etl
 #endif  // TAETL_CHRONO_HPP
