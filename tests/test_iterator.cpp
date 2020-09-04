@@ -30,6 +30,36 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEST_CASE("iterator: size", "[iterator]")
+{
+    int carr[4] = {};
+    REQUIRE(etl::size(carr) == 4);
+
+    auto arr = etl::array<int, 5> {};
+    REQUIRE(etl::size(arr) == 5);
+
+    auto sv1 = etl::string_view {"test"};
+    REQUIRE(etl::size(sv1) == 4);
+
+    auto const sv2 = etl::string_view {};
+    REQUIRE(etl::size(sv2) == 0);
+}
+
+TEST_CASE("iterator: empty", "[iterator]")
+{
+    int carr[4] = {};
+    REQUIRE_FALSE(etl::empty(carr));
+
+    auto arr = etl::array<int, 5> {};
+    REQUIRE_FALSE(etl::empty(arr));
+
+    auto sv1 = etl::string_view {"test"};
+    REQUIRE_FALSE(etl::empty(sv1));
+
+    auto const sv2 = etl::string_view {};
+    REQUIRE(etl::empty(sv2));
+}
+
 TEST_CASE("iterator: data", "[iterator]")
 {
     int carr[4] = {};

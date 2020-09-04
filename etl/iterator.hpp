@@ -28,9 +28,51 @@ DAMAGE.
 #define TAETL_SPAN_HPP
 
 #include "etl/definitions.hpp"
+#include "etl/warning.hpp"
 
 namespace etl
 {
+/**
+ * @brief Returns the size of the given container c or array array. Returns
+ * c.size(), converted to the return type if necessary.
+ */
+template <typename C>
+constexpr auto size(C const& c) noexcept(noexcept(c.size()))
+    -> decltype(c.size())
+{
+    return c.size();
+}
+
+/**
+ * @brief Returns the size of the given container c or array array. Returns N.
+ */
+template <class T, etl::size_t N>
+constexpr auto size(const T (&array)[N]) noexcept -> etl::size_t
+{
+    etl::ignore_unused(&array[0]);
+    return N;
+}
+
+/**
+ * @brief Returns whether the given container is empty.
+ */
+template <typename C>
+constexpr auto empty(const C& c) noexcept(noexcept(c.empty()))
+    -> decltype(c.empty())
+{
+    return c.empty();
+}
+
+/**
+ * @brief Returns whether the given container is empty.
+ */
+template <typename T, etl::size_t N>
+constexpr auto empty(T (&array)[N]) noexcept -> bool
+{
+    etl::ignore_unused(&array);
+    return false;
+}
+
 /**
  * @brief Returns a pointer to the block of memory containing the elements of
  * the container. Returns c.data().
