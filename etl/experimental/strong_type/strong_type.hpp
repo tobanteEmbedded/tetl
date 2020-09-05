@@ -48,7 +48,7 @@ struct skill
     };
 
     template <typename StrongType>
-    struct subtractable : crtp<StrongType, addable>
+    struct subtractable : crtp<StrongType, subtractable>
     {
         [[nodiscard]] constexpr auto
         operator-(StrongType const& other) const noexcept -> StrongType
@@ -60,7 +60,7 @@ struct skill
     };
 
     template <typename StrongType>
-    struct multipliable : crtp<StrongType, addable>
+    struct multipliable : crtp<StrongType, multipliable>
     {
         [[nodiscard]] constexpr auto
         operator*(StrongType const& other) const noexcept -> StrongType
@@ -72,7 +72,7 @@ struct skill
     };
 
     template <typename StrongType>
-    struct divisible : crtp<StrongType, addable>
+    struct divisible : crtp<StrongType, divisible>
     {
         [[nodiscard]] constexpr auto
         operator/(StrongType const& other) const noexcept -> StrongType
@@ -84,7 +84,7 @@ struct skill
     };
 
     template <typename StrongType>
-    struct comparable : crtp<StrongType, addable>
+    struct comparable : crtp<StrongType, comparable>
     {
         [[nodiscard]] constexpr friend auto
         operator<(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
