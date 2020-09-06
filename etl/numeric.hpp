@@ -34,6 +34,7 @@ DAMAGE.
 #include "definitions.hpp"
 #include "limits.hpp"
 #include "type_traits.hpp"
+#include "utility.hpp"
 
 namespace etl
 {
@@ -45,10 +46,7 @@ template <class InputIt, class Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
                                         Type init) noexcept -> Type
 {
-    for (; first != last; ++first)
-    {
-        init = init + *first;  // etl::move since C++20
-    }
+    for (; first != last; ++first) { init = move(init) + *first; }
     return init;
 }
 
@@ -60,10 +58,7 @@ template <class InputIt, class Type, class BinaryOperation>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init,
                                         BinaryOperation op) noexcept -> Type
 {
-    for (; first != last; ++first)
-    {
-        init = op(init, *first);  // etl::move since C++20
-    }
+    for (; first != last; ++first) { init = op(move(init), *first); }
     return init;
 }
 
