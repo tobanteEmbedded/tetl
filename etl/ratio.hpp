@@ -99,6 +99,22 @@ using ratio_add
 template <class R1, class R2>
 using ratio_subtract
     = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
+
+/**
+ * @brief The alias template etl::ratio_divide denotes the result of dividing
+ * two exact rational fractions represented by the etl::ratio specializations R1
+ * and R2.
+ *
+ * @details The result is a etl::ratio specialization etl::ratio<U, V>, such
+ * that given Num == R1::num * R2::den and Denom == R1::den * R2::num (computed
+ * without arithmetic overflow), U is etl::ratio<Num, Denom>::num and V is
+ * etl::ratio<Num, Denom>::den.
+ *
+ * @todo Check overflow.
+ */
+template <class R1, class R2>
+using ratio_divide = ratio<R1::num * R2::den, R1::den * R2::num>;
+
 }  // namespace etl
 
 #endif  // TAETL_RATIO_HPP

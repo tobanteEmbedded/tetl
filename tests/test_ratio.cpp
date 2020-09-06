@@ -85,3 +85,24 @@ TEST_CASE("ratio: ratio_subtract", "[ratio]")
         STATIC_REQUIRE(sum::den == 2);
     }
 }
+
+TEST_CASE("ratio: ratio_divide", "[ratio]")
+{
+    WHEN("1/12 / 1/6 = 1/2")
+    {
+        using one_twelfth = etl::ratio<1, 12>;
+        using one_sixth   = etl::ratio<1, 6>;
+        using res         = etl::ratio_divide<one_twelfth, one_sixth>;
+        STATIC_REQUIRE(res::num == 1);
+        STATIC_REQUIRE(res::den == 2);
+    }
+
+    WHEN("2/3 / 1/6 = 4/1")
+    {
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using res       = etl::ratio_divide<two_third, one_sixth>;
+        STATIC_REQUIRE(res::num == 4);
+        STATIC_REQUIRE(res::den == 1);
+    }
+}
