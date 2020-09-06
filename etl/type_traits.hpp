@@ -31,8 +31,7 @@ DAMAGE.
 #ifndef TAETL_TYPETRAITS_HPP
 #define TAETL_TYPETRAITS_HPP
 
-#include "definitions.hpp"
-#include "intrinsics.hpp"
+#include "detail/type_traits_decl.hpp"
 
 namespace etl
 {
@@ -46,6 +45,9 @@ struct integral_constant
     constexpr operator value_type() const noexcept { return value; }
     constexpr auto operator()() const noexcept -> value_type { return value; }
 };
+
+template <bool B>
+using bool_constant = integral_constant<bool, B>;
 
 using true_type  = integral_constant<bool, true>;
 using false_type = integral_constant<bool, false>;
