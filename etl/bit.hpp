@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_BIT_HPP
 #define TAETL_BIT_HPP
 
-// TAETL
-#include "definitions.hpp"
+#include "etl/definitions.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl
 {
@@ -59,12 +59,12 @@ enum class endian
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @todo Limit (SFINAE) to unsigned types. Fix conversion warnings.
  */
 template <class T>
-[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
+[[nodiscard]] constexpr auto popcount(T input) noexcept
+    -> etl::enable_if_t<etl::is_unsigned_v<T>, int>
 {
-    T count = 0;
+    auto count = T {0};
     while (input)
     {
         count = count + (input & T {1});
