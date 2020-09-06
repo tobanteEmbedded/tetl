@@ -94,7 +94,39 @@ using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 template <typename T>
 auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
 
-// remove_const
+/**
+ * @brief If T is an array of some type X, provides the member typedef type
+ * equal to X, otherwise type is T. Note that if T is a multidimensional array,
+ * only the first dimension is removed. The behavior of a program that adds
+ * specializations for remove_extent is undefined.
+ */
+template <class T>
+struct remove_extent
+{
+    using type = T;
+};
+
+template <class T>
+struct remove_extent<T[]>
+{
+    using type = T;
+};
+
+template <class T, etl::size_t N>
+struct remove_extent<T[N]>
+{
+    using type = T;
+};
+
+template <class T>
+using remove_extent_t = typename remove_extent<T>::type;
+
+/**
+ * @brief Provides the member typedef type which is the same as T, except that
+ * its topmost cv-qualifiers are removed. Removes the topmost const.
+ * @details The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
 template <typename Type>
 struct remove_const
 {
@@ -110,7 +142,13 @@ struct remove_const<Type const>
 template <class T>
 using remove_const_t = typename remove_const<T>::type;
 
-// remove_volatile
+/**
+ * @brief Provides the member typedef type which is the same as T, except that
+ * its topmost cv-qualifiers are removed. Removes the topmost volatile.
+ * @details The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+
 template <typename Type>
 struct remove_volatile
 {
@@ -126,7 +164,13 @@ struct remove_volatile<Type volatile>
 template <class T>
 using remove_volatile_t = typename remove_volatile<T>::type;
 
-// remove_cv
+/**
+ * @brief Provides the member typedef type which is the same as T, except that
+ * its topmost cv-qualifiers are removed. Removes the topmost const, or the
+ * topmost volatile, or both, if present.
+ * @details The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
 template <typename Type>
 struct remove_cv
 {
@@ -157,6 +201,33 @@ struct remove_reference<T&&>
 
 template <class T>
 using remove_reference_t = typename remove_reference<T>::type;
+
+namespace detail
+{
+template <class T>
+auto try_add_pointer(int)
+    -> etl::type_identity<typename etl::remove_reference<T>::type*>;
+template <class T>
+auto try_add_pointer(...) -> etl::type_identity<T>;
+
+}  // namespace detail
+
+/**
+ * @brief If T is a reference type, then provides the member typedef type which
+ * is a pointer to the referred type. Otherwise, if T names an object type, a
+ * function type that is not cv- or ref-qualified, or a (possibly cv-qualified)
+ * void type, provides the member typedef type which is the type T*. Otherwise
+ * (if T is a cv- or ref-qualified function type), provides the member typedef
+ * type which is the type T. The behavior of a program that adds specializations
+ * for add_pointer is undefined.
+ */
+template <class T>
+struct add_pointer : decltype(detail::try_add_pointer<T>(0))
+{
+};
+
+template <class T>
+using add_pointer_t = typename add_pointer<T>::type;
 
 /**
  * @brief If T and U name the same type (taking into account const/volatile
@@ -366,6 +437,44 @@ struct is_floating_point
 template <class T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 
+/**
+ * If T is a const-qualified type (that is, const, or const volatile), provides
+ * the member constant value equal to true. For any other type, value is false.
+ */
+template <class T>
+struct is_const : etl::false_type
+{
+};
+
+template <class T>
+struct is_const<const T> : etl::true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_const_v = is_const<T>::value;
+
+/**
+ * If T is a reference type (lvalue reference or rvalue reference), provides the
+ * member constant value equal true. For any other type, value is false. The
+ * behavior of a program that adds specializations for is_reference or
+ * is_reference_v is undefined.
+ */
+template <class T>
+struct is_reference : etl::false_type
+{
+};
+template <class T>
+struct is_reference<T&> : etl::true_type
+{
+};
+template <class T>
+struct is_reference<T&&> : etl::true_type
+{
+};
+template <class T>
+inline constexpr bool is_reference_v = is_reference<T>::value;
+
 template <class T>
 struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>>
 {
@@ -374,6 +483,13 @@ struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>>
 template <class T>
 inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 
+/**
+ * @brief Checks whether T is an array type. Provides the member constant value
+ * which is equal to true, if T is an array type. Otherwise, value is equal to
+ * false.
+ * @details The behavior of a program that adds specializations for is_array or
+ * is_array_v is undefined.
+ */
 template <class T>
 struct is_array : false_type
 {
@@ -391,6 +507,13 @@ struct is_array<T[N]> : true_type
 
 template <class T>
 inline constexpr bool is_array_v = is_array<T>::value;
+
+template <class T>
+struct is_function
+    : etl::integral_constant<bool, !etl::is_const<const T>::value
+                                       && !etl::is_reference<T>::value>
+{
+};
 
 namespace detail
 {
@@ -616,6 +739,96 @@ struct rank<T[N]>
 
 template <class Type>
 inline constexpr etl::size_t rank_v = rank<Type>::value;
+
+/**
+ * Applies lvalue-to-rvalue, array-to-pointer, and function-to-pointer implicit
+ * conversions to the type T, removes cv-qualifiers, and defines the resulting
+ * type as the member typedef type.
+ */
+template <class T>
+struct decay
+{
+private:
+    using U = typename etl::remove_reference<T>::type;
+
+public:
+    using type = typename etl::conditional<
+        etl::is_array<U>::value, typename etl::remove_extent<U>::type*,
+        typename etl::conditional<
+            etl::is_function<U>::value, typename etl::add_pointer<U>::type,
+            typename etl::remove_cv<U>::type>::type>::type;
+};
+
+template <class T>
+using decay_t = typename decay<T>::type;
+
+/**
+ * @brief Determines the common type among all types T..., that is the type all
+ * T... can be implicitly converted to. If such a type exists (as determined
+ * according to the rules below), the member type names that type. Otherwise,
+ * there is no member type.
+ * @ref https://en.cppreference.com/w/cpp/types/common_type
+ */
+// primary template (used for zero types)
+template <typename...>
+struct common_type
+{
+};
+
+//////// one type
+template <class T>
+struct common_type<T> : common_type<T, T>
+{
+};
+
+namespace detail
+{
+template <class T1, class T2>
+using cond_t = decltype(false ? etl::declval<T1>() : etl::declval<T2>());
+
+template <class T1, class T2, class = void>
+struct common_type_2_impl
+{
+};
+
+template <class T1, class T2>
+struct common_type_2_impl<T1, T2, void_t<cond_t<T1, T2>>>
+{
+    using type = typename etl::decay<cond_t<T1, T2>>::type;
+};
+
+template <class AlwaysVoid, class T1, class T2, class... R>
+struct common_type_multi_impl
+{
+};
+
+template <class T1, class T2, class... R>
+struct common_type_multi_impl<void_t<typename common_type<T1, T2>::type>, T1,
+                              T2, R...>
+    : common_type<typename common_type<T1, T2>::type, R...>
+{
+};
+}  // namespace detail
+
+//////// two types
+
+template <class T1, class T2>
+struct common_type<T1, T2>
+    : detail::common_type_2_impl<typename etl::decay<T1>::type,
+                                 typename etl::decay<T2>::type>
+{
+};
+
+//////// 3+ types
+template <class T1, class T2, class... R>
+struct common_type<T1, T2, R...>
+    : detail::common_type_multi_impl<void, T1, T2, R...>
+{
+};
+
+template <class... T>
+using common_type_t = typename common_type<T...>::type;
+
 }  // namespace etl
 
 #endif  // TAETL_TYPETRAITS_HPP
