@@ -86,6 +86,21 @@ template <typename M, typename N>
 }
 
 /**
+ * @brief Computes the least common multiple of the integers m and n.
+ *
+ * @return If either m or n is zero, returns zero. Otherwise, returns the least
+ * common multiple of |m| and |n|.
+ */
+template <class M, class N>
+[[nodiscard]] constexpr auto lcm(M m, N n) -> etl::enable_if_t<
+    etl::is_integral_v<
+        M> && !etl::is_same_v<M, bool> && etl::is_integral_v<N> && !etl::is_same_v<N, bool>,
+    etl::common_type_t<M, N>>
+{
+    return (m * n) / gcd(m, n);
+}
+
+/**
  * @brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  * @details T is arithmentic type other than bool

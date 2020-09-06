@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_CHRONO_HPP
 #define TAETL_CHRONO_HPP
 
-#include "etl/definitions.hpp"
 #include "etl/ratio.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl::chrono
 {
@@ -211,6 +211,26 @@ using years = duration<etl::int32_t, etl::ratio<31556952>>;
 
 namespace etl
 {
+/**
+ * @brief Exposes the type named type, which is the common type of two
+ * etl::chrono::durations, whose period is the greatest common divisor of
+ * Period1 and Period2.
+ *
+ * @details The period of the resulting duration can be computed by forming a
+ * ratio of the greatest common divisor of Period1::num and Period2::num and the
+ * least common multiple of Period1::den and Period2::den.
+ */
+template <class Rep1, class Period1, class Rep2, class Period2>
+
+struct common_type<etl::chrono::duration<Rep1, Period1>,
+                   etl::chrono::duration<Rep2, Period2>>
+{
+    using type
+        = etl::chrono::duration<typename etl::common_type<Rep1, Rep2>::type,
+                                ratio<etl::gcd(Period1::num, Period2::num),
+                                      etl::lcm(Period1::den, Period2::den)>>;
+};
+
 inline namespace literals
 {
 inline namespace chrono_literals

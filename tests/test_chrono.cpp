@@ -52,6 +52,29 @@ TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
     REQUIRE(etl::chrono::seconds {}.count() == 0);
 }
 
+namespace
+{
+template <typename T, typename S>
+auto durationDiff(const T& t, const S& s) ->
+    typename std::common_type<T, S>::type
+{
+    typedef typename std::common_type<T, S>::type Common;
+    return Common(t) - Common(s);
+}
+}  // namespace
+TEST_CASE("chrono/duration: common_type<duration>", "[chrono]")
+{
+    using milliseconds = std::chrono::milliseconds;
+    using microseconds = std::chrono::microseconds;
+
+    auto ms = milliseconds {30};
+    REQUIRE(ms.count() == 30);
+    auto us = microseconds {1100};
+    REQUIRE(us.count() == 1100);
+    auto diff = durationDiff(ms, us);
+    REQUIRE(diff.count() == 28900);
+}
+
 TEST_CASE("chrono/duration: operator\"\"_h (hour)", "[chrono]")
 {
     using namespace etl::literals;
