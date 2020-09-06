@@ -80,10 +80,11 @@ template <typename Type>
 /**
  * @brief Computes the greatest common divisor of the integers m and n.
  *
- * @todo Actual return type is etl::common_type. Needs to be implemented.
+ * @return If both m and n are zero, returns zero. Otherwise, returns the
+ * greatest common divisor of |m| and |n|.
  */
 template <typename M, typename N>
-[[nodiscard]] constexpr auto gcd(M m, N n) noexcept
+[[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {
     if (n == 0) { return m; }
     return gcd(n, m % n);
@@ -92,11 +93,11 @@ template <typename M, typename N>
 /**
  * @brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
- * @detail T is arithmentic type other than bool
+ * @details T is arithmentic type other than bool
  */
 template <typename Integer>
-constexpr auto midpoint(Integer a, Integer b) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, Integer>
+constexpr auto midpoint(Integer a, Integer b) noexcept -> etl::enable_if_t<
+    etl::is_integral_v<Integer> && !etl::is_same_v<Integer, bool>, Integer>
 {
     using U  = etl::make_unsigned_t<Integer>;
     int sign = 1;
