@@ -113,3 +113,16 @@ TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t,
     REQUIRE(etl::countl_one(etl::uint16_t {0b1000'0000'1111'1111}) == 1);
     REQUIRE(etl::countl_one(etl::uint16_t {0b1111'0000'1111'1111}) == 4);
 }
+
+TEMPLATE_TEST_CASE("bit: bit_width", "[bit]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
+{
+    REQUIRE(etl::bit_width(TestType {0}) == 0);
+    REQUIRE(etl::bit_width(TestType {1}) == 1);
+    REQUIRE(etl::bit_width(TestType {2}) == 2);
+    REQUIRE(etl::bit_width(TestType {3}) == 2);
+    REQUIRE(etl::bit_width(TestType {4}) == 3);
+    REQUIRE(etl::bit_width(TestType {5}) == 3);
+    REQUIRE(etl::bit_width(TestType {6}) == 3);
+    REQUIRE(etl::bit_width(TestType {7}) == 3);
+}

@@ -157,6 +157,22 @@ template <typename T>
 
     return res;
 }
+
+/**
+ * @brief If x is not zero, calculates the number of bits needed to store the
+ * value x, that is, 1+⌊log2(x)⌋. If x is zero, returns zero.
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ */
+template <typename T>
+[[nodiscard]] constexpr auto bit_width(T x) noexcept
+    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+{
+    return etl::numeric_limits<T>::digits - etl::countl_zero(x);
+}
+
 }  // namespace etl
 
 #endif  // TAETL_BIT_HPP
