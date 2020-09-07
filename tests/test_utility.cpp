@@ -42,6 +42,21 @@ TEMPLATE_TEST_CASE("utility: exchange", "[utility]", etl::uint8_t, etl::int8_t,
     REQUIRE(c == TestType {43});
 }
 
+TEMPLATE_TEST_CASE("utility: as_const", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto original = TestType {42};
+    REQUIRE_FALSE(etl::is_const_v<decltype(original)>);
+
+    auto const& ref = etl::as_const(original);
+    REQUIRE(etl::is_const_v<etl::remove_reference_t<decltype(ref)>>);
+
+    REQUIRE(original == 42);
+    REQUIRE(original == ref);
+}
+
 TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)

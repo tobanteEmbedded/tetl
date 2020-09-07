@@ -96,6 +96,23 @@ template <class T, class U = T>
     return old_value;
 }
 
+/**
+ * @brief Forms lvalue reference to const type of t.
+ */
+template <class T>
+[[nodiscard]] constexpr auto as_const(T& t) noexcept -> std::add_const_t<T>&
+{
+    return t;
+}
+
+/**
+ * @brief Const rvalue reference overload is deleted to disallow rvalue
+ * arguments.
+ */
+template <class T>
+constexpr auto as_const(const T&&) -> void
+    = delete;
+
 namespace detail
 {
 template <class T>
