@@ -65,6 +65,28 @@ public:
         return etl::numeric_limits<Rep>::max();
     }
 };
+
+/**
+ * @brief The etl::chrono::treat_as_floating_point trait helps determine if a
+ * duration can be converted to another duration with a different tick period.
+ *
+ * @details Implicit conversions between two durations normally depends on the
+ * tick period of the durations. However, implicit conversions can happen
+ * regardless of tick period if
+ * etl::chrono::treat_as_floating_point<Rep>::value == true.
+ *
+ * @note etl::chrono::treat_as_floating_point may be specialized for
+ * program-defined types.
+ */
+template <class Rep>
+struct treat_as_floating_point : etl::is_floating_point<Rep>
+{
+};
+
+template <class Rep>
+inline constexpr bool treat_as_floating_point_v
+    = treat_as_floating_point<Rep>::value;
+
 /**
  * @brief Class template etl::chrono::duration represents a time interval.
  *
@@ -94,30 +116,64 @@ public:
      * @brief Constructs a new duration from one of several optional data
      * sources. The default constructor is defaulted.
      */
-    constexpr duration() = default;
+    constexpr duration() noexcept = default;
 
     /**
      * @brief Constructs a new duration from one of several optional data
      * sources. The copy constructor is defaulted (makes a bitwise copy of the
      * tick count).
      */
-    duration(const duration&) = default;
+    duration(const duration&) noexcept = default;
 
     /**
-     * @brief Constructs a new duration from one of several optional data
-     * sources.
+     * @brief Constructs a duration with r ticks.
+     *
+     * @details  Note that this constructor only participates in overload
+     * resolution if const Rep2& (the argument type) is implicitly convertible
+     * to rep (the type of this duration's ticks) and
+     * treat_as_floating_point<rep>::value is true, or
+     * treat_as_floating_point<Rep2>::value is false.
+     *
+     * That is, a duration with an integer tick count cannot be constructed from
+     * a floating-point value, but a duration with a floating-point tick count
+     * can be constructed from an integer value
      */
-    template <class Rep2>
-    constexpr explicit duration(const Rep2& r) : data_(r)
+    template <
+        class Rep2,
+        typename = typename etl::enable_if_t<
+            treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>>>
+    constexpr explicit duration(const Rep2& r) noexcept : data_(r)
     {
     }
 
-    // /**
-    //  * @brief Constructs a new duration from one of several optional data
-    //  * sources.
-    //  */
-    // template <class Rep2, class Period2>
-    // constexpr duration(const duration<Rep2, Period2>& d)
+    /**
+     * @brief  Constructs a duration by converting d to an appropriate period
+     * and tick count, as if by duration_cast<duration>(d).count().
+     *
+     * @details In order to prevent truncation during conversion, this
+     * constructor only participates in overload resolution if computation of
+     * the conversion factor (by std::ratio_divide<Period2, Period>) does not
+     * overflow and:
+     *
+     * treat_as_floating_point<rep>::value == true
+     *
+     * or both:
+     *
+     * ratio_divide<Period2, period>::den == 1, and
+     * treat_as_floating_point<Rep2>::value == false
+     *
+     * That is, either the duration uses floating-point ticks, or Period2 is
+     * exactly divisible by period
+     */
+    template <class Rep2, class Period2,
+              typename = typename etl::enable_if_t<
+                  (treat_as_floating_point_v<rep> == true)
+                  || (ratio_divide<Period2, period>::den == 1
+                      && !treat_as_floating_point_v<Rep2>)>>
+    constexpr duration(const duration<Rep2, Period2>& other) noexcept
+        : data_(other.count() * ratio_divide<Period2, period>::num)
+    {
+    }
 
     /**
      * @brief Assigns the contents of one duration to another.
@@ -190,22 +246,48 @@ using hours = duration<etl::int32_t, etl::ratio<3600>>;
 /**
  * @brief Signed integer type of at least 25 bits.
  */
-using days = duration<etl::int32_t, etl::ratio<86400>>;
+using days = duration<etl::int32_t, etl::ratio<86'400>>;
 
 /**
  * @brief Signed integer type of at least 22 bits.
  */
-using weeks = duration<etl::int32_t, etl::ratio<604800>>;
+using weeks = duration<etl::int32_t, etl::ratio<604'800>>;
 
 /**
  * @brief Signed integer type of at least 20 bits.
  */
-using months = duration<etl::int32_t, etl::ratio<2629746>>;
+using months = duration<etl::int32_t, etl::ratio<2'629'746>>;
 
 /**
  * @brief Signed integer type of at least 17 bits.
  */
-using years = duration<etl::int32_t, etl::ratio<31556952>>;
+using years = duration<etl::int32_t, etl::ratio<31'556'952>>;
+
+namespace detail
+{
+template <class T>
+struct is_duration : etl::false_type
+{
+};
+template <class Rep, class Period>
+struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type
+{
+};
+}  // namespace detail
+
+// /**
+//  * @brief Returns the greatest duration t representable in ToDuration that is
+//  * less or equal to d. The function does not participate in the overload
+//  * resolution unless ToDuration is an instance of etl::chrono::duration.
+//  */
+// template <class To, class Rep, class Period,
+//           class = etl::enable_if_t<detail::is_duration<To> {}>>
+// constexpr auto floor(const duration<Rep, Period>& d) -> To
+// {
+//     auto const t = etl::chrono::duration_cast<To>(d);
+//     if (t > d) { return t - To {1}; }
+//     return t;
+// }
 
 }  // namespace etl::chrono
 

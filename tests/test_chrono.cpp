@@ -36,11 +36,50 @@ TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t,
     etl::ignore_unused(d1);
 }
 
+TEST_CASE("chrono/duration: construct(ratio)", "[chrono]")
+{
+    using etl::chrono::milliseconds;
+    using etl::chrono::minutes;
+    using etl::chrono::seconds;
+
+    SECTION("seconds to milliseconds")
+    {
+        auto const sec   = seconds {1};
+        auto const milli = milliseconds {sec};
+        REQUIRE(milli.count() == 1'000);
+    }
+
+    SECTION("seconds to minutes")
+    {
+        auto const minute = minutes {1};
+        auto const sec    = seconds {minute};
+        REQUIRE(sec.count() == 60);
+    }
+
+    SECTION("float to float")
+    {
+        using seconds_f   = etl::chrono::duration<float, etl::ratio<1>>;
+        using minutes_f   = etl::chrono::duration<float, etl::ratio<60>>;
+        auto const minute = minutes_f {1.0f};
+        auto const sec    = seconds_f {minute};
+        REQUIRE(sec.count() == 60.0f);
+    }
+
+    // SECTION("double to int")
+    // {
+    //     using seconds_f  = etl::chrono::duration<double, etl::ratio<1>>;
+    //     auto const sec   = seconds_f {1.0f};
+    //     auto const milli = milliseconds {sec};
+    //     REQUIRE(sec.count() == 60);
+    // }
+}
+
 TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
     using duration_t = etl::chrono::duration<TestType>;
     REQUIRE(duration_t::max().count() > duration_t::min().count());
+    REQUIRE(duration_t::max().count() > duration_t::zero().count());
 }
 
 TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
@@ -52,28 +91,31 @@ TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
     REQUIRE(etl::chrono::seconds {}.count() == 0);
 }
 
-namespace
-{
-template <typename T, typename S>
-auto durationDiff(const T& t, const S& s) ->
-    typename std::common_type<T, S>::type
-{
-    typedef typename std::common_type<T, S>::type Common;
-    return Common(t) - Common(s);
-}
-}  // namespace
 TEST_CASE("chrono/duration: common_type<duration>", "[chrono]")
 {
-    using milliseconds = std::chrono::milliseconds;
-    using microseconds = std::chrono::microseconds;
+    SECTION("ms & us")
+    {
+        using ms = etl::chrono::milliseconds;
+        using us = etl::chrono::microseconds;
+        STATIC_REQUIRE(etl::is_same_v<etl::common_type<ms, us>::type, us>);
+        STATIC_REQUIRE(etl::is_same_v<etl::common_type<us, ms>::type, us>);
+    }
 
-    auto ms = milliseconds {30};
-    REQUIRE(ms.count() == 30);
-    auto us = microseconds {1100};
-    REQUIRE(us.count() == 1100);
-    auto diff = durationDiff(ms, us);
-    REQUIRE(diff.count() == 28900);
+    SECTION("ms & ns")
+    {
+        using ms = etl::chrono::milliseconds;
+        using ns = etl::chrono::nanoseconds;
+        STATIC_REQUIRE(etl::is_same_v<etl::common_type<ms, ns>::type, ns>);
+        STATIC_REQUIRE(etl::is_same_v<etl::common_type<ns, ms>::type, ns>);
+    }
 }
+
+// TEST_CASE("chrono/duration: floor", "[chrono]")
+// {
+//     using ms = etl::chrono::milliseconds;
+//     using us = etl::chrono::microseconds;
+//     REQUIRE(etl::chrono::floor<us>(ms {30}).count() == us {30}.count());
+// }
 
 TEST_CASE("chrono/duration: operator\"\"_h (hour)", "[chrono]")
 {
