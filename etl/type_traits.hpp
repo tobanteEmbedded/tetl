@@ -766,30 +766,30 @@ inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
  * trivial. For the purposes of this check, the call to etl::declval is
  * considered trivial.
  */
-template <class T>
+template <class T, class... Args>
 struct is_trivially_constructible
     : etl::integral_constant<bool, TAETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
 {
 };
 
-template <class T>
+template <class T, class... Args>
 inline constexpr bool is_trivially_constructible_v
-    = is_trivially_constructible<T>::value;
+    = is_trivially_constructible<T, Args...>::value;
 
 /**
  * @brief The variable definition does not call any operation that is not
  * trivial. For the purposes of this check, the call to etl::declval is
  * considered trivial.
  */
-template <class T>
+template <class T, class... Args>
 struct is_nothrow_constructible
     : etl::integral_constant<bool, TAETL_IS_NOTHROW_CONSTRUCTIBLE(T)>
 {
 };
 
-template <class T>
+template <class T, class... Args>
 inline constexpr bool is_nothrow_constructible_v
-    = is_nothrow_constructible<T>::value;
+    = is_nothrow_constructible<T, Args...>::value;
 
 /**
  * @brief If etl::is_constructible<T>::value is true, provides the member
@@ -858,6 +858,82 @@ inline constexpr bool is_nothrow_default_constructible_v
     = is_nothrow_default_constructible<T>::value;
 
 /**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
+ or
+ * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
+ * member constant value equal to false. Otherwise, provides a member
+ constant
+ * value equal to etl::is_constructible<T, const T&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * array of unknown bound. Otherwise, the behavior is undefined. If an
+ * instantiation of a template above depends, directly or indirectly, on an
+ * incomplete type, and that instantiation could yield a different result if
+ * that type were hypothetically completed, the behavior is undefined.
+ *
+ * The behavior of a program that adds specializations for any of the
+ templates
+ * described on this page is undefined.
+ */
+template <class T>
+struct is_copy_constructible
+    : etl::is_constructible<T, typename etl::add_lvalue_reference<
+                                   typename etl::add_const<T>::type>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
+
+/**
+ * @brief Same as copy, but uses etl::is_trivially_constructible<T, const T&>.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * array of unknown bound. Otherwise, the behavior is undefined. If an
+ * instantiation of a template above depends, directly or indirectly, on an
+ * incomplete type, and that instantiation could yield a different result if
+ * that type were hypothetically completed, the behavior is undefined.
+ *
+ * The behavior of a program that adds specializations for any of the templates
+ * described on this page is undefined.
+ */
+template <class T>
+struct is_trivially_copy_constructible
+    : etl::is_trivially_constructible<
+          T, typename etl::add_lvalue_reference_t<typename etl::add_const_t<T>>>
+{
+};
+
+template <class T>
+inline constexpr bool is_trivially_copy_constructible_v
+    = is_trivially_copy_constructible<T>::value;
+
+/**
+ * @brief Same as copy, but uses etl::is_nothrow_constructible<T, const T&>.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * array of unknown bound. Otherwise, the behavior is undefined. If an
+ * instantiation of a template above depends, directly or indirectly, on an
+ * incomplete type, and that instantiation could yield a different result if
+ * that type were hypothetically completed, the behavior is undefined.
+ *
+ * The behavior of a program that adds specializations for any of the
+ templates
+ * described on this page is undefined.
+ */
+template <class T>
+struct is_nothrow_copy_constructible
+    : etl::is_nothrow_constructible<T,
+                                    typename etl::add_lvalue_reference<
+                                        typename etl::add_const<T>::type>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_copy_constructible_v
+    = is_nothrow_copy_constructible<T>::value;
+
+/**
  * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
@@ -871,6 +947,44 @@ struct is_move_constructible
 
 template <class T>
 inline constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
+ or
+ * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
+ * member constant value equal to false. Otherwise, provides a member
+ constant
+ * value equal to etl::is_trivially_constructible<T, T&&>::value.
+ */
+template <class T>
+struct is_trivially_move_constructible
+    : etl::is_trivially_constructible<
+          T, typename etl::add_rvalue_reference<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_trivially_move_constructible_v
+    = is_trivially_move_constructible<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
+ or
+ * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
+ * member constant value equal to false. Otherwise, provides a member
+ constant
+ * value equal to etl::is_nothrow_constructible<T, T&&>::value.
+ */
+template <class T>
+struct is_nothrow_move_constructible
+    : etl::is_nothrow_constructible<T,
+                                    typename etl::add_rvalue_reference<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_move_constructible_v
+    = is_nothrow_move_constructible<T>::value;
 
 namespace detail
 {
