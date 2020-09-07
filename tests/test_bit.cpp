@@ -80,14 +80,22 @@ TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t,
     REQUIRE_FALSE(etl::has_single_bit(TestType {3 << 4}));
 }
 
-template <typename T>
-auto countl_zero(T val) -> int
+TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
 {
-    return val ? countl_zero<T>(static_cast<T>(val >> 1)) - 1
-               : etl::numeric_limits<T>::digits;
-}
+    REQUIRE(etl::countl_zero(TestType {0})
+            == etl::numeric_limits<TestType>::digits);
 
-// TEST_CASE("bit: countl_zero", "[bit]")
-// {
-//     REQUIRE(countl_zero(etl::uint8_t {0b1111'1111}) == 8);
-// }
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b1111'1111}) == 0);
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b0111'1111}) == 1);
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b0011'1111}) == 2);
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b0001'1111}) == 3);
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b0000'1111}) == 4);
+    REQUIRE(etl::countl_zero(etl::uint8_t {0b0000'0000}) == 8);
+
+    REQUIRE(etl::countl_zero(etl::uint16_t {0b1000'0000'1111'1111}) == 0);
+    REQUIRE(etl::countl_zero(etl::uint16_t {0b0100'0000'1111'1111}) == 1);
+    REQUIRE(etl::countl_zero(etl::uint16_t {0b0010'0000'1111'1111}) == 2);
+    REQUIRE(etl::countl_zero(etl::uint16_t {0b0001'0000'1111'1111}) == 3);
+    REQUIRE(etl::countl_zero(etl::uint16_t {0b0000'0000'0000'0001}) == 15);
+}

@@ -248,7 +248,7 @@ public:
     static constexpr auto epsilon() noexcept -> unsigned char { return {}; }
     static constexpr auto round_error() noexcept -> unsigned char { return {}; }
 
-    static constexpr int digits = CHAR_BIT - 1;
+    static constexpr int digits = CHAR_BIT;
     // static constexpr int digits10     = digits * etl::log10(2);
     static constexpr int max_digits10 = 0;
 

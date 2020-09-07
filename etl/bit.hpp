@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_BIT_HPP
 
 #include "etl/definitions.hpp"
+#include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl
@@ -52,6 +53,19 @@ enum class endian
 #endif
 };
 
+namespace detail
+{
+template <class T>
+struct is_unsigned_integer
+    : etl::integral_constant<
+          bool,
+          is_unsigned_v<
+              T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
+{
+};
+
+}  // namespace detail
+
 /**
  * @brief Returns the number of 1 bits in the value of x.
  *
@@ -61,10 +75,8 @@ enum class endian
  *
  */
 template <class T>
-[[nodiscard]] constexpr auto popcount(T input) noexcept -> etl::enable_if_t<
-    is_unsigned_v<
-        T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>),
-    int>
+[[nodiscard]] constexpr auto popcount(T input) noexcept
+    -> etl::enable_if_t<detail::is_unsigned_integer<T>::value, int>
 {
     auto count = T {0};
     while (input)
@@ -85,12 +97,40 @@ template <class T>
  * @return true if x is an integral power of two; otherwise false.
  */
 template <typename T>
-constexpr auto has_single_bit(T x) noexcept -> enable_if_t<
-    is_unsigned_v<
-        T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>),
-    bool>
+[[nodiscard]] constexpr auto has_single_bit(T x) noexcept
+    -> enable_if_t<detail::is_unsigned_integer<T>::value, bool>
 {
     return popcount(x) == 1;
+}
+
+/**
+ * @brief Returns the number of consecutive 0 bits in the value of x, starting
+ * from the most significant bit ("left").
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @return The number of consecutive 0 bits in the value of x, starting from the
+ * most significant bit.
+ */
+template <typename T>
+[[nodiscard]] constexpr auto countl_zero(T x)
+    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+{
+    if (x == T {0}) { return etl::numeric_limits<T>::digits; }
+
+    // Keep shifting x by one until leftmost bit
+    // does not become 1.
+    auto const total_bits = sizeof(x) * 8;
+    int res               = 0;
+    while (!(x & (T {1} << (total_bits - 1))))
+    {
+        x = (x << T {1});
+        res++;
+    }
+
+    return res;
 }
 }  // namespace etl
 
