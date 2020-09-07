@@ -376,6 +376,18 @@ next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
     return it;
 }
 
+/**
+ * @brief Return the nth predecessor of iterator it.
+ */
+template <class BidirIt>
+[[nodiscard]] constexpr auto
+prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1)
+    -> BidirIt
+{
+    etl::advance(it, -n);
+    return it;
+}
+
 }  // namespace etl
 
 #endif  // TAETL_SPAN_HPP
