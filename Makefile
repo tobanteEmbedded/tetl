@@ -66,7 +66,7 @@ clean:
 
 .PHONY: stats
 stats:
-	cloc --by-file --json cmake docs etl examples fuzzing tests README.md
+	cloc --by-file cmake docs etl examples fuzzing tests README.md
 
 .PHONY: format
 format:
