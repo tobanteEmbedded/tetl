@@ -211,6 +211,24 @@ public:
     }
 
     /**
+     * @brief Implements unary plus and unary minus for the durations.
+     */
+    [[nodiscard]] constexpr auto operator+() const
+        -> etl::common_type_t<duration>
+    {
+        return etl::common_type_t<duration>(*this);
+    }
+
+    /**
+     * @brief Implements unary plus and unary minus for the durations.
+     */
+    [[nodiscard]] constexpr auto operator-() const
+        -> etl::common_type_t<duration>
+    {
+        return etl::common_type_t<duration>(-data_);
+    }
+
+    /**
      * @brief Increments or decrements the number of ticks for this duration.
      * Equivalent to ++data_; return *this;
      */
@@ -408,6 +426,18 @@ constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
 //     if (t > d) { return t - To {1}; }
 //     return t;
 // }
+
+/**
+ * @brief Returns the absolute value of the duration d. Specifically, if d >=
+ * d.zero(), return d, otherwise return -d. The function does not participate in
+ * the overload resolution unless etl::numeric_limits<Rep>::is_signed is true.
+ */
+template <typename Rep, typename Period,
+          typename = etl::enable_if_t<numeric_limits<Rep>::is_signed>>
+constexpr auto abs(duration<Rep, Period> d) -> duration<Rep, Period>
+{
+    return d >= d.zero() ? d : -d;
+}
 
 }  // namespace etl::chrono
 

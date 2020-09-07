@@ -225,6 +225,15 @@ TEST_CASE("chrono/duration: operator>=", "[chrono]")
     REQUIRE(seconds {1} >= milliseconds {1'000});
 }
 
+TEST_CASE("chrono/duration: abs", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+
+    REQUIRE(etl::chrono::abs(microseconds {-10}) == microseconds {10});
+    REQUIRE(etl::chrono::abs(milliseconds {-143}) == milliseconds {143});
+}
+
 TEST_CASE("chrono/duration: duration_cast", "[chrono]")
 {
     using etl::chrono::duration_cast;
