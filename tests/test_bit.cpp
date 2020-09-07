@@ -99,3 +99,17 @@ TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t,
     REQUIRE(etl::countl_zero(etl::uint16_t {0b0001'0000'1111'1111}) == 3);
     REQUIRE(etl::countl_zero(etl::uint16_t {0b0000'0000'0000'0001}) == 15);
 }
+
+TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
+{
+    REQUIRE(etl::countl_one(TestType {etl::numeric_limits<TestType>::max()})
+            == etl::numeric_limits<TestType>::digits);
+
+    REQUIRE(etl::countl_one(etl::uint8_t {0b0000'0000}) == 0);
+    REQUIRE(etl::countl_one(etl::uint8_t {0b1111'1111}) == 8);
+    REQUIRE(etl::countl_one(etl::uint8_t {0b1110'1111}) == 3);
+
+    REQUIRE(etl::countl_one(etl::uint16_t {0b1000'0000'1111'1111}) == 1);
+    REQUIRE(etl::countl_one(etl::uint16_t {0b1111'0000'1111'1111}) == 4);
+}

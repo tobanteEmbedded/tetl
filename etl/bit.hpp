@@ -115,16 +115,42 @@ template <typename T>
  * most significant bit.
  */
 template <typename T>
-[[nodiscard]] constexpr auto countl_zero(T x)
+[[nodiscard]] constexpr auto countl_zero(T x) noexcept
     -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
 {
+    auto const total_bits = etl::numeric_limits<T>::digits;
     if (x == T {0}) { return etl::numeric_limits<T>::digits; }
 
-    // Keep shifting x by one until leftmost bit
-    // does not become 1.
-    auto const total_bits = sizeof(x) * 8;
-    int res               = 0;
+    int res = 0;
     while (!(x & (T {1} << (total_bits - 1))))
+    {
+        x = (x << T {1});
+        res++;
+    }
+
+    return res;
+}
+
+/**
+ * @brief Returns the number of consecutive 1 ("one") bits in the value of x,
+ * starting from the most significant bit ("left").
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @return The number of consecutive 1 bits in the value of x, starting from the
+ * most significant bit.
+ */
+template <typename T>
+[[nodiscard]] constexpr auto countl_one(T x) noexcept
+    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+{
+    auto const total_bits = etl::numeric_limits<T>::digits;
+    if (x == etl::numeric_limits<T>::max()) { return total_bits; }
+
+    int res = 0;
+    while (x & (T {1} << (total_bits - 1)))
     {
         x = (x << T {1});
         res++;

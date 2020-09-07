@@ -527,7 +527,7 @@ public:
     static constexpr auto epsilon() noexcept -> unsigned long { return {}; }
     static constexpr auto round_error() noexcept -> unsigned long { return {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(int);
+    static constexpr int digits = CHAR_BIT * sizeof(unsigned long);
     // static constexpr int digits10     = digits * etl::log10(2);
     static constexpr int max_digits10 = 0;
 
@@ -629,7 +629,7 @@ public:
         return {};
     }
 
-    static constexpr int digits = CHAR_BIT * sizeof(int);
+    static constexpr int digits = CHAR_BIT * sizeof(unsigned long long);
     // static constexpr int digits10     = digits * etl::log10(2);
     static constexpr int max_digits10 = 0;
 
