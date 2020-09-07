@@ -27,6 +27,7 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/string_view.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -134,5 +135,42 @@ TEMPLATE_TEST_CASE("iterator: prev", "[iterator]", char, int, float)
         auto* n2 = etl::prev(n1);
         REQUIRE(n2 != end(arr));
         REQUIRE(n2 == &arr[3]);
+    }
+}
+
+TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
+                   float)
+{
+    SECTION("insert rvalue")
+    {
+        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto iter = etl::back_inserter(vec);
+        REQUIRE(vec.size() == 0);
+        iter = TestType {1};
+        REQUIRE(vec.size() == 1);
+    }
+
+    SECTION("insert lvalue")
+    {
+        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto iter = etl::back_inserter(vec);
+        REQUIRE(vec.size() == 0);
+        auto const val = TestType {42};
+        iter           = val;
+        REQUIRE(vec.size() == 1);
+    }
+
+    SECTION("increment/decrement/dereference should not change state (no-op)")
+    {
+        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto iter = etl::back_inserter(vec);
+        REQUIRE(vec.size() == 0);
+        auto const val = TestType {42};
+        iter           = val;
+        REQUIRE(vec.size() == 1);
+        REQUIRE(&++iter == &iter);
+        REQUIRE(vec.size() == 1);
+        *iter;
+        REQUIRE(vec.size() == 1);
     }
 }
