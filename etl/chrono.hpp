@@ -210,6 +210,38 @@ public:
         return duration(etl::chrono::duration_values<rep>::max());
     }
 
+    /**
+     * @brief Increments or decrements the number of ticks for this duration.
+     * Equivalent to ++data_; return *this;
+     */
+    constexpr auto operator++() -> duration&
+    {
+        ++data_;
+        return *this;
+    }
+
+    /**
+     * @brief Increments or decrements the number of ticks for this duration.
+     * Equivalent to return duration(data_++)
+     */
+    constexpr auto operator++(int) -> duration { return duration(data_++); }
+
+    /**
+     * @brief Increments or decrements the number of ticks for this duration.
+     * Equivalent to --data_; return *this;
+     */
+    constexpr auto operator--() -> duration&
+    {
+        --data_;
+        return *this;
+    }
+
+    /**
+     * @brief Increments or decrements the number of ticks for this duration.
+     * Equivalent to return duration(data_--);
+     */
+    constexpr auto operator--(int) -> duration { return duration(data_--); }
+
 private:
     rep data_ {};
 };

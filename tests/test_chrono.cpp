@@ -65,13 +65,13 @@ TEST_CASE("chrono/duration: construct(ratio)", "[chrono]")
         REQUIRE(sec.count() == 60.0f);
     }
 
-    // SECTION("double to int")
-    // {
-    //     using seconds_f  = etl::chrono::duration<double, etl::ratio<1>>;
-    //     auto const sec   = seconds_f {1.0f};
-    //     auto const milli = milliseconds {sec};
-    //     REQUIRE(sec.count() == 60);
-    // }
+    SECTION("double to int")
+    {
+        using milliseconds_f = etl::chrono::duration<double, etl::milli>;
+        auto const sec       = seconds {1};
+        auto const milli     = milliseconds_f(sec);
+        REQUIRE(milli.count() == 1'000.0);
+    }
 }
 
 TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t,
@@ -80,6 +80,26 @@ TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t,
     using duration_t = etl::chrono::duration<TestType>;
     REQUIRE(duration_t::max().count() > duration_t::min().count());
     REQUIRE(duration_t::max().count() > duration_t::zero().count());
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: operator++ & operator--", "[chrono]",
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t)
+{
+    using duration_t = etl::chrono::duration<TestType>;
+    auto dur         = duration_t {0};
+    REQUIRE(dur++.count() == 0);
+    REQUIRE(dur.count() == 1);
+    REQUIRE(dur--.count() == 1);
+    REQUIRE(dur.count() == 0);
+    ++dur;
+    REQUIRE(dur.count() == 1);
+    --dur;
+    REQUIRE(dur.count() == 0);
+
+    etl::chrono::hours h(1);
+    etl::chrono::minutes m = ++h;
+    m--;
+    REQUIRE(m.count() == 119);
 }
 
 TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
