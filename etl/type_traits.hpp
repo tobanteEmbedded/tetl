@@ -587,6 +587,52 @@ struct is_member_pointer
 template <class T>
 inline constexpr bool is_member_pointer_v = is_member_pointer<T>::value;
 
+namespace detail
+{
+template <class T>
+struct is_member_function_pointer_helper : etl::false_type
+{
+};
+
+template <class T, class U>
+struct is_member_function_pointer_helper<T U::*> : etl::is_function<T>
+{
+};
+
+}  // namespace detail
+
+/**
+ * @brief Checks whether T is a non-static member function pointer. Provides the
+ * member constant value which is equal to true, if T is a non-static member
+ * function pointer type. Otherwise, value is equal to false.
+ */
+template <class T>
+struct is_member_function_pointer : detail::is_member_function_pointer_helper<
+                                        typename etl::remove_cv<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_member_function_pointer_v
+    = is_member_function_pointer<T>::value;
+
+/**
+ * @brief Checks whether T is a non-static member object pointer. Provides the
+ * member constant value which is equal to true, if T is a non-static member
+ * object pointer type. Otherwise, value is equal to false.
+ */
+template <class T>
+struct is_member_object_pointer
+    : etl::integral_constant<bool,
+                             etl::is_member_pointer<T>::value
+                                 && !etl::is_member_function_pointer<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_member_object_pointer_v
+    = is_member_object_pointer<T>::value;
+
 /**
  * @brief If T is an arithmetic type (that is, an integral type or a
  * floating-point type) or a cv-qualified version thereof, provides the member
@@ -604,6 +650,11 @@ struct is_arithmetic
 template <class T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
 
+/**
+ * @brief If T is a scalar type (that is a possibly cv-qualified arithmetic,
+ * pointer, pointer to member, enumeration, or etl::nullptr_t type), provides
+ * the member constant value equal true. For any other type, value is false.
+ */
 template <class T>
 struct is_scalar
     : etl::integral_constant<bool, etl::is_arithmetic<T>::value
@@ -617,6 +668,11 @@ struct is_scalar
 template <class T>
 inline constexpr bool is_scalar_v = is_scalar<T>::value;
 
+/**
+ * @brief If T is an object type (that is any possibly cv-qualified type other
+ * than function, reference, or void types), provides the member constant value
+ * equal true. For any other type, value is false.
+ */
 template <class T>
 struct is_object
     : etl::integral_constant<
@@ -627,6 +683,21 @@ struct is_object
 
 template <class T>
 inline constexpr bool is_object_v = is_object<T>::value;
+
+/**
+ * @brief If T is a compound type (that is, array, function, object pointer,
+ * function pointer, member object pointer, member function pointer, reference,
+ * class, union, or enumeration, including any cv-qualified variants), provides
+ * the member constant value equal true. For any other type, value is false.
+ */
+template <class T>
+struct is_compound
+    : etl::integral_constant<bool, !etl::is_fundamental<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_compound_v = is_compound<T>::value;
 
 namespace detail
 {
