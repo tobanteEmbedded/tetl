@@ -27,7 +27,6 @@ DAMAGE.
 #ifndef TAETL_BIT_HPP
 #define TAETL_BIT_HPP
 
-#include "etl/definitions.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
