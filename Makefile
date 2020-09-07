@@ -31,18 +31,25 @@ avr:
 test:
 	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
 
+ifneq (,$(findstring clang,$(CXX)))
+    LCOV = lcov --gcov-tool llvm-gcov.sh
+else
+    LCOV = lcov
+endif
+COVERAGE_DIR=$(BUILD_DIR_BASE)_coverage
 .PHONY: coverage
 coverage:
-	cmake -S . -G Ninja -B$(BUILD_DIR_BASE)_coverage -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON
-	cmake --build $(BUILD_DIR_BASE)_coverage
-	cd $(BUILD_DIR_BASE)_coverage && lcov -c -i -d . --base-directory . -o base_cov.info
-	cd $(BUILD_DIR_BASE)_coverage && ctest
-	cd $(BUILD_DIR_BASE)_coverage && lcov -c -d . --base-directory . -o test_cov.info
-	cd $(BUILD_DIR_BASE)_coverage && lcov -a base_cov.info -a test_cov.info -o cov.info
-	cd $(BUILD_DIR_BASE)_coverage && lcov --remove cov.info "*3rd_party/*" -o cov.info
-	cd $(BUILD_DIR_BASE)_coverage && lcov --remove cov.info "*c++*" -o cov.info
-	cd $(BUILD_DIR_BASE)_coverage && lcov --remove cov.info "*v1*" -o cov.info
-	cd $(BUILD_DIR_BASE)_coverage && lcov --remove cov.info "*Xcode.app*" -o cov.info
+	mkdir -p $(COVERAGE_DIR)
+	cmake -S . -G Ninja -B$(COVERAGE_DIR) -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON
+	cmake --build $(COVERAGE_DIR) -- -j12
+	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
+	cd $(COVERAGE_DIR) && ctest -j12
+	cd $(COVERAGE_DIR) && $(LCOV) -c -d . --base-directory . -o test_cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) -a base_cov.info -a test_cov.info -o cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*3rd_party/*" -o cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*c++*" -o cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*v1*" -o cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
 
 .PHONY: report
 report:

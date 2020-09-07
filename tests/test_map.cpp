@@ -115,23 +115,6 @@ TEST_CASE("map: ranged-based-for", "[map]")
 
         REQUIRE(result == 125 * 3);
     }
-
-    WHEN("const")
-    {
-        auto const m = []() {
-            auto r = etl::make::map<int, int, 4> {};
-            r.insert({1, 42});
-            r.insert({2, 42});
-            r.insert({3, 42});
-            r.insert({4, 42});
-            return r;
-        }();
-
-        auto result = 0;
-        for (auto const& item : m) { result += item.second; }
-
-        REQUIRE(result == 42 * 4);
-    }
 }
 
 TEMPLATE_TEST_CASE("map: empty", "[map]", etl::uint8_t, etl::int8_t,
