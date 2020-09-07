@@ -343,6 +343,23 @@ struct pair
     T1 first {};
     T2 second {};
 };
+
+/**
+ * @brief Creates a etl::pair object, deducing the target type from the types of
+ * arguments.
+ *
+ * @details The deduced types V1 and V2 are etl::decay<T1>::type and
+ * etl::decay<T2>::type (the usual type transformations applied to arguments of
+ * functions passed by value).
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/pair/make_pair
+ */
+template <class T1, class T2>
+[[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
+    -> etl::pair<typename etl::decay<T1>::type, typename etl::decay<T2>::type>
+{
+    return {t, u};
+}
 }  // namespace etl
 
 #endif  // TAETL_UTILITY_HPP

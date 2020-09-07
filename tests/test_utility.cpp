@@ -178,3 +178,16 @@ TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint8_t,
 {
     REQUIRE_FALSE(etl::in_range<TestType>(-1));
 }
+
+TEMPLATE_TEST_CASE("utility: make_pair", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto p = etl::make_pair(TestType {0}, 143.0f);
+    STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p.first)>);
+    STATIC_REQUIRE(etl::is_same_v<float, decltype(p.second)>);
+
+    REQUIRE(p.first == 0);
+    REQUIRE(p.second == 143.0);
+}
