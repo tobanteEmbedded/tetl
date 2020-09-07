@@ -31,6 +31,9 @@ DAMAGE.
 
 namespace etl
 {
+template <class T>
+auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
+
 /**
  * @brief etl::move is used to indicate that an object t may be "moved from",
  * i.e. allowing the efficient transfer of resources from t to another object.
@@ -47,21 +50,59 @@ constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
     return static_cast<typename etl::remove_reference<T>::type&&>(t);
 }
 
+/**
+ * @brief Forwards lvalues as either lvalues or as rvalues, depending on T.
+ *
+ * @details When t is a forwarding reference (a function argument that is
+ * declared as an rvalue reference to a cv-unqualified function template
+ * parameter), this overload forwards the argument to another function with the
+ * value category it had when passed to the calling function.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/forward
+ */
 template <class T>
 constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
 }
 
+/**
+ * @brief Forwards rvalues as rvalues and prohibits forwarding of rvalues as
+ * lvalues.
+ *
+ * @details This overload makes it possible to forward a result of an expression
+ * (such as function call), which may be rvalue or lvalue, as the original value
+ * category of a forwarding reference argument.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/forward
+ */
 template <class T>
 constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
 }
 
-template <class T>
-auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
+/**
+ * @brief Replaces the value of obj with new_value and returns the old value of
+ * obj.
+ * @return The old value of obj.
+ */
+template <class T, class U = T>
+[[nodiscard]] constexpr auto exchange(T& obj, U&& new_value) -> T
+{
+    T old_value = etl::move(obj);
+    obj         = etl::forward<U>(new_value);
+    return old_value;
+}
 
+/**
+ * @brief etl::pair is a class template that provides a way to store two
+ * heterogeneous objects as a single unit. A pair is a specific case of a
+ * etl::tuple with two elements. If neither T1 nor T2 is a possibly cv-qualified
+ * class type with non-trivial destructor, or array thereof, the destructor of
+ * pair is trivial.
+ * @ref https://en.cppreference.com/w/cpp/utility/pair
+ */
 template <class T1, class T2>
 struct pair
 {
