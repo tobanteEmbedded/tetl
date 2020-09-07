@@ -138,10 +138,11 @@ public:
      * a floating-point value, but a duration with a floating-point tick count
      * can be constructed from an integer value
      */
-    template <
-        class Rep2,
-        typename = typename etl::enable_if_t<
-            treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>>>
+    template <class Rep2,
+              typename = typename etl::enable_if_t<
+                  is_convertible_v<Rep2, rep> == true
+                  && (treat_as_floating_point_v<
+                          rep> || !treat_as_floating_point_v<Rep2>)>>
     constexpr explicit duration(const Rep2& r) noexcept : data_(r)
     {
     }
