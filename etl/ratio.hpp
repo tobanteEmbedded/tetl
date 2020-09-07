@@ -180,15 +180,35 @@ template <class R1, class R2>
 inline constexpr bool ratio_less_equal_v = ratio_less_equal<R1, R2>::value;
 
 /**
- * @brief Compares two ratio objects for equality at compile-time
+ * @brief Compares two ratio objects for equality at compile-time. If the ratio
+ * R1 is greater than the ratio R2, provides the member constant value equal
+ * true. Otherwise, value is false.
  */
 template <class R1, class R2>
-struct ratio_greater;
+struct ratio_greater
+    : public etl::integral_constant<bool,
+                                    (R1::num * R2::den > R2::num * R1::den)>
+{
+};
+
+template <class R1, class R2>
+inline constexpr bool ratio_greater_v = ratio_greater<R1, R2>::value;
+
 /**
- * @brief Compares two ratio objects for equality at compile-time
+ * @brief Compares two ratio objects for equality at compile-time. If the ratio
+ * R1 is greater than or equal to the ratio R2, provides the member constant
+ * value equal true. Otherwise, value is false.
  */
 template <class R1, class R2>
-struct ratio_greater_equal;
+struct ratio_greater_equal
+    : public etl::integral_constant<bool,
+                                    (R1::num * R2::den >= R2::num * R1::den)>
+{
+};
+
+template <class R1, class R2>
+inline constexpr bool ratio_greater_equal_v
+    = ratio_greater_equal<R1, R2>::value;
 
 using atto  = ratio<1, 1'000'000'000'000'000'000>;
 using femto = ratio<1, 1'000'000'000'000'000>;
