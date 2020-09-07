@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_SPAN_HPP
 
 #include "etl/definitions.hpp"
+#include "etl/type_traits.hpp"
 #include "etl/warning.hpp"
 
 namespace etl
@@ -210,6 +211,122 @@ template <typename T, etl::size_t N>
 constexpr auto data(T (&array)[N]) noexcept -> T*
 {
     return &array[0];
+}
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct input_iterator_tag
+{
+};
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct output_iterator_tag
+{
+};
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct forward_iterator_tag : public input_iterator_tag
+{
+};
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct bidirectional_iterator_tag : public forward_iterator_tag
+{
+};
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct random_access_iterator_tag : public bidirectional_iterator_tag
+{
+};
+
+/**
+ * @brief Defines the category of an iterator. Each tag is an empty type and
+ * corresponds to one of the five (until C++20) six (since C++20) iterator
+ * categories.
+ */
+struct contiguous_iterator_tag : public random_access_iterator_tag
+{
+};
+
+/**
+ * @brief etl::iterator_traits is the type trait class that provides uniform
+ * interface to the properties of LegacyIterator types. This makes it possible
+ * to implement algorithms only in terms of iterators.
+ *
+ * @details The template can be specialized for user-defined iterators so that
+ * the information about the iterator can be retrieved even if the type does not
+ * provide the usual typedefs.
+ *
+ * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
+ */
+template <class Iter>
+struct iterator_traits;
+
+/**
+ * @brief etl::iterator_traits is the type trait class that provides uniform
+ * interface to the properties of LegacyIterator types. This makes it possible
+ * to implement algorithms only in terms of iterators.
+ *
+ * @details The template can be specialized for user-defined iterators so that
+ * the information about the iterator can be retrieved even if the type does not
+ * provide the usual typedefs.
+ *
+ * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
+ */
+template <class T>
+struct iterator_traits<T*>
+{
+    using iterator_concept  = contiguous_iterator_tag;
+    using iterator_category = random_access_iterator_tag;
+    using value_type        = remove_cv_t<T>;
+    using difference_type   = ptrdiff_t;
+    using pointer           = T*;
+    using reference         = T&;
+};
+
+/**
+ * @brief Returns the number of hops from first to last.
+ *
+ * @ref https://en.cppreference.com/w/cpp/iterator/distance
+ */
+template <class It>
+constexpr auto distance(It first, It last) ->
+    typename etl::iterator_traits<It>::difference_type
+{
+    using category = typename etl::iterator_traits<It>::iterator_category;
+    static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
+
+    if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
+        return last - first;
+    else
+    {
+        typename etl::iterator_traits<It>::difference_type result = 0;
+        while (first != last)
+        {
+            ++first;
+            ++result;
+        }
+        return result;
+    }
 }
 
 }  // namespace etl

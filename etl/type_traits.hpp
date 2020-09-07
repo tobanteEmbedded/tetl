@@ -1081,6 +1081,43 @@ struct is_signed : detail::is_signed<T>::type
 template <class T>
 inline constexpr bool is_signed_v = is_signed<T>::value;
 
+namespace detail
+{
+template <typename B>
+auto test_pre_ptr_convertible(const volatile B*) -> etl::true_type;
+template <typename>
+auto test_pre_ptr_convertible(const volatile void*) -> etl::false_type;
+
+template <typename, typename>
+auto test_pre_is_base_of(...) -> etl::true_type;
+template <typename B, typename D>
+auto test_pre_is_base_of(int)
+    -> decltype(test_pre_ptr_convertible<B>(static_cast<D*>(nullptr)));
+}  // namespace detail
+
+/**
+ * @brief If Derived is derived from Base or if both are the same non-union
+ * class (in both cases ignoring cv-qualification), provides the member constant
+ * value equal to true. Otherwise value is false.
+ *
+ * @details If both Base and Derived are non-union class types, and they are not
+ * the same type (ignoring cv-qualification), Derived shall be a complete type;
+ * otherwise the behavior is undefined.
+ *
+ * @ref https://en.cppreference.com/w/cpp/types/is_base_of
+ */
+template <typename Base, typename Derived>
+struct is_base_of
+    : etl::integral_constant<
+          bool, etl::is_class<Base>::value
+                    && etl::is_class<Derived>::value&& decltype(
+                        detail::test_pre_is_base_of<Base, Derived>(0))::value>
+{
+};
+
+template <class Base, class Derived>
+inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
+
 /**
  * @brief Provides member typedef type, which is defined as T if B is true at
  * compile time, or as F if B is false.

@@ -30,6 +30,8 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+#include <list>
+
 TEST_CASE("iterator: size", "[iterator]")
 {
     int carr[4] = {};
@@ -73,4 +75,16 @@ TEST_CASE("iterator: data", "[iterator]")
 
     auto const sv2 = etl::string_view {};
     REQUIRE(etl::data(sv2) == nullptr);
+}
+
+TEMPLATE_TEST_CASE("iterator: distance", "[iterator]", char, int, float)
+{
+    SECTION("random access iterator")
+    {
+        auto arr = etl::array<TestType, 5> {};
+        REQUIRE(etl::distance(begin(arr), begin(arr)) == 0);
+        REQUIRE(etl::distance(end(arr), end(arr)) == 0);
+        REQUIRE(etl::distance(begin(arr), begin(arr) + 2) == 2);
+        REQUIRE(etl::distance(begin(arr), end(arr)) == 5);
+    }
 }
