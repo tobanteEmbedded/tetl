@@ -814,7 +814,7 @@ inline constexpr bool is_default_constructible_v
     = is_default_constructible<T>::value;
 
 /**
- * @brief  If std::is_trivially_constructible<T>::value is true, provides the
+ * @brief  If etl::is_trivially_constructible<T>::value is true, provides the
  * member constant value equal to true, otherwise value is false.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
@@ -836,7 +836,7 @@ inline constexpr bool is_trivially_default_constructible_v
     = is_trivially_default_constructible<T>::value;
 
 /**
- * @brief If std::is_nothrow_constructible<T>::value is true, provides the
+ * @brief If etl::is_nothrow_constructible<T>::value is true, provides the
  * member constant value equal to true, otherwise value is false.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
@@ -1121,6 +1121,27 @@ struct is_convertible
 template <class From, class To>
 inline constexpr bool is_convertible_v = is_convertible<From, To>::value;
 
+/**
+ * @brief Provides the nested type type, which is a trivial standard-layout type
+ * suitable for use as uninitialized storage for any object whose size is at
+ * most Len and whose alignment requirement is a divisor of Align.
+ *
+ * @details The default value of Align is the most stringent (the largest)
+ * alignment requirement for any object whose size is at most Len. If the
+ * default value is not used, Align must be the value of alignof(T) for some
+ * type T, or the behavior is undefined.
+ */
+template <etl::size_t Len, etl::size_t Align = alignof(etl::max_align_t)>
+struct aligned_storage
+{
+    struct type
+    {
+        alignas(Align) unsigned char data[Len];
+    };
+};
+
+template <etl::size_t Len, etl::size_t Align = alignof(etl::max_align_t)>
+using aligned_storage_t = typename aligned_storage<Len, Align>::type;
 }  // namespace etl
 
 #endif  // TAETL_TYPETRAITS_HPP

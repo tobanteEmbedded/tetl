@@ -69,5 +69,9 @@ using size_t    = size_t;
 using ptrdiff_t = ptrdiff_t;
 using nullptr_t = decltype(nullptr);
 
+struct alignas(long double) max_align_t
+{
+};
+
 }  // namespace etl
 #endif  // TAETL_DEFINITONS_HPP
