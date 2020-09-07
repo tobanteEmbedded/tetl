@@ -569,7 +569,7 @@ template <class T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
 /**
- * @brief Checks whether T is a function type. Types like std::function,
+ * @brief Checks whether T is a function type. Types like etl::function,
  * lambdas, classes with overloaded operator() and pointers to functions don't
  * count as function types. Provides the member constant value which is equal to
  * true, if T is a function type. Otherwise, value is equal to false.

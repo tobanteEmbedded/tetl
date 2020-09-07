@@ -25,6 +25,8 @@ DAMAGE.
 */
 
 #include "etl/algorithm.hpp"
+#include "etl/iterator.hpp"
+#include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
@@ -37,14 +39,14 @@ TEMPLATE_TEST_CASE("stack_vector: construct default", "[stack_vector]", char,
     REQUIRE(vec.empty());
     REQUIRE(vec.size() == 0);
     REQUIRE(vec.capacity() == vec.max_size());
-    REQUIRE(std::is_same_v<TestType, typename vector_t::value_type>);
-    REQUIRE(std::is_same_v<TestType&, typename vector_t::reference>);
+    REQUIRE(etl::is_same_v<TestType, typename vector_t::value_type>);
+    REQUIRE(etl::is_same_v<TestType&, typename vector_t::reference>);
     REQUIRE(
-        std::is_same_v<TestType const&, typename vector_t::const_reference>);
-    REQUIRE(std::is_same_v<TestType*, typename vector_t::pointer>);
-    REQUIRE(std::is_same_v<TestType const*, typename vector_t::const_pointer>);
-    REQUIRE(std::is_same_v<TestType*, typename vector_t::iterator>);
-    REQUIRE(std::is_same_v<TestType const*, typename vector_t::const_iterator>);
+        etl::is_same_v<TestType const&, typename vector_t::const_reference>);
+    REQUIRE(etl::is_same_v<TestType*, typename vector_t::pointer>);
+    REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_pointer>);
+    REQUIRE(etl::is_same_v<TestType*, typename vector_t::iterator>);
+    REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_iterator>);
 }
 
 TEMPLATE_TEST_CASE("stack_vector: construct(count)", "[stack_vector]", int,
@@ -98,7 +100,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(move)", "[stack_vector]", int,
     REQUIRE_FALSE(vec.empty());
     REQUIRE(vec.size() == 2);
 
-    auto const vec2 = vector_t {std::move(vec)};
+    auto const vec2 = vector_t {etl::move(vec)};
     REQUIRE(vec.size() == 0);
 
     REQUIRE(vec2.size() == 2);
@@ -134,7 +136,7 @@ TEMPLATE_TEST_CASE("stack_vector: operator=(move)", "[stack_vector]", int,
     REQUIRE(vec.size() == 2);
 
     auto vec2 = vector_t {};
-    vec2      = std::move(vec);
+    vec2      = etl::move(vec);
     REQUIRE(vec.size() == 0);
 
     REQUIRE(vec2.size() == 2);
@@ -434,7 +436,7 @@ TEMPLATE_TEST_CASE("stack_vector: ranged-for", "[stack_vector]", char, int)
         vec.emplace_back(TestType {2});
         vec.emplace_back(TestType {3});
         vec.emplace_back(TestType {4});
-        auto const sum = std::accumulate(std::begin(vec), std::end(vec), 0);
+        auto const sum = etl::accumulate(etl::begin(vec), etl::end(vec), 0);
         REQUIRE(sum == 10);
     }
 }

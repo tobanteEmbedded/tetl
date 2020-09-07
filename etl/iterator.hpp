@@ -33,6 +33,114 @@ DAMAGE.
 namespace etl
 {
 /**
+ * @brief Returns an iterator to the beginning of the given container c or array
+ * array. These templates rely on C::begin() having a reasonable implementation.
+ * Returns exactly c.begin(), which is typically an iterator to the beginning of
+ * the sequence represented by c. If C is a standard Container, this returns
+ * C::iterator when c is not const-qualified, and C::const_iterator otherwise.
+ *
+ * @details Custom overloads of begin may be provided for classes that do not
+ * expose a suitable begin() member function, yet can be iterated.
+ */
+template <class C>
+constexpr auto begin(C& c) -> decltype(c.begin())
+{
+    return c.begin();
+}
+
+/**
+ * @brief Returns an iterator to the beginning of the given container c or array
+ * array. These templates rely on C::begin() having a reasonable implementation.
+ * Returns exactly c.begin(), which is typically an iterator to the beginning of
+ * the sequence represented by c. If C is a standard Container, this returns
+ * C::iterator when c is not const-qualified, and C::const_iterator otherwise.
+ *
+ * @details Custom overloads of begin may be provided for classes that do not
+ * expose a suitable begin() member function, yet can be iterated.
+ */
+template <class C>
+constexpr auto begin(const C& c) -> decltype(c.begin())
+{
+    return c.begin();
+}
+
+/**
+ * @brief Returns an iterator to the beginning of the given container c or array
+ * array. These templates rely on C::begin() having a reasonable implementation.
+ * Returns a pointer to the beginning of the array.
+ *
+ * @details Custom overloads of begin may be provided for classes that do not
+ * expose a suitable begin() member function, yet can be iterated.
+ */
+template <class T, etl::size_t N>
+constexpr auto begin(T (&array)[N]) noexcept -> T*
+{
+    return &array[0];
+}
+
+/**
+ * @brief Returns an iterator to the beginning of the given container c or
+ * array array. These templates rely on C::begin() having a reasonable
+ * implementation. Returns exactly etl::begin(c), with c always treated as
+ * const-qualified. If C is a standard Container, this always returns
+ * C::const_iterator.
+ *
+ * @details Custom overloads of begin may be provided for classes that do
+ * not expose a suitable begin() member function, yet can be iterated.
+ */
+template <class C>
+constexpr auto cbegin(const C& c) noexcept(noexcept(etl::begin(c)))
+    -> decltype(etl::begin(c))
+{
+    return etl::begin(c);
+}
+
+/**
+ * @brief Returns an iterator to the end (i.e. the element after the last
+ * element) of the given container c or array array. These templates rely on
+ * C::end() having a reasonable implementation.
+ */
+template <class C>
+constexpr auto end(C& c) -> decltype(c.end())
+{
+    return c.end();
+}
+
+/**
+ * @brief Returns an iterator to the end (i.e. the element after the last
+ * element) of the given container c or array array. These templates rely on
+ * C::end() having a reasonable implementation.
+ */
+template <class C>
+constexpr auto end(const C& c) -> decltype(c.end())
+{
+    return c.end();
+}
+
+/**
+ * @brief Returns an iterator to the end (i.e. the element after the last
+ * element) of the given container c or array array. These templates rely on
+ * C::end() having a reasonable implementation.
+ */
+template <class T, etl::size_t N>
+constexpr auto end(T (&array)[N]) noexcept -> T*
+{
+    return &array[N];
+}
+
+/**
+ * @brief Returns an iterator to the end (i.e. the element after the last
+ * element) of the given container c or array array. These templates rely on
+ * C::end() having a reasonable implementation.
+ */
+template <class C>
+constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c)))
+    -> decltype(etl::end(c))
+{
+    return etl::end(c);
+}
+
+/**
  * @brief Returns the size of the given container c or array array. Returns
  * c.size(), converted to the return type if necessary.
  */
