@@ -48,10 +48,6 @@ matrix:
       osx_image: xcode11.6
       script: *script-macOS
 
-    - os: osx
-      osx_image: xcode10.1
-      script: *script-macOS
-
     - os: linux
       dist: bionic
       addons:
