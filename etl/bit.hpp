@@ -61,8 +61,10 @@ enum class endian
  *
  */
 template <class T>
-[[nodiscard]] constexpr auto popcount(T input) noexcept
-    -> etl::enable_if_t<etl::is_unsigned_v<T>, int>
+[[nodiscard]] constexpr auto popcount(T input) noexcept -> etl::enable_if_t<
+    is_unsigned_v<
+        T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>),
+    int>
 {
     auto count = T {0};
     while (input)
@@ -84,9 +86,8 @@ template <class T>
  */
 template <typename T>
 constexpr auto has_single_bit(T x) noexcept -> enable_if_t<
-    !is_same_v<
-        T,
-        bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>,
+    is_unsigned_v<
+        T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>),
     bool>
 {
     return popcount(x) == 1;

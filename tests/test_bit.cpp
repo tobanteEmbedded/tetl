@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 #include "etl/bit.hpp"
+#include "etl/limits.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -78,3 +79,15 @@ TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t,
     REQUIRE_FALSE(etl::has_single_bit(TestType {3}));
     REQUIRE_FALSE(etl::has_single_bit(TestType {3 << 4}));
 }
+
+template <typename T>
+auto countl_zero(T val) -> int
+{
+    return val ? countl_zero<T>(static_cast<T>(val >> 1)) - 1
+               : etl::numeric_limits<T>::digits;
+}
+
+// TEST_CASE("bit: countl_zero", "[bit]")
+// {
+//     REQUIRE(countl_zero(etl::uint8_t {0b1111'1111}) == 8);
+// }
