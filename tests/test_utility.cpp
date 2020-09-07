@@ -41,3 +41,108 @@ TEMPLATE_TEST_CASE("utility: exchange", "[utility]", etl::uint8_t, etl::int8_t,
     REQUIRE(original == TestType {44});
     REQUIRE(c == TestType {43});
 }
+
+TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE(etl::cmp_equal(0, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_equal(-1, TestType {0}));
+
+    REQUIRE(etl::cmp_equal(TestType {0}, TestType {0}));
+    REQUIRE(etl::cmp_equal(TestType {1}, TestType {1}));
+    REQUIRE(etl::cmp_equal(TestType {42}, TestType {42}));
+
+    REQUIRE_FALSE(etl::cmp_equal(TestType {0}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_equal(TestType {1}, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_equal(TestType {42}, TestType {43}));
+}
+
+TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE(etl::cmp_not_equal(-1, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_not_equal(0, TestType {0}));
+
+    REQUIRE_FALSE(etl::cmp_not_equal(TestType {0}, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_not_equal(TestType {1}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_not_equal(TestType {42}, TestType {42}));
+
+    REQUIRE(etl::cmp_not_equal(TestType {0}, TestType {1}));
+    REQUIRE(etl::cmp_not_equal(TestType {1}, TestType {0}));
+    REQUIRE(etl::cmp_not_equal(TestType {42}, TestType {43}));
+}
+
+TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE(etl::cmp_less(-1, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_less(0, TestType {0}));
+
+    REQUIRE(etl::cmp_less(TestType {0}, TestType {1}));
+    REQUIRE(etl::cmp_less(TestType {1}, TestType {2}));
+    REQUIRE(etl::cmp_less(TestType {42}, TestType {43}));
+
+    REQUIRE_FALSE(etl::cmp_less(TestType {2}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_less(TestType {1}, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_less(TestType {44}, TestType {43}));
+}
+
+TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE_FALSE(etl::cmp_greater(-1, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_greater(0, TestType {0}));
+
+    REQUIRE_FALSE(etl::cmp_greater(TestType {0}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_greater(TestType {1}, TestType {2}));
+    REQUIRE_FALSE(etl::cmp_greater(TestType {42}, TestType {43}));
+
+    REQUIRE(etl::cmp_greater(TestType {2}, TestType {1}));
+    REQUIRE(etl::cmp_greater(TestType {1}, TestType {0}));
+    REQUIRE(etl::cmp_greater(TestType {44}, TestType {43}));
+}
+
+TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE(etl::cmp_less_equal(-1, TestType {0}));
+    REQUIRE(etl::cmp_less_equal(0, TestType {0}));
+
+    REQUIRE(etl::cmp_less_equal(TestType {0}, TestType {1}));
+    REQUIRE(etl::cmp_less_equal(TestType {1}, TestType {1}));
+    REQUIRE(etl::cmp_less_equal(TestType {1}, TestType {2}));
+    REQUIRE(etl::cmp_less_equal(TestType {42}, TestType {43}));
+
+    REQUIRE_FALSE(etl::cmp_less_equal(TestType {2}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_less_equal(TestType {1}, TestType {0}));
+    REQUIRE_FALSE(etl::cmp_less_equal(TestType {44}, TestType {43}));
+}
+
+TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE_FALSE(etl::cmp_greater_equal(-1, TestType {0}));
+    REQUIRE(etl::cmp_greater_equal(0, TestType {0}));
+    REQUIRE(etl::cmp_greater_equal(TestType {0}, 0));
+
+    REQUIRE_FALSE(etl::cmp_greater_equal(TestType {0}, TestType {1}));
+    REQUIRE_FALSE(etl::cmp_greater_equal(TestType {1}, TestType {2}));
+    REQUIRE_FALSE(etl::cmp_greater_equal(TestType {42}, TestType {43}));
+
+    REQUIRE(etl::cmp_greater_equal(TestType {2}, TestType {2}));
+    REQUIRE(etl::cmp_greater_equal(TestType {2}, TestType {1}));
+    REQUIRE(etl::cmp_greater_equal(TestType {1}, TestType {0}));
+    REQUIRE(etl::cmp_greater_equal(TestType {44}, TestType {43}));
+}

@@ -95,6 +95,150 @@ template <class T, class U = T>
     return old_value;
 }
 
+namespace detail
+{
+template <class T>
+struct is_unsigned_integer_comp
+    : etl::integral_constant<
+          bool,
+          is_integral_v<
+              T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
+{
+};
+}  // namespace detail
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    using UT = etl::make_unsigned_t<T>;
+    using UU = etl::make_unsigned_t<U>;
+
+    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t == u; }
+    else if constexpr (etl::is_signed_v<T>)
+    {
+        return t < 0 ? false : UT(t) == u;
+    }
+    else
+    {
+        return u < 0 ? false : t == UU(u);
+    }
+}
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    return !cmp_equal(t, u);
+}
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    using UT = etl::make_unsigned_t<T>;
+    using UU = etl::make_unsigned_t<U>;
+    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>)
+        return t < u;
+    else if constexpr (etl::is_signed_v<T>)
+        return t < 0 ? true : UT(t) < u;
+    else
+        return u < 0 ? false : t < UU(u);
+}
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    return cmp_less(u, t);
+}
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    return !cmp_greater(t, u);
+}
+
+/**
+ * @brief Compare the values of two integers t and u. Unlike builtin comparison
+ * operators, negative signed integers always compare less than (and not equal
+ * to) unsigned integers: the comparison is safe against lossy integer
+ * conversion.
+ * @details It is a compile-time error if either T or U is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type).
+ * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ */
+template <class T, class U>
+[[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept
+    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
+                       && detail::is_unsigned_integer_comp<U>::value,
+                   bool>
+{
+    return !cmp_less(t, u);
+}
+
 /**
  * @brief etl::pair is a class template that provides a way to store two
  * heterogeneous objects as a single unit. A pair is a specific case of a
