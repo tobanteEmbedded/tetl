@@ -72,6 +72,25 @@ template <class T>
     }
     return static_cast<int>(count);
 }
+
+/**
+ * @brief Checks if x is an integral power of two.
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @return true if x is an integral power of two; otherwise false.
+ */
+template <typename T>
+constexpr auto has_single_bit(T x) noexcept -> enable_if_t<
+    !is_same_v<
+        T,
+        bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>,
+    bool>
+{
+    return popcount(x) == 1;
+}
 }  // namespace etl
 
 #endif  // TAETL_BIT_HPP

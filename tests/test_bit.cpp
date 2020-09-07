@@ -64,3 +64,17 @@ TEST_CASE("bit: popcount(uint64)", "[bit]")
 {
     REQUIRE(etl::popcount(uint64_t {0xFFFFFFFFFFFFFFFF}) == 64);
 }
+
+TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
+{
+    REQUIRE(etl::has_single_bit(TestType {1 << 0}));
+    REQUIRE(etl::has_single_bit(TestType {1 << 1}));
+    REQUIRE(etl::has_single_bit(TestType {1 << 2}));
+    REQUIRE(etl::has_single_bit(TestType {1 << 3}));
+    REQUIRE(etl::has_single_bit(TestType {1 << 4}));
+
+    REQUIRE_FALSE(etl::has_single_bit(TestType {0}));
+    REQUIRE_FALSE(etl::has_single_bit(TestType {3}));
+    REQUIRE_FALSE(etl::has_single_bit(TestType {3 << 4}));
+}
