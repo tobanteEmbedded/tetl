@@ -88,3 +88,19 @@ TEMPLATE_TEST_CASE("iterator: distance", "[iterator]", char, int, float)
         REQUIRE(etl::distance(begin(arr), end(arr)) == 5);
     }
 }
+
+TEMPLATE_TEST_CASE("iterator: advance", "[iterator]", char, int, float)
+{
+    SECTION("random access iterator")
+    {
+        auto arr = etl::array<TestType, 5> {};
+        auto* p  = arr.begin();
+
+        etl::advance(p, 1);
+        REQUIRE(p != begin(arr));
+        REQUIRE(p == &arr[1]);
+
+        etl::advance(p, 2);
+        REQUIRE(p == &arr[3]);
+    }
+}

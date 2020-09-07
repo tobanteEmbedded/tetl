@@ -304,6 +304,41 @@ struct iterator_traits<T*>
 };
 
 /**
+ * @brief Increments given iterator it by n elements. If n is negative, the
+ * iterator is decremented. In this case, InputIt must meet the requirements of
+ * LegacyBidirectionalIterator, otherwise the behavior is undefined.
+ *
+ * @ref https://en.cppreference.com/w/cpp/iterator/advance
+ */
+template <class It, class Distance>
+constexpr auto advance(It& it, Distance n) -> void
+{
+    using category = typename etl::iterator_traits<It>::iterator_category;
+    static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
+
+    auto dist = typename etl::iterator_traits<It>::difference_type(n);
+    if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
+        it += dist;
+    else
+    {
+        while (dist > 0)
+        {
+            --dist;
+            ++it;
+        }
+        if constexpr (etl::is_base_of_v<etl::bidirectional_iterator_tag,
+                                        category>)
+        {
+            while (dist < 0)
+            {
+                ++dist;
+                --it;
+            }
+        }
+    }
+}
+
+/**
  * @brief Returns the number of hops from first to last.
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/distance
