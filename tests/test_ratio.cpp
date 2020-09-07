@@ -86,6 +86,27 @@ TEST_CASE("ratio: ratio_subtract", "[ratio]")
     }
 }
 
+TEST_CASE("ratio: ratio_multiply", "[ratio]")
+{
+    WHEN("1/12 * 1/2 = 1/2")
+    {
+        using one_twelfth = etl::ratio<1, 12>;
+        using one_half    = etl::ratio<1, 2>;
+        using res         = etl::ratio_multiply<one_twelfth, one_half>;
+        STATIC_REQUIRE(res::num == 1);
+        STATIC_REQUIRE(res::den == 24);
+    }
+
+    WHEN("2/3 * 1/6 = 1/9")
+    {
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using res       = etl::ratio_multiply<two_third, one_sixth>;
+        STATIC_REQUIRE(res::num == 1);
+        STATIC_REQUIRE(res::den == 9);
+    }
+}
+
 TEST_CASE("ratio: ratio_divide", "[ratio]")
 {
     WHEN("1/12 / 1/6 = 1/2")
@@ -105,4 +126,42 @@ TEST_CASE("ratio: ratio_divide", "[ratio]")
         STATIC_REQUIRE(res::num == 4);
         STATIC_REQUIRE(res::den == 1);
     }
+}
+
+TEST_CASE("ratio: ratio_equal", "[ratio]")
+{
+    using one_twelfth = etl::ratio<1, 12>;
+    using one_half    = etl::ratio<1, 2>;
+
+    STATIC_REQUIRE(etl::ratio_equal_v<one_half, one_half>);
+    STATIC_REQUIRE(etl::ratio_equal_v<one_half, etl::ratio<2, 4>>);
+    STATIC_REQUIRE(etl::ratio_equal_v<one_half, etl::ratio<3, 6>>);
+    STATIC_REQUIRE(etl::ratio_equal_v<one_twelfth, one_twelfth>);
+    STATIC_REQUIRE(etl::ratio_equal_v<one_twelfth, etl::ratio<2, 24>>);
+    STATIC_REQUIRE(etl::ratio_equal_v<one_twelfth, etl::ratio<3, 36>>);
+
+    STATIC_REQUIRE_FALSE(etl::ratio_equal_v<one_half, one_twelfth>);
+    STATIC_REQUIRE_FALSE(etl::ratio_equal_v<one_twelfth, one_half>);
+    STATIC_REQUIRE_FALSE(etl::ratio_equal_v<one_twelfth, etl::ratio<2, 23>>);
+    STATIC_REQUIRE_FALSE(etl::ratio_equal_v<one_twelfth, etl::ratio<3, 35>>);
+}
+
+TEST_CASE("ratio: ratio_not_equal", "[ratio]")
+{
+    using one_twelfth = etl::ratio<1, 12>;
+    using one_half    = etl::ratio<1, 2>;
+
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_half, one_half>);
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<2, 4>>);
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<3, 6>>);
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_twelfth, one_twelfth>);
+    STATIC_REQUIRE_FALSE(
+        etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 24>>);
+    STATIC_REQUIRE_FALSE(
+        etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 36>>);
+
+    STATIC_REQUIRE(etl::ratio_not_equal_v<one_half, one_twelfth>);
+    STATIC_REQUIRE(etl::ratio_not_equal_v<one_twelfth, one_half>);
+    STATIC_REQUIRE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 23>>);
+    STATIC_REQUIRE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 35>>);
 }
