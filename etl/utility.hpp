@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_UTILITY_HPP
 #define TAETL_UTILITY_HPP
 
+#include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl
@@ -98,7 +99,7 @@ template <class T, class U = T>
 namespace detail
 {
 template <class T>
-struct is_unsigned_integer_comp
+struct is_integer_and_not_char
     : etl::integral_constant<
           bool,
           is_integral_v<
@@ -119,8 +120,8 @@ struct is_unsigned_integer_comp
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     using UT = etl::make_unsigned_t<T>;
@@ -149,8 +150,8 @@ template <class T, class U>
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     return !cmp_equal(t, u);
@@ -168,8 +169,8 @@ template <class T, class U>
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     using UT = etl::make_unsigned_t<T>;
@@ -194,8 +195,8 @@ template <class T, class U>
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     return cmp_less(u, t);
@@ -213,8 +214,8 @@ template <class T, class U>
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     return !cmp_greater(t, u);
@@ -232,11 +233,30 @@ template <class T, class U>
  */
 template <class T, class U>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_unsigned_integer_comp<T>::value
-                       && detail::is_unsigned_integer_comp<U>::value,
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value
+                       && detail::is_integer_and_not_char<U>::value,
                    bool>
 {
     return !cmp_less(t, u);
+}
+
+/**
+ * @brief Returns true if the value of t is in the range of values that can be
+ * represented in R, that is, if t can be converted to R without data loss.
+ *
+ * @details It is a compile-time error if either T or R is not a signed or
+ * unsigned integer type (including standard integer type and extended integer
+ * type). This function cannot be used with etl::byte, char, char8_t, char16_t,
+ * char32_t, wchar_t and bool.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/in_range
+ */
+template <class R, class T>
+[[nodiscard]] constexpr auto in_range(T t) noexcept
+    -> enable_if_t<detail::is_integer_and_not_char<T>::value, bool>
+{
+    return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
+           && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());
 }
 
 /**

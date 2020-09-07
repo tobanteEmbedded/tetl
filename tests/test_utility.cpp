@@ -146,3 +146,20 @@ TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint8_t,
     REQUIRE(etl::cmp_greater_equal(TestType {1}, TestType {0}));
     REQUIRE(etl::cmp_greater_equal(TestType {44}, TestType {43}));
 }
+
+TEMPLATE_TEST_CASE("utility: in_range", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+
+{
+    REQUIRE(etl::in_range<TestType>(0));
+    REQUIRE(etl::in_range<TestType>(etl::numeric_limits<TestType>::min()));
+    REQUIRE(etl::in_range<TestType>(etl::numeric_limits<TestType>::max()));
+}
+
+TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
+
+{
+    REQUIRE_FALSE(etl::in_range<TestType>(-1));
+}
