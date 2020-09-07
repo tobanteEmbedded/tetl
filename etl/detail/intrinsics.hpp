@@ -31,11 +31,12 @@ DAMAGE.
 #define TAETL_IS_CLASS(Type) __is_class(Type)
 #define TAETL_IS_UNION(Type) __is_union(Type)
 
-#define TAETL_IS_TRIVIAL_CONSTRUCTABLE(Type) __is_trivially_constructible(Type)
+#define TAETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)
 
+// Macro not available in GCC8.2
 #if defined(__is_nothrow_constructible)
-#define TAETL_IS_NOTHROW_CONSTRUCTABLE(Type) __is_nothrow_constructible(Type)
+#define TAETL_IS_NOTHROW_CONSTRUCTIBLE(Type) __is_nothrow_constructible(Type)
 #else
-#define TAETL_IS_NOTHROW_CONSTRUCTABLE(Type) true
+#define TAETL_IS_NOTHROW_CONSTRUCTIBLE(Type) true
 #endif
 #endif  // TAETL_INTRINSICS_HPP

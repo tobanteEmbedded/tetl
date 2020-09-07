@@ -768,7 +768,7 @@ inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
  */
 template <class T>
 struct is_trivially_constructible
-    : etl::integral_constant<bool, TAETL_IS_TRIVIAL_CONSTRUCTABLE(T)>
+    : etl::integral_constant<bool, TAETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
 {
 };
 
@@ -783,7 +783,7 @@ inline constexpr bool is_trivially_constructible_v
  */
 template <class T>
 struct is_nothrow_constructible
-    : etl::integral_constant<bool, TAETL_IS_NOTHROW_CONSTRUCTABLE(T)>
+    : etl::integral_constant<bool, TAETL_IS_NOTHROW_CONSTRUCTIBLE(T)>
 {
 };
 
