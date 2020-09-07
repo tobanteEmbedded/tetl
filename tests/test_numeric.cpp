@@ -54,7 +54,7 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
                    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
                    etl::uint64_t, float, double, long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);

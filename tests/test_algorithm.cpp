@@ -36,7 +36,7 @@ TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -60,7 +60,7 @@ TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -77,7 +77,7 @@ TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -99,7 +99,7 @@ TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -148,7 +148,7 @@ TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -179,7 +179,7 @@ TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType {1});
     vec.push_back(TestType {2});
     vec.push_back(TestType {3});
@@ -208,7 +208,7 @@ TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -232,7 +232,7 @@ TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -256,7 +256,7 @@ TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-    etl::make::vector<TestType, 16> vec;
+    etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);

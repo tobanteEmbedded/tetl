@@ -24,16 +24,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// C STANDARD
 #include <stdio.h>
 
-// TAETL
 #include "etl/algorithm.hpp"
 #include "etl/vector.hpp"
 
 auto main() -> int
 {
-    etl::make::vector<double, 16> vec;
+    etl::stack_vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);

@@ -29,130 +29,412 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("vector: ConstructDefault", "[vector]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("stack_vector: construct default", "[stack_vector]", char,
+                   int, float)
 {
-    etl::make::vector<TestType, 16> vec;
-
-    REQUIRE(vec.empty() == true);
+    using vector_t = etl::stack_vector<TestType, 16>;
+    auto vec       = vector_t {};
+    REQUIRE(vec.empty());
     REQUIRE(vec.size() == 0);
-    REQUIRE(vec.max_size() == 16);
-    REQUIRE(vec.capacity() == 16);
-    REQUIRE(vec.data() != nullptr);
+    REQUIRE(vec.capacity() == vec.max_size());
+    REQUIRE(std::is_same_v<TestType, typename vector_t::value_type>);
+    REQUIRE(std::is_same_v<TestType&, typename vector_t::reference>);
+    REQUIRE(
+        std::is_same_v<TestType const&, typename vector_t::const_reference>);
+    REQUIRE(std::is_same_v<TestType*, typename vector_t::pointer>);
+    REQUIRE(std::is_same_v<TestType const*, typename vector_t::const_pointer>);
+    REQUIRE(std::is_same_v<TestType*, typename vector_t::iterator>);
+    REQUIRE(std::is_same_v<TestType const*, typename vector_t::const_iterator>);
+}
 
-    auto func = [](etl::vector<TestType> const& v) {
-        REQUIRE(v.empty() == true);
-        REQUIRE(v.size() == 0);
-        REQUIRE(v.max_size() == 16);
-        REQUIRE(v.capacity() == 16);
-        REQUIRE(v.data() != nullptr);
+TEMPLATE_TEST_CASE("stack_vector: construct(count)", "[stack_vector]", int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+
+    auto vec1 = vector_t {1};
+    REQUIRE_FALSE(vec1.empty());
+    REQUIRE(vec1.size() == 1);
+
+    auto vec2 = vector_t {2};
+    REQUIRE_FALSE(vec2.empty());
+    REQUIRE(vec2.size() == 2);
+}
+
+TEMPLATE_TEST_CASE("stack_vector: construct(count, value)", "[stack_vector]",
+                   int, float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {2, TestType(143)};
+    REQUIRE_FALSE(vec.empty());
+    REQUIRE(vec.size() == 2);
+    REQUIRE(vec.front() == TestType(143));
+    REQUIRE(vec.back() == TestType(143));
+}
+
+TEMPLATE_TEST_CASE("stack_vector: construct(copy)", "[stack_vector]", int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {2, TestType(143)};
+
+    REQUIRE_FALSE(vec.empty());
+    REQUIRE(vec.size() == 2);
+
+    auto const vec2 = vec;
+    REQUIRE(vec.size() == 2);
+
+    REQUIRE(vec2.size() == 2);
+    REQUIRE(vec2.front() == TestType(143));
+    REQUIRE(vec2.back() == TestType(143));
+}
+
+TEMPLATE_TEST_CASE("stack_vector: construct(move)", "[stack_vector]", int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {2, TestType(143)};
+
+    REQUIRE_FALSE(vec.empty());
+    REQUIRE(vec.size() == 2);
+
+    auto const vec2 = vector_t {std::move(vec)};
+    REQUIRE(vec.size() == 0);
+
+    REQUIRE(vec2.size() == 2);
+    REQUIRE(vec2.front() == TestType(143));
+    REQUIRE(vec2.back() == TestType(143));
+}
+
+TEMPLATE_TEST_CASE("stack_vector: operator=(copy)", "[stack_vector]", int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {2, TestType(143)};
+
+    REQUIRE_FALSE(vec.empty());
+    REQUIRE(vec.size() == 2);
+
+    auto vec2 = vector_t {};
+    vec2      = vec;
+    REQUIRE(vec.size() == 2);
+
+    REQUIRE(vec2.size() == 2);
+    REQUIRE(vec2.front() == TestType(143));
+    REQUIRE(vec2.back() == TestType(143));
+}
+
+TEMPLATE_TEST_CASE("stack_vector: operator=(move)", "[stack_vector]", int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {2, TestType(143)};
+
+    REQUIRE_FALSE(vec.empty());
+    REQUIRE(vec.size() == 2);
+
+    auto vec2 = vector_t {};
+    vec2      = std::move(vec);
+    REQUIRE(vec.size() == 0);
+
+    REQUIRE(vec2.size() == 2);
+    REQUIRE(vec2.front() == TestType(143));
+    REQUIRE(vec2.back() == TestType(143));
+}
+
+TEST_CASE("stack_vector: destruct", "[stack_vector]")
+{
+    auto currentCount = 0;
+    struct Counter
+    {
+        Counter(int* c) : counter_ {c} { }
+        ~Counter() noexcept { (*counter_)++; }
+        int* counter_;
     };
 
-    func(vec);
+    using vector_t     = etl::stack_vector<Counter, 2>;
+    auto const counter = Counter(&currentCount);
+    {
+        auto vec = vector_t {1, counter};
+        REQUIRE_FALSE(vec.empty());
+    }
+    REQUIRE(currentCount == 1);
+
+    currentCount = 0;
+    {
+        auto vec = vector_t {2, counter};
+        REQUIRE_FALSE(vec.empty());
+    }
+    REQUIRE(currentCount == 2);
 }
 
-TEMPLATE_TEST_CASE("vector: RangeBasedFor", "[vector]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("stack_vector: assign", "[stack_vector]", int, float)
 {
-    etl::make::vector<TestType, 5> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(5);
-
-    auto counter = 0;
-    for (auto const& item : vec)
-    { REQUIRE(item == static_cast<TestType>(++counter)); }
-}
-
-TEMPLATE_TEST_CASE("vector: Iterators", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
-{
-    etl::make::vector<TestType, 5> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(5);
-
-    auto counter = 0;
-    etl::for_each(vec.begin(), vec.end(), [&counter](auto const& item) {
-        REQUIRE(item == static_cast<TestType>(++counter));
-    });
-}
-
-TEMPLATE_TEST_CASE("vector: PushBack", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
-{
-    etl::make::vector<TestType, 2> vec;
-
-    REQUIRE(vec.empty() == true);
-    REQUIRE(vec.size() == 0);
-    REQUIRE(vec.max_size() == 2);
-    REQUIRE(vec.capacity() == 2);
-    REQUIRE(vec.data() != nullptr);
-
-    vec.push_back(TestType {1});
-    REQUIRE(vec.empty() == false);
-    REQUIRE(vec.size() == 1);
-    REQUIRE(vec.max_size() == 2);
-    REQUIRE(vec.capacity() == 2);
-    REQUIRE(vec.data() != nullptr);
-
-    vec.push_back(TestType {2});
-    REQUIRE(vec.empty() == false);
-    REQUIRE(vec.size() == 2);
-    REQUIRE(vec.max_size() == 2);
-    REQUIRE(vec.capacity() == 2);
-    REQUIRE(vec.data() != nullptr);
-}
-
-TEMPLATE_TEST_CASE("vector: PopBack", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
-{
-    etl::make::vector<TestType, 5> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
-    vec.push_back(5);
-
-    REQUIRE(vec.back() == 5);
-    vec.pop_back();
-    REQUIRE(vec.back() == 4);
-    vec.pop_back();
-    REQUIRE(vec.back() == 3);
-    vec.pop_back();
-    REQUIRE(vec.back() == 2);
-    vec.pop_back();
-    REQUIRE(vec.back() == 1);
-    vec.pop_back();
-
+    using vector_t = etl::stack_vector<TestType, 2>;
+    auto vec       = vector_t {};
     REQUIRE(vec.empty());
+
+    vec.assign(1, TestType {});
+    REQUIRE(vec.size() == 1);
+
+    vec.assign(2, TestType {});
+    REQUIRE(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("vector: EmplaceBack", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("stack_vector: begin/end", "[stack_vector]", char, int,
+                   float)
 {
-    etl::make::vector<TestType, 4> vec;
-    REQUIRE(vec.empty() == true);
-    REQUIRE(vec.size() == 0);
+    using vector_t = etl::stack_vector<TestType, 16>;
+
+    WHEN("vector is empty")
+    {
+        auto vec = vector_t {};
+        REQUIRE(vec.empty());
+        REQUIRE(vec.begin() == vec.end());
+        REQUIRE(vec.cbegin() == vec.cend());
+    }
+
+    WHEN("vector is empty & const")
+    {
+        auto const vec = vector_t {};
+        REQUIRE(vec.empty());
+        REQUIRE(vec.begin() == vec.end());
+        REQUIRE(vec.cbegin() == vec.cend());
+    }
+}
+
+TEMPLATE_TEST_CASE("stack_vector: push_back", "[stack_vector]", char, int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+
+    SECTION("should increase size with each push_back")
+    {
+        REQUIRE(vec.empty());
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 1);
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 2);
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 3);
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 4);
+    }
+
+    SECTION("should throw when going over capacity")
+    {
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 4);
+        REQUIRE(vec.size() == vec.capacity());
+    }
+
+    SECTION("should be empty again after clearing")
+    {
+        REQUIRE(vec.empty());
+
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        REQUIRE(vec.size() == 4);
+
+        vec.clear();
+        REQUIRE(vec.empty());
+    }
+}
+
+TEMPLATE_TEST_CASE("stack_vector: emplace_back", "[stack_vector]", char, int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+
+    SECTION("should increase size with each emplace_back")
+    {
+        REQUIRE(vec.empty());
+        vec.emplace_back(TestType {1});
+        REQUIRE(vec.size() == 1);
+        REQUIRE(vec.back() == 1);
+        vec.emplace_back(TestType {2});
+        REQUIRE(vec.size() == 2);
+        REQUIRE(vec.back() == 2);
+        vec.emplace_back(TestType {1});
+        REQUIRE(vec.size() == 3);
+        vec.emplace_back(TestType {1});
+        REQUIRE(vec.size() == 4);
+    }
+
+    SECTION("should throw when going over capacity")
+    {
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        REQUIRE(vec.size() == 4);
+        REQUIRE(vec.size() == vec.capacity());
+    }
+
+    SECTION("should be empty again after clearing")
+    {
+        REQUIRE(vec.empty());
+
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        REQUIRE(vec.size() == 4);
+
+        vec.clear();
+        REQUIRE(vec.empty());
+    }
+}
+
+TEST_CASE("stack_vector: emplace_back - custom ctor", "[stack_vector]")
+{
+    struct Foo
+    {
+        Foo(int x, float y) : x_ {x}, y_ {y} { }
+        int x_;
+        float y_;
+    };
+
+    using vector_t = etl::stack_vector<Foo, 4>;
+    auto vec       = vector_t {};
+
+    SECTION("should increase size with each emplace_back")
+    {
+        REQUIRE(vec.empty());
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 1);
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 2);
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 3);
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 4);
+    }
+
+    SECTION("should throw when going over capacity")
+    {
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 4);
+        REQUIRE(vec.size() == vec.capacity());
+    }
+
+    SECTION("should be empty again after clearing")
+    {
+        REQUIRE(vec.empty());
+
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43f);
+        REQUIRE(vec.size() == 4);
+
+        vec.clear();
+        REQUIRE(vec.empty());
+    }
+}
+
+TEMPLATE_TEST_CASE("stack_vector: operator[]", "[stack_vector]", char, int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+    REQUIRE(vec.empty());
+    vec.emplace_back(TestType {1});
+    vec.emplace_back(TestType {2});
+
+    REQUIRE(vec[0] == TestType {1});
+    REQUIRE(vec[1] == TestType {2});
+
+    auto const vec2 = vec;
+    REQUIRE(vec2[0] == TestType {1});
+    REQUIRE(vec2[1] == TestType {2});
+}
+
+TEMPLATE_TEST_CASE("stack_vector: at", "[stack_vector]", char, int, float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+    REQUIRE(vec.empty());
+    vec.emplace_back(TestType {1});
+    vec.emplace_back(TestType {2});
+
+    REQUIRE(vec.at(0) == TestType {1});
+    REQUIRE(vec.at(1) == TestType {2});
+
+    auto const vec2 = vec;
+    REQUIRE(vec2.at(0) == TestType {1});
+    REQUIRE(vec2.at(1) == TestType {2});
+}
+
+TEMPLATE_TEST_CASE("stack_vector: front/back", "[stack_vector]", char, int,
+                   float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+    REQUIRE(vec.empty());
 
     vec.emplace_back(TestType {1});
-    REQUIRE(vec.empty() == false);
-    REQUIRE(vec.size() == 1);
-    REQUIRE(vec.back() == 1);
+    REQUIRE(vec.front() == TestType {1});
+    REQUIRE(vec.back() == TestType {1});
+    REQUIRE(vec.front() == vec.back());
 
     vec.emplace_back(TestType {2});
-    REQUIRE(vec.size() == 2);
-    REQUIRE(vec.back() == 2);
+    REQUIRE_FALSE(vec.front() == vec.back());
+    REQUIRE(vec.front() == TestType {1});
+    REQUIRE(vec.back() == TestType {2});
+
+    auto const vec2 = vec;
+    REQUIRE_FALSE(vec2.front() == vec2.back());
+    REQUIRE(vec2.front() == TestType {1});
+    REQUIRE(vec2.back() == TestType {2});
+}
+
+TEMPLATE_TEST_CASE("stack_vector: data", "[stack_vector]", char, int, float)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+
+    auto vec = vector_t {};
+    REQUIRE(vec.empty());
+    REQUIRE(vec.data() == vec.begin());
+
+    auto const vec2 = vec;
+    REQUIRE(vec2.data() == vec2.begin());
+}
+
+TEMPLATE_TEST_CASE("stack_vector: ranged-for", "[stack_vector]", char, int)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+    auto vec       = vector_t {};
+
+    SECTION("loop")
+    {
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {1});
+
+        auto sum = 0;
+        for (auto const& element : vec) { sum += element; }
+        REQUIRE(sum == 4);
+    }
+
+    SECTION("algorithm")
+    {
+        vec.emplace_back(TestType {1});
+        vec.emplace_back(TestType {2});
+        vec.emplace_back(TestType {3});
+        vec.emplace_back(TestType {4});
+        auto const sum = std::accumulate(std::begin(vec), std::end(vec), 0);
+        REQUIRE(sum == 10);
+    }
 }

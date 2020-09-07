@@ -30,7 +30,7 @@ DAMAGE.
 
 auto main() -> int
 {
-    etl::make::vector<double, 16> vec;
+    etl::stack_vector<double, 16> vec;
     vec.push_back(1.0);
     vec.push_back(2.0);
     vec.push_back(3.0);

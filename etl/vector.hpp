@@ -31,166 +31,370 @@ DAMAGE.
 #ifndef TAETL_VECTOR_HPP
 #define TAETL_VECTOR_HPP
 
+#include "etl/algorithm.hpp"    // for for_each
 #include "etl/definitions.hpp"  // for size_t, ptrdiff_t
 #include "etl/new.hpp"          // for operator new
 #include "etl/utility.hpp"      // for forward
 
 namespace etl
 {
-template <typename ValueType>
-class vector
+template <class ValueType, size_t Capacity>
+class stack_vector
 {
 public:
-    using value_type = ValueType;
-
+    using value_type      = ValueType;
     using size_type       = etl::size_t;
     using difference_type = etl::ptrdiff_t;
-
-    using pointer       = ValueType*;
-    using const_pointer = const ValueType*;
-
     using reference       = ValueType&;
-    using const_reference = const ValueType&;
+    using const_reference = ValueType const&;
+    using pointer         = ValueType*;
+    using const_pointer   = ValueType const*;
+    using iterator        = ValueType*;
+    using const_iterator  = ValueType const*;
+    // using reverse_iterator       = etl::reverse_iterator<iterator>;
+    // using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
-    using iterator       = ValueType*;
-    using const_iterator = const ValueType*;
+    /**
+     * @brief Default constructor. Constructs an empty container.
+     */
+    constexpr stack_vector() noexcept : memory_ {0}, size_ {0} { }
 
+    /**
+     * @brief Constructs the container with count default-inserted instances of
+     * T. No copies are made.
+     */
+    explicit constexpr stack_vector(size_type count) : stack_vector {}
+    {
+        for (auto i = size_type {0}; i < count; ++i) { emplace_back(); }
+    }
+
+    /**
+     * @brief Constructs the container with count copies of elements with value
+     * value.
+     */
+    constexpr stack_vector(size_type count, const_reference value)
+        : stack_vector {}
+    {
+        for (auto i = size_type {0}; i < count; ++i) { push_back(value); }
+    }
+
+    /**
+     * @brief Copy constructor. Constructs the container with the copy of the
+     * contents of other.
+     */
+    constexpr stack_vector(stack_vector const& other) : stack_vector {}
+    {
+        etl::for_each(other.begin(), other.end(), [&](auto const element) {
+            push_back(etl::move(element));
+        });
+    }
+
+    /**
+     * @brief Move constructor. Constructs the container with the contents of
+     * other using move semantics. Allocator is obtained by move-construction
+     * from the allocator belonging to other. After the move, other is
+     * guaranteed to be empty().
+     */
+    constexpr stack_vector(stack_vector&& other) noexcept : stack_vector {}
+    {
+        etl::for_each(other.begin(), other.end(),
+                      [&](auto element) { emplace_back(etl::move(element)); });
+        other.clear();
+    }
+
+    /**
+     * @brief Replaces the contents of the container. Copy assignment operator.
+     * Replaces the contents with a copy of the contents of other.
+     */
+    constexpr auto operator=(stack_vector const& other) -> stack_vector&
+    {
+        etl::for_each(other.begin(), other.end(), [&](auto const element) {
+            push_back(etl::move(element));
+        });
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the container. Move assignment operator.
+     * Replaces the contents with those of other using move semantics (i.e. the
+     * data in other is moved from other into this container). other is in a
+     * valid but unspecified state afterwards.
+     */
+    constexpr auto operator=(stack_vector&& other) -> stack_vector&
+    {
+        etl::for_each(other.begin(), other.end(),
+                      [&](auto element) { emplace_back(etl::move(element)); });
+        other.clear();
+        return *this;
+    }
+
+    /**
+     * @brief Destructs the vector. The destructors of the elements are called
+     * and the used storage is deallocated. Note, that if the elements are
+     * pointers, the pointed-to objects are not destroyed.
+     */
+    ~stack_vector() { clear(); }
+
+    /**
+     * @brief Replaces the contents of the container. Replaces the contents with
+     * count copies of value value.
+     */
+    constexpr auto assign(size_type count, const_reference value) -> void
+    {
+        clear();
+        for (auto i = size_type {0}; i < count; ++i) { push_back(value); }
+    }
+
+    /**
+     * @brief Returns a reference to the first element in the container. Calling
+     * front on an empty container is undefined.
+     */
+    [[nodiscard]] constexpr auto front() -> reference
+    {
+        assert(!empty());
+        return *(begin());
+    }
+
+    /**
+     * @brief Returns a reference to the first element in the container. Calling
+     * front on an empty container is undefined.
+     */
+    [[nodiscard]] constexpr auto front() const -> const_reference
+    {
+        assert(!empty());
+        return *(begin());
+    }
+
+    /**
+     * @brief Returns reference to the last element in the container. Calling
+     * back on an empty container causes undefined behavior.
+     */
+    [[nodiscard]] constexpr auto back() -> reference
+    {
+        assert(!empty());
+        return *(begin() + size_ - 1);
+    }
+
+    /**
+     * @brief Returns reference to the last element in the container. Calling
+     * back on an empty container causes undefined behavior.
+     */
+    [[nodiscard]] constexpr auto back() const -> const_reference
+    {
+        assert(!empty());
+        return *(begin() + size_ - 1);
+    }
+
+    /**
+     * @brief Returns a reference to the element at specified location pos. No
+     * bounds checking is performed.
+     */
+    constexpr auto operator[](size_type pos) -> reference
+    {
+        assert(pos < size());
+        return begin()[pos];
+    }
+
+    /**
+     * @brief Returns a reference to the element at specified location pos. No
+     * bounds checking is performed.
+     */
+    constexpr auto operator[](size_type pos) const -> const_reference
+    {
+        assert(pos < size());
+        return begin()[pos];
+    }
+
+    /**
+     * @brief Returns a reference to the element at specified location pos, with
+     * bounds checking. If pos is not within the range of the container, an
+     * exception of type etl::out_of_range is thrown.
+     */
+    constexpr auto at(size_type pos) -> reference
+    {
+        // if (!(pos < size()))
+        // { throw etl::out_of_range {"index is out of range"}; }
+        return (*this)[pos];
+    }
+
+    /**
+     * @brief Returns a reference to the element at specified location pos, with
+     * bounds checking. If pos is not within the range of the container, an
+     * exception of type etl::out_of_range is thrown.
+     */
+    constexpr auto at(size_type pos) const -> const_reference
+    {
+        // if (!(pos < size()))
+        // { throw etl::out_of_range {"index is out of range"}; }
+        return (*this)[pos];
+    }
+
+    /**
+     * @brief Returns pointer to the underlying array serving as element
+     * storage. The pointer is such that range [data(); data() + size()) is
+     * always a valid range, even if the container is empty (data() is not
+     * dereferenceable in that case).
+     */
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return begin(); }
+
+    /**
+     * @brief Returns pointer to the underlying array serving as element
+     * storage. The pointer is such that range [data(); data() + size()) is
+     * always a valid range, even if the container is empty (data() is not
+     * dereferenceable in that case).
+     */
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+    {
+        return begin();
+    }
+
+    /**
+     * @brief Returns an iterator to the first element of the vector. If the
+     * vector is empty, the returned iterator will be equal to end().
+     */
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator
+    {
+        return (iterator)memory_;
+    }
+
+    /**
+     * @brief Returns an iterator to the first element of the vector. If the
+     * vector is empty, the returned iterator will be equal to end().
+     */
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return (const_iterator)memory_;
+    }
+
+    /**
+     * @brief Returns an iterator to the first element of the vector. If the
+     * vector is empty, the returned iterator will be equal to end().
+     */
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    {
+        return begin();
+    }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of
+     * the vector. This element acts as a placeholder; attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return (iterator)(memory_ + (sizeof(value_type) * size_));
+    }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of
+     * the vector. This element acts as a placeholder; attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return (const_iterator)(memory_ + (sizeof(value_type) * size_));
+    }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of
+     * the vector. This element acts as a placeholder; attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    {
+        return end();
+    }
+
+    /**
+     * @brief Checks if the container has no elements, i.e. whether begin() ==
+     * end().
+     */
     [[nodiscard]] constexpr auto empty() const noexcept -> bool
     {
         return size_ == 0;
     }
 
+    /**
+     * @brief Returns the number of elements in the container, i.e.
+     * etl::distance(begin(), end()).
+     */
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
         return size_;
     }
 
+    /**
+     * @brief Returns the maximum number of elements the container is able to
+     * hold.
+     */
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
     {
-        return capacity_;
+        return Capacity;
     }
 
+    /**
+     * @brief Returns the number of elements that the container has currently
+     * allocated space for.
+     */
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
     {
-        return capacity_;
-    }
-
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return data_; }
-
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
-    {
-        return data_;
+        return Capacity;
     }
 
     /**
-     * @brief Returns an iterator to the beginning.
+     * @brief Erases all elements from the container. After this call, size()
+     * returns zero.
      */
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
-
-    /**
-     * @brief Returns an const iterator to the beginning.
-     */
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+    constexpr auto clear() noexcept -> void
     {
-        return data_;
+        etl::for_each(begin(), end(),
+                      [](value_type& element) { element.~value_type(); });
+        size_ = 0;
     }
 
     /**
-     * @brief Returns an iterator to the end.
+     * @brief Appends the given element to the end of the container. The new
+     * element is initialized as a copy.
      */
-    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    constexpr auto push_back(const_reference element) -> void
     {
-        return data_ + size();
+        check_capacity();
+        *((pointer)&memory_[sizeof(value_type) * size_++]) = etl::move(element);
     }
 
     /**
-     * @brief Returns an const iterator to the end.
+     * @brief Appends the given element to the end of the container. The value
+     * is moved into the new element.
      */
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+    constexpr auto push_back(value_type&& element) -> void
     {
-        return data_ + size();
+        check_capacity();
+        *((pointer)&memory_[sizeof(value_type) * size_++]) = etl::move(element);
     }
 
     /**
-     * @brief Accesses the first item.
-     */
-    [[nodiscard]] constexpr auto front() noexcept -> reference
-    {
-        return data_[0];
-    }
-
-    /**
-     * @brief Accesses the last item.
-     */
-    [[nodiscard]] constexpr auto back() noexcept -> reference
-    {
-        return data_[size_ - 1];
-    }
-
-    /**
-     * @brief Adds one element to the back. It fails silently if the Array is
-     * full
-     */
-    constexpr auto push_back(ValueType const& value) noexcept -> void
-    {
-        if (size_ >= capacity_) { return; }
-
-        data_[size_++] = value;
-    }
-
-    /**
-     * @brief Decrements the size by 1.
-     */
-    constexpr void pop_back() noexcept
-    {
-        if (size_ > 0) { size_--; }
-    }
-
-    /**
-     * @brief Construct element inplace at the end of the vector. The behavior
-     * is undefined if the size == capacity.
-     * @returns Reference to constructed element.
+     * @brief Appends a new element to the end of the container. The element is
+     * constructed using placement-new to construct the element in-place at the
+     * location provided by the container. The arguments args... are forwarded
+     * to the constructor as etl::forward<Args>(args)....
      */
     template <class... Args>
-    auto emplace_back(Args&&... args) noexcept -> reference
+    constexpr auto emplace_back(Args&&... args) -> reference
     {
-        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
-        return *::new (addr) ValueType {etl::forward<Args>(args)...};
-    }
-
-    /**
-     * @brief Deleted, since the buffer size is constant.
-     */
-    auto reserve(size_type new_cap) -> void = delete;
-
-    /**
-     * @brief Deleted, since the buffer size is constant.
-     */
-    auto shrink_to_fit() -> void = delete;
-
-protected:
-    explicit vector(ValueType* data, size_t sz, size_t cap)
-        : data_ {data}, size_ {sz}, capacity_ {cap}
-    {
+        check_capacity();
+        auto const size  = sizeof(value_type) * size_++;
+        auto* const addr = reinterpret_cast<void*>(&memory_[size]);
+        return *::new (addr) value_type {etl::forward<Args>(args)...};
     }
 
 private:
-    ValueType* data_;
-    size_t size_;
-    size_t const capacity_;
-};
+    auto check_capacity() -> void
+    {
+        if (size_ == Capacity) { assert(false); }
+    }
 
-namespace make
-{
-template <typename ValueType, size_t Size>
-class vector : public ::etl::vector<ValueType>
-{
-public:
-    explicit vector() : ::etl::vector<ValueType> {&mem_[0], 0, Size} { }
-
-private:
-    ValueType mem_[Size] = {};
+    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)];
+    size_type size_;
 };
-}  // namespace make
 }  // namespace etl
 #endif  // TAETL_VECTOR_HPP

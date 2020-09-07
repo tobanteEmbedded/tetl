@@ -24,12 +24,13 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include <stdio.h>  // for printf
+
 #include "etl/vector.hpp"  // for vector
-#include <stdio.h>         // for printf
 
 auto main() -> int
 {
-    etl::make::vector<double, 16> vec1;
+    etl::stack_vector<double, 16> vec1;
     vec1.push_back(1.0);
     vec1.push_back(2.0);
     vec1.push_back(3.0);
@@ -37,7 +38,7 @@ auto main() -> int
 
     for (auto item : vec1) { printf("%f\n", item); }
 
-    auto foo = [](etl::vector<double>& vec2) {
+    auto foo = [](auto& vec2) {
         for (auto item : vec2) { printf("%f\n", item); }
     };
 
