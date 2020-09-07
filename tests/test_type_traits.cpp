@@ -322,3 +322,52 @@ TEST_CASE("type_traits: make_unsigned", "[type_traits]")
     STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<unsigned long long>,
                                   unsigned long long>);
 }
+
+namespace
+{
+struct Ex1
+{
+    // member has a non-trivial default ctor
+    std::string str;
+};
+
+struct Ex2
+{
+    // trivial and non-throwing
+    Ex2() = default;
+    int n;
+};
+
+struct Ex3
+{
+    Ex3(int& _n) : n {_n} { }
+    int& n;
+};
+
+}  // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_default_constructible", "[type_traits]",
+                   int, float, Ex1, Ex2)
+{
+    STATIC_REQUIRE(etl::is_default_constructible<TestType>::value);
+    STATIC_REQUIRE(etl::is_default_constructible_v<TestType>);
+
+    STATIC_REQUIRE_FALSE(etl::is_default_constructible_v<Ex3>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_trivially_default_constructible",
+                   "[type_traits]", int, float, Ex2)
+{
+    STATIC_REQUIRE(etl::is_trivially_default_constructible<TestType>::value);
+    STATIC_REQUIRE(etl::is_trivially_default_constructible_v<TestType>);
+
+    STATIC_REQUIRE_FALSE(etl::is_trivially_default_constructible_v<Ex1>);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_default_constructible_v<Ex3>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_nothrow_default_constructible",
+                   "[type_traits]", int, float, Ex2)
+{
+    STATIC_REQUIRE(etl::is_nothrow_default_constructible<TestType>::value);
+    STATIC_REQUIRE(etl::is_nothrow_default_constructible_v<TestType>);
+}
