@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_SPAN_HPP
-#define TAETL_SPAN_HPP
+#ifndef TAETL_ITERATOR_HPP
+#define TAETL_ITERATOR_HPP
 
 #include "etl/definitions.hpp"
 #include "etl/memory.hpp"
@@ -487,6 +487,8 @@ template <class Container>
  * push_front() member function is called whenever the iterator (whether
  * dereferenced or not) is assigned to. Incrementing the
  * etl::front_insert_iterator is a no-op.
+ *
+ * @todo Add tests when a container with push_front has been implemented.
  */
 template <class Container>
 class front_insert_iterator
@@ -575,4 +577,4 @@ template <class Container>
 
 }  // namespace etl
 
-#endif  // TAETL_SPAN_HPP
+#endif  // TAETL_ITERATOR_HPP

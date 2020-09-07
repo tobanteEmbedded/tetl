@@ -31,7 +31,9 @@ DAMAGE.
 #ifndef TAETL_TYPETRAITS_HPP
 #define TAETL_TYPETRAITS_HPP
 
-#include "detail/type_traits_decl.hpp"
+#include "detail/type_traits_decl.hpp"  // for is_fundamental
+#include "etl/definitions.hpp"          // for size_t, max_align_t, nullptr_t
+#include "etl/detail/intrinsics.hpp"    // for TAETL_IS_CLASS, TAETL_IS_ENUM
 
 namespace etl
 {

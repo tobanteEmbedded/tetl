@@ -23,9 +23,10 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "etl/definitions.hpp"
-#include "etl/tuple.hpp"
-#include "etl/warning.hpp"
+
+#include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
+#include "etl/tuple.hpp"        // for get, tuple
+#include "etl/warning.hpp"      // for ignore_unused
 
 #include "catch2/catch.hpp"
 

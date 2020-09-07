@@ -24,9 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// TAETL
-#include "etl/numeric.hpp"
-#include "etl/vector.hpp"
+#include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
+#include "etl/limits.hpp"       // for numeric_limits
+#include "etl/numeric.hpp"      // for midpoint, accumulate, gcd
+#include "etl/vector.hpp"       // for stack_vector
 
 #include "catch2/catch.hpp"
 
