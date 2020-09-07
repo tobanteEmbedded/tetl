@@ -364,6 +364,18 @@ constexpr auto distance(It first, It last) ->
     }
 }
 
+/**
+ * @brief Return the nth successor of iterator it.
+ */
+template <class InputIt>
+[[nodiscard]] constexpr auto
+next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
+    -> InputIt
+{
+    etl::advance(it, n);
+    return it;
+}
+
 }  // namespace etl
 
 #endif  // TAETL_SPAN_HPP

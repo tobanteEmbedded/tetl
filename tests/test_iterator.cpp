@@ -104,3 +104,19 @@ TEMPLATE_TEST_CASE("iterator: advance", "[iterator]", char, int, float)
         REQUIRE(p == &arr[3]);
     }
 }
+
+TEMPLATE_TEST_CASE("iterator: next", "[iterator]", char, int, float)
+{
+    SECTION("random access iterator")
+    {
+        auto arr = etl::array<TestType, 5> {};
+        auto* p  = arr.begin();
+        auto* n1 = etl::next(p);
+        REQUIRE(n1 != begin(arr));
+        REQUIRE(n1 == &arr[1]);
+
+        auto* n2 = etl::next(n1);
+        REQUIRE(n2 != begin(arr));
+        REQUIRE(n2 == &arr[2]);
+    }
+}
