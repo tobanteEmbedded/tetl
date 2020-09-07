@@ -360,6 +360,79 @@ template <class T1, class T2>
 {
     return {t, u};
 }
+
+/**
+ * @brief Tests if both elements of lhs and rhs are equal, that is, compares
+ * lhs.first with rhs.first and lhs.second with rhs.second.
+ */
+template <class T1, class T2>
+constexpr auto operator==(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
+{
+    return (lhs.first == rhs.first) && (lhs.second == rhs.second);
+}
+
+/**
+ * @brief Tests if both elements of lhs and rhs are equal, that is, compares
+ * lhs.first with rhs.first and lhs.second with rhs.second.
+ */
+template <class T1, class T2>
+constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
+{
+    return !(lhs == rhs);
+}
+
+/**
+ * @brief Compares lhs and rhs lexicographically by operator<, that is, compares
+ * the first elements and only if they are equivalent, compares the second
+ * elements.
+ */
+template <class T1, class T2>
+constexpr auto operator<(etl::pair<T1, T2> const& lhs,
+                         etl::pair<T1, T2> const& rhs) -> bool
+{
+    if (lhs.first < rhs.first) { return true; }
+    if (rhs.first < lhs.first) { return false; }
+    if (lhs.second < rhs.second) { return true; }
+    return false;
+}
+
+/**
+ * @brief Compares lhs and rhs lexicographically by operator<, that is, compares
+ * the first elements and only if they are equivalent, compares the second
+ * elements.
+ */
+template <class T1, class T2>
+constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
+{
+    return !(rhs < lhs);
+}
+
+/**
+ * @brief Compares lhs and rhs lexicographically by operator<, that is, compares
+ * the first elements and only if they are equivalent, compares the second
+ * elements.
+ */
+template <class T1, class T2>
+constexpr auto operator>(etl::pair<T1, T2> const& lhs,
+                         etl::pair<T1, T2> const& rhs) -> bool
+{
+    return rhs < lhs;
+}
+
+/**
+ * @brief Compares lhs and rhs lexicographically by operator<, that is, compares
+ * the first elements and only if they are equivalent, compares the second
+ * elements.
+ */
+template <class T1, class T2>
+constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
+{
+    return !(lhs < rhs);
+}
 }  // namespace etl
 
 #endif  // TAETL_UTILITY_HPP
