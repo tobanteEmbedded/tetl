@@ -32,6 +32,11 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief Converts any type T to a reference type, making it possible to use
+ * member functions in decltype expressions without the need to go through
+ * constructors.
+ */
 template <class T>
 auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
 
@@ -100,7 +105,7 @@ template <class T, class U = T>
  * @brief Forms lvalue reference to const type of t.
  */
 template <class T>
-[[nodiscard]] constexpr auto as_const(T& t) noexcept -> std::add_const_t<T>&
+[[nodiscard]] constexpr auto as_const(T& t) noexcept -> etl::add_const_t<T>&
 {
     return t;
 }

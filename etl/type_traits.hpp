@@ -230,6 +230,48 @@ template <class T>
 using add_pointer_t = typename add_pointer<T>::type;
 
 /**
+ * @brief Provides the member typedef type which is the same as T, except it has
+ * a cv-qualifier added (unless T is a function, a reference, or already has
+ * this cv-qualifier). Adds both const and volatile.
+ */
+template <class T>
+struct add_cv
+{
+    using type = T const volatile;
+};
+
+template <class T>
+using add_cv_t = typename add_cv<T>::type;
+
+/**
+ * @brief Provides the member typedef type which is the same as T, except it has
+ * a cv-qualifier added (unless T is a function, a reference, or already has
+ * this cv-qualifier). Adds const.
+ */
+template <class T>
+struct add_const
+{
+    using type = T const;
+};
+
+template <class T>
+using add_const_t = typename add_const<T>::type;
+
+/**
+ * @brief Provides the member typedef type which is the same as T, except it has
+ * a cv-qualifier added (unless T is a function, a reference, or already has
+ * this cv-qualifier). Adds volatile.
+ */
+template <class T>
+struct add_volatile
+{
+    using type = T volatile;
+};
+
+template <class T>
+using add_volatile_t = typename add_volatile<T>::type;
+
+/**
  * @brief If T and U name the same type (taking into account const/volatile
  * qualifications), provides the member constant value equal to true. Otherwise
  * value is false.
