@@ -16,6 +16,9 @@ EXAMPLE_PATH           = ./examples
 EXAMPLE_PATTERNS       = *.cpp
 EXAMPLE_RECURSIVE      = NO
 
+# Disable doc gen for symbols detail namespace.
+EXCLUDE_SYMBOLS = detail
+
 # Generate html output
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO

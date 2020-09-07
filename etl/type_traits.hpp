@@ -391,6 +391,73 @@ struct is_integral
 template <class T>
 inline constexpr bool is_integral_v = is_integral<T>::value;
 
+namespace detail
+{
+template <typename>
+struct make_unsigned_helper;
+
+template <>
+struct make_unsigned_helper<signed char>
+{
+    using type = unsigned char;
+};
+
+template <>
+struct make_unsigned_helper<signed short>
+{
+    using type = unsigned short;
+};
+
+template <>
+struct make_unsigned_helper<signed int>
+{
+    using type = unsigned int;
+};
+
+template <>
+struct make_unsigned_helper<signed long>
+{
+    using type = unsigned long;
+};
+
+template <>
+struct make_unsigned_helper<signed long long>
+{
+    using type = unsigned long long;
+};
+
+template <>
+struct make_unsigned_helper<unsigned char>
+{
+    using type = unsigned char;
+};
+
+template <>
+struct make_unsigned_helper<unsigned short>
+{
+    using type = unsigned short;
+};
+
+template <>
+struct make_unsigned_helper<unsigned int>
+{
+    using type = unsigned int;
+};
+
+template <>
+struct make_unsigned_helper<unsigned long>
+{
+    using type = unsigned long;
+};
+
+template <>
+struct make_unsigned_helper<unsigned long long>
+{
+    using type = unsigned long long;
+};
+
+}  // namespace detail
+
 /**
  * @brief If T is an integral (except bool) or enumeration type, provides the
  * member typedef type which is the unsigned integer type corresponding to T,
@@ -399,72 +466,23 @@ inline constexpr bool is_integral_v = is_integral<T>::value;
  * provided. The behavior of a program that adds specializations for
  * make_unsigned is undefined.
  */
-template <typename>
-struct make_unsigned;
-
-template <>
-struct make_unsigned<signed char>
+template <typename Type>
+struct make_unsigned : detail::make_unsigned_helper<Type>
 {
-    using type = unsigned char;
-};
-
-template <>
-struct make_unsigned<signed short>
-{
-    using type = unsigned short;
-};
-
-template <>
-struct make_unsigned<signed int>
-{
-    using type = unsigned int;
-};
-
-template <>
-struct make_unsigned<signed long>
-{
-    using type = unsigned long;
-};
-
-template <>
-struct make_unsigned<signed long long>
-{
-    using type = unsigned long long;
-};
-
-template <>
-struct make_unsigned<unsigned char>
-{
-    using type = unsigned char;
-};
-
-template <>
-struct make_unsigned<unsigned short>
-{
-    using type = unsigned short;
-};
-
-template <>
-struct make_unsigned<unsigned int>
-{
-    using type = unsigned int;
-};
-
-template <>
-struct make_unsigned<unsigned long>
-{
-    using type = unsigned long;
-};
-
-template <>
-struct make_unsigned<unsigned long long>
-{
-    using type = unsigned long long;
 };
 
 template <class T>
 using make_unsigned_t = typename make_unsigned<T>::type;
 
+/**
+ * @brief Checks whether T is a floating-point type. Provides the member
+ * constant value which is equal to true, if T is the type float, double, long
+ * double, including any cv-qualified variants. Otherwise, value is equal to
+ * false.
+ *
+ * @details The behavior of a program that adds specializations for
+ * is_floating_point or is_floating_point_v is undefined.
+ */
 template <class T>
 struct is_floating_point
     : etl::integral_constant<
@@ -550,12 +568,24 @@ struct is_array<T[N]> : true_type
 template <class T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
+/**
+ * @brief Checks whether T is a function type. Types like std::function,
+ * lambdas, classes with overloaded operator() and pointers to functions don't
+ * count as function types. Provides the member constant value which is equal to
+ * true, if T is a function type. Otherwise, value is equal to false.
+ *
+ * @details The behavior of a program that adds specializations for is_function
+ * or is_function_v is undefined.
+ */
 template <class T>
 struct is_function
     : etl::integral_constant<bool, !etl::is_const<const T>::value
                                        && !etl::is_reference<T>::value>
 {
 };
+
+template <class T>
+inline constexpr bool is_function_v = is_function<T>::value;
 
 namespace detail
 {
@@ -569,6 +599,15 @@ struct is_pointer_helper<T*> : etl::true_type
 };
 }  // namespace detail
 
+/**
+ * @brief Checks whether T is a pointer to object or a pointer to function (but
+ * not a pointer to member/member function). Provides the member constant value
+ * which is equal to true, if T is a object/function pointer type. Otherwise,
+ * value is equal to false.
+ *
+ * @details The behavior of a program that adds specializations for is_pointer
+ * or is_pointer_v is undefined.
+ */
 template <class T>
 struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type>
 {
