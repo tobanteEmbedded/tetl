@@ -130,6 +130,112 @@ TEST_CASE("chrono/duration: common_type<duration>", "[chrono]")
     }
 }
 
+TEST_CASE("chrono/duration: operator==", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE(seconds {1} == seconds {1});
+    REQUIRE(milliseconds {42} == milliseconds {42});
+    REQUIRE(microseconds {143} == microseconds {143});
+    REQUIRE(seconds {1} == milliseconds {1'000});
+
+    REQUIRE_FALSE(seconds {1} == seconds {0});
+    REQUIRE_FALSE(milliseconds {42} == milliseconds {143});
+    REQUIRE_FALSE(microseconds {143} == microseconds {42});
+}
+
+TEST_CASE("chrono/duration: operator!=", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE(seconds {1} != seconds {0});
+    REQUIRE(milliseconds {42} != milliseconds {143});
+    REQUIRE(microseconds {143} != microseconds {42});
+
+    REQUIRE_FALSE(seconds {1} != seconds {1});
+    REQUIRE_FALSE(milliseconds {42} != milliseconds {42});
+    REQUIRE_FALSE(microseconds {143} != microseconds {143});
+    REQUIRE_FALSE(seconds {1} != milliseconds {1'000});
+}
+
+TEST_CASE("chrono/duration: operator<", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE(seconds {0} < seconds {1});
+    REQUIRE(milliseconds {999} < seconds {1});
+    REQUIRE(milliseconds {42} < milliseconds {143});
+    REQUIRE(microseconds {143} < microseconds {1'000});
+
+    REQUIRE_FALSE(seconds {1} < seconds {1});
+    REQUIRE_FALSE(milliseconds {42} < milliseconds {42});
+    REQUIRE_FALSE(microseconds {143} < microseconds {143});
+    REQUIRE_FALSE(seconds {1} < milliseconds {1'000});
+}
+
+TEST_CASE("chrono/duration: operator<=", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE(seconds {0} <= seconds {1});
+    REQUIRE(milliseconds {999} <= seconds {1});
+    REQUIRE(milliseconds {1000} <= seconds {1});
+    REQUIRE(milliseconds {42} <= milliseconds {143});
+    REQUIRE(microseconds {143} <= microseconds {1'000});
+    REQUIRE(seconds {1} <= seconds {1});
+}
+
+TEST_CASE("chrono/duration: operator>", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE_FALSE(seconds {0} > seconds {1});
+    REQUIRE_FALSE(milliseconds {999} > seconds {1});
+    REQUIRE_FALSE(milliseconds {42} > milliseconds {143});
+    REQUIRE_FALSE(microseconds {143} > microseconds {1'000});
+
+    REQUIRE(milliseconds {1'000} > milliseconds {42});
+    REQUIRE(microseconds {144} > microseconds {143});
+    REQUIRE(seconds {1} > milliseconds {999});
+}
+
+TEST_CASE("chrono/duration: operator>=", "[chrono]")
+{
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+    using etl::chrono::seconds;
+
+    REQUIRE_FALSE(seconds {0} >= seconds {1});
+    REQUIRE_FALSE(milliseconds {999} >= seconds {1});
+    REQUIRE_FALSE(milliseconds {42} >= milliseconds {143});
+    REQUIRE_FALSE(microseconds {143} >= microseconds {1'000});
+
+    REQUIRE(milliseconds {1'000} >= milliseconds {42});
+    REQUIRE(microseconds {144} >= microseconds {143});
+    REQUIRE(seconds {1} >= milliseconds {1'000});
+}
+
+TEST_CASE("chrono/duration: duration_cast", "[chrono]")
+{
+    using etl::chrono::duration_cast;
+    using etl::chrono::microseconds;
+    using etl::chrono::milliseconds;
+
+    auto milli = milliseconds {1};
+    auto micro = duration_cast<microseconds>(milli);
+    REQUIRE(micro.count() == 1'000);
+}
+
 // TEST_CASE("chrono/duration: floor", "[chrono]")
 // {
 //     using ms = etl::chrono::milliseconds;
