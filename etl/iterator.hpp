@@ -481,6 +481,98 @@ template <class Container>
     return etl::back_insert_iterator<Container>(container);
 }
 
+/**
+ * @brief etl::front_insert_iterator is an LegacyOutputIterator that prepends
+ * elements to a container for which it was constructed. The container's
+ * push_front() member function is called whenever the iterator (whether
+ * dereferenced or not) is assigned to. Incrementing the
+ * etl::front_insert_iterator is a no-op.
+ */
+template <class Container>
+class front_insert_iterator
+{
+protected:
+    Container* container_ = nullptr;
+
+public:
+    using iterator_category = output_iterator_tag;
+    using value_type        = void;
+    using difference_type   = void;
+    using pointer           = void;
+    using reference         = void;
+    using container_type    = Container;
+
+    /**
+     * @brief Initializes the underlying pointer to container with nullptr.
+     */
+    constexpr front_insert_iterator() noexcept = default;
+
+    /**
+     * @brief Initializes the underlying pointer to the container to
+     * etl::addressof(c).
+     */
+    constexpr explicit front_insert_iterator(Container& container)
+        : container_ {etl::addressof(container)}
+    {
+    }
+
+    /**
+     * @brief Inserts the given value value to the container.
+     */
+    constexpr auto operator=(const typename Container::value_type& value)
+        -> front_insert_iterator&
+    {
+        container_->push_front(value);
+        return *this;
+    }
+
+    /**
+     * @brief Inserts the given value value to the container.
+     */
+    constexpr auto operator=(typename Container::value_type&& value)
+        -> front_insert_iterator&
+    {
+        container_->push_front(etl::move(value));
+        return *this;
+    }
+
+    /**
+     * @brief Does nothing, this member function is provided to satisfy the
+     * requirements of LegacyOutputIterator. It returns the iterator itself,
+     * which makes it possible to use code such as *iter = value to output
+     * (insert) the value into the underlying container.
+     */
+    constexpr auto operator*() -> front_insert_iterator& { return *this; }
+
+    /**
+     * @brief Does nothing. These operator overloads are provided to satisfy the
+     * requirements of LegacyOutputIterator. They make it possible for the
+     * expressions *iter++=value and *++iter=value to be used to output (insert)
+     * a value into the underlying container.
+     */
+    constexpr auto operator++() -> front_insert_iterator& { return *this; }
+
+    /**
+     * @brief Does nothing. These operator overloads are provided to satisfy the
+     * requirements of LegacyOutputIterator. They make it possible for the
+     * expressions *iter++=value and *++iter=value to be used to output (insert)
+     * a value into the underlying container.
+     */
+    constexpr auto operator++(int) -> front_insert_iterator { return *this; }
+};
+
+/**
+ * @brief front_inserter is a convenience function template that constructs a
+ * etl::front_insert_iterator for the container c with the type deduced from the
+ * type of the argument.
+ */
+template <class Container>
+[[nodiscard]] constexpr auto front_inserter(Container& c)
+    -> etl::front_insert_iterator<Container>
+{
+    return etl::front_insert_iterator<Container>(c);
+}
+
 }  // namespace etl
 
 #endif  // TAETL_SPAN_HPP

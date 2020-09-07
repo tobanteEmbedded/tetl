@@ -174,3 +174,15 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
         REQUIRE(vec.size() == 1);
     }
 }
+
+TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int,
+                   float)
+{
+    SECTION("construct")
+    {
+        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto iter = etl::front_inserter(vec);
+        REQUIRE(&++iter == &iter);
+        REQUIRE(&++iter == &(*iter));
+    }
+}
