@@ -138,8 +138,7 @@ TEMPLATE_TEST_CASE("iterator: prev", "[iterator]", char, int, float)
     }
 }
 
-TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int, float)
 {
     SECTION("insert rvalue")
     {
@@ -175,8 +174,7 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
     }
 }
 
-TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int, float)
 {
     SECTION("construct")
     {

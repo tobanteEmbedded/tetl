@@ -73,8 +73,7 @@ public:
     /**
      * @brief Accesses the specified const item with bounds checking.
      */
-    [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
-        -> const_reference
+    [[nodiscard]] constexpr auto at(size_type const pos) const noexcept -> const_reference
     {
         ETL_ASSERT(pos < Size);
         return _data[pos];
@@ -83,8 +82,7 @@ public:
     /**
      * @brief Accesses the specified item with bounds checking.
      */
-    [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
-        -> reference
+    [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept -> reference
     {
         ETL_ASSERT(pos < Size);
         return _data[pos];
@@ -103,10 +101,7 @@ public:
     /**
      * @brief Accesses the first item.
      */
-    [[nodiscard]] constexpr auto front() noexcept -> reference
-    {
-        return _data[0];
-    }
+    [[nodiscard]] constexpr auto front() noexcept -> reference { return _data[0]; }
 
     /**
      * @brief Accesses the first item.
@@ -119,10 +114,7 @@ public:
     /**
      * @brief Accesses the last item.
      */
-    [[nodiscard]] constexpr auto back() noexcept -> reference
-    {
-        return _data[Size - 1];
-    }
+    [[nodiscard]] constexpr auto back() noexcept -> reference { return _data[Size - 1]; }
 
     /**
      * @brief Accesses the last item.
@@ -138,10 +130,7 @@ public:
      * always a valid range, even if the container is empty (data() is not
      * dereferenceable in that case).
      */
-    [[nodiscard]] constexpr auto data() noexcept -> pointer
-    {
-        return &_data[0];
-    }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return &_data[0]; }
 
     /**
      * @brief Returns pointer to the underlying array serving as element
@@ -157,10 +146,7 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator
-    {
-        return &_data[0];
-    }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return &_data[0]; }
 
     /**
      * @brief Returns an iterator to the beginning.
@@ -181,10 +167,7 @@ public:
     /**
      * @brief Returns an iterator to the end.
      */
-    [[nodiscard]] constexpr auto end() noexcept -> iterator
-    {
-        return &_data[0] + size();
-    }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator { return &_data[0] + size(); }
 
     /**
      * @brief Returns an iterator to the end.
@@ -205,27 +188,18 @@ public:
     /**
      * @brief Returns true if the size is 0.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size() == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
     /**
      * @brief Returns the number of items.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return Size;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return Size; }
 
     /**
      * @brief Returns the number of items that can be held in allocated
      * storage.
      */
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
-    {
-        return Size;
-    }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Size; }
 
 private:
     Type _data[Size] {};

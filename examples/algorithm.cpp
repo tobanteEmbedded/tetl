@@ -41,8 +41,7 @@ auto main() -> int
     auto print = [](auto& x) { printf("%f\n", x); };
 
     etl::for_each(vec.begin(), vec.end(), print);
-    etl::for_each_n(vec.begin(), 3,
-                    [](const auto& x) { printf("%f\n", x * 2); });
+    etl::for_each_n(vec.begin(), 3, [](const auto& x) { printf("%f\n", x * 2); });
 
     // FIND FIND_IF
     double n1 = 3.0;

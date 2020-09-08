@@ -45,8 +45,7 @@ public:
     /**
      * @brief Construct a buffer to represent a given memory range.
      */
-    mutable_buffer(void* data, etl::size_t size)
-        : data_ {data}, size_ {size} { }
+    mutable_buffer(void* data, etl::size_t size) : data_ {data}, size_ {size} { }
 
     /**
      * @brief Get a pointer to the beginning of the memory range.

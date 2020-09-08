@@ -38,30 +38,21 @@ namespace etl
  * negative infinity.
  * @return true if arg is infinite, false otherwise
  */
-[[nodiscard]] constexpr auto isinf(float arg) -> bool
-{
-    return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(float arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
  * @return true if arg is infinite, false otherwise
  */
-[[nodiscard]] constexpr auto isinf(double arg) -> bool
-{
-    return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(double arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
  * @return true if arg is infinite, false otherwise
  */
-[[nodiscard]] constexpr auto isinf(long double arg) -> bool
-{
-    return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(long double arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief A set of overloads or a function template accepting the arg argument
@@ -91,10 +82,7 @@ template <typename IntegralType>
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
  */
-[[nodiscard]] constexpr auto isnan(long double arg) -> bool
-{
-    return arg == NAN;
-}
+[[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg == NAN; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number

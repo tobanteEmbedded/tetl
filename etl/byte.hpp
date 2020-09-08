@@ -98,33 +98,27 @@ constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
  * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) |
  * static_cast<unsigned int>(r));
  */
-[[nodiscard]] constexpr auto operator|(etl::byte l, etl::byte r) noexcept
-    -> etl::byte
+[[nodiscard]] constexpr auto operator|(etl::byte l, etl::byte r) noexcept -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l)
-                     | static_cast<unsigned int>(r));
+    return etl::byte(static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
 }
 
 /**
  * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) &
  * static_cast<unsigned int>(r));
  */
-[[nodiscard]] constexpr auto operator&(etl::byte l, etl::byte r) noexcept
-    -> etl::byte
+[[nodiscard]] constexpr auto operator&(etl::byte l, etl::byte r) noexcept -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l)
-                     & static_cast<unsigned int>(r));
+    return etl::byte(static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
 }
 
 /**
  * @brief Equivalent to: return etl::byte(static_cast<unsigned int>(l) ^
  * static_cast<unsigned int>(r));
  */
-[[nodiscard]] constexpr auto operator^(etl::byte l, etl::byte r) noexcept
-    -> etl::byte
+[[nodiscard]] constexpr auto operator^(etl::byte l, etl::byte r) noexcept -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l)
-                     ^ static_cast<unsigned int>(r));
+    return etl::byte(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
 }
 
 /**

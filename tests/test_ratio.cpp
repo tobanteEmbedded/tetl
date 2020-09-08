@@ -155,10 +155,8 @@ TEST_CASE("ratio: ratio_not_equal", "[ratio]")
     STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<2, 4>>);
     STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_half, etl::ratio<3, 6>>);
     STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_twelfth, one_twelfth>);
-    STATIC_REQUIRE_FALSE(
-        etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 24>>);
-    STATIC_REQUIRE_FALSE(
-        etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 36>>);
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<2, 24>>);
+    STATIC_REQUIRE_FALSE(etl::ratio_not_equal_v<one_twelfth, etl::ratio<3, 36>>);
 
     STATIC_REQUIRE(etl::ratio_not_equal_v<one_half, one_twelfth>);
     STATIC_REQUIRE(etl::ratio_not_equal_v<one_twelfth, one_half>);

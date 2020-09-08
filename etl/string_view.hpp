@@ -68,8 +68,7 @@ public:
      * After construction, data() is equal to other.data(), and size() is equal
      * to other.size().
      */
-    constexpr basic_string_view(
-        basic_string_view const& other) noexcept = default;
+    constexpr basic_string_view(basic_string_view const& other) noexcept = default;
 
     /**
      * @brief Constructs a view of the first count characters of the character
@@ -99,9 +98,8 @@ public:
     /**
      * @brief Replaces the view with that of view.
      */
-    [[nodiscard]] constexpr auto
-    operator                  =(const basic_string_view& view) noexcept
-        -> basic_string_view& = default;
+    [[nodiscard]] constexpr auto operator=(const basic_string_view& view) noexcept
+        -> basic_string_view&            = default;
 
     /**
      * @brief Returns an iterator to the first character of the view.
@@ -154,8 +152,7 @@ public:
      * pos. No bounds checking is performed: the behavior is undefined if pos >=
      * size().
      */
-    [[nodiscard]] constexpr auto operator[](size_type pos) const
-        -> const_reference
+    [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference
     {
         return at(pos);
     }
@@ -164,10 +161,7 @@ public:
      * @brief Returns reference to the first character in the view. The behavior
      * is undefined if empty() == true.
      */
-    [[nodiscard]] constexpr auto front() const -> const_reference
-    {
-        return *begin_;
-    }
+    [[nodiscard]] constexpr auto front() const -> const_reference { return *begin_; }
 
     /**
      * @brief Returns reference to the last character in the view. The behavior
@@ -183,28 +177,19 @@ public:
      * is such that the range [data(); data() + size()) is valid and the values
      * in it correspond to the values of the view.
      */
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
-    {
-        return begin_;
-    }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return begin_; }
 
     /**
      * @brief Returns the number of CharT elements in the view, i.e.
      * etl::distance(begin(), end()).
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
     /**
      * @brief Returns the number of CharT elements in the view, i.e.
      * etl::distance(begin(), end()).
      */
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size_; }
 
     /**
      * @brief The largest possible number of char-like objects that can be
@@ -218,10 +203,7 @@ public:
     /**
      * @brief Checks if the view has no characters, i.e. whether size() == 0.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size_ == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
     /**
      * @brief Moves the start of the view forward by n characters. The behavior
@@ -268,8 +250,7 @@ public:
      *
      * @ref https://en.cppreference.com/w/cpp/string/basic_string_view/compare
      */
-    [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept
-        -> int
+    [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept -> int
     {
         auto const rlen = etl::min(size(), v.size());
         auto const res  = traits_type::compare(data(), v.data(), rlen);
@@ -328,8 +309,7 @@ public:
      * count1).compare(basic_string_view(s, count2)).
      */
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         CharType const* s,
-                                         size_type count2) const -> int
+                                         CharType const* s, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s, count2));
     }
@@ -376,8 +356,7 @@ public:
      */
     constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
     {
-        return size() >= sv.size()
-               && compare(size() - sv.size(), npos, sv) == 0;
+        return size() >= sv.size() && compare(size() - sv.size(), npos, sv) == 0;
     }
 
     /**
@@ -419,8 +398,7 @@ public:
             if (at(outerIdx) == v.front())
             {
                 auto found = [&] {
-                    for (size_type innerIdx = 0; innerIdx < v.size();
-                         ++innerIdx)
+                    for (size_type innerIdx = 0; innerIdx < v.size(); ++innerIdx)
                     {
                         auto offset = outerIdx + innerIdx;
                         if (at(offset) != v.at(innerIdx)) { return false; }
@@ -443,8 +421,7 @@ public:
      * @return Position of the first character of the found substring, or npos
      * if no such substring is found.
      */
-    constexpr auto find(CharType ch, size_type pos = 0) const noexcept
-        -> size_type
+    constexpr auto find(CharType ch, size_type pos = 0) const noexcept -> size_type
     {
         return find(basic_string_view(etl::addressof(ch), 1), pos);
     }
@@ -481,8 +458,8 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(basic_string_view v,
-                         size_type pos = npos) const noexcept -> size_type
+    constexpr auto rfind(basic_string_view v, size_type pos = npos) const noexcept
+        -> size_type
     {
         auto const offset = etl::clamp<size_type>(pos, 0, size());
         if (v.size() > size()) { return npos; }
@@ -514,8 +491,7 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(CharType c, size_type pos = npos) const noexcept
-        -> size_type
+    constexpr auto rfind(CharType c, size_type pos = npos) const noexcept -> size_type
 
     {
         return rfind(basic_string_view(etl::addressof(c), 1), pos);
@@ -528,8 +504,8 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(CharType const* s, size_type pos,
-                         size_type count) const -> size_type
+    constexpr auto rfind(CharType const* s, size_type pos, size_type count) const
+        -> size_type
     {
         return rfind(basic_string_view(s, count), pos);
     }
@@ -541,8 +517,7 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(CharType const* s, size_type pos = npos) const
-        -> size_type
+    constexpr auto rfind(CharType const* s, size_type pos = npos) const -> size_type
     {
         return rfind(basic_string_view {s}, pos);
     }
@@ -555,8 +530,8 @@ public:
      * @return Position of the first occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_first_of(basic_string_view v,
-                                 size_type pos = 0) const noexcept -> size_type
+    constexpr auto find_first_of(basic_string_view v, size_type pos = 0) const noexcept
+        -> size_type
     {
         for (size_type idx = pos; idx < size(); ++idx)
         {
@@ -591,8 +566,8 @@ public:
      * @return Position of the first occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_first_of(CharType const* s, size_type pos,
-                                 size_type count) const -> size_type
+    constexpr auto find_first_of(CharType const* s, size_type pos, size_type count) const
+        -> size_type
     {
         return find_first_of(basic_string_view(s, count), pos);
     }
@@ -605,8 +580,7 @@ public:
      * @return Position of the first occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_first_of(CharType const* s, size_type pos = 0) const
-        -> size_type
+    constexpr auto find_first_of(CharType const* s, size_type pos = 0) const -> size_type
     {
         return find_first_of(basic_string_view(s), pos);
     }
@@ -621,8 +595,7 @@ public:
      * @return Position of the last occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_last_of(basic_string_view v,
-                                size_type pos = npos) const noexcept
+    constexpr auto find_last_of(basic_string_view v, size_type pos = npos) const noexcept
         -> size_type
     {
         auto offset = etl::clamp<size_type>(pos, 0, size());
@@ -663,8 +636,8 @@ public:
      * @return Position of the last occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_last_of(CharType const* s, size_type pos,
-                                size_type count) const -> size_type
+    constexpr auto find_last_of(CharType const* s, size_type pos, size_type count) const
+        -> size_type
     {
         return find_last_of(basic_string_view(s, count), pos);
     }
@@ -692,8 +665,8 @@ public:
      * @return Position of the last character not equal to any of the characters
      * in the given string, or npos if no such character is found.
      */
-    [[nodiscard]] constexpr auto
-    find_last_not_of(basic_string_view v, size_type pos = npos) const noexcept
+    [[nodiscard]] constexpr auto find_last_not_of(basic_string_view v,
+                                                  size_type pos = npos) const noexcept
         -> size_type
     {
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
@@ -714,8 +687,8 @@ public:
      * @return Position of the last character not equal to any of the characters
      * in the given string, or npos if no such character is found.
      */
-    [[nodiscard]] constexpr auto
-    find_last_not_of(CharType c, size_type pos = npos) const noexcept
+    [[nodiscard]] constexpr auto find_last_not_of(CharType c,
+                                                  size_type pos = npos) const noexcept
         -> size_type
     {
         return find_last_not_of(basic_string_view(etl::addressof(c), 1), pos);
@@ -729,9 +702,8 @@ public:
      * @return Position of the last character not equal to any of the characters
      * in the given string, or npos if no such character is found.
      */
-    [[nodiscard]] constexpr auto
-    find_last_not_of(const CharType* s, size_type pos, size_type count) const
-        -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(const CharType* s, size_type pos,
+                                                  size_type count) const -> size_type
     {
         return find_last_not_of(basic_string_view(s, count), pos);
     }
@@ -744,8 +716,7 @@ public:
      * in the given string, or npos if no such character is found.
      */
     [[nodiscard]] constexpr auto find_last_not_of(const CharType* s,
-                                                  size_type pos = npos) const
-        -> size_type
+                                                  size_type pos = npos) const -> size_type
     {
         return find_last_not_of(basic_string_view(s), pos);
     }
@@ -812,8 +783,7 @@ template <class CharType, class Traits>
 operator<(etl::basic_string_view<CharType, Traits> lhs,
           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-    return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                        rhs.end());
+    return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 /**

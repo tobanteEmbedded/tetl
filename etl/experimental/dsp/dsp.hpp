@@ -68,8 +68,7 @@ constexpr auto operator""_K(long double val) -> constant<long double>
 {
     return constant {val};
 }
-constexpr auto operator""_K(unsigned long long val)
-    -> constant<unsigned long long>
+constexpr auto operator""_K(unsigned long long val) -> constant<unsigned long long>
 {
     return constant {val};
 }
@@ -122,7 +121,7 @@ struct delay
     };
 
 private:
-    using z_buffer_t = etl::array<T, static_cast<size_t>(Z) + 1>;
+    using z_buffer_t                     = etl::array<T, static_cast<size_t>(Z) + 1>;
     typename z_buffer_t::size_type head_ = 0;
     typename z_buffer_t::size_type tail_ = 0;
     z_buffer_t z_buffer_                 = {};

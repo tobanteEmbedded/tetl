@@ -139,18 +139,12 @@ public:
     /**
      * @brief Returns a pointer to the beginning of the sequence.
      */
-    [[nodiscard]] constexpr auto data() const noexcept -> pointer
-    {
-        return data_;
-    }
+    [[nodiscard]] constexpr auto data() const noexcept -> pointer { return data_; }
 
     /**
      * @brief Returns the number of elements in the span.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
 private:
     ElementType* data_ = nullptr;

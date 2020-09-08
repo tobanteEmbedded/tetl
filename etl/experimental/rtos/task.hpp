@@ -88,11 +88,11 @@ inline auto rtos_task(void* task) -> void
  */
 template <typename TaskType>
 inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
-                        UBaseType_t prio           = 0,
-                        TaskHandle_t* const handle = nullptr) -> void
+                        UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
+    -> void
 {
-    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task),
-                prio, handle);
+    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio,
+                handle);
 }
 
 /**

@@ -28,8 +28,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float,
-                   double)
+TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;
     auto func        = function_t {[]() { return TestType {1}; }};
@@ -37,8 +36,7 @@ TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float,
     REQUIRE(func() == TestType {1});
 }
 
-TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
-                   float, double)
+TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;
     auto func        = function_t {[]() { return TestType {1}; }};
@@ -48,8 +46,8 @@ TEMPLATE_TEST_CASE("functional: function - ctor copy", "[functional]", int,
     REQUIRE(func() == TestType {1});
 }
 
-TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int,
-                   float, double)
+TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int, float,
+                   double)
 {
     using function_t  = etl::function<16, TestType(void)>;
     auto func         = function_t {[]() { return TestType {1}; }};
@@ -59,8 +57,7 @@ TEMPLATE_TEST_CASE("functional: function - assigment copy", "[functional]", int,
     REQUIRE(func2() == TestType {1});
 }
 
-TEMPLATE_TEST_CASE("functional: function_view - ctor", "[functional]", int,
-                   float, double)
+TEMPLATE_TEST_CASE("functional: function_view - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(TestType)>;
     auto func        = function_t {[](TestType val) { return TestType {val}; }};

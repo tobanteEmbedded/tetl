@@ -84,8 +84,7 @@ struct treat_as_floating_point : etl::is_floating_point<Rep>
 };
 
 template <class Rep>
-inline constexpr bool treat_as_floating_point_v
-    = treat_as_floating_point<Rep>::value;
+inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;
 
 /**
  * @brief Class template etl::chrono::duration represents a time interval.
@@ -138,11 +137,11 @@ public:
      * a floating-point value, but a duration with a floating-point tick count
      * can be constructed from an integer value
      */
-    template <class Rep2,
-              typename = typename etl::enable_if_t<
-                  is_convertible_v<Rep2, rep> == true
-                  && (treat_as_floating_point_v<
-                          rep> || !treat_as_floating_point_v<Rep2>)>>
+    template <
+        class Rep2,
+        typename = typename etl::enable_if_t<
+            is_convertible_v<Rep2, rep> == true
+            && (treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>)>>
     constexpr explicit duration(const Rep2& r) noexcept : data_(r)
     {
     }
@@ -167,10 +166,10 @@ public:
      * exactly divisible by period
      */
     template <class Rep2, class Period2,
-              typename = typename etl::enable_if_t<
-                  (treat_as_floating_point_v<rep> == true)
-                  || (ratio_divide<Period2, period>::den == 1
-                      && !treat_as_floating_point_v<Rep2>)>>
+              typename
+              = typename etl::enable_if_t<(treat_as_floating_point_v<rep> == true)
+                                          || (ratio_divide<Period2, period>::den == 1
+                                              && !treat_as_floating_point_v<Rep2>)>>
     constexpr duration(const duration<Rep2, Period2>& other) noexcept
         : data_(other.count() * ratio_divide<Period2, period>::num)
     {
@@ -213,8 +212,7 @@ public:
     /**
      * @brief Implements unary plus and unary minus for the durations.
      */
-    [[nodiscard]] constexpr auto operator+() const
-        -> etl::common_type_t<duration>
+    [[nodiscard]] constexpr auto operator+() const -> etl::common_type_t<duration>
     {
         return etl::common_type_t<duration>(*this);
     }
@@ -222,8 +220,7 @@ public:
     /**
      * @brief Implements unary plus and unary minus for the durations.
      */
-    [[nodiscard]] constexpr auto operator-() const
-        -> etl::common_type_t<duration>
+    [[nodiscard]] constexpr auto operator-() const -> etl::common_type_t<duration>
     {
         return etl::common_type_t<duration>(-data_);
     }
@@ -270,11 +267,10 @@ private:
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator==(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs)
-    -> bool
+                                        const duration<Rep2, Period2>& rhs) -> bool
 {
-    using common_t = typename etl::common_type<duration<Rep1, Period1>,
-                                               duration<Rep2, Period2>>::type;
+    using common_t =
+        typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
 
     return common_t(lhs).count() == common_t(rhs).count();
 }
@@ -285,8 +281,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator!=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs)
-    -> bool
+                                        const duration<Rep2, Period2>& rhs) -> bool
 {
     return !(lhs == rhs);
 }
@@ -297,11 +292,10 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator<(const duration<Rep1, Period1>& lhs,
-                                       const duration<Rep2, Period2>& rhs)
-    -> bool
+                                       const duration<Rep2, Period2>& rhs) -> bool
 {
-    using common_t = typename etl::common_type<duration<Rep1, Period1>,
-                                               duration<Rep2, Period2>>::type;
+    using common_t =
+        typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
     return common_t(lhs).count() < common_t(rhs).count();
 }
 
@@ -311,8 +305,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator<=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs)
-    -> bool
+                                        const duration<Rep2, Period2>& rhs) -> bool
 {
     return !(rhs < lhs);
 }
@@ -323,8 +316,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator>(const duration<Rep1, Period1>& lhs,
-                                       const duration<Rep2, Period2>& rhs)
-    -> bool
+                                       const duration<Rep2, Period2>& rhs) -> bool
 {
     return rhs < lhs;
 }
@@ -335,8 +327,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  */
 template <class Rep1, class Period1, class Rep2, class Period2>
 [[nodiscard]] constexpr auto operator>=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs)
-    -> bool
+                                        const duration<Rep2, Period2>& rhs) -> bool
 {
     return !(lhs < rhs);
 }
@@ -457,10 +448,9 @@ template <class Rep1, class Period1, class Rep2, class Period2>
 struct common_type<etl::chrono::duration<Rep1, Period1>,
                    etl::chrono::duration<Rep2, Period2>>
 {
-    using type
-        = etl::chrono::duration<typename etl::common_type<Rep1, Rep2>::type,
-                                ratio<etl::gcd(Period1::num, Period2::num),
-                                      etl::lcm(Period1::den, Period2::den)>>;
+    using type = etl::chrono::duration<typename etl::common_type<Rep1, Rep2>::type,
+                                       ratio<etl::gcd(Period1::num, Period2::num),
+                                             etl::lcm(Period1::den, Period2::den)>>;
 };
 
 inline namespace literals
@@ -532,8 +522,7 @@ constexpr auto operator""_s(long double m) -> etl::chrono::duration<long double>
  */
 constexpr auto operator""_ms(unsigned long long m) -> etl::chrono::milliseconds
 {
-    return etl::chrono::milliseconds(
-        static_cast<etl::chrono::milliseconds::rep>(m));
+    return etl::chrono::milliseconds(static_cast<etl::chrono::milliseconds::rep>(m));
 }
 
 /**
@@ -553,8 +542,7 @@ constexpr auto operator""_ms(long double m)
  */
 constexpr auto operator""_us(unsigned long long m) -> etl::chrono::microseconds
 {
-    return etl::chrono::microseconds(
-        static_cast<etl::chrono::microseconds::rep>(m));
+    return etl::chrono::microseconds(static_cast<etl::chrono::microseconds::rep>(m));
 }
 
 /**
@@ -574,8 +562,7 @@ constexpr auto operator""_us(long double m)
  */
 constexpr auto operator""_ns(unsigned long long m) -> etl::chrono::nanoseconds
 {
-    return etl::chrono::nanoseconds(
-        static_cast<etl::chrono::nanoseconds::rep>(m));
+    return etl::chrono::nanoseconds(static_cast<etl::chrono::nanoseconds::rep>(m));
 }
 
 /**

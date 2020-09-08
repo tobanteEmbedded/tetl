@@ -72,8 +72,7 @@ public:
      * @brief Constructs the container with count copies of elements with value
      * value.
      */
-    constexpr stack_vector(size_type count, const_reference value)
-        : stack_vector {}
+    constexpr stack_vector(size_type count, const_reference value) : stack_vector {}
     {
         for (auto i = size_type {0}; i < count; ++i) { push_back(value); }
     }
@@ -84,9 +83,8 @@ public:
      */
     constexpr stack_vector(stack_vector const& other) : stack_vector {}
     {
-        etl::for_each(other.begin(), other.end(), [&](auto const element) {
-            push_back(etl::move(element));
-        });
+        etl::for_each(other.begin(), other.end(),
+                      [&](auto const element) { push_back(etl::move(element)); });
     }
 
     /**
@@ -108,9 +106,8 @@ public:
      */
     constexpr auto operator=(stack_vector const& other) -> stack_vector&
     {
-        etl::for_each(other.begin(), other.end(), [&](auto const element) {
-            push_back(etl::move(element));
-        });
+        etl::for_each(other.begin(), other.end(),
+                      [&](auto const element) { push_back(etl::move(element)); });
         return *this;
     }
 
@@ -300,28 +297,19 @@ public:
      * the vector. This element acts as a placeholder; attempting to access it
      * results in undefined behavior.
      */
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
-    {
-        return end();
-    }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
     /**
      * @brief Checks if the container has no elements, i.e. whether begin() ==
      * end().
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size_ == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
     /**
      * @brief Returns the number of elements in the container, i.e.
      * etl::distance(begin(), end()).
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
     /**
      * @brief Returns the maximum number of elements the container is able to
@@ -347,8 +335,7 @@ public:
      */
     constexpr auto clear() noexcept -> void
     {
-        etl::for_each(begin(), end(),
-                      [](value_type& element) { element.~value_type(); });
+        etl::for_each(begin(), end(), [](value_type& element) { element.~value_type(); });
         size_ = 0;
     }
 

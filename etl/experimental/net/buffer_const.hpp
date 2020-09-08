@@ -45,10 +45,7 @@ public:
     /**
      * @brief Construct a buffer to represent a given memory range.
      */
-    const_buffer(void const* data, etl::size_t size)
-        : data_ {data}, size_ {size}
-    {
-    }
+    const_buffer(void const* data, etl::size_t size) : data_ {data}, size_ {size} { }
 
     /**
      * @brief Get a pointer to the beginning of the memory range.
@@ -81,8 +78,7 @@ private:
  * another.
  * @relates const_buffer
  */
-inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
-    -> const_buffer
+inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept -> const_buffer
 {
     auto offset      = n < b.size() ? n : b.size();
     const auto* data = static_cast<char const*>(b.data()) + offset;
@@ -95,8 +91,7 @@ inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
  * another.
  * @relates const_buffer
  */
-inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept
-    -> const_buffer
+inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept -> const_buffer
 {
     return b + n;
 }

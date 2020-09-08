@@ -28,8 +28,7 @@ DAMAGE.
 #include "etl/definitions.hpp"  // for uint16_t
 
 template <typename T>
-auto func(T val) ->
-    typename etl::enable_if<etl::is_integral<T>::value, int>::type
+auto func(T val) -> typename etl::enable_if<etl::is_integral<T>::value, int>::type
 {
     return val;
 }

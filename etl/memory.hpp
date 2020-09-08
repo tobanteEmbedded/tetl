@@ -42,8 +42,7 @@ namespace etl
  * internally. If used on micro controllers, the base address should be set to
  * the start of RAM. See your linker script.
  */
-template <typename Type, intptr_t BaseAddress = 0,
-          typename StorageType = uint16_t>
+template <typename Type, intptr_t BaseAddress = 0, typename StorageType = uint16_t>
 class small_ptr
 {
 public:
@@ -81,10 +80,7 @@ public:
     /**
      * @brief Returns the compressed underlying integer address.
      */
-    [[nodiscard]] auto compressed_value() const noexcept -> StorageType
-    {
-        return value_;
-    }
+    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return value_; }
 
     /**
      * @brief Returns a raw pointer to Type.
@@ -180,8 +176,7 @@ private:
  * presence of overloaded operator&.
  */
 template <class T>
-auto addressof(T& arg) noexcept ->
-    typename etl::enable_if_t<etl::is_object_v<T>, T*>
+auto addressof(T& arg) noexcept -> typename etl::enable_if_t<etl::is_object_v<T>, T*>
 {
     return reinterpret_cast<T*>(
         &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
@@ -192,8 +187,7 @@ auto addressof(T& arg) noexcept ->
  * presence of overloaded operator&.
  */
 template <class T>
-auto addressof(T& arg) noexcept ->
-    typename etl::enable_if_t<!etl::is_object_v<T>, T*>
+auto addressof(T& arg) noexcept -> typename etl::enable_if_t<!etl::is_object_v<T>, T*>
 {
     return &arg;
 }
@@ -239,8 +233,7 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 template <class ForwardIt, class Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
-    for (; n > 0; (void)++first, --n)
-    { etl::destroy_at(etl::addressof(*first)); }
+    for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
     return first;
 }
 

@@ -82,8 +82,7 @@ constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
  * every iterator in the range [first, first+n] in order.
  */
 template <class InputIt, class Size, class UnaryFunction>
-constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
-    -> InputIt
+constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept -> InputIt
 {
     for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
     return first;
@@ -93,8 +92,8 @@ constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>
-[[nodiscard]] constexpr auto find(InputIt first, InputIt last,
-                                  const T& value) noexcept -> InputIt
+[[nodiscard]] constexpr auto find(InputIt first, InputIt last, const T& value) noexcept
+    -> InputIt
 {
     for (; first != last; ++first)
     {
@@ -135,8 +134,7 @@ template <class InputIt, class UnaryPredicate>
  * @brief Returns the greater of a and b.
  */
 template <class Type>
-[[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept
-    -> Type const&
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (a < b) ? b : a;
 }
@@ -145,8 +143,8 @@ template <class Type>
  * @brief Returns the greater of a and b, using a compare function.
  */
 template <class Type, class Compare>
-[[nodiscard]] constexpr auto max(Type const& a, Type const& b,
-                                 Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b, Compare comp) noexcept
+    -> Type const&
 {
     return (comp(a, b)) ? b : a;
 }
@@ -157,8 +155,7 @@ template <class Type, class Compare>
  */
 template <class ForwardIterator>
 [[nodiscard]] constexpr auto max_element(ForwardIterator first,
-                                         ForwardIterator last) noexcept
-    -> ForwardIterator
+                                         ForwardIterator last) noexcept -> ForwardIterator
 {
     if (first == last) { return last; }
 
@@ -176,9 +173,8 @@ template <class ForwardIterator>
  * compared using the given binary comparison function comp.
  */
 template <class ForwardIterator, class Compare>
-[[nodiscard]] constexpr auto max_element(ForwardIterator first,
-                                         ForwardIterator last, Compare comp)
-    -> ForwardIterator
+[[nodiscard]] constexpr auto max_element(ForwardIterator first, ForwardIterator last,
+                                         Compare comp) -> ForwardIterator
 {
     if (first == last) { return last; }
 
@@ -195,8 +191,7 @@ template <class ForwardIterator, class Compare>
  * @brief Returns the smaller of a and b.
  */
 template <class Type>
-[[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept
-    -> Type const&
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (b < a) ? b : a;
 }
@@ -205,8 +200,8 @@ template <class Type>
  * @brief Returns the smaller of a and b, using a compare function.
  */
 template <class Type, class Compare>
-[[nodiscard]] constexpr auto min(Type const& a, Type const& b,
-                                 Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b, Compare comp) noexcept
+    -> Type const&
 {
     return (comp(b, a)) ? b : a;
 }
@@ -217,8 +212,7 @@ template <class Type, class Compare>
  */
 template <class ForwardIterator>
 [[nodiscard]] constexpr auto min_element(ForwardIterator first,
-                                         ForwardIterator last) noexcept
-    -> ForwardIterator
+                                         ForwardIterator last) noexcept -> ForwardIterator
 {
     if (first == last) { return last; }
 
@@ -236,9 +230,8 @@ template <class ForwardIterator>
  * compared using the given binary comparison function comp.
  */
 template <class ForwardIterator, class Compare>
-[[nodiscard]] constexpr auto min_element(ForwardIterator first,
-                                         ForwardIterator last, Compare comp)
-    -> ForwardIterator
+[[nodiscard]] constexpr auto min_element(ForwardIterator first, ForwardIterator last,
+                                         Compare comp) -> ForwardIterator
 {
     if (first == last) { return last; }
 
@@ -257,15 +250,15 @@ template <class ForwardIterator, class Compare>
  * values.
  */
 template <class Type>
-[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
-                                   Type const& hi) noexcept -> Type const&
+[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi) noexcept
+    -> Type const&
 {
     return clamp(v, lo, hi, etl::less<Type>());
 }
 
 template <class Type, class Compare>
-[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
-                                   Type const& hi, Compare comp) -> Type const&
+[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi,
+                                   Compare comp) -> Type const&
 {
     ETL_ASSERT(!comp(hi, lo));
     return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
@@ -276,8 +269,7 @@ template <class Type, class Compare>
  * [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-[[nodiscard]] constexpr auto all_of(InputIt first, InputIt last,
-                                    UnaryPredicate p) -> bool
+[[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
 {
     return etl::find_if_not(first, last, p) == last;
 }
@@ -287,8 +279,7 @@ template <class InputIt, class UnaryPredicate>
  * the range [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last,
-                                    UnaryPredicate p) -> bool
+[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
 {
     return etl::find_if(first, last, p) != last;
 }
@@ -298,8 +289,8 @@ template <class InputIt, class UnaryPredicate>
  * [first, last).
  */
 template <class InputIt, class UnaryPredicate>
-[[nodiscard]] constexpr auto none_of(InputIt first, InputIt last,
-                                     UnaryPredicate p) -> bool
+[[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, UnaryPredicate p)
+    -> bool
 {
     return etl::find_if(first, last, p) == last;
 }
@@ -313,8 +304,7 @@ template <class InputIt, class UnaryPredicate>
  * function is that [first, n_first) and [n_first, last) are valid ranges.
  */
 template <class ForwardIt>
-constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last)
-    -> ForwardIt
+constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> ForwardIt
 {
     if (first == n_first) { return last; }
     if (n_first == last) { return first; }
@@ -344,8 +334,7 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last)
  * elements is preserved.
  */
 template <class BidirIt, class UnaryPredicate>
-constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p)
-    -> BidirIt
+constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> BidirIt
 {
     auto const n = l - f;
     if (n == 0) { return f; }
@@ -362,9 +351,9 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p)
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
 template <class InputIt1, class InputIt2, class Compare>
-[[nodiscard]] constexpr auto
-lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                        InputIt2 last2, Compare comp) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
+                                                     InputIt2 first2, InputIt2 last2,
+                                                     Compare comp) -> bool
 {
     for (; (first1 != last1) && (first2 != last2); ++first1, (void)++first2)
     {
@@ -382,9 +371,9 @@ lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
 template <class InputIt1, class InputIt2>
-[[nodiscard]] constexpr auto
-lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                        InputIt2 last2) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
+                                                     InputIt2 first2, InputIt2 last2)
+    -> bool
 {
     return lexicographical_compare(first1, last1, first2, last2,
                                    etl::less<decltype(*first1)> {});

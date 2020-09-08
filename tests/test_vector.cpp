@@ -31,8 +31,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("stack_vector: construct default", "[stack_vector]", char,
-                   int, float)
+TEMPLATE_TEST_CASE("stack_vector: construct default", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 16>;
     auto vec       = vector_t {};
@@ -41,16 +40,14 @@ TEMPLATE_TEST_CASE("stack_vector: construct default", "[stack_vector]", char,
     REQUIRE(vec.capacity() == vec.max_size());
     REQUIRE(etl::is_same_v<TestType, typename vector_t::value_type>);
     REQUIRE(etl::is_same_v<TestType&, typename vector_t::reference>);
-    REQUIRE(
-        etl::is_same_v<TestType const&, typename vector_t::const_reference>);
+    REQUIRE(etl::is_same_v<TestType const&, typename vector_t::const_reference>);
     REQUIRE(etl::is_same_v<TestType*, typename vector_t::pointer>);
     REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_pointer>);
     REQUIRE(etl::is_same_v<TestType*, typename vector_t::iterator>);
     REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_iterator>);
 }
 
-TEMPLATE_TEST_CASE("stack_vector: construct(count)", "[stack_vector]", int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: construct(count)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
 
@@ -63,8 +60,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(count)", "[stack_vector]", int,
     REQUIRE(vec2.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("stack_vector: construct(count, value)", "[stack_vector]",
-                   int, float)
+TEMPLATE_TEST_CASE("stack_vector: construct(count, value)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
     auto vec       = vector_t {2, TestType(143)};
@@ -74,8 +70,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(count, value)", "[stack_vector]",
     REQUIRE(vec.back() == TestType(143));
 }
 
-TEMPLATE_TEST_CASE("stack_vector: construct(copy)", "[stack_vector]", int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: construct(copy)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
     auto vec       = vector_t {2, TestType(143)};
@@ -91,8 +86,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(copy)", "[stack_vector]", int,
     REQUIRE(vec2.back() == TestType(143));
 }
 
-TEMPLATE_TEST_CASE("stack_vector: construct(move)", "[stack_vector]", int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: construct(move)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
     auto vec       = vector_t {2, TestType(143)};
@@ -108,8 +102,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(move)", "[stack_vector]", int,
     REQUIRE(vec2.back() == TestType(143));
 }
 
-TEMPLATE_TEST_CASE("stack_vector: operator=(copy)", "[stack_vector]", int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: operator=(copy)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
     auto vec       = vector_t {2, TestType(143)};
@@ -126,8 +119,7 @@ TEMPLATE_TEST_CASE("stack_vector: operator=(copy)", "[stack_vector]", int,
     REQUIRE(vec2.back() == TestType(143));
 }
 
-TEMPLATE_TEST_CASE("stack_vector: operator=(move)", "[stack_vector]", int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: operator=(move)", "[stack_vector]", int, float)
 {
     using vector_t = etl::stack_vector<TestType, 2>;
     auto vec       = vector_t {2, TestType(143)};
@@ -183,8 +175,7 @@ TEMPLATE_TEST_CASE("stack_vector: assign", "[stack_vector]", int, float)
     REQUIRE(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("stack_vector: begin/end", "[stack_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: begin/end", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 16>;
 
@@ -205,8 +196,7 @@ TEMPLATE_TEST_CASE("stack_vector: begin/end", "[stack_vector]", char, int,
     }
 }
 
-TEMPLATE_TEST_CASE("stack_vector: push_back", "[stack_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: push_back", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 4>;
     auto vec       = vector_t {};
@@ -249,8 +239,7 @@ TEMPLATE_TEST_CASE("stack_vector: push_back", "[stack_vector]", char, int,
     }
 }
 
-TEMPLATE_TEST_CASE("stack_vector: emplace_back", "[stack_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: emplace_back", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 4>;
     auto vec       = vector_t {};
@@ -345,8 +334,7 @@ TEST_CASE("stack_vector: emplace_back - custom ctor", "[stack_vector]")
     }
 }
 
-TEMPLATE_TEST_CASE("stack_vector: operator[]", "[stack_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: operator[]", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 4>;
     auto vec       = vector_t {};
@@ -378,8 +366,7 @@ TEMPLATE_TEST_CASE("stack_vector: at", "[stack_vector]", char, int, float)
     REQUIRE(vec2.at(1) == TestType {2});
 }
 
-TEMPLATE_TEST_CASE("stack_vector: front/back", "[stack_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("stack_vector: front/back", "[stack_vector]", char, int, float)
 {
     using vector_t = etl::stack_vector<TestType, 4>;
     auto vec       = vector_t {};

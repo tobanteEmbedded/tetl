@@ -29,8 +29,8 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
+TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double)
 {
     auto d1 = etl::chrono::duration<TestType> {};
     etl::ignore_unused(d1);
@@ -74,16 +74,16 @@ TEST_CASE("chrono/duration: construct(ratio)", "[chrono]")
     }
 }
 
-TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
+TEMPLATE_TEST_CASE("chrono/duration: min,max,zero", "[chrono]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double)
 {
     using duration_t = etl::chrono::duration<TestType>;
     REQUIRE(duration_t::max().count() > duration_t::min().count());
     REQUIRE(duration_t::max().count() > duration_t::zero().count());
 }
 
-TEMPLATE_TEST_CASE("chrono/duration: operator++ & operator--", "[chrono]",
-                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t)
+TEMPLATE_TEST_CASE("chrono/duration: operator++ & operator--", "[chrono]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t)
 {
     using duration_t = etl::chrono::duration<TestType>;
     auto dur         = duration_t {0};
@@ -102,8 +102,8 @@ TEMPLATE_TEST_CASE("chrono/duration: operator++ & operator--", "[chrono]",
     REQUIRE(m.count() == 119);
 }
 
-TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
+TEMPLATE_TEST_CASE("chrono/duration: count", "[chrono]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double)
 {
     REQUIRE(etl::chrono::duration<TestType> {}.count() == 0);
     REQUIRE(etl::chrono::nanoseconds {}.count() == 0);

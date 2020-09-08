@@ -31,10 +31,9 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
@@ -73,9 +72,9 @@ TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
     REQUIRE(result2 == vec.end());
 }
 
-TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
@@ -84,9 +83,8 @@ TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
     vec.push_back(TestType(4));
 
     // find_if
-    auto* result3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
-        return static_cast<bool>(x % 2);
-    });
+    auto* result3 = etl::find_if(
+        vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x % 2); });
     REQUIRE_FALSE(result3 == vec.end());
 
     auto* result4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
@@ -95,9 +93,9 @@ TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
     REQUIRE(result4 == vec.end());
 }
 
-TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
@@ -105,22 +103,18 @@ TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t,
     vec.push_back(TestType(3));
     vec.push_back(TestType(4));
     // find_if_not
-    auto* result5
-        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
-              return static_cast<bool>(x % 2);
-          });
+    auto* result5 = etl::find_if_not(
+        vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x % 2); });
     REQUIRE_FALSE(result5 == vec.end());
 
-    auto* result6
-        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
-              return static_cast<bool>(x == 100);
-          });
+    auto* result6 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+        return static_cast<bool>(x == 100);
+    });
     REQUIRE_FALSE(result6 == vec.end());
 
-    auto* result7
-        = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
-              return static_cast<bool>(x != 100);
-          });
+    auto* result7 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+        return static_cast<bool>(x != 100);
+    });
     REQUIRE(result7 == vec.end());
 }
 
@@ -144,9 +138,8 @@ TEMPLATE_TEST_CASE("algorithm: max", "[algorithm]", etl::int8_t, etl::int16_t,
     REQUIRE(etl::max<TestType>(10, -20, cmp) == -20);
 }
 
-TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
@@ -175,9 +168,8 @@ TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
     REQUIRE(etl::min<TestType>(10, -20, cmp) == 10);
 }
 
-TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t, etl::int16_t,
+                   etl::int32_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(TestType {1});
@@ -203,10 +195,9 @@ TEMPLATE_TEST_CASE("algorithm: clamp", "[algorithm]", etl::uint8_t, etl::int8_t,
     STATIC_REQUIRE(etl::clamp<TestType>(55, 0, 100) == TestType {55});
 }
 
-TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
@@ -227,10 +218,9 @@ TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t,
     }
 }
 
-TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
@@ -251,10 +241,9 @@ TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t,
     }
 }
 
-TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::stack_vector<TestType, 16> vec;
     vec.push_back(1);
@@ -275,10 +264,9 @@ TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t,
     }
 }
 
-TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::array<TestType, 16> arr;
     arr[0] = 1;
@@ -292,9 +280,8 @@ TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::array<TestType, 6> arr;
     arr[0] = 0;

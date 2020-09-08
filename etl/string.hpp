@@ -69,8 +69,7 @@ struct char_traits<char>
     /**
      * @brief Assigns character a to character r.
      */
-    static constexpr auto assign(char_type& a, char_type const& b) noexcept
-        -> void
+    static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void
     {
         a = b;
     }
@@ -78,18 +77,12 @@ struct char_traits<char>
     /**
      * @brief Returns true if a and b are equal, false otherwise.
      */
-    static constexpr auto eq(char_type a, char_type b) noexcept -> bool
-    {
-        return a == b;
-    }
+    static constexpr auto eq(char_type a, char_type b) noexcept -> bool { return a == b; }
 
     /**
      * @brief Returns true if a is less than b, false otherwise.
      */
-    static constexpr auto lt(char_type a, char_type b) noexcept -> bool
-    {
-        return a < b;
-    }
+    static constexpr auto lt(char_type a, char_type b) noexcept -> bool { return a < b; }
 
     /**
      * @brief Compares the first count characters of the character strings s1
@@ -126,8 +119,8 @@ struct char_traits<char>
      * @return A pointer to the first character in the range specified by [p, p
      * + count) that compares equal to ch, or a null pointer if not found.
      */
-    static constexpr auto find(char_type const* str, size_t count,
-                               char_type const& token) -> char_type const*
+    static constexpr auto find(char_type const* str, size_t count, char_type const& token)
+        -> char_type const*
     {
         for (size_t i = 0; i < count; ++i)
         {
@@ -143,8 +136,8 @@ struct char_traits<char>
      * if the copied character ranges overlap, i.e. src is in [dest, dest +
      * count).
      */
-    static constexpr auto move(char_type* dest, char_type const* source,
-                               size_t count) -> char_type*
+    static constexpr auto move(char_type* dest, char_type const* source, size_t count)
+        -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
         return dest;
@@ -156,8 +149,8 @@ struct char_traits<char>
      * [0, count), performs assign(src[i], dest[i]). The behavior is undefined
      * if copied character ranges overlap, i.e. src is in [dest, dest + count).
      */
-    static constexpr auto copy(char_type* dest, char_type const* source,
-                               size_t count) -> char_type*
+    static constexpr auto copy(char_type* dest, char_type const* source, size_t count)
+        -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
         return dest;
@@ -196,8 +189,7 @@ struct char_traits<char>
      *
      * @details https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
      */
-    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept
-        -> bool
+    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
     {
         if (lhs == rhs) { return true; }
         if ((lhs == eof()) && (rhs == eof())) { return true; }
@@ -290,8 +282,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    [[nodiscard]] constexpr auto at(etl::size_t index) const noexcept
-        -> const_reference
+    [[nodiscard]] constexpr auto at(etl::size_t index) const noexcept -> const_reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -309,8 +300,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    constexpr auto operator[](etl::size_t index) const noexcept
-        -> const_reference
+    constexpr auto operator[](etl::size_t index) const noexcept -> const_reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -355,26 +345,17 @@ public:
     /**
      * @brief Checks whether the string is empty.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size_ == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return size_; }
 
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto length() const noexcept -> etl::size_t
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto length() const noexcept -> etl::size_t { return size_; }
 
     /**
      * @brief Returns the number of characters that can be held in allocated
@@ -443,8 +424,7 @@ public:
      * @brief Appends characters in the range [s, s + count). This range can
      * contain null characters.
      */
-    constexpr auto append(const_pointer s, etl::size_t count) noexcept
-        -> basic_string&
+    constexpr auto append(const_pointer s, etl::size_t count) noexcept -> basic_string&
     {
         for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
         size_ += count;
@@ -456,8 +436,8 @@ public:
     /**
      * @brief Inserts count copies of character ch at the position index.
      */
-    constexpr auto insert(size_type index, size_type count,
-                          CharType ch) noexcept -> basic_string&
+    constexpr auto insert(size_type index, size_type count, CharType ch) noexcept
+        -> basic_string&
     {
         for (size_type i = index; i < count; i++) { data_[size_ + i] = ch; }
         size_ += count;
@@ -469,8 +449,7 @@ public:
      * @brief Inserts null-terminated character string pointed to by s at the
      * position index.
      */
-    constexpr auto insert(size_type index, const_pointer s) noexcept
-        -> basic_string&
+    constexpr auto insert(size_type index, const_pointer s) noexcept -> basic_string&
     {
         auto const len = etl::strlen(s);
         for (size_type i = 0; i < len; i++)

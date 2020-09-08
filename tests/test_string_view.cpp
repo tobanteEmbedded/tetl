@@ -386,10 +386,8 @@ TEST_CASE("string_view: rfind", "[string_view]")
         REQUIRE(sv.rfind("t", etl::string_view::npos, 1) == 3);
         REQUIRE(sv.rfind("est", etl::string_view::npos, 3) == 1);
 
-        REQUIRE(sv.rfind("x", etl::string_view::npos, 1)
-                == etl::string_view::npos);
-        REQUIRE(sv.rfind("foo", etl::string_view::npos, 3)
-                == etl::string_view::npos);
+        REQUIRE(sv.rfind("x", etl::string_view::npos, 1) == etl::string_view::npos);
+        REQUIRE(sv.rfind("foo", etl::string_view::npos, 3) == etl::string_view::npos);
     }
 
     WHEN("rhs == const char* s, size_type pos")

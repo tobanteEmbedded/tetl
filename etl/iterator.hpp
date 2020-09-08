@@ -137,8 +137,7 @@ constexpr auto end(T (&array)[N]) noexcept -> T*
  * C::end() having a reasonable implementation.
  */
 template <class C>
-constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c)))
-    -> decltype(etl::end(c))
+constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
 {
     return etl::end(c);
 }
@@ -148,8 +147,7 @@ constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c)))
  * c.size(), converted to the return type if necessary.
  */
 template <typename C>
-constexpr auto size(C const& c) noexcept(noexcept(c.size()))
-    -> decltype(c.size())
+constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
 {
     return c.size();
 }
@@ -168,8 +166,7 @@ constexpr auto size(const T (&array)[N]) noexcept -> etl::size_t
  * @brief Returns whether the given container is empty.
  */
 template <typename C>
-constexpr auto empty(const C& c) noexcept(noexcept(c.empty()))
-    -> decltype(c.empty())
+constexpr auto empty(const C& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
 {
     return c.empty();
 }
@@ -199,8 +196,7 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
  * the container. Returns c.data().
  */
 template <typename C>
-constexpr auto data(const C& c) noexcept(noexcept(c.data()))
-    -> decltype(c.data())
+constexpr auto data(const C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 {
     return c.data();
 }
@@ -328,8 +324,7 @@ constexpr auto advance(It& it, Distance n) -> void
             --dist;
             ++it;
         }
-        if constexpr (etl::is_base_of_v<etl::bidirectional_iterator_tag,
-                                        category>)
+        if constexpr (etl::is_base_of_v<etl::bidirectional_iterator_tag, category>)
         {
             while (dist < 0)
             {
@@ -371,8 +366,7 @@ constexpr auto distance(It first, It last) ->
  */
 template <class InputIt>
 [[nodiscard]] constexpr auto
-next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
-    -> InputIt
+next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {
     etl::advance(it, n);
     return it;
@@ -383,8 +377,7 @@ next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
  */
 template <class BidirIt>
 [[nodiscard]] constexpr auto
-prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1)
-    -> BidirIt
+prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
 {
     etl::advance(it, -n);
     return it;

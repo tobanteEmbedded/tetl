@@ -28,8 +28,8 @@ DAMAGE.
 
 #include "etl/string.hpp"
 
-TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::string<8>,
-                   etl::string<12>, etl::small_string)
+TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::string<8>, etl::string<12>,
+                   etl::small_string)
 {
     constexpr TestType str1 {};
 

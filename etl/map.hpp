@@ -31,6 +31,7 @@ DAMAGE.
 #include "etl/cassert.hpp"
 #include "etl/definitions.hpp"
 #include "etl/functional.hpp"
+#include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
 namespace etl
@@ -255,7 +256,7 @@ public:
 
 private:
     using pair_t    = typename map_view<KeyT, ValueT, Compare>::value_type;
-    using storage_t = typename aligned_storage_t<sizeof(pair_t), alignof(pair_t)>;
+    using storage_t = typename aligned_storage<sizeof(pair_t), alignof(pair_t)>::type;
     storage_t memory_[Size] {};
 };
 }  // namespace etl

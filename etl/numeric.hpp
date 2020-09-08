@@ -43,8 +43,8 @@ namespace etl
  * [first, last). Uses operator+ to sum up the elements.
  */
 template <class InputIt, class Type>
-[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
-                                        Type init) noexcept -> Type
+[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init) noexcept
+    -> Type
 {
     for (; first != last; ++first) { init = move(init) + *first; }
     return init;
@@ -106,8 +106,9 @@ template <class M, class N>
  * @details T is arithmentic type other than bool
  */
 template <typename Integer>
-constexpr auto midpoint(Integer a, Integer b) noexcept -> etl::enable_if_t<
-    etl::is_integral_v<Integer> && !etl::is_same_v<Integer, bool>, Integer>
+constexpr auto midpoint(Integer a, Integer b) noexcept
+    -> etl::enable_if_t<etl::is_integral_v<Integer> && !etl::is_same_v<Integer, bool>,
+                        Integer>
 {
     using U  = etl::make_unsigned_t<Integer>;
     int sign = 1;

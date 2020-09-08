@@ -366,8 +366,8 @@ template <class T1, class T2>
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <class T1, class T2>
-constexpr auto operator==(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator==(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
@@ -377,8 +377,8 @@ constexpr auto operator==(etl::pair<T1, T2> const& lhs,
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <class T1, class T2>
-constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator!=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     return !(lhs == rhs);
 }
@@ -389,8 +389,8 @@ constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <class T1, class T2>
-constexpr auto operator<(etl::pair<T1, T2> const& lhs,
-                         etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     if (lhs.first < rhs.first) { return true; }
     if (rhs.first < lhs.first) { return false; }
@@ -404,8 +404,8 @@ constexpr auto operator<(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <class T1, class T2>
-constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     return !(rhs < lhs);
 }
@@ -416,8 +416,8 @@ constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <class T1, class T2>
-constexpr auto operator>(etl::pair<T1, T2> const& lhs,
-                         etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     return rhs < lhs;
 }
@@ -428,8 +428,8 @@ constexpr auto operator>(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <class T1, class T2>
-constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
+    -> bool
 {
     return !(lhs < rhs);
 }
