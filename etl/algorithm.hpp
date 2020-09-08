@@ -34,6 +34,8 @@ DAMAGE.
 #include "cassert.hpp"
 #include "definitions.hpp"
 #include "functional.hpp"
+#include "iterator.hpp"
+#include "type_traits.hpp"
 
 namespace etl
 {
@@ -328,6 +330,28 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
 }
 
 /**
+ * @brief Reorders the elements in the range [first, last) in such a way that all elements
+ * for which the predicate p returns true precede the elements for which predicate p
+ * returns false. Relative order of the elements is not preserved.
+ */
+template <class ForwardIt, class UnaryPredicate>
+constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> ForwardIt
+{
+    first = find_if_not(first, last, p);
+    if (first == last) { return first; }
+
+    for (ForwardIt i = next(first); i != last; ++i)
+    {
+        if (p(*i))
+        {
+            iter_swap(i, first);
+            ++first;
+        }
+    }
+    return first;
+}
+
+/**
  * @brief  Reorders the elements in the range [first, last) in such a way
  * that all elements for which the predicate p returns true precede the
  * elements for which predicate p returns false. Relative order of the
@@ -464,6 +488,49 @@ template <class InputIt1, class InputIt2>
 {
     return lexicographical_compare(first1, last1, first2, last2,
                                    etl::less<decltype(*first1)> {});
+}
+
+/**
+ * @brief Sorts the elements in the range [first, last) in non-descending order. The order
+ * of equal elements is not guaranteed to be preserved.
+ *
+ * @details A sequence is sorted with respect to a comparator comp if for any iterator it
+ * pointing to the sequence and any non-negative integer n such that it + n is a valid
+ * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
+ * *it) evaluates to false. Quick sort implementation.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/sort
+ */
+template <class RandomIt, class Compare>
+constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
+{
+    auto const N = distance(first, last);
+    if (N <= 1) { return; }
+
+    auto const pivot = *next(first, N / 2);
+    auto m1 = partition(first, last, [&](auto const& elem) { return comp(elem, pivot); });
+    auto m2 = partition(m1, last, [&](auto const& elem) { return !comp(pivot, elem); });
+
+    sort(first, m1, comp);
+    sort(m2, last, comp);
+}
+
+/**
+ * @brief Sorts the elements in the range [first, last) in non-descending order. The order
+ * of equal elements is not guaranteed to be preserved. Elements are compared using
+ * operator<.
+ *
+ * @details A sequence is sorted with respect to a comparator comp if for any iterator it
+ * pointing to the sequence and any non-negative integer n such that it + n is a valid
+ * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
+ * *it) evaluates to false. Quick sort implementation.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/sort
+ */
+template <class RandomIt>
+constexpr auto sort(RandomIt first, RandomIt last) -> void
+{
+    sort(first, last, [](auto const& lhs, auto const& rhs) { return lhs < rhs; });
 }
 
 }  // namespace etl

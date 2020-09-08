@@ -466,3 +466,38 @@ TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
         REQUIRE(all_42);
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: sort", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("already sorted")
+    {
+        auto source = etl::array<TestType, 4> {};
+        source[0]   = TestType {1};
+        source[1]   = TestType {2};
+        source[2]   = TestType {3};
+        source[3]   = TestType {4};
+
+        etl::sort(begin(source), end(source), etl::less<TestType> {});
+        REQUIRE(source[0] == TestType {1});
+        REQUIRE(source[1] == TestType {2});
+        REQUIRE(source[2] == TestType {3});
+        REQUIRE(source[3] == TestType {4});
+    }
+
+    SECTION("reversed")
+    {
+        auto source = etl::array<TestType, 4> {};
+        source[0]   = TestType {4};
+        source[1]   = TestType {3};
+        source[2]   = TestType {2};
+        source[3]   = TestType {1};
+
+        etl::sort(begin(source), end(source));
+        REQUIRE(source[0] == TestType {1});
+        REQUIRE(source[1] == TestType {2});
+        REQUIRE(source[2] == TestType {3});
+        REQUIRE(source[3] == TestType {4});
+    }
+}
