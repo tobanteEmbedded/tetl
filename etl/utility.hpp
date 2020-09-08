@@ -290,7 +290,10 @@ template <class R, class T>
  * etl::tuple with two elements. If neither T1 nor T2 is a possibly cv-qualified
  * class type with non-trivial destructor, or array thereof, the destructor of
  * pair is trivial.
+ *
  * @ref https://en.cppreference.com/w/cpp/utility/pair
+ *
+ * @todo Add conditional explicit when C++20 is available.
  */
 template <class T1, class T2>
 struct pair
@@ -298,16 +301,68 @@ struct pair
     using first_type  = T1;
     using second_type = T2;
 
-    constexpr pair() = default;
+    /**
+     * @brief Default constructor. Value-initializes both elements of the pair, first and
+     * second.
+     */
+    constexpr pair() : first {}, second {} { }
+
+    /**
+     * @brief Initializes first with x and second with y.
+     */
     constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
+    /**
+     * @brief Initializes first with etl::forward<U1>(x) and second with
+     * etl::forward<U2>(y).
+     *
+     * @details This constructor participates in overload resolution if and only if
+     * etl::is_constructible_v<first_type, U1&&> and etl::is_constructible_v<second_type,
+     * U2&&> are both true.
+     */
+    template <class U1, class U2,
+              class = etl::enable_if_t<
+                  etl::is_constructible_v<
+                      first_type, U1&&> && etl::is_constructible_v<second_type, U2&&>>>
+    constexpr pair(U1&& x, U2&& y)
+        : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
+    {
+    }
+
+    /**
+     * @brief Initializes first with p.first and second with p.second.
+     */
     template <class U1, class U2>
     constexpr pair(pair<U1, U2> const& p)
         : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
     {
     }
+    /**
+     * @brief Initializes first with std::forward<U1>(p.first) and second with
+     * std::forward<U2>(p.second).
+     */
+    template <class U1, class U2>
+    constexpr pair(pair<U1, U2>&& p)
+        : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
+    {
+    }
 
+    /**
+     * @brief Copy constructor is defaulted, and is constexpr if copying of both elements
+     * satisfies the requirements on constexpr functions.
+     */
     constexpr pair(pair const& p) = default;
+
+    /**
+     * @brief Move constructor is defaulted, and is constexpr if moving of both elements
+     * satisfies the requirements on constexpr functions.
+     */
+    constexpr pair(pair&& p) noexcept = default;
+
+    /**
+     * @brief Defaulted destructor.
+     */
+    ~pair() noexcept = default;
 
     constexpr auto operator=(pair const& p) -> pair&
     {
@@ -325,8 +380,6 @@ struct pair
         return *this;
     }
 
-    constexpr pair(pair&& p) noexcept = default;
-
     constexpr auto operator=(pair&& p) noexcept -> pair&
     {
         first  = etl::move(p.first);
@@ -342,11 +395,17 @@ struct pair
         return *this;
     }
 
-    ~pair() noexcept = default;
+    // void swap(pair&& other)
+    // {
+    //     using etl::swap;
+    //     swap(first, other.first);
+    //     swap(second, other.second);
+    // }
 
-    T1 first {};
-    T2 second {};
-};
+    T1 first;
+    T2 second;
+
+};  // namespace etl
 
 /**
  * @brief Creates a etl::pair object, deducing the target type from the types of

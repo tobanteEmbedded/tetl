@@ -175,10 +175,10 @@ TEMPLATE_TEST_CASE("map: operator[]", "[map]", etl::uint8_t, etl::int8_t, etl::u
                    float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
-    map.insert({1, 125});
-    map.insert({2, 42});
-    REQUIRE(map[1] == 125);
-    REQUIRE(map[2] == 42);
+    map.insert({1, TestType {125}});
+    map.insert({2, TestType {42}});
+    REQUIRE(map[1] == TestType {125});
+    REQUIRE(map[2] == TestType {42});
     REQUIRE(map.contains(1) == true);
     REQUIRE(map.contains(2) == true);
     REQUIRE(map.contains(3) == false);
@@ -191,7 +191,7 @@ TEMPLATE_TEST_CASE("map: begin/cbegin", "[map]", etl::uint8_t, etl::int8_t, etl:
                    float, double, long double)
 {
     auto m = etl::map<TestType, TestType, 4> {};
-    m.insert({1, 125});
+    m.insert({TestType {1}, TestType {125}});
     REQUIRE(m.begin() == m.cbegin());
     REQUIRE(m.begin()->second == 125);
 }
@@ -201,7 +201,7 @@ TEMPLATE_TEST_CASE("map: end/cend", "[map]", etl::uint8_t, etl::int8_t, etl::uin
                    float, double, long double)
 {
     auto m = etl::map<TestType, TestType, 4> {};
-    m.insert({1, 125});
+    m.insert({TestType {1}, TestType {125}});
     REQUIRE(m.end() == m.cend());
 }
 
