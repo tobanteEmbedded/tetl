@@ -1013,6 +1013,199 @@ template <class T>
 inline constexpr bool is_nothrow_move_constructible_v
     = is_nothrow_move_constructible<T>::value;
 
+/**
+ * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
+ * unevaluated context, provides the member constant value equal true. Otherwise, value is
+ * false. Access checks are performed as if from a context unrelated to either type.
+ */
+template <class T, class U>
+struct is_assignable : etl::integral_constant<bool, TAETL_IS_ASSIGNABLE(T, U)>
+{
+};
+
+template <class T, class U>
+inline constexpr bool is_assignable_v = is_assignable<T, U>::value;
+
+/**
+ * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
+ * unevaluated context, provides the member constant value equal true. Otherwise, value is
+ * false. Access checks are performed as if from a context unrelated to either type.
+ */
+template <class T, class U>
+struct is_trivially_assignable
+    : etl::integral_constant<bool, TAETL_IS_TRIVIALLY_ASSIGNABLE(T, U)>
+{
+};
+
+template <class T, class U>
+inline constexpr bool is_trivially_assignable_v = is_trivially_assignable<T, U>::value;
+
+namespace detail
+{
+template <typename T, typename U>
+struct is_nothrow_assignable_helper
+    : public etl::integral_constant<bool, noexcept(declval<T>() = declval<U>())>
+{
+};
+}  // namespace detail
+
+/**
+ * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
+ * unevaluated context, provides the member constant value equal true. Otherwise, value is
+ * false. Access checks are performed as if from a context unrelated to either type.
+ */
+
+template <typename T, typename U>
+struct is_nothrow_assignable
+    : public etl::integral_constant<
+          bool,
+          is_assignable_v<T, U> && detail::is_nothrow_assignable_helper<T, U>::value>
+{
+};
+
+template <class T, class U>
+inline constexpr bool is_nothrow_assignable_v = is_nothrow_assignable<T, U>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_assignable<T&, const T&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_copy_assignable
+    : etl::is_assignable<typename etl::add_lvalue_reference<T>::type,
+                         typename etl::add_lvalue_reference<const T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_copy_assignable_v = is_copy_assignable<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_trivially_assignable<T&, const T&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_trivially_copy_assignable
+    : etl::is_trivially_assignable<typename etl::add_lvalue_reference<T>::type,
+                                   typename etl::add_lvalue_reference<const T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_trivially_copy_assignable_v
+    = is_trivially_copy_assignable<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_nothrow_assignable<T&, const T&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_nothrow_copy_assignable
+    : etl::is_nothrow_assignable<typename etl::add_lvalue_reference<T>::type,
+                                 typename etl::add_lvalue_reference<const T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_copy_assignable_v = is_nothrow_copy_assignable<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_assignable<T&, T&&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_move_assignable
+    : etl::is_assignable<typename etl::add_lvalue_reference<T>::type,
+                         typename etl::add_rvalue_reference<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_move_assignable_v = is_move_assignable<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_assignable<T&, T&&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_trivially_move_assignable
+    : etl::is_trivially_assignable<typename etl::add_lvalue_reference<T>::type,
+                                   typename etl::add_rvalue_reference<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_trivially_move_assignable_v
+    = is_trivially_move_assignable<T>::value;
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_assignable<T&, T&&>::value.
+ *
+ * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
+ * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
+ * above depends, directly or indirectly, on an incomplete type, and that instantiation
+ * could yield a different result if that type were hypothetically completed, the behavior
+ * is undefined. The behavior of a program that adds specializations for any of the
+ * templates described on this page is undefined.
+ */
+template <class T>
+struct is_nothrow_move_assignable
+    : etl::is_nothrow_assignable<typename etl::add_lvalue_reference<T>::type,
+                                 typename etl::add_rvalue_reference<T>::type>
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_move_assignable_v = is_nothrow_move_assignable<T>::value;
+
 namespace detail
 {
 template <typename T, bool = etl::is_arithmetic<T>::value>
