@@ -59,25 +59,25 @@ TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
     STATIC_REQUIRE(std::is_trivially_destructible_v<Kilogram>);
     STATIC_REQUIRE(std::is_nothrow_destructible_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_assignable_v<Kilogram, Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_assignable_v<Kilogram, Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(etl::is_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_assignable_v<Kilogram, Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_assignable_v<Kilogram, Kilogram>);
 
-    STATIC_REQUIRE(std::is_copy_constructible_v<Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_copy_constructible_v<Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_copy_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_copy_constructible_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_copy_assignable_v<Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_copy_assignable_v<Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_copy_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_copy_assignable_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_move_constructible_v<Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_move_constructible_v<Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_move_constructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_move_constructible_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_move_assignable_v<Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_move_assignable_v<Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_move_assignable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_move_assignable_v<Kilogram>);
 
     STATIC_REQUIRE(std::is_swappable_v<Kilogram>);
     STATIC_REQUIRE(std::is_nothrow_swappable_v<Kilogram>);
