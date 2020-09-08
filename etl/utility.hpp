@@ -197,12 +197,15 @@ template <class T, class U>
 {
     using UT = etl::make_unsigned_t<T>;
     using UU = etl::make_unsigned_t<U>;
-    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>)
-        return t < u;
+    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t < u; }
     else if constexpr (etl::is_signed_v<T>)
+    {
         return t < 0 ? true : UT(t) < u;
+    }
     else
+    {
         return u < 0 ? false : t < UU(u);
+    }
 }
 
 /**

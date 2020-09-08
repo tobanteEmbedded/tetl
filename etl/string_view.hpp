@@ -238,7 +238,7 @@ public:
      * @brief Returns a view of the substring [pos, pos + rcount), where rcount
      * is the smaller of count and size() - pos.
      */
-    constexpr auto substr(size_type pos = 0, size_type count = npos) const
+    [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const
         -> basic_string_view
     {
         auto const rcount = etl::min(count, size() - pos);
@@ -320,7 +320,7 @@ public:
      *
      * @details Effectively returns substr(0, sv.size()) == sv
      */
-    constexpr auto starts_with(basic_string_view sv) const noexcept -> bool
+    [[nodiscard]] constexpr auto starts_with(basic_string_view sv) const noexcept -> bool
     {
         return substr(0, sv.size()) == sv;
     }
@@ -331,7 +331,7 @@ public:
      *
      * @details Effectively returns !empty() && Traits::eq(front(), c)
      */
-    constexpr auto starts_with(CharType c) const noexcept -> bool
+    [[nodiscard]] constexpr auto starts_with(CharType c) const noexcept -> bool
     {
         return !empty() && traits_type::eq(front(), c);
     }
@@ -354,7 +354,7 @@ public:
      * @details Effectively returns size() >= sv.size() && compare(size() -
      * sv.size(), npos, sv) == 0
      */
-    constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
+    [[nodiscard]] constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
     {
         return size() >= sv.size() && compare(size() - sv.size(), npos, sv) == 0;
     }
@@ -365,7 +365,7 @@ public:
      *
      * @details Effectively returns !empty() && Traits::eq(back(), c)
      */
-    constexpr auto ends_with(CharType c) const noexcept -> bool
+    [[nodiscard]] constexpr auto ends_with(CharType c) const noexcept -> bool
     {
         return !empty() && Traits::eq(back(), c);
     }
@@ -388,8 +388,8 @@ public:
      * @return Position of the first character of the found substring, or npos
      * if no such substring is found.
      */
-    constexpr auto find(basic_string_view v, size_type pos = 0) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto find(basic_string_view v,
+                                      size_type pos = 0) const noexcept -> size_type
     {
         if (v.size() > size() - pos) { return npos; }
 
@@ -421,7 +421,8 @@ public:
      * @return Position of the first character of the found substring, or npos
      * if no such substring is found.
      */
-    constexpr auto find(CharType ch, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto find(CharType ch, size_type pos = 0) const noexcept
+        -> size_type
     {
         return find(basic_string_view(etl::addressof(ch), 1), pos);
     }
@@ -458,8 +459,8 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(basic_string_view v, size_type pos = npos) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto rfind(basic_string_view v,
+                                       size_type pos = npos) const noexcept -> size_type
     {
         auto const offset = etl::clamp<size_type>(pos, 0, size());
         if (v.size() > size()) { return npos; }
@@ -491,7 +492,8 @@ public:
      * @return Position of the first character of the found substring or npos if
      * no such substring is found.
      */
-    constexpr auto rfind(CharType c, size_type pos = npos) const noexcept -> size_type
+    [[nodiscard]] constexpr auto rfind(CharType c, size_type pos = npos) const noexcept
+        -> size_type
 
     {
         return rfind(basic_string_view(etl::addressof(c), 1), pos);
@@ -530,7 +532,8 @@ public:
      * @return Position of the first occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_first_of(basic_string_view v, size_type pos = 0) const noexcept
+    [[nodiscard]] constexpr auto find_first_of(basic_string_view v,
+                                               size_type pos = 0) const noexcept
         -> size_type
     {
         for (size_type idx = pos; idx < size(); ++idx)
@@ -552,7 +555,8 @@ public:
      * @return Position of the first occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_first_of(CharType c, size_type pos = 0) const noexcept
+    [[nodiscard]] constexpr auto find_first_of(CharType c,
+                                               size_type pos = 0) const noexcept
         -> size_type
     {
         return find_first_of(basic_string_view(etl::addressof(c), 1), pos);
@@ -595,7 +599,8 @@ public:
      * @return Position of the last occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_last_of(basic_string_view v, size_type pos = npos) const noexcept
+    [[nodiscard]] constexpr auto find_last_of(basic_string_view v,
+                                              size_type pos = npos) const noexcept
         -> size_type
     {
         auto offset = etl::clamp<size_type>(pos, 0, size());
@@ -620,7 +625,8 @@ public:
      * @return Position of the last occurrence of any character of the
      * substring, or npos if no such character is found.
      */
-    constexpr auto find_last_of(CharType c, size_type pos = npos) const noexcept
+    [[nodiscard]] constexpr auto find_last_of(CharType c,
+                                              size_type pos = npos) const noexcept
         -> size_type
     {
         return find_last_of(basic_string_view(etl::addressof(c), 1), pos);

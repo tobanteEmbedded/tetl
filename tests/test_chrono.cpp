@@ -60,9 +60,9 @@ TEST_CASE("chrono/duration: construct(ratio)", "[chrono]")
     {
         using seconds_f   = etl::chrono::duration<float, etl::ratio<1>>;
         using minutes_f   = etl::chrono::duration<float, etl::ratio<60>>;
-        auto const minute = minutes_f {1.0f};
+        auto const minute = minutes_f {1.0F};
         auto const sec    = seconds_f {minute};
-        REQUIRE(sec.count() == 60.0f);
+        REQUIRE(sec.count() == 60.0F);
     }
 
     SECTION("double to int")

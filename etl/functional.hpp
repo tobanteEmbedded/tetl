@@ -66,7 +66,7 @@ public:
         }
     }
 
-    auto operator=(function_view const& other) -> function_view&
+    auto operator=(function_view const& other) noexcept -> function_view&
     {
         if (&other == this) { return *this; }
         if (create_ptr_ != nullptr) { destroy_ptr_(storage_); }

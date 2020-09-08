@@ -316,7 +316,7 @@ constexpr auto advance(It& it, Distance n) -> void
 
     auto dist = typename etl::iterator_traits<It>::difference_type(n);
     if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
-        it += dist;
+    { it += dist; }
     else
     {
         while (dist > 0)
@@ -348,7 +348,7 @@ constexpr auto distance(It first, It last) ->
     static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
 
     if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
-        return last - first;
+    { return last - first; }
     else
     {
         typename etl::iterator_traits<It>::difference_type result = 0;

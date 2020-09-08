@@ -300,7 +300,7 @@ public:
     constexpr map(map const& other) : map {}
     {
         etl::for_each(other.begin(), other.end(),
-                      [this](auto element) { base_t::insert(etl::move(element)); });
+                      [this](auto element) { this->base_t::insert(etl::move(element)); });
     }
 
     /**
@@ -311,8 +311,9 @@ public:
      */
     constexpr map(map&& other) noexcept : map {}
     {
-        etl::for_each(other.begin(), other.end(),
-                      [this](auto& element) { base_t::insert(etl::move(element)); });
+        etl::for_each(other.begin(), other.end(), [this](auto& element) {
+            this->base_t::insert(etl::move(element));
+        });
         other.clear();
     }
 
@@ -325,7 +326,7 @@ public:
         if (this == &other) { return *this; }
 
         etl::for_each(other.begin(), other.end(),
-                      [this](auto element) { base_t::insert(etl::move(element)); });
+                      [this](auto element) { this->base_t::insert(etl::move(element)); });
         return *this;
     }
 
@@ -337,8 +338,9 @@ public:
      */
     constexpr auto operator=(map&& other) noexcept -> map&
     {
-        etl::for_each(other.begin(), other.end(),
-                      [this](auto& element) { base_t::insert(etl::move(element)); });
+        etl::for_each(other.begin(), other.end(), [this](auto& element) {
+            this->base_t::insert(etl::move(element));
+        });
         other.clear();
         return *this;
     }

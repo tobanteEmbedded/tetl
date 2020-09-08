@@ -184,7 +184,7 @@ TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t, etl::in
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto p = etl::make_pair(TestType {0}, 143.0f);
+    auto p = etl::make_pair(TestType {0}, 143.0F);
     STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p.first)>);
     STATIC_REQUIRE(etl::is_same_v<float, decltype(p.second)>);
 
@@ -197,9 +197,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator==", "[utility]", etl::uint8_t, etl::i
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE(p1 == p2);
     REQUIRE(p2 == p1);
@@ -213,9 +213,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator!=", "[utility]", etl::uint8_t, etl::i
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE_FALSE(p1 != p2);
     REQUIRE_FALSE(p2 != p1);
@@ -229,9 +229,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator<", "[utility]", etl::uint8_t, etl::in
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE_FALSE(p1 < p2);
     REQUIRE_FALSE(p2 < p1);
@@ -245,9 +245,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator<=", "[utility]", etl::uint8_t, etl::i
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE(p1 <= p2);
     REQUIRE(p2 <= p1);
@@ -261,9 +261,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator>", "[utility]", etl::uint8_t, etl::in
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {24}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {24}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE(p1 > p2);
     REQUIRE_FALSE(p2 > p1);
@@ -277,9 +277,9 @@ TEMPLATE_TEST_CASE("utility/pair: operator>=", "[utility]", etl::uint8_t, etl::i
                    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
-    auto const p1 = etl::make_pair(TestType {42}, 143.0f);
-    auto const p2 = etl::make_pair(TestType {24}, 143.0f);
-    auto const p3 = etl::make_pair(TestType {123}, 143.0f);
+    auto const p1 = etl::make_pair(TestType {42}, 143.0F);
+    auto const p2 = etl::make_pair(TestType {24}, 143.0F);
+    auto const p3 = etl::make_pair(TestType {123}, 143.0F);
 
     REQUIRE(p1 >= p2);
     REQUIRE_FALSE(p2 >= p1);

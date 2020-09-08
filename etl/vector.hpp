@@ -57,7 +57,7 @@ public:
     /**
      * @brief Default constructor. Constructs an empty container.
      */
-    constexpr stack_vector() noexcept : memory_ {0}, size_ {0} { }
+    constexpr stack_vector() noexcept = default;
 
     /**
      * @brief Constructs the container with count default-inserted instances of
@@ -106,6 +106,7 @@ public:
      */
     constexpr auto operator=(stack_vector const& other) -> stack_vector&
     {
+        if (this == &other) { return *this; }
         etl::for_each(other.begin(), other.end(),
                       [&](auto const element) { push_back(etl::move(element)); });
         return *this;
@@ -117,7 +118,7 @@ public:
      * data in other is moved from other into this container). other is in a
      * valid but unspecified state afterwards.
      */
-    constexpr auto operator=(stack_vector&& other) -> stack_vector&
+    constexpr auto operator=(stack_vector&& other) noexcept -> stack_vector&
     {
         etl::for_each(other.begin(), other.end(),
                       [&](auto element) { emplace_back(etl::move(element)); });
@@ -219,7 +220,7 @@ public:
      * bounds checking. If pos is not within the range of the container, an
      * exception of type etl::out_of_range is thrown.
      */
-    constexpr auto at(size_type pos) const -> const_reference
+    [[nodiscard]] constexpr auto at(size_type pos) const -> const_reference
     {
         // if (!(pos < size()))
         // { throw etl::out_of_range {"index is out of range"}; }
@@ -380,8 +381,8 @@ private:
         if (size_ == Capacity) { assert(false); }
     }
 
-    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)];
-    size_type size_;
+    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)] = {};
+    size_type size_ {};
 };
 }  // namespace etl
 #endif  // TAETL_VECTOR_HPP

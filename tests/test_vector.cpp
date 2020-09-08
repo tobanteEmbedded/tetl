@@ -78,7 +78,7 @@ TEMPLATE_TEST_CASE("stack_vector: construct(copy)", "[stack_vector]", int, float
     REQUIRE_FALSE(vec.empty());
     REQUIRE(vec.size() == 2);
 
-    auto const vec2 = vec;
+    auto const& vec2 = vec;
     REQUIRE(vec.size() == 2);
 
     REQUIRE(vec2.size() == 2);
@@ -299,22 +299,22 @@ TEST_CASE("stack_vector: emplace_back - custom ctor", "[stack_vector]")
     SECTION("should increase size with each emplace_back")
     {
         REQUIRE(vec.empty());
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 1);
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 2);
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 3);
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 4);
     }
 
     SECTION("should throw when going over capacity")
     {
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 4);
         REQUIRE(vec.size() == vec.capacity());
     }
@@ -323,10 +323,10 @@ TEST_CASE("stack_vector: emplace_back - custom ctor", "[stack_vector]")
     {
         REQUIRE(vec.empty());
 
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
-        vec.emplace_back(143, 1.43f);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
+        vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 4);
 
         vec.clear();

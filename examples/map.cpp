@@ -44,7 +44,7 @@ auto custom_compare() -> void
     {
         constexpr explicit Key(size_t val) : val_ {val} { }
 
-        constexpr auto key() const -> size_t { return val_; }
+        [[nodiscard]] constexpr auto key() const -> size_t { return val_; }
 
     private:
         size_t val_;

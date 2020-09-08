@@ -351,7 +351,7 @@ TEMPLATE_TEST_CASE("algorithm: copy_if", "[algorithm]", etl::uint8_t, etl::int8_
     SECTION("copy_if to c array")
     {
         TestType dest[4] = {};
-        auto res = etl::copy_if(begin(source), end(source), etl::begin(dest), predicate);
+        auto* res = etl::copy_if(begin(source), end(source), etl::begin(dest), predicate);
         REQUIRE(res == &dest[2]);
         REQUIRE(dest[0] == TestType {7});
         REQUIRE(dest[1] == TestType {9});
