@@ -231,11 +231,27 @@ public:
     template <class... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
+        // Return if no capacity is left.
         if (size_ == capacity_) { return {end(), false}; }
 
-        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
-        ::new (addr) value_type {etl::forward<Args>(args)...};
-        return {&data_[size_], true};
+        // Construct value_type inplace at the end of the internal array.
+        auto* const addr = reinterpret_cast<void*>(&data_[size_]);
+        auto* obj        = ::new (addr) value_type {etl::forward<Args>(args)...};
+
+        // Check if the key from the newly created object has already existed.
+        auto* key_existed = find_if(
+            begin(), end(), [&](auto const& item) { return item.first == obj->first; });
+
+        // If so, return its iterator and false for insertion.
+        if (key_existed != end())
+        {
+            obj->~value_type();
+            return {key_existed, false};
+        }
+
+        // Key has not existed before. Array needs to be sorted.
+        size_++;
+        return {obj, true};
     }
 
     /**

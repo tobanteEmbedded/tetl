@@ -320,7 +320,15 @@ TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t, etl::ui
     REQUIRE(map.size() == 0);
 
     auto func = [&](auto& view) {
-        view.emplace(1, TestType {100});
+        auto res_1 = view.emplace(1, TestType {100});
+        REQUIRE(res_1.second == true);
+        REQUIRE(view.size() == 1);
+        REQUIRE(view.count(1) == 1);
+        REQUIRE(view.find(1)->second == 100);
+
+        // emplacing the same key again should not override the original value.
+        auto res_2 = view.emplace(1, TestType {42});
+        REQUIRE(res_2.second == false);
         REQUIRE(view.size() == 1);
         REQUIRE(view.count(1) == 1);
         REQUIRE(view.find(1)->second == 100);
