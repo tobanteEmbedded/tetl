@@ -65,23 +65,39 @@ TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t, etl::uin
         int* dtor;
     };
 
-    auto numCtors = 0;
-    auto numDtors = 0;
-
-    SECTION("Create Container")
+    SECTION("emplace")
     {
+        auto numCtors = 0;
+        auto numDtors = 0;
+
         auto map = etl::map<TestType, Value, 4> {};
         map.emplace(TestType {1}, Value {numCtors, numDtors});
         map.emplace(TestType {2}, Value {numCtors, numDtors});
         map.emplace(TestType {3}, Value {numCtors, numDtors});
         map.emplace(TestType {4}, Value {numCtors, numDtors});
         REQUIRE(map.size() == 4);
+
+        REQUIRE(numCtors == 4);
+        // 4 * (1 final destruction)
+        REQUIRE(numDtors == 4);
     }
 
-    REQUIRE(numCtors == 4);
+    SECTION("emplace(make_pair())")
+    {
+        auto numCtors = 0;
+        auto numDtors = 0;
 
-    // 4 * (1 move + 1 final destruction)
-    REQUIRE(numDtors == 4 * 2);
+        auto map = etl::map<TestType, Value, 4> {};
+        map.emplace(etl::make_pair(TestType {1}, Value {numCtors, numDtors}));
+        map.emplace(etl::make_pair(TestType {2}, Value {numCtors, numDtors}));
+        map.emplace(etl::make_pair(TestType {3}, Value {numCtors, numDtors}));
+        map.emplace(etl::make_pair(TestType {4}, Value {numCtors, numDtors}));
+        REQUIRE(map.size() == 4);
+
+        REQUIRE(numCtors == 4);
+        // 4 * (1 move + 1 final destruction)
+        REQUIRE(numDtors == 4 * 2);
+    }
 }
 
 TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
