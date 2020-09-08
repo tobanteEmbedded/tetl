@@ -4,6 +4,7 @@ foreach(_target
   "algorithm"
   "array"
   "chrono"
+  "map"
   "numeric"
   "string"
   "tuple"

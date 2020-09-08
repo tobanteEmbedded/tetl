@@ -24,6 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+/**
+ * @example map.cpp
+ */
+
 #ifndef TAETL_MAP_HPP
 #define TAETL_MAP_HPP
 

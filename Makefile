@@ -22,6 +22,7 @@ avr:
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/chrono -I. examples/chrono.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/map -I. examples/map.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/string -I. examples/string.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/tuple -I. examples/tuple.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/type_traits -I. examples/type_traits.cpp
