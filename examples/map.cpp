@@ -39,15 +39,23 @@ auto basic_usage() -> void
 
 auto custom_compare() -> void
 {
-    // Typedef for the value being stored inside the map.
-    using value_t = etl::stack_vector<float, 4>;
+    // Custom key type.
+    struct key_t
+    {
+        constexpr explicit key_t(size_t val) : val_ {val} { }
 
-    // Lambda for comparing to objects of type value_t.
-    auto compare = [](value_t& lhs, value_t& rhs) { return lhs.size() < rhs.size(); };
+        constexpr auto key() const -> size_t { return val_; }
 
-    // Create map of type value_t with the comparator compare, no elements and a capacity
-    // of 16 key-value pairs.
-    auto data = etl::map<int, value_t, 16, decltype(compare)> {};
+    private:
+        size_t val_;
+    };
+
+    // Lambda for comparing to objects of type key_t.
+    constexpr auto compare = [](key_t& lhs, key_t& rhs) { return lhs.key() < rhs.key(); };
+
+    // Create map of with <key_t,int> pair with the comparator compare, no elements and a
+    // capacity of 16.
+    auto data = etl::map<key_t, int, 16, decltype(compare)> {};
     etl::ignore_unused(data);
 }
 

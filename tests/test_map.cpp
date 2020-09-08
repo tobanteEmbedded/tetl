@@ -53,6 +53,32 @@ TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t, etl::ui
     func(test);
 }
 
+TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    struct Value
+    {
+        Value(int& ctor, int& d) : dtor {&d} { ctor++; }
+        ~Value() { (*dtor)++; }
+
+        int* dtor;
+    };
+
+    auto numCtors = 0;
+    auto numDtors = 0;
+
+    SECTION("Create Container")
+    {
+        auto map = etl::map<TestType, Value, 4> {};
+        map.insert({TestType {1}, Value {numCtors, numDtors}});
+        REQUIRE(map.size() == 1);
+    }
+
+    REQUIRE(numCtors == 1);
+    REQUIRE(numDtors >= 1);
+}
+
 TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
                    float, double, long double)

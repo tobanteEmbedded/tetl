@@ -40,6 +40,10 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief Interface base class for etl::map. Use this class for function parameters. To
+ * create an instance, use etl::map.
+ */
 template <typename KeyType, typename ValueType, typename Compare = etl::less<KeyType>>
 class map_view
 {
@@ -252,14 +256,31 @@ private:
     size_type const capacity_;
 };
 
+/**
+ * @brief etl::map is a sorted associative container that contains key-value pairs with
+ * unique keys. Keys are sorted by using the comparison function Compare. Search, removal,
+ * and insertion operations have logarithmic complexity. Uses an inline key-value pair
+ * array as storage.
+ *
+ * @details Everywhere the standard library uses the Compare requirements, uniqueness is
+ * determined by using the equivalence relation. In imprecise terms, two objects a and b
+ * are considered equivalent (not unique) if neither compares less than the other:
+ * !comp(a, b) && !comp(b, a).
+ */
 template <typename KeyT, typename ValueT, size_t Size, typename Compare = etl::less<KeyT>>
 class map : public map_view<KeyT, ValueT, Compare>
 {
 public:
-    explicit map() : map_view<KeyT, ValueT, Compare> {(pair_t*)(&memory_[0]), Size} { }
+    constexpr explicit map() noexcept
+        : base_t {reinterpret_cast<pair_t*>(&memory_[0]), Size}
+    {
+    }
+
+    ~map() noexcept { base_t::clear(); }
 
 private:
-    using pair_t    = typename map_view<KeyT, ValueT, Compare>::value_type;
+    using base_t    = map_view<KeyT, ValueT, Compare>;
+    using pair_t    = typename base_t::value_type;
     using storage_t = typename aligned_storage<sizeof(pair_t), alignof(pair_t)>::type;
     storage_t memory_[Size] {};
 };
