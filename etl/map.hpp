@@ -220,6 +220,25 @@ public:
     }
 
     /**
+     * @brief Inserts a new element into the container constructed in-place with the given
+     * args if there is no element with the key in the container.
+     *
+     * @details Careful use of emplace allows the new element to be constructed while
+     * avoiding unnecessary copy or move operations. The constructor of the new element
+     * (i.e. etl::pair<Key const, T>) is called with exactly the same arguments as
+     * supplied to emplace, forwarded via etl::forward<Args>(args)....
+     */
+    template <class... Args>
+    constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
+    {
+        if (size_ == capacity_) { return {end(), false}; }
+
+        auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
+        ::new (addr) value_type {etl::forward<Args>(args)...};
+        return {&data_[size_], true};
+    }
+
+    /**
      * @brief Returns an element with key equivalent to key.
      */
     [[nodiscard]] constexpr auto find(KeyType const& key) noexcept -> iterator

@@ -71,12 +71,17 @@ TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t, etl::uin
     SECTION("Create Container")
     {
         auto map = etl::map<TestType, Value, 4> {};
-        map.insert({TestType {1}, Value {numCtors, numDtors}});
-        REQUIRE(map.size() == 1);
+        map.emplace(TestType {1}, Value {numCtors, numDtors});
+        map.emplace(TestType {2}, Value {numCtors, numDtors});
+        map.emplace(TestType {3}, Value {numCtors, numDtors});
+        map.emplace(TestType {4}, Value {numCtors, numDtors});
+        REQUIRE(map.size() == 4);
     }
 
-    REQUIRE(numCtors == 1);
-    REQUIRE(numDtors >= 1);
+    REQUIRE(numCtors == 4);
+
+    // 4 * (1 move + 1 final destruction)
+    REQUIRE(numDtors == 4 * 2);
 }
 
 TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
@@ -234,4 +239,21 @@ TEMPLATE_TEST_CASE("map: insert(value_type &&)", "[map]", etl::uint8_t, etl::int
     REQUIRE(map.size() == 2);
     REQUIRE(map.count(3) == 1);
     REQUIRE(map.find(3)->second == TestType {42});
+}
+
+TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    auto map = etl::map<int, TestType, 4> {};
+    REQUIRE(map.size() == 0);
+
+    auto func = [&](auto& view) {
+        view.emplace(1, TestType {100});
+        REQUIRE(view.size() == 1);
+        REQUIRE(view.count(1) == 1);
+        REQUIRE(view.find(1)->second == 100);
+    };
+    func(map);
+    REQUIRE(map.size() == 1);
 }
