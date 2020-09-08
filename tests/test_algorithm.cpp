@@ -416,3 +416,26 @@ TEMPLATE_TEST_CASE("algorithm: copy_n", "[algorithm]", etl::uint8_t, etl::int8_t
         REQUIRE(dest.at(3) == TestType {4});
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: copy_backward", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+
+    auto source = etl::array<TestType, 4> {};
+    source[0]   = TestType {1};
+    source[1]   = TestType {2};
+    source[2]   = TestType {3};
+    source[3]   = TestType {4};
+
+    SECTION("copy_backward to c array")
+    {
+        TestType dest[4] = {};
+        etl::copy_backward(begin(source), end(source), etl::end(dest));
+        REQUIRE(dest[0] == TestType {1});
+        REQUIRE(dest[1] == TestType {2});
+        REQUIRE(dest[2] == TestType {3});
+        REQUIRE(dest[3] == TestType {4});
+    }
+}

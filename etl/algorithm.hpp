@@ -405,6 +405,23 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 }
 
 /**
+ * @brief Copies the elements from the range, defined by [first, last), to another range
+ * ending at d_last. The elements are copied in reverse order (the last element is copied
+ * first), but their relative order is preserved.
+ *
+ * @details The behavior is undefined if d_last is within (first, last]. etl::copy must be
+ * used instead of etl::copy_backward in that case.
+ *
+ * @return Iterator to the last element copied.
+ */
+template <class BidirIt1, class BidirIt2>
+constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> BidirIt2
+{
+    while (first != last) { *(--d_last) = *(--last); }
+    return d_last;
+}
+
+/**
  * @brief Checks if the first range [first1, last1) is lexicographically
  * less than the second range [first2, last2). Elements are compared using
  * the given binary comparison function comp.
