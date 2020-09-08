@@ -50,9 +50,9 @@ namespace etl
 template <class T>
 constexpr auto swap(T& a, T& b) noexcept -> void
 {
-    auto temp = a;
-    a         = b;
-    b         = temp;
+    T temp(etl::move(a));
+    a = etl::move(b);
+    b = etl::move(temp);
 }
 
 /**
