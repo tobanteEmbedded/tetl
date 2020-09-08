@@ -192,6 +192,76 @@ TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t, etl::in
     REQUIRE(p.second == 143.0);
 }
 
+TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto p = etl::make_pair(TestType {0}, 143.0F);
+    SECTION("same types")
+    {
+        auto other {p};
+
+        STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
+        STATIC_REQUIRE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
+
+        REQUIRE(other.first == p.first);
+        REQUIRE(other.second == p.second);
+    }
+}
+
+TEMPLATE_TEST_CASE("utility/pair: copy assign", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto p = etl::make_pair(TestType {0}, 143.0F);
+    SECTION("same types")
+    {
+        auto other = etl::pair<TestType, float> {};
+        other      = p;
+        REQUIRE(other.first == p.first);
+        REQUIRE(other.second == p.second);
+    }
+    SECTION("different types")
+    {
+        auto other = etl::pair<TestType, double> {};
+        other      = p;
+
+        STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
+        STATIC_REQUIRE_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
+
+        REQUIRE(other.first == p.first);
+        REQUIRE(other.second == (float)p.second);
+    }
+}
+
+TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto p = etl::make_pair(TestType {0}, 143.0F);
+    SECTION("same types")
+    {
+        auto other = etl::pair<TestType, float> {};
+        other      = etl::move(p);
+        REQUIRE(other.first == p.first);
+        REQUIRE(other.second == p.second);
+    }
+    SECTION("different types")
+    {
+        auto other = etl::pair<TestType, double> {};
+        other      = etl::move(p);
+
+        STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
+        STATIC_REQUIRE_FALSE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
+
+        REQUIRE(other.first == p.first);
+        REQUIRE(other.second == (float)p.second);
+    }
+}
+
 TEMPLATE_TEST_CASE("utility/pair: operator==", "[utility]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
