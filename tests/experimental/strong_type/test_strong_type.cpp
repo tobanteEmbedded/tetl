@@ -79,10 +79,10 @@ TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
     STATIC_REQUIRE(etl::is_trivially_move_assignable_v<Kilogram>);
     STATIC_REQUIRE(etl::is_nothrow_move_assignable_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_swappable_v<Kilogram>);
-    STATIC_REQUIRE(std::is_nothrow_swappable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_swappable_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_nothrow_swappable_v<Kilogram>);
 
-    STATIC_REQUIRE(std::is_trivial_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivial_v<Kilogram>);
 
     STATIC_REQUIRE(!std::has_virtual_destructor_v<Kilogram>);
 }

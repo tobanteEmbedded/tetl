@@ -24,6 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "etl/map.hpp"
 #include "etl/type_traits.hpp"
 
 #include "catch2/catch.hpp"
@@ -307,7 +308,7 @@ namespace
 struct Ex1
 {
     // member has a non-trivial default ctor
-    std::string str;
+    etl::map<int, float, 4> str;
 };
 
 struct Ex2

@@ -1208,6 +1208,142 @@ inline constexpr bool is_nothrow_move_assignable_v = is_nothrow_move_assignable<
 
 namespace detail
 {
+struct nat
+{
+    nat()           = delete;
+    nat(const nat&) = delete;
+    nat& operator=(const nat&) = delete;
+    ~nat()                     = delete;
+};
+
+using etl::swap;
+template <class T>
+void swap(nat a, nat b) noexcept;
+
+template <class T>
+struct is_swappable_helper
+{
+    using type              = decltype(swap(etl::declval<T&>(), etl::declval<T&>()));
+    static const bool value = !is_same<type, nat>::value;
+};
+
+}  // namespace detail
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_swappable_with<T&, T&>::value
+ */
+template <class T>
+struct is_swappable
+    : public integral_constant<bool, detail::is_swappable_helper<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_swappable_v = is_swappable<T>::value;
+
+namespace detail
+{
+template <bool, class T>
+struct is_nothrow_swappable_helper
+    : public integral_constant<bool,
+                               noexcept(swap(etl::declval<T&>(), etl::declval<T&>()))>
+{
+};
+template <class T>
+struct is_nothrow_swappable_helper<false, T> : public false_type
+{
+};
+}  // namespace detail
+
+/**
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
+ * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
+ * equal to false. Otherwise, provides a member constant value equal to
+ * etl::is_nothrow_swappable_with<T&, T&>::value
+ */
+template <class T>
+struct is_nothrow_swappable
+    : public detail::is_nothrow_swappable_helper<is_swappable<T>::value, T>
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
+
+/**
+ * @brief
+ */
+
+/**
+ * @brief If T is a TriviallyCopyable type, provides the member constant value equal to
+ * true. For any other type, value is false. The only trivially copyable types are scalar
+ * types, trivially copyable classes, and arrays of such types/classes (possibly
+ * cv-qualified).
+ *
+ * @todo Add is_destructible
+ */
+template <typename T>
+class is_trivially_copyable
+{
+    // copy constructors
+    static constexpr bool has_trivial_copy_ctor = etl::is_copy_constructible<T>::value;
+    static constexpr bool has_deleted_copy_ctor = !etl::is_copy_constructible<T>::value;
+
+    // move constructors
+    static constexpr bool has_trivial_move_ctor = etl::is_move_constructible<T>::value;
+    static constexpr bool has_deleted_move_ctor = !etl::is_move_constructible<T>::value;
+
+    // copy assign
+    static constexpr bool has_trivial_copy_assign = is_copy_assignable<T>::value;
+    static constexpr bool has_deleted_copy_assign = !is_copy_assignable<T>::value;
+
+    // move assign
+    static constexpr bool has_trivial_move_assign = is_move_assignable<T>::value;
+    static constexpr bool has_deleted_move_assign = !is_move_assignable<T>::value;
+
+    // destructor
+    static constexpr bool has_trivial_dtor = true;
+    // = etl::is_destructible<T>::value;
+
+public:
+    static constexpr bool value = has_trivial_dtor
+                                  && (has_deleted_move_assign || has_trivial_move_assign)
+                                  && (has_deleted_move_ctor || has_trivial_move_ctor)
+                                  && (has_deleted_copy_assign || has_trivial_copy_assign)
+                                  && (has_deleted_copy_ctor || has_trivial_copy_ctor);
+};
+
+template <typename T>
+class is_trivially_copyable<T*> : public etl::true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
+
+/**
+ * @brief If T is TrivialType (that is, a scalar type, a trivially copyable class with a
+ * trivial default constructor, or array of such type/class, possibly cv-qualified),
+ * provides the member constant value equal to true. For any other type, value is false.
+ *
+ * @ref https://en.cppreference.com/w/cpp/types/is_trivial
+ */
+template <class T>
+struct is_trivial
+    : etl::integral_constant<bool,
+                             etl::is_trivially_copyable<T>::value
+                                 && etl::is_trivially_default_constructible<T>::value>
+{
+};
+
+template <class T>
+inline constexpr bool is_trivial_v = is_trivial<T>::value;
+
+namespace detail
+{
 template <typename T, bool = etl::is_arithmetic<T>::value>
 struct is_unsigned : etl::integral_constant<bool, T(0) < T(-1)>
 {

@@ -36,7 +36,6 @@ namespace etl::hardware::stm32
 // extern isr::vector_t callbacks;
 
 // static void dummy_handler() {
-//   std::putchar('a');
 // }
 
 // constexpr auto callbacks = isr::vector_t{

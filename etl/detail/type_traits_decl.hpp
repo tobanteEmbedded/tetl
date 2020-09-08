@@ -78,6 +78,9 @@ struct is_compound;
 template <class T>
 struct is_member_pointer;
 
+template <class T>
+constexpr auto swap(T& a, T& b) noexcept -> void;
+
 }  // namespace etl
 
 #endif  // TAETL_TYPETRAITS_DECL_HPP

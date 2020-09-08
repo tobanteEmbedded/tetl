@@ -338,8 +338,8 @@ struct pair
     {
     }
     /**
-     * @brief Initializes first with std::forward<U1>(p.first) and second with
-     * std::forward<U2>(p.second).
+     * @brief Initializes first with etl::forward<U1>(p.first) and second with
+     * etl::forward<U2>(p.second).
      */
     template <class U1, class U2>
     constexpr pair(pair<U1, U2>&& p)
