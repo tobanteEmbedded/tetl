@@ -36,7 +36,7 @@ namespace etl
 {
 template <typename KeyType, typename ValueType,
           typename Compare = etl::less<KeyType>>
-class map
+class map_view
 {
 public:
     using key_type        = KeyType;
@@ -251,7 +251,7 @@ public:
     }
 
 protected:
-    explicit constexpr map(pointer data, size_t capacity)
+    explicit constexpr map_view(pointer data, size_t capacity)
         : data_(data), size_(0), capacity_(capacity)
     {
     }
@@ -262,22 +262,21 @@ private:
     size_type const capacity_;
 };
 
-namespace make
-{
 template <typename KeyType, typename ValueType, size_t Capacity,
           typename Compare = etl::less<KeyType>>
-class map : public ::etl::map<KeyType, ValueType, Compare>
+class map : public map_view<KeyType, ValueType, Compare>
 {
 public:
     explicit map()
-        : ::etl::map<KeyType, ValueType, Compare> {&data_[0], Capacity}
+        : map_view<KeyType, ValueType, Compare> {(value_type*)(&memory_[0]),
+                                                 Capacity}
     {
     }
 
 private:
-    typename ::etl::map<KeyType, ValueType, Compare>::value_type
-        data_[Capacity];
+    using value_type =
+        typename map_view<KeyType, ValueType, Compare>::value_type;
+    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)];
 };
-}  // namespace make
 }  // namespace etl
 #endif  // TAETL_MAP_HPP
