@@ -92,7 +92,7 @@ constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept -> In
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>
-[[nodiscard]] constexpr auto find(InputIt first, InputIt last, const T& value) noexcept
+[[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept
     -> InputIt
 {
     for (; first != last; ++first)
@@ -419,6 +419,15 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> 
 {
     while (first != last) { *(--d_last) = *(--last); }
     return d_last;
+}
+
+/**
+ * @brief Assigns the given value to the elements in the range [first, last).
+ */
+template <class ForwardIt, class T>
+constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
+{
+    for (; first != last; ++first) { *first = value; }
 }
 
 /**

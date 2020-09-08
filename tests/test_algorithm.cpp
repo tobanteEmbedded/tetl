@@ -421,8 +421,6 @@ TEMPLATE_TEST_CASE("algorithm: copy_backward", "[algorithm]", etl::uint8_t, etl:
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using vector_t = etl::stack_vector<TestType, 4>;
-
     auto source = etl::array<TestType, 4> {};
     source[0]   = TestType {1};
     source[1]   = TestType {2};
@@ -437,5 +435,34 @@ TEMPLATE_TEST_CASE("algorithm: copy_backward", "[algorithm]", etl::uint8_t, etl:
         REQUIRE(dest[1] == TestType {2});
         REQUIRE(dest[2] == TestType {3});
         REQUIRE(dest[3] == TestType {4});
+    }
+}
+
+TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("c array")
+    {
+        TestType source[4] = {};
+        etl::fill(etl::begin(source), etl::end(source), TestType {42});
+
+        auto const all_42
+            = etl::all_of(etl::begin(source), etl::end(source),
+                          [](auto const& val) { return val == TestType {42}; });
+
+        REQUIRE(all_42);
+    }
+
+    SECTION("etl::array")
+    {
+        auto source = etl::array<TestType, 4> {};
+        etl::fill(begin(source), end(source), TestType {42});
+
+        auto const all_42 = etl::all_of(begin(source), end(source), [](auto const& val) {
+            return val == TestType {42};
+        });
+
+        REQUIRE(all_42);
     }
 }
