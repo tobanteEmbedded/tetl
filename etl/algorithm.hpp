@@ -385,6 +385,26 @@ constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredi
 }
 
 /**
+ * @brief Copies exactly count values from the range beginning at first to the range
+ * beginning at result. Formally, for each integer 0 ≤ i < count, performs *(result + i) =
+ * *(first + i). Overlap of ranges is formally permitted, but leads to unpredictable
+ * ordering of the results.
+ *
+ * @return Iterator in the destination range, pointing past the last element copied if
+ * count>0 or result otherwise.
+ */
+template <class InputIt, class Size, class OutputIt>
+constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
+{
+    if (count > 0)
+    {
+        *result++ = *first;
+        for (Size i = 1; i < count; ++i) { *result++ = *++first; }
+    }
+    return result;
+}
+
+/**
  * @brief Checks if the first range [first1, last1) is lexicographically
  * less than the second range [first2, last2). Elements are compared using
  * the given binary comparison function comp.
