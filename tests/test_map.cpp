@@ -53,6 +53,61 @@ TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t, etl::ui
     func(test);
 }
 
+TEMPLATE_TEST_CASE("map: copy construct", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto original = etl::map<TestType, TestType, 4> {};
+    original.emplace(TestType {1}, TestType {42});
+    auto copy = etl::map<TestType, TestType, 4> {original};
+
+    REQUIRE(copy.size() == 1);
+    REQUIRE(original.size() == copy.size());
+    REQUIRE(copy.at(TestType {1}) == 42);
+}
+
+TEMPLATE_TEST_CASE("map: move construct", "[map]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto original = etl::map<TestType, TestType, 4> {};
+    original.emplace(TestType {1}, TestType {42});
+    auto copy = etl::map<TestType, TestType, 4> {etl::move(original)};
+
+    REQUIRE(copy.size() == 1);
+    REQUIRE(original.size() == 0);
+    REQUIRE(copy.at(TestType {1}) == 42);
+}
+
+TEMPLATE_TEST_CASE("map: operator=", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    SECTION("Copy")
+    {
+        auto original = etl::map<TestType, TestType, 4> {};
+        original.emplace(TestType {1}, TestType {42});
+        auto copy = etl::map<TestType, TestType, 4> {};
+        copy      = original;
+
+        REQUIRE(copy.size() == 1);
+        REQUIRE(original.size() == 1);
+        REQUIRE(copy.at(TestType {1}) == 42);
+    }
+
+    SECTION("Move")
+    {
+        auto original = etl::map<TestType, TestType, 4> {};
+        original.emplace(TestType {1}, TestType {42});
+        auto moved = etl::map<TestType, TestType, 4> {};
+        moved      = etl::map<TestType, TestType, 4> {etl::move(original)};
+
+        REQUIRE(moved.size() == 1);
+        REQUIRE(original.size() == 0);
+        REQUIRE(moved.at(TestType {1}) == 42);
+    }
+}
+
 TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
                    float, double, long double)

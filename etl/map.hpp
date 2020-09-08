@@ -285,11 +285,67 @@ template <typename KeyT, typename ValueT, size_t Size, typename Compare = etl::l
 class map : public map_view<KeyT, ValueT, Compare>
 {
 public:
+    /**
+     * @brief Default constructor.
+     */
     constexpr explicit map() noexcept
         : base_t {reinterpret_cast<pair_t*>(&memory_[0]), Size}
     {
     }
 
+    /**
+     * @brief Copy constructor. Constructs the container with the copy of the
+     * contents of other.
+     */
+    constexpr map(map const& other) : map {}
+    {
+        etl::for_each(other.begin(), other.end(),
+                      [this](auto element) { base_t::insert(etl::move(element)); });
+    }
+
+    /**
+     * @brief Move constructor. Constructs the container with the contents of
+     * other using move semantics. Allocator is obtained by move-construction
+     * from the allocator belonging to other. After the move, other is
+     * guaranteed to be empty().
+     */
+    constexpr map(map&& other) noexcept : map {}
+    {
+        etl::for_each(other.begin(), other.end(),
+                      [this](auto& element) { base_t::insert(etl::move(element)); });
+        other.clear();
+    }
+
+    /**
+     * @brief Replaces the contents of the container. Copy assignment operator.
+     * Replaces the contents with a copy of the contents of other.
+     */
+    constexpr auto operator=(map const& other) -> map&
+    {
+        if (this == &other) { return *this; }
+
+        etl::for_each(other.begin(), other.end(),
+                      [this](auto element) { base_t::insert(etl::move(element)); });
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the container. Move assignment operator.
+     * Replaces the contents with those of other using move semantics (i.e. the
+     * data in other is moved from other into this container). other is in a
+     * valid but unspecified state afterwards.
+     */
+    constexpr auto operator=(map&& other) noexcept -> map&
+    {
+        etl::for_each(other.begin(), other.end(),
+                      [this](auto& element) { base_t::insert(etl::move(element)); });
+        other.clear();
+        return *this;
+    }
+
+    /**
+     * @brief Destructor. Deletes all elements.
+     */
     ~map() noexcept { base_t::clear(); }
 
 private:
