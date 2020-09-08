@@ -35,8 +35,7 @@ DAMAGE.
 
 namespace etl
 {
-template <typename KeyType, typename ValueType,
-          typename Compare = etl::less<KeyType>>
+template <typename KeyType, typename ValueType, typename Compare = etl::less<KeyType>>
 class map_view
 {
 public:
@@ -74,8 +73,7 @@ public:
      * @brief Returns a reference to the mapped value of the element with key
      * equivalent to key. If no such element exists, you are in UB land.
      */
-    [[nodiscard]] constexpr auto at(key_type const& key) const
-        -> mapped_type const&
+    [[nodiscard]] constexpr auto at(key_type const& key) const -> mapped_type const&
     {
         ETL_ASSERT(find(key) != nullptr);
         return find(key)->second;
@@ -121,10 +119,7 @@ public:
     /**
      * @brief Returns an iterator to the end.
      */
-    [[nodiscard]] constexpr auto end() noexcept -> iterator
-    {
-        return data_ + size();
-    }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator { return data_ + size(); }
 
     /**
      * @brief Returns an const iterator to the end.
@@ -145,10 +140,7 @@ public:
     /**
      * @brief Returns the current element count.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
     /**
      * @brief Returns the capacity.
@@ -161,16 +153,12 @@ public:
     /**
      * @brief Returns true if the size == 0.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size_ == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
     /**
      * @brief Returns 1 if the key is present, otherwise 0.
      */
-    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept -> size_type
     {
         return find(key) != nullptr ? 1 : 0;
     }
@@ -199,8 +187,7 @@ public:
      * iterator to the inserted element (or to the element that prevented the
      * insertion) and a bool denoting whether the insertion took place.
      */
-    constexpr auto insert(value_type const& value) noexcept
-        -> etl::pair<iterator, bool>
+    constexpr auto insert(value_type const& value) noexcept -> etl::pair<iterator, bool>
     {
         if (size_ == capacity_) { return {end(), false}; }
 
@@ -238,8 +225,7 @@ public:
     /**
      * @brief Returns an element with key equivalent to key.
      */
-    [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept
-        -> const_iterator
+    [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept -> const_iterator
     {
         for (auto i = cbegin(); i != cend(); ++i)
         {
@@ -261,21 +247,16 @@ private:
     size_type const capacity_;
 };
 
-template <typename KeyType, typename ValueType, size_t Capacity,
-          typename Compare = etl::less<KeyType>>
-class map : public map_view<KeyType, ValueType, Compare>
+template <typename KeyT, typename ValueT, size_t Size, typename Compare = etl::less<KeyT>>
+class map : public map_view<KeyT, ValueT, Compare>
 {
 public:
-    explicit map()
-        : map_view<KeyType, ValueType, Compare> {(value_type*)(&memory_[0]),
-                                                 Capacity}
-    {
-    }
+    explicit map() : map_view<KeyT, ValueT, Compare> {(pair_t*)(&memory_[0]), Size} { }
 
 private:
-    using value_type =
-        typename map_view<KeyType, ValueType, Compare>::value_type;
-    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)] {};
+    using pair_t    = typename map_view<KeyT, ValueT, Compare>::value_type;
+    using storage_t = typename aligned_storage_t<sizeof(pair_t), alignof(pair_t)>;
+    storage_t memory_[Size] {};
 };
 }  // namespace etl
 #endif  // TAETL_MAP_HPP
