@@ -344,6 +344,47 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> Bidir
 }
 
 /**
+ * @brief Copies the elements in the range, defined by [first, last), to another range
+ * beginning at destination.
+ *
+ * @details Copies all elements in the range [first, last) starting from first and
+ * proceeding to last - 1. The behavior is undefined if destination is within the range
+ * [first, last). In this case, etl::copy_backward may be used instead.
+ *
+ * @return Output iterator to the element in the destination range, one past the last
+ * element copied.
+ */
+template <class InputIt, class OutputIt>
+constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
+{
+    for (; first != last; ++first, ++destination) { *destination = *first; }
+    return destination;
+}
+
+/**
+ * @brief Copies the elements in the range, defined by [first, last), to another range
+ * beginning at destination.
+ *
+ * @details Only copies the elements for which the predicate pred returns true. The
+ * relative order of the elements that are copied is preserved. The behavior is undefined
+ * if the source and the destination ranges overlap.
+ *
+ * @return Output iterator to the element in the destination range, one past the last
+ * element copied.
+ */
+template <class InputIt, class OutputIt, class UnaryPredicate>
+constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredicate pred)
+    -> OutputIt
+{
+    while (first != last)
+    {
+        if (pred(*first)) { *d_first++ = *first; }
+        first++;
+    }
+    return d_first;
+}
+
+/**
  * @brief Checks if the first range [first1, last1) is lexicographically
  * less than the second range [first2, last2). Elements are compared using
  * the given binary comparison function comp.

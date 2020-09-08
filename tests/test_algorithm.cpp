@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// TAETL
 #include "etl/algorithm.hpp"
+#include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
@@ -297,4 +297,75 @@ TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
     REQUIRE(arr[1] == 2);
     REQUIRE(arr[2] == 3);
     REQUIRE(arr[3] == 4);
+}
+
+TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+
+    auto source = etl::array<TestType, 4> {};
+    source[0]   = TestType {1};
+    source[1]   = TestType {2};
+    source[2]   = TestType {3};
+    source[3]   = TestType {4};
+
+    SECTION("copy to c array")
+    {
+        TestType dest[4] = {};
+        etl::copy(begin(source), end(source), etl::begin(dest));
+        REQUIRE(dest[0] == TestType {1});
+        REQUIRE(dest[1] == TestType {2});
+        REQUIRE(dest[2] == TestType {3});
+        REQUIRE(dest[3] == TestType {4});
+    }
+
+    SECTION("copy to vector")
+    {
+        auto dest = vector_t {};
+        REQUIRE(dest.size() == 0);
+        etl::copy(begin(source), end(source), etl::back_inserter(dest));
+        REQUIRE(dest.size() == 4);
+        REQUIRE(dest.at(0) == TestType {1});
+        REQUIRE(dest.at(1) == TestType {2});
+        REQUIRE(dest.at(2) == TestType {3});
+        REQUIRE(dest.at(3) == TestType {4});
+    }
+}
+
+TEMPLATE_TEST_CASE("algorithm: copy_if", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using vector_t = etl::stack_vector<TestType, 4>;
+
+    auto source = etl::array<TestType, 4> {};
+    source[0]   = TestType {1};
+    source[1]   = TestType {7};
+    source[2]   = TestType {3};
+    source[3]   = TestType {9};
+
+    auto predicate = [](auto const& val) { return static_cast<int>(val) >= 5; };
+
+    SECTION("copy_if to c array")
+    {
+        TestType dest[4] = {};
+        auto res = etl::copy_if(begin(source), end(source), etl::begin(dest), predicate);
+        REQUIRE(res == &dest[2]);
+        REQUIRE(dest[0] == TestType {7});
+        REQUIRE(dest[1] == TestType {9});
+        REQUIRE(dest[2] == TestType {0});
+        REQUIRE(dest[3] == TestType {0});
+    }
+
+    SECTION("copy_if to vector")
+    {
+        auto dest = vector_t {};
+        REQUIRE(dest.size() == 0);
+        etl::copy_if(begin(source), end(source), etl::back_inserter(dest), predicate);
+        REQUIRE(dest.size() == 2);
+        REQUIRE(dest.at(0) == TestType {7});
+        REQUIRE(dest.at(1) == TestType {9});
+    }
 }
