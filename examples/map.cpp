@@ -40,9 +40,9 @@ auto basic_usage() -> void
 auto custom_compare() -> void
 {
     // Custom key type.
-    struct key_t
+    struct Key
     {
-        constexpr explicit key_t(size_t val) : val_ {val} { }
+        constexpr explicit Key(size_t val) : val_ {val} { }
 
         constexpr auto key() const -> size_t { return val_; }
 
@@ -50,12 +50,12 @@ auto custom_compare() -> void
         size_t val_;
     };
 
-    // Lambda for comparing to objects of type key_t.
-    constexpr auto compare = [](key_t& lhs, key_t& rhs) { return lhs.key() < rhs.key(); };
+    // Lambda for comparing to objects of type Key.
+    constexpr auto compare = [](Key& lhs, Key& rhs) { return lhs.key() < rhs.key(); };
 
-    // Create map of with <key_t,int> pair with the comparator compare, no elements and a
+    // Create map of with <Key,int> pair with the comparator compare, no elements and a
     // capacity of 16.
-    auto data = etl::map<key_t, int, 16, decltype(compare)> {};
+    auto data = etl::map<Key, int, 16, decltype(compare)> {};
     etl::ignore_unused(data);
 }
 
