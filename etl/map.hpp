@@ -192,9 +192,11 @@ public:
     }
 
     /**
-     * @brief Inserts a value pair into the map. Returns a pair consisting of an
-     * iterator to the inserted element (or to the element that prevented the
-     * insertion) and a bool denoting whether the insertion took place.
+     * @brief Inserts a value pair into the map.
+     *
+     * @details Returns a pair consisting of an iterator to the inserted element (or to
+     * the element that prevented the insertion) and a bool denoting whether the insertion
+     * took place.
      */
     constexpr auto insert(value_type const& value) noexcept -> etl::pair<iterator, bool>
     {
@@ -206,9 +208,26 @@ public:
     }
 
     /**
-     * @brief Inserts a value pair into the map. Returns a pair consisting of an
-     * iterator to the inserted element (or to the element that prevented the
-     * insertion) and a bool denoting whether the insertion took place.
+     * @brief Inserts a value pair into the map.
+     *
+     * @details Returns a pair consisting of an iterator to the inserted element (or to
+     * the element that prevented the insertion) and a bool denoting whether the insertion
+     * took place.
+     */
+    template <class P>
+    constexpr auto insert(P&& value)
+        -> etl::enable_if_t<etl::is_constructible_v<value_type, P&&>,
+                            etl::pair<iterator, bool>>
+    {
+        return emplace(etl::forward<P>(value));
+    }
+
+    /**
+     * @brief Inserts a value pair into the map.
+     *
+     * @details Returns a pair consisting of an iterator to the inserted element (or to
+     * the element that prevented the insertion) and a bool denoting whether the insertion
+     * took place.
      */
     constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
     {

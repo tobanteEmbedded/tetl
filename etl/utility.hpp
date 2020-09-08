@@ -302,7 +302,8 @@ struct pair
     constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
     template <class U1, class U2>
-    constexpr pair(pair<U1, U2> const& p) : first {p.first}, second {p.second}
+    constexpr pair(pair<U1, U2> const& p)
+        : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
     {
     }
 
