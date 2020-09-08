@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_MAP_HPP
 #define TAETL_MAP_HPP
 
+#include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
 #include "etl/definitions.hpp"
 #include "etl/functional.hpp"
@@ -41,7 +42,7 @@ class map_view
 public:
     using key_type        = KeyType;
     using mapped_type     = ValueType;
-    using value_type      = etl::pair<const KeyType, ValueType>;
+    using value_type      = etl::pair<KeyType const, ValueType>;
     using size_type       = etl::size_t;
     using difference_type = etl::ptrdiff_t;
     using key_compare     = Compare;
@@ -186,12 +187,10 @@ public:
     /**
      * @brief Erases all elements from the container. After this call, size()
      * returns zero.
-     *
-     * @todo Replace with calls to destructor
      */
     constexpr auto clear() noexcept -> void
     {
-        // etl::memset(data_, 0, capacity_ * sizeof(value_type));
+        etl::for_each(begin(), end(), [](auto& value) { value.~value_type(); });
         size_ = 0;
     }
 
@@ -252,7 +251,7 @@ public:
 
 protected:
     explicit constexpr map_view(pointer data, size_t capacity)
-        : data_(data), size_(0), capacity_(capacity)
+        : data_ {data}, size_ {0}, capacity_ {capacity}
     {
     }
 
@@ -276,7 +275,7 @@ public:
 private:
     using value_type =
         typename map_view<KeyType, ValueType, Compare>::value_type;
-    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)];
+    alignas(value_type) etl::uint8_t memory_[Capacity * sizeof(value_type)] {};
 };
 }  // namespace etl
 #endif  // TAETL_MAP_HPP
