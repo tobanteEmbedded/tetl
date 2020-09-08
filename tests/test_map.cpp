@@ -80,8 +80,8 @@ TEMPLATE_TEST_CASE("map: operator[]", "[map]", etl::uint8_t, etl::int8_t,
     REQUIRE(map.contains(1) == true);
     REQUIRE(map.contains(2) == true);
     REQUIRE(map.contains(3) == false);
-    // REQUIRE(map[3] == 0);
-    // REQUIRE(map.contains(3) == true);
+    REQUIRE(map[3] == 0);
+    REQUIRE(map.contains(3) == true);
 }
 
 TEMPLATE_TEST_CASE("map: begin/cbegin", "[map]", etl::uint8_t, etl::int8_t,

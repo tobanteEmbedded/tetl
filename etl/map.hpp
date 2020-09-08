@@ -219,7 +219,7 @@ public:
         if (size_ == capacity_) { return {end(), false}; }
 
         auto* const addr = reinterpret_cast<void*>(&data_[size_++]);
-        ::new (addr) value_type {value};
+        ::new (addr) value_type {etl::move(value)};
         return {&data_[size_], true};
     }
 
