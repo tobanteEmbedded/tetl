@@ -239,28 +239,23 @@ public:
     }
 
     /**
-     * @brief Returns an element with key equivalent to key.
+     * @brief Returns an element with key equivalent to key. Nullptr if not found.
      */
     [[nodiscard]] constexpr auto find(KeyType const& key) noexcept -> iterator
     {
-        for (auto i = begin(); i != end(); ++i)
-        {
-            if (i->first == key) { return i; }
-        }
-        return nullptr;
+        auto keys_match = [&key](auto const& item) { return item.first == key; };
+        auto iter       = etl::find_if(begin(), end(), keys_match);
+        return iter != end() ? iter : nullptr;
     }
 
     /**
-     * @brief Returns an element with key equivalent to key.
+     * @brief Returns an element with key equivalent to key. Nullptr if not found.
      */
     [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept -> const_iterator
     {
-        for (auto i = cbegin(); i != cend(); ++i)
-        {
-            if (i->first == key) { return i; }
-        }
-
-        return nullptr;
+        auto keys_match = [&key](auto const& item) { return item.first == key; };
+        auto iter       = etl::find_if(begin(), end(), keys_match);
+        return iter != end() ? iter : nullptr;
     }
 
 protected:
