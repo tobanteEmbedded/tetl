@@ -28,6 +28,37 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
+{
+    REQUIRE(etl::plus<TestType> {}(TestType {2}, TestType {1}) == TestType {3});
+    REQUIRE(etl::plus<TestType> {}(TestType {1}, TestType {1}) == TestType {2});
+    REQUIRE(etl::plus<TestType> {}(TestType {100}, TestType {100}) == TestType {200});
+
+    REQUIRE(etl::plus<> {}(TestType {2}, TestType {1}) == TestType {3});
+    REQUIRE(etl::plus<> {}(TestType {1}, TestType {1}) == TestType {2});
+    REQUIRE(etl::plus<> {}(TestType {100}, TestType {100}) == TestType {200});
+}
+
+TEMPLATE_TEST_CASE("functional: minus", "[functional]", int, float, double)
+{
+    REQUIRE(etl::minus<TestType> {}(TestType {99}, 98) == TestType {1});
+    REQUIRE(etl::minus<> {}(TestType {2}, TestType {1}) == TestType {1});
+    REQUIRE(etl::minus<> {}(TestType {1}, TestType {1}) == TestType {0});
+    REQUIRE(etl::minus<> {}(TestType {99}, TestType {100}) == TestType {-1});
+
+    REQUIRE(etl::minus<TestType> {}(TestType {99}, TestType {98}) == TestType {1});
+}
+
+TEMPLATE_TEST_CASE("functional: equal_to", "[functional]", int, float, double)
+{
+    REQUIRE(etl::equal_to<TestType> {}(TestType {99}, 99));
+    REQUIRE(etl::equal_to<> {}(TestType {1}, TestType {1}));
+
+    REQUIRE_FALSE(etl::equal_to<> {}(TestType {2}, TestType {1}));
+    REQUIRE_FALSE(etl::equal_to<> {}(TestType {99}, TestType {100}));
+    REQUIRE_FALSE(etl::equal_to<TestType> {}(TestType {99}, TestType {98}));
+}
+
 TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;
