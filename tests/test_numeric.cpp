@@ -67,10 +67,21 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t, etl::int
                    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
                    double, long double)
 {
-    std::vector<TestType> a {TestType {0}, TestType {1}, TestType {2}, TestType {3},
-                             TestType {4}};
-    std::vector<TestType> b {TestType {5}, TestType {4}, TestType {2}, TestType {3},
-                             TestType {1}};
+    // 0 1 2 3 4
+    etl::stack_vector<TestType, 6> a {};
+    a.push_back(TestType {0});
+    a.push_back(TestType {1});
+    a.push_back(TestType {2});
+    a.push_back(TestType {3});
+    a.push_back(TestType {4});
+
+    // 5 4 3 2 1
+    etl::stack_vector<TestType, 6> b {};
+    b.push_back(TestType {5});
+    b.push_back(TestType {4});
+    b.push_back(TestType {2});
+    b.push_back(TestType {3});
+    b.push_back(TestType {1});
 
     auto product = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0});
     REQUIRE(product == TestType {21});
