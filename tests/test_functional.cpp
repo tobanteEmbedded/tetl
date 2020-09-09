@@ -49,6 +49,46 @@ TEMPLATE_TEST_CASE("functional: minus", "[functional]", int, float, double)
     REQUIRE(etl::minus<TestType> {}(TestType {99}, TestType {98}) == TestType {1});
 }
 
+TEMPLATE_TEST_CASE("functional: multiplies", "[functional]", int, float, double)
+{
+    REQUIRE(etl::multiplies<TestType> {}(TestType {99}, 2) == TestType {198});
+    REQUIRE(etl::multiplies<> {}(TestType {2}, TestType {1}) == TestType {2});
+    REQUIRE(etl::multiplies<> {}(TestType {1}, TestType {1}) == TestType {1});
+    REQUIRE(etl::multiplies<> {}(TestType {99}, TestType {100}) == TestType {9900});
+
+    REQUIRE(etl::multiplies<TestType> {}(TestType {99}, TestType {1}) == TestType {99});
+}
+
+TEMPLATE_TEST_CASE("functional: divides", "[functional]", int, float, double)
+{
+    REQUIRE(etl::divides<TestType> {}(TestType {100}, 2) == TestType {50});
+    REQUIRE(etl::divides<> {}(TestType {2}, TestType {1}) == TestType {2});
+    REQUIRE(etl::divides<> {}(TestType {1}, TestType {1}) == TestType {1});
+    REQUIRE(etl::divides<> {}(TestType {100}, TestType {100}) == TestType {1});
+
+    REQUIRE(etl::divides<TestType> {}(TestType {99}, TestType {1}) == TestType {99});
+}
+
+TEMPLATE_TEST_CASE("functional: modulus", "[functional]", int, unsigned)
+{
+    REQUIRE(etl::modulus<TestType> {}(TestType {100}, 2) == TestType {0});
+    REQUIRE(etl::modulus<> {}(TestType {2}, TestType {1}) == TestType {0});
+    REQUIRE(etl::modulus<> {}(TestType {5}, TestType {3}) == TestType {2});
+    REQUIRE(etl::modulus<> {}(TestType {100}, TestType {99}) == TestType {1});
+
+    REQUIRE(etl::modulus<TestType> {}(TestType {99}, TestType {90}) == TestType {9});
+}
+
+TEMPLATE_TEST_CASE("functional: negate", "[functional]", int, float, double)
+{
+    REQUIRE(etl::negate<TestType> {}(TestType {50}) == TestType {-50});
+    REQUIRE(etl::negate<> {}(TestType {2}) == TestType {-2});
+    REQUIRE(etl::negate<> {}(TestType {-1}) == TestType {1});
+    REQUIRE(etl::negate<> {}(TestType {100}) == TestType {-100});
+
+    REQUIRE(etl::negate<TestType> {}(TestType {99}) == TestType {-99});
+}
+
 TEMPLATE_TEST_CASE("functional: equal_to", "[functional]", int, float, double)
 {
     REQUIRE(etl::equal_to<TestType> {}(TestType {99}, 99));

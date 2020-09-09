@@ -109,6 +109,135 @@ struct minus<void>
 };
 
 /**
+ * @brief Function object for performing multiplication. Effectively calls operator* on
+ * two instances of type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies
+ */
+template <class T = void>
+struct multiplies
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs * rhs; }
+};
+
+/**
+ * @brief Function object for performing multiplication. Effectively calls operator* on
+ * two instances of type T. The standard library provides a specialization of
+ * std::multiplies when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
+ */
+template <>
+struct multiplies<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) * etl::forward<U>(rhs))
+    {
+        return lhs * rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing division. Effectively calls operator/ on two
+ * instances of type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/divides
+ */
+template <class T = void>
+struct divides
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs / rhs; }
+};
+
+/**
+ * @brief Function object for performing division. Effectively calls operator/ on two
+ * instances of type T. The standard library provides a specialization of std::divides
+ * when T is not specified, which leaves the parameter types and return type to be
+ * deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/divides_void
+ */
+template <>
+struct divides<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) / etl::forward<U>(rhs))
+    {
+        return lhs / rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for computing remainders of divisions. Implements operator% for
+ * type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus
+ */
+template <class T = void>
+struct modulus
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs % rhs; }
+};
+
+/**
+ * @brief Function object for computing remainders of divisions. Implements operator% for
+ * type T. The standard library provides a specialization of std::modulus when T is not
+ * specified, which leaves the parameter types and return type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus_void
+ */
+template <>
+struct modulus<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) % etl::forward<U>(rhs))
+    {
+        return lhs % rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing negation. Effectively calls operator- on an
+ * instance of type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/negate
+ */
+template <class T = void>
+struct negate
+{
+    constexpr auto operator()(const T& arg) const -> T { return -arg; }
+};
+
+/**
+ * @brief Function object for performing negation. Effectively calls operator- on an
+ * instance of type T. The standard library provides a specialization of std::negate when
+ * T is not specified, which leaves the parameter types and return type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/negate_void
+ */
+template <>
+struct negate<void>
+{
+    template <class T>
+    constexpr auto operator()(T&& arg) const -> decltype(-etl::forward<T>(arg))
+    {
+        return -arg;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
  * @brief Function object for performing comparisons. Unless specialised, invokes
  * operator== on type T.
  *
