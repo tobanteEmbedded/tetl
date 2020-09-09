@@ -146,6 +146,16 @@ TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t, etl::
     STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
 
+TEMPLATE_TEST_CASE("numeric: lcm", "[numeric]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    STATIC_REQUIRE(etl::lcm(TestType {10}, TestType {5}) == TestType {10});
+
+    REQUIRE(etl::lcm(TestType {4}, TestType {6}) == TestType {12});
+    REQUIRE(etl::lcm(TestType {6}, TestType {4}) == TestType {12});
+    REQUIRE(etl::lcm(TestType {30}, TestType {120}) == TestType {120});
+}
+
 TEMPLATE_TEST_CASE("numeric: midpoint(integer)", "[numeric]", signed char, signed short,
                    signed int, signed long)
 {
