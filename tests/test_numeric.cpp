@@ -91,6 +91,31 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t, etl::int
     REQUIRE(pairwise_matches == TestType {2});
 }
 
+TEMPLATE_TEST_CASE("numeric: partial_sum", "[numeric]", etl::int16_t, etl::int32_t,
+                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
+                   double, long double)
+{
+    SECTION("plus")
+    {
+        etl::stack_vector<TestType, 5> vec {5, TestType {2}};
+        etl::partial_sum(vec.begin(), vec.end(), vec.begin());
+        REQUIRE(vec[0] == TestType {2});
+        REQUIRE(vec[1] == TestType {4});
+        REQUIRE(vec[2] == TestType {6});
+        REQUIRE(vec[3] == TestType {8});
+    }
+
+    SECTION("multiplies (pow2)")
+    {
+        etl::stack_vector<TestType, 5> vec {5, TestType {2}};
+        etl::partial_sum(vec.begin(), vec.end(), vec.begin(), etl::multiplies<>());
+        REQUIRE(vec[0] == TestType {2});
+        REQUIRE(vec[1] == TestType {4});
+        REQUIRE(vec[2] == TestType {8});
+        REQUIRE(vec[3] == TestType {16});
+    }
+}
+
 TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t, etl::int32_t,
                    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
                    double, long double)

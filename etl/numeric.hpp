@@ -32,6 +32,7 @@ DAMAGE.
 #define TAETL_NUMERIC_HPP
 
 #include "definitions.hpp"
+#include "functional.hpp"
 #include "limits.hpp"
 #include "type_traits.hpp"
 #include "utility.hpp"
@@ -126,6 +127,55 @@ template <class InputIt1, class InputIt2, class T, class BinaryOperation1,
     for (; first1 != last1; ++first1, ++first2)
     { init = op1(etl::move(init), op2(*first1, *first2)); }
     return init;
+}
+
+/**
+ * @brief Computes the partial sums of the elements in the subranges of the range [first,
+ * last) and writes them to the range beginning at destination. This version uses the
+ * given binary function op, both applying etl::move to their operands on the left hand
+ * side.
+ *
+ * @details BinaryFunction must not invalidate any iterators, including the end iterators,
+ * or modify any elements of the range involved.
+ *
+ * @return Iterator to the element past the last element written.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
+ */
+template <class InputIt, class OutputIt, class BinaryOperation>
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
+                           BinaryOperation op) -> OutputIt
+{
+    if (first == last) { return destination; }
+
+    auto sum     = *first;
+    *destination = sum;
+
+    while (++first != last)
+    {
+        sum            = op(etl::move(sum), *first);
+        *++destination = sum;
+    }
+
+    return ++destination;
+}
+
+/**
+ * @brief Computes the partial sums of the elements in the subranges of the range [first,
+ * last) and writes them to the range beginning at destination. This version uses
+ * operator+ to sum up the elements.
+ *
+ * @details BinaryFunction must not invalidate any iterators, including the end iterators,
+ * or modify any elements of the range involved.
+ *
+ * @return Iterator to the element past the last element written.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
+ */
+template <class InputIt, class OutputIt>
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination) -> OutputIt
+{
+    return etl::partial_sum(first, last, destination, etl::plus<>());
 }
 
 /**
