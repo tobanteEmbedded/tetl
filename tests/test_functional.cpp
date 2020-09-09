@@ -99,6 +99,56 @@ TEMPLATE_TEST_CASE("functional: equal_to", "[functional]", int, float, double)
     REQUIRE_FALSE(etl::equal_to<TestType> {}(TestType {99}, TestType {98}));
 }
 
+TEMPLATE_TEST_CASE("functional: not_equal_to", "[functional]", int, float, double)
+{
+    REQUIRE_FALSE(etl::not_equal_to<TestType> {}(TestType {99}, 99));
+    REQUIRE_FALSE(etl::not_equal_to<> {}(TestType {1}, TestType {1}));
+
+    REQUIRE(etl::not_equal_to<> {}(TestType {2}, TestType {1}));
+    REQUIRE(etl::not_equal_to<> {}(TestType {99}, TestType {100}));
+    REQUIRE(etl::not_equal_to<TestType> {}(TestType {99}, TestType {98}));
+}
+
+TEMPLATE_TEST_CASE("functional: greater", "[functional]", int, float, double)
+{
+    REQUIRE_FALSE(etl::greater<TestType> {}(TestType {99}, 99));
+    REQUIRE_FALSE(etl::greater<> {}(TestType {1}, TestType {1}));
+
+    REQUIRE(etl::greater<> {}(TestType {2}, TestType {1}));
+    REQUIRE(etl::greater<> {}(TestType {101}, TestType {100}));
+    REQUIRE(etl::greater<TestType> {}(TestType {99}, TestType {98}));
+}
+
+TEMPLATE_TEST_CASE("functional: greater_equal", "[functional]", int, float, double)
+{
+    REQUIRE_FALSE(etl::greater_equal<TestType> {}(TestType {99}, 100));
+    REQUIRE_FALSE(etl::greater_equal<> {}(TestType {1}, TestType {2}));
+
+    REQUIRE(etl::greater_equal<> {}(TestType {2}, TestType {1}));
+    REQUIRE(etl::greater_equal<> {}(TestType {100}, TestType {100}));
+    REQUIRE(etl::greater_equal<TestType> {}(TestType {99}, TestType {98}));
+}
+
+TEMPLATE_TEST_CASE("functional: less", "[functional]", int, float, double)
+{
+    REQUIRE(etl::less<TestType> {}(TestType {99}, 100));
+    REQUIRE(etl::less<> {}(TestType {1}, TestType {2}));
+
+    REQUIRE_FALSE(etl::less<> {}(TestType {2}, TestType {1}));
+    REQUIRE_FALSE(etl::less<> {}(TestType {101}, TestType {100}));
+    REQUIRE_FALSE(etl::less<TestType> {}(TestType {99}, TestType {98}));
+}
+
+TEMPLATE_TEST_CASE("functional: less_equal", "[functional]", int, float, double)
+{
+    REQUIRE(etl::less_equal<TestType> {}(TestType {100}, 100));
+    REQUIRE(etl::less_equal<> {}(TestType {1}, TestType {2}));
+
+    REQUIRE_FALSE(etl::less_equal<> {}(TestType {2}, TestType {1}));
+    REQUIRE_FALSE(etl::less_equal<> {}(TestType {1024}, TestType {100}));
+    REQUIRE_FALSE(etl::less_equal<TestType> {}(TestType {99}, TestType {98}));
+}
+
 TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;

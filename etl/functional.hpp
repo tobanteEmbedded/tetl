@@ -35,15 +35,6 @@ DAMAGE.
 
 namespace etl
 {
-template <class Type>
-struct less
-{
-    constexpr auto operator()(const Type& lhs, const Type& rhs) const -> bool
-    {
-        return lhs < rhs;
-    }
-};
-
 /**
  * @brief Function object for performing addition. Effectively calls operator+ on two
  * instances of type T.
@@ -268,6 +259,183 @@ struct equal_to<void>
         -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
     {
         return lhs == rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator!= on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
+ */
+template <class T = void>
+struct not_equal_to
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs != rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator!= on type T. The standard library provides a specialization of
+ * std::not_equal_to when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void
+ */
+template <>
+struct not_equal_to<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) != etl::forward<U>(rhs))
+    {
+        return lhs != rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator> on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/greater
+ */
+template <class T = void>
+struct greater
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs > rhs; }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator> on type T. The standard library provides a specialization of
+ * std::greater when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_void
+ */
+template <>
+struct greater<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) > etl::forward<U>(rhs))
+    {
+        return lhs > rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator>= on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal
+ */
+template <class T = void>
+struct greater_equal
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs >= rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator> on type T. The standard library provides a specialization of
+ * std::greater_equal when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void
+ */
+template <>
+struct greater_equal<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) >= etl::forward<U>(rhs))
+    {
+        return lhs >= rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator< on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/less
+ */
+template <class T = void>
+struct less
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    {
+        return lhs < rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator< on type T. The standard library provides a specialization of std::less
+ * when T is not specified, which leaves the parameter types and return type to be
+ * deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/less_void
+ */
+template <>
+struct less<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
+    {
+        return lhs < rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator<= on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/less_equal
+ */
+template <class T = void>
+struct less_equal
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    {
+        return lhs <= rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator< on type T. The standard library provides a specialization of std::less_equal
+ * when T is not specified, which leaves the parameter types and return type to be
+ * deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/less_equal_void
+ */
+template <>
+struct less_equal<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) <= etl::forward<U>(rhs))
+    {
+        return lhs <= rhs;
     }
 
     // using is_transparent = true;
