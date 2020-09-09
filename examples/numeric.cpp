@@ -25,13 +25,14 @@ DAMAGE.
 */
 #include <stdio.h>
 
+#include "etl/numbers.hpp"
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
 auto main() -> int
 {
     etl::stack_vector<double, 16> vec;
-    vec.push_back(1.0);
+    vec.push_back(etl::numbers::pi);
     vec.push_back(2.0);
     vec.push_back(3.0);
     vec.push_back(4.0);
