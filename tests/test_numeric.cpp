@@ -24,6 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "etl/array.hpp"        // for array
 #include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
 #include "etl/limits.hpp"       // for numeric_limits
 #include "etl/numeric.hpp"      // for midpoint, accumulate, gcd
@@ -48,6 +49,35 @@ TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double, long do
     REQUIRE(etl::abs<TestType>(-1.0) == TestType {1.0});
     REQUIRE(etl::abs<TestType>(10.0) == TestType {10.0});
     REQUIRE(etl::abs<TestType>(-10.0) == TestType {10.0});
+}
+
+TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t, etl::int64_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
+                   long double)
+{
+    auto data = etl::array<TestType, 4> {};
+    etl::iota(begin(data), end(data), TestType {0});
+    REQUIRE(data[0] == 0);
+    REQUIRE(data[1] == 1);
+    REQUIRE(data[2] == 2);
+    REQUIRE(data[3] == 3);
+}
+
+TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t, etl::int32_t,
+                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
+                   double, long double)
+{
+    std::vector<TestType> a {TestType {0}, TestType {1}, TestType {2}, TestType {3},
+                             TestType {4}};
+    std::vector<TestType> b {TestType {5}, TestType {4}, TestType {2}, TestType {3},
+                             TestType {1}};
+
+    auto product = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0});
+    REQUIRE(product == TestType {21});
+
+    auto pairwise_matches = etl::inner_product(
+        a.begin(), a.end(), b.begin(), TestType {0}, etl::plus<> {}, etl::equal_to<> {});
+    REQUIRE(pairwise_matches == TestType {2});
 }
 
 TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t, etl::int32_t,
