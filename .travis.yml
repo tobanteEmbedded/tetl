@@ -49,7 +49,7 @@ matrix:
       script: *script-macOS
 
     - os: linux
-      dist: bionic
+      dist: focal
       addons:
         apt:
           packages:
