@@ -29,6 +29,26 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEMPLATE_TEST_CASE("bit: bitcast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
+{
+    SECTION("round trip")
+    {
+        auto original = TestType {42};
+        auto other    = etl::bit_cast<float>(original);
+        REQUIRE(etl::bit_cast<TestType>(other) == original);
+    }
+}
+
+TEMPLATE_TEST_CASE("bit: bitcast 64bit", "[bit]", etl::uint64_t, etl::int64_t, double)
+{
+    SECTION("round trip")
+    {
+        auto original = TestType {42};
+        auto other    = etl::bit_cast<double>(original);
+        REQUIRE(etl::bit_cast<TestType>(other) == original);
+    }
+}
+
 TEST_CASE("bit: endian", "[bit]")
 {
     REQUIRE(etl::endian::native == etl::endian::little);

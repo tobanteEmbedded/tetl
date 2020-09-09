@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_BIT_HPP
 #define TAETL_BIT_HPP
 
+#include "etl/cstring.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
@@ -38,6 +39,8 @@ namespace etl
  * @details If all scalar types are little-endian, etl::endian::native equals
  * etl::endian::little. If all scalar types are big-endian,
  * etl::endian::native equals etl::endian::big
+ *
+ * @ref https://en.cppreference.com/w/cpp/types/endian
  */
 enum class endian
 {
@@ -51,6 +54,34 @@ enum class endian
     native = __BYTE_ORDER__
 #endif
 };
+
+/**
+ * @brief Obtain a value of type To by reinterpreting the object representation of from.
+ * Every bit in the value representation of the returned To object is equal to the
+ * corresponding bit in the object representation of from.
+ *
+ * @details The values of padding bits in the returned To object are unspecified. If there
+ * is no value of type To corresponding to the value representation produced, the behavior
+ * is undefined. If there are multiple such values, which value is produced is
+ * unspecified. This overload only participates in overload resolution if sizeof(To) ==
+ * sizeof(From) and both To and From are TriviallyCopyable types.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/bit_cast
+ */
+template <class To, class From>
+constexpr auto bit_cast(const From& src) noexcept -> typename etl::enable_if_t<
+    (sizeof(To) == sizeof(From))
+        && etl::is_trivially_copyable_v<From> && etl::is_trivially_copyable_v<To>,
+    To>
+{
+    static_assert(is_trivially_constructible_v<To>,
+                  "This implementation additionally requires destination type to be "
+                  "trivially constructible");
+
+    To dst;
+    etl::memcpy(&dst, &src, sizeof(To));
+    return dst;
+}
 
 namespace detail
 {
