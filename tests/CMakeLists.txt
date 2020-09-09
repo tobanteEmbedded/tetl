@@ -19,6 +19,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_map.cpp
     test_memory.cpp
     test_mutex.cpp
+    test_numbers.cpp
     test_numeric.cpp
     test_ratio.cpp
     test_span.cpp

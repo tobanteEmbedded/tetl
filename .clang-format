@@ -4,7 +4,7 @@ AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: "true"
 AlignOperands: "true"
 AlignTrailingComments: "true"
-AlwaysBreakTemplateDeclarations: "true"
+AlwaysBreakTemplateDeclarations: "false"
 AllowShortIfStatementsOnASingleLine: "true"
 AllowShortLoopsOnASingleLine: "true"
 BreakBeforeBraces: Allman
