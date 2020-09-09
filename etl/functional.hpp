@@ -44,6 +44,106 @@ struct less
     }
 };
 
+/**
+ * @brief Function object for performing addition. Effectively calls operator+ on two
+ * instances of type T.
+ *
+ * * @ref https://en.cppreference.com/w/cpp/utility/functional/plus
+ */
+template <class T = void>
+struct plus
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs + rhs; }
+};
+
+/**
+ * @brief Function object for performing addition. Effectively calls operator+ on two
+ * instances of type T. The standard library provides a specialization of std::plus when T
+ * is not specified, which leaves the parameter types and return type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/plus_void
+ */
+template <>
+struct plus<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
+    {
+        return lhs + rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing subtraction. Effectively calls operator- on two
+ * instances of type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/minus
+ */
+template <class T = void>
+struct minus
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs - rhs; }
+};
+
+/**
+ * @brief Function object for performing subtraction. Effectively calls operator- on two
+ * instances of type T. The standard library provides a specialization of std::minus when
+ * T is not specified, which leaves the parameter types and return type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/minus_void
+ */
+template <>
+struct minus<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) - etl::forward<U>(rhs))
+    {
+        return lhs - rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator== on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/equal_to
+ */
+template <class T = void>
+struct equal_to
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs == rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing comparisons. Unless specialised, invokes
+ * operator== on type T. The standard library provides a specialization of std::equal_to
+ * when T is not specified, which leaves the parameter types and return type to be
+ * deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/equal_to_void
+ */
+template <>
+struct equal_to<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
+    {
+        return lhs == rhs;
+    }
+
+    // using is_transparent = true;
+};
+
 template <class>
 class function_view;
 

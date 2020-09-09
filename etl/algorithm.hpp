@@ -298,6 +298,17 @@ template <class InputIt, class UnaryPredicate>
 }
 
 /**
+ * @brief Reverses the order of the elements in the range [first, last). Behaves as if
+ * applying etl::iter_swap to every pair of iterators first+i, (last-i) - 1 for each
+ * non-negative i < (last-first)/2.
+ */
+template <class BidirIt>
+constexpr auto reverse(BidirIt first, BidirIt last) -> void
+{
+    while ((first != last) && (first != --last)) { etl::iter_swap(first++, last); }
+}
+
+/**
  * @brief Performs a left rotation on a range of elements.
  *
  * @details Specifically, etl::rotate swaps the elements in the range [first,
