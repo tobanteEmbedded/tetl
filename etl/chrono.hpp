@@ -30,6 +30,11 @@ DAMAGE.
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
 
+// Somehow the abs macro gets included in avr-gcc builds. Not sure where it's coming from.
+#ifdef abs
+#undef abs
+#endif
+
 namespace etl::chrono
 {
 /**

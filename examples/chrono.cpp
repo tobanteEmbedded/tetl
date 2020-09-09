@@ -27,10 +27,6 @@ DAMAGE.
 
 #include "etl/chrono.hpp"
 
-#ifdef abs
-#undef abs
-#endif
-
 auto main() -> int
 {
     using namespace etl::literals;
