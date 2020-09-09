@@ -31,19 +31,32 @@ DAMAGE.
 
 namespace etl::numbers
 {
-template <class T> inline constexpr T e_v      = 2.7182818284590452353602874713526625L;
-template <class T> inline constexpr T log2e_v  = 1.4426950408889634073599246810018921L;
-template <class T> inline constexpr T log10e_v = 0.4342944819032518276511289189166051L;
-template <class T> inline constexpr T pi_v     = 3.1415926535897932384626433832795028L;
-template <class T> inline constexpr T inv_sqrtpi_v = 0.564189583547756286948079451560772L;
-template <class T> inline constexpr T inv_pi_v    = 0.3183098861837906715377675267450287L;
-template <class T> inline constexpr T ln2_v       = 0.6931471805599453094172321214581766L;
-template <class T> inline constexpr T ln10_v      = 2.3025850929940456840179914546843642L;
-template <class T> inline constexpr T sqrt2_v     = 1.4142135623730950488016887242096981L;
-template <class T> inline constexpr T sqrt3_v     = 1.7320508075688772935274463415058724L;
-template <class T> inline constexpr T inv_sqrt3_v = 0.5773502691896257645091487805019574L;
-template <class T> inline constexpr T egamma_v    = 0.5772156649015328606065120900824024L;
-template <class T> inline constexpr T phi_v       = 1.6180339887498948482045868343656381L;
+template <class T>
+inline constexpr T e_v = 2.7182818284590452353602874713526625L;
+template <class T>
+inline constexpr T log2e_v = 1.4426950408889634073599246810018921L;
+template <class T>
+inline constexpr T log10e_v = 0.4342944819032518276511289189166051L;
+template <class T>
+inline constexpr T pi_v = 3.1415926535897932384626433832795028L;
+template <class T>
+inline constexpr T inv_sqrtpi_v = 0.564189583547756286948079451560772L;
+template <class T>
+inline constexpr T inv_pi_v = 0.3183098861837906715377675267450287L;
+template <class T>
+inline constexpr T ln2_v = 0.6931471805599453094172321214581766L;
+template <class T>
+inline constexpr T ln10_v = 2.3025850929940456840179914546843642L;
+template <class T>
+inline constexpr T sqrt2_v = 1.4142135623730950488016887242096981L;
+template <class T>
+inline constexpr T sqrt3_v = 1.7320508075688772935274463415058724L;
+template <class T>
+inline constexpr T inv_sqrt3_v = 0.5773502691896257645091487805019574L;
+template <class T>
+inline constexpr T egamma_v = 0.5772156649015328606065120900824024L;
+template <class T>
+inline constexpr T phi_v = 1.6180339887498948482045868343656381L;
 
 inline constexpr float ef          = e_v<float>;
 inline constexpr float log2ef      = log2e_v<float>;
