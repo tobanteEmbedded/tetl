@@ -12,7 +12,7 @@ script-anchors:
     - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug
     - cmake --build . -- -j
     - ctest -j
-    - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-7
+    - bash <(curl -s https://codecov.io/bash)
 
   - &script-docs
     - cd $TRAVIS_BUILD_DIR
