@@ -32,6 +32,10 @@ DAMAGE.
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef abs
+#undef abs
+#endif
+
 /**
  * @brief Namespace for the etl library.
  */

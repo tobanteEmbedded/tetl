@@ -1274,10 +1274,6 @@ template <class T>
 inline constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
 
 /**
- * @brief
- */
-
-/**
  * @brief If T is a TriviallyCopyable type, provides the member constant value equal to
  * true. For any other type, value is false. The only trivially copyable types are scalar
  * types, trivially copyable classes, and arrays of such types/classes (possibly
