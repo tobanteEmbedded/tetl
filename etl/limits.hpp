@@ -102,9 +102,9 @@ class numeric_limits<bool>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto min() noexcept { return false; }
-    static constexpr auto max() noexcept { return true; }
-    static constexpr auto lowest() noexcept { return false; }
+    static constexpr auto min() noexcept -> bool { return false; }
+    static constexpr auto max() noexcept -> bool { return true; }
+    static constexpr auto lowest() noexcept -> bool { return false; }
 
     static constexpr int digits       = 1;
     static constexpr int digits10     = 0;
@@ -147,9 +147,9 @@ class numeric_limits<char>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto min() noexcept { return CHAR_MIN; }
-    static constexpr auto max() noexcept { return CHAR_MAX; }
-    static constexpr auto lowest() noexcept { return CHAR_MIN; }
+    static constexpr auto min() noexcept -> char { return CHAR_MIN; }
+    static constexpr auto max() noexcept -> char { return CHAR_MAX; }
+    static constexpr auto lowest() noexcept -> char { return CHAR_MIN; }
 
     static constexpr bool is_signed  = CHAR_MIN < 0;
     static constexpr bool is_integer = true;
@@ -192,9 +192,9 @@ class numeric_limits<signed char>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto min() noexcept { return SCHAR_MIN; }
-    static constexpr auto max() noexcept { return SCHAR_MAX; }
-    static constexpr auto lowest() noexcept { return SCHAR_MIN; }
+    static constexpr auto min() noexcept -> signed char { return SCHAR_MIN; }
+    static constexpr auto max() noexcept -> signed char { return SCHAR_MAX; }
+    static constexpr auto lowest() noexcept -> signed char { return SCHAR_MIN; }
 
     static constexpr bool is_signed  = SCHAR_MIN < 0;
     static constexpr bool is_integer = true;
@@ -237,9 +237,9 @@ class numeric_limits<unsigned char>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return UCHAR_MAX; }
+    static constexpr auto lowest() noexcept -> unsigned char { return 0; }
+    static constexpr auto min() noexcept -> unsigned char { return 0; }
+    static constexpr auto max() noexcept -> unsigned char { return UCHAR_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -282,9 +282,9 @@ class numeric_limits<short>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return SHRT_MIN; }
-    static constexpr auto min() noexcept { return SHRT_MIN; }
-    static constexpr auto max() noexcept { return SHRT_MAX; }
+    static constexpr auto lowest() noexcept -> short { return SHRT_MIN; }
+    static constexpr auto min() noexcept -> short { return SHRT_MIN; }
+    static constexpr auto max() noexcept -> short { return SHRT_MAX; }
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = true;
@@ -327,9 +327,9 @@ class numeric_limits<unsigned short>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return USHRT_MAX; }
+    static constexpr auto lowest() noexcept -> unsigned short { return 0; }
+    static constexpr auto min() noexcept -> unsigned short { return 0; }
+    static constexpr auto max() noexcept -> unsigned short { return USHRT_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -372,9 +372,9 @@ class numeric_limits<int>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return INT_MIN; }
-    static constexpr auto min() noexcept { return INT_MIN; }
-    static constexpr auto max() noexcept { return INT_MAX; }
+    static constexpr auto lowest() noexcept -> int { return INT_MIN; }
+    static constexpr auto min() noexcept -> int { return INT_MIN; }
+    static constexpr auto max() noexcept -> int { return INT_MAX; }
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = true;
@@ -417,9 +417,9 @@ class numeric_limits<unsigned int>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return UINT_MAX; }
+    static constexpr auto lowest() noexcept -> unsigned int { return 0; }
+    static constexpr auto min() noexcept -> unsigned int { return 0; }
+    static constexpr auto max() noexcept -> unsigned int { return UINT_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -462,9 +462,9 @@ class numeric_limits<long>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return LONG_MIN; }
-    static constexpr auto min() noexcept { return LONG_MIN; }
-    static constexpr auto max() noexcept { return LONG_MAX; }
+    static constexpr auto lowest() noexcept -> long { return LONG_MIN; }
+    static constexpr auto min() noexcept -> long { return LONG_MIN; }
+    static constexpr auto max() noexcept -> long { return LONG_MAX; }
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = true;
@@ -507,9 +507,9 @@ class numeric_limits<unsigned long>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return ULONG_MAX; }
+    static constexpr auto lowest() noexcept -> unsigned long { return 0; }
+    static constexpr auto min() noexcept -> unsigned long { return 0; }
+    static constexpr auto max() noexcept -> unsigned long { return ULONG_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
@@ -553,9 +553,9 @@ class numeric_limits<long long>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return LLONG_MIN; }
-    static constexpr auto min() noexcept { return LLONG_MIN; }
-    static constexpr auto max() noexcept { return LLONG_MAX; }
+    static constexpr auto lowest() noexcept -> long long { return LLONG_MIN; }
+    static constexpr auto min() noexcept -> long long { return LLONG_MIN; }
+    static constexpr auto max() noexcept -> long long { return LLONG_MAX; }
 
     static constexpr bool is_signed  = true;
     static constexpr bool is_integer = true;
@@ -600,9 +600,9 @@ class numeric_limits<unsigned long long>
 public:
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept { return 0; }
-    static constexpr auto min() noexcept { return 0; }
-    static constexpr auto max() noexcept { return ULLONG_MAX; }
+    static constexpr auto lowest() noexcept -> unsigned long long { return 0; }
+    static constexpr auto min() noexcept -> unsigned long long { return 0; }
+    static constexpr auto max() noexcept -> unsigned long long { return ULLONG_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
