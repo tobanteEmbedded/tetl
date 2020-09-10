@@ -67,7 +67,7 @@ TEMPLATE_TEST_CASE("type_traits: is_void = false", "[type_traits]", etl::uint8_t
 TEMPLATE_TEST_CASE("type_traits: is_void = true", "[type_traits]", void)
 {
     STATIC_REQUIRE(etl::is_void<TestType>::value == true);
-    STATIC_REQUIRE(etl::is_void_v<TestType> == true);
+    STATIC_REQUIRE(etl::is_void_v<TestType>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_integral = false", "[type_traits]", float, double,
@@ -80,13 +80,13 @@ TEMPLATE_TEST_CASE("type_traits: is_integral = true", "[type_traits]", etl::uint
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-    STATIC_REQUIRE(etl::is_integral_v<TestType> == true);
+    STATIC_REQUIRE(etl::is_integral_v<TestType>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_floating_point = true", "[type_traits]", float,
                    double, long double)
 {
-    STATIC_REQUIRE(etl::is_floating_point_v<TestType> == true);
+    STATIC_REQUIRE(etl::is_floating_point_v<TestType>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_floating_point = false", "[type_traits]",
@@ -105,7 +105,7 @@ TEMPLATE_TEST_CASE("type_traits: is_null_pointer = false", "[type_traits]", etl:
 
 TEST_CASE("type_traits: is_null_pointer = true", "[type_traits]")
 {
-    STATIC_REQUIRE(etl::is_null_pointer_v<decltype(nullptr)> == true);
+    STATIC_REQUIRE(etl::is_null_pointer_v<decltype(nullptr)>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_array = false", "[type_traits]", etl::uint8_t,
@@ -119,15 +119,15 @@ TEMPLATE_TEST_CASE("type_traits: is_array = true", "[type_traits]", etl::uint8_t
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double, struct S)
 {
-    STATIC_REQUIRE(etl::is_array_v<TestType[]> == true);
-    STATIC_REQUIRE(etl::is_array_v<TestType[4]> == true);
+    STATIC_REQUIRE(etl::is_array_v<TestType[]>);
+    STATIC_REQUIRE(etl::is_array_v<TestType[4]>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_pointer", "[type_traits]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double, struct S)
 {
-    STATIC_REQUIRE(etl::is_pointer_v<TestType*> == true);
+    STATIC_REQUIRE(etl::is_pointer_v<TestType*>);
     STATIC_REQUIRE(etl::is_pointer_v<TestType> == false);
 }
 
@@ -140,8 +140,8 @@ TEMPLATE_TEST_CASE("type_traits: is_class = false", "[type_traits]", etl::uint8_
 
 TEMPLATE_TEST_CASE("type_traits: is_class = true", "[type_traits]", struct S, struct CS)
 {
-    STATIC_REQUIRE(etl::is_class_v<TestType> == true);
-    STATIC_REQUIRE(etl::is_class_v<struct X> == true);
+    STATIC_REQUIRE(etl::is_class_v<TestType>);
+    STATIC_REQUIRE(etl::is_class_v<struct X>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_enum = false", "[type_traits]", etl::uint8_t,
@@ -170,9 +170,9 @@ enum class EC
 
 TEMPLATE_TEST_CASE("type_traits: is_enum = true", "[type_traits]", E, EC)
 {
-    STATIC_REQUIRE(etl::is_enum_v<TestType> == true);
-    STATIC_REQUIRE(etl::is_enum_v<TestType const> == true);
-    STATIC_REQUIRE(etl::is_enum_v<TestType volatile> == true);
+    STATIC_REQUIRE(etl::is_enum_v<TestType>);
+    STATIC_REQUIRE(etl::is_enum_v<TestType const>);
+    STATIC_REQUIRE(etl::is_enum_v<TestType volatile>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_union = false", "[type_traits]", etl::uint8_t,
@@ -203,9 +203,9 @@ using UnionB = union
 
 TEMPLATE_TEST_CASE("type_traits: is_union = true", "[type_traits]", UnionA, UnionB)
 {
-    STATIC_REQUIRE(etl::is_union_v<TestType> == true);
-    STATIC_REQUIRE(etl::is_union_v<TestType const> == true);
-    STATIC_REQUIRE(etl::is_union_v<TestType volatile> == true);
+    STATIC_REQUIRE(etl::is_union_v<TestType>);
+    STATIC_REQUIRE(etl::is_union_v<TestType const>);
+    STATIC_REQUIRE(etl::is_union_v<TestType volatile>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_arithmetic", "[type_traits]", bool, etl::uint8_t,
@@ -244,6 +244,63 @@ TEMPLATE_TEST_CASE("type_traits: is_unsigned = true", "[type_traits]", etl::uint
                    etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
     STATIC_REQUIRE(etl::is_unsigned<TestType>::value);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_volatile", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using etl::remove_volatile_t;
+    STATIC_REQUIRE(is_same_v<remove_volatile_t<TestType const>, TestType const>);
+    STATIC_REQUIRE(is_same_v<remove_volatile_t<TestType volatile>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_volatile_t<TestType const volatile>, TestType const>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_const", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using etl::remove_const_t;
+    STATIC_REQUIRE(is_same_v<remove_const_t<TestType const>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<TestType volatile>, TestType volatile>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<TestType const volatile>, TestType volatile>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_cv", "[type_traits]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using etl::remove_cv_t;
+    STATIC_REQUIRE(is_same_v<remove_cv_t<TestType const>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_cv_t<TestType volatile>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_cv_t<TestType const volatile>, TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_reference", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using etl::remove_reference_t;
+    STATIC_REQUIRE(is_same_v<remove_reference_t<TestType>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_reference_t<TestType&>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_reference_t<TestType&&>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_reference_t<TestType const&>, TestType const>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_cvref", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using etl::remove_cvref_t;
+    STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType&>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType&&>, TestType>);
+    STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType const&>, TestType>);
 }
 
 TEST_CASE("type_traits: conditional", "[type_traits]")

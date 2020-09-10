@@ -203,6 +203,23 @@ struct remove_reference<T&&>
 template <class T>
 using remove_reference_t = typename remove_reference<T>::type;
 
+/**
+ * @brief If the type T is a reference type, provides the member typedef type which is the
+ * type referred to by T with its topmost cv-qualifiers removed. Otherwise type is T with
+ * its topmost cv-qualifiers removed.
+ *
+ * @details The behavior of a program that adds specializations for remove_cvref is
+ * undefined.
+ */
+template <class T>
+struct remove_cvref
+{
+    using type = etl::remove_cv_t<etl::remove_reference_t<T>>;
+};
+
+template <class T>
+using remove_cvref_t = typename remove_cvref<T>::type;
+
 namespace detail
 {
 template <class T>
