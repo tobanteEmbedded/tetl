@@ -44,7 +44,10 @@ namespace etl
 template <class T = void>
 struct plus
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs + rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs + rhs;
+    }
 };
 
 /**
@@ -58,7 +61,7 @@ template <>
 struct plus<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
     {
         return lhs + rhs;
@@ -76,7 +79,10 @@ struct plus<void>
 template <class T = void>
 struct minus
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs - rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs - rhs;
+    }
 };
 
 /**
@@ -90,7 +96,7 @@ template <>
 struct minus<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) - etl::forward<U>(rhs))
     {
         return lhs - rhs;
@@ -108,7 +114,10 @@ struct minus<void>
 template <class T = void>
 struct multiplies
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs * rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs * rhs;
+    }
 };
 
 /**
@@ -123,7 +132,7 @@ template <>
 struct multiplies<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) * etl::forward<U>(rhs))
     {
         return lhs * rhs;
@@ -141,7 +150,10 @@ struct multiplies<void>
 template <class T = void>
 struct divides
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs / rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs / rhs;
+    }
 };
 
 /**
@@ -156,7 +168,7 @@ template <>
 struct divides<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) / etl::forward<U>(rhs))
     {
         return lhs / rhs;
@@ -174,7 +186,10 @@ struct divides<void>
 template <class T = void>
 struct modulus
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs % rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs % rhs;
+    }
 };
 
 /**
@@ -188,7 +203,7 @@ template <>
 struct modulus<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) % etl::forward<U>(rhs))
     {
         return lhs % rhs;
@@ -206,7 +221,7 @@ struct modulus<void>
 template <class T = void>
 struct negate
 {
-    constexpr auto operator()(const T& arg) const -> T { return -arg; }
+    [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return -arg; }
 };
 
 /**
@@ -220,7 +235,8 @@ template <>
 struct negate<void>
 {
     template <class T>
-    constexpr auto operator()(T&& arg) const -> decltype(-etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const
+        -> decltype(-etl::forward<T>(arg))
     {
         return -arg;
     }
@@ -237,7 +253,7 @@ struct negate<void>
 template <class T = void>
 struct equal_to
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
     {
         return lhs == rhs;
     }
@@ -255,7 +271,7 @@ template <>
 struct equal_to<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
     {
         return lhs == rhs;
@@ -273,7 +289,7 @@ struct equal_to<void>
 template <class T = void>
 struct not_equal_to
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
     {
         return lhs != rhs;
     }
@@ -291,7 +307,7 @@ template <>
 struct not_equal_to<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) != etl::forward<U>(rhs))
     {
         return lhs != rhs;
@@ -309,7 +325,10 @@ struct not_equal_to<void>
 template <class T = void>
 struct greater
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs > rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs > rhs;
+    }
 };
 
 /**
@@ -324,7 +343,7 @@ template <>
 struct greater<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) > etl::forward<U>(rhs))
     {
         return lhs > rhs;
@@ -342,7 +361,7 @@ struct greater<void>
 template <class T = void>
 struct greater_equal
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
     {
         return lhs >= rhs;
     }
@@ -360,7 +379,7 @@ template <>
 struct greater_equal<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) >= etl::forward<U>(rhs))
     {
         return lhs >= rhs;
@@ -378,7 +397,7 @@ struct greater_equal<void>
 template <class T = void>
 struct less
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
     {
         return lhs < rhs;
     }
@@ -396,7 +415,7 @@ template <>
 struct less<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
     {
         return lhs < rhs;
@@ -414,7 +433,7 @@ struct less<void>
 template <class T = void>
 struct less_equal
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
     {
         return lhs <= rhs;
     }
@@ -432,7 +451,7 @@ template <>
 struct less_equal<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) <= etl::forward<U>(rhs))
     {
         return lhs <= rhs;
@@ -450,7 +469,7 @@ struct less_equal<void>
 template <class T = void>
 struct logical_and
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
     {
         return lhs && rhs;
     }
@@ -468,7 +487,7 @@ template <>
 struct logical_and<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) && etl::forward<U>(rhs))
     {
         return lhs && rhs;
@@ -486,7 +505,7 @@ struct logical_and<void>
 template <class T = void>
 struct logical_or
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
     {
         return lhs || rhs;
     }
@@ -504,7 +523,7 @@ template <>
 struct logical_or<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) || etl::forward<U>(rhs))
     {
         return lhs || rhs;
@@ -522,7 +541,7 @@ struct logical_or<void>
 template <class T = void>
 struct logical_not
 {
-    constexpr auto operator()(const T& arg) const -> bool { return !arg; }
+    [[nodiscard]] constexpr auto operator()(const T& arg) const -> bool { return !arg; }
 };
 
 /**
@@ -537,7 +556,8 @@ template <>
 struct logical_not<void>
 {
     template <class T>
-    constexpr auto operator()(T&& arg) const -> decltype(!etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const
+        -> decltype(!etl::forward<T>(arg))
     {
         return !arg;
     }
@@ -554,7 +574,10 @@ struct logical_not<void>
 template <class T = void>
 struct bit_and
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs & rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs & rhs;
+    }
 };
 
 /**
@@ -569,7 +592,7 @@ template <>
 struct bit_and<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) & etl::forward<U>(rhs))
     {
         return lhs & rhs;
@@ -587,7 +610,10 @@ struct bit_and<void>
 template <class T = void>
 struct bit_or
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs | rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs | rhs;
+    }
 };
 
 /**
@@ -601,7 +627,7 @@ template <>
 struct bit_or<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) | etl::forward<U>(rhs))
     {
         return lhs | rhs;
@@ -619,7 +645,10 @@ struct bit_or<void>
 template <class T = void>
 struct bit_xor
 {
-    constexpr auto operator()(const T& lhs, const T& rhs) const -> T { return lhs ^ rhs; }
+    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    {
+        return lhs ^ rhs;
+    }
 };
 
 /**
@@ -633,7 +662,7 @@ template <>
 struct bit_xor<void>
 {
     template <class T, class U>
-    constexpr auto operator()(T&& lhs, U&& rhs) const
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) ^ etl::forward<U>(rhs))
     {
         return lhs ^ rhs;
@@ -651,7 +680,7 @@ struct bit_xor<void>
 template <class T = void>
 struct bit_not
 {
-    constexpr auto operator()(const T& arg) const -> T { return ~arg; }
+    [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return ~arg; }
 };
 
 /**
@@ -665,7 +694,8 @@ template <>
 struct bit_not<void>
 {
     template <class T>
-    constexpr auto operator()(T&& arg) const -> decltype(~etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const
+        -> decltype(~etl::forward<T>(arg))
     {
         return ~arg;
     }
