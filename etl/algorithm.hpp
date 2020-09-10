@@ -541,7 +541,7 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 template <class RandomIt>
 constexpr auto sort(RandomIt first, RandomIt last) -> void
 {
-    sort(first, last, [](auto const& lhs, auto const& rhs) { return lhs < rhs; });
+    sort(first, last, etl::less<> {});
 }
 
 }  // namespace etl
