@@ -147,6 +147,38 @@ constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 }
 
 /**
+ * @brief Returns the number of elements in the range [first, last) satisfying specific
+ * criteria. Counts the elements that are equal to value.
+ */
+template <class InputIter, class T>
+[[nodiscard]] constexpr auto count(InputIter first, InputIter last, const T& value) ->
+    typename iterator_traits<InputIter>::difference_type
+{
+    auto ret = typename iterator_traits<InputIter>::difference_type {0};
+    for (; first != last; ++first)
+    {
+        if (*first == value) { ret++; }
+    }
+    return ret;
+}
+
+/**
+ * @brief Returns the number of elements in the range [first, last) satisfying specific
+ * criteria. Counts elements for which predicate p returns true.
+ */
+template <class InputIter, class UnaryPredicate>
+[[nodiscard]] constexpr auto count_if(InputIter first, InputIter last, UnaryPredicate p)
+    -> typename iterator_traits<InputIter>::difference_type
+{
+    auto ret = typename iterator_traits<InputIter>::difference_type {0};
+    for (; first != last; ++first)
+    {
+        if (p(*first)) { ret++; }
+    }
+    return ret;
+}
+
+/**
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>

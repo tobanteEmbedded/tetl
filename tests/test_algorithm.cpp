@@ -117,6 +117,31 @@ TEMPLATE_TEST_CASE("algorithm: generate_n", "[algorithm]", etl::uint8_t, etl::ui
     REQUIRE(data[3] == TestType {42});
 }
 
+TEMPLATE_TEST_CASE("algorithm: count", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    auto data = etl::array<TestType, 4> {};
+    etl::iota(begin(data), end(data), TestType {0});
+    REQUIRE(etl::count(begin(data), end(data), TestType {0}) == 1);
+    REQUIRE(etl::count(begin(data), end(data), TestType {1}) == 1);
+    REQUIRE(etl::count(begin(data), end(data), TestType {2}) == 1);
+    REQUIRE(etl::count(begin(data), end(data), TestType {3}) == 1);
+    REQUIRE(etl::count(begin(data), end(data), TestType {4}) == 0);
+}
+
+TEMPLATE_TEST_CASE("algorithm: count_if", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    auto data = etl::array<TestType, 4> {};
+    etl::iota(begin(data), end(data), TestType {0});
+
+    auto p1 = [](auto const& val) { return val < TestType {2}; };
+    auto p2 = [](auto const& val) -> bool { return static_cast<int>(val) % 2; };
+
+    REQUIRE(etl::count_if(begin(data), end(data), p1) == 2);
+    REQUIRE(etl::count_if(begin(data), end(data), p2) == 2);
+}
+
 TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
