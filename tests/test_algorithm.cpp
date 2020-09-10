@@ -86,6 +86,37 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uin
     REQUIRE(vec[4] == static_cast<TestType>('o') * 2);
 }
 
+TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    auto data = etl::array<TestType, 4> {};
+    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val == 0; }));
+
+    etl::generate(begin(data), end(data), [n = TestType {0}]() mutable { return n++; });
+    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val >= 0; }));
+
+    REQUIRE(data[0] == 0);
+    REQUIRE(data[1] == 1);
+    REQUIRE(data[2] == 2);
+    REQUIRE(data[3] == 3);
+}
+
+TEMPLATE_TEST_CASE("algorithm: generate_n", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    auto data = etl::stack_vector<TestType, 4> {};
+    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val == 0; }));
+
+    auto rng = []() { return TestType {42}; };
+    etl::generate_n(etl::back_inserter(data), 4, rng);
+    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val >= 0; }));
+
+    REQUIRE(data[0] == TestType {42});
+    REQUIRE(data[1] == TestType {42});
+    REQUIRE(data[2] == TestType {42});
+    REQUIRE(data[3] == TestType {42});
+}
+
 TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
