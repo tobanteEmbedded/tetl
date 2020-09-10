@@ -37,10 +37,15 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief array class with fixed size capacity.
+ * @brief etl::array is a container that encapsulates fixed size arrays.
  *
- * @tparam Type Type to hold in container
- * @tparam Size Capacity for Array
+ * @details This container is an aggregate type with the same semantics as a struct
+ * holding a C-style array Type[N] as its only non-static data member. Unlike a C-style
+ * array, it doesn't decay to Type* automatically. As an aggregate type, it can be
+ * initialized with aggregate-initialization given at most N initializers that are
+ * convertible to Ttype: etl::array<int, 3> a = {1,2,3};.
+ *
+ * @todo Add aggregate-initialization.
  */
 template <class Type, etl::size_t Size>
 class array
@@ -186,20 +191,36 @@ public:
     }
 
     /**
-     * @brief Returns true if the size is 0.
+     * @brief Checks if the container has no elements, i.e. whether begin() == end().
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    {
+        return begin() == end();
+    }
 
     /**
-     * @brief Returns the number of items.
+     * @brief Returns the number of elements in the container, i.e. etl::distance(begin(),
+     * end()).
      */
     [[nodiscard]] constexpr auto size() const noexcept -> size_type { return Size; }
 
     /**
-     * @brief Returns the number of items that can be held in allocated
-     * storage.
+     * @brief Returns the maximum number of elements the container is able to hold due to
+     * system or library implementation limitations, i.e. etl::distance(begin(), end())
+     * for the largest container.
+     *
+     * @details Because each etl::array<T, N> is a fixed-size container, the value
+     * returned by max_size equals N (which is also the value returned by size)
      */
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Size; }
+
+    /**
+     * @brief Assigns the given value value to all elements in the container.
+     */
+    constexpr auto fill(const_reference value) -> void
+    {
+        for (auto& item : (*this)) { item = value; }
+    }
 
 private:
     Type _data[Size] {};

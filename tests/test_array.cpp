@@ -24,6 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 
 #include "catch2/catch.hpp"
@@ -169,4 +170,18 @@ TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t, etl::int8
 
     REQUIRE(arr.front() == 0);
     REQUIRE(arr.back() == 3);
+}
+
+TEMPLATE_TEST_CASE("array: fill", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    etl::array<TestType, 4> arr {};
+    REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 0; }));
+
+    arr.fill(TestType {42});
+    REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 42; }));
+
+    arr.fill(TestType {1});
+    REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 1; }));
 }
