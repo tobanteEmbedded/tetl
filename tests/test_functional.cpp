@@ -170,6 +170,32 @@ TEST_CASE("functional: logical_not", "[functional]")
     REQUIRE(etl::logical_not<> {}(false));
 }
 
+TEST_CASE("functional: bit_and", "[functional]")
+{
+    REQUIRE(etl::bit_and<etl::uint8_t> {}(0b0000'0101, 0b0000'1001) == 1);
+    REQUIRE(etl::bit_and<etl::uint8_t> {}(1, 0) == 0);
+    REQUIRE(etl::bit_and<> {}(1, 1) == 1);
+}
+
+TEST_CASE("functional: bit_or", "[functional]")
+{
+    REQUIRE(etl::bit_or<etl::uint8_t> {}(0b0000'0101, 0b0000'1001) == 0b0000'1101);
+    REQUIRE(etl::bit_or<etl::uint8_t> {}(1, 0) == 1);
+    REQUIRE(etl::bit_or<> {}(1, 1) == 1);
+}
+
+TEST_CASE("functional: bit_xor", "[functional]")
+{
+    REQUIRE(etl::bit_xor<etl::uint8_t> {}(0b0000'0101, 0b0000'1001) == 0b0000'1100);
+    REQUIRE(etl::bit_xor<etl::uint8_t> {}(1, 0) == 1);
+    REQUIRE(etl::bit_xor<> {}(1, 1) == 0);
+}
+
+TEST_CASE("functional: bit_not", "[functional]")
+{
+    REQUIRE(etl::bit_not<etl::uint8_t> {}(0b0000'0101) == 0b1111'1010);
+}
+
 TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;
