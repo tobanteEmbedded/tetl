@@ -28,6 +28,7 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
+#include "etl/string.hpp"
 #include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
@@ -54,6 +55,35 @@ TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t, etl::int8
     counter = 0;
     etl::for_each_n(vec.begin(), 2, increment_counter);
     REQUIRE(counter == 2);
+}
+
+TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    etl::array<TestType, 4> a;
+    a.fill(2);
+    etl::transform(begin(a), end(a), begin(a), [](auto const& val) { return val * 2; });
+    REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 4; }));
+
+    etl::small_string str("hello");
+    etl::stack_vector<TestType, 8> vec;
+    etl::transform(begin(str), end(str), etl::back_inserter(vec),
+                   [](auto c) -> TestType { return static_cast<TestType>(c); });
+
+    REQUIRE(vec[0] == static_cast<TestType>('h'));
+    REQUIRE(vec[1] == static_cast<TestType>('e'));
+    REQUIRE(vec[2] == static_cast<TestType>('l'));
+    REQUIRE(vec[3] == static_cast<TestType>('l'));
+    REQUIRE(vec[4] == static_cast<TestType>('o'));
+
+    etl::transform(cbegin(vec), cend(vec), cbegin(vec), begin(vec), etl::plus<> {});
+
+    REQUIRE(vec[0] == static_cast<TestType>('h') * 2);
+    REQUIRE(vec[1] == static_cast<TestType>('e') * 2);
+    REQUIRE(vec[2] == static_cast<TestType>('l') * 2);
+    REQUIRE(vec[3] == static_cast<TestType>('l') * 2);
+    REQUIRE(vec[4] == static_cast<TestType>('o') * 2);
 }
 
 TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,

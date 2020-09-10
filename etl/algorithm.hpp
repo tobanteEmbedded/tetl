@@ -91,6 +91,37 @@ constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept -> In
 }
 
 /**
+ * @brief Applies the given function to a range and stores the result in
+ * another range, beginning at d_first. The unary operation unary_op is applied to the
+ * range defined by [first1, last1).
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/transform
+ */
+template <class InputIt, class OutputIt, class UnaryOperation>
+constexpr auto transform(InputIt first1, InputIt last1, OutputIt d_first,
+                         UnaryOperation unary_op) -> OutputIt
+{
+    while (first1 != last1) { *d_first++ = unary_op(*first1++); }
+    return d_first;
+}
+
+/**
+ * @brief Applies the given function to a range and stores the result in
+ * another range, beginning at d_first. The binary operation binary_op is applied to pairs
+ * of elements from two ranges: one defined by [first1, last1) and the other beginning at
+ * first2.
+ *
+ * @ref https://en.cppreference.com/w/cpp/algorithm/transform
+ */
+template <class InputIt1, class InputIt2, class OutputIt, class BinaryOperation>
+constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                         OutputIt d_first, BinaryOperation binary_op) -> OutputIt
+{
+    while (first1 != last1) { *d_first++ = binary_op(*first1++, *first2++); }
+    return d_first;
+}
+
+/**
  * @brief Searches for an element equal to value.
  */
 template <class InputIt, class T>
