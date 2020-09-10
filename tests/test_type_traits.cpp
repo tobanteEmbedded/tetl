@@ -303,6 +303,55 @@ TEMPLATE_TEST_CASE("type_traits: remove_cvref", "[type_traits]", etl::uint8_t,
     STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType const&>, TestType>);
 }
 
+TEMPLATE_TEST_CASE("type_traits: add_pointer", "[type_traits]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::add_pointer_t;
+    using etl::is_same_v;
+    STATIC_REQUIRE(is_same_v<add_pointer_t<TestType>, TestType*>);
+    STATIC_REQUIRE(is_same_v<add_pointer_t<TestType const>, TestType const*>);
+    STATIC_REQUIRE(is_same_v<add_pointer_t<TestType volatile>, TestType volatile*>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: add_cv", "[type_traits]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::add_cv_t;
+    using etl::is_same_v;
+    STATIC_REQUIRE(is_same_v<add_cv_t<TestType>, TestType const volatile>);
+    STATIC_REQUIRE(is_same_v<add_cv_t<TestType const>, TestType const volatile>);
+    STATIC_REQUIRE(is_same_v<add_cv_t<TestType volatile>, TestType const volatile>);
+    STATIC_REQUIRE(is_same_v<add_cv_t<TestType const volatile>, TestType const volatile>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: add_const", "[type_traits]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::add_const_t;
+    using etl::is_same_v;
+    STATIC_REQUIRE(is_same_v<add_const_t<TestType>, TestType const>);
+    STATIC_REQUIRE(is_same_v<add_const_t<TestType const>, TestType const>);
+    STATIC_REQUIRE(is_same_v<add_const_t<TestType volatile>, TestType const volatile>);
+    STATIC_REQUIRE(
+        is_same_v<add_const_t<TestType const volatile>, TestType const volatile>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: add_volatile", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::add_volatile_t;
+    using etl::is_same_v;
+    STATIC_REQUIRE(is_same_v<add_volatile_t<TestType>, TestType volatile>);
+    STATIC_REQUIRE(is_same_v<add_volatile_t<TestType const>, TestType const volatile>);
+    STATIC_REQUIRE(is_same_v<add_volatile_t<TestType volatile>, TestType volatile>);
+    STATIC_REQUIRE(
+        is_same_v<add_volatile_t<TestType const volatile>, TestType const volatile>);
+}
+
 TEST_CASE("type_traits: conditional", "[type_traits]")
 {
     using etl::conditional;
