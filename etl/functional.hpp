@@ -49,7 +49,7 @@ struct plus
 
 /**
  * @brief Function object for performing addition. Effectively calls operator+ on two
- * instances of type T. The standard library provides a specialization of std::plus when T
+ * instances of type T. The standard library provides a specialization of etl::plus when T
  * is not specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/plus_void
@@ -81,7 +81,7 @@ struct minus
 
 /**
  * @brief Function object for performing subtraction. Effectively calls operator- on two
- * instances of type T. The standard library provides a specialization of std::minus when
+ * instances of type T. The standard library provides a specialization of etl::minus when
  * T is not specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/minus_void
@@ -114,7 +114,7 @@ struct multiplies
 /**
  * @brief Function object for performing multiplication. Effectively calls operator* on
  * two instances of type T. The standard library provides a specialization of
- * std::multiplies when T is not specified, which leaves the parameter types and return
+ * etl::multiplies when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
@@ -146,7 +146,7 @@ struct divides
 
 /**
  * @brief Function object for performing division. Effectively calls operator/ on two
- * instances of type T. The standard library provides a specialization of std::divides
+ * instances of type T. The standard library provides a specialization of etl::divides
  * when T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
@@ -179,7 +179,7 @@ struct modulus
 
 /**
  * @brief Function object for computing remainders of divisions. Implements operator% for
- * type T. The standard library provides a specialization of std::modulus when T is not
+ * type T. The standard library provides a specialization of etl::modulus when T is not
  * specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus_void
@@ -211,7 +211,7 @@ struct negate
 
 /**
  * @brief Function object for performing negation. Effectively calls operator- on an
- * instance of type T. The standard library provides a specialization of std::negate when
+ * instance of type T. The standard library provides a specialization of etl::negate when
  * T is not specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/negate_void
@@ -245,7 +245,7 @@ struct equal_to
 
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
- * operator== on type T. The standard library provides a specialization of std::equal_to
+ * operator== on type T. The standard library provides a specialization of etl::equal_to
  * when T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
@@ -282,7 +282,7 @@ struct not_equal_to
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
  * operator!= on type T. The standard library provides a specialization of
- * std::not_equal_to when T is not specified, which leaves the parameter types and return
+ * etl::not_equal_to when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void
@@ -315,7 +315,7 @@ struct greater
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
  * operator> on type T. The standard library provides a specialization of
- * std::greater when T is not specified, which leaves the parameter types and return
+ * etl::greater when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_void
@@ -351,7 +351,7 @@ struct greater_equal
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
  * operator> on type T. The standard library provides a specialization of
- * std::greater_equal when T is not specified, which leaves the parameter types and return
+ * etl::greater_equal when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void
@@ -386,7 +386,7 @@ struct less
 
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
- * operator< on type T. The standard library provides a specialization of std::less
+ * operator< on type T. The standard library provides a specialization of etl::less
  * when T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
@@ -422,7 +422,7 @@ struct less_equal
 
 /**
  * @brief Function object for performing comparisons. Unless specialised, invokes
- * operator< on type T. The standard library provides a specialization of std::less_equal
+ * operator< on type T. The standard library provides a specialization of etl::less_equal
  * when T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
@@ -459,7 +459,7 @@ struct logical_and
 /**
  * @brief Function object for performing logical AND (logical conjunction). Effectively
  * calls operator&& on type T. The standard library provides a specialization of
- * std::logical_and when T is not specified, which leaves the parameter types and return
+ * etl::logical_and when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and_void
@@ -495,7 +495,7 @@ struct logical_or
 /**
  * @brief Function object for performing logical OR (logical disjunction). Effectively
  * calls operator|| on type T. The standard library provides a specialization of
- * std::logical_or when T is not specified, which leaves the parameter types and return
+ * etl::logical_or when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
@@ -528,7 +528,7 @@ struct logical_not
 /**
  * @brief Function object for performing logical NOT (logical negation). Effectively calls
  * operator! for type T. The standard library provides a specialization of
- * std::logical_not when T is not specified, which leaves the parameter types and return
+ * etl::logical_not when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not_void
@@ -560,7 +560,7 @@ struct bit_and
 /**
  * @brief Function object for performing bitwise AND. Effectively
  * calls operator& on type T. The standard library provides a specialization of
- * std::bit_and when T is not specified, which leaves the parameter types and return
+ * etl::bit_and when T is not specified, which leaves the parameter types and return
  * type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_and_void
@@ -592,7 +592,7 @@ struct bit_or
 
 /**
  * @brief Function object for performing bitwise OR. Effectively calls operator| on type
- * T. The standard library provides a specialization of std::bit_or when T is not
+ * T. The standard library provides a specialization of etl::bit_or when T is not
  * specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_or_void
@@ -624,7 +624,7 @@ struct bit_xor
 
 /**
  * @brief Function object for performing bitwise XOR. Effectively calls operator^ on type
- * T. The standard library provides a specialization of std::bit_xor when T is not
+ * T. The standard library provides a specialization of etl::bit_xor when T is not
  * specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void
@@ -656,7 +656,7 @@ struct bit_not
 
 /**
  * @brief Function object for performing bitwise NOT. Effectively calls operator~ on type
- * T. The standard library provides a specialization of std::bit_not when T is not
+ * T. The standard library provides a specialization of etl::bit_not when T is not
  * specified, which leaves the parameter types and return type to be deduced.
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_not_void
