@@ -185,3 +185,19 @@ TEMPLATE_TEST_CASE("array: fill", "[array]", etl::uint8_t, etl::int8_t, etl::uin
     arr.fill(TestType {1});
     REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 1; }));
 }
+
+TEMPLATE_TEST_CASE("array: swap", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+    etl::array<TestType, 4> a {};
+    a.fill(TestType {1});
+    etl::array<TestType, 4> b {};
+
+    REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
+    REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
+
+    a.swap(b);
+    REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 0; }));
+    REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 1; }));
+}

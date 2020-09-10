@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 #include "etl/algorithm.hpp"
+#include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"

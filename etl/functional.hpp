@@ -27,7 +27,6 @@ DAMAGE.
 #ifndef TAETL_FUNCTIONAL_HPP
 #define TAETL_FUNCTIONAL_HPP
 
-#include "array.hpp"
 #include "byte.hpp"
 #include "definitions.hpp"
 #include "new.hpp"

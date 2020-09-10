@@ -33,6 +33,7 @@ DAMAGE.
 
 #include "cassert.hpp"
 #include "definitions.hpp"
+#include "type_traits.hpp"
 
 namespace etl
 {
@@ -220,6 +221,16 @@ public:
     constexpr auto fill(const_reference value) -> void
     {
         for (auto& item : (*this)) { item = value; }
+    }
+
+    /**
+     * @brief Exchanges the contents of the container with those of other. Does not cause
+     * iterators and references to associate with the other container.
+     */
+    constexpr auto swap(array& other) noexcept(etl::is_nothrow_swappable_v<Type>) -> void
+    {
+        using etl::swap;
+        for (auto i = size_type {0}; i < size(); ++i) { swap((*this)[i], other[i]); }
     }
 
 private:
