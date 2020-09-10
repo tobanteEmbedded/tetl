@@ -149,6 +149,27 @@ TEMPLATE_TEST_CASE("functional: less_equal", "[functional]", int, float, double)
     REQUIRE_FALSE(etl::less_equal<TestType> {}(TestType {99}, TestType {98}));
 }
 
+TEST_CASE("functional: logical_and", "[functional]")
+{
+    REQUIRE_FALSE(etl::logical_and<bool> {}(true, false));
+    REQUIRE(etl::logical_and<bool> {}(true, true));
+    REQUIRE(etl::logical_and<> {}(true, true));
+}
+
+TEST_CASE("functional: logical_or", "[functional]")
+{
+    REQUIRE_FALSE(etl::logical_or<bool> {}(false, false));
+    REQUIRE(etl::logical_or<bool> {}(false, true));
+    REQUIRE(etl::logical_or<> {}(true, false));
+}
+
+TEST_CASE("functional: logical_not", "[functional]")
+{
+    REQUIRE_FALSE(etl::logical_not<bool> {}(true));
+    REQUIRE(etl::logical_not<bool> {}(false));
+    REQUIRE(etl::logical_not<> {}(false));
+}
+
 TEMPLATE_TEST_CASE("functional: function - ctor", "[functional]", int, float, double)
 {
     using function_t = etl::function<16, TestType(void)>;

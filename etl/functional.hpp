@@ -441,6 +441,110 @@ struct less_equal<void>
     // using is_transparent = true;
 };
 
+/**
+ * @brief Function object for performing logical AND (logical conjunction). Effectively
+ * calls operator&& on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and
+ */
+template <class T = void>
+struct logical_and
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    {
+        return lhs && rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing logical AND (logical conjunction). Effectively
+ * calls operator&& on type T. The standard library provides a specialization of
+ * std::logical_and when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and_void
+ */
+template <>
+struct logical_and<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) && etl::forward<U>(rhs))
+    {
+        return lhs && rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing logical OR (logical disjunction). Effectively
+ * calls operator|| on type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or
+ */
+template <class T = void>
+struct logical_or
+{
+    constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    {
+        return lhs || rhs;
+    }
+};
+
+/**
+ * @brief Function object for performing logical OR (logical disjunction). Effectively
+ * calls operator|| on type T. The standard library provides a specialization of
+ * std::logical_or when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
+ */
+template <>
+struct logical_or<void>
+{
+    template <class T, class U>
+    constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) || etl::forward<U>(rhs))
+    {
+        return lhs || rhs;
+    }
+
+    // using is_transparent = true;
+};
+
+/**
+ * @brief Function object for performing logical NOT (logical negation). Effectively calls
+ * operator! for type T.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not
+ */
+template <class T = void>
+struct logical_not
+{
+    constexpr auto operator()(const T& arg) const -> bool { return !arg; }
+};
+
+/**
+ * @brief Function object for performing logical NOT (logical negation). Effectively calls
+ * operator! for type T. The standard library provides a specialization of
+ * std::logical_not when T is not specified, which leaves the parameter types and return
+ * type to be deduced.
+ *
+ * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not_void
+ */
+template <>
+struct logical_not<void>
+{
+    template <class T>
+    constexpr auto operator()(T&& arg) const -> decltype(!etl::forward<T>(arg))
+    {
+        return !arg;
+    }
+
+    // using is_transparent = true;
+};
+
 template <class>
 class function_view;
 
