@@ -36,27 +36,26 @@ TEMPLATE_TEST_CASE("cmath: isinf", "[cmath]", float, double, long double)
     REQUIRE_FALSE(etl::isinf(TestType {1}));
 }
 
-// TEMPLATE_TEST_CASE("cmath: isnan", "[cmath]", float, double, long double)
-// {
-//     auto val = TestType {0.0};
-//     REQUIRE_FALSE(etl::isnan(val));
+TEMPLATE_TEST_CASE("cmath: isnan", "[cmath]", float, double, long double)
+{
+    auto val = TestType {0.0};
+    REQUIRE_FALSE(etl::isnan(val));
 
-//     val = 1.0;
-//     REQUIRE_FALSE(etl::isnan(val));
+    val = 1.0;
+    REQUIRE_FALSE(etl::isnan(val));
 
-//     val = INFINITY;
-//     REQUIRE_FALSE(etl::isnan(val));
+    val = INFINITY;
+    REQUIRE_FALSE(etl::isnan(val));
 
-//     val = NAN;
-//     REQUIRE(etl::isnan(val));
-// }
+    val = NAN;
+    REQUIRE(etl::isnan(val));
+}
 
-// TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double,
-//                    long double)
-// {
-//     REQUIRE(etl::isfinite(TestType {0}));
-//     REQUIRE(etl::isfinite(TestType {1}));
+TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double, long double)
+{
+    REQUIRE(etl::isfinite(TestType {0}));
+    REQUIRE(etl::isfinite(TestType {1}));
 
-//     REQUIRE_FALSE(etl::isfinite(TestType {INFINITY}));
-//     REQUIRE_FALSE(etl::isfinite(TestType {NAN}));
-// }
+    REQUIRE_FALSE(etl::isfinite(TestType {INFINITY}));
+    REQUIRE_FALSE(etl::isfinite(TestType {NAN}));
+}

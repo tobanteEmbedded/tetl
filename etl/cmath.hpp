@@ -70,19 +70,19 @@ template <typename IntegralType>
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
  */
-[[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg == NAN; }
+[[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
  */
-[[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg == NAN; }
+[[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
  */
-[[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg == NAN; }
+[[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
