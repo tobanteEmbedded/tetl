@@ -58,3 +58,11 @@ TEST_CASE("cstring: memset", "[cstring]")
     REQUIRE(buffer.at(0) == 1);
     REQUIRE(buffer.at(1) == 1);
 }
+
+TEST_CASE("cstring: strlen", "[cstring]")
+{
+    REQUIRE(etl::strlen("") == 0);
+    REQUIRE(etl::strlen("a") == 1);
+    REQUIRE(etl::strlen("to") == 2);
+    REQUIRE(etl::strlen("xxxxxxxxxx") == 10);
+}

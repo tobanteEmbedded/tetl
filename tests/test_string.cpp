@@ -63,14 +63,6 @@ TEST_CASE("string/char_traits: <char>::assign(char,char)", "[string]")
     STATIC_REQUIRE(ch('b') == 'b');
 }
 
-TEST_CASE("string: strlen", "[string]")
-{
-    STATIC_REQUIRE(etl::strlen("") == 0);
-    STATIC_REQUIRE(etl::strlen("a") == 1);
-    STATIC_REQUIRE(etl::strlen("to") == 2);
-    STATIC_REQUIRE(etl::strlen("xxxxxxxxxx") == 10);
-}
-
 TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::string<12>,
                    etl::small_string, etl::string<12> const, etl::small_string const)
 {
