@@ -46,28 +46,40 @@ using double_t = double;
 /**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
+ *
  * @return true if arg is infinite, false otherwise
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isinf
  */
 [[nodiscard]] constexpr auto isinf(float arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
+ *
  * @return true if arg is infinite, false otherwise
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isinf
  */
 [[nodiscard]] constexpr auto isinf(double arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
+ *
  * @return true if arg is infinite, false otherwise
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isinf
  */
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool { return arg == INFINITY; }
 
 /**
  * @brief A set of overloads or a function template accepting the arg argument
  * of any integral type. Equivalent to cast to double.
+ *
  * @return true if arg is infinite, false otherwise
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isinf
  */
 template <typename IntegralType>
 [[nodiscard]] constexpr auto isinf(IntegralType arg)
@@ -79,24 +91,32 @@ template <typename IntegralType>
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isnan
  */
 [[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isnan
  */
 [[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isnan
  */
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg != arg; }
 
 /**
  * @brief Determines if the given floating point number arg is a not-a-number
  * (NaN) value.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isnan
  */
 template <typename IntegralType>
 [[nodiscard]] constexpr auto isnan(IntegralType arg)
@@ -108,6 +128,8 @@ template <typename IntegralType>
 /**
  * @brief Determines if the given floating point number arg has finite value
  * i.e. it is normal, subnormal or zero, but not infinite or NaN.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isfinite
  */
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool
 {
@@ -117,6 +139,8 @@ template <typename IntegralType>
 /**
  * @brief Determines if the given floating point number arg has finite value
  * i.e. it is normal, subnormal or zero, but not infinite or NaN.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isfinite
  */
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool
 {
@@ -126,6 +150,8 @@ template <typename IntegralType>
 /**
  * @brief Determines if the given floating point number arg has finite value
  * i.e. it is normal, subnormal or zero, but not infinite or NaN.
+ *
+ * @ref https://en.cppreference.com/w/cpp/numeric/math/isfinite
  */
 [[nodiscard]] constexpr auto isfinite(long double arg) -> bool
 {
