@@ -109,29 +109,41 @@ public:
     // template <class It, class End>
     // constexpr span(It first, End last);
 
-    // /**
-    //  * @brief Constructs a span.
-    //  */
-    // template <etl::size_t N>
-    // constexpr span(element_type (&arr)[N]) noexcept;
+    /**
+     * @brief Constructs a span. From a c style array.
+     */
+    template <etl::size_t N>
+    constexpr span(element_type (&arr)[N]) noexcept : data_ {&arr[0]}, size_ {N}
+    {
+    }
 
-    // /**
-    //  * @brief Constructs a span.
-    //  */
-    // template <class U, etl::size_t N>
-    // constexpr span(etl::array<U, N>& arr) noexcept;
+    /**
+     * @brief Constructs a span. From a etl::array<Type,Size>.
+     */
+    template <class U, etl::size_t N>
+    constexpr span(etl::array<U, N>& arr) noexcept
+        : data_ {arr.data()}, size_ {arr.size()}
+    {
+    }
 
-    // /**
-    //  * @brief Constructs a span.
-    //  */
-    // template <class U, etl::size_t N>
-    // constexpr span(const etl::array<U, N>& arr) noexcept;
+    /**
+     * @brief Constructs a span. From a etl::array<Type,Size> const.
+     */
+    template <class U, etl::size_t N>
+    constexpr span(etl::array<U, N> const& arr) noexcept
+        : data_ {arr.data()}, size_ {arr.size()}
+    {
+    }
 
-    // /**
-    //  * @brief Constructs a span.
-    //  */
-    // template <class R>
-    // explicit(extent != etl::dynamic_extent) constexpr span(R&& r);
+    /**
+     * @brief Constructs a span.
+     *
+     * @todo Add explicit(extent != etl::dynamic_extent)
+     */
+    template <class R>
+    constexpr span(R&& r) : data_ {r.data()}, size_ {r.size()}
+    {
+    }
 
     // /**
     //  * @brief Constructs a span.
@@ -211,6 +223,40 @@ private:
     pointer data_   = nullptr;
     size_type size_ = 0;
 };
+
+/**
+ * @brief Deduction Guides. From raw array.
+ */
+template <class Type, etl::size_t Extent>
+span(Type (&)[Extent]) -> span<Type, Extent>;
+
+/**
+ * @brief Deduction Guides. From etl::array<Type, Size>.
+ */
+template <class Type, etl::size_t Size>
+span(etl::array<Type, Size>&) -> span<Type, Size>;
+
+/**
+ * @brief Deduction Guides. From etl::array<Type const, Size>.
+ */
+template <class Type, etl::size_t Size>
+span(etl::array<Type, Size> const&) -> span<Type const, Size>;
+
+/**
+ * @brief Deduction Guides. From Container.
+ */
+template <class Container,
+          class Element
+          = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
+span(Container&) -> span<Element>;
+
+/**
+ * @brief Deduction Guides. From Container const.
+ */
+template <class Container,
+          class Element
+          = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
+span(Container const&) -> span<Element>;
 }  // namespace etl
 
 #endif  // TAETL_SPAN_HPP

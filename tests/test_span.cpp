@@ -29,6 +29,57 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEMPLATE_TEST_CASE("span: deduction guides", "[span]", char, int, float)
+{
+    SECTION("from C array")
+    {
+        TestType arr[16] = {};
+        auto sp          = etl::span {arr};
+        REQUIRE(sp.data() == &arr[0]);
+        REQUIRE(sp.size() == 16);
+    }
+
+    SECTION("from etl::array")
+    {
+        auto arr = etl::array<TestType, 8> {};
+        auto sp  = etl::span {arr};
+        REQUIRE(sp.data() == arr.data());
+        REQUIRE(sp.size() == 8);
+    }
+
+    SECTION("from etl::array const")
+    {
+        auto const arr = etl::array<TestType, 8> {};
+        auto const sp  = etl::span {arr};
+        REQUIRE(sp.data() == arr.data());
+        REQUIRE(sp.size() == 8);
+    }
+
+    SECTION("from Container")
+    {
+        auto vec = etl::stack_vector<TestType, 8> {};
+        vec.push_back(TestType {});
+        vec.push_back(TestType {});
+        auto sp = etl::span {vec};
+        REQUIRE(sp.data() == vec.data());
+        REQUIRE(sp.size() == 2);
+    }
+
+    SECTION("from Container const")
+    {
+        auto const vec = []() {
+            auto v = etl::stack_vector<TestType, 8> {};
+            v.push_back(TestType {});
+            v.push_back(TestType {});
+            return v;
+        }();
+
+        auto const sp = etl::span {vec};
+        REQUIRE(sp.data() == vec.data());
+        REQUIRE(sp.size() == 2);
+    }
+}
+
 TEST_CASE("span: ctor(default)", "[span]")
 {
     auto sp = etl::span<char> {};
