@@ -34,6 +34,16 @@ DAMAGE.
 namespace etl
 {
 /**
+ * @brief Most efficient floating-point type at least as wide as float.
+ */
+using float_t = float;
+
+/**
+ * @brief Most efficient floating-point type at least as wide as double.
+ */
+using double_t = double;
+
+/**
  * @brief Determines if the given floating point number arg is a positive or
  * negative infinity.
  * @return true if arg is infinite, false otherwise
