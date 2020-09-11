@@ -587,4 +587,20 @@ TEMPLATE_TEST_CASE("algorithm: sort", "[algorithm]", etl::uint8_t, etl::int8_t,
         REQUIRE(source[2] == TestType {3});
         REQUIRE(source[3] == TestType {4});
     }
+
+    SECTION("custom compare")
+    {
+        auto source = etl::array<TestType, 4> {};
+        source[0]   = TestType {1};
+        source[1]   = TestType {1};
+        source[2]   = TestType {56};
+        source[3]   = TestType {42};
+
+        etl::sort(begin(source), end(source),
+                  [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        REQUIRE(source[0] == TestType {56});
+        REQUIRE(source[1] == TestType {42});
+        REQUIRE(source[2] == TestType {1});
+        REQUIRE(source[3] == TestType {1});
+    }
 }

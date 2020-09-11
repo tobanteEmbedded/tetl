@@ -213,17 +213,6 @@ TEMPLATE_TEST_CASE("stack_vector: push_back", "[stack_vector]", char, int, float
         vec.push_back(TestType {});
         REQUIRE(vec.size() == 4);
     }
-
-    SECTION("should throw when going over capacity")
-    {
-        vec.push_back(TestType {});
-        vec.push_back(TestType {});
-        vec.push_back(TestType {});
-        vec.push_back(TestType {});
-        REQUIRE(vec.size() == 4);
-        REQUIRE(vec.size() == vec.capacity());
-    }
-
     SECTION("should be empty again after clearing")
     {
         REQUIRE(vec.empty());
@@ -307,16 +296,6 @@ TEST_CASE("stack_vector: emplace_back - custom ctor", "[stack_vector]")
         REQUIRE(vec.size() == 3);
         vec.emplace_back(143, 1.43F);
         REQUIRE(vec.size() == 4);
-    }
-
-    SECTION("should throw when going over capacity")
-    {
-        vec.emplace_back(143, 1.43F);
-        vec.emplace_back(143, 1.43F);
-        vec.emplace_back(143, 1.43F);
-        vec.emplace_back(143, 1.43F);
-        REQUIRE(vec.size() == 4);
-        REQUIRE(vec.size() == vec.capacity());
     }
 
     SECTION("should be empty again after clearing")

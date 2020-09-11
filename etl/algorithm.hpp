@@ -596,22 +596,20 @@ template <class InputIt1, class InputIt2>
  * @details A sequence is sorted with respect to a comparator comp if for any iterator it
  * pointing to the sequence and any non-negative integer n such that it + n is a valid
  * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
- * *it) evaluates to false. Quick sort implementation.
+ * *it) evaluates to false. Bubble sort implementation.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
 template <class RandomIt, class Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    auto const N = distance(first, last);
-    if (N <= 1) { return; }
-
-    auto const pivot = *next(first, N / 2);
-    auto m1 = partition(first, last, [&](auto const& elem) { return comp(elem, pivot); });
-    auto m2 = partition(m1, last, [&](auto const& elem) { return !comp(pivot, elem); });
-
-    sort(first, m1, comp);
-    sort(m2, last, comp);
+    for (auto i = first; i != last; ++i)
+    {
+        for (auto j = first; j < i; ++j)
+        {
+            if (comp(*i, *j)) { etl::iter_swap(i, j); }
+        }
+    }
 }
 
 /**
@@ -622,7 +620,7 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
  * @details A sequence is sorted with respect to a comparator comp if for any iterator it
  * pointing to the sequence and any non-negative integer n such that it + n is a valid
  * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
- * *it) evaluates to false. Quick sort implementation.
+ * *it) evaluates to false. Bubble sort implementation.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
