@@ -220,6 +220,40 @@ struct remove_cvref
 template <class T>
 using remove_cvref_t = typename remove_cvref<T>::type;
 
+/**
+ * @brief Provides the member typedef type which is the type pointed to by T, or, if T is
+ * not a pointer, then type is the same as T. The behavior of a program that adds
+ * specializations for remove_pointer is undefined.
+ */
+template <class T>
+struct remove_pointer
+{
+    using type = T;
+};
+template <class T>
+struct remove_pointer<T*>
+{
+    using type = T;
+};
+template <class T>
+struct remove_pointer<T* const>
+{
+    using type = T;
+};
+template <class T>
+struct remove_pointer<T* volatile>
+{
+    using type = T;
+};
+template <class T>
+struct remove_pointer<T* const volatile>
+{
+    using type = T;
+};
+
+template <class T>
+using remove_pointer_t = typename remove_pointer<T>::type;
+
 namespace detail
 {
 template <class T>
