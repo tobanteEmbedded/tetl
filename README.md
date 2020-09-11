@@ -14,6 +14,7 @@ The tobanteAudio embedded template library is intended for micro controller wher
 git clone https://github.com/tobanteAudio/taetl.git
 ```
 
+- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
 - [Project Integration](docs/project_integration.md)
 - [Building Tests & Documentation](docs/building.md)
 - [API Reference](https://tobanteaudio.github.io/taetl/index.html)
