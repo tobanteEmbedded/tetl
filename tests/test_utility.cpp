@@ -179,6 +179,30 @@ TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint8_t, etl:
     REQUIRE_FALSE(etl::in_range<TestType>(-1));
 }
 
+TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    auto p1 = etl::pair {TestType {0}, 143.0F};
+    STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p1.first)>);
+    STATIC_REQUIRE(etl::is_same_v<float, decltype(p1.second)>);
+    REQUIRE(p1.first == 0);
+    REQUIRE(p1.second == 143.0);
+
+    auto p2 = etl::pair {1.2, TestType {42}};
+    STATIC_REQUIRE(etl::is_same_v<double, decltype(p2.first)>);
+    STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p2.second)>);
+    REQUIRE(p2.first == 1.2);
+    REQUIRE(p2.second == TestType {42});
+
+    auto p3 = etl::pair {TestType {2}, TestType {42}};
+    STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p3.first)>);
+    STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p3.second)>);
+    REQUIRE(p3.first == TestType {2});
+    REQUIRE(p3.second == TestType {42});
+}
+
 TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
