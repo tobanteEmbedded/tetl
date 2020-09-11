@@ -84,19 +84,30 @@ public:
      */
     constexpr span() noexcept = default;
 
-    // /**
-    //  * @brief Constructs a span.
-    //  */
-    // template <class It>
-    // explicit(extent != etl::dynamic_extent) constexpr span(It first,
-    //                                                        size_type count);
+    /**
+     * @brief Constructs a span.
+     *
+     * @details Constructs a span that is a view over the range [first, first + count);
+     * the resulting span has data() == etl::to_address(first) and size() == count. The
+     * behavior is undefined if [first, first + count) is not a valid range, if It does
+     * not actually model contiguous_iterator, or if extent != etl::dynamic_extent &&
+     * count != extent. This overload only participates in overload resolution if, It
+     * satisfies contiguous_iterator and the conversion from etl::iter_reference_t<It> to
+     * element_type is at most a qualification conversion.
+     *
+     * @todo Add explicit(extent != etl::dynamic_extent).
+     */
+    template <class It>
+    constexpr span(It first, size_type count) : data_ {first}, size_ {count}
+    {
+    }
 
     // /**
     //  * @brief Constructs a span.
+    //  * @todo Add explicit(extent != etl::dynamic_extent).
     //  */
     // template <class It, class End>
-    // explicit(extent != etl::dynamic_extent) constexpr span(It first, End
-    // last);
+    // constexpr span(It first, End last);
 
     // /**
     //  * @brief Constructs a span.
@@ -137,6 +148,43 @@ public:
     constexpr span(const span& other) noexcept = default;
 
     /**
+     * @brief Returns an iterator to the first element of the span. If the span is empty,
+     * the returned iterator will be equal to end().
+     */
+    [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return &data_[0]; }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of the span.
+     * This element acts as a placeholder; attempting to access it results in undefined
+     * behavior
+     */
+    [[nodiscard]] constexpr auto end() const noexcept -> iterator
+    {
+        return begin() + size();
+    }
+
+    /**
+     * @brief Returns a reference to the first element in the span. Calling front on an
+     * empty span results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto front() const -> reference { return *begin(); }
+
+    /**
+     * @brief Returns a reference to the last element in the span. Calling front on an
+     * empty span results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto back() const -> reference { return *(end() - 1); }
+
+    /**
+     * @brief Returns a reference to the idx-th element of the sequence. The behavior is
+     * undefined if idx is out of range (i.e., if it is greater than or equal to size()).
+     */
+    [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference
+    {
+        return data()[idx];
+    }
+
+    /**
      * @brief Returns a pointer to the beginning of the sequence.
      */
     [[nodiscard]] constexpr auto data() const noexcept -> pointer { return data_; }
@@ -146,9 +194,22 @@ public:
      */
     [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
+    /**
+     * @brief Returns the number of elements in the span.
+     */
+    [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type
+    {
+        return size() * sizeof(element_type);
+    }
+
+    /**
+     * @brief Checks if the span is empty.
+     */
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+
 private:
-    ElementType* data_ = nullptr;
-    size_type size_    = 0;
+    pointer data_   = nullptr;
+    size_type size_ = 0;
 };
 }  // namespace etl
 

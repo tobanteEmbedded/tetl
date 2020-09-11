@@ -23,14 +23,124 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#include "etl/iterator.hpp"
 #include "etl/span.hpp"
-#include "etl/warning.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("span: construct - default", "[span]")
+TEST_CASE("span: ctor(default)", "[span]")
 {
     auto sp = etl::span<char> {};
     REQUIRE(sp.data() == nullptr);
     REQUIRE(sp.size() == 0);
+    REQUIRE(sp.empty());
+}
+
+TEMPLATE_TEST_CASE("span: ctor(first,count)", "[span]", char, int, float)
+{
+    SECTION("static extent")
+    {
+        auto arr = etl::array<TestType, 8> {};
+        auto sp  = etl::span<TestType, 8> {etl::begin(arr), etl::size(arr)};
+        REQUIRE_FALSE(sp.empty());
+        REQUIRE(sp.data() == arr.data());
+        REQUIRE(sp.size() == arr.size());
+        REQUIRE(sp.extent == arr.size());
+    }
+
+    SECTION("static array")
+    {
+        auto arr = etl::array<TestType, 8> {};
+        auto sp  = etl::span<TestType> {etl::begin(arr), etl::size(arr)};
+        REQUIRE_FALSE(sp.empty());
+        REQUIRE(sp.data() == arr.data());
+        REQUIRE(sp.size() == arr.size());
+        REQUIRE(sp.extent == etl::dynamic_extent);
+    }
+
+    SECTION("static vector")
+    {
+        auto vec = etl::stack_vector<TestType, 8> {};
+        auto rng = []() { return TestType {42}; };
+        etl::generate_n(etl::back_inserter(vec), 4, rng);
+
+        auto sp = etl::span<TestType> {etl::begin(vec), etl::size(vec)};
+        REQUIRE_FALSE(sp.empty());
+        REQUIRE(sp.data() == vec.data());
+        REQUIRE(sp.size() == vec.size());
+        REQUIRE(sp.extent == etl::dynamic_extent);
+        REQUIRE(etl::all_of(etl::begin(sp), etl::end(sp),
+                            [](auto& x) { return x == TestType {42}; }));
+    }
+}
+
+TEMPLATE_TEST_CASE("span: begin/end", "[span]", char, int, float)
+{
+    SECTION("empty")
+    {
+        auto sp = etl::span<TestType> {};
+        REQUIRE(sp.begin() == sp.end());
+        REQUIRE(etl::begin(sp) == etl::end(sp));
+        REQUIRE(sp.size() == 0);
+    }
+
+    SECTION("ranged-for")
+    {
+        auto data = etl::array<TestType, 4> {};
+        auto sp   = etl::span<TestType> {etl::begin(data), etl::size(data)};
+        REQUIRE_FALSE(sp.begin() == sp.end());
+        REQUIRE_FALSE(etl::begin(sp) == etl::end(sp));
+
+        auto counter = 0;
+        for (auto const& x : sp)
+        {
+            etl::ignore_unused(x);
+            counter++;
+        }
+        REQUIRE(counter == 4);
+    }
+
+    SECTION("algorithm")
+    {
+        auto data = etl::array<TestType, 4> {};
+        auto sp   = etl::span<TestType> {etl::begin(data), etl::size(data)};
+        REQUIRE_FALSE(sp.begin() == sp.end());
+        REQUIRE_FALSE(etl::begin(sp) == etl::end(sp));
+
+        auto counter = 0;
+        etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto) { counter++; });
+        REQUIRE(counter == 4);
+    }
+}
+
+TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
+{
+    auto rng = []() {
+        static auto i = TestType {127};
+        return TestType {i--};
+    };
+
+    auto vec = etl::stack_vector<TestType, 8> {};
+    etl::generate_n(etl::back_inserter(vec), 4, rng);
+    auto sp = etl::span<TestType> {etl::begin(vec), etl::size(vec)};
+    REQUIRE(sp[0] == TestType {127});
+    REQUIRE(sp[1] == TestType {126});
+    REQUIRE(sp[2] == TestType {125});
+    REQUIRE(sp[3] == TestType {124});
+
+    auto const csp = etl::span {sp};
+    REQUIRE(csp[0] == TestType {127});
+    REQUIRE(csp[1] == TestType {126});
+    REQUIRE(csp[2] == TestType {125});
+    REQUIRE(csp[3] == TestType {124});
+}
+
+TEMPLATE_TEST_CASE("span: size_bytes", "[span]", char, int, float, double, etl::uint64_t)
+{
+    auto vec = etl::stack_vector<TestType, 6> {};
+    etl::generate_n(etl::back_inserter(vec), 4, []() { return TestType {42}; });
+    auto sp = etl::span<TestType> {etl::begin(vec), etl::size(vec)};
+
+    REQUIRE(sp.size_bytes() == 4 * sizeof(TestType));
 }
