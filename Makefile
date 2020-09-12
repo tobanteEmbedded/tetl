@@ -51,6 +51,7 @@ coverage:
 	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*c++*" -o cov.info
 	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*v1*" -o cov.info
 	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
+	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*test_*" -o cov.info
 
 .PHONY: report
 report:
