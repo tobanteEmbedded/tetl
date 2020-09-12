@@ -90,11 +90,7 @@ TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
     auto data = etl::array<TestType, 4> {};
-    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val == 0; }));
-
     etl::generate(begin(data), end(data), [n = TestType {0}]() mutable { return n++; });
-    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val >= 0; }));
-
     REQUIRE(data[0] == 0);
     REQUIRE(data[1] == 1);
     REQUIRE(data[2] == 2);
@@ -105,11 +101,8 @@ TEMPLATE_TEST_CASE("algorithm: generate_n", "[algorithm]", etl::uint8_t, etl::ui
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
     auto data = etl::stack_vector<TestType, 4> {};
-    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val == 0; }));
-
-    auto rng = []() { return TestType {42}; };
+    auto rng  = []() { return TestType {42}; };
     etl::generate_n(etl::back_inserter(data), 4, rng);
-    REQUIRE(etl::all_of(begin(data), end(data), [](auto val) { return val >= 0; }));
 
     REQUIRE(data[0] == TestType {42});
     REQUIRE(data[1] == TestType {42});
@@ -117,8 +110,9 @@ TEMPLATE_TEST_CASE("algorithm: generate_n", "[algorithm]", etl::uint8_t, etl::ui
     REQUIRE(data[3] == TestType {42});
 }
 
-TEMPLATE_TEST_CASE("algorithm: count", "[algorithm]", etl::uint8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("algorithm: count", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     auto data = etl::array<TestType, 4> {};
     etl::iota(begin(data), end(data), TestType {0});
@@ -130,7 +124,8 @@ TEMPLATE_TEST_CASE("algorithm: count", "[algorithm]", etl::uint8_t, etl::uint16_
 }
 
 TEMPLATE_TEST_CASE("algorithm: count_if", "[algorithm]", etl::uint8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double)
 {
     auto data = etl::array<TestType, 4> {};
     etl::iota(begin(data), end(data), TestType {0});
@@ -212,15 +207,7 @@ TEMPLATE_TEST_CASE("algorithm: max", "[algorithm]", etl::int8_t, etl::int16_t,
     REQUIRE(etl::max<TestType>(-10, 5) == 5);
     REQUIRE(etl::max<TestType>(-10, -20) == -10);
 
-    // Compare absolute values
-    auto cmp = [](auto x, auto y) {
-        auto new_x = x;
-        auto new_y = y;
-        if (x < 0) { new_x = new_x * -1; }
-        if (y < 0) { new_y = new_y * -1; }
-
-        return (new_x < new_y) ? y : x;
-    };
+    auto cmp = [](auto x, auto y) { return etl::abs(x) < etl::abs(y) ? y : x; };
     REQUIRE(etl::max<TestType>(-10, -20, cmp) == -20);
     REQUIRE(etl::max<TestType>(10, -20, cmp) == -20);
 }
@@ -235,11 +222,9 @@ TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t, etl::in
     vec.push_back(TestType(4));
     vec.push_back(TestType(-5));
 
-    auto const functor
-        = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
-
+    auto const cmp = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
     REQUIRE(*etl::max_element(vec.begin(), vec.end()) == TestType(4));
-    REQUIRE(*etl::max_element(vec.begin(), vec.end(), functor) == TestType(-5));
+    REQUIRE(*etl::max_element(vec.begin(), vec.end(), cmp) == TestType(-5));
 }
 
 TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
@@ -249,8 +234,7 @@ TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
     REQUIRE(etl::min<TestType>(-10, 5) == -10);
     REQUIRE(etl::min<TestType>(-10, -20) == -20);
 
-    // Compare absolute values
-    auto cmp = [](auto x, auto y) { return (etl::abs(x) < etl::abs(y)); };
+    auto cmp = [](auto x, auto y) { return etl::abs(x) < etl::abs(y); };
     REQUIRE(etl::min<TestType>(-10, -20, cmp) == -10);
     REQUIRE(etl::min<TestType>(10, -20, cmp) == 10);
 }
@@ -265,11 +249,9 @@ TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t, etl::in
     vec.push_back(TestType {4});
     vec.push_back(TestType {-5});
 
-    auto const functor
-        = [](auto a, auto b) -> bool { return (etl::abs(a) < etl::abs(b)); };
-
+    auto const cmp = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
     REQUIRE(*etl::min_element(vec.begin(), vec.end()) == TestType {-5});
-    REQUIRE(*etl::min_element(vec.begin(), vec.end(), functor) == TestType {1});
+    REQUIRE(*etl::min_element(vec.begin(), vec.end(), cmp) == TestType {1});
 }
 
 TEMPLATE_TEST_CASE("algorithm: clamp", "[algorithm]", etl::uint8_t, etl::int8_t,
@@ -292,17 +274,11 @@ TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t, etl::int8_t
     vec.push_back(3);
     vec.push_back(4);
 
-    SECTION("true")
-    {
-        auto const predicate = [](auto a) { return etl::abs(a) > 0; };
-        REQUIRE(etl::all_of(vec.begin(), vec.end(), predicate) == true);
-    }
+    auto const p1 = [](auto a) { return etl::abs(a) > 0; };
+    REQUIRE(etl::all_of(vec.begin(), vec.end(), p1));
 
-    SECTION("false")
-    {
-        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
-        REQUIRE(etl::all_of(vec.begin(), vec.end(), predicate) == false);
-    }
+    auto const p2 = [](auto a) { return etl::abs(a) > 10; };
+    REQUIRE_FALSE(etl::all_of(vec.begin(), vec.end(), p2));
 }
 
 TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t, etl::int8_t,
@@ -315,17 +291,10 @@ TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t, etl::int8_t
     vec.push_back(3);
     vec.push_back(4);
 
-    SECTION("true")
-    {
-        auto const predicate = [](auto a) { return etl::abs(a) > 0; };
-        REQUIRE(etl::any_of(vec.begin(), vec.end(), predicate) == true);
-    }
-
-    SECTION("false")
-    {
-        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
-        REQUIRE(etl::any_of(vec.begin(), vec.end(), predicate) == false);
-    }
+    auto const p1 = [](auto a) { return etl::abs(a) > 0; };
+    REQUIRE(etl::any_of(vec.begin(), vec.end(), p1));
+    auto const p2 = [](auto a) { return etl::abs(a) > 10; };
+    REQUIRE_FALSE(etl::any_of(vec.begin(), vec.end(), p2));
 }
 
 TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t, etl::int8_t,
@@ -338,17 +307,11 @@ TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t, etl::int8_
     vec.push_back(3);
     vec.push_back(4);
 
-    SECTION("true")
-    {
-        auto const predicate = [](auto a) { return etl::abs(a) > 10; };
-        REQUIRE(etl::none_of(vec.begin(), vec.end(), predicate) == true);
-    }
+    auto const p1 = [](auto a) { return etl::abs(a) > 10; };
+    REQUIRE(etl::none_of(vec.begin(), vec.end(), p1));
 
-    SECTION("false")
-    {
-        auto const predicate = [](auto a) { return a < 10; };
-        REQUIRE(etl::none_of(vec.begin(), vec.end(), predicate) == false);
-    }
+    auto const p2 = [](auto a) { return a < 10; };
+    REQUIRE_FALSE(etl::none_of(vec.begin(), vec.end(), p2));
 }
 
 TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t,
@@ -364,6 +327,20 @@ TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t
     REQUIRE(arr[0] == 1);
     etl::rotate(arr.begin(), arr.begin() + 1, arr.end());
     REQUIRE(arr[0] == 2);
+}
+
+TEMPLATE_TEST_CASE("algorithm: reverse", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto data = etl::array<TestType, 4> {};
+    etl::iota(begin(data), end(data), TestType {0});
+    etl::reverse(begin(data), end(data));
+
+    REQUIRE(data[0] == 3);
+    REQUIRE(data[1] == 2);
+    REQUIRE(data[2] == 1);
+    REQUIRE(data[3] == 0);
 }
 
 TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,

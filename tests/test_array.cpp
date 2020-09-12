@@ -26,6 +26,7 @@ DAMAGE.
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
+#include "etl/numeric.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -51,13 +52,10 @@ TEMPLATE_TEST_CASE("array: size", "[array]", etl::uint8_t, etl::int8_t, etl::uin
 
 TEMPLATE_TEST_CASE("array: range-for", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     etl::array<TestType, 4> arr {};
-    arr[0] = 0;
-    arr[1] = 1;
-    arr[2] = 2;
-    arr[3] = 3;
+    etl::iota(etl::begin(arr), etl::end(arr), TestType {0});
 
     auto counter = 0;
     for (auto& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
@@ -65,13 +63,10 @@ TEMPLATE_TEST_CASE("array: range-for", "[array]", etl::uint8_t, etl::int8_t,
 
 TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     etl::array<TestType, 4> arr {};
-    arr.at(0) = 0;
-    arr.at(1) = 1;
-    arr.at(2) = 2;
-    arr.at(3) = 3;
+    etl::iota(etl::begin(arr), etl::end(arr), TestType {0});
 
     REQUIRE(*arr.data() == 0);
     REQUIRE(arr.front() == 0);
@@ -83,14 +78,11 @@ TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t, etl::int8_
 
 TEMPLATE_TEST_CASE("array: begin/end const", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     auto const arr = []() {
         etl::array<TestType, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        etl::iota(etl::begin(a), etl::end(a), TestType {0});
         return a;
     }();
 
@@ -106,10 +98,7 @@ TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t, etl::uint1
 {
     auto arr = []() {
         etl::array<TestType, 4> a {};
-        a.at(0) = TestType {0};
-        a.at(1) = TestType {1};
-        a.at(2) = TestType {2};
-        a.at(3) = TestType {3};
+        etl::iota(etl::begin(a), etl::end(a), TestType {0});
         return a;
     }();
 
@@ -117,18 +106,19 @@ TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t, etl::uint1
     REQUIRE(arr.at(1) == TestType {1});
     REQUIRE(arr.at(2) == TestType {2});
     REQUIRE(arr.at(3) == TestType {3});
+
+    REQUIRE(arr[0] == TestType {0});
+    REQUIRE(arr[1] == TestType {1});
+    REQUIRE(arr[2] == TestType {2});
+    REQUIRE(arr[3] == TestType {3});
 }
 
 TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
     auto const arr = []() {
         etl::array<TestType, 4> a {};
-        a.at(0) = 0;
-        a.at(1) = 1;
-        a.at(2) = 2;
-        a.at(3) = 3;
+        etl::iota(etl::begin(a), etl::end(a), TestType {0});
         return a;
     }();
 
@@ -136,18 +126,20 @@ TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t, etl:
     REQUIRE(arr.at(1) == TestType {1});
     REQUIRE(arr.at(2) == TestType {2});
     REQUIRE(arr.at(3) == TestType {3});
+
+    REQUIRE(arr[0] == TestType {0});
+    REQUIRE(arr[1] == TestType {1});
+    REQUIRE(arr[2] == TestType {2});
+    REQUIRE(arr[3] == TestType {3});
 }
 
 TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     auto arr = []() {
         etl::array<TestType, 4> a {};
-        a.at(0) = TestType {0};
-        a.at(1) = TestType {1};
-        a.at(2) = TestType {2};
-        a.at(3) = TestType {3};
+        etl::iota(etl::begin(a), etl::end(a), TestType {0});
         return a;
     }();
 
@@ -157,14 +149,11 @@ TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t,
 
 TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     auto const arr = []() {
         etl::array<TestType, 4> a {};
-        a.at(0) = TestType {0};
-        a.at(1) = TestType {1};
-        a.at(2) = TestType {2};
-        a.at(3) = TestType {3};
+        etl::iota(etl::begin(a), etl::end(a), TestType {0});
         return a;
     }();
 
