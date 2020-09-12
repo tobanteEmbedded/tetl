@@ -325,7 +325,7 @@ TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t
     arr[3] = 4;
 
     REQUIRE(arr[0] == 1);
-    etl::rotate(arr.begin(), arr.begin() + 1, arr.end());
+    etl::rotate(begin(arr), begin(arr) + 1, end(arr));
     REQUIRE(arr[0] == 2);
 }
 
@@ -343,24 +343,47 @@ TEMPLATE_TEST_CASE("algorithm: reverse", "[algorithm]", etl::uint8_t, etl::int8_
     REQUIRE(data[3] == 0);
 }
 
-TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 6> arr;
-    arr[0] = 0;
+    etl::array<TestType, 7> arr;
+    arr[0] = 11;
     arr[1] = 1;
-    arr[2] = 0;
-    arr[3] = 2;
-    arr[4] = 3;
-    arr[5] = 4;
+    arr[2] = 12;
+    arr[3] = 13;
+    arr[4] = 2;
+    arr[5] = 3;
+    arr[6] = 4;
 
-    REQUIRE(arr[0] == 0);
-    etl::stable_partition(arr.begin(), arr.end(), [](auto n) { return n > 0; });
+    etl::partition(begin(arr), end(arr), [](auto n) { return n < 10; });
     REQUIRE(arr[0] == 1);
     REQUIRE(arr[1] == 2);
     REQUIRE(arr[2] == 3);
     REQUIRE(arr[3] == 4);
+}
+
+TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    etl::array<TestType, 7> arr;
+    arr[0] = 11;
+    arr[1] = 1;
+    arr[2] = 12;
+    arr[3] = 13;
+    arr[4] = 2;
+    arr[5] = 3;
+    arr[6] = 4;
+
+    etl::stable_partition(begin(arr), end(arr), [](auto n) { return n < 10; });
+    REQUIRE(arr[0] == 1);
+    REQUIRE(arr[1] == 2);
+    REQUIRE(arr[2] == 3);
+    REQUIRE(arr[3] == 4);
+    REQUIRE(arr[4] == 11);
+    REQUIRE(arr[5] == 12);
+    REQUIRE(arr[6] == 13);
 }
 
 TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,

@@ -410,21 +410,17 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
     if (first == n_first) { return last; }
     if (n_first == last) { return first; }
 
-    ForwardIt read      = n_first;
-    ForwardIt write     = first;
-    ForwardIt next_read = first;  // read position for when "read" hits "last"
+    auto read      = n_first;
+    auto write     = first;
+    auto next_read = first;
 
     while (read != last)
     {
-        if (write == next_read)
-        {
-            next_read = read;  // track where "first" went
-        }
+        if (write == next_read) { next_read = read; }
         etl::iter_swap(write++, read++);
     }
 
-    // rotate the remaining sequence into place
-    (rotate)(write, next_read, last);
+    rotate(write, next_read, last);
     return write;
 }
 
