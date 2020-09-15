@@ -30,66 +30,66 @@ DAMAGE.
 
 #include <cstring>
 
-TEST_CASE("cstdlib: iota(signed,base10)", "[cstdlib]")
+TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
 {
     SECTION("0")
     {
         int val         = 0;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 1);
-        REQUIRE(std::strcmp(buffer, "0") == 0);
+        REQUIRE(etl::strlen(result) == 1);
+        REQUIRE(std::strcmp(result, "0") == 0);
     }
 
     SECTION("10")
     {
         int val         = 10;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 2);
-        REQUIRE(std::strcmp(buffer, "10") == 0);
+        REQUIRE(etl::strlen(result) == 2);
+        REQUIRE(std::strcmp(result, "10") == 0);
     }
 
     SECTION("999")
     {
         int val         = 999;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 3);
-        REQUIRE(std::strcmp(buffer, "999") == 0);
+        REQUIRE(etl::strlen(result) == 3);
+        REQUIRE(std::strcmp(result, "999") == 0);
     }
 
     SECTION("1002")
     {
         int val         = 1002;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 4);
-        REQUIRE(std::strcmp(buffer, "1002") == 0);
+        REQUIRE(etl::strlen(result) == 4);
+        REQUIRE(std::strcmp(result, "1002") == 0);
     }
 
     SECTION("44444")
     {
         int val         = 44444;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 5);
-        REQUIRE(std::strcmp(buffer, "44444") == 0);
+        REQUIRE(etl::strlen(result) == 5);
+        REQUIRE(std::strcmp(result, "44444") == 0);
     }
 
     SECTION("123456789")
     {
         int val         = 123456789;
         char buffer[12] = {};
-        auto* result    = etl::iota(val, buffer, 10);
+        auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(buffer) == 9);
-        REQUIRE(std::strcmp(buffer, "123456789") == 0);
+        REQUIRE(etl::strlen(result) == 9);
+        REQUIRE(std::strcmp(result, "123456789") == 0);
     }
 }
 

@@ -42,7 +42,7 @@ namespace etl
  *
  * @todo Only base 10 is currently supported.
  */
-auto iota(int val, char* const buffer, int base) -> char*
+auto itoa(int val, char* const buffer, int base) -> char*
 {
     switch (base)
     {
