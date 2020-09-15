@@ -92,3 +92,17 @@ TEST_CASE("cstdlib: iota(signed,base10)", "[cstdlib]")
         REQUIRE(std::strcmp(buffer, "123456789") == 0);
     }
 }
+
+TEST_CASE("cstdlib: atol", "[cstdlib]")
+{
+    SECTION("positive")
+    {
+        REQUIRE(etl::atol("0") == long {0});
+        REQUIRE(etl::atol("10") == long {10});
+        REQUIRE(etl::atol("100") == long {100});
+        REQUIRE(etl::atol("1000") == long {1000});
+        REQUIRE(etl::atol("10000") == long {10000});
+        REQUIRE(etl::atol("999999") == long {999999});
+        REQUIRE(etl::atol("9999999") == long {9999999});
+    }
+}

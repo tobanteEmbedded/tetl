@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_CSTDLIB_HPP
 
 #include "cassert.hpp"
+#include "cstring.hpp"
 #include "definitions.hpp"
 
 namespace etl
@@ -82,6 +83,45 @@ auto iota(int val, char* const buffer, int base) -> char*
         return buffer;
     }
     }
+}
+
+/**
+ * @brief Parses the C-string str interpreting its content as an integral number, which is
+ * returned as a value of type long int.
+ */
+auto atol(const char* str) -> long
+{
+    static constexpr long pow10[19] = {
+        // 10000000000000000000UL,
+        1000000000000000000UL,
+        100000000000000000UL,
+        10000000000000000UL,
+        1000000000000000UL,
+        100000000000000UL,
+        10000000000000UL,
+        1000000000000UL,
+        100000000000UL,
+        10000000000UL,
+        1000000000UL,
+        100000000UL,
+        10000000UL,
+        1000000UL,
+        100000UL,
+        10000UL,
+        1000UL,
+        100UL,
+        10UL,
+        1UL,
+    };
+
+    auto const* first = &str[0];
+    auto const* last  = first + etl::strlen(first);
+
+    long result = 0;
+    auto i      = sizeof(pow10) / sizeof(pow10[0]) - unsigned(last - first);
+    for (; first != last; ++first) { result += pow10[i++] * (*first - '0'); }
+
+    return result;
 }
 }  // namespace etl
 
