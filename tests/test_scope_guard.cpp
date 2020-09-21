@@ -32,7 +32,7 @@ TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
 {
     SECTION("single")
     {
-        int counter = 0;
+        auto counter = 0;
         {
             etl::scope_exit e {[&] { counter++; }};
         }
@@ -41,7 +41,7 @@ TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
 
     SECTION("multiple")
     {
-        int counter = 0;
+        auto counter = 0;
         {
             etl::scope_exit e1 {[&] { counter++; }};
             etl::scope_exit e2 {[&] { counter++; }};
@@ -52,18 +52,21 @@ TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
 
     SECTION("move")
     {
-        int counter = 0;
+        auto counter = 0;
         {
             auto e1 = etl::scope_exit {[&] { counter++; }};
-            auto e2 {etl::move(e1)};
-            REQUIRE(counter == 0);
+            {
+                auto e2 {etl::move(e1)};
+                REQUIRE(counter == 0);
+            }
+            REQUIRE(counter == 1);
         }
         REQUIRE(counter == 1);
     }
 
     SECTION("release")
     {
-        int counter = 0;
+        auto counter = 0;
         {
             etl::scope_exit e {[&] { counter++; }};
             e.release();
