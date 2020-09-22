@@ -27,6 +27,21 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEST_CASE("variant: monostate", "[variant]")
+{
+    // All instances of etl::monostate compare equal.
+    auto lhs = etl::monostate {};
+    auto rhs = etl::monostate {};
+
+    CHECK(lhs == rhs);
+    CHECK(lhs <= rhs);
+    CHECK(lhs >= rhs);
+
+    CHECK_FALSE(lhs != rhs);
+    CHECK_FALSE(lhs < rhs);
+    CHECK_FALSE(lhs > rhs);
+}
+
 TEST_CASE("variant: construct", "[variant]")
 {
     auto var = etl::variant<etl::monostate, int, float> {42};

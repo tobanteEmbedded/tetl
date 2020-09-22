@@ -34,9 +34,71 @@ DAMAGE.
 
 namespace etl
 {
+template <typename... Types>
+class variant;
+
+/**
+ * @brief Unit type intended for use as a well-behaved empty alternative in etl::variant.
+ * In particular, a variant of non-default-constructible types may list etl::monostate as
+ * its first alternative: this makes the variant itself default-constructible
+ */
 struct monostate
 {
 };
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator==(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return true;
+}
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator!=(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return false;
+}
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator<(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return false;
+}
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator>(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return false;
+}
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator<=(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return true;
+}
+
+/**
+ * @brief All instances of etl::monostate compare equal.
+ */
+[[nodiscard]] constexpr auto operator>=(monostate /*lhs*/, monostate /*rhs*/) noexcept
+    -> bool
+{
+    return true;
+}
 
 namespace detail
 {
@@ -150,6 +212,45 @@ struct variant_data_get<Target, variant_data<Head, Tail...>>
 };
 
 }  // namespace detail
+
+/**
+ * @brief Provides compile-time indexed access to the types of the alternatives of the
+ * possibly cv-qualified variant, combining cv-qualifications of the variant (if any) with
+ * the cv-qualifications of the alternative.
+ *
+ * @todo Implement
+ */
+template <etl::size_t I, class T>
+struct variant_alternative;
+
+/**
+ * @brief Provides compile-time indexed access to the types of the alternatives of the
+ * possibly cv-qualified variant, combining cv-qualifications of the variant (if any) with
+ * the cv-qualifications of the alternative.
+ *
+ * @todo Implement
+ */
+template <etl::size_t I, class... Types>
+struct variant_alternative<I, variant<Types...>>
+{
+    using type = void;
+};
+
+/**
+ * @brief Provides compile-time indexed access to the types of the alternatives of the
+ * possibly cv-qualified variant, combining cv-qualifications of the variant (if any) with
+ * the cv-qualifications of the alternative.
+ *
+ * @todo Implement
+ */
+template <etl::size_t I, class T>
+class variant_alternative<I, const T>
+{
+    using type = void;
+};
+
+template <size_t I, class T>
+using variant_alternative_t = typename variant_alternative<I, T>::type;
 
 /**
  * @brief This is a special value equal to the largest value representable by the type
@@ -268,9 +369,38 @@ constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept -> bo
 }
 
 /**
- * @brief Type-based non-throwing accessor: Equivalent to (1) with I being the
- * zero-based index of T in Types.... The call is ill-formed if T is not a unique
- * element of Types....
+ * @brief Index-based non-throwing accessor: If pv is not a null pointer and pv->index()
+ * == I, returns a pointer to the value stored in the variant pointed to by pv. Otherwise,
+ * returns a null pointer value. The call is ill-formed if I is not a valid index in the
+ * variant.
+ *
+ * @todo Implement
+ */
+template <etl::size_t I, class... Types>
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept
+    -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
+{
+    return nullptr;
+}
+
+/**
+ * @brief Index-based non-throwing accessor: If pv is not a null pointer and pv->index()
+ * == I, returns a pointer to the value stored in the variant pointed to by pv. Otherwise,
+ * returns a null pointer value. The call is ill-formed if I is not a valid index in the
+ * variant.
+ *
+ * @todo Implement
+ */
+template <etl::size_t I, class... Types>
+constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
+    -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>> const>
+{
+    return nullptr;
+}
+
+/**
+ * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a
+ * unique element of Types....
  */
 template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>
@@ -283,9 +413,8 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t
 }
 
 /**
- * @brief Type-based non-throwing accessor: Equivalent to (1) with I being the zero-based
- * index of T in Types.... The call is ill-formed if T is not a unique element of
- * Types....
+ * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a unique
+ * element of Types....
  */
 template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
