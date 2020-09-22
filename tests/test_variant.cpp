@@ -42,6 +42,23 @@ TEST_CASE("variant: monostate", "[variant]")
     CHECK_FALSE(lhs > rhs);
 }
 
+TEST_CASE("variant: sizeof", "[variant]")
+{
+    if constexpr (sizeof(etl::size_t) == 8)
+    {
+        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int>) == 16);
+        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int, float>) == 16);
+        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int, double>) == 16);
+
+        struct S
+        {
+            float data[4];
+        };
+
+        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, S, double>) == 24);
+    }
+}
+
 TEST_CASE("variant: construct", "[variant]")
 {
     SECTION("monostate")

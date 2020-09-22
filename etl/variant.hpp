@@ -110,35 +110,40 @@ struct variant_storage;
 template <typename Head>
 struct variant_storage<Head>
 {
-    alignas(Head) unsigned char data[sizeof(Head)];
+    using storage_t = typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+    storage_t data;
+
+    // alignas(Head) unsigned char data[sizeof(Head)];
 
     template <typename T>
     void construct(T&& head_init, union_index_type& union_index)
     {
         static_assert(etl::is_same_v<T, Head>,
                       "Tried to access non-existent type in union");
-        new (data) Head(etl::forward<T>(head_init));
+        new (&data) Head(etl::forward<T>(head_init));
         union_index = 0;
     }
 
     void destruct(union_index_type)
     {
-        static_cast<Head*>(static_cast<void*>(data))->~Head();
+        static_cast<Head*>(static_cast<void*>(&data))->~Head();
     }
 };
 
 template <typename Head, typename... Tail>
 struct variant_storage<Head, Tail...>
 {
+    using storage_t = typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+
     union
     {
-        alignas(Head) unsigned char data[sizeof(Head)];
+        storage_t data;
         variant_storage<Tail...> tail;
     };
 
     void construct(const Head& head_init, union_index_type& union_index)
     {
-        new (data) Head(head_init);
+        new (&data) Head(head_init);
         union_index = 0;
     }
 
@@ -151,7 +156,7 @@ struct variant_storage<Head, Tail...>
     void construct(Head&& head_init, union_index_type& union_index)
     {
         using etl::move;
-        new (data) Head(move(head_init));
+        new (&data) Head(move(head_init));
         union_index = 0;
     }
 
@@ -166,7 +171,7 @@ struct variant_storage<Head, Tail...>
     {
         if (union_index == 0)
         {
-            static_cast<Head*>(static_cast<void*>(data))->~Head();
+            static_cast<Head*>(static_cast<void*>(&data))->~Head();
             return;
         }
 
@@ -181,12 +186,12 @@ struct variant_storage_type_get<Head, variant_storage<Head, Tail...>>
 {
     static auto get(variant_storage<Head, Tail...>& vu) -> Head&
     {
-        return *static_cast<Head*>(static_cast<void*>(vu.data));
+        return *static_cast<Head*>(static_cast<void*>(&vu.data));
     }
 
     static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
     {
-        return *static_cast<Head const*>(static_cast<void const*>(vu.data));
+        return *static_cast<Head const*>(static_cast<void const*>(&vu.data));
     }
 
     static constexpr const union_index_type index = 0;
