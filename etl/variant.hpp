@@ -45,10 +45,9 @@ using union_index_type = size_t;
 template <typename...>
 struct variant_data;
 
-template <typename Head_>
-struct variant_data<Head_>
+template <typename Head>
+struct variant_data<Head>
 {
-    using Head = Head_;
     alignas(Head) unsigned char data[sizeof(Head)];
 
     template <typename T>
@@ -66,10 +65,9 @@ struct variant_data<Head_>
     }
 };
 
-template <typename Head_, typename... Tail>
-struct variant_data<Head_, Tail...>
+template <typename Head, typename... Tail>
+struct variant_data<Head, Tail...>
 {
-    using Head = Head_;
     union
     {
         alignas(Head) unsigned char data[sizeof(Head)];
@@ -173,7 +171,7 @@ public:
      * @details Constructs a variant holding the alternative type T.
      */
     template <typename T>
-    variant(T&& t)
+    explicit variant(T&& t)
     {
         data_.construct(etl::forward<T>(t), union_index_);
     }
@@ -188,6 +186,52 @@ public:
     ~variant()
     {
         if (!valueless_by_exception()) { data_.destruct(union_index_); }
+    }
+
+    /**
+     * @brief Copy-assignment
+     *
+     * @details  If both *this and rhs are valueless by exception, does nothing.
+     *
+     * Otherwise, if rhs is valueless, but *this is not, destroys the value contained in
+     * *this and makes it valueless.
+     *
+     * Otherwise, if rhs holds the same alternative as *this, assigns the value contained
+     * in rhs to the value contained in *this. If an exception is thrown, *this does not
+     * become valueless: the value depends on the exception safety guarantee of the
+     * alternative's copy assignment.
+     */
+    constexpr auto operator=(variant const& rhs) -> variant&
+    {
+        // Self assignment
+        if (this == &rhs)
+        {
+            // Do nothing
+            return *this;
+        }
+
+        // Both Valueless
+        if (valueless_by_exception() && rhs.valueless_by_exception())
+        {
+            // Do nothing
+            return *this;
+        }
+
+        // RHS Valueless
+        if (!valueless_by_exception() && rhs.valueless_by_exception())
+        {
+            data_.destruct(union_index_);
+            return *this;
+        }
+
+        // Same type
+        if (index() && rhs.index())
+        {
+            data_ = rhs.data_;
+            return *this;
+        }
+
+        return *this;
     }
 
     /**

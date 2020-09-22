@@ -29,9 +29,18 @@ DAMAGE.
 
 TEST_CASE("variant: construct", "[variant]")
 {
-    auto var = etl::variant<etl::monostate, int> {42};
-    // auto const value = var.get<int>();
-    // REQUIRE(value == 42);
+    auto var = etl::variant<etl::monostate, int, float> {42};
+    CHECK(etl::holds_alternative<int>(var) == true);
+    CHECK(*etl::get_if<int>(&var) == 42);
+
+    // var = 10;
+    // CHECK(etl::holds_alternative<int>(var) == true);
+    // CHECK(*etl::get_if<int>(&var) == 10);
+
+    // var = 42.0f;
+    // CHECK(etl::holds_alternative<float>(var) == true);
+    // CHECK(etl::get_if<int>(&var) == nullptr);
+    // CHECK(*etl::get_if<float>(&var) == 42.0f);
 }
 
 TEST_CASE("variant: holds_alternative", "[variant]")
@@ -39,19 +48,19 @@ TEST_CASE("variant: holds_alternative", "[variant]")
     SECTION("mutable")
     {
         auto var = etl::variant<etl::monostate, int, float, double> {42};
-        REQUIRE(etl::holds_alternative<int>(var) == true);
-        REQUIRE(etl::holds_alternative<etl::monostate>(var) == false);
-        REQUIRE(etl::holds_alternative<float>(var) == false);
-        REQUIRE(etl::holds_alternative<double>(var) == false);
+        CHECK(etl::holds_alternative<int>(var) == true);
+        CHECK(etl::holds_alternative<etl::monostate>(var) == false);
+        CHECK(etl::holds_alternative<float>(var) == false);
+        CHECK(etl::holds_alternative<double>(var) == false);
     }
 
     SECTION("const")
     {
         auto const var = etl::variant<etl::monostate, int, float, double> {42.0f};
-        REQUIRE(etl::holds_alternative<float>(var) == true);
-        REQUIRE(etl::holds_alternative<int>(var) == false);
-        REQUIRE(etl::holds_alternative<etl::monostate>(var) == false);
-        REQUIRE(etl::holds_alternative<double>(var) == false);
+        CHECK(etl::holds_alternative<float>(var) == true);
+        CHECK(etl::holds_alternative<int>(var) == false);
+        CHECK(etl::holds_alternative<etl::monostate>(var) == false);
+        CHECK(etl::holds_alternative<double>(var) == false);
     }
 }
 
@@ -60,22 +69,22 @@ TEST_CASE("variant: get_if", "[variant]")
     SECTION("mutable")
     {
         auto var = etl::variant<etl::monostate, int, float, double> {42};
-        REQUIRE(etl::get_if<int>(&var) != nullptr);
-        REQUIRE(*etl::get_if<int>(&var) == 42);
+        CHECK(etl::get_if<int>(&var) != nullptr);
+        CHECK(*etl::get_if<int>(&var) == 42);
 
-        REQUIRE(etl::get_if<etl::monostate>(&var) == nullptr);
-        REQUIRE(etl::get_if<float>(&var) == nullptr);
-        REQUIRE(etl::get_if<double>(&var) == nullptr);
+        CHECK(etl::get_if<etl::monostate>(&var) == nullptr);
+        CHECK(etl::get_if<float>(&var) == nullptr);
+        CHECK(etl::get_if<double>(&var) == nullptr);
     }
 
     SECTION("const")
     {
         auto const var = etl::variant<etl::monostate, int, float, double> {42};
-        REQUIRE(etl::get_if<int>(&var) != nullptr);
-        REQUIRE(*etl::get_if<int>(&var) == 42);
+        CHECK(etl::get_if<int>(&var) != nullptr);
+        CHECK(*etl::get_if<int>(&var) == 42);
 
-        REQUIRE(etl::get_if<etl::monostate>(&var) == nullptr);
-        REQUIRE(etl::get_if<float>(&var) == nullptr);
-        REQUIRE(etl::get_if<double>(&var) == nullptr);
+        CHECK(etl::get_if<etl::monostate>(&var) == nullptr);
+        CHECK(etl::get_if<float>(&var) == nullptr);
+        CHECK(etl::get_if<double>(&var) == nullptr);
     }
 }
