@@ -32,10 +32,20 @@ TEST_CASE("variant: construct", "[variant]")
     auto var = etl::variant<etl::monostate, int, float> {42};
     CHECK(etl::holds_alternative<int>(var) == true);
     CHECK(*etl::get_if<int>(&var) == 42);
+}
 
-    // var = 10;
-    // CHECK(etl::holds_alternative<int>(var) == true);
-    // CHECK(*etl::get_if<int>(&var) == 10);
+TEST_CASE("variant: operator=(variant const&)", "[variant]")
+{
+    auto var = etl::variant<etl::monostate, int, float> {42};
+    CHECK(etl::holds_alternative<int>(var) == true);
+    CHECK(*etl::get_if<int>(&var) == 42);
+
+    auto var2 = etl::variant<etl::monostate, int, float> {143};
+    CHECK(etl::holds_alternative<int>(var2) == true);
+    CHECK(*etl::get_if<int>(&var2) == 143);
+    var2 = var;
+    CHECK(etl::holds_alternative<int>(var2) == true);
+    CHECK(*etl::get_if<int>(&var2) == 42);
 
     // var = 42.0f;
     // CHECK(etl::holds_alternative<float>(var) == true);

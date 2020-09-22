@@ -203,15 +203,8 @@ public:
      */
     constexpr auto operator=(variant const& rhs) -> variant&
     {
-        // Self assignment
-        if (this == &rhs)
-        {
-            // Do nothing
-            return *this;
-        }
-
-        // Both Valueless
-        if (valueless_by_exception() && rhs.valueless_by_exception())
+        // Self assignment or Both Valueless
+        if ((this == &rhs) || (valueless_by_exception() && rhs.valueless_by_exception()))
         {
             // Do nothing
             return *this;
