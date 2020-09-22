@@ -44,9 +44,26 @@ TEST_CASE("variant: monostate", "[variant]")
 
 TEST_CASE("variant: construct", "[variant]")
 {
-    auto var = etl::variant<etl::monostate, int, float> {42};
-    CHECK(etl::holds_alternative<int>(var) == true);
-    CHECK(*etl::get_if<int>(&var) == 42);
+    SECTION("monostate")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {etl::monostate {}};
+        CHECK(etl::holds_alternative<etl::monostate>(var) == true);
+        CHECK(*etl::get_if<etl::monostate>(&var) == etl::monostate {});
+    }
+
+    SECTION("int")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {42};
+        CHECK(etl::holds_alternative<int>(var) == true);
+        CHECK(*etl::get_if<int>(&var) == 42);
+    }
+
+    SECTION("float")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {143.0f};
+        CHECK(etl::holds_alternative<float>(var) == true);
+        CHECK(*etl::get_if<float>(&var) == 143.0f);
+    }
 }
 
 TEST_CASE("variant: operator=(variant const&)", "[variant]")

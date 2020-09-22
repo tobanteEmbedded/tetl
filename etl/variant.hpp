@@ -115,7 +115,7 @@ struct variant_data<Head>
     template <typename T>
     void construct(T&& head_init, union_index_type& union_index)
     {
-        static_assert(etl::is_same<T, Head>::value,
+        static_assert(etl::is_same_v<T, Head>,
                       "Tried to access non-existent type in union");
         new (data) Head(etl::forward<T>(head_init));
         union_index = 0;
@@ -135,8 +135,6 @@ struct variant_data<Head, Tail...>
         alignas(Head) unsigned char data[sizeof(Head)];
         variant_data<Tail...> tail;
     };
-
-    //
 
     void construct(const Head& head_init, union_index_type& union_index)
     {
@@ -164,15 +162,15 @@ struct variant_data<Head, Tail...>
         ++union_index;
     }
 
-    //
-
     void destruct(union_index_type union_index)
     {
-        if (union_index == 0) { static_cast<Head*>(static_cast<void*>(data))->~Head(); }
-        else
+        if (union_index == 0)
         {
-            tail.destruct(union_index - 1);
+            static_cast<Head*>(static_cast<void*>(data))->~Head();
+            return;
         }
+
+        tail.destruct(union_index - 1);
     }
 };
 template <typename...>
@@ -294,9 +292,6 @@ public:
      *
      * @details  If both *this and rhs are valueless by exception, does nothing.
      *
-     * Otherwise, if rhs is valueless, but *this is not, destroys the value contained in
-     * *this and makes it valueless.
-     *
      * Otherwise, if rhs holds the same alternative as *this, assigns the value contained
      * in rhs to the value contained in *this. If an exception is thrown, *this does not
      * become valueless: the value depends on the exception safety guarantee of the
@@ -304,19 +299,8 @@ public:
      */
     constexpr auto operator=(variant const& rhs) -> variant&
     {
-        // Self assignment or Both Valueless
-        if ((this == &rhs) || (valueless_by_exception() && rhs.valueless_by_exception()))
-        {
-            // Do nothing
-            return *this;
-        }
-
-        // RHS Valueless
-        if (!valueless_by_exception() && rhs.valueless_by_exception())
-        {
-            data_.destruct(union_index_);
-            return *this;
-        }
+        // Self assignment
+        if (this == &rhs) { return *this; }
 
         // Same type
         if (index() && rhs.index())
