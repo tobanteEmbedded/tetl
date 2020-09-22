@@ -105,10 +105,10 @@ namespace detail
 using union_index_type = size_t;
 
 template <typename...>
-struct variant_data;
+struct variant_storage;
 
 template <typename Head>
-struct variant_data<Head>
+struct variant_storage<Head>
 {
     alignas(Head) unsigned char data[sizeof(Head)];
 
@@ -128,12 +128,12 @@ struct variant_data<Head>
 };
 
 template <typename Head, typename... Tail>
-struct variant_data<Head, Tail...>
+struct variant_storage<Head, Tail...>
 {
     union
     {
         alignas(Head) unsigned char data[sizeof(Head)];
-        variant_data<Tail...> tail;
+        variant_storage<Tail...> tail;
     };
 
     void construct(const Head& head_init, union_index_type& union_index)
@@ -174,17 +174,17 @@ struct variant_data<Head, Tail...>
     }
 };
 template <typename...>
-struct variant_data_get;
+struct variant_storage_type_get;
 
 template <typename Head, typename... Tail>
-struct variant_data_get<Head, variant_data<Head, Tail...>>
+struct variant_storage_type_get<Head, variant_storage<Head, Tail...>>
 {
-    static auto get(variant_data<Head, Tail...>& vu) -> Head&
+    static auto get(variant_storage<Head, Tail...>& vu) -> Head&
     {
         return *static_cast<Head*>(static_cast<void*>(vu.data));
     }
 
-    static auto get(variant_data<Head, Tail...> const& vu) -> Head const&
+    static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
     {
         return *static_cast<Head const*>(static_cast<void const*>(vu.data));
     }
@@ -193,20 +193,20 @@ struct variant_data_get<Head, variant_data<Head, Tail...>>
 };
 
 template <typename Target, typename Head, typename... Tail>
-struct variant_data_get<Target, variant_data<Head, Tail...>>
+struct variant_storage_type_get<Target, variant_storage<Head, Tail...>>
 {
-    static auto get(variant_data<Head, Tail...>& vu) -> Target&
+    static auto get(variant_storage<Head, Tail...>& vu) -> Target&
     {
-        return variant_data_get<Target, variant_data<Tail...>>::get(vu.tail);
+        return variant_storage_type_get<Target, variant_storage<Tail...>>::get(vu.tail);
     }
 
-    static auto get(variant_data<Head, Tail...> const& vu) -> Target const&
+    static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
     {
-        return variant_data_get<Target, variant_data<Tail...>>::get(vu.tail);
+        return variant_storage_type_get<Target, variant_storage<Tail...>>::get(vu.tail);
     }
 
     static constexpr const union_index_type index
-        = variant_data_get<Target, variant_data<Tail...>>::index + 1;
+        = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
 };
 
 }  // namespace detail
@@ -337,7 +337,7 @@ public:
     auto data() noexcept { return &data_; }
 
 private:
-    detail::variant_data<Types...> data_;
+    detail::variant_storage<Types...> data_;
     detail::union_index_type union_index_;
 };
 
@@ -348,8 +348,8 @@ private:
 template <class T, class... Types>
 constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept -> bool
 {
-    using storage_t = detail::variant_data<Types...>;
-    return detail::variant_data_get<T, storage_t>::index == v.index();
+    using storage_t = detail::variant_storage<Types...>;
+    return detail::variant_storage_type_get<T, storage_t>::index == v.index();
 }
 
 /**
@@ -389,9 +389,9 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>
 {
-    using storage_t = detail::variant_data<Types...>;
+    using storage_t = detail::variant_storage<Types...>;
     if (holds_alternative<T>(*pv))
-    { return &detail::variant_data_get<T, storage_t>::get(*pv->data()); }
+    { return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data()); }
 
     return nullptr;
 }
@@ -404,9 +404,9 @@ template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<const T>
 {
-    using storage_t = detail::variant_data<Types...>;
+    using storage_t = detail::variant_storage<Types...>;
     if (holds_alternative<T>(*pv))
-    { return &detail::variant_data_get<T, storage_t>::get(*pv->data()); }
+    { return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data()); }
 
     return nullptr;
 }

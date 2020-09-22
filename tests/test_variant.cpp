@@ -47,40 +47,67 @@ TEST_CASE("variant: construct", "[variant]")
     SECTION("monostate")
     {
         auto var = etl::variant<etl::monostate, int, float> {etl::monostate {}};
-        CHECK(etl::holds_alternative<etl::monostate>(var) == true);
+        CHECK(etl::holds_alternative<etl::monostate>(var));
         CHECK(*etl::get_if<etl::monostate>(&var) == etl::monostate {});
     }
 
     SECTION("int")
     {
         auto var = etl::variant<etl::monostate, int, float> {42};
-        CHECK(etl::holds_alternative<int>(var) == true);
+        CHECK(etl::holds_alternative<int>(var));
         CHECK(*etl::get_if<int>(&var) == 42);
     }
 
     SECTION("float")
     {
         auto var = etl::variant<etl::monostate, int, float> {143.0f};
-        CHECK(etl::holds_alternative<float>(var) == true);
+        CHECK(etl::holds_alternative<float>(var));
         CHECK(*etl::get_if<float>(&var) == 143.0f);
+    }
+}
+
+TEST_CASE("variant: index", "[variant]")
+{
+    SECTION("0")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {etl::monostate {}};
+        CHECK(var.index() == 0);
+    }
+
+    SECTION("1")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {42};
+        CHECK(var.index() == 1);
+    }
+
+    SECTION("2")
+    {
+        auto var = etl::variant<etl::monostate, int, float> {143.0f};
+        CHECK(var.index() == 2);
+    }
+
+    SECTION("3")
+    {
+        auto var = etl::variant<etl::monostate, int, float, double> {143.0};
+        CHECK(var.index() == 3);
     }
 }
 
 TEST_CASE("variant: operator=(variant const&)", "[variant]")
 {
     auto var = etl::variant<etl::monostate, int, float> {42};
-    CHECK(etl::holds_alternative<int>(var) == true);
+    CHECK(etl::holds_alternative<int>(var));
     CHECK(*etl::get_if<int>(&var) == 42);
 
     auto var2 = etl::variant<etl::monostate, int, float> {143};
-    CHECK(etl::holds_alternative<int>(var2) == true);
+    CHECK(etl::holds_alternative<int>(var2));
     CHECK(*etl::get_if<int>(&var2) == 143);
     var2 = var;
-    CHECK(etl::holds_alternative<int>(var2) == true);
+    CHECK(etl::holds_alternative<int>(var2));
     CHECK(*etl::get_if<int>(&var2) == 42);
 
     // var = 42.0f;
-    // CHECK(etl::holds_alternative<float>(var) == true);
+    // CHECK(etl::holds_alternative<float>(var));
     // CHECK(etl::get_if<int>(&var) == nullptr);
     // CHECK(*etl::get_if<float>(&var) == 42.0f);
 }
@@ -90,19 +117,19 @@ TEST_CASE("variant: holds_alternative", "[variant]")
     SECTION("mutable")
     {
         auto var = etl::variant<etl::monostate, int, float, double> {42};
-        CHECK(etl::holds_alternative<int>(var) == true);
-        CHECK(etl::holds_alternative<etl::monostate>(var) == false);
-        CHECK(etl::holds_alternative<float>(var) == false);
-        CHECK(etl::holds_alternative<double>(var) == false);
+        CHECK(etl::holds_alternative<int>(var));
+        CHECK_FALSE(etl::holds_alternative<etl::monostate>(var));
+        CHECK_FALSE(etl::holds_alternative<float>(var));
+        CHECK_FALSE(etl::holds_alternative<double>(var));
     }
 
     SECTION("const")
     {
         auto const var = etl::variant<etl::monostate, int, float, double> {42.0f};
-        CHECK(etl::holds_alternative<float>(var) == true);
-        CHECK(etl::holds_alternative<int>(var) == false);
-        CHECK(etl::holds_alternative<etl::monostate>(var) == false);
-        CHECK(etl::holds_alternative<double>(var) == false);
+        CHECK(etl::holds_alternative<float>(var));
+        CHECK_FALSE(etl::holds_alternative<int>(var));
+        CHECK_FALSE(etl::holds_alternative<etl::monostate>(var));
+        CHECK_FALSE(etl::holds_alternative<double>(var));
     }
 }
 
