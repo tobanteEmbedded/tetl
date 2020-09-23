@@ -40,8 +40,9 @@ DAMAGE.
 #define TAETL_IS_NOTHROW_CONSTRUCTIBLE(Type) true
 #endif
 
-#define TAETL_IS_ASSIGNABLE(Type, Argument) __is_assignable(Type, Argument)
-#define TAETL_IS_TRIVIALLY_ASSIGNABLE(Type, Argument)                                    \
-    __is_trivially_assignable(Type, Argument)
+#define TAETL_IS_TRIVIAL_DESTRUCTIBLE(Type) __has_trivial_destructor(Type)
+
+#define TAETL_IS_ASSIGNABLE(T, Arg) __is_assignable(T, Arg)
+#define TAETL_IS_TRIVIALLY_ASSIGNABLE(T, Arg) __is_trivially_assignable(T, Arg)
 
 #endif  // TAETL_INTRINSICS_HPP

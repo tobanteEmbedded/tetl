@@ -1065,6 +1065,18 @@ inline constexpr bool is_nothrow_move_constructible_v
     = is_nothrow_move_constructible<T>::value;
 
 /**
+ * @brief
+ */
+template <typename T>
+struct is_trivially_destructible
+    : public integral_constant<bool, TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
+{
+};
+
+template <typename T>
+inline constexpr auto is_trivially_destructible_v = is_trivially_destructible<T>::value;
+
+/**
  * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
  * unevaluated context, provides the member constant value equal true. Otherwise, value is
  * false. Access checks are performed as if from a context unrelated to either type.
