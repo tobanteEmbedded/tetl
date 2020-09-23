@@ -23,9 +23,10 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#include "etl/type_traits.hpp"
 
 #include "etl/map.hpp"
-#include "etl/type_traits.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -456,4 +457,39 @@ TEMPLATE_TEST_CASE("type_traits: is_nothrow_default_constructible", "[type_trait
 {
     STATIC_REQUIRE(etl::is_nothrow_default_constructible<TestType>::value);
     STATIC_REQUIRE(etl::is_nothrow_default_constructible_v<TestType>);
+}
+
+struct TrivialDtor_1
+{
+};
+
+struct TrivialDtor_2
+{
+    ~TrivialDtor_2() = default;
+};
+
+struct NonTrivialDtor_1
+{
+    ~NonTrivialDtor_1() { }
+};
+
+struct NonTrivialDtor_2
+{
+    etl::stack_vector<float, 16> data;
+};
+
+TEMPLATE_TEST_CASE("type_traits: is_trivially_destructible(true)", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double,
+                   TrivialDtor_1, TrivialDtor_2)
+{
+    STATIC_REQUIRE(etl::is_trivially_destructible<TestType>::value);
+    STATIC_REQUIRE(etl::is_trivially_destructible_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_trivially_destructible(false)", "[type_traits]",
+                   NonTrivialDtor_1, NonTrivialDtor_2)
+{
+    STATIC_REQUIRE_FALSE(etl::is_trivially_destructible<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<TestType>);
 }
