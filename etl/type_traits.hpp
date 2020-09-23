@@ -54,7 +54,7 @@ using bool_constant = integral_constant<bool, B>;
 using true_type  = integral_constant<bool, true>;
 using false_type = integral_constant<bool, false>;
 
-template <class...>
+template <typename...>
 using void_t = void;
 
 template <class T>

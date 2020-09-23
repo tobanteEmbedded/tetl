@@ -394,9 +394,11 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>
 {
-    using storage_t = detail::variant_storage<Types...>;
     if (holds_alternative<T>(*pv))
-    { return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data()); }
+    {
+        using storage_t = detail::variant_storage<Types...>;
+        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+    }
 
     return nullptr;
 }
@@ -409,9 +411,11 @@ template <class T, class... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<const T>
 {
-    using storage_t = detail::variant_storage<Types...>;
     if (holds_alternative<T>(*pv))
-    { return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data()); }
+    {
+        using storage_t = detail::variant_storage<Types...>;
+        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+    }
 
     return nullptr;
 }
