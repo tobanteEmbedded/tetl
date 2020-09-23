@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_mutex.cpp
     test_numbers.cpp
     test_numeric.cpp
+    test_optional.cpp
     test_ratio.cpp
     test_scope_guard.cpp
     test_span.cpp
