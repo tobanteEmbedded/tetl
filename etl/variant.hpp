@@ -31,6 +31,7 @@ DAMAGE.
 #include "etl/new.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
+#include "etl/warning.hpp"
 
 namespace etl
 {
@@ -247,7 +248,7 @@ struct variant_alternative<I, variant<Types...>>
  * @todo Implement
  */
 template <etl::size_t I, class T>
-class variant_alternative<I, const T>
+struct variant_alternative<I, const T>
 {
     using type = void;
 };
@@ -369,6 +370,7 @@ template <etl::size_t I, class... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
 {
+    etl::ignore_unused(pv);
     return nullptr;
 }
 
@@ -384,6 +386,7 @@ template <etl::size_t I, class... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>> const>
 {
+    etl::ignore_unused(pv);
     return nullptr;
 }
 
