@@ -159,11 +159,11 @@ public:
      * @todo Cleanup & fix SFINAE.
      */
     template <class U = ValueT>
-    constexpr auto operator=(U&& value) -> etl::enable_if_t<            //
-        !etl::is_same_v<etl::remove_cvref_t<U>, etl::optional<ValueT>>  //
-            && etl::is_constructible_v<ValueT, U>                       //
-            && etl::is_assignable_v<ValueT&, U>,                        //
-        // && (!etl::is_scalar_v<ValueT> || !etl::is_same_v<std::decay_t<U>, ValueT>),
+    constexpr auto operator=(U&& value) -> etl::enable_if_t<
+        etl::conjunction_v<
+            etl::negation<etl::is_same<etl::remove_cvref_t<U>, etl::optional<ValueT>>>,
+            etl::is_constructible<ValueT, U>, etl::is_assignable<ValueT&, U>>,
+        // && (!etl::is_scalar_v<ValueT> || !etl::is_same_v<etl::decay_t<U>, ValueT>),
         optional&>
     {
         if (has_value()) { reset(); }
