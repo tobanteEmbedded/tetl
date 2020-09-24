@@ -116,7 +116,7 @@ TEMPLATE_TEST_CASE("optional: is_trivially_destructible_v", "[optional]", bool,
             TestType data {};
         };
 
-        // etl::optional<S> opt {};
+        etl::optional<S> opt {};
         STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<S>);
     }
 }
