@@ -384,6 +384,35 @@ TEST_CASE("type_traits: conjunction", "[type_traits]")
     STATIC_REQUIRE_FALSE(conjunction_v<is_same<int, int>, is_same<double, float>>);
 }
 
+TEST_CASE("type_traits: disjunction", "[type_traits]")
+{
+    using etl::disjunction_v;
+    using etl::is_same;
+
+    STATIC_REQUIRE(disjunction_v<is_same<int, int>, is_same<short, short>>);
+    STATIC_REQUIRE(disjunction_v<is_same<short, short>, is_same<float, float>>);
+    STATIC_REQUIRE(disjunction_v<is_same<int, int>, is_same<double, double>>);
+
+    STATIC_REQUIRE(disjunction_v<is_same<float, int>, is_same<short, short>>);
+    STATIC_REQUIRE(disjunction_v<is_same<int, short>, is_same<float, float>>);
+    STATIC_REQUIRE(disjunction_v<is_same<int, int>, is_same<double, float>>);
+
+    STATIC_REQUIRE_FALSE(disjunction_v<is_same<float, int>, is_same<short, double>>);
+    STATIC_REQUIRE_FALSE(disjunction_v<is_same<int, short>, is_same<float, int>>);
+    STATIC_REQUIRE_FALSE(disjunction_v<is_same<bool, int>, is_same<double, float>>);
+}
+
+TEST_CASE("type_traits: negation", "[type_traits]")
+{
+    STATIC_REQUIRE(etl::negation_v<etl::is_same<short, float>>);
+    STATIC_REQUIRE(etl::negation_v<etl::is_same<bool, float>>);
+    STATIC_REQUIRE(etl::negation_v<etl::is_same<int, float>>);
+
+    STATIC_REQUIRE_FALSE(etl::negation_v<etl::is_same<int, int>>);
+    STATIC_REQUIRE_FALSE(etl::negation_v<etl::is_same<bool, bool>>);
+    STATIC_REQUIRE_FALSE(etl::negation_v<etl::is_same<float, float>>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: rank", "[type_traits]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

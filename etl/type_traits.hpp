@@ -1526,6 +1526,38 @@ template <class... B>
 inline constexpr bool conjunction_v = conjunction<B...>::value;
 
 /**
+ * @brief Forms the logical disjunction of the type traits B..., effectively performing a
+ * logical OR on the sequence of traits.
+ */
+template <typename...>
+struct disjunction : etl::false_type
+{
+};
+template <typename B1>
+struct disjunction<B1> : B1
+{
+};
+template <typename B1, typename... Bn>
+struct disjunction<B1, Bn...>
+    : etl::conditional_t<bool(B1::value), B1, disjunction<Bn...>>
+{
+};
+
+template <class... B>
+inline constexpr bool disjunction_v = disjunction<B...>::value;
+
+/**
+ * @brief Forms the logical negation of the type trait B.
+ */
+template <class B>
+struct negation : etl::bool_constant<!bool(B::value)>
+{
+};
+
+template <class B>
+inline constexpr bool negation_v = negation<B>::value;
+
+/**
  * @brief Define a member typedef only if a boolean constant is true.
  */
 template <bool, typename Type = void>
