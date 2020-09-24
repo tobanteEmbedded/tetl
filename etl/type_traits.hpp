@@ -51,8 +51,8 @@ struct integral_constant
 template <bool B>
 using bool_constant = integral_constant<bool, B>;
 
-using true_type  = integral_constant<bool, true>;
-using false_type = integral_constant<bool, false>;
+using true_type  = bool_constant<true>;
+using false_type = bool_constant<false>;
 
 template <typename...>
 using void_t = void;
@@ -627,8 +627,8 @@ inline constexpr bool is_array_v = is_array<T>::value;
  * or is_function_v is undefined.
  */
 template <class T>
-struct is_function : etl::integral_constant<bool, !etl::is_const<const T>::value
-                                                      && !etl::is_reference<T>::value>
+struct is_function
+    : etl::bool_constant<!etl::is_const<const T>::value && !etl::is_reference<T>::value>
 {
 };
 
@@ -665,7 +665,7 @@ template <class T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;
 
 template <class T>
-struct is_class : etl::integral_constant<bool, TAETL_IS_CLASS(T)>
+struct is_class : etl::bool_constant<TAETL_IS_CLASS(T)>
 {
 };
 
@@ -673,7 +673,7 @@ template <class T>
 inline constexpr bool is_class_v = is_class<T>::value;
 
 template <class T>
-struct is_enum : etl::integral_constant<bool, TAETL_IS_ENUM(T)>
+struct is_enum : etl::bool_constant<TAETL_IS_ENUM(T)>
 {
 };
 
@@ -681,7 +681,7 @@ template <class T>
 inline constexpr bool is_enum_v = is_enum<T>::value;
 
 template <class T>
-struct is_union : etl::integral_constant<bool, TAETL_IS_UNION(T)>
+struct is_union : etl::bool_constant<TAETL_IS_UNION(T)>
 {
 };
 
@@ -751,8 +751,8 @@ inline constexpr bool is_member_function_pointer_v = is_member_function_pointer<
  */
 template <class T>
 struct is_member_object_pointer
-    : etl::integral_constant<bool, etl::is_member_pointer<T>::value
-                                       && !etl::is_member_function_pointer<T>::value>
+    : etl::bool_constant<etl::is_member_pointer<T>::value
+                         && !etl::is_member_function_pointer<T>::value>
 {
 };
 
@@ -768,8 +768,7 @@ inline constexpr bool is_member_object_pointer_v = is_member_object_pointer<T>::
  */
 template <class T>
 struct is_arithmetic
-    : etl::integral_constant<bool, etl::is_integral<T>::value
-                                       || etl::is_floating_point<T>::value>
+    : etl::bool_constant<etl::is_integral<T>::value || etl::is_floating_point<T>::value>
 {
 };
 
@@ -783,10 +782,9 @@ inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
  */
 template <class T>
 struct is_scalar
-    : etl::integral_constant<bool, etl::is_arithmetic<T>::value || etl::is_enum<T>::value
-                                       || etl::is_pointer<T>::value
-                                       || etl::is_member_pointer<T>::value
-                                       || etl::is_null_pointer<T>::value>
+    : etl::bool_constant<etl::is_arithmetic<T>::value || etl::is_enum<T>::value
+                         || etl::is_pointer<T>::value || etl::is_member_pointer<T>::value
+                         || etl::is_null_pointer<T>::value>
 {
 };
 
@@ -800,9 +798,8 @@ inline constexpr bool is_scalar_v = is_scalar<T>::value;
  */
 template <class T>
 struct is_object
-    : etl::integral_constant<bool, etl::is_scalar<T>::value || etl::is_array<T>::value
-                                       || etl::is_union<T>::value
-                                       || etl::is_class<T>::value>
+    : etl::bool_constant<etl::is_scalar<T>::value || etl::is_array<T>::value
+                         || etl::is_union<T>::value || etl::is_class<T>::value>
 {
 };
 
@@ -816,7 +813,7 @@ inline constexpr bool is_object_v = is_object<T>::value;
  * the member constant value equal true. For any other type, value is false.
  */
 template <class T>
-struct is_compound : etl::integral_constant<bool, !etl::is_fundamental<T>::value>
+struct is_compound : etl::bool_constant<!etl::is_fundamental<T>::value>
 {
 };
 
@@ -849,8 +846,7 @@ inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
  * considered trivial.
  */
 template <class T, class... Args>
-struct is_trivially_constructible
-    : etl::integral_constant<bool, TAETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
+struct is_trivially_constructible : etl::bool_constant<TAETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
 {
 };
 
@@ -864,8 +860,7 @@ inline constexpr bool is_trivially_constructible_v
  * considered trivial.
  */
 template <class T, class... Args>
-struct is_nothrow_constructible
-    : etl::integral_constant<bool, TAETL_IS_NOTHROW_CONSTRUCTIBLE(T)>
+struct is_nothrow_constructible : etl::bool_constant<TAETL_IS_NOTHROW_CONSTRUCTIBLE(T)>
 {
 };
 
@@ -1068,8 +1063,7 @@ inline constexpr bool is_nothrow_move_constructible_v
  * @brief
  */
 template <typename T>
-struct is_trivially_destructible
-    : public integral_constant<bool, TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
+struct is_trivially_destructible : public bool_constant<TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
 {
 };
 
@@ -1082,7 +1076,7 @@ inline constexpr auto is_trivially_destructible_v = is_trivially_destructible<T>
  * false. Access checks are performed as if from a context unrelated to either type.
  */
 template <class T, class U>
-struct is_assignable : etl::integral_constant<bool, TAETL_IS_ASSIGNABLE(T, U)>
+struct is_assignable : etl::bool_constant<TAETL_IS_ASSIGNABLE(T, U)>
 {
 };
 
@@ -1095,8 +1089,7 @@ inline constexpr bool is_assignable_v = is_assignable<T, U>::value;
  * false. Access checks are performed as if from a context unrelated to either type.
  */
 template <class T, class U>
-struct is_trivially_assignable
-    : etl::integral_constant<bool, TAETL_IS_TRIVIALLY_ASSIGNABLE(T, U)>
+struct is_trivially_assignable : etl::bool_constant<TAETL_IS_TRIVIALLY_ASSIGNABLE(T, U)>
 {
 };
 
@@ -1107,7 +1100,7 @@ namespace detail
 {
 template <typename T, typename U>
 struct is_nothrow_assignable_helper
-    : public etl::integral_constant<bool, noexcept(declval<T>() = declval<U>())>
+    : public etl::bool_constant<noexcept(declval<T>() = declval<U>())>
 {
 };
 }  // namespace detail
@@ -1299,8 +1292,7 @@ struct is_swappable_helper
  * etl::is_swappable_with<T&, T&>::value
  */
 template <class T>
-struct is_swappable
-    : public integral_constant<bool, detail::is_swappable_helper<T>::value>
+struct is_swappable : public bool_constant<detail::is_swappable_helper<T>::value>
 {
 };
 
@@ -1311,8 +1303,7 @@ namespace detail
 {
 template <bool, class T>
 struct is_nothrow_swappable_helper
-    : public integral_constant<bool,
-                               noexcept(swap(etl::declval<T&>(), etl::declval<T&>()))>
+    : public bool_constant<noexcept(swap(etl::declval<T&>(), etl::declval<T&>()))>
 {
 };
 template <class T>
@@ -1392,9 +1383,8 @@ inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
  */
 template <class T>
 struct is_trivial
-    : etl::integral_constant<bool,
-                             etl::is_trivially_copyable<T>::value
-                                 && etl::is_trivially_default_constructible<T>::value>
+    : etl::bool_constant<etl::is_trivially_copyable<T>::value
+                         && etl::is_trivially_default_constructible<T>::value>
 {
 };
 
@@ -1404,7 +1394,7 @@ inline constexpr bool is_trivial_v = is_trivial<T>::value;
 namespace detail
 {
 template <typename T, bool = etl::is_arithmetic<T>::value>
-struct is_unsigned : etl::integral_constant<bool, T(0) < T(-1)>
+struct is_unsigned : etl::bool_constant<T(0) < T(-1)>
 {
 };
 
@@ -1433,7 +1423,7 @@ inline constexpr bool is_unsigned_v = is_unsigned<T>::value;
 namespace detail
 {
 template <typename T, bool = etl::is_arithmetic<T>::value>
-struct is_signed : etl::integral_constant<bool, T(-1) < T(0)>
+struct is_signed : etl::bool_constant<T(-1) < T(0)>
 {
 };
 
@@ -1484,10 +1474,9 @@ auto test_pre_is_base_of(int)
  */
 template <typename Base, typename Derived>
 struct is_base_of
-    : etl::integral_constant<bool, etl::is_class<Base>::value
-                                       && etl::is_class<Derived>::value&& decltype(
-                                           detail::test_pre_is_base_of<Base, Derived>(
-                                               0))::value>
+    : etl::bool_constant<etl::is_class<Base>::value
+                         && etl::is_class<Derived>::value&& decltype(
+                             detail::test_pre_is_base_of<Base, Derived>(0))::value>
 {
 };
 
