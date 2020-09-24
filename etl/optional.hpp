@@ -302,5 +302,13 @@ private:
     bool has_value_ = false;
 };
 
+/**
+ * @brief One deduction guide is provided for etl::optional to account for the edge cases
+ * missed by the implicit deduction guides, in particular, non-copyable arguments and
+ * array to pointer conversion.
+ */
+template <class T>
+optional(T) -> optional<T>;
+
 }  // namespace etl
 #endif  // TAETL_OPTIONAL_HPP

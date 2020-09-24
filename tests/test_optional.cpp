@@ -136,3 +136,35 @@ TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t
     etl::optional<TestType> opt {};
     CHECK(opt.value_or(TestType {42}) == TestType {42});
 }
+
+TEMPLATE_TEST_CASE("optional: deduction guide", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("implicit")
+    {
+        {
+            etl::optional opt {TestType {}};
+            STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+        }
+
+        {
+            TestType data {};
+            etl::optional opt {data};
+            STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+        }
+
+        {
+            TestType const data {42};
+            etl::optional opt {data};
+            STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+        }
+    }
+
+    SECTION("explicit")
+    {
+        TestType data[2];
+        etl::optional opt {data};  // explicit deduction guide is used in this case
+        STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, TestType*>);
+    }
+}
