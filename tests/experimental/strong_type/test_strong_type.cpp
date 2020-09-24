@@ -56,7 +56,7 @@ TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
     STATIC_REQUIRE(etl::is_nothrow_constructible_v<Kilogram>);
 
     STATIC_REQUIRE(std::is_destructible_v<Kilogram>);
-    STATIC_REQUIRE(std::is_trivially_destructible_v<Kilogram>);
+    STATIC_REQUIRE(etl::is_trivially_destructible_v<Kilogram>);
     STATIC_REQUIRE(std::is_nothrow_destructible_v<Kilogram>);
 
     STATIC_REQUIRE(etl::is_assignable_v<Kilogram, Kilogram>);
