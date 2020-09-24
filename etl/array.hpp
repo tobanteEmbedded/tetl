@@ -237,6 +237,17 @@ struct array
 };
 
 /**
+ * @brief Specializes the etl::swap algorithm for etl::array. Swaps the contents of lhs
+ * and rhs.
+ */
+template <class T, etl::size_t N>
+constexpr auto swap(etl::array<T, N>& lhs,
+                    etl::array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+{
+    lhs.swap(rhs);
+}
+
+/**
  * @brief Checks if the contents of lhs and rhs are equal, that is, they have the same
  * number of elements and each element in lhs compares equal with the element in rhs at
  * the same position.

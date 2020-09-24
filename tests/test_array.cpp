@@ -189,6 +189,11 @@ TEMPLATE_TEST_CASE("array: swap", "[array]", etl::uint8_t, etl::int8_t, etl::uin
     a.swap(b);
     REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 0; }));
     REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 1; }));
+
+    using etl::swap;
+    swap(a, b);
+    REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
+    REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
 }
 
 TEMPLATE_TEST_CASE("array: comparsion", "[array]", etl::uint8_t, etl::int8_t,
