@@ -1503,6 +1503,29 @@ template <bool B, class T, class F>
 using conditional_t = typename conditional<B, T, F>::type;
 
 /**
+ * @brief Forms the logical conjunction of the type traits B..., effectively performing a
+ * logical AND on the sequence of traits.
+ */
+template <typename...>
+struct conjunction : etl::true_type
+{
+};
+
+template <typename B1>
+struct conjunction<B1> : B1
+{
+};
+
+template <typename B1, typename... Bn>
+struct conjunction<B1, Bn...>
+    : etl::conditional_t<bool(B1::value), conjunction<Bn...>, B1>
+{
+};
+
+template <class... B>
+inline constexpr bool conjunction_v = conjunction<B...>::value;
+
+/**
  * @brief Define a member typedef only if a boolean constant is true.
  */
 template <bool, typename Type = void>

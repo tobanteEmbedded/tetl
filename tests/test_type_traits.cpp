@@ -370,6 +370,20 @@ TEST_CASE("type_traits: conditional", "[type_traits]")
     REQUIRE_FALSE(typeid(Type2) == typeid(int));
 }
 
+TEST_CASE("type_traits: conjunction", "[type_traits]")
+{
+    using etl::conjunction_v;
+    using etl::is_same;
+
+    STATIC_REQUIRE(conjunction_v<is_same<int, int>, is_same<short, short>>);
+    STATIC_REQUIRE(conjunction_v<is_same<short, short>, is_same<float, float>>);
+    STATIC_REQUIRE(conjunction_v<is_same<int, int>, is_same<double, double>>);
+
+    STATIC_REQUIRE_FALSE(conjunction_v<is_same<float, int>, is_same<short, short>>);
+    STATIC_REQUIRE_FALSE(conjunction_v<is_same<int, short>, is_same<float, float>>);
+    STATIC_REQUIRE_FALSE(conjunction_v<is_same<int, int>, is_same<double, float>>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: rank", "[type_traits]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
