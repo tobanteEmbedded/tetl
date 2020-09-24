@@ -525,6 +525,21 @@ TEMPLATE_TEST_CASE("algorithm: copy_backward", "[algorithm]", etl::uint8_t, etl:
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: equal", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto lhs = etl::array<TestType, 2> {TestType {0}, TestType {1}};
+    auto rhs = etl::array<TestType, 2> {TestType {0}, TestType {1}};
+    auto cmp = etl::not_equal_to<> {};
+
+    CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs)));
+    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), cmp));
+
+    CHECK(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs)));
+    CHECK_FALSE(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
+}
+
 TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
