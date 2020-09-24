@@ -30,7 +30,7 @@ DAMAGE.
 
 TEMPLATE_TEST_CASE("optional: construct()", "[optional]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     CHECK_FALSE(etl::optional<TestType> {}.has_value());
     CHECK_FALSE(etl::optional<TestType> {etl::nullopt}.has_value());
@@ -38,7 +38,7 @@ TEMPLATE_TEST_CASE("optional: construct()", "[optional]", bool, etl::uint8_t, et
 
 TEMPLATE_TEST_CASE("optional: construct(value_type)", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     CHECK(etl::optional<TestType> {TestType {}}.has_value());
     CHECK(etl::optional<TestType> {TestType {1}}.has_value());
@@ -46,7 +46,7 @@ TEMPLATE_TEST_CASE("optional: construct(value_type)", "[optional]", bool, etl::u
 
 TEMPLATE_TEST_CASE("optional: construct(in_place, args...)", "[optional]", bool,
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
 {
     auto opt = etl::optional<TestType> {etl::in_place, TestType {}};
     CHECK(opt.has_value());
@@ -54,7 +54,7 @@ TEMPLATE_TEST_CASE("optional: construct(in_place, args...)", "[optional]", bool,
 
 TEMPLATE_TEST_CASE("optional: construct(optional)", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -128,7 +128,7 @@ TEST_CASE("optional: construct() non_trivial", "[optional]")
 
 TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     etl::optional<TestType> opt {};
     CHECK_FALSE(opt.has_value());
@@ -138,7 +138,7 @@ TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool, etl::uint
 
 TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -163,7 +163,7 @@ TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]", etl::uint8_t
 
 TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("None have values")
     {
@@ -234,7 +234,7 @@ TEST_CASE("optional: operator=() non_trivial", "[optional]")
 
 TEMPLATE_TEST_CASE("optional: is_trivially_destructible_v", "[optional]", bool,
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("true")
     {
@@ -259,7 +259,7 @@ TEMPLATE_TEST_CASE("optional: is_trivially_destructible_v", "[optional]", bool,
 
 TEMPLATE_TEST_CASE("optional: has_value", "[optional]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -282,7 +282,7 @@ TEMPLATE_TEST_CASE("optional: has_value", "[optional]", bool, etl::uint8_t, etl:
 
 TEMPLATE_TEST_CASE("optional: operator bool", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -305,7 +305,7 @@ TEMPLATE_TEST_CASE("optional: operator bool", "[optional]", bool, etl::uint8_t,
 
 TEMPLATE_TEST_CASE("optional: operator->()", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -328,7 +328,7 @@ TEMPLATE_TEST_CASE("optional: operator->()", "[optional]", bool, etl::uint8_t,
 
 TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -361,7 +361,7 @@ TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t
 
 TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -401,7 +401,7 @@ TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
 
 TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("empty")
     {
@@ -478,9 +478,44 @@ TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
     }
 }
 
+TEMPLATE_TEST_CASE("optional: make_optional(value_type)", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    auto opt_1 = etl::make_optional(TestType {42});
+    STATIC_REQUIRE(etl::is_same_v<typename decltype(opt_1)::value_type, TestType>);
+
+    auto value_2 = TestType {};
+    auto opt_2   = etl::make_optional(TestType {value_2});
+    STATIC_REQUIRE(etl::is_same_v<typename decltype(opt_2)::value_type, TestType>);
+
+    auto const value_3 = TestType {};
+    auto const opt_3   = etl::make_optional(TestType {value_3});
+    STATIC_REQUIRE(etl::is_same_v<typename decltype(opt_3)::value_type, TestType>);
+}
+
+TEMPLATE_TEST_CASE("optional: make_optional(args...)", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    struct S
+    {
+        TestType data_1;
+        int data_2;
+
+        S(TestType d1, int d2) : data_1 {d1}, data_2 {d2} { }
+    };
+
+    auto const opt = etl::make_optional<S>(TestType {42}, 1);
+    STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, S>);
+
+    CHECK(opt.value()->data_1 == TestType {42});
+    CHECK(opt.value()->data_2 == 1);
+}
+
 TEMPLATE_TEST_CASE("optional: deduction guide", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t, float, double)
 {
     SECTION("implicit")
     {

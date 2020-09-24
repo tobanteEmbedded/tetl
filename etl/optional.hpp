@@ -525,6 +525,24 @@ public:
 };
 
 /**
+ * @brief Creates an optional object from value.
+ */
+template <typename ValueType>
+constexpr auto make_optional(ValueType&& value) -> etl::optional<etl::decay_t<ValueType>>
+{
+    return etl::optional<etl::decay_t<ValueType>>(etl::forward<ValueType>(value));
+}
+
+/**
+ * @brief Creates an optional object constructed in-place from args...
+ */
+template <typename ValueType, typename... Args>
+constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
+{
+    return etl::optional<ValueType>(etl::in_place, etl::forward<Args>(args)...);
+}
+
+/**
  * @brief One deduction guide is provided for etl::optional to account for the edge cases
  * missed by the implicit deduction guides, in particular, non-copyable arguments and
  * array to pointer conversion.
