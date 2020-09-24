@@ -190,3 +190,34 @@ TEMPLATE_TEST_CASE("array: swap", "[array]", etl::uint8_t, etl::int8_t, etl::uin
     REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 0; }));
     REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 1; }));
 }
+
+TEMPLATE_TEST_CASE("array: comparsion", "[array]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("not equal")
+    {
+        etl::array<TestType, 3> lhs {TestType {1}, TestType {2}, TestType {3}};
+        etl::array<TestType, 3> rhs {TestType {7}, TestType {8}, TestType {9}};
+
+        CHECK_FALSE(lhs == rhs);
+        CHECK(lhs != rhs);
+        CHECK(lhs < rhs);
+        CHECK(lhs <= rhs);
+        CHECK_FALSE(lhs > rhs);
+        CHECK_FALSE(lhs >= rhs);
+    }
+
+    SECTION("equal")
+    {
+        etl::array<TestType, 3> lhs {TestType {1}, TestType {2}, TestType {3}};
+        etl::array<TestType, 3> rhs {TestType {1}, TestType {2}, TestType {3}};
+
+        CHECK(lhs == rhs);
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(lhs < rhs);
+        CHECK(lhs <= rhs);
+        CHECK_FALSE(lhs > rhs);
+        CHECK(lhs >= rhs);
+    }
+}

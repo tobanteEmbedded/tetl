@@ -31,6 +31,7 @@ DAMAGE.
 #ifndef TAETL_ARRAY_HPP
 #define TAETL_ARRAY_HPP
 
+#include "algorithm.hpp"
 #include "cassert.hpp"
 #include "definitions.hpp"
 #include "type_traits.hpp"
@@ -49,9 +50,8 @@ namespace etl
  * @todo Add aggregate-initialization.
  */
 template <class Type, etl::size_t Size>
-class array
+struct array
 {
-public:
     using value_type      = Type;
     using size_type       = etl::size_t;
     using difference_type = etl::ptrdiff_t;
@@ -233,10 +233,79 @@ public:
         for (auto i = size_type {0}; i < size(); ++i) { swap((*this)[i], other[i]); }
     }
 
-private:
-    Type _data[Size] {};
+    Type _data[Size];
 };
 
+/**
+ * @brief Checks if the contents of lhs and rhs are equal, that is, they have the same
+ * number of elements and each element in lhs compares equal with the element in rhs at
+ * the same position.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator==(etl::array<T, N> const& lhs,
+                                        etl::array<T, N> const& rhs) -> bool
+{
+    return etl::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
+/**
+ * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator!=(etl::array<T, N> const& lhs,
+                                        etl::array<T, N> const& rhs) -> bool
+{
+    return !(lhs == rhs);
+}
+
+/**
+ * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator<(etl::array<T, N> const& lhs,
+                                       etl::array<T, N> const& rhs) -> bool
+{
+    return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+/**
+ * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator<=(etl::array<T, N> const& lhs,
+                                        etl::array<T, N> const& rhs) -> bool
+{
+    return !(rhs < lhs);
+}
+
+/**
+ * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator>(etl::array<T, N> const& lhs,
+                                       etl::array<T, N> const& rhs) -> bool
+{
+    return rhs < lhs;
+}
+
+/**
+ * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
+ */
+template <class T, etl::size_t N>
+[[nodiscard]] constexpr auto operator>=(etl::array<T, N> const& lhs,
+                                        etl::array<T, N> const& rhs) -> bool
+{
+    return !(lhs < rhs);
+}
+
+/**
+ * @brief Deduction guide.
+ */
 template <class T, class... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
