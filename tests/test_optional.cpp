@@ -280,6 +280,52 @@ TEMPLATE_TEST_CASE("optional: has_value", "[optional]", bool, etl::uint8_t, etl:
     }
 }
 
+TEMPLATE_TEST_CASE("optional: operator bool", "[optional]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("empty")
+    {
+        auto opt = etl::optional<TestType> {};
+        CHECK_FALSE(static_cast<bool>(opt));
+
+        auto const c_opt = etl::optional<TestType> {};
+        CHECK_FALSE(static_cast<bool>(c_opt));
+    }
+
+    SECTION("with value")
+    {
+        auto opt = etl::optional<TestType> {TestType {1}};
+        CHECK(static_cast<bool>(opt));
+
+        auto const c_opt = etl::optional<TestType> {TestType {1}};
+        CHECK(static_cast<bool>(c_opt));
+    }
+}
+
+TEMPLATE_TEST_CASE("optional: operator->()", "[optional]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("empty")
+    {
+        auto opt = etl::optional<TestType> {};
+        CHECK(opt.operator->() == nullptr);
+
+        auto const c_opt = etl::optional<TestType> {};
+        CHECK(c_opt.operator->() == nullptr);
+    }
+
+    SECTION("with value")
+    {
+        auto opt = etl::optional<TestType> {TestType {1}};
+        CHECK_FALSE(opt.operator->() == nullptr);
+
+        auto const c_opt = etl::optional<TestType> {TestType {1}};
+        CHECK_FALSE(c_opt.operator->() == nullptr);
+    }
+}
+
 TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -291,6 +337,10 @@ TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t
 
         auto const c_opt = etl::optional<TestType> {};
         CHECK(c_opt.value_or(TestType {42}) == TestType {42});
+
+        CHECK(etl::optional<TestType> {}.value_or(TestType {42}) == TestType {42});
+        CHECK(etl::move(etl::optional<TestType> {etl::nullopt}).value_or(TestType {42})
+              == TestType {42});
     }
 
     SECTION("with value")
@@ -300,6 +350,12 @@ TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t
 
         auto const c_opt = etl::optional<TestType> {TestType {1}};
         CHECK(c_opt.value_or(TestType {42}) == TestType {1});
+
+        CHECK(etl::optional<TestType> {TestType {1}}.value_or(TestType {42})
+              == TestType {1});
+
+        CHECK(etl::move(etl::optional<TestType> {TestType {1}}).value_or(TestType {42})
+              == TestType {1});
     }
 }
 
