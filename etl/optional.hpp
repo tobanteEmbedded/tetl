@@ -477,7 +477,7 @@ public:
     template <class U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) const& -> value_type
     {
-        return bool(*this) ? this->value()
+        return has_value() ? this->value()
                            : static_cast<value_type>(etl::forward<U>(default_value));
     }
 
@@ -488,7 +488,7 @@ public:
     template <class U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) && -> value_type
     {
-        return bool(*this) ? etl::move(this->value())
+        return has_value() ? etl::move(this->value())
                            : static_cast<value_type>(etl::forward<U>(default_value));
     }
 
@@ -497,39 +497,16 @@ public:
      */
     [[nodiscard]] constexpr auto operator->() const -> const value_type*
     {
-        return &this->value();
+        return has_value() ? &this->value() : nullptr;
     }
 
     /**
      * @brief Returns a pointer to the contained value.
      */
-    [[nodiscard]] constexpr auto operator->() -> value_type* { return &this->value(); }
-
-    /**
-     * @brief Returns a reference to the contained value.
-     */
-    [[nodiscard]] constexpr auto operator*() const& -> const value_type&
+    [[nodiscard]] constexpr auto operator->() -> value_type*
     {
-        return this->value();
+        return has_value() ? &this->value() : nullptr;
     }
-
-    /**
-     * @brief Returns a reference to the contained value.
-     */
-    [[nodiscard]] constexpr auto operator*() & -> value_type& { return this->value(); }
-
-    /**
-     * @brief Returns a reference to the contained value.
-     */
-    [[nodiscard]] constexpr auto operator*() const&& -> const value_type&&
-    {
-        return this->value();
-    }
-
-    /**
-     * @brief Returns a reference to the contained value.
-     */
-    [[nodiscard]] constexpr auto operator*() && -> value_type&& { return this->value(); }
 
     /**
      * @brief Swaps the contents with those of other.
