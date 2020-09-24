@@ -525,6 +525,348 @@ public:
 };
 
 /**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator==(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return false; }
+    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return true; }
+    return *lhs.value() == *rhs.value();
+}
+
+/**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator!=(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return true; }
+    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return false; }
+    return *lhs.value() != *rhs.value();
+}
+
+/**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (!static_cast<bool>(rhs)) { return false; }
+    if (!static_cast<bool>(lhs)) { return true; }
+    return *lhs.value() < *rhs.value();
+}
+
+/**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator>(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (!static_cast<bool>(lhs)) { return false; }
+    if (!static_cast<bool>(rhs)) { return true; }
+    return *lhs.value() > *rhs.value();
+}
+
+/**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator<=(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (!static_cast<bool>(lhs)) { return true; }
+    if (!static_cast<bool>(rhs)) { return false; }
+    return *lhs.value() <= *rhs.value();
+}
+
+/**
+ * @brief Compares two optional objects, lhs and rhs.
+ */
+template <class T, class U>
+constexpr auto operator>=(optional<T> const& lhs, optional<U> const& rhs) -> bool
+{
+    if (!static_cast<bool>(rhs)) { return true; }
+    if (!static_cast<bool>(lhs)) { return false; }
+    return *lhs.value() >= *rhs.value();
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator==(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return !opt;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator==(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept
+    -> bool
+{
+    return !opt;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator!=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return static_cast<bool>(opt);
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator!=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept
+    -> bool
+{
+    return static_cast<bool>(opt);
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator<(optional<T> const& /*opt*/, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return false;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator<(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept
+    -> bool
+{
+    return static_cast<bool>(opt);
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator<=(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return !opt;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator<=(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept
+    -> bool
+{
+    return true;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator>(optional<T> const& opt, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return static_cast<bool>(opt);
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator>(etl::nullopt_t /*unused*/, optional<T> const& /*opt*/) noexcept
+    -> bool
+{
+    return false;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator>=(optional<T> const& /*opt*/, etl::nullopt_t /*unused*/) noexcept
+    -> bool
+{
+    return true;
+}
+
+/**
+ * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
+ * that does not contain a value.
+ */
+template <class T>
+constexpr auto operator>=(etl::nullopt_t /*unused*/, optional<T> const& opt) noexcept
+    -> bool
+{
+    return !opt;
+}
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator==(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator==(const T&, optional<U> const&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator!=(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator!=(const T&, optional<U> const&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator<(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator<(const T&, optional<U> const&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator>(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator>(const T&, optional<U> const&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator<=(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator<=(const T&, optional<U> const&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator>=(optional<T> const&, const U&) -> bool
+// {
+// }
+
+// /**
+//  * @brief Compares opt with a value. The values are compared (using the corresponding
+//  * operator of T) only if opt contains a value. Otherwise, opt is considered less than
+//  * value. If the corresponding two-way comparison expression between *opt and value is
+//  not
+//  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
+//  */
+// template <class T, class U>
+// constexpr auto operator>=(const T&, optional<U> const&) -> bool
+// {
+// }
+
+/**
  * @brief Creates an optional object from value.
  */
 template <typename ValueType>

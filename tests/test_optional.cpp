@@ -399,6 +399,173 @@ TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
     }
 }
 
+TEMPLATE_TEST_CASE("optional: operator== & operator!=", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> lhs_1 {};
+        etl::optional<TestType> rhs_1 {};
+        CHECK(lhs_1 == rhs_1);
+        CHECK_FALSE(lhs_1 != rhs_1);
+
+        etl::optional<TestType> lhs_2 {etl::nullopt};
+        etl::optional<TestType> rhs_2 {etl::nullopt};
+        CHECK(lhs_2 == rhs_2);
+        CHECK(lhs_2 == etl::nullopt);
+        CHECK(etl::nullopt == rhs_2);
+        CHECK_FALSE(lhs_2 != rhs_2);
+    }
+
+    SECTION("with value")
+    {
+        etl::optional<TestType> lhs_1 {TestType {42}};
+        etl::optional<TestType> rhs_1 {TestType {42}};
+        CHECK(lhs_1 == rhs_1);
+        CHECK_FALSE(lhs_1 != rhs_1);
+        CHECK_FALSE(lhs_1 == etl::nullopt);
+        CHECK_FALSE(etl::nullopt == lhs_1);
+
+        etl::optional<TestType> lhs_2 {TestType {0}};
+        etl::optional<TestType> rhs_2 {TestType {42}};
+        CHECK(lhs_2 != rhs_2);
+        CHECK(lhs_2 != etl::nullopt);
+        CHECK(etl::nullopt != lhs_2);
+        CHECK_FALSE(lhs_2 == rhs_2);
+
+        etl::optional<TestType> lhs_3 {TestType {0}};
+        etl::optional<TestType> rhs_3 {etl::nullopt};
+        CHECK(lhs_3 != rhs_3);
+        CHECK_FALSE(lhs_3 == rhs_3);
+    }
+}
+
+TEMPLATE_TEST_CASE("optional: operator<", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> lhs_1 {};
+        etl::optional<TestType> rhs_1 {};
+        CHECK_FALSE(lhs_1 < rhs_1);
+        CHECK_FALSE(etl::nullopt < rhs_1);
+        CHECK_FALSE(lhs_1 < etl::nullopt);
+
+        etl::optional<TestType> lhs_2 {etl::nullopt};
+        etl::optional<TestType> rhs_2 {etl::nullopt};
+        CHECK_FALSE(lhs_2 < rhs_2);
+    }
+
+    SECTION("with value")
+    {
+        etl::optional<TestType> lhs_1 {TestType {42}};
+        etl::optional<TestType> rhs_1 {TestType {42}};
+        CHECK_FALSE(lhs_1 < rhs_1);
+        CHECK_FALSE(lhs_1 < etl::nullopt);
+        CHECK(etl::nullopt < rhs_1);
+
+        etl::optional<TestType> lhs_2 {TestType {0}};
+        etl::optional<TestType> rhs_2 {TestType {42}};
+        CHECK(lhs_2 < rhs_2);
+
+        etl::optional<TestType> lhs_3 {etl::nullopt};
+        etl::optional<TestType> rhs_3 {TestType {42}};
+        CHECK(lhs_3 < rhs_3);
+
+        CHECK(etl::nullopt < rhs_3);
+        CHECK_FALSE(lhs_3 < etl::nullopt);
+    }
+}
+
+TEMPLATE_TEST_CASE("optional: operator>", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> lhs_1 {};
+        etl::optional<TestType> rhs_1 {};
+        CHECK_FALSE(lhs_1 > rhs_1);
+
+        etl::optional<TestType> lhs_2 {etl::nullopt};
+        etl::optional<TestType> rhs_2 {etl::nullopt};
+        CHECK_FALSE(lhs_2 > rhs_2);
+    }
+
+    SECTION("with value")
+    {
+        etl::optional<TestType> lhs_1 {TestType {42}};
+        etl::optional<TestType> rhs_1 {TestType {42}};
+        CHECK_FALSE(lhs_1 > rhs_1);
+
+        etl::optional<TestType> lhs_2 {TestType {42}};
+        etl::optional<TestType> rhs_2 {TestType {0}};
+        CHECK(lhs_2 > rhs_2);
+    }
+}
+
+TEMPLATE_TEST_CASE("optional: operator<=", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> lhs_1 {};
+        etl::optional<TestType> rhs_1 {};
+        CHECK(lhs_1 <= rhs_1);
+
+        etl::optional<TestType> lhs_2 {etl::nullopt};
+        etl::optional<TestType> rhs_2 {etl::nullopt};
+        CHECK(lhs_2 <= rhs_2);
+    }
+
+    SECTION("with value")
+    {
+        etl::optional<TestType> lhs_1 {TestType {42}};
+        etl::optional<TestType> rhs_1 {TestType {42}};
+        CHECK(lhs_1 <= rhs_1);
+
+        etl::optional<TestType> lhs_2 {TestType {0}};
+        etl::optional<TestType> rhs_2 {TestType {42}};
+        CHECK(lhs_2 <= rhs_2);
+
+        etl::optional<TestType> lhs_3 {etl::nullopt};
+        etl::optional<TestType> rhs_3 {TestType {42}};
+        CHECK(lhs_3 <= rhs_3);
+    }
+}
+
+TEMPLATE_TEST_CASE("optional: operator>=", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> lhs_1 {};
+        etl::optional<TestType> rhs_1 {};
+        CHECK(lhs_1 >= rhs_1);
+
+        etl::optional<TestType> lhs_2 {etl::nullopt};
+        etl::optional<TestType> rhs_2 {etl::nullopt};
+        CHECK(lhs_2 >= rhs_2);
+    }
+
+    SECTION("with value")
+    {
+        etl::optional<TestType> lhs_1 {TestType {42}};
+        etl::optional<TestType> rhs_1 {TestType {42}};
+        CHECK(lhs_1 >= rhs_1);
+        CHECK(rhs_1 >= lhs_1);
+
+        etl::optional<TestType> lhs_2 {TestType {42}};
+        etl::optional<TestType> rhs_2 {TestType {0}};
+        CHECK(lhs_2 >= rhs_2);
+        CHECK_FALSE(rhs_2 >= lhs_2);
+    }
+}
+
 TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double)
