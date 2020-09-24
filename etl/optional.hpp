@@ -187,7 +187,11 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
 
     optional_copy_base() = default;
 
-    optional_copy_base(const optional_copy_base& opt) { this->construct_from(opt); }
+    optional_copy_base(const optional_copy_base& opt)
+        : optional_storage_base<ValueType>::optional_storage_base {}
+    {
+        this->construct_from(opt);
+    }
 
     optional_copy_base(optional_copy_base&&) = default;
 
@@ -322,7 +326,7 @@ public:
     /**
      * @brief Constructs an object that does not contain a value.
      */
-    constexpr optional(etl::nullopt_t) noexcept { }
+    constexpr optional(etl::nullopt_t /*unused*/) noexcept { }
 
     /**
      * @brief Copy constructor.
@@ -335,6 +339,18 @@ public:
     constexpr optional(optional&&) noexcept(
         etl::is_nothrow_move_constructible_v<value_type>)
         = default;
+
+    /**
+     * @brief Constructs an optional object that contains a value, initialized as if
+     * direct-initializing.
+     */
+    template <typename... Args,
+              typename
+              = typename etl::enable_if_t<is_constructible_v<value_type, Args...>>>
+    constexpr explicit optional(etl::in_place_t /*unused*/, Args&&... arguments)
+        : base_type(in_place, etl::forward<Args>(arguments)...)
+    {
+    }
 
     /**
      * @brief Constructs an optional object that contains a value, initialized as if

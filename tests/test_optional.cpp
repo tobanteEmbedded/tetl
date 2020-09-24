@@ -44,6 +44,14 @@ TEMPLATE_TEST_CASE("optional: construct(value_type)", "[optional]", bool, etl::u
     CHECK(etl::optional<TestType> {TestType {1}}.has_value());
 }
 
+TEMPLATE_TEST_CASE("optional: construct(in_place, args...)", "[optional]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto opt = etl::optional<TestType> {etl::in_place, TestType {}};
+    CHECK(opt.has_value());
+}
+
 TEMPLATE_TEST_CASE("optional: construct(optional)", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -253,22 +261,46 @@ TEMPLATE_TEST_CASE("optional: has_value", "[optional]", bool, etl::uint8_t, etl:
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using Optional = etl::optional<TestType>;
+    SECTION("empty")
+    {
+        auto opt = etl::optional<TestType> {};
+        CHECK_FALSE(opt.has_value());
 
-    CHECK(Optional {TestType {1}}.has_value());
-    CHECK_FALSE(Optional {}.has_value());
-    CHECK_FALSE(Optional {etl::nullopt}.has_value());
+        auto const c_opt = etl::optional<TestType> {};
+        CHECK_FALSE(c_opt.has_value());
+    }
+
+    SECTION("with value")
+    {
+        auto opt = etl::optional<TestType> {TestType {1}};
+        CHECK(opt.has_value());
+
+        auto const c_opt = etl::optional<TestType> {TestType {1}};
+        CHECK(c_opt.has_value());
+    }
 }
 
 TEMPLATE_TEST_CASE("optional: value_or", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using Optional = etl::optional<TestType>;
+    SECTION("empty")
+    {
+        auto opt = etl::optional<TestType> {};
+        CHECK(opt.value_or(TestType {42}) == TestType {42});
 
-    CHECK(Optional {}.value_or(TestType {42}) == TestType {42});
-    CHECK(Optional {etl::nullopt}.value_or(TestType {42}) == TestType {42});
-    CHECK(Optional {TestType {1}}.value_or(TestType {42}) == TestType {1});
+        auto const c_opt = etl::optional<TestType> {};
+        CHECK(c_opt.value_or(TestType {42}) == TestType {42});
+    }
+
+    SECTION("with value")
+    {
+        auto opt = etl::optional<TestType> {TestType {1}};
+        CHECK(opt.value_or(TestType {42}) == TestType {1});
+
+        auto const c_opt = etl::optional<TestType> {TestType {1}};
+        CHECK(c_opt.value_or(TestType {42}) == TestType {1});
+    }
 }
 
 TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
@@ -283,12 +315,31 @@ TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
         CHECK_FALSE(opt.has_value());
     }
 
-    SECTION("with value")
+    SECTION("with trivial value")
     {
         etl::optional<TestType> opt {TestType {}};
         CHECK(opt.has_value());
         opt.reset();
         CHECK_FALSE(opt.has_value());
+    }
+
+    SECTION("with none-trivial value")
+    {
+        struct S
+        {
+            int& counter;
+
+            S(int& c) : counter {c} { }
+            ~S() { counter++; }
+        };
+
+        auto counter = 0;
+        etl::optional<S> opt {etl::in_place, counter};
+        CHECK(opt.has_value());
+        CHECK(counter == 0);
+        opt.reset();
+        CHECK_FALSE(opt.has_value());
+        CHECK(counter == 1);
     }
 }
 
