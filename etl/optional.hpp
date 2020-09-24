@@ -166,7 +166,7 @@ struct optional_destruct_base<ValueType, true>
 
     template <class... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t, Args&&... args)
-        : value_(static_cast<ValueType>(etl::forward<Args>(args))...), has_value_(true)
+        : value_(etl::forward<Args>(args)...), has_value_(true)
     {
     }
 
