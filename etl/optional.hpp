@@ -154,6 +154,25 @@ public:
     }
 
     /**
+     * @brief Perfect-forwarded assignment.
+     *
+     * @todo Cleanup & fix SFINAE.
+     */
+    template <class U = ValueT>
+    constexpr auto operator=(U&& value) -> etl::enable_if_t<            //
+        !etl::is_same_v<etl::remove_cvref_t<U>, etl::optional<ValueT>>  //
+            && etl::is_constructible_v<ValueT, U>                       //
+            && etl::is_assignable_v<ValueT&, U>,                        //
+        // && (!etl::is_scalar_v<ValueT> || !etl::is_same_v<std::decay_t<U>, ValueT>),
+        optional&>
+    {
+        if (has_value()) { reset(); }
+        this->data_ = etl::forward<U>(value);
+        has_value_  = true;
+        return *this;
+    }
+
+    /**
      * @brief Returns a pointer to the contained value.
      */
     [[nodiscard]] constexpr auto operator->() const -> const value_type*
@@ -262,6 +281,7 @@ public:
 private:
     union
     {
+        char null_state_;
         ValueT data_;
     };
 

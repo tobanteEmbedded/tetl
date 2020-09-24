@@ -46,6 +46,17 @@ TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool, etl::uint
     CHECK_FALSE(opt.has_value());
 }
 
+TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    etl::optional<TestType> opt {};
+    CHECK_FALSE(opt.has_value());
+    opt = TestType {42};
+    CHECK(opt.has_value());
+    CHECK(opt.value() == TestType {42});
+}
+
 TEMPLATE_TEST_CASE("optional: is_trivially_destructible_v", "[optional]", bool,
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
