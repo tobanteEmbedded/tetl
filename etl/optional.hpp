@@ -106,6 +106,21 @@ public:
     constexpr optional(optional const& other) = default;
 
     /**
+     * @brief Constructs an optional object that contains a value, initialized as if
+     * direct-initializing.
+     */
+    template <typename U = value_type,
+              typename   = typename etl::enable_if_t<conjunction_v<          //
+                  is_constructible<ValueT, U&&>,                           //
+                  negation<is_same<remove_cvref_t<U>, optional<ValueT>>>,  //
+                  negation<is_same<remove_cvref_t<U>, etl::in_place_t>>    //
+                  >>>
+    constexpr optional(U&& value)
+        : data_ {static_cast<value_type>(etl::forward<U>(value))}, has_value_ {true}
+    {
+    }
+
+    /**
      * @brief If *this contains a value before the call, the contained value is
      * destroyed by calling its destructor as if by value().T::~T(). *this does
      * not contain a value after this call.
@@ -147,7 +162,6 @@ public:
             {
                 (*this) = etl::move(*other);
             }
-            return *this;
         }
 
         return *this;

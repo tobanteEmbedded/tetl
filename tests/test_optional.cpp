@@ -28,12 +28,20 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("optional: construct", "[optional]", bool, etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("optional: construct()", "[optional]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     CHECK_FALSE(etl::optional<TestType> {}.has_value());
     CHECK_FALSE(etl::optional<TestType> {etl::nullopt}.has_value());
+}
+
+TEMPLATE_TEST_CASE("optional: construct(value_type)", "[optional]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    CHECK(etl::optional<TestType> {TestType {}}.has_value());
+    CHECK(etl::optional<TestType> {TestType {1}}.has_value());
 }
 
 TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool, etl::uint8_t,
@@ -55,6 +63,37 @@ TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]", etl::uint8_t
     opt = TestType {42};
     CHECK(opt.has_value());
     CHECK(opt.value() == TestType {42});
+}
+
+TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("None have values")
+    {
+        etl::optional<TestType> opt {};
+        CHECK_FALSE(opt.has_value());
+        opt = etl::optional<TestType> {};
+        CHECK_FALSE(opt.has_value());
+    }
+
+    SECTION("First has value")
+    {
+        etl::optional<TestType> opt {42};
+        CHECK(opt.has_value());
+        CHECK(opt.value() == TestType {42});
+        opt = etl::optional<TestType> {};
+        CHECK_FALSE(opt.has_value());
+    }
+
+    SECTION("Second has value")
+    {
+        etl::optional<TestType> opt {};
+        CHECK_FALSE(opt.has_value());
+        opt = etl::optional<TestType> {42};
+        CHECK(opt.has_value());
+        CHECK(opt.value() == TestType {42});
+    }
 }
 
 TEMPLATE_TEST_CASE("optional: is_trivially_destructible_v", "[optional]", bool,
