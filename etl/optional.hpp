@@ -32,6 +32,8 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 namespace etl
 {
 /**
@@ -53,70 +55,6 @@ inline constexpr auto nullopt = etl::nullopt_t {{}};
 
 namespace detail
 {
-template <bool CanCopy, bool CanMove>
-struct sfinae_ctor_base
-{
-};
-template <>
-struct sfinae_ctor_base<false, false>
-{
-    sfinae_ctor_base()                        = default;
-    sfinae_ctor_base(sfinae_ctor_base const&) = delete;
-    sfinae_ctor_base(sfinae_ctor_base&&)      = delete;
-    sfinae_ctor_base& operator=(sfinae_ctor_base const&) = default;
-    sfinae_ctor_base& operator=(sfinae_ctor_base&&) = default;
-};
-template <>
-struct sfinae_ctor_base<true, false>
-{
-    sfinae_ctor_base()                        = default;
-    sfinae_ctor_base(sfinae_ctor_base const&) = default;
-    sfinae_ctor_base(sfinae_ctor_base&&)      = delete;
-    sfinae_ctor_base& operator=(sfinae_ctor_base const&) = default;
-    sfinae_ctor_base& operator=(sfinae_ctor_base&&) = default;
-};
-template <>
-struct sfinae_ctor_base<false, true>
-{
-    sfinae_ctor_base()                        = default;
-    sfinae_ctor_base(sfinae_ctor_base const&) = delete;
-    sfinae_ctor_base(sfinae_ctor_base&&)      = default;
-    sfinae_ctor_base& operator=(sfinae_ctor_base const&) = default;
-    sfinae_ctor_base& operator=(sfinae_ctor_base&&) = default;
-};
-
-template <bool CanCopy, bool CanMove>
-struct sfinae_assign_base
-{
-};
-template <>
-struct sfinae_assign_base<false, false>
-{
-    sfinae_assign_base()                          = default;
-    sfinae_assign_base(sfinae_assign_base const&) = default;
-    sfinae_assign_base(sfinae_assign_base&&)      = default;
-    sfinae_assign_base& operator=(sfinae_assign_base const&) = delete;
-    sfinae_assign_base& operator=(sfinae_assign_base&&) = delete;
-};
-template <>
-struct sfinae_assign_base<true, false>
-{
-    sfinae_assign_base()                          = default;
-    sfinae_assign_base(sfinae_assign_base const&) = default;
-    sfinae_assign_base(sfinae_assign_base&&)      = default;
-    sfinae_assign_base& operator=(sfinae_assign_base const&) = default;
-    sfinae_assign_base& operator=(sfinae_assign_base&&) = delete;
-};
-template <>
-struct sfinae_assign_base<false, true>
-{
-    sfinae_assign_base()                          = default;
-    sfinae_assign_base(sfinae_assign_base const&) = default;
-    sfinae_assign_base(sfinae_assign_base&&)      = default;
-    sfinae_assign_base& operator=(sfinae_assign_base const&) = delete;
-    sfinae_assign_base& operator=(sfinae_assign_base&&) = default;
-};
-
 template <class ValueType, bool = etl::is_trivially_destructible<ValueType>::value>
 struct optional_destruct_base;
 
@@ -364,16 +302,12 @@ class optional : private detail::optional_move_assign_base<ValueType>,
 {
     using base_type = detail::optional_move_assign_base<ValueType>;
 
-    //   Disable the reference extension using this static assert.
     static_assert(!etl::is_same_v<etl::remove_cvref_t<ValueType>, etl::in_place_t>,
                   "instantiation of optional with in_place_t is ill-formed");
     static_assert(!etl::is_same_v<etl::remove_cvref_t<ValueType>, etl::nullopt_t>,
                   "instantiation of optional with nullopt_t is ill-formed");
     static_assert(!etl::is_reference_v<ValueType>,
                   "instantiation of optional with a reference type is ill-formed");
-    // static_assert(etl::is_destructible_v<ValueType>,
-    //               "instantiation of optional with a non-destructible type is
-    //               ill-formed");
     static_assert(!etl::is_array_v<ValueType>,
                   "instantiation of optional with an array type is ill-formed");
 
@@ -383,7 +317,7 @@ public:
     /**
      * @brief Constructs an object that does not contain a value.
      */
-    constexpr optional() noexcept { }
+    constexpr optional() noexcept = default;
 
     /**
      * @brief Constructs an object that does not contain a value.
@@ -398,7 +332,9 @@ public:
     /**
      * @brief Move constructor.
      */
-    constexpr optional(optional&&) = default;
+    constexpr optional(optional&&) noexcept(
+        etl::is_nothrow_move_constructible_v<value_type>)
+        = default;
 
     /**
      * @brief Constructs an optional object that contains a value, initialized as if

@@ -44,6 +44,80 @@ TEMPLATE_TEST_CASE("optional: construct(value_type)", "[optional]", bool, etl::u
     CHECK(etl::optional<TestType> {TestType {1}}.has_value());
 }
 
+TEMPLATE_TEST_CASE("optional: construct(optional)", "[optional]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> opt {};
+        CHECK_FALSE(opt.has_value());
+
+        // copy ctor
+        auto opt_1 {opt};
+        CHECK_FALSE(opt_1.has_value());
+
+        // move ctor
+        auto opt_2 {etl::move(opt)};
+        CHECK_FALSE(opt_2.has_value());
+
+        auto opt_3 {etl::optional<TestType> {}};
+        CHECK_FALSE(opt_3.has_value());
+    }
+
+    SECTION("with value")
+    {
+        auto opt = etl::optional<TestType> {TestType {42}};
+        CHECK(opt.has_value());
+        CHECK(opt.value() == TestType {42});
+
+        // copy ctor
+        auto opt_1 {opt};
+        CHECK(opt_1.has_value());
+        CHECK(opt_1.value() == TestType {42});
+
+        // move ctor
+        auto opt_2 {etl::move(opt)};
+        CHECK(opt_2.has_value());
+        CHECK(opt_2.value() == TestType {42});
+
+        auto opt_3 {etl::optional<TestType> {TestType {42}}};
+        CHECK(opt_3.has_value());
+        CHECK(opt_3.value() == TestType {42});
+    }
+}
+
+TEST_CASE("optional: construct() non_trivial", "[optional]")
+{
+    struct S
+    {
+        S() = default;
+        S(S const&) { }
+        S(S&&) { }
+        S& operator=(S const&) { return *this; }
+        S& operator=(S&&) { return *this; }
+        ~S() { }
+    };
+
+    STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<S>);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_move_assignable_v<S>);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_move_constructible_v<S>);
+
+    etl::optional<S> opt_1 {S {}};
+    CHECK(opt_1.has_value());
+
+    {
+        auto opt_2 {opt_1};
+        CHECK(opt_2.has_value());
+
+        auto const opt_3 {etl::move(opt_2)};
+        CHECK(opt_3.has_value());
+
+        auto const opt_4 {opt_3};
+        CHECK(opt_4.has_value());
+    }
+}
+
 TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -87,7 +161,13 @@ TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
     {
         etl::optional<TestType> opt {};
         CHECK_FALSE(opt.has_value());
+
+        // copy assignment
         opt = etl::optional<TestType> {};
+        CHECK_FALSE(opt.has_value());
+
+        // move assignment
+        opt = etl::move(etl::optional<TestType> {});
         CHECK_FALSE(opt.has_value());
     }
 
@@ -107,6 +187,40 @@ TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
         opt = etl::optional<TestType> {TestType {42}};
         CHECK(opt.has_value());
         CHECK(opt.value() == TestType {42});
+    }
+}
+
+TEST_CASE("optional: operator=() non_trivial", "[optional]")
+{
+    struct S
+    {
+        S() = default;
+        S(S const&) { }
+        S(S&&) { }
+        S& operator=(S const&) { return *this; }
+        S& operator=(S&&) { return *this; }
+        ~S() { }
+    };
+
+    STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<S>);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_move_assignable_v<S>);
+    STATIC_REQUIRE_FALSE(etl::is_trivially_move_constructible_v<S>);
+
+    etl::optional<S> opt_1 {};
+    CHECK_FALSE(opt_1.has_value());
+
+    opt_1 = S {};
+    CHECK(opt_1.has_value());
+
+    {
+        auto opt_2 = opt_1;
+        CHECK(opt_2.has_value());
+
+        auto const opt_3 = etl::move(opt_2);
+        CHECK(opt_3.has_value());
+
+        auto const opt_4 = opt_3;
+        CHECK(opt_4.has_value());
     }
 }
 
