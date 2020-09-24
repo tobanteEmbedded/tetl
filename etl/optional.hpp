@@ -431,43 +431,21 @@ public:
     using base_type::reset;
 
     /**
-     * @brief If *this contains a value, returns a reference to the contained
-     * value.
+     * @brief If the optional contains a value, returns a pointer. If empty the pointer
+     * will be null.
      */
-    [[nodiscard]] constexpr auto value() & -> value_type&
+    [[nodiscard]] constexpr auto value() -> value_type*
     {
-        ETL_ASSERT(this->has_value());
-        return this->get();
+        return this->has_value() ? &this->get() : nullptr;
     }
 
     /**
-     * @brief If *this contains a value, returns a reference to the contained
-     * value.
+     * @brief If the optional contains a value, returns a pointer. If empty the pointer
+     * will be null.
      */
-    [[nodiscard]] constexpr auto value() const& -> const value_type&
+    [[nodiscard]] constexpr auto value() const -> const value_type*
     {
-        ETL_ASSERT(this->has_value());
-        return this->get();
-    }
-
-    /**
-     * @brief If *this contains a value, returns a reference to the contained
-     * value.
-     */
-    [[nodiscard]] constexpr auto value() && -> value_type&&
-    {
-        ETL_ASSERT(this->has_value());
-        return this->get();
-    }
-
-    /**
-     * @brief If *this contains a value, returns a reference to the contained
-     * value.
-     */
-    [[nodiscard]] constexpr auto value() const&& -> const value_type&&
-    {
-        ETL_ASSERT(this->has_value());
-        return this->get();
+        return this->has_value() ? &this->get() : nullptr;
     }
 
     /**
@@ -477,7 +455,7 @@ public:
     template <class U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) const& -> value_type
     {
-        return has_value() ? this->value()
+        return has_value() ? *this->value()
                            : static_cast<value_type>(etl::forward<U>(default_value));
     }
 
@@ -488,25 +466,24 @@ public:
     template <class U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) && -> value_type
     {
-        return has_value() ? etl::move(this->value())
+        return has_value() ? etl::move(*this->value())
                            : static_cast<value_type>(etl::forward<U>(default_value));
     }
 
     /**
-     * @brief Returns a pointer to the contained value.
+     * @brief Returns a pointer to the contained value. The pointer is null if the
+     * optional is empty.
      */
     [[nodiscard]] constexpr auto operator->() const -> const value_type*
     {
-        return has_value() ? &this->value() : nullptr;
+        return this->value();
     }
 
     /**
-     * @brief Returns a pointer to the contained value.
+     * @brief Returns a pointer to the contained value. The pointer is null if the
+     * optional is empty.
      */
-    [[nodiscard]] constexpr auto operator->() -> value_type*
-    {
-        return has_value() ? &this->value() : nullptr;
-    }
+    [[nodiscard]] constexpr auto operator->() -> value_type* { return this->value(); }
 
     /**
      * @brief Swaps the contents with those of other.
