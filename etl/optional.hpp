@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_OPTIONAL_HPP
 #define TAETL_OPTIONAL_HPP
 
+#include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
 #include "etl/memory.hpp"
 #include "etl/type_traits.hpp"
@@ -529,6 +530,39 @@ public:
      * @brief Returns a reference to the contained value.
      */
     [[nodiscard]] constexpr auto operator*() && -> value_type&& { return this->value(); }
+
+    /**
+     * @brief Swaps the contents with those of other.
+     */
+    constexpr auto
+    swap(optional& other) noexcept(etl::is_nothrow_move_constructible_v<value_type>&&
+                                       etl::is_nothrow_swappable_v<value_type>) -> void
+    {
+        // If neither *this nor other contain a value, the function has no effect.
+
+        // If both *this and other contain values, the contained values are exchanged
+        if (this->has_value() == other.has_value())
+        {
+            using etl::swap;
+            if (this->has_value()) { swap(this->get(), other.get()); }
+            return;
+        }
+
+        // If only one of *this and other contains a value (let's call this object in
+        // and the other un), the contained value of un is direct-initialized from
+        // etl::move(*in), followed by destruction of the contained value of in as if
+        // by in->T::~T(). After this call, in does not contain a value; un contains a
+        // value.
+        if (this->has_value())
+        {
+            other.construct(etl::move(this->get()));
+            reset();
+            return;
+        }
+
+        this->construct(etl::move(other.get()));
+        other.reset();
+    }
 
     /**
      * @brief Implementation detail. Do not use!

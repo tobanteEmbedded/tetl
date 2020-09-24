@@ -343,6 +343,85 @@ TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
     }
 }
 
+TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("empty")
+    {
+        etl::optional<TestType> opt_1 {};
+        etl::optional<TestType> opt_2 {};
+        CHECK_FALSE(opt_1.has_value());
+        CHECK_FALSE(opt_2.has_value());
+
+        opt_1.swap(opt_2);
+        CHECK_FALSE(opt_1.has_value());
+        CHECK_FALSE(opt_2.has_value());
+    }
+
+    SECTION("with trivial value")
+    {
+        SECTION("One Side")
+        {
+            etl::optional<TestType> opt_1 {TestType {1}};
+            etl::optional<TestType> opt_2 {};
+            CHECK(opt_1.has_value());
+            CHECK_FALSE(opt_2.has_value());
+
+            opt_1.swap(opt_2);
+            CHECK_FALSE(opt_1.has_value());
+            CHECK(opt_2.has_value());
+            CHECK(opt_2.value() == 1);
+
+            etl::optional<TestType> opt_3 {};
+            etl::optional<TestType> opt_4 {TestType {1}};
+            CHECK_FALSE(opt_3.has_value());
+            CHECK(opt_4.has_value());
+
+            opt_3.swap(opt_4);
+            CHECK(opt_3.has_value());
+            CHECK(opt_3.value() == 1);
+            CHECK_FALSE(opt_4.has_value());
+        }
+
+        SECTION("Both Sides")
+        {
+            etl::optional<TestType> opt_1 {TestType {1}};
+            etl::optional<TestType> opt_2 {TestType {2}};
+            CHECK(opt_1.has_value());
+            CHECK(opt_2.has_value());
+
+            opt_1.swap(opt_2);
+            CHECK(opt_1.has_value());
+            CHECK(opt_2.has_value());
+            CHECK(opt_1.value() == 2);
+            CHECK(opt_2.value() == 1);
+        }
+    }
+
+    SECTION("with none-trivial value")
+    {
+        struct S
+        {
+            TestType data;
+
+            S(TestType c) : data {c} { }
+            ~S() { }
+        };
+
+        etl::optional<S> opt_1 {TestType {1}};
+        etl::optional<S> opt_2 {TestType {2}};
+        CHECK(opt_1.has_value());
+        CHECK(opt_2.has_value());
+
+        opt_1.swap(opt_2);
+        CHECK(opt_1.has_value());
+        CHECK(opt_2.has_value());
+        CHECK(opt_1.value().data == 2);
+        CHECK(opt_2.value().data == 1);
+    }
+}
+
 TEMPLATE_TEST_CASE("optional: deduction guide", "[optional]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
