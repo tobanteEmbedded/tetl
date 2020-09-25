@@ -30,6 +30,8 @@ DAMAGE.
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/tuple_size.hpp"
+
 namespace etl
 {
 /**

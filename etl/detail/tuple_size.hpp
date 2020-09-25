@@ -24,68 +24,45 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-/**
- * @example tuple.cpp
- */
+#ifndef TAETL_TUPLE_SIZE_HPP
+#define TAETL_TUPLE_SIZE_HPP
 
-#ifndef TAETL_TUPLE_HPP
-#define TAETL_TUPLE_HPP
-
-#include "etl/detail/tuple_size.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl
 {
-/**
- * @brief
- *
- * @todo Implement index_sequence & tuple_size
- */
+// class template tuple
 template <typename First, typename... Rest>
-struct tuple : public tuple<Rest...>
-{
-    tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
+struct tuple;
 
-    First first;
+template <class T>
+struct tuple_size; /*undefined*/
+
+template <class... Types>
+struct tuple_size<etl::tuple<Types...>>
+    : etl::integral_constant<etl::size_t, sizeof...(Types)>
+{
 };
 
-template <typename First>
-struct tuple<First>
+template <class T>
+struct tuple_size<const T> : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
-    tuple(First f) : first(f) { }
-
-    First first;
 };
 
-namespace detail
+template <class T>
+struct tuple_size<volatile T> : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
-template <int index, typename First, typename... Rest>
-struct get_impl
-{
-    static constexpr auto value(const tuple<First, Rest...>* t)
-        -> decltype(get_impl<index - 1, Rest...>::value(t))
-    {
-        return get_impl<index - 1, Rest...>::value(t);
-    }
 };
 
-template <typename First, typename... Rest>
-struct get_impl<0, First, Rest...>
+template <class T>
+struct tuple_size<const volatile T>
+    : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
-    static constexpr auto value(const tuple<First, Rest...>* t) -> First
-    {
-        return t->first;
-    }
 };
 
-}  // namespace detail
-
-template <int index, typename First, typename... Rest>
-constexpr auto get(const tuple<First, Rest...>& t)
-    -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
-{
-    return detail::get_impl<index, First, Rest...>::value(&t);
-}
+template <class T>
+inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
 
 }  // namespace etl
 
-#endif  // TAETL_TUPLE_HPP
+#endif  // TAETL_TUPLE_SIZE_HPP

@@ -31,10 +31,12 @@ DAMAGE.
 #ifndef TAETL_ARRAY_HPP
 #define TAETL_ARRAY_HPP
 
-#include "algorithm.hpp"
-#include "cassert.hpp"
-#include "definitions.hpp"
-#include "type_traits.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/cassert.hpp"
+#include "etl/definitions.hpp"
+#include "etl/type_traits.hpp"
+
+#include "etl/detail/tuple_size.hpp"
 
 namespace etl
 {
@@ -246,6 +248,32 @@ constexpr auto swap(etl::array<T, N>& lhs,
 {
     lhs.swap(rhs);
 }
+
+/**
+ * @brief Provides access to the number of elements in an etl::array as a compile-time
+ * constant expression.
+ */
+template <class T, etl::size_t N>
+struct tuple_size<etl::array<T, N>> : etl::integral_constant<etl::size_t, N>
+{
+};
+
+/**
+ * @brief Provides compile-time indexed access to the type of the elements of the array
+ * using tuple-like interface.
+ */
+template <etl::size_t I, class T>
+struct tuple_element;
+
+/**
+ * @brief Provides compile-time indexed access to the type of the elements of the array
+ * using tuple-like interface.
+ */
+template <etl::size_t I, class T, etl::size_t N>
+struct tuple_element<I, etl::array<T, N>>
+{
+    using type = T;
+};
 
 /**
  * @brief Checks if the contents of lhs and rhs are equal, that is, they have the same
