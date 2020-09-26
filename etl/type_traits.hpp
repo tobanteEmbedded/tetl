@@ -124,6 +124,47 @@ template <class T>
 using remove_extent_t = typename remove_extent<T>::type;
 
 /**
+ * @brief If T is a multidimensional array of some type X, provides the member typedef
+ * type equal to X, otherwise type is T. The behavior of a program that adds
+ * specializations for remove_all_extents is undefined.
+ */
+template <class T>
+struct remove_all_extents
+{
+    using type = T;
+};
+
+/**
+ * @brief If T is a multidimensional array of some type X, provides the member typedef
+ * type equal to X, otherwise type is T. The behavior of a program that adds
+ * specializations for remove_all_extents is undefined.
+ */
+template <class T>
+struct remove_all_extents<T[]>
+{
+    using type = typename remove_all_extents<T>::type;
+};
+
+/**
+ * @brief If T is a multidimensional array of some type X, provides the member typedef
+ * type equal to X, otherwise type is T. The behavior of a program that adds
+ * specializations for remove_all_extents is undefined.
+ */
+template <class T, etl::size_t N>
+struct remove_all_extents<T[N]>
+{
+    using type = typename remove_all_extents<T>::type;
+};
+
+/**
+ * @brief If T is a multidimensional array of some type X, provides the member typedef
+ * type equal to X, otherwise type is T. The behavior of a program that adds
+ * specializations for remove_all_extents is undefined.
+ */
+template <class T>
+using remove_all_extents_t = typename remove_all_extents<T>::type;
+
+/**
  * @brief Provides the member typedef type which is the same as T, except that
  * its topmost cv-qualifiers are removed. Removes the topmost const.
  * @details The behavior of a program that adds specializations for any of the
@@ -1059,8 +1100,92 @@ template <class T>
 inline constexpr bool is_nothrow_move_constructible_v
     = is_nothrow_move_constructible<T>::value;
 
+namespace detail
+{
+struct dummy_struct
+{
+    char data[2];
+};
+
+template <class>
+struct is_destructible_apply
+{
+    using type = int;
+};
+
+template <typename Type>
+struct is_destructor_wellformed
+{
+    template <typename Inner>
+    static auto test(
+        typename is_destructible_apply<decltype(etl::declval<Inner&>().~Inner())>::type)
+        -> char;
+
+    template <typename Inner>
+    static auto test(...) -> dummy_struct;
+
+    static const bool value = sizeof(test<Type>(12)) == sizeof(char);
+};
+
+template <class Type, bool>
+struct destructible_imp;
+
+template <class Type>
+struct destructible_imp<Type, false>
+    : public etl::integral_constant<
+          bool,
+          is_destructor_wellformed<typename etl::remove_all_extents<Type>::type>::value>
+{
+};
+
+template <class Type>
+struct destructible_imp<Type, true> : public etl::true_type
+{
+};
+
+template <class Type, bool>
+struct destructible_false;
+
+template <class Type>
+struct destructible_false<Type, false>
+    : public destructible_imp<Type, etl::is_reference<Type>::value>
+{
+};
+
+template <class Type>
+struct destructible_false<Type, true> : public etl::false_type
+{
+};
+
+}  // namespace detail
+
 /**
- * @brief
+ * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ */
+template <class Type>
+struct is_destructible
+    : public detail::destructible_false<Type, etl::is_function<Type>::value>
+{
+};
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ */
+template <class Type>
+struct is_destructible<Type[]> : public etl::false_type
+{
+};
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ */
+template <>
+struct is_destructible<void> : public etl::false_type
+{
+};
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <typename T>
 struct is_trivially_destructible : public bool_constant<TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
@@ -1069,6 +1194,50 @@ struct is_trivially_destructible : public bool_constant<TAETL_IS_TRIVIAL_DESTRUC
 
 template <typename T>
 inline constexpr auto is_trivially_destructible_v = is_trivially_destructible<T>::value;
+
+namespace detail
+{
+template <bool, class Type>
+struct is_nothrow_destructible_helper;
+
+template <typename Type>
+struct is_nothrow_destructible_helper<false, Type> : public false_type
+{
+};
+
+template <typename Type>
+struct is_nothrow_destructible_helper<true, Type>
+    : public integral_constant<bool, noexcept(etl::declval<Type>().~Type())>
+{
+};
+}  // namespace detail
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ */
+template <typename Type>
+struct is_nothrow_destructible
+    : public detail::is_nothrow_destructible_helper<is_destructible<Type>::value, Type>
+{
+};
+
+template <typename Type, size_t N>
+struct is_nothrow_destructible<Type[N]> : public is_nothrow_destructible<Type>
+{
+};
+
+template <typename Type>
+struct is_nothrow_destructible<Type&> : public true_type
+{
+};
+
+template <class Type>
+struct is_nothrow_destructible<Type&&> : public true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_nothrow_destructible_v = is_nothrow_destructible<T>::value;
 
 /**
  * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
