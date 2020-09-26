@@ -68,6 +68,19 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 }
 
 /**
+ * @brief Moves the elements in the range [first, last), to another range beginning at
+ * d_first, starting from first and proceeding to last - 1. After this operation the
+ * elements in the moved-from range will still contain valid values of the appropriate
+ * type, but not necessarily the same values as before the move.
+ */
+template <class InputIt, class OutputIt>
+constexpr auto move(InputIt first, InputIt last, OutputIt d_first) -> OutputIt
+{
+    while (first != last) { *d_first++ = ::etl::move(*first++); }
+    return d_first;
+}
+
+/**
  * @brief Applies the given function object f to the result of dereferencing
  * every iterator in the range [first, last] in order.
  */
