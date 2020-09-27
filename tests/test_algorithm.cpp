@@ -661,3 +661,47 @@ TEMPLATE_TEST_CASE("algorithm: is_sorted", "[algorithm]", etl::uint8_t, etl::int
         CHECK_FALSE(etl::is_sorted(begin(source), end(source), etl::greater<> {}));
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("char")
+    {
+        auto const v1 = etl::array {'a', 'b', 'c', 'f', 'h', 'x'};
+        auto const v2 = etl::array {'a', 'b', 'c'};
+        auto const v3 = etl::array {'a', 'c'};
+        auto const v4 = etl::array {'a', 'a', 'b'};
+        auto const v5 = etl::array {'g'};
+        auto const v6 = etl::array {'a', 'c', 'g'};
+        auto const v7 = etl::array {'A', 'B', 'C'};
+
+        auto no_case = [](char a, char b) { return std::tolower(a) < std::tolower(b); };
+
+        CHECK(etl::includes(v1.begin(), v1.end(), v2.begin(), v2.end()));
+        CHECK(etl::includes(v1.begin(), v1.end(), v3.begin(), v3.end()));
+        CHECK(etl::includes(v1.begin(), v1.end(), v7.begin(), v7.end(), no_case));
+
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v4.begin(), v4.end()));
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v5.begin(), v5.end()));
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v6.begin(), v6.end()));
+    }
+
+    SECTION("TestType")
+    {
+        using T       = TestType;
+        auto const v1 = etl::array {T(1), T(2), T(3), T(6), T(8), T(24)};
+        auto const v2 = etl::array {T(1), T(2), T(3)};
+        auto const v3 = etl::array {T(1), T(3)};
+        auto const v4 = etl::array {T(1), T(1), T(2)};
+        auto const v5 = etl::array {T(7)};
+        auto const v6 = etl::array {T(1), T(3), T(7)};
+
+        CHECK(etl::includes(v1.begin(), v1.end(), v2.begin(), v2.end()));
+        CHECK(etl::includes(v1.begin(), v1.end(), v3.begin(), v3.end()));
+
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v4.begin(), v4.end()));
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v5.begin(), v5.end()));
+        CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v6.begin(), v6.end()));
+    }
+}

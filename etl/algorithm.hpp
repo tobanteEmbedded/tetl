@@ -742,6 +742,39 @@ template <typename ForwardIter, typename Compare>
     return etl::is_sorted_until(first, last, comp) == last;
 }
 
+/**
+ * @brief Returns true if the sorted range [first2, last2) is a subsequence of the sorted
+ * range [first1, last1). Both ranges must be sorted with operator<.
+ */
+template <class InputIt1, class InputIt2>
+[[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                                      InputIt2 last2) -> bool
+{
+    for (; first2 != last2; ++first1)
+    {
+        if (first1 == last1 || *first2 < *first1) { return false; }
+        if (!(*first1 < *first2)) { ++first2; }
+    }
+    return true;
+}
+
+/**
+ * @brief Returns true if the sorted range [first2, last2) is a subsequence of the sorted
+ * range [first1, last1). Both ranges must be sorted with the given comparison function
+ * comp.
+ */
+template <class InputIt1, class InputIt2, class Compare>
+[[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                                      InputIt2 last2, Compare comp) -> bool
+{
+    for (; first2 != last2; ++first1)
+    {
+        if (first1 == last1 || comp(*first2, *first1)) { return false; }
+        if (!comp(*first1, *first2)) { ++first2; }
+    }
+    return true;
+}
+
 }  // namespace etl
 
 #endif  // TAETL_ALGORITHM_HPP
