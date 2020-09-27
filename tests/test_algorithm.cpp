@@ -619,3 +619,45 @@ TEMPLATE_TEST_CASE("algorithm: sort", "[algorithm]", etl::uint8_t, etl::int8_t,
         REQUIRE(source[3] == TestType {1});
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: is_sorted", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("already is_sorteded")
+    {
+        auto source = etl::array<TestType, 4> {
+            TestType {1},
+            TestType {2},
+            TestType {3},
+            TestType {4},
+        };
+
+        CHECK(etl::is_sorted(begin(source), end(source), etl::less<TestType> {}));
+    }
+
+    SECTION("reversed")
+    {
+        auto source = etl::array<TestType, 4> {
+            TestType {4},
+            TestType {3},
+            TestType {2},
+            TestType {1},
+        };
+
+        CHECK(etl::is_sorted(begin(source), end(source), etl::greater<> {}));
+        CHECK_FALSE(etl::is_sorted(begin(source), end(source)));
+    }
+
+    SECTION("custom compare")
+    {
+        auto source = etl::array<TestType, 4> {
+            TestType {1},
+            TestType {1},
+            TestType {56},
+            TestType {42},
+        };
+
+        CHECK_FALSE(etl::is_sorted(begin(source), end(source), etl::greater<> {}));
+    }
+}

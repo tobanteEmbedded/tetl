@@ -688,6 +688,60 @@ constexpr auto sort(RandomIt first, RandomIt last) -> void
     sort(first, last, etl::less<> {});
 }
 
+/**
+ * @brief Examines the range [first, last) and finds the largest range beginning at first
+ * in which the elements are sorted in non-descending order. Elements are compared using
+ * operator<.
+ */
+template <typename ForwardIter>
+[[nodiscard]] constexpr auto is_sorted_until(ForwardIter first, ForwardIter last)
+    -> ForwardIter
+{
+    return is_sorted_until(first, last, etl::less<>());
+}
+
+/**
+ * @brief Examines the range [first, last) and finds the largest range beginning at first
+ * in which the elements are sorted in non-descending order. Elements are compared using
+ * the given binary comparison function comp.
+ */
+template <typename ForwardIter, typename Compare>
+[[nodiscard]] constexpr auto is_sorted_until(ForwardIter first, ForwardIter last,
+                                             Compare comp) -> ForwardIter
+{
+    if (first != last)
+    {
+        ForwardIter next = first;
+        while (++next != last)
+        {
+            if (comp(*next, *first)) { return next; }
+            first = next;
+        }
+    }
+    return last;
+}
+
+/**
+ * @brief Checks if the elements in range [first, last) are sorted in non-descending
+ * order. Elements are compared using operator<.
+ */
+template <typename ForwardIter>
+[[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last) -> bool
+{
+    return etl::is_sorted_until(first, last) == last;
+}
+
+/**
+ * @brief Checks if the elements in range [first, last) are sorted in non-descending
+ * order. Elements are compared using the given binary comparison function comp.
+ */
+template <typename ForwardIter, typename Compare>
+[[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last, Compare comp)
+    -> bool
+{
+    return etl::is_sorted_until(first, last, comp) == last;
+}
+
 }  // namespace etl
 
 #endif  // TAETL_ALGORITHM_HPP
