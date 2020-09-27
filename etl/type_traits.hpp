@@ -140,14 +140,14 @@ inline constexpr bool negation_v = negation<B>::value;
 namespace detail
 {
 template <class T>
-auto try_add_lvalue_reference(int) -> etl::type_identity<T&>;
+auto try_add_lvalue_reference(int) -> ::etl::type_identity<T&>;
 template <class T>
-auto try_add_lvalue_reference(...) -> etl::type_identity<T>;
+auto try_add_lvalue_reference(...) -> ::etl::type_identity<T>;
 
 template <class T>
-auto try_add_rvalue_reference(int) -> etl::type_identity<T&&>;
+auto try_add_rvalue_reference(int) -> ::etl::type_identity<T&&>;
 template <class T>
-auto try_add_rvalue_reference(...) -> etl::type_identity<T>;
+auto try_add_rvalue_reference(...) -> ::etl::type_identity<T>;
 
 }  // namespace detail
 
@@ -316,7 +316,7 @@ using remove_volatile_t = typename remove_volatile<T>::type;
 template <typename Type>
 struct remove_cv
 {
-    using type = typename remove_const<typename remove_volatile<Type>::type>::type;
+    using type = remove_const_t<remove_volatile_t<Type>>;
 };
 
 template <class T>
@@ -397,9 +397,9 @@ using remove_pointer_t = typename remove_pointer<T>::type;
 namespace detail
 {
 template <class T>
-auto try_add_pointer(int) -> etl::type_identity<typename etl::remove_reference<T>::type*>;
+auto try_add_pointer(int) -> ::etl::type_identity<::etl::remove_reference_t<T>*>;
 template <class T>
-auto try_add_pointer(...) -> etl::type_identity<T>;
+auto try_add_pointer(...) -> ::etl::type_identity<T>;
 
 }  // namespace detail
 
@@ -491,86 +491,83 @@ struct is_void : is_same<void, typename remove_cv<T>::type>
 template <class T>
 inline constexpr bool is_void_v = is_void<T>::value;
 
-/// @cond
 namespace detail
 {
 template <typename>
-struct is_integral_helper : public false_type
+struct is_integral_helper : public ::etl::false_type
 {
 };
 
 template <>
-struct is_integral_helper<bool> : public true_type
+struct is_integral_helper<bool> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<char> : public true_type
+struct is_integral_helper<char> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<signed char> : public true_type
+struct is_integral_helper<signed char> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<unsigned char> : public true_type
+struct is_integral_helper<unsigned char> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<char16_t> : public true_type
+struct is_integral_helper<char16_t> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<char32_t> : public true_type
+struct is_integral_helper<char32_t> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<short> : public true_type
+struct is_integral_helper<short> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<unsigned short> : public true_type
+struct is_integral_helper<unsigned short> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<int> : public true_type
+struct is_integral_helper<int> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<unsigned int> : public true_type
+struct is_integral_helper<unsigned int> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<long> : public true_type
+struct is_integral_helper<long> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<unsigned long> : public true_type
+struct is_integral_helper<unsigned long> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<long long> : public true_type
+struct is_integral_helper<long long> : public ::etl::true_type
 {
 };
 
 template <>
-struct is_integral_helper<unsigned long long> : public true_type
+struct is_integral_helper<unsigned long long> : public ::etl::true_type
 {
 };
 }  // namespace detail
-
-/// @endcond
 
 // is_integral
 template <typename Type>
@@ -676,10 +673,9 @@ using make_unsigned_t = typename make_unsigned<T>::type;
  */
 template <class T>
 struct is_floating_point
-    : etl::integral_constant<
-          bool, etl::is_same<float, typename etl::remove_cv<T>::type>::value
-                    || etl::is_same<double, typename etl::remove_cv<T>::type>::value
-                    || etl::is_same<long double, typename etl::remove_cv<T>::type>::value>
+    : etl::bool_constant<etl::is_same<float, etl::remove_cv_t<T>>::value
+                         || etl::is_same<double, etl::remove_cv_t<T>>::value
+                         || etl::is_same<long double, etl::remove_cv_t<T>>::value>
 {
 };
 
@@ -729,9 +725,8 @@ struct is_empty_test_struct_2
 };
 
 template <class T, bool = ::etl::is_class<T>::value>
-struct is_empty_helper
-    : public ::etl::integral_constant<bool, sizeof(is_empty_test_struct_1<T>)
-                                                == sizeof(is_empty_test_struct_2)>
+struct is_empty_helper : public ::etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
+                                                     == sizeof(is_empty_test_struct_2)>
 {
 };
 
@@ -830,11 +825,11 @@ inline constexpr bool is_function_v = is_function<T>::value;
 namespace detail
 {
 template <class T>
-struct is_pointer_helper : etl::false_type
+struct is_pointer_helper : ::etl::false_type
 {
 };
 template <class T>
-struct is_pointer_helper<T*> : etl::true_type
+struct is_pointer_helper<T*> : ::etl::true_type
 {
 };
 }  // namespace detail
@@ -917,12 +912,12 @@ inline constexpr bool is_union_v = is_union<T>::value;
 namespace detail
 {
 template <class T>
-struct is_member_pointer_helper : etl::false_type
+struct is_member_pointer_helper : ::etl::false_type
 {
 };
 
 template <class T, class U>
-struct is_member_pointer_helper<T U::*> : etl::true_type
+struct is_member_pointer_helper<T U::*> : ::etl::true_type
 {
 };
 }  // namespace detail
@@ -934,8 +929,7 @@ struct is_member_pointer_helper<T U::*> : etl::true_type
  * is_member_pointer or is_member_pointer_v (since C++17) is undefined.
  */
 template <class T>
-struct is_member_pointer
-    : detail::is_member_pointer_helper<typename etl::remove_cv<T>::type>
+struct is_member_pointer : detail::is_member_pointer_helper<etl::remove_cv_t<T>>
 {
 };
 
@@ -945,12 +939,12 @@ inline constexpr bool is_member_pointer_v = is_member_pointer<T>::value;
 namespace detail
 {
 template <class T>
-struct is_member_function_pointer_helper : etl::false_type
+struct is_member_function_pointer_helper : ::etl::false_type
 {
 };
 
 template <class T, class U>
-struct is_member_function_pointer_helper<T U::*> : etl::is_function<T>
+struct is_member_function_pointer_helper<T U::*> : ::etl::is_function<T>
 {
 };
 
@@ -963,7 +957,7 @@ struct is_member_function_pointer_helper<T U::*> : etl::is_function<T>
  */
 template <class T>
 struct is_member_function_pointer
-    : detail::is_member_function_pointer_helper<typename etl::remove_cv<T>::type>
+    : detail::is_member_function_pointer_helper<etl::remove_cv_t<T>>
 {
 };
 
@@ -977,8 +971,8 @@ inline constexpr bool is_member_function_pointer_v = is_member_function_pointer<
  */
 template <class T>
 struct is_member_object_pointer
-    : etl::bool_constant<etl::is_member_pointer<T>::value
-                         && !etl::is_member_function_pointer<T>::value>
+    : etl::bool_constant<
+          etl::is_member_pointer_v<T> && !etl::is_member_function_pointer_v<T>>
 {
 };
 
@@ -994,7 +988,7 @@ inline constexpr bool is_member_object_pointer_v = is_member_object_pointer<T>::
  */
 template <class T>
 struct is_arithmetic
-    : etl::bool_constant<etl::is_integral<T>::value || etl::is_floating_point<T>::value>
+    : etl::bool_constant<etl::is_integral_v<T> || etl::is_floating_point_v<T>>
 {
 };
 
@@ -1022,9 +1016,9 @@ inline constexpr bool is_fundamental_v = is_fundamental<T>::value;
  */
 template <class T>
 struct is_scalar
-    : etl::bool_constant<etl::is_arithmetic<T>::value || etl::is_enum<T>::value
-                         || etl::is_pointer<T>::value || etl::is_member_pointer<T>::value
-                         || etl::is_null_pointer<T>::value>
+    : etl::bool_constant<
+          etl::is_arithmetic_v<
+              T> || etl::is_enum_v<T> || etl::is_pointer_v<T> || etl::is_member_pointer_v<T> || etl::is_null_pointer_v<T>>
 {
 };
 
@@ -1038,8 +1032,9 @@ inline constexpr bool is_scalar_v = is_scalar<T>::value;
  */
 template <class T>
 struct is_object
-    : etl::bool_constant<etl::is_scalar<T>::value || etl::is_array<T>::value
-                         || etl::is_union<T>::value || etl::is_class<T>::value>
+    : etl::bool_constant<
+          etl::is_scalar_v<
+              T> || etl::is_array_v<T> || etl::is_union_v<T> || etl::is_class_v<T>>
 {
 };
 
@@ -1053,7 +1048,7 @@ inline constexpr bool is_object_v = is_object<T>::value;
  * the member constant value equal true. For any other type, value is false.
  */
 template <class T>
-struct is_compound : etl::bool_constant<!etl::is_fundamental<T>::value>
+struct is_compound : etl::bool_constant<!etl::is_fundamental_v<T>>
 {
 };
 
@@ -1099,13 +1094,13 @@ inline constexpr bool is_unbounded_array_v = is_unbounded_array<T>::value;
 namespace detail
 {
 template <class, class T, class... Args>
-struct is_constructible_helper : etl::false_type
+struct is_constructible_helper : ::etl::false_type
 {
 };
 
 template <class T, class... Args>
-struct is_constructible_helper<void_t<decltype(T(declval<Args>()...))>, T, Args...>
-    : etl::true_type
+struct is_constructible_helper<::etl::void_t<decltype(T(::etl::declval<Args>()...))>, T,
+                               Args...> : ::etl::true_type
 {
 };
 }  // namespace detail
@@ -1210,11 +1205,9 @@ inline constexpr bool is_nothrow_default_constructible_v
     = is_nothrow_default_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
- or
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
- * member constant value equal to false. Otherwise, provides a member
- constant
+ * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_constructible<T, const T&>::value.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
@@ -1223,14 +1216,12 @@ inline constexpr bool is_nothrow_default_constructible_v
  * incomplete type, and that instantiation could yield a different result if
  * that type were hypothetically completed, the behavior is undefined.
  *
- * The behavior of a program that adds specializations for any of the
- templates
+ * The behavior of a program that adds specializations for any of the templates
  * described on this page is undefined.
  */
 template <class T>
 struct is_copy_constructible
-    : etl::is_constructible<
-          T, typename etl::add_lvalue_reference<typename etl::add_const<T>::type>::type>
+    : etl::is_constructible<T, etl::add_lvalue_reference_t<etl::add_const_t<T>>>
 {
 };
 
@@ -1251,8 +1242,7 @@ inline constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
  */
 template <class T>
 struct is_trivially_copy_constructible
-    : etl::is_trivially_constructible<
-          T, typename etl::add_lvalue_reference_t<typename etl::add_const_t<T>>>
+    : etl::is_trivially_constructible<T, etl::add_lvalue_reference_t<etl::add_const_t<T>>>
 {
 };
 
@@ -1269,14 +1259,12 @@ inline constexpr bool is_trivially_copy_constructible_v
  * incomplete type, and that instantiation could yield a different result if
  * that type were hypothetically completed, the behavior is undefined.
  *
- * The behavior of a program that adds specializations for any of the
- templates
+ * The behavior of a program that adds specializations for any of the templates
  * described on this page is undefined.
  */
 template <class T>
 struct is_nothrow_copy_constructible
-    : etl::is_nothrow_constructible<
-          T, typename etl::add_lvalue_reference<typename etl::add_const<T>::type>::type>
+    : etl::is_nothrow_constructible<T, etl::add_lvalue_reference_t<etl::add_const_t<T>>>
 {
 };
 
@@ -1291,8 +1279,7 @@ inline constexpr bool is_nothrow_copy_constructible_v
  * value equal to etl::is_constructible<T, T&&>::value.
  */
 template <class T>
-struct is_move_constructible
-    : etl::is_constructible<T, typename etl::add_rvalue_reference<T>::type>
+struct is_move_constructible : etl::is_constructible<T, etl::add_rvalue_reference_t<T>>
 {
 };
 
@@ -1300,16 +1287,14 @@ template <class T>
 inline constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
- or
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
- * member constant value equal to false. Otherwise, provides a member
- constant
+ * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_trivially_constructible<T, T&&>::value.
  */
 template <class T>
 struct is_trivially_move_constructible
-    : etl::is_trivially_constructible<T, typename etl::add_rvalue_reference<T>::type>
+    : etl::is_trivially_constructible<T, etl::add_rvalue_reference_t<T>>
 {
 };
 
@@ -1318,16 +1303,14 @@ inline constexpr bool is_trivially_move_constructible_v
     = is_trivially_move_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void
- or
+ * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
- * member constant value equal to false. Otherwise, provides a member
- constant
+ * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_nothrow_constructible<T, T&&>::value.
  */
 template <class T>
 struct is_nothrow_move_constructible
-    : etl::is_nothrow_constructible<T, typename etl::add_rvalue_reference<T>::type>
+    : etl::is_nothrow_constructible<T, etl::add_rvalue_reference_t<T>>
 {
 };
 
@@ -1337,19 +1320,13 @@ inline constexpr bool is_nothrow_move_constructible_v
 
 namespace detail
 {
-template <typename T>
-struct is_array_unknown_bounds
-    : public etl::conjunction<etl::is_array<T>, etl::negation<etl::extent<T>>>
-{
-};
-
 struct try_is_destructible_impl
 {
-    template <typename T, typename = decltype(etl::declval<T&>().~T())>
-    static auto test(int) -> etl::true_type;
+    template <typename T, typename = decltype(::etl::declval<T&>().~T())>
+    static auto test(int) -> ::etl::true_type;
 
     template <typename>
-    static auto test(...) -> etl::false_type;
+    static auto test(...) -> ::etl::false_type;
 };
 
 template <typename T>
@@ -1359,24 +1336,24 @@ struct is_destructible_impl : public try_is_destructible_impl
 };
 
 template <typename T,
-          bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>,
-                                  is_array_unknown_bounds<T>>::value,
-          bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
+          bool = ::etl::disjunction<::etl::is_void<T>, ::etl::is_function<T>,
+                                    ::etl::is_unbounded_array<T>>::value,
+          bool = ::etl::disjunction<::etl::is_reference<T>, ::etl::is_scalar<T>>::value>
 struct is_destructible_safe;
 
 template <typename T>
 struct is_destructible_safe<T, false, false>
-    : public is_destructible_impl<typename etl::remove_all_extents<T>::type>::type
+    : public is_destructible_impl<typename ::etl::remove_all_extents<T>::type>::type
 {
 };
 
 template <typename T>
-struct is_destructible_safe<T, true, false> : public etl::false_type
+struct is_destructible_safe<T, true, false> : public ::etl::false_type
 {
 };
 
 template <typename T>
-struct is_destructible_safe<T, false, true> : public etl::true_type
+struct is_destructible_safe<T, false, true> : public ::etl::true_type
 {
 };
 
@@ -1429,13 +1406,13 @@ template <bool, class Type>
 struct is_nothrow_destructible_helper;
 
 template <typename Type>
-struct is_nothrow_destructible_helper<false, Type> : public false_type
+struct is_nothrow_destructible_helper<false, Type> : public ::etl::false_type
 {
 };
 
 template <typename Type>
 struct is_nothrow_destructible_helper<true, Type>
-    : public integral_constant<bool, noexcept(etl::declval<Type>().~Type())>
+    : public ::etl::bool_constant<noexcept(::etl::declval<Type>().~Type())>
 {
 };
 }  // namespace detail
@@ -1511,7 +1488,7 @@ namespace detail
 {
 template <typename T, typename U>
 struct is_nothrow_assignable_helper
-    : public etl::bool_constant<noexcept(declval<T>() = declval<U>())>
+    : public ::etl::bool_constant<noexcept(::etl::declval<T>() = ::etl::declval<U>())>
 {
 };
 }  // namespace detail
@@ -1521,7 +1498,6 @@ struct is_nothrow_assignable_helper
  * unevaluated context, provides the member constant value equal true. Otherwise, value is
  * false. Access checks are performed as if from a context unrelated to either type.
  */
-
 template <typename T, typename U>
 struct is_nothrow_assignable
     : public etl::integral_constant<
@@ -1683,15 +1659,15 @@ struct nat
     ~nat()                     = delete;
 };
 
-using etl::swap;
+using ::etl::swap;
 template <class T>
 void swap(nat a, nat b) noexcept;
 
 template <class T>
 struct is_swappable_helper
 {
-    using type              = decltype(swap(etl::declval<T&>(), etl::declval<T&>()));
-    static const bool value = !is_same<type, nat>::value;
+    using type              = decltype(swap(::etl::declval<T&>(), ::etl::declval<T&>()));
+    static const bool value = !::etl::is_same_v<type, nat>;
 };
 
 }  // namespace detail
@@ -1713,12 +1689,12 @@ inline constexpr bool is_swappable_v = is_swappable<T>::value;
 namespace detail
 {
 template <bool, class T>
-struct is_nothrow_swappable_helper
-    : public bool_constant<noexcept(swap(etl::declval<T&>(), etl::declval<T&>()))>
+struct is_nothrow_swappable_helper : public ::etl::bool_constant<noexcept(swap(
+                                         ::etl::declval<T&>(), ::etl::declval<T&>()))>
 {
 };
 template <class T>
-struct is_nothrow_swappable_helper<false, T> : public false_type
+struct is_nothrow_swappable_helper<false, T> : public ::etl::false_type
 {
 };
 }  // namespace detail
@@ -1804,13 +1780,13 @@ inline constexpr bool is_trivial_v = is_trivial<T>::value;
 
 namespace detail
 {
-template <typename T, bool = etl::is_arithmetic<T>::value>
-struct is_unsigned : etl::bool_constant<T(0) < T(-1)>
+template <typename T, bool = ::etl::is_arithmetic_v<T>>
+struct is_unsigned : ::etl::bool_constant<T(0) < T(-1)>
 {
 };
 
 template <typename T>
-struct is_unsigned<T, false> : etl::false_type
+struct is_unsigned<T, false> : ::etl::false_type
 {
 };
 }  // namespace detail
@@ -1833,13 +1809,13 @@ inline constexpr bool is_unsigned_v = is_unsigned<T>::value;
 
 namespace detail
 {
-template <typename T, bool = etl::is_arithmetic<T>::value>
-struct is_signed : etl::bool_constant<T(-1) < T(0)>
+template <typename T, bool = ::etl::is_arithmetic_v<T>>
+struct is_signed : ::etl::bool_constant<T(-1) < T(0)>
 {
 };
 
 template <typename T>
-struct is_signed<T, false> : etl::false_type
+struct is_signed<T, false> : ::etl::false_type
 {
 };
 }  // namespace detail
@@ -1861,12 +1837,12 @@ inline constexpr bool is_signed_v = is_signed<T>::value;
 namespace detail
 {
 template <typename B>
-auto test_pre_ptr_convertible(const volatile B*) -> etl::true_type;
+auto test_pre_ptr_convertible(const volatile B*) -> ::etl::true_type;
 template <typename>
-auto test_pre_ptr_convertible(const volatile void*) -> etl::false_type;
+auto test_pre_ptr_convertible(const volatile void*) -> ::etl::false_type;
 
 template <typename, typename>
-auto test_pre_is_base_of(...) -> etl::true_type;
+auto test_pre_is_base_of(...) -> ::etl::true_type;
 template <typename B, typename D>
 auto test_pre_is_base_of(int)
     -> decltype(test_pre_ptr_convertible<B>(static_cast<D*>(nullptr)));
@@ -1980,7 +1956,7 @@ struct common_type<T> : common_type<T, T>
 namespace detail
 {
 template <class T1, class T2>
-using cond_t = decltype(false ? etl::declval<T1>() : etl::declval<T2>());
+using cond_t = decltype(false ? ::etl::declval<T1>() : ::etl::declval<T2>());
 
 template <class T1, class T2, class = void>
 struct common_type_2_impl
@@ -1990,7 +1966,7 @@ struct common_type_2_impl
 template <class T1, class T2>
 struct common_type_2_impl<T1, T2, void_t<cond_t<T1, T2>>>
 {
-    using type = typename etl::decay<cond_t<T1, T2>>::type;
+    using type = ::etl::decay_t<cond_t<T1, T2>>;
 };
 
 template <class AlwaysVoid, class T1, class T2, class... R>
@@ -2025,18 +2001,18 @@ using common_type_t = typename common_type<T...>::type;
 namespace detail
 {
 template <class>
-using true_type_for = etl::true_type;
+using true_type_for = ::etl::true_type;
 
 template <class T>
 auto test_returnable(int) -> true_type_for<T()>;
 template <class>
-auto test_returnable(...) -> etl::false_type;
+auto test_returnable(...) -> ::etl::false_type;
 
 template <class From, class To>
 auto test_nonvoid_convertible(int)
-    -> true_type_for<decltype(etl::declval<void (&)(To)>()(etl::declval<From>()))>;
+    -> true_type_for<decltype(::etl::declval<void (&)(To)>()(::etl::declval<From>()))>;
 template <class, class>
-auto test_nonvoid_convertible(...) -> etl::false_type;
+auto test_nonvoid_convertible(...) -> ::etl::false_type;
 
 }  // namespace detail
 
