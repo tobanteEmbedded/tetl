@@ -856,6 +856,40 @@ struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type>
 template <class T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;
 
+/**
+ * @brief Checks whether T is a lvalue reference type. Provides the member constant value
+ * which is equal to true, if T is a lvalue reference type. Otherwise, value is equal to
+ * false.
+ */
+template <class T>
+struct is_lvalue_reference : etl::false_type
+{
+};
+template <class T>
+struct is_lvalue_reference<T&> : etl::true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
+
+/**
+ * @brief Checks whether T is a rvalue reference type. Provides the member constant value
+ * which is equal to true, if T is a rvalue reference type. Otherwise, value is equal to
+ * false.
+ */
+template <class T>
+struct is_rvalue_reference : etl::false_type
+{
+};
+template <class T>
+struct is_rvalue_reference<T&&> : etl::true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
+
 template <class T>
 struct is_class : etl::bool_constant<TAETL_IS_CLASS(T)>
 {
