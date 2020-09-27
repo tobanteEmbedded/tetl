@@ -27,10 +27,29 @@ DAMAGE.
 #ifndef TAETL_CASSERT_HPP
 #define TAETL_CASSERT_HPP
 
-#include <assert.h>
-
-#define ETL_ASSERT(X)                                                                    \
+#ifndef NDEBUG
+#define ETL_ASSERT(Expression)                                                           \
+    assertion_handler(#Expression, Expression, __FILE__, __LINE__, nullptr)
+#else
+#define ETL_ASSERT(Expression)                                                           \
     do {                                                                                 \
     } while (false)
+#endif
+
+/**
+ * @todo Maybe create a constexpr version of ETL_ASSERT. Otherwise the assertion_handler
+ * makes no real sense, because printing is not supported in constexpr context.
+ */
+inline constexpr auto
+assertion_handler([[maybe_unused]] const char* expr_str, [[maybe_unused]] bool expr,
+                  [[maybe_unused]] const char* file, [[maybe_unused]] int line,
+                  [[maybe_unused]] const char* msg = nullptr) -> void
+{
+    // I/O is not available, since this function has to work in a constexpr context.
+    // Throwing is legal as long as the throwing code is never executed.
+#ifndef NDEBUG
+    if (!expr) { throw 1; }
+#endif
+}
 
 #endif  // TAETL_CASSERT_HPP
