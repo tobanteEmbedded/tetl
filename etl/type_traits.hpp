@@ -63,6 +63,80 @@ struct type_identity
     using type = T;
 };
 
+/**
+ * @brief Provides member typedef type, which is defined as T if B is true at
+ * compile time, or as F if B is false.
+ */
+template <bool B, class T, class F>
+struct conditional
+{
+    using type = T;
+};
+
+template <class T, class F>
+struct conditional<false, T, F>
+{
+    using type = F;
+};
+
+template <bool B, class T, class F>
+using conditional_t = typename conditional<B, T, F>::type;
+
+/**
+ * @brief Forms the logical conjunction of the type traits B..., effectively performing a
+ * logical AND on the sequence of traits.
+ */
+template <typename...>
+struct conjunction : etl::true_type
+{
+};
+
+template <typename B1>
+struct conjunction<B1> : B1
+{
+};
+
+template <typename B1, typename... Bn>
+struct conjunction<B1, Bn...>
+    : etl::conditional_t<bool(B1::value), conjunction<Bn...>, B1>
+{
+};
+
+template <class... B>
+inline constexpr bool conjunction_v = conjunction<B...>::value;
+
+/**
+ * @brief Forms the logical disjunction of the type traits B..., effectively performing a
+ * logical OR on the sequence of traits.
+ */
+template <typename...>
+struct disjunction : etl::false_type
+{
+};
+template <typename B1>
+struct disjunction<B1> : B1
+{
+};
+template <typename B1, typename... Bn>
+struct disjunction<B1, Bn...>
+    : etl::conditional_t<bool(B1::value), B1, disjunction<Bn...>>
+{
+};
+
+template <class... B>
+inline constexpr bool disjunction_v = disjunction<B...>::value;
+
+/**
+ * @brief Forms the logical negation of the type trait B.
+ */
+template <class B>
+struct negation : etl::bool_constant<!bool(B::value)>
+{
+};
+
+template <class B>
+inline constexpr bool negation_v = negation<B>::value;
+
 namespace detail
 {
 template <class T>
@@ -95,6 +169,31 @@ using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 
 template <typename T>
 auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
+
+template <class T, unsigned N = 0>
+struct extent : etl::integral_constant<etl::size_t, 0>
+{
+};
+
+template <class T>
+struct extent<T[], 0> : etl::integral_constant<etl::size_t, 0>
+{
+};
+
+template <class T, unsigned N>
+struct extent<T[], N> : etl::extent<T, N - 1>
+{
+};
+
+template <class T, etl::size_t I>
+struct extent<T[I], 0> : etl::integral_constant<etl::size_t, I>
+{
+};
+
+template <class T, etl::size_t I, unsigned N>
+struct extent<T[I], N> : etl::extent<T, N - 1>
+{
+};
 
 /**
  * @brief If T is an array of some type X, provides the member typedef type
@@ -1102,58 +1201,46 @@ inline constexpr bool is_nothrow_move_constructible_v
 
 namespace detail
 {
-struct dummy_struct
-{
-    char data[2];
-};
-
-template <class>
-struct is_destructible_apply
-{
-    using type = int;
-};
-
-template <typename Type>
-struct is_destructor_wellformed
-{
-    template <typename Inner>
-    static auto test(
-        typename is_destructible_apply<decltype(etl::declval<Inner&>().~Inner())>::type)
-        -> char;
-
-    template <typename Inner>
-    static auto test(...) -> dummy_struct;
-
-    static const bool value = sizeof(test<Type>(12)) == sizeof(char);
-};
-
-template <class Type, bool>
-struct destructible_imp;
-
-template <class Type>
-struct destructible_imp<Type, false>
-    : public etl::integral_constant<
-          bool,
-          is_destructor_wellformed<typename etl::remove_all_extents<Type>::type>::value>
+template <typename T>
+struct is_array_unknown_bounds
+    : public etl::conjunction<etl::is_array<T>, etl::negation<etl::extent<T>>>
 {
 };
 
-template <class Type>
-struct destructible_imp<Type, true> : public etl::true_type
+struct try_is_destructible_impl
+{
+    template <typename T, typename = decltype(etl::declval<T&>().~T())>
+    static auto test(int) -> etl::true_type;
+
+    template <typename>
+    static auto test(...) -> etl::false_type;
+};
+
+template <typename T>
+struct is_destructible_impl : public try_is_destructible_impl
+{
+    using type = decltype(test<T>(0));
+};
+
+template <typename T,
+          bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>,
+                                  is_array_unknown_bounds<T>>::value,
+          bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
+struct is_destructible_safe;
+
+template <typename T>
+struct is_destructible_safe<T, false, false>
+    : public is_destructible_impl<typename etl::remove_all_extents<T>::type>::type
 {
 };
 
-template <class Type, bool>
-struct destructible_false;
-
-template <class Type>
-struct destructible_false<Type, false>
-    : public destructible_imp<Type, etl::is_reference<Type>::value>
+template <typename T>
+struct is_destructible_safe<T, true, false> : public etl::false_type
 {
 };
 
-template <class Type>
-struct destructible_false<Type, true> : public etl::false_type
+template <typename T>
+struct is_destructible_safe<T, false, true> : public etl::true_type
 {
 };
 
@@ -1162,10 +1249,12 @@ struct destructible_false<Type, true> : public etl::false_type
 /**
  * @brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
-template <class Type>
-struct is_destructible
-    : public detail::destructible_false<Type, etl::is_function<Type>::value>
+template <typename T>
+struct is_destructible : public detail::is_destructible_safe<T>
 {
+    //   static_assert(
+    //       etl::__is_complete_or_unbounded(__type_identity<T>{}),
+    //       "template argument must be a complete class or an unbounded array");
 };
 
 /**
@@ -1183,6 +1272,9 @@ template <>
 struct is_destructible<void> : public etl::false_type
 {
 };
+
+template <typename T>
+inline constexpr auto is_destructible_v = is_destructible<T>::value;
 
 /**
  * @brief https://en.cppreference.com/w/cpp/types/is_destructible
@@ -1238,6 +1330,20 @@ struct is_nothrow_destructible<Type&&> : public true_type
 
 template <class T>
 inline constexpr bool is_nothrow_destructible_v = is_nothrow_destructible<T>::value;
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+ */
+template <typename T>
+struct has_virtual_destructor : public bool_constant<TAETL_HAS_VIRTUAL_DESTRUCTOR(T)>
+{
+};
+
+/**
+ * @brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+ */
+template <typename T>
+inline constexpr auto has_virtual_destructor_v = has_virtual_destructor<T>::value;
 
 /**
  * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed in
@@ -1651,80 +1757,6 @@ struct is_base_of
 
 template <class Base, class Derived>
 inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
-
-/**
- * @brief Provides member typedef type, which is defined as T if B is true at
- * compile time, or as F if B is false.
- */
-template <bool B, class T, class F>
-struct conditional
-{
-    using type = T;
-};
-
-template <class T, class F>
-struct conditional<false, T, F>
-{
-    using type = F;
-};
-
-template <bool B, class T, class F>
-using conditional_t = typename conditional<B, T, F>::type;
-
-/**
- * @brief Forms the logical conjunction of the type traits B..., effectively performing a
- * logical AND on the sequence of traits.
- */
-template <typename...>
-struct conjunction : etl::true_type
-{
-};
-
-template <typename B1>
-struct conjunction<B1> : B1
-{
-};
-
-template <typename B1, typename... Bn>
-struct conjunction<B1, Bn...>
-    : etl::conditional_t<bool(B1::value), conjunction<Bn...>, B1>
-{
-};
-
-template <class... B>
-inline constexpr bool conjunction_v = conjunction<B...>::value;
-
-/**
- * @brief Forms the logical disjunction of the type traits B..., effectively performing a
- * logical OR on the sequence of traits.
- */
-template <typename...>
-struct disjunction : etl::false_type
-{
-};
-template <typename B1>
-struct disjunction<B1> : B1
-{
-};
-template <typename B1, typename... Bn>
-struct disjunction<B1, Bn...>
-    : etl::conditional_t<bool(B1::value), B1, disjunction<Bn...>>
-{
-};
-
-template <class... B>
-inline constexpr bool disjunction_v = disjunction<B...>::value;
-
-/**
- * @brief Forms the logical negation of the type trait B.
- */
-template <class B>
-struct negation : etl::bool_constant<!bool(B::value)>
-{
-};
-
-template <class B>
-inline constexpr bool negation_v = negation<B>::value;
 
 /**
  * @brief Define a member typedef only if a boolean constant is true.
