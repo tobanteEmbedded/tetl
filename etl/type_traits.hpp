@@ -703,6 +703,18 @@ struct is_const<const T> : etl::true_type
 template <class T>
 inline constexpr bool is_const_v = is_const<T>::value;
 
+template <class T>
+struct is_volatile : etl::false_type
+{
+};
+template <class T>
+struct is_volatile<volatile T> : etl::true_type
+{
+};
+
+template <class T>
+inline constexpr bool is_volatile_v = is_volatile<T>::value;
+
 namespace detail
 {
 template <class T>
@@ -954,6 +966,20 @@ struct is_arithmetic
 
 template <class T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+
+/**
+ * @brief If T is a fundamental type (that is, arithmetic type, void, or nullptr_t),
+ * provides the member constant value equal true. For any other type, value is false.
+ */
+template <class T>
+struct is_fundamental
+    : etl::bool_constant<
+          etl::is_arithmetic_v<T> || etl::is_void_v<T> || etl::is_null_pointer_v<T>>
+{
+};
+
+template <class T>
+inline constexpr bool is_fundamental_v = is_fundamental<T>::value;
 
 /**
  * @brief If T is a scalar type (that is a possibly cv-qualified arithmetic,

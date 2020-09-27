@@ -282,6 +282,29 @@ TEMPLATE_TEST_CASE("type_traits: is_arithmetic", "[type_traits]", bool, etl::uin
     STATIC_REQUIRE_FALSE(etl::is_arithmetic<TestType const* const>::value);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_fundamental", "[type_traits]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    struct S
+    {
+        TestType data_;
+    };
+
+    STATIC_REQUIRE(etl::is_fundamental_v<void>);
+    STATIC_REQUIRE(etl::is_fundamental_v<etl::nullptr_t>);
+    STATIC_REQUIRE(etl::is_fundamental_v<TestType>);
+    STATIC_REQUIRE(etl::is_fundamental_v<TestType const>);
+    STATIC_REQUIRE(etl::is_fundamental_v<TestType volatile>);
+
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<S>);
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<TestType&>);
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<TestType const&>);
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<TestType*>);
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<TestType const*>);
+    STATIC_REQUIRE_FALSE(etl::is_fundamental_v<TestType const* const>);
+}
+
 class A
 {
 };
