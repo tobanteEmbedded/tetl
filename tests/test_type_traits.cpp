@@ -71,6 +71,65 @@ TEMPLATE_TEST_CASE("type_traits: is_void = true", "[type_traits]", void)
     STATIC_REQUIRE(etl::is_void_v<TestType>);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_const", "[type_traits]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    STATIC_REQUIRE(etl::is_const<TestType const>::value);
+    STATIC_REQUIRE(etl::is_const_v<TestType const>);
+    STATIC_REQUIRE(etl::is_const<const TestType>::value);
+    STATIC_REQUIRE(etl::is_const_v<const TestType>);
+
+    STATIC_REQUIRE_FALSE(etl::is_const<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_const_v<TestType>);
+    STATIC_REQUIRE_FALSE(etl::is_const<TestType volatile>::value);
+    STATIC_REQUIRE_FALSE(etl::is_const_v<TestType volatile>);
+}
+
+namespace
+{
+struct A
+{
+};
+
+struct B
+{
+    int m;
+};
+
+struct C
+{
+    [[maybe_unused]] static int m;
+};
+
+struct D
+{
+    virtual ~D();
+};
+
+union E
+{
+};
+
+struct F
+{
+    [[no_unique_address]] E e;
+};
+
+}  // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_empty = true", "[type_traits]", A, C)
+{
+    STATIC_REQUIRE(etl::is_empty<TestType>::value);
+    STATIC_REQUIRE(etl::is_empty_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_empty = false", "[type_traits]", B, D, E)
+{
+    STATIC_REQUIRE_FALSE(etl::is_empty<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_empty_v<TestType>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_integral = false", "[type_traits]", float, double,
                    long double, (struct S))
 {
@@ -159,17 +218,17 @@ TEMPLATE_TEST_CASE("type_traits: is_enum = false", "[type_traits]", etl::uint8_t
     STATIC_REQUIRE(etl::is_enum_v<TestType const&> == false);
 }
 
-enum E
+enum Enum
 {
     one,
 };
 
-enum class EC
+enum class EnumC
 {
     nop,
 };
 
-TEMPLATE_TEST_CASE("type_traits: is_enum = true", "[type_traits]", E, EC)
+TEMPLATE_TEST_CASE("type_traits: is_enum = true", "[type_traits]", Enum, EnumC)
 {
     STATIC_REQUIRE(etl::is_enum_v<TestType>);
     STATIC_REQUIRE(etl::is_enum_v<TestType const>);
@@ -178,7 +237,7 @@ TEMPLATE_TEST_CASE("type_traits: is_enum = true", "[type_traits]", E, EC)
 
 TEMPLATE_TEST_CASE("type_traits: is_union = false", "[type_traits]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double, E, EC)
+                   etl::uint64_t, etl::int64_t, float, double, long double, Enum, EnumC)
 {
     STATIC_REQUIRE(etl::is_union_v<TestType> == false);
     STATIC_REQUIRE(etl::is_union_v<TestType const> == false);

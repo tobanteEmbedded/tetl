@@ -687,7 +687,7 @@ template <class T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 
 /**
- * If T is a const-qualified type (that is, const, or const volatile), provides
+ * @brief If T is a const-qualified type (that is, const, or const volatile), provides
  * the member constant value equal to true. For any other type, value is false.
  */
 template <class T>
@@ -703,8 +703,48 @@ struct is_const<const T> : etl::true_type
 template <class T>
 inline constexpr bool is_const_v = is_const<T>::value;
 
+namespace detail
+{
+template <class T>
+struct is_empty_test_struct_1 : public T
+{
+    char _dummy_data_;
+};
+
+struct is_empty_test_struct_2
+{
+    char _dummy_data_;
+};
+
+template <class T, bool = ::etl::is_class<T>::value>
+struct is_empty_helper
+    : public ::etl::integral_constant<bool, sizeof(is_empty_test_struct_1<T>)
+                                                == sizeof(is_empty_test_struct_2)>
+{
+};
+
+template <class T>
+struct is_empty_helper<T, false> : public ::etl::false_type
+{
+};
+}  // namespace detail
+
 /**
- * If T is a reference type (lvalue reference or rvalue reference), provides the
+ * @brief f T is an empty type (that is, a non-union class type with no non-static data
+ * members other than bit-fields of size 0, no virtual functions, no virtual base classes,
+ * and no non-empty base classes), provides the member constant value equal to true. For
+ * any other type, value is false.
+ */
+template <class T>
+struct is_empty : public detail::is_empty_helper<T>
+{
+};
+
+template <class T>
+inline constexpr bool is_empty_v = is_empty<T>::value;
+
+/**
+ * @brief If T is a reference type (lvalue reference or rvalue reference), provides the
  * member constant value equal true. For any other type, value is false. The
  * behavior of a program that adds specializations for is_reference or
  * is_reference_v is undefined.
