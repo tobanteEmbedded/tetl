@@ -34,7 +34,6 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_type_traits.cpp
     test_utility.cpp
     test_variant.cpp
-    test_vector.cpp
     test_version.cpp
 
     experimental/dsp/test_dsp.cpp

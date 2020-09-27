@@ -206,7 +206,7 @@ protected:
      * @brief Changes the size of the storage without adding or removing elements
      * (unsafe). The size of an empty storage can only be changed to 0.
      */
-    static constexpr void unsafe_set_size(size_t new_size) noexcept
+    static constexpr void unsafe_set_size([[maybe_unused]] size_t new_size) noexcept
     {
         assert(new_size == 0
                && "tried to change size of empty storage to "
@@ -305,7 +305,7 @@ public:
     {
         assert(!full() && "tried to emplace_back on full storage!");
         index(data_, size()) = T(etl::forward<Args>(args)...);
-        unsafe_set_size(size() + 1);
+        unsafe_set_size(static_cast<size_type>(size() + 1));
     }
 
     /**
@@ -314,7 +314,7 @@ public:
     constexpr auto pop_back() noexcept -> void
     {
         assert(!empty() && "tried to pop_back from empty storage!");
-        unsafe_set_size(size() - 1);
+        unsafe_set_size(static_cast<size_type>(size() - 1));
     }
 
 protected:
@@ -445,7 +445,7 @@ public:
     {
         assert(!full() && "tried to emplace_back on full storage");
         new (end()) T(etl::forward<Args>(args)...);
-        unsafe_set_size(size() + 1);
+        unsafe_set_size(static_cast<size_type>(size() + 1));
     }
 
     /**
@@ -456,7 +456,7 @@ public:
         assert(!empty() && "tried to pop_back from empty storage!");
         auto ptr = end() - 1;
         ptr->~T();
-        unsafe_set_size(size() - 1);
+        unsafe_set_size(static_cast<size_type>(size() - 1));
     }
 
 protected:
@@ -632,7 +632,7 @@ public:
      *
      * @todo FCV_REQUIRES_(detail::InputIterator<InputIt>)
      */
-    template <class InputIter>
+    template <typename InputIter>
     constexpr static_vector(InputIter first, InputIter last)
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
@@ -806,7 +806,7 @@ public:
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
         assert(!empty() && "calling back on an empty vector");
-        return detail::index(*this, size() - 1);
+        return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
     /**
@@ -815,7 +815,7 @@ public:
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
         assert(!empty() && "calling back on an empty vector");
-        return detail::index(*this, size() - 1);
+        return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
     /**
@@ -890,8 +890,7 @@ public:
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
     {
         assert_iterator_in_range(position);
-        const auto new_size = size() + n;
-        assert(new_size <= capacity() && "trying to insert beyond capacity!");
+        assert(size() + n <= capacity() && "trying to insert beyond capacity!");
         auto b = end();
         while (n != 0)
         {
@@ -1015,7 +1014,7 @@ public:
 
 private:
     template <typename It>
-    constexpr void assert_iterator_in_range(It it) noexcept
+    constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
     {
         static_assert(etl::is_pointer_v<It>);
         assert(this->begin() <= it && "iterator not in range");
@@ -1023,7 +1022,8 @@ private:
     }
 
     template <typename It0, typename It1>
-    constexpr void assert_valid_iterator_pair(It0 first, It1 last) noexcept
+    constexpr void assert_valid_iterator_pair([[maybe_unused]] It0 first,
+                                              [[maybe_unused]] It1 last) noexcept
     {
         static_assert(etl::is_pointer_v<It0>);
         static_assert(etl::is_pointer_v<It1>);
@@ -1031,7 +1031,8 @@ private:
     }
 
     template <typename It0, typename It1>
-    constexpr void assert_iterator_pair_in_range(It0 first, It1 last) noexcept
+    constexpr void assert_iterator_pair_in_range([[maybe_unused]] It0 first,
+                                                 [[maybe_unused]] It1 last) noexcept
     {
         assert_iterator_in_range(first);
         assert_iterator_in_range(last);

@@ -25,7 +25,7 @@ DAMAGE.
 */
 #include "etl/iterator.hpp"
 #include "etl/span.hpp"
-#include "etl/vector.hpp"
+#include "etl/static_vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -57,7 +57,7 @@ TEMPLATE_TEST_CASE("span: deduction guides", "[span]", char, int, float)
 
     SECTION("from Container")
     {
-        auto vec = etl::stack_vector<TestType, 8> {};
+        auto vec = etl::static_vector<TestType, 8> {};
         vec.push_back(TestType {});
         vec.push_back(TestType {});
         auto sp = etl::span {vec};
@@ -68,7 +68,7 @@ TEMPLATE_TEST_CASE("span: deduction guides", "[span]", char, int, float)
     SECTION("from Container const")
     {
         auto const vec = []() {
-            auto v = etl::stack_vector<TestType, 8> {};
+            auto v = etl::static_vector<TestType, 8> {};
             v.push_back(TestType {});
             v.push_back(TestType {});
             return v;
@@ -112,7 +112,7 @@ TEMPLATE_TEST_CASE("span: ctor(first,count)", "[span]", char, int, float)
 
     SECTION("static vector")
     {
-        auto vec = etl::stack_vector<TestType, 8> {};
+        auto vec = etl::static_vector<TestType, 8> {};
         auto rng = []() { return TestType {42}; };
         etl::generate_n(etl::back_inserter(vec), 4, rng);
 
@@ -172,7 +172,7 @@ TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
         return TestType {i--};
     };
 
-    auto vec = etl::stack_vector<TestType, 8> {};
+    auto vec = etl::static_vector<TestType, 8> {};
     etl::generate_n(etl::back_inserter(vec), 4, rng);
     auto sp = etl::span<TestType> {etl::begin(vec), etl::size(vec)};
     REQUIRE(sp[0] == TestType {127});
@@ -189,7 +189,7 @@ TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
 
 TEMPLATE_TEST_CASE("span: size_bytes", "[span]", char, int, float, double, etl::uint64_t)
 {
-    auto vec = etl::stack_vector<TestType, 6> {};
+    auto vec = etl::static_vector<TestType, 6> {};
     etl::generate_n(etl::back_inserter(vec), 4, []() { return TestType {42}; });
     auto sp = etl::span<TestType> {etl::begin(vec), etl::size(vec)};
 

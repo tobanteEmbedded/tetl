@@ -26,11 +26,11 @@ DAMAGE.
 
 #include <stdio.h>  // for printf
 
-#include "etl/vector.hpp"  // for vector
+#include "etl/static_vector.hpp"  // for static_vector
 
 auto main() -> int
 {
-    etl::stack_vector<double, 16> vec1;
+    etl::static_vector<double, 16> vec1;
     vec1.push_back(1.0);
     vec1.push_back(2.0);
     vec1.push_back(3.0);

@@ -26,8 +26,8 @@ DAMAGE.
 
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
+#include "etl/static_vector.hpp"
 #include "etl/string_view.hpp"
-#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -142,7 +142,7 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int, fl
 {
     SECTION("insert rvalue")
     {
-        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto vec  = etl::static_vector<TestType, 5> {};
         auto iter = etl::back_inserter(vec);
         REQUIRE(vec.size() == 0);
         iter = TestType {1};
@@ -151,7 +151,7 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int, fl
 
     SECTION("insert lvalue")
     {
-        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto vec  = etl::static_vector<TestType, 5> {};
         auto iter = etl::back_inserter(vec);
         REQUIRE(vec.size() == 0);
         auto const val = TestType {42};
@@ -161,7 +161,7 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int, fl
 
     SECTION("increment/decrement/dereference should not change state (no-op)")
     {
-        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto vec  = etl::static_vector<TestType, 5> {};
         auto iter = etl::back_inserter(vec);
         REQUIRE(vec.size() == 0);
         auto const val = TestType {42};
@@ -178,7 +178,7 @@ TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int, f
 {
     SECTION("construct")
     {
-        auto vec  = etl::stack_vector<TestType, 5> {};
+        auto vec  = etl::static_vector<TestType, 5> {};
         auto iter = etl::front_inserter(vec);
         REQUIRE(&++iter == &iter);
         REQUIRE(&++iter == &(*iter));

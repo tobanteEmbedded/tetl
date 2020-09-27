@@ -27,7 +27,6 @@ DAMAGE.
 
 #include "etl/algorithm.hpp"
 #include "etl/map.hpp"
-#include "etl/vector.hpp"
 #include "etl/warning.hpp"
 
 auto basic_usage() -> void

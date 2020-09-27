@@ -26,7 +26,7 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 
 #include "etl/map.hpp"
-#include "etl/vector.hpp"
+#include "etl/static_vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -518,7 +518,7 @@ struct NonTrivialDtor_1
 
 struct NonTrivialDtor_2
 {
-    etl::stack_vector<float, 16> data;
+    etl::static_vector<NonTrivialDtor_1, 16> data;
 };
 
 TEMPLATE_TEST_CASE("type_traits: is_trivially_destructible(true)", "[type_traits]", bool,

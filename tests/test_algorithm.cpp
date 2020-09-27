@@ -28,8 +28,8 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
+#include "etl/static_vector.hpp"
 #include "etl/string.hpp"
-#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 
@@ -37,7 +37,7 @@ TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t, etl::int8
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -67,7 +67,7 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uin
     REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 4; }));
 
     etl::small_string str("hello");
-    etl::stack_vector<TestType, 8> vec;
+    etl::static_vector<TestType, 8> vec;
     etl::transform(begin(str), end(str), etl::back_inserter(vec),
                    [](auto c) -> TestType { return static_cast<TestType>(c); });
 
@@ -100,7 +100,7 @@ TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint
 TEMPLATE_TEST_CASE("algorithm: generate_n", "[algorithm]", etl::uint8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-    auto data = etl::stack_vector<TestType, 4> {};
+    auto data = etl::static_vector<TestType, 4> {};
     auto rng  = []() { return TestType {42}; };
     etl::generate_n(etl::back_inserter(data), 4, rng);
 
@@ -141,7 +141,7 @@ TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -158,7 +158,7 @@ TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t, etl::int8_
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -179,7 +179,7 @@ TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t, etl::i
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -215,7 +215,7 @@ TEMPLATE_TEST_CASE("algorithm: max", "[algorithm]", etl::int8_t, etl::int16_t,
 TEMPLATE_TEST_CASE("algorithm: max_element", "[algorithm]", etl::int8_t, etl::int16_t,
                    etl::int32_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType(1));
     vec.push_back(TestType(2));
     vec.push_back(TestType(3));
@@ -242,7 +242,7 @@ TEMPLATE_TEST_CASE("algorithm: min", "[algorithm]", etl::int8_t, etl::int16_t,
 TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t, etl::int16_t,
                    etl::int32_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(TestType {1});
     vec.push_back(TestType {2});
     vec.push_back(TestType {3});
@@ -268,7 +268,7 @@ TEMPLATE_TEST_CASE("algorithm: all_of", "[algorithm]", etl::uint8_t, etl::int8_t
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -285,7 +285,7 @@ TEMPLATE_TEST_CASE("algorithm: any_of", "[algorithm]", etl::uint8_t, etl::int8_t
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -301,7 +301,7 @@ TEMPLATE_TEST_CASE("algorithm: none_of", "[algorithm]", etl::uint8_t, etl::int8_
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::stack_vector<TestType, 16> vec;
+    etl::static_vector<TestType, 16> vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
@@ -390,7 +390,7 @@ TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using vector_t = etl::stack_vector<TestType, 4>;
+    using vector_t = etl::static_vector<TestType, 4>;
 
     auto source = etl::array<TestType, 4> {};
     source[0]   = TestType {1};
@@ -414,10 +414,10 @@ TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
         REQUIRE(dest.size() == 0);
         etl::copy(begin(source), end(source), etl::back_inserter(dest));
         REQUIRE(dest.size() == 4);
-        REQUIRE(dest.at(0) == TestType {1});
-        REQUIRE(dest.at(1) == TestType {2});
-        REQUIRE(dest.at(2) == TestType {3});
-        REQUIRE(dest.at(3) == TestType {4});
+        REQUIRE(dest[0] == TestType {1});
+        REQUIRE(dest[1] == TestType {2});
+        REQUIRE(dest[2] == TestType {3});
+        REQUIRE(dest[3] == TestType {4});
     }
 }
 
@@ -425,7 +425,7 @@ TEMPLATE_TEST_CASE("algorithm: copy_if", "[algorithm]", etl::uint8_t, etl::int8_
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using vector_t = etl::stack_vector<TestType, 4>;
+    using vector_t = etl::static_vector<TestType, 4>;
 
     auto source = etl::array<TestType, 4> {};
     source[0]   = TestType {1};
@@ -452,8 +452,8 @@ TEMPLATE_TEST_CASE("algorithm: copy_if", "[algorithm]", etl::uint8_t, etl::int8_
         REQUIRE(dest.size() == 0);
         etl::copy_if(begin(source), end(source), etl::back_inserter(dest), predicate);
         REQUIRE(dest.size() == 2);
-        REQUIRE(dest.at(0) == TestType {7});
-        REQUIRE(dest.at(1) == TestType {9});
+        REQUIRE(dest[0] == TestType {7});
+        REQUIRE(dest[1] == TestType {9});
     }
 }
 
@@ -461,7 +461,7 @@ TEMPLATE_TEST_CASE("algorithm: copy_n", "[algorithm]", etl::uint8_t, etl::int8_t
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using vector_t = etl::stack_vector<TestType, 4>;
+    using vector_t = etl::static_vector<TestType, 4>;
 
     auto source = etl::array<TestType, 4> {};
     source[0]   = TestType {1};
@@ -497,10 +497,10 @@ TEMPLATE_TEST_CASE("algorithm: copy_n", "[algorithm]", etl::uint8_t, etl::int8_t
         REQUIRE(dest.size() == 0);
         etl::copy_n(begin(source), source.size(), etl::back_inserter(dest));
         REQUIRE(dest.size() == 4);
-        REQUIRE(dest.at(0) == TestType {1});
-        REQUIRE(dest.at(1) == TestType {2});
-        REQUIRE(dest.at(2) == TestType {3});
-        REQUIRE(dest.at(3) == TestType {4});
+        REQUIRE(dest[0] == TestType {1});
+        REQUIRE(dest[1] == TestType {2});
+        REQUIRE(dest[2] == TestType {3});
+        REQUIRE(dest[3] == TestType {4});
     }
 }
 

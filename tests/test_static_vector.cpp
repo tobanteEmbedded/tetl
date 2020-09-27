@@ -247,7 +247,7 @@ struct Vertex
     T y;
     T z;
 
-    Vertex(T x, T y, T z) : x {x}, y {y}, z {z} { }
+    Vertex(T _x, T _y, T _z) : x {_x}, y {_y}, z {_z} { }
 };
 
 template <typename T>
