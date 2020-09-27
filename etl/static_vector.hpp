@@ -589,11 +589,11 @@ public:
     // }
     // [[nodiscard]] auto rend() noexcept -> reverse_iterator
     // {
-    //     return reverse_iterator(this->begin());
+    //     return reverse_iterator(begin());
     // }
     // [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
     // {
-    //     return const_reverse_iterator(this->begin());
+    //     return const_reverse_iterator(begin());
     // }
 
     [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator { return begin(); }
@@ -789,7 +789,7 @@ public:
         // Nothing to assert: size of other cannot exceed capacity because both vectors
         // have the same type
         clear();
-        insert(this->begin(), other.begin(), other.end());
+        insert(begin(), other.begin(), other.end());
         return *this;
     }
 
@@ -803,7 +803,7 @@ public:
         // Nothing to assert: size of other cannot exceed capacity because both vectors
         // have the same type
         clear();
-        move_insert(this->begin(), other.begin(), other.end());
+        move_insert(begin(), other.begin(), other.end());
         return *this;
     }
 
@@ -828,7 +828,7 @@ public:
                             T const& value) noexcept(noexcept(insert(begin(), n, value)))
     {
         ETL_ASSERT(n <= capacity() && "size exceeds capacity");
-        this->insert(this->begin(), n, value);
+        insert(begin(), n, value);
     }
 
     /**
@@ -845,7 +845,7 @@ public:
             ETL_ASSERT(static_cast<size_type>(last - first) <= capacity()
                        && "range size exceeds capacity");
         }
-        insert(this->begin(), first, last);
+        insert(begin(), first, last);
     }
 
     /**
@@ -909,7 +909,7 @@ public:
                        && "range size exceeds capacity");
         }
         clear();
-        insert(this->begin(), first, last);
+        insert(begin(), first, last);
     }
 
     /**
@@ -920,7 +920,7 @@ public:
     {
         ETL_ASSERT(n <= capacity() && "size exceeds capacity");
         clear();
-        insert(this->begin(), n, u);
+        insert(begin(), n, u);
     }
 
     /**
@@ -1039,7 +1039,7 @@ private:
     constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
     {
         static_assert(etl::is_pointer_v<It>);
-        ETL_ASSERT(this->begin() <= it && "iterator not in range");
+        ETL_ASSERT(begin() <= it && "iterator not in range");
         ETL_ASSERT(it <= end() && "iterator not in range");
     }
 
