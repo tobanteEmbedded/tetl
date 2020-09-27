@@ -376,6 +376,44 @@ TEMPLATE_TEST_CASE("algorithm: reverse", "[algorithm]", etl::uint8_t, etl::int8_
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: reverse_copy", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("built-in")
+    {
+        auto source = etl::array<TestType, 4> {};
+        etl::iota(begin(source), end(source), TestType {0});
+
+        auto destination = etl::array<TestType, 4> {};
+        etl::reverse_copy(begin(source), end(source), begin(destination));
+
+        CHECK(destination[0] == 3);
+        CHECK(destination[1] == 2);
+        CHECK(destination[2] == 1);
+        CHECK(destination[3] == 0);
+    }
+
+    SECTION("struct")
+    {
+        struct S
+        {
+            TestType data;
+        };
+
+        auto source = etl::array {
+            S {TestType(1)},
+            S {TestType(2)},
+        };
+
+        decltype(source) destination {};
+        etl::reverse_copy(begin(source), end(source), begin(destination));
+
+        CHECK(destination[0].data == TestType(2));
+        CHECK(destination[1].data == TestType(1));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

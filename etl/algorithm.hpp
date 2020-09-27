@@ -403,10 +403,26 @@ template <class InputIt, class UnaryPredicate>
  * applying etl::iter_swap to every pair of iterators first+i, (last-i) - 1 for each
  * non-negative i < (last-first)/2.
  */
-template <class BidirIt>
-constexpr auto reverse(BidirIt first, BidirIt last) -> void
+template <class BidirIter>
+constexpr auto reverse(BidirIter first, BidirIter last) -> void
 {
     while ((first != last) && (first != --last)) { etl::iter_swap(first++, last); }
+}
+
+/**
+ * @brief Copies the elements from the range [ \p first, \p last ) to another range
+ * beginning at d_first in such a way that the elements in the new range are in reverse
+ * order.
+ *
+ * @details If the source and destination ranges (that is, [first, last) and [d_first,
+ * d_first+(last-first)) respectively) overlap, the behavior is undefined.
+ */
+template <class BidirIter, class OutputIter>
+constexpr auto reverse_copy(BidirIter first, BidirIter last, OutputIter destination)
+    -> OutputIter
+{
+    while (first != last) { *(destination++) = *(--last); }
+    return destination;
 }
 
 /**
