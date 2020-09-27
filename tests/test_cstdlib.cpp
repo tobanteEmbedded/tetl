@@ -39,7 +39,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 1);
-        REQUIRE(std::strcmp(result, "0") == 0);
+        REQUIRE(etl::strcmp(result, "0") == 0);
     }
 
     SECTION("10")
@@ -49,7 +49,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 2);
-        REQUIRE(std::strcmp(result, "10") == 0);
+        REQUIRE(etl::strcmp(result, "10") == 0);
     }
 
     SECTION("999")
@@ -59,7 +59,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 3);
-        REQUIRE(std::strcmp(result, "999") == 0);
+        REQUIRE(etl::strcmp(result, "999") == 0);
     }
 
     SECTION("1002")
@@ -69,7 +69,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 4);
-        REQUIRE(std::strcmp(result, "1002") == 0);
+        REQUIRE(etl::strcmp(result, "1002") == 0);
     }
 
     SECTION("44444")
@@ -79,7 +79,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 5);
-        REQUIRE(std::strcmp(result, "44444") == 0);
+        REQUIRE(etl::strcmp(result, "44444") == 0);
     }
 
     SECTION("123456789")
@@ -89,7 +89,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         auto* result    = etl::itoa(val, buffer, 10);
         REQUIRE(&buffer[0] == result);
         REQUIRE(etl::strlen(result) == 9);
-        REQUIRE(std::strcmp(result, "123456789") == 0);
+        REQUIRE(etl::strcmp(result, "123456789") == 0);
     }
 }
 

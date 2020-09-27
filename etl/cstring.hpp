@@ -90,5 +90,22 @@ constexpr auto strlen(const char* str) -> etl::size_t
     return static_cast<etl::size_t>(s - str);
 }
 
+/**
+ * @brief Compares the C string lhs to the C string rhs.
+ *
+ * @details This function starts comparing the first character of each string. If they are
+ * equal to each other, it continues with the following pairs until the characters differ
+ * or until a terminating null-character is reached.
+ */
+constexpr auto strcmp(const char* lhs, const char* rhs) -> int
+{
+    for (; *lhs != '\0'; ++lhs, ++rhs)
+    {
+        if (*lhs != *rhs) { break; }
+    }
+
+    return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
+}
+
 }  // namespace etl
 #endif  // TAETL_CSTRING_HPP
