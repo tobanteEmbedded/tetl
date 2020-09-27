@@ -27,9 +27,6 @@ DAMAGE.
 #ifndef TAETL_STATIC_VECTOR_HPP
 #define TAETL_STATIC_VECTOR_HPP
 
-#include <cassert>
-#include <type_traits>
-
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/definitions.hpp"
