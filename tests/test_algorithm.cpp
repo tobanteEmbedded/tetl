@@ -33,6 +33,18 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
+TEMPLATE_TEST_CASE("algorithm: iter_swap", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto data = etl::array {TestType(1), TestType(2)};
+    CHECK(data[0] == TestType(1));
+    CHECK(data[1] == TestType(2));
+    etl::iter_swap(begin(data), begin(data) + 1);
+    CHECK(data[0] == TestType(2));
+    CHECK(data[1] == TestType(1));
+}
+
 TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -333,14 +345,35 @@ TEMPLATE_TEST_CASE("algorithm: reverse", "[algorithm]", etl::uint8_t, etl::int8_
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto data = etl::array<TestType, 4> {};
-    etl::iota(begin(data), end(data), TestType {0});
-    etl::reverse(begin(data), end(data));
+    SECTION("built-in")
+    {
+        auto data = etl::array<TestType, 4> {};
+        etl::iota(begin(data), end(data), TestType {0});
+        etl::reverse(begin(data), end(data));
 
-    REQUIRE(data[0] == 3);
-    REQUIRE(data[1] == 2);
-    REQUIRE(data[2] == 1);
-    REQUIRE(data[3] == 0);
+        CHECK(data[0] == 3);
+        CHECK(data[1] == 2);
+        CHECK(data[2] == 1);
+        CHECK(data[3] == 0);
+    }
+
+    SECTION("struct")
+    {
+        struct S
+        {
+            TestType data;
+        };
+
+        auto arr = etl::array {
+            S {TestType(1)},
+            S {TestType(2)},
+        };
+
+        etl::reverse(begin(arr), end(arr));
+
+        CHECK(arr[0].data == TestType(2));
+        CHECK(arr[1].data == TestType(1));
+    }
 }
 
 TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int8_t,
