@@ -79,7 +79,7 @@ auto itoa(int val, char* const buffer, int base) -> char*
     }
     default:
     {
-        ETL_ASSERT(false);
+        assert(false);
         return buffer;
     }
     }

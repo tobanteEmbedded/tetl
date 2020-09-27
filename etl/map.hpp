@@ -74,7 +74,7 @@ public:
      */
     [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&
     {
-        ETL_ASSERT(find(key) != nullptr);
+        assert(find(key) != nullptr);
         return find(key)->second;
     }
 
@@ -84,7 +84,7 @@ public:
      */
     [[nodiscard]] constexpr auto at(key_type const& key) const -> mapped_type const&
     {
-        ETL_ASSERT(find(key) != nullptr);
+        assert(find(key) != nullptr);
         return find(key)->second;
     }
 

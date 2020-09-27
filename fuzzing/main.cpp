@@ -10,11 +10,11 @@ extern "C" int LLVMFuzzerTestOneInput(uint8_t const* data, size_t size)
     auto value        = data[0];
     auto const* first = data + 1;
     auto const* last  = data + size;
-    auto const* pos   = etl::find_if(
-        first, last, [&](auto const item) { return item == value; });
+    auto const* pos
+        = etl::find_if(first, last, [&](auto const item) { return item == value; });
 
-    if (pos != last) { ETL_ASSERT(*pos == value); }
-    for (auto const* p = first; p != pos; ++p) { ETL_ASSERT(*p != value); }
+    if (pos != last) { assert(*pos == value); }
+    for (auto const* p = first; p != pos; ++p) { assert(*p != value); }
 
     return EXIT_SUCCESS;
 }

@@ -112,7 +112,7 @@ using smallest_size_t =
 template <typename Rng, typename Index>
 constexpr decltype(auto) index(Rng&& rng, Index&& i) noexcept
 {
-    ETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
+    assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
     return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
 
@@ -193,7 +193,7 @@ public:
     static constexpr auto emplace_back(Args&&...) noexcept
         -> etl::enable_if_t<etl::is_constructible_v<T, Args...>, void>
     {
-        ETL_ASSERT(false && "tried to emplace_back on empty storage");
+        assert(false && "tried to emplace_back on empty storage");
     }
 
     /**
@@ -201,7 +201,7 @@ public:
      */
     static constexpr void pop_back() noexcept
     {
-        ETL_ASSERT(false && "tried to pop_back on empty storage");
+        assert(false && "tried to pop_back on empty storage");
     }
 
 protected:
@@ -211,9 +211,9 @@ protected:
      */
     static constexpr void unsafe_set_size([[maybe_unused]] size_t new_size) noexcept
     {
-        ETL_ASSERT(new_size == 0
-                   && "tried to change size of empty storage to "
-                      "non-zero value");
+        assert(new_size == 0
+               && "tried to change size of empty storage to "
+                  "non-zero value");
     }
 
     /**
@@ -311,7 +311,7 @@ public:
         etl::is_constructible_v<T, Args...> and etl::is_assignable_v<value_type&, T>,
         void>
     {
-        ETL_ASSERT(!full() && "tried to emplace_back on full storage!");
+        assert(!full() && "tried to emplace_back on full storage!");
         index(data_, size()) = T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size() + 1));
     }
@@ -321,7 +321,7 @@ public:
      */
     constexpr auto pop_back() noexcept -> void
     {
-        ETL_ASSERT(!empty() && "tried to pop_back from empty storage!");
+        assert(!empty() && "tried to pop_back from empty storage!");
         unsafe_set_size(static_cast<size_type>(size() - 1));
     }
 
@@ -333,7 +333,7 @@ protected:
      */
     constexpr auto unsafe_set_size(size_t new_size) noexcept -> void
     {
-        ETL_ASSERT(new_size <= Capacity && "new_size out-of-bounds [0, Capacity]");
+        assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity]");
         size_ = size_type(new_size);
     }
 
@@ -456,7 +456,7 @@ public:
         noexcept(new (end()) T(etl::forward<Args>(args)...)))
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
     {
-        ETL_ASSERT(!full() && "tried to emplace_back on full storage");
+        assert(!full() && "tried to emplace_back on full storage");
         new (end()) T(etl::forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size() + 1));
     }
@@ -466,7 +466,7 @@ public:
      */
     auto pop_back() noexcept(etl::is_nothrow_destructible_v<T>) -> void
     {
-        ETL_ASSERT(!empty() && "tried to pop_back from empty storage!");
+        assert(!empty() && "tried to pop_back from empty storage!");
         auto ptr = end() - 1;
         ptr->~T();
         unsafe_set_size(static_cast<size_type>(size() - 1));
@@ -480,7 +480,7 @@ protected:
      */
     constexpr void unsafe_set_size(size_t new_size) noexcept
     {
-        ETL_ASSERT(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
+        assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
         size_ = size_type(new_size);
     }
 
@@ -493,8 +493,8 @@ protected:
     void unsafe_destroy(InputIt first,
                         InputIt last) noexcept(etl::is_nothrow_destructible_v<T>)
     {
-        ETL_ASSERT(first >= data() && first <= end() && "first is out-of-bounds");
-        ETL_ASSERT(last >= data() && last <= end() && "last is out-of-bounds");
+        assert(first >= data() && first <= end() && "first is out-of-bounds");
+        assert(last >= data() && last <= end() && "last is out-of-bounds");
         for (; first != last; ++first) { first->~T(); }
     }
 
@@ -564,10 +564,10 @@ private:
         -> etl::enable_if_t<
             etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>, void>
     {
-        ETL_ASSERT(n <= capacity()
-                   && "static_vector cannot be "
-                      "resized to a size greater than "
-                      "capacity");
+        assert(n <= capacity()
+               && "static_vector cannot be "
+                  "resized to a size greater than "
+                  "capacity");
         while (n != size()) { emplace_back(T {}); }
     }
 
@@ -620,14 +620,15 @@ public:
 
     /**
      * @brief Appends \p value at the end of the vector.
+     *
+     * @todo Add noexcept(noexcept(emplace_back(etl::forward<U>(value)))) breaks AVR build
+     * GCC8.2 currently.
      */
     template <typename U>
-    constexpr auto
-    push_back(U&& value) noexcept(noexcept(emplace_back(etl::forward<U>(value))))
-        -> etl::enable_if_t<
-            etl::is_constructible_v<T, U> && etl::is_assignable_v<reference, U&&>, void>
+    constexpr auto push_back(U&& value) noexcept(false) -> etl::enable_if_t<
+        etl::is_constructible_v<T, U> && etl::is_assignable_v<reference, U&&>, void>
     {
-        ETL_ASSERT(!full() && "vector is full!");
+        assert(!full() && "vector is full!");
         emplace_back(etl::forward<U>(value));
     }
 
@@ -643,8 +644,8 @@ public:
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InputIt>)
         {
-            ETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity()
-                       && "trying to insert beyond capacity!");
+            assert(size() + static_cast<size_type>(last - first) <= capacity()
+                   && "trying to insert beyond capacity!");
         }
         iterator b = end();
 
@@ -663,7 +664,7 @@ public:
         move_insert(position, etl::declval<value_type*>(), etl::declval<value_type*>())))
         -> etl::enable_if_t<etl::is_constructible_v<T, Args...>, iterator>
     {
-        ETL_ASSERT(!full() && "tried emplace on full static_vector!");
+        assert(!full() && "tried emplace on full static_vector!");
         assert_iterator_in_range(position);
         value_type a(etl::forward<Args>(args)...);
         return move_insert(position, &a, &a + 1);
@@ -682,7 +683,7 @@ public:
            value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
         -> etl::enable_if_t<etl::is_move_constructible_v<T>, iterator>
     {
-        ETL_ASSERT(!full() && "tried insert on full static_vector!");
+        assert(!full() && "tried insert on full static_vector!");
         assert_iterator_in_range(position);
         return move_insert(position, &x, &x + 1);
     }
@@ -695,7 +696,7 @@ public:
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
     {
         assert_iterator_in_range(position);
-        ETL_ASSERT(size() + n <= capacity() && "trying to insert beyond capacity!");
+        assert(size() + n <= capacity() && "trying to insert beyond capacity!");
         auto b = end();
         while (n != 0)
         {
@@ -716,7 +717,7 @@ public:
            const_reference x) noexcept(noexcept(insert(position, size_type(1), x)))
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
     {
-        ETL_ASSERT(!full() && "tried insert on full static_vector!");
+        assert(!full() && "tried insert on full static_vector!");
         assert_iterator_in_range(position);
         return insert(position, size_type(1), x);
     }
@@ -733,8 +734,8 @@ public:
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InputIt>)
         {
-            ETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity()
-                       && "trying to insert beyond capacity!");
+            assert(size() + static_cast<size_type>(last - first) <= capacity()
+                   && "trying to insert beyond capacity!");
         }
         auto b = end();
 
@@ -819,7 +820,7 @@ public:
      */
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
     {
-        ETL_ASSERT(n <= capacity() && "size exceeds capacity");
+        assert(n <= capacity() && "size exceeds capacity");
         emplace_n(n);
     }
 
@@ -831,7 +832,7 @@ public:
     constexpr static_vector(size_type n,
                             T const& value) noexcept(noexcept(insert(begin(), n, value)))
     {
-        ETL_ASSERT(n <= capacity() && "size exceeds capacity");
+        assert(n <= capacity() && "size exceeds capacity");
         insert(begin(), n, value);
     }
 
@@ -845,9 +846,9 @@ public:
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
         {
-            ETL_ASSERT(last - first >= 0);
-            ETL_ASSERT(static_cast<size_type>(last - first) <= capacity()
-                       && "range size exceeds capacity");
+            assert(last - first >= 0);
+            assert(static_cast<size_type>(last - first) <= capacity()
+                   && "range size exceeds capacity");
         }
         insert(begin(), first, last);
     }
@@ -908,9 +909,9 @@ public:
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
         {
-            ETL_ASSERT(last - first >= 0);
-            ETL_ASSERT(static_cast<size_type>(last - first) <= capacity()
-                       && "range size exceeds capacity");
+            assert(last - first >= 0);
+            assert(static_cast<size_type>(last - first) <= capacity()
+                   && "range size exceeds capacity");
         }
         clear();
         insert(begin(), first, last);
@@ -922,7 +923,7 @@ public:
     constexpr auto assign(size_type n, const T& u)
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
     {
-        ETL_ASSERT(n <= capacity() && "size exceeds capacity");
+        assert(n <= capacity() && "size exceeds capacity");
         clear();
         insert(begin(), n, u);
     }
@@ -965,7 +966,7 @@ public:
      */
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
-        ETL_ASSERT(!empty() && "calling back on an empty vector");
+        assert(!empty() && "calling back on an empty vector");
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
@@ -974,7 +975,7 @@ public:
      */
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
-        ETL_ASSERT(!empty() && "calling back on an empty vector");
+        assert(!empty() && "calling back on an empty vector");
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
@@ -1027,9 +1028,9 @@ public:
         if (sz == size()) { return; }
         if (sz > size())
         {
-            ETL_ASSERT(sz <= capacity()
-                       && "static_vector cannot be resized to "
-                          "a size greater than capacity");
+            assert(sz <= capacity()
+                   && "static_vector cannot be resized to "
+                      "a size greater than capacity");
             insert(end(), sz - size(), value);
         }
         else
@@ -1043,8 +1044,8 @@ private:
     constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
     {
         static_assert(etl::is_pointer_v<It>);
-        ETL_ASSERT(begin() <= it && "iterator not in range");
-        ETL_ASSERT(it <= end() && "iterator not in range");
+        assert(begin() <= it && "iterator not in range");
+        assert(it <= end() && "iterator not in range");
     }
 
     template <typename It0, typename It1>
@@ -1053,7 +1054,7 @@ private:
     {
         static_assert(etl::is_pointer_v<It0>);
         static_assert(etl::is_pointer_v<It1>);
-        ETL_ASSERT(first <= last && "invalid iterator pair");
+        assert(first <= last && "invalid iterator pair");
     }
 
     template <typename It0, typename It1>

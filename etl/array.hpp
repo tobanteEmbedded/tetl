@@ -74,7 +74,7 @@ struct array
      */
     [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
     {
-        ETL_ASSERT(pos < Size);
+        assert(pos < Size);
         return _data[pos];
     }
 
@@ -83,7 +83,7 @@ struct array
      */
     [[nodiscard]] constexpr auto at(size_type const pos) const noexcept -> const_reference
     {
-        ETL_ASSERT(pos < Size);
+        assert(pos < Size);
         return _data[pos];
     }
 
@@ -92,7 +92,7 @@ struct array
      */
     [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept -> reference
     {
-        ETL_ASSERT(pos < Size);
+        assert(pos < Size);
         return _data[pos];
     }
 
@@ -102,7 +102,7 @@ struct array
     [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
         -> const_reference
     {
-        ETL_ASSERT(pos < Size);
+        assert(pos < Size);
         return _data[pos];
     }
 

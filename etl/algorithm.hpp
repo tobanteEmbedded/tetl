@@ -363,7 +363,7 @@ template <class Type, class Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi,
                                    Compare comp) -> Type const&
 {
-    ETL_ASSERT(!comp(hi, lo));
+    assert(!comp(hi, lo));
     return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
 
