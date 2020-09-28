@@ -31,6 +31,10 @@ DAMAGE.
 #define TAETL_IS_CLASS(Type) __is_class(Type)
 #define TAETL_IS_UNION(Type) __is_union(Type)
 
+#define TAETL_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
+#define TAETL_IS_FINAL(Type) __is_final(Type)
+#define TAETL_IS_ABSTRACT(Type) __is_abstract(Type)
+
 #define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
 
 #define TAETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)

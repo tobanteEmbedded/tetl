@@ -42,13 +42,13 @@ public:
     auto operator=(dummy_mutex&&) -> dummy_mutex& = default;
     dummy_mutex(dummy_mutex&&)                    = default;
 
-    auto lock() noexcept { data_ = true; }
-    auto unlock() noexcept { data_ = false; }
+    auto lock() noexcept { is_locked_ = true; }
+    auto unlock() noexcept { is_locked_ = false; }
 
-    [[nodiscard]] auto is_locked() const noexcept { return data_; }
+    [[nodiscard]] auto is_locked() const noexcept { return is_locked_; }
 
 private:
-    bool data_ = false;
+    bool is_locked_ = false;
 };
 }  // namespace
 

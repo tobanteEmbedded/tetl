@@ -145,6 +145,120 @@ TEMPLATE_TEST_CASE("type_traits: is_empty = false", "[type_traits]", B, D, E)
     STATIC_REQUIRE_FALSE(etl::is_empty_v<TestType>);
 }
 
+namespace
+{
+struct IsPolymorphic_A
+{
+    int m;
+};
+
+struct IsPolymorphic_B
+{
+    virtual void foo();
+};
+
+struct IsPolymorphic_C : IsPolymorphic_B
+{
+};
+
+struct IsPolymorphic_D
+{
+    virtual ~IsPolymorphic_D() = default;
+};
+
+}  // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_polymorphic = false", "[type_traits]", int, float,
+                   IsPolymorphic_A)
+{
+    STATIC_REQUIRE_FALSE(etl::is_polymorphic<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_polymorphic_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_polymorphic = true", "[type_traits]", IsPolymorphic_B,
+                   IsPolymorphic_C, IsPolymorphic_D)
+{
+    STATIC_REQUIRE(etl::is_polymorphic<TestType>::value);
+    STATIC_REQUIRE(etl::is_polymorphic_v<TestType>);
+}
+
+namespace
+{
+struct IsFinal_A
+{
+    int m;
+};
+
+struct IsFinal_B
+{
+    virtual void foo();
+};
+
+struct IsFinal_C final : IsFinal_B
+{
+};
+
+struct IsFinal_D
+{
+    virtual ~IsFinal_D() = default;
+};
+
+union IsFinal_E final
+{
+    char data1;
+    float data2;
+};
+
+}  // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_final = false", "[type_traits]", int, float,
+                   IsFinal_A, IsFinal_B, IsFinal_D)
+{
+    STATIC_REQUIRE_FALSE(etl::is_final<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_final_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_final = true", "[type_traits]", IsFinal_C, IsFinal_E)
+{
+    STATIC_REQUIRE(etl::is_final<TestType>::value);
+    STATIC_REQUIRE(etl::is_final_v<TestType>);
+}
+
+namespace
+{
+struct IsAbstract_A
+{
+    int m;
+};
+
+struct IsAbstract_B
+{
+    virtual void foo() { }
+};
+
+struct IsAbstract_C
+{
+    virtual void foo() = 0;
+};
+
+struct IsAbstract_D : IsAbstract_C
+{
+};
+}  // namespace
+TEMPLATE_TEST_CASE("type_traits: is_abstract = false", "[type_traits]", int, float,
+                   IsAbstract_A, IsAbstract_B)
+{
+    STATIC_REQUIRE_FALSE(etl::is_abstract<TestType>::value);
+    STATIC_REQUIRE_FALSE(etl::is_abstract_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_abstract = true", "[type_traits]", IsAbstract_C,
+                   IsAbstract_D)
+{
+    STATIC_REQUIRE(etl::is_abstract<TestType>::value);
+    STATIC_REQUIRE(etl::is_abstract_v<TestType>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_integral = false", "[type_traits]", float, double,
                    long double, (struct S))
 {

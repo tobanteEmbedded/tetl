@@ -834,6 +834,41 @@ template <class T>
 inline constexpr bool is_empty_v = is_empty<T>::value;
 
 /**
+ * @brief is_polymorphic
+ */
+template <typename T>
+struct is_polymorphic : public bool_constant<TAETL_IS_POLYMORPHIC(T)>
+{
+};
+
+template <typename T>
+inline constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
+
+/**
+ * @brief If T is a final class (that is, a class declared with the final specifier),
+ * provides the member constant value equal true. For any other type, value is false. If T
+ * is a class type, T shall be a complete type; otherwise, the behavior is undefined.
+ */
+template <typename T>
+struct is_final : public bool_constant<TAETL_IS_FINAL(T)>
+{
+};
+
+template <typename T>
+inline constexpr bool is_final_v = is_final<T>::value;
+
+/**
+ * @brief is_abstract
+ */
+template <typename T>
+struct is_abstract : public bool_constant<TAETL_IS_ABSTRACT(T)>
+{
+};
+
+template <typename T>
+inline constexpr bool is_abstract_v = is_abstract<T>::value;
+
+/**
  * @brief If T is a reference type (lvalue reference or rvalue reference), provides the
  * member constant value equal true. For any other type, value is false. The
  * behavior of a program that adds specializations for is_reference or
