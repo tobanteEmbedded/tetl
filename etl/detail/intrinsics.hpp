@@ -35,6 +35,8 @@ DAMAGE.
 #define TAETL_IS_FINAL(Type) __is_final(Type)
 #define TAETL_IS_ABSTRACT(Type) __is_abstract(Type)
 
+#define TAETL_IS_AGGREGATE(Type) __is_aggregate(Type)
+
 #define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
 
 #define TAETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)

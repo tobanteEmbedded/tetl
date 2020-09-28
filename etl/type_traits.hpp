@@ -869,6 +869,17 @@ template <typename T>
 inline constexpr bool is_abstract_v = is_abstract<T>::value;
 
 /**
+ * @brief is_aggregate
+ */
+template <typename T>
+struct is_aggregate : bool_constant<TAETL_IS_AGGREGATE(remove_cv_t<T>)>
+{
+};
+
+template <typename T>
+inline constexpr bool is_aggregate_v = is_aggregate<T>::value;
+
+/**
  * @brief If T is a reference type (lvalue reference or rvalue reference), provides the
  * member constant value equal true. For any other type, value is false. The
  * behavior of a program that adds specializations for is_reference or
