@@ -485,9 +485,51 @@ constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 }
 
 /**
- * @brief Reorders the elements in the range [first, last) in such a way that all elements
- * for which the predicate p returns true precede the elements for which predicate p
- * returns false. Relative order of the elements is not preserved.
+ * @brief Copies the elements from the range [first, last), to another range beginning at
+ * d_first in such a way that there are no consecutive equal elements. Only the first
+ * element of each group of equal elements is copied.
+ *
+ * @details Elements are compared using the given binary predicate \p pred. The behavior
+ * is undefined if it is not an equivalence relation.
+ */
+template <typename InputIter, typename OutputIter, typename BinaryPredicate>
+constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destination,
+                           BinaryPredicate pred) -> OutputIter
+{
+    if (first != last)
+    {
+        *destination = *first;
+
+        while (++first != last)
+        {
+            if (!pred(*destination, *first)) { *++destination = *first; }
+        }
+
+        ++destination;
+    }
+
+    return destination;
+}
+
+/**
+ * @brief Copies the elements from the range [first, last), to another range beginning at
+ * d_first in such a way that there are no consecutive equal elements. Only the first
+ * element of each group of equal elements is copied.
+ *
+ * @details Elements are compared using operator==. The behavior is undefined if it is not
+ * an equivalence relation.
+ */
+template <class InputIter, class OutputIter>
+constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destination)
+    -> OutputIter
+{
+    return etl::unique_copy(first, last, destination, etl::equal_to<> {});
+}
+
+/**
+ * @brief Reorders the elements in the range [first, last) in such a way that all
+ * elements for which the predicate p returns true precede the elements for which
+ * predicate p returns false. Relative order of the elements is not preserved.
  */
 template <typename ForwardIt, typename UnaryPredicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> ForwardIt

@@ -439,6 +439,35 @@ TEMPLATE_TEST_CASE("algorithm: unique", "[algorithm]", etl::uint8_t, etl::int8_t
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: unique_copy", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("equal_to")
+    {
+        auto source = etl::array {T(1), T(1), T(1), T(2), T(3)};
+        decltype(source) dest {};
+
+        etl::unique_copy(begin(source), end(source), begin(dest));
+        CHECK(dest[0] == T(1));
+        CHECK(dest[1] == T(2));
+        CHECK(dest[2] == T(3));
+    }
+
+    SECTION("not_equal_to")
+    {
+        auto source = etl::array {T(1), T(1), T(1), T(2), T(3)};
+        decltype(source) dest {};
+
+        etl::unique_copy(begin(source), end(source), begin(dest), etl::not_equal_to<> {});
+        CHECK(dest[0] == T(1));
+        CHECK(dest[1] == T(1));
+        CHECK(dest[2] == T(1));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
