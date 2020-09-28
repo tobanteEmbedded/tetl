@@ -518,6 +518,18 @@ TEMPLATE_TEST_CASE("type_traits: is_unsigned = true", "[type_traits]", etl::uint
     STATIC_REQUIRE(etl::is_unsigned<TestType>::value);
 }
 
+TEMPLATE_TEST_CASE("type_traits: alignment_of = 1", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, char)
+{
+    STATIC_REQUIRE(etl::alignment_of_v<TestType> == 1);
+}
+
+TEMPLATE_TEST_CASE("type_traits: alignment_of = 1", "[type_traits]", etl::int16_t,
+                   etl::uint16_t, short, char16_t)
+{
+    STATIC_REQUIRE(etl::alignment_of_v<TestType> == 2);
+}
+
 TEMPLATE_TEST_CASE("type_traits: remove_volatile", "[type_traits]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

@@ -1844,6 +1844,17 @@ template <class T>
 inline constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
 
 /**
+ * @brief alignment_of
+ */
+template <class T>
+struct alignment_of : public integral_constant<size_t, alignof(T)>
+{
+};
+
+template <class T>
+inline constexpr size_t alignment_of_v = alignment_of<T>::value;
+
+/**
  * @brief If T is a TriviallyCopyable type, provides the member constant value equal to
  * true. For any other type, value is false. The only trivially copyable types are scalar
  * types, trivially copyable classes, and arrays of such types/classes (possibly
