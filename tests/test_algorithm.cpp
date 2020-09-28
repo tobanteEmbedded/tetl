@@ -149,6 +149,30 @@ TEMPLATE_TEST_CASE("algorithm: count_if", "[algorithm]", etl::uint8_t, etl::uint
     REQUIRE(etl::count_if(begin(data), end(data), p2) == 2);
 }
 
+TEMPLATE_TEST_CASE("algorithm: mismatch", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double)
+{
+    using T = TestType;
+    SECTION("first1,last1,first2")
+    {
+        auto lhs    = etl::array {T(0), T(1), T(2)};
+        auto rhs    = etl::array {T(0), T(1), T(3)};
+        auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs));
+        CHECK(*result.first == T(2));
+        CHECK(*result.second == T(3));
+    }
+
+    SECTION("first1,last1,first2,last2")
+    {
+        auto lhs    = etl::array {T(0), T(1), T(2)};
+        auto rhs    = etl::array {T(0), T(1), T(4)};
+        auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs), end(rhs));
+        CHECK(*result.first == T(2));
+        CHECK(*result.second == T(4));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

@@ -177,8 +177,8 @@ template <typename InputIter, typename T>
 }
 
 /**
- * @brief Returns the number of elements in the range [first, last) satisfying specific
- * criteria. Counts elements for which predicate p returns true.
+ * @brief Returns the number of elements in the range [first, last) satisfying
+ * specific criteria. Counts elements for which predicate p returns true.
  */
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto count_if(InputIter first, InputIter last, UnaryPredicate p)
@@ -190,6 +190,77 @@ template <typename InputIter, typename UnaryPredicate>
         if (p(*first)) { ++result; }
     }
     return result;
+}
+
+/**
+ * @brief Returns the first mismatching pair of elements from two ranges: one defined by
+ * [first1, last1) and another defined by [first2,last2). If last2 is not provided
+ * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ *
+ * @details Elements are compared using the given binary predicate p.
+ */
+template <class InputIter1, class InputIter2, class BinaryPredicate>
+[[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2, BinaryPredicate pred)
+    -> etl::pair<InputIter1, InputIter2>
+{
+    for (; first1 != last1; ++first1, ++first2)
+    {
+        if (!pred(*first1, *first2)) { break; }
+    }
+
+    return etl::pair<InputIter1, InputIter2>(first1, first2);
+}
+
+/**
+ * @brief Returns the first mismatching pair of elements from two ranges: one defined
+ * by [first1, last1) and another defined by [first2,last2). If last2 is not provided
+ * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ *
+ * @details Elements are compared using operator==.
+ */
+template <class InputIter1, class InputIter2>
+[[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2)
+    -> etl::pair<InputIter1, InputIter2>
+{
+    return mismatch(first1, last1, first2, etl::equal_to<> {});
+}
+
+/**
+ * @brief Returns the first mismatching pair of elements from two ranges: one defined by
+ * [first1, last1) and another defined by [first2,last2). If last2 is not provided
+ * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ *
+ * @details Elements are compared using the given binary predicate p.
+ */
+template <class InputIter1, class InputIter2, class BinaryPredicate>
+[[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2, InputIter2 last2,
+                                      BinaryPredicate pred)
+    -> etl::pair<InputIter1, InputIter2>
+{
+    for (; first1 != last1 && first2 != last2; ++first1, ++first2)
+    {
+        if (!pred(*first1, *first2)) { break; }
+    }
+
+    return etl::pair<InputIter1, InputIter2>(first1, first2);
+}
+
+/**
+ * @brief Returns the first mismatching pair of elements from two ranges: one defined
+ * by [first1, last1) and another defined by [first2,last2). If last2 is not provided
+ * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ *
+ * @details Elements are compared using operator==.
+ */
+template <class InputIter1, class InputIter2>
+[[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2, InputIter2 last2)
+    -> etl::pair<InputIter1, InputIter2>
+{
+    return mismatch(first1, last1, first2, last2, etl::equal_to<> {});
 }
 
 /**
@@ -412,8 +483,8 @@ constexpr auto reverse(BidirIter first, BidirIter last) -> void
 
 /**
  * @brief Copies the elements from the range [ \p first, \p last ) to another range
- * beginning at d_first in such a way that the elements in the new range are in reverse
- * order.
+ * beginning at d_first in such a way that the elements in the new range are in
+ * reverse order.
  *
  * @details If the source and destination ranges (that is, [first, last) and [d_first,
  * d_first+(last-first)) respectively) overlap, the behavior is undefined.
@@ -456,8 +527,8 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
 
 /**
  * @brief Eliminates all except the first element from every consecutive group of
- * equivalent elements from the range [first, last) and returns a past-the-end iterator
- * for the new logical end of the range.
+ * equivalent elements from the range [first, last) and returns a past-the-end
+ * iterator for the new logical end of the range.
  */
 template <class ForwardIter, class BinaryPredicate>
 constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
@@ -475,8 +546,8 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
 
 /**
  * @brief Eliminates all except the first element from every consecutive group of
- * equivalent elements from the range [first, last) and returns a past-the-end iterator
- * for the new logical end of the range.
+ * equivalent elements from the range [first, last) and returns a past-the-end
+ * iterator for the new logical end of the range.
  */
 template <class ForwardIter>
 constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
@@ -485,12 +556,12 @@ constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 }
 
 /**
- * @brief Copies the elements from the range [first, last), to another range beginning at
- * d_first in such a way that there are no consecutive equal elements. Only the first
- * element of each group of equal elements is copied.
+ * @brief Copies the elements from the range [first, last), to another range beginning
+ * at d_first in such a way that there are no consecutive equal elements. Only the
+ * first element of each group of equal elements is copied.
  *
- * @details Elements are compared using the given binary predicate \p pred. The behavior
- * is undefined if it is not an equivalence relation.
+ * @details Elements are compared using the given binary predicate \p pred. The
+ * behavior is undefined if it is not an equivalence relation.
  */
 template <typename InputIter, typename OutputIter, typename BinaryPredicate>
 constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destination,
@@ -512,12 +583,12 @@ constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destinati
 }
 
 /**
- * @brief Copies the elements from the range [first, last), to another range beginning at
- * d_first in such a way that there are no consecutive equal elements. Only the first
- * element of each group of equal elements is copied.
+ * @brief Copies the elements from the range [first, last), to another range beginning
+ * at d_first in such a way that there are no consecutive equal elements. Only the
+ * first element of each group of equal elements is copied.
  *
- * @details Elements are compared using operator==. The behavior is undefined if it is not
- * an equivalence relation.
+ * @details Elements are compared using operator==. The behavior is undefined if it is
+ * not an equivalence relation.
  */
 template <class InputIter, class OutputIter>
 constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destination)
@@ -569,8 +640,8 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> Bidir
  * beginning at destination.
  *
  * @details Copies all elements in the range [first, last) starting from first and
- * proceeding to last - 1. The behavior is undefined if destination is within the range
- * [first, last). In this case, etl::copy_backward may be used instead.
+ * proceeding to last - 1. The behavior is undefined if destination is within the
+ * range [first, last). In this case, etl::copy_backward may be used instead.
  *
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
@@ -587,8 +658,8 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> Output
  * beginning at destination.
  *
  * @details Only copies the elements for which the predicate pred returns true. The
- * relative order of the elements that are copied is preserved. The behavior is undefined
- * if the source and the destination ranges overlap.
+ * relative order of the elements that are copied is preserved. The behavior is
+ * undefined if the source and the destination ranges overlap.
  *
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
@@ -607,7 +678,8 @@ constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredi
 
 /**
  * @brief Copies exactly count values from the range beginning at first to the range
- * beginning at result. Formally, for each integer 0 ≤ i < count, performs *(result + i) =
+ * beginning at result. Formally, for each integer 0 ≤ i < count, performs *(result +
+ * i) =
  * *(first + i). Overlap of ranges is formally permitted, but leads to unpredictable
  * ordering of the results.
  *
@@ -626,12 +698,12 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 }
 
 /**
- * @brief Copies the elements from the range, defined by [first, last), to another range
- * ending at d_last. The elements are copied in reverse order (the last element is copied
- * first), but their relative order is preserved.
+ * @brief Copies the elements from the range, defined by [first, last), to another
+ * range ending at d_last. The elements are copied in reverse order (the last element
+ * is copied first), but their relative order is preserved.
  *
- * @details The behavior is undefined if d_last is within (first, last]. etl::copy must be
- * used instead of etl::copy_backward in that case.
+ * @details The behavior is undefined if d_last is within (first, last]. etl::copy
+ * must be used instead of etl::copy_backward in that case.
  *
  * @return Iterator to the last element copied.
  */
@@ -652,7 +724,8 @@ constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 }
 
 /**
- * @brief Returns true if the range [first1, last1) is equal to the range [first2, first2
+ * @brief Returns true if the range [first1, last1) is equal to the range [first2,
+ * first2
  * + (last1 - first1)), and false otherwise.
  */
 template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
@@ -667,7 +740,8 @@ template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
 }
 
 /**
- * @brief Returns true if the range [first1, last1) is equal to the range [first2, first2
+ * @brief Returns true if the range [first1, last1) is equal to the range [first2,
+ * first2
  * + (last1 - first1)), and false otherwise.
  */
 template <typename InputIt1, typename InputIt2>
@@ -678,8 +752,8 @@ template <typename InputIt1, typename InputIt2>
 }
 
 /**
- * @brief Returns true if the range [first1, last1) is equal to the range [first2, last2),
- * and false otherwise.
+ * @brief Returns true if the range [first1, last1) is equal to the range [first2,
+ * last2), and false otherwise.
  */
 template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -690,8 +764,8 @@ template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
 }
 
 /**
- * @brief Returns true if the range [first1, last1) is equal to the range [first2, last2),
- * and false otherwise.
+ * @brief Returns true if the range [first1, last1) is equal to the range [first2,
+ * last2), and false otherwise.
  */
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -737,13 +811,13 @@ template <typename InputIt1, typename InputIt2>
 }
 
 /**
- * @brief Sorts the elements in the range [first, last) in non-descending order. The order
- * of equal elements is not guaranteed to be preserved.
+ * @brief Sorts the elements in the range [first, last) in non-descending order. The
+ * order of equal elements is not guaranteed to be preserved.
  *
- * @details A sequence is sorted with respect to a comparator comp if for any iterator it
- * pointing to the sequence and any non-negative integer n such that it + n is a valid
- * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
- * *it) evaluates to false. Bubble sort implementation.
+ * @details A sequence is sorted with respect to a comparator comp if for any iterator
+ * it pointing to the sequence and any non-negative integer n such that it + n is a
+ * valid iterator pointing to an element of the sequence, comp(*(it + n), *it) (or
+ * *(it + n) < *it) evaluates to false. Bubble sort implementation.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
@@ -760,14 +834,14 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 }
 
 /**
- * @brief Sorts the elements in the range [first, last) in non-descending order. The order
- * of equal elements is not guaranteed to be preserved. Elements are compared using
- * operator<.
+ * @brief Sorts the elements in the range [first, last) in non-descending order. The
+ * order of equal elements is not guaranteed to be preserved. Elements are compared
+ * using operator<.
  *
- * @details A sequence is sorted with respect to a comparator comp if for any iterator it
- * pointing to the sequence and any non-negative integer n such that it + n is a valid
- * iterator pointing to an element of the sequence, comp(*(it + n), *it) (or *(it + n) <
- * *it) evaluates to false. Bubble sort implementation.
+ * @details A sequence is sorted with respect to a comparator comp if for any iterator
+ * it pointing to the sequence and any non-negative integer n such that it + n is a
+ * valid iterator pointing to an element of the sequence, comp(*(it + n), *it) (or
+ * *(it + n) < *it) evaluates to false. Bubble sort implementation.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
@@ -778,9 +852,9 @@ constexpr auto sort(RandomIt first, RandomIt last) -> void
 }
 
 /**
- * @brief Examines the range [first, last) and finds the largest range beginning at first
- * in which the elements are sorted in non-descending order. Elements are compared using
- * operator<.
+ * @brief Examines the range [first, last) and finds the largest range beginning at
+ * first in which the elements are sorted in non-descending order. Elements are
+ * compared using operator<.
  */
 template <typename ForwardIter>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIter first, ForwardIter last)
@@ -790,9 +864,9 @@ template <typename ForwardIter>
 }
 
 /**
- * @brief Examines the range [first, last) and finds the largest range beginning at first
- * in which the elements are sorted in non-descending order. Elements are compared using
- * the given binary comparison function comp.
+ * @brief Examines the range [first, last) and finds the largest range beginning at
+ * first in which the elements are sorted in non-descending order. Elements are
+ * compared using the given binary comparison function comp.
  */
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIter first, ForwardIter last,
@@ -832,8 +906,8 @@ template <typename ForwardIter, typename Compare>
 }
 
 /**
- * @brief Returns true if the sorted range [first2, last2) is a subsequence of the sorted
- * range [first1, last1). Both ranges must be sorted with operator<.
+ * @brief Returns true if the sorted range [first2, last2) is a subsequence of the
+ * sorted range [first1, last1). Both ranges must be sorted with operator<.
  */
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -848,9 +922,9 @@ template <typename InputIt1, typename InputIt2>
 }
 
 /**
- * @brief Returns true if the sorted range [first2, last2) is a subsequence of the sorted
- * range [first1, last1). Both ranges must be sorted with the given comparison function
- * comp.
+ * @brief Returns true if the sorted range [first2, last2) is a subsequence of the
+ * sorted range [first1, last1). Both ranges must be sorted with the given comparison
+ * function comp.
  */
 template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
