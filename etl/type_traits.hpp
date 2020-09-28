@@ -2143,6 +2143,20 @@ struct aligned_storage
 
 template <etl::size_t Len, etl::size_t Align = alignof(etl::max_align_t)>
 using aligned_storage_t = typename aligned_storage<Len, Align>::type;
+
+/**
+ * @brief Detects whether the function call occurs within a constant-evaluated context.
+ * Returns true if the evaluation of the call occurs within the evaluation of an
+ * expression or conversion that is manifestly constant-evaluated; otherwise returns
+ * false.
+ *
+ * https://en.cppreference.com/w/cpp/types/is_constant_evaluated
+ */
+[[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
+{
+    return TAETL_IS_CONSTANT_EVALUATED();
+}
+
 }  // namespace etl
 
 #endif  // TAETL_TYPETRAITS_HPP
