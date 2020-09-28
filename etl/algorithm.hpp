@@ -31,11 +31,13 @@ DAMAGE.
 #ifndef TAETL_ALGORITHM_HPP
 #define TAETL_ALGORITHM_HPP
 
-#include "cassert.hpp"
-#include "definitions.hpp"
-#include "functional.hpp"
-#include "iterator.hpp"
-#include "type_traits.hpp"
+#include "etl/cassert.hpp"
+#include "etl/definitions.hpp"
+#include "etl/functional.hpp"
+#include "etl/iterator.hpp"
+#include "etl/type_traits.hpp"
+
+#include "etl/detail/algo_search.hpp"
 
 namespace etl
 {
@@ -303,6 +305,42 @@ template <typename InputIter, typename UnaryPredicate>
         if (!predicate(*first)) { return first; }
     }
     return last;
+}
+
+/**
+ * @brief Searches for the first occurrence of the sequence of elements [s_first, s_last)
+ * in the range [first, last). Elements are compared using the given binary predicate \p
+ * pred.
+ */
+template <class ForwardIter1, class ForwardIter2, class BinaryPredicate>
+[[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
+                                    ForwardIter2 s_first, ForwardIter2 s_last,
+                                    BinaryPredicate pred) -> ForwardIter1
+{
+    return detail::search_impl(first, last, s_first, s_last, pred);
+}
+
+/**
+ * @brief Searches for the first occurrence of the sequence of elements [s_first, s_last)
+ * in the range [first, last). Elements are compared using operator==.
+ */
+template <class ForwardIter1, class ForwardIter2>
+[[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
+                                    ForwardIter2 s_first, ForwardIter2 s_last)
+    -> ForwardIter1
+{
+    return search(first, last, s_first, s_last, etl::equal_to<> {});
+}
+
+/**
+ * @brief Searches the sequence [first, last) for the pattern specified in the constructor
+ * of searcher.
+ */
+template <class ForwardIter, class Searcher>
+[[nodiscard]] constexpr auto search(ForwardIter first, ForwardIter last,
+                                    Searcher const& searcher) -> ForwardIter
+{
+    return searcher(first, last).first;
 }
 
 /**

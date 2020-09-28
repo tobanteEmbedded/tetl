@@ -535,6 +535,50 @@ TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
     REQUIRE(arr[6] == 13);
 }
 
+TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("find match")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
+        auto target = etl::array {T(1), T(2), T(3)};
+        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        CHECK(*res == T(1));
+    }
+
+    SECTION("no match")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(0), T(2), T(3)};
+        auto target = etl::array {T(1), T(2), T(3)};
+        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        CHECK(res == end(source));
+    }
+
+    SECTION("match range empty")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(0), T(2), T(3)};
+        auto target = etl::static_vector<T, 0> {};
+        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        CHECK(res == begin(source));
+    }
+
+    SECTION("searcher")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
+
+        auto t1 = etl::array {T(1), T(2), T(3)};
+        auto s1 = etl::default_searcher(t1.begin(), t1.end());
+        CHECK(*etl::search(source.begin(), source.end(), s1) == T(1));
+
+        auto t2 = etl::static_vector<T, 0> {};
+        auto s2 = etl::default_searcher(t2.begin(), t2.end());
+        CHECK(etl::search(source.begin(), source.end(), s2) == begin(source));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

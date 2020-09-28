@@ -27,10 +27,13 @@ DAMAGE.
 #ifndef TAETL_FUNCTIONAL_HPP
 #define TAETL_FUNCTIONAL_HPP
 
-#include "byte.hpp"
-#include "definitions.hpp"
-#include "new.hpp"
-#include "utility.hpp"
+#include "etl/byte.hpp"
+#include "etl/definitions.hpp"
+#include "etl/iterator.hpp"
+#include "etl/new.hpp"
+#include "etl/utility.hpp"
+
+#include "etl/detail/algo_search.hpp"
 
 namespace etl
 {
@@ -808,6 +811,38 @@ public:
 
 private:
     etl::byte storage_[Capacity] {};
+};
+
+/**
+ * @brief Default searcher. A class suitable for use with Searcher overload of etl::search
+ * that delegates the search operation to the pre-C++17 standard library's etl::search.
+ */
+template <typename ForwardIter, typename Predicate = equal_to<>>
+class default_searcher
+{
+public:
+    default_searcher(ForwardIter f, ForwardIter l, Predicate p = Predicate())
+        : first_(f), last_(l), predicate_(p)
+    {
+    }
+
+    template <typename ForwardIter2>
+    auto operator()(ForwardIter2 f, ForwardIter2 l) const
+        -> etl::pair<ForwardIter2, ForwardIter2>
+    {
+        if (auto i = ::etl::detail::search_impl(f, l, first_, last_, predicate_); i != l)
+        {
+            auto j = ::etl::next(i, etl::distance(first_, last_));
+            return etl::pair<ForwardIter2, ForwardIter2> {i, j};
+        }
+
+        return etl::pair<ForwardIter2, ForwardIter2> {l, l};
+    }
+
+private:
+    ForwardIter first_;
+    ForwardIter last_;
+    Predicate predicate_;
 };
 
 }  // namespace etl
