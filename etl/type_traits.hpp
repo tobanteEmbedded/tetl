@@ -582,6 +582,89 @@ inline constexpr bool is_integral_v = is_integral<T>::value;
 namespace detail
 {
 template <typename>
+struct make_signed_helper;
+
+template <>
+struct make_signed_helper<signed char>
+{
+    using type = signed char;
+};
+
+template <>
+struct make_signed_helper<signed short>
+{
+    using type = signed short;
+};
+
+template <>
+struct make_signed_helper<signed int>
+{
+    using type = signed int;
+};
+
+template <>
+struct make_signed_helper<signed long>
+{
+    using type = signed long;
+};
+
+template <>
+struct make_signed_helper<signed long long>
+{
+    using type = signed long long;
+};
+
+template <>
+struct make_signed_helper<unsigned char>
+{
+    using type = signed char;
+};
+
+template <>
+struct make_signed_helper<unsigned short>
+{
+    using type = signed short;
+};
+
+template <>
+struct make_signed_helper<unsigned int>
+{
+    using type = signed int;
+};
+
+template <>
+struct make_signed_helper<unsigned long>
+{
+    using type = signed long;
+};
+
+template <>
+struct make_signed_helper<unsigned long long>
+{
+    using type = signed long long;
+};
+
+}  // namespace detail
+
+/**
+ * @brief If T is an integral (except bool) or enumeration type, provides the
+ * member typedef type which is the unsigned integer type corresponding to T,
+ * with the same cv-qualifiers. If T is signed or unsigned char, short, int,
+ * long, long long; the unsigned type from this list corresponding to T is
+ * provided. The behavior of a program that adds specializations for
+ * make_signed is undefined.
+ */
+template <typename Type>
+struct make_signed : detail::make_signed_helper<Type>
+{
+};
+
+template <class T>
+using make_signed_t = typename make_signed<T>::type;
+
+namespace detail
+{
+template <typename>
 struct make_unsigned_helper;
 
 template <>
@@ -815,7 +898,7 @@ inline constexpr bool is_array_v = is_array<T>::value;
  */
 template <class T>
 struct is_function
-    : etl::bool_constant<!etl::is_const<const T>::value && !etl::is_reference<T>::value>
+    : etl::bool_constant<!etl::is_const_v<T const> && !etl::is_reference_v<T>>
 {
 };
 
