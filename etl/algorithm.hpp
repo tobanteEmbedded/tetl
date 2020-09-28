@@ -455,6 +455,36 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
 }
 
 /**
+ * @brief Eliminates all except the first element from every consecutive group of
+ * equivalent elements from the range [first, last) and returns a past-the-end iterator
+ * for the new logical end of the range.
+ */
+template <class ForwardIter, class BinaryPredicate>
+constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
+    -> ForwardIter
+{
+    if (first == last) { return last; }
+
+    auto result = first;
+    while (++first != last)
+    {
+        if (!pred(*result, *first) && ++result != first) { *result = etl::move(*first); }
+    }
+    return ++result;
+}
+
+/**
+ * @brief Eliminates all except the first element from every consecutive group of
+ * equivalent elements from the range [first, last) and returns a past-the-end iterator
+ * for the new logical end of the range.
+ */
+template <class ForwardIter>
+constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
+{
+    return unique(first, last, etl::equal_to<> {});
+}
+
+/**
  * @brief Reorders the elements in the range [first, last) in such a way that all elements
  * for which the predicate p returns true precede the elements for which predicate p
  * returns false. Relative order of the elements is not preserved.
