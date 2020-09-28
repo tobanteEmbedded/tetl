@@ -30,7 +30,7 @@ avr:
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
+	cd $(BUILD_DIR) && ctest -Q -C $(CONFIG) -j8
 
 ifneq (,$(findstring clang,$(CXX)))
     LCOV = lcov --gcov-tool llvm-gcov.sh
@@ -44,7 +44,7 @@ coverage:
 	cmake -S . -G Ninja -B$(COVERAGE_DIR) -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON
 	cmake --build $(COVERAGE_DIR) -- -j12
 	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
-	cd $(COVERAGE_DIR) && ctest -j12
+	cd $(COVERAGE_DIR) && ctest -Q -j12
 	cd $(COVERAGE_DIR) && $(LCOV) -c -d . --base-directory . -o test_cov.info
 	cd $(COVERAGE_DIR) && $(LCOV) -a base_cov.info -a test_cov.info -o cov.info
 	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*3rd_party/*" -o cov.info

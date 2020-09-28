@@ -43,10 +43,10 @@ test_script:
   - cmd: >-
       cd build_debug
 
-      ctest -C Debug
+      ctest -Q -C Debug
 
       cd ..
 
       cd build_release
 
-      ctest -C Release
+      ctest -Q -C Release
