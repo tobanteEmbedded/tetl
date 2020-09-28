@@ -114,7 +114,7 @@ template <typename InputIter, typename OutputIter, typename UnaryOperation>
 constexpr auto transform(InputIter first, InputIter last, OutputIter destination,
                          UnaryOperation op) -> OutputIter
 {
-    while (first != last) { *destination++ = op(*first++); }
+    for (; first != last; ++first, ++destination) { *destination = op(*first); }
     return destination;
 }
 
@@ -129,10 +129,10 @@ constexpr auto transform(InputIter first, InputIter last, OutputIter destination
 template <typename InputIter1, typename InputIter2, typename OutputIter,
           typename BinaryOperation>
 constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
-                         OutputIter destination, BinaryOperation op) -> OutputIter
+                         OutputIter dest, BinaryOperation op) -> OutputIter
 {
-    while (first1 != last1) { *destination++ = op(*first1++, *first2++); }
-    return destination;
+    for (; first1 != last1; ++first1, ++first2, ++dest) { *dest = op(*first1, *first2); }
+    return dest;
 }
 
 /**
@@ -144,7 +144,7 @@ constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 template <typename ForwardIt, typename Generator>
 constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 {
-    while (first != last) { *first++ = g(); }
+    for (; first != last; ++first) { *first = g(); }
 }
 
 /**
@@ -156,7 +156,7 @@ constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 template <typename OutputIt, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 {
-    for (SizeT i = 0; i < count; i++) { *first++ = g(); }
+    for (; count > 0; ++first, --count) { *first = g(); }
     return first;
 }
 
@@ -168,12 +168,12 @@ template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto count(InputIter first, InputIter last, const T& value) ->
     typename iterator_traits<InputIter>::difference_type
 {
-    auto ret = typename iterator_traits<InputIter>::difference_type {0};
+    auto result = typename iterator_traits<InputIter>::difference_type {0};
     for (; first != last; ++first)
     {
-        if (*first == value) { ret++; }
+        if (*first == value) { ++result; }
     }
-    return ret;
+    return result;
 }
 
 /**
@@ -184,20 +184,20 @@ template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto count_if(InputIter first, InputIter last, UnaryPredicate p)
     -> typename iterator_traits<InputIter>::difference_type
 {
-    auto ret = typename iterator_traits<InputIter>::difference_type {0};
+    auto result = typename iterator_traits<InputIter>::difference_type {0};
     for (; first != last; ++first)
     {
-        if (p(*first)) { ret++; }
+        if (p(*first)) { ++result; }
     }
-    return ret;
+    return result;
 }
 
 /**
  * @brief Searches for an element equal to value.
  */
-template <typename InputIt, typename T>
-[[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept
-    -> InputIt
+template <typename InputIter, typename T>
+[[nodiscard]] constexpr auto find(InputIter first, InputIter last,
+                                  T const& value) noexcept -> InputIter
 {
     for (; first != last; ++first)
     {
@@ -209,9 +209,9 @@ template <typename InputIt, typename T>
 /**
  * @brief Searches for an element for which predicate p returns true
  */
-template <typename InputIt, typename UnaryPredicate>
-[[nodiscard]] constexpr auto find_if(InputIt first, InputIt last,
-                                     UnaryPredicate p) noexcept -> InputIt
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto find_if(InputIter first, InputIter last,
+                                     UnaryPredicate p) noexcept -> InputIter
 {
     for (; first != last; ++first)
     {
@@ -223,13 +223,13 @@ template <typename InputIt, typename UnaryPredicate>
 /**
  * @brief Searches for an element for which predicate q returns false
  */
-template <typename InputIt, typename UnaryPredicate>
-[[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last,
-                                         UnaryPredicate q) noexcept -> InputIt
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto find_if_not(InputIter first, InputIter last,
+                                         UnaryPredicate predicate) noexcept -> InputIter
 {
     for (; first != last; ++first)
     {
-        if (!q(*first)) { return first; }
+        if (!predicate(*first)) { return first; }
     }
     return last;
 }
