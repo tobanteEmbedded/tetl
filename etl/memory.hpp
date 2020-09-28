@@ -171,6 +171,50 @@ private:
     StorageType value_;
 };
 
+template <class T>
+class default_delete
+{
+public:
+    constexpr default_delete() noexcept = default;
+
+    template <class U,
+              typename = typename etl::enable_if_t<etl::is_convertible_v<U*, T*>>>
+    default_delete(const default_delete<U>&) noexcept
+    {
+    }
+
+    auto operator()(T* ptr) const noexcept -> void { delete ptr; }
+
+private:
+    static_assert(!etl::is_function<T>::value);
+    static_assert(sizeof(T));
+    static_assert(!etl::is_void<T>::value);
+};
+
+template <class T>
+class default_delete<T[]>
+{
+public:
+    constexpr default_delete() noexcept = default;
+
+    template <class U,
+              typename = etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>>>
+    default_delete(const default_delete<U[]>&) noexcept
+    {
+    }
+
+    template <class U>
+    auto operator()(U* array_ptr) const noexcept
+        -> etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>, void>
+    {
+        delete[] array_ptr;
+    }
+
+private:
+    static_assert(sizeof(T));
+    static_assert(!etl::is_void<T>::value);
+};
+
 /**
  * @brief Obtains the actual address of the object or function arg, even in
  * presence of overloaded operator&.

@@ -182,6 +182,24 @@ TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)
     REQUIRE(etl::addressof(val) == &val);
 }
 
+TEMPLATE_TEST_CASE("memory: default_delete", "[memory]", int, float, long)
+{
+    SECTION("scalar")
+    {
+        auto deleter = etl::default_delete<TestType>();
+        auto* ptr    = ::new TestType {};
+        deleter(ptr);
+    }
+
+    SECTION("array")
+    {
+        auto deleter = etl::default_delete<TestType[]>();
+        auto* ptr    = ::new TestType[512];
+        deleter(ptr);
+    }
+    SUCCEED();
+}
+
 namespace
 {
 auto some_function() -> void { }
