@@ -52,7 +52,34 @@ private:
 };
 }  // namespace
 
-TEST_CASE("mutex: construct", "[mutex]")
+TEST_CASE("mutex/lock_guard: construct", "[mutex]")
+{
+    SECTION("not locked")
+    {
+        dummy_mutex mtx {};
+        REQUIRE_FALSE(mtx.is_locked());
+        {
+            etl::lock_guard lock {mtx};
+            REQUIRE(mtx.is_locked());
+            etl::ignore_unused(lock);
+        }
+        REQUIRE_FALSE(mtx.is_locked());
+    }
+
+    SECTION("already locked")
+    {
+        dummy_mutex mtx {};
+        mtx.lock();
+        {
+            etl::lock_guard lock {mtx, etl::adopt_lock};
+            REQUIRE(mtx.is_locked());
+            etl::ignore_unused(lock);
+        }
+        REQUIRE_FALSE(mtx.is_locked());
+    }
+}
+
+TEST_CASE("mutex/scoped_lock: construct", "[mutex]")
 {
     dummy_mutex mtx {};
     etl::scoped_lock lock {mtx};
@@ -60,7 +87,7 @@ TEST_CASE("mutex: construct", "[mutex]")
     etl::ignore_unused(lock);
 }
 
-TEST_CASE("mutex: lock/unlock", "[mutex]")
+TEST_CASE("mutex/scoped_lock: lock/unlock", "[mutex]")
 {
     dummy_mutex mtx {};
     REQUIRE_FALSE(mtx.is_locked());
