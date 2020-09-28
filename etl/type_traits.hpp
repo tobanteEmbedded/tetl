@@ -2154,7 +2154,11 @@ using aligned_storage_t = typename aligned_storage<Len, Align>::type;
  */
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
+#if defined(TAETL_CPP_STANDARD_20)
     return TAETL_IS_CONSTANT_EVALUATED();
+#else
+    return false;
+#endif
 }
 
 }  // namespace etl
