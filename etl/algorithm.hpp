@@ -47,7 +47,7 @@ namespace etl
  * @todo Fix noexcept specifier.
  * @ref https://en.cppreference.com/w/cpp/algorithm/swap
  */
-template <class T>
+template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void
 {
     T temp(etl::move(a));
@@ -60,7 +60,7 @@ constexpr auto swap(T& a, T& b) noexcept -> void
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/iter_swap
  */
-template <class ForwardIt1, class ForwardIt2>
+template <typename ForwardIt1, typename ForwardIt2>
 constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 {
     using etl::swap;
@@ -73,18 +73,18 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
  * elements in the moved-from range will still contain valid values of the appropriate
  * type, but not necessarily the same values as before the move.
  */
-template <class InputIt, class OutputIt>
-constexpr auto move(InputIt first, InputIt last, OutputIt d_first) -> OutputIt
+template <typename InputIter, typename OutputIter>
+constexpr auto move(InputIter first, InputIter last, OutputIter destination) -> OutputIter
 {
-    while (first != last) { *d_first++ = ::etl::move(*first++); }
-    return d_first;
+    for (; first != last; ++first, ++destination) { *destination = ::etl::move(*first); }
+    return destination;
 }
 
 /**
  * @brief Applies the given function object f to the result of dereferencing
  * every iterator in the range [first, last] in order.
  */
-template <class InputIt, class UnaryFunction>
+template <typename InputIt, typename UnaryFunction>
 constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
     -> UnaryFunction
 {
@@ -93,45 +93,46 @@ constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
 }
 
 /**
- * @brief Applies the given function object f to the result of dereferencing
- * every iterator in the range [first, first+n] in order.
+ * @brief Applies the given function object \p f to the result of dereferencing
+ * every iterator in the range [ \p first, first+n] in order.
  */
-template <class InputIt, class Size, class UnaryFunction>
-constexpr auto for_each_n(InputIt first, Size n, UnaryFunction f) noexcept -> InputIt
+template <typename InputIter, typename Size, typename UnaryFunction>
+constexpr auto for_each_n(InputIter first, Size n, UnaryFunction f) noexcept -> InputIter
 {
-    for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
+    for (Size i = 0; i < n; ++first, ++i) { f(*first); }
     return first;
 }
 
 /**
  * @brief Applies the given function to a range and stores the result in
- * another range, beginning at d_first. The unary operation unary_op is applied to the
- * range defined by [first1, last1).
+ * another range, beginning at \p destination. The unary operation unary_op is applied to
+ * the range defined by [ \p first, \p last ).
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/transform
  */
-template <class InputIt, class OutputIt, class UnaryOperation>
-constexpr auto transform(InputIt first1, InputIt last1, OutputIt d_first,
-                         UnaryOperation unary_op) -> OutputIt
+template <typename InputIter, typename OutputIter, typename UnaryOperation>
+constexpr auto transform(InputIter first, InputIter last, OutputIter destination,
+                         UnaryOperation op) -> OutputIter
 {
-    while (first1 != last1) { *d_first++ = unary_op(*first1++); }
-    return d_first;
+    while (first != last) { *destination++ = op(*first++); }
+    return destination;
 }
 
 /**
  * @brief Applies the given function to a range and stores the result in
- * another range, beginning at d_first. The binary operation binary_op is applied to pairs
- * of elements from two ranges: one defined by [first1, last1) and the other beginning at
- * first2.
+ * another range, beginning at destination. The binary operation binary_op is applied to
+ * pairs of elements from two ranges: one defined by [first1, last1) and the other
+ * beginning at first2.
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/transform
  */
-template <class InputIt1, class InputIt2, class OutputIt, class BinaryOperation>
-constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                         OutputIt d_first, BinaryOperation binary_op) -> OutputIt
+template <typename InputIter1, typename InputIter2, typename OutputIter,
+          typename BinaryOperation>
+constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
+                         OutputIter destination, BinaryOperation op) -> OutputIter
 {
-    while (first1 != last1) { *d_first++ = binary_op(*first1++, *first2++); }
-    return d_first;
+    while (first1 != last1) { *destination++ = op(*first1++, *first2++); }
+    return destination;
 }
 
 /**
@@ -140,7 +141,7 @@ constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/generate
  */
-template <class ForwardIt, class Generator>
+template <typename ForwardIt, typename Generator>
 constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 {
     while (first != last) { *first++ = g(); }
@@ -152,7 +153,7 @@ constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/generate_n
  */
-template <class OutputIt, class SizeT, class Generator>
+template <typename OutputIt, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 {
     for (SizeT i = 0; i < count; i++) { *first++ = g(); }
@@ -163,7 +164,7 @@ constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
  * @brief Returns the number of elements in the range [first, last) satisfying specific
  * criteria. Counts the elements that are equal to value.
  */
-template <class InputIter, class T>
+template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto count(InputIter first, InputIter last, const T& value) ->
     typename iterator_traits<InputIter>::difference_type
 {
@@ -179,7 +180,7 @@ template <class InputIter, class T>
  * @brief Returns the number of elements in the range [first, last) satisfying specific
  * criteria. Counts elements for which predicate p returns true.
  */
-template <class InputIter, class UnaryPredicate>
+template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto count_if(InputIter first, InputIter last, UnaryPredicate p)
     -> typename iterator_traits<InputIter>::difference_type
 {
@@ -194,7 +195,7 @@ template <class InputIter, class UnaryPredicate>
 /**
  * @brief Searches for an element equal to value.
  */
-template <class InputIt, class T>
+template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept
     -> InputIt
 {
@@ -208,7 +209,7 @@ template <class InputIt, class T>
 /**
  * @brief Searches for an element for which predicate p returns true
  */
-template <class InputIt, class UnaryPredicate>
+template <typename InputIt, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if(InputIt first, InputIt last,
                                      UnaryPredicate p) noexcept -> InputIt
 {
@@ -222,7 +223,7 @@ template <class InputIt, class UnaryPredicate>
 /**
  * @brief Searches for an element for which predicate q returns false
  */
-template <class InputIt, class UnaryPredicate>
+template <typename InputIt, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last,
                                          UnaryPredicate q) noexcept -> InputIt
 {
@@ -236,7 +237,7 @@ template <class InputIt, class UnaryPredicate>
 /**
  * @brief Returns the greater of a and b.
  */
-template <class Type>
+template <typename Type>
 [[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (a < b) ? b : a;
@@ -245,7 +246,7 @@ template <class Type>
 /**
  * @brief Returns the greater of a and b, using a compare function.
  */
-template <class Type, class Compare>
+template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto max(Type const& a, Type const& b, Compare comp) noexcept
     -> Type const&
 {
@@ -256,7 +257,7 @@ template <class Type, class Compare>
  * @brief Finds the greatest element in the range [first, last). Elements are
  * compared using operator<.
  */
-template <class ForwardIterator>
+template <typename ForwardIterator>
 [[nodiscard]] constexpr auto max_element(ForwardIterator first,
                                          ForwardIterator last) noexcept -> ForwardIterator
 {
@@ -275,7 +276,7 @@ template <class ForwardIterator>
  * @brief Finds the greatest element in the range [first, last). Elements are
  * compared using the given binary comparison function comp.
  */
-template <class ForwardIterator, class Compare>
+template <typename ForwardIterator, typename Compare>
 [[nodiscard]] constexpr auto max_element(ForwardIterator first, ForwardIterator last,
                                          Compare comp) -> ForwardIterator
 {
@@ -293,7 +294,7 @@ template <class ForwardIterator, class Compare>
 /**
  * @brief Returns the smaller of a and b.
  */
-template <class Type>
+template <typename Type>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (b < a) ? b : a;
@@ -302,7 +303,7 @@ template <class Type>
 /**
  * @brief Returns the smaller of a and b, using a compare function.
  */
-template <class Type, class Compare>
+template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b, Compare comp) noexcept
     -> Type const&
 {
@@ -313,7 +314,7 @@ template <class Type, class Compare>
  * @brief Finds the smallest element in the range [first, last). Elements are
  * compared using operator<.
  */
-template <class ForwardIterator>
+template <typename ForwardIterator>
 [[nodiscard]] constexpr auto min_element(ForwardIterator first,
                                          ForwardIterator last) noexcept -> ForwardIterator
 {
@@ -332,7 +333,7 @@ template <class ForwardIterator>
  * @brief Finds the smallest element in the range [first, last). Elements are
  * compared using the given binary comparison function comp.
  */
-template <class ForwardIterator, class Compare>
+template <typename ForwardIterator, typename Compare>
 [[nodiscard]] constexpr auto min_element(ForwardIterator first, ForwardIterator last,
                                          Compare comp) -> ForwardIterator
 {
@@ -352,14 +353,14 @@ template <class ForwardIterator, class Compare>
  * than v, returns hi; otherwise returns v. Uses operator< to compare the
  * values.
  */
-template <class Type>
+template <typename Type>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi) noexcept
     -> Type const&
 {
     return clamp(v, lo, hi, etl::less<Type>());
 }
 
-template <class Type, class Compare>
+template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi,
                                    Compare comp) -> Type const&
 {
@@ -371,7 +372,7 @@ template <class Type, class Compare>
  * @brief Checks if unary predicate p returns true for all elements in the range
  * [first, last).
  */
-template <class InputIt, class UnaryPredicate>
+template <typename InputIt, typename UnaryPredicate>
 [[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
 {
     return etl::find_if_not(first, last, p) == last;
@@ -381,7 +382,7 @@ template <class InputIt, class UnaryPredicate>
  * @brief Checks if unary predicate p returns true for at least one element in
  * the range [first, last).
  */
-template <class InputIt, class UnaryPredicate>
+template <typename InputIt, typename UnaryPredicate>
 [[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
 {
     return etl::find_if(first, last, p) != last;
@@ -391,7 +392,7 @@ template <class InputIt, class UnaryPredicate>
  * @brief Checks if unary predicate p returns true for no elements in the range
  * [first, last).
  */
-template <class InputIt, class UnaryPredicate>
+template <typename InputIt, typename UnaryPredicate>
 [[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, UnaryPredicate p)
     -> bool
 {
@@ -403,7 +404,7 @@ template <class InputIt, class UnaryPredicate>
  * applying etl::iter_swap to every pair of iterators first+i, (last-i) - 1 for each
  * non-negative i < (last-first)/2.
  */
-template <class BidirIter>
+template <typename BidirIter>
 constexpr auto reverse(BidirIter first, BidirIter last) -> void
 {
     while ((first != last) && (first != --last)) { etl::iter_swap(first++, last); }
@@ -417,7 +418,7 @@ constexpr auto reverse(BidirIter first, BidirIter last) -> void
  * @details If the source and destination ranges (that is, [first, last) and [d_first,
  * d_first+(last-first)) respectively) overlap, the behavior is undefined.
  */
-template <class BidirIter, class OutputIter>
+template <typename BidirIter, typename OutputIter>
 constexpr auto reverse_copy(BidirIter first, BidirIter last, OutputIter destination)
     -> OutputIter
 {
@@ -433,7 +434,7 @@ constexpr auto reverse_copy(BidirIter first, BidirIter last, OutputIter destinat
  * new range and n_first - 1 becomes the last element. A precondition of this
  * function is that [first, n_first) and [n_first, last) are valid ranges.
  */
-template <class ForwardIt>
+template <typename ForwardIt>
 constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> ForwardIt
 {
     if (first == n_first) { return last; }
@@ -458,7 +459,7 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
  * for which the predicate p returns true precede the elements for which predicate p
  * returns false. Relative order of the elements is not preserved.
  */
-template <class ForwardIt, class UnaryPredicate>
+template <typename ForwardIt, typename UnaryPredicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> ForwardIt
 {
     first = find_if_not(first, last, p);
@@ -481,7 +482,7 @@ constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> F
  * elements for which predicate p returns false. Relative order of the
  * elements is preserved.
  */
-template <class BidirIt, class UnaryPredicate>
+template <typename BidirIt, typename UnaryPredicate>
 constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> BidirIt
 {
     auto const n = l - f;
@@ -502,7 +503,7 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> Bidir
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
  */
-template <class InputIt, class OutputIt>
+template <typename InputIt, typename OutputIt>
 constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     for (; first != last; ++first, ++destination) { *destination = *first; }
@@ -520,7 +521,7 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> Output
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
  */
-template <class InputIt, class OutputIt, class UnaryPredicate>
+template <typename InputIt, typename OutputIt, typename UnaryPredicate>
 constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredicate pred)
     -> OutputIt
 {
@@ -541,7 +542,7 @@ constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredi
  * @return Iterator in the destination range, pointing past the last element copied if
  * count>0 or result otherwise.
  */
-template <class InputIt, class Size, class OutputIt>
+template <typename InputIt, typename Size, typename OutputIt>
 constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 {
     if (count > 0)
@@ -562,7 +563,7 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
  *
  * @return Iterator to the last element copied.
  */
-template <class BidirIt1, class BidirIt2>
+template <typename BidirIt1, typename BidirIt2>
 constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> BidirIt2
 {
     while (first != last) { *(--d_last) = *(--last); }
@@ -572,7 +573,7 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> 
 /**
  * @brief Assigns the given value to the elements in the range [first, last).
  */
-template <class ForwardIt, class T>
+template <typename ForwardIt, typename T>
 constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
     for (; first != last; ++first) { *first = value; }
@@ -582,7 +583,7 @@ constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
  * @brief Returns true if the range [first1, last1) is equal to the range [first2, first2
  * + (last1 - first1)), and false otherwise.
  */
-template <class InputIt1, class InputIt2, class BinaryPredicate>
+template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                                    BinaryPredicate p) -> bool
 {
@@ -634,7 +635,7 @@ template <typename InputIt1, typename InputIt2>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
-template <class InputIt1, class InputIt2, class Compare>
+template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
                                                      InputIt2 first2, InputIt2 last2,
                                                      Compare comp) -> bool
@@ -654,7 +655,7 @@ template <class InputIt1, class InputIt2, class Compare>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
-template <class InputIt1, class InputIt2>
+template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
                                                      InputIt2 first2, InputIt2 last2)
     -> bool
@@ -674,7 +675,7 @@ template <class InputIt1, class InputIt2>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
-template <class RandomIt, class Compare>
+template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
     for (auto i = first; i != last; ++i)
@@ -698,7 +699,7 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
-template <class RandomIt>
+template <typename RandomIt>
 constexpr auto sort(RandomIt first, RandomIt last) -> void
 {
     sort(first, last, etl::less<> {});
@@ -762,7 +763,7 @@ template <typename ForwardIter, typename Compare>
  * @brief Returns true if the sorted range [first2, last2) is a subsequence of the sorted
  * range [first1, last1). Both ranges must be sorted with operator<.
  */
-template <class InputIt1, class InputIt2>
+template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                                       InputIt2 last2) -> bool
 {
@@ -779,7 +780,7 @@ template <class InputIt1, class InputIt2>
  * range [first1, last1). Both ranges must be sorted with the given comparison function
  * comp.
  */
-template <class InputIt1, class InputIt2, class Compare>
+template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                                       InputIt2 last2, Compare comp) -> bool
 {
