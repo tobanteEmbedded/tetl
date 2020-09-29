@@ -431,6 +431,28 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string same capacity")
+    {
+        auto lhs = TestType {};
+        auto rhs = TestType {};
+
+        CHECK(lhs.compare(rhs) == 0);
+        CHECK(rhs.compare(lhs) == 0);
+    }
+
+    SECTION("empty string different capacity")
+    {
+        auto lhs = TestType {};
+        auto rhs = etl::static_string<2> {};
+
+        CHECK(lhs.compare(rhs) == 0);
+        CHECK(rhs.compare(lhs) == 0);
+    }
+}
+
 TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

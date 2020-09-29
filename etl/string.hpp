@@ -360,6 +360,94 @@ public:
     constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
 
     /**
+     * @brief Compares this string to str.
+     */
+    [[nodiscard]] constexpr auto compare(basic_static_string const& str) const noexcept
+        -> int
+    {
+        return compare_impl(data(), size(), str.data(), str.size());
+    }
+
+    /**
+     * @brief Compares this string to str with other capacity.
+     */
+    template <size_type OtherCapacity>
+    [[nodiscard]] constexpr auto
+    compare(basic_static_string<value_type, OtherCapacity, traits_type> const& str)
+        const noexcept -> int
+    {
+        return compare_impl(data(), size(), str.data(), str.size());
+    }
+
+    /**
+     * @brief Compares a [pos1, pos1+count1) substring of this string to str. If count1 >
+     * size() - pos1 the substring is [pos1, size()).
+     *
+     * @todo Implement.
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         basic_static_string const& str) const -> int
+    {
+        etl::ignore_unused(pos1, count1, str);
+        return 0;
+    }
+
+    /**
+     * @brief Compares a [pos1, pos1+count1) substring of this string to a substring
+     * [pos2, pos2+count2) of str. If count1 > size() - pos1 the first substring is [pos1,
+     * size()). Likewise, count2 > str.size() - pos2 the second substring is [pos2,
+     * str.size()).
+     *
+     * @todo Implement.
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         basic_static_string const& str, size_type pos2,
+                                         size_type count2 = npos) const -> int
+    {
+        etl::ignore_unused(pos1, count1, str, pos2, count2);
+        return 0;
+    }
+
+    /**
+     * @brief Compares this string to the null-terminated character sequence beginning at
+     * the character pointed to by s with length Traits::length(s).
+     */
+    [[nodiscard]] constexpr auto compare(const CharType* s) const -> int
+    {
+        return compare_impl(data(), size(), s, Traits::length(s));
+    }
+
+    /**
+     * @brief Compares a [pos1, pos1+count1) substring of this string to the
+     * null-terminated character sequence beginning at the character pointed to by s with
+     * length Traits::length(s). If count1 > size() - pos1 the substring is [pos1,
+     * size()).
+     *
+     * @todo Implement.
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         const CharType* s) const -> int
+    {
+        etl::ignore_unused(pos1, count1, s);
+        return 0;
+    }
+
+    /**
+     * @brief  Compares a [pos1, pos1+count1) substring of this string to the characters
+     * in the range [s, s + count2). If count1 > size() - pos1 the substring is [pos1,
+     * size()). (Note: the characters in the range [s, s + count2) may include null
+     * characters.)
+     *
+     * @todo Implement.
+     */
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         const CharType* s, size_type count2) const -> int
+    {
+        etl::ignore_unused(pos1, count1, s, count2);
+        return 0;
+    }
+
+    /**
      * @brief Checks if the string begins with the given prefix.
      */
     [[nodiscard]] constexpr auto
@@ -409,7 +497,27 @@ public:
         return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(str);
     }
 
+    /**
+     * @brief This is a special value equal to the maximum value representable by the type
+     * size_type. The exact meaning depends on context, but it is generally used either as
+     * end of string indicator by the functions that expect a string index or as the error
+     * indicator by the functions that return a string index.
+     */
+    static const size_type npos = static_cast<size_type>(-1);
+
 private:
+    [[nodiscard]] constexpr auto compare_impl(const value_type* lhs, size_type lhs_size,
+                                              const value_type* rhs,
+                                              size_type rhs_size) const noexcept -> int
+    {
+        auto const min_size = etl::min(lhs_size, rhs_size);
+        auto const result   = traits_type::compare(lhs, rhs, min_size);
+        if (result != 0) { return result; }
+        if (lhs_size < rhs_size) { return -1; }
+        if (lhs_size > rhs_size) { return 1; }
+        return 0;
+    }
+
     etl::size_t size_        = 0;
     CharType data_[Capacity] = {};
 };
@@ -428,8 +536,7 @@ operator==(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
            etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
     -> bool
 {
-    if (lhs.size() != rhs.size()) { return false; }
-    return Traits::compare(lhs.c_str(), rhs.c_str(), lhs.size()) == 0;
+    return lhs.compare(rhs) == 0;
 }
 
 /**
