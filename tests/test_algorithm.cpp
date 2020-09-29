@@ -959,6 +959,42 @@ TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: fill_n", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("c array")
+    {
+        using etl::begin;
+        using etl::end;
+
+        T tc[4] = {};
+        etl::fill_n(begin(tc), 4, T {42});
+        CHECK(etl::all_of(begin(tc), end(tc), [](auto v) { return v == T(42); }));
+    }
+
+    SECTION("etl::array")
+    {
+        auto tc0 = etl::array<T, 4> {};
+        CHECK(etl::fill_n(begin(tc0), 0, T {42}) == begin(tc0));
+
+        auto tc1 = etl::array<T, 4> {};
+        CHECK(etl::fill_n(begin(tc1), 4, T {42}) == end(tc1));
+        CHECK(etl::all_of(begin(tc1), end(tc1), [](auto v) { return v == T(42); }));
+
+        auto tc2  = etl::array<T, 4> {};
+        auto res2 = etl::fill_n(begin(tc2), 2, T {42});
+        CHECK(res2 != begin(tc2));
+        CHECK(res2 != end(tc2));
+        CHECK(tc2[0] == T(42));
+        CHECK(tc2[1] == T(42));
+        CHECK(tc2[2] == T(0));
+        CHECK(tc2[3] == T(0));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: sort", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

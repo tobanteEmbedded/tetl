@@ -978,6 +978,24 @@ constexpr auto fill(ForwardIter first, ForwardIter last, T const& value) -> void
 }
 
 /**
+ * @brief Assigns the given value to the first count elements in the range beginning at
+ * first if count > 0. Does nothing otherwise.
+ *
+ * @return Iterator one past the last element assigned if count > 0, first otherwise.
+ */
+template <typename OutputIter, typename Size, typename T>
+constexpr auto fill_n(OutputIter first, Size count, const T& value) -> OutputIter
+{
+    for (auto i = Size {0}; i < count; ++i)
+    {
+        *first = value;
+        ++first;
+    }
+
+    return first;
+}
+
+/**
  * @brief Returns true if the range [first1, last1) is equal to the range [first2,
  * first2
  * + (last1 - first1)), and false otherwise.
