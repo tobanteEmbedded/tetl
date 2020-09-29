@@ -85,10 +85,32 @@ public:
      * @brief Charater Pointer constant constructor. Calls etl::strlen.
      * Fails silently if input length is greater then capacity.
      */
-    constexpr basic_static_string(const_pointer c_string) noexcept
-        : basic_static_string(c_string, etl::strlen(c_string))
+    constexpr basic_static_string(const_pointer str) noexcept
+        : basic_static_string(str, etl::strlen(str))
     {
     }
+
+    /**
+     * @brief Defaulted copy constructor.
+     */
+    constexpr basic_static_string(basic_static_string const& /*str*/) noexcept = default;
+
+    /**
+     * @brief Defaulted copy assignment.
+     */
+    constexpr auto operator     =(basic_static_string const& /*str*/) noexcept
+        -> basic_static_string& = default;
+
+    /**
+     * @brief Defaulted move constructor.
+     */
+    constexpr basic_static_string(basic_static_string&& /*str*/) noexcept = default;
+
+    /**
+     * @brief Defaulted move assignment.
+     */
+    constexpr auto operator     =(basic_static_string&& /*str*/) noexcept
+        -> basic_static_string& = default;
 
     /**
      * @brief Trivial defaulted destructor
