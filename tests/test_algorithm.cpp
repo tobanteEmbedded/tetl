@@ -38,11 +38,24 @@ TEMPLATE_TEST_CASE("algorithm: iter_swap", "[algorithm]", etl::uint8_t, etl::int
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto data = etl::array {TestType(1), TestType(2)};
-    CHECK(data[0] == TestType(1));
-    CHECK(data[1] == TestType(2));
     etl::iter_swap(begin(data), begin(data) + 1);
     CHECK(data[0] == TestType(2));
     CHECK(data[1] == TestType(1));
+}
+
+TEMPLATE_TEST_CASE("algorithm: swap_ranges", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T       = TestType;
+    auto a        = etl::array {T(1), T(2)};
+    decltype(a) b = {};
+
+    etl::swap_ranges(begin(a), end(a), begin(b));
+    CHECK(a[0] == T(0));
+    CHECK(a[1] == T(0));
+    CHECK(b[0] == T(1));
+    CHECK(b[1] == T(2));
 }
 
 TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t, etl::int8_t,

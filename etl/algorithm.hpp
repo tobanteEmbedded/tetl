@@ -46,8 +46,9 @@ namespace etl
  * does not participate in overload resolution unless
  * etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
  *
+ * https://en.cppreference.com/w/cpp/algorithm/swap
+ *
  * @todo Fix noexcept specifier.
- * @ref https://en.cppreference.com/w/cpp/algorithm/swap
  */
 template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void
@@ -60,13 +61,33 @@ constexpr auto swap(T& a, T& b) noexcept -> void
 /**
  * @brief Swaps the values of the elements the given iterators are pointing to.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/iter_swap
+ * https://en.cppreference.com/w/cpp/algorithm/iter_swap
  */
 template <typename ForwardIt1, typename ForwardIt2>
 constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 {
     using etl::swap;
     swap(*a, *b);
+}
+
+/**
+ * @brief Exchanges elements between range [first1, last1) and another range starting at
+ * first2.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/iter_swap
+ */
+template <class ForwardIter1, class ForwardIter2>
+constexpr auto swap_ranges(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2 first2)
+    -> ForwardIter2
+{
+    while (first1 != last1)
+    {
+        etl::iter_swap(first1, first2);
+        ++first1;
+        ++first2;
+    }
+
+    return first2;
 }
 
 /**
