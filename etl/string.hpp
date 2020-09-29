@@ -221,13 +221,13 @@ struct char_traits<char>
 };
 
 /**
- * @brief basic_string class with fixed size capacity.
+ * @brief basic_static_string class with fixed size capacity.
  *
  * @tparam CharType Build in type for character size (mostly 'char')
- * @tparam Capacity Capacity for basic_string
+ * @tparam Capacity Capacity for basic_static_string
  */
 template <typename CharType, etl::size_t Capacity>
-class basic_string
+class basic_static_string
 {
 public:
     using value_type      = CharType;
@@ -242,13 +242,13 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr basic_string() = default;
+    constexpr basic_static_string() = default;
 
     /**
      * @brief Charater Pointer constant constructor.
      * Fails silently if input len is greater then capacity.
      */
-    constexpr basic_string(const char* str, etl::size_t const len) noexcept
+    constexpr basic_static_string(const char* str, etl::size_t const len) noexcept
     {
         if (str != nullptr)
         {
@@ -265,8 +265,8 @@ public:
      * @brief Charater Pointer constant constructor. Calls etl::strlen.
      * Fails silently if input length is greater then capacity.
      */
-    constexpr basic_string(const char* c_string) noexcept
-        : basic_string(c_string, etl::strlen(c_string))
+    constexpr basic_static_string(const char* c_string) noexcept
+        : basic_static_string(c_string, etl::strlen(c_string))
     {
     }
 
@@ -401,7 +401,7 @@ public:
      * @brief Appends count copies of character s.
      */
     constexpr auto append(etl::size_t const count, CharType const s) noexcept
-        -> basic_string&
+        -> basic_static_string&
     {
         for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s; }
         size_ += count;
@@ -414,7 +414,7 @@ public:
      * @brief Appends the null-terminated character string pointed to by s. The
      * length of the string is determined by the first null character using
      */
-    constexpr auto append(const_pointer s) noexcept -> basic_string&
+    constexpr auto append(const_pointer s) noexcept -> basic_static_string&
     {
         auto const len = etl::strlen(s);
         return append(s, len);
@@ -424,7 +424,8 @@ public:
      * @brief Appends characters in the range [s, s + count). This range can
      * contain null characters.
      */
-    constexpr auto append(const_pointer s, etl::size_t count) noexcept -> basic_string&
+    constexpr auto append(const_pointer s, etl::size_t count) noexcept
+        -> basic_static_string&
     {
         for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
         size_ += count;
@@ -437,7 +438,7 @@ public:
      * @brief Inserts count copies of character ch at the position index.
      */
     constexpr auto insert(size_type index, size_type count, CharType ch) noexcept
-        -> basic_string&
+        -> basic_static_string&
     {
         for (size_type i = index; i < count; i++) { data_[size_ + i] = ch; }
         size_ += count;
@@ -449,7 +450,8 @@ public:
      * @brief Inserts null-terminated character string pointed to by s at the
      * position index.
      */
-    constexpr auto insert(size_type index, const_pointer s) noexcept -> basic_string&
+    constexpr auto insert(size_type index, const_pointer s) noexcept
+        -> basic_static_string&
     {
         auto const len = etl::strlen(s);
         for (size_type i = 0; i < len; i++)
@@ -470,7 +472,7 @@ public:
      * index. The range can contain null characters.
      */
     constexpr auto insert(size_type const index, const_pointer s,
-                          size_type const count) noexcept -> basic_string&
+                          size_type const count) noexcept -> basic_static_string&
     {
         for (size_type i = 0; i < count; i++)
         {
@@ -491,9 +493,7 @@ private:
 };
 
 template <etl::size_t Capacity>
-using string = basic_string<char, Capacity>;
-
-using small_string = basic_string<char, 32>;
+using static_string = basic_static_string<char, Capacity>;
 
 }  // namespace etl
 

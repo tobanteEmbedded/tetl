@@ -78,7 +78,7 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uin
     etl::transform(begin(a), end(a), begin(a), [](auto const& val) { return val * 2; });
     REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 4; }));
 
-    etl::small_string str("hello");
+    etl::static_string<32> str("hello");
     etl::static_vector<TestType, 8> vec;
     etl::transform(begin(str), end(str), etl::back_inserter(vec),
                    [](auto c) -> TestType { return static_cast<TestType>(c); });

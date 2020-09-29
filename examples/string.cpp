@@ -32,7 +32,7 @@ DAMAGE.
 
 auto main() -> int
 {
-    etl::small_string str {};
+    etl::static_string<32> str {};
 
     const char* cptr = "C-string";
     str.append(cptr, 4);

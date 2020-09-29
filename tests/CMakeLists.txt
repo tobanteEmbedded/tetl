@@ -28,7 +28,6 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_span.cpp
     test_string.cpp
     test_static_vector.cpp
-    test_string_constexpr.cpp
     test_string_view.cpp
     test_tuple.cpp
     test_type_traits.cpp
