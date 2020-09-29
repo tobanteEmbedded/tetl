@@ -384,9 +384,49 @@ TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
 
     SECTION("true")
     {
+        auto str1 = TestType {"foo"};
+        CHECK(str1.starts_with("foo"_sv));
+        CHECK(str1.starts_with("foo"));
+        CHECK(str1.starts_with('f'));
+
+        auto str2 = TestType {"foobar"};
+        CHECK(str2.starts_with("foo"_sv));
+        CHECK(str2.starts_with("foo"));
+        CHECK(str2.starts_with('f'));
+    }
+}
+
+TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using namespace etl::literals;
+
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK_FALSE(str.ends_with("foo"_sv));
+        CHECK_FALSE(str.ends_with("foo"));
+        CHECK_FALSE(str.ends_with('o'));
+    }
+
+    SECTION("false")
+    {
+        auto str = TestType {"test"};
+        CHECK_FALSE(str.ends_with("foo"_sv));
+        CHECK_FALSE(str.ends_with("foo"));
+        CHECK_FALSE(str.ends_with('o'));
+    }
+
+    SECTION("true")
+    {
         auto str = TestType {"foo"};
-        CHECK(str.starts_with("foo"_sv));
-        CHECK(str.starts_with("foo"));
-        CHECK(str.starts_with('f'));
+        CHECK(str.ends_with("foo"_sv));
+        CHECK(str.ends_with("foo"));
+        CHECK(str.ends_with('o'));
+
+        auto str2 = TestType {"barfoo"};
+        CHECK(str2.ends_with("foo"_sv));
+        CHECK(str2.ends_with("foo"));
+        CHECK(str2.ends_with('o'));
     }
 }

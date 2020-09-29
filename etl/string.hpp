@@ -384,6 +384,31 @@ public:
         return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(str);
     }
 
+    /**
+     * @brief Checks if the string ends with the given prefix.
+     */
+    [[nodiscard]] constexpr auto
+    ends_with(etl::basic_string_view<CharType, Traits> sv) const noexcept -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(sv);
+    }
+
+    /**
+     * @brief Checks if the string ends with the given prefix.
+     */
+    [[nodiscard]] constexpr auto ends_with(CharType c) const noexcept -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(c);
+    }
+
+    /**
+     * @brief Checks if the string ends with the given prefix.
+     */
+    [[nodiscard]] constexpr auto ends_with(CharType const* str) const -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(str);
+    }
+
 private:
     etl::size_t size_        = 0;
     CharType data_[Capacity] = {};
