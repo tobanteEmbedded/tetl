@@ -710,6 +710,47 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t, etl::int8_t
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: search_n", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        auto source = etl::static_vector<T, 2> {};
+        auto res    = etl::search_n(begin(source), end(source), 3, T(0));
+        CHECK(res == end(source));
+    }
+
+    SECTION("zero or negative count")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
+        CHECK(etl::search_n(begin(source), end(source), 0, T(0)) == begin(source));
+
+        if constexpr (etl::numeric_limits<T>::is_signed)
+        {
+            CHECK(etl::search_n(begin(source), end(source), -1, T(0)) == begin(source));
+            CHECK(etl::search_n(begin(source), end(source), -2, T(0)) == begin(source));
+        }
+    }
+
+    SECTION("no match")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
+        auto res    = etl::search_n(begin(source), end(source), 3, T(42));
+        CHECK(res == end(source));
+    }
+
+    SECTION("find match")
+    {
+        auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
+        auto res    = etl::search_n(begin(source), end(source), 3, T(0));
+        CHECK(res == begin(source));
+        CHECK(*res == T(0));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

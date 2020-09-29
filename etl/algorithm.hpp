@@ -402,6 +402,48 @@ template <typename ForwardIter, typename Searcher>
 }
 
 /**
+ * @brief Searches the range [first, last) for the first sequence of count identical
+ * elements, each equal to the given value.
+ */
+template <typename ForwardIter, typename Size, typename ValueT, typename BinaryPredicate>
+[[nodiscard]] constexpr auto search_n(ForwardIter first, ForwardIter last, Size count,
+                                      ValueT const& value, BinaryPredicate pred)
+    -> ForwardIter
+{
+    if (count <= Size {}) { return first; }
+
+    auto local_counter = Size {};
+    ForwardIter found  = nullptr;
+
+    for (; first != last; ++first)
+    {
+        if (pred(*first, value))
+        {
+            local_counter++;
+            if (found == nullptr) { found = first; }
+        }
+        else
+        {
+            local_counter = 0;
+        }
+
+        if (local_counter == count) { return found; }
+    }
+
+    return last;
+}
+/**
+ * @brief Searches the range [first, last) for the first sequence of count identical
+ * elements, each equal to the given value.
+ */
+template <typename ForwardIt, typename Size, typename ValueT>
+[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count,
+                                      ValueT const& value) -> ForwardIt
+{
+    return search_n(first, last, count, value, etl::equal_to<> {});
+}
+
+/**
  * @brief Returns the greater of a and b.
  */
 template <typename Type>
