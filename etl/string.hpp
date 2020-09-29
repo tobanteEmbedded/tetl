@@ -53,11 +53,11 @@ public:
     using value_type      = CharType;
     using size_type       = etl::size_t;
     using pointer         = CharType*;
-    using const_pointer   = const CharType*;
+    using const_pointer   = CharType const*;
     using reference       = CharType&;
-    using const_reference = const CharType&;
+    using const_reference = CharType const&;
     using iterator        = CharType*;
-    using const_iterator  = const CharType*;
+    using const_iterator  = CharType const*;
 
     /**
      * @brief Default constructor.
@@ -68,7 +68,7 @@ public:
      * @brief Charater Pointer constant constructor.
      * Fails silently if input len is greater then capacity.
      */
-    constexpr basic_static_string(const char* str, etl::size_t const len) noexcept
+    constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
         if (str != nullptr)
         {
@@ -85,7 +85,7 @@ public:
      * @brief Charater Pointer constant constructor. Calls etl::strlen.
      * Fails silently if input length is greater then capacity.
      */
-    constexpr basic_static_string(const char* c_string) noexcept
+    constexpr basic_static_string(const_pointer c_string) noexcept
         : basic_static_string(c_string, etl::strlen(c_string))
     {
     }
@@ -93,7 +93,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    constexpr auto at(etl::size_t index) noexcept -> reference
+    constexpr auto at(size_type index) noexcept -> reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -102,7 +102,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    [[nodiscard]] constexpr auto at(etl::size_t index) const noexcept -> const_reference
+    [[nodiscard]] constexpr auto at(size_type index) const noexcept -> const_reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -111,7 +111,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    constexpr auto operator[](etl::size_t index) noexcept -> reference
+    constexpr auto operator[](size_type index) noexcept -> reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -120,7 +120,7 @@ public:
     /**
      * @brief Accesses the specified character with bounds checking.
      */
-    constexpr auto operator[](etl::size_t index) const noexcept -> const_reference
+    constexpr auto operator[](size_type index) const noexcept -> const_reference
     {
         if (index < size_) { return data_[index]; }
         return data_[size_];
@@ -177,18 +177,18 @@ public:
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto length() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size_; }
 
     /**
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    [[nodiscard]] constexpr auto capacity() const noexcept -> etl::size_t
+    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
     {
         return Capacity;
     }
@@ -197,7 +197,7 @@ public:
      * @brief Returns the number of characters that can be held in allocated
      * storage.
      */
-    [[nodiscard]] constexpr auto max_size() const noexcept -> etl::size_t
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
     {
         return Capacity;
     }
@@ -209,7 +209,7 @@ public:
      *
      * @details Always null-terminated.
      */
-    [[nodiscard]] constexpr auto data() noexcept -> CharType* { return &data_[0]; };
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return &data_[0]; };
 
     /**
      * @brief Returns a pointer to the underlying array serving as character storage. The
@@ -218,7 +218,7 @@ public:
      *
      * @details Always null-terminated.
      */
-    [[nodiscard]] constexpr auto data() const noexcept -> const CharType*
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
     {
         return &data_[0];
     };
@@ -231,7 +231,7 @@ public:
      * correspond to the values stored in the string with an additional null
      * character after the last position.
      */
-    [[nodiscard]] constexpr auto c_str() const noexcept -> const CharType*
+    [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer
     {
         return data();
     };
@@ -257,10 +257,10 @@ public:
     /**
      * @brief Appends count copies of character s.
      */
-    constexpr auto append(etl::size_t const count, CharType const s) noexcept
+    constexpr auto append(size_type const count, CharType const s) noexcept
         -> basic_static_string&
     {
-        for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s; }
+        for (size_type i = 0; i < count; i++) { data_[size_ + i] = s; }
         size_ += count;
         data_[size_] = 0;
 
@@ -281,10 +281,10 @@ public:
      * @brief Appends characters in the range [s, s + count). This range can
      * contain null characters.
      */
-    constexpr auto append(const_pointer s, etl::size_t count) noexcept
+    constexpr auto append(const_pointer s, size_type count) noexcept
         -> basic_static_string&
     {
-        for (etl::size_t i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
+        for (size_type i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
         size_ += count;
         data_[size_] = 0;
 
@@ -419,7 +419,7 @@ public:
      * @brief Compares this string to the null-terminated character sequence beginning at
      * the character pointed to by s with length Traits::length(s).
      */
-    [[nodiscard]] constexpr auto compare(const CharType* s) const -> int
+    [[nodiscard]] constexpr auto compare(const_pointer s) const -> int
     {
         return compare_impl(data(), size(), s, Traits::length(s));
     }
@@ -433,7 +433,7 @@ public:
      * @todo Implement.
      */
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         const CharType* s) const -> int
+                                         const_pointer s) const -> int
     {
         etl::ignore_unused(pos1, count1, s);
         return 0;
@@ -448,7 +448,7 @@ public:
      * @todo Implement.
      */
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         const CharType* s, size_type count2) const -> int
+                                         const_pointer s, size_type count2) const -> int
     {
         etl::ignore_unused(pos1, count1, s, count2);
         return 0;
@@ -474,7 +474,7 @@ public:
     /**
      * @brief Checks if the string begins with the given prefix.
      */
-    [[nodiscard]] constexpr auto starts_with(CharType const* str) const -> bool
+    [[nodiscard]] constexpr auto starts_with(const_pointer str) const -> bool
     {
         return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(str);
     }
@@ -499,7 +499,7 @@ public:
     /**
      * @brief Checks if the string ends with the given prefix.
      */
-    [[nodiscard]] constexpr auto ends_with(CharType const* str) const -> bool
+    [[nodiscard]] constexpr auto ends_with(const_pointer str) const -> bool
     {
         return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(str);
     }
@@ -513,8 +513,8 @@ public:
     static const size_type npos = static_cast<size_type>(-1);
 
 private:
-    [[nodiscard]] constexpr auto compare_impl(const value_type* lhs, size_type lhs_size,
-                                              const value_type* rhs,
+    [[nodiscard]] constexpr auto compare_impl(const_pointer lhs, size_type lhs_size,
+                                              const_pointer rhs,
                                               size_type rhs_size) const noexcept -> int
     {
         auto const min_size = etl::min(lhs_size, rhs_size);
@@ -525,7 +525,7 @@ private:
         return 0;
     }
 
-    etl::size_t size_        = 0;
+    size_type size_          = 0;
     CharType data_[Capacity] = {};
 };
 
