@@ -508,6 +508,28 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Resizes the string to contain count characters.
+     *
+     * @details If the current size is less than count, additional characters are
+     * appended, maximum up to it's capacity. If the current size is greater than count,
+     * the string is reduced to its first count elements.
+     */
+    constexpr auto resize(size_type count, CharType ch) noexcept -> void
+    {
+        if (size() > count) { size_ = count; }
+        if (size() < count) { append(count, ch); }
+    }
+
+    /**
+     * @brief Resizes the string to contain count characters.
+     *
+     * @details If the current size is less than count, additional characters are
+     * appended, maximum up to it's capacity. If the current size is greater than count,
+     * the string is reduced to its first count elements.
+     */
+    constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
+
 private:
     etl::size_t size_        = 0;
     CharType data_[Capacity] = {};

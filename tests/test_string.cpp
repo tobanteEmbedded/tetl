@@ -310,3 +310,45 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
     REQUIRE(str[3] == 0);
     REQUIRE(str[4] == 0);
 }
+
+TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("default char")
+    {
+        auto str = TestType {};
+        CHECK(str.empty() == true);
+
+        // grow
+        str.resize(2);
+        CHECK(str.empty() == false);
+        CHECK(str.size() == 2);
+        CHECK(str[0] == '\0');
+        CHECK(str[1] == '\0');
+
+        // shrink
+        str.resize(1);
+        CHECK(str.empty() == false);
+        CHECK(str.size() == 1);
+        CHECK(str[0] == '\0');
+    }
+
+    SECTION("provided char")
+    {
+        auto str = TestType {};
+        CHECK(str.empty() == true);
+
+        // grow
+        str.resize(2, 'a');
+        CHECK(str.empty() == false);
+        CHECK(str.size() == 2);
+        CHECK(str[0] == 'a');
+        CHECK(str[1] == 'a');
+
+        // shrink
+        str.resize(1, 'a');
+        CHECK(str.empty() == false);
+        CHECK(str.size() == 1);
+        CHECK(str[0] == 'a');
+    }
+}
