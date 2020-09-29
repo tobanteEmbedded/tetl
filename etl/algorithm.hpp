@@ -444,6 +444,38 @@ template <typename ForwardIt, typename Size, typename ValueT>
 }
 
 /**
+ * @brief Removes all elements satisfying specific criteria from the range [first, last)
+ * and returns a past-the-end iterator for the new end of the range.
+ */
+template <typename ForwardIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto remove_if(ForwardIter first, ForwardIter last,
+                                       UnaryPredicate pred) -> ForwardIter
+{
+    first = etl::find_if(first, last, pred);
+
+    if (first != last)
+    {
+        for (auto i = first; ++i != last;)
+        {
+            if (!pred(*i)) { *first++ = etl::move(*i); }
+        }
+    }
+
+    return first;
+}
+
+/**
+ * @brief Removes all elements satisfying specific criteria from the range [first, last)
+ * and returns a past-the-end iterator for the new end of the range.
+ */
+template <typename ForwardIter, typename T>
+[[nodiscard]] constexpr auto remove(ForwardIter first, ForwardIter last, const T& value)
+    -> ForwardIter
+{
+    return remove_if(first, last, [&value](auto const& item) { return item == value; });
+}
+
+/**
  * @brief Returns the greater of a and b.
  */
 template <typename Type>

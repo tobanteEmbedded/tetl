@@ -98,6 +98,31 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uin
     REQUIRE(vec[4] == static_cast<TestType>('o') * 2);
 }
 
+TEMPLATE_TEST_CASE("algorithm: remove", "[algorithm]", etl::uint8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
+{
+    SECTION("empty range")
+    {
+        auto data = etl::static_vector<TestType, 4> {};
+        auto res  = etl::remove(begin(data), end(data), TestType {1});
+        CHECK(res == end(data));
+        CHECK(data.empty());
+    }
+
+    SECTION("found")
+    {
+        auto data = etl::static_vector<TestType, 4> {};
+        data.push_back(TestType {1});
+        data.push_back(TestType {0});
+        data.push_back(TestType {0});
+        data.push_back(TestType {0});
+
+        auto res = etl::remove(begin(data), end(data), TestType {1});
+        CHECK(res == end(data) - 1);
+        CHECK(data[0] == 0);
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
