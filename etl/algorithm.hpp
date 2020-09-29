@@ -266,6 +266,34 @@ template <typename InputIter1, typename InputIter2>
 }
 
 /**
+ * @brief Searches the range [first, last) for two consecutive equal elements.
+ */
+template <typename ForwardIter, typename BinaryPredicate>
+[[nodiscard]] constexpr auto adjacent_find(ForwardIter first, ForwardIter last,
+                                           BinaryPredicate pred) -> ForwardIter
+{
+    if (first == last) { return last; }
+
+    auto next = first;
+    ++next;
+
+    for (; next != last; ++next, ++first)
+    {
+        if (pred(*first, *next)) { return first; }
+    }
+
+    return last;
+}
+
+/**
+ * @brief Searches the range [first, last) for two consecutive equal elements.
+ */
+template <typename ForwardIt>
+[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
+{
+    return adjacent_find(first, last, etl::equal_to<> {});
+}
+/**
  * @brief Searches for an element equal to value.
  */
 template <typename InputIter, typename T>

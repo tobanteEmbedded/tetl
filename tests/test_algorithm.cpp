@@ -190,6 +190,34 @@ TEMPLATE_TEST_CASE("algorithm: find", "[algorithm]", etl::uint8_t, etl::int8_t,
     REQUIRE(result2 == vec.end());
 }
 
+TEMPLATE_TEST_CASE("algorithm: adjacent_find", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    SECTION("empty range")
+    {
+        auto data = etl::static_vector<TestType, 2> {};
+        auto res  = etl::adjacent_find(begin(data), end(data));
+        CHECK(res == end(data));
+    }
+
+    SECTION("no match")
+    {
+        auto const data = etl::array {TestType(0), TestType(1), TestType(2)};
+        auto res        = etl::adjacent_find(begin(data), end(data));
+        CHECK(res == end(data));
+    }
+
+    SECTION("match")
+    {
+        auto const d1 = etl::array {TestType(0), TestType(0), TestType(2)};
+        CHECK(etl::adjacent_find(begin(d1), end(d1)) == begin(d1));
+
+        auto const d2 = etl::array {TestType(0), TestType(2), TestType(2)};
+        CHECK(etl::adjacent_find(begin(d2), end(d2)) == begin(d2) + 1);
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
