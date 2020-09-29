@@ -249,6 +249,14 @@ TEMPLATE_TEST_CASE("string: data/c_str", "[string]", etl::static_string<12>,
     CHECK(str.c_str()[0] == 'j');
 }
 
+TEMPLATE_TEST_CASE("string: operator string_view", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    TestType str {"junk"};
+    auto sv = etl::string_view {str};
+    CHECK(sv.data()[0] == 'j');
+}
+
 TEMPLATE_TEST_CASE("string: clear", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

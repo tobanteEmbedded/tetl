@@ -228,6 +228,16 @@ public:
     };
 
     /**
+     * @brief Returns a etl::basic_string_view.
+     */
+    [[nodiscard]] constexpr
+    operator basic_string_view<value_type, char_traits<value_type>>() const noexcept
+    {
+        using return_type = basic_string_view<value_type, char_traits<value_type>>;
+        return return_type(data(), size());
+    }
+
+    /**
      * @brief Removes all characters from the string.
      */
     constexpr auto clear() noexcept -> void
