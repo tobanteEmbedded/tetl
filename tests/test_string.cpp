@@ -430,3 +430,29 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
         CHECK(str2.ends_with('o'));
     }
 }
+
+TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string same capacity")
+    {
+        auto lhs = TestType {};
+        auto rhs = TestType {};
+
+        CHECK(lhs == rhs);
+        CHECK_FALSE(lhs != rhs);
+        CHECK(rhs == lhs);
+        CHECK_FALSE(rhs != lhs);
+    }
+
+    SECTION("empty string different capacity")
+    {
+        auto lhs = TestType {};
+        auto rhs = etl::static_string<2> {};
+
+        CHECK(lhs == rhs);
+        CHECK_FALSE(lhs != rhs);
+        CHECK(rhs == lhs);
+        CHECK_FALSE(rhs != lhs);
+    }
+}
