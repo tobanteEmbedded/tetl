@@ -203,6 +203,16 @@ public:
     }
 
     /**
+     * @brief Reserve is deleted, since the capacity is fixed.
+     */
+    constexpr auto reserve(size_type new_cap) -> void = delete;
+
+    /**
+     * @brief Shrink to fit is deleted, since the capacity is fixed.
+     */
+    constexpr auto shrink_to_fit() -> void = delete;
+
+    /**
      * @brief Returns a pointer to the underlying array serving as character storage. The
      * pointer is such that the range [data(); data() + size()) is valid and the values in
      * it correspond to the values stored in the string.
