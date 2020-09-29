@@ -271,6 +271,27 @@ TEMPLATE_TEST_CASE("string: clear", "[string]", etl::static_string<12>,
     REQUIRE(str.size() == etl::size_t(0));
 }
 
+TEMPLATE_TEST_CASE("string: push_back", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    TestType str {""};
+    str.push_back('a');
+    str.push_back('b');
+    REQUIRE(str == TestType("ab"));
+    REQUIRE(str.size() == 2);
+}
+
+TEMPLATE_TEST_CASE("string: pop_back", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    TestType str {"abc"};
+    str.pop_back();
+    str.pop_back();
+    REQUIRE(str == TestType("a"));
+    REQUIRE(str == "a");
+    REQUIRE(str.size() == 1);
+}
+
 TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {

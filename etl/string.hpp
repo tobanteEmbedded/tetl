@@ -255,9 +255,31 @@ public:
     }
 
     /**
+     * @brief Appends the given character ch to the end of the string. Does nothing if the
+     * string is full.
+     */
+    constexpr auto push_back(value_type ch) noexcept -> void
+    {
+        if (size() < capacity()) { append(1, ch); }
+    }
+
+    /**
+     * @brief Removes the last character from the string. Does nothing if the
+     * string is empty.
+     */
+    constexpr auto pop_back() noexcept -> void
+    {
+        if (!empty())
+        {
+            data_[size_ - 1] = '\0';
+            size_--;
+        }
+    }
+
+    /**
      * @brief Appends count copies of character s.
      */
-    constexpr auto append(size_type const count, CharType const s) noexcept
+    constexpr auto append(size_type const count, value_type const s) noexcept
         -> basic_static_string&
     {
         for (size_type i = 0; i < count; i++) { data_[size_ + i] = s; }
