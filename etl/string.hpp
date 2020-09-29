@@ -376,6 +376,27 @@ public:
     }
 
     /**
+     * @brief Returns a pointer to the underlying array serving as character storage. The
+     * pointer is such that the range [data(); data() + size()) is valid and the values in
+     * it correspond to the values stored in the string.
+     *
+     * @details Always null-terminated.
+     */
+    [[nodiscard]] constexpr auto data() noexcept -> CharType* { return &data_[0]; };
+
+    /**
+     * @brief Returns a pointer to the underlying array serving as character storage. The
+     * pointer is such that the range [data(); data() + size()) is valid and the values in
+     * it correspond to the values stored in the string.
+     *
+     * @details Always null-terminated.
+     */
+    [[nodiscard]] constexpr auto data() const noexcept -> const CharType*
+    {
+        return &data_[0];
+    };
+
+    /**
      * @brief Returns a pointer to a null-terminated character array.
      *
      * The data is equivalent to those stored in the string. The pointer is such
@@ -385,7 +406,7 @@ public:
      */
     [[nodiscard]] constexpr auto c_str() const noexcept -> const CharType*
     {
-        return &data_[0];
+        return data();
     };
 
     /**

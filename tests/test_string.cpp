@@ -240,6 +240,15 @@ TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::static_string<12>,
     REQUIRE(str.back() == 'b');
 }
 
+TEMPLATE_TEST_CASE("string: data/c_str", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    TestType str {"junk"};
+    CHECK(str.data() == str.c_str());
+    CHECK(str.c_str() != nullptr);
+    CHECK(str.c_str()[0] == 'j');
+}
+
 TEMPLATE_TEST_CASE("string: clear", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
