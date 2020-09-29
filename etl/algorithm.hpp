@@ -167,7 +167,7 @@ constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
  * criteria. Counts the elements that are equal to value.
  */
 template <typename InputIter, typename T>
-[[nodiscard]] constexpr auto count(InputIter first, InputIter last, const T& value) ->
+[[nodiscard]] constexpr auto count(InputIter first, InputIter last, T const& value) ->
     typename iterator_traits<InputIter>::difference_type
 {
     auto result = typename iterator_traits<InputIter>::difference_type {0};
@@ -455,6 +455,27 @@ template <typename ForwardIterator, typename Compare>
         if (comp(*first, *smallest)) { smallest = first; }
     }
     return smallest;
+}
+
+/**
+ * @brief Returns the lowest and the greatest of the given values.
+ */
+template <typename T, typename Compare>
+[[nodiscard]] constexpr auto minmax(T const& a, T const& b, Compare comp)
+    -> etl::pair<T const&, T const&>
+{
+    using return_type = etl::pair<T const&, T const&>;
+    return comp(b, a) ? return_type(b, a) : return_type(a, b);
+}
+
+/**
+ * @brief Returns the lowest and the greatest of the given values.
+ */
+template <typename T>
+[[nodiscard]] constexpr auto minmax(T const& a, T const& b)
+    -> etl::pair<T const&, T const&>
+{
+    return etl::minmax(a, b, etl::less<> {});
 }
 
 /**

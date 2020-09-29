@@ -290,6 +290,37 @@ TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t, etl::in
     REQUIRE(*etl::min_element(vec.begin(), vec.end(), cmp) == TestType {1});
 }
 
+TEMPLATE_TEST_CASE("algorithm: minmax", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("in order")
+    {
+        auto a   = TestType(1);
+        auto b   = TestType(2);
+        auto res = etl::minmax(a, b);
+        CHECK(res.first == a);
+        CHECK(res.second == b);
+    }
+
+    SECTION("reversed")
+    {
+        auto a   = TestType(2);
+        auto b   = TestType(1);
+        auto res = etl::minmax(a, b);
+        CHECK(res.first == b);
+        CHECK(res.second == a);
+    }
+
+    SECTION("same")
+    {
+        auto a   = TestType(42);
+        auto b   = TestType(42);
+        auto res = etl::minmax(a, b);
+        CHECK(res.first == TestType(42));
+        CHECK(res.second == TestType(42));
+    }
+}
 TEMPLATE_TEST_CASE("algorithm: minmax_element", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
