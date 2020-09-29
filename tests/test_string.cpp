@@ -590,6 +590,90 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>
     }
 }
 
+TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find(TestType {}, 0) == 0);
+        CHECK(str.find(TestType {}, 1) == TestType::npos);
+        CHECK(str.find(TestType {""}) == 0);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.find(TestType {"abc"}, 0) == TestType::npos);
+        CHECK(str.find(TestType {"abc"}, 1) == TestType::npos);
+        CHECK(str.find(TestType {"abc"}) == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find(TestType {"abc"}, 0) == 0);
+        CHECK(str.find(TestType {"bc"}, 1) == 1);
+        CHECK(str.find(TestType {"cd"}) == 2);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: find(char const*)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find("") == 0);
+        CHECK(str.find("", 0) == 0);
+        CHECK(str.find("", 1) == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.find("abc", 0) == TestType::npos);
+        CHECK(str.find("abc", 1) == TestType::npos);
+        CHECK(str.find("abc") == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find("abc", 0) == 0);
+        CHECK(str.find("bc", 1) == 1);
+        CHECK(str.find("cd") == 2);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find('a', 0) == TestType::npos);
+        CHECK(str.find('a', 1) == TestType::npos);
+        CHECK(str.find('a') == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"bcdef"};
+        CHECK(str.find('a', 0) == TestType::npos);
+        CHECK(str.find('a', 1) == TestType::npos);
+        CHECK(str.find('a') == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find('a', 0) == 0);
+        CHECK(str.find('b', 1) == 1);
+        CHECK(str.find('c') == 2);
+    }
+}
+
 TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

@@ -636,12 +636,102 @@ public:
     }
 
     /**
+     * @brief Finds the first substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position preceding pos.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/find
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found.
+     */
+    [[nodiscard]] constexpr auto find(basic_static_string const& str,
+                                      size_type pos = 0) const noexcept -> size_type
+    {
+        return find(str.c_str(), pos, str.size());
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position preceding pos.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/find
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found.
+     */
+    [[nodiscard]] constexpr auto find(const_pointer s, size_type pos,
+                                      size_type count) const noexcept -> size_type
+    {
+        // an empty substring is found at pos if and only if pos <= size()
+        if (count == 0 && pos <= size()) { return pos; }
+
+        // A substring can be found only if pos <= size() - str.size()
+        if (pos <= size() - count)
+        {
+            for (auto i = size_type(pos); i < size(); ++i)
+            {
+                auto found = i;
+                for (auto j = size_type(0); j < count; ++j)
+                {
+                    if (!(data_[i + j] == s[j]))
+                    {
+                        found = npos;
+                        break;
+                    }
+                }
+
+                if (found != npos) { return found; }
+            }
+        }
+
+        // For a non-empty substring, if pos >= size(), the function always returns npos.
+        return npos;
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position preceding pos.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/find
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found.
+     */
+    [[nodiscard]] constexpr auto find(const_pointer s, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return find(s, pos, traits_type::length(s));
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position preceding pos.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/find
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found.
+     */
+    [[nodiscard]] constexpr auto find(value_type ch, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        if (pos < size())
+        {
+            auto found = etl::find(begin() + pos, end(), ch);
+            if (found == end()) { return npos; }
+            return static_cast<size_type>(etl::distance(begin(), found));
+        }
+
+        return npos;
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable by the type
      * size_type. The exact meaning depends on context, but it is generally used either as
      * end of string indicator by the functions that expect a string index or as the error
      * indicator by the functions that return a string index.
      */
-    static const size_type npos = static_cast<size_type>(-1);
+    constexpr static size_type npos = static_cast<size_type>(-1);
 
 private:
     [[nodiscard]] constexpr auto compare_impl(const_pointer lhs, size_type lhs_size,
@@ -658,7 +748,7 @@ private:
 
     size_type size_          = 0;
     CharType data_[Capacity] = {};
-};
+};  // namespace etl
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
