@@ -44,10 +44,12 @@ namespace etl
  * @tparam CharType Build in type for character size (mostly 'char')
  * @tparam Capacity Capacity for basic_static_string
  */
-template <typename CharType, etl::size_t Capacity>
+template <typename CharType, etl::size_t Capacity,
+          typename Traits = etl::char_traits<CharType>>
 class basic_static_string
 {
 public:
+    using traits_type     = Traits;
     using value_type      = CharType;
     using size_type       = etl::size_t;
     using pointer         = CharType*;
@@ -231,10 +233,9 @@ public:
      * @brief Returns a etl::basic_string_view.
      */
     [[nodiscard]] constexpr
-    operator basic_string_view<value_type, char_traits<value_type>>() const noexcept
+    operator basic_string_view<value_type, traits_type>() const noexcept
     {
-        using return_type = basic_string_view<value_type, char_traits<value_type>>;
-        return return_type(data(), size());
+        return basic_string_view<value_type, traits_type>(data(), size());
     }
 
     /**
@@ -357,6 +358,31 @@ public:
      * the string is reduced to its first count elements.
      */
     constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
+
+    // /**
+    //  * @brief Checks if the string begins with the given prefix.
+    //  */
+    // [[nodiscard]] constexpr auto
+    // starts_with(std::basic_string_view<CharT, Traits> sv) const noexcept -> bool
+    // {
+    //     return false;
+    // }
+
+    // /**
+    //  * @brief Checks if the string begins with the given prefix.
+    //  */
+    // [[nodiscard]] constexpr auto starts_with(CharT c) const noexcept -> bool
+    // {
+    //     return false;
+    // }
+
+    // /**
+    //  * @brief Checks if the string begins with the given prefix.
+    //  */
+    // [[nodiscard]] constexpr auto starts_with(const CharT* s) const -> bool
+    // {
+    //     return false;
+    // }
 
 private:
     etl::size_t size_        = 0;
