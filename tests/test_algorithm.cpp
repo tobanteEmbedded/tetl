@@ -290,6 +290,33 @@ TEMPLATE_TEST_CASE("algorithm: min_element", "[algorithm]", etl::int8_t, etl::in
     REQUIRE(*etl::min_element(vec.begin(), vec.end(), cmp) == TestType {1});
 }
 
+TEMPLATE_TEST_CASE("algorithm: minmax_element", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    auto test_0 = etl::array {T(1), T(2), T(3)};
+    auto res_0  = etl::minmax_element(begin(test_0), end(test_0));
+    CHECK(*res_0.first == T(1));
+    CHECK(*res_0.second == T(3));
+
+    auto test_1 = etl::array {T(1), T(2), T(3), T(4), T(5), T(6)};
+    auto res_1  = etl::minmax_element(begin(test_1), end(test_1));
+    CHECK(*res_1.first == T(1));
+    CHECK(*res_1.second == T(6));
+
+    auto test_2 = etl::array {T(1), T(4), T(5), T(3), T(2)};
+    auto res_2  = etl::minmax_element(begin(test_2), end(test_2));
+    CHECK(*res_2.first == T(1));
+    CHECK(*res_2.second == T(5));
+
+    auto test_3 = etl::array {T(100), T(99), T(0)};
+    auto res_3  = etl::minmax_element(begin(test_3), end(test_3));
+    CHECK(*res_3.first == T(0));
+    CHECK(*res_3.second == T(100));
+}
+
 TEMPLATE_TEST_CASE("algorithm: clamp", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

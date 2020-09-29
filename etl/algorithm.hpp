@@ -458,6 +458,64 @@ template <typename ForwardIterator, typename Compare>
 }
 
 /**
+ * @brief Finds the smallest and greatest element in the range [first, last).
+ */
+template <typename ForwardIter, typename Compare>
+[[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last,
+                                            Compare comp)
+    -> etl::pair<ForwardIter, ForwardIter>
+{
+    auto min = first;
+    auto max = first;
+
+    if (first == last || ++first == last) { return {min, max}; }
+
+    if (comp(*first, *min)) { min = first; }
+    else
+    {
+        max = first;
+    }
+
+    while (++first != last)
+    {
+        auto i = first;
+        if (++first == last)
+        {
+            if (comp(*i, *min)) { min = i; }
+            else if (!(comp(*i, *max)))
+            {
+                max = i;
+            }
+            break;
+        }
+
+        if (comp(*first, *i))
+        {
+            if (comp(*first, *min)) { min = first; }
+            if (!(comp(*i, *max))) { max = i; }
+        }
+        else
+        {
+            if (comp(*i, *min)) { min = i; }
+            if (!(comp(*first, *max))) { max = first; }
+        }
+    }
+
+    return {min, max};
+}
+
+/**
+ * @brief Finds the smallest and greatest element in the range [first, last).
+ */
+template <typename ForwardIter>
+[[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last)
+    -> etl::pair<ForwardIter, ForwardIter>
+{
+    using value_type = typename etl::iterator_traits<ForwardIter>::value_type;
+    return etl::minmax_element(first, last, etl::less<value_type>());
+}
+
+/**
  * @brief If v compares less than lo, returns lo; otherwise if hi compares less
  * than v, returns hi; otherwise returns v. Uses operator< to compare the
  * values.
