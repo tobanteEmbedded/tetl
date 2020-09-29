@@ -30,7 +30,8 @@ DAMAGE.
 #include "algorithm.hpp"
 #include "definitions.hpp"
 #include "memory.hpp"
-#include "string.hpp"
+
+#include "etl/detail/string_char_traits.hpp"
 
 namespace etl
 {
