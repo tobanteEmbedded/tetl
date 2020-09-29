@@ -431,6 +431,29 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using namespace etl::literals;
+
+    SECTION("empty ")
+    {
+        auto str = TestType {};
+        CHECK(str.substr().size() == 0);
+        CHECK(str.substr(1).size() == 0);
+        CHECK(str.substr(10).size() == 0);
+    }
+
+    SECTION("non empty")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.size() == 4);
+        CHECK(str.substr(0, 1).size() == 1);
+        CHECK(str.substr(1).size() == 3);
+        CHECK(str.substr(10).size() == 0);
+    }
+}
+
 TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

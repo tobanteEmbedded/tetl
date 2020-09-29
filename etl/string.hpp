@@ -505,6 +505,20 @@ public:
     }
 
     /**
+     * @brief Returns a substring [pos, pos+count). If the requested substring extends
+     * past the end of the string, or if count == npos, the returned substring is [pos,
+     * size()).
+     *
+     * If \p pos is greater then size(), an empty string will be returned.
+     */
+    [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const
+        -> basic_static_string
+    {
+        if (pos > size()) { return {}; }
+        return basic_static_string(data() + pos, etl::min(count, size() - pos));
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable by the type
      * size_type. The exact meaning depends on context, but it is generally used either as
      * end of string indicator by the functions that expect a string index or as the error
