@@ -59,3 +59,26 @@ TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double, long double)
     REQUIRE_FALSE(etl::isfinite(TestType {INFINITY}));
     REQUIRE_FALSE(etl::isfinite(TestType {NAN}));
 }
+
+TEMPLATE_TEST_CASE("cmath: lerp", "[cmath]", float, double, long double)
+{
+    using T = TestType;
+    CHECK(etl::lerp(T(0), T(1), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(1), T(0.5)) == T(0.5));
+
+    CHECK(etl::lerp(T(0), T(20), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(20), T(0.5)) == T(10));
+    CHECK(etl::lerp(T(0), T(20), T(2)) == T(40));
+
+    CHECK(etl::lerp(T(20), T(0), T(0)) == T(20));
+    CHECK(etl::lerp(T(20), T(0), T(0.5)) == T(10));
+    CHECK(etl::lerp(T(20), T(0), T(2)) == T(-20));
+
+    CHECK(etl::lerp(T(0), T(-20), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(-20), T(0.5)) == T(-10));
+    CHECK(etl::lerp(T(0), T(-20), T(2)) == T(-40));
+
+    CHECK(etl::lerp(T(-10), T(-20), T(0)) == T(-10));
+    CHECK(etl::lerp(T(-10), T(-20), T(0.5)) == T(-15));
+    CHECK(etl::lerp(T(-10), T(-20), T(2)) == T(-30));
+}
