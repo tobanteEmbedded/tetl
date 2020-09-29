@@ -44,6 +44,18 @@ TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto t1 = etl::tuple<TestType, float> {TestType {1}, 2.0F};
-    REQUIRE(etl::get<0>(t1) == TestType {1});
-    REQUIRE(etl::get<1>(t1) == 2.0F);
+    CHECK(etl::get<0>(t1) == TestType {1});
+    CHECK(etl::get<1>(t1) == 2.0F);
 }
+
+// TEMPLATE_TEST_CASE("tuple: tie", "[tuple]", bool, etl::uint8_t, etl::int8_t,
+//                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+//                    etl::uint64_t, etl::int64_t, float, double, long double)
+// {
+//     auto data      = etl::tuple<TestType, float> {TestType {1}, 2.0F};
+//     auto f         = float {};
+//     auto t         = TestType {};
+//     etl::tie(t, f) = data;
+//     CHECK(t == TestType {1});
+//     CHECK(f == 2.0F);
+// }

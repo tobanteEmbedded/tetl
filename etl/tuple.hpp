@@ -86,6 +86,36 @@ constexpr auto get(const tuple<First, Rest...>& t)
     return detail::get_impl<index, First, Rest...>::value(&t);
 }
 
+// namespace detail
+// {
+// struct ignore_t
+// {
+//     template <typename T>
+//     constexpr auto operator=(const T&) const -> const ignore_t&
+//     {
+//         return *this;
+//     }
+// };
+// }  // namespace detail
+
+// /**
+//  * @brief An object of unspecified type such that any value can be assigned to it with
+//  no
+//  * effect. Intended for use with etl::tie when unpacking a etl::tuple, as a placeholder
+//  * for the arguments that are not used.
+//  */
+// inline constexpr detail::ignore_t ignore;
+
+// /**
+//  * @brief Creates a tuple of lvalue references to its arguments or instances of
+//  * etl::ignore.
+//  */
+// template <typename... Types>
+// constexpr auto tie(Types&... args) -> etl::tuple<Types&...>
+// {
+//     return etl::tuple<Types&...>(args...);
+// }
+
 }  // namespace etl
 
 #endif  // TAETL_TUPLE_HPP
