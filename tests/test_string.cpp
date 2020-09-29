@@ -478,3 +478,29 @@ TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
         CHECK_FALSE(rhs != lhs);
     }
 }
+
+TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using string = TestType;
+
+    SECTION("empty string")
+    {
+        CHECK_FALSE(string {} < string {});
+
+        CHECK_FALSE(string {} < etl::static_string<2> {});
+        CHECK_FALSE(etl::static_string<4> {} < string {});
+    }
+
+    SECTION("string same capacity")
+    {
+        CHECK(string {"abc"} < string {"def"});
+        CHECK(string {"abc"} < string {"defg"});
+    }
+
+    SECTION("string different capacity")
+    {
+        CHECK_FALSE(string {"def"} < etl::static_string<2> {"a"});
+        CHECK(etl::static_string<2> {"a"} < string {"test"});
+    }
+}

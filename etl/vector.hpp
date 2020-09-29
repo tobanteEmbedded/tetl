@@ -1086,21 +1086,21 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
  * @brief
  */
 template <typename T, size_t Capacity>
-constexpr auto operator<(static_vector<T, Capacity> const& lhs,
-                         static_vector<T, Capacity> const& rhs) noexcept -> bool
+constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
+                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                      etl::less<> {});
+    return not(lhs == rhs);
 }
 
 /**
  * @brief
  */
 template <typename T, size_t Capacity>
-constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
-                          static_vector<T, Capacity> const& rhs) noexcept -> bool
+constexpr auto operator<(static_vector<T, Capacity> const& lhs,
+                         static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return not(lhs == rhs);
+    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
+                      etl::less<> {});
 }
 
 /**

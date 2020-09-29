@@ -129,28 +129,35 @@ public:
     /**
      * @brief Returns an iterator to the beginning.
      */
-    constexpr auto begin() noexcept -> iterator { return &data_[0]; }
+    constexpr auto begin() noexcept -> iterator { return data(); }
+
+    /**
+     * @brief Returns an const iterator to the beginning.
+     */
+    constexpr auto begin() const noexcept -> const_iterator { return data(); }
 
     /**
      * @brief Returns an const iterator to the beginning.
      */
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
-        return &data_[0];
+        return begin();
     }
 
     /**
      * @brief Returns an iterator to the end.
      */
-    constexpr auto end() noexcept -> iterator { return &data_[0] + size(); }
+    constexpr auto end() noexcept -> iterator { return begin() + size(); }
 
     /**
      * @brief Returns an const iterator to the end.
      */
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
-    {
-        return &data_[0] + size();
-    }
+    constexpr auto end() const noexcept -> const_iterator { return begin() + size(); }
+
+    /**
+     * @brief Returns an const iterator to the end.
+     */
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
     /**
      * @brief Accesses the first character.
@@ -554,6 +561,21 @@ operator!=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
     -> bool
 {
     return !(lhs == rhs);
+}
+
+/**
+ * @brief Compares the contents of a string with another string or a null-terminated array
+ * of CharType.
+ *
+ * @details The ordering comparisons are done lexicographically.
+ */
+template <typename CharType, typename Traits, etl::size_t Capacity1,
+          etl::size_t Capacity2>
+[[nodiscard]] constexpr auto
+operator<(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
+          etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
+{
+    return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <etl::size_t Capacity>
