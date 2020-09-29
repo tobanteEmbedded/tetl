@@ -201,7 +201,7 @@ template <typename InputIter, typename UnaryPredicate>
  *
  * @details Elements are compared using the given binary predicate p.
  */
-template <class InputIter1, class InputIter2, class BinaryPredicate>
+template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, BinaryPredicate pred)
     -> etl::pair<InputIter1, InputIter2>
@@ -221,7 +221,7 @@ template <class InputIter1, class InputIter2, class BinaryPredicate>
  *
  * @details Elements are compared using operator==.
  */
-template <class InputIter1, class InputIter2>
+template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2)
     -> etl::pair<InputIter1, InputIter2>
@@ -236,7 +236,7 @@ template <class InputIter1, class InputIter2>
  *
  * @details Elements are compared using the given binary predicate p.
  */
-template <class InputIter1, class InputIter2, class BinaryPredicate>
+template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2,
                                       BinaryPredicate pred)
@@ -257,7 +257,7 @@ template <class InputIter1, class InputIter2, class BinaryPredicate>
  *
  * @details Elements are compared using operator==.
  */
-template <class InputIter1, class InputIter2>
+template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2)
     -> etl::pair<InputIter1, InputIter2>
@@ -312,7 +312,7 @@ template <typename InputIter, typename UnaryPredicate>
  * in the range [first, last). Elements are compared using the given binary predicate \p
  * pred.
  */
-template <class ForwardIter1, class ForwardIter2, class BinaryPredicate>
+template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
                                     ForwardIter2 s_first, ForwardIter2 s_last,
                                     BinaryPredicate pred) -> ForwardIter1
@@ -324,7 +324,7 @@ template <class ForwardIter1, class ForwardIter2, class BinaryPredicate>
  * @brief Searches for the first occurrence of the sequence of elements [s_first, s_last)
  * in the range [first, last). Elements are compared using operator==.
  */
-template <class ForwardIter1, class ForwardIter2>
+template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
                                     ForwardIter2 s_first, ForwardIter2 s_last)
     -> ForwardIter1
@@ -336,7 +336,7 @@ template <class ForwardIter1, class ForwardIter2>
  * @brief Searches the sequence [first, last) for the pattern specified in the constructor
  * of searcher.
  */
-template <class ForwardIter, class Searcher>
+template <typename ForwardIter, typename Searcher>
 [[nodiscard]] constexpr auto search(ForwardIter first, ForwardIter last,
                                     Searcher const& searcher) -> ForwardIter
 {
@@ -647,7 +647,7 @@ constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> For
  * equivalent elements from the range [first, last) and returns a past-the-end
  * iterator for the new logical end of the range.
  */
-template <class ForwardIter, class BinaryPredicate>
+template <typename ForwardIter, typename BinaryPredicate>
 constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
     -> ForwardIter
 {
@@ -666,7 +666,7 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
  * equivalent elements from the range [first, last) and returns a past-the-end
  * iterator for the new logical end of the range.
  */
-template <class ForwardIter>
+template <typename ForwardIter>
 constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 {
     return unique(first, last, etl::equal_to<> {});
@@ -707,7 +707,7 @@ constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destinati
  * @details Elements are compared using operator==. The behavior is undefined if it is
  * not an equivalence relation.
  */
-template <class InputIter, class OutputIter>
+template <typename InputIter, typename OutputIter>
 constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destination)
     -> OutputIter
 {
