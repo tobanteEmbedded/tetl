@@ -526,6 +526,48 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: swap", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        auto lhs = TestType {};
+        auto rhs = TestType {};
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
+
+        lhs.swap(rhs);
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
+    }
+
+    SECTION("same size")
+    {
+        auto lhs = TestType {"abc"};
+        auto rhs = TestType {"def"};
+        CHECK(lhs.size() == rhs.size());
+
+        etl::swap(lhs, rhs);
+        CHECK(lhs.size() == rhs.size());
+
+        CHECK(lhs == "def");
+        CHECK(rhs == "abc");
+    }
+
+    SECTION("different size")
+    {
+        auto lhs = TestType {"foo"};
+        auto rhs = TestType {"barbaz"};
+        CHECK(lhs.size() != rhs.size());
+
+        lhs.swap(rhs);
+        CHECK(lhs.size() != rhs.size());
+
+        CHECK(lhs == "barbaz");
+        CHECK(rhs == "foo");
+    }
+}
+
 TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

@@ -430,28 +430,6 @@ public:
     }
 
     /**
-     * @brief Resizes the string to contain count characters.
-     *
-     * @details If the current size is less than count, additional characters are
-     * appended, maximum up to it's capacity. If the current size is greater than count,
-     * the string is reduced to its first count elements.
-     */
-    constexpr auto resize(size_type count, CharType ch) noexcept -> void
-    {
-        if (size() > count) { size_ = count; }
-        if (size() < count) { append(count, ch); }
-    }
-
-    /**
-     * @brief Resizes the string to contain count characters.
-     *
-     * @details If the current size is less than count, additional characters are
-     * appended, maximum up to it's capacity. If the current size is greater than count,
-     * the string is reduced to its first count elements.
-     */
-    constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
-
-    /**
      * @brief Compares this string to str.
      */
     [[nodiscard]] constexpr auto compare(basic_static_string const& str) const noexcept
@@ -622,6 +600,39 @@ public:
         auto const* dest = destination;
         auto const* res  = etl::copy(first, last, destination);
         return static_cast<size_type>(res - dest);
+    }
+
+    /**
+     * @brief Resizes the string to contain count characters.
+     *
+     * @details If the current size is less than count, additional characters are
+     * appended, maximum up to it's capacity. If the current size is greater than count,
+     * the string is reduced to its first count elements.
+     */
+    constexpr auto resize(size_type count, CharType ch) noexcept -> void
+    {
+        if (size() > count) { size_ = count; }
+        if (size() < count) { append(count, ch); }
+    }
+
+    /**
+     * @brief Resizes the string to contain count characters.
+     *
+     * @details If the current size is less than count, additional characters are
+     * appended, maximum up to it's capacity. If the current size is greater than count,
+     * the string is reduced to its first count elements.
+     */
+    constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
+
+    /**
+     * @brief Exchanges the contents of the string with those of other. All iterators and
+     * references may be invalidated.
+     */
+    constexpr auto swap(basic_static_string& other) noexcept -> void
+    {
+        auto temp(etl::move(other));
+        other = etl::move(*this);
+        *this = etl::move(temp);
     }
 
     /**
@@ -821,12 +832,24 @@ operator>=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharType, typename Traits, etl::size_t Capacity>
 [[nodiscard]] constexpr auto
-operator>=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
+operator>=(etl::basic_static_string<CharType, Capacity, Traits> const& lhs,
            CharType const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) >= 0;
+}
+
+/**
+ * @brief Specializes the std::swap algorithm for std::basic_string. Swaps the contents of
+ * lhs and rhs. Equivalent to lhs.swap(rhs).
+ */
+template <typename CharType, typename Traits, etl::size_t Capacity>
+constexpr auto swap(etl::basic_static_string<CharType, Capacity, Traits>& lhs,
+                    etl::basic_static_string<CharType, Capacity, Traits>&
+                        rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+{
+    lhs.swap(rhs);
 }
 
 template <etl::size_t Capacity>
