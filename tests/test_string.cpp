@@ -674,6 +674,90 @@ TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find_first_of(TestType {}, 0) == TestType::npos);
+        CHECK(str.find_first_of(TestType {}, 1) == TestType::npos);
+        CHECK(str.find_first_of(TestType {""}) == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.find_first_of(TestType {"abc"}, 0) == TestType::npos);
+        CHECK(str.find_first_of(TestType {"abc"}, 1) == TestType::npos);
+        CHECK(str.find_first_of(TestType {"abc"}) == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find_first_of(TestType {"abc"}, 0) == 0);
+        CHECK(str.find_first_of(TestType {"bc"}, 1) == 1);
+        CHECK(str.find_first_of(TestType {"cd"}) == 2);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: find_first_of(char const*)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find_first_of("", 0) == TestType::npos);
+        CHECK(str.find_first_of("", 1) == TestType::npos);
+        CHECK(str.find_first_of("") == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.find_first_of("abc", 0) == TestType::npos);
+        CHECK(str.find_first_of("abc", 1) == TestType::npos);
+        CHECK(str.find_first_of("abc") == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find_first_of("abc", 0) == 0);
+        CHECK(str.find_first_of("bc", 1) == 1);
+        CHECK(str.find_first_of("cd") == 2);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: find_first_of(char)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK(str.find_first_of('a', 0) == TestType::npos);
+        CHECK(str.find_first_of('a', 1) == TestType::npos);
+        CHECK(str.find_first_of('a') == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.find_first_of('a', 0) == TestType::npos);
+        CHECK(str.find_first_of('a', 1) == TestType::npos);
+        CHECK(str.find_first_of('a') == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType {"abcd"};
+        CHECK(str.find_first_of('a', 0) == 0);
+        CHECK(str.find_first_of('b', 1) == 1);
+        CHECK(str.find_first_of('c') == 2);
+    }
+}
+
 TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

@@ -726,6 +726,63 @@ public:
     }
 
     /**
+     * @brief Finds the first character equal to one of the characters in the given
+     * character sequence. The search considers only the interval [pos, size()). If the
+     * character is not present in the interval, npos will be returned.
+     */
+    [[nodiscard]] constexpr auto find_first_of(basic_static_string const& str,
+                                               size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return find_first_of(str.c_str(), pos, str.size());
+    }
+
+    /**
+     * @brief Finds the first character equal to one of the characters in the given
+     * character sequence. The search considers only the interval [pos, size()). If the
+     * character is not present in the interval, npos will be returned.
+     */
+    [[nodiscard]] constexpr auto find_first_of(const_pointer s, size_type pos,
+                                               size_type count) const -> size_type
+    {
+        if (pos < size())
+        {
+            for (auto i = size_type(pos); i < size(); ++i)
+            {
+                for (auto j = size_type(0); j < count; ++j)
+                {
+                    if (data_[i] == s[j]) { return i; }
+                }
+            }
+        }
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the first character equal to one of the characters in the given
+     * character sequence. The search considers only the interval [pos, size()). If the
+     * character is not present in the interval, npos will be returned.
+     */
+    [[nodiscard]] constexpr auto find_first_of(const_pointer s, size_type pos = 0) const
+        -> size_type
+    {
+        return find_first_of(s, pos, traits_type::length(s));
+    }
+
+    /**
+     * @brief Finds the first character equal to one of the characters in the given
+     * character sequence. The search considers only the interval [pos, size()). If the
+     * character is not present in the interval, npos will be returned.
+     */
+    [[nodiscard]] constexpr auto find_first_of(value_type ch,
+                                               size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return find_first_of(&ch, pos, 1);
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable by the type
      * size_type. The exact meaning depends on context, but it is generally used either as
      * end of string indicator by the functions that expect a string index or as the error
