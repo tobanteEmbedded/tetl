@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/array.hpp"          // for array
-#include "etl/definitions.hpp"    // for int16_t, int32_t, int64_t, int8_t
-#include "etl/limits.hpp"         // for numeric_limits
-#include "etl/numeric.hpp"        // for midpoint, accumulate, gcd
-#include "etl/static_vector.hpp"  // for static_vector
+#include "etl/array.hpp"        // for array
+#include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
+#include "etl/limits.hpp"       // for numeric_limits
+#include "etl/numeric.hpp"      // for midpoint, accumulate, gcd
+#include "etl/vector.hpp"       // for static_vector
 
 #include "catch2/catch.hpp"
 

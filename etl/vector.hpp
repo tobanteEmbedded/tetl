@@ -28,8 +28,8 @@ DAMAGE.
  * @example vector.cpp
  */
 
-#ifndef TAETL_STATIC_VECTOR_HPP
-#define TAETL_STATIC_VECTOR_HPP
+#ifndef TAETL_VECTOR_HPP
+#define TAETL_VECTOR_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
@@ -1138,4 +1138,4 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
 
 }  // namespace etl
 
-#endif  // TAETL_STATIC_VECTOR_HPP
+#endif  // TAETL_VECTOR_HPP

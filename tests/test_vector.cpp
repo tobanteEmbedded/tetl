@@ -23,7 +23,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "etl/static_vector.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 

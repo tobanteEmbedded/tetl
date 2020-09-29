@@ -26,7 +26,7 @@ DAMAGE.
 
 #include <stdio.h>  // for printf
 
-#include "etl/static_vector.hpp"  // for static_vector
+#include "etl/vector.hpp"  // for static_vector
 
 auto main() -> int
 {

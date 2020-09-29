@@ -26,8 +26,8 @@ DAMAGE.
 
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
-#include "etl/static_vector.hpp"
 #include "etl/string_view.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 

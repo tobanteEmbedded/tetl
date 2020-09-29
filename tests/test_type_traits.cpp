@@ -26,7 +26,7 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 
 #include "etl/map.hpp"
-#include "etl/static_vector.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 

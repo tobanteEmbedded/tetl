@@ -27,7 +27,7 @@ DAMAGE.
 
 #include "etl/numbers.hpp"
 #include "etl/numeric.hpp"
-#include "etl/static_vector.hpp"
+#include "etl/vector.hpp"
 
 auto main() -> int
 {

@@ -25,7 +25,7 @@ DAMAGE.
 */
 #include "etl/iterator.hpp"
 #include "etl/span.hpp"
-#include "etl/static_vector.hpp"
+#include "etl/vector.hpp"
 
 #include "catch2/catch.hpp"
 

@@ -27,7 +27,7 @@ DAMAGE.
 #include <stdio.h>
 
 #include "etl/algorithm.hpp"
-#include "etl/static_vector.hpp"
+#include "etl/vector.hpp"
 
 auto main() -> int
 {
