@@ -359,30 +359,30 @@ public:
      */
     constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
 
-    // /**
-    //  * @brief Checks if the string begins with the given prefix.
-    //  */
-    // [[nodiscard]] constexpr auto
-    // starts_with(std::basic_string_view<CharT, Traits> sv) const noexcept -> bool
-    // {
-    //     return false;
-    // }
+    /**
+     * @brief Checks if the string begins with the given prefix.
+     */
+    [[nodiscard]] constexpr auto
+    starts_with(etl::basic_string_view<CharType, Traits> sv) const noexcept -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(sv);
+    }
 
-    // /**
-    //  * @brief Checks if the string begins with the given prefix.
-    //  */
-    // [[nodiscard]] constexpr auto starts_with(CharT c) const noexcept -> bool
-    // {
-    //     return false;
-    // }
+    /**
+     * @brief Checks if the string begins with the given prefix.
+     */
+    [[nodiscard]] constexpr auto starts_with(CharType c) const noexcept -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(c);
+    }
 
-    // /**
-    //  * @brief Checks if the string begins with the given prefix.
-    //  */
-    // [[nodiscard]] constexpr auto starts_with(const CharT* s) const -> bool
-    // {
-    //     return false;
-    // }
+    /**
+     * @brief Checks if the string begins with the given prefix.
+     */
+    [[nodiscard]] constexpr auto starts_with(CharType const* str) const -> bool
+    {
+        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(str);
+    }
 
 private:
     etl::size_t size_        = 0;

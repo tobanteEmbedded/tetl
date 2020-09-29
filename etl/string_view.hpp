@@ -343,7 +343,7 @@ public:
      *
      * @details Effectively returns starts_with(basic_string_view(s))
      */
-    constexpr auto starts_with(CharType const* str) const -> bool
+    [[nodiscard]] constexpr auto starts_with(CharType const* str) const -> bool
     {
         return starts_with(basic_string_view(str));
     }

@@ -360,3 +360,33 @@ TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
         CHECK(str[0] == 'a');
     }
 }
+
+TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using namespace etl::literals;
+
+    SECTION("empty string")
+    {
+        auto str = TestType {};
+        CHECK_FALSE(str.starts_with("foo"_sv));
+        CHECK_FALSE(str.starts_with("foo"));
+        CHECK_FALSE(str.starts_with('f'));
+    }
+
+    SECTION("false")
+    {
+        auto str = TestType {"test"};
+        CHECK_FALSE(str.starts_with("foo"_sv));
+        CHECK_FALSE(str.starts_with("foo"));
+        CHECK_FALSE(str.starts_with('f'));
+    }
+
+    SECTION("true")
+    {
+        auto str = TestType {"foo"};
+        CHECK(str.starts_with("foo"_sv));
+        CHECK(str.starts_with("foo"));
+        CHECK(str.starts_with('f'));
+    }
+}
