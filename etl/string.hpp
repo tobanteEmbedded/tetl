@@ -604,6 +604,27 @@ public:
     }
 
     /**
+     * @brief Copies a substring [pos, pos+count) to character string pointed to by dest.
+     * If the requested substring lasts past the end of the string, or if count == npos,
+     * the copied substring is [pos, size()). The resulting character string is not
+     * null-terminated.
+     *
+     * If \p pos is greater then size(), nothing will be copied.
+     *
+     * @return Number of characters copied.
+     */
+    constexpr auto copy(pointer destination, size_type count, size_type pos = 0) const
+        -> size_type
+    {
+        if (pos > size()) { return 0; }
+        auto first       = data() + pos;
+        auto last        = first + etl::min(count, size() - pos);
+        auto const* dest = destination;
+        auto const* res  = etl::copy(first, last, destination);
+        return static_cast<size_type>(res - dest);
+    }
+
+    /**
      * @brief This is a special value equal to the maximum value representable by the type
      * size_type. The exact meaning depends on context, but it is generally used either as
      * end of string indicator by the functions that expect a string index or as the error

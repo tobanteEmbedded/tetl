@@ -486,6 +486,46 @@ TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        char destination[32] = {};
+        auto str             = TestType {};
+        CHECK(str.empty());
+        CHECK(str.copy(destination, 0, 0) == 0);
+        CHECK(str.copy(destination, 1, 0) == 0);
+        CHECK(str.copy(destination, 10, 1) == 0);
+    }
+
+    SECTION("non empty")
+    {
+        char destination[32] = {};
+        auto str             = TestType {"abcd"};
+        CHECK(str.size() == 4);
+
+        CHECK(str.copy(destination, 1, 100) == 0);
+        CHECK(destination[0] == '\0');
+
+        CHECK(str.copy(destination, 1, 0) == 1);
+        CHECK(destination[0] == 'a');
+        CHECK(destination[1] == '\0');
+
+        CHECK(str.copy(destination, 2, 2) == 2);
+        CHECK(destination[0] == 'c');
+        CHECK(destination[1] == 'd');
+        CHECK(destination[2] == '\0');
+
+        CHECK(str.copy(destination, str.size()) == 4);
+        CHECK(destination[0] == 'a');
+        CHECK(destination[1] == 'b');
+        CHECK(destination[2] == 'c');
+        CHECK(destination[3] == 'd');
+        CHECK(destination[4] == '\0');
+    }
+}
+
 TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
