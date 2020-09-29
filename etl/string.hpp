@@ -665,26 +665,12 @@ public:
         // an empty substring is found at pos if and only if pos <= size()
         if (count == 0 && pos <= size()) { return pos; }
 
-        // A substring can be found only if pos <= size() - str.size()
         if (pos <= size() - count)
         {
-            for (auto i = size_type(pos); i < size(); ++i)
-            {
-                auto found = i;
-                for (auto j = size_type(0); j < count; ++j)
-                {
-                    if (!(data_[i + j] == s[j]))
-                    {
-                        found = npos;
-                        break;
-                    }
-                }
-
-                if (found != npos) { return found; }
-            }
+            auto view = static_cast<basic_string_view<value_type>>(*this);
+            return view.find(s, pos, count);
         }
 
-        // For a non-empty substring, if pos >= size(), the function always returns npos.
         return npos;
     }
 
@@ -715,14 +701,7 @@ public:
     [[nodiscard]] constexpr auto find(value_type ch, size_type pos = 0) const noexcept
         -> size_type
     {
-        if (pos < size())
-        {
-            auto found = etl::find(begin() + pos, end(), ch);
-            if (found == end()) { return npos; }
-            return static_cast<size_type>(etl::distance(begin(), found));
-        }
-
-        return npos;
+        return find(etl::addressof(ch), pos, 1);
     }
 
     /**
@@ -747,13 +726,8 @@ public:
     {
         if (pos < size())
         {
-            for (auto i = size_type(pos); i < size(); ++i)
-            {
-                for (auto j = size_type(0); j < count; ++j)
-                {
-                    if (data_[i] == s[j]) { return i; }
-                }
-            }
+            auto view = static_cast<basic_string_view<value_type>>(*this);
+            return view.find_first_of(s, pos, count);
         }
 
         return npos;
@@ -779,7 +753,7 @@ public:
                                                size_type pos = 0) const noexcept
         -> size_type
     {
-        return find_first_of(&ch, pos, 1);
+        return find_first_of(etl::addressof(ch), pos, 1);
     }
 
     /**
