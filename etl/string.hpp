@@ -189,12 +189,38 @@ public:
     /**
      * @brief Accesses the first character.
      */
-    constexpr auto front() noexcept -> reference { return data_[0]; }
+    [[nodiscard]] constexpr auto front() noexcept -> reference
+    {
+        assert(!empty());
+        return data_[0];
+    }
+
+    /**
+     * @brief Accesses the first character.
+     */
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference
+    {
+        assert(!empty());
+        return data_[0];
+    }
 
     /**
      * @brief Accesses the last character.
      */
-    constexpr auto back() noexcept -> reference { return data_[size_ - 1]; }
+    [[nodiscard]] constexpr auto back() noexcept -> reference
+    {
+        assert(!empty());
+        return data_[size_ - 1];
+    }
+
+    /**
+     * @brief Accesses the last character.
+     */
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference
+    {
+        assert(!empty());
+        return data_[size_ - 1];
+    }
 
     /**
      * @brief Checks whether the string is empty.
