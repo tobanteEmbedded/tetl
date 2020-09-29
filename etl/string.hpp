@@ -91,6 +91,11 @@ public:
     }
 
     /**
+     * @brief Trivial defaulted destructor
+     */
+    ~basic_static_string() noexcept = default;
+
+    /**
      * @brief Accesses the specified character with bounds checking.
      */
     constexpr auto at(size_type index) noexcept -> reference
