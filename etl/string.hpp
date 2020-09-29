@@ -705,6 +705,85 @@ public:
     }
 
     /**
+     * @brief Finds the last substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position following pos.
+     * If npos or any value not smaller than size()-1 is passed as pos, whole string will
+     * be searched.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/rfind
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found. Note that this is an offset from the start of the string, not
+     * the end.
+     */
+    [[nodiscard]] constexpr auto rfind(basic_static_string const& str,
+                                       size_type pos = 0) const noexcept -> size_type
+    {
+        return rfind(str.c_str(), pos, str.size());
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position following pos.
+     * If npos or any value not smaller than size()-1 is passed as pos, whole string will
+     * be searched.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/rfind
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found. Note that this is an offset from the start of the string, not
+     * the end.
+     */
+    [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos,
+                                       size_type count) const noexcept -> size_type
+    {
+        if (count == 0)
+        {
+            if (pos <= size()) { return pos; }
+            return size();
+        }
+
+        auto view = static_cast<basic_string_view<value_type>>(*this);
+        return view.rfind(s, pos, count);
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position following pos.
+     * If npos or any value not smaller than size()-1 is passed as pos, whole string will
+     * be searched.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/rfind
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found. Note that this is an offset from the start of the string, not
+     * the end.
+     */
+    [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return rfind(s, pos, traits_type::length(s));
+    }
+
+    /**
+     * @brief Finds the last substring equal to the given character sequence. Search
+     * begins at pos, i.e. the found substring must not begin in a position following pos.
+     * If npos or any value not smaller than size()-1 is passed as pos, whole string will
+     * be searched.
+     *
+     * https://en.cppreference.com/w/cpp/string/basic_string/rfind
+     *
+     * @return Position of the first character of the found substring or npos if no such
+     * substring is found. Note that this is an offset from the start of the string, not
+     * the end.
+     */
+    [[nodiscard]] constexpr auto rfind(value_type ch, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        return rfind(etl::addressof(ch), pos, 1);
+    }
+
+    /**
      * @brief Finds the first character equal to one of the characters in the given
      * character sequence. The search considers only the interval [pos, size()). If the
      * character is not present in the interval, npos will be returned.

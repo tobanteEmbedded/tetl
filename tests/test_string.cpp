@@ -674,6 +674,67 @@ TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
     }
 }
 
+TEMPLATE_TEST_CASE("string: rfind(string)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {"test"};
+        CHECK(str.rfind(TestType {}) == 0);
+        CHECK(str.rfind(TestType {}, 0) == 0);
+        CHECK(str.rfind(TestType {}, TestType::npos) == str.size());
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.rfind(TestType {"abc"}, 0) == TestType::npos);
+        CHECK(str.rfind(TestType {"abc"}, 1) == TestType::npos);
+        CHECK(str.rfind(TestType {"abc"}) == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        // auto const str = TestType {"test"};
+        // CHECK(str.rfind(TestType {"t"}) == 3);
+        // CHECK(str.rfind(TestType {"est"}) == 1);
+
+        // CHECK(str.rfind(TestType {"st"}, 12) == 2);
+        // CHECK(str.rfind(TestType {"st"}, 12) == 2);
+    }
+}
+
+TEMPLATE_TEST_CASE("string: rfind(char const*)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty string")
+    {
+        auto str = TestType {"test"};
+        CHECK(str.rfind("") == 0);
+        CHECK(str.rfind("", 0) == 0);
+        CHECK(str.rfind("", TestType::npos) == str.size());
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType {"def"};
+        CHECK(str.rfind("abc", 0) == TestType::npos);
+        CHECK(str.rfind("abc", 1) == TestType::npos);
+        CHECK(str.rfind("abc") == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto const str = TestType {"test"};
+        CHECK(str.rfind("t") == 0);
+        // CHECK(str.rfind("t", 1) == 3);
+        // CHECK(str.rfind("est") == 1);
+
+        // CHECK(str.rfind("st", 12) == 2);
+        // CHECK(str.rfind("st", 12) == 2);
+    }
+}
+
 TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
