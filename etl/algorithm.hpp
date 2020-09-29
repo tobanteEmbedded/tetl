@@ -336,9 +336,39 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
- * @brief Searches for the first occurrence of the sequence of elements [s_first, s_last)
- * in the range [first, last). Elements are compared using the given binary predicate \p
- * pred.
+ * @brief
+ */
+template <class InputIter, class ForwardIter, class BinaryPredicate>
+[[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
+                                           ForwardIter s_first, ForwardIter s_last,
+                                           BinaryPredicate pred) -> InputIter
+{
+    for (; first != last; ++first)
+    {
+        for (auto it = s_first; it != s_last; ++it)
+        {
+            if (pred(*first, *it)) { return first; }
+        }
+    }
+
+    return last;
+}
+
+/**
+ * @brief
+ */
+template <class InputIter, class ForwardIter>
+[[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
+                                           ForwardIter s_first, ForwardIter s_last)
+    -> InputIter
+{
+    return find_first_of(first, last, s_first, s_last, etl::equal_to<> {});
+}
+
+/**
+ * @brief Searches for the first occurrence of the sequence of elements [s_first,
+ * s_last) in the range [first, last). Elements are compared using the given binary
+ * predicate \p pred.
  */
 template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,

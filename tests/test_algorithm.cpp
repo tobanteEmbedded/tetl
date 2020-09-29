@@ -264,6 +264,51 @@ TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t, etl::i
     REQUIRE(result7 == vec.end());
 }
 
+TEMPLATE_TEST_CASE("algorithm: find_first_of", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    SECTION("empty range")
+    {
+        auto tc    = etl::static_vector<TestType, 16> {};
+        auto match = etl::array {TestType(2), TestType(42)};
+        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        CHECK(res == end(tc));
+    }
+
+    SECTION("empty matches")
+    {
+        auto tc    = etl::static_vector<TestType, 16> {};
+        auto match = etl::static_vector<TestType, 16> {};
+        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        CHECK(res == end(tc));
+    }
+
+    SECTION("no matches")
+    {
+        auto tc    = etl::array {TestType(0), TestType(1)};
+        auto match = etl::array {TestType(2), TestType(42)};
+        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        CHECK(res == end(tc));
+    }
+
+    SECTION("same ranges")
+    {
+        auto tc  = etl::array {TestType(0), TestType(1)};
+        auto res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
+        CHECK(res == begin(tc));
+    }
+
+    SECTION("matches")
+    {
+        auto tc    = etl::array {TestType(0), TestType(1), TestType(42)};
+        auto match = etl::array {TestType(2), TestType(42)};
+        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        CHECK(res == end(tc) - 1);
+        CHECK(*res == TestType(42));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: max", "[algorithm]", etl::int8_t, etl::int16_t,
                    etl::int32_t, etl::int64_t, float, double, long double)
 {
