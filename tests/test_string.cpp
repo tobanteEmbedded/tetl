@@ -487,7 +487,6 @@ TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
     SECTION("empty string")
     {
         CHECK_FALSE(string {} < string {});
-
         CHECK_FALSE(string {} < etl::static_string<2> {});
         CHECK_FALSE(etl::static_string<4> {} < string {});
     }
@@ -502,5 +501,83 @@ TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
     {
         CHECK_FALSE(string {"def"} < etl::static_string<2> {"a"});
         CHECK(etl::static_string<2> {"a"} < string {"test"});
+    }
+}
+
+TEMPLATE_TEST_CASE("string: operator<=", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using string = TestType;
+
+    // SECTION("empty string")
+    // {
+    //     CHECK(string {} <= string {});
+    //     CHECK(string {} <= etl::static_string<2> {});
+    //     CHECK(etl::static_string<4> {} <= string {});
+    // }
+
+    SECTION("string same capacity")
+    {
+        CHECK(string {"abc"} <= string {"def"});
+        CHECK(string {"abc"} <= string {"defg"});
+        CHECK(string {"abc"} <= string {"abc"});
+    }
+
+    SECTION("string different capacity")
+    {
+        CHECK_FALSE(string {"def"} <= etl::static_string<2> {"a"});
+        CHECK(etl::static_string<2> {"a"} <= string {"test"});
+    }
+}
+
+TEMPLATE_TEST_CASE("string: operator>", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using string = TestType;
+
+    SECTION("empty string")
+    {
+        CHECK_FALSE(string {} > string {});
+        CHECK_FALSE(string {} > etl::static_string<2> {});
+        CHECK_FALSE(etl::static_string<4> {} > string {});
+    }
+
+    SECTION("string same capacity")
+    {
+        CHECK_FALSE(string {"abc"} > string {"def"});
+        CHECK_FALSE(string {"abc"} > string {"defg"});
+        CHECK_FALSE(string {"abc"} > string {"abc"});
+    }
+
+    SECTION("string different capacity")
+    {
+        CHECK(string {"def"} > etl::static_string<2> {"a"});
+        CHECK_FALSE(etl::static_string<2> {"a"} > string {"test"});
+    }
+}
+
+TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    using string = TestType;
+
+    SECTION("empty string")
+    {
+        CHECK(string {} >= string {});
+        CHECK(string {} >= etl::static_string<2> {});
+        CHECK(etl::static_string<4> {} >= string {});
+    }
+
+    SECTION("string same capacity")
+    {
+        CHECK(string {"abc"} >= string {"abc"});
+        CHECK_FALSE(string {"abc"} >= string {"def"});
+        CHECK_FALSE(string {"abc"} >= string {"defg"});
+    }
+
+    SECTION("string different capacity")
+    {
+        CHECK(string {"def"} >= etl::static_string<2> {"a"});
+        CHECK_FALSE(etl::static_string<2> {"a"} >= string {"test"});
     }
 }
