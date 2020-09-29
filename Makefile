@@ -30,7 +30,7 @@ avr:
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -Q -C $(CONFIG) -j8
+	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
 
 ifneq (,$(findstring clang,$(CXX)))
     LCOV = lcov --gcov-tool llvm-gcov.sh

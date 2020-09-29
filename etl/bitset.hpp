@@ -29,6 +29,7 @@ DAMAGE.
 
 #include "array.hpp"
 #include "definitions.hpp"
+#include "limits.hpp"
 
 namespace etl
 {
@@ -42,18 +43,52 @@ template <size_t NumberOfBits>
 class bitset
 {
 public:
+    /**
+     * @brief Default constructor. Constructs a bitset with all bits set to zero.
+     */
     constexpr bitset() noexcept = default;
 
-    constexpr auto set(size_t const pos) -> void
+    /**
+     * @brief Constructs a bitset, initializing the first (rightmost, least significant) M
+     * bit positions to the corresponding bit values of val, where M is the smaller of the
+     * number of bits in an unsigned long long and the number of bits N in the bitset
+     * being constructed. If M is less than N the bitset is longer than 64 bits, the
+     * remaining bit positions are initialized to zeroes.
+     */
+    constexpr bitset(unsigned long long /*val*/) noexcept : bitset {} { }
+
+    /**
+     * @brief Sets all bits to true or to specified value. Sets all bits to true.
+     */
+    constexpr auto set() noexcept -> bitset<NumberOfBits>&
     {
-        bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7));
+        for (auto& b : bits_) { b = etl::numeric_limits<unsigned char>::max(); }
+        return *this;
     }
 
+    /**
+     * @brief Sets all bits to true or to specified value. Sets the bit at position
+     * pos to the value value.
+     */
+    constexpr auto set(etl::size_t pos, bool value = true) -> bitset<NumberOfBits>&
+    {
+        if (value) { bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7)); }
+        return *this;
+    }
+
+    /**
+     * @brief Returns the value of the bit at the position pos. Perfoms no bounds
+     * checking.
+     */
     [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
     {
         return (bits_[pos >> 3] & (1 << (pos & 0x7))) != 0;
     }
 
+    /**
+     * @brief Returns the value of the bit at the position pos. Perfoms no bounds
+     * checking.
+     */
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
         return test(pos);

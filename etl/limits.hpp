@@ -57,9 +57,9 @@ class numeric_limits
 public:
     static constexpr bool is_specialized = false;
 
-    static constexpr auto min() noexcept { return T {}; }
-    static constexpr auto max() noexcept { return T {}; }
-    static constexpr auto lowest() noexcept { return T {}; }
+    static constexpr auto min() noexcept { return T(); }
+    static constexpr auto max() noexcept { return T(); }
+    static constexpr auto lowest() noexcept { return T(); }
 
     static constexpr int digits       = 0;
     static constexpr int digits10     = 0;
@@ -69,8 +69,8 @@ public:
     static constexpr bool is_integer = false;
     static constexpr bool is_exact   = false;
     static constexpr int radix       = 0;
-    static constexpr auto epsilon() noexcept { return T {}; }
-    static constexpr auto round_error() noexcept { return T {}; }
+    static constexpr auto epsilon() noexcept { return T(); }
+    static constexpr auto round_error() noexcept { return T(); }
 
     static constexpr int min_exponent   = 0;
     static constexpr int min_exponent10 = 0;
@@ -82,10 +82,10 @@ public:
     static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return T {}; }
-    static constexpr auto quiet_NaN() noexcept { return T {}; }
-    static constexpr auto signaling_NaN() noexcept { return T {}; }
-    static constexpr auto denorm_min() noexcept { return T {}; }
+    static constexpr auto infinity() noexcept { return T(); }
+    static constexpr auto quiet_NaN() noexcept { return T(); }
+    static constexpr auto signaling_NaN() noexcept { return T(); }
+    static constexpr auto denorm_min() noexcept { return T(); }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = false;
