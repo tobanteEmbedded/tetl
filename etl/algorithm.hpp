@@ -86,8 +86,8 @@ constexpr auto move(InputIter first, InputIter last, OutputIter destination) -> 
  * @brief Applies the given function object f to the result of dereferencing
  * every iterator in the range [first, last] in order.
  */
-template <typename InputIt, typename UnaryFunction>
-constexpr auto for_each(InputIt first, InputIt last, UnaryFunction f) noexcept
+template <typename InputIter, typename UnaryFunction>
+constexpr auto for_each(InputIter first, InputIter last, UnaryFunction f) noexcept
     -> UnaryFunction
 {
     for (; first != last; ++first) { f(*first); }
@@ -143,8 +143,8 @@ constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/generate
  */
-template <typename ForwardIt, typename Generator>
-constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
+template <typename ForwardIter, typename Generator>
+constexpr auto generate(ForwardIter first, ForwardIter last, Generator g) -> void
 {
     for (; first != last; ++first) { *first = g(); }
 }
@@ -155,8 +155,8 @@ constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/generate_n
  */
-template <typename OutputIt, typename SizeT, typename Generator>
-constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
+template <typename OutputIter, typename SizeT, typename Generator>
+constexpr auto generate_n(OutputIter first, SizeT count, Generator g) -> OutputIter
 {
     for (; count > 0; ++first, --count) { *first = g(); }
     return first;
@@ -560,8 +560,9 @@ template <typename Type, typename Compare>
  * @brief Checks if unary predicate p returns true for all elements in the range
  * [first, last).
  */
-template <typename InputIt, typename UnaryPredicate>
-[[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto all_of(InputIter first, InputIter last, UnaryPredicate p)
+    -> bool
 {
     return etl::find_if_not(first, last, p) == last;
 }
@@ -570,8 +571,9 @@ template <typename InputIt, typename UnaryPredicate>
  * @brief Checks if unary predicate p returns true for at least one element in
  * the range [first, last).
  */
-template <typename InputIt, typename UnaryPredicate>
-[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, UnaryPredicate p) -> bool
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto any_of(InputIter first, InputIter last, UnaryPredicate p)
+    -> bool
 {
     return etl::find_if(first, last, p) != last;
 }
@@ -580,8 +582,8 @@ template <typename InputIt, typename UnaryPredicate>
  * @brief Checks if unary predicate p returns true for no elements in the range
  * [first, last).
  */
-template <typename InputIt, typename UnaryPredicate>
-[[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, UnaryPredicate p)
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto none_of(InputIter first, InputIter last, UnaryPredicate p)
     -> bool
 {
     return etl::find_if(first, last, p) == last;
@@ -622,8 +624,9 @@ constexpr auto reverse_copy(BidirIter first, BidirIter last, OutputIter destinat
  * new range and n_first - 1 becomes the last element. A precondition of this
  * function is that [first, n_first) and [n_first, last) are valid ranges.
  */
-template <typename ForwardIt>
-constexpr auto rotate(ForwardIt first, ForwardIt n_first, ForwardIt last) -> ForwardIt
+template <typename ForwardIter>
+constexpr auto rotate(ForwardIter first, ForwardIter n_first, ForwardIter last)
+    -> ForwardIter
 {
     if (first == n_first) { return last; }
     if (n_first == last) { return first; }
@@ -719,13 +722,14 @@ constexpr auto unique_copy(InputIter first, InputIter last, OutputIter destinati
  * elements for which the predicate p returns true precede the elements for which
  * predicate p returns false. Relative order of the elements is not preserved.
  */
-template <typename ForwardIt, typename UnaryPredicate>
-constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> ForwardIt
+template <typename ForwardIter, typename UnaryPredicate>
+constexpr auto partition(ForwardIter first, ForwardIter last, UnaryPredicate p)
+    -> ForwardIter
 {
     first = find_if_not(first, last, p);
     if (first == last) { return first; }
 
-    for (ForwardIt i = next(first); i != last; ++i)
+    for (ForwardIter i = next(first); i != last; ++i)
     {
         if (p(*i))
         {
@@ -742,8 +746,8 @@ constexpr auto partition(ForwardIt first, ForwardIt last, UnaryPredicate p) -> F
  * elements for which predicate p returns false. Relative order of the
  * elements is preserved.
  */
-template <typename BidirIt, typename UnaryPredicate>
-constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> BidirIt
+template <typename BidirIter, typename UnaryPredicate>
+constexpr auto stable_partition(BidirIter f, BidirIter l, UnaryPredicate p) -> BidirIter
 {
     auto const n = l - f;
     if (n == 0) { return f; }
@@ -763,8 +767,8 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, UnaryPredicate p) -> Bidir
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
  */
-template <typename InputIt, typename OutputIt>
-constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
+template <typename InputIter, typename OutputIter>
+constexpr auto copy(InputIter first, InputIter last, OutputIter destination) -> OutputIter
 {
     for (; first != last; ++first, ++destination) { *destination = *first; }
     return destination;
@@ -781,9 +785,9 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> Output
  * @return Output iterator to the element in the destination range, one past the last
  * element copied.
  */
-template <typename InputIt, typename OutputIt, typename UnaryPredicate>
-constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredicate pred)
-    -> OutputIt
+template <typename InputIter, typename OutputIter, typename UnaryPredicate>
+constexpr auto copy_if(InputIter first, InputIter last, OutputIter d_first,
+                       UnaryPredicate pred) -> OutputIter
 {
     while (first != last)
     {
@@ -803,8 +807,8 @@ constexpr auto copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredi
  * @return Iterator in the destination range, pointing past the last element copied if
  * count>0 or result otherwise.
  */
-template <typename InputIt, typename Size, typename OutputIt>
-constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
+template <typename InputIter, typename Size, typename OutputIter>
+constexpr auto copy_n(InputIter first, Size count, OutputIter result) -> OutputIter
 {
     if (count > 0)
     {
@@ -824,8 +828,9 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
  *
  * @return Iterator to the last element copied.
  */
-template <typename BidirIt1, typename BidirIt2>
-constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> BidirIt2
+template <typename BidirIter1, typename BidirIter2>
+constexpr auto copy_backward(BidirIter1 first, BidirIter1 last, BidirIter2 d_last)
+    -> BidirIter2
 {
     while (first != last) { *(--d_last) = *(--last); }
     return d_last;
@@ -834,8 +839,8 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last) -> 
 /**
  * @brief Assigns the given value to the elements in the range [first, last).
  */
-template <typename ForwardIt, typename T>
-constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
+template <typename ForwardIter, typename T>
+constexpr auto fill(ForwardIter first, ForwardIter last, T const& value) -> void
 {
     for (; first != last; ++first) { *first = value; }
 }
@@ -845,8 +850,8 @@ constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
  * first2
  * + (last1 - first1)), and false otherwise.
  */
-template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
+[[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1, InputIter2 first2,
                                    BinaryPredicate p) -> bool
 {
     for (; first1 != last1; ++first1, ++first2)
@@ -861,8 +866,8 @@ template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
  * first2
  * + (last1 - first1)), and false otherwise.
  */
-template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2)
+template <typename InputIter1, typename InputIter2>
+[[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1, InputIter2 first2)
     -> bool
 {
     return equal(first1, last1, first2, equal_to<> {});
@@ -872,9 +877,9 @@ template <typename InputIt1, typename InputIt2>
  * @brief Returns true if the range [first1, last1) is equal to the range [first2,
  * last2), and false otherwise.
  */
-template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                                   InputIt2 last2, BinaryPredicate p) -> bool
+template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
+[[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1, InputIter2 first2,
+                                   InputIter2 last2, BinaryPredicate p) -> bool
 {
     if (etl::distance(first1, last1) != etl::distance(first2, last2)) { return false; }
     return etl::equal(first1, last1, first2, p);
@@ -884,9 +889,9 @@ template <typename InputIt1, typename InputIt2, typename BinaryPredicate>
  * @brief Returns true if the range [first1, last1) is equal to the range [first2,
  * last2), and false otherwise.
  */
-template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                                   InputIt2 last2) -> bool
+template <typename InputIter1, typename InputIter2>
+[[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1, InputIter2 first2,
+                                   InputIter2 last2) -> bool
 {
     return etl::equal(first1, last1, first2, last2, equal_to<> {});
 }
@@ -898,9 +903,9 @@ template <typename InputIt1, typename InputIt2>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
-template <typename InputIt1, typename InputIt2, typename Compare>
-[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
-                                                     InputIt2 first2, InputIt2 last2,
+template <typename InputIter1, typename InputIter2, typename Compare>
+[[nodiscard]] constexpr auto lexicographical_compare(InputIter1 first1, InputIter1 last1,
+                                                     InputIter2 first2, InputIter2 last2,
                                                      Compare comp) -> bool
 {
     for (; (first1 != last1) && (first2 != last2); ++first1, (void)++first2)
@@ -918,9 +923,9 @@ template <typename InputIt1, typename InputIt2, typename Compare>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
-template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1, InputIt1 last1,
-                                                     InputIt2 first2, InputIt2 last2)
+template <typename InputIter1, typename InputIter2>
+[[nodiscard]] constexpr auto lexicographical_compare(InputIter1 first1, InputIter1 last1,
+                                                     InputIter2 first2, InputIter2 last2)
     -> bool
 {
     return lexicographical_compare(first1, last1, first2, last2,
@@ -938,8 +943,8 @@ template <typename InputIt1, typename InputIt2>
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
-template <typename RandomIt, typename Compare>
-constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
+template <typename RandomIter, typename Compare>
+constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
 {
     for (auto i = first; i != last; ++i)
     {
@@ -962,8 +967,8 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/sort
  */
-template <typename RandomIt>
-constexpr auto sort(RandomIt first, RandomIt last) -> void
+template <typename RandomIter>
+constexpr auto sort(RandomIter first, RandomIter last) -> void
 {
     sort(first, last, etl::less<> {});
 }
@@ -1026,9 +1031,9 @@ template <typename ForwardIter, typename Compare>
  * @brief Returns true if the sorted range [first2, last2) is a subsequence of the
  * sorted range [first1, last1). Both ranges must be sorted with operator<.
  */
-template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                                      InputIt2 last2) -> bool
+template <typename InputIter1, typename InputIter2>
+[[nodiscard]] constexpr auto includes(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2, InputIter2 last2) -> bool
 {
     for (; first2 != last2; ++first1)
     {
@@ -1043,9 +1048,10 @@ template <typename InputIt1, typename InputIt2>
  * sorted range [first1, last1). Both ranges must be sorted with the given comparison
  * function comp.
  */
-template <typename InputIt1, typename InputIt2, typename Compare>
-[[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-                                      InputIt2 last2, Compare comp) -> bool
+template <typename InputIter1, typename InputIter2, typename Compare>
+[[nodiscard]] constexpr auto includes(InputIter1 first1, InputIter1 last1,
+                                      InputIter2 first2, InputIter2 last2, Compare comp)
+    -> bool
 {
     for (; first2 != last2; ++first1)
     {
