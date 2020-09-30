@@ -67,7 +67,7 @@ struct array
     /**
      * @brief Default constructor.
      */
-    constexpr array() = default;
+    // constexpr array() = default;
 
     /**
      * @brief Accesses the specified item with bounds checking.
