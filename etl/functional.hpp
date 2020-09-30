@@ -999,7 +999,7 @@ struct hash<long double>
 };
 
 template <>
-struct hash<std::nullptr_t>
+struct hash<etl::nullptr_t>
 {
     [[nodiscard]] auto operator()(nullptr_t /*unused*/) const noexcept -> etl::size_t
     {

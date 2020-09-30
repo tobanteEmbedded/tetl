@@ -1043,8 +1043,8 @@ operator>=(etl::basic_static_string<CharType, Capacity, Traits> const& lhs,
 }
 
 /**
- * @brief Specializes the std::swap algorithm for std::basic_string. Swaps the contents of
- * lhs and rhs. Equivalent to lhs.swap(rhs).
+ * @brief Specializes the etl::swap algorithm for etl::basic_static_string. Swaps the
+ * contents of lhs and rhs. Equivalent to lhs.swap(rhs).
  */
 template <typename CharType, typename Traits, etl::size_t Capacity>
 constexpr auto swap(etl::basic_static_string<CharType, Capacity, Traits>& lhs,

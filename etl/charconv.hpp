@@ -33,8 +33,8 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief A BitmaskType used to specify floating-point formatting for std::to_chars and
- * std::from_chars
+ * @brief A BitmaskType used to specify floating-point formatting for etl::to_chars and
+ * etl::from_chars
  */
 enum class chars_format : etl::uint8_t
 {
