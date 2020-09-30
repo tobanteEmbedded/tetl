@@ -26,6 +26,8 @@ DAMAGE.
 
 #include "etl/functional.hpp"
 
+#include "etl/array.hpp"
+
 #include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
@@ -235,4 +237,33 @@ TEMPLATE_TEST_CASE("functional: function_view - ctor", "[functional]", int, floa
     };
 
     handler(func);
+}
+
+TEST_CASE("functional: hash", "[functional]")
+{
+    CHECK(etl::hash<bool> {}(true) != 0);
+
+    CHECK(etl::hash<char16_t> {}('a') != 0);
+    CHECK(etl::hash<char32_t> {}('a') != 0);
+    CHECK(etl::hash<wchar_t> {}('a') != 0);
+
+    CHECK(etl::hash<signed char> {}(42) != 0);
+    CHECK(etl::hash<unsigned char> {}(143) != 0);
+    CHECK(etl::hash<short> {}(143) != 0);
+    CHECK(etl::hash<unsigned short> {}(143) != 0);
+    CHECK(etl::hash<int> {}(143) != 0);
+    CHECK(etl::hash<unsigned int> {}(143) != 0);
+    CHECK(etl::hash<long> {}(143) != 0);
+    CHECK(etl::hash<unsigned long> {}(143) != 0);
+    CHECK(etl::hash<long long> {}(143) != 0);
+    CHECK(etl::hash<unsigned long long> {}(143) != 0);
+
+    CHECK(etl::hash<float> {}(143) != 0);
+    CHECK(etl::hash<double> {}(143) != 0);
+    CHECK(etl::hash<long double> {}(143) != 0);
+
+    etl::array<float, 4> data {};
+    CHECK(etl::hash<decltype(data)*> {}(&data) != 0);
+
+    CHECK(etl::hash<etl::nullptr_t> {}(nullptr) == 0);
 }

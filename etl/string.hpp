@@ -733,6 +733,8 @@ public:
      * @return Position of the first character of the found substring or npos if no such
      * substring is found. Note that this is an offset from the start of the string, not
      * the end.
+     *
+     * @todo Fix. See tests.
      */
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos,
                                        size_type count) const noexcept -> size_type
