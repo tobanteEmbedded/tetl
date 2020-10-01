@@ -27,9 +27,9 @@ DAMAGE.
 #ifndef TAETL_EXPERIMENTAL_FORMAT_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_HPP
 
-#include "etl/array.hpp"
 #include "etl/definitions.hpp"
 #include "etl/string_view.hpp"
+#include "etl/vector.hpp"
 #include "etl/warning.hpp"
 
 namespace etl::experimental::format
@@ -38,7 +38,7 @@ template <typename Out>
 struct format_to_n_result
 {
     Out out;
-    etl::ptrdiff_t size;
+    typename etl::iterator_traits<etl::remove_cvref_t<Out>>::difference_type size;
 };
 
 template <typename OutputIter, typename... Args>
@@ -46,17 +46,16 @@ auto format_to_n(OutputIter out, etl::ptrdiff_t n, etl::string_view fmt,
                  Args const&... args) -> format_to_n_result<OutputIter>
 {
     ::etl::ignore_unused(n);
-    auto indices = etl::array<size_t, sizeof...(args)> {};
-    auto result  = format_to_n_result<OutputIter> {out, 0};
+
+    auto indices = etl::static_vector<etl::size_t, sizeof...(args)> {};
+    auto result  = format_to_n_result<OutputIter> {out, {}};
 
     auto write_char = [&result](auto ch) {
         *result.out++ = ch;
         result.size++;
     };
 
-    auto replace_char_at = [out](auto ch, auto pos) { out[pos] = ch; };
-
-    auto indexCounter = size_t {0};
+    auto var_start = etl::size_t {};
     for (decltype(fmt)::size_type i {}; i < fmt.size(); ++i)
     {
         auto ch = fmt[i];
@@ -69,8 +68,7 @@ auto format_to_n(OutputIter out, etl::ptrdiff_t n, etl::string_view fmt,
                 continue;
             }
 
-            indices[indexCounter++] = i;
-            write_char('0');
+            var_start = i;
             continue;
         }
 
@@ -80,17 +78,27 @@ auto format_to_n(OutputIter out, etl::ptrdiff_t n, etl::string_view fmt,
             {
                 ++i;
                 write_char('}');
+                continue;
             }
+
+            indices.push_back(var_start);
+            write_char('0');
             continue;
         }
 
         write_char(ch);
     }
 
-    if (indexCounter > 0)
+    if (indices.size() > 0)
     {
-        typename decltype(indices)::size_type i {};
-        (replace_char_at(args, indices[i++]), ...);
+        [[maybe_unused]] auto replace_char_at = [n](auto output, auto pos, char val) {
+            ::etl::ignore_unused(n);
+            assert((long)pos < n);
+            output[pos] = val;
+        };
+
+        [[maybe_unused]] typename decltype(indices)::size_type i {};
+        (replace_char_at(out, indices[i++], args), ...);
     }
 
     return result;

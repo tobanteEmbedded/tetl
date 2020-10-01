@@ -31,11 +31,38 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("experimental/format: format_to_n", "[experimental][format]", char)
+TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
 {
-    using namespace etl::experimental;
-    auto buffer = etl::array<char, 32> {};
-    auto res = format::format_to_n(buffer.data(), buffer.size(), "{{test}}", TestType());
-    CHECK(res.size == etl::string_view("{test}").size());
-    CHECK(etl::string_view(buffer.begin()) == etl::string_view("{test}"));
+    namespace fmt = etl::experimental::format;
+
+    SECTION("escape")
+    {
+        auto buffer = etl::array<char, 32> {};
+        auto target = etl::string_view("{abc}");
+        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "{{abc}}");
+        CHECK(res.out == buffer.begin() + target.size());
+        CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
+        CHECK(etl::string_view(buffer.begin()) == target);
+    }
+
+    SECTION("replace single arg")
+    {
+        auto buffer = etl::array<char, 32> {};
+        auto target = etl::string_view("test");
+        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "tes{}", 't');
+        CHECK(res.out == buffer.begin() + target.size());
+        CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
+        CHECK(etl::string_view(buffer.begin()) == target);
+    }
+
+    // SECTION("replace multiple args")
+    // {
+    //     auto buffer  = etl::array<char, 32> {};
+    //     auto fmt_str = etl::string_view("{} {}");
+    //     auto target  = etl::string_view("a b");
+    //     auto res     = fmt::format_to_n(buffer.data(), buffer.size(), fmt_str, 'a',
+    //     'b'); CHECK(res.out == buffer.begin() + target.size()); CHECK(res.size ==
+    //     static_cast<decltype(res.size)>(target.size()));
+    //     CHECK(etl::string_view(buffer.begin()) == target);
+    // }
 }

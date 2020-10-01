@@ -42,7 +42,7 @@ namespace etl
  *
  * @todo Only base 10 is currently supported.
  */
-auto itoa(int val, char* const buffer, int base) -> char*
+constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
     switch (base)
     {
@@ -89,9 +89,9 @@ auto itoa(int val, char* const buffer, int base) -> char*
  * @brief Parses the C-string str interpreting its content as an integral number, which is
  * returned as a value of type long int.
  */
-auto atol(const char* str) -> long
+constexpr auto atol(const char* str) -> long
 {
-    static constexpr long pow10[19] = {
+    constexpr long pow10[19] = {
         // 10000000000000000000UL,
         1000000000000000000UL,
         100000000000000000UL,
