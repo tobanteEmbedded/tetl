@@ -16,7 +16,7 @@ COMMONFLAGS += -fdata-sections
 COMMONFLAGS += -Werror
 COMMONFLAGS += -Wall
 COMMONFLAGS += -Wextra
-# COMMONFLAGS += -Wpedantic
+COMMONFLAGS += -Wpedantic
 
 CFLAGS += $(COMMONFLAGS)
 CFLAGS += -std=gnu11
@@ -27,7 +27,6 @@ CFLAGS += -Wno-switch-default
 
 CXXFLAGS += $(COMMONFLAGS)
 CXXFLAGS += -std=gnu++2a
-CXXFLAGS += -flto
 CXXFLAGS += -fpermissive
 CXXFLAGS += -fno-rtti
 CXXFLAGS += -fno-exceptions
