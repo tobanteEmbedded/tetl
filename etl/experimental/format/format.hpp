@@ -37,33 +37,74 @@ DAMAGE.
 
 namespace etl::experimental::format
 {
-template <class T, class CharT = char>
+/**
+ * @brief The enabled specializations of formatter define formatting rules for a given
+ * type. Enabled specializations meet the Formatter requirements.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/formatter
+ */
+template <typename T, typename CharT = char>
 struct formatter;
 
-template <class OutputIt, class CharT>
-struct basic_format_context
+/**
+ * @brief Provides access to formatting state consisting of the formatting arguments and
+ * the output iterator.
+ *
+ * The behavior is undefined if OutputIt does not model output_iterator<const CharT&>.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/basic_format_context
+ */
+template <typename OutputIt, typename CharT>
+class basic_format_context
 {
 public:
     using iterator  = OutputIt;
     using char_type = CharT;
 
+    explicit constexpr basic_format_context(OutputIt pos) noexcept : pos_ {pos} { }
+
     template <typename T>
     using formatter_type = formatter<T, CharT>;
 
+    /**
+     * @brief Returns the iterator to the output buffer.
+     */
     [[nodiscard]] constexpr auto out() noexcept -> iterator { return pos_; }
+
+    /**
+     * @brief Sets the output iterator to it. After a call to advance_to, subsequent calls
+     * to out() will return a copy of it.
+     */
     constexpr auto advance_to(iterator it) noexcept -> void { pos_ = it; }
 
+private:
     OutputIt pos_;
 };
 
+/**
+ * @brief Provides access to formatting state consisting of the formatting arguments and
+ * the output iterator.
+ *
+ * @details The first template argument is an output iterator that appends to
+ * etl::static_string, such as etl::back_insert_iterator<etl::static_string>.
+ * Implementations are encouraged to use an iterator to type-erased buffer type that
+ * supports appending to any contiguous and resizable container.
+ *
+ * The behavior is undefined if OutputIt does not model output_iterator<const CharT&>.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/basic_format_context
+ */
 template <typename ContainerT>
 using format_context = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
 
+/**
+ * @brief Standard specializations for basic type char.
+ */
 template <>
 struct formatter<char, char>
 {
     template <class FormatContext>
-    auto format(char val, FormatContext& fc)
+    constexpr auto format(char val, FormatContext& fc)
     {
         auto pos = fc.out();
         *pos     = val;
@@ -71,51 +112,55 @@ struct formatter<char, char>
     }
 };
 
+/**
+ * @brief Standard specializations for basic type char const*.
+ */
 template <>
 struct formatter<char const*, char>
 {
     template <class FormatContext>
-    auto format(char const* val, FormatContext& fc)
+    constexpr auto format(char const* val, FormatContext& fc)
     {
-        auto pos = fc.out();
-        etl::for_each(val, val + etl::strlen(val), [&pos](auto ch) { *pos++ = ch; });
-        return pos;
+        return etl::copy(val, val + etl::strlen(val), fc.out());
     }
 };
 
-template <size_t N>
+/**
+ * @brief Standard specializations for basic type char array.
+ */
+template <::etl::size_t N>
 struct formatter<char[N], char>
 {
     template <class FormatContext>
-    auto format(char const* val, FormatContext& fc)
+    constexpr auto format(char const* val, FormatContext& fc)
     {
-        auto pos = fc.out();
-        etl::for_each(val, val + N, [&pos](auto ch) { *pos++ = ch; });
-        return pos;
+        return etl::copy(val, val + N, fc.out());
     }
 };
 
+/**
+ * @brief Standard specializations for etl::string_view.
+ */
 template <>
 struct formatter<etl::string_view, char>
 {
     template <typename FormatContext>
-    auto format(etl::string_view str, FormatContext& fc)
+    constexpr auto format(etl::string_view str, FormatContext& fc)
     {
-        auto pos = fc.out();
-        for (auto ch : str) { *pos++ = ch; }
-        return pos;
+        return etl::copy(begin(str), end(str), fc.out());
     }
 };
 
+/**
+ * @brief Standard specializations for etl::static_string<Capacity>.
+ */
 template <etl::size_t Capacity>
 struct formatter<etl::static_string<Capacity>, char>
 {
     template <typename FormatContext>
-    auto format(etl::static_string<Capacity> const& str, FormatContext& fc)
+    constexpr auto format(etl::static_string<Capacity> const& str, FormatContext& fc)
     {
-        auto pos = fc.out();
-        for (auto ch : str) { *pos++ = ch; }
-        return pos;
+        return formatter<::etl::string_view>().format(str, fc);
     }
 };
 
@@ -152,6 +197,12 @@ auto slice_next_argument(etl::string_view str)
 
 }  // namespace detail
 
+/**
+ * @brief Format args according to the format string fmt, and write the result to the
+ * output iterator out.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/format_to
+ */
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
@@ -174,6 +225,12 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
     return ctx.out();
 }
 
+/**
+ * @brief etl::format_to_n_result has no base classes, or members other than out, size and
+ * implicitly declared special member functions.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/format_to_n
+ */
 template <typename Out>
 struct format_to_n_result
 {
@@ -181,6 +238,12 @@ struct format_to_n_result
     diff_t<Out> size;
 };
 
+/**
+ * @brief Format args according to the format string fmt, and write the result to the
+ * output iterator out. At most n characters are written.
+ *
+ * https://en.cppreference.com/w/cpp/utility/format/format_to_n
+ */
 template <typename OutputIter, typename... Args>
 auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
                  Args const&... args) -> format_to_n_result<OutputIter>

@@ -112,6 +112,27 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<string_view>",
     CHECK(etl::string_view(str.data()) == etl::string_view(str_2));
 }
 
+TEMPLATE_TEST_CASE("experimental/format: formatter<static_string<Capacity>>",
+                   "[experimental][format]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    namespace fmt  = etl::experimental::format;
+    using string_t = TestType;
+
+    auto str       = string_t();
+    auto ctx       = fmt::format_context<string_t> {etl::back_inserter(str)};
+    auto formatter = fmt::formatter<string_t, char> {};
+
+    string_t str_1 = "test";
+    formatter.format(str_1, ctx);
+    CHECK(etl::string_view(str.data()) == etl::string_view(str_1));
+
+    str.clear();
+    string_t str_2 = "abcdef";
+    formatter.format(str_2, ctx);
+    CHECK(etl::string_view(str.data()) == etl::string_view(str_2));
+}
+
 TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 {
     namespace fmt = etl::experimental::format;
