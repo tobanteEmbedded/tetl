@@ -219,3 +219,60 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
     //     CHECK(etl::string_view(buffer.begin()) == target);
     // }
 }
+
+TEST_CASE("experimental/format: detail::slice_next_argument", "[experimental][format]")
+{
+    auto slice_next_argument
+        = [](etl::string_view str) -> etl::pair<etl::string_view, etl::string_view> {
+        using size_type = etl::string_view::size_type;
+
+        constexpr auto token_arg_start = '{';
+        constexpr auto token_arg_stop  = '}';
+
+        if (auto res = etl::find(begin(str), end(str), token_arg_start);
+            res != end(str) && *etl::next(res) == token_arg_stop)
+        {
+            auto index = static_cast<size_type>(etl::distance(begin(str), res));
+            return etl::make_pair(str.substr(0, index), str.substr(index + 2));
+        }
+
+        return etl::make_pair(str, etl::string_view {});
+    };
+
+    using namespace etl::literals;
+
+    SECTION("argument only")
+    {
+        auto slices = slice_next_argument("{}");
+        CHECK(slices.first == ""_sv);
+        CHECK(slices.second == ""_sv);
+    }
+
+    SECTION("prefix")
+    {
+        auto slices = slice_next_argument("a{}");
+        CHECK(slices.first == "a"_sv);
+        CHECK(slices.second == ""_sv);
+    }
+
+    SECTION("postfix")
+    {
+        auto slices = slice_next_argument("{}b");
+        CHECK(slices.first == ""_sv);
+        CHECK(slices.second == "b"_sv);
+    }
+
+    SECTION("pre&postfix")
+    {
+        auto slices = slice_next_argument("ab{}cd");
+        CHECK(slices.first == "ab"_sv);
+        CHECK(slices.second == "cd"_sv);
+    }
+
+    SECTION("escape")
+    {
+        auto slices = slice_next_argument("{{test}}");
+        CHECK(slices.first == "{{test}}"_sv);
+        CHECK(slices.second == ""_sv);
+    }
+}
