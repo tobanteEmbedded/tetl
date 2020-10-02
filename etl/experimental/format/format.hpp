@@ -134,30 +134,31 @@ auto format_impl(ValueT const& val, Context& ctx)
 }
 
 template <typename ContextT, typename Pos>
-auto parse_format_str(ContextT& ctx, etl::string_view fmt_str, Pos current_pos)
+auto parse_format_str(ContextT& ctx, ::etl::string_view fmt_str, Pos current_pos)
 {
     auto pos       = current_pos;
     auto found_arg = false;
 
     while (!found_arg)
     {
-        auto f      = etl::find(begin(fmt_str) + pos, end(fmt_str), '{');
-        auto length = static_cast<etl::size_t>(etl::distance(begin(fmt_str) + pos, f));
+        auto f = ::etl::find(begin(fmt_str) + pos, end(fmt_str), '{');
+        auto length
+            = static_cast<::etl::size_t>(::etl::distance(begin(fmt_str) + pos, f));
 
         format_impl(fmt_str.substr(pos, length), ctx);
-        pos += static_cast<etl::size_t>(length + 2);
+        pos += static_cast<::etl::size_t>(length + 2);
 
-        if (*etl::next(f) == '{')
+        if (*::etl::next(f) == '{')
         {
-            if (auto close = etl::find(f + 2, end(fmt_str), '}');
-                *etl::next(close) == '}')
+            if (auto close = ::etl::find(f + 2, end(fmt_str), '}');
+                *::etl::next(close) == '}')
             {
                 format_impl('{', ctx);
-                auto dist = static_cast<etl::size_t>(etl::distance(f + 2, close));
+                auto dist = static_cast<::etl::size_t>(::etl::distance(f + 2, close));
                 format_impl(fmt_str.substr(pos, dist), ctx);
                 format_impl('}', ctx);
 
-                pos += static_cast<etl::size_t>(dist + 2);
+                pos += static_cast<::etl::size_t>(dist + 2);
                 continue;
             }
         }
