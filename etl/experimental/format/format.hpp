@@ -27,22 +27,157 @@ DAMAGE.
 #ifndef TAETL_EXPERIMENTAL_FORMAT_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_HPP
 
+#include "etl/cstring.hpp"
 #include "etl/definitions.hpp"
+#include "etl/iterator.hpp"
+#include "etl/string.hpp"
 #include "etl/string_view.hpp"
 #include "etl/vector.hpp"
 #include "etl/warning.hpp"
 
 namespace etl::experimental::format
 {
+template <class T, class CharT = char>
+struct formatter;
+
+template <class OutputIt, class CharT>
+struct basic_format_context
+{
+public:
+    using iterator  = OutputIt;
+    using char_type = CharT;
+
+    template <typename T>
+    using formatter_type = formatter<T, CharT>;
+
+    [[nodiscard]] constexpr auto out() noexcept -> iterator { return pos_; }
+    constexpr auto advance_to(iterator it) noexcept -> void { pos_ = it; }
+
+    OutputIt pos_;
+};
+
+template <typename ContainerT>
+using format_context = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
+
+template <>
+struct formatter<char, char>
+{
+    template <class FormatContext>
+    auto format(char val, FormatContext& fc)
+    {
+        auto pos = fc.out();
+        *pos     = val;
+        return pos++;
+    }
+};
+
+template <>
+struct formatter<char const*, char>
+{
+    template <class FormatContext>
+    auto format(char const* val, FormatContext& fc)
+    {
+        auto pos = fc.out();
+        etl::for_each(val, val + etl::strlen(val), [&pos](auto ch) { *pos++ = ch; });
+        return pos;
+    }
+};
+
+template <>
+struct formatter<etl::string_view, char>
+{
+    template <typename FormatContext>
+    auto format(etl::string_view str, FormatContext& fc)
+    {
+        auto pos = fc.out();
+        for (auto ch : str) { *pos++ = ch; }
+        return pos;
+    }
+};
+
+// template <>
+// struct formatter<int, char>
+// {
+//     template <typename FormatContext>
+//     auto format(int val, FormatContext& fc)
+//     {
+//         auto pos = fc.out();
+//         auto str = etl::to_string(val);
+//         for (auto ch : str) { *pos++ = ch; }
+//         return pos;
+//     }
+// };
+
+template <typename ValueT, typename Context>
+auto format_impl(ValueT const& val, Context& ctx)
+{
+    auto fmt = formatter<ValueT, char> {};
+    fmt.format(val, ctx);
+}
+
+template <typename OutputIt, typename... Args>
+auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
+{
+    auto parse_format_str = [](auto& ctx, auto fmt_str, auto current_pos) {
+        auto pos       = current_pos;
+        auto found_arg = false;
+
+        while (!found_arg)
+        {
+            auto f      = etl::find(begin(fmt_str) + pos, end(fmt_str), '{');
+            auto length = etl::distance(begin(fmt_str) + pos, f);
+
+            format_impl(fmt_str.substr(pos, length), ctx);
+            pos += length + 2;
+
+            if (*etl::next(f) == '{')
+            {
+                if (auto close = etl::find(f + 2, end(fmt_str), '}');
+                    *etl::next(close) == '}')
+                {
+                    format_impl('{', ctx);
+                    auto dist = etl::distance(f + 2, close);
+                    format_impl(fmt_str.substr(pos, dist), ctx);
+                    format_impl('}', ctx);
+
+                    pos += dist + 2;
+                    continue;
+                }
+            }
+
+            found_arg = true;
+        }
+
+        return pos;
+    };
+
+    auto ctx         = format_context<::etl::static_string<32>> {out};
+    auto current_pos = etl::string_view::size_type {};
+    current_pos      = parse_format_str(ctx, fmt, current_pos);
+
+    (
+        [&] {
+            format_impl(args, ctx);
+            current_pos = parse_format_str(ctx, fmt, current_pos);
+        }(),
+        ...);
+
+    return ctx.out();
+}
+
+template <typename Out>
+using diff_t =
+    typename ::etl::iterator_traits<::etl::remove_cvref_t<Out>>::difference_type;
+
 template <typename Out>
 struct format_to_n_result
 {
     Out out;
-    typename ::etl::iterator_traits<::etl::remove_cvref_t<Out>>::difference_type size;
+    diff_t<Out> size;
 };
 
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, ::etl::ptrdiff_t n, ::etl::string_view fmt,
+auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
                  Args const&... args) -> format_to_n_result<OutputIter>
 {
     ::etl::ignore_unused(n);
@@ -93,7 +228,7 @@ auto format_to_n(OutputIter out, ::etl::ptrdiff_t n, ::etl::string_view fmt,
     {
         [[maybe_unused]] auto replace_char_at = [n](auto output, auto pos, char val) {
             ::etl::ignore_unused(n);
-            assert((long)pos < n);
+            // assert((long)pos < n);
             output[pos] = val;
         };
 
