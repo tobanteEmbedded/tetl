@@ -29,7 +29,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("bit: bitcast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
+TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
 {
     SECTION("round trip")
     {
@@ -39,7 +39,7 @@ TEMPLATE_TEST_CASE("bit: bitcast 32bit", "[bit]", etl::uint32_t, etl::int32_t, f
     }
 }
 
-TEMPLATE_TEST_CASE("bit: bitcast 64bit", "[bit]", etl::uint64_t, etl::int64_t, double)
+TEMPLATE_TEST_CASE("bit: bit_cast 64bit", "[bit]", etl::uint64_t, etl::int64_t, double)
 {
     SECTION("round trip")
     {
@@ -53,6 +53,16 @@ TEST_CASE("bit: endian", "[bit]")
 {
     REQUIRE(etl::endian::native == etl::endian::little);
     REQUIRE(etl::endian::big != etl::endian::little);
+}
+
+TEST_CASE("bit: is_big/little_endian", "[bit]")
+{
+    if constexpr (etl::endian::native == etl::endian::little)
+    { CHECK(etl::is_little_endian()); }
+    else
+    {
+        CHECK(etl::is_big_endian());
+    }
 }
 
 TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t, etl::uint16_t,
