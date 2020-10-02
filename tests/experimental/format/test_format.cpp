@@ -75,11 +75,52 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 
     SECTION("replace multiple args")
     {
+        auto str_1 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_1), "{} {} {}", 'a', 'b', 'c');
+        CHECK(etl::string_view(str_1) == etl::string_view("a b c"));
+
+        auto str_2 = etl::static_string<32> {};
+        auto fmt_2 = etl::string_view("some {} text {} mixed {}");
+        fmt::format_to(etl::back_inserter(str_2), fmt_2, 'a', 'b', 'c');
+        CHECK(etl::string_view(str_2) == etl::string_view("some a text b mixed c"));
+    }
+}
+
+TEST_CASE("experimental/format: format_to<char const*>", "[experimental][format]")
+{
+    namespace fmt = etl::experimental::format;
+
+    SECTION("single arg")
+    {
         auto str    = etl::static_string<32> {};
-        auto target = etl::string_view("a b c");
-        fmt::format_to(etl::back_inserter(str), "{} {} {}", 'a', 'b', 'c');
+        auto target = etl::string_view("testtt");
+        fmt::format_to(etl::back_inserter(str), "tes{}", "ttt");
         CHECK(etl::string_view(str.begin()) == target);
     }
+
+    // SECTION("escape single arg")
+    // {
+    //     auto str_1 = etl::static_string<32> {};
+    //     fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
+    //     CHECK(std::string_view(str_1.begin()) == std::string_view("abc {test}"));
+
+    //     auto str_2 = etl::static_string<32> {};
+    //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
+    //     CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
+    // }
+
+    // SECTION("replace multiple args")
+    // {
+    //     auto str_1 = etl::static_string<32> {};
+    //     fmt::format_to(etl::back_inserter(str_1), "{} {} {}", "abc", "def", "ghi");
+    //     CHECK(etl::string_view(str_1) == etl::string_view("abc def ghi"));
+
+    //     auto str_2 = etl::static_string<32> {};
+    //     auto fmt_2 = etl::string_view("some {} text {} mixed {}");
+    //     fmt::format_to(etl::back_inserter(str_2), fmt_2, "abc", "def", "ghi");
+    //     CHECK(etl::string_view(str_2) == etl::string_view("some abc text def mixed
+    //     ghi"));
+    // }
 }
 
 TEST_CASE("experimental/format: format_to_n", "[experimental][format]")

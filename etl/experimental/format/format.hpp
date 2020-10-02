@@ -83,6 +83,18 @@ struct formatter<char const*, char>
     }
 };
 
+template <size_t N>
+struct formatter<char[N], char>
+{
+    template <class FormatContext>
+    auto format(char const* val, FormatContext& fc)
+    {
+        auto pos = fc.out();
+        etl::for_each(val, val + N, [&pos](auto ch) { *pos++ = ch; });
+        return pos;
+    }
+};
+
 template <>
 struct formatter<etl::string_view, char>
 {
