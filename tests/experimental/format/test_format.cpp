@@ -31,51 +31,54 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("experimental/format: format_to", "[experimental][format]")
+TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 {
     namespace fmt = etl::experimental::format;
-
-    // SECTION("escape")
-    // {
-    //     auto str    = etl::static_string<32> {};
-    //     auto target = std::string_view("a {test}");
-    //     fmt::format_to(etl::back_inserter(str), "{} {{test}}", 'a');
-    //     CHECK(std::string_view(str.begin()) == target);
-    // }
 
     SECTION("no arg")
     {
         auto str    = etl::static_string<32> {};
-        auto target = std::string_view("test");
+        auto target = etl::string_view("test");
         fmt::format_to(etl::back_inserter(str), "test");
-        CHECK(std::string_view(str.begin()) == target);
+        CHECK(etl::string_view(str) == target);
     }
 
     SECTION("no arg escaped")
     {
         auto str_1 = etl::static_string<32> {};
         fmt::format_to(etl::back_inserter(str_1), "{{test}}");
-        CHECK(std::string_view(str_1.begin()) == std::string_view("{test}"));
+        CHECK(etl::string_view(str_1) == etl::string_view("{test}"));
 
         auto str_2 = etl::static_string<32> {};
         fmt::format_to(etl::back_inserter(str_2), "{{abc}} {{def}}");
-        CHECK(std::string_view(str_2.begin()) == std::string_view("{abc} {def}"));
+        CHECK(etl::string_view(str_2) == etl::string_view("{abc} {def}"));
     }
 
-    SECTION("replace single arg")
+    SECTION("single arg")
     {
         auto str    = etl::static_string<32> {};
-        auto target = std::string_view("test");
+        auto target = etl::string_view("test");
         fmt::format_to(etl::back_inserter(str), "tes{}", 't');
-        CHECK(std::string_view(str.begin()) == target);
+        CHECK(etl::string_view(str) == target);
+    }
+
+    SECTION("escape single arg")
+    {
+        auto str_1 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", 'a');
+        CHECK(etl::string_view(str_1) == etl::string_view("a {test}"));
+
+        auto str_2 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
+        CHECK(etl::string_view(str_2) == etl::string_view("{test} b"));
     }
 
     SECTION("replace multiple args")
     {
         auto str    = etl::static_string<32> {};
-        auto target = std::string_view("a b c");
+        auto target = etl::string_view("a b c");
         fmt::format_to(etl::back_inserter(str), "{} {} {}", 'a', 'b', 'c');
-        CHECK(std::string_view(str.begin()) == target);
+        CHECK(etl::string_view(str.begin()) == target);
     }
 }
 
@@ -87,7 +90,7 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
     {
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("{abc}");
-        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "{{abc}}");
+        auto res = fmt::format_to_n(buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);
@@ -97,7 +100,7 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
     {
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("test");
-        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "tes{}", 't');
+        auto res = fmt::format_to_n(data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);

@@ -108,6 +108,10 @@ struct formatter<etl::string_view, char>
 //     }
 // };
 
+template <typename Out>
+using diff_t =
+    typename ::etl::iterator_traits<::etl::remove_cvref_t<Out>>::difference_type;
+
 template <typename ValueT, typename Context>
 auto format_impl(ValueT const& val, Context& ctx)
 {
@@ -124,11 +128,12 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
 
         while (!found_arg)
         {
-            auto f      = etl::find(begin(fmt_str) + pos, end(fmt_str), '{');
-            auto length = etl::distance(begin(fmt_str) + pos, f);
+            auto f = etl::find(begin(fmt_str) + pos, end(fmt_str), '{');
+            auto length
+                = static_cast<etl::size_t>(etl::distance(begin(fmt_str) + pos, f));
 
             format_impl(fmt_str.substr(pos, length), ctx);
-            pos += length + 2;
+            pos += static_cast<etl::size_t>(length + 2);
 
             if (*etl::next(f) == '{')
             {
@@ -136,11 +141,11 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
                     *etl::next(close) == '}')
                 {
                     format_impl('{', ctx);
-                    auto dist = etl::distance(f + 2, close);
+                    auto dist = static_cast<etl::size_t>(etl::distance(f + 2, close));
                     format_impl(fmt_str.substr(pos, dist), ctx);
                     format_impl('}', ctx);
 
-                    pos += dist + 2;
+                    pos += static_cast<etl::size_t>(dist + 2);
                     continue;
                 }
             }
@@ -164,10 +169,6 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
 
     return ctx.out();
 }
-
-template <typename Out>
-using diff_t =
-    typename ::etl::iterator_traits<::etl::remove_cvref_t<Out>>::difference_type;
 
 template <typename Out>
 struct format_to_n_result
