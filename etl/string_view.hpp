@@ -99,8 +99,8 @@ public:
     /**
      * @brief Replaces the view with that of view.
      */
-    [[nodiscard]] constexpr auto operator=(const basic_string_view& view) noexcept
-        -> basic_string_view&            = default;
+    constexpr auto operator   =(const basic_string_view& view) noexcept
+        -> basic_string_view& = default;
 
     /**
      * @brief Returns an iterator to the first character of the view.
