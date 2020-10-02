@@ -307,3 +307,55 @@ TEST_CASE("experimental/format: detail::slice_next_argument", "[experimental][fo
         CHECK(slices.second == ""_sv);
     }
 }
+
+TEST_CASE("experimental/format: detail::format_escaped_sequences",
+          "[experimental][format]")
+{
+    namespace fmt = etl::experimental::format;
+    using namespace etl::literals;
+    using namespace std::literals;
+
+    SECTION("none")
+    {
+        auto buffer = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(buffer), "test");
+        CHECK(etl::string_view(buffer) == "test"_sv);
+    }
+
+    SECTION("single")
+    {
+        auto buffer = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(buffer), "{{test}}");
+        CHECK(etl::string_view(buffer) == "{test}"_sv);
+    }
+
+    SECTION("single with noise")
+    {
+        auto b1 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b1), "foobar {{test}}");
+        CHECK(etl::string_view(b1) == "foobar {test}"_sv);
+
+        auto b2 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b2), "foobar__{{test}}");
+        CHECK(etl::string_view(b2) == "foobar__{test}"_sv);
+
+        auto b3 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b3), "{{test}} foobar");
+        CHECK(std::string_view(b3.data()) == "{test} foobar"sv);
+
+        auto b4 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b4), "{{test}}__foobar");
+        CHECK(std::string_view(b4.data()) == "{test}__foobar"sv);
+    }
+
+    SECTION("multiple")
+    {
+        auto b1 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b1), "{{test}} {{abc}}");
+        CHECK(etl::string_view(b1) == "{test} {abc}"_sv);
+
+        auto b2 = etl::static_string<32> {};
+        fmt::detail::format_escaped_sequences(etl::back_inserter(b2), "{{test}}{{abc}}");
+        CHECK(etl::string_view(b2) == "{test}{abc}"_sv);
+    }
+}

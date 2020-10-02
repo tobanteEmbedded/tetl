@@ -195,6 +195,51 @@ auto slice_next_argument(etl::string_view str)
     return etl::make_pair(str, etl::string_view {});
 }
 
+template <typename OutputIt>
+auto format_escaped_sequences(OutputIt buffer, ::etl::string_view str) -> void
+{
+    // Escape tokens
+    constexpr auto tk_escape_begin = '{';
+    constexpr auto tk_escape_end   = '}';
+
+    // Loop as long as escaped sequences are found.
+    auto first = begin(str);
+    while (true)
+    {
+        // Find open sequence {{
+        auto const open_first   = ::etl::find(first, end(str), tk_escape_begin);
+        auto const open_sec     = ::etl::next(open_first);
+        auto const escape_start = open_first != end(str)   //
+                                  && open_sec != end(str)  //
+                                  && *open_sec == tk_escape_begin;
+
+        if (escape_start)
+        {
+            // Copy upto {{
+            ::etl::copy(first, open_first, buffer);
+
+            // Find sequence }}
+            auto close_first
+                = ::etl::find(::etl::next(open_sec), end(str), tk_escape_end);
+            auto close_sec    = ::etl::next(close_first);
+            auto escape_close = close_first != end(str)   //
+                                && close_sec != end(str)  //
+                                && *close_sec == tk_escape_end;
+
+            // Copy everything between {{ ... }}, but only one curly each.
+            if (escape_close) { ::etl::copy(open_sec, close_first + 1, buffer); }
+
+            first = close_first + 2;
+        }
+        else
+        {
+            // No more escaped sequence found, copy rest.
+            ::etl::copy(first, end(str), buffer);
+            return;
+        }
+    }
+}
+
 }  // namespace detail
 
 /**
