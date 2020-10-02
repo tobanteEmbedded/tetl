@@ -94,6 +94,7 @@ inline auto is_big_endian() noexcept -> bool
         char data[sizeof(u)];
     };
 
+    static_assert(sizeof(u) == sizeof(bytes));
     return bit_cast<bytes>(u).data[0] == 0;
 }
 
