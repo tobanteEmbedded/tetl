@@ -26,7 +26,7 @@ DAMAGE.
 
 #include "etl/experimental/format/format.hpp"
 
-#include "etl/array.hpp"
+#include "etl/string.hpp"
 #include "etl/string_view.hpp"
 
 #include "catch2/catch.hpp"
@@ -37,9 +37,10 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
 
     SECTION("escape")
     {
-        auto buffer = etl::array<char, 32> {};
+        auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("{abc}");
-        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "{{abc}}");
+        auto res
+            = fmt::format_to_n(buffer.data(), (etl::ptrdiff_t)buffer.size(), "{{abc}}");
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);
@@ -47,9 +48,10 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
 
     SECTION("replace single arg")
     {
-        auto buffer = etl::array<char, 32> {};
+        auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("test");
-        auto res    = fmt::format_to_n(buffer.data(), buffer.size(), "tes{}", 't');
+        auto res = fmt::format_to_n(buffer.data(), (etl::ptrdiff_t)buffer.size(), "tes{}",
+                                    't');
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);
@@ -57,12 +59,12 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
 
     // SECTION("replace multiple args")
     // {
-    //     auto buffer  = etl::array<char, 32> {};
+    //     auto buffer  = etl::static_string<32> {};
     //     auto fmt_str = etl::string_view("{} {}");
     //     auto target  = etl::string_view("a b");
-    //     auto res     = fmt::format_to_n(buffer.data(), buffer.size(), fmt_str, 'a',
-    //     'b'); CHECK(res.out == buffer.begin() + target.size()); CHECK(res.size ==
-    //     static_cast<decltype(res.size)>(target.size()));
+    //     auto res     = fmt::format_to_n(buffer.data(), (etl::ptrdiff_t)buffer.size(),
+    //     fmt_str, 'a', 'b'); CHECK(res.out == buffer.begin() + target.size());
+    //     CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
     //     CHECK(etl::string_view(buffer.begin()) == target);
     // }
 }

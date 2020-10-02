@@ -38,16 +38,16 @@ template <typename Out>
 struct format_to_n_result
 {
     Out out;
-    typename etl::iterator_traits<etl::remove_cvref_t<Out>>::difference_type size;
+    typename ::etl::iterator_traits<::etl::remove_cvref_t<Out>>::difference_type size;
 };
 
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, etl::ptrdiff_t n, etl::string_view fmt,
+auto format_to_n(OutputIter out, ::etl::ptrdiff_t n, ::etl::string_view fmt,
                  Args const&... args) -> format_to_n_result<OutputIter>
 {
     ::etl::ignore_unused(n);
 
-    auto indices = etl::static_vector<etl::size_t, sizeof...(args)> {};
+    auto indices = ::etl::static_vector<::etl::size_t, sizeof...(args)> {};
     auto result  = format_to_n_result<OutputIter> {out, {}};
 
     auto write_char = [&result](auto ch) {
@@ -55,7 +55,7 @@ auto format_to_n(OutputIter out, etl::ptrdiff_t n, etl::string_view fmt,
         result.size++;
     };
 
-    auto var_start = etl::size_t {};
+    auto var_start = ::etl::size_t {};
     for (decltype(fmt)::size_type i {}; i < fmt.size(); ++i)
     {
         auto ch = fmt[i];
