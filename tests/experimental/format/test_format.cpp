@@ -145,16 +145,16 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
         CHECK(etl::string_view(str) == target);
     }
 
-    // SECTION("no arg escaped")
-    // {
-    //     auto str_1 = etl::static_string<32> {};
-    //     fmt::format_to(etl::back_inserter(str_1), "{{test}}");
-    //     CHECK(etl::string_view(str_1) == etl::string_view("{test}"));
+    SECTION("no arg escaped")
+    {
+        auto str_1 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_1), "{{test}}");
+        CHECK(etl::string_view(str_1) == etl::string_view("{test}"));
 
-    //     // auto str_2 = etl::static_string<32> {};
-    //     // fmt::format_to(etl::back_inserter(str_2), "{{abc}} {{def}}");
-    //     // CHECK(etl::string_view(str_2) == etl::string_view("{abc} {def}"));
-    // }
+        auto str_2 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_2), "{{abc}} {{def}}");
+        CHECK(etl::string_view(str_2) == etl::string_view("{abc} {def}"));
+    }
 
     SECTION("single arg")
     {
@@ -164,16 +164,16 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
         CHECK(etl::string_view(str) == target);
     }
 
-    // SECTION("escape single arg")
-    // {
-    //     auto str_1 = etl::static_string<32> {};
-    //     fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", 'a');
-    //     CHECK(etl::string_view(str_1) == etl::string_view("a {test}"));
+    SECTION("escape single arg")
+    {
+        auto str_1 = etl::static_string<32> {};
+        fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", 'a');
+        CHECK(etl::string_view(str_1) == etl::string_view("a {test}"));
 
-    //     auto str_2 = etl::static_string<32> {};
-    //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
-    //     CHECK(etl::string_view(str_2) == etl::string_view("{test} b"));
-    // }
+        // auto str_2 = etl::static_string<32> {};
+        // fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
+        // CHECK(std::string_view(str_2.data()) == std::string_view("{test} b"));
+    }
 
     SECTION("replace multiple args")
     {
@@ -200,17 +200,16 @@ TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
         CHECK(etl::string_view(str.begin()) == target);
     }
 
-    //     SECTION("escape single arg")
-    //     {
-    //         // auto str_1 = etl::static_string<32> {};
-    //         // fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
-    //         // CHECK(std::string_view(str_1.begin()) == std::string_view("abc
-    //         {test}"));
+    // SECTION("escape single arg")
+    // {
+    //     auto str_1 = etl::static_string<32> {};
+    //     fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
+    //     CHECK(std::string_view(str_1.begin()) == std::string_view("abc {test}"));
 
-    //         auto str_2 = etl::static_string<32> {};
-    //         fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
-    //         CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
-    //     }
+    //     auto str_2 = etl::static_string<32> {};
+    //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
+    //     CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
+    // }
 
     //     SECTION("replace multiple args")
     //     {

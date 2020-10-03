@@ -260,7 +260,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
     auto ctx = format_context<::etl::static_string<32>> {out};
 
     auto slices = detail::slice_next_argument(fmt);
-    detail::format_impl(slices.first, ctx);
+    detail::format_escaped_sequences(ctx, slices.first);
     auto rest = slices.second;
     ::etl::ignore_unused(rest);
 
@@ -268,7 +268,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
         [&] {
             detail::format_impl(args, ctx);
             auto rest_slices = detail::slice_next_argument(rest);
-            detail::format_impl(rest_slices.first, ctx);
+            detail::format_escaped_sequences(ctx, rest_slices.first);
             rest = rest_slices.second;
         }(),
         ...);
