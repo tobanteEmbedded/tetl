@@ -238,6 +238,63 @@ TEMPLATE_TEST_CASE("static_vector: swap", "[static_vector]", char, int, float)
     CHECK(lhs == rhs);
 }
 
+TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[static_vector]", char, int, float)
+{
+    SECTION("empty")
+    {
+        auto lhs_1       = etl::static_vector<TestType, 4> {};
+        auto const rhs_1 = etl::static_vector<TestType, 4> {};
+        CHECK(lhs_1 == rhs_1);
+        CHECK_FALSE(lhs_1 != rhs_1);
+
+        auto const lhs_2 = etl::static_vector<TestType, 4>();
+        auto const rhs_2 = etl::static_vector<TestType, 4>(2);
+        CHECK(lhs_2 != rhs_2);
+        CHECK_FALSE(lhs_2 == rhs_2);
+
+        auto const lhs_3 = etl::static_vector<TestType, 4>(2);
+        auto const rhs_3 = etl::static_vector<TestType, 4>();
+        CHECK(lhs_3 != rhs_3);
+        CHECK_FALSE(lhs_3 == rhs_3);
+    }
+
+    SECTION("with elements")
+    {
+        auto lhs_1 = etl::static_vector<TestType, 4> {};
+        lhs_1.push_back(TestType(1));
+        lhs_1.push_back(TestType(2));
+        auto rhs_1 = etl::static_vector<TestType, 4> {};
+        rhs_1.push_back(TestType(1));
+        rhs_1.push_back(TestType(2));
+
+        CHECK(lhs_1 == rhs_1);
+        CHECK_FALSE(lhs_1 != rhs_1);
+
+        auto lhs_2 = etl::static_vector<TestType, 4> {};
+        lhs_2.push_back(TestType(1));
+        lhs_2.push_back(TestType(2));
+        auto rhs_2 = etl::static_vector<TestType, 4> {};
+        rhs_2.push_back(TestType(1));
+        rhs_2.push_back(TestType(3));
+
+        CHECK(lhs_2 != rhs_2);
+        CHECK_FALSE(lhs_2 == rhs_2);
+    }
+}
+
+TEMPLATE_TEST_CASE("static_vector: operator</<=", "[static_vector]", char, int, float)
+{
+    SECTION("empty")
+    {
+        auto lhs_1       = etl::static_vector<TestType, 4> {};
+        auto const rhs_1 = etl::static_vector<TestType, 4> {};
+        CHECK(lhs_1 < rhs_1);
+        CHECK(rhs_1 < lhs_1);
+        CHECK(lhs_1 <= rhs_1);
+        CHECK(rhs_1 <= lhs_1);
+    }
+}
+
 namespace
 {
 template <typename T>

@@ -1074,11 +1074,11 @@ template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    if (etl::size(lhs) == etl::size(rhs))
+    if (size(lhs) == size(rhs))
     {
-        return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                          etl::equal_to<> {});
+        return etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), etl::equal_to<> {});
     }
+
     return false;
 }
 
@@ -1099,8 +1099,7 @@ template <typename T, size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                      etl::less<> {});
+    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), less<> {});
 }
 
 /**
@@ -1110,8 +1109,7 @@ template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                      etl::less_equal<> {});
+    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), less_equal<> {});
 }
 
 /**
@@ -1121,8 +1119,7 @@ template <typename T, size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                      etl::greater<> {});
+    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), greater<> {});
 }
 
 /**
@@ -1132,8 +1129,7 @@ template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return etl::equal(etl::begin(lhs), etl::end(lhs), etl::begin(rhs), etl::end(rhs),
-                      etl::greater_equal<> {});
+    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), greater_equal<> {});
 }
 
 }  // namespace etl
