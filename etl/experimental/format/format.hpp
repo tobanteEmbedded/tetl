@@ -104,7 +104,7 @@ template <>
 struct formatter<char, char>
 {
     template <class FormatContext>
-    constexpr auto format(char val, FormatContext& fc)
+    constexpr auto format(char val, FormatContext& fc) -> decltype(fc.out())
     {
         auto pos = fc.out();
         *pos     = val;
@@ -119,7 +119,7 @@ template <>
 struct formatter<char const*, char>
 {
     template <class FormatContext>
-    constexpr auto format(char const* val, FormatContext& fc)
+    constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
     {
         return etl::copy(val, val + etl::strlen(val), fc.out());
     }
@@ -132,7 +132,7 @@ template <::etl::size_t N>
 struct formatter<char[N], char>
 {
     template <class FormatContext>
-    constexpr auto format(char const* val, FormatContext& fc)
+    constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
     {
         return etl::copy(val, val + N, fc.out());
     }
@@ -145,7 +145,7 @@ template <>
 struct formatter<etl::string_view, char>
 {
     template <typename FormatContext>
-    constexpr auto format(etl::string_view str, FormatContext& fc)
+    constexpr auto format(etl::string_view str, FormatContext& fc) -> decltype(fc.out())
     {
         return etl::copy(begin(str), end(str), fc.out());
     }
@@ -159,6 +159,7 @@ struct formatter<etl::static_string<Capacity>, char>
 {
     template <typename FormatContext>
     constexpr auto format(etl::static_string<Capacity> const& str, FormatContext& fc)
+        -> decltype(fc.out())
     {
         return formatter<::etl::string_view>().format(str, fc);
     }
@@ -170,11 +171,15 @@ using diff_t =
 
 namespace detail
 {
-template <typename ValueT, typename Context>
-auto format_argument(ValueT const& val, Context& ctx)
+// Escape tokens
+inline constexpr auto token_begin = '{';
+inline constexpr auto token_end   = '}';
+
+template <typename ValueT, typename FormatContext>
+auto format_argument(ValueT const& val, FormatContext& fc) -> decltype(fc.out())
 {
-    auto fmt = formatter<ValueT, char> {};
-    fmt.format(val, ctx);
+    auto formatter_ = formatter<ValueT, char> {};
+    return formatter_.format(val, fc);
 }
 
 auto split_at_next_argument(etl::string_view str)
@@ -182,11 +187,8 @@ auto split_at_next_argument(etl::string_view str)
 {
     using size_type = etl::string_view::size_type;
 
-    constexpr auto token_arg_start = '{';
-    constexpr auto token_arg_stop  = '}';
-
-    if (auto res = etl::find(begin(str), end(str), token_arg_start);
-        res != end(str) && *etl::next(res) == token_arg_stop)
+    auto res = etl::find(begin(str), end(str), token_begin);
+    if (res != end(str) && *etl::next(res) == token_end)
     {
         auto index  = static_cast<size_type>(etl::distance(begin(str), res));
         auto first  = str.substr(0, index);
@@ -197,23 +199,19 @@ auto split_at_next_argument(etl::string_view str)
     return etl::make_pair(str, etl::string_view {});
 }
 
-template <typename Context>
-auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
+template <typename FormatContext>
+auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx) -> void
 {
-    // Escape tokens
-    constexpr auto tk_escape_begin = '{';
-    constexpr auto tk_escape_end   = '}';
-
     // Loop as long as escaped sequences are found.
     auto first = begin(str);
     while (true)
     {
         // Find open sequence {{
-        auto const open_first   = ::etl::find(first, end(str), tk_escape_begin);
+        auto const open_first   = ::etl::find(first, end(str), token_begin);
         auto const open_sec     = ::etl::next(open_first);
         auto const escape_start = open_first != end(str)   //
                                   && open_sec != end(str)  //
-                                  && *open_sec == tk_escape_begin;
+                                  && *open_sec == token_begin;
 
         if (escape_start)
         {
@@ -221,12 +219,11 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
             detail::format_argument(etl::string_view(first, open_first), ctx);
 
             // Find sequence }}
-            auto close_first
-                = ::etl::find(::etl::next(open_sec), end(str), tk_escape_end);
+            auto close_first  = ::etl::find(::etl::next(open_sec), end(str), token_end);
             auto close_sec    = ::etl::next(close_first);
             auto escape_close = close_first != end(str)   //
                                 && close_sec != end(str)  //
-                                && *close_sec == tk_escape_end;
+                                && *close_sec == token_end;
 
             // Copy everything between {{ ... }}, but only one curly each.
             if (escape_close)
@@ -237,17 +234,16 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
             else
             {
                 assert(false && "No closing }} found");
-                break;
+                return;
             }
         }
         else
         {
-            break;
+            // No more escaped sequence found, copy rest.
+            detail::format_argument(etl::string_view(first, end(str)), ctx);
+            return;
         }
     }
-
-    // No more escaped sequence found, copy rest.
-    detail::format_argument(etl::string_view(first, end(str)), ctx);
 }
 
 }  // namespace detail
@@ -265,8 +261,8 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
     auto ctx = format_context<::etl::static_string<32>> {out};
 
     // Format leading text before the first argument.
-    auto slices = detail::split_at_next_argument(fmt);
-    detail::format_escaped_sequences(ctx, slices.first);
+    auto const slices = detail::split_at_next_argument(fmt);
+    detail::format_escaped_sequences(slices.first, ctx);
 
     // Save rest of format string. Supress warning if format_to was called without
     // arguments.
@@ -279,8 +275,8 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
             detail::format_argument(args, ctx);
 
             // Split format text at next argument
-            auto rest_slices = detail::split_at_next_argument(rest);
-            detail::format_escaped_sequences(ctx, rest_slices.first);
+            auto const rest_slices = detail::split_at_next_argument(rest);
+            detail::format_escaped_sequences(rest_slices.first, ctx);
 
             // Save rest of format string for the next arguments
             rest = rest_slices.second;
@@ -288,9 +284,10 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
         ...);
 
     // Anything left over after the last argument.
-    if (auto trailing = detail::split_at_next_argument(rest); !trailing.first.empty())
+    if (auto const trailing = detail::split_at_next_argument(rest);
+        !trailing.first.empty())
     {
-        detail::format_escaped_sequences(ctx, trailing.first);
+        detail::format_escaped_sequences(trailing.first, ctx);
         assert(trailing.second.empty());
     }
 
