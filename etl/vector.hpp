@@ -625,9 +625,9 @@ public:
      * @todo Add noexcept(noexcept(emplace_back(etl::forward<U>(value)))) breaks AVR build
      * GCC8.2 currently.
      */
-    template <typename U>
-    constexpr auto push_back(U&& value) noexcept(false) -> etl::enable_if_t<
-        etl::is_constructible_v<T, U> && etl::is_assignable_v<reference, U&&>, void>
+    template <typename U,
+              TAETL_REQUIRES_(is_constructible_v<T, U>&& is_assignable_v<reference, U&&>)>
+    constexpr auto push_back(U&& value) noexcept(false) -> void
     {
         assert(!full() && "vector is full!");
         emplace_back(etl::forward<U>(value));

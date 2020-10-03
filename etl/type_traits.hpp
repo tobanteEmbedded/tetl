@@ -1866,24 +1866,23 @@ template <typename T>
 class is_trivially_copyable
 {
     // copy constructors
-    static constexpr bool has_trivial_copy_ctor = etl::is_copy_constructible<T>::value;
-    static constexpr bool has_deleted_copy_ctor = !etl::is_copy_constructible<T>::value;
+    static constexpr bool has_trivial_copy_ctor = etl::is_copy_constructible_v<T>;
+    static constexpr bool has_deleted_copy_ctor = !etl::is_copy_constructible_v<T>;
 
     // move constructors
-    static constexpr bool has_trivial_move_ctor = etl::is_move_constructible<T>::value;
-    static constexpr bool has_deleted_move_ctor = !etl::is_move_constructible<T>::value;
+    static constexpr bool has_trivial_move_ctor = etl::is_move_constructible_v<T>;
+    static constexpr bool has_deleted_move_ctor = !etl::is_move_constructible_v<T>;
 
     // copy assign
-    static constexpr bool has_trivial_copy_assign = is_copy_assignable<T>::value;
-    static constexpr bool has_deleted_copy_assign = !is_copy_assignable<T>::value;
+    static constexpr bool has_trivial_copy_assign = is_copy_assignable_v<T>;
+    static constexpr bool has_deleted_copy_assign = !is_copy_assignable_v<T>;
 
     // move assign
-    static constexpr bool has_trivial_move_assign = is_move_assignable<T>::value;
-    static constexpr bool has_deleted_move_assign = !is_move_assignable<T>::value;
+    static constexpr bool has_trivial_move_assign = is_move_assignable_v<T>;
+    static constexpr bool has_deleted_move_assign = !is_move_assignable_v<T>;
 
     // destructor
-    static constexpr bool has_trivial_dtor = true;
-    // = etl::is_destructible<T>::value;
+    static constexpr bool has_trivial_dtor = etl::is_destructible_v<T>;
 
 public:
     static constexpr bool value = has_trivial_dtor

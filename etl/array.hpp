@@ -47,9 +47,7 @@ namespace etl
  * holding a C-style array Type[N] as its only non-static data member. Unlike a C-style
  * array, it doesn't decay to Type* automatically. As an aggregate type, it can be
  * initialized with aggregate-initialization given at most N initializers that are
- * convertible to Ttype: etl::array<int, 3> a = {1,2,3};.
- *
- * @todo Add aggregate-initialization.
+ * convertible to Type: etl::array<int, 3> a = {1,2,3};.
  */
 template <typename Type, etl::size_t Size>
 struct array
