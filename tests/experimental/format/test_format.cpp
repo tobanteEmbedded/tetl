@@ -200,16 +200,16 @@ TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
         CHECK(etl::string_view(str.begin()) == target);
     }
 
-    // SECTION("escape single arg")
-    // {
-    //     auto str_1 = etl::static_string<32> {};
-    //     fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
-    //     CHECK(std::string_view(str_1.begin()) == std::string_view("abc {test}"));
+    SECTION("escape single arg")
+    {
+        // auto str_1 = etl::static_string<32> {};
+        // fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
+        // CHECK(std::string_view(str_1.begin()) == std::string_view("abc {test}"));
 
-    //     auto str_2 = etl::static_string<32> {};
-    //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
-    //     CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
-    // }
+        //     auto str_2 = etl::static_string<32> {};
+        //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
+        //     CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
+    }
 
     //     SECTION("replace multiple args")
     //     {

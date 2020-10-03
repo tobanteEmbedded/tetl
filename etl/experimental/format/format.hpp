@@ -235,15 +235,17 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
             else
             {
                 assert(false && "No closing }} found");
+                break;
             }
         }
         else
         {
-            // No more escaped sequence found, copy rest.
-            detail::format_impl(etl::string_view(first, end(str)), ctx);
-            return;
+            break;
         }
     }
+
+    // No more escaped sequence found, copy rest.
+    detail::format_impl(etl::string_view(first, end(str)), ctx);
 }
 
 }  // namespace detail
