@@ -25,6 +25,8 @@ DAMAGE.
 */
 #include "etl/vector.hpp"
 
+#include "etl/numeric.hpp"
+
 #include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("vector/static_vector: typedefs", "[vector]", etl::uint8_t,
@@ -331,16 +333,59 @@ TEMPLATE_TEST_CASE("vector/static_vector: operator==/!=", "[vector]", etl::uint8
 
 TEMPLATE_TEST_CASE("vector/static_vector: operator</<=", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+                   etl::uint64_t, etl::int64_t)
 {
     SECTION("empty")
     {
-        auto lhs_1       = etl::static_vector<TestType, 4> {};
-        auto const rhs_1 = etl::static_vector<TestType, 4> {};
-        CHECK(lhs_1 < rhs_1);
-        CHECK(rhs_1 < lhs_1);
-        CHECK(lhs_1 <= rhs_1);
-        CHECK(rhs_1 <= lhs_1);
+        auto lhs       = etl::static_vector<TestType, 4>();
+        auto const rhs = etl::static_vector<TestType, 4>();
+        CHECK_FALSE(lhs < rhs);
+        CHECK_FALSE(rhs < lhs);
+        CHECK(lhs <= rhs);
+        CHECK(rhs <= lhs);
+    }
+
+    SECTION("full")
+    {
+        auto lhs = etl::static_vector<TestType, 4>(4);
+        etl::iota(begin(lhs), end(lhs), TestType(0));
+        auto rhs = etl::static_vector<TestType, 4>(4);
+        etl::iota(begin(rhs), end(rhs), TestType(1));
+
+        CHECK(lhs < rhs);
+        CHECK(lhs <= rhs);
+
+        CHECK_FALSE(rhs < lhs);
+        CHECK_FALSE(rhs <= lhs);
+    }
+}
+
+TEMPLATE_TEST_CASE("vector/static_vector: operator>/>=", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    SECTION("empty")
+    {
+        auto lhs       = etl::static_vector<TestType, 4>();
+        auto const rhs = etl::static_vector<TestType, 4>();
+        CHECK_FALSE(lhs > rhs);
+        CHECK_FALSE(rhs > lhs);
+        CHECK(lhs >= rhs);
+        CHECK(rhs >= lhs);
+    }
+
+    SECTION("full")
+    {
+        auto lhs = etl::static_vector<TestType, 4>(4);
+        etl::iota(begin(lhs), end(lhs), TestType(1));
+        auto rhs = etl::static_vector<TestType, 4>(4);
+        etl::iota(begin(rhs), end(rhs), TestType(0));
+
+        CHECK(lhs > rhs);
+        CHECK(lhs >= rhs);
+
+        CHECK_FALSE(rhs > lhs);
+        CHECK_FALSE(rhs >= lhs);
     }
 }
 

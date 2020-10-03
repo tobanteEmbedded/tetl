@@ -1064,7 +1064,7 @@ private:
 };
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
@@ -1079,53 +1079,53 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
 }
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return not(lhs == rhs);
+    return !(lhs == rhs);
 }
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), less<> {});
+    return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), less_equal<> {});
+    return !(rhs < lhs);
 }
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), greater<> {});
+    return rhs < lhs;
 }
 
 /**
- * @brief
+ * @brief Compares the contents of two vectors.
  */
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), greater_equal<> {});
+    return !(lhs < rhs);
 }
 
 }  // namespace etl
