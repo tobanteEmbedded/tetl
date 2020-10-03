@@ -224,7 +224,7 @@ struct variant_storage_type_get<Target, variant_storage<Head, Tail...>>
  *
  * @todo Implement
  */
-template <etl::size_t I, class T>
+template <etl::size_t I, typename T>
 struct variant_alternative;
 
 /**
@@ -234,7 +234,7 @@ struct variant_alternative;
  *
  * @todo Implement
  */
-template <etl::size_t I, class... Types>
+template <etl::size_t I, typename... Types>
 struct variant_alternative<I, variant<Types...>>
 {
     using type = void;
@@ -247,13 +247,13 @@ struct variant_alternative<I, variant<Types...>>
  *
  * @todo Implement
  */
-template <etl::size_t I, class T>
+template <etl::size_t I, typename T>
 struct variant_alternative<I, const T>
 {
     using type = void;
 };
 
-template <size_t I, class T>
+template <size_t I, typename T>
 using variant_alternative_t = typename variant_alternative<I, T>::type;
 
 /**
@@ -351,7 +351,7 @@ private:
  * @brief Checks if the variant v holds the alternative T. The call is ill-formed if T
  * does not appear exactly once in Types...
  */
-template <class T, class... Types>
+template <typename T, typename... Types>
 constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept -> bool
 {
     using storage_t = detail::variant_storage<Types...>;
@@ -366,7 +366,7 @@ constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept -> bo
  *
  * @todo Implement
  */
-template <etl::size_t I, class... Types>
+template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
 {
@@ -382,7 +382,7 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
  *
  * @todo Implement
  */
-template <etl::size_t I, class... Types>
+template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>> const>
 {
@@ -394,7 +394,7 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
  * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a
  * unique element of Types....
  */
-template <class T, class... Types>
+template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>
 {
     if (holds_alternative<T>(*pv))
@@ -410,7 +410,7 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t
  * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a unique
  * element of Types....
  */
-template <class T, class... Types>
+template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<const T>
 {

@@ -39,7 +39,7 @@ namespace etl
  * member functions in decltype expressions without the need to go through
  * constructors.
  */
-template <class T>
+template <typename T>
 auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
 
 /**
@@ -52,7 +52,7 @@ auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
  * @param t
  * @return static_cast<typename etl::remove_reference<T>::type&&>(t)
  */
-template <class T>
+template <typename T>
 constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
 {
     return static_cast<typename etl::remove_reference<T>::type&&>(t);
@@ -68,7 +68,7 @@ constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
  *
  * @ref https://en.cppreference.com/w/cpp/utility/forward
  */
-template <class T>
+template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
@@ -84,7 +84,7 @@ constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
  *
  * @ref https://en.cppreference.com/w/cpp/utility/forward
  */
-template <class T>
+template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
@@ -95,7 +95,7 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
  * obj.
  * @return The old value of obj.
  */
-template <class T, class U = T>
+template <typename T, typename U = T>
 [[nodiscard]] constexpr auto exchange(T& obj, U&& new_value) -> T
 {
     T old_value = etl::move(obj);
@@ -106,7 +106,7 @@ template <class T, class U = T>
 /**
  * @brief Forms lvalue reference to const type of t.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> etl::add_const_t<T>&
 {
     return t;
@@ -116,13 +116,13 @@ template <class T>
  * @brief Const rvalue reference overload is deleted to disallow rvalue
  * arguments.
  */
-template <class T>
+template <typename T>
 constexpr auto as_const(const T&&) -> void
     = delete;
 
 namespace detail
 {
-template <class T>
+template <typename T>
 struct is_integer_and_not_char
     : etl::integral_constant<
           bool,
@@ -142,7 +142,7 @@ struct is_integer_and_not_char
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -172,7 +172,7 @@ template <class T, class U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -191,7 +191,7 @@ template <class T, class U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -220,7 +220,7 @@ template <class T, class U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -239,7 +239,7 @@ template <class T, class U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -258,7 +258,7 @@ template <class T, class U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value
                        && detail::is_integer_and_not_char<U>::value,
@@ -278,7 +278,7 @@ template <class T, class U>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/in_range
  */
-template <class R, class T>
+template <typename R, typename T>
 [[nodiscard]] constexpr auto in_range(T t) noexcept
     -> enable_if_t<detail::is_integer_and_not_char<T>::value, bool>
 {
@@ -297,7 +297,7 @@ template <class R, class T>
  *
  * @todo Add conditional explicit when C++20 is available.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 struct pair
 {
     using first_type  = T1;
@@ -322,8 +322,8 @@ struct pair
      * etl::is_constructible_v<first_type, U1&&> and etl::is_constructible_v<second_type,
      * U2&&> are both true.
      */
-    template <class U1, class U2,
-              class = etl::enable_if_t<
+    template <typename U1, typename U2,
+              typename = etl::enable_if_t<
                   etl::is_constructible_v<
                       first_type, U1&&> && etl::is_constructible_v<second_type, U2&&>>>
     constexpr pair(U1&& x, U2&& y)
@@ -334,7 +334,7 @@ struct pair
     /**
      * @brief Initializes first with p.first and second with p.second.
      */
-    template <class U1, class U2>
+    template <typename U1, typename U2>
     constexpr pair(pair<U1, U2> const& p)
         : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
     {
@@ -343,7 +343,7 @@ struct pair
      * @brief Initializes first with etl::forward<U1>(p.first) and second with
      * etl::forward<U2>(p.second).
      */
-    template <class U1, class U2>
+    template <typename U1, typename U2>
     constexpr pair(pair<U1, U2>&& p)
         : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
     {
@@ -374,7 +374,7 @@ struct pair
         return *this;
     }
 
-    template <class U1, class U2>
+    template <typename U1, typename U2>
     constexpr auto operator=(pair<U1, U2> const& p) -> pair&
     {
         first  = p.first;
@@ -389,7 +389,7 @@ struct pair
         return *this;
     }
 
-    template <class U1, class U2>
+    template <typename U1, typename U2>
     constexpr auto operator=(pair<U1, U2>&& p) -> pair&
     {
         first  = etl::move(p.first);
@@ -419,7 +419,7 @@ struct pair
  *
  * @ref https://en.cppreference.com/w/cpp/utility/pair/make_pair
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
     -> etl::pair<typename etl::decay<T1>::type, typename etl::decay<T2>::type>
 {
@@ -430,7 +430,7 @@ template <class T1, class T2>
  * @brief Tests if both elements of lhs and rhs are equal, that is, compares
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator==(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -441,7 +441,7 @@ constexpr auto operator==(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * @brief Tests if both elements of lhs and rhs are equal, that is, compares
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator!=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -453,7 +453,7 @@ constexpr auto operator!=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * the first elements and only if they are equivalent, compares the second
  * elements.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator<(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -468,7 +468,7 @@ constexpr auto operator<(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& 
  * the first elements and only if they are equivalent, compares the second
  * elements.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator<=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -480,7 +480,7 @@ constexpr auto operator<=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * the first elements and only if they are equivalent, compares the second
  * elements.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator>(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -492,7 +492,7 @@ constexpr auto operator>(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& 
  * the first elements and only if they are equivalent, compares the second
  * elements.
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto operator>=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
     -> bool
 {
@@ -550,13 +550,13 @@ inline constexpr auto in_place = in_place_t {};
  * etl::in_place_type_t and etl::in_place_index_t can be used in the
  * constructor's parameter list to match the intended tag.
  */
-template <class T>
+template <typename T>
 struct in_place_type_t
 {
     explicit in_place_type_t() = default;
 };
 
-template <class T>
+template <typename T>
 inline constexpr auto in_place_type = in_place_type_t<T> {};
 
 /**

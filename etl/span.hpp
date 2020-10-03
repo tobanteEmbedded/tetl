@@ -52,7 +52,7 @@ inline constexpr auto dynamic_extent = size_t(-1);
  * two members: a pointer to T and a size. A span with static extent may have
  * only one member: a pointer to T.
  */
-template <class ElementType, size_t Extent = etl::dynamic_extent>
+template <typename ElementType, size_t Extent = etl::dynamic_extent>
 class span
 {
 public:
@@ -97,7 +97,7 @@ public:
      *
      * @todo Add explicit(extent != etl::dynamic_extent).
      */
-    template <class It>
+    template <typename It>
     constexpr span(It first, size_type count) : data_ {first}, size_ {count}
     {
     }
@@ -106,7 +106,7 @@ public:
     //  * @brief Constructs a span.
     //  * @todo Add explicit(extent != etl::dynamic_extent).
     //  */
-    // template <class It, class End>
+    // template <typename It, typename End>
     // constexpr span(It first, End last);
 
     /**
@@ -120,7 +120,7 @@ public:
     /**
      * @brief Constructs a span. From a etl::array<Type,Size>.
      */
-    template <class U, etl::size_t N>
+    template <typename U, etl::size_t N>
     constexpr span(etl::array<U, N>& arr) noexcept
         : data_ {arr.data()}, size_ {arr.size()}
     {
@@ -129,7 +129,7 @@ public:
     /**
      * @brief Constructs a span. From a etl::array<Type,Size> const.
      */
-    template <class U, etl::size_t N>
+    template <typename U, etl::size_t N>
     constexpr span(etl::array<U, N> const& arr) noexcept
         : data_ {arr.data()}, size_ {arr.size()}
     {
@@ -140,7 +140,7 @@ public:
      *
      * @todo Add explicit(extent != etl::dynamic_extent)
      */
-    template <class R>
+    template <typename R>
     constexpr span(R&& r) : data_ {r.data()}, size_ {r.size()}
     {
     }
@@ -148,7 +148,7 @@ public:
     // /**
     //  * @brief Constructs a span.
     //  */
-    // template <class U, etl::size_t N>
+    // template <typename U, etl::size_t N>
     // explicit(extent != etl::dynamic_extent
     //          && N == etl::dynamic_extent) constexpr span(const etl::span<U,
     //          N>&
@@ -227,34 +227,34 @@ private:
 /**
  * @brief Deduction Guides. From raw array.
  */
-template <class Type, etl::size_t Extent>
+template <typename Type, etl::size_t Extent>
 span(Type (&)[Extent]) -> span<Type, Extent>;
 
 /**
  * @brief Deduction Guides. From etl::array<Type, Size>.
  */
-template <class Type, etl::size_t Size>
+template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size>&) -> span<Type, Size>;
 
 /**
  * @brief Deduction Guides. From etl::array<Type const, Size>.
  */
-template <class Type, etl::size_t Size>
+template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 /**
  * @brief Deduction Guides. From Container.
  */
-template <class Container,
-          class Element
+template <typename Container,
+          typename Element
           = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 /**
  * @brief Deduction Guides. From Container const.
  */
-template <class Container,
-          class Element
+template <typename Container,
+          typename Element
           = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 }  // namespace etl

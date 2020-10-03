@@ -42,7 +42,7 @@ namespace etl
  * element of the sequence at position zero. A typical implementation holds only
  * two members: a pointer to constant CharType and a size.
  */
-template <class CharType, class Traits = etl::char_traits<CharType>>
+template <typename CharType, typename Traits = etl::char_traits<CharType>>
 class basic_string_view
 {
 public:
@@ -769,7 +769,7 @@ private:
  * each character in lhs has an equivalent character in rhs at the same
  * position.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator==(etl::basic_string_view<CharType, Traits> lhs,
            etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
@@ -786,7 +786,7 @@ operator==(etl::basic_string_view<CharType, Traits> lhs,
  * each character in lhs has an equivalent character in rhs at the same
  * position.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator!=(etl::basic_string_view<CharType, Traits> lhs,
            etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
@@ -802,7 +802,7 @@ operator!=(etl::basic_string_view<CharType, Traits> lhs,
  * comparison is performed by a function equivalent to
  * etl::lexicographical_compare.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator<(etl::basic_string_view<CharType, Traits> lhs,
           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
@@ -818,7 +818,7 @@ operator<(etl::basic_string_view<CharType, Traits> lhs,
  * comparison is performed by a function equivalent to
  * etl::lexicographical_compare.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator<=(etl::basic_string_view<CharType, Traits> lhs,
            etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
@@ -834,7 +834,7 @@ operator<=(etl::basic_string_view<CharType, Traits> lhs,
  * comparison is performed by a function equivalent to
  * etl::lexicographical_compare.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator>(etl::basic_string_view<CharType, Traits> lhs,
           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
@@ -850,7 +850,7 @@ operator>(etl::basic_string_view<CharType, Traits> lhs,
  * comparison is performed by a function equivalent to
  * etl::lexicographical_compare.
  */
-template <class CharType, class Traits>
+template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
 operator>=(etl::basic_string_view<CharType, Traits> lhs,
            etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool

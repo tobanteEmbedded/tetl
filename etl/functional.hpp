@@ -43,7 +43,7 @@ namespace etl
  *
  * * @ref https://en.cppreference.com/w/cpp/utility/functional/plus
  */
-template <class T = void>
+template <typename T = void>
 struct plus
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -62,7 +62,7 @@ struct plus
 template <>
 struct plus<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
     {
@@ -78,7 +78,7 @@ struct plus<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/minus
  */
-template <class T = void>
+template <typename T = void>
 struct minus
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -97,7 +97,7 @@ struct minus
 template <>
 struct minus<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) - etl::forward<U>(rhs))
     {
@@ -113,7 +113,7 @@ struct minus<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies
  */
-template <class T = void>
+template <typename T = void>
 struct multiplies
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -133,7 +133,7 @@ struct multiplies
 template <>
 struct multiplies<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) * etl::forward<U>(rhs))
     {
@@ -149,7 +149,7 @@ struct multiplies<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/divides
  */
-template <class T = void>
+template <typename T = void>
 struct divides
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -169,7 +169,7 @@ struct divides
 template <>
 struct divides<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) / etl::forward<U>(rhs))
     {
@@ -185,7 +185,7 @@ struct divides<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus
  */
-template <class T = void>
+template <typename T = void>
 struct modulus
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -204,7 +204,7 @@ struct modulus
 template <>
 struct modulus<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) % etl::forward<U>(rhs))
     {
@@ -220,7 +220,7 @@ struct modulus<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/negate
  */
-template <class T = void>
+template <typename T = void>
 struct negate
 {
     [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return -arg; }
@@ -236,7 +236,7 @@ struct negate
 template <>
 struct negate<void>
 {
-    template <class T>
+    template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(-etl::forward<T>(arg))
     {
@@ -252,7 +252,7 @@ struct negate<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/equal_to
  */
-template <class T = void>
+template <typename T = void>
 struct equal_to
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -272,7 +272,7 @@ struct equal_to
 template <>
 struct equal_to<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
     {
@@ -288,7 +288,7 @@ struct equal_to<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
  */
-template <class T = void>
+template <typename T = void>
 struct not_equal_to
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -308,7 +308,7 @@ struct not_equal_to
 template <>
 struct not_equal_to<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) != etl::forward<U>(rhs))
     {
@@ -324,7 +324,7 @@ struct not_equal_to<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/greater
  */
-template <class T = void>
+template <typename T = void>
 struct greater
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -344,7 +344,7 @@ struct greater
 template <>
 struct greater<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) > etl::forward<U>(rhs))
     {
@@ -360,7 +360,7 @@ struct greater<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal
  */
-template <class T = void>
+template <typename T = void>
 struct greater_equal
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -380,7 +380,7 @@ struct greater_equal
 template <>
 struct greater_equal<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) >= etl::forward<U>(rhs))
     {
@@ -396,7 +396,7 @@ struct greater_equal<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/less
  */
-template <class T = void>
+template <typename T = void>
 struct less
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
@@ -416,7 +416,7 @@ struct less
 template <>
 struct less<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
     {
@@ -432,7 +432,7 @@ struct less<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/less_equal
  */
-template <class T = void>
+template <typename T = void>
 struct less_equal
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
@@ -452,7 +452,7 @@ struct less_equal
 template <>
 struct less_equal<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) <= etl::forward<U>(rhs))
     {
@@ -468,7 +468,7 @@ struct less_equal<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and
  */
-template <class T = void>
+template <typename T = void>
 struct logical_and
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
@@ -488,7 +488,7 @@ struct logical_and
 template <>
 struct logical_and<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) && etl::forward<U>(rhs))
     {
@@ -504,7 +504,7 @@ struct logical_and<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or
  */
-template <class T = void>
+template <typename T = void>
 struct logical_or
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
@@ -524,7 +524,7 @@ struct logical_or
 template <>
 struct logical_or<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) || etl::forward<U>(rhs))
     {
@@ -540,7 +540,7 @@ struct logical_or<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not
  */
-template <class T = void>
+template <typename T = void>
 struct logical_not
 {
     [[nodiscard]] constexpr auto operator()(const T& arg) const -> bool { return !arg; }
@@ -557,7 +557,7 @@ struct logical_not
 template <>
 struct logical_not<void>
 {
-    template <class T>
+    template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(!etl::forward<T>(arg))
     {
@@ -573,7 +573,7 @@ struct logical_not<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_and
  */
-template <class T = void>
+template <typename T = void>
 struct bit_and
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -593,7 +593,7 @@ struct bit_and
 template <>
 struct bit_and<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) & etl::forward<U>(rhs))
     {
@@ -609,7 +609,7 @@ struct bit_and<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_or
  */
-template <class T = void>
+template <typename T = void>
 struct bit_or
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -628,7 +628,7 @@ struct bit_or
 template <>
 struct bit_or<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) | etl::forward<U>(rhs))
     {
@@ -644,7 +644,7 @@ struct bit_or<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_xor
  */
-template <class T = void>
+template <typename T = void>
 struct bit_xor
 {
     [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
@@ -663,7 +663,7 @@ struct bit_xor
 template <>
 struct bit_xor<void>
 {
-    template <class T, class U>
+    template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) ^ etl::forward<U>(rhs))
     {
@@ -679,7 +679,7 @@ struct bit_xor<void>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_not
  */
-template <class T = void>
+template <typename T = void>
 struct bit_not
 {
     [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return ~arg; }
@@ -695,7 +695,7 @@ struct bit_not
 template <>
 struct bit_not<void>
 {
-    template <class T>
+    template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(~etl::forward<T>(arg))
     {
@@ -705,10 +705,10 @@ struct bit_not<void>
     // using is_transparent = true;
 };
 
-template <class>
+template <typename>
 class function_view;
 
-template <class Result, class... Arguments>
+template <typename Result, typename... Arguments>
 class function_view<Result(Arguments...)>
 {
 public:
@@ -791,10 +791,10 @@ private:
     etl::byte* storage_ = nullptr;
 };
 
-template <size_t, class>
+template <size_t, typename>
 class function;
 
-template <size_t Capacity, class Result, class... Arguments>
+template <size_t Capacity, typename Result, typename... Arguments>
 class function<Capacity, Result(Arguments...)>
     : public function_view<Result(Arguments...)>
 {
@@ -845,7 +845,7 @@ private:
     Predicate predicate_;
 };
 
-template <class T>
+template <typename T>
 struct hash;
 
 template <>
@@ -1007,7 +1007,7 @@ struct hash<etl::nullptr_t>
     }
 };
 
-template <class T>
+template <typename T>
 struct hash<T*>
 {
     [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t

@@ -31,7 +31,7 @@ namespace etl
 {
 using streamoff = int;
 
-template <class State>
+template <typename State>
 class fpos;
 }  // namespace etl
 #endif  // TAETL_IOS_HPP

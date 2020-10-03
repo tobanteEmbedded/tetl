@@ -635,7 +635,7 @@ public:
     /**
      * @brief FCV_REQUIRES_(detail::InputIterator<InputIt>)
      */
-    template <class InputIt>
+    template <typename InputIt>
     constexpr iterator
     move_insert(const_iterator position, InputIt first,
                 InputIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
@@ -726,7 +726,7 @@ public:
      * @brief detail::InputIterator<InputIt>and etl::is_constructible_v<value_type,
      * detail::iterator_reference_t<InputIt>>
      */
-    template <class InputIt>
+    template <typename InputIt>
     constexpr iterator insert(const_iterator position, InputIt first,
                               InputIt last) noexcept(noexcept(emplace_back(*first)))
     {
@@ -902,7 +902,7 @@ public:
     /**
      * @brief
      */
-    template <class InputIter>
+    template <typename InputIter>
     constexpr auto assign(InputIter first, InputIter last) noexcept(
         noexcept(clear()) and noexcept(insert(begin(), first, last)))
         -> etl::enable_if_t<detail::InputIterator<InputIter>, void>

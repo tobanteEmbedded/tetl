@@ -171,13 +171,13 @@ private:
     StorageType value_;
 };
 
-template <class T>
+template <typename T>
 class default_delete
 {
 public:
     constexpr default_delete() noexcept = default;
 
-    template <class U,
+    template <typename U,
               typename = typename etl::enable_if_t<etl::is_convertible_v<U*, T*>>>
     default_delete(const default_delete<U>&) noexcept
     {
@@ -191,19 +191,19 @@ private:
     static_assert(!etl::is_void<T>::value);
 };
 
-template <class T>
+template <typename T>
 class default_delete<T[]>
 {
 public:
     constexpr default_delete() noexcept = default;
 
-    template <class U,
+    template <typename U,
               typename = etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>>>
     default_delete(const default_delete<U[]>&) noexcept
     {
     }
 
-    template <class U>
+    template <typename U>
     auto operator()(U* array_ptr) const noexcept
         -> etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>, void>
     {
@@ -219,7 +219,7 @@ private:
  * @brief Obtains the actual address of the object or function arg, even in
  * presence of overloaded operator&.
  */
-template <class T>
+template <typename T>
 auto addressof(T& arg) noexcept -> typename etl::enable_if_t<etl::is_object_v<T>, T*>
 {
     return reinterpret_cast<T*>(
@@ -230,7 +230,7 @@ auto addressof(T& arg) noexcept -> typename etl::enable_if_t<etl::is_object_v<T>
  * @brief Obtains the actual address of the object or function arg, even in
  * presence of overloaded operator&.
  */
-template <class T>
+template <typename T>
 auto addressof(T& arg) noexcept -> typename etl::enable_if_t<!etl::is_object_v<T>, T*>
 {
     return &arg;
@@ -240,7 +240,7 @@ auto addressof(T& arg) noexcept -> typename etl::enable_if_t<!etl::is_object_v<T
  * @brief Rvalue overload is deleted to prevent taking the address of const
  * rvalues.
  */
-template <class T>
+template <typename T>
 auto addressof(T const&&) = delete;
 
 /**
@@ -249,7 +249,7 @@ auto addressof(T const&&) = delete;
  * elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
  * etl::end(*p)).
  */
-template <class T>
+template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
     if constexpr (etl::is_array_v<T>)
@@ -265,7 +265,7 @@ constexpr auto destroy_at(T* p) -> void
 /**
  * @brief Destroys the objects in the range [first, last).
  */
-template <class ForwardIt>
+template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {
     for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
@@ -274,7 +274,7 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 /**
  * @brief Destroys the n objects in the range starting at first.
  */
-template <class ForwardIt, class Size>
+template <typename ForwardIt, class Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
     for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }

@@ -51,7 +51,7 @@ namespace etl
  *
  * @todo Add aggregate-initialization.
  */
-template <class Type, etl::size_t Size>
+template <typename Type, etl::size_t Size>
 struct array
 {
     using value_type      = Type;
@@ -242,7 +242,7 @@ struct array
  * @brief Specializes the etl::swap algorithm for etl::array. Swaps the contents of lhs
  * and rhs.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto swap(etl::array<T, N>& lhs,
                     etl::array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
@@ -253,7 +253,7 @@ constexpr auto swap(etl::array<T, N>& lhs,
  * @brief Provides access to the number of elements in an etl::array as a compile-time
  * constant expression.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 struct tuple_size<etl::array<T, N>> : etl::integral_constant<etl::size_t, N>
 {
 };
@@ -262,14 +262,14 @@ struct tuple_size<etl::array<T, N>> : etl::integral_constant<etl::size_t, N>
  * @brief Provides compile-time indexed access to the type of the elements of the array
  * using tuple-like interface.
  */
-template <etl::size_t I, class T>
+template <etl::size_t I, typename T>
 struct tuple_element;
 
 /**
  * @brief Provides compile-time indexed access to the type of the elements of the array
  * using tuple-like interface.
  */
-template <etl::size_t I, class T, etl::size_t N>
+template <etl::size_t I, typename T, etl::size_t N>
 struct tuple_element<I, etl::array<T, N>>
 {
     using type = T;
@@ -280,7 +280,7 @@ struct tuple_element<I, etl::array<T, N>>
  * number of elements and each element in lhs compares equal with the element in rhs at
  * the same position.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator==(etl::array<T, N> const& lhs,
                                         etl::array<T, N> const& rhs) -> bool
 {
@@ -291,7 +291,7 @@ template <class T, etl::size_t N>
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
  * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator!=(etl::array<T, N> const& lhs,
                                         etl::array<T, N> const& rhs) -> bool
 {
@@ -302,7 +302,7 @@ template <class T, etl::size_t N>
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
  * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator<(etl::array<T, N> const& lhs,
                                        etl::array<T, N> const& rhs) -> bool
 {
@@ -313,7 +313,7 @@ template <class T, etl::size_t N>
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
  * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator<=(etl::array<T, N> const& lhs,
                                         etl::array<T, N> const& rhs) -> bool
 {
@@ -324,7 +324,7 @@ template <class T, etl::size_t N>
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
  * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator>(etl::array<T, N> const& lhs,
                                        etl::array<T, N> const& rhs) -> bool
 {
@@ -335,7 +335,7 @@ template <class T, etl::size_t N>
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison is
  * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 [[nodiscard]] constexpr auto operator>=(etl::array<T, N> const& lhs,
                                         etl::array<T, N> const& rhs) -> bool
 {
@@ -345,7 +345,7 @@ template <class T, etl::size_t N>
 /**
  * @brief Deduction guide.
  */
-template <class T, class... U>
+template <typename T, typename... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 }  // namespace etl

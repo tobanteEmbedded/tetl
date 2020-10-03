@@ -68,7 +68,7 @@ enum class endian
  *
  * @ref https://en.cppreference.com/w/cpp/numeric/bit_cast
  */
-template <class To, class From>
+template <typename To, typename From>
 constexpr auto bit_cast(const From& src) noexcept -> typename etl::enable_if_t<
     (sizeof(To) == sizeof(From))
         && etl::is_trivially_copyable_v<From> && etl::is_trivially_copyable_v<To>,
@@ -105,7 +105,7 @@ inline auto is_little_endian() noexcept -> bool { return !is_big_endian(); }
 
 namespace detail
 {
-template <class T>
+template <typename T>
 struct is_unsigned_integer
     : etl::integral_constant<
           bool,
@@ -124,7 +124,7 @@ struct is_unsigned_integer
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto popcount(T input) noexcept
     -> etl::enable_if_t<detail::is_unsigned_integer<T>::value, int>
 {

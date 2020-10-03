@@ -45,7 +45,7 @@ namespace etl::chrono
  * representation Rep requires a specific implementation to return these
  * duration objects.
  */
-template <class Rep>
+template <typename Rep>
 struct duration_values
 {
 public:
@@ -83,12 +83,12 @@ public:
  * @note etl::chrono::treat_as_floating_point may be specialized for
  * program-defined types.
  */
-template <class Rep>
+template <typename Rep>
 struct treat_as_floating_point : etl::is_floating_point<Rep>
 {
 };
 
-template <class Rep>
+template <typename Rep>
 inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;
 
 /**
@@ -101,7 +101,7 @@ inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::
  * represent fractions of ticks. Period is included as part of the duration's
  * type, and is only used when converting between different durations.
  */
-template <class Rep, class Period = etl::ratio<1>>
+template <typename Rep, typename Period = etl::ratio<1>>
 class duration
 {
 public:
@@ -143,7 +143,7 @@ public:
      * can be constructed from an integer value
      */
     template <
-        class Rep2,
+        typename Rep2,
         typename = typename etl::enable_if_t<
             is_convertible_v<Rep2, rep> == true
             && (treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>)>>
@@ -170,7 +170,7 @@ public:
      * That is, either the duration uses floating-point ticks, or Period2 is
      * exactly divisible by period
      */
-    template <class Rep2, class Period2,
+    template <typename Rep2, typename Period2,
               typename
               = typename etl::enable_if_t<(treat_as_floating_point_v<rep> == true)
                                           || (ratio_divide<Period2, period>::den == 1
@@ -270,7 +270,7 @@ private:
  * @brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
  * number of ticks for the type common to both durations are equal.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator==(const duration<Rep1, Period1>& lhs,
                                         const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -284,7 +284,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  * @brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
  * number of ticks for the type common to both durations are equal.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator!=(const duration<Rep1, Period1>& lhs,
                                         const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -295,7 +295,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator<(const duration<Rep1, Period1>& lhs,
                                        const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -308,7 +308,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator<=(const duration<Rep1, Period1>& lhs,
                                         const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -319,7 +319,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator>(const duration<Rep1, Period1>& lhs,
                                        const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -330,7 +330,7 @@ template <class Rep1, class Period1, class Rep2, class Period2>
  * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator>=(const duration<Rep1, Period1>& lhs,
                                         const duration<Rep2, Period2>& rhs) -> bool
 {
@@ -389,11 +389,11 @@ using years = duration<etl::int32_t, etl::ratio<31'556'952>>;
 
 namespace detail
 {
-template <class T>
+template <typename T>
 struct is_duration : etl::false_type
 {
 };
-template <class Rep, class Period>
+template <typename Rep, typename Period>
 struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type
 {
 };
@@ -403,7 +403,7 @@ struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type
  * @brief Converts a etl::chrono::duration to a duration of different type
  * ToDuration.
  */
-template <class ToDuration, class Rep, class Period>
+template <typename ToDuration, typename Rep, typename Period>
 constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
 {
     return ToDuration(d);
@@ -414,8 +414,8 @@ constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
 //  * less or equal to d. The function does not participate in the overload
 //  * resolution unless ToDuration is an instance of etl::chrono::duration.
 //  */
-// template <class To, class Rep, class Period,
-//           class = etl::enable_if_t<detail::is_duration<To>::value>>
+// template <typename To, typename Rep, typename Period,
+//           typename = etl::enable_if_t<detail::is_duration<To>::value>>
 // constexpr auto floor(const duration<Rep, Period>& d) -> To
 // {
 //     auto const t = etl::chrono::duration_cast<To>(d);
@@ -448,7 +448,7 @@ namespace etl
  * ratio of the greatest common divisor of Period1::num and Period2::num and the
  * least common multiple of Period1::den and Period2::den.
  */
-template <class Rep1, class Period1, class Rep2, class Period2>
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 
 struct common_type<etl::chrono::duration<Rep1, Period1>,
                    etl::chrono::duration<Rep2, Period2>>

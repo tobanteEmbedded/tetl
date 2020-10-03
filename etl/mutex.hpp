@@ -84,7 +84,7 @@ inline constexpr adopt_lock_t adopt_lock {};
  * leaves the scope in which the lock_guard object was created, the lock_guard is
  * destructed and the mutex is released. The lock_guard class is non-copyable.
  */
-template <class MutexT>
+template <typename MutexT>
 class lock_guard
 {
 public:

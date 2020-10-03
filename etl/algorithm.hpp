@@ -76,7 +76,7 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
  *
  * https://en.cppreference.com/w/cpp/algorithm/iter_swap
  */
-template <class ForwardIter1, class ForwardIter2>
+template <typename ForwardIter1, typename ForwardIter2>
 constexpr auto swap_ranges(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2 first2)
     -> ForwardIter2
 {
@@ -359,7 +359,7 @@ template <typename InputIter, typename UnaryPredicate>
 /**
  * @brief
  */
-template <class InputIter, class ForwardIter, class BinaryPredicate>
+template <typename InputIter, typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
                                            ForwardIter s_first, ForwardIter s_last,
                                            BinaryPredicate pred) -> InputIter
@@ -378,7 +378,7 @@ template <class InputIter, class ForwardIter, class BinaryPredicate>
 /**
  * @brief
  */
-template <class InputIter, class ForwardIter>
+template <typename InputIter, typename ForwardIter>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
                                            ForwardIter s_first, ForwardIter s_last)
     -> InputIter

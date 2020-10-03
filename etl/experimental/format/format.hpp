@@ -103,7 +103,7 @@ using format_context = basic_format_context<etl::back_insert_iterator<ContainerT
 template <>
 struct formatter<char, char>
 {
-    template <class FormatContext>
+    template <typename FormatContext>
     constexpr auto format(char val, FormatContext& fc) -> decltype(fc.out())
     {
         auto pos = fc.out();
@@ -118,7 +118,7 @@ struct formatter<char, char>
 template <>
 struct formatter<char const*, char>
 {
-    template <class FormatContext>
+    template <typename FormatContext>
     constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
     {
         return etl::copy(val, val + etl::strlen(val), fc.out());
@@ -131,7 +131,7 @@ struct formatter<char const*, char>
 template <::etl::size_t N>
 struct formatter<char[N], char>
 {
-    template <class FormatContext>
+    template <typename FormatContext>
     constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
     {
         return etl::copy(val, val + N, fc.out());

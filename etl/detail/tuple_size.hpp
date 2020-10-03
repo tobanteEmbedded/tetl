@@ -35,32 +35,32 @@ namespace etl
 template <typename First, typename... Rest>
 struct tuple;
 
-template <class T>
+template <typename T>
 struct tuple_size; /*undefined*/
 
-template <class... Types>
+template <typename... Types>
 struct tuple_size<etl::tuple<Types...>>
     : etl::integral_constant<etl::size_t, sizeof...(Types)>
 {
 };
 
-template <class T>
+template <typename T>
 struct tuple_size<const T> : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
 };
 
-template <class T>
+template <typename T>
 struct tuple_size<volatile T> : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
 };
 
-template <class T>
+template <typename T>
 struct tuple_size<const volatile T>
     : etl::integral_constant<etl::size_t, tuple_size<T>::value>
 {
 };
 
-template <class T>
+template <typename T>
 inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
 
 }  // namespace etl

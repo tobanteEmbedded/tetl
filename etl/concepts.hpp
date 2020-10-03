@@ -35,11 +35,11 @@ namespace etl
 {
 namespace detail
 {
-template <class T, class U>
+template <typename T, typename U>
 concept same_as_helper = etl::is_same_v<T, U>;
 }
 
-template <class T, class U>
+template <typename T, typename U>
 concept same_as = detail::same_as_helper<T, U>&& detail::same_as_helper<U, T>;
 }  // namespace etl
 #endif

@@ -56,10 +56,10 @@ inline constexpr auto nullopt = etl::nullopt_t {{}};
 
 namespace detail
 {
-template <class ValueType, bool = etl::is_trivially_destructible<ValueType>::value>
+template <typename ValueType, bool = etl::is_trivially_destructible<ValueType>::value>
 struct optional_destruct_base;
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_destruct_base<ValueType, false>
 {
     using value_type = ValueType;
@@ -72,7 +72,7 @@ struct optional_destruct_base<ValueType, false>
 
     constexpr optional_destruct_base() noexcept : null_state_() { }
 
-    template <class... Args>
+    template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/, Args&&... args)
         : value_(etl::forward<Args>(args)...), has_value_(true)
     {
@@ -95,7 +95,7 @@ struct optional_destruct_base<ValueType, false>
     bool has_value_ = false;
 };
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_destruct_base<ValueType, true>
 {
     typedef ValueType value_type;
@@ -103,7 +103,7 @@ struct optional_destruct_base<ValueType, true>
 
     constexpr optional_destruct_base() noexcept : null_state_(), has_value_(false) { }
 
-    template <class... Args>
+    template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t, Args&&... args)
         : value_(etl::forward<Args>(args)...), has_value_(true)
     {
@@ -122,7 +122,7 @@ struct optional_destruct_base<ValueType, true>
     bool has_value_;
 };
 
-template <class ValueType, bool = etl::is_reference<ValueType>::value>
+template <typename ValueType, bool = etl::is_reference<ValueType>::value>
 struct optional_storage_base : optional_destruct_base<ValueType>
 {
     using base_t     = optional_destruct_base<ValueType>;
@@ -148,7 +148,7 @@ struct optional_storage_base : optional_destruct_base<ValueType>
         return etl::move(this->value_);
     }
 
-    template <class... Args>
+    template <typename... Args>
 
     void construct(Args&&... args)
     {
@@ -157,13 +157,13 @@ struct optional_storage_base : optional_destruct_base<ValueType>
         this->has_value_ = true;
     }
 
-    template <class T>
+    template <typename T>
     void construct_from(T&& opt)
     {
         if (opt.has_value()) construct(etl::forward<T>(opt).get());
     }
 
-    template <class T>
+    template <typename T>
     void assign_from(T&& opt)
     {
         if (this->has_value_ == opt.has_value())
@@ -180,13 +180,14 @@ struct optional_storage_base : optional_destruct_base<ValueType>
     }
 };
 
-template <class ValueType, bool = etl::is_trivially_copy_constructible<ValueType>::value>
+template <typename ValueType,
+          bool = etl::is_trivially_copy_constructible<ValueType>::value>
 struct optional_copy_base : optional_storage_base<ValueType>
 {
     using optional_storage_base<ValueType>::optional_storage_base;
 };
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
 {
     using optional_storage_base<ValueType>::optional_storage_base;
@@ -205,13 +206,14 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
     optional_copy_base& operator=(optional_copy_base&&) = default;
 };
 
-template <class ValueType, bool = etl::is_trivially_move_constructible<ValueType>::value>
+template <typename ValueType,
+          bool = etl::is_trivially_move_constructible<ValueType>::value>
 struct optional_move_base : optional_copy_base<ValueType>
 {
     using optional_copy_base<ValueType>::optional_copy_base;
 };
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
 {
     using value_type = ValueType;
@@ -232,15 +234,15 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
     optional_move_base& operator=(optional_move_base&&) = default;
 };
 
-template <class ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
-                               etl::is_trivially_copy_constructible<ValueType>::value&&
-                                   etl::is_trivially_copy_assignable<ValueType>::value>
+template <typename ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
+                                  etl::is_trivially_copy_constructible<ValueType>::value&&
+                                      etl::is_trivially_copy_assignable<ValueType>::value>
 struct optional_copy_assign_base : optional_move_base<ValueType>
 {
     using optional_move_base<ValueType>::optional_move_base;
 };
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_copy_assign_base<ValueType, false> : optional_move_base<ValueType>
 {
     using optional_move_base<ValueType>::optional_move_base;
@@ -261,15 +263,15 @@ struct optional_copy_assign_base<ValueType, false> : optional_move_base<ValueTyp
     auto operator=(optional_copy_assign_base&&) -> optional_copy_assign_base& = default;
 };
 
-template <class ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
-                               etl::is_trivially_move_constructible<ValueType>::value&&
-                                   etl::is_trivially_move_assignable<ValueType>::value>
+template <typename ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
+                                  etl::is_trivially_move_constructible<ValueType>::value&&
+                                      etl::is_trivially_move_assignable<ValueType>::value>
 struct optional_move_assign_base : optional_copy_assign_base<ValueType>
 {
     using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
 };
 
-template <class ValueType>
+template <typename ValueType>
 struct optional_move_assign_base<ValueType, false> : optional_copy_assign_base<ValueType>
 {
     using value_type = ValueType;
@@ -292,12 +294,12 @@ struct optional_move_assign_base<ValueType, false> : optional_copy_assign_base<V
     }
 };
 
-template <class ValueType>
+template <typename ValueType>
 using optional_sfinae_ctor_base_t
     = sfinae_ctor_base<etl::is_copy_constructible<ValueType>::value,
                        etl::is_move_constructible<ValueType>::value>;
 
-template <class ValueType>
+template <typename ValueType>
 using optional_sfinae_assign_base_t
     = sfinae_assign_base<(etl::is_copy_constructible<ValueType>::value
                           && etl::is_copy_assignable<ValueType>::value),
@@ -306,7 +308,7 @@ using optional_sfinae_assign_base_t
 
 }  // namespace detail
 
-template <class ValueType>
+template <typename ValueType>
 class optional : private detail::optional_move_assign_base<ValueType>,
                  private detail::optional_sfinae_ctor_base_t<ValueType>,
                  private detail::optional_sfinae_assign_base_t<ValueType>
@@ -397,7 +399,7 @@ public:
      *
      * @todo Cleanup & fix SFINAE.
      */
-    template <class U = ValueType>
+    template <typename U = ValueType>
     constexpr auto operator=(U&& value) -> etl::enable_if_t<
         etl::conjunction_v<
             etl::negation<etl::is_same<etl::remove_cvref_t<U>, etl::optional<ValueType>>>,
@@ -458,7 +460,7 @@ public:
      * @brief Returns the contained value if *this has a value, otherwise returns
      * default_value.
      */
-    template <class U>
+    template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) const& -> value_type
     {
         return has_value() ? *this->value()
@@ -469,7 +471,7 @@ public:
      * @brief Returns the contained value if *this has a value, otherwise returns
      * default_value.
      */
-    template <class U>
+    template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& default_value) && -> value_type
     {
         return has_value() ? etl::move(*this->value())
@@ -533,7 +535,7 @@ public:
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -545,7 +547,7 @@ template <class T, class U>
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -557,7 +559,7 @@ template <class T, class U>
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -569,7 +571,7 @@ template <class T, class U>
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -581,7 +583,7 @@ template <class T, class U>
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -593,7 +595,7 @@ template <class T, class U>
 /**
  * @brief Compares two optional objects, lhs and rhs.
  */
-template <class T, class U>
+template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs, optional<U> const& rhs)
     -> bool
 {
@@ -606,7 +608,7 @@ template <class T, class U>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator==(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -617,7 +619,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator==(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
 {
@@ -628,7 +630,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -639,7 +641,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator!=(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
 {
@@ -650,7 +652,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator<(optional<T> const& /*opt*/,
                                        etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -661,7 +663,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator<(etl::nullopt_t /*unused*/,
                                        optional<T> const& opt) noexcept -> bool
 {
@@ -672,7 +674,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -683,7 +685,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator<=(etl::nullopt_t /*unused*/,
                                         optional<T> const& /*opt*/) noexcept -> bool
 {
@@ -694,7 +696,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator>(optional<T> const& opt,
                                        etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -705,7 +707,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator>(etl::nullopt_t /*unused*/,
                                        optional<T> const& /*opt*/) noexcept -> bool
 {
@@ -716,7 +718,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& /*opt*/,
                                         etl::nullopt_t /*unused*/) noexcept -> bool
 {
@@ -727,7 +729,7 @@ template <class T>
  * @brief Compares opt with a nullopt. Equivalent to when comparing to an optional
  * that does not contain a value.
  */
-template <class T>
+template <typename T>
 [[nodiscard]] constexpr auto operator>=(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
 {
@@ -741,7 +743,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator==(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -753,7 +755,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator==(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -765,7 +767,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator!=(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -777,7 +779,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator!=(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -789,7 +791,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator<(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -801,7 +803,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator<(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -813,7 +815,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator>(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -825,7 +827,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator>(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -837,7 +839,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator<=(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -849,7 +851,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator<=(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -861,7 +863,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator>=(optional<T> const&, const U&) -> bool
 // {
 // }
@@ -873,7 +875,7 @@ template <class T>
 //  not
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
-// template <class T, class U>
+// template <typename T, typename U>
 // constexpr auto operator>=(const T&, optional<U> const&) -> bool
 // {
 // }
@@ -901,7 +903,7 @@ constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
  * missed by the implicit deduction guides, in particular, non-copyable arguments and
  * array to pointer conversion.
  */
-template <class T>
+template <typename T>
 optional(T) -> optional<T>;
 
 }  // namespace etl

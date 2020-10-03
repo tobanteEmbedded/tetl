@@ -45,7 +45,7 @@ namespace etl
  * @details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
-template <class C>
+template <typename C>
 constexpr auto begin(C& c) -> decltype(c.begin())
 {
     return c.begin();
@@ -61,7 +61,7 @@ constexpr auto begin(C& c) -> decltype(c.begin())
  * @details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
-template <class C>
+template <typename C>
 constexpr auto begin(const C& c) -> decltype(c.begin())
 {
     return c.begin();
@@ -75,7 +75,7 @@ constexpr auto begin(const C& c) -> decltype(c.begin())
  * @details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto begin(T (&array)[N]) noexcept -> T*
 {
     return &array[0];
@@ -91,7 +91,7 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
  * @details Custom overloads of begin may be provided for classes that do
  * not expose a suitable begin() member function, yet can be iterated.
  */
-template <class C>
+template <typename C>
 constexpr auto cbegin(const C& c) noexcept(noexcept(etl::begin(c)))
     -> decltype(etl::begin(c))
 {
@@ -103,7 +103,7 @@ constexpr auto cbegin(const C& c) noexcept(noexcept(etl::begin(c)))
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
-template <class C>
+template <typename C>
 constexpr auto end(C& c) -> decltype(c.end())
 {
     return c.end();
@@ -114,7 +114,7 @@ constexpr auto end(C& c) -> decltype(c.end())
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
-template <class C>
+template <typename C>
 constexpr auto end(const C& c) -> decltype(c.end())
 {
     return c.end();
@@ -125,7 +125,7 @@ constexpr auto end(const C& c) -> decltype(c.end())
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto end(T (&array)[N]) noexcept -> T*
 {
     return &array[N];
@@ -136,7 +136,7 @@ constexpr auto end(T (&array)[N]) noexcept -> T*
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
-template <class C>
+template <typename C>
 constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
 {
     return etl::end(c);
@@ -155,7 +155,7 @@ constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size(
 /**
  * @brief Returns the size of the given container c or array array. Returns N.
  */
-template <class T, etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto size(const T (&array)[N]) noexcept -> etl::size_t
 {
     etl::ignore_unused(&array[0]);
@@ -276,7 +276,7 @@ struct contiguous_iterator_tag : public random_access_iterator_tag
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
  */
-template <class Iter>
+template <typename Iter>
 struct iterator_traits;
 
 /**
@@ -290,7 +290,7 @@ struct iterator_traits;
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
  */
-template <class T>
+template <typename T>
 struct iterator_traits<T*>
 {
     using iterator_concept  = contiguous_iterator_tag;
@@ -308,7 +308,7 @@ struct iterator_traits<T*>
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/advance
  */
-template <class It, class Distance>
+template <typename It, class Distance>
 constexpr auto advance(It& it, Distance n) -> void
 {
     using category = typename etl::iterator_traits<It>::iterator_category;
@@ -340,7 +340,7 @@ constexpr auto advance(It& it, Distance n) -> void
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/distance
  */
-template <class It>
+template <typename It>
 constexpr auto distance(It first, It last) ->
     typename etl::iterator_traits<It>::difference_type
 {
@@ -364,7 +364,7 @@ constexpr auto distance(It first, It last) ->
 /**
  * @brief Return the nth successor of iterator it.
  */
-template <class InputIt>
+template <typename InputIt>
 [[nodiscard]] constexpr auto
 next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {
@@ -375,7 +375,7 @@ next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1) 
 /**
  * @brief Return the nth predecessor of iterator it.
  */
-template <class BidirIt>
+template <typename BidirIt>
 [[nodiscard]] constexpr auto
 prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
 {
@@ -389,7 +389,7 @@ prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1) 
  * function is called whenever the iterator (whether dereferenced or not) is
  * assigned to. Incrementing the etl::back_insert_iterator is a no-op.
  */
-template <class Container>
+template <typename Container>
 class back_insert_iterator
 {
 protected:
@@ -467,7 +467,7 @@ public:
  * etl::back_insert_iterator for the container c with the type deduced from the
  * type of the argument.
  */
-template <class Container>
+template <typename Container>
 [[nodiscard]] constexpr auto back_inserter(Container& container)
     -> back_insert_iterator<Container>
 {
@@ -483,7 +483,7 @@ template <class Container>
  *
  * @todo Add tests when a container with push_front has been implemented.
  */
-template <class Container>
+template <typename Container>
 class front_insert_iterator
 {
 protected:
@@ -561,7 +561,7 @@ public:
  * etl::front_insert_iterator for the container c with the type deduced from the
  * type of the argument.
  */
-template <class Container>
+template <typename Container>
 [[nodiscard]] constexpr auto front_inserter(Container& c)
     -> etl::front_insert_iterator<Container>
 {

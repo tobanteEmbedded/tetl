@@ -32,7 +32,7 @@ namespace etl::detail
 /**
  * Needed by algorithm.hpp & function.hpp (default_searcher)
  */
-template <class ForwardIter1, class ForwardIter2, class BinaryPredicate>
+template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
                                          ForwardIter2 s_first, ForwardIter2 s_last,
                                          BinaryPredicate pred) -> ForwardIter1

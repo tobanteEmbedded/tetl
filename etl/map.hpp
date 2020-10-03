@@ -214,7 +214,7 @@ public:
      * the element that prevented the insertion) and a bool denoting whether the insertion
      * took place.
      */
-    template <class P>
+    template <typename P>
     constexpr auto insert(P&& value)
         -> etl::enable_if_t<etl::is_constructible_v<value_type, P&&>,
                             etl::pair<iterator, bool>>
@@ -247,7 +247,7 @@ public:
      * (i.e. etl::pair<Key const, T>) is called with exactly the same arguments as
      * supplied to emplace, forwarded via etl::forward<Args>(args)....
      */
-    template <class... Args>
+    template <typename... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
         // Return if no capacity is left.

@@ -51,7 +51,7 @@ enum float_denorm_style
     denorm_present       = 1
 };
 
-template <class T>
+template <typename T>
 class numeric_limits
 {
 public:

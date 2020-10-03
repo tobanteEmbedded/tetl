@@ -43,7 +43,7 @@ namespace etl
  * @brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses operator+ to sum up the elements.
  */
-template <class InputIt, class Type>
+template <typename InputIt, typename Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init) noexcept
     -> Type
 {
@@ -55,7 +55,7 @@ template <class InputIt, class Type>
  * @brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses the BinaryOperation to sum up the elements.
  */
-template <class InputIt, class Type, class BinaryOperation>
+template <typename InputIt, typename Type, typename BinaryOperation>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init,
                                         BinaryOperation op) noexcept -> Type
 {
@@ -77,7 +77,7 @@ template <typename Type>
  * @brief Fills the range [first, last) with sequentially increasing values, starting with
  * value and repetitively evaluating ++value.
  */
-template <class ForwardIt, class T>
+template <typename ForwardIt, typename T>
 constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 {
     while (first != last)
@@ -97,7 +97,7 @@ constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
  * reaching last1. For built-in meaning of + and *, this computes inner product of the two
  * ranges.
  */
-template <class InputIt1, class InputIt2, class T>
+template <typename InputIt1, typename InputIt2, typename T>
 [[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
                                            InputIt2 first2, T init) -> T
 {
@@ -118,8 +118,8 @@ template <class InputIt1, class InputIt2, class T>
  * op1 or op2 must not invalidate any iterators, including the end iterators, or
  * modify any elements of the range involved.
  */
-template <class InputIt1, class InputIt2, class T, class BinaryOperation1,
-          class BinaryOperation2>
+template <typename InputIt1, typename InputIt2, typename T, typename BinaryOperation1,
+          typename BinaryOperation2>
 [[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
                                            InputIt2 first2, T init, BinaryOperation1 op1,
                                            BinaryOperation2 op2) -> T
@@ -142,7 +142,7 @@ template <class InputIt1, class InputIt2, class T, class BinaryOperation1,
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
  */
-template <class InputIt, class OutputIt, class BinaryOperation>
+template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
                            BinaryOperation op) -> OutputIt
 {
@@ -172,7 +172,7 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
  *
  * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
  */
-template <class InputIt, class OutputIt>
+template <typename InputIt, typename OutputIt>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     return etl::partial_sum(first, last, destination, etl::plus<>());
@@ -197,7 +197,7 @@ template <typename M, typename N>
  * @return If either m or n is zero, returns zero. Otherwise, returns the least
  * common multiple of |m| and |n|.
  */
-template <class M, class N>
+template <typename M, typename N>
 [[nodiscard]] constexpr auto lcm(M m, N n) -> etl::enable_if_t<
     etl::is_integral_v<
         M> && !etl::is_same_v<M, bool> && etl::is_integral_v<N> && !etl::is_same_v<N, bool>,
