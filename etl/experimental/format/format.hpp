@@ -195,8 +195,8 @@ auto slice_next_argument(etl::string_view str)
     return etl::make_pair(str, etl::string_view {});
 }
 
-template <typename OutputIt>
-auto format_escaped_sequences(OutputIt buffer, ::etl::string_view str) -> void
+template <typename Context>
+auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
 {
     // Escape tokens
     constexpr auto tk_escape_begin = '{';
@@ -216,7 +216,7 @@ auto format_escaped_sequences(OutputIt buffer, ::etl::string_view str) -> void
         if (escape_start)
         {
             // Copy upto {{
-            ::etl::copy(first, open_first, buffer);
+            detail::format_impl(etl::string_view(first, open_first), ctx);
 
             // Find sequence }}
             auto close_first
@@ -227,14 +227,20 @@ auto format_escaped_sequences(OutputIt buffer, ::etl::string_view str) -> void
                                 && *close_sec == tk_escape_end;
 
             // Copy everything between {{ ... }}, but only one curly each.
-            if (escape_close) { ::etl::copy(open_sec, close_first + 1, buffer); }
-
-            first = close_first + 2;
+            if (escape_close)
+            {
+                detail::format_impl(etl::string_view(open_sec, close_first + 1), ctx);
+                first = close_first + 2;
+            }
+            else
+            {
+                assert(false && "No closing }} found");
+            }
         }
         else
         {
             // No more escaped sequence found, copy rest.
-            ::etl::copy(first, end(str), buffer);
+            detail::format_impl(etl::string_view(first, end(str)), ctx);
             return;
         }
     }
