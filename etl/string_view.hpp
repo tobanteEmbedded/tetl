@@ -111,6 +111,8 @@ public:
     {
     }
 
+    ~basic_string_view() noexcept = default;
+
     /**
      * @brief Replaces the view with that of view.
      */

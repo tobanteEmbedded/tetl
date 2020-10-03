@@ -182,7 +182,7 @@ auto format_argument(ValueT const& val, FormatContext& fc) -> decltype(fc.out())
     return formatter_.format(val, fc);
 }
 
-auto split_at_next_argument(etl::string_view str)
+inline auto split_at_next_argument(etl::string_view str)
     -> etl::pair<etl::string_view, etl::string_view>
 {
     using size_type = etl::string_view::size_type;
