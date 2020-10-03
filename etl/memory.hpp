@@ -274,7 +274,7 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 /**
  * @brief Destroys the n objects in the range starting at first.
  */
-template <typename ForwardIt, class Size>
+template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
     for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }

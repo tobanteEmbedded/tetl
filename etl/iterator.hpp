@@ -308,7 +308,7 @@ struct iterator_traits<T*>
  *
  * @ref https://en.cppreference.com/w/cpp/iterator/advance
  */
-template <typename It, class Distance>
+template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void
 {
     using category = typename etl::iterator_traits<It>::iterator_category;
