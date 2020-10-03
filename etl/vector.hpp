@@ -41,6 +41,8 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 namespace etl
 {
 namespace detail
@@ -107,9 +109,8 @@ using smallest_size_t =
 
 /**
  * @brief Index a range doing bound checks in debug builds
- * FCV_REQUIRES_(RandomAccessRange<Rng>)
  */
-template <typename Rng, typename Index>
+template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr decltype(auto) index(Rng&& rng, Index&& i) noexcept
 {
     assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
@@ -633,9 +634,9 @@ public:
     }
 
     /**
-     * @brief FCV_REQUIRES_(detail::InputIterator<InputIt>)
+     * @brief
      */
-    template <typename InputIt>
+    template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
     constexpr iterator
     move_insert(const_iterator position, InputIt first,
                 InputIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
@@ -723,10 +724,11 @@ public:
     }
 
     /**
-     * @brief detail::InputIterator<InputIt>and etl::is_constructible_v<value_type,
-     * detail::iterator_reference_t<InputIt>>
+     * @brief
      */
-    template <typename InputIt>
+    template <typename InputIt,
+              TAETL_REQUIRES_(detail::InputIterator<InputIt>&& is_constructible_v<
+                              value_type, detail::iterator_reference_t<InputIt>>)>
     constexpr iterator insert(const_iterator position, InputIt first,
                               InputIt last) noexcept(noexcept(emplace_back(*first)))
     {
@@ -814,10 +816,8 @@ public:
 
     /**
      * @brief Initializes vector with \p n default-constructed elements.
-     *
-     * @todo FCV_REQUIRES(etl::is_copy_constructible_v<T> ||
-     * etl::is_move_constructible_v<T>)
      */
+    TAETL_REQUIRES(etl::is_copy_constructible_v<T> || etl::is_move_constructible_v<T>)
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
     {
         assert(n <= capacity() && "size exceeds capacity");
@@ -826,9 +826,8 @@ public:
 
     /**
      * @brief Initializes vector with \p n with \p value.
-     *
-     * @todo FCV_REQUIRES(etl::is_copy_constructible_v<T>)
      */
+    TAETL_REQUIRES(is_copy_constructible_v<T>)
     constexpr static_vector(size_type n,
                             T const& value) noexcept(noexcept(insert(begin(), n, value)))
     {
@@ -838,10 +837,8 @@ public:
 
     /**
      * @brief Initialize vector from range [first, last).
-     *
-     * @todo FCV_REQUIRES_(detail::InputIterator<InputIt>)
      */
-    template <typename InputIter>
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr static_vector(InputIter first, InputIter last)
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
@@ -902,10 +899,9 @@ public:
     /**
      * @brief
      */
-    template <typename InputIter>
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr auto assign(InputIter first, InputIter last) noexcept(
-        noexcept(clear()) and noexcept(insert(begin(), first, last)))
-        -> etl::enable_if_t<detail::InputIterator<InputIter>, void>
+        noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
         {
