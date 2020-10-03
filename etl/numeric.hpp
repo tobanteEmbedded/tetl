@@ -209,7 +209,12 @@ template <typename M, typename N>
 /**
  * @brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
- * @details T is arithmentic type other than bool
+ *
+ * @details CppCon 2019: Marshall Clow “std::midpoint? How Hard Could it Be?”
+ *
+ * https://www.youtube.com/watch?v=sBtAGxBh-XI
+ *
+ * https://en.cppreference.com/w/cpp/numeric/midpoint
  */
 template <typename Integer>
 constexpr auto midpoint(Integer a, Integer b) noexcept
@@ -230,6 +235,16 @@ constexpr auto midpoint(Integer a, Integer b) noexcept
         a + static_cast<Integer>(sign * static_cast<Integer>(U(M - m) >> 1)));
 }
 
+/**
+ * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * rounded towards a.
+ *
+ * @details CppCon 2019: Marshall Clow “std::midpoint? How Hard Could it Be?”
+ *
+ * https://www.youtube.com/watch?v=sBtAGxBh-XI
+ *
+ * https://en.cppreference.com/w/cpp/numeric/midpoint
+ */
 template <typename Float>
 constexpr auto midpoint(Float a, Float b) noexcept
     -> etl::enable_if_t<etl::is_floating_point_v<Float>, Float>
@@ -246,6 +261,16 @@ constexpr auto midpoint(Float a, Float b) noexcept
     return a / 2 + b / 2;
 }
 
+/**
+ * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * rounded towards a.
+ *
+ * @details CppCon 2019: Marshall Clow “std::midpoint? How Hard Could it Be?”
+ *
+ * https://www.youtube.com/watch?v=sBtAGxBh-XI
+ *
+ * https://en.cppreference.com/w/cpp/numeric/midpoint
+ */
 template <typename Pointer>
 constexpr auto midpoint(Pointer a, Pointer b) noexcept
     -> enable_if_t<is_pointer_v<Pointer>, Pointer>
