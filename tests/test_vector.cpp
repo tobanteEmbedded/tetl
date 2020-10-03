@@ -98,6 +98,16 @@ TEMPLATE_TEST_CASE("static_vector: ctor size", "[vector]", etl::uint8_t, etl::in
     CHECK(etl::all_of(begin(vec), end(vec), [](auto val) { return val == TestType(); }));
 }
 
+TEMPLATE_TEST_CASE("static_vector: ctor size,value", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    etl::static_vector<T, 16> vec(16, T(42));
+    CHECK(vec.size() == 16);
+    CHECK(etl::all_of(begin(vec), end(vec), [](auto val) { return val == T(42); }));
+}
+
 TEMPLATE_TEST_CASE("static_vector: ctor copy", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
