@@ -179,7 +179,7 @@ TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::static_string<12>,
 TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
-    auto str = TestType {};
+    auto str = TestType();
     str.append(4, 'a');
 
     REQUIRE(str.size() == etl::size_t(4));
@@ -306,7 +306,7 @@ TEMPLATE_TEST_CASE("string: pop_back", "[string]", etl::static_string<12>,
 TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType {};
+    auto str = TestType();
     REQUIRE(str.empty() == true);
 
     str.insert(0, 4, 'a');
@@ -322,7 +322,7 @@ TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType {};
+    auto str = TestType();
     REQUIRE(str.empty() == true);
 
     str.insert(0, "abcd");
@@ -338,7 +338,7 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType {};
+    auto str = TestType();
     REQUIRE(str.empty() == true);
 
     str.insert(0, "abcd", 3);
@@ -356,7 +356,7 @@ TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
 {
     SECTION("default char")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.empty() == true);
 
         // grow
@@ -375,7 +375,7 @@ TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
 
     SECTION("provided char")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.empty() == true);
 
         // grow
@@ -400,7 +400,7 @@ TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
 
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK_FALSE(str.starts_with("foo"_sv));
         CHECK_FALSE(str.starts_with("foo"));
         CHECK_FALSE(str.starts_with('f'));
@@ -408,7 +408,7 @@ TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
 
     SECTION("false")
     {
-        auto str = TestType {"test"};
+        auto str = TestType("test");
         CHECK_FALSE(str.starts_with("foo"_sv));
         CHECK_FALSE(str.starts_with("foo"));
         CHECK_FALSE(str.starts_with('f'));
@@ -416,7 +416,7 @@ TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
 
     SECTION("true")
     {
-        auto str1 = TestType {"foo"};
+        auto str1 = TestType("foo");
         CHECK(str1.starts_with("foo"_sv));
         CHECK(str1.starts_with("foo"));
         CHECK(str1.starts_with('f'));
@@ -435,7 +435,7 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
 
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK_FALSE(str.ends_with("foo"_sv));
         CHECK_FALSE(str.ends_with("foo"));
         CHECK_FALSE(str.ends_with('o'));
@@ -443,7 +443,7 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
 
     SECTION("false")
     {
-        auto str = TestType {"test"};
+        auto str = TestType("test");
         CHECK_FALSE(str.ends_with("foo"_sv));
         CHECK_FALSE(str.ends_with("foo"));
         CHECK_FALSE(str.ends_with('o'));
@@ -451,12 +451,12 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
 
     SECTION("true")
     {
-        auto str = TestType {"foo"};
+        auto str = TestType("foo");
         CHECK(str.ends_with("foo"_sv));
         CHECK(str.ends_with("foo"));
         CHECK(str.ends_with('o'));
 
-        auto str2 = TestType {"barfoo"};
+        auto str2 = TestType("barfoo");
         CHECK(str2.ends_with("foo"_sv));
         CHECK(str2.ends_with("foo"));
         CHECK(str2.ends_with('o'));
@@ -470,7 +470,7 @@ TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
 
     SECTION("empty ")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.substr().size() == 0);
         CHECK(str.substr(1).size() == 0);
         CHECK(str.substr(10).size() == 0);
@@ -478,7 +478,7 @@ TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
 
     SECTION("non empty")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.size() == 4);
         CHECK(str.substr(0, 1).size() == 1);
         CHECK(str.substr(1).size() == 3);
@@ -492,7 +492,7 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
     SECTION("empty")
     {
         char destination[32] = {};
-        auto str             = TestType {};
+        auto str             = TestType();
         CHECK(str.empty());
         CHECK(str.copy(destination, 0, 0) == 0);
         CHECK(str.copy(destination, 1, 0) == 0);
@@ -502,7 +502,7 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
     SECTION("non empty")
     {
         char destination[32] = {};
-        auto str             = TestType {"abcd"};
+        auto str             = TestType("abcd");
         CHECK(str.size() == 4);
 
         CHECK(str.copy(destination, 1, 100) == 0);
@@ -531,8 +531,8 @@ TEMPLATE_TEST_CASE("string: swap", "[string]", etl::static_string<12>,
 {
     SECTION("empty")
     {
-        auto lhs = TestType {};
-        auto rhs = TestType {};
+        auto lhs = TestType();
+        auto rhs = TestType();
         CHECK(lhs.empty());
         CHECK(rhs.empty());
 
@@ -556,7 +556,7 @@ TEMPLATE_TEST_CASE("string: swap", "[string]", etl::static_string<12>,
 
     SECTION("different size")
     {
-        auto lhs = TestType {"foo"};
+        auto lhs = TestType("foo");
         auto rhs = TestType {"barbaz"};
         CHECK(lhs.size() != rhs.size());
 
@@ -573,8 +573,8 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>
 {
     SECTION("empty string same capacity")
     {
-        auto lhs = TestType {};
-        auto rhs = TestType {};
+        auto lhs = TestType();
+        auto rhs = TestType();
 
         CHECK(lhs.compare(rhs) == 0);
         CHECK(rhs.compare(lhs) == 0);
@@ -582,7 +582,7 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>
 
     SECTION("empty string different capacity")
     {
-        auto lhs = TestType {};
+        auto lhs = TestType();
         auto rhs = etl::static_string<2> {};
 
         CHECK(lhs.compare(rhs) == 0);
@@ -595,9 +595,9 @@ TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
-        CHECK(str.find(TestType {}, 0) == 0);
-        CHECK(str.find(TestType {}, 1) == TestType::npos);
+        auto str = TestType();
+        CHECK(str.find(TestType(), 0) == 0);
+        CHECK(str.find(TestType(), 1) == TestType::npos);
         CHECK(str.find(TestType {""}) == 0);
     }
 
@@ -611,7 +611,7 @@ TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find(TestType {"abc"}, 0) == 0);
         CHECK(str.find(TestType {"bc"}, 1) == 1);
         CHECK(str.find(TestType {"cd"}) == 2);
@@ -623,7 +623,7 @@ TEMPLATE_TEST_CASE("string: find(char const*)", "[string]", etl::static_string<1
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.find("") == 0);
         CHECK(str.find("", 0) == 0);
         CHECK(str.find("", 1) == TestType::npos);
@@ -639,7 +639,7 @@ TEMPLATE_TEST_CASE("string: find(char const*)", "[string]", etl::static_string<1
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find("abc", 0) == 0);
         CHECK(str.find("bc", 1) == 1);
         CHECK(str.find("cd") == 2);
@@ -651,7 +651,7 @@ TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.find('a', 0) == TestType::npos);
         CHECK(str.find('a', 1) == TestType::npos);
         CHECK(str.find('a') == TestType::npos);
@@ -667,7 +667,7 @@ TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find('a', 0) == 0);
         CHECK(str.find('b', 1) == 1);
         CHECK(str.find('c') == 2);
@@ -679,10 +679,10 @@ TEMPLATE_TEST_CASE("string: rfind(string)", "[string]", etl::static_string<12>,
 {
     SECTION("empty string")
     {
-        auto str = TestType {"test"};
-        CHECK(str.rfind(TestType {}) == 0);
-        CHECK(str.rfind(TestType {}, 0) == 0);
-        CHECK(str.rfind(TestType {}, TestType::npos) == str.size());
+        auto str = TestType("test");
+        CHECK(str.rfind(TestType()) == 0);
+        CHECK(str.rfind(TestType(), 0) == 0);
+        CHECK(str.rfind(TestType(), TestType::npos) == str.size());
     }
 
     SECTION("not found")
@@ -695,7 +695,7 @@ TEMPLATE_TEST_CASE("string: rfind(string)", "[string]", etl::static_string<12>,
 
     SECTION("found")
     {
-        // auto const str = TestType {"test"};
+        // auto const str = TestType ("test");
         // CHECK(str.rfind(TestType {"t"}) == 3);
         // CHECK(str.rfind(TestType {"est"}) == 1);
 
@@ -709,7 +709,7 @@ TEMPLATE_TEST_CASE("string: rfind(char const*)", "[string]", etl::static_string<
 {
     SECTION("empty string")
     {
-        auto str = TestType {"test"};
+        auto str = TestType("test");
         CHECK(str.rfind("") == 0);
         CHECK(str.rfind("", 0) == 0);
         CHECK(str.rfind("", TestType::npos) == str.size());
@@ -725,7 +725,7 @@ TEMPLATE_TEST_CASE("string: rfind(char const*)", "[string]", etl::static_string<
 
     SECTION("found")
     {
-        auto const str = TestType {"test"};
+        auto const str = TestType("test");
         CHECK(str.rfind("t") == 0);
         // CHECK(str.rfind("t", 1) == 3);
         // CHECK(str.rfind("est") == 1);
@@ -740,9 +740,9 @@ TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]", etl::static_stri
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
-        CHECK(str.find_first_of(TestType {}, 0) == TestType::npos);
-        CHECK(str.find_first_of(TestType {}, 1) == TestType::npos);
+        auto str = TestType();
+        CHECK(str.find_first_of(TestType(), 0) == TestType::npos);
+        CHECK(str.find_first_of(TestType(), 1) == TestType::npos);
         CHECK(str.find_first_of(TestType {""}) == TestType::npos);
     }
 
@@ -756,7 +756,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]", etl::static_stri
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find_first_of(TestType {"abc"}, 0) == 0);
         CHECK(str.find_first_of(TestType {"bc"}, 1) == 1);
         CHECK(str.find_first_of(TestType {"cd"}) == 2);
@@ -768,7 +768,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(char const*)", "[string]",
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.find_first_of("", 0) == TestType::npos);
         CHECK(str.find_first_of("", 1) == TestType::npos);
         CHECK(str.find_first_of("") == TestType::npos);
@@ -784,7 +784,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(char const*)", "[string]",
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find_first_of("abc", 0) == 0);
         CHECK(str.find_first_of("bc", 1) == 1);
         CHECK(str.find_first_of("cd") == 2);
@@ -796,7 +796,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(char)", "[string]", etl::static_string
 {
     SECTION("empty string")
     {
-        auto str = TestType {};
+        auto str = TestType();
         CHECK(str.find_first_of('a', 0) == TestType::npos);
         CHECK(str.find_first_of('a', 1) == TestType::npos);
         CHECK(str.find_first_of('a') == TestType::npos);
@@ -812,7 +812,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(char)", "[string]", etl::static_string
 
     SECTION("found")
     {
-        auto str = TestType {"abcd"};
+        auto str = TestType("abcd");
         CHECK(str.find_first_of('a', 0) == 0);
         CHECK(str.find_first_of('b', 1) == 1);
         CHECK(str.find_first_of('c') == 2);
@@ -824,8 +824,8 @@ TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
 {
     SECTION("empty string same capacity")
     {
-        auto lhs = TestType {};
-        auto rhs = TestType {};
+        auto lhs = TestType();
+        auto rhs = TestType();
 
         CHECK(lhs == "");
         CHECK(lhs == rhs);
@@ -836,7 +836,7 @@ TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
 
     SECTION("empty string different capacity")
     {
-        auto lhs = TestType {};
+        auto lhs = TestType();
         auto rhs = etl::static_string<2> {};
 
         CHECK(lhs == "");
@@ -873,7 +873,7 @@ TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
     {
         CHECK_FALSE(string {"def"} < "a");
         CHECK_FALSE(string {"def"} < etl::static_string<2> {"a"});
-        CHECK(etl::static_string<2> {"a"} < string {"test"});
+        CHECK(etl::static_string<2> {"a"} < string("test"));
     }
 }
 
@@ -902,7 +902,7 @@ TEMPLATE_TEST_CASE("string: operator<=", "[string]", etl::static_string<12>,
     {
         CHECK_FALSE(string {"def"} <= "a");
         CHECK_FALSE(string {"def"} <= etl::static_string<2> {"a"});
-        CHECK(etl::static_string<2> {"a"} <= string {"test"});
+        CHECK(etl::static_string<2> {"a"} <= string("test"));
     }
 }
 
@@ -930,7 +930,7 @@ TEMPLATE_TEST_CASE("string: operator>", "[string]", etl::static_string<12>,
     SECTION("string different capacity")
     {
         CHECK(string {"def"} > etl::static_string<2> {"a"});
-        CHECK_FALSE(etl::static_string<2> {"a"} > string {"test"});
+        CHECK_FALSE(etl::static_string<2> {"a"} > string("test"));
     }
 }
 
@@ -958,6 +958,6 @@ TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
     SECTION("string different capacity")
     {
         CHECK(string {"def"} >= etl::static_string<2> {"a"});
-        CHECK_FALSE(etl::static_string<2> {"a"} >= string {"test"});
+        CHECK_FALSE(etl::static_string<2> {"a"} >= string("test"));
     }
 }

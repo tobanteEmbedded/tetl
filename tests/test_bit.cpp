@@ -55,16 +55,6 @@ TEST_CASE("bit: endian", "[bit]")
     REQUIRE(etl::endian::big != etl::endian::little);
 }
 
-TEST_CASE("bit: is_big/little_endian", "[bit]")
-{
-    if constexpr (etl::endian::native == etl::endian::little)
-    { CHECK(etl::is_little_endian()); }
-    else
-    {
-        CHECK(etl::is_big_endian());
-    }
-}
-
 TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t, etl::uint16_t,
                    etl::uint32_t, etl::uint64_t)
 {

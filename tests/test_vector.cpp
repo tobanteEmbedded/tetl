@@ -27,8 +27,8 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("static_vector: typedefs", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: typedefs", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     using vector_t = etl::static_vector<TestType, 16>;
@@ -42,8 +42,8 @@ TEMPLATE_TEST_CASE("static_vector: typedefs", "[vector]", etl::uint8_t, etl::int
     STATIC_REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_iterator>);
 }
 
-TEMPLATE_TEST_CASE("static_vector: zero sized", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: zero sized", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto zero = etl::static_vector<TestType, 0> {};
@@ -55,8 +55,8 @@ TEMPLATE_TEST_CASE("static_vector: zero sized", "[vector]", etl::uint8_t, etl::i
     CHECK(zero.full());
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor empty", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor empty", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<TestType, 16> lhs {};
@@ -80,8 +80,8 @@ TEMPLATE_TEST_CASE("static_vector: ctor empty", "[vector]", etl::uint8_t, etl::i
     CHECK_FALSE(rhs != lhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor begin/end", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor begin/end", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto first  = etl::static_vector<TestType, 4>(4);
@@ -89,8 +89,8 @@ TEMPLATE_TEST_CASE("static_vector: ctor begin/end", "[vector]", etl::uint8_t, et
     CHECK(first == second);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor size", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor size", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<TestType, 16> vec(8);
@@ -98,7 +98,7 @@ TEMPLATE_TEST_CASE("static_vector: ctor size", "[vector]", etl::uint8_t, etl::in
     CHECK(etl::all_of(begin(vec), end(vec), [](auto val) { return val == TestType(); }));
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor size,value", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor size,value", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -108,8 +108,8 @@ TEMPLATE_TEST_CASE("static_vector: ctor size,value", "[vector]", etl::uint8_t,
     CHECK(etl::all_of(begin(vec), end(vec), [](auto val) { return val == T(42); }));
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor copy", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor copy", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto first = etl::static_vector<TestType, 4>(4);
@@ -117,8 +117,8 @@ TEMPLATE_TEST_CASE("static_vector: ctor copy", "[vector]", etl::uint8_t, etl::in
     CHECK(first == second);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor move", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: ctor move", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto first = etl::static_vector<TestType, 4>(4);
@@ -128,7 +128,7 @@ TEMPLATE_TEST_CASE("static_vector: ctor move", "[vector]", etl::uint8_t, etl::in
     CHECK(etl::all_of(begin(copy), end(copy), cmp));
 }
 
-TEMPLATE_TEST_CASE("static_vector: assignment copy", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: assignment copy", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -138,7 +138,7 @@ TEMPLATE_TEST_CASE("static_vector: assignment copy", "[vector]", etl::uint8_t,
     CHECK(first == copy);
 }
 
-TEMPLATE_TEST_CASE("static_vector: assignment move", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: assignment move", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -150,8 +150,8 @@ TEMPLATE_TEST_CASE("static_vector: assignment move", "[vector]", etl::uint8_t,
     CHECK(etl::all_of(begin(copy), end(copy), cmp));
 }
 
-TEMPLATE_TEST_CASE("static_vector: begin/end", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: begin/end", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<TestType, 16> vec {};
@@ -166,7 +166,7 @@ TEMPLATE_TEST_CASE("static_vector: begin/end", "[vector]", etl::uint8_t, etl::in
     CHECK_FALSE(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 }
 
-TEMPLATE_TEST_CASE("static_vector: resize", "[vector]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: resize", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -193,7 +193,7 @@ TEMPLATE_TEST_CASE("static_vector: resize", "[vector]", etl::uint8_t, etl::int8_
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: assign", "[vector]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: assign", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -215,8 +215,8 @@ TEMPLATE_TEST_CASE("static_vector: assign", "[vector]", etl::uint8_t, etl::int8_
     CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == TestType(42); }));
 }
 
-TEMPLATE_TEST_CASE("static_vector: pop_back", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: pop_back", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto vec = etl::static_vector<TestType, 4> {};
@@ -227,8 +227,8 @@ TEMPLATE_TEST_CASE("static_vector: pop_back", "[vector]", etl::uint8_t, etl::int
     CHECK(vec.size() == 0);
 }
 
-TEMPLATE_TEST_CASE("static_vector: push_back", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: push_back", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<TestType, 16> vec {};
@@ -249,7 +249,7 @@ TEMPLATE_TEST_CASE("static_vector: push_back", "[vector]", etl::uint8_t, etl::in
     CHECK_FALSE(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 }
 
-TEMPLATE_TEST_CASE("static_vector: erase", "[vector]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: erase", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -264,7 +264,7 @@ TEMPLATE_TEST_CASE("static_vector: erase", "[vector]", etl::uint8_t, etl::int8_t
     CHECK(vec.front() == TestType(2));
 }
 
-TEMPLATE_TEST_CASE("static_vector: swap", "[vector]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: swap", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -283,8 +283,8 @@ TEMPLATE_TEST_CASE("static_vector: swap", "[vector]", etl::uint8_t, etl::int8_t,
     CHECK(lhs == rhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: operator==/!=", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     SECTION("empty")
@@ -329,8 +329,8 @@ TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[vector]", etl::uint8_t, etl
     }
 }
 
-TEMPLATE_TEST_CASE("static_vector: operator</<=", "[vector]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+TEMPLATE_TEST_CASE("vector/static_vector: operator</<=", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     SECTION("empty")
@@ -370,7 +370,7 @@ template <typename T>
     return !(lhs == rhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial zero", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial zero", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -382,9 +382,9 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial zero", "[vector]", etl::uint8_t,
     CHECK(zero.full());
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial ctor empty", "[vector]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial ctor empty", "[vector]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<Vertex<TestType>, 16> lhs {};
     CHECK(lhs.empty());
@@ -401,8 +401,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial ctor empty", "[vector]", etl::uin
     CHECK_FALSE(rhs != lhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial emplace_back", "[vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace_back", "[vector]", char,
+                   int, float)
 {
     etl::static_vector<Vertex<TestType>, 16> lhs {};
     CHECK(lhs.empty());
@@ -420,7 +420,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial emplace_back", "[vector]", char, 
     CHECK(lhs.size() == 1);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial emplace", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -430,7 +430,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial emplace", "[vector]", etl::uint8_
     CHECK(vec.size() == 1);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial pop_back", "[vector]", etl::uint8_t,
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial pop_back", "[vector]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -447,8 +447,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial pop_back", "[vector]", etl::uint8
     CHECK(original.size() == 0);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial insert(copy)", "[vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial insert(copy)", "[vector]", char,
+                   int, float)
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
@@ -458,8 +458,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial insert(copy)", "[vector]", char, 
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial insert(move)", "[vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial insert(move)", "[vector]", char,
+                   int, float)
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
@@ -468,9 +468,9 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial insert(move)", "[vector]", char, 
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial operator[]", "[vector]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial operator[]", "[vector]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto a   = Vertex {TestType(1), TestType(1), TestType(1)};
     auto b   = Vertex {TestType(2), TestType(2), TestType(2)};

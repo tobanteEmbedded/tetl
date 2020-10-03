@@ -83,26 +83,6 @@ constexpr auto bit_cast(const From& src) noexcept -> typename etl::enable_if_t<
     return dst;
 }
 
-/**
- * @brief Returns true, if the system is big endian.
- */
-inline auto is_big_endian() noexcept -> bool
-{
-    auto const u = 1U;
-    struct bytes
-    {
-        char data[sizeof(u)];
-    };
-
-    static_assert(sizeof(u) == sizeof(bytes));
-    return bit_cast<bytes>(u).data[0] == 0;
-}
-
-/**
- * @brief Returns true, if the system is little endian.
- */
-inline auto is_little_endian() noexcept -> bool { return !is_big_endian(); }
-
 namespace detail
 {
 template <typename T>
@@ -131,8 +111,8 @@ template <typename T>
     auto count = T {0};
     while (input)
     {
-        count = count + (input & T {1});
-        input = input >> T {1};
+        count = count + (input & T(1));
+        input = input >> T(1);
     }
     return static_cast<int>(count);
 }
