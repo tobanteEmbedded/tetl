@@ -27,7 +27,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEMPLATE_TEST_CASE("static_vector: typedefs", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: typedefs", "[vector]", char, int, float)
 {
     using vector_t = etl::static_vector<TestType, 16>;
 
@@ -40,7 +40,7 @@ TEMPLATE_TEST_CASE("static_vector: typedefs", "[static_vector]", char, int, floa
     STATIC_REQUIRE(etl::is_same_v<TestType const*, typename vector_t::const_iterator>);
 }
 
-TEMPLATE_TEST_CASE("static_vector: zero sized", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: zero sized", "[vector]", char, int, float)
 {
     auto zero = etl::static_vector<TestType, 0> {};
     CHECK(zero.capacity() == zero.max_size());
@@ -51,7 +51,7 @@ TEMPLATE_TEST_CASE("static_vector: zero sized", "[static_vector]", char, int, fl
     CHECK(zero.full());
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor empty", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: ctor empty", "[vector]", char, int, float)
 {
     etl::static_vector<TestType, 16> lhs {};
     CHECK(lhs.empty());
@@ -74,28 +74,28 @@ TEMPLATE_TEST_CASE("static_vector: ctor empty", "[static_vector]", char, int, fl
     CHECK_FALSE(rhs != lhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor begin/end", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: ctor begin/end", "[vector]", char, int, float)
 {
     auto first  = etl::static_vector<TestType, 4>(4);
     auto second = etl::static_vector<TestType, 4> {etl::begin(first), etl::end(first)};
     CHECK(first == second);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor size", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: ctor size", "[vector]", char, int, float)
 {
     etl::static_vector<TestType, 16> vec(8);
     CHECK(vec.size() == 8);
     CHECK(etl::all_of(begin(vec), end(vec), [](auto val) { return val == TestType(); }));
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor copy", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: ctor copy", "[vector]", char, int, float)
 {
     auto first = etl::static_vector<TestType, 4>(4);
     etl::static_vector<TestType, 4> second {first};
     CHECK(first == second);
 }
 
-TEMPLATE_TEST_CASE("static_vector: ctor move", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: ctor move", "[vector]", char, int, float)
 {
     auto first = etl::static_vector<TestType, 4>(4);
     etl::static_vector<TestType, 4> copy {etl::move(first)};
@@ -104,7 +104,7 @@ TEMPLATE_TEST_CASE("static_vector: ctor move", "[static_vector]", char, int, flo
     CHECK(etl::all_of(begin(copy), end(copy), cmp));
 }
 
-TEMPLATE_TEST_CASE("static_vector: assignment copy", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: assignment copy", "[vector]", char, int, float)
 {
     auto first = etl::static_vector<TestType, 4>(4);
     etl::static_vector<TestType, 4> copy {};
@@ -112,7 +112,7 @@ TEMPLATE_TEST_CASE("static_vector: assignment copy", "[static_vector]", char, in
     CHECK(first == copy);
 }
 
-TEMPLATE_TEST_CASE("static_vector: assignment move", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: assignment move", "[vector]", char, int, float)
 {
     auto first = etl::static_vector<TestType, 4>(4);
     etl::static_vector<TestType, 4> copy {};
@@ -122,7 +122,7 @@ TEMPLATE_TEST_CASE("static_vector: assignment move", "[static_vector]", char, in
     CHECK(etl::all_of(begin(copy), end(copy), cmp));
 }
 
-TEMPLATE_TEST_CASE("static_vector: begin/end", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: begin/end", "[vector]", char, int, float)
 {
     etl::static_vector<TestType, 16> vec {};
     CHECK(vec.empty());
@@ -136,7 +136,7 @@ TEMPLATE_TEST_CASE("static_vector: begin/end", "[static_vector]", char, int, flo
     CHECK_FALSE(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 }
 
-TEMPLATE_TEST_CASE("static_vector: resize", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: resize", "[vector]", char, int, float)
 {
     auto vec = etl::static_vector<TestType, 4> {};
     CHECK(vec.size() == 0);
@@ -161,7 +161,7 @@ TEMPLATE_TEST_CASE("static_vector: resize", "[static_vector]", char, int, float)
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: assign", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: assign", "[vector]", char, int, float)
 {
     auto a = etl::static_vector<TestType, 4> {};
     a.assign(4, TestType {42});
@@ -178,7 +178,7 @@ TEMPLATE_TEST_CASE("static_vector: assign", "[static_vector]", char, int, float)
     CHECK(etl::all_of(begin(b), end(b), [](auto val) { return val == TestType(42); }));
 }
 
-TEMPLATE_TEST_CASE("static_vector: pop_back", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: pop_back", "[vector]", char, int, float)
 {
     auto vec = etl::static_vector<TestType, 4> {};
     CHECK(vec.size() == 0);
@@ -188,7 +188,7 @@ TEMPLATE_TEST_CASE("static_vector: pop_back", "[static_vector]", char, int, floa
     CHECK(vec.size() == 0);
 }
 
-TEMPLATE_TEST_CASE("static_vector: push_back", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: push_back", "[vector]", char, int, float)
 {
     etl::static_vector<TestType, 16> vec {};
     CHECK(vec.empty());
@@ -208,7 +208,7 @@ TEMPLATE_TEST_CASE("static_vector: push_back", "[static_vector]", char, int, flo
     CHECK_FALSE(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 }
 
-TEMPLATE_TEST_CASE("static_vector: erase", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: erase", "[vector]", char, int, float)
 {
     auto vec = etl::static_vector<TestType, 4> {4};
     etl::generate(etl::begin(vec), etl::end(vec), [] {
@@ -221,7 +221,7 @@ TEMPLATE_TEST_CASE("static_vector: erase", "[static_vector]", char, int, float)
     CHECK(vec.front() == TestType(2));
 }
 
-TEMPLATE_TEST_CASE("static_vector: swap", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: swap", "[vector]", char, int, float)
 {
     auto lhs       = etl::static_vector<TestType, 4> {4};
     auto generator = [] {
@@ -238,7 +238,7 @@ TEMPLATE_TEST_CASE("static_vector: swap", "[static_vector]", char, int, float)
     CHECK(lhs == rhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[vector]", char, int, float)
 {
     SECTION("empty")
     {
@@ -282,7 +282,7 @@ TEMPLATE_TEST_CASE("static_vector: operator==/!=", "[static_vector]", char, int,
     }
 }
 
-TEMPLATE_TEST_CASE("static_vector: operator</<=", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: operator</<=", "[vector]", char, int, float)
 {
     SECTION("empty")
     {
@@ -321,7 +321,7 @@ template <typename T>
     return !(lhs == rhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial zero", "[static_vector]", char, int, float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial zero", "[vector]", char, int, float)
 {
     etl::static_vector<Vertex<TestType>, 0> zero {};
     CHECK(zero.empty());
@@ -331,8 +331,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial zero", "[static_vector]", char, i
     CHECK(zero.full());
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial ctor empty", "[static_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial ctor empty", "[vector]", char, int, float)
 {
     etl::static_vector<Vertex<TestType>, 16> lhs {};
     CHECK(lhs.empty());
@@ -349,8 +348,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial ctor empty", "[static_vector]", c
     CHECK_FALSE(rhs != lhs);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial emplace_back", "[static_vector]", char,
-                   int, float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial emplace_back", "[vector]", char, int,
+                   float)
 {
     etl::static_vector<Vertex<TestType>, 16> lhs {};
     CHECK(lhs.empty());
@@ -368,8 +367,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial emplace_back", "[static_vector]",
     CHECK(lhs.size() == 1);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial emplace", "[static_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial emplace", "[vector]", char, int, float)
 {
     etl::static_vector<Vertex<TestType>, 3> vec {};
     vec.emplace(vec.end(), TestType(1.20f), TestType(1.00f), TestType(1.43f));
@@ -377,8 +375,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial emplace", "[static_vector]", char
     CHECK(vec.size() == 1);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial pop_back", "[static_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial pop_back", "[vector]", char, int, float)
 {
     etl::static_vector<Vertex<TestType>, 3> original {};
     auto vertex = Vertex {TestType(1), TestType(2), TestType(3)};
@@ -391,8 +388,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial pop_back", "[static_vector]", cha
     CHECK(original.size() == 0);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial insert(copy)", "[static_vector]", char,
-                   int, float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial insert(copy)", "[vector]", char, int,
+                   float)
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
@@ -402,8 +399,8 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial insert(copy)", "[static_vector]",
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial insert(move)", "[static_vector]", char,
-                   int, float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial insert(move)", "[vector]", char, int,
+                   float)
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
@@ -412,8 +409,7 @@ TEMPLATE_TEST_CASE("static_vector: non_trivial insert(move)", "[static_vector]",
     CHECK(vec.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("static_vector: non_trivial operator[]", "[static_vector]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("static_vector: non_trivial operator[]", "[vector]", char, int, float)
 {
     auto a   = Vertex {TestType(1), TestType(1), TestType(1)};
     auto b   = Vertex {TestType(2), TestType(2), TestType(2)};
