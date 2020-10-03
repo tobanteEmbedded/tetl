@@ -171,13 +171,13 @@ using diff_t =
 namespace detail
 {
 template <typename ValueT, typename Context>
-auto format_impl(ValueT const& val, Context& ctx)
+auto format_argument(ValueT const& val, Context& ctx)
 {
     auto fmt = formatter<ValueT, char> {};
     fmt.format(val, ctx);
 }
 
-auto slice_next_argument(etl::string_view str)
+auto split_at_next_argument(etl::string_view str)
     -> etl::pair<etl::string_view, etl::string_view>
 {
     using size_type = etl::string_view::size_type;
@@ -188,8 +188,10 @@ auto slice_next_argument(etl::string_view str)
     if (auto res = etl::find(begin(str), end(str), token_arg_start);
         res != end(str) && *etl::next(res) == token_arg_stop)
     {
-        auto index = static_cast<size_type>(etl::distance(begin(str), res));
-        return etl::make_pair(str.substr(0, index), str.substr(index + 2));
+        auto index  = static_cast<size_type>(etl::distance(begin(str), res));
+        auto first  = str.substr(0, index);
+        auto second = str.substr(index + 2);
+        return etl::make_pair(first, second);
     }
 
     return etl::make_pair(str, etl::string_view {});
@@ -216,7 +218,7 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
         if (escape_start)
         {
             // Copy upto {{
-            detail::format_impl(etl::string_view(first, open_first), ctx);
+            detail::format_argument(etl::string_view(first, open_first), ctx);
 
             // Find sequence }}
             auto close_first
@@ -229,7 +231,7 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
             // Copy everything between {{ ... }}, but only one curly each.
             if (escape_close)
             {
-                detail::format_impl(etl::string_view(open_sec, close_first + 1), ctx);
+                detail::format_argument(etl::string_view(open_sec, close_first + 1), ctx);
                 first = close_first + 2;
             }
             else
@@ -245,7 +247,7 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
     }
 
     // No more escaped sequence found, copy rest.
-    detail::format_impl(etl::string_view(first, end(str)), ctx);
+    detail::format_argument(etl::string_view(first, end(str)), ctx);
 }
 
 }  // namespace detail
@@ -259,21 +261,38 @@ auto format_escaped_sequences(Context ctx, ::etl::string_view str) -> void
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
+    // TODO: Make more generic. What about other string types.
     auto ctx = format_context<::etl::static_string<32>> {out};
 
-    auto slices = detail::slice_next_argument(fmt);
+    // Format leading text before the first argument.
+    auto slices = detail::split_at_next_argument(fmt);
     detail::format_escaped_sequences(ctx, slices.first);
+
+    // Save rest of format string. Supress warning if format_to was called without
+    // arguments.
     auto rest = slices.second;
     ::etl::ignore_unused(rest);
 
     (
         [&] {
-            detail::format_impl(args, ctx);
-            auto rest_slices = detail::slice_next_argument(rest);
+            // Format argument
+            detail::format_argument(args, ctx);
+
+            // Split format text at next argument
+            auto rest_slices = detail::split_at_next_argument(rest);
             detail::format_escaped_sequences(ctx, rest_slices.first);
+
+            // Save rest of format string for the next arguments
             rest = rest_slices.second;
         }(),
         ...);
+
+    // Anything left over after the last argument.
+    if (auto trailing = detail::split_at_next_argument(rest); !trailing.first.empty())
+    {
+        detail::format_escaped_sequences(ctx, trailing.first);
+        assert(trailing.second.empty());
+    }
 
     return ctx.out();
 }

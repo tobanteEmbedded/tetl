@@ -266,42 +266,42 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
     // }
 }
 
-TEST_CASE("experimental/format: detail::slice_next_argument", "[experimental][format]")
+TEST_CASE("experimental/format: detail::split_at_next_argument", "[experimental][format]")
 {
     namespace fmt = etl::experimental::format;
     using namespace etl::literals;
 
     SECTION("argument only")
     {
-        auto slices = fmt::detail::slice_next_argument("{}");
+        auto slices = fmt::detail::split_at_next_argument("{}");
         CHECK(slices.first == ""_sv);
         CHECK(slices.second == ""_sv);
     }
 
     SECTION("prefix")
     {
-        auto slices = fmt::detail::slice_next_argument("a{}");
+        auto slices = fmt::detail::split_at_next_argument("a{}");
         CHECK(slices.first == "a"_sv);
         CHECK(slices.second == ""_sv);
     }
 
     SECTION("postfix")
     {
-        auto slices = fmt::detail::slice_next_argument("{}b");
+        auto slices = fmt::detail::split_at_next_argument("{}b");
         CHECK(slices.first == ""_sv);
         CHECK(slices.second == "b"_sv);
     }
 
     SECTION("pre&postfix")
     {
-        auto slices = fmt::detail::slice_next_argument("ab{}cd");
+        auto slices = fmt::detail::split_at_next_argument("ab{}cd");
         CHECK(slices.first == "ab"_sv);
         CHECK(slices.second == "cd"_sv);
     }
 
     SECTION("escape")
     {
-        auto slices = fmt::detail::slice_next_argument("{{test}}");
+        auto slices = fmt::detail::split_at_next_argument("{{test}}");
         CHECK(slices.first == "{{test}}"_sv);
         CHECK(slices.second == ""_sv);
     }
