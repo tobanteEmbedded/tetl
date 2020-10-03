@@ -42,6 +42,15 @@ TEST_CASE("string_view: construct default", "[string_view]")
     STATIC_REQUIRE(sv.length() == 0);
 }
 
+TEST_CASE("string_view: construct(first,last)", "[string_view]")
+{
+    auto const sv   = etl::string_view {"test"};
+    auto const copy = etl::string_view(begin(sv), end(sv));
+    REQUIRE(copy.data() == sv.data());
+    REQUIRE(copy.size() == sv.size());
+    REQUIRE(copy == sv);
+}
+
 TEST_CASE("string_view: construct copy", "[string_view]")
 {
     WHEN("empty")

@@ -29,6 +29,7 @@ DAMAGE.
 
 #include "algorithm.hpp"
 #include "definitions.hpp"
+#include "iterator.hpp"
 #include "memory.hpp"
 
 #include "etl/detail/string_char_traits.hpp"
@@ -93,6 +94,20 @@ public:
      */
     constexpr basic_string_view(CharType const* str)
         : begin_ {str}, size_ {traits_type::length(str)}
+    {
+    }
+
+    /**
+     * @brief Constructs a basic_string_view over the range [first, last). The behavior is
+     * undefined if [first, last) is not a valid range.
+     *
+     * @todo SFINAE protect.
+     */
+    template <
+        typename FirstIter, typename SecondIter,
+        typename etl::enable_if_t<!etl::is_convertible_v<SecondIter, size_type>, int> = 0>
+    constexpr basic_string_view(FirstIter first, SecondIter last)
+        : basic_string_view {first, static_cast<size_type>(last - first)}
     {
     }
 
