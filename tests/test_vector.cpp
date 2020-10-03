@@ -270,19 +270,40 @@ TEMPLATE_TEST_CASE("vector/static_vector: swap", "[vector]", etl::uint8_t, etl::
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    auto lhs       = etl::static_vector<TestType, 4> {4};
-    auto generator = [] {
-        static auto val = TestType {};
-        return val += TestType(1);
-    };
+    SECTION("method")
+    {
+        auto lhs       = etl::static_vector<TestType, 4> {4};
+        auto generator = [] {
+            static auto val = TestType {};
+            return val += TestType(1);
+        };
 
-    etl::generate(etl::begin(lhs), etl::end(lhs), generator);
-    auto rhs = lhs;
+        etl::generate(etl::begin(lhs), etl::end(lhs), generator);
+        auto rhs = lhs;
 
-    lhs.swap(rhs);
-    CHECK(lhs == rhs);
-    rhs.swap(lhs);
-    CHECK(lhs == rhs);
+        lhs.swap(rhs);
+        CHECK(lhs == rhs);
+        rhs.swap(lhs);
+        CHECK(lhs == rhs);
+    }
+
+    SECTION("free function")
+    {
+        auto lhs       = etl::static_vector<TestType, 4> {4};
+        auto generator = [] {
+            static auto val = TestType {};
+            return val += TestType(1);
+        };
+
+        etl::generate(etl::begin(lhs), etl::end(lhs), generator);
+        auto rhs = lhs;
+
+        using ::etl::swap;
+        swap(lhs, rhs);
+        CHECK(lhs == rhs);
+        swap(rhs, lhs);
+        CHECK(lhs == rhs);
+    }
 }
 
 TEMPLATE_TEST_CASE("vector/static_vector: operator==/!=", "[vector]", etl::uint8_t,

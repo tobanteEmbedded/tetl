@@ -1003,7 +1003,7 @@ public:
     }
 
     /**
-     * @brief
+     * @brief Exchanges the contents of the container with those of other.
      */
     constexpr auto swap(static_vector& other) noexcept(etl::is_nothrow_swappable_v<T>)
         -> etl::enable_if_t<etl::is_assignable_v<T&, T&&>, void>
@@ -1064,9 +1064,24 @@ private:
 };
 
 /**
- * @brief Compares the contents of two vectors.
+ * @brief Specializes the etl::swap algorithm for etl::static_vector. Swaps the contents
+ * of lhs and rhs.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
+constexpr auto swap(static_vector<T, Capacity>& lhs,
+                    static_vector<T, Capacity>& rhs) noexcept -> void
+{
+    lhs.swap(rhs);
+}
+
+/**
+ * @brief Compares the contents of two vectors.
+ *
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
+ * number of elements and each element in lhs compares equal with the element in rhs at
+ * the same position.
+ */
+template <typename T, etl::size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -1080,8 +1095,12 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
 
 /**
  * @brief Compares the contents of two vectors.
+ *
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
+ * number of elements and each element in lhs compares equal with the element in rhs at
+ * the same position.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -1090,8 +1109,11 @@ constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
 
 /**
  * @brief Compares the contents of two vectors.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -1100,8 +1122,11 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs,
 
 /**
  * @brief Compares the contents of two vectors.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -1110,8 +1135,11 @@ constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
 
 /**
  * @brief Compares the contents of two vectors.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -1120,8 +1148,11 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs,
 
 /**
  * @brief Compares the contents of two vectors.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare.
  */
-template <typename T, size_t Capacity>
+template <typename T, etl::size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
