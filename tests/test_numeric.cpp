@@ -120,18 +120,26 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t, etl::int32_
                    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
                    double, long double)
 {
-    etl::static_vector<TestType, 16> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
-    vec.push_back(4);
+    using T  = TestType;
+    auto vec = etl::array {T(1), T(2), T(3), T(4)};
 
-    // accumulate
-    REQUIRE(etl::accumulate(vec.begin(), vec.end(), TestType {0}) == 10);
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), T {0}) == T(10));
 
-    // accumulate binary function op
-    auto func = [](TestType a, TestType b) { return a + (b * 2); };
-    REQUIRE(etl::accumulate(vec.begin(), vec.end(), TestType {0}, func) == 20);
+    auto func = [](T a, T b) { return a + (b * 2); };
+    REQUIRE(etl::accumulate(vec.begin(), vec.end(), T {0}, func) == T(20));
+}
+
+TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
+                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float,
+                   double, long double)
+{
+    using T  = TestType;
+    auto vec = etl::array {T(1), T(2), T(3), T(4)};
+    REQUIRE(etl::reduce(vec.begin(), vec.end()) == T(10));
+    REQUIRE(etl::reduce(vec.begin(), vec.end(), T {0}) == T(10));
+
+    auto func = [](T a, T b) { return a + (b * 2); };
+    REQUIRE(etl::reduce(vec.begin(), vec.end(), T {0}, func) == T(20));
 }
 
 TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t, etl::uint16_t,
