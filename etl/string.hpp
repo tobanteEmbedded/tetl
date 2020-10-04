@@ -49,15 +49,17 @@ template <typename CharType, etl::size_t Capacity,
 class basic_static_string
 {
 public:
-    using traits_type     = Traits;
-    using value_type      = CharType;
-    using size_type       = etl::size_t;
-    using pointer         = CharType*;
-    using const_pointer   = CharType const*;
-    using reference       = CharType&;
-    using const_reference = CharType const&;
-    using iterator        = CharType*;
-    using const_iterator  = CharType const*;
+    using traits_type            = Traits;
+    using value_type             = CharType;
+    using size_type              = etl::size_t;
+    using pointer                = CharType*;
+    using const_pointer          = CharType const*;
+    using reference              = CharType&;
+    using const_reference        = CharType const&;
+    using iterator               = CharType*;
+    using const_iterator         = CharType const*;
+    using reverse_iterator       = etl::reverse_iterator<iterator>;
+    using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
     /**
      * @brief Default constructor.
@@ -185,6 +187,60 @@ public:
      * @brief Returns an const iterator to the end.
      */
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return rbegin();
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed string. It
+     * corresponds to the last character of the non-reversed string.
+     */
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return rend();
+    }
 
     /**
      * @brief Accesses the first character.
