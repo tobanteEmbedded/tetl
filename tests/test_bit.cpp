@@ -55,6 +55,27 @@ TEST_CASE("bit: endian", "[bit]")
     REQUIRE(etl::endian::big != etl::endian::little);
 }
 
+TEMPLATE_TEST_CASE("bit: rotl", "[bit]", etl::uint8_t)
+{
+    etl::uint8_t const i = 0b00011101;
+
+    CHECK(etl::rotl(i, 0) == 0b00011101);
+    CHECK(etl::rotl(i, 1) == 0b00111010);
+    CHECK(etl::rotl(i, 4) == 0b11010001);
+    CHECK(etl::rotl(i, 9) == 0b00111010);
+    CHECK(etl::rotl(i, -1) == 0b10001110);
+}
+
+TEMPLATE_TEST_CASE("bit: rotr", "[bit]", etl::uint8_t)
+{
+    TestType const i = 0b00011101;
+
+    CHECK(etl::rotr(i, 0) == 0b00011101);
+    CHECK(etl::rotr(i, 1) == 0b10001110);
+    CHECK(etl::rotr(i, 9) == 0b10001110);
+    CHECK(etl::rotr(i, -1) == 0b00111010);
+}
+
 TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t, etl::uint16_t,
                    etl::uint32_t, etl::uint64_t)
 {
