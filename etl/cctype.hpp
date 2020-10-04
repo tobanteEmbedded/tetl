@@ -27,4 +27,48 @@ DAMAGE.
 #ifndef TAETL_CCTYPE_HPP
 #define TAETL_CCTYPE_HPP
 
+#include "cassert.hpp"
+#include "limits.hpp"
+
+namespace etl
+{
+/**
+ * @brief Checks if the given character is an alphanumeric character as classified by the
+ * default C locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isalnum
+ *
+ * @return Non-zero value if the character is an alphanumeric character, 0 otherwise.
+ */
+[[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto is_digit = ch >= '0' && ch <= '9';
+    auto is_lower = ch >= 'a' && ch <= 'z';
+    auto is_upper = ch >= 'A' && ch <= 'Z';
+
+    return static_cast<int>(is_digit || is_lower || is_upper);
+}
+
+/**
+ * @brief Checks if the given character is an alphanumeric character as classified by the
+ * default C locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isalnum
+ *
+ * @return Non-zero value if the character is an alphanumeric character, 0 otherwise.
+ */
+[[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto is_lower = ch >= 'a' && ch <= 'z';
+    auto is_upper = ch >= 'A' && ch <= 'Z';
+
+    return static_cast<int>(is_lower || is_upper);
+}
+}  // namespace etl
 #endif  // TAETL_CCTYPE_HPP

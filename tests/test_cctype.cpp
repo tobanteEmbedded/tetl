@@ -28,4 +28,52 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-TEST_CASE("cctype: chars_format", "[cctype]") { SUCCEED(); }
+TEST_CASE("cctype: isalnum", "[cctype]")
+{
+    SECTION("digit")
+    {
+        CHECK(etl::isalnum('0'));
+        CHECK(etl::isalnum('1'));
+        CHECK(etl::isalnum('2'));
+        CHECK(etl::isalnum('3'));
+        CHECK(etl::isalnum('4'));
+        CHECK(etl::isalnum('5'));
+        CHECK(etl::isalnum('6'));
+        CHECK(etl::isalnum('7'));
+        CHECK(etl::isalnum('8'));
+        CHECK(etl::isalnum('9'));
+    }
+
+    SECTION("lower")
+    {
+        for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK(etl::isalnum(ch)); }
+    }
+
+    SECTION("upper")
+    {
+        for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK(etl::isalnum(ch)); }
+    }
+}
+
+TEST_CASE("cctype: isalpha", "[cctype]")
+{
+    SECTION("true")
+    {
+        for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK(etl::isalpha(ch)); }
+        for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK(etl::isalpha(ch)); }
+    }
+
+    SECTION("false")
+    {
+        CHECK_FALSE(etl::isalpha('0'));
+        CHECK_FALSE(etl::isalpha('1'));
+        CHECK_FALSE(etl::isalpha('2'));
+        CHECK_FALSE(etl::isalpha('3'));
+        CHECK_FALSE(etl::isalpha('4'));
+        CHECK_FALSE(etl::isalpha('5'));
+        CHECK_FALSE(etl::isalpha('6'));
+        CHECK_FALSE(etl::isalpha('7'));
+        CHECK_FALSE(etl::isalpha('8'));
+        CHECK_FALSE(etl::isalpha('9'));
+    }
+}
