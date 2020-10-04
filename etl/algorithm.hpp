@@ -1226,7 +1226,7 @@ template <typename ForwardIter, typename T, typename Compare>
  *
  * https://en.cppreference.com/w/cpp/algorithm/lower_bound
  */
-template <typename ForwardIter, typename T, typename Compare>
+template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
                                          T const& value) noexcept -> ForwardIter
 {
