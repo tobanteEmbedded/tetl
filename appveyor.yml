@@ -43,10 +43,10 @@ test_script:
   - cmd: >-
       cd build_debug
 
-      ctest -Q -C Debug
+      .\tests\Debug\etl-tests.exe
 
       cd ..
 
       cd build_release
 
-      ctest -Q -C Release
+      .\tests\Release\etl-tests.exe
