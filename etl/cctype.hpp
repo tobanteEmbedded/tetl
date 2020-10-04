@@ -206,6 +206,27 @@ namespace etl
 }
 
 /**
+ * @brief Checks if ch is a printable character as classified by the currently installed C
+ * locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isprint
+ *
+ * @return Non-zero value if the character is a punctuation character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto const is_digit = isdigit(ch) != 0;
+    auto const is_upper = isupper(ch) != 0;
+    auto const is_lower = islower(ch) != 0;
+    auto const is_punct = ispunct(ch) != 0;
+
+    return static_cast<int>(is_digit || is_lower || is_upper || is_punct || ch == ' ');
+}
+
+/**
  * @brief Converts the given character to lowercase according to the character conversion
  * rules defined by the default C locale.
  *

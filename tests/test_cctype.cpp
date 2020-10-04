@@ -150,6 +150,25 @@ TEST_CASE("cctype: ispunct", "[cctype]")
     for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::ispunct(ch)); }
 }
 
+TEST_CASE("cctype: isprint", "[cctype]")
+{
+    CHECK(etl::isprint(' '));
+
+    for (auto ch = '!'; ch <= '/'; ++ch) { CHECK(etl::isprint(ch)); }
+    for (auto ch = ':'; ch <= '@'; ++ch) { CHECK(etl::isprint(ch)); }
+    for (auto ch = '['; ch <= '`'; ++ch) { CHECK(etl::isprint(ch)); }
+    for (auto ch = '{'; ch <= '~'; ++ch) { CHECK(etl::isprint(ch)); }
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK(etl::isprint(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK(etl::isprint(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK(etl::isprint(ch)); }
+
+    CHECK_FALSE(etl::isprint('\n'));
+    CHECK_FALSE(etl::isprint('\f'));
+    CHECK_FALSE(etl::isprint('\t'));
+    CHECK_FALSE(etl::isprint('\v'));
+}
+
 TEST_CASE("cctype: tolower", "[cctype]")
 {
     CHECK(static_cast<char>(etl::tolower('a')) == 'a');
