@@ -137,3 +137,33 @@ TEST_CASE("cctype: isblank", "[cctype]")
     for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
     for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
 }
+
+TEST_CASE("cctype: tolower", "[cctype]")
+{
+    CHECK(static_cast<char>(etl::tolower('a')) == 'a');
+    CHECK(static_cast<char>(etl::tolower('A')) == 'a');
+
+    for (auto ch = '0'; ch <= '9'; ++ch)
+    { CHECK(static_cast<char>(etl::tolower(ch)) == ch); }
+
+    for (auto ch = 'a'; ch <= 'z'; ++ch)
+    { CHECK(static_cast<char>(etl::tolower(ch)) == ch); }
+
+    for (auto ch = 'A'; ch <= 'Z'; ++ch)
+    { CHECK(static_cast<char>(etl::tolower(ch)) == ch + 32); }
+}
+
+TEST_CASE("cctype: toupper", "[cctype]")
+{
+    CHECK(static_cast<char>(etl::toupper('a')) == 'A');
+    CHECK(static_cast<char>(etl::toupper('A')) == 'A');
+
+    for (auto ch = '0'; ch <= '9'; ++ch)
+    { CHECK(static_cast<char>(etl::toupper(ch)) == ch); }
+
+    for (auto ch = 'A'; ch <= 'Z'; ++ch)
+    { CHECK(static_cast<char>(etl::toupper(ch)) == ch); }
+
+    for (auto ch = 'a'; ch <= 'z'; ++ch)
+    { CHECK(static_cast<char>(etl::toupper(ch)) == ch - 32); }
+}

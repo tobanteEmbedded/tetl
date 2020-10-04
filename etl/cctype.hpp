@@ -180,5 +180,47 @@ namespace etl
 
     return static_cast<int>(space || horizontal_tab);
 }
+
+/**
+ * @brief Converts the given character to lowercase according to the character conversion
+ * rules defined by the default C locale.
+ *
+ * In the default "C" locale, the following uppercase letters ABCDEFGHIJKLMNOPQRSTUVWXYZ
+ * are replaced with respective lowercase letters abcdefghijklmnopqrstuvwxyz.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/tolower
+ *
+ * @return Lowercase version of ch or unmodified ch if no lowercase version is listed in
+ * the current C locale.
+ */
+[[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
+    return static_cast<int>(ch);
+}
+
+/**
+ * @brief Converts the given character to uppercase according to the character conversion
+ * rules defined by the default C locale.
+ *
+ * In the default "C" locale, the following lowercase letters abcdefghijklmnopqrstuvwxyz
+ * are replaced with respective uppercase letters ABCDEFGHIJKLMNOPQRSTUVWXYZ.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/toupper
+ *
+ * @return Converted character or ch if no uppercase version is defined by the current C
+ * locale.
+ */
+[[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
+    return static_cast<int>(ch);
+}
 }  // namespace etl
 #endif  // TAETL_CCTYPE_HPP
