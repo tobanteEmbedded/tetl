@@ -138,6 +138,18 @@ TEST_CASE("cctype: isblank", "[cctype]")
     for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
 }
 
+TEST_CASE("cctype: ispunct", "[cctype]")
+{
+    for (auto ch = '!'; ch <= '/'; ++ch) { CHECK(etl::ispunct(ch)); }
+    for (auto ch = ':'; ch <= '@'; ++ch) { CHECK(etl::ispunct(ch)); }
+    for (auto ch = '['; ch <= '`'; ++ch) { CHECK(etl::ispunct(ch)); }
+    for (auto ch = '{'; ch <= '~'; ++ch) { CHECK(etl::ispunct(ch)); }
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::ispunct(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::ispunct(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::ispunct(ch)); }
+}
+
 TEST_CASE("cctype: tolower", "[cctype]")
 {
     CHECK(static_cast<char>(etl::tolower('a')) == 'a');

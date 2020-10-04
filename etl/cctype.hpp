@@ -182,6 +182,30 @@ namespace etl
 }
 
 /**
+ * @brief Checks if the given character is a punctuation character as classified by the
+ * current C locale.
+ *
+ * The default C locale classifies the characters !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ as
+ * punctuation.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/ispunct
+ *
+ * @return Non-zero value if the character is a punctuation character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto const sec_1 = ch >= '!' && ch <= '/';
+    auto const sec_2 = ch >= ':' && ch <= '@';
+    auto const sec_3 = ch >= '[' && ch <= '`';
+    auto const sec_4 = ch >= '{' && ch <= '~';
+
+    return static_cast<int>(sec_1 || sec_2 || sec_3 || sec_4);
+}
+
+/**
  * @brief Converts the given character to lowercase according to the character conversion
  * rules defined by the default C locale.
  *
