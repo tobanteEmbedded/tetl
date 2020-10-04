@@ -77,3 +77,34 @@ TEST_CASE("cctype: isalpha", "[cctype]")
         CHECK_FALSE(etl::isalpha('9'));
     }
 }
+
+TEST_CASE("cctype: islower", "[cctype]")
+{
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK(etl::islower(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::islower(ch)); }
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::islower(ch)); }
+}
+
+TEST_CASE("cctype: isupper", "[cctype]")
+{
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK(etl::isupper(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isupper(ch)); }
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::isupper(ch)); }
+}
+
+TEST_CASE("cctype: isdigit", "[cctype]")
+{
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK(etl::isdigit(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isdigit(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isdigit(ch)); }
+}
+
+TEST_CASE("cctype: isxdigit", "[cctype]")
+{
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK(etl::isxdigit(ch)); }
+    for (auto ch = 'A'; ch <= 'F'; ++ch) { CHECK(etl::isxdigit(ch)); }
+    for (auto ch = 'a'; ch <= 'f'; ++ch) { CHECK(etl::isxdigit(ch)); }
+
+    for (auto ch = 'G'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isxdigit(ch)); }
+    for (auto ch = 'g'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isxdigit(ch)); }
+}

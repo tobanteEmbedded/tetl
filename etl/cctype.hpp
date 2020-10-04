@@ -53,12 +53,12 @@ namespace etl
 }
 
 /**
- * @brief Checks if the given character is an alphanumeric character as classified by the
+ * @brief Checks if the given character is an alphabetic character as classified by the
  * default C locale.
  *
- * https://en.cppreference.com/w/cpp/string/byte/isalnum
+ * https://en.cppreference.com/w/cpp/string/byte/isalpha
  *
- * @return Non-zero value if the character is an alphanumeric character, 0 otherwise.
+ * @return Non-zero value if the character is an alphabetic character, 0 otherwise.
  */
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
@@ -69,6 +69,71 @@ namespace etl
     auto is_upper = ch >= 'A' && ch <= 'Z';
 
     return static_cast<int>(is_lower || is_upper);
+}
+
+/**
+ * @brief Checks if the given character is classified as a lowercase character according
+ * to the default C locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/islower
+ *
+ * @return Non-zero value if the character is a lowercase letter, zero otherwise.
+ */
+[[nodiscard]] constexpr auto islower(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= 'a' && ch <= 'z');
+}
+
+/**
+ * @brief Checks if the given character is classified as a uppercase character according
+ * to the default C locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isupper
+ *
+ * @return Non-zero value if the character is a uppercase letter, zero otherwise.
+ */
+[[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= 'A' && ch <= 'Z');
+}
+
+/**
+ * @brief Checks if the given character is one of the 10 decimal digits: 0123456789.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isdigit
+ *
+ * @return Non-zero value if the character is a numeric character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= '0' && ch <= '9');
+}
+
+/**
+ * @brief Checks if the given character is a hexadecimal numeric character
+ * (0123456789abcdefABCDEF).
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isxdigit
+ *
+ * @return Non-zero value if the character is a hexadecimal numeric character, zero
+ * otherwise.
+ */
+[[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto const is_digit     = ch >= '0' && ch <= '9';
+    auto const is_hex_lower = ch >= 'a' && ch <= 'f';
+    auto const is_hex_upper = ch >= 'A' && ch <= 'F';
+
+    return static_cast<int>(is_digit || is_hex_lower || is_hex_upper);
 }
 }  // namespace etl
 #endif  // TAETL_CCTYPE_HPP
