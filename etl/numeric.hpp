@@ -220,7 +220,7 @@ template <typename M, typename N,
  * @brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  *
- * @details CppCon 2019: Marshall Clow “std::midpoint? How Hard Could it Be?”
+ * @details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
  *
  * https://www.youtube.com/watch?v=sBtAGxBh-XI
  *
@@ -249,7 +249,7 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
  * @brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  *
- * @details CppCon 2019: Marshall Clow “std::midpoint? How Hard Could it Be?”
+ * @details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
  *
  * https://www.youtube.com/watch?v=sBtAGxBh-XI
  *
