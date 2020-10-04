@@ -26,6 +26,7 @@ DAMAGE.
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
+#include "etl/cctype.hpp"
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
 #include "etl/string.hpp"
@@ -1115,7 +1116,7 @@ TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t, etl::int8
         auto const v6 = etl::array {'a', 'c', 'g'};
         auto const v7 = etl::array {'A', 'B', 'C'};
 
-        auto no_case = [](char a, char b) { return std::tolower(a) < std::tolower(b); };
+        auto no_case = [](char a, char b) { return etl::tolower(a) < etl::tolower(b); };
 
         CHECK(etl::includes(v1.begin(), v1.end(), v2.begin(), v2.end()));
         CHECK(etl::includes(v1.begin(), v1.end(), v3.begin(), v3.end()));

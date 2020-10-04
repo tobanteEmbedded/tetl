@@ -169,6 +169,21 @@ TEST_CASE("cctype: isprint", "[cctype]")
     CHECK_FALSE(etl::isprint('\v'));
 }
 
+TEST_CASE("cctype: iscntrl", "[cctype]")
+{
+    CHECK(etl::iscntrl(0x7F));
+    for (auto ch = 0x00; ch <= 0x1F; ++ch) { CHECK(etl::iscntrl(ch)); }
+
+    for (auto ch = '!'; ch <= '/'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+    for (auto ch = ':'; ch <= '@'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+    for (auto ch = '['; ch <= '`'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+    for (auto ch = '{'; ch <= '~'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::iscntrl(ch)); }
+}
+
 TEST_CASE("cctype: tolower", "[cctype]")
 {
     CHECK(static_cast<char>(etl::tolower('a')) == 'a');

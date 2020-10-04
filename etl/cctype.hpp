@@ -227,6 +227,23 @@ namespace etl
 }
 
 /**
+ * @brief Checks if the given character is a control character as classified by the
+ * currently installed C locale. In the default, "C" locale, the control characters are
+ * the characters with the codes 0x00-0x1F and 0x7F.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/iscntrl
+ *
+ * @return Non-zero value if the character is a control character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
+}
+
+/**
  * @brief Converts the given character to lowercase according to the character conversion
  * rules defined by the default C locale.
  *
