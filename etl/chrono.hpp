@@ -175,7 +175,7 @@ public:
                               || (ratio_divide<Period2, period>::den == 1
                                   && !treat_as_floating_point_v<Rep2>))>
     constexpr duration(const duration<Rep2, Period2>& other) noexcept
-        : data_(other.count() * ratio_divide<Period2, period>::num)
+        : data_(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
     {
     }
 

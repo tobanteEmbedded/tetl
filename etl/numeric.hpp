@@ -69,8 +69,16 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {
-    if (input < 0) { return static_cast<Type>(-input); }
-    return input;
+    using limits = numeric_limits<Type>;
+    if constexpr (limits::is_signed || !limits::is_specialized)
+    {
+        if (input < 0) { return static_cast<Type>(-input); }
+        return input;
+    }
+    else
+    {
+        return input;
+    }
 }
 
 /**
