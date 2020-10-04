@@ -108,3 +108,32 @@ TEST_CASE("cctype: isxdigit", "[cctype]")
     for (auto ch = 'G'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isxdigit(ch)); }
     for (auto ch = 'g'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isxdigit(ch)); }
 }
+
+TEST_CASE("cctype: isspace", "[cctype]")
+{
+    CHECK(etl::isspace(' '));
+    CHECK(etl::isspace('\f'));
+    CHECK(etl::isspace('\n'));
+    CHECK(etl::isspace('\r'));
+    CHECK(etl::isspace('\t'));
+    CHECK(etl::isspace('\v'));
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::isspace(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isspace(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isspace(ch)); }
+}
+
+TEST_CASE("cctype: isblank", "[cctype]")
+{
+    CHECK(etl::isblank(' '));
+    CHECK(etl::isblank('\t'));
+
+    CHECK_FALSE(etl::isblank('\f'));
+    CHECK_FALSE(etl::isblank('\n'));
+    CHECK_FALSE(etl::isblank('\r'));
+    CHECK_FALSE(etl::isblank('\v'));
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::isblank(ch)); }
+}

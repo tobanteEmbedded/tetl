@@ -135,5 +135,50 @@ namespace etl
 
     return static_cast<int>(is_digit || is_hex_lower || is_hex_upper);
 }
+
+/**
+ * @brief Checks if the given character is whitespace character as classified by the
+ * default C locale.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isspace
+ *
+ * @return Non-zero value if the character is a whitespace character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto const space           = ch == ' ';
+    auto const form_feed       = ch == '\f';
+    auto const line_feed       = ch == '\n';
+    auto const carriage_return = ch == '\r';
+    auto const horizontal_tab  = ch == '\t';
+    auto const vertical_tab    = ch == '\v';
+
+    return static_cast<int>(space || form_feed || line_feed || carriage_return
+                            || horizontal_tab || vertical_tab);
+}
+
+/**
+ * @brief Checks if the given character is a blank character as classified by the
+ * currently installed C locale. Blank characters are whitespace characters used to
+ * separate words within a sentence. In the default C locale, only space (0x20) and
+ * horizontal tab (0x09) are classified as blank characters.
+ *
+ * https://en.cppreference.com/w/cpp/string/byte/isblank
+ *
+ * @return Non-zero value if the character is a blank character, zero otherwise.
+ */
+[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    assert(static_cast<unsigned char>(ch) == ch);
+
+    auto const space          = ch == ' ';
+    auto const horizontal_tab = ch == '\t';
+
+    return static_cast<int>(space || horizontal_tab);
+}
 }  // namespace etl
 #endif  // TAETL_CCTYPE_HPP
