@@ -108,6 +108,27 @@ TEST_CASE("string_view: end", "[string_view]")
     }
 }
 
+TEST_CASE("string_view: rbegin/rend", "[string_view]")
+{
+    WHEN("empty")
+    {
+        auto const sv = etl::string_view {};
+        CHECK(sv.data() == nullptr);
+        CHECK(sv.rend() == sv.crend());
+        CHECK(sv.data() == nullptr);
+        CHECK(sv.rbegin() == sv.crbegin());
+    }
+
+    WHEN("not empty")
+    {
+        auto const sv = etl::string_view {"abc"};
+        CHECK(*sv.rbegin() == 'c');
+        CHECK(sv.rbegin() == sv.crbegin());
+        CHECK(sv.rend() != sv.rbegin());
+        CHECK(sv.rend() == sv.crend());
+    }
+}
+
 TEST_CASE("string_view: ranged-for", "[string_view]")
 {
     auto const sv = etl::string_view {"test"};

@@ -47,18 +47,18 @@ template <typename CharType, typename Traits = etl::char_traits<CharType>>
 class basic_string_view
 {
 public:
-    using traits_type     = Traits;
-    using value_type      = CharType;
-    using pointer         = CharType*;
-    using const_pointer   = CharType const*;
-    using reference       = CharType&;
-    using const_reference = CharType const&;
-    using const_iterator  = CharType const*;
-    using iterator        = const_iterator;
-    using size_type       = etl::size_t;
-    using difference_type = etl::ptrdiff_t;
-    // using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
-    // using reverse_iterator       = const_reverse_iterator;
+    using traits_type            = Traits;
+    using value_type             = CharType;
+    using pointer                = CharType*;
+    using const_pointer          = CharType const*;
+    using reference              = CharType&;
+    using const_reference        = CharType const&;
+    using const_iterator         = CharType const*;
+    using iterator               = const_iterator;
+    using size_type              = etl::size_t;
+    using difference_type        = etl::ptrdiff_t;
+    using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
+    using reverse_iterator       = const_reverse_iterator;
 
     /**
      * @brief Default constructor. Constructs an empty basic_string_view. After
@@ -153,6 +153,50 @@ public:
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
         return begin_ + size_;
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed view. It
+     * corresponds to the last character of the non-reversed view.
+     */
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first character of the reversed view. It
+     * corresponds to the last character of the non-reversed view.
+     */
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the character following the last character of
+     * the reversed view.
+     *
+     * It corresponds to the character preceding the first character of the non-reversed
+     * view. This character acts as a placeholder, attempting to access it results in
+     * undefined behavior.
+     */
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the character following the last character of
+     * the reversed view.
+     *
+     * It corresponds to the character preceding the first character of the non-reversed
+     * view. This character acts as a placeholder, attempting to access it results in
+     * undefined behavior.
+     */
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
     }
 
     /**
