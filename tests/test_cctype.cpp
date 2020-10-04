@@ -150,6 +150,24 @@ TEST_CASE("cctype: ispunct", "[cctype]")
     for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK_FALSE(etl::ispunct(ch)); }
 }
 
+TEST_CASE("cctype: isgraph", "[cctype]")
+{
+    for (auto ch = '!'; ch <= '/'; ++ch) { CHECK(etl::isgraph(ch)); }
+    for (auto ch = ':'; ch <= '@'; ++ch) { CHECK(etl::isgraph(ch)); }
+    for (auto ch = '['; ch <= '`'; ++ch) { CHECK(etl::isgraph(ch)); }
+    for (auto ch = '{'; ch <= '~'; ++ch) { CHECK(etl::isgraph(ch)); }
+
+    for (auto ch = '0'; ch <= '9'; ++ch) { CHECK(etl::isgraph(ch)); }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { CHECK(etl::isgraph(ch)); }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { CHECK(etl::isgraph(ch)); }
+
+    CHECK_FALSE(etl::isgraph(' '));
+    CHECK_FALSE(etl::isgraph('\n'));
+    CHECK_FALSE(etl::isgraph('\f'));
+    CHECK_FALSE(etl::isgraph('\t'));
+    CHECK_FALSE(etl::isgraph('\v'));
+}
+
 TEST_CASE("cctype: isprint", "[cctype]")
 {
     CHECK(etl::isprint(' '));
