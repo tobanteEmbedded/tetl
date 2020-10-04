@@ -286,6 +286,42 @@ TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t, etl::
     }
 }
 
+TEMPLATE_TEST_CASE("utility/pair: swap", "[utility]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+
+{
+    using pair_type = etl::pair<TestType, int>;
+    using etl::swap;
+
+    SECTION("empty")
+    {
+        auto lhs = pair_type();
+        auto rhs = pair_type();
+        CHECK(lhs.first == TestType());
+        CHECK(lhs == rhs);
+
+        swap(lhs, rhs);
+        CHECK(lhs.first == TestType());
+        CHECK(lhs == rhs);
+    }
+
+    SECTION("not empty")
+    {
+        auto lhs = pair_type();
+        auto rhs = pair_type(TestType(42), 143);
+        CHECK(lhs.first == TestType());
+
+        swap(lhs, rhs);
+        CHECK(lhs.first == TestType(42));
+        CHECK(lhs.second == 143);
+
+        swap(lhs, rhs);
+        CHECK(rhs.first == TestType(42));
+        CHECK(rhs.second == 143);
+    }
+}
+
 TEMPLATE_TEST_CASE("utility/pair: operator==", "[utility]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

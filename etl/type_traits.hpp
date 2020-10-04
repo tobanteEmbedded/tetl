@@ -1859,8 +1859,6 @@ inline constexpr size_t alignment_of_v = alignment_of<T>::value;
  * true. For any other type, value is false. The only trivially copyable types are scalar
  * types, trivially copyable classes, and arrays of such types/classes (possibly
  * cv-qualified).
- *
- * @todo Add is_destructible
  */
 template <typename T>
 class is_trivially_copyable

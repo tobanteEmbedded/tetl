@@ -30,6 +30,7 @@ DAMAGE.
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/algo_swap.hpp"
 #include "etl/detail/sfinae.hpp"
 #include "etl/detail/tuple_size.hpp"
 
@@ -305,25 +306,22 @@ struct pair
      * @brief Default constructor. Value-initializes both elements of the pair, first and
      * second.
      */
+    TAETL_REQUIRES(is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
     constexpr pair() : first {}, second {} { }
 
     /**
      * @brief Initializes first with x and second with y.
      */
+    TAETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
     constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
     /**
      * @brief Initializes first with etl::forward<U1>(x) and second with
      * etl::forward<U2>(y).
-     *
-     * @details This constructor participates in overload resolution if and only if
-     * etl::is_constructible_v<first_type, U1&&> and etl::is_constructible_v<second_type,
-     * U2&&> are both true.
      */
     template <typename U1, typename U2,
-              typename = etl::enable_if_t<
-                  etl::is_constructible_v<
-                      first_type, U1&&> && etl::is_constructible_v<second_type, U2&&>>>
+              TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
+                                  is_constructible_v<U2&&, second_type>)>
     constexpr pair(U1&& x, U2&& y)
         : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
     {
@@ -332,7 +330,9 @@ struct pair
     /**
      * @brief Initializes first with p.first and second with p.second.
      */
-    template <typename U1, typename U2>
+    template <typename U1, typename U2,
+              TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
+                                  is_constructible_v<second_type, U2 const&>)>
     constexpr pair(pair<U1, U2> const& p)
         : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
     {
@@ -341,7 +341,9 @@ struct pair
      * @brief Initializes first with etl::forward<U1>(p.first) and second with
      * etl::forward<U2>(p.second).
      */
-    template <typename U1, typename U2>
+    template <typename U1, typename U2,
+              TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
+                                  is_constructible_v<second_type, U2&&>)>
     constexpr pair(pair<U1, U2>&& p)
         : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
     {
@@ -372,7 +374,9 @@ struct pair
         return *this;
     }
 
-    template <typename U1, typename U2>
+    template <typename U1, typename U2,
+              TAETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
+                                  is_assignable_v<second_type&, U2 const&>)>
     constexpr auto operator=(pair<U1, U2> const& p) -> pair&
     {
         first  = p.first;
@@ -380,6 +384,7 @@ struct pair
         return *this;
     }
 
+    TAETL_REQUIRES(is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
     constexpr auto operator=(pair&& p) noexcept -> pair&
     {
         first  = etl::move(p.first);
@@ -387,7 +392,9 @@ struct pair
         return *this;
     }
 
-    template <typename U1, typename U2>
+    template <typename U1, typename U2,
+              TAETL_REQUIRES_(
+                  is_assignable_v<first_type&, U1>&& is_assignable_v<second_type&, U2>)>
     constexpr auto operator=(pair<U1, U2>&& p) -> pair&
     {
         first  = etl::move(p.first);
@@ -395,17 +402,28 @@ struct pair
         return *this;
     }
 
-    // void swap(pair&& other)
-    // {
-    //     using etl::swap;
-    //     swap(first, other.first);
-    //     swap(second, other.second);
-    // }
+    constexpr void swap(pair& other) noexcept(
+        (is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+    {
+        using ::etl::swap;
+        swap(first, other.first);
+        swap(second, other.second);
+    }
 
     T1 first;
     T2 second;
 
 };  // namespace etl
+
+/**
+ * @brief Swaps the contents of x and y. Equivalent to x.swap(y).
+ */
+template <class T1, class T2>
+constexpr auto swap(pair<T1, T2>& lhs,
+                    pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+{
+    lhs.swap(rhs);
+}
 
 /**
  * @brief Creates a etl::pair object, deducing the target type from the types of

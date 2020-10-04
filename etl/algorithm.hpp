@@ -38,26 +38,10 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/algo_search.hpp"
+#include "etl/detail/algo_swap.hpp"
 
 namespace etl
 {
-/**
- * @brief Exchanges the given values. Swaps the values a and b. This overload
- * does not participate in overload resolution unless
- * etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
- *
- * https://en.cppreference.com/w/cpp/algorithm/swap
- *
- * @todo Fix noexcept specifier.
- */
-template <typename T>
-constexpr auto swap(T& a, T& b) noexcept -> void
-{
-    T temp(etl::move(a));
-    a = etl::move(b);
-    b = etl::move(temp);
-}
-
 /**
  * @brief Swaps the values of the elements the given iterators are pointing to.
  *
