@@ -33,6 +33,27 @@ DAMAGE.
 
 #include <list>
 
+TEMPLATE_TEST_CASE("iterator: rbegin", "[iterator]", char, int, float)
+{
+    using T = TestType;
+
+    SECTION("C array")
+    {
+        T data[4] = {T(1), T(2), T(3), T(4)};
+        CHECK(*etl::rbegin(data) == T(4));
+        CHECK(*(++etl::rbegin(data)) == T(3));
+    }
+
+    SECTION("array")
+    {
+        auto data = etl::array {T(1), T(2), T(3), T(4)};
+        CHECK(*etl::rbegin(data) == T(4));
+        CHECK(*etl::rbegin(etl::as_const(data)) == T(4));
+        CHECK(*etl::crbegin(data) == T(4));
+        CHECK(*(++rbegin(data)) == T(3));  // Found via ADL
+    }
+}
+
 TEST_CASE("iterator: size", "[iterator]")
 {
     int carr[4] = {};
