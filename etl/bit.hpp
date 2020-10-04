@@ -98,6 +98,10 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 
 }  // namespace detail
 
+/**
+ * @brief Computes the result of bitwise left-rotating the value of x by s positions. This
+ * operation is also known as a left circular shift.
+ */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
@@ -107,6 +111,10 @@ constexpr auto rotl(T t, int s) noexcept -> T
     return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
 }
 
+/**
+ * @brief Computes the result of bitwise right-rotating the value of x by s positions.
+ * This operation is also known as a right circular shift.
+ */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
