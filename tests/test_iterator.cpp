@@ -33,6 +33,13 @@ DAMAGE.
 
 #include <list>
 
+TEMPLATE_TEST_CASE("iterator: make_reverse_iterator", "[iterator]", char, int, float)
+{
+    using T   = TestType;
+    auto data = etl::array {T(1), T(2), T(3)};
+    CHECK(*data.rbegin() == *etl::make_reverse_iterator(data.end()));
+}
+
 TEMPLATE_TEST_CASE("iterator: rbegin", "[iterator]", char, int, float)
 {
     using T = TestType;

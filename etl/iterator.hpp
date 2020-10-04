@@ -370,6 +370,18 @@ private:
 };
 
 /**
+ * @brief Convenience function template that constructs a etl::reverse_iterator for the
+ * given iterator \p i (which must be a LegacyBidirectionalIterator) with the type deduced
+ * from the type of the argument.
+ */
+template <typename Iter>
+[[nodiscard]] constexpr auto make_reverse_iterator(Iter i) noexcept
+    -> etl::reverse_iterator<Iter>
+{
+    return etl::reverse_iterator<Iter>(i);
+}
+
+/**
  * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
  * take into account that the iterator order is reversed.
  */
@@ -434,6 +446,7 @@ template <typename Iter1, typename Iter2>
 {
     return lhs.base() >= rhs.base();
 }
+
 /**
  * @brief etl::back_insert_iterator is a LegacyOutputIterator that appends to a
  * container for which it was constructed. The container's push_back() member
