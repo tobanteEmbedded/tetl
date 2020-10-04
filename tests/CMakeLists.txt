@@ -8,6 +8,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_bit.cpp
     test_bitset.cpp
     test_byte.cpp
+    test_cctype.cpp
     test_charconv.cpp
     test_chrono.cpp
     test_cmath.cpp
