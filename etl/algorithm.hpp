@@ -1183,6 +1183,57 @@ template <typename ForwardIter, typename Compare>
 }
 
 /**
+ * @brief Returns an iterator pointing to the first element in the range [first, last)
+ * that is not less than (i.e. greater or equal to) value, or last if no such element is
+ * found.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/lower_bound
+ */
+template <typename ForwardIter, typename T, typename Compare>
+[[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
+                                         T const& value, Compare comp) noexcept
+    -> ForwardIter
+{
+    using diff_t = typename etl::iterator_traits<ForwardIter>::difference_type;
+    ForwardIter it;
+    diff_t count;
+    diff_t step;
+    count = etl::distance(first, last);
+
+    while (count > 0)
+    {
+        it   = first;
+        step = count / 2;
+        etl::advance(it, step);
+        if (comp(*it, value))
+        {
+            first = ++it;
+            count -= step + 1;
+        }
+        else
+        {
+            count = step;
+        }
+    }
+
+    return first;
+}
+
+/**
+ * @brief Returns an iterator pointing to the first element in the range [first, last)
+ * that is not less than (i.e. greater or equal to) value, or last if no such element is
+ * found.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/lower_bound
+ */
+template <typename ForwardIter, typename T, typename Compare>
+[[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
+                                         T const& value) noexcept -> ForwardIter
+{
+    return lower_bound(first, last, value, etl::less<> {});
+}
+
+/**
  * @brief Returns true if the sorted range [first2, last2) is a subsequence of the
  * sorted range [first1, last1). Both ranges must be sorted with operator<.
  */

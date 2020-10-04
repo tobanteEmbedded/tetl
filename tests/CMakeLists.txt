@@ -27,6 +27,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_optional.cpp
     test_ratio.cpp
     test_scope_guard.cpp
+    test_set.cpp
     test_span.cpp
     test_string.cpp
     test_string_view.cpp
