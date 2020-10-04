@@ -54,6 +54,28 @@ TEMPLATE_TEST_CASE("iterator: rbegin", "[iterator]", char, int, float)
     }
 }
 
+TEMPLATE_TEST_CASE("iterator: rend", "[iterator]", char, int, float)
+{
+    using T = TestType;
+
+    SECTION("C array")
+    {
+        T data[4] = {T(0), T(0), T(0), T(0)};
+        auto cmp  = [](auto val) { return val == T(0); };
+        CHECK(etl::all_of(etl::rbegin(data), etl::rend(data), cmp));
+        CHECK(etl::all_of(etl::crbegin(data), etl::crend(data), cmp));
+    }
+
+    SECTION("array")
+    {
+        auto data = etl::array {T(0), T(0), T(0), T(0)};
+        auto cmp  = [](auto val) { return val == T(0); };
+        CHECK(etl::all_of(rbegin(data), rend(data), cmp));
+        CHECK(etl::all_of(crbegin(data), crend(data), cmp));
+        CHECK(etl::all_of(rbegin(etl::as_const(data)), rend(etl::as_const(data)), cmp));
+    }
+}
+
 TEST_CASE("iterator: size", "[iterator]")
 {
     int carr[4] = {};

@@ -370,6 +370,71 @@ private:
 };
 
 /**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator==(etl::reverse_iterator<Iter1> const& lhs,
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() == rhs.base();
+}
+
+/**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator!=(etl::reverse_iterator<Iter1> const& lhs,
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() != rhs.base();
+}
+
+/**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator<(etl::reverse_iterator<Iter1> const& lhs,
+                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() < rhs.base();
+}
+
+/**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator<=(etl::reverse_iterator<Iter1> const& lhs,
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() <= rhs.base();
+}
+
+/**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator>(etl::reverse_iterator<Iter1> const& lhs,
+                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() > rhs.base();
+}
+
+/**
+ * @brief Compares the underlying iterators. Inverse comparisons are applied in order to
+ * take into account that the iterator order is reversed.
+ */
+template <typename Iter1, typename Iter2>
+[[nodiscard]] constexpr auto operator>=(etl::reverse_iterator<Iter1> const& lhs,
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+{
+    return lhs.base() >= rhs.base();
+}
+/**
  * @brief etl::back_insert_iterator is a LegacyOutputIterator that appends to a
  * container for which it was constructed. The container's push_back() member
  * function is called whenever the iterator (whether dereferenced or not) is
@@ -695,6 +760,42 @@ template <typename Container>
 constexpr auto crbegin(Container const& c) -> decltype(etl::rbegin(c))
 {
     return etl::rbegin(c);
+}
+
+/**
+ * @brief Returns an iterator to the reverse-end of the given container.
+ */
+template <typename Container>
+constexpr auto rend(Container& c) -> decltype(c.rend())
+{
+    return c.rend();
+}
+
+/**
+ * @brief Returns an iterator to the reverse-end of the given container.
+ */
+template <typename Container>
+constexpr auto rend(Container const& c) -> decltype(c.rend())
+{
+    return c.rend();
+}
+
+/**
+ * @brief Returns an iterator to the reverse-end of the given array.
+ */
+template <typename T, etl::size_t N>
+constexpr auto rend(T (&array)[N]) -> reverse_iterator<T*>
+{
+    return reverse_iterator<T*>(begin(array));
+}
+
+/**
+ * @brief Returns an iterator to the reverse-end of the given container.
+ */
+template <typename Container>
+constexpr auto crend(Container const& c) -> decltype(etl::rend(c))
+{
+    return etl::rend(c);
 }
 
 /**
