@@ -284,6 +284,16 @@ public:
     constexpr auto remove_suffix(size_type n) -> void { size_ = size_ - n; }
 
     /**
+     * @brief Exchanges the view with that of v.
+     */
+    constexpr void swap(basic_string_view& v) noexcept
+    {
+        using etl::swap;
+        swap(begin_, v.begin_);
+        swap(size_, v.size_);
+    }
+
+    /**
      * @brief Copies the substring [pos, pos + rcount) to the character array
      * pointed to by dest, where rcount is the smaller of count and size() -
      * pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
