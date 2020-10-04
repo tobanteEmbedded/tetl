@@ -88,10 +88,10 @@ constexpr auto bit_cast(const From& src) noexcept -> To
 namespace detail
 {
 template <typename T>
-using bit_unsigned_int = std::bool_constant<
-    std::disjunction_v<std::is_same<T, unsigned char>, std::is_same<T, unsigned short>,
-                       std::is_same<T, unsigned int>, std::is_same<T, unsigned long>,
-                       std::is_same<T, unsigned long long>>>;
+using bit_unsigned_int = etl::bool_constant<
+    etl::disjunction_v<etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
+                       etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
+                       etl::is_same<T, unsigned long long>>>;
 
 template <typename T>
 inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
@@ -102,7 +102,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
     auto const cnt    = static_cast<unsigned>(s);
-    auto const digits = static_cast<unsigned>(std::numeric_limits<T>::digits);
+    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
     if ((cnt % digits) == 0) { return t; }
     return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
 }
@@ -111,7 +111,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
     auto const cnt    = static_cast<unsigned>(s);
-    auto const digits = static_cast<unsigned>(std::numeric_limits<T>::digits);
+    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
     if ((cnt % digits) == 0) { return t; }
     return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
 }
