@@ -172,7 +172,7 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 
         // auto str_2 = etl::static_string<32> {};
         // fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
-        // CHECK(std::string_view(str_2.data()) == std::string_view("{test} b"));
+        // CHECK(etl::string_view(str_2.data()) == etl::string_view("{test} b"));
     }
 
     SECTION("replace multiple args")
@@ -204,11 +204,11 @@ TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
     {
         // auto str_1 = etl::static_string<32> {};
         // fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
-        // CHECK(std::string_view(str_1.begin()) == std::string_view("abc {test}"));
+        // CHECK(etl::string_view(str_1.begin()) == etl::string_view("abc {test}"));
 
         //     auto str_2 = etl::static_string<32> {};
         //     fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
-        //     CHECK(std::string_view(str_2.begin()) == std::string_view("{test} abc"));
+        //     CHECK(etl::string_view(str_2.begin()) == etl::string_view("{test} abc"));
     }
 
     //     SECTION("replace multiple args")
@@ -216,8 +216,8 @@ TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
     //         //        auto str_1 = etl::static_string<32> {};
     //         //        fmt::format_to(etl::back_inserter(str_1), "{} {} {}", "abc",
     //         "def",
-    //         //        "ghi"); CHECK(std::string_view(str_1.begin()) ==
-    //         std::string_view("abc
+    //         //        "ghi"); CHECK(etl::string_view(str_1.begin()) ==
+    //         etl::string_view("abc
     //         //        def ghi"));
 
     //         //     auto str_2 = etl::static_string<32> {};
@@ -312,7 +312,6 @@ TEST_CASE("experimental/format: detail::format_escaped_sequences",
 {
     namespace fmt = etl::experimental::format;
     using namespace etl::literals;
-    using namespace std::literals;
 
     using string_t = etl::static_string<32>;
 

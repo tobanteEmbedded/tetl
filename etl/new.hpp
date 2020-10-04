@@ -54,7 +54,7 @@ DAMAGE.
  * if this function is called through a placement new expression and ptr is a null
  * pointer.
  */
-[[nodiscard]] auto operator new[](std::size_t count, void* ptr) noexcept -> void*
+[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept -> void*
 {
     etl::ignore_unused(n);
     return ptr;

@@ -34,6 +34,7 @@ DAMAGE.
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
 #include "etl/definitions.hpp"
+#include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/tuple_size.hpp"
@@ -52,20 +53,17 @@ namespace etl
 template <typename Type, etl::size_t Size>
 struct array
 {
-    using value_type      = Type;
-    using size_type       = etl::size_t;
-    using difference_type = etl::ptrdiff_t;
-    using pointer         = Type*;
-    using const_pointer   = const Type*;
-    using reference       = Type&;
-    using const_reference = const Type&;
-    using iterator        = Type*;
-    using const_iterator  = const Type*;
-
-    /**
-     * @brief Default constructor.
-     */
-    // constexpr array() = default;
+    using value_type             = Type;
+    using size_type              = etl::size_t;
+    using difference_type        = etl::ptrdiff_t;
+    using pointer                = Type*;
+    using const_pointer          = const Type*;
+    using reference              = Type&;
+    using const_reference        = const Type&;
+    using iterator               = Type*;
+    using const_iterator         = const Type*;
+    using reverse_iterator       = typename etl::reverse_iterator<iterator>;
+    using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
 
     /**
      * @brief Accesses the specified item with bounds checking.
@@ -189,6 +187,69 @@ struct array
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
     {
         return &_data[0] + size();
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed array. It
+     * corresponds to the last element of the non-reversed array. If the array is empty,
+     * the returned iterator is equal to rend().
+     */
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed array. It
+     * corresponds to the last element of the non-reversed array. If the array is empty,
+     * the returned iterator is equal to rend().
+     */
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed array. It
+     * corresponds to the last element of the non-reversed array. If the array is empty,
+     * the returned iterator is equal to rend().
+     */
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+    {
+        return rbegin();
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed array. It corresponds to the element preceding the first element of the
+     * non-reversed array. This element acts as a placeholder, attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed array. It corresponds to the element preceding the first element of the
+     * non-reversed array. This element acts as a placeholder, attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed array. It corresponds to the element preceding the first element of the
+     * non-reversed array. This element acts as a placeholder, attempting to access it
+     * results in undefined behavior.
+     */
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    {
+        return rend();
     }
 
     /**

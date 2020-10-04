@@ -76,20 +76,52 @@ TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t, etl::int8_
     for (auto const& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
 }
 
-TEMPLATE_TEST_CASE("array: begin/end const", "[array]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-    auto const arr = []() {
-        etl::array<TestType, 4> a {};
-        etl::iota(etl::begin(a), etl::end(a), TestType {0});
-        return a;
-    }();
+    SECTION("const")
+    {
+        auto const arr = []() {
+            etl::array<TestType, 4> a {};
+            etl::iota(etl::begin(a), etl::end(a), TestType {0});
+            return a;
+        }();
 
-    REQUIRE(*arr.data() == 0);
+        REQUIRE(*arr.data() == 0);
 
-    auto counter = 0;
-    for (auto const& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
+        auto counter = 0;
+        for (auto const& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
+    }
+}
+
+TEMPLATE_TEST_CASE("array: rbegin/rend", "[array]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    SECTION("mutable")
+    {
+        auto arr = etl::array {TestType(1), TestType(2), TestType(3)};
+        auto it  = arr.rbegin();
+
+        CHECK(*it == TestType(3));
+        ++it;
+        CHECK(*it == TestType(2));
+        it++;
+        CHECK(*it == TestType(1));
+    }
+
+    SECTION("const")
+    {
+        auto const arr = etl::array {TestType(1), TestType(2), TestType(3)};
+        auto it        = arr.rbegin();
+
+        CHECK(*it == TestType(3));
+        ++it;
+        CHECK(*it == TestType(2));
+        it++;
+        CHECK(*it == TestType(1));
+    }
 }
 
 TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,

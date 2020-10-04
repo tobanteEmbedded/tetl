@@ -384,6 +384,168 @@ prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1) 
 }
 
 /**
+ * @brief etl::reverse_iterator is an iterator adaptor that reverses the
+ * direction of a given iterator. In other words, when provided with a
+ * bidirectional iterator, etl::reverse_iterator produces a new iterator that
+ * moves from the end to the beginning of the sequence defined by the underlying
+ * bidirectional iterator.
+ *
+ * @details This is the iterator returned by member functions rbegin() and
+ * rend() of the standard library containers.
+ */
+template <class Iter>
+class reverse_iterator
+{
+public:
+    using iterator_type   = Iter;
+    using value_type      = typename etl::iterator_traits<Iter>::value_type;
+    using difference_type = typename etl::iterator_traits<Iter>::difference_type;
+    using reference       = typename etl::iterator_traits<Iter>::reference;
+    using pointer         = typename etl::iterator_traits<Iter>::pointer;
+
+    /**
+     * @brief Constructs a new iterator adaptor.
+     *
+     * @details Default constructor. The underlying iterator is value-initialized.
+     * Operations on the resulting iterator have defined behavior if and only if
+     * the corresponding operations on a value-initialized Iterator also have
+     * defined behavior.
+     */
+    constexpr reverse_iterator() : current() { }
+
+    /**
+     * @brief Constructs a new iterator adaptor.
+     *
+     * @details The underlying iterator is initialized with x.
+     */
+    constexpr explicit reverse_iterator(Iter x) : current(x) { }
+
+    /**
+     * @brief Constructs a new iterator adaptor.
+     *
+     * @details The underlying iterator is initialized with that of other.
+     */
+    template <class Other>
+    constexpr reverse_iterator(reverse_iterator<Other> const& other)
+        : current(other.base())
+    {
+    }
+
+    /**
+     * @brief The underlying iterator is assigned the value of the underlying
+     * iterator of other, i.e. other.base().
+     */
+    template <class Other>
+    constexpr auto operator=(reverse_iterator<Other> const& other) -> reverse_iterator&
+    {
+        current = other.base();
+        return *this;
+    }
+
+    /**
+     * @brief Returns the underlying base iterator.
+     */
+    constexpr auto base() const -> Iter { return current; }
+
+    /**
+     * @brief Returns a reference to the element previous to current.
+     */
+    constexpr auto operator*() const -> reference
+    {
+        auto tmp = current;
+        return *--tmp;
+    }
+
+    /**
+     * @brief Returns a pointer to the element previous to current.
+     */
+    constexpr auto operator->() const -> pointer { return etl::addressof(operator*()); }
+
+    /**
+     * @brief Pre-increments by one respectively.
+     */
+    constexpr auto operator++() -> reverse_iterator&
+    {
+        --current;
+        return *this;
+    }
+
+    /**
+     * @brief Pre-increments by one respectively.
+     */
+    constexpr auto operator++(int) -> reverse_iterator
+    {
+        auto tmp(*this);
+        --current;
+        return tmp;
+    }
+
+    /**
+     * @brief Pre-decrements by one respectively.
+     */
+    constexpr auto operator--() -> reverse_iterator&
+    {
+        ++current;
+        return *this;
+    }
+
+    /**
+     * @brief Pre-decrements by one respectively.
+     */
+    constexpr auto operator--(int) -> reverse_iterator
+    {
+        auto tmp(*this);
+        ++current;
+        return tmp;
+    }
+
+    /**
+     * @brief Returns an iterator which is advanced by n positions.
+     */
+    constexpr auto operator+(difference_type n) const -> reverse_iterator
+    {
+        return reverse_iterator(current - n);
+    }
+
+    /**
+     * @brief Advances the iterator by n or -n positions respectively.
+     */
+    constexpr auto operator+=(difference_type n) -> reverse_iterator&
+    {
+        current -= n;
+        return *this;
+    }
+
+    /**
+     * @brief Returns an iterator which is advanced by -n positions.
+     */
+    constexpr auto operator-(difference_type n) const -> reverse_iterator
+    {
+        return reverse_iterator(current + n);
+    }
+
+    /**
+     * @brief Advances the iterator by n or -n positions respectively.
+     */
+    constexpr auto operator-=(difference_type n) -> reverse_iterator&
+    {
+        current += n;
+        return *this;
+    }
+
+    /**
+     * @brief Returns a reference to the element at specified relative location.
+     */
+    constexpr auto operator[](difference_type n) const -> reference
+    {
+        return *(*this + n);
+    }
+
+private:
+    Iter current;
+};
+
+/**
  * @brief etl::back_insert_iterator is a LegacyOutputIterator that appends to a
  * container for which it was constructed. The container's push_back() member
  * function is called whenever the iterator (whether dereferenced or not) is
