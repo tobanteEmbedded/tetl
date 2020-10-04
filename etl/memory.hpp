@@ -32,6 +32,8 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 #include "etl/warning.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 namespace etl
 {
 /**
@@ -177,8 +179,7 @@ class default_delete
 public:
     constexpr default_delete() noexcept = default;
 
-    template <typename U,
-              typename = typename etl::enable_if_t<etl::is_convertible_v<U*, T*>>>
+    template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
     default_delete(const default_delete<U>&) noexcept
     {
     }
@@ -197,15 +198,13 @@ class default_delete<T[]>
 public:
     constexpr default_delete() noexcept = default;
 
-    template <typename U,
-              typename = etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>>>
+    template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
     default_delete(const default_delete<U[]>&) noexcept
     {
     }
 
-    template <typename U>
-    auto operator()(U* array_ptr) const noexcept
-        -> etl::enable_if_t<etl::is_convertible_v<U (*)[], T (*)[]>, void>
+    template <typename U, TAETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
+    auto operator()(U* array_ptr) const noexcept -> void
     {
         delete[] array_ptr;
     }
@@ -219,8 +218,8 @@ private:
  * @brief Obtains the actual address of the object or function arg, even in
  * presence of overloaded operator&.
  */
-template <typename T>
-auto addressof(T& arg) noexcept -> typename etl::enable_if_t<etl::is_object_v<T>, T*>
+template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
+auto addressof(T& arg) noexcept -> T*
 {
     return reinterpret_cast<T*>(
         &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
@@ -230,8 +229,8 @@ auto addressof(T& arg) noexcept -> typename etl::enable_if_t<etl::is_object_v<T>
  * @brief Obtains the actual address of the object or function arg, even in
  * presence of overloaded operator&.
  */
-template <typename T>
-auto addressof(T& arg) noexcept -> typename etl::enable_if_t<!etl::is_object_v<T>, T*>
+template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
+auto addressof(T& arg) noexcept -> T*
 {
     return &arg;
 }

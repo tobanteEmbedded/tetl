@@ -30,6 +30,8 @@ DAMAGE.
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 // Somehow the abs macro gets included in avr-gcc builds. Not sure where it's coming from.
 #ifdef abs
 #undef abs
@@ -142,11 +144,9 @@ public:
      * a floating-point value, but a duration with a floating-point tick count
      * can be constructed from an integer value
      */
-    template <
-        typename Rep2,
-        typename = typename etl::enable_if_t<
-            is_convertible_v<Rep2, rep> == true
-            && (treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>)>>
+    template <typename Rep2,
+              TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
+                  treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
     constexpr explicit duration(const Rep2& r) noexcept : data_(r)
     {
     }
@@ -171,10 +171,9 @@ public:
      * exactly divisible by period
      */
     template <typename Rep2, typename Period2,
-              typename
-              = typename etl::enable_if_t<(treat_as_floating_point_v<rep> == true)
-                                          || (ratio_divide<Period2, period>::den == 1
-                                              && !treat_as_floating_point_v<Rep2>)>>
+              TAETL_REQUIRES_((treat_as_floating_point_v<rep>)
+                              || (ratio_divide<Period2, period>::den == 1
+                                  && !treat_as_floating_point_v<Rep2>))>
     constexpr duration(const duration<Rep2, Period2>& other) noexcept
         : data_(other.count() * ratio_divide<Period2, period>::num)
     {
@@ -428,8 +427,7 @@ constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
  * d.zero(), return d, otherwise return -d. The function does not participate in
  * the overload resolution unless etl::numeric_limits<Rep>::is_signed is true.
  */
-template <typename Rep, typename Period,
-          typename = etl::enable_if_t<numeric_limits<Rep>::is_signed>>
+template <typename Rep, typename Period, TAETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
 constexpr auto abs(duration<Rep, Period> d) -> duration<Rep, Period>
 {
     return d >= d.zero() ? d : -d;
@@ -449,7 +447,6 @@ namespace etl
  * least common multiple of Period1::den and Period2::den.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-
 struct common_type<etl::chrono::duration<Rep1, Period1>,
                    etl::chrono::duration<Rep2, Period2>>
 {

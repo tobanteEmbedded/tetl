@@ -354,8 +354,7 @@ public:
      * direct-initializing.
      */
     template <typename... Args,
-              typename
-              = typename etl::enable_if_t<is_constructible_v<value_type, Args...>>>
+              TAETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
     constexpr explicit optional(etl::in_place_t /*unused*/, Args&&... arguments)
         : base_type(in_place, etl::forward<Args>(arguments)...)
     {

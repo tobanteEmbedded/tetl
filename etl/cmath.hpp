@@ -29,6 +29,8 @@ DAMAGE.
 
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 #include <math.h>
 
 namespace etl
@@ -81,9 +83,8 @@ using double_t = double;
  *
  * @details https://en.cppreference.com/w/cpp/numeric/math/isinf
  */
-template <typename IntegralType>
-[[nodiscard]] constexpr auto isinf(IntegralType arg)
-    -> etl::enable_if_t<etl::is_integral_v<IntegralType>, bool>
+template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
+[[nodiscard]] constexpr auto isinf(IntegralType arg) -> bool
 {
     return isinf(static_cast<double>(arg));
 }
@@ -118,9 +119,8 @@ template <typename IntegralType>
  *
  * @details https://en.cppreference.com/w/cpp/numeric/math/isnan
  */
-template <typename IntegralType>
-[[nodiscard]] constexpr auto isnan(IntegralType arg)
-    -> etl::enable_if_t<etl::is_integral_v<IntegralType>, bool>
+template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
+[[nodiscard]] constexpr auto isnan(IntegralType arg) -> bool
 {
     return isnan(static_cast<double>(arg));
 }

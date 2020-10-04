@@ -214,10 +214,8 @@ public:
      * the element that prevented the insertion) and a bool denoting whether the insertion
      * took place.
      */
-    template <typename P>
-    constexpr auto insert(P&& value)
-        -> etl::enable_if_t<etl::is_constructible_v<value_type, P&&>,
-                            etl::pair<iterator, bool>>
+    template <typename P, TAETL_REQUIRES_(is_constructible_v<value_type, P&&>)>
+    constexpr auto insert(P&& value) -> etl::pair<iterator, bool>
     {
         return emplace(etl::forward<P>(value));
     }

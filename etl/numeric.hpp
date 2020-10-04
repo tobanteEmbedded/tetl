@@ -197,11 +197,13 @@ template <typename M, typename N>
  * @return If either m or n is zero, returns zero. Otherwise, returns the least
  * common multiple of |m| and |n|.
  */
-template <typename M, typename N>
-[[nodiscard]] constexpr auto lcm(M m, N n) -> etl::enable_if_t<
-    etl::is_integral_v<
-        M> && !etl::is_same_v<M, bool> && etl::is_integral_v<N> && !etl::is_same_v<N, bool>,
-    etl::common_type_t<M, N>>
+template <typename M, typename N,
+          TAETL_REQUIRES_(
+              (is_integral_v<
+                   M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
+[[nodiscard]] constexpr auto lcm(M m, N n) ->
+
+    etl::common_type_t<M, N>
 {
     return (m * n) / gcd(m, n);
 }
@@ -216,23 +218,23 @@ template <typename M, typename N>
  *
  * https://en.cppreference.com/w/cpp/numeric/midpoint
  */
-template <typename Integer>
-constexpr auto midpoint(Integer a, Integer b) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer> && !etl::is_same_v<Integer, bool>,
-                        Integer>
+template <typename Int, TAETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
-    using U  = etl::make_unsigned_t<Integer>;
-    int sign = 1;
-    auto m   = static_cast<U>(a);
-    auto M   = static_cast<U>(b);
+    using U = make_unsigned_t<Int>;
+
+    auto sign = 1;
+    auto m    = static_cast<U>(a);
+    auto M    = static_cast<U>(b);
+
     if (a > b)
     {
         sign = -1;
         m    = static_cast<U>(b);
         M    = static_cast<U>(a);
     }
-    return static_cast<Integer>(
-        a + static_cast<Integer>(sign * static_cast<Integer>(U(M - m) >> 1)));
+
+    return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(U(M - m) >> 1)));
 }
 
 /**
@@ -245,12 +247,11 @@ constexpr auto midpoint(Integer a, Integer b) noexcept
  *
  * https://en.cppreference.com/w/cpp/numeric/midpoint
  */
-template <typename Float>
-constexpr auto midpoint(Float a, Float b) noexcept
-    -> etl::enable_if_t<etl::is_floating_point_v<Float>, Float>
+template <typename Float, TAETL_REQUIRES_(is_floating_point_v<Float>)>
+constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
-    auto const lo = etl::numeric_limits<Float>::min() * 2;
-    auto const hi = etl::numeric_limits<Float>::max() / 2;
+    auto const lo = numeric_limits<Float>::min() * 2;
+    auto const hi = numeric_limits<Float>::max() / 2;
 
     if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
 
@@ -271,9 +272,8 @@ constexpr auto midpoint(Float a, Float b) noexcept
  *
  * https://en.cppreference.com/w/cpp/numeric/midpoint
  */
-template <typename Pointer>
-constexpr auto midpoint(Pointer a, Pointer b) noexcept
-    -> enable_if_t<is_pointer_v<Pointer>, Pointer>
+template <typename Pointer, TAETL_REQUIRES_(is_pointer_v<Pointer>)>
+constexpr auto midpoint(Pointer a, Pointer b) noexcept -> Pointer
 {
     return a + midpoint(ptrdiff_t {0}, b - a);
 }

@@ -30,6 +30,7 @@ DAMAGE.
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/sfinae.hpp"
 #include "etl/detail/tuple_size.hpp"
 
 namespace etl
@@ -130,6 +131,10 @@ struct is_integer_and_not_char
               T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
 {
 };
+
+template <typename T>
+inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::value;
+
 }  // namespace detail
 
 /**
@@ -142,11 +147,10 @@ struct is_integer_and_not_char
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
     using UU = etl::make_unsigned_t<U>;
@@ -172,11 +176,10 @@ template <typename T, typename U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
     return !cmp_equal(t, u);
 }
@@ -191,11 +194,10 @@ template <typename T, typename U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
     using UU = etl::make_unsigned_t<U>;
@@ -220,11 +222,10 @@ template <typename T, typename U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
     return cmp_less(u, t);
 }
@@ -239,11 +240,10 @@ template <typename T, typename U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
     return !cmp_greater(t, u);
 }
@@ -258,11 +258,10 @@ template <typename T, typename U>
  * type).
  * @ref https://en.cppreference.com/w/cpp/utility/intcmp
  */
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value
-                       && detail::is_integer_and_not_char<U>::value,
-                   bool>
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                              detail::is_integer_and_not_char_v<U>)>
+[[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
     return !cmp_less(t, u);
 }
@@ -278,9 +277,8 @@ template <typename T, typename U>
  *
  * @ref https://en.cppreference.com/w/cpp/utility/in_range
  */
-template <typename R, typename T>
-[[nodiscard]] constexpr auto in_range(T t) noexcept
-    -> enable_if_t<detail::is_integer_and_not_char<T>::value, bool>
+template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
+[[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
     return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
            && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());

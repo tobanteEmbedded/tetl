@@ -30,6 +30,8 @@ DAMAGE.
 #include "definitions.hpp"
 #include "type_traits.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 namespace etl
 {
 enum class byte : uint8_t
@@ -40,9 +42,8 @@ enum class byte : uint8_t
  * @brief Equivalent to: return Integer(b); This overload only participates
  * in overload resolution if etl::is_integral_v<Integer> is true.
  */
-template <typename Integer>
-[[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, Integer>
+template <typename Integer, TAETL_REQUIRES_(etl::is_integral_v<Integer>)>
+[[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept -> Integer
 {
     return static_cast<Integer>(b);
 }
@@ -52,9 +53,8 @@ template <typename Integer>
  * shift); This overload only participates in overload resolution if
  * etl::is_integral_v<Integer> is true.
  */
-template <typename Integer>
-[[nodiscard]] constexpr auto operator<<(etl::byte b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte>
+template <typename Integer, TAETL_REQUIRES_(etl::is_integral_v<Integer>)>
+[[nodiscard]] constexpr auto operator<<(etl::byte b, Integer shift) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) << shift);
 }
@@ -64,9 +64,8 @@ template <typename Integer>
  * shift); This overload only participates in overload resolution if
  * etl::is_integral_v<Integer> is true.
  */
-template <typename Integer>
-[[nodiscard]] constexpr auto operator>>(etl::byte b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte>
+template <typename Integer, TAETL_REQUIRES_(etl::is_integral_v<Integer>)>
+[[nodiscard]] constexpr auto operator>>(etl::byte b, Integer shift) noexcept -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) >> shift);
 }
@@ -75,9 +74,8 @@ template <typename Integer>
  * @brief Equivalent to: return b = b << shift; This overload only participates
  * in overload resolution if etl::is_integral_v<Integer> is true.
  */
-template <typename Integer>
-constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+template <typename Integer, TAETL_REQUIRES_(etl::is_integral_v<Integer>)>
+constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept -> etl::byte&
 
 {
     return b = b << shift;
@@ -87,9 +85,8 @@ constexpr auto operator<<=(etl::byte& b, Integer shift) noexcept
  * @brief Equivalent to: return b = b >> shift; This overload only participates
  * in overload resolution if etl::is_integral_v<Integer> is true.
  */
-template <typename Integer>
-constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<Integer>, etl::byte&>
+template <typename Integer, TAETL_REQUIRES_(etl::is_integral_v<Integer>)>
+constexpr auto operator>>=(etl::byte& b, Integer shift) noexcept -> etl::byte&
 {
     return b = b >> shift;
 }

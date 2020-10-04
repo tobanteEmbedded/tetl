@@ -190,9 +190,8 @@ public:
      * @brief Constructs a new element at the end of the storagein-place. Increases size
      * of the storage by one. Always fails for empty storage.
      */
-    template <typename... Args>
-    static constexpr auto emplace_back(Args&&...) noexcept
-        -> etl::enable_if_t<etl::is_constructible_v<T, Args...>, void>
+    template <typename... Args, TAETL_REQUIRES_((is_constructible_v<T, Args...>))>
+    static constexpr auto emplace_back(Args&&...) noexcept -> void
     {
         assert(false && "tried to emplace_back on empty storage");
     }
@@ -452,10 +451,9 @@ public:
     /**
      * @brief Constructs an element in-place at the end of the embedded storage.
      */
-    template <typename... Args>
+    template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<T>)>
     auto emplace_back(Args&&... args) noexcept(
-        noexcept(new (end()) T(etl::forward<Args>(args)...)))
-        -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
+        noexcept(new (end()) T(etl::forward<Args>(args)...))) -> void
     {
         assert(!full() && "tried to emplace_back on full storage");
         new (end()) T(etl::forward<Args>(args)...);
@@ -559,11 +557,11 @@ public:
     // using reverse_iterator       = ::etl::reverse_iterator<iterator>;
     // using const_reverse_iterator = ::etl::reverse_iterator<const_iterator>;
 private:
+    TAETL_REQUIRES(etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>)
     constexpr auto emplace_n(size_type n) noexcept(
         (etl::is_move_constructible_v<T> && etl::is_nothrow_move_constructible_v<T>)
         || (etl::is_copy_constructible_v<T> && etl::is_nothrow_copy_constructible_v<T>))
-        -> etl::enable_if_t<
-            etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>, void>
+        -> void
     {
         assert(n <= capacity()
                && "static_vector cannot be "
@@ -660,10 +658,10 @@ public:
     /**
      * @brief
      */
-    template <typename... Args>
+    template <typename... Args, TAETL_REQUIRES_(is_constructible_v<T, Args...>)>
     constexpr auto emplace(const_iterator position, Args&&... args) noexcept(noexcept(
         move_insert(position, etl::declval<value_type*>(), etl::declval<value_type*>())))
-        -> etl::enable_if_t<etl::is_constructible_v<T, Args...>, iterator>
+        -> iterator
     {
         assert(!full() && "tried emplace on full static_vector!");
         assert_iterator_in_range(position);

@@ -31,6 +31,8 @@ DAMAGE.
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/sfinae.hpp"
+
 namespace etl
 {
 /**
@@ -68,11 +70,11 @@ enum class endian
  *
  * @ref https://en.cppreference.com/w/cpp/numeric/bit_cast
  */
-template <typename To, typename From>
-constexpr auto bit_cast(const From& src) noexcept -> typename etl::enable_if_t<
-    (sizeof(To) == sizeof(From))
-        && etl::is_trivially_copyable_v<From> && etl::is_trivially_copyable_v<To>,
-    To>
+template <
+    typename To, typename From,
+    TAETL_REQUIRES_((sizeof(To) == sizeof(From))
+                    && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
+constexpr auto bit_cast(const From& src) noexcept -> To
 {
     static_assert(is_trivially_constructible_v<To>,
                   "This implementation additionally requires destination type to be "
@@ -94,6 +96,9 @@ struct is_unsigned_integer
 {
 };
 
+template <typename T>
+inline constexpr auto is_unsigned_integer_v = is_unsigned_integer<T>::value;
+
 }  // namespace detail
 
 /**
@@ -104,9 +109,8 @@ struct is_unsigned_integer
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
  */
-template <typename T>
-[[nodiscard]] constexpr auto popcount(T input) noexcept
-    -> etl::enable_if_t<detail::is_unsigned_integer<T>::value, int>
+template <typename T, TAETL_REQUIRES_(detail::is_unsigned_integer_v<T>)>
+[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
     auto count = T {0};
     while (input)
@@ -126,9 +130,8 @@ template <typename T>
  *
  * @return true if x is an integral power of two; otherwise false.
  */
-template <typename T>
-[[nodiscard]] constexpr auto has_single_bit(T x) noexcept
-    -> enable_if_t<detail::is_unsigned_integer<T>::value, bool>
+template <typename T, TAETL_REQUIRES_(detail::is_unsigned_integer_v<T>)>
+[[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
     return popcount(x) == 1;
 }
@@ -144,9 +147,8 @@ template <typename T>
  * @return The number of consecutive 0 bits in the value of x, starting from the
  * most significant bit.
  */
-template <typename T>
-[[nodiscard]] constexpr auto countl_zero(T x) noexcept
-    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+template <typename T, TAETL_REQUIRES_(detail::is_unsigned_integer_v<T>)>
+[[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
     auto const total_bits = etl::numeric_limits<T>::digits;
     if (x == T {0}) { return etl::numeric_limits<T>::digits; }
@@ -172,9 +174,8 @@ template <typename T>
  * @return The number of consecutive 1 bits in the value of x, starting from the
  * most significant bit.
  */
-template <typename T>
-[[nodiscard]] constexpr auto countl_one(T x) noexcept
-    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+template <typename T, TAETL_REQUIRES_(detail::is_unsigned_integer_v<T>)>
+[[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
     auto const total_bits = etl::numeric_limits<T>::digits;
     if (x == etl::numeric_limits<T>::max()) { return total_bits; }
@@ -197,9 +198,8 @@ template <typename T>
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  */
-template <typename T>
-[[nodiscard]] constexpr auto bit_width(T x) noexcept
-    -> enable_if_t<detail::is_unsigned_integer<T>::value, int>
+template <typename T, TAETL_REQUIRES_(detail::is_unsigned_integer_v<T>)>
+[[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
     return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
