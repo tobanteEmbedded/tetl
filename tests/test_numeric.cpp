@@ -55,12 +55,25 @@ TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t, etl
                    etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
                    long double)
 {
-    auto data = etl::array<TestType, 4> {};
-    etl::iota(begin(data), end(data), TestType {0});
-    REQUIRE(data[0] == 0);
-    REQUIRE(data[1] == 1);
-    REQUIRE(data[2] == 2);
-    REQUIRE(data[3] == 3);
+    SECTION("from 0")
+    {
+        auto data = etl::array<TestType, 4> {};
+        etl::iota(begin(data), end(data), TestType {0});
+        CHECK(data[0] == 0);
+        CHECK(data[1] == 1);
+        CHECK(data[2] == 2);
+        CHECK(data[3] == 3);
+    }
+
+    SECTION("from 42")
+    {
+        auto data = etl::array<TestType, 4> {};
+        etl::iota(begin(data), end(data), TestType {42});
+        CHECK(data[0] == 42);
+        CHECK(data[1] == 43);
+        CHECK(data[2] == 44);
+        CHECK(data[3] == 45);
+    }
 }
 
 TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t, etl::int32_t,
