@@ -34,6 +34,10 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief etl::static_set is an associative container that contains a sorted set of unique
+ * objects of type Key. Sorting is done using the key comparison function Compare.
+ */
 template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
 class static_set
 {
@@ -60,46 +64,114 @@ public:
         bool inserted;
     };
 
+    /**
+     * @brief Default constructor. Constructs empty container.
+     */
     static_set() = default;
 
+    /**
+     * @brief Constructs the container with the contents of the range [first, last).
+     *
+     * @details If multiple elements in the range have keys that compare equivalent, it is
+     * unspecified which element is inserted (pending LWG2844).
+     */
+    template <class InputIt>
+    static_set(InputIt first, InputIt last)
+    {
+        for (; first != last; ++first) { insert(*first); }
+    }
+
+    /**
+     * @brief Returns an iterator to the first element of the set.
+     */
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
+
+    /**
+     * @brief Returns an iterator to the first element of the set.
+     */
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
     {
         return data_;
     }
+
+    /**
+     * @brief Returns an iterator to the first element of the set.
+     */
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
     {
         return begin();
     }
 
+    /**
+     * @brief Returns an iterator to the element following the last element of the set.
+     */
     [[nodiscard]] constexpr auto end() noexcept -> iterator { return data_ + size_; }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of the set.
+     */
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
     {
         return data_ + size_;
     }
+
+    /**
+     * @brief Returns an iterator to the element following the last element of the set.
+     */
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed set. It
+     * corresponds to the last element of the non-reversed set.
+     */
     [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
     {
         return reverse_iterator(end());
     }
+
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed set. It
+     * corresponds to the last element of the non-reversed set.
+     */
     [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
         return reverse_iterator(end());
     }
+
+    /**
+     * @brief Returns a reverse iterator to the first element of the reversed set. It
+     * corresponds to the last element of the non-reversed set.
+     */
     [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
     {
         return rbegin();
     }
 
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed set. It corresponds to the element preceding the first element of the
+     * non-reversed set.
+     */
     [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
     {
         return reverse_iterator(begin());
     }
+
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed set. It corresponds to the element preceding the first element of the
+     * non-reversed set.
+     */
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
         return reverse_iterator(begin());
     }
+
+    /**
+     * @brief Returns a reverse iterator to the element following the last element of the
+     * reversed set. It corresponds to the element preceding the first element of the
+     * non-reversed set.
+     */
     [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
     {
         return rend();
@@ -152,7 +224,7 @@ public:
             }
         }
 
-        return etl::pair<iterator, bool>(nullptr, true);
+        return etl::pair<iterator, bool>(nullptr, false);
     }
 
     /**
@@ -214,10 +286,7 @@ public:
      *
      * @return The key comparison function object.
      */
-    [[nodiscard]] constexpr auto key_comp() const noexcept -> key_compare
-    {
-        return key_compare();
-    }
+    [[nodiscard]] auto key_comp() const noexcept -> key_compare { return key_compare(); }
 
     /**
      * @brief Returns the function object that compares the values. It is the same
@@ -225,7 +294,7 @@ public:
      *
      * @return The value comparison function object.
      */
-    [[nodiscard]] constexpr auto value_comp() const noexcept -> value_compare
+    [[nodiscard]] auto value_comp() const noexcept -> value_compare
     {
         return value_compare();
     }
