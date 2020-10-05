@@ -137,6 +137,20 @@ TEMPLATE_TEST_CASE("set/static_set: rbegin/rend", "[set]", etl::uint8_t, etl::in
     CHECK(it == rend(set));
 }
 
+TEMPLATE_TEST_CASE("set/static_set: clear", "[set]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto set = etl::static_set<TestType, 2>();
+    set.emplace(TestType(1));
+    set.emplace(TestType(4));
+    CHECK(set.full());
+    CHECK_FALSE(set.empty());
+
+    set.clear();
+    CHECK(set.empty());
+    CHECK_FALSE(set.full());
+}
 TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

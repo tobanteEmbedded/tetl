@@ -140,14 +140,23 @@ public:
     /**
      * @brief
      */
-    static constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
+    static constexpr auto insert(value_type&& /*value*/) -> etl::pair<iterator, bool>
     {
-        ::etl::ignore_unused(value);
         assert(false && "tried to insert on empty storage");
         return etl::pair<iterator, bool> {nullptr, false};
     }
 
 protected:
+    /**
+     * @brief (unsafe) Changes the container size to \p new_size.
+     *
+     * @warning No elements are constructed or destroyed.
+     */
+    constexpr void unsafe_set_size([[maybe_unused]] size_t new_size) noexcept
+    {
+        assert(new_size == 0 && "new_size out-of-bounds for empty storage");
+    }
+
     /**
      * @brief Destroys all elements of the storage in range [begin, end) without changings
      * its size (unsafe). Nothing to destroy since the storage is empty.
@@ -295,6 +304,17 @@ public:
 
 protected:
     /**
+     * @brief (unsafe) Changes the container size to \p new_size.
+     *
+     * @warning No elements are constructed or destroyed.
+     */
+    constexpr void unsafe_set_size(size_t new_size) noexcept
+    {
+        assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
+        size_ = size_type(new_size);
+    }
+
+    /**
      * @brief (unsafe) Destroy elements in the range [begin, end).
      *
      * @warning The size of the storage is not changed.
@@ -345,6 +365,7 @@ private:
 
     using base_type::unsafe_destroy;
     using base_type::unsafe_destroy_all;
+    using base_type::unsafe_set_size;
 
 public:
     using key_type               = typename base_type::key_type;
@@ -479,6 +500,16 @@ public:
      * @brief Returns the maximum number of elements the container is able to hold.
      */
     using base_type::max_size;
+
+    /**
+     * @brief Erases all elements from the container. After this call, size() returns
+     * zero.
+     */
+    constexpr auto clear() noexcept -> void
+    {
+        unsafe_destroy_all();
+        unsafe_set_size(0);
+    }
 
     /**
      * @brief Inserts element into the container, if the container doesn't
