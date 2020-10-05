@@ -470,7 +470,7 @@ public:
     using base_type::full;
 
     /**
-     * @brief Returns the number of elements in the container, i.e. std::distance(begin(),
+     * @brief Returns the number of elements in the container, i.e. etl::distance(begin(),
      * end()).
      */
     using base_type::size;
@@ -507,6 +507,16 @@ public:
     }
 
     /**
+     * @brief Returns the number of elements with key that compares equivalent to the
+     * specified argument, which is either 1 or 0 since this container does not allow
+     * duplicates.
+     */
+    [[nodiscard]] constexpr auto count(key_type const& key) const -> size_type
+    {
+        return contains(key) ? 1 : 0;
+    }
+
+    /**
      * @brief Finds an element with key equivalent to key.
      *
      * @return Iterator to an element with key equivalent to key. If no such
@@ -539,6 +549,43 @@ public:
     }
 
     /**
+     * @brief Returns an iterator pointing to the first element that is not less than
+     * (i.e. greater or equal to) key.
+     */
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
+    {
+        return etl::lower_bound(begin(), end(), key, key_compare {});
+    }
+
+    /**
+     * @brief Returns an iterator pointing to the first element that is not less than
+     * (i.e. greater or equal to) key.
+     */
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const -> const_iterator
+    {
+        return etl::lower_bound(begin(), end(), key, key_compare {});
+    }
+
+    // /**
+    //  * @brief Returns an iterator pointing to the first element that is greater than
+    //  key.
+    //  */
+    // [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
+    // {
+    //     return etl::upper_bound(begin(), end(), key, key_compare {});
+    // }
+
+    // /**
+    //  * @brief Returns an iterator pointing to the first element that is greater than
+    //  key.
+    //  */
+    // [[nodiscard]] constexpr auto upper_bound(key_type const& key) const ->
+    // const_iterator
+    // {
+    //     return etl::upper_bound(begin(), end(), key, key_compare {});
+    // }
+
+    /**
      * @brief Returns the function object that compares the keys, which is a copy
      * of this container's constructor argument comp. It is the same as
      * value_comp.
@@ -558,6 +605,97 @@ public:
         return value_compare();
     }
 };
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
+ * number of elements and each element in lhs compares equal with the element in rhs at
+ * the same position.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator==(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                        etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return lhs.size() == rhs.size() && etl::equal(begin(lhs), end(lhs), begin(rhs));
+}
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
+ * number of elements and each element in lhs compares equal with the element in rhs at
+ * the same position.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator!=(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                        etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return !(lhs == rhs);
+}
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare. This comparison
+ * ignores the set's ordering Compare.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator<(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                       etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return etl::lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
+}
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare. This comparison
+ * ignores the set's ordering Compare.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator<=(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                        etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return !(rhs < lhs);
+}
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare. This comparison
+ * ignores the set's ordering Compare.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator>(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                       etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return rhs < lhs;
+}
+
+/**
+ * @brief Compares the contents of two sets.
+ *
+ * @details Compares the contents of lhs and rhs lexicographically. The comparison is
+ * performed by a function equivalent to etl::lexicographical_compare. This comparison
+ * ignores the set's ordering Compare.
+ */
+template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+[[nodiscard]] constexpr auto operator>=(etl::static_set<Key, Capacity, Comp> const& lhs,
+                                        etl::static_set<Key, Capacity, Comp> const& rhs)
+    -> bool
+{
+    return !(lhs < rhs);
+}
+
 }  // namespace etl
 
 #endif  // TAETL_SET_HPP

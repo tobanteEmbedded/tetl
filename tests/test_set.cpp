@@ -239,3 +239,57 @@ TEMPLATE_TEST_CASE("set/static_set: key_comp/value_comp", "[set]", etl::uint8_t,
     CHECK(k_cmp(T(1), T(2)) == v_cmp(T(1), T(2)));
     CHECK(k_cmp(T(2), T(1)) == v_cmp(T(2), T(1)));
 }
+
+TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    SECTION("empty")
+    {
+        auto lhs = etl::static_set<TestType, 4>();
+        auto rhs = etl::static_set<TestType, 4>();
+        CHECK(lhs == rhs);
+        CHECK(rhs == lhs);
+        CHECK(etl::as_const(lhs) == etl::as_const(rhs));
+        CHECK(etl::as_const(rhs) == etl::as_const(lhs));
+
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(rhs != lhs);
+        CHECK_FALSE(etl::as_const(lhs) != etl::as_const(rhs));
+        CHECK_FALSE(etl::as_const(rhs) != etl::as_const(lhs));
+    }
+
+    SECTION("equal")
+    {
+        auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+        auto lhs  = etl::static_set<TestType, 4>(begin(data), end(data));
+        auto rhs  = etl::static_set<TestType, 4>(begin(data), end(data));
+
+        CHECK(lhs == rhs);
+        CHECK(rhs == lhs);
+        CHECK(etl::as_const(lhs) == etl::as_const(rhs));
+        CHECK(etl::as_const(rhs) == etl::as_const(lhs));
+
+        CHECK_FALSE(lhs != rhs);
+        CHECK_FALSE(rhs != lhs);
+        CHECK_FALSE(etl::as_const(lhs) != etl::as_const(rhs));
+        CHECK_FALSE(etl::as_const(rhs) != etl::as_const(lhs));
+    }
+
+    SECTION("not equal")
+    {
+        auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+        auto lhs  = etl::static_set<TestType, 4>(begin(data), end(data) - 1);
+        auto rhs  = etl::static_set<TestType, 4>(begin(data), end(data));
+
+        CHECK(lhs != rhs);
+        CHECK(rhs != lhs);
+        CHECK(etl::as_const(lhs) != etl::as_const(rhs));
+        CHECK(etl::as_const(rhs) != etl::as_const(lhs));
+
+        CHECK_FALSE(lhs == rhs);
+        CHECK_FALSE(rhs == lhs);
+        CHECK_FALSE(etl::as_const(lhs) == etl::as_const(rhs));
+        CHECK_FALSE(etl::as_const(rhs) == etl::as_const(lhs));
+    }
+}
