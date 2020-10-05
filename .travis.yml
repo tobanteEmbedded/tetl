@@ -9,7 +9,7 @@ script-anchors:
     - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug
+    - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
     - cmake --build . -- -j
     - ctest -j
     - bash <(curl -s https://codecov.io/bash)
@@ -22,7 +22,7 @@ script-anchors:
     - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
     - cmake --build . -- -j
     - ctest -j
 
@@ -30,11 +30,11 @@ script-anchors:
     - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
     - cmake --build . -- -j2
     - ctest -j2
     - rm -rf *
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Debug
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
     - cmake --build . -- -j2
     - ctest -j2
 

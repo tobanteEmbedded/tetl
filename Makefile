@@ -7,7 +7,7 @@ all: config build test
 
 .PHONY: config
 config:
-	cmake -S. -B$(BUILD_DIR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG)
+	cmake -S. -B$(BUILD_DIR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG) -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
 
 .PHONY: build
 build:
