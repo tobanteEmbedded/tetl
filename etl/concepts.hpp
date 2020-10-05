@@ -30,18 +30,39 @@ DAMAGE.
 #include "definitions.hpp"
 #include "type_traits.hpp"
 
-#if defined(TAETL_CPP_STANDARD_20)
+#if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace etl
 {
 namespace detail
 {
 template <typename T, typename U>
-concept same_as_helper = etl::is_same_v<T, U>;
+concept same_helper = etl::is_same_v<T, U>;
 }
 
 template <typename T, typename U>
-concept same_as = detail::same_as_helper<T, U>&& detail::same_as_helper<U, T>;
+concept same_as = detail::same_helper<T, U>&& detail::same_helper<U, T>;
+
+template <typename From, typename To>
+concept convertible_to
+    = etl::is_convertible_v<From, To>&& requires(etl::add_rvalue_reference_t<From> (&f)())
+{
+    static_cast<To>(f());
+};
+
+template <typename T>
+concept integral = etl::is_integral_v<T>;
+
+template <typename T>
+concept signed_integral = etl::integral<T>&& etl::is_signed_v<T>;
+
+template <typename T>
+concept unsigned_integral = etl::integral<T>&& etl::is_unsigned_v<T>;
+
+template <typename T>
+concept floating_point = etl::is_floating_point_v<T>;
+
 }  // namespace etl
+
 #endif
 
 #endif  // TAETL_CONCEPTS_HPP
