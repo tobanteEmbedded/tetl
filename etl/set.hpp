@@ -462,10 +462,7 @@ public:
     /**
      * @brief Checks if the container has no elements, i.e. whether begin() == end().
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return begin() == end();
-    }
+    using base_type::empty;
 
     /**
      * @brief Checks if the container full, i.e. whether size() == Capacity.

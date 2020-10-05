@@ -49,6 +49,19 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t, etl::
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
+    SECTION("0")
+    {
+        auto set = etl::static_set<TestType, 0>();
+        CHECK(set.size() == 0);
+        CHECK(set.max_size() == 0);
+        CHECK(set.empty());
+        CHECK(set.full());
+        CHECK(set.begin() == nullptr);
+        CHECK(etl::as_const(set).begin() == nullptr);
+        CHECK(set.end() == nullptr);
+        CHECK(etl::as_const(set).end() == nullptr);
+    }
+
     SECTION("4")
     {
         auto set = etl::static_set<TestType, 4>();
