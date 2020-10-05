@@ -34,94 +34,19 @@ DAMAGE.
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/cassert.hpp"
-#include "etl/definitions.hpp"
 #include "etl/functional.hpp"
-#include "etl/iterator.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
 
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/container_utils.hpp"
 
 namespace etl
 {
 namespace detail
 {
-template <typename T>
-inline constexpr bool is_movable_v = etl::is_object_v<T>&& etl::is_assignable_v<T&, T>&&
-    etl::is_move_constructible_v<T>&& etl::is_swappable_v<T&>;
-
-template <typename Rng>
-using range_iterator_t = decltype(etl::begin(etl::declval<Rng>()));
-
-template <typename T>
-using iterator_reference_t = typename etl::iterator_traits<T>::reference;
-
-template <typename T>
-using iterator_category_t = typename etl::iterator_traits<T>::iterator_category;
-
-template <typename T, typename Cat, typename = void>
-struct Iterator_ : etl::false_type
-{
-};
-
-template <typename T, typename Cat>
-struct Iterator_<T, Cat, etl::void_t<iterator_category_t<T>>>
-    : etl::bool_constant<etl::is_convertible_v<iterator_category_t<T>, Cat>>
-{
-};
-
-// Concepts (poor-man emulation using type traits)
-template <typename T>
-static constexpr bool InputIterator = Iterator_<T, etl::input_iterator_tag> {};
-
-template <typename T>
-static constexpr bool ForwardIterator = Iterator_<T, etl::forward_iterator_tag> {};
-
-template <typename T>
-static constexpr bool OutputIterator
-    = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
-
-template <typename T>
-static constexpr bool BidirectionalIterator
-    = Iterator_<T, etl::bidirectional_iterator_tag> {};
-
-template <typename T>
-static constexpr bool RandomAccessIterator
-    = Iterator_<T, etl::random_access_iterator_tag> {};
-
-template <typename T>
-static constexpr bool RandomAccessRange = RandomAccessIterator<range_iterator_t<T>>;
-
-/**
- * @brief Smallest fixed-width unsigned integer type that can represent values in the
- * range [0, N].
- */
-// clang-format off
-template<size_t N>
-using smallest_size_t =
-            etl::conditional_t<(N < etl::numeric_limits<uint8_t>::max()),  uint8_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint16_t>::max()), uint16_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint32_t>::max()), uint32_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint64_t>::max()), uint64_t,
-                                                                 size_t>>>>;
-// clang-format on
-
-/**
- * @brief Index a range doing bound checks in debug builds
- */
-template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
-constexpr decltype(auto) index(Rng&& rng, Index&& i) noexcept
-{
-    assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
-    return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
-}
-
 /**
  * @brief Storage for zero elements.
  */
 template <typename T>
-class sv_zero_storage
+class static_vector_zero_storage
 {
 public:
     using size_type       = uint8_t;
@@ -133,33 +58,34 @@ public:
     /**
      * @brief Defaulted constructor.
      */
-    constexpr sv_zero_storage() = default;
+    constexpr static_vector_zero_storage() = default;
 
     /**
      * @brief Defaulted copy constructor.
      */
-    constexpr sv_zero_storage(sv_zero_storage const&) = default;
+    constexpr static_vector_zero_storage(static_vector_zero_storage const&) = default;
 
     /**
      * @brief Defaulted copy assignment .
      */
-    constexpr auto operator =(sv_zero_storage const&) noexcept
-        -> sv_zero_storage& = default;
+    constexpr auto operator            =(static_vector_zero_storage const&) noexcept
+        -> static_vector_zero_storage& = default;
 
     /**
      * @brief Defaulted move constructor.
      */
-    constexpr sv_zero_storage(sv_zero_storage&&) noexcept = default;
+    constexpr static_vector_zero_storage(static_vector_zero_storage&&) noexcept = default;
 
     /**
      * @brief Defaulted move assignment.
      */
-    constexpr auto operator=(sv_zero_storage&&) noexcept -> sv_zero_storage& = default;
+    constexpr auto operator            =(static_vector_zero_storage&&) noexcept
+        -> static_vector_zero_storage& = default;
 
     /**
      * @brief Defaulted destructor.
      */
-    ~sv_zero_storage() = default;
+    ~static_vector_zero_storage() = default;
 
     /**
      * @brief Pointer to the data in the storage.
@@ -237,13 +163,13 @@ protected:
  * @brief Storage for trivial types.
  */
 template <typename T, size_t Capacity>
-class sv_trivial_storage
+class static_vector_trivial_storage
 {
     static_assert(etl::is_trivial_v<T>,
                   "storage::trivial<T, C> requires etl::is_trivial_v<T>");
     static_assert(Capacity != size_t {0}, "Capacity must be greater "
                                           "than zero (use "
-                                          "storage::sv_zero_storage instead)");
+                                          "storage::static_vector_zero_storage instead)");
 
 public:
     using size_type       = smallest_size_t<Capacity>;
@@ -252,17 +178,19 @@ public:
     using pointer         = T*;
     using const_pointer   = T const*;
 
-    constexpr sv_trivial_storage() noexcept = default;
+    constexpr static_vector_trivial_storage() noexcept = default;
 
-    constexpr sv_trivial_storage(sv_trivial_storage const&) noexcept = default;
-    constexpr auto operator    =(sv_trivial_storage const&) noexcept
-        -> sv_trivial_storage& = default;
+    constexpr static_vector_trivial_storage(
+        static_vector_trivial_storage const&) noexcept = default;
+    constexpr auto operator               =(static_vector_trivial_storage const&) noexcept
+        -> static_vector_trivial_storage& = default;
 
-    constexpr sv_trivial_storage(sv_trivial_storage&&) noexcept = default;
-    constexpr auto operator    =(sv_trivial_storage&&) noexcept
-        -> sv_trivial_storage& = default;
+    constexpr static_vector_trivial_storage(
+        static_vector_trivial_storage&&) noexcept = default;
+    constexpr auto operator               =(static_vector_trivial_storage&&) noexcept
+        -> static_vector_trivial_storage& = default;
 
-    ~sv_trivial_storage() = default;
+    ~static_vector_trivial_storage() = default;
 
     /**
      * @brief Direct access to the underlying storage.
@@ -368,7 +296,7 @@ private:
  * @brief Storage for non-trivial elements.
  */
 template <typename T, size_t Capacity>
-class sv_non_trivial_storage
+class static_vector_non_trivial_storage
 {
     static_assert(!etl::is_trivial_v<T>,
                   "use storage::trivial for etl::is_trivial_v<T> elements");
@@ -381,17 +309,19 @@ public:
     using pointer         = T*;
     using const_pointer   = T const*;
 
-    constexpr sv_non_trivial_storage() = default;
+    constexpr static_vector_non_trivial_storage() = default;
 
-    constexpr sv_non_trivial_storage(sv_non_trivial_storage const&) = default;
-    constexpr auto operator        =(sv_non_trivial_storage const&)
-        -> sv_non_trivial_storage& = default;
+    constexpr static_vector_non_trivial_storage(static_vector_non_trivial_storage const&)
+        = default;
+    constexpr auto operator                   =(static_vector_non_trivial_storage const&)
+        -> static_vector_non_trivial_storage& = default;
 
-    constexpr sv_non_trivial_storage(sv_non_trivial_storage&&) = default;
-    constexpr auto operator                                    =(sv_non_trivial_storage&&)
-        -> sv_non_trivial_storage&                             = default;
+    constexpr static_vector_non_trivial_storage(static_vector_non_trivial_storage&&)
+        = default;
+    constexpr auto operator                   =(static_vector_non_trivial_storage&&)
+        -> static_vector_non_trivial_storage& = default;
 
-    ~sv_non_trivial_storage() noexcept(etl::is_nothrow_destructible_v<T>)
+    ~static_vector_non_trivial_storage() noexcept(etl::is_nothrow_destructible_v<T>)
     {
         unsafe_destroy_all();
     }
@@ -521,10 +451,10 @@ private:
  * @brief Selects the vector storage.
  */
 template <typename T, size_t Capacity>
-using storage_type = etl::conditional_t<
-    Capacity == 0, sv_zero_storage<T>,
-    etl::conditional_t<etl::is_trivial_v<T>, sv_trivial_storage<T, Capacity>,
-                       sv_non_trivial_storage<T, Capacity>>>;
+using static_vector_storage_type = etl::conditional_t<
+    Capacity == 0, static_vector_zero_storage<T>,
+    etl::conditional_t<etl::is_trivial_v<T>, static_vector_trivial_storage<T, Capacity>,
+                       static_vector_non_trivial_storage<T, Capacity>>>;
 
 }  // namespace detail
 
@@ -532,11 +462,11 @@ using storage_type = etl::conditional_t<
  * @brief Dynamically-resizable fixed-capacity vector.
  */
 template <typename T, size_t Capacity>
-class static_vector : private detail::storage_type<T, Capacity>
+class static_vector : private detail::static_vector_storage_type<T, Capacity>
 {
 private:
     static_assert(etl::is_nothrow_destructible_v<T>, "T must be nothrow destructible");
-    using base_type = detail::storage_type<T, Capacity>;
+    using base_type = detail::static_vector_storage_type<T, Capacity>;
     using self      = static_vector<T, Capacity>;
 
     using base_type::unsafe_destroy;
