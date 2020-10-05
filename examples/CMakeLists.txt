@@ -6,6 +6,7 @@ foreach(_target
   "chrono"
   "map"
   "numeric"
+  "set"
   "string"
   "tuple"
   "type_traits"

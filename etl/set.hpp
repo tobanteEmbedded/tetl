@@ -24,6 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+/**
+ * @example set.cpp
+ */
+
 #ifndef TAETL_SET_HPP
 #define TAETL_SET_HPP
 
@@ -136,8 +140,7 @@ public:
     /**
      * @brief
      */
-    [[nodiscard]] static constexpr auto insert(value_type&& value)
-        -> etl::pair<iterator, bool>
+    static constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
     {
         ::etl::ignore_unused(value);
         assert(false && "tried to insert on empty storage");
@@ -274,7 +277,7 @@ public:
     /**
      * @brief
      */
-    [[nodiscard]] constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
+    constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
     {
         if (!full())
         {
@@ -297,7 +300,7 @@ protected:
      * @warning The size of the storage is not changed.
      */
     template <typename InputIt>
-    constexpr auto unsafe_destroy(InputIt, InputIt) noexcept -> void
+    constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept -> void
     {
     }
 
