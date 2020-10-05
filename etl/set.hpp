@@ -135,7 +135,7 @@ public:
      */
     [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
-        return reverse_iterator(end());
+        return const_reverse_iterator(end());
     }
 
     /**
@@ -164,7 +164,7 @@ public:
      */
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
-        return reverse_iterator(begin());
+        return const_reverse_iterator(begin());
     }
 
     /**

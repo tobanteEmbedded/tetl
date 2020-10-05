@@ -94,6 +94,34 @@ TEMPLATE_TEST_CASE("set/static_set: begin/end", "[set]", etl::uint8_t, etl::int8
     CHECK(begin(set) != end(set));
     CHECK(begin(etl::as_const(set)) != end(etl::as_const(set)));
     CHECK(cbegin(set) != cend(set));
+
+    for (auto& key : set) { CHECK(key == 0); }
+    etl::for_each(begin(set), end(set), [](auto key) { CHECK(key == 0); });
+}
+
+TEMPLATE_TEST_CASE("set/static_set: rbegin/rend", "[set]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto set = etl::static_set<TestType, 4>();
+    CHECK(rbegin(set) == rend(set));
+    CHECK(rbegin(etl::as_const(set)) == rend(etl::as_const(set)));
+    CHECK(set.crbegin() == set.crend());
+
+    set.emplace(TestType(0));
+    CHECK(rbegin(set) != rend(set));
+    CHECK(rbegin(etl::as_const(set)) != rend(etl::as_const(set)));
+    CHECK(crbegin(set) != crend(set));
+
+    etl::for_each(rbegin(set), rend(set), [](auto key) { CHECK(key == 0); });
+
+    set.emplace(TestType(2));
+    set.emplace(TestType(1));
+    auto it = set.rbegin();
+    CHECK(*it++ == TestType(2));
+    CHECK(*it++ == TestType(1));
+    CHECK(*it++ == TestType(0));
+    CHECK(it == rend(set));
 }
 
 TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t, etl::int8_t,
