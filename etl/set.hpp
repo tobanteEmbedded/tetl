@@ -507,6 +507,17 @@ public:
     }
 
     /**
+     * @brief Exchanges the contents of the container with those of other.
+     */
+    constexpr auto swap(static_set& other) noexcept(etl::is_nothrow_swappable_v<key_type>)
+        -> etl::enable_if_t<etl::is_assignable_v<key_type&, key_type&&>, void>
+    {
+        static_set tmp = etl::move(other);
+        other          = etl::move(*this);
+        (*this)        = etl::move(tmp);
+    }
+
+    /**
      * @brief Returns the number of elements with key that compares equivalent to the
      * specified argument, which is either 1 or 0 since this container does not allow
      * duplicates.
@@ -613,7 +624,7 @@ public:
  * number of elements and each element in lhs compares equal with the element in rhs at
  * the same position.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator==(etl::static_set<Key, Capacity, Comp> const& lhs,
                                         etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
@@ -628,7 +639,7 @@ template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
  * number of elements and each element in lhs compares equal with the element in rhs at
  * the same position.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator!=(etl::static_set<Key, Capacity, Comp> const& lhs,
                                         etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
@@ -643,7 +654,7 @@ template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
  * performed by a function equivalent to etl::lexicographical_compare. This comparison
  * ignores the set's ordering Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator<(etl::static_set<Key, Capacity, Comp> const& lhs,
                                        etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
@@ -658,7 +669,7 @@ template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
  * performed by a function equivalent to etl::lexicographical_compare. This comparison
  * ignores the set's ordering Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator<=(etl::static_set<Key, Capacity, Comp> const& lhs,
                                         etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
@@ -673,7 +684,7 @@ template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
  * performed by a function equivalent to etl::lexicographical_compare. This comparison
  * ignores the set's ordering Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator>(etl::static_set<Key, Capacity, Comp> const& lhs,
                                        etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
@@ -688,12 +699,24 @@ template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
  * performed by a function equivalent to etl::lexicographical_compare. This comparison
  * ignores the set's ordering Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator>=(etl::static_set<Key, Capacity, Comp> const& lhs,
                                         etl::static_set<Key, Capacity, Comp> const& rhs)
     -> bool
 {
     return !(lhs < rhs);
+}
+
+/**
+ * @brief Specializes the std::swap algorithm for std::set. Swaps the contents of lhs and
+ * rhs. Calls lhs.swap(rhs).
+ */
+template <typename Key, etl::size_t Capacity, typename Comp>
+constexpr auto
+swap(etl::static_set<Key, Capacity, Comp>& lhs,
+     etl::static_set<Key, Capacity, Comp>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+{
+    lhs.swap(rhs);
 }
 
 }  // namespace etl

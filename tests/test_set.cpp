@@ -240,6 +240,75 @@ TEMPLATE_TEST_CASE("set/static_set: key_comp/value_comp", "[set]", etl::uint8_t,
     CHECK(k_cmp(T(2), T(1)) == v_cmp(T(2), T(1)));
 }
 
+TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::swap;
+
+    SECTION("empty")
+    {
+        auto lhs = etl::static_set<TestType, 4>();
+        auto rhs = etl::static_set<TestType, 4>();
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
+
+        swap(lhs, rhs);
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
+
+        rhs.swap(lhs);
+        CHECK(lhs.empty());
+        CHECK(rhs.empty());
+    }
+
+    SECTION("same size")
+    {
+        auto lhs_data = etl::array {T(1), T(2), T(3)};
+        auto rhs_data = etl::array {T(4), T(5), T(6)};
+        auto lhs      = etl::static_set<T, 4>(begin(lhs_data), end(lhs_data));
+        auto rhs      = etl::static_set<T, 4>(begin(rhs_data), end(rhs_data));
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
+
+        lhs.swap(rhs);
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(4));
+        CHECK(*rhs.begin() == T(1));
+
+        swap(rhs, lhs);
+        CHECK(lhs.size() == rhs.size());
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
+    }
+
+    SECTION("different size")
+    {
+        auto lhs_data = etl::array {T(1), T(2), T(3)};
+        auto rhs_data = etl::array {T(4), T(5)};
+        auto lhs      = etl::static_set<T, 4>(begin(lhs_data), end(lhs_data));
+        auto rhs      = etl::static_set<T, 4>(begin(rhs_data), end(rhs_data));
+        CHECK(lhs.size() == 3);
+        CHECK(rhs.size() == 2);
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
+
+        lhs.swap(rhs);
+        CHECK(lhs.size() == 2);
+        CHECK(rhs.size() == 3);
+        CHECK(*lhs.begin() == T(4));
+        CHECK(*rhs.begin() == T(1));
+
+        swap(rhs, lhs);
+        CHECK(lhs.size() == 3);
+        CHECK(rhs.size() == 2);
+        CHECK(*lhs.begin() == T(1));
+        CHECK(*rhs.begin() == T(4));
+    }
+}
+
 TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
