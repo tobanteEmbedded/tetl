@@ -394,10 +394,16 @@ public:
      * @details If multiple elements in the range have keys that compare equivalent, it is
      * unspecified which element is inserted (pending LWG2844).
      */
-    template <class InputIt>
-    static_set(InputIt first, InputIt last)
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    static_set(InputIter first, InputIter last)
     {
-        for (; first != last; ++first) { insert(*first); }
+        if constexpr (detail::RandomAccessIterator<InputIter>)
+        {
+            assert(last - first >= 0);
+            assert(static_cast<size_type>(last - first) <= max_size());
+        }
+
+        insert(first, last);
     }
 
     /**
@@ -528,10 +534,21 @@ public:
     }
 
     /**
+     * @brief Inserts elements from range [first, last). If multiple elements in the range
+     * have keys that compare equivalent, it is unspecified which element is inserted
+     * (pending LWG2844).
+     */
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    auto insert(InputIter first, InputIter last) -> void
+    {
+        for (; first != last; ++first) { insert(*first); }
+    }
+
+    /**
      * @brief Inserts a new element into the container constructed in-place with
      * the given args if there is no element with the key in the container.
      */
-    template <class... Args>
+    template <typename... Args>
     auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
         return insert(value_type(etl::forward<Args>(args)...));
@@ -739,7 +756,7 @@ template <typename Key, etl::size_t Capacity, typename Comp>
 }
 
 /**
- * @brief Specializes the std::swap algorithm for std::set. Swaps the contents of lhs and
+ * @brief Specializes the etl::swap algorithm for etl::set. Swaps the contents of lhs and
  * rhs. Calls lhs.swap(rhs).
  */
 template <typename Key, etl::size_t Capacity, typename Comp>
