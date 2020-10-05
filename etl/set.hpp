@@ -219,27 +219,30 @@ public:
     /**
      * @brief Returns an iterator to the first element of the set.
      */
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_.data(); }
 
     /**
      * @brief Returns an iterator to the first element of the set.
      */
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
     {
-        return data_;
+        return data_.data();
     }
 
     /**
      * @brief Returns an iterator to the element following the last element of the set.
      */
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return data_ + size_; }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator
+    {
+        return data_.data() + size_;
+    }
 
     /**
      * @brief Returns an iterator to the element following the last element of the set.
      */
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
     {
-        return data_ + size_;
+        return data_.data() + size_;
     }
 
     /**
@@ -306,13 +309,13 @@ protected:
     constexpr auto unsafe_destroy_all() noexcept -> void { }
 
 private:
-    // If the value_type is const, make a const array of
-    // non-const elements:
-    using data_t
-        = etl::conditional_t<!etl::is_const_v<Key>, etl::array<Key, Capacity>,
-                             const etl::array<etl::remove_const_t<Key>, Capacity>>;
-    alignas(alignof(Key)) data_t data_;
+    // If the value_type is const, make a const array of non-const elements:
+    static constexpr auto condition = !etl::is_const_v<Key>;
+    using mutable_storage_t         = etl::array<Key, Capacity>;
+    using const_storage_t = etl::array<etl::remove_const_t<Key>, Capacity> const;
+    using storage_t = etl::conditional_t<condition, mutable_storage_t, const_storage_t>;
 
+    alignas(alignof(Key)) storage_t data_;
     size_type size_ = 0;
 };
 
@@ -330,30 +333,31 @@ using static_set_storage_type
  * objects of type Key. Sorting is done using the key comparison function Compare.
  */
 template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
-class static_set
+class static_set : private detail::static_set_storage_type<Key, Capacity, Compare>
 {
+private:
+    static_assert(etl::is_nothrow_destructible_v<Key>);
+    using base_type = detail::static_set_storage_type<Key, Capacity>;
+    using self      = static_set<Key, Capacity>;
+
+    using base_type::unsafe_destroy;
+    using base_type::unsafe_destroy_all;
+
 public:
-    using key_type               = Key;
-    using value_type             = Key;
+    using key_type               = typename base_type::key_type;
+    using value_type             = typename base_type::value_type;
     using size_type              = etl::size_t;
     using difference_type        = etl::ptrdiff_t;
     using key_compare            = Compare;
     using value_compare          = Compare;
     using reference              = value_type&;
     using const_reference        = value_type const&;
-    using pointer                = value_type*;
-    using const_pointer          = value_type const*;
-    using iterator               = pointer;
-    using const_iterator         = const_pointer;
+    using pointer                = typename base_type::pointer;
+    using const_pointer          = typename base_type::const_pointer;
+    using iterator               = typename base_type::pointer;
+    using const_iterator         = typename base_type::const_pointer;
     using reverse_iterator       = etl::reverse_iterator<iterator>;
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
-
-    template <typename Iter>
-    struct insert_return_type
-    {
-        Iter position;
-        bool inserted;
-    };
 
     /**
      * @brief Default constructor. Constructs empty container.
@@ -375,15 +379,7 @@ public:
     /**
      * @brief Returns an iterator to the first element of the set.
      */
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
-
-    /**
-     * @brief Returns an iterator to the first element of the set.
-     */
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-    {
-        return data_;
-    }
+    using base_type::begin;
 
     /**
      * @brief Returns an iterator to the first element of the set.
@@ -396,15 +392,7 @@ public:
     /**
      * @brief Returns an iterator to the element following the last element of the set.
      */
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return data_ + size_; }
-
-    /**
-     * @brief Returns an iterator to the element following the last element of the set.
-     */
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-    {
-        return data_ + size_;
-    }
+    using base_type::end;
 
     /**
      * @brief Returns an iterator to the element following the last element of the set.
@@ -479,44 +467,24 @@ public:
     /**
      * @brief Checks if the container full, i.e. whether size() == Capacity.
      */
-    [[nodiscard]] constexpr auto full() const noexcept -> bool
-    {
-        return size_ == Capacity;
-    }
+    using base_type::full;
 
     /**
      * @brief Returns the number of elements in the container, i.e. std::distance(begin(),
      * end()).
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+    using base_type::size;
 
     /**
      * @brief Returns the maximum number of elements the container is able to hold.
      */
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
-    {
-        return Capacity;
-    }
+    using base_type::max_size;
 
     /**
      * @brief Inserts element into the container, if the container doesn't
      * already contain an element with an equivalent key.
      */
-    auto insert(value_type&& value) -> etl::pair<iterator, bool>
-    {
-        if (!full())
-        {
-            auto p = etl::lower_bound(begin(), end(), value, key_compare {});
-            if (p == end() || *(p) != value)
-            {
-                data_[size_++] = etl::move(value);
-                auto pos       = etl::rotate(p, end() - 1, end());
-                return etl::make_pair(pos, true);
-            }
-        }
-
-        return etl::pair<iterator, bool>(nullptr, false);
-    }
+    using base_type::insert;
 
     /**
      * @brief Inserts element into the container, if the container doesn't
@@ -589,10 +557,6 @@ public:
     {
         return value_compare();
     }
-
-private:
-    key_type data_[Capacity] {};
-    size_type size_ {};
 };
 }  // namespace etl
 
