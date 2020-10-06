@@ -458,9 +458,9 @@ template <typename ForwardIter, typename Size, typename ValueT, typename BinaryP
  * @brief Searches the range [first, last) for the first sequence of count identical
  * elements, each equal to the given value.
  */
-template <typename ForwardIt, typename Size, typename ValueT>
-[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count,
-                                      ValueT const& value) -> ForwardIt
+template <typename ForwardIter, typename Size, typename ValueT>
+[[nodiscard]] constexpr auto search_n(ForwardIter first, ForwardIter last, Size count,
+                                      ValueT const& value) -> ForwardIter
 {
     return search_n(first, last, count, value, etl::equal_to<> {});
 }
@@ -829,7 +829,7 @@ template <typename BidirIter, typename OutputIter>
 constexpr auto reverse_copy(BidirIter first, BidirIter last, OutputIter destination)
     -> OutputIter
 {
-    while (first != last) { *(destination++) = *(--last); }
+    for (; first != last; ++destination) { *(destination) = *(--last); }
     return destination;
 }
 
@@ -1051,6 +1051,19 @@ constexpr auto copy_backward(BidirIter1 first, BidirIter1 last, BidirIter2 d_las
 {
     while (first != last) { *(--d_last) = *(--last); }
     return d_last;
+}
+
+/**
+ * @brief Copies the elements from the range [ \p first , \p last ), to another range
+ * beginning at \p destination in such a way, that the element \p n_first becomes the
+ * first element of the new range and \p n_first - 1 becomes the last element.
+ */
+template <typename ForwardIter, typename OutputIter>
+constexpr auto rotate_copy(ForwardIter first, ForwardIter n_first, ForwardIter last,
+                           OutputIter destination) -> OutputIter
+{
+    destination = etl::copy(n_first, last, destination);
+    return etl::copy(first, n_first, destination);
 }
 
 /**

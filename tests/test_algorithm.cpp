@@ -573,15 +573,47 @@ TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 16> arr {};
-    arr[0] = 1;
-    arr[1] = 2;
-    arr[2] = 3;
-    arr[3] = 4;
+    using T = TestType;
 
-    REQUIRE(arr[0] == 1);
-    etl::rotate(begin(arr), begin(arr) + 1, end(arr));
-    REQUIRE(arr[0] == 2);
+    auto data = etl::array {T(1), T(2), T(3), T(4)};
+    CHECK(data[0] == 1);
+
+    etl::rotate(begin(data), begin(data) + 1, end(data));
+    CHECK(data[0] == 2);
+}
+
+TEMPLATE_TEST_CASE("algorithm: rotate_copy", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        etl::static_vector<T, 5> src {};
+        etl::static_vector<T, 5> dest {};
+        auto pivot = etl::find(begin(src), end(src), T(3));
+
+        etl::rotate_copy(src.begin(), pivot, src.end(), etl::back_inserter(dest));
+        CHECK(dest.empty());
+        CHECK(dest.size() == src.size());
+    }
+
+    SECTION("cppreference example")
+    {
+        auto src   = etl::array {T(1), T(2), T(3), T(4), T(5)};
+        auto pivot = etl::find(begin(src), end(src), T(3));
+
+        // From 1, 2, 3, 4, 5 to 3, 4, 5, 1, 2
+        etl::static_vector<T, 5> dest {};
+        etl::rotate_copy(src.begin(), pivot, src.end(), etl::back_inserter(dest));
+        CHECK(dest.size() == src.size());
+        CHECK(dest[0] == T(3));
+        CHECK(dest[1] == T(4));
+        CHECK(dest[2] == T(5));
+        CHECK(dest[3] == T(1));
+        CHECK(dest[4] == T(2));
+    }
 }
 
 TEMPLATE_TEST_CASE("algorithm: reverse", "[algorithm]", etl::uint8_t, etl::int8_t,
