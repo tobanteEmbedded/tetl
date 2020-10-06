@@ -1102,6 +1102,49 @@ TEMPLATE_TEST_CASE("algorithm: is_sorted", "[algorithm]", etl::uint8_t, etl::int
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: lower_bound", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::lower_bound;
+    auto greater = etl::greater<>();
+
+    SECTION("empty range")
+    {
+        auto const vec = etl::static_vector<T, 4> {};
+        CHECK(lower_bound(begin(vec), end(vec), T(0)) == end(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(0), greater) == end(vec));
+    }
+
+    SECTION("single element")
+    {
+        auto vec = etl::static_vector<T, 4> {};
+        vec.push_back(T(0));
+        CHECK(lower_bound(begin(vec), end(vec), T(0)) == begin(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(1)) == end(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(0), greater) == begin(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(1), greater) == begin(vec));
+
+        // reset
+        vec.clear();
+        vec.push_back(T(1));
+        CHECK(lower_bound(begin(vec), end(vec), T(0)) == begin(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(1)) == begin(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(0), greater) == end(vec));
+        CHECK(lower_bound(begin(vec), end(vec), T(1), greater) == begin(vec));
+    }
+
+    SECTION("multiple elements")
+    {
+        auto const array = etl::array {T(0), T(1), T(2), T(3)};
+        CHECK(lower_bound(begin(array), end(array), T(0)) == begin(array));
+        CHECK(lower_bound(begin(array), end(array), T(1)) == begin(array) + 1);
+        CHECK(lower_bound(begin(array), end(array), T(4)) == end(array));
+        CHECK(lower_bound(begin(array), end(array), T(0), greater) == end(array));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
