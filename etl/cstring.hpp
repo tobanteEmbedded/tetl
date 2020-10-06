@@ -37,7 +37,7 @@ namespace etl
  * dest. Source and destination may not overlap. If source and destination might
  * overlap, memmove() must be used instead.
  */
-constexpr auto memcpy(void* dest, const void* src, etl::size_t n) -> void*
+constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
     auto* dp       = static_cast<etl::byte*>(dest);
     auto const* sp = static_cast<etl::byte const*>(src);
@@ -63,7 +63,7 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
  * @todo Check original implementation. They use __np_anyptrlt which is not
  * portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
  */
-constexpr auto memmove(void* dest, const void* src, etl::size_t n) -> void*
+constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 {
     auto const* ps = static_cast<etl::byte const*>(src);
     auto* pd       = static_cast<etl::byte*>(dest);
@@ -83,9 +83,9 @@ constexpr auto memmove(void* dest, const void* src, etl::size_t n) -> void*
 /**
  * @brief Returns the length of the C string str.
  */
-constexpr auto strlen(const char* str) -> etl::size_t
+constexpr auto strlen(char const* str) -> etl::size_t
 {
-    const char* s = nullptr;
+    char const* s = nullptr;
     for (s = str; *s != 0; ++s) { ; }
     return static_cast<etl::size_t>(s - str);
 }
@@ -97,7 +97,7 @@ constexpr auto strlen(const char* str) -> etl::size_t
  * equal to each other, it continues with the following pairs until the characters differ
  * or until a terminating null-character is reached.
  */
-constexpr auto strcmp(const char* lhs, const char* rhs) -> int
+constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 {
     for (; *lhs != '\0'; ++lhs, ++rhs)
     {

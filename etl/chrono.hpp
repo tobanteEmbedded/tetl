@@ -129,7 +129,7 @@ public:
      * sources. The copy constructor is defaulted (makes a bitwise copy of the
      * tick count).
      */
-    duration(const duration&) noexcept = default;
+    duration(duration const&) noexcept = default;
 
     /**
      * @brief Constructs a duration with r ticks.
@@ -147,7 +147,7 @@ public:
     template <typename Rep2,
               TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
                   treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
-    constexpr explicit duration(const Rep2& r) noexcept : data_(r)
+    constexpr explicit duration(Rep2 const& r) noexcept : data_(r)
     {
     }
 
@@ -174,7 +174,7 @@ public:
               TAETL_REQUIRES_((treat_as_floating_point_v<rep>)
                               || (ratio_divide<Period2, period>::den == 1
                                   && !treat_as_floating_point_v<Rep2>))>
-    constexpr duration(const duration<Rep2, Period2>& other) noexcept
+    constexpr duration(duration<Rep2, Period2> const& other) noexcept
         : data_(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
     {
     }
@@ -182,7 +182,7 @@ public:
     /**
      * @brief Assigns the contents of one duration to another.
      */
-    auto operator=(const duration& other) -> duration& = default;
+    auto operator=(duration const& other) -> duration& = default;
 
     /**
      * @brief Returns the number of ticks for this duration.
@@ -270,8 +270,8 @@ private:
  * number of ticks for the type common to both durations are equal.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator==(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator==(duration<Rep1, Period1> const& lhs,
+                                        duration<Rep2, Period2> const& rhs) -> bool
 {
     using common_t =
         typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
@@ -284,8 +284,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
  * number of ticks for the type common to both durations are equal.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator!=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator!=(duration<Rep1, Period1> const& lhs,
+                                        duration<Rep2, Period2> const& rhs) -> bool
 {
     return !(lhs == rhs);
 }
@@ -295,8 +295,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator<(const duration<Rep1, Period1>& lhs,
-                                       const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator<(duration<Rep1, Period1> const& lhs,
+                                       duration<Rep2, Period2> const& rhs) -> bool
 {
     using common_t =
         typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
@@ -308,8 +308,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator<=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator<=(duration<Rep1, Period1> const& lhs,
+                                        duration<Rep2, Period2> const& rhs) -> bool
 {
     return !(rhs < lhs);
 }
@@ -319,8 +319,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator>(const duration<Rep1, Period1>& lhs,
-                                       const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator>(duration<Rep1, Period1> const& lhs,
+                                       duration<Rep2, Period2> const& rhs) -> bool
 {
     return rhs < lhs;
 }
@@ -330,8 +330,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator>=(const duration<Rep1, Period1>& lhs,
-                                        const duration<Rep2, Period2>& rhs) -> bool
+[[nodiscard]] constexpr auto operator>=(duration<Rep1, Period1> const& lhs,
+                                        duration<Rep2, Period2> const& rhs) -> bool
 {
     return !(lhs < rhs);
 }
@@ -403,7 +403,7 @@ struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type
  * ToDuration.
  */
 template <typename ToDuration, typename Rep, typename Period>
-constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
+constexpr auto duration_cast(duration<Rep, Period> const& d) -> ToDuration
 {
     return ToDuration(d);
 }
@@ -415,7 +415,7 @@ constexpr auto duration_cast(const duration<Rep, Period>& d) -> ToDuration
 //  */
 // template <typename To, typename Rep, typename Period,
 //           typename = etl::enable_if_t<detail::is_duration<To>::value>>
-// constexpr auto floor(const duration<Rep, Period>& d) -> To
+// constexpr auto floor(duration <Rep, Period> const&   d) -> To
 // {
 //     auto const t = etl::chrono::duration_cast<To>(d);
 //     if (t > d) { return t - To {1}; }

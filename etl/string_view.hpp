@@ -116,7 +116,7 @@ public:
     /**
      * @brief Replaces the view with that of view.
      */
-    constexpr auto operator   =(const basic_string_view& view) noexcept
+    constexpr auto operator   =(basic_string_view const& view) noexcept
         -> basic_string_view& = default;
 
     /**
@@ -780,7 +780,7 @@ public:
      * @return Position of the last character not equal to any of the characters
      * in the given string, or npos if no such character is found.
      */
-    [[nodiscard]] constexpr auto find_last_not_of(const CharType* s, size_type pos,
+    [[nodiscard]] constexpr auto find_last_not_of(const_pointer s, size_type pos,
                                                   size_type count) const -> size_type
     {
         return find_last_not_of(basic_string_view(s, count), pos);
@@ -793,7 +793,7 @@ public:
      * @return Position of the last character not equal to any of the characters
      * in the given string, or npos if no such character is found.
      */
-    [[nodiscard]] constexpr auto find_last_not_of(const CharType* s,
+    [[nodiscard]] constexpr auto find_last_not_of(const_pointer s,
                                                   size_type pos = npos) const -> size_type
     {
         return find_last_not_of(basic_string_view(s), pos);
@@ -925,7 +925,7 @@ inline namespace string_view_literals
  * @brief Forms a string view of a character literal. Returns
  * etl::string_view{str, len}
  */
-constexpr auto operator"" _sv(const char* str, etl::size_t len) noexcept
+constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept
     -> etl::string_view
 {
     return {str, len};

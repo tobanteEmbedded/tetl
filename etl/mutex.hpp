@@ -94,8 +94,8 @@ public:
     lock_guard(mutex_type& m, adopt_lock_t /*unused*/) : mutex_ {m} { }
     ~lock_guard() { mutex_.unlock(); }
 
-    lock_guard(const lock_guard&) = delete;
-    auto operator=(const lock_guard&) -> lock_guard& = delete;
+    lock_guard(lock_guard const&) = delete;
+    auto operator=(lock_guard const&) -> lock_guard& = delete;
 
 private:
     mutex_type& mutex_;
@@ -112,8 +112,8 @@ public:
     explicit scoped_lock(MutexT& m) : mutex_ {m} { mutex_.lock(); }
     ~scoped_lock() { mutex_.unlock(); }
 
-    scoped_lock(const scoped_lock&) = delete;
-    auto operator=(const scoped_lock&) = delete;
+    scoped_lock(scoped_lock const&) = delete;
+    auto operator=(scoped_lock const&) = delete;
 
     scoped_lock(scoped_lock&&) noexcept = default;
     auto operator=(scoped_lock&&) noexcept -> scoped_lock& = default;

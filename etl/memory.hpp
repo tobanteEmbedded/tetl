@@ -180,7 +180,7 @@ public:
     constexpr default_delete() noexcept = default;
 
     template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
-    default_delete(const default_delete<U>&) noexcept
+    default_delete(default_delete<U> const&) noexcept
     {
     }
 
@@ -199,7 +199,7 @@ public:
     constexpr default_delete() noexcept = default;
 
     template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
-    default_delete(const default_delete<U[]>&) noexcept
+    default_delete(default_delete<U[]> const&) noexcept
     {
     }
 

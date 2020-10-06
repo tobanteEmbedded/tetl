@@ -74,7 +74,7 @@ template <
     typename To, typename From,
     TAETL_REQUIRES_((sizeof(To) == sizeof(From))
                     && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
-constexpr auto bit_cast(const From& src) noexcept -> To
+constexpr auto bit_cast(From const& src) noexcept -> To
 {
     static_assert(is_trivially_constructible_v<To>,
                   "This implementation additionally requires destination type to be "

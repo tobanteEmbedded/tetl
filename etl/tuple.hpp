@@ -61,7 +61,7 @@ namespace detail
 template <int index, typename First, typename... Rest>
 struct get_impl
 {
-    static constexpr auto value(const tuple<First, Rest...>* t)
+    static constexpr auto value(tuple<First, Rest...> const* t)
         -> decltype(get_impl<index - 1, Rest...>::value(t))
     {
         return get_impl<index - 1, Rest...>::value(t);
@@ -71,7 +71,7 @@ struct get_impl
 template <typename First, typename... Rest>
 struct get_impl<0, First, Rest...>
 {
-    static constexpr auto value(const tuple<First, Rest...>* t) -> First
+    static constexpr auto value(tuple<First, Rest...> const* t) -> First
     {
         return t->first;
     }
@@ -80,7 +80,7 @@ struct get_impl<0, First, Rest...>
 }  // namespace detail
 
 template <int index, typename First, typename... Rest>
-constexpr auto get(const tuple<First, Rest...>& t)
+constexpr auto get(tuple<First, Rest...> const& t)
     -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
 {
     return detail::get_impl<index, First, Rest...>::value(&t);
@@ -91,7 +91,7 @@ constexpr auto get(const tuple<First, Rest...>& t)
 // struct ignore_t
 // {
 //     template <typename T>
-//     constexpr auto operator=(const T&) const -> const ignore_t&
+//     constexpr auto operator=( T const&) const -> const ignore_t&
 //     {
 //         return *this;
 //     }

@@ -150,14 +150,14 @@ public:
     //  */
     // template <typename U, etl::size_t N>
     // explicit(extent != etl::dynamic_extent
-    //          && N == etl::dynamic_extent) constexpr span(const etl::span<U,
-    //          N>&
+    //          && N == etl::dynamic_extent) constexpr span( etl::span<U,
+    //          N> const&
     //                                                          s) noexcept;
 
     /**
      * @brief Constructs a span.
      */
-    constexpr span(const span& other) noexcept = default;
+    constexpr span(span const& other) noexcept = default;
 
     /**
      * @brief Returns an iterator to the first element of the span. If the span is empty,

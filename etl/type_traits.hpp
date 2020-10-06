@@ -1337,7 +1337,7 @@ inline constexpr bool is_nothrow_default_constructible_v
  * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
- * value equal to etl::is_constructible<T, const T&>::value.
+ * value equal to etl::is_constructible<T, T const&>::value.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
@@ -1358,7 +1358,7 @@ template <typename T>
 inline constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
 
 /**
- * @brief Same as copy, but uses etl::is_trivially_constructible<T, const T&>.
+ * @brief Same as copy, but uses etl::is_trivially_constructible<T, T const&>.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
@@ -1380,7 +1380,7 @@ inline constexpr bool is_trivially_copy_constructible_v
     = is_trivially_copy_constructible<T>::value;
 
 /**
- * @brief Same as copy, but uses etl::is_nothrow_constructible<T, const T&>.
+ * @brief Same as copy, but uses etl::is_nothrow_constructible<T, T const&>.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
@@ -1642,7 +1642,7 @@ inline constexpr bool is_nothrow_assignable_v = is_nothrow_assignable<T, U>::val
  * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
  * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
  * equal to false. Otherwise, provides a member constant value equal to
- * etl::is_assignable<T&, const T&>::value.
+ * etl::is_assignable<T&, T const&>::value.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
  * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
@@ -1665,7 +1665,7 @@ inline constexpr bool is_copy_assignable_v = is_copy_assignable<T>::value;
  * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
  * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
  * equal to false. Otherwise, provides a member constant value equal to
- * etl::is_trivially_assignable<T&, const T&>::value.
+ * etl::is_trivially_assignable<T&, T const&>::value.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
  * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
@@ -1689,7 +1689,7 @@ inline constexpr bool is_trivially_copy_assignable_v
  * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or a function
  * type with a cv-qualifier-seq or a ref-qualifier), provides a member constant value
  * equal to false. Otherwise, provides a member constant value equal to
- * etl::is_nothrow_assignable<T&, const T&>::value.
+ * etl::is_nothrow_assignable<T&, T const&>::value.
  *
  * @details T shall be a complete type, (possibly cv-qualified) void, or an array of
  * unknown bound. Otherwise, the behavior is undefined. If an instantiation of a template
@@ -1783,8 +1783,8 @@ namespace detail
 struct nat
 {
     nat()           = delete;
-    nat(const nat&) = delete;
-    nat& operator=(const nat&) = delete;
+    nat(nat const&) = delete;
+    nat& operator=(nat const&) = delete;
     ~nat()                     = delete;
 };
 
@@ -1974,9 +1974,9 @@ inline constexpr bool is_signed_v = is_signed<T>::value;
 namespace detail
 {
 template <typename B>
-auto test_pre_ptr_convertible(const volatile B*) -> ::etl::true_type;
+auto test_pre_ptr_convertible(B const volatile*) -> ::etl::true_type;
 template <typename>
-auto test_pre_ptr_convertible(const volatile void*) -> ::etl::false_type;
+auto test_pre_ptr_convertible(void const volatile*) -> ::etl::false_type;
 
 template <typename, typename>
 auto test_pre_is_base_of(...) -> ::etl::true_type;

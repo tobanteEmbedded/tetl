@@ -46,7 +46,7 @@ namespace etl
 template <typename T = void>
 struct plus
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs + rhs;
     }
@@ -81,7 +81,7 @@ struct plus<void>
 template <typename T = void>
 struct minus
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs - rhs;
     }
@@ -116,7 +116,7 @@ struct minus<void>
 template <typename T = void>
 struct multiplies
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs * rhs;
     }
@@ -152,7 +152,7 @@ struct multiplies<void>
 template <typename T = void>
 struct divides
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs / rhs;
     }
@@ -188,7 +188,7 @@ struct divides<void>
 template <typename T = void>
 struct modulus
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs % rhs;
     }
@@ -223,7 +223,7 @@ struct modulus<void>
 template <typename T = void>
 struct negate
 {
-    [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return -arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return -arg; }
 };
 
 /**
@@ -255,7 +255,7 @@ struct negate<void>
 template <typename T = void>
 struct equal_to
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs == rhs;
     }
@@ -291,7 +291,7 @@ struct equal_to<void>
 template <typename T = void>
 struct not_equal_to
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs != rhs;
     }
@@ -327,7 +327,7 @@ struct not_equal_to<void>
 template <typename T = void>
 struct greater
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs > rhs;
     }
@@ -363,7 +363,7 @@ struct greater<void>
 template <typename T = void>
 struct greater_equal
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs >= rhs;
     }
@@ -399,7 +399,7 @@ struct greater_equal<void>
 template <typename T = void>
 struct less
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
     {
         return lhs < rhs;
     }
@@ -435,7 +435,7 @@ struct less<void>
 template <typename T = void>
 struct less_equal
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
     {
         return lhs <= rhs;
     }
@@ -471,7 +471,7 @@ struct less_equal<void>
 template <typename T = void>
 struct logical_and
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
     {
         return lhs && rhs;
     }
@@ -507,7 +507,7 @@ struct logical_and<void>
 template <typename T = void>
 struct logical_or
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> bool
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
     {
         return lhs || rhs;
     }
@@ -543,7 +543,7 @@ struct logical_or<void>
 template <typename T = void>
 struct logical_not
 {
-    [[nodiscard]] constexpr auto operator()(const T& arg) const -> bool { return !arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
 };
 
 /**
@@ -576,7 +576,7 @@ struct logical_not<void>
 template <typename T = void>
 struct bit_and
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs & rhs;
     }
@@ -612,7 +612,7 @@ struct bit_and<void>
 template <typename T = void>
 struct bit_or
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs | rhs;
     }
@@ -647,7 +647,7 @@ struct bit_or<void>
 template <typename T = void>
 struct bit_xor
 {
-    [[nodiscard]] constexpr auto operator()(const T& lhs, const T& rhs) const -> T
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs ^ rhs;
     }
@@ -682,7 +682,7 @@ struct bit_xor<void>
 template <typename T = void>
 struct bit_not
 {
-    [[nodiscard]] constexpr auto operator()(const T& arg) const -> T { return ~arg; }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }
 };
 
 /**

@@ -844,7 +844,7 @@ public:
     /**
      * @brief
      */
-    constexpr auto assign(size_type n, const T& u)
+    constexpr auto assign(size_type n, T const& u)
         -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
     {
         assert(n <= capacity() && "size exceeds capacity");

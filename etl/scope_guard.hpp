@@ -54,8 +54,8 @@ public:
 
     void release() noexcept { policy_.release(); }
 
-    scope_guard(const scope_guard&) = delete;
-    auto operator=(const scope_guard&) -> scope_guard& = delete;
+    scope_guard(scope_guard const&) = delete;
+    auto operator=(scope_guard const&) -> scope_guard& = delete;
     auto operator=(scope_guard&&) -> scope_guard& = delete;
 
 private:

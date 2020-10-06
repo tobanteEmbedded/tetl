@@ -142,7 +142,7 @@ struct variant_storage<Head, Tail...>
         variant_storage<Tail...> tail;
     };
 
-    void construct(const Head& head_init, union_index_type& union_index)
+    void construct(Head const& head_init, union_index_type& union_index)
     {
         new (&data) Head(head_init);
         union_index = 0;
@@ -248,7 +248,7 @@ struct variant_alternative<I, variant<Types...>>
  * @todo Implement
  */
 template <etl::size_t I, typename T>
-struct variant_alternative<I, const T>
+struct variant_alternative<I, T const>
 {
     using type = void;
 };

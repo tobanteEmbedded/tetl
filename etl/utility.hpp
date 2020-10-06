@@ -119,7 +119,7 @@ template <typename T>
  * arguments.
  */
 template <typename T>
-constexpr auto as_const(const T&&) -> void
+constexpr auto as_const(T const&&) -> void
     = delete;
 
 namespace detail

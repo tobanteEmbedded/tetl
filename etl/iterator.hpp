@@ -484,7 +484,7 @@ public:
     /**
      * @brief Inserts the given value value to the container.
      */
-    constexpr auto operator=(const typename Container::value_type& value)
+    constexpr auto operator=(typename Container::value_type const& value)
         -> back_insert_iterator&
     {
         container_->push_back(value);
@@ -578,7 +578,7 @@ public:
     /**
      * @brief Inserts the given value value to the container.
      */
-    constexpr auto operator=(const typename Container::value_type& value)
+    constexpr auto operator=(typename Container::value_type const& value)
         -> front_insert_iterator&
     {
         container_->push_front(value);
@@ -659,7 +659,7 @@ constexpr auto begin(C& c) -> decltype(c.begin())
  * expose a suitable begin() member function, yet can be iterated.
  */
 template <typename C>
-constexpr auto begin(const C& c) -> decltype(c.begin())
+constexpr auto begin(C const& c) -> decltype(c.begin())
 {
     return c.begin();
 }
@@ -689,7 +689,7 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
  * not expose a suitable begin() member function, yet can be iterated.
  */
 template <typename C>
-constexpr auto cbegin(const C& c) noexcept(noexcept(etl::begin(c)))
+constexpr auto cbegin(C const& c) noexcept(noexcept(etl::begin(c)))
     -> decltype(etl::begin(c))
 {
     return etl::begin(c);
@@ -712,7 +712,7 @@ constexpr auto end(C& c) -> decltype(c.end())
  * C::end() having a reasonable implementation.
  */
 template <typename C>
-constexpr auto end(const C& c) -> decltype(c.end())
+constexpr auto end(C const& c) -> decltype(c.end())
 {
     return c.end();
 }
@@ -734,7 +734,7 @@ constexpr auto end(T (&array)[N]) noexcept -> T*
  * C::end() having a reasonable implementation.
  */
 template <typename C>
-constexpr auto cend(const C& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
+constexpr auto cend(C const& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
 {
     return etl::end(c);
 }
@@ -825,7 +825,7 @@ constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size(
  * @brief Returns the size of the given container c or array array. Returns N.
  */
 template <typename T, etl::size_t N>
-constexpr auto size(const T (&array)[N]) noexcept -> etl::size_t
+constexpr auto size(T const (&array)[N]) noexcept -> etl::size_t
 {
     etl::ignore_unused(&array[0]);
     return N;
@@ -835,7 +835,7 @@ constexpr auto size(const T (&array)[N]) noexcept -> etl::size_t
  * @brief Returns whether the given container is empty.
  */
 template <typename C>
-constexpr auto empty(const C& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
+constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
 {
     return c.empty();
 }
@@ -865,7 +865,7 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
  * the container. Returns c.data().
  */
 template <typename C>
-constexpr auto data(const C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
+constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 {
     return c.data();
 }

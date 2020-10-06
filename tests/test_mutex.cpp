@@ -36,8 +36,8 @@ public:
     dummy_mutex() noexcept  = default;
     ~dummy_mutex() noexcept = default;
 
-    auto operator=(const dummy_mutex&) -> dummy_mutex& = delete;
-    dummy_mutex(const dummy_mutex&)                    = delete;
+    auto operator=(dummy_mutex const&) -> dummy_mutex& = delete;
+    dummy_mutex(dummy_mutex const&)                    = delete;
 
     auto operator=(dummy_mutex&&) -> dummy_mutex& = default;
     dummy_mutex(dummy_mutex&&)                    = default;

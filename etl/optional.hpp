@@ -194,7 +194,7 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
 
     optional_copy_base() = default;
 
-    optional_copy_base(const optional_copy_base& opt)
+    optional_copy_base(optional_copy_base const& opt)
         : optional_storage_base<ValueType>::optional_storage_base {}
     {
         this->construct_from(opt);
@@ -202,7 +202,7 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
 
     optional_copy_base(optional_copy_base&&) = default;
 
-    optional_copy_base& operator=(const optional_copy_base&) = default;
+    optional_copy_base& operator=(optional_copy_base const&) = default;
     optional_copy_base& operator=(optional_copy_base&&) = default;
 };
 
@@ -221,7 +221,7 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
 
     optional_move_base() = default;
 
-    optional_move_base(const optional_move_base&) = default;
+    optional_move_base(optional_move_base const&) = default;
 
     optional_move_base(optional_move_base&& opt) noexcept(
         etl::is_nothrow_move_constructible_v<value_type>)
@@ -229,7 +229,7 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
         this->construct_from(etl::move(opt));
     }
 
-    optional_move_base& operator=(const optional_move_base&) = default;
+    optional_move_base& operator=(optional_move_base const&) = default;
 
     optional_move_base& operator=(optional_move_base&&) = default;
 };
@@ -249,11 +249,11 @@ struct optional_copy_assign_base<ValueType, false> : optional_move_base<ValueTyp
 
     optional_copy_assign_base() = default;
 
-    optional_copy_assign_base(const optional_copy_assign_base&) = default;
+    optional_copy_assign_base(optional_copy_assign_base const&) = default;
 
     optional_copy_assign_base(optional_copy_assign_base&&) = default;
 
-    [[nodiscard]] auto operator=(const optional_copy_assign_base& opt)
+    [[nodiscard]] auto operator=(optional_copy_assign_base const& opt)
         -> optional_copy_assign_base&
     {
         this->assign_from(opt);
@@ -279,11 +279,11 @@ struct optional_move_assign_base<ValueType, false> : optional_copy_assign_base<V
 
     optional_move_assign_base() = default;
 
-    optional_move_assign_base(const optional_move_assign_base& opt) = default;
+    optional_move_assign_base(optional_move_assign_base const& opt) = default;
 
     optional_move_assign_base(optional_move_assign_base&&) = default;
 
-    optional_move_assign_base& operator=(const optional_move_assign_base&) = default;
+    optional_move_assign_base& operator=(optional_move_assign_base const&) = default;
 
     optional_move_assign_base& operator=(optional_move_assign_base&& opt) noexcept(
         etl::is_nothrow_move_assignable_v<value_type>&&
@@ -743,7 +743,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator==(optional<T> const&, const U&) -> bool
+// constexpr auto operator==(optional<T> const&, U const &) -> bool
 // {
 // }
 
@@ -755,7 +755,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator==(const T&, optional<U> const&) -> bool
+// constexpr auto operator==(T const&, optional<U> const&) -> bool
 // {
 // }
 
@@ -767,7 +767,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator!=(optional<T> const&, const U&) -> bool
+// constexpr auto operator!=(optional<T> const&, U const&) -> bool
 // {
 // }
 
@@ -779,7 +779,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator!=(const T&, optional<U> const&) -> bool
+// constexpr auto operator!=(T const&, optional<U> const&) -> bool
 // {
 // }
 
@@ -791,7 +791,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator<(optional<T> const&, const U&) -> bool
+// constexpr auto operator<(optional<T> const&, U const&) -> bool
 // {
 // }
 
@@ -803,7 +803,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator<(const T&, optional<U> const&) -> bool
+// constexpr auto operator<(T const&, optional<U> const&) -> bool
 // {
 // }
 
@@ -815,7 +815,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator>(optional<T> const&, const U&) -> bool
+// constexpr auto operator>(optional<T> const&, U const&) -> bool
 // {
 // }
 
@@ -827,7 +827,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator>(const T&, optional<U> const&) -> bool
+// constexpr auto operator>(T const&, optional<U> const&) -> bool
 // {
 // }
 
@@ -839,7 +839,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator<=(optional<T> const&, const U&) -> bool
+// constexpr auto operator<=(optional<T> const&, U const&) -> bool
 // {
 // }
 
@@ -851,7 +851,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator<=(const T&, optional<U> const&) -> bool
+// constexpr auto operator<=(T const&, optional<U> const&) -> bool
 // {
 // }
 
@@ -863,7 +863,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator>=(optional<T> const&, const U&) -> bool
+// constexpr auto operator>=(optional<T> const&, U const&) -> bool
 // {
 // }
 
@@ -875,7 +875,7 @@ template <typename T>
 //  * well-formed, or if its result is not convertible to bool, the program is ill-formed.
 //  */
 // template <typename T, typename U>
-// constexpr auto operator>=(const T&, optional<U> const&) -> bool
+// constexpr auto operator>=(T const&, optional<U> const&) -> bool
 // {
 // }
 

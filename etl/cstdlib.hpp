@@ -89,7 +89,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
  * @brief Parses the C-string str interpreting its content as an integral number, which is
  * returned as a value of type long int.
  */
-constexpr auto atol(const char* str) -> long
+constexpr auto atol(char const* str) -> long
 {
     constexpr long pow10[19] = {
         // 10000000000000000000UL,

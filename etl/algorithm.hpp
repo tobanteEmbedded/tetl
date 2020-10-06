@@ -474,7 +474,7 @@ template <typename ForwardIter, typename UnaryPredicate>
  * and returns a past-the-end iterator for the new end of the range.
  */
 template <typename ForwardIter, typename T>
-[[nodiscard]] constexpr auto remove(ForwardIter first, ForwardIter last, const T& value)
+[[nodiscard]] constexpr auto remove(ForwardIter first, ForwardIter last, T const& value)
     -> ForwardIter
 {
     return remove_if(first, last, [&value](auto const& item) { return item == value; });
@@ -989,7 +989,7 @@ constexpr auto fill(ForwardIter first, ForwardIter last, T const& value) -> void
  * @return Iterator one past the last element assigned if count > 0, first otherwise.
  */
 template <typename OutputIter, typename Size, typename T>
-constexpr auto fill_n(OutputIter first, Size count, const T& value) -> OutputIter
+constexpr auto fill_n(OutputIter first, Size count, T const& value) -> OutputIter
 {
     for (auto i = Size {0}; i < count; ++i)
     {

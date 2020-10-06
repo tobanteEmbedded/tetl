@@ -99,7 +99,10 @@ struct port
         memory.bit_set_reset = (1U << (val(pin) + 16U));
     }
 
-    void toggle_pin(pin_number const pin) { memory.output_data ^= (1U << val(pin)); }
+    void toggle_pin(pin_number const pin)
+    {
+        memory.output_data = memory.output_data ^ (1U << val(pin));
+    }
 
     [[nodiscard]] static auto place_at(void* addr) -> port& { return *new (addr) port; }
 
