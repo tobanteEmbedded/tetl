@@ -940,45 +940,65 @@ TEMPLATE_TEST_CASE("algorithm: move", "[algorithm]", etl::uint8_t, etl::int8_t,
 
         S(S const& s)
         {
-            data        = s.data;
-            copy_called = true;
+            data = s.data;
+            copy = true;
         }
 
         S(S&& s)
         {
-            data        = s.data;
-            move_called = true;
+            data = s.data;
+            move = true;
         }
 
         auto operator=(S const& s) noexcept -> S&
         {
-            data        = s.data;
-            copy_called = true;
+            data = s.data;
+            copy = true;
             return *this;
         }
 
         auto operator=(S&& s) noexcept -> S&
         {
-            data        = s.data;
-            move_called = true;
+            data = s.data;
+            move = true;
             return *this;
         }
 
         TestType data;
-        bool copy_called = false;
-        bool move_called = false;
+        bool copy = false;
+        bool move = false;
     };
 
-    // move
-    auto source = etl::array {S {TestType {1}}, S {TestType {1}}, S {TestType {1}}};
-    decltype(source) dest {};
-    etl::move(begin(source), end(source), begin(dest));
+    SECTION("move forward")
+    {
+        // move
+        auto source = etl::array {S {TestType {1}}, S {TestType {1}}, S {TestType {1}}};
+        decltype(source) dest {};
+        etl::move(begin(source), end(source), begin(dest));
 
-    // assert
-    using etl::all_of;
-    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move_called; }));
-    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy_called; }));
-    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.data == 1; }));
+        // assert
+        using etl::all_of;
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move; }));
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy; }));
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.data == 1; }));
+    }
+
+    SECTION("move backward")
+    {
+        // move
+        auto source = etl::array {S {TestType {1}}, S {TestType {2}}, S {TestType {3}}};
+        decltype(source) dest {};
+        etl::move_backward(begin(source), end(source), end(dest));
+
+        // assert
+        using etl::all_of;
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move; }));
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy; }));
+        CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.data != 0; }));
+        CHECK(dest[0].data == TestType(1));
+        CHECK(dest[1].data == TestType(2));
+        CHECK(dest[2].data == TestType(3));
+    }
 }
 
 TEMPLATE_TEST_CASE("algorithm: equal", "[algorithm]", etl::uint8_t, etl::int8_t,
