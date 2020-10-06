@@ -49,6 +49,12 @@ template <typename CharType, etl::size_t Capacity,
           typename Traits = etl::char_traits<CharType>>
 class basic_static_string
 {
+    template <typename T>
+    constexpr static bool string_view_and_not_char_pointer
+        = is_convertible_v<T const&, basic_string_view<CharType,
+                                                       Traits>>  //
+          && !is_convertible_v<T const&, CharType const*>;
+
 public:
     using traits_type            = Traits;
     using value_type             = CharType;
@@ -100,6 +106,17 @@ public:
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr basic_static_string(InputIter first, InputIter last) noexcept
         : basic_static_string(first, static_cast<size_type>(etl::distance(first, last)))
+    {
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then initializes the string
+     * with the contents of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    explicit constexpr basic_static_string(T const& t)
+        : basic_static_string {etl::basic_string_view<CharType, Traits> {t}.begin(),
+                               etl::basic_string_view<CharType, Traits> {t}.end()}
     {
     }
 

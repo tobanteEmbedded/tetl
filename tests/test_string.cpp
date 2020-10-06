@@ -127,6 +127,23 @@ TEMPLATE_TEST_CASE("string: ctor(first,last)", "[string]", etl::static_string<12
     CHECK(dest[4] == '\0');
 }
 
+TEMPLATE_TEST_CASE("string: ctor(string_view)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    etl::string_view sv {"test"};
+    TestType dest {sv};
+
+    CHECK_FALSE(dest.full());
+    CHECK(dest.size() == etl::size_t(4));
+    CHECK(dest.length() == etl::size_t(4));
+    CHECK(dest[0] == 't');
+    CHECK(dest[1] == 'e');
+    CHECK(dest[2] == 's');
+    CHECK(dest[3] == 't');
+    CHECK(dest[4] == '\0');
+}
+
 TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
                    etl::static_string<12>, etl::static_string<32>)
 {
