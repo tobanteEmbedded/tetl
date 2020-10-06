@@ -287,7 +287,7 @@ private:
     // non-const elements:
     using data_t = etl::conditional_t<!etl::is_const_v<T>, etl::array<T, Capacity>,
                                       const etl::array<etl::remove_const_t<T>, Capacity>>;
-    alignas(alignof(T)) data_t data_{};
+    alignas(alignof(T)) data_t data_ {};
 
     size_type size_ = 0;
 };
@@ -1090,6 +1090,33 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return !(lhs < rhs);
+}
+
+/**
+ * @brief Erases all elements that satisfy the predicate pred from the container.
+ * @details https://en.cppreference.com/w/cpp/container/vector/erase2
+ * @return The number of erased elements.
+ */
+template <typename T, etl::size_t Capacity, typename Predicate>
+constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
+    typename static_vector<T, Capacity>::size_type
+{
+    auto it = etl::remove_if(c.begin(), c.end(), pred);
+    auto r  = etl::distance(it, c.end());
+    c.erase(it, c.end());
+    return static_cast<typename static_vector<T, Capacity>::size_type>(r);
+}
+
+/**
+ * @brief Erases all elements that compare equal to value from the container.
+ * @details https://en.cppreference.com/w/cpp/container/vector/erase2
+ * @return The number of erased elements.
+ */
+template <typename T, etl::size_t Capacity, typename U>
+constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
+    typename static_vector<T, Capacity>::size_type
+{
+    return erase_if(c, [&value](auto const& item) { return item == value; });
 }
 
 }  // namespace etl

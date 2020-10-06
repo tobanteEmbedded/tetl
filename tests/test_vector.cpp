@@ -410,6 +410,31 @@ TEMPLATE_TEST_CASE("vector/static_vector: operator>/>=", "[vector]", etl::uint8_
     }
 }
 
+TEMPLATE_TEST_CASE("vector/static_vector: erase/erase_if", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    using T = TestType;
+
+    SECTION("empty")
+    {
+        auto data = etl::static_vector<T, 4>();
+        CHECK(data.empty());
+        CHECK(etl::erase(data, TestType(0)) == 0);
+        CHECK(data.empty());
+    }
+
+    SECTION("range")
+    {
+        auto data = etl::array {T(0), T(0), T(1), T(2), T(0), T(2)};
+        auto vec  = etl::static_vector<T, 6>(begin(data), end(data));
+        CHECK(vec.full());
+        CHECK(etl::erase(vec, TestType(0)) == 3);
+        CHECK_FALSE(vec.full());
+        CHECK(vec.size() == 3);
+    }
+}
+
 namespace
 {
 template <typename T>
