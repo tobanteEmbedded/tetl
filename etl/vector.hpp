@@ -474,18 +474,18 @@ private:
     using base_type::unsafe_set_size;
 
 public:
-    using value_type      = typename base_type::value_type;
-    using difference_type = ptrdiff_t;
-    using reference       = value_type&;
-    using const_reference = value_type const&;
-    using pointer         = typename base_type::pointer;
-    using const_pointer   = typename base_type::const_pointer;
-    using iterator        = typename base_type::pointer;
-    using const_iterator  = typename base_type::const_pointer;
-    using size_type       = size_t;
+    using value_type             = typename base_type::value_type;
+    using difference_type        = ptrdiff_t;
+    using reference              = value_type&;
+    using const_reference        = value_type const&;
+    using pointer                = typename base_type::pointer;
+    using const_pointer          = typename base_type::const_pointer;
+    using iterator               = typename base_type::pointer;
+    using const_iterator         = typename base_type::const_pointer;
+    using size_type              = size_t;
+    using reverse_iterator       = etl::reverse_iterator<iterator>;
+    using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
-    // using reverse_iterator       = ::etl::reverse_iterator<iterator>;
-    // using const_reverse_iterator = ::etl::reverse_iterator<const_iterator>;
 private:
     TAETL_REQUIRES(etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>)
     constexpr auto emplace_n(size_type n) noexcept(
@@ -512,22 +512,22 @@ public:
         return data() + size();
     }
 
-    // [[nodiscard]] auto rbegin() noexcept -> reverse_iterator
-    // {
-    //     return reverse_iterator(end());
-    // }
-    // [[nodiscard]] auto rbegin() const noexcept -> const_reverse_iterator
-    // {
-    //     return const_reverse_iterator(end());
-    // }
-    // [[nodiscard]] auto rend() noexcept -> reverse_iterator
-    // {
-    //     return reverse_iterator(begin());
-    // }
-    // [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
-    // {
-    //     return const_reverse_iterator(begin());
-    // }
+    [[nodiscard]] auto rbegin() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
+    [[nodiscard]] auto rbegin() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(end());
+    }
+    [[nodiscard]] auto rend() noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
+    }
+    [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
+    {
+        return const_reverse_iterator(begin());
+    }
 
     [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator { return begin(); }
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator

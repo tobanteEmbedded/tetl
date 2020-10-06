@@ -168,6 +168,26 @@ TEMPLATE_TEST_CASE("vector/static_vector: begin/end", "[vector]", etl::uint8_t,
     CHECK_FALSE(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 }
 
+TEMPLATE_TEST_CASE("vector/static_vector: rbegin/rend", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    etl::static_vector<TestType, 16> vec {};
+    CHECK(vec.empty());
+    CHECK(etl::rbegin(vec) == etl::rend(vec));
+    CHECK(etl::crbegin(vec) == etl::crend(vec));
+    CHECK(etl::rbegin(etl::as_const(vec)) == etl::rend(etl::as_const(vec)));
+
+    vec.push_back(TestType {2});
+    CHECK(*etl::rbegin(vec) == TestType {2});
+    CHECK_FALSE(etl::rbegin(vec) == etl::rend(vec));
+    CHECK_FALSE(etl::crbegin(vec) == etl::crend(vec));
+    CHECK_FALSE(etl::rbegin(etl::as_const(vec)) == etl::rend(etl::as_const(vec)));
+
+    vec.push_back(TestType {3});
+    CHECK(*etl::rbegin(vec) == TestType {3});
+}
+
 TEMPLATE_TEST_CASE("vector/static_vector: resize", "[vector]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
