@@ -34,6 +34,7 @@ DAMAGE.
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
 
+#include "etl/detail/container_utils.hpp"
 #include "etl/detail/string_char_traits.hpp"
 
 namespace etl
@@ -67,8 +68,8 @@ public:
     constexpr basic_static_string() = default;
 
     /**
-     * @brief Charater Pointer constant constructor.
-     * Fails silently if input len is greater then capacity.
+     * @brief Charater Pointer constant constructor. Fails silently if input len is
+     * greater then capacity.
      */
     constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
@@ -84,11 +85,21 @@ public:
     }
 
     /**
-     * @brief Charater Pointer constant constructor. Calls etl::strlen.
-     * Fails silently if input length is greater then capacity.
+     * @brief Charater Pointer constant constructor. Calls etl::strlen. Fails silently if
+     * input length is greater then capacity.
      */
     constexpr basic_static_string(const_pointer str) noexcept
         : basic_static_string(str, etl::strlen(str))
+    {
+    }
+
+    /**
+     * @brief Constructs the string with the contents of the range [first, last). Fails
+     * silently if input length is greater then capacity.
+     */
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    constexpr basic_static_string(InputIter first, InputIter last) noexcept
+        : basic_static_string(first, static_cast<size_type>(etl::distance(first, last)))
     {
     }
 
@@ -287,7 +298,15 @@ public:
     /**
      * @brief Checks whether the string is empty.
      */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
+
+    /**
+     * @brief Checks whether the string is full.
+     */
+    [[nodiscard]] constexpr auto full() const noexcept -> bool
+    {
+        return size() == capacity();
+    }
 
     /**
      * @brief Returns the number of characters.
@@ -297,7 +316,7 @@ public:
     /**
      * @brief Returns the number of characters.
      */
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size_; }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size(); }
 
     /**
      * @brief Returns the number of characters that can be held in allocated

@@ -63,7 +63,7 @@ TEST_CASE("string/char_traits: <char>::assign(char,char)", "[string]")
     STATIC_REQUIRE(ch('b') == 'b');
 }
 
-TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::static_string<12>,
+TEMPLATE_TEST_CASE("string: ctor()", "[string]", etl::static_string<12>,
                    etl::static_string<32>, etl::static_string<12> const,
                    etl::static_string<32> const)
 {
@@ -75,36 +75,56 @@ TEMPLATE_TEST_CASE("string: ctor - default", "[string]", etl::static_string<12>,
     REQUIRE(str.length() == etl::size_t(0));
 }
 
-TEMPLATE_TEST_CASE("string: ctor - char const*", "[string]", etl::static_string<12>,
+TEMPLATE_TEST_CASE("string: ctor(char const*)", "[string]", etl::static_string<12>,
                    etl::static_string<32>, etl::static_string<12> const,
                    etl::static_string<32> const)
 {
     TestType str {"abc"};
 
-    REQUIRE(str.empty() == false);
-    REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == etl::size_t(3));
-    REQUIRE(str.length() == etl::size_t(3));
-    REQUIRE(str[0] == 'a');
-    REQUIRE(str[1] == 'b');
-    REQUIRE(str[2] == 'c');
-    REQUIRE(str[3] == char(0));
+    CHECK_FALSE(str.full());
+    CHECK_FALSE(str.empty());
+    CHECK(str.capacity() == str.max_size());
+    CHECK(str.size() == etl::size_t(3));
+    CHECK(str.length() == etl::size_t(3));
+    CHECK(str[0] == 'a');
+    CHECK(str[1] == 'b');
+    CHECK(str[2] == 'c');
+    CHECK(str[3] == '\0');
 }
 
-TEMPLATE_TEST_CASE("string: ctor - char const*, size_t", "[string]",
+TEMPLATE_TEST_CASE("string: ctor(char const*, size_t)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
-    TestType str {"abc", 3};
+    auto const* src = "abc";
+    TestType str {src, etl::strlen(src)};
 
-    REQUIRE(str.empty() == false);
-    REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == etl::size_t(3));
-    REQUIRE(str.length() == etl::size_t(3));
-    REQUIRE(str[0] == 'a');
-    REQUIRE(str[1] == 'b');
-    REQUIRE(str[2] == 'c');
-    REQUIRE(str[3] == char(0));
+    CHECK_FALSE(str.full());
+    CHECK_FALSE(str.empty());
+    CHECK(str.capacity() == str.max_size());
+    CHECK(str.size() == etl::size_t(3));
+    CHECK(str.length() == etl::size_t(3));
+    CHECK(str[0] == 'a');
+    CHECK(str[1] == 'b');
+    CHECK(str[2] == 'c');
+    CHECK(str[3] == '\0');
+}
+
+TEMPLATE_TEST_CASE("string: ctor(first,last)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    TestType src {"test"};
+    TestType dest {begin(src), end(src)};
+
+    CHECK_FALSE(dest.full());
+    CHECK(dest.size() == etl::size_t(4));
+    CHECK(dest.length() == etl::size_t(4));
+    CHECK(dest[0] == 't');
+    CHECK(dest[1] == 'e');
+    CHECK(dest[2] == 's');
+    CHECK(dest[3] == 't');
+    CHECK(dest[4] == '\0');
 }
 
 TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
