@@ -287,7 +287,7 @@ private:
     // non-const elements:
     using data_t = etl::conditional_t<!etl::is_const_v<T>, etl::array<T, Capacity>,
                                       const etl::array<etl::remove_const_t<T>, Capacity>>;
-    alignas(alignof(T)) data_t data_;
+    alignas(alignof(T)) data_t data_{};
 
     size_type size_ = 0;
 };

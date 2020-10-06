@@ -456,9 +456,6 @@ template <typename Iter1, typename Iter2>
 template <typename Container>
 class back_insert_iterator
 {
-protected:
-    Container* container_ = nullptr;
-
 public:
     using iterator_category = output_iterator_tag;
     using value_type        = void;
@@ -524,6 +521,9 @@ public:
      * a value into the underlying container.
      */
     constexpr auto operator++(int) -> back_insert_iterator { return *this; }
+
+private:
+    Container* container_ = nullptr;
 };
 
 /**
