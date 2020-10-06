@@ -376,3 +376,29 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t, etl::
         CHECK_FALSE(etl::as_const(rhs) == etl::as_const(lhs));
     }
 }
+
+// TEMPLATE_TEST_CASE("set/static_set: erase_if", "[set]", etl::uint8_t, etl::int8_t,
+//                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+//                    etl::uint64_t, etl::int64_t, float, double, long double)
+// {
+//     auto predicate = [](auto const& val) { return val == TestType {1}; };
+
+//     SECTION("empty")
+//     {
+//         auto set = etl::static_set<TestType, 4>();
+//         CHECK(set.empty());
+//         CHECK_FALSE(set.contains(TestType {1}));
+//         CHECK(etl::erase_if(set, predicate) == 0);
+//         CHECK(set.empty());
+//         CHECK_FALSE(set.contains(TestType {1}));
+//     }
+
+//     SECTION("not empty")
+//     {
+//         auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+//         auto set  = etl::static_set<TestType, 4>();
+//         CHECK(set.contains(TestType {1}));
+//         CHECK(etl::erase_if(set, predicate) == 0);
+//         CHECK_FALSE(set.contains(TestType {1}));
+//     }
+// }

@@ -789,13 +789,36 @@ template <typename Key, etl::size_t Capacity, typename Comp>
  * @brief Specializes the etl::swap algorithm for etl::set. Swaps the contents of lhs and
  * rhs. Calls lhs.swap(rhs).
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, etl::size_t Capacity, typename Compare>
 constexpr auto
-swap(etl::static_set<Key, Capacity, Comp>& lhs,
-     etl::static_set<Key, Capacity, Comp>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+swap(etl::static_set<Key, Capacity, Compare>& lhs,
+     etl::static_set<Key, Capacity, Compare>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+    -> void
 {
     lhs.swap(rhs);
 }
+
+// /**
+//  * @brief Erases all elements that satisfy the predicate pred from the container.
+//  *
+//  * https://en.cppreference.com/w/cpp/container/set/erase_if
+//  */
+// template <typename Key, etl::size_t Capacity, typename Compare, typename Predicate>
+// constexpr auto erase_if(etl::static_set<Key, Capacity, Compare>& c, Predicate pred) ->
+//     typename etl::static_set<Key, Capacity, Compare>::size_type
+// {
+//     auto const old_size = c.size();
+//     for (auto i = c.begin(), last = c.end(); i != last;)
+//     {
+//         if (pred(*i)) { i = c.erase(i); }
+//         else
+//         {
+//             ++i;
+//         }
+//     }
+
+//     return old_size - c.size();
+// }
 
 }  // namespace etl
 
