@@ -1456,6 +1456,33 @@ template <typename ForwardIter, typename T>
 }
 
 /**
+ * @brief Returns a range containing all elements equivalent to value in the range [first,
+ * last).
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/equal_range
+ */
+template <typename ForwardIt, typename T, typename Compare>
+[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value,
+                                         Compare comp) -> etl::pair<ForwardIt, ForwardIt>
+{
+    return etl::make_pair(etl::lower_bound(first, last, value, comp),
+                          etl::upper_bound(first, last, value, comp));
+}
+
+/**
+ * @brief Returns a range containing all elements equivalent to value in the range [first,
+ * last).
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/equal_range
+ */
+template <typename ForwardIt, typename T>
+[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value)
+    -> etl::pair<ForwardIt, ForwardIt>
+{
+    return equal_range(first, last, value, etl::less<> {});
+}
+
+/**
  * @brief Checks if an element equivalent to value appears within the range [ \p first ,
  * \p last ).
  *
@@ -1483,7 +1510,7 @@ template <typename ForwardIter, typename T, typename Compare>
  */
 template <typename ForwardIter, class T>
 [[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
-                                           const T& value) -> bool
+                                           T const& value) -> bool
 {
     return binary_search(first, last, value, etl::less<> {});
 }
