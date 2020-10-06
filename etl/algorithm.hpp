@@ -498,6 +498,42 @@ template <typename ForwardIter, typename T>
 }
 
 /**
+ * @brief Copies elements from the range [ \p first , \p last ), to another range
+ * beginning at \p destination, omitting the elements which satisfy specific criteria.
+ * Source and destination ranges cannot overlap. Ignores all elements for which predicate
+ * \p p returns true.
+ *
+ * @return Iterator to the element past the last element copied.
+ */
+template <typename InputIter, typename OutputIter, typename UnaryPredicate>
+constexpr auto remove_copy_if(InputIter first, InputIter last, OutputIter destination,
+                              UnaryPredicate p) -> OutputIter
+{
+    for (; first != last; ++first, ++destination)
+    {
+        if (!p(*first)) { *destination = *first; }
+    }
+
+    return destination;
+}
+
+/**
+ * @brief Copies elements from the range [ \p first , \p last ), to another range
+ * beginning at \p destination, omitting the elements which satisfy specific criteria.
+ * Source and destination ranges cannot overlap. Ignores all elements that are equal to
+ * \p value.
+ *
+ * @return Iterator to the element past the last element copied.
+ */
+template <typename InputIter, typename OutputIter, typename T>
+constexpr auto remove_copy(InputIter first, InputIter last, OutputIter destination,
+                           T const& value) -> OutputIter
+{
+    return remove_copy_if(first, last, destination,
+                          [&value](auto const& item) { return item == value; });
+}
+
+/**
  * @brief Returns the greater of a and b.
  */
 template <typename Type>

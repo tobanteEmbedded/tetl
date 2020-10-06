@@ -137,6 +137,33 @@ TEMPLATE_TEST_CASE("algorithm: remove", "[algorithm]", etl::uint8_t, etl::uint16
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: remove_copy/remove_copy_if", "[algorithm]", etl::uint8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        auto source = etl::static_vector<TestType, 4> {};
+        auto dest   = etl::static_vector<TestType, 4> {};
+        etl::remove_copy(begin(source), end(source), etl::back_inserter(dest), T(1));
+
+        CHECK(dest.empty());
+    }
+
+    SECTION("range")
+    {
+        auto source = etl::array {T(1), T(2), T(3), T(4)};
+        auto dest   = etl::static_vector<TestType, 4> {};
+        etl::remove_copy(begin(source), end(source), etl::back_inserter(dest), T(1));
+
+        CHECK_FALSE(dest.empty());
+        CHECK(dest.size() == 3);
+        CHECK(etl::all_of(begin(dest), end(dest), [](auto val) { return val > T(1); }));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
