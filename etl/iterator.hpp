@@ -269,7 +269,7 @@ public:
     /**
      * @brief Returns the underlying base iterator.
      */
-    constexpr auto base() const -> Iter { return current; }
+    [[nodiscard]] constexpr auto base() const -> Iter { return current; }
 
     /**
      * @brief Returns a reference to the element previous to current.

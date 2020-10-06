@@ -160,8 +160,9 @@ template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType
 
 namespace detail
 {
-template <typename FloatT>
-constexpr FloatT lerp_impl(FloatT a, FloatT b, FloatT t) noexcept
+template <typename Float>
+[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
+    -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
 {
     if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
 

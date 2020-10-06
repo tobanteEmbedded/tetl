@@ -81,12 +81,12 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<char const*>",
     auto ctx       = fmt::format_context<string_t> {etl::back_inserter(str)};
     auto formatter = fmt::formatter<char const*, char> {};
 
-    auto* c_str_1 = "test";
+    auto const* c_str_1 = "test";
     formatter.format(c_str_1, ctx);
     CHECK(etl::string_view(str.data()) == etl::string_view(c_str_1));
 
     str.clear();
-    auto* c_str_2 = "abcdef";
+    auto const* c_str_2 = "abcdef";
     formatter.format(c_str_2, ctx);
     CHECK(etl::string_view(str.data()) == etl::string_view(c_str_2));
 }

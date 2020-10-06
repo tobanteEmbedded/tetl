@@ -125,7 +125,7 @@ struct variant_storage<Head>
         union_index = 0;
     }
 
-    void destruct(union_index_type)
+    void destruct(union_index_type /*unused*/)
     {
         static_cast<Head*>(static_cast<void*>(&data))->~Head();
     }
@@ -339,7 +339,7 @@ public:
     /**
      * @todo Remove & replace with friendship for etl::get_if.
      */
-    auto data() const noexcept { return &data_; }
+    [[nodiscard]] auto data() const noexcept { return &data_; }
     auto data() noexcept { return &data_; }
 
 private:

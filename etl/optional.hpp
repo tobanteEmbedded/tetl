@@ -67,7 +67,7 @@ struct optional_destruct_base<ValueType, false>
 
     ~optional_destruct_base()
     {
-        if (has_value_) value_.~value_type();
+        if (has_value_) { value_.~value_type(); }
     }
 
     constexpr optional_destruct_base() noexcept : null_state_() { }
@@ -89,7 +89,7 @@ struct optional_destruct_base<ValueType, false>
 
     union
     {
-        char null_state_;
+        char null_state_ {};
         value_type value_;
     };
     bool has_value_ = false;
@@ -101,10 +101,10 @@ struct optional_destruct_base<ValueType, true>
     typedef ValueType value_type;
     static_assert(etl::is_object_v<value_type>, "undefined behavior");
 
-    constexpr optional_destruct_base() noexcept : null_state_(), has_value_(false) { }
+    constexpr optional_destruct_base() noexcept : null_state_() { }
 
     template <typename... Args>
-    constexpr explicit optional_destruct_base(etl::in_place_t, Args&&... args)
+    constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/, Args&&... args)
         : value_(etl::forward<Args>(args)...), has_value_(true)
     {
     }
@@ -116,10 +116,10 @@ struct optional_destruct_base<ValueType, true>
 
     union
     {
-        char null_state_;
+        char null_state_ {};
         value_type value_;
     };
-    bool has_value_;
+    bool has_value_ {false};
 };
 
 template <typename ValueType, bool = etl::is_reference<ValueType>::value>
@@ -129,21 +129,24 @@ struct optional_storage_base : optional_destruct_base<ValueType>
     using value_type = ValueType;
     using base_t::base_t;
 
-    [[nodiscard]] constexpr bool has_value() const noexcept { return this->has_value_; }
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return this->has_value_;
+    }
 
-    [[nodiscard]] constexpr value_type& get() & noexcept { return this->value_; }
+    [[nodiscard]] constexpr auto get() & noexcept -> value_type& { return this->value_; }
 
-    [[nodiscard]] constexpr const value_type& get() const& noexcept
+    [[nodiscard]] constexpr auto get() const& noexcept -> const value_type&
     {
         return this->value_;
     }
 
-    [[nodiscard]] constexpr value_type&& get() && noexcept
+    [[nodiscard]] constexpr auto get() && noexcept -> value_type&&
     {
         return etl::move(this->value_);
     }
 
-    [[nodiscard]] constexpr const value_type&& get() const&& noexcept
+    [[nodiscard]] constexpr auto get() const&& noexcept -> const value_type&&
     {
         return etl::move(this->value_);
     }
@@ -160,7 +163,7 @@ struct optional_storage_base : optional_destruct_base<ValueType>
     template <typename T>
     void construct_from(T&& opt)
     {
-        if (opt.has_value()) construct(etl::forward<T>(opt).get());
+        if (opt.has_value()) { construct(etl::forward<T>(opt).get()); }
     }
 
     template <typename T>
@@ -168,14 +171,15 @@ struct optional_storage_base : optional_destruct_base<ValueType>
     {
         if (this->has_value_ == opt.has_value())
         {
-            if (this->has_value_) this->value_ = etl::forward<T>(opt).get();
+            if (this->has_value_) { this->value_ = etl::forward<T>(opt).get(); }
         }
         else
         {
-            if (this->has_value_)
-                this->reset();
+            if (this->has_value_) { this->reset(); }
             else
+            {
                 construct(etl::forward<T>(opt).get());
+            }
         }
     }
 };
@@ -200,10 +204,10 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
         this->construct_from(opt);
     }
 
-    optional_copy_base(optional_copy_base&&) = default;
+    optional_copy_base(optional_copy_base&&) noexcept = default;
 
-    optional_copy_base& operator=(optional_copy_base const&) = default;
-    optional_copy_base& operator=(optional_copy_base&&) = default;
+    auto operator=(optional_copy_base const&) -> optional_copy_base& = default;
+    auto operator=(optional_copy_base&&) noexcept -> optional_copy_base& = default;
 };
 
 template <typename ValueType,
@@ -229,9 +233,9 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
         this->construct_from(etl::move(opt));
     }
 
-    optional_move_base& operator=(optional_move_base const&) = default;
+    auto operator=(optional_move_base const&) -> optional_move_base& = default;
 
-    optional_move_base& operator=(optional_move_base&&) = default;
+    auto operator=(optional_move_base&&) noexcept -> optional_move_base& = default;
 };
 
 template <typename ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
@@ -251,7 +255,7 @@ struct optional_copy_assign_base<ValueType, false> : optional_move_base<ValueTyp
 
     optional_copy_assign_base(optional_copy_assign_base const&) = default;
 
-    optional_copy_assign_base(optional_copy_assign_base&&) = default;
+    optional_copy_assign_base(optional_copy_assign_base&&) noexcept = default;
 
     [[nodiscard]] auto operator=(optional_copy_assign_base const& opt)
         -> optional_copy_assign_base&
@@ -260,7 +264,8 @@ struct optional_copy_assign_base<ValueType, false> : optional_move_base<ValueTyp
         return *this;
     }
 
-    auto operator=(optional_copy_assign_base&&) -> optional_copy_assign_base& = default;
+    auto operator                     =(optional_copy_assign_base&&) noexcept
+        -> optional_copy_assign_base& = default;
 };
 
 template <typename ValueType, bool = etl::is_trivially_destructible<ValueType>::value&&
@@ -281,13 +286,15 @@ struct optional_move_assign_base<ValueType, false> : optional_copy_assign_base<V
 
     optional_move_assign_base(optional_move_assign_base const& opt) = default;
 
-    optional_move_assign_base(optional_move_assign_base&&) = default;
+    optional_move_assign_base(optional_move_assign_base&&) noexcept = default;
 
-    optional_move_assign_base& operator=(optional_move_assign_base const&) = default;
+    auto operator                     =(optional_move_assign_base const&)
+        -> optional_move_assign_base& = default;
 
-    optional_move_assign_base& operator=(optional_move_assign_base&& opt) noexcept(
+    auto operator=(optional_move_assign_base&& opt) noexcept(
         etl::is_nothrow_move_assignable_v<value_type>&&
             etl::is_nothrow_move_constructible_v<value_type>)
+        -> optional_move_assign_base&
     {
         this->assign_from(etl::move(opt));
         return *this;
@@ -378,7 +385,7 @@ public:
      * destroyed by calling its destructor as if by value().T::~T(). *this does
      * not contain a value after this call.
      */
-    constexpr auto operator=(etl::nullopt_t) noexcept -> optional&
+    constexpr auto operator=(etl::nullopt_t /*unused*/) noexcept -> optional&
     {
         reset();
         return *this;

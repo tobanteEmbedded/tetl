@@ -187,7 +187,7 @@ inline auto split_at_next_argument(etl::string_view str)
 {
     using size_type = etl::string_view::size_type;
 
-    auto res = etl::find(begin(str), end(str), token_begin);
+    auto const* res = etl::find(begin(str), end(str), token_begin);
     if (res != end(str) && *etl::next(res) == token_end)
     {
         auto index  = static_cast<size_type>(etl::distance(begin(str), res));
@@ -203,14 +203,14 @@ template <typename FormatContext>
 auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx) -> void
 {
     // Loop as long as escaped sequences are found.
-    auto first = begin(str);
+    auto const* first = begin(str);
     while (true)
     {
         // Find open sequence {{
-        auto const open_first   = ::etl::find(first, end(str), token_begin);
-        auto const open_sec     = ::etl::next(open_first);
-        auto const escape_start = open_first != end(str)   //
-                                  && open_sec != end(str)  //
+        const auto* const open_first = ::etl::find(first, end(str), token_begin);
+        const auto* const open_sec   = ::etl::next(open_first);
+        auto const escape_start      = open_first != end(str)  //
+                                  && open_sec != end(str)      //
                                   && *open_sec == token_begin;
 
         if (escape_start)
@@ -219,10 +219,11 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx) -> voi
             detail::format_argument(etl::string_view(first, open_first), ctx);
 
             // Find sequence }}
-            auto close_first  = ::etl::find(::etl::next(open_sec), end(str), token_end);
-            auto close_sec    = ::etl::next(close_first);
-            auto escape_close = close_first != end(str)   //
-                                && close_sec != end(str)  //
+            auto const* close_first
+                = ::etl::find(::etl::next(open_sec), end(str), token_end);
+            auto const* close_sec = ::etl::next(close_first);
+            auto escape_close     = close_first != end(str)  //
+                                && close_sec != end(str)     //
                                 && *close_sec == token_end;
 
             // Copy everything between {{ ... }}, but only one curly each.

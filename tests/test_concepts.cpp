@@ -31,15 +31,15 @@ DAMAGE.
 #if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace
 {
-auto floating_point_test(etl::floating_point auto) { return true; }
+auto floating_point_test(etl::floating_point auto /*unused*/) { return true; }
 
-auto floating_point_test(auto) { return false; }
+auto floating_point_test(auto /*unused*/) { return false; }
 }  // namespace
 
 TEST_CASE("concepts: floating_point", "[concepts]")
 {
     CHECK(floating_point_test(143.0));
-    CHECK(floating_point_test(143.0f));
+    CHECK(floating_point_test(143.0F));
     CHECK(floating_point_test(143.0l));
 
     CHECK_FALSE(floating_point_test(etl::int8_t(42)));
@@ -51,14 +51,14 @@ TEST_CASE("concepts: floating_point", "[concepts]")
     CHECK_FALSE(floating_point_test(etl::int64_t(143)));
     CHECK_FALSE(floating_point_test(etl::uint64_t(143)));
     CHECK_FALSE(floating_point_test(143));
-    CHECK_FALSE(floating_point_test(143u));
+    CHECK_FALSE(floating_point_test(143U));
 }
 
 namespace
 {
-auto integral_test(etl::integral auto) { return true; }
+auto integral_test(etl::integral auto /*unused*/) { return true; }
 
-auto integral_test(auto) { return false; }
+auto integral_test(auto /*unused*/) { return false; }
 }  // namespace
 
 TEST_CASE("concepts: integral", "[concepts]")
@@ -72,18 +72,18 @@ TEST_CASE("concepts: integral", "[concepts]")
     CHECK(integral_test(etl::int64_t(143)));
     CHECK(integral_test(etl::uint64_t(143)));
     CHECK(integral_test(143));
-    CHECK(integral_test(143u));
+    CHECK(integral_test(143U));
 
     CHECK_FALSE(integral_test(143.0));
-    CHECK_FALSE(integral_test(143.0f));
+    CHECK_FALSE(integral_test(143.0F));
     CHECK_FALSE(integral_test(143.0l));
 }
 
 namespace
 {
-auto signed_integral_test(etl::signed_integral auto) { return true; }
+auto signed_integral_test(etl::signed_integral auto /*unused*/) { return true; }
 
-auto signed_integral_test(auto) { return false; }
+auto signed_integral_test(auto /*unused*/) { return false; }
 }  // namespace
 
 TEST_CASE("concepts: signed_integral", "[concepts]")
@@ -98,17 +98,17 @@ TEST_CASE("concepts: signed_integral", "[concepts]")
     CHECK_FALSE(signed_integral_test(etl::uint16_t(143)));
     CHECK_FALSE(signed_integral_test(etl::uint32_t(143)));
     CHECK_FALSE(signed_integral_test(etl::uint64_t(143)));
-    CHECK_FALSE(signed_integral_test(143u));
+    CHECK_FALSE(signed_integral_test(143U));
     CHECK_FALSE(signed_integral_test(143.0));
-    CHECK_FALSE(signed_integral_test(143.0f));
+    CHECK_FALSE(signed_integral_test(143.0F));
     CHECK_FALSE(signed_integral_test(143.0l));
 }
 
 namespace
 {
-auto unsigned_integral_test(etl::unsigned_integral auto) { return true; }
+auto unsigned_integral_test(etl::unsigned_integral auto /*unused*/) { return true; }
 
-auto unsigned_integral_test(auto) { return false; }
+auto unsigned_integral_test(auto /*unused*/) { return false; }
 }  // namespace
 
 TEST_CASE("concepts: unsigned_integral", "[concepts]")
@@ -117,7 +117,7 @@ TEST_CASE("concepts: unsigned_integral", "[concepts]")
     CHECK(unsigned_integral_test(etl::uint16_t(143)));
     CHECK(unsigned_integral_test(etl::uint32_t(143)));
     CHECK(unsigned_integral_test(etl::uint64_t(143)));
-    CHECK(unsigned_integral_test(143u));
+    CHECK(unsigned_integral_test(143U));
 
     CHECK_FALSE(unsigned_integral_test(etl::int8_t(42)));
     CHECK_FALSE(unsigned_integral_test(etl::int16_t(143)));
@@ -125,7 +125,7 @@ TEST_CASE("concepts: unsigned_integral", "[concepts]")
     CHECK_FALSE(unsigned_integral_test(etl::int64_t(143)));
     CHECK_FALSE(unsigned_integral_test(143));
     CHECK_FALSE(unsigned_integral_test(143.0));
-    CHECK_FALSE(unsigned_integral_test(143.0f));
+    CHECK_FALSE(unsigned_integral_test(143.0F));
     CHECK_FALSE(unsigned_integral_test(143.0l));
 }
 

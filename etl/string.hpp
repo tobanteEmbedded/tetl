@@ -163,7 +163,10 @@ public:
     /**
      * @brief Returns an const iterator to the beginning.
      */
-    constexpr auto begin() const noexcept -> const_iterator { return data(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    {
+        return data();
+    }
 
     /**
      * @brief Returns an const iterator to the beginning.
@@ -181,7 +184,10 @@ public:
     /**
      * @brief Returns an const iterator to the end.
      */
-    constexpr auto end() const noexcept -> const_iterator { return begin() + size(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return begin() + size();
+    }
 
     /**
      * @brief Returns an const iterator to the end.
@@ -651,10 +657,10 @@ public:
         -> size_type
     {
         if (pos > size()) { return 0; }
-        auto first       = data() + pos;
-        auto last        = first + etl::min(count, size() - pos);
-        auto const* dest = destination;
-        auto const* res  = etl::copy(first, last, destination);
+        auto const* first = data() + pos;
+        auto const* last  = first + etl::min(count, size() - pos);
+        auto const* dest  = destination;
+        auto const* res   = etl::copy(first, last, destination);
         return static_cast<size_type>(res - dest);
     }
 

@@ -115,7 +115,7 @@ TEMPLATE_TEST_CASE("vector/static_vector: ctor copy", "[vector]", etl::uint8_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto first = etl::static_vector<TestType, 4>(4);
-    etl::static_vector<TestType, 4> second {first};
+    etl::static_vector<TestType, 4> const& second {first};
     CHECK(first == second);
 }
 
@@ -475,12 +475,12 @@ TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace_back", "[vector]",
     etl::static_vector<Vertex<TestType>, 16> rhs {};
     CHECK(rhs.empty());
 
-    rhs.emplace_back(TestType(1.20f), TestType(1.00f), TestType(1.43f));
+    rhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
     CHECK_FALSE(rhs.empty());
     CHECK_FALSE(rhs == lhs);
     CHECK(rhs.size() == 1);
 
-    lhs.emplace_back(TestType(1.20f), TestType(1.00f), TestType(1.43f));
+    lhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
     CHECK_FALSE(lhs.empty());
     CHECK(rhs == lhs);
     CHECK(lhs.size() == 1);
@@ -491,7 +491,7 @@ TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace", "[vector]", etl:
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_vector<Vertex<TestType>, 3> vec {};
-    vec.emplace(vec.end(), TestType(1.20f), TestType(1.00f), TestType(1.43f));
+    vec.emplace(vec.end(), TestType(1.20F), TestType(1.00F), TestType(1.43F));
     CHECK_FALSE(vec.empty());
     CHECK(vec.size() == 1);
 }
@@ -518,7 +518,7 @@ TEMPLATE_TEST_CASE("vector/static_vector: non_trivial insert(copy)", "[vector]",
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
-    auto vertex = Vertex {TestType(1.20f), TestType(1.00f), TestType(1.43f)};
+    auto vertex = Vertex {TestType(1.20F), TestType(1.00F), TestType(1.43F)};
     vec.insert(vec.begin(), vertex);
     vec.insert(vec.begin(), vertex);
     CHECK(vec.size() == 2);
@@ -529,8 +529,8 @@ TEMPLATE_TEST_CASE("vector/static_vector: non_trivial insert(move)", "[vector]",
 {
     auto vec = etl::static_vector<Vertex<TestType>, 3> {};
     CHECK(vec.size() == 0);
-    vec.insert(vec.begin(), Vertex {TestType(1.20f), TestType(1.00f), TestType(1.43f)});
-    vec.insert(vec.begin(), Vertex {TestType(1.20f), TestType(1.00f), TestType(1.43f)});
+    vec.insert(vec.begin(), Vertex {TestType(1.20F), TestType(1.00F), TestType(1.43F)});
+    vec.insert(vec.begin(), Vertex {TestType(1.20F), TestType(1.00F), TestType(1.43F)});
     CHECK(vec.size() == 2);
 }
 

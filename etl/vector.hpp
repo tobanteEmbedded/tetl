@@ -117,7 +117,7 @@ public:
      * of the storage by one. Always fails for empty storage.
      */
     template <typename... Args, TAETL_REQUIRES_((is_constructible_v<T, Args...>))>
-    static constexpr auto emplace_back(Args&&...) noexcept -> void
+    static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
     {
         assert(false && "tried to emplace_back on empty storage");
     }
@@ -271,7 +271,7 @@ protected:
      * @warning The size of the storage is not changed.
      */
     template <typename InputIt>
-    constexpr auto unsafe_destroy(InputIt, InputIt) noexcept -> void
+    constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept -> void
     {
     }
 
@@ -316,9 +316,9 @@ public:
     constexpr auto operator                   =(static_vector_non_trivial_storage const&)
         -> static_vector_non_trivial_storage& = default;
 
-    constexpr static_vector_non_trivial_storage(static_vector_non_trivial_storage&&)
-        = default;
-    constexpr auto operator                   =(static_vector_non_trivial_storage&&)
+    constexpr static_vector_non_trivial_storage(
+        static_vector_non_trivial_storage&&) noexcept = default;
+    constexpr auto operator=(static_vector_non_trivial_storage&&) noexcept
         -> static_vector_non_trivial_storage& = default;
 
     ~static_vector_non_trivial_storage() noexcept(etl::is_nothrow_destructible_v<T>)
@@ -396,7 +396,7 @@ public:
     auto pop_back() noexcept(etl::is_nothrow_destructible_v<T>) -> void
     {
         assert(!empty() && "tried to pop_back from empty storage!");
-        auto ptr = end() - 1;
+        auto* ptr = end() - 1;
         ptr->~T();
         unsafe_set_size(static_cast<size_type>(size() - 1));
     }
@@ -565,9 +565,10 @@ public:
      * @brief
      */
     template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
-    constexpr iterator
+    constexpr auto
     move_insert(const_iterator position, InputIt first,
                 InputIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
+        -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -580,7 +581,7 @@ public:
 
         // we insert at the end and then just rotate:
         for (; first != last; ++first) { emplace_back(etl::move(*first)); }
-        auto writable_position = begin() + (position - begin());
+        auto* writable_position = begin() + (position - begin());
         etl::rotate<iterator>(writable_position, b, end());
         return writable_position;
     }
@@ -626,14 +627,14 @@ public:
     {
         assert_iterator_in_range(position);
         assert(size() + n <= capacity() && "trying to insert beyond capacity!");
-        auto b = end();
+        auto* b = end();
         while (n != 0)
         {
             push_back(x);
             --n;
         }
 
-        auto writable_position = begin() + (position - begin());
+        auto* writable_position = begin() + (position - begin());
         etl::rotate(writable_position, b, end());
         return writable_position;
     }
@@ -657,8 +658,9 @@ public:
     template <typename InputIt,
               TAETL_REQUIRES_(detail::InputIterator<InputIt>&& is_constructible_v<
                               value_type, detail::iterator_reference_t<InputIt>>)>
-    constexpr iterator insert(const_iterator position, InputIt first,
-                              InputIt last) noexcept(noexcept(emplace_back(*first)))
+    constexpr auto insert(const_iterator position, InputIt first,
+                          InputIt last) noexcept(noexcept(emplace_back(*first)))
+        -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -667,12 +669,12 @@ public:
             assert(size() + static_cast<size_type>(last - first) <= capacity()
                    && "trying to insert beyond capacity!");
         }
-        auto b = end();
+        auto* b = end();
 
         // insert at the end and then just rotate:
         for (; first != last; ++first) { emplace_back(*first); }
 
-        auto writable_position = begin() + (position - begin());
+        auto* writable_position = begin() + (position - begin());
         etl::rotate(writable_position, b, end());
         return writable_position;
     }
@@ -791,7 +793,10 @@ public:
     /**
      * @brief Number of elements in the vector
      */
-    constexpr auto size() const noexcept -> size_type { return base_type::size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type
+    {
+        return base_type::size();
+    }
 
     /**
      * @brief Maximum number of elements that can be allocated in the vector

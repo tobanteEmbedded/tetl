@@ -1784,7 +1784,7 @@ struct nat
 {
     nat()           = delete;
     nat(nat const&) = delete;
-    nat& operator=(nat const&) = delete;
+    auto operator=(nat const&) -> nat& = delete;
     ~nat()                     = delete;
 };
 

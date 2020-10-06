@@ -87,7 +87,7 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t, etl::uin
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
                    float, double, long double)
 {
-    etl::array<TestType, 4> a;
+    etl::array<TestType, 4> a {};
     a.fill(2);
     etl::transform(begin(a), end(a), begin(a), [](auto const& val) { return val * 2; });
     REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 4; }));
@@ -118,7 +118,7 @@ TEMPLATE_TEST_CASE("algorithm: remove", "[algorithm]", etl::uint8_t, etl::uint16
     SECTION("empty range")
     {
         auto data = etl::static_vector<TestType, 4> {};
-        auto res  = etl::remove(begin(data), end(data), TestType {1});
+        auto* res = etl::remove(begin(data), end(data), TestType {1});
         CHECK(res == end(data));
         CHECK(data.empty());
     }
@@ -131,7 +131,7 @@ TEMPLATE_TEST_CASE("algorithm: remove", "[algorithm]", etl::uint8_t, etl::uint16
         data.push_back(TestType {0});
         data.push_back(TestType {0});
 
-        auto res = etl::remove(begin(data), end(data), TestType {1});
+        auto* res = etl::remove(begin(data), end(data), TestType {1});
         CHECK(res == end(data) - 1);
         CHECK(data[0] == 0);
     }
@@ -236,14 +236,14 @@ TEMPLATE_TEST_CASE("algorithm: adjacent_find", "[algorithm]", etl::uint8_t, etl:
     SECTION("empty range")
     {
         auto data = etl::static_vector<TestType, 2> {};
-        auto res  = etl::adjacent_find(begin(data), end(data));
+        auto* res = etl::adjacent_find(begin(data), end(data));
         CHECK(res == end(data));
     }
 
     SECTION("no match")
     {
         auto const data = etl::array {TestType(0), TestType(1), TestType(2)};
-        auto res        = etl::adjacent_find(begin(data), end(data));
+        auto const* res = etl::adjacent_find(begin(data), end(data));
         CHECK(res == end(data));
     }
 
@@ -311,7 +311,7 @@ TEMPLATE_TEST_CASE("algorithm: find_first_of", "[algorithm]", etl::uint8_t, etl:
     {
         auto tc    = etl::static_vector<TestType, 16> {};
         auto match = etl::array {TestType(2), TestType(42)};
-        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        auto* res  = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
         CHECK(res == end(tc));
     }
 
@@ -319,7 +319,7 @@ TEMPLATE_TEST_CASE("algorithm: find_first_of", "[algorithm]", etl::uint8_t, etl:
     {
         auto tc    = etl::static_vector<TestType, 16> {};
         auto match = etl::static_vector<TestType, 16> {};
-        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        auto* res  = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
         CHECK(res == end(tc));
     }
 
@@ -327,14 +327,14 @@ TEMPLATE_TEST_CASE("algorithm: find_first_of", "[algorithm]", etl::uint8_t, etl:
     {
         auto tc    = etl::array {TestType(0), TestType(1)};
         auto match = etl::array {TestType(2), TestType(42)};
-        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        auto* res  = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
         CHECK(res == end(tc));
     }
 
     SECTION("same ranges")
     {
-        auto tc  = etl::array {TestType(0), TestType(1)};
-        auto res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
+        auto tc   = etl::array {TestType(0), TestType(1)};
+        auto* res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
         CHECK(res == begin(tc));
     }
 
@@ -342,7 +342,7 @@ TEMPLATE_TEST_CASE("algorithm: find_first_of", "[algorithm]", etl::uint8_t, etl:
     {
         auto tc    = etl::array {TestType(0), TestType(1), TestType(42)};
         auto match = etl::array {TestType(2), TestType(42)};
-        auto res   = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
+        auto* res  = etl::find_first_of(begin(tc), end(tc), begin(match), end(match));
         CHECK(res == end(tc) - 1);
         CHECK(*res == TestType(42));
     }
@@ -524,7 +524,7 @@ TEMPLATE_TEST_CASE("algorithm: rotate", "[algorithm]", etl::uint8_t, etl::int8_t
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 16> arr;
+    etl::array<TestType, 16> arr {};
     arr[0] = 1;
     arr[1] = 2;
     arr[2] = 3;
@@ -666,7 +666,7 @@ TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 7> arr;
+    etl::array<TestType, 7> arr {};
     arr[0] = 11;
     arr[1] = 1;
     arr[2] = 12;
@@ -686,7 +686,7 @@ TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 7> arr;
+    etl::array<TestType, 7> arr {};
     arr[0] = 11;
     arr[1] = 1;
     arr[2] = 12;
@@ -715,7 +715,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t, etl::int8_t
     {
         auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
         auto target = etl::array {T(1), T(2), T(3)};
-        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        auto* res   = etl::search(begin(source), end(source), begin(target), end(target));
         CHECK(*res == T(1));
     }
 
@@ -723,7 +723,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t, etl::int8_t
     {
         auto source = etl::array {T(0), T(0), T(0), T(0), T(2), T(3)};
         auto target = etl::array {T(1), T(2), T(3)};
-        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        auto* res   = etl::search(begin(source), end(source), begin(target), end(target));
         CHECK(res == end(source));
     }
 
@@ -731,7 +731,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t, etl::int8_t
     {
         auto source = etl::array {T(0), T(0), T(0), T(0), T(2), T(3)};
         auto target = etl::static_vector<T, 0> {};
-        auto res    = etl::search(begin(source), end(source), begin(target), end(target));
+        auto* res   = etl::search(begin(source), end(source), begin(target), end(target));
         CHECK(res == begin(source));
     }
 
@@ -758,7 +758,7 @@ TEMPLATE_TEST_CASE("algorithm: search_n", "[algorithm]", etl::uint8_t, etl::int8
     SECTION("empty range")
     {
         auto source = etl::static_vector<T, 2> {};
-        auto res    = etl::search_n(begin(source), end(source), 3, T(0));
+        auto* res   = etl::search_n(begin(source), end(source), 3, T(0));
         CHECK(res == end(source));
     }
 
@@ -777,14 +777,14 @@ TEMPLATE_TEST_CASE("algorithm: search_n", "[algorithm]", etl::uint8_t, etl::int8
     SECTION("no match")
     {
         auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
-        auto res    = etl::search_n(begin(source), end(source), 3, T(42));
+        auto* res   = etl::search_n(begin(source), end(source), 3, T(42));
         CHECK(res == end(source));
     }
 
     SECTION("find match")
     {
         auto source = etl::array {T(0), T(0), T(0), T(1), T(2), T(3)};
-        auto res    = etl::search_n(begin(source), end(source), 3, T(0));
+        auto* res   = etl::search_n(begin(source), end(source), 3, T(0));
         CHECK(res == begin(source));
         CHECK(*res == T(0));
     }
@@ -998,8 +998,8 @@ TEMPLATE_TEST_CASE("algorithm: fill_n", "[algorithm]", etl::uint8_t, etl::int8_t
         CHECK(etl::fill_n(begin(tc1), 4, T {42}) == end(tc1));
         CHECK(etl::all_of(begin(tc1), end(tc1), [](auto v) { return v == T(42); }));
 
-        auto tc2  = etl::array<T, 4> {};
-        auto res2 = etl::fill_n(begin(tc2), 2, T {42});
+        auto tc2   = etl::array<T, 4> {};
+        auto* res2 = etl::fill_n(begin(tc2), 2, T {42});
         CHECK(res2 != begin(tc2));
         CHECK(res2 != end(tc2));
         CHECK(tc2[0] == T(42));

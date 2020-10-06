@@ -42,7 +42,7 @@ public:
     {
     }
 
-    scope_guard(scope_guard&& rhs)
+    scope_guard(scope_guard&& rhs) noexcept
         : func_ {etl::move(rhs.func_)}, policy_ {etl::move(rhs.policy_)}
     {
     }

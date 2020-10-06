@@ -160,7 +160,7 @@ TEMPLATE_TEST_CASE("span: begin/end", "[span]", char, int, float)
         REQUIRE_FALSE(etl::begin(sp) == etl::end(sp));
 
         auto counter = 0;
-        etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto) { counter++; });
+        etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });
         REQUIRE(counter == 4);
     }
 }
