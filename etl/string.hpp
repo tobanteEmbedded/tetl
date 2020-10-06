@@ -105,7 +105,7 @@ public:
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr basic_static_string(InputIter first, InputIter last) noexcept
-        : basic_static_string(first, static_cast<size_type>(etl::distance(first, last)))
+        : basic_static_string(first, static_cast<size_type>(distance(first, last)))
     {
     }
 
@@ -115,8 +115,18 @@ public:
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     explicit constexpr basic_static_string(T const& t)
-        : basic_static_string {etl::basic_string_view<CharType, Traits> {t}.begin(),
-                               etl::basic_string_view<CharType, Traits> {t}.end()}
+        : basic_static_string {basic_string_view<CharType, Traits> {t}.begin(),
+                               basic_string_view<CharType, Traits> {t}.end()}
+    {
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then initializes the string
+     * with the subrange [ \p pos, \p pos + \p n ) of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
+        : basic_static_string {basic_string_view<CharType, Traits> {t}.substr(pos, n)}
     {
     }
 
