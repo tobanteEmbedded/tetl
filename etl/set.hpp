@@ -563,6 +563,52 @@ public:
     }
 
     /**
+     * @brief Removes the element at pos.
+     *
+     * https://en.cppreference.com/w/cpp/container/set/erase
+     *
+     * @return Iterator following the last removed element.
+     */
+    constexpr auto erase(iterator pos) noexcept -> iterator
+    {
+        etl::rotate(pos, pos + 1, end());
+        unsafe_set_size(size() - 1);
+        return pos + 1;
+    }
+
+    /**
+     * @brief Removes the elements in the range [first; last), which must be a valid range
+     * in *this.
+     *
+     * https://en.cppreference.com/w/cpp/container/set/erase
+     *
+     * @return Iterator following the last removed element.
+     */
+    constexpr auto erase(iterator first, iterator last) -> iterator
+    {
+        auto res = first;
+        for (; first != last; ++first) { res = erase(first); }
+        return res;
+    }
+
+    /**
+     * @brief Removes the element (if one exists) with the key equivalent to key.
+     *
+     * https://en.cppreference.com/w/cpp/container/set/erase
+     *
+     * @return Number of elements removed.
+     */
+    constexpr auto erase(key_type const& key) noexcept -> size_type
+    {
+        if (auto pos = etl::lower_bound(begin(), end(), key); pos != end())
+        {
+            erase(pos);
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
      * @brief Exchanges the contents of the container with those of other.
      */
     constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)

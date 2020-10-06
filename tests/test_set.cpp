@@ -151,6 +151,7 @@ TEMPLATE_TEST_CASE("set/static_set: clear", "[set]", etl::uint8_t, etl::int8_t,
     CHECK(set.empty());
     CHECK_FALSE(set.full());
 }
+
 TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -201,6 +202,30 @@ TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t, etl::int8_t
     CHECK(res.second == false);
     CHECK(set.size() == 4);
     CHECK_FALSE(set.contains(5));
+}
+
+TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T   = TestType;
+    auto data = etl::array {T(1), T(2), T(3), T(4)};
+    auto set  = etl::static_set<T, 4>(begin(data), end(data));
+
+    CHECK(set.contains(T(3)));
+    CHECK(set.erase(T(3)) == 1);
+    CHECK(set.size() == 3);
+    CHECK_FALSE(set.contains(T(3)));
+
+    CHECK(set.contains(T(1)));
+    CHECK(set.erase(begin(set)) == begin(set) + 1);
+    CHECK(set.size() == 2);
+    CHECK_FALSE(set.contains(T(1)));
+
+    CHECK(set.contains(T(2)));
+    CHECK(set.erase(begin(set), end(set) - 1) == end(set));
+    CHECK(set.size() == 1);
+    CHECK_FALSE(set.contains(T(2)));
 }
 
 TEMPLATE_TEST_CASE("set/static_set: find", "[set]", etl::uint8_t, etl::int8_t,
