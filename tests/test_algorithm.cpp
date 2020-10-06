@@ -164,6 +164,28 @@ TEMPLATE_TEST_CASE("algorithm: remove_copy/remove_copy_if", "[algorithm]", etl::
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: replace/replace_if", "[algorithm]", etl::uint8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        auto data = etl::static_vector<TestType, 4> {};
+        etl::replace(begin(data), end(data), T(0), T(1));
+        CHECK(data.empty());
+    }
+
+    SECTION("range")
+    {
+        auto data = etl::array {T(1), T(2), T(2), T(3)};
+        etl::replace(begin(data), end(data), T(2), T(1));
+        CHECK(etl::count(begin(data), end(data), T(2)) == 0);
+        CHECK(etl::count(begin(data), end(data), T(1)) == 3);
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: generate", "[algorithm]", etl::uint8_t, etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {

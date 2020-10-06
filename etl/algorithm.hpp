@@ -534,6 +534,33 @@ constexpr auto remove_copy(InputIter first, InputIter last, OutputIter destinati
 }
 
 /**
+ * @brief Replaces all elements satisfying specific criteria with \p new_value in the
+ * range [ \p first , \p last ). Replaces all elements for which predicate \p p returns
+ * true.
+ */
+template <typename ForwardIt, typename UnaryPredicate, typename T>
+constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
+                          T const& new_value) -> void
+{
+    for (; first != last; ++first)
+    {
+        if (p(*first)) { *first = new_value; }
+    }
+}
+
+/**
+ * @brief Replaces all elements satisfying specific criteria with \p new_value in the
+ * range [ \p first , \p last ). Replaces all elements that are equal to \p old_value.
+ */
+template <typename ForwardIt, typename T>
+constexpr auto replace(ForwardIt first, ForwardIt last, T const& old_value,
+                       T const& new_value) -> void
+{
+    auto predicate = [&old_value](auto const& item) { return item == old_value; };
+    replace_if(first, last, predicate, new_value);
+}
+
+/**
  * @brief Returns the greater of a and b.
  */
 template <typename Type>
