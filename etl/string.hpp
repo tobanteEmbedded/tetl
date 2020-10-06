@@ -49,11 +49,12 @@ template <typename CharType, etl::size_t Capacity,
           typename Traits = etl::char_traits<CharType>>
 class basic_static_string
 {
+    // clang-format off
     template <typename T>
-    constexpr static bool string_view_and_not_char_pointer
-        = is_convertible_v<T const&, basic_string_view<CharType,
-                                                       Traits>>  //
-          && !is_convertible_v<T const&, CharType const*>;
+    constexpr static bool string_view_and_not_char_pointer = 
+        is_convertible_v<T const&, basic_string_view<CharType, Traits>> 
+        && !is_convertible_v<T const&, CharType const*>;
+    // clang-format on
 
 public:
     using traits_type            = Traits;
@@ -74,11 +75,14 @@ public:
     constexpr basic_static_string() = default;
 
     /**
-     * @brief Charater Pointer constant constructor. Fails silently if input len is
-     * greater then capacity.
+     * @brief Character pointer constructor.
+     *
+     * @details Fails silently if input len is greater then capacity.
      */
     constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
+        assert(len + 1 <= Capacity && "size + null-terminator greater than capacity");
+
         if (str != nullptr)
         {
             if (len < Capacity)
@@ -91,8 +95,9 @@ public:
     }
 
     /**
-     * @brief Charater Pointer constant constructor. Calls etl::strlen. Fails silently if
-     * input length is greater then capacity.
+     * @brief Character pointer constructor. Calls etl::strlen.
+     *
+     * @details Fails silently if input length is greater then capacity.
      */
     constexpr basic_static_string(const_pointer str) noexcept
         : basic_static_string(str, etl::strlen(str))
@@ -100,8 +105,8 @@ public:
     }
 
     /**
-     * @brief Constructs the string with the contents of the range [first, last). Fails
-     * silently if input length is greater then capacity.
+     * @brief Constructs the string with the contents of the range [ \p first, \p last).
+     * Fails silently if input length is greater then capacity.
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr basic_static_string(InputIter first, InputIter last) noexcept
