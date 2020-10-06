@@ -572,7 +572,7 @@ public:
     constexpr auto erase(iterator pos) noexcept -> iterator
     {
         etl::rotate(pos, pos + 1, end());
-        unsafe_set_size(size() - 1);
+        unsafe_set_size(static_cast<size_type>(size() - 1));
         return pos + 1;
     }
 
