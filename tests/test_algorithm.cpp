@@ -929,6 +929,58 @@ TEMPLATE_TEST_CASE("algorithm: copy_backward", "[algorithm]", etl::uint8_t, etl:
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: move", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    // test struct
+    struct S
+    {
+        S(TestType d = TestType(0)) : data {d} { }
+
+        S(S const& s)
+        {
+            data        = s.data;
+            copy_called = true;
+        }
+
+        S(S&& s)
+        {
+            data        = s.data;
+            move_called = true;
+        }
+
+        auto operator=(S const& s) noexcept -> S&
+        {
+            data        = s.data;
+            copy_called = true;
+            return *this;
+        }
+
+        auto operator=(S&& s) noexcept -> S&
+        {
+            data        = s.data;
+            move_called = true;
+            return *this;
+        }
+
+        TestType data;
+        bool copy_called = false;
+        bool move_called = false;
+    };
+
+    // move
+    auto source = etl::array {S {TestType {1}}, S {TestType {1}}, S {TestType {1}}};
+    decltype(source) dest {};
+    etl::move(begin(source), end(source), begin(dest));
+
+    // assert
+    using etl::all_of;
+    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move_called; }));
+    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy_called; }));
+    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.data == 1; }));
+}
+
 TEMPLATE_TEST_CASE("algorithm: equal", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
