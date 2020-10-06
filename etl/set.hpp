@@ -286,11 +286,12 @@ public:
     /**
      * @brief
      */
-    constexpr auto insert(value_type&& value) -> etl::pair<iterator, bool>
+    constexpr auto insert(value_type&& value)
+        -> enable_if_t<is_move_constructible_v<value_type>, etl::pair<iterator, bool>>
     {
         if (!full())
         {
-            auto p = etl::lower_bound(begin(), end(), value, key_compare {});
+            auto p = lower_bound(begin(), end(), value, key_compare {});
             if (p == end() || *(p) != value)
             {
                 data_[size_++] = etl::move(value);
@@ -395,7 +396,8 @@ public:
      * unspecified which element is inserted (pending LWG2844).
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    static_set(InputIter first, InputIter last)
+    static_set(InputIter first,
+               InputIter last) noexcept(noexcept(base_type::insert(declval<key_type>())))
     {
         if constexpr (detail::RandomAccessIterator<InputIter>)
         {
@@ -527,7 +529,9 @@ public:
      * @brief Inserts element into the container, if the container doesn't
      * already contain an element with an equivalent key.
      */
-    auto insert(value_type const& value) -> etl::pair<iterator, bool>
+    auto insert(value_type const& value) noexcept(
+        noexcept(base_type::insert(move(declval<key_type>()))))
+        -> enable_if_t<is_copy_constructible_v<value_type>, etl::pair<iterator, bool>>
     {
         value_type tmp = value;
         return insert(etl::move(tmp));
@@ -539,7 +543,8 @@ public:
      * (pending LWG2844).
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    auto insert(InputIter first, InputIter last) -> void
+    auto insert(InputIter first,
+                InputIter last) noexcept(noexcept(insert(declval<key_type>()))) -> void
     {
         for (; first != last; ++first) { insert(*first); }
     }
@@ -548,8 +553,9 @@ public:
      * @brief Inserts a new element into the container constructed in-place with
      * the given args if there is no element with the key in the container.
      */
-    template <typename... Args>
-    auto emplace(Args&&... args) -> etl::pair<iterator, bool>
+    template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<key_type>)>
+    auto emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
+        -> etl::pair<iterator, bool>
     {
         return insert(value_type(etl::forward<Args>(args)...));
     }
@@ -557,8 +563,8 @@ public:
     /**
      * @brief Exchanges the contents of the container with those of other.
      */
-    constexpr auto swap(static_set& other) noexcept(etl::is_nothrow_swappable_v<key_type>)
-        -> etl::enable_if_t<etl::is_assignable_v<key_type&, key_type&&>, void>
+    constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
+        -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
     {
         static_set tmp = etl::move(other);
         other          = etl::move(*this);
@@ -570,7 +576,7 @@ public:
      * specified argument, which is either 1 or 0 since this container does not allow
      * duplicates.
      */
-    [[nodiscard]] constexpr auto count(key_type const& key) const -> size_type
+    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept -> size_type
     {
         return contains(key) ? 1 : 0;
     }
