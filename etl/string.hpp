@@ -56,6 +56,8 @@ class basic_static_string
         && !is_convertible_v<T const&, CharType const*>;
     // clang-format on
 
+    auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
+
 public:
     using traits_type            = Traits;
     using value_type             = CharType;
@@ -83,14 +85,11 @@ public:
     {
         assert(len + 1 <= Capacity && "size + null-terminator greater than capacity");
 
-        if (str != nullptr)
+        if (str != nullptr && len + 1 < Capacity)
         {
-            if (len < Capacity)
-            {
-                etl::memset(&data_[0], 0, len + 1);
-                size_ = len;
-                etl::memcpy(&data_[0], str, len);
-            }
+            clear_storage();
+            size_ = len;
+            etl::memcpy(&data_[0], str, len);
         }
     }
 
@@ -102,6 +101,22 @@ public:
     constexpr basic_static_string(const_pointer str) noexcept
         : basic_static_string(str, etl::strlen(str))
     {
+    }
+
+    /**
+     * @brief Constructs the string with \p count copies of character \p ch.
+     *
+     * @details Fails silently if input length is greater then capacity.
+     */
+    constexpr basic_static_string(size_type count, CharType ch) noexcept
+    {
+        assert(count + 1 <= Capacity && "size + null-terminator greater than capacity");
+        if (count + 1 <= Capacity)
+        {
+            clear_storage();
+            fill(begin(), begin() + count, ch);
+            size_ = count;
+        }
     }
 
     /**

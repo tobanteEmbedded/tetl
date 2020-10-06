@@ -69,10 +69,22 @@ TEMPLATE_TEST_CASE("string: ctor()", "[string]", etl::static_string<12>,
 {
     TestType str {};
 
-    REQUIRE(str.empty() == true);
-    REQUIRE(str.capacity() == str.max_size());
-    REQUIRE(str.size() == etl::size_t(0));
-    REQUIRE(str.length() == etl::size_t(0));
+    CHECK_FALSE(str.full());
+    CHECK(str.empty());
+    CHECK(str.capacity() == str.max_size());
+    CHECK(str.size() == etl::size_t(0));
+    CHECK(str.length() == etl::size_t(0));
+}
+
+TEMPLATE_TEST_CASE("string: ctor(size_t,char)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    auto str = TestType(10, 'a');
+    CHECK_FALSE(str.empty());
+    CHECK_FALSE(str.full());
+    CHECK(str.size() == etl::size_t(10));
+    CHECK(etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; }));
 }
 
 TEMPLATE_TEST_CASE("string: ctor(char const*)", "[string]", etl::static_string<12>,
