@@ -24,16 +24,25 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 #include <stdio.h>
+#include <stdlib.h>
 
+#include "etl/algorithm.hpp"
 #include "etl/array.hpp"
+#include "etl/cassert.hpp"
 
 auto main() -> int
 {
-    etl::array<int, 4> arr {};
-    arr.at(0) = 1;
-    arr[1]    = 2;
+    auto src = etl::array {1, 2, 3, 4};  // size & type are deduced
+    for (auto& item : src) { printf("%d\n", item); }
 
-    for (auto& item : arr) { printf("%d\n", item); }
+    src.fill(42);
+    assert(etl::all_of(begin(src), end(src), [](auto val) { return val == 42; }));
 
-    return 0;
+    decltype(src) dest = {};
+    assert(etl::all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
+
+    etl::copy(begin(src), end(src), begin(dest));
+    assert(etl::all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
+
+    return EXIT_SUCCESS;
 }

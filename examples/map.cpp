@@ -33,7 +33,7 @@ auto basic_usage() -> void
 {
     // Create map with no elements and a capacity of 16 key-value pairs.
     auto map = etl::map<int, float, 16> {};
-    printf("size: %lu", map.size());
+    printf("size: %d", static_cast<int>(map.size()));
 }
 
 auto custom_compare() -> void

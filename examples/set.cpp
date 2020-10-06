@@ -27,21 +27,32 @@ DAMAGE.
 #include <assert.h>  // for assert
 #include <stdio.h>   // for printf
 
-#include "etl/set.hpp"  // for static_set
+#include "etl/algorithm.hpp"  // for for_each
+#include "etl/array.hpp"      // for array
+#include "etl/set.hpp"        // for static_set
 
 auto main() -> int
 {
-    etl::static_set<double, 16> set;
-    set.insert(3.0);  // 3.0
-    set.insert(1.0);  // 1.0, 3.0
-    set.insert(2.0);  // 1.0, 2.0, 3.0
-    set.insert(4.0);  // 1.0, 2.0, 3.0, 4.0
-    set.insert(4.0);  // 1.0, 2.0, 3.0, 4.0
+    // Basic usage
+    etl::static_set<int, 16> set_1;
+    set_1.insert(3);  // 3
+    set_1.insert(1);  // 1, 3
+    set_1.insert(2);  // 1, 2, 3
+    set_1.insert(4);  // 1, 2, 3, 4
+    set_1.insert(4);  // 1, 2, 3, 4
 
-    for (auto key : set) { printf("%f\n", key); }
+    etl::for_each(begin(set_1), end(set_1), [](auto key) { printf("%d\n", key); });
 
-    assert(set.contains(2.0));
-    assert(set.contains(5.0) == false);
+    assert(set_1.contains(2));
+    assert(set_1.contains(5) == false);
+
+    // Construct from range
+    auto data  = etl::array {1.0f, 2.0f, 3.0f};
+    auto set_2 = etl::static_set<float, 3> {begin(data), end(data)};
+
+    assert(set_2.full());
+    assert(set_2.size() == 3);
+    assert(set_2.count(1.0f) == 1);
 
     return 0;
 }
