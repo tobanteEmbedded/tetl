@@ -1014,7 +1014,7 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
- * @brief Examines the partitioned (as if by std::partition) range [ \p first , \p last )
+ * @brief Examines the partitioned (as if by etl::partition) range [ \p first , \p last )
  * and locates the end of the first partition, that is, the first element that does not
  * satisfy p or last if all elements satisfy \p p.
  */
@@ -1338,8 +1338,9 @@ template <typename ForwardIter>
 }
 
 /**
- * @brief Checks if the elements in range [first, last) are sorted in non-descending
- * order. Elements are compared using the given binary comparison function comp.
+ * @brief Checks if the elements in range [ \p first , \p last ) are sorted in
+ * non-descending order. Elements are compared using the given binary comparison function
+ * comp.
  */
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last, Compare comp)
@@ -1397,6 +1398,39 @@ template <typename ForwardIter, typename T>
                                          T const& value) noexcept -> ForwardIter
 {
     return lower_bound(first, last, value, etl::less<> {});
+}
+
+/**
+ * @brief Checks if an element equivalent to value appears within the range [ \p first ,
+ * \p last ).
+ *
+ * @details For etl::binary_search to succeed, the range [ \p first , \p last ) must be at
+ * least partially ordered with respect to value
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/binary_search
+ */
+template <typename ForwardIter, typename T, typename Compare>
+[[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
+                                           T const& value, Compare comp) -> bool
+{
+    first = etl::lower_bound(first, last, value, comp);
+    return (!(first == last) && !(comp(value, *first)));
+}
+
+/**
+ * @brief Checks if an element equivalent to value appears within the range [ \p first ,
+ * \p last ).
+ *
+ * @details For etl::binary_search to succeed, the range [ \p first , \p last ) must be at
+ * least partially ordered with respect to value
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/binary_search
+ */
+template <typename ForwardIter, class T>
+[[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
+                                           const T& value) -> bool
+{
+    return binary_search(first, last, value, etl::less<> {});
 }
 
 /**

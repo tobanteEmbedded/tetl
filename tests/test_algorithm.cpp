@@ -1344,6 +1344,29 @@ TEMPLATE_TEST_CASE("algorithm: is_partitioned", "[algorithm]", etl::uint8_t, etl
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: binary_search", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        auto const data = etl::static_vector<T, 4> {};
+        CHECK_FALSE(etl::binary_search(begin(data), end(data), T(0)));
+    }
+
+    SECTION("range")
+    {
+        auto const data = etl::array {T(0), T(1), T(2)};
+        CHECK(etl::binary_search(begin(data), end(data), T(0)));
+        CHECK(etl::binary_search(begin(data), end(data), T(1)));
+        CHECK(etl::binary_search(begin(data), end(data), T(2)));
+        CHECK_FALSE(etl::binary_search(begin(data), end(data), T(3)));
+        CHECK_FALSE(etl::binary_search(begin(data), end(data), T(4)));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: lower_bound", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
