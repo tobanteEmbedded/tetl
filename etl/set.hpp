@@ -291,11 +291,11 @@ public:
     {
         if (!full())
         {
-            auto *p = lower_bound(begin(), end(), value, key_compare {});
+            auto* p = lower_bound(begin(), end(), value, key_compare {});
             if (p == end() || *(p) != value)
             {
                 data_[size_++] = etl::move(value);
-                auto *pos       = etl::rotate(p, end() - 1, end());
+                auto* pos      = etl::rotate(p, end() - 1, end());
                 return etl::make_pair(pos, true);
             }
         }
@@ -339,7 +339,7 @@ private:
     using const_storage_t = etl::array<etl::remove_const_t<Key>, Capacity> const;
     using storage_t = etl::conditional_t<condition, mutable_storage_t, const_storage_t>;
 
-    alignas(alignof(Key)) storage_t data_{};
+    alignas(alignof(Key)) storage_t data_ {};
     size_type size_ = 0;
 };
 
@@ -633,24 +633,23 @@ public:
         return etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
-    // /**
-    //  * @brief Returns an iterator pointing to the first element that is greater than
-    //  key.
-    //  */
-    // [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
-    // {
-    //     return etl::upper_bound(begin(), end(), key, key_compare {});
-    // }
+    /**
+     * @brief Returns an iterator pointing to the first element that is greater than
+     key.
+     */
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
+    {
+        return etl::upper_bound(begin(), end(), key, key_compare {});
+    }
 
-    // /**
-    //  * @brief Returns an iterator pointing to the first element that is greater than
-    //  key.
-    //  */
-    // [[nodiscard]] constexpr auto upper_bound(key_type const& key) const ->
-    // const_iterator
-    // {
-    //     return etl::upper_bound(begin(), end(), key, key_compare {});
-    // }
+    /**
+     * @brief Returns an iterator pointing to the first element that is greater than
+     key.
+     */
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const -> const_iterator
+    {
+        return etl::upper_bound(begin(), end(), key, key_compare {});
+    }
 
     /**
      * @brief Returns the function object that compares the keys, which is a copy

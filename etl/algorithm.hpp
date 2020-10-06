@@ -1401,6 +1401,61 @@ template <typename ForwardIter, typename T>
 }
 
 /**
+ * @brief Returns an iterator pointing to the first element in the range
+ * [ \p first , \p last ) that is greater than \p value, or last if no such element is
+ * found.
+ *
+ * @details The range [ \p first , \p last ) must be partitioned with respect to the
+ * expression !(value < element) or !comp(value, element), i.e., all elements for which
+ * the expression is true must precede all elements for which the expression is false. A
+ * fully-sorted range meets this criterion.
+ */
+template <typename ForwardIter, typename T, typename Compare>
+[[nodiscard]] constexpr auto upper_bound(ForwardIter first, ForwardIter last,
+                                         T const& value, Compare comp) -> ForwardIter
+{
+    using diff_t = typename etl::iterator_traits<ForwardIter>::difference_type;
+
+    ForwardIter it;
+    diff_t count;
+    diff_t step;
+    count = etl::distance(first, last);
+
+    while (count > 0)
+    {
+        it   = first;
+        step = count / 2;
+        etl::advance(it, step);
+        if (!comp(value, *it))
+        {
+            first = ++it;
+            count -= step + 1;
+        }
+        else
+            count = step;
+    }
+
+    return first;
+}
+
+/**
+ * @brief Returns an iterator pointing to the first element in the range
+ * [ \p first , \p last ) that is greater than \p value, or last if no such element is
+ * found.
+ *
+ * @details The range [ \p first , \p last ) must be partitioned with respect to the
+ * expression !(value < element) or !comp(value, element), i.e., all elements for which
+ * the expression is true must precede all elements for which the expression is false. A
+ * fully-sorted range meets this criterion.
+ */
+template <typename ForwardIter, typename T>
+[[nodiscard]] constexpr auto upper_bound(ForwardIter first, ForwardIter last,
+                                         T const& value) -> ForwardIter
+{
+    return upper_bound(first, last, value, etl::less<> {});
+}
+
+/**
  * @brief Checks if an element equivalent to value appears within the range [ \p first ,
  * \p last ).
  *
