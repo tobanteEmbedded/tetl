@@ -652,6 +652,29 @@ public:
     }
 
     /**
+     * @brief Returns a range containing all elements with the given \p key in the
+     * container. The range is defined by two iterators, one pointing to the first element
+     * that is not less than \p key and another pointing to the first element greater than
+     * \p key. Alternatively, the first iterator may be obtained with lower_bound(), and
+     * the second with upper_bound().
+     */
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) -> iterator
+    {
+        return etl::equal_range(begin(), end(), key, key_compare {});
+    }
+
+    /**
+     * @brief Returns a range containing all elements with the given \p key in the
+     * container. The range is defined by two iterators, one pointing to the first element
+     * that is not less than \p key and another pointing to the first element greater than
+     * \p key. Alternatively, the first iterator may be obtained with lower_bound(), and
+     * the second with upper_bound().
+     */
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> const_iterator
+    {
+        return etl::equal_range(begin(), end(), key, key_compare {});
+    }
+    /**
      * @brief Returns the function object that compares the keys, which is a copy
      * of this container's constructor argument comp. It is the same as
      * value_comp.
