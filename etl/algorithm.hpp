@@ -1014,6 +1014,23 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
+ * @brief Examines the partitioned (as if by std::partition) range [ \p first , \p last )
+ * and locates the end of the first partition, that is, the first element that does not
+ * satisfy p or last if all elements satisfy \p p.
+ */
+template <typename ForwardIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto partition_point(ForwardIter first, ForwardIter last,
+                                             UnaryPredicate p) -> ForwardIter
+{
+    for (; first != last; ++first)
+    {
+        if (!p(*first)) { break; }
+    }
+
+    return first;
+}
+
+/**
  * @brief  Reorders the elements in the range [first, last) in such a way
  * that all elements for which the predicate p returns true precede the
  * elements for which predicate p returns false. Relative order of the

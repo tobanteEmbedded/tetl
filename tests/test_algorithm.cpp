@@ -795,6 +795,30 @@ TEMPLATE_TEST_CASE("algorithm: partition_copy", "[algorithm]", etl::uint8_t, etl
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: partition_point", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("empty range")
+    {
+        auto data = etl::static_vector<T, 5> {};
+        auto pred = [](auto v) { return v < 10; };
+        auto res  = etl::partition_point(begin(data), end(data), pred);
+        CHECK(res == end(data));
+    }
+
+    SECTION("range")
+    {
+        auto data = etl::array {T(1), T(2), T(10), T(11)};
+        auto pred = [](auto v) { return v < 10; };
+        auto res  = etl::partition_point(begin(data), end(data), pred);
+        CHECK_FALSE(res == end(data));
+        CHECK(*res == T(10));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
