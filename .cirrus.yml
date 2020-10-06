@@ -1,5 +1,4 @@
 container:
-  image: opthomasprime/avr-gcc:latest
+  image: tobante/avr-gcc:9.2
 task:
-  # build_script: make
   tests_script: make avr

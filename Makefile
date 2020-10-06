@@ -15,19 +15,33 @@ build:
 
 .PHONY: avr
 avr:
-	mkdir -p build_avr
+	mkdir -p build_avr/17
+	mkdir -p build_avr/20
 	avr-gcc --version
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/algorithm -I. examples/algorithm.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/array -I. examples/array.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/chrono -I. examples/chrono.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/numeric -I. examples/numeric.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/map -I. examples/map.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/set -I. examples/set.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/string -I. examples/string.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/tuple -I. examples/tuple.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/type_traits -I. examples/type_traits.cpp
-	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/vector -I. examples/vector.cpp
+	# 17
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/algorithm -I. examples/algorithm.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/array -I. examples/array.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/chrono -I. examples/chrono.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/map -I. examples/map.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/set -I. examples/set.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/string -I. examples/string.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/tuple -I. examples/tuple.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/type_traits -I. examples/type_traits.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/vector -I. examples/vector.cpp
+	# 20
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/algorithm -I. examples/algorithm.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/array -I. examples/array.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/chrono -I. examples/chrono.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/map -I. examples/map.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/set -I. examples/set.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/string -I. examples/string.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/tuple -I. examples/tuple.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/type_traits -I. examples/type_traits.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/vector -I. examples/vector.cpp
 
 .PHONY: test
 test:
