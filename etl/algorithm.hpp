@@ -1276,9 +1276,33 @@ template <typename ForwardIter, typename Compare>
 }
 
 /**
+ * @brief Returns true if all elements in the range [ \p first , \p last ) that satisfy
+ * the predicate \p p appear before all elements that don't. Also returns true if the
+ * range is empty.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/is_partitioned
+ */
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto is_partitioned(InputIter first, InputIter last,
+                                            UnaryPredicate p) -> bool
+{
+    for (; first != last; ++first)
+    {
+        if (!p(*first)) { break; }
+    }
+
+    for (; first != last; ++first)
+    {
+        if (p(*first)) { return false; }
+    }
+
+    return true;
+}
+
+/**
  * @brief Returns an iterator pointing to the first element in the range [first, last)
- * that is not less than (i.e. greater or equal to) value, or last if no such element is
- * found.
+ * that is not less than (i.e. greater or equal to) value, or last if no such element
+ * is found.
  *
  * https://en.cppreference.com/w/cpp/algorithm/lower_bound
  */

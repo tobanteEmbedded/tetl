@@ -1255,6 +1255,45 @@ TEMPLATE_TEST_CASE("algorithm: is_sorted", "[algorithm]", etl::uint8_t, etl::int
     }
 }
 
+TEMPLATE_TEST_CASE("algorithm: is_partitioned", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    SECTION("empty range always returns true")
+    {
+        auto data      = etl::static_vector<T, 1> {};
+        auto predicate = [](auto const& val) { return val < T(1); };
+        CHECK(etl::is_partitioned(begin(data), end(data), predicate));
+    }
+
+    SECTION("true")
+    {
+        auto predicate = [](auto const& val) { return val < T(1); };
+
+        auto test_1 = etl::array {T(2), T(2), T(2)};
+        CHECK(etl::is_partitioned(begin(test_1), end(test_1), predicate));
+
+        auto test_2 = etl::array {T(0), T(0), T(2), T(3)};
+        CHECK(etl::is_partitioned(begin(test_2), end(test_2), predicate));
+
+        auto test_3 = etl::array {T(1), T(1), T(2)};
+        CHECK(etl::is_partitioned(begin(test_3), end(test_3), predicate));
+    }
+
+    SECTION("false")
+    {
+        auto predicate = [](auto const& val) { return val < T(1); };
+
+        auto test_1 = etl::array {T(2), T(0), T(2)};
+        CHECK_FALSE(etl::is_partitioned(begin(test_1), end(test_1), predicate));
+
+        auto test_2 = etl::array {T(0), T(0), T(2), T(0)};
+        CHECK_FALSE(etl::is_partitioned(begin(test_2), end(test_2), predicate));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: lower_bound", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
