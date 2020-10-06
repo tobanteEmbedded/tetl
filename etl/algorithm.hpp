@@ -958,6 +958,62 @@ constexpr auto partition(ForwardIter first, ForwardIter last, UnaryPredicate p)
 }
 
 /**
+ * @brief Copies the elements from the range [ \p first , \p last ) to two different
+ * ranges depending on the value returned by the predicate \p p. The elements that satisfy
+ * the predicate \p p are copied to the range beginning at \p destination_true. The rest
+ * of the elements are copied to the range beginning at \p destination_false.
+ *
+ * @details The behavior is undefined if the input range overlaps either of the output
+ * ranges.
+ */
+template <typename InputIter, typename OutputIter1, typename OutputIter2,
+          typename UnaryPredicate>
+constexpr auto partition_copy(InputIter first, InputIter last,
+                              OutputIter1 destination_true, OutputIter2 destination_false,
+                              UnaryPredicate p) -> etl::pair<OutputIter1, OutputIter2>
+{
+    for (; first != last; ++first)
+    {
+        if (p(*first))
+        {
+            *destination_true = *first;
+            ++destination_true;
+        }
+        else
+        {
+            *destination_false = *first;
+            ++destination_false;
+        }
+    }
+
+    return etl::make_pair(destination_true, destination_false);
+}
+
+/**
+ * @brief Returns true if all elements in the range [ \p first , \p last ) that satisfy
+ * the predicate \p p appear before all elements that don't. Also returns true if the
+ * range is empty.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/is_partitioned
+ */
+template <typename InputIter, typename UnaryPredicate>
+[[nodiscard]] constexpr auto is_partitioned(InputIter first, InputIter last,
+                                            UnaryPredicate p) -> bool
+{
+    for (; first != last; ++first)
+    {
+        if (!p(*first)) { break; }
+    }
+
+    for (; first != last; ++first)
+    {
+        if (p(*first)) { return false; }
+    }
+
+    return true;
+}
+
+/**
  * @brief  Reorders the elements in the range [first, last) in such a way
  * that all elements for which the predicate p returns true precede the
  * elements for which predicate p returns false. Relative order of the
@@ -1273,30 +1329,6 @@ template <typename ForwardIter, typename Compare>
     -> bool
 {
     return etl::is_sorted_until(first, last, comp) == last;
-}
-
-/**
- * @brief Returns true if all elements in the range [ \p first , \p last ) that satisfy
- * the predicate \p p appear before all elements that don't. Also returns true if the
- * range is empty.
- *
- * https://en.cppreference.com/w/cpp/algorithm/is_partitioned
- */
-template <typename InputIter, typename UnaryPredicate>
-[[nodiscard]] constexpr auto is_partitioned(InputIter first, InputIter last,
-                                            UnaryPredicate p) -> bool
-{
-    for (; first != last; ++first)
-    {
-        if (!p(*first)) { break; }
-    }
-
-    for (; first != last; ++first)
-    {
-        if (p(*first)) { return false; }
-    }
-
-    return true;
 }
 
 /**

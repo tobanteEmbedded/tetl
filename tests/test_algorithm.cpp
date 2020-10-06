@@ -747,14 +747,8 @@ TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 7> arr {};
-    arr[0] = 11;
-    arr[1] = 1;
-    arr[2] = 12;
-    arr[3] = 13;
-    arr[4] = 2;
-    arr[5] = 3;
-    arr[6] = 4;
+    using T  = TestType;
+    auto arr = etl::array {T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
 
     etl::partition(begin(arr), end(arr), [](auto n) { return n < 10; });
     REQUIRE(arr[0] == 1);
@@ -763,18 +757,50 @@ TEMPLATE_TEST_CASE("algorithm: partition", "[algorithm]", etl::uint8_t, etl::int
     REQUIRE(arr[3] == 4);
 }
 
+TEMPLATE_TEST_CASE("algorithm: partition_copy", "[algorithm]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::all_of;
+
+    SECTION("empty range")
+    {
+        auto src     = etl::static_vector<T, 5> {};
+        auto d_true  = etl::array<T, 5> {};
+        auto d_false = etl::array<T, 5> {};
+        auto pred    = [](auto n) { return n < 10; };
+
+        auto res = etl::partition_copy(begin(src), end(src), begin(d_true),
+                                       begin(d_false), pred);
+        CHECK(res.first == begin(d_true));
+        CHECK(res.second == begin(d_false));
+    }
+
+    SECTION("range")
+    {
+        auto src       = etl::array {T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
+        auto d_true    = etl::static_vector<T, 5> {};
+        auto d_false   = etl::static_vector<T, 5> {};
+        auto predicate = [](auto n) { return n < 10; };
+
+        auto false_it = etl::back_inserter(d_false);
+        auto true_it  = etl::back_inserter(d_true);
+        etl::partition_copy(begin(src), end(src), true_it, false_it, predicate);
+
+        CHECK(d_true.size() == 4);
+        CHECK(all_of(begin(d_true), end(d_true), [](auto v) { return v < 10; }));
+        CHECK(d_false.size() == 3);
+        CHECK(all_of(begin(d_false), end(d_false), [](auto v) { return v >= 10; }));
+    }
+}
+
 TEMPLATE_TEST_CASE("algorithm: stable_partition", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    etl::array<TestType, 7> arr {};
-    arr[0] = 11;
-    arr[1] = 1;
-    arr[2] = 12;
-    arr[3] = 13;
-    arr[4] = 2;
-    arr[5] = 3;
-    arr[6] = 4;
+    using T  = TestType;
+    auto arr = etl::array {T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
 
     etl::stable_partition(begin(arr), end(arr), [](auto n) { return n < 10; });
     REQUIRE(arr[0] == 1);
