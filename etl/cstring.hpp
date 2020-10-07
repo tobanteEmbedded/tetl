@@ -28,10 +28,110 @@ DAMAGE.
 #define TAETL_CSTRING_HPP
 
 #include "byte.hpp"
+#include "cassert.hpp"
 #include "definitions.hpp"
 
 namespace etl
 {
+/**
+ * @brief The macro NULL is an implementation-defined null pointer constant.
+ */
+#define TAETL_NULL nullptr
+
+/**
+ * @brief Copies the character string pointed to by \p src, including the null terminator,
+ * to the character array whose first element is pointed to by \p dest.
+ *
+ * @details The behavior is undefined if the dest array is not large enough. The behavior
+ * is undefined if the strings overlap.
+ *
+ * @return dest
+ */
+constexpr auto strcpy(char* dest, char const* src) -> char*
+{
+    assert(dest != nullptr && src != nullptr);
+    auto* temp = dest;
+    while ((*dest++ = *src++) != '\0') { ; }
+    return temp;
+}
+
+/**
+ * @brief Copies at most \p count characters of the byte string pointed to by \p src
+ * (including the terminating null character) to character array pointed to by \p dest.
+ *
+ * @details If count is reached before the entire string src was copied, the resulting
+ * character array is not null-terminated. If, after copying the terminating null
+ * character from src, count is not reached, additional null characters are written to
+ * dest until the total of count characters have been written. If the strings overlap, the
+ * behavior is undefined.
+ *
+ * @return dest
+ */
+constexpr auto strncpy(char* dest, char const* src, etl::size_t const count) -> char*
+{
+    assert(dest != nullptr && src != nullptr);
+    auto* temp = dest;
+    for (etl::size_t counter = 0; *src != '\0' && counter != count;)
+    {
+        *dest = *src;
+        ++src;
+        ++dest;
+        ++counter;
+    }
+
+    return temp;
+}
+
+/**
+ * @brief Returns the length of the C string str.
+ */
+constexpr auto strlen(char const* str) -> etl::size_t
+{
+    char const* s = nullptr;
+    for (s = str; *s != 0; ++s) { ; }
+    return static_cast<etl::size_t>(s - str);
+}
+
+/**
+ * @brief Appends a copy of the character string pointed to by \p src to the end of the
+ * character string pointed to by \p dest. The character src[0] replaces the null
+ * terminator at the end of dest. The resulting byte string is null-terminated.
+ *
+ * @details The behavior is undefined if the destination array is not large enough for the
+ * contents of both src and dest and the terminating null character. The behavior is
+ * undefined if the strings overlap.
+ */
+constexpr auto strcat(char* dest, char const* src) -> char*
+{
+    auto* ptr = dest + etl::strlen(dest);
+    while (*src != '\0') { *ptr++ = *src++; }
+    *ptr = '\0';
+    return dest;
+}
+
+/**
+ * @brief Appends a byte string pointed to by \p src to a byte string pointed to by \p
+ * dest. At most \p count characters are copied. The resulting byte string is
+ * null-terminated.
+ *
+ * @details The destination byte string must have enough space for the contents of both
+ * dest and src plus the terminating null character, except that the size of src is
+ * limited to count. The behavior is undefined if the strings overlap.
+ */
+constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
+{
+    auto* ptr                 = dest + etl::strlen(dest);
+    etl::size_t local_counter = 0;
+    while (*src != '\0' && local_counter != count)
+    {
+        *ptr++ = *src++;
+        ++local_counter;
+    }
+
+    *ptr = '\0';
+    return dest;
+}
+
 /**
  * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
  * dest. Source and destination may not overlap. If source and destination might
@@ -78,16 +178,6 @@ constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
     }
 
     return dest;
-}
-
-/**
- * @brief Returns the length of the C string str.
- */
-constexpr auto strlen(char const* str) -> etl::size_t
-{
-    char const* s = nullptr;
-    for (s = str; *s != 0; ++s) { ; }
-    return static_cast<etl::size_t>(s - str);
 }
 
 /**

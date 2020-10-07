@@ -26,8 +26,46 @@ DAMAGE.
 
 #include "etl/array.hpp"
 #include "etl/cstring.hpp"
+#include "etl/string_view.hpp"
 
 #include "catch2/catch.hpp"
+
+TEST_CASE("cstring: strcpy", "[cstring]")
+{
+    char source[32] = {"test"};
+    char dest[32] {};
+    etl::strcpy(dest, source);
+    CHECK(etl::strlen(dest) == 4);
+}
+
+TEST_CASE("cstring: strncpy", "[cstring]")
+{
+    char source[32] = {"test"};
+    char dest[32] {};
+    etl::strncpy(dest, source, 2);
+    CHECK(dest[0] == 't');
+    CHECK(dest[1] == 'e');
+}
+
+TEST_CASE("cstring: strcat", "[cstring]")
+{
+    char str[50]  = "Hello ";
+    char str2[50] = "World!";
+    etl::strcat(str, str2);
+    CHECK(etl::string_view {str} == etl::string_view {"Hello World!"});
+    etl::strcat(str, " Goodbye World!");
+    CHECK(etl::string_view {str} == etl::string_view {"Hello World! Goodbye World!"});
+}
+
+TEST_CASE("cstring: strncat", "[cstring]")
+{
+    char str[50]  = "Hello ";
+    char str2[50] = "World!";
+    etl::strcat(str, str2);
+    CHECK(etl::string_view {str} == etl::string_view {"Hello World!"});
+    etl::strncat(str, " Goodbye World!", 3);
+    CHECK(etl::string_view {str} == etl::string_view {"Hello World! Go"});
+}
 
 TEST_CASE("cstring: memcpy", "[cstring]")
 {
