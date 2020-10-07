@@ -533,6 +533,18 @@ public:
     }
 
     /**
+     * @brief Constructs the contained value in-place. If *this already contains a value
+     * before the call, the contained value is destroyed by calling its destructor.
+     */
+    template <typename... Args>
+    constexpr auto emplace(Args&&... args) -> value_type&
+    {
+        this->reset();
+        this->construct(etl::forward<Args>(args)...);
+        return *value();
+    }
+
+    /**
      * @brief Implementation detail. Do not use!
      */
     using base_type::get;

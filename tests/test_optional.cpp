@@ -399,6 +399,35 @@ TEMPLATE_TEST_CASE("optional: reset", "[optional]", etl::uint8_t, etl::int8_t,
     }
 }
 
+TEMPLATE_TEST_CASE("optional: emplace", "[optional]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double)
+{
+    struct S
+    {
+        S(TestType _x, TestType _y) : x {_x}, y {_y} { }
+
+        TestType x;
+        TestType y;
+    };
+
+    SECTION("built-in types")
+    {
+        etl::optional<TestType> opt {};
+        CHECK_FALSE(opt.has_value());
+        opt.emplace(TestType {1});
+        CHECK(opt.has_value());
+    }
+
+    SECTION("struct")
+    {
+        etl::optional<S> opt {};
+        CHECK_FALSE(opt.has_value());
+        opt.emplace(TestType {1}, TestType {2});
+        CHECK(opt.has_value());
+    }
+}
+
 TEMPLATE_TEST_CASE("optional: operator== & operator!=", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double)
