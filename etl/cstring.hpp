@@ -133,6 +133,48 @@ constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> 
 }
 
 /**
+ * @brief Compares the C string lhs to the C string rhs.
+ *
+ * @details This function starts comparing the first character of each string. If they are
+ * equal to each other, it continues with the following pairs until the characters differ
+ * or until a terminating null-character is reached.
+ */
+constexpr auto strcmp(char const* lhs, char const* rhs) -> int
+{
+    for (; *lhs != '\0'; ++lhs, ++rhs)
+    {
+        if (*lhs != *rhs) { break; }
+    }
+
+    return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
+}
+
+/**
+ * @brief Compares at most \p count characters of two possibly null-terminated arrays. The
+ * comparison is done lexicographically. Characters following the null character are not
+ * compared.
+ *
+ * @details The behavior is undefined when access occurs past the end of either array
+ * \p lhs or \p rhs. The behavior is undefined when either lhs or rhs is the null pointer.
+ */
+constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
+{
+    unsigned char u1 {};
+    unsigned char u2 {};
+
+    auto local_count = count;
+    while (local_count-- > 0)
+    {
+        u1 = static_cast<unsigned char>(*lhs++);
+        u2 = static_cast<unsigned char>(*rhs++);
+        if (u1 != u2) { return u1 - u2; }
+        if (u1 == '\0') { return 0; }
+    }
+
+    return 0;
+}
+
+/**
  * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
  * dest. Source and destination may not overlap. If source and destination might
  * overlap, memmove() must be used instead.
@@ -178,23 +220,6 @@ constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
     }
 
     return dest;
-}
-
-/**
- * @brief Compares the C string lhs to the C string rhs.
- *
- * @details This function starts comparing the first character of each string. If they are
- * equal to each other, it continues with the following pairs until the characters differ
- * or until a terminating null-character is reached.
- */
-constexpr auto strcmp(char const* lhs, char const* rhs) -> int
-{
-    for (; *lhs != '\0'; ++lhs, ++rhs)
-    {
-        if (*lhs != *rhs) { break; }
-    }
-
-    return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
 }
 
 }  // namespace etl

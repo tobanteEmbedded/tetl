@@ -67,6 +67,13 @@ TEST_CASE("cstring: strncat", "[cstring]")
     CHECK(etl::string_view {str} == etl::string_view {"Hello World! Go"});
 }
 
+TEST_CASE("cstring: strncmp", "[cstring]")
+{
+    CHECK(etl::strncmp("Hello, world!", "Hello, everybody!", 13) > 0);
+    CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 13) < 0);
+    CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 7) == 0);
+}
+
 TEST_CASE("cstring: memcpy", "[cstring]")
 {
     auto source = etl::array<etl::uint8_t, 2> {};
