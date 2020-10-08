@@ -498,7 +498,7 @@ public:
     };
 
     /**
-     * @brief Appends the null-terminated character string pointed to by s. The
+     * @brief Appends the null-terminated character string pointed to by \p s. The
      * length of the string is determined by the first null character using
      */
     constexpr auto append(const_pointer s) noexcept -> basic_static_string&
@@ -508,7 +508,7 @@ public:
     };
 
     /**
-     * @brief Appends characters in the range [s, s + count). This range can
+     * @brief Appends characters in the range [ \p s, \p s + \p count ). This range can
      * contain null characters.
      */
     constexpr auto append(const_pointer s, size_type count) noexcept
@@ -520,6 +520,58 @@ public:
 
         return *this;
     };
+
+    /**
+     * @brief Appends characters in the range [ \p first , \p last ).
+     */
+    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    constexpr auto append(InputIter first, InputIter last) noexcept
+        -> basic_static_string&
+    {
+        assert(capacity() - size() > static_cast<size_type>(etl::distance(first, last)));
+        for (; first != last; ++first) { push_back(*first); }
+        return *this;
+    }
+
+    /**
+     * @brief Appends string \p str.
+     */
+    constexpr auto append(basic_static_string const& str) noexcept -> basic_static_string&
+    {
+        return append(str.begin(), str.end());
+    }
+
+    /**
+     * @brief Appends a substring [ \p pos, \p pos + \p count ) of \p str.
+     */
+    constexpr auto append(basic_static_string const& str, size_type pos,
+                          size_type count = npos) noexcept -> basic_static_string&
+    {
+        return append(str.substr(pos, count));
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string_view sv, then appends all characters
+     * from sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto append(T const& t) -> basic_static_string&
+    {
+        etl::basic_string_view<CharType, Traits> sv = t;
+        return append(sv.data(), sv.size());
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string_view sv then appends the characters
+     * from the subview [ \p pos, \p pos + \p count ) of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto append(T const& t, size_type pos, size_type count = npos)
+        -> basic_static_string&
+    {
+        etl::basic_string_view<CharType, Traits> sv = t;
+        return append(sv.substr(pos, count));
+    }
 
     /**
      * @brief Inserts count copies of character ch at the position index.

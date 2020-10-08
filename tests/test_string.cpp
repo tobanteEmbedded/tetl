@@ -357,6 +357,132 @@ TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]", etl::static_stri
     REQUIRE(str[3] == 't');
 }
 
+TEMPLATE_TEST_CASE("string: append(first,last)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        etl::string_view empty_src {""};
+
+        TestType empty {};
+        empty.append(begin(empty_src), end(empty_src));
+        CHECK(empty.empty());
+
+        TestType str {"abc"};
+        str.append(begin(empty_src), end(empty_src));
+        CHECK(etl::string_view(str) == etl::string_view("abc"));
+    }
+
+    SECTION("no nulls")
+    {
+        etl::string_view src {"_test"};
+
+        TestType dest {"abc"};
+        dest.append(begin(src), end(src));
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+}
+
+TEMPLATE_TEST_CASE("string: append(string)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        TestType empty_src {""};
+
+        TestType empty {};
+        empty.append(empty_src);
+        CHECK(empty.empty());
+
+        TestType str {"abc"};
+        str.append(empty_src);
+        CHECK(etl::string_view(str) == etl::string_view("abc"));
+    }
+
+    SECTION("no nulls")
+    {
+        TestType src {"_test"};
+
+        TestType dest {"abc"};
+        dest.append(src);
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+}
+
+TEMPLATE_TEST_CASE("string: append(string,pos,count)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        TestType empty_src {""};
+
+        TestType empty {};
+        empty.append(empty_src, 0);
+        CHECK(empty.empty());
+
+        TestType str {"abc"};
+        str.append(empty_src, 1);
+        CHECK(etl::string_view(str) == etl::string_view("abc"));
+    }
+
+    SECTION("no nulls")
+    {
+        TestType src {"_test"};
+
+        TestType dest {"abc"};
+        dest.append(src, 2, 2);
+        CHECK(etl::string_view(dest) == etl::string_view("abces"));
+    }
+}
+
+TEMPLATE_TEST_CASE("string: append(string_view)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        etl::string_view empty_src {""};
+
+        TestType empty {};
+        empty.append(empty_src);
+        CHECK(empty.empty());
+
+        TestType str {"abc"};
+        str.append(empty_src);
+        CHECK(etl::string_view(str) == etl::string_view("abc"));
+    }
+
+    SECTION("no nulls")
+    {
+        etl::string_view src {"_test"};
+
+        TestType dest {"abc"};
+        dest.append(src);
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+}
+
+TEMPLATE_TEST_CASE("string: append(string_view,pos,count)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
+{
+    SECTION("empty")
+    {
+        etl::string_view empty_src {};
+
+        TestType empty {};
+        empty.append(empty_src, 0);
+        CHECK(empty.empty());
+    }
+
+    SECTION("no nulls")
+    {
+        etl::string_view src {"_test"};
+
+        TestType dest {"abc"};
+        dest.append(src, 2, 1);
+        CHECK(etl::string_view(dest) == etl::string_view("abce"));
+    }
+}
+
 TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
