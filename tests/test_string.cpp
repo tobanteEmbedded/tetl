@@ -483,6 +483,42 @@ TEMPLATE_TEST_CASE("string: append(string_view,pos,count)", "[string]",
     }
 }
 
+TEMPLATE_TEST_CASE("string: operator+=", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("string")
+    {
+        TestType src {"_test"};
+        TestType dest {"abc"};
+        dest += src;
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+
+    SECTION("char")
+    {
+        auto src = 'a';
+        TestType dest {"abc"};
+        dest += src;
+        CHECK(etl::string_view(dest) == etl::string_view("abca"));
+    }
+
+    SECTION("char const*")
+    {
+        auto const* src = "_test";
+        TestType dest {"abc"};
+        dest += src;
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+
+    SECTION("string_view")
+    {
+        etl::string_view src {"_test"};
+        TestType dest {"abc"};
+        dest += src;
+        CHECK(etl::string_view(dest) == etl::string_view("abc_test"));
+    }
+}
+
 TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {

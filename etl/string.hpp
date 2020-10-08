@@ -574,6 +574,41 @@ public:
     }
 
     /**
+     * @brief Appends string \p str.
+     */
+    constexpr auto operator+=(basic_static_string const& str) noexcept
+        -> basic_static_string&
+    {
+        return append(str);
+    }
+
+    /**
+     * @brief Appends character ch.
+     */
+    constexpr auto operator+=(value_type ch) noexcept -> basic_static_string&
+    {
+        return append(1, ch);
+    }
+
+    /**
+     * @brief Appends the null-terminated character string pointed to by s.
+     */
+    constexpr auto operator+=(const_pointer s) noexcept -> basic_static_string&
+    {
+        return append(s);
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then appends characters in the
+     * string view sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto operator+=(T const& t) noexcept -> basic_static_string&
+    {
+        return append(t);
+    }
+
+    /**
      * @brief Inserts count copies of character ch at the position index.
      */
     constexpr auto insert(size_type index, size_type count, CharType ch) noexcept
