@@ -1561,6 +1561,38 @@ constexpr auto swap(etl::basic_static_string<CharType, Capacity, Traits>& lhs,
     lhs.swap(rhs);
 }
 
+/**
+ * @brief Erases all elements that compare equal to value from the container.
+ */
+template <typename CharT, typename Traits, etl::size_t Capacity, typename U>
+constexpr auto erase(basic_static_string<CharT, Capacity, Traits>& c,
+                     U const& value) noexcept ->
+    typename basic_static_string<CharT, Capacity, Traits>::size_type
+{
+    using return_type = typename basic_static_string<CharT, Capacity, Traits>::size_type;
+
+    auto it = etl::remove(begin(c), end(c), value);
+    auto r  = etl::distance(it, end(c));
+    c.erase(it, end(c));
+    return static_cast<return_type>(r);
+}
+
+/**
+ * @brief Erases all elements that satisfy the predicate pred from the container.
+ */
+template <typename CharT, typename Traits, etl::size_t Capacity, typename Predicate>
+constexpr auto erase_if(basic_static_string<CharT, Capacity, Traits>& c,
+                        Predicate pred) noexcept ->
+    typename basic_static_string<CharT, Capacity, Traits>::size_type
+{
+    using return_type = typename basic_static_string<CharT, Capacity, Traits>::size_type;
+
+    auto it = etl::remove_if(begin(c), end(c), pred);
+    auto r  = etl::distance(it, end(c));
+    c.erase(it, end(c));
+    return static_cast<return_type>(r);
+}
+
 template <etl::size_t Capacity>
 using static_string = basic_static_string<char, Capacity>;
 
