@@ -11,9 +11,8 @@ script-anchors:
     - cd build
     - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
     - cmake --build . -- -j
-    - ctest -j
     - lcov  -c -i -d . --base-directory . -o base_cov.info
-    - ctest
+    - ctest -j
     - lcov  -c -d . --base-directory . -o test_cov.info
     - lcov  -a base_cov.info -a test_cov.info -o cov.info
     - lcov  --remove cov.info "*3rd_party/*" -o cov.info
