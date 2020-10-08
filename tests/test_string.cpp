@@ -1064,6 +1064,36 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>
         CHECK(lhs.compare(rhs) == 0);
         CHECK(rhs.compare(lhs) == 0);
     }
+
+    SECTION("same size equal")
+    {
+        auto const lhs = TestType("test");
+        auto const rhs = TestType("test");
+
+        CHECK(lhs.compare("test") == 0);
+        CHECK(lhs.compare(rhs) == 0);
+        CHECK(rhs.compare(lhs) == 0);
+
+        CHECK(lhs.compare(1, 1, "test") < 0);
+        CHECK(lhs.compare(1, 1, rhs) < 0);
+        CHECK(rhs.compare(1, 1, lhs) < 0);
+
+        CHECK(lhs.compare(1, 1, rhs, 1, 1) == 0);
+        CHECK(rhs.compare(1, 1, lhs, 1, 1) == 0);
+    }
+
+    SECTION("different size equal")
+    {
+        auto const lhs = TestType("test");
+        auto const rhs = TestType("te");
+
+        CHECK(lhs.compare(rhs) > 0);
+        CHECK(rhs.compare(etl::string_view("test")) < 0);
+
+        auto other = etl::static_string<9> {"te"};
+        CHECK(lhs.compare(other) > 0);
+        CHECK(other.compare(etl::string_view("te")) == 0);
+    }
 }
 
 TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,

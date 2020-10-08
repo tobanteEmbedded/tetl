@@ -809,16 +809,15 @@ public:
     }
 
     /**
-     * @brief Compares a [pos1, pos1+count1) substring of this string to str. If count1 >
-     * size() - pos1 the substring is [pos1, size()).
-     *
-     * @todo Implement.
+     * @brief Compares a [pos, pos+count) substring of this string to str. If count >
+     * size() - pos the substring is [pos, size()).
      */
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+    [[nodiscard]] constexpr auto compare(size_type const pos, size_type const count,
                                          basic_static_string const& str) const -> int
     {
-        etl::ignore_unused(pos1, count1, str);
-        return 0;
+        auto const sz  = count > size() - pos ? size() : count;
+        auto const sub = string_view(*this).substr(pos, sz);
+        return sub.compare(str);
     }
 
     /**
@@ -826,39 +825,42 @@ public:
      * [pos2, pos2+count2) of str. If count1 > size() - pos1 the first substring is [pos1,
      * size()). Likewise, count2 > str.size() - pos2 the second substring is [pos2,
      * str.size()).
-     *
-     * @todo Implement.
      */
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         basic_static_string const& str, size_type pos2,
-                                         size_type count2 = npos) const -> int
+    [[nodiscard]] constexpr auto compare(size_type const pos1, size_type const count1,
+                                         basic_static_string const& str,
+                                         size_type const pos2,
+                                         size_type const count2 = npos) const -> int
     {
-        etl::ignore_unused(pos1, count1, str, pos2, count2);
-        return 0;
+        auto const sz1  = count1 > size() - pos1 ? size() : count1;
+        auto const sub1 = string_view(*this).substr(pos1, sz1);
+
+        auto const sz2  = count2 > str.size() - pos2 ? size() : count2;
+        auto const sub2 = string_view(str).substr(pos2, sz2);
+
+        return sub1.compare(sub2);
     }
 
     /**
      * @brief Compares this string to the null-terminated character sequence beginning at
-     * the character pointed to by s with length Traits::length(s).
+     * the character pointed to by s with length traits_type::length(s).
      */
     [[nodiscard]] constexpr auto compare(const_pointer s) const -> int
     {
-        return compare_impl(data(), size(), s, Traits::length(s));
+        return compare_impl(data(), size(), s, traits_type::length(s));
     }
 
     /**
      * @brief Compares a [pos1, pos1+count1) substring of this string to the
      * null-terminated character sequence beginning at the character pointed to by s with
-     * length Traits::length(s). If count1 > size() - pos1 the substring is [pos1,
+     * length traits_type::length(s). If count1 > size() - pos1 the substring is [pos1,
      * size()).
-     *
-     * @todo Implement.
      */
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+    [[nodiscard]] constexpr auto compare(size_type const pos, size_type const count,
                                          const_pointer s) const -> int
     {
-        etl::ignore_unused(pos1, count1, s);
-        return 0;
+        auto const sz  = count > size() - pos ? size() : count;
+        auto const sub = string_view(*this).substr(pos, sz);
+        return compare_impl(sub.data(), sub.size(), s, traits_type::length(s));
     }
 
     /**
@@ -866,14 +868,53 @@ public:
      * in the range [s, s + count2). If count1 > size() - pos1 the substring is [pos1,
      * size()). (Note: the characters in the range [s, s + count2) may include null
      * characters.)
-     *
-     * @todo Implement.
      */
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                         const_pointer s, size_type count2) const -> int
+    [[nodiscard]] constexpr auto compare(size_type const pos1, size_type const count1,
+                                         const_pointer s, size_type const count2) const
+        -> int
     {
-        etl::ignore_unused(pos1, count1, s, count2);
-        return 0;
+        auto const sz  = count1 > size() - pos1 ? size() : count1;
+        auto const sub = string_view(*this).substr(pos1, sz);
+        return compare_impl(sub.data(), sub.size(), s, count2);
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then compares the content of
+     * this string to sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
+    {
+        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        view_type const sv = t;
+        return view_type(*this).compare(sv);
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then compares a [pos1,
+     * pos1+count1) substring of this string to sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+                                         T const& t) const noexcept -> int
+    {
+        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        view_type const sv = t;
+        return view_type(*this).substr(pos1, count1).compare(sv);
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then compares a [pos1,
+     * pos1+count1) substring of this string to a substring [pos2, pos2+count2) of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, T const& t,
+                                         size_type pos2,
+                                         size_type count2 = npos) const noexcept -> int
+    {
+        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        view_type const sv = t;
+        return view_type(*this).substr(pos1, count1).compare(sv.substr(pos2, count2));
     }
 
     /**
