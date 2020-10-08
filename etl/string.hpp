@@ -172,21 +172,146 @@ public:
     constexpr basic_static_string(basic_static_string const& /*str*/) noexcept = default;
 
     /**
+     * @brief Defaulted move constructor.
+     */
+    constexpr basic_static_string(basic_static_string&& /*str*/) noexcept = default;
+
+    /**
      * @brief Defaulted copy assignment.
      */
     constexpr auto operator     =(basic_static_string const& /*str*/) noexcept
         -> basic_static_string& = default;
 
     /**
-     * @brief Defaulted move constructor.
-     */
-    constexpr basic_static_string(basic_static_string&& /*str*/) noexcept = default;
-
-    /**
      * @brief Defaulted move assignment.
      */
     constexpr auto operator     =(basic_static_string&& /*str*/) noexcept
         -> basic_static_string& = default;
+
+    /**
+     * @brief Replaces the contents with those of null-terminated character string
+     pointed to by \p s.
+     */
+    constexpr auto operator=(const_pointer s) noexcept -> basic_static_string&
+    {
+        assign(s, traits_type::length(s));
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with character \p ch.
+     */
+    constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
+    {
+        assign(etl::addressof(ch), 1);
+        return *this;
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
+     * with those of the sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto operator=(T const& t) noexcept -> basic_static_string&
+    {
+        assign(t);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with count copies of character ch.
+     */
+    constexpr auto assign(size_type count, value_type ch) noexcept -> basic_static_string&
+    {
+        (*this) = basic_static_string {count, ch};
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with a copy of str.
+     */
+    constexpr auto assign(basic_static_string const& str) noexcept -> basic_static_string&
+    {
+        *this = str;
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with a substring [ \p pos, \p pos + \p count )
+     * of \p str.
+     */
+    constexpr auto assign(basic_static_string const& str, size_type pos,
+                          size_type count = npos) noexcept -> basic_static_string&
+    {
+        *this = str.substr(pos, count);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with those of \p str using move semantics.
+     */
+    constexpr auto assign(basic_static_string&& str) noexcept -> basic_static_string&
+    {
+        *this = etl::move(str);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with copies of the characters in the range
+     * [ \p s, \p s + \p count ). This range can contain null characters.
+     */
+    constexpr auto assign(const_pointer s, size_type count) noexcept
+        -> basic_static_string&
+    {
+        *this = basic_static_string {s, count};
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with those of null-terminated character string pointed
+     * to by \p s.
+     */
+    constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
+    {
+        *this = basic_static_string {s, count};
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents with copies of the characters in the
+     * range [ \p first , \p last ).
+     */
+    template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
+    constexpr auto assign(InputIt first, InputIt last) noexcept -> basic_static_string&
+    {
+        *this = basic_static_string {first, last};
+        return *this;
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
+     * with the characters from sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto assign(T const& t) noexcept -> basic_static_string&
+    {
+        auto tmp = basic_static_string {basic_static_string {t}};
+        *this    = tmp;
+        return *this;
+    }
+
+    /**
+     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
+     * with the characters from the subview [ \p pos, \p pos + \p count ) of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept
+        -> basic_static_string&
+    {
+        auto tmp = basic_static_string {basic_static_string {t, pos, count}};
+        *this    = tmp;
+        return *this;
+    }
 
     /**
      * @brief Trivial defaulted destructor

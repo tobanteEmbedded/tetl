@@ -203,6 +203,81 @@ TEMPLATE_TEST_CASE("string: ctor(string_view,pos,n)", "[string]", etl::static_st
     CHECK(dest[2] == '\0');
 }
 
+TEMPLATE_TEST_CASE("string: operator=", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+    SECTION("string")
+    {
+        TestType src_1 {};
+        TestType str_1 {};
+        str_1 = src_1;
+        CHECK(str_1.size() == 0);
+        CHECK(str_1.empty());
+
+        TestType src_2 {"test"};
+        TestType str_2 {};
+        str_2 = src_2;
+        CHECK(str_2.size() == 4);
+        CHECK(etl::string_view(str_2) == etl::string_view("test"));
+
+        auto src_3 = TestType {"abc"};
+        TestType str_3;
+        str_3 = src_3;
+        CHECK(str_3.size() == 3);
+        CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    }
+
+    SECTION("char const*")
+    {
+        auto const* src_2 = "test";
+        TestType str_2 {};
+        str_2 = src_2;
+        CHECK(str_2.size() == 4);
+        CHECK(etl::string_view(str_2) == etl::string_view("test"));
+
+        auto const* src_3 = "abc";
+        TestType str_3;
+        str_3 = src_3;
+        CHECK(str_3.size() == 3);
+        CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    }
+
+    SECTION("char")
+    {
+        auto const src_2 = 'a';
+        TestType str_2 {};
+        str_2 = src_2;
+        CHECK(str_2.size() == 1);
+        CHECK(etl::string_view(str_2) == etl::string_view("a"));
+
+        auto const src_3 = 'b';
+        TestType str_3;
+        str_3 = src_3;
+        CHECK(str_3.size() == 1);
+        CHECK(etl::string_view(str_3) == etl::string_view("b"));
+    }
+
+    SECTION("string_view")
+    {
+        etl::string_view src_1 {};
+        TestType str_1 {};
+        str_1 = src_1;
+        CHECK(str_1.size() == 0);
+
+        etl::string_view src_2 {"test"};
+        TestType str_2 {};
+        str_2 = src_2;
+        CHECK(str_2.size() == 4);
+        CHECK(etl::string_view(str_2) == etl::string_view("test"));
+
+        auto src_3 = etl::string_view {"abc"};
+        TestType str_3;
+        str_3 = src_3;
+        CHECK(str_3.size() == 3);
+        CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    }
+}
+
 TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
                    etl::static_string<12>, etl::static_string<32>)
 {
