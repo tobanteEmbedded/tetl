@@ -273,7 +273,7 @@ public:
      */
     constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
     {
-        *this = basic_static_string {s, count};
+        *this = basic_static_string {s, etl::strlen(s)};
         return *this;
     }
 
