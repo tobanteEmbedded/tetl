@@ -13,6 +13,10 @@ config:
 build:
 	cmake --build $(BUILD_DIR) --config $(CONFIG) -- -j
 
+.PHONY: arm
+arm:
+	$(MAKE) -C examples/projects/arm_make clean all
+
 .PHONY: avr
 avr:
 	mkdir -p build_avr/17
