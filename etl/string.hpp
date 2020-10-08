@@ -320,39 +320,21 @@ public:
     ~basic_static_string() noexcept = default;
 
     /**
-     * @brief Accesses the specified character with bounds checking.
-     */
-    constexpr auto at(size_type index) noexcept -> reference
-    {
-        if (index < size_) { return data_[index]; }
-        return data_[size_];
-    }
-
-    /**
-     * @brief Accesses the specified character with bounds checking.
-     */
-    [[nodiscard]] constexpr auto at(size_type index) const noexcept -> const_reference
-    {
-        if (index < size_) { return data_[index]; }
-        return data_[size_];
-    }
-
-    /**
-     * @brief Accesses the specified character with bounds checking.
+     * @brief Accesses the specified character without bounds checking.
      */
     constexpr auto operator[](size_type index) noexcept -> reference
     {
-        if (index < size_) { return data_[index]; }
-        return data_[size_];
+        assert(index < size_);
+        return data_[index];
     }
 
     /**
-     * @brief Accesses the specified character with bounds checking.
+     * @brief Accesses the specified character without bounds checking.
      */
     constexpr auto operator[](size_type index) const noexcept -> const_reference
     {
-        if (index < size_) { return data_[index]; }
-        return data_[size_];
+        assert(index < size_);
+        return data_[index];
     }
 
     /**
