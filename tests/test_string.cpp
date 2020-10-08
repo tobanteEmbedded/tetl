@@ -1071,15 +1071,26 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]", etl::static_string<12>
         auto const rhs = TestType("test");
 
         CHECK(lhs.compare("test") == 0);
+        CHECK(lhs.compare(etl::string_view("test")) == 0);
         CHECK(lhs.compare(rhs) == 0);
         CHECK(rhs.compare(lhs) == 0);
 
         CHECK(lhs.compare(1, 1, "test") < 0);
+        CHECK(lhs.compare(1, 1, etl::string_view("test")) < 0);
         CHECK(lhs.compare(1, 1, rhs) < 0);
         CHECK(rhs.compare(1, 1, lhs) < 0);
 
         CHECK(lhs.compare(1, 1, rhs, 1, 1) == 0);
         CHECK(rhs.compare(1, 1, lhs, 1, 1) == 0);
+
+        CHECK(TestType("te").compare(0, 2, etl::string_view("test"), 0, 2) == 0);
+        CHECK(TestType("abcabc").compare(3, 3, etl::string_view("abc"), 0, 3) == 0);
+        CHECK(TestType("abcabc").compare(3, 1, etl::string_view("abc"), 0, 3) < 0);
+        CHECK(TestType("abcabc").compare(3, 3, etl::string_view("abc"), 0, 1) > 0);
+
+        CHECK(TestType("abcabc").compare(3, 3, "abc", 3) == 0);
+        CHECK(TestType("abcabc").compare(3, 1, "abc", 0, 3) < 0);
+        CHECK(TestType("abcabc").compare(3, 3, "abc", 0, 1) > 0);
     }
 
     SECTION("different size equal")

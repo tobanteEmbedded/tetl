@@ -106,7 +106,7 @@ public:
      *
      * @details Fails silently if input length is greater then capacity.
      */
-    constexpr basic_static_string(size_type count, CharType ch) noexcept
+    constexpr basic_static_string(size_type count, value_type ch) noexcept
     {
         assert(count + 1 <= Capacity && "size + null-terminator greater than capacity");
         if (count + 1 <= Capacity)
@@ -738,7 +738,7 @@ public:
     /**
      * @brief Inserts count copies of character ch at the position index.
      */
-    constexpr auto insert(size_type index, size_type count, CharType ch) noexcept
+    constexpr auto insert(size_type index, size_type count, value_type ch) noexcept
         -> basic_static_string&
     {
         for (size_type i = index; i < count; i++) { data_[size_ + i] = ch; }
@@ -1015,7 +1015,7 @@ public:
      * appended, maximum up to it's capacity. If the current size is greater than count,
      * the string is reduced to its first count elements.
      */
-    constexpr auto resize(size_type count, CharType ch) noexcept -> void
+    constexpr auto resize(size_type count, value_type ch) noexcept -> void
     {
         if (size() > count) { size_ = count; }
         if (size() < count) { append(count, ch); }
@@ -1028,7 +1028,10 @@ public:
      * appended, maximum up to it's capacity. If the current size is greater than count,
      * the string is reduced to its first count elements.
      */
-    constexpr auto resize(size_type count) noexcept -> void { resize(count, CharType()); }
+    constexpr auto resize(size_type count) noexcept -> void
+    {
+        resize(count, value_type());
+    }
 
     /**
      * @brief Exchanges the contents of the string with those of other. All iterators and
@@ -1266,8 +1269,8 @@ private:
 
     auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
 
-    size_type size_          = 0;
-    CharType data_[Capacity] = {};
+    size_type size_            = 0;
+    value_type data_[Capacity] = {};
 };  // namespace etl
 
 /**
