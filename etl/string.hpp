@@ -149,10 +149,11 @@ public:
      * with the contents of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    explicit constexpr basic_static_string(T const& t)
-        : basic_static_string {basic_string_view<value_type, traits_type> {t}.begin(),
-                               basic_string_view<value_type, traits_type> {t}.end()}
+    explicit constexpr basic_static_string(T const& t) noexcept
+
     {
+        basic_string_view<value_type, traits_type> const sv = t;
+        assign(sv.begin(), sv.end());
     }
 
     /**
