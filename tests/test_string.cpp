@@ -782,49 +782,138 @@ TEMPLATE_TEST_CASE("string: pop_back", "[string]", etl::static_string<12>,
 TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType();
-    REQUIRE(str.empty() == true);
+    SECTION("on empty string")
+    {
+        auto str = TestType();
+        str.insert(0, 4, 'a');
+        CHECK(str.size() == 4);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("aaaa"));
+    }
 
-    str.insert(0, 4, 'a');
-    REQUIRE(str.empty() == false);
-    REQUIRE(str.size() == 4);
-    REQUIRE(str[0] == 'a');
-    REQUIRE(str[1] == 'a');
-    REQUIRE(str[2] == 'a');
-    REQUIRE(str[3] == 'a');
-    REQUIRE(str[4] == 0);
+    SECTION("on filled string")
+    {
+        auto str = TestType("test");
+        str.insert(0, 4, 'a');
+        CHECK(str.size() == 8);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("aaaatest"));
+
+        str = TestType("test");
+        str.insert(1, 2, 'a');
+        str.insert(0, 1, 'b');
+        CHECK(str.size() == 7);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("btaaest"));
+
+        str = TestType("test");
+        str.insert(str.size(), 2, 'a');
+        CHECK(str.size() == 6);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("testaa"));
+    }
+
+    SECTION("on full string")
+    {
+        auto str = TestType("");
+        str.insert(0, str.capacity(), 'a');
+        CHECK(str.full());
+        CHECK(str.size() == str.capacity() - 1);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; }));
+    }
 }
 
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType();
-    REQUIRE(str.empty() == true);
+    SECTION("on empty string")
+    {
+        auto str = TestType();
+        str.insert(0, "aaaa");
+        CHECK(str.size() == 4);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("aaaa"));
+    }
 
-    str.insert(0, "abcd");
-    REQUIRE(str.empty() == false);
-    REQUIRE(str.size() == 4);
-    REQUIRE(str[0] == 'a');
-    REQUIRE(str[1] == 'b');
-    REQUIRE(str[2] == 'c');
-    REQUIRE(str[3] == 'd');
-    REQUIRE(str[4] == 0);
+    SECTION("on filled string")
+    {
+        auto str = TestType("test");
+        str.insert(0, "abcd");
+        CHECK(str.size() == 8);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("abcdtest"));
+
+        str = TestType("test");
+        str.insert(1, "aa");
+        str.insert(0, "b");
+        CHECK(str.size() == 7);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("btaaest"));
+
+        str = TestType("test");
+        str.insert(str.size(), "aa");
+        CHECK(str.size() == 6);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("testaa"));
+    }
+
+    SECTION("on full string")
+    {
+        auto str = TestType("");
+        for (etl::size_t i = 0; i < str.capacity(); ++i) { str.insert(0, "a"); }
+
+        CHECK(str.full());
+        CHECK(str.size() == str.capacity() - 1);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; }));
+    }
 }
 
 TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
-    auto str = TestType();
-    REQUIRE(str.empty() == true);
+    SECTION("on empty string")
+    {
+        auto str = TestType();
+        str.insert(0, "aaaa", 4);
+        CHECK(str.size() == 4);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("aaaa"));
+    }
 
-    str.insert(0, "abcd", 3);
-    REQUIRE(str.empty() == false);
-    REQUIRE(str.size() == 3);
-    REQUIRE(str[0] == 'a');
-    REQUIRE(str[1] == 'b');
-    REQUIRE(str[2] == 'c');
-    REQUIRE(str[3] == 0);
-    REQUIRE(str[4] == 0);
+    SECTION("on filled string")
+    {
+        auto str = TestType("test");
+        str.insert(0, "abcd", 3);
+        CHECK(str.size() == 7);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("abctest"));
+
+        str = TestType("test");
+        str.insert(1, "aa", 2);
+        str.insert(0, "b", 1);
+        CHECK(str.size() == 7);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("btaaest"));
+
+        str = TestType("test");
+        str.insert(str.size(), "aa", 1);
+        CHECK(str.size() == 5);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::string_view(str) == etl::string_view("testa"));
+    }
+
+    SECTION("on full string")
+    {
+        auto str = TestType("");
+        for (etl::size_t i = 0; i < str.capacity(); ++i) { str.insert(0, "ab", 1); }
+
+        CHECK(str.full());
+        CHECK(str.size() == str.capacity() - 1);
+        CHECK(etl::strlen(str.data()) == str.size());
+        CHECK(etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; }));
+    }
 }
 
 TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,

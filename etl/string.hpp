@@ -490,11 +490,12 @@ public:
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
     /**
-     * @brief Checks whether the string is full.
+     * @brief Checks whether the string is full. Equals to capacity - 1, for the null
+     * termination character.
      */
     [[nodiscard]] constexpr auto full() const noexcept -> bool
     {
-        return size() == capacity();
+        return size() == capacity() - 1;
     }
 
     /**
@@ -509,7 +510,7 @@ public:
 
     /**
      * @brief Returns the number of characters that can be held in allocated
-     * storage.
+     * storage, including the space for the null terminator.
      */
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
     {
@@ -518,7 +519,7 @@ public:
 
     /**
      * @brief Returns the number of characters that can be held in allocated
-     * storage.
+     * storage, including the space for the null terminator.
      */
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
     {
@@ -617,10 +618,10 @@ public:
     constexpr auto append(size_type const count, value_type const s) noexcept
         -> basic_static_string&
     {
-        for (size_type i = 0; i < count; i++) { data_[size_ + i] = s; }
-        size_ += count;
+        auto const safe_count = etl::min(count, capacity() - size() - 1);
+        for (size_type i = 0; i < safe_count; i++) { data_[size_ + i] = s; }
+        size_ += safe_count;
         data_[size_] = 0;
-
         return *this;
     };
 
@@ -641,10 +642,10 @@ public:
     constexpr auto append(const_pointer s, size_type count) noexcept
         -> basic_static_string&
     {
-        for (size_type i = 0; i < count; i++) { data_[size_ + i] = s[i]; }
-        size_ += count;
+        auto const safe_count = etl::min(count, capacity() - size() - 1);
+        for (size_type i = 0; i < safe_count; i++) { data_[size_ + i] = s[i]; }
+        size_ += safe_count;
         data_[size_] = 0;
-
         return *this;
     };
 
@@ -738,12 +739,11 @@ public:
     /**
      * @brief Inserts count copies of character ch at the position index.
      */
-    constexpr auto insert(size_type index, size_type count, value_type ch) noexcept
-        -> basic_static_string&
+    constexpr auto insert(size_type const index, size_type const count,
+                          value_type const ch) noexcept -> basic_static_string&
     {
-        for (size_type i = index; i < count; i++) { data_[size_ + i] = ch; }
-        size_ += count;
-        data_[size_] = 0;
+        for (size_type i = 0; i < count; ++i)
+        { insert_impl(begin() + index, etl::addressof(ch), 1); }
         return *this;
     }
 
@@ -751,20 +751,10 @@ public:
      * @brief Inserts null-terminated character string pointed to by s at the
      * position index.
      */
-    constexpr auto insert(size_type index, const_pointer s) noexcept
+    constexpr auto insert(size_type const index, const_pointer s) noexcept
         -> basic_static_string&
     {
-        auto const len = etl::strlen(s);
-        for (size_type i = 0; i < len; i++)
-        {
-            if (auto const pos = index + i; pos < Capacity)
-            {
-                data_[pos] = s[i];
-                size_ += 1;
-            }
-        }
-
-        data_[size_] = 0;
+        insert_impl(begin() + index, s, etl::strlen(s));
         return *this;
     }
 
@@ -775,16 +765,88 @@ public:
     constexpr auto insert(size_type const index, const_pointer s,
                           size_type const count) noexcept -> basic_static_string&
     {
-        for (size_type i = 0; i < count; i++)
-        {
-            if (auto const pos = index + i; pos < Capacity)
-            {
-                data_[pos] = s[i];
-                size_ += 1;
-            }
-        }
+        insert_impl(begin() + index, s, count);
+        return *this;
+    }
 
-        data_[size_] = 0;
+    /**
+     * @brief Inserts string \p str at the position \p index.
+     */
+    constexpr auto insert(size_type const index, basic_static_string const& str) noexcept
+        -> basic_static_string&
+    {
+        insert_impl(begin() + index, str.data(), str.size());
+        return *this;
+    }
+
+    /**
+     * @brief Inserts a string, obtained by str.substr(index_str, count) at the position
+     * index.
+     */
+    constexpr auto insert(size_type const index, basic_static_string const& str,
+                          size_type const index_str,
+                          size_type const count = npos) noexcept -> basic_static_string&
+    {
+        using view_type = basic_string_view<value_type, traits_type>;
+        auto sv         = view_type(str).substr(index_str, count);
+        insert_impl(begin() + index, sv.data(), sv.size());
+        return *this;
+    }
+
+    // /**
+    //  * @brief Inserts character ch before the character pointed by pos.
+    //  */
+    // constexpr auto insert(const_iterator pos, value_type const ch) noexcept -> iterator
+    // {
+    // }
+
+    // /**
+    //  * @brief Inserts count copies of character ch before the element (if any) pointed
+    //  by
+    //  * pos.
+    //  */
+    // constexpr auto insert(const_iterator pos, size_type count,
+    //                       value_type const ch) noexcept -> iterator
+    // {
+    // }
+
+    // /**
+    //  * @brief Inserts characters from the range [first, last) before the element (if
+    //  any)
+    //  * pointed by pos.
+    //  */
+    // template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<T>)>
+    // constexpr auto insert(const_iterator pos, InputIter first, InputIter last) noexcept
+    //     -> iterator
+    // {
+    // }
+
+    /**
+     * @brief Implicitly converts t to a string view sv, then inserts the elements from sv
+     * before the element (if any) pointed by pos.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto insert(size_type const pos, T const& t) noexcept
+        -> basic_static_string&
+    {
+        basic_string_view<value_type, traits_type> sv = t;
+        insert_impl(begin() + pos, sv.data(), sv.size());
+        return *this;
+    }
+
+    /**
+     * @brief Implicitly converts t to a string view sv, then inserts, before the element
+     * (if any) pointed by pos, the characters from the subview [index_str,
+     * index_str+count) of sv.
+     */
+    template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    constexpr auto insert(size_type const index, T const& t, size_type const index_str,
+                          size_type const count = npos) noexcept -> basic_static_string&
+    {
+        basic_string_view<value_type, traits_type> sv = t;
+
+        auto sub = sv.substr(index_str, count);
+        insert_impl(begin() + index, sub.data(), sub.size());
         return *this;
     }
 
@@ -1255,6 +1317,16 @@ public:
     constexpr static size_type npos = static_cast<size_type>(-1);
 
 private:
+    constexpr auto insert_impl(iterator pos, const_pointer text, size_type count) -> void
+    {
+        // Insert text at end.
+        auto current_end = end();
+        append(text, count);
+
+        // Rotate to correct position
+        etl::rotate(pos, current_end, end());
+    }
+
     [[nodiscard]] constexpr auto compare_impl(const_pointer lhs, size_type lhs_size,
                                               const_pointer rhs,
                                               size_type rhs_size) const noexcept -> int
