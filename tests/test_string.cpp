@@ -909,15 +909,15 @@ TEMPLATE_TEST_CASE("string: erase", "[string]", etl::static_string<32>,
 
         // Erase "This "
         str.erase(0, 5);
-        CHECK(std::string_view(str.data()) == std::string_view("is an example"));
+        CHECK(etl::string_view(str.data()) == etl::string_view("is an example"));
 
         // Erase ' '
         CHECK(*str.erase(etl::find(begin(str), end(str), ' ')) == 'a');
-        CHECK(std::string_view(str.data()) == std::string_view("isan example"));
+        CHECK(etl::string_view(str.data()) == etl::string_view("isan example"));
 
         // Trim from ' ' to the end of the string
         str.erase(str.find(' '));
-        CHECK(std::string_view(str.data()) == std::string_view("isan"));
+        CHECK(etl::string_view(str.data()) == etl::string_view("isan"));
     }
 }
 
