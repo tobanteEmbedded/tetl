@@ -261,6 +261,7 @@ TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::static_string<12>,
     TestType str {};
 
     etl::for_each(str.begin(), str.end(), [](auto& c) { REQUIRE(c == char(0)); });
+    for (auto const& c : str) { REQUIRE(c == char(0)); };
 }
 
 TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::static_string<12>,
@@ -270,6 +271,40 @@ TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::static_string<12>,
     TestType str {};
 
     etl::for_each(str.cbegin(), str.cend(), [](auto const& c) { REQUIRE(c == char(0)); });
+}
+
+TEMPLATE_TEST_CASE("string: rbegin/rend", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    TestType empty {};
+    CHECK(empty.rbegin() == empty.rend());
+
+    TestType str_1 {"test"};
+    CHECK(str_1.rbegin() != str_1.rend());
+    auto begin_1 = str_1.rbegin();
+    CHECK(*begin_1++ == 't');
+    CHECK(*begin_1++ == 's');
+    CHECK(*begin_1++ == 'e');
+    CHECK(*begin_1++ == 't');
+    CHECK(begin_1 == str_1.rend());
+}
+
+TEMPLATE_TEST_CASE("string: crbegin/crend", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    TestType empty {};
+    CHECK(empty.crbegin() == empty.crend());
+
+    TestType str_1 {"test"};
+    CHECK(str_1.crbegin() != str_1.crend());
+    auto begin_1 = str_1.crbegin();
+    CHECK(*begin_1++ == 't');
+    CHECK(*begin_1++ == 's');
+    CHECK(*begin_1++ == 'e');
+    CHECK(*begin_1++ == 't');
+    CHECK(begin_1 == str_1.crend());
 }
 
 TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]", etl::static_string<12>,
