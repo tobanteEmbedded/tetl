@@ -130,6 +130,23 @@ public:
     }
 
     /**
+     * @brief Constructs the string with a substring [pos, pos+count) of other.
+     */
+    constexpr basic_static_string(basic_static_string const& other, size_type pos,
+                                  size_type count)
+        : basic_static_string {other.substr(pos, count)}
+    {
+    }
+
+    /**
+     * @brief Constructs the string with a substring [pos, other.size()).
+     */
+    constexpr basic_static_string(basic_static_string const& other, size_type pos)
+        : basic_static_string {other.substr(pos, other.size())}
+    {
+    }
+
+    /**
      * @brief Implicitly converts \p t to a string view sv, then initializes the string
      * with the contents of sv.
      */

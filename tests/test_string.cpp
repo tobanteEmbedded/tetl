@@ -139,6 +139,38 @@ TEMPLATE_TEST_CASE("string: ctor(first,last)", "[string]", etl::static_string<12
     CHECK(dest[4] == '\0');
 }
 
+TEMPLATE_TEST_CASE("string: ctor(string,pos)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    TestType src {"testabc"};
+
+    TestType dest_1(src, 0);
+    CHECK(etl::string_view(dest_1) == etl::string_view(src));
+
+    TestType dest_2(src, 4);
+    CHECK(etl::string_view(dest_2) == etl::string_view("abc"));
+
+    auto dest_3 = TestType(src, 9);
+    CHECK(etl::string_view(dest_3) == etl::string_view(""));
+}
+
+TEMPLATE_TEST_CASE("string: ctor(string,pos,count)", "[string]", etl::static_string<12>,
+                   etl::static_string<32>, etl::static_string<12> const,
+                   etl::static_string<32> const)
+{
+    TestType src {"testabc"};
+
+    TestType dest_1(src, 0, 2);
+    CHECK(etl::string_view(dest_1) == etl::string_view("te"));
+
+    TestType dest_2(src, 4, 2);
+    CHECK(etl::string_view(dest_2) == etl::string_view("ab"));
+
+    auto dest_3 = TestType(src, 9, 2);
+    CHECK(etl::string_view(dest_3) == etl::string_view(""));
+}
+
 TEMPLATE_TEST_CASE("string: ctor(string_view)", "[string]", etl::static_string<12>,
                    etl::static_string<32>, etl::static_string<12> const,
                    etl::static_string<32> const)
