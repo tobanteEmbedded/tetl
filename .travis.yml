@@ -7,20 +7,8 @@ language: cpp
 script-anchors:
   - &script-coverage
     - cd $TRAVIS_BUILD_DIR
-    - mkdir build
-    - cd build
-    - cmake -D TOBANTEAUDIO_ETL_BUILD_COVERAGE:BOOL=TRUE .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
-    - cmake --build . -- -j
-    - lcov  -c -i -d . --base-directory . -o base_cov.info
-    - ctest -j
-    - lcov  -c -d . --base-directory . -o test_cov.info
-    - lcov  -a base_cov.info -a test_cov.info -o cov.info
-    - lcov  --remove cov.info "*3rd_party/*" -o cov.info
-    - lcov  --remove cov.info "*c++*" -o cov.info
-    - lcov  --remove cov.info "*v1*" -o cov.info
-    - lcov  --remove cov.info "*Xcode.app*" -o cov.info
-    - lcov  --remove cov.info "*test_*" -o cov.info
-    - bash <(curl -s https://codecov.io/bash)
+    - make coverage
+    - bash <(curl -s https://codecov.io/bash) -f build_coverage/cov.info
 
   - &script-docs
     - cd $TRAVIS_BUILD_DIR
