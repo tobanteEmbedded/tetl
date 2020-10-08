@@ -42,30 +42,29 @@ namespace etl
 /**
  * @brief basic_static_string class with fixed size capacity.
  *
- * @tparam CharType Build in type for character size (mostly 'char')
+ * @tparam CharT Build in type for character size (mostly 'char')
  * @tparam Capacity Capacity for basic_static_string
  */
-template <typename CharType, etl::size_t Capacity,
-          typename Traits = etl::char_traits<CharType>>
+template <typename CharT, etl::size_t Capacity, typename Traits = etl::char_traits<CharT>>
 class basic_static_string
 {
     // clang-format off
     template <typename T>
     constexpr static bool string_view_and_not_char_pointer = 
-        is_convertible_v<T const&, basic_string_view<CharType, Traits>> 
-        && !is_convertible_v<T const&, CharType const*>;
+        is_convertible_v<T const&, basic_string_view<CharT, Traits>> 
+        && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
 
 public:
     using traits_type            = Traits;
-    using value_type             = CharType;
+    using value_type             = CharT;
     using size_type              = etl::size_t;
-    using pointer                = CharType*;
-    using const_pointer          = CharType const*;
-    using reference              = CharType&;
-    using const_reference        = CharType const&;
-    using iterator               = CharType*;
-    using const_iterator         = CharType const*;
+    using pointer                = CharT*;
+    using const_pointer          = CharT const*;
+    using reference              = CharT&;
+    using const_reference        = CharT const&;
+    using iterator               = CharT*;
+    using const_iterator         = CharT const*;
     using reverse_iterator       = etl::reverse_iterator<iterator>;
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
@@ -1371,180 +1370,172 @@ private:
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details Two strings are equal if both the size of lhs and rhs are equal and each
  * character in lhs has equivalent character in rhs at the same position.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator==(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
-    -> bool
+operator==(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> bool
 {
     return lhs.compare(rhs) == 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details Two strings are equal if both the size of lhs and rhs are equal and each
  * character in lhs has equivalent character in rhs at the same position.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
-operator==(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           CharType const* rhs) noexcept -> bool
+operator==(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) == 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details Two strings are equal if both the size of lhs and rhs are equal and each
  * character in lhs has equivalent character in rhs at the same position.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator!=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
-    -> bool
+operator!=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> bool
 {
     return lhs.compare(rhs) != 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details Two strings are equal if both the size of lhs and rhs are equal and each
  * character in lhs has equivalent character in rhs at the same position.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
-operator!=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           CharType const* rhs) noexcept -> bool
+operator!=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) != 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator<(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-          etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
+operator<(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+          etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
 {
     return lhs.compare(rhs) < 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
-operator<(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-          CharType const* rhs) noexcept -> bool
+operator<(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+          CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) < 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator<=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
+operator<=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
 {
     return lhs.compare(rhs) <= 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
-operator<=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           CharType const* rhs) noexcept -> bool
+operator<=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) <= 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator>(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-          etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
+operator>(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+          etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
 {
     return lhs.compare(rhs) > 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1>
+template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
-operator>(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-          CharType const* rhs) noexcept -> bool
+operator>(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+          CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) > 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity1,
-          etl::size_t Capacity2>
+template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
 [[nodiscard]] constexpr auto
-operator>=(etl::basic_static_string<CharType, Capacity1, Traits> const& lhs,
-           etl::basic_static_string<CharType, Capacity2, Traits> const& rhs) noexcept
+operator>=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+           etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
 {
     return lhs.compare(rhs) >= 0;
 }
 
 /**
  * @brief Compares the contents of a string with another string or a null-terminated array
- * of CharType.
+ * of CharT.
  *
  * @details The ordering comparisons are done lexicographically.
  */
-template <typename CharType, typename Traits, etl::size_t Capacity>
+template <typename CharT, typename Traits, etl::size_t Capacity>
 [[nodiscard]] constexpr auto
-operator>=(etl::basic_static_string<CharType, Capacity, Traits> const& lhs,
-           CharType const* rhs) noexcept -> bool
+operator>=(etl::basic_static_string<CharT, Capacity, Traits> const& lhs,
+           CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) >= 0;
 }
@@ -1553,9 +1544,9 @@ operator>=(etl::basic_static_string<CharType, Capacity, Traits> const& lhs,
  * @brief Specializes the etl::swap algorithm for etl::basic_static_string. Swaps the
  * contents of lhs and rhs. Equivalent to lhs.swap(rhs).
  */
-template <typename CharType, typename Traits, etl::size_t Capacity>
-constexpr auto swap(etl::basic_static_string<CharType, Capacity, Traits>& lhs,
-                    etl::basic_static_string<CharType, Capacity, Traits>&
+template <typename CharT, typename Traits, etl::size_t Capacity>
+constexpr auto swap(etl::basic_static_string<CharT, Capacity, Traits>& lhs,
+                    etl::basic_static_string<CharT, Capacity, Traits>&
                         rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
