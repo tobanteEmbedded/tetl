@@ -32,6 +32,7 @@ FIRMWARE_BIN = $(BIN).bin
 .PHONY: all
 all: $(BINDIR) $(FIRMWARE_BIN) size
 
+
 %.o: %.s
 	@echo "$<"
 	@$(AS) -c $(COMMONFLAGS) -x assembler-with-cpp -D__ASSEMBLY__ -c -o $@ $<
@@ -74,3 +75,8 @@ clean:
 format:
 	find include -iname '*.hpp' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.c' | xargs clang-format -i
 	find src -iname '*.hpp' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.c' | xargs clang-format -i
+
+.PHONY: toolchain
+toolchain:
+	@echo "Root: $(TOOLCHAIN_ROOT)"
+	@echo "Version: $(TOOLCHAIN_VERSION)"
