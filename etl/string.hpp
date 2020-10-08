@@ -590,6 +590,48 @@ public:
     }
 
     /**
+     * @brief Removes min(count, size() - index) characters starting at index.
+     *
+     * @return *this
+     */
+    constexpr auto erase(size_type index = 0, size_type count = npos) noexcept
+        -> basic_static_string&
+    {
+        auto safe_count = etl::min(count, size() - index);
+        erase(begin() + index, begin() + index + safe_count);
+        return *this;
+    }
+
+    /**
+     * @brief Removes the character at position.
+     *
+     * @return iterator pointing to the character immediately following the character
+     * erased, or end() if no such character exists.
+     */
+    constexpr auto erase(const_iterator position) noexcept -> iterator
+    {
+        return erase(position, position + 1);
+    }
+
+    /**
+     * @brief Removes the characters in the range [first, last).
+     *
+     * @return iterator pointing to the character last pointed to before the erase, or
+     * end() if no such character exists.
+     */
+    constexpr auto erase(const_iterator first, const_iterator last) noexcept -> iterator
+    {
+        auto const start    = static_cast<size_type>(etl::distance(cbegin(), first));
+        auto const distance = static_cast<size_type>(etl::distance(first, last));
+        assert(size() > distance);
+        etl::rotate(begin() + start, begin() + start + distance, end());
+        // etl::fill(begin() + distance, end(), '\0');
+        size_ -= distance;
+        data_[size()] = '\0';
+        return begin() + start;
+    }
+
+    /**
      * @brief Appends the given character ch to the end of the string. Does nothing if the
      * string is full.
      */

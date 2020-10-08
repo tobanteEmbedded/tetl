@@ -916,6 +916,27 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
     }
 }
 
+TEMPLATE_TEST_CASE("string: erase", "[string]", etl::static_string<32>,
+                   etl::static_string<64>)
+{
+    SECTION("cpprefrence example")
+    {
+        TestType str = "This is an example";
+
+        // Erase "This "
+        str.erase(0, 5);
+        CHECK(std::string_view(str.data()) == std::string_view("is an example"));
+
+        // Erase ' '
+        CHECK(*str.erase(etl::find(begin(str), end(str), ' ')) == 'a');
+        CHECK(std::string_view(str.data()) == std::string_view("isan example"));
+
+        // Trim from ' ' to the end of the string
+        str.erase(str.find(' '));
+        CHECK(std::string_view(str.data()) == std::string_view("isan"));
+    }
+}
+
 TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
                    etl::static_string<32>)
 {
