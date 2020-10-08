@@ -56,8 +56,6 @@ class basic_static_string
         && !is_convertible_v<T const&, CharType const*>;
     // clang-format on
 
-    auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
-
 public:
     using traits_type            = Traits;
     using value_type             = CharType;
@@ -152,8 +150,8 @@ public:
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     explicit constexpr basic_static_string(T const& t)
-        : basic_static_string {basic_string_view<CharType, Traits> {t}.begin(),
-                               basic_string_view<CharType, Traits> {t}.end()}
+        : basic_static_string {basic_string_view<value_type, traits_type> {t}.begin(),
+                               basic_string_view<value_type, traits_type> {t}.end()}
     {
     }
 
@@ -163,7 +161,8 @@ public:
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
-        : basic_static_string {basic_string_view<CharType, Traits> {t}.substr(pos, n)}
+        : basic_static_string {
+            basic_string_view<value_type, traits_type> {t}.substr(pos, n)}
     {
     }
 
@@ -454,11 +453,12 @@ public:
     }
 
     /**
-     * @brief Removes all characters from the string.
+     * @brief Removes all characters from the string. Sets size to 0 and overrides the
+     * buffer with zeros.
      */
     constexpr auto clear() noexcept -> void
     {
-        for (auto& c : data_) { c = 0; }
+        clear_storage();
         size_ = 0;
     }
 
@@ -468,6 +468,7 @@ public:
      */
     constexpr auto push_back(value_type ch) noexcept -> void
     {
+        assert(size() < capacity());
         if (size() < capacity()) { append(1, ch); }
     }
 
@@ -557,7 +558,7 @@ public:
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     constexpr auto append(T const& t) -> basic_static_string&
     {
-        etl::basic_string_view<CharType, Traits> sv = t;
+        etl::basic_string_view<value_type, traits_type> sv = t;
         return append(sv.data(), sv.size());
     }
 
@@ -569,7 +570,7 @@ public:
     constexpr auto append(T const& t, size_type pos, size_type count = npos)
         -> basic_static_string&
     {
-        etl::basic_string_view<CharType, Traits> sv = t;
+        etl::basic_string_view<value_type, traits_type> sv = t;
         return append(sv.substr(pos, count));
     }
 
@@ -753,17 +754,19 @@ public:
      * @brief Checks if the string begins with the given prefix.
      */
     [[nodiscard]] constexpr auto
-    starts_with(etl::basic_string_view<CharType, Traits> sv) const noexcept -> bool
+    starts_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(sv);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .starts_with(sv);
     }
 
     /**
      * @brief Checks if the string begins with the given prefix.
      */
-    [[nodiscard]] constexpr auto starts_with(CharType c) const noexcept -> bool
+    [[nodiscard]] constexpr auto starts_with(value_type c) const noexcept -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(c);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .starts_with(c);
     }
 
     /**
@@ -771,24 +774,27 @@ public:
      */
     [[nodiscard]] constexpr auto starts_with(const_pointer str) const -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).starts_with(str);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .starts_with(str);
     }
 
     /**
      * @brief Checks if the string ends with the given prefix.
      */
     [[nodiscard]] constexpr auto
-    ends_with(etl::basic_string_view<CharType, Traits> sv) const noexcept -> bool
+    ends_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(sv);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .ends_with(sv);
     }
 
     /**
      * @brief Checks if the string ends with the given prefix.
      */
-    [[nodiscard]] constexpr auto ends_with(CharType c) const noexcept -> bool
+    [[nodiscard]] constexpr auto ends_with(value_type c) const noexcept -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(c);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .ends_with(c);
     }
 
     /**
@@ -796,7 +802,8 @@ public:
      */
     [[nodiscard]] constexpr auto ends_with(const_pointer str) const -> bool
     {
-        return etl::basic_string_view<CharType, Traits>(data(), size()).ends_with(str);
+        return etl::basic_string_view<value_type, traits_type>(data(), size())
+            .ends_with(str);
     }
 
     /**
@@ -1089,6 +1096,8 @@ private:
         if (lhs_size > rhs_size) { return 1; }
         return 0;
     }
+
+    auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
 
     size_type size_          = 0;
     CharType data_[Capacity] = {};
