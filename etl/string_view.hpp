@@ -32,6 +32,7 @@ DAMAGE.
 #include "iterator.hpp"
 #include "memory.hpp"
 
+#include "etl/detail/container_utils.hpp"
 #include "etl/detail/sfinae.hpp"
 #include "etl/detail/string_char_traits.hpp"
 
@@ -102,11 +103,10 @@ public:
      * @brief Constructs a basic_string_view over the range [first, last). The behavior is
      * undefined if [first, last) is not a valid range.
      *
-     * @todo Improve SFINAE protection. See standard.
+     * @todo Improve SFINAE protection. See C++20 standard.
      */
-    template <typename FirstIter, typename SecondIter,
-              TAETL_REQUIRES_(!etl::is_convertible_v<SecondIter, size_type>)>
-    constexpr basic_string_view(FirstIter first, SecondIter last)
+    template <typename Iter, TAETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
+    constexpr basic_string_view(Iter first, Iter last)
         : basic_string_view {first, static_cast<size_type>(last - first)}
     {
     }

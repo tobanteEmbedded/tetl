@@ -143,21 +143,6 @@ TEST_CASE("string_view: ranged-for", "[string_view]")
     REQUIRE(counter == 4);
 }
 
-TEST_CASE("string_view: at", "[string_view]")
-{
-    auto const sv1 = etl::string_view {"test"};
-    REQUIRE(sv1.at(0) == 't');
-    REQUIRE(sv1.at(1) == 'e');
-    REQUIRE(sv1.at(2) == 's');
-    REQUIRE(sv1.at(3) == 't');
-
-    auto sv2 = etl::string_view {"tobi"};
-    REQUIRE(sv2.at(0) == 't');
-    REQUIRE(sv2.at(1) == 'o');
-    REQUIRE(sv2.at(2) == 'b');
-    REQUIRE(sv2.at(3) == 'i');
-}
-
 TEST_CASE("string_view: operator[]", "[string_view]")
 {
     auto const sv1 = etl::string_view {"test"};
@@ -222,7 +207,7 @@ TEST_CASE("string_view: remove_prefix", "[string_view]")
         REQUIRE(sv.size() == 4);
         sv.remove_prefix(1);
         REQUIRE(sv.size() == 3);
-        REQUIRE(sv.at(0) == 'e');
+        REQUIRE(sv[0] == 'e');
     }
 }
 
@@ -243,13 +228,13 @@ TEST_CASE("string_view: remove_suffix", "[string_view]")
 
         sv.remove_suffix(1);
         REQUIRE(sv.size() == 3);
-        REQUIRE(sv.at(0) == 't');
-        REQUIRE(sv.at(1) == 'e');
-        REQUIRE(sv.at(2) == 's');
+        REQUIRE(sv[0] == 't');
+        REQUIRE(sv[1] == 'e');
+        REQUIRE(sv[2] == 's');
 
         sv.remove_suffix(2);
         REQUIRE(sv.size() == 1);
-        REQUIRE(sv.at(0) == 't');
+        REQUIRE(sv[0] == 't');
     }
 }
 
@@ -388,51 +373,51 @@ TEST_CASE("string_view: find", "[string_view]")
     }
 }
 
-TEST_CASE("string_view: rfind", "[string_view]")
-{
-    WHEN("rhs == string_view")
-    {
-        auto const sv = etl::string_view {"test"};
-        REQUIRE(sv.rfind(etl::string_view {"t"}) == 3);
-        REQUIRE(sv.rfind(etl::string_view {"est"}) == 1);
+// TEST_CASE("string_view: rfind", "[string_view]")
+// {
+//     // WHEN("rhs == string_view")
+//     // {
+//     //     auto const sv = etl::string_view {"test"};
+//     //     REQUIRE(sv.rfind(etl::string_view {"t"}) == 3);
+//     //     REQUIRE(sv.rfind(etl::string_view {"est"}) == 1);
 
-        REQUIRE(sv.rfind(etl::string_view {"st"}, 12) == 2);
-        REQUIRE(sv.rfind(etl::string_view {"st"}, 12) == 2);
-    }
+//     //     REQUIRE(sv.rfind(etl::string_view {"st"}, 12) == 2);
+//     //     REQUIRE(sv.rfind(etl::string_view {"st"}, 12) == 2);
+//     // }
 
-    WHEN("rhs == char")
-    {
-        auto const sv = etl::string_view {"test"};
-        REQUIRE(sv.rfind('t') == 3);
-        REQUIRE(sv.rfind('e') == 1);
+//     WHEN("rhs == char")
+//     {
+//         auto const sv = etl::string_view {"test"};
+//         REQUIRE(sv.rfind('t') == 3);
+//         REQUIRE(sv.rfind('e') == 1);
 
-        REQUIRE(sv.rfind('s') == 2);
-        REQUIRE(sv.rfind('s', 2) == 2);
-    }
+//         REQUIRE(sv.rfind('s') == 2);
+//         REQUIRE(sv.rfind('s', 2) == 2);
+//     }
 
-    WHEN("rhs == const char* s, size_type pos, size_type count")
-    {
-        auto const sv = etl::string_view {"test"};
-        REQUIRE(sv.rfind("t", etl::string_view::npos, 1) == 3);
-        REQUIRE(sv.rfind("est", etl::string_view::npos, 3) == 1);
+//     WHEN("rhs == const char* s, size_type pos, size_type count")
+//     {
+//         auto const sv = etl::string_view {"test"};
+//         REQUIRE(sv.rfind("t", etl::string_view::npos, 1) == 3);
+//         REQUIRE(sv.rfind("est", etl::string_view::npos, 3) == 1);
 
-        REQUIRE(sv.rfind("x", etl::string_view::npos, 1) == etl::string_view::npos);
-        REQUIRE(sv.rfind("foo", etl::string_view::npos, 3) == etl::string_view::npos);
-    }
+//         REQUIRE(sv.rfind("x", etl::string_view::npos, 1) == etl::string_view::npos);
+//         REQUIRE(sv.rfind("foo", etl::string_view::npos, 3) == etl::string_view::npos);
+//     }
 
-    WHEN("rhs == const char* s, size_type pos")
-    {
-        auto const sv = etl::string_view {"test"};
-        REQUIRE(sv.rfind("t", etl::string_view::npos) == 3);
-        REQUIRE(sv.rfind("est", etl::string_view::npos) == 1);
+//     WHEN("rhs == const char* s, size_type pos")
+//     {
+//         auto const sv = etl::string_view {"test"};
+//         REQUIRE(sv.rfind("t", etl::string_view::npos) == 3);
+//         REQUIRE(sv.rfind("est", etl::string_view::npos) == 1);
 
-        REQUIRE(sv.rfind("x", 0) == etl::string_view::npos);
-        REQUIRE(sv.rfind("foo", 0) == etl::string_view::npos);
+//         REQUIRE(sv.rfind("x", 0) == etl::string_view::npos);
+//         REQUIRE(sv.rfind("foo", 0) == etl::string_view::npos);
 
-        REQUIRE(sv.rfind("xxxxx", 0) == etl::string_view::npos);
-        REQUIRE(sv.rfind("foobarbaz", 0) == etl::string_view::npos);
-    }
-}
+//         REQUIRE(sv.rfind("xxxxx", 0) == etl::string_view::npos);
+//         REQUIRE(sv.rfind("foobarbaz", 0) == etl::string_view::npos);
+//     }
+// }
 
 TEST_CASE("string_view: find_first_of", "[string_view]")
 {
@@ -569,17 +554,17 @@ TEST_CASE("string_view: substr", "[string_view]")
 
     auto const sub1 = sv.substr(0, 1);
     REQUIRE(sub1.size() == 1);
-    REQUIRE(sub1.at(0) == 't');
+    REQUIRE(sub1[0] == 't');
 
     auto const sub2 = sv.substr(0, 2);
     REQUIRE(sub2.size() == 2);
-    REQUIRE(sub2.at(0) == 't');
-    REQUIRE(sub2.at(1) == 'e');
+    REQUIRE(sub2[0] == 't');
+    REQUIRE(sub2[1] == 'e');
 
     auto const sub3 = sv.substr(2, 2);
     REQUIRE(sub3.size() == 2);
-    REQUIRE(sub3.at(0) == 's');
-    REQUIRE(sub3.at(1) == 't');
+    REQUIRE(sub3[0] == 's');
+    REQUIRE(sub3[1] == 't');
 }
 
 TEST_CASE("string_view: compare(string)", "[string]")
@@ -693,5 +678,5 @@ TEST_CASE("string_view: operator\"\"", "[string_view]")
     using namespace etl::literals;
     auto const sv = "test"_sv;
     REQUIRE(sv.size() >= 4);
-    REQUIRE(sv.at(0) >= 't');
+    REQUIRE(sv[0] >= 't');
 }
