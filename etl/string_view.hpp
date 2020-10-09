@@ -204,26 +204,16 @@ public:
      * pos. No bounds checking is performed: the behavior is undefined if pos >=
      * size().
      */
-    [[nodiscard]] constexpr auto at(size_type pos) const -> const_reference
-    {
-        return begin_[pos];
-    }
-
-    /**
-     * @brief Returns a const reference to the character at specified location
-     * pos. No bounds checking is performed: the behavior is undefined if pos >=
-     * size().
-     */
     [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference
     {
-        return at(pos);
+        return unsafe_at(pos);
     }
 
     /**
      * @brief Returns reference to the first character in the view. The behavior
      * is undefined if empty() == true.
      */
-    [[nodiscard]] constexpr auto front() const -> const_reference { return *begin_; }
+    [[nodiscard]] constexpr auto front() const -> const_reference { return unsafe_at(0); }
 
     /**
      * @brief Returns reference to the last character in the view. The behavior
@@ -231,7 +221,7 @@ public:
      */
     [[nodiscard]] constexpr auto back() const -> const_reference
     {
-        return begin_[size_ - 1];
+        return unsafe_at(size_ - 1);
     }
 
     /**
@@ -467,13 +457,13 @@ public:
 
         for (size_type outerIdx = pos; outerIdx < size(); ++outerIdx)
         {
-            if (at(outerIdx) == v.front())
+            if (unsafe_at(outerIdx) == v.front())
             {
                 auto found = [&] {
                     for (size_type innerIdx = 0; innerIdx < v.size(); ++innerIdx)
                     {
                         auto offset = outerIdx + innerIdx;
-                        if (at(offset) != v.at(innerIdx)) { return false; }
+                        if (unsafe_at(offset) != v[innerIdx]) { return false; }
                     }
 
                     return true;
@@ -539,12 +529,12 @@ public:
 
         size_type outer = offset;
         do {
-            if (at(outer) == v.front())
+            if (unsafe_at(outer) == v.front())
             {
                 auto found = [&] {
                     for (size_type inner = 0; inner < v.size(); ++inner)
                     {
-                        if (at(outer + inner) != v.at(inner)) { return false; }
+                        if (unsafe_at(outer + inner) != v[inner]) { return false; }
                     }
 
                     return true;
@@ -612,7 +602,7 @@ public:
         {
             for (auto const c : v)
             {
-                if (c == at(idx)) { return idx; }
+                if (c == unsafe_at(idx)) { return idx; }
             }
         }
 
@@ -677,7 +667,7 @@ public:
     {
         auto offset = etl::clamp<size_type>(pos, 0, size());
         do {
-            auto const current = at(offset);
+            auto const current = unsafe_at(offset);
             for (auto const ch : v)
             {
                 if (ch == current) { return offset; }
@@ -749,9 +739,8 @@ public:
     {
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
         do {
-            if (etl::none_of(v.begin(), v.end(),
-                             [&](auto ch) { return ch == at(offset); }))
-            { return offset; }
+            auto equals = [&](auto ch) { return ch == unsafe_at(offset); };
+            if (etl::none_of(v.begin(), v.end(), equals)) { return offset; }
         } while (offset-- != 0);
 
         return npos;
@@ -811,6 +800,11 @@ public:
     static constexpr size_type npos = size_type(-1);
 
 private:
+    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference
+    {
+        return begin_[pos];
+    }
+
     const_pointer begin_ = nullptr;
     size_type size_      = 0;
 };
