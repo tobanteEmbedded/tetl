@@ -37,6 +37,21 @@ DAMAGE.
 
 namespace etl
 {
+namespace detail
+{
+template <typename T, typename, typename = void>
+struct is_transparent : ::etl::false_type
+{
+};
+
+template <typename T, typename U>
+struct is_transparent<
+    T, U,
+    ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>, void, bool>>
+    : ::etl::true_type
+{
+};
+}  // namespace detail
 /**
  * @brief Function object for performing addition. Effectively calls operator+ on two
  * instances of type T.
@@ -46,6 +61,9 @@ namespace etl
 template <typename T = void>
 struct plus
 {
+    /**
+     * @brief Returns the sum of lhs and rhs.
+     */
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs + rhs;
@@ -62,14 +80,23 @@ struct plus
 template <>
 struct plus<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
+    /**
+     * @brief Returns the sum of lhs and rhs.
+     */
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
     {
         return lhs + rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -81,6 +108,9 @@ struct plus<void>
 template <typename T = void>
 struct minus
 {
+    /**
+     * @brief Returns the difference between lhs and rhs.
+     */
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs - rhs;
@@ -97,14 +127,23 @@ struct minus
 template <>
 struct minus<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
+    /**
+     * @brief Returns the difference between lhs and rhs.
+     */
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) - etl::forward<U>(rhs))
     {
         return lhs - rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -116,6 +155,9 @@ struct minus<void>
 template <typename T = void>
 struct multiplies
 {
+    /**
+     * @brief Returns the product between lhs and rhs.
+     */
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
     {
         return lhs * rhs;
@@ -133,14 +175,23 @@ struct multiplies
 template <>
 struct multiplies<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
+    /**
+     * @brief Returns the product between lhs and rhs.
+     */
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) * etl::forward<U>(rhs))
     {
         return lhs * rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -169,14 +220,20 @@ struct divides
 template <>
 struct divides<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) / etl::forward<U>(rhs))
     {
         return lhs / rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -204,14 +261,20 @@ struct modulus
 template <>
 struct modulus<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) % etl::forward<U>(rhs))
     {
         return lhs % rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -236,14 +299,20 @@ struct negate
 template <>
 struct negate<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(-etl::forward<T>(arg))
     {
         return -arg;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -272,14 +341,20 @@ struct equal_to
 template <>
 struct equal_to<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
     {
         return lhs == rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -308,14 +383,20 @@ struct not_equal_to
 template <>
 struct not_equal_to<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) != etl::forward<U>(rhs))
     {
         return lhs != rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -344,14 +425,20 @@ struct greater
 template <>
 struct greater<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) > etl::forward<U>(rhs))
     {
         return lhs > rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -380,14 +467,20 @@ struct greater_equal
 template <>
 struct greater_equal<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) >= etl::forward<U>(rhs))
     {
         return lhs >= rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -416,14 +509,20 @@ struct less
 template <>
 struct less<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
     {
         return lhs < rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -452,14 +551,20 @@ struct less_equal
 template <>
 struct less_equal<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) <= etl::forward<U>(rhs))
     {
         return lhs <= rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -488,14 +593,20 @@ struct logical_and
 template <>
 struct logical_and<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) && etl::forward<U>(rhs))
     {
         return lhs && rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -524,14 +635,20 @@ struct logical_or
 template <>
 struct logical_or<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) || etl::forward<U>(rhs))
     {
         return lhs || rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -557,14 +674,20 @@ struct logical_not
 template <>
 struct logical_not<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(!etl::forward<T>(arg))
     {
         return !arg;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -593,14 +716,20 @@ struct bit_and
 template <>
 struct bit_and<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) & etl::forward<U>(rhs))
     {
         return lhs & rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -628,14 +757,20 @@ struct bit_or
 template <>
 struct bit_or<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) | etl::forward<U>(rhs))
     {
         return lhs | rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -663,14 +798,20 @@ struct bit_xor
 template <>
 struct bit_xor<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
         -> decltype(etl::forward<T>(lhs) ^ etl::forward<U>(rhs))
     {
         return lhs ^ rhs;
     }
-
-    // using is_transparent = true;
 };
 
 /**
@@ -695,14 +836,20 @@ struct bit_not
 template <>
 struct bit_not<void>
 {
+    /**
+     * @brief The member type is_transparent indicates to the caller that this function
+     * object is a transparent function object: it accepts arguments of arbitrary types
+     * and uses perfect forwarding, which avoids unnecessary copying and conversion when
+     * the function object is used in heterogeneous context, or with rvalue arguments.
+     */
+    using is_transparent = void;
+
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
         -> decltype(~etl::forward<T>(arg))
     {
         return ~arg;
     }
-
-    // using is_transparent = true;
 };
 
 template <typename>
