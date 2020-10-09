@@ -85,7 +85,7 @@ public:
         if (str != nullptr && len + 1 < Capacity)
         {
             clear_storage();
-            size_ = len;
+            unsafe_set_size(len);
             etl::memcpy(&data_[0], str, len);
         }
     }
@@ -112,7 +112,7 @@ public:
         {
             clear_storage();
             fill(begin(), begin() + count, ch);
-            size_ = count;
+            unsafe_set_size(count);
         }
     }
 
@@ -323,8 +323,7 @@ public:
      */
     constexpr auto operator[](size_type index) noexcept -> reference
     {
-        assert(index < size_);
-        return data_[index];
+        return unsafe_at(index);
     }
 
     /**
@@ -332,8 +331,7 @@ public:
      */
     constexpr auto operator[](size_type index) const noexcept -> const_reference
     {
-        assert(index < size_);
-        return data_[index];
+        return unsafe_at(index);
     }
 
     /**
@@ -432,19 +430,14 @@ public:
     /**
      * @brief Accesses the first character.
      */
-    [[nodiscard]] constexpr auto front() noexcept -> reference
-    {
-        assert(!empty());
-        return data_[0];
-    }
+    [[nodiscard]] constexpr auto front() noexcept -> reference { return unsafe_at(0); }
 
     /**
      * @brief Accesses the first character.
      */
     [[nodiscard]] constexpr auto front() const noexcept -> const_reference
     {
-        assert(!empty());
-        return data_[0];
+        return unsafe_at(0);
     }
 
     /**
@@ -452,8 +445,7 @@ public:
      */
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
-        assert(!empty());
-        return data_[size_ - 1];
+        return unsafe_at(size() - 1);
     }
 
     /**
@@ -461,8 +453,7 @@ public:
      */
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
-        assert(!empty());
-        return data_[size_ - 1];
+        return unsafe_at(size() - 1);
     }
 
     /**
@@ -567,7 +558,7 @@ public:
     constexpr auto clear() noexcept -> void
     {
         clear_storage();
-        size_ = 0;
+        unsafe_set_size(0);
     }
 
     /**
@@ -606,9 +597,7 @@ public:
         auto const distance = static_cast<size_type>(etl::distance(first, last));
         assert(size() > distance);
         etl::rotate(begin() + start, begin() + start + distance, end());
-        // etl::fill(begin() + distance, end(), '\0');
-        size_ -= distance;
-        data_[size()] = '\0';
+        unsafe_set_size(size() - distance);
         return begin() + start;
     }
 
@@ -628,11 +617,7 @@ public:
      */
     constexpr auto pop_back() noexcept -> void
     {
-        if (!empty())
-        {
-            data_[size_ - 1] = '\0';
-            size_--;
-        }
+        if (!empty()) { unsafe_set_size(size() - 1); }
     }
 
     /**
@@ -642,9 +627,8 @@ public:
         -> basic_static_string&
     {
         auto const safe_count = etl::min(count, capacity() - size() - 1);
-        for (size_type i = 0; i < safe_count; i++) { data_[size_ + i] = s; }
-        size_ += safe_count;
-        data_[size_] = 0;
+        for (size_type i = 0; i < safe_count; i++) { data_[size() + i] = s; }
+        unsafe_set_size(size() + safe_count);
         return *this;
     };
 
@@ -666,9 +650,8 @@ public:
         -> basic_static_string&
     {
         auto const safe_count = etl::min(count, capacity() - size() - 1);
-        for (size_type i = 0; i < safe_count; i++) { data_[size_ + i] = s[i]; }
-        size_ += safe_count;
-        data_[size_] = 0;
+        for (size_type i = 0; i < safe_count; i++) { data_[size() + i] = s[i]; }
+        unsafe_set_size(size() + safe_count);
         return *this;
     };
 
@@ -1102,7 +1085,7 @@ public:
      */
     constexpr auto resize(size_type count, value_type ch) noexcept -> void
     {
-        if (size() > count) { size_ = count; }
+        if (size() > count) { unsafe_set_size(count); }
         if (size() < count) { append(count, ch); }
     }
 
@@ -1340,6 +1323,26 @@ public:
     constexpr static size_type npos = static_cast<size_type>(-1);
 
 private:
+    constexpr auto unsafe_set_size(size_type const new_size_) noexcept -> void
+    {
+        assert(new_size_ <= Capacity - 1);
+        size_        = new_size_;
+        data_[size_] = '\0';
+    }
+
+    [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
+    {
+        assert(index < size_);
+        return data_[index];
+    }
+
+    [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept
+        -> const_reference
+    {
+        assert(index < size_);
+        return data_[index];
+    }
+
     constexpr auto insert_impl(iterator pos, const_pointer text, size_type count) -> void
     {
         // Insert text at end.
