@@ -346,7 +346,7 @@ private:
 /**
  * @brief Selects the vector storage.
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Compare = etl::less<>>
 using static_set_storage_type
     = etl::conditional_t<Capacity == 0, static_set_zero_storage<Key>,
                          static_set_trivial_storage<Key, Capacity, Compare>>;
@@ -356,7 +356,7 @@ using static_set_storage_type
  * @brief etl::static_set is an associative container that contains a sorted set of unique
  * objects of type Key. Sorting is done using the key comparison function Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
+template <typename Key, etl::size_t Capacity, typename Compare = etl::less<>>
 class static_set : private detail::static_set_storage_type<Key, Capacity, Compare>
 {
 private:
