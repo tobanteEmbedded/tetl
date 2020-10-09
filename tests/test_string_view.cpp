@@ -582,6 +582,58 @@ TEST_CASE("string_view: substr", "[string_view]")
     REQUIRE(sub3.at(1) == 't');
 }
 
+TEST_CASE("string_view: compare(string)", "[string]")
+{
+    SECTION("empty string same capacity")
+    {
+        auto lhs = etl::string_view();
+        auto rhs = etl::string_view();
+
+        CHECK(lhs.compare(rhs) == 0);
+        CHECK(rhs.compare(lhs) == 0);
+    }
+
+    SECTION("same size equal")
+    {
+        auto const lhs = etl::string_view("test");
+        auto const rhs = etl::string_view("test");
+
+        CHECK(lhs.compare("test") == 0);
+        CHECK(lhs.compare(etl::string_view("test")) == 0);
+        CHECK(lhs.compare(rhs) == 0);
+        CHECK(rhs.compare(lhs) == 0);
+
+        CHECK(lhs.compare(1, 1, "test") < 0);
+        CHECK(lhs.compare(1, 1, etl::string_view("test")) < 0);
+        CHECK(lhs.compare(1, 1, rhs) < 0);
+        CHECK(rhs.compare(1, 1, lhs) < 0);
+
+        CHECK(lhs.compare(1, 1, rhs, 1, 1) == 0);
+        CHECK(rhs.compare(1, 1, lhs, 1, 1) == 0);
+
+        CHECK(etl::string_view("te").compare(0, 2, etl::string_view("test"), 0, 2) == 0);
+        CHECK(etl::string_view("abcabc").compare(3, 3, etl::string_view("abc"), 0, 3)
+              == 0);
+        CHECK(etl::string_view("abcabc").compare(3, 1, etl::string_view("abc"), 0, 3)
+              < 0);
+        CHECK(etl::string_view("abcabc").compare(3, 3, etl::string_view("abc"), 0, 1)
+              > 0);
+
+        CHECK(etl::string_view("abcabc").compare(3, 3, "abc", 3) == 0);
+        CHECK(etl::string_view("abcabc").compare(3, 1, "abc", 0, 3) < 0);
+        CHECK(etl::string_view("abcabc").compare(3, 3, "abc", 0, 1) > 0);
+    }
+
+    SECTION("different size equal")
+    {
+        auto const lhs = etl::string_view("test");
+        auto const rhs = etl::string_view("te");
+
+        CHECK(lhs.compare(rhs) > 0);
+        CHECK(rhs.compare(etl::string_view("test")) < 0);
+    }
+}
+
 TEST_CASE("string_view: operator==", "[string_view]")
 {
     auto const sv = etl::string_view {"test"};
