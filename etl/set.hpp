@@ -346,7 +346,7 @@ private:
 /**
  * @brief Selects the vector storage.
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<>>
+template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
 using static_set_storage_type
     = etl::conditional_t<Capacity == 0, static_set_zero_storage<Key>,
                          static_set_trivial_storage<Key, Capacity, Compare>>;
@@ -356,7 +356,7 @@ using static_set_storage_type
  * @brief etl::static_set is an associative container that contains a sorted set of unique
  * objects of type Key. Sorting is done using the key comparison function Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<>>
+template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
 class static_set : private detail::static_set_storage_type<Key, Capacity, Compare>
 {
 private:
@@ -630,6 +630,16 @@ public:
     }
 
     /**
+     * @brief Returns the number of elements with key that compares equivalent to the
+     * value \p x.
+     */
+    template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+    [[nodiscard]] constexpr auto count(K const& x) const -> size_type
+    {
+        return contains(x) ? 1 : 0;
+    }
+
+    /**
      * @brief Finds an element with key equivalent to key.
      *
      * @return Iterator to an element with key equivalent to key. If no such
@@ -653,12 +663,47 @@ public:
     }
 
     /**
+     * @brief Finds an element with key that compares equivalent to the value \p x.
+     */
+    template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+    constexpr auto find(K const& x) -> iterator
+    {
+        return etl::find_if(begin(), end(), [&x](auto const& val) {
+            auto comp = key_compare();
+            return comp(val, x);
+        });
+    }
+
+    /**
+     * @brief Finds an element with key that compares equivalent to the value \p x.
+     */
+    template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+    constexpr auto find(K const& x) const -> const_iterator
+    {
+        return etl::find_if(cbegin(), cend(), [&x](auto const& val) {
+            auto comp = key_compare();
+            return comp(val, x);
+        });
+    }
+
+    /**
      * @brief Checks if there is an element with key equivalent to key in the
      * container.
      */
     [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept -> bool
     {
         return find(key) != end();
+    }
+
+    /**
+     * @brief Checks if there is an element with key that compares equivalent to the
+     value
+     * \p x.
+     */
+    template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+    [[nodiscard]] constexpr auto contains(K const& x) const -> bool
+    {
+        return find(x) != end();
     }
 
     /**

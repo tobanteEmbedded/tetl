@@ -27,6 +27,7 @@ DAMAGE.
 #include "etl/set.hpp"
 
 #include "etl/array.hpp"
+#include "etl/string.hpp"
 
 #include "catch2/catch.hpp"
 
