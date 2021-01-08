@@ -54,4 +54,8 @@ DAMAGE.
 #define TAETL_IS_TRIVIALLY_ASSIGNABLE(T, Arg) __is_trivially_assignable(T, Arg)
 
 #define TAETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
+
+#define TAETL_BUILTIN_NAN (__builtin_nanf(""))
+#define TAETL_BUILTIN_INFINITY (__builtin_inff())
+
 #endif  // TAETL_INTRINSICS_HPP

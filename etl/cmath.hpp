@@ -32,12 +32,13 @@ DAMAGE.
 #include "etl/detail/sfinae.hpp"
 
 #ifndef NAN
-#define NAN (__builtin_nanf(""))
+#define NAN TAETL_BUILTIN_NAN
 #endif
 
 #ifndef INFINITY
-#define INFINITY (__builtin_inff())
+#define INFINITY TAETL_BUILTIN_INFINITY
 #endif
+
 namespace etl
 {
 /**
