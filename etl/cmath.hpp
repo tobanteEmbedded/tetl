@@ -31,12 +31,16 @@ DAMAGE.
 
 #include "etl/detail/sfinae.hpp"
 
+#ifdef _MSC_VER
+#include <math.h>
+#else
 #ifndef NAN
 #define NAN TAETL_BUILTIN_NAN
 #endif
 
 #ifndef INFINITY
 #define INFINITY TAETL_BUILTIN_INFINITY
+#endif
 #endif
 
 namespace etl
