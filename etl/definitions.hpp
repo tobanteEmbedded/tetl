@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_DEFINITONS_HPP
 #define TAETL_DEFINITONS_HPP
 
+#include "detail/intrinsics.hpp"
 #include "version.hpp"
 
 /**
@@ -34,36 +35,36 @@ DAMAGE.
  */
 namespace etl
 {
-using int8_t = __INT8_TYPE__;
+using int8_t = TAETL_BUILTIN_INT8;
 static_assert(sizeof(etl::int8_t) == 1, "int8 size should be 1");
 
-using int16_t = __INT16_TYPE__;
+using int16_t = TAETL_BUILTIN_INT16;
 static_assert(sizeof(etl::int16_t) == 2, "int16 size should be 2");
 
-using int32_t = __INT32_TYPE__;
+using int32_t = TAETL_BUILTIN_INT32;
 static_assert(sizeof(etl::int32_t) == 4, "int32 size should be 4");
 
-using int64_t = __INT64_TYPE__;
+using int64_t = TAETL_BUILTIN_INT64;
 static_assert(sizeof(etl::int64_t) == 8, "int64 size should be 8");
 
-using uint8_t = __UINT8_TYPE__;
+using uint8_t = TAETL_BUILTIN_UINT8;
 static_assert(sizeof(etl::uint8_t) == 1, "uint8 size should be 1");
 
-using uint16_t = __UINT16_TYPE__;
+using uint16_t = TAETL_BUILTIN_UINT16;
 static_assert(sizeof(etl::uint16_t) == 2, "uint16 size should be 2");
 
-using uint32_t = __UINT32_TYPE__;
+using uint32_t = TAETL_BUILTIN_UINT32;
 static_assert(sizeof(etl::uint32_t) == 4, "uint32 size should be 4");
 
-using uint64_t = __UINT64_TYPE__;
+using uint64_t = TAETL_BUILTIN_UINT64;
 static_assert(sizeof(etl::uint64_t) == 8, "uint64 size should be 8");
 
-using intptr_t  = __INTPTR_TYPE__;
-using uintptr_t = __UINTPTR_TYPE__;
-using intmax_t  = __INTMAX_TYPE__;
-using uintmax_t = __UINTMAX_TYPE__;
-using size_t    = __SIZE_TYPE__;
-using ptrdiff_t = __PTRDIFF_TYPE__;
+using intptr_t  = TAETL_BUILTIN_INTPTR;
+using uintptr_t = TAETL_BUILTIN_UINTPTR;
+using intmax_t  = TAETL_BUILTIN_INTMAX;
+using uintmax_t = TAETL_BUILTIN_UINTMAX;
+using size_t    = TAETL_BUILTIN_SIZET;
+using ptrdiff_t = TAETL_BUILTIN_PTRDIFF;
 using nullptr_t = decltype(nullptr);
 
 struct alignas(long double) max_align_t

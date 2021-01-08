@@ -175,7 +175,7 @@ template <typename Float>
     if (t == 1) { return b; }
 
     auto const x = a + t * (b - a);
-    if (t > 1 == b > a) { return b < x ? x : b; }
+    if ((t > 1) == (b > a)) { return b < x ? x : b; }
     return x < b ? x : b;
 }
 }  // namespace detail

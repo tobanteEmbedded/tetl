@@ -11,7 +11,7 @@ config:
 
 .PHONY: build
 build:
-	cmake --build $(BUILD_DIR) --config $(CONFIG) -- -j
+	cmake --build $(BUILD_DIR) --config $(CONFIG) -- -j6
 
 .PHONY: arm
 arm:
@@ -88,7 +88,7 @@ tidy:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)	
+	rm -rf $(BUILD_DIR)
 	rm -rf build_avr
 	rm -rf build-doc
 
