@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019-2020, Tobias Hienzsch
+Copyright (c) 2019-2021, Tobias Hienzsch
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,13 @@ DAMAGE.
 
 #include "etl/detail/sfinae.hpp"
 
-#include <math.h>
+#ifndef NAN
+#define NAN (__builtin_nanf(""))
+#endif
 
+#ifndef INFINITY
+#define INFINITY (__builtin_inff())
+#endif
 namespace etl
 {
 /**

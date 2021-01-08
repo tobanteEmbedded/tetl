@@ -27,9 +27,9 @@ DAMAGE.
 #ifndef TAETL_LIMITS_HPP
 #define TAETL_LIMITS_HPP
 
-#include <float.h>
-#include <limits.h>
-#include <math.h>
+#include "cfloat.hpp"
+#include "climits.hpp"
+#include "cmath.hpp"
 
 #include "definitions.hpp"
 
