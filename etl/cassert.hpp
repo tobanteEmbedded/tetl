@@ -27,6 +27,12 @@ DAMAGE.
 #ifndef TAETL_CASSERT_HPP
 #define TAETL_CASSERT_HPP
 
+#if __has_include(<assert.h>)
 #include <assert.h>
+#else
+#ifndef assert
+#define assert(x)
+#endif
+#endif
 
 #endif  // TAETL_CASSERT_HPP

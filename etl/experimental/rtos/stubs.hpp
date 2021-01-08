@@ -41,7 +41,7 @@ using configSTACK_DEPTH_TYPE = etl::uint16_t;
 #define errQUEUE_FULL (static_cast<BaseType_t>(0))
 
 // TICK
-using TickType_t = uint32_t;
+using TickType_t = etl::uint32_t;
 
 // SCHEDULER
 inline auto vPortYield() -> void { }
