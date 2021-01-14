@@ -33,6 +33,7 @@ avr:
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/string -I. examples/string.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/tuple -I. examples/tuple.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/type_traits -I. examples/type_traits.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/utility -I. examples/utility.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/vector -I. examples/vector.cpp
 	# 20
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/algorithm -I. examples/algorithm.cpp
@@ -45,6 +46,7 @@ avr:
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/string -I. examples/string.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/tuple -I. examples/tuple.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/type_traits -I. examples/type_traits.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/utility -I. examples/utility.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/vector -I. examples/vector.cpp
 
 .PHONY: test
