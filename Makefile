@@ -28,6 +28,7 @@ avr:
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/chrono -I. examples/chrono.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/optional -I. examples/optional.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/map -I. examples/map.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/set -I. examples/set.cpp
 	avr-gcc --std=c++17 -Os -Wall -Wextra -Wpedantic -o build_avr/17/string -I. examples/string.cpp
@@ -41,6 +42,7 @@ avr:
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/chrono -I. examples/chrono.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/stm32_rtos -I. examples/experimental/stm32_rtos.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/numeric -I. examples/numeric.cpp
+	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/optional -I. examples/optional.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/map -I. examples/map.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/set -I. examples/set.cpp
 	avr-gcc --std=c++2a -Os -Wall -Wextra -Wpedantic -o build_avr/20/string -I. examples/string.cpp

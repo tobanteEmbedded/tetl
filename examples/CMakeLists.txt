@@ -6,6 +6,7 @@ foreach(_target
   "chrono"
   "map"
   "numeric"
+  "optional"
   "set"
   "string"
   "tuple"
