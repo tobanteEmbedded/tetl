@@ -57,23 +57,31 @@ public:
         /**
          * @brief Assigns a value to the referenced bit.
          */
-        auto operator=(bool x) noexcept -> reference&;
+        auto operator=(bool value) noexcept -> reference&
+        {
+            if (value) { *data_ |= static_cast<uint8_t>(1 << (position_)); }
+            return *this;
+        }
 
         /**
          * @brief Assigns a value to the referenced bit.
          * @returns *this
          */
-        auto operator=(reference const& x) noexcept -> reference&;
+        auto operator=(reference const& x) noexcept -> reference&
+        {
+            (*this) = static_cast<bool>(x);
+            return *this;
+        }
 
         /**
          * @brief Returns the value of the referenced bit.
          */
-        operator bool() const noexcept;
+        operator bool() const noexcept { return (*data_ & (1 << position_)) != 0; }
 
         /**
          * @brief Returns the inverse of the referenced bit.
          */
-        auto operator~() const noexcept -> bool;
+        auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
 
         /**
          * @brief Inverts the referenced bit.
@@ -123,6 +131,15 @@ public:
     {
         if (value) { bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7)); }
         return *this;
+    }
+
+    /**
+     * @brief Returns the value of the bit at the position pos. Perfoms no bounds
+     * checking.
+     */
+    [[nodiscard]] constexpr auto operator[](size_t const pos) -> reference
+    {
+        return reference(&bits_[pos >> 3], static_cast<uint8_t>(pos & 0x7));
     }
 
     /**

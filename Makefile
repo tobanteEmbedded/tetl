@@ -27,7 +27,7 @@ COVERAGE_DIR=$(BUILD_DIR_BASE)_coverage
 coverage:
 	mkdir -p $(COVERAGE_DIR)
 	cmake -S . -G Ninja -B$(COVERAGE_DIR) -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
-	cmake --build $(COVERAGE_DIR) -- -j12
+	cmake --build $(COVERAGE_DIR) -- -j6
 	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
 	cd $(COVERAGE_DIR) && ctest -j12
 	cd $(COVERAGE_DIR) && $(LCOV) -c -d . --base-directory . -o test_cov.info
