@@ -44,16 +44,65 @@ class bitset
 {
 public:
     /**
+     * @brief The primary use of std::bitset::reference is to provide an l-value that can
+     * be returned from operator[].
+     *
+     * @details This class is used as a proxy object to allow users to interact with
+     * individual bits of a bitset, since standard C++ types (like references and
+     * pointers) are not built with enough precision to specify individual bits.
+     */
+    class reference
+    {
+    public:
+        /**
+         * @brief Assigns a value to the referenced bit.
+         */
+        auto operator=(bool x) noexcept -> reference&;
+
+        /**
+         * @brief Assigns a value to the referenced bit.
+         * @returns *this
+         */
+        auto operator=(reference const& x) noexcept -> reference&;
+
+        /**
+         * @brief Returns the value of the referenced bit.
+         */
+        operator bool() const noexcept;
+
+        /**
+         * @brief Returns the inverse of the referenced bit.
+         */
+        auto operator~() const noexcept -> bool;
+
+        /**
+         * @brief Inverts the referenced bit.
+         * @returns *this
+         */
+        auto flip() noexcept -> reference&;
+
+    private:
+        explicit reference(uint8_t* data, uint8_t position)
+            : data_ {data}, position_ {position}
+        {
+        }
+
+        friend bitset;
+        uint8_t* data_;
+        uint8_t position_;
+    };
+
+    /**
      * @brief Default constructor. Constructs a bitset with all bits set to zero.
      */
     constexpr bitset() noexcept = default;
 
     /**
-     * @brief Constructs a bitset, initializing the first (rightmost, least significant) M
-     * bit positions to the corresponding bit values of val, where M is the smaller of the
-     * number of bits in an unsigned long long and the number of bits N in the bitset
-     * being constructed. If M is less than N the bitset is longer than 64 bits, the
-     * remaining bit positions are initialized to zeroes.
+     * @brief Constructs a bitset, initializing the first (rightmost, least
+     * significant) M bit positions to the corresponding bit values of val, where M is
+     * the smaller of the number of bits in an unsigned long long and the number of
+     * bits N in the bitset being constructed. If M is less than N the bitset is
+     * longer than 64 bits, the remaining bit positions are initialized to zeroes.
      */
     constexpr bitset(unsigned long long /*val*/) noexcept : bitset {} { }
 
@@ -80,24 +129,57 @@ public:
      * @brief Returns the value of the bit at the position pos. Perfoms no bounds
      * checking.
      */
-    [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
+    [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
-        return (bits_[pos >> 3] & (1 << (pos & 0x7))) != 0;
+        return test(pos);
     }
 
     /**
      * @brief Returns the value of the bit at the position pos. Perfoms no bounds
      * checking.
      */
-    [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
+    [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
     {
-        return test(pos);
+        return (bits_[pos >> 3] & (1 << (pos & 0x7))) != 0;
     }
 
+    /**
+     * @brief Checks if all bits are set to true.
+     */
+    [[nodiscard]] constexpr auto all() const noexcept -> bool
+    {
+        return count() == size();
+    }
+
+    /**
+     * @brief Checks if any bits are set to true.
+     */
+    [[nodiscard]] constexpr auto any() const noexcept -> bool { return count() > 0; }
+
+    /**
+     * @brief Checks if none bits are set to true.
+     */
+    [[nodiscard]] constexpr auto none() const noexcept -> bool { return count() == 0; }
+
+    /**
+     * @brief Returns the number of bits that are set to true.
+     */
+    [[nodiscard]] constexpr auto count() const noexcept -> size_t
+    {
+        size_t count = 0;
+        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t {1} : 0; }
+        return count;
+    }
+
+    /**
+     * @brief Returns the number of bits that the bitset holds.
+     */
+    [[nodiscard]] constexpr auto size() const noexcept -> size_t { return NumberOfBits; }
+
 private:
-    static constexpr size_t size_          = NumberOfBits;
-    static constexpr size_t allocated_     = NumberOfBits >> 3;
-    array<unsigned char, allocated_> bits_ = {};
+    static constexpr size_t size_      = NumberOfBits;
+    static constexpr size_t allocated_ = NumberOfBits >> 3;
+    array<uint8_t, allocated_> bits_   = {};
 };
 
 }  // namespace etl

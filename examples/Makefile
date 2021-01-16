@@ -12,6 +12,7 @@ include mk/avr_atmega328p.mk
 
 EXAMPLES 	+= algorithm
 EXAMPLES 	+= array
+EXAMPLES 	+= bitset
 EXAMPLES 	+= chrono
 EXAMPLES 	+= map
 EXAMPLES 	+= numeric
