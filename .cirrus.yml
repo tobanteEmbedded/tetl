@@ -1,9 +1,0 @@
-task:
-  container:
-    image: tobante/arm-gcc:9.3
-  tests_script: make arm
-
-task:
-  container:
-    image: tobante/avr-gcc:9.2
-  tests_script: make avr

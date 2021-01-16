@@ -1,0 +1,20 @@
+name: ARM
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: tobante/arm-gcc:9.3
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build example project
+        run: make -C examples/projects/arm_make clean all
