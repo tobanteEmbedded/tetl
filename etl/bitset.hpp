@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2019-2020, Tobias Hienzsch
+Copyright (c) 2019-2021, Tobias Hienzsch
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,6 +44,8 @@ namespace etl
  *
  * @include bitset.cpp
  * @todo Converted to and from strings and integers. Add operators & more docs.
+ * @todo Add tests for sizes that are not a power of two. Broken at the moment.
+ * @todo What if position index is out of bounds? Return nullptr?
  */
 template <size_t N>
 class bitset
@@ -128,16 +130,7 @@ public:
     constexpr bitset() noexcept = default;
 
     /**
-     * @brief Constructs a bitset, initializing the first (rightmost, least
-     * significant) M bit positions to the corresponding bit values of val, where M is
-     * the smaller of the number of bits in an unsigned long long and the number of
-     * bits N in the bitset being constructed. If M is less than N the bitset is
-     * longer than 64 bits, the remaining bit positions are initialized to zeroes.
-     */
-    constexpr bitset(unsigned long long /*val*/) noexcept : bitset {} { }
-
-    /**
-     * @brief Sets all bits to true or to specified value. Sets all bits to true.
+     * @brief Sets all bits to true.
      */
     constexpr auto set() noexcept -> bitset<N>&
     {
@@ -146,8 +139,11 @@ public:
     }
 
     /**
-     * @brief Sets all bits to true or to specified value. Sets the bit at position
-     * pos to the value value.
+     * @brief Sets the bit at the given position to the given value.
+     *
+     * @param pos Index of the bit to be modified.
+     * @param value The new value for the bit.
+     * @returns *this
      */
     constexpr auto set(etl::size_t pos, bool value = true) -> bitset<N>&
     {
@@ -174,6 +170,9 @@ public:
 
     /**
      * @brief Sets the bit at position pos to false.
+     *
+     * @param pos Index of the bit to be reset.
+     * @returns *this
      */
     constexpr auto reset(size_t pos) noexcept -> bitset<N>&
     {
@@ -194,6 +193,9 @@ public:
 
     /**
      * @brief Flips the bit at the position pos.
+     *
+     * @param pos Index of the bit to be reset.
+     * @returns *this
      */
     constexpr auto flip(size_t pos) noexcept -> bitset<N>&
     {
@@ -204,8 +206,10 @@ public:
     }
 
     /**
-     * @brief Returns the value of the bit at the position pos. Perfoms no bounds
-     * checking.
+     * @brief Returns a reference like proxy to the bit at the position pos. Perfoms no
+     * bounds checking.
+     *
+     * @param pos Index of the bit.
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) -> reference
     {
@@ -217,6 +221,8 @@ public:
     /**
      * @brief Returns the value of the bit at the position pos. Perfoms no bounds
      * checking.
+     *
+     * @param pos Index of the bit.
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
@@ -226,6 +232,8 @@ public:
     /**
      * @brief Returns the value of the bit at the position pos. Perfoms no bounds
      * checking.
+     *
+     * @param pos Index of the bit.
      */
     [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
     {
