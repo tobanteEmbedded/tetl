@@ -245,8 +245,28 @@ public:
      */
     [[nodiscard]] constexpr auto size() const noexcept -> size_t { return N; }
 
+    /**
+     * @brief Returns true if all of the bits in *this and rhs are equal.
+     */
+    [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept -> bool
+    {
+        for (size_t i = 0; i < size(); ++i)
+        {
+            if (test(i) != rhs.test(i)) { return false; }
+        }
+
+        return true;
+    }
+
+    /**
+     * @brief Returns true if all of the bits in *this and rhs are not equal.
+     */
+    [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept -> bool
+    {
+        return !(*this == rhs);
+    }
+
 private:
-    static constexpr size_t size_      = N;
     static constexpr size_t allocated_ = N >> 3;
     array<uint8_t, allocated_> bits_   = {};
 };

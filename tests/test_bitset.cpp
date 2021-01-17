@@ -115,3 +115,19 @@ TEMPLATE_TEST_CASE_SIG("bitset: flip()", "[bitset]", ((size_t Num), Num), 8, 16,
     b.flip();
     CHECK(b.none());
 }
+
+TEMPLATE_TEST_CASE_SIG("bitset: compare", "[bitset]", ((size_t Num), Num), 8, 16, 32, 64)
+{
+    auto lhs = etl::bitset<Num> {};
+    auto rhs = etl::bitset<Num> {};
+    CHECK(rhs == lhs);
+    CHECK(lhs == rhs);
+    CHECK_FALSE(rhs != lhs);
+    CHECK_FALSE(lhs != rhs);
+
+    rhs.flip();
+    CHECK_FALSE(rhs == lhs);
+    CHECK_FALSE(lhs == rhs);
+    CHECK(rhs != lhs);
+    CHECK(lhs != rhs);
+}
