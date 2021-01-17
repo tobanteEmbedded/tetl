@@ -146,6 +146,24 @@ public:
     }
 
     /**
+     * @brief Sets all bits to false.
+     */
+    constexpr auto reset() noexcept -> bitset<N>&
+    {
+        bits_.fill(0);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bit at position pos to false.
+     */
+    constexpr auto reset(size_t pos) noexcept -> bitset<N>&
+    {
+        bits_[pos >> 3] &= ~(1UL << static_cast<uint8_t>(pos & 0x7));
+        return *this;
+    }
+
+    /**
      * @brief Returns the value of the bit at the position pos. Perfoms no bounds
      * checking.
      */

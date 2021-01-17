@@ -28,14 +28,14 @@ DAMAGE.
 
 #include "etl/bitset.hpp"
 
-TEMPLATE_TEST_CASE_SIG("bitset: construct default", "[bit]", ((size_t Num), Num), 8, 15,
-                       16, 31, 32, 63, 64, 127, 128)
+TEMPLATE_TEST_CASE_SIG("bitset: construct default", "[bitset]", ((size_t Num), Num), 8,
+                       15, 16, 31, 32, 63, 64, 127, 128)
 {
     auto set = etl::bitset<Num> {};
     REQUIRE_FALSE(set.test(0));
 }
 
-TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bit]",
+TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bitset]",
                        ((size_t Num), Num), 8, 15, 16, 31, 32, 63, 64, 127, 128)
 {
     unsigned long long val = 0;
@@ -43,8 +43,8 @@ TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bit]",
     REQUIRE_FALSE(set[0]);
 }
 
-TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bit]", ((size_t Num), Num), 8, 15, 16, 31, 32,
-                       63, 64, 127, 128)
+TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bitset]", ((size_t Num), Num), 8, 15, 16, 31,
+                       32, 63, 64, 127, 128)
 {
     WHEN("b is mutable")
     {
@@ -66,7 +66,7 @@ TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bit]", ((size_t Num), Num), 8, 15, 16,
     }
 }
 
-TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bit]", ((size_t Num), Num), 8, 15, 16, 31,
+TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bitset]", ((size_t Num), Num), 8, 15, 16, 31,
                        32, 63, 64, 127, 128)
 {
     WHEN("b is mutable")
@@ -85,4 +85,22 @@ TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bit]", ((size_t Num), Num), 8, 15, 
         }();
         STATIC_REQUIRE(b[1]);
     }
+}
+
+TEMPLATE_TEST_CASE_SIG("bitset: reset()", "[bitset]", ((size_t Num), Num), 8, 15, 16, 31,
+                       32, 63, 64, 127, 128)
+{
+    auto b = etl::bitset<Num> {};
+
+    b.set(0);
+    b.set(1);
+    CHECK(b.test(0));
+    CHECK(b.test(1));
+
+    b.reset(1);
+    CHECK_FALSE(b.test(1));
+
+    b.reset();
+    CHECK_FALSE(b.test(0));
+    CHECK_FALSE(b.test(1));
 }

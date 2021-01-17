@@ -43,9 +43,19 @@ auto main() -> int
     assert(bits.test(0) == true);
     assert(bits.count() == 1);
 
-    etl::bitset<8>::reference ref = bits[0];
-    assert(ref == true);
-    assert(~ref == false);
+    bits.set(1);
+    assert(bits.test(1) == true);
+    assert(bits.count() == 2);
+
+    bits.reset(1);
+    assert(bits.test(1) == false);
+
+    bits.reset();
+    assert(bits.test(0) == false);
+
+    // etl::bitset<8>::reference ref = bits[0];
+    // assert(ref == true);
+    // assert(~ref == false);
 
     // ref = false;
     // assert(ref == false);
