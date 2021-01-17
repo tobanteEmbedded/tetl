@@ -67,11 +67,11 @@ public:
         {
             if (value)
             {
-                *data_ |= static_cast<uint8_t>(1 << (position_));
+                *data_ |= (1U << position_);
                 return *this;
             }
 
-            *data_ &= ~(1UL << static_cast<uint8_t>(position_));
+            *data_ &= ~(1U << position_);
             return *this;
         }
 
@@ -107,7 +107,7 @@ public:
          */
         constexpr auto flip() noexcept -> reference&
         {
-            *data_ ^= 1UL << static_cast<uint8_t>(position_);
+            *data_ ^= 1U << position_;
             return *this;
         }
 
@@ -141,7 +141,7 @@ public:
      */
     constexpr auto set() noexcept -> bitset<N>&
     {
-        for (auto& b : bits_) { b = etl::numeric_limits<unsigned char>::max(); }
+        for (auto& b : bits_) { b = etl::numeric_limits<uint8_t>::max(); }
         return *this;
     }
 
@@ -151,8 +151,15 @@ public:
      */
     constexpr auto set(etl::size_t pos, bool value = true) -> bitset<N>&
     {
-        assert(pos < size());
-        if (value) { bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7)); }
+        if (value)
+        {
+            auto& byte  = byte_for_position(pos);
+            auto offset = offset_in_byte(pos);
+            byte |= (1 << offset);
+            return *this;
+        }
+
+        reset(pos);
         return *this;
     }
 
@@ -170,8 +177,9 @@ public:
      */
     constexpr auto reset(size_t pos) noexcept -> bitset<N>&
     {
-        assert(pos < size());
-        bits_[pos >> 3] &= ~(1UL << static_cast<uint8_t>(pos & 0x7));
+        auto& byte  = byte_for_position(pos);
+        auto offset = offset_in_byte(pos);
+        byte &= ~(1U << offset);
         return *this;
     }
 
@@ -189,8 +197,9 @@ public:
      */
     constexpr auto flip(size_t pos) noexcept -> bitset<N>&
     {
-        assert(pos < size());
-        bits_[pos >> 3] ^= 1UL << static_cast<uint8_t>(pos & 0x7);
+        auto& byte  = byte_for_position(pos);
+        auto offset = offset_in_byte(pos);
+        byte ^= 1U << offset;
         return *this;
     }
 
@@ -200,8 +209,9 @@ public:
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) -> reference
     {
-        assert(pos < size());
-        return reference(&bits_[pos >> 3], static_cast<uint8_t>(pos & 0x7));
+        auto& byte  = byte_for_position(pos);
+        auto offset = offset_in_byte(pos);
+        return reference(&byte, offset);
     }
 
     /**
@@ -210,7 +220,6 @@ public:
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
-        assert(pos < size());
         return test(pos);
     }
 
@@ -220,7 +229,9 @@ public:
      */
     [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
     {
-        return (bits_[pos >> 3] & (1 << (pos & 0x7))) != 0;
+        auto& byte  = byte_for_position(pos);
+        auto offset = offset_in_byte(pos);
+        return (byte & (1U << offset)) != 0;
     }
 
     /**
@@ -278,6 +289,23 @@ public:
     }
 
 private:
+    [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
+    {
+        assert(pos < size());
+        return bits_[pos >> 3];
+    }
+
+    [[nodiscard]] constexpr auto byte_for_position(size_t pos) -> uint8_t&
+    {
+        assert(pos < size());
+        return bits_[pos >> 3];
+    }
+
+    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t
+    {
+        return pos & 0x7;
+    }
+
     static constexpr size_t allocated_ = N >> 3;
     array<uint8_t, allocated_> bits_   = {};
 };
