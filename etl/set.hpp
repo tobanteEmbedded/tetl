@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 /**
+ * @file set.hpp
  * @example set.cpp
  */
 
@@ -355,6 +356,8 @@ using static_set_storage_type
 /**
  * @brief etl::static_set is an associative container that contains a sorted set of unique
  * objects of type Key. Sorting is done using the key comparison function Compare.
+ *
+ * @include set.cpp
  */
 template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
 class static_set : private detail::static_set_storage_type<Key, Capacity, Compare>

@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 /**
+ * @file optional.hpp
  * @example optional.cpp
  */
 
@@ -46,6 +47,8 @@ namespace etl
  * with uninitialized state. In particular, etl::optional has a constructor with
  * nullopt_t as a single argument, which creates an optional that does not
  * contain a value.
+ *
+ * @include optional.cpp
  */
 struct nullopt_t
 {

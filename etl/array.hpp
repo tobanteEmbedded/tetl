@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 /**
+ * @file array.hpp
  * @example array.cpp
  */
 
@@ -49,6 +50,8 @@ namespace etl
  * array, it doesn't decay to Type* automatically. As an aggregate type, it can be
  * initialized with aggregate-initialization given at most N initializers that are
  * convertible to Type: etl::array<int, 3> a = {1,2,3};.
+ *
+ * @include array.cpp
  */
 template <typename Type, etl::size_t Size>
 struct array

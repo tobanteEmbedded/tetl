@@ -25,6 +25,7 @@ DAMAGE.
 */
 
 /**
+ * @file numeric.hpp
  * @example numeric.cpp
  */
 

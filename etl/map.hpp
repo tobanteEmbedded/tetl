@@ -25,9 +25,9 @@ DAMAGE.
 */
 
 /**
+ * @file map.hpp
  * @example map.cpp
  */
-
 #ifndef TAETL_MAP_HPP
 #define TAETL_MAP_HPP
 
@@ -313,6 +313,8 @@ private:
  * determined by using the equivalence relation. In imprecise terms, two objects a and b
  * are considered equivalent (not unique) if neither compares less than the other:
  * !comp(a, b) && !comp(b, a).
+ *
+ * @include map.cpp
  */
 template <typename KeyT, typename ValueT, size_t Size, typename Compare = etl::less<KeyT>>
 class map : public map_view<KeyT, ValueT, Compare>

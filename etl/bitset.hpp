@@ -27,6 +27,11 @@ DAMAGE.
 #ifndef TAETL_BITSET_HPP
 #define TAETL_BITSET_HPP
 
+/**
+ * @file bitset.hpp
+ * @example bitset.cpp
+ */
+
 #include "array.hpp"
 #include "definitions.hpp"
 #include "limits.hpp"
@@ -37,6 +42,7 @@ namespace etl
  * @brief The class template bitset represents a fixed-size sequence of N bits.
  * Bitsets can be manipulated by standard logic operators.
  *
+ * @include bitset.cpp
  * @todo Converted to and from strings and integers. Add operators & more docs.
  */
 template <size_t N>
