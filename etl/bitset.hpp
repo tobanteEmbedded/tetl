@@ -39,7 +39,7 @@ namespace etl
  *
  * @todo Converted to and from strings and integers. Add operators & more docs.
  */
-template <size_t NumberOfBits>
+template <size_t N>
 class bitset
 {
 public:
@@ -57,7 +57,7 @@ public:
         /**
          * @brief Assigns a value to the referenced bit.
          */
-        auto operator=(bool value) noexcept -> reference&
+        constexpr auto operator=(bool value) noexcept -> reference&
         {
             if (value) { *data_ |= static_cast<uint8_t>(1 << (position_)); }
             return *this;
@@ -67,7 +67,7 @@ public:
          * @brief Assigns a value to the referenced bit.
          * @returns *this
          */
-        auto operator=(reference const& x) noexcept -> reference&
+        constexpr auto operator=(reference const& x) noexcept -> reference&
         {
             (*this) = static_cast<bool>(x);
             return *this;
@@ -76,21 +76,27 @@ public:
         /**
          * @brief Returns the value of the referenced bit.
          */
-        operator bool() const noexcept { return (*data_ & (1 << position_)) != 0; }
+        [[nodiscard]] constexpr operator bool() const noexcept
+        {
+            return (*data_ & (1 << position_)) != 0;
+        }
 
         /**
          * @brief Returns the inverse of the referenced bit.
          */
-        auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
+        [[nodiscard]] constexpr auto operator~() const noexcept -> bool
+        {
+            return !static_cast<bool>(*this);
+        }
 
         /**
          * @brief Inverts the referenced bit.
          * @returns *this
          */
-        auto flip() noexcept -> reference&;
+        constexpr auto flip() noexcept -> reference&;
 
     private:
-        explicit reference(uint8_t* data, uint8_t position)
+        constexpr explicit reference(uint8_t* data, uint8_t position)
             : data_ {data}, position_ {position}
         {
         }
@@ -117,7 +123,7 @@ public:
     /**
      * @brief Sets all bits to true or to specified value. Sets all bits to true.
      */
-    constexpr auto set() noexcept -> bitset<NumberOfBits>&
+    constexpr auto set() noexcept -> bitset<N>&
     {
         for (auto& b : bits_) { b = etl::numeric_limits<unsigned char>::max(); }
         return *this;
@@ -127,7 +133,7 @@ public:
      * @brief Sets all bits to true or to specified value. Sets the bit at position
      * pos to the value value.
      */
-    constexpr auto set(etl::size_t pos, bool value = true) -> bitset<NumberOfBits>&
+    constexpr auto set(etl::size_t pos, bool value = true) -> bitset<N>&
     {
         if (value) { bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7)); }
         return *this;
@@ -191,11 +197,11 @@ public:
     /**
      * @brief Returns the number of bits that the bitset holds.
      */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_t { return NumberOfBits; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_t { return N; }
 
 private:
-    static constexpr size_t size_      = NumberOfBits;
-    static constexpr size_t allocated_ = NumberOfBits >> 3;
+    static constexpr size_t size_      = N;
+    static constexpr size_t allocated_ = N >> 3;
     array<uint8_t, allocated_> bits_   = {};
 };
 
