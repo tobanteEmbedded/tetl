@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/scope_guard.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/scope_guard.hpp"
 
 TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
 {

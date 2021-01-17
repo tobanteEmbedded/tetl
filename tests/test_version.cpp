@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/version.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/version.hpp"
 
 TEST_CASE("version: language_standard", "[vector]")
 {

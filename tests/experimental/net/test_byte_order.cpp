@@ -24,10 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/definitions.hpp"                  // for int8_t, uint16_t, uin...
 #include "etl/experimental/net/byte_order.hpp"  // for hton, ntoh, net
-
-#include "catch2/catch.hpp"
 
 TEST_CASE("experimental/net: ntoh/hton char", "[experimental][net]")
 {

@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/experimental/hardware/mcp23017/mcp23017.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/experimental/hardware/mcp23017/mcp23017.hpp"
 
 using namespace etl::hardware;
 

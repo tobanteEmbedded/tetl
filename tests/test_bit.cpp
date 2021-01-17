@@ -24,10 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/bit.hpp"
 #include "etl/limits.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
 {

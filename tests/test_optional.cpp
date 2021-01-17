@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/optional.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/optional.hpp"
 
 TEMPLATE_TEST_CASE("optional: construct()", "[optional]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,

@@ -24,11 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/functional.hpp"
+#include "catch2/catch.hpp"
 
 #include "etl/array.hpp"
-
-#include "catch2/catch.hpp"
+#include "etl/functional.hpp"
 
 TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
 {

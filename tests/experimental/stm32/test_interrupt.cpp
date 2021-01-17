@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include <bitset>
 
 #include "etl/experimental/hardware/stm32/interrupt.hpp"
-
-#include "catch2/catch.hpp"
 
 using namespace etl::hardware;
 

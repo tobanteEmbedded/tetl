@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/cmath.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/cmath.hpp"
 
 TEMPLATE_TEST_CASE("cmath: isinf", "[cmath]", float, double, long double)
 {

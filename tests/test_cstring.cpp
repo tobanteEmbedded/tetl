@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/array.hpp"
 #include "etl/cstring.hpp"
 #include "etl/string_view.hpp"
-
-#include "catch2/catch.hpp"
 
 TEST_CASE("cstring: strcpy", "[cstring]")
 {

@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
 #include "etl/tuple.hpp"        // for get, tuple
 #include "etl/warning.hpp"      // for ignore_unused
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,

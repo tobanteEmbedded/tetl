@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/concepts.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/concepts.hpp"
 
 #if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace

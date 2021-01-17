@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/numbers.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/numbers.hpp"
 
 TEMPLATE_TEST_CASE("numbers: constants", "[numbers]", float, double, long double)
 {

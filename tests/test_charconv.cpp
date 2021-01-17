@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/charconv.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/charconv.hpp"
 
 TEST_CASE("charconv: chars_format", "[charconv]")
 {

@@ -23,11 +23,12 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+
+#include "catch2/catch.hpp"
+
 #include "etl/stack.hpp"
 
 #include "etl/vector.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("stack: typedefs", "[stack]", char, int, float)
 {

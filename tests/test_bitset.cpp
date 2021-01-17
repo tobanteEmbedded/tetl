@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/bitset.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/bitset.hpp"
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct default", "[bit]", ((size_t Num), Num), 8, 15,
                        16, 31, 32, 63, 64, 127, 128)

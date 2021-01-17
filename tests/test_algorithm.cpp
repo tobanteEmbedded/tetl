@@ -24,6 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/cctype.hpp"
@@ -31,8 +33,6 @@ DAMAGE.
 #include "etl/numeric.hpp"
 #include "etl/string.hpp"
 #include "etl/vector.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("algorithm: iter_swap", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,

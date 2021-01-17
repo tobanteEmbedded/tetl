@@ -23,12 +23,11 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-
-#include <bitset>
+#include "catch2/catch.hpp"
 
 #include "etl/experimental/hardware/stm32/gpio.hpp"
 
-#include "catch2/catch.hpp"
+#include <bitset>
 
 using namespace etl::hardware;
 using register_bits = std::bitset<32>;

@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/limits.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/limits.hpp"
 
 TEST_CASE("limits: float_round_style", "[limits]")
 {

@@ -23,10 +23,11 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#define TAETL_RTOS_USE_STUBS
-#include "etl/experimental/rtos/task.hpp"
 
 #include "catch2/catch.hpp"
+
+#define TAETL_RTOS_USE_STUBS
+#include "etl/experimental/rtos/task.hpp"
 
 namespace rtos = etl::rtos;
 

@@ -23,12 +23,12 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "etl/cstdlib.hpp"
-#include "etl/cstring.hpp"
-
 #include "catch2/catch.hpp"
 
 #include <cstring>
+
+#include "etl/cstdlib.hpp"
+#include "etl/cstring.hpp"
 
 TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
 {

@@ -24,12 +24,12 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/array.hpp"                            // for array
 #include "etl/experimental/net/buffer.hpp"          // for make_buffer
 #include "etl/experimental/net/buffer_const.hpp"    // for const_buffer, ope...
 #include "etl/experimental/net/buffer_mutable.hpp"  // for mutable_buffer
-
-#include "catch2/catch.hpp"
 
 TEST_CASE("experimental/net/mutable_buffer: construct empty", "[experimental][net]")
 {

@@ -24,11 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/array.hpp"
 #include "etl/byte.hpp"
 #include "etl/memory.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t, uint32_t,
                    uint64_t)

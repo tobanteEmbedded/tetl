@@ -23,11 +23,11 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#include "catch2/catch.hpp"
+
 #include "etl/iterator.hpp"
 #include "etl/span.hpp"
 #include "etl/vector.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("span: deduction guides", "[span]", char, int, float)
 {
@@ -160,7 +160,8 @@ TEMPLATE_TEST_CASE("span: begin/end", "[span]", char, int, float)
         REQUIRE_FALSE(etl::begin(sp) == etl::end(sp));
 
         auto counter = 0;
-        etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });
+        etl::for_each(etl::begin(sp), etl::end(sp),
+                      [&counter](auto /*unused*/) { counter++; });
         REQUIRE(counter == 4);
     }
 }

@@ -24,9 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "etl/cctype.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/cctype.hpp"
 
 TEST_CASE("cctype: isalnum", "[cctype]")
 {

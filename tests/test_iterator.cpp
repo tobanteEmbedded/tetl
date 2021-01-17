@@ -24,12 +24,12 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/string_view.hpp"
 #include "etl/vector.hpp"
-
-#include "catch2/catch.hpp"
 
 #include <list>
 

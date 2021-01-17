@@ -1785,7 +1785,7 @@ struct nat
     nat()           = delete;
     nat(nat const&) = delete;
     auto operator=(nat const&) -> nat& = delete;
-    ~nat()                     = delete;
+    ~nat()                             = delete;
 };
 
 using ::etl::swap;

@@ -24,10 +24,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/chrono.hpp"
 #include "etl/warning.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t, etl::int16_t,
                    etl::int32_t, etl::int64_t, float, double)

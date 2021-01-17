@@ -24,12 +24,12 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#include "catch2/catch.hpp"
+
 #include "etl/experimental/format/format.hpp"
 
 #include "etl/string.hpp"
 #include "etl/string_view.hpp"
-
-#include "catch2/catch.hpp"
 
 TEMPLATE_TEST_CASE("experimental/format: formatter<char>", "[experimental][format]",
                    etl::static_string<12>, etl::static_string<32>)

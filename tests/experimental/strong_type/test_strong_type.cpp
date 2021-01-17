@@ -24,10 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-// TAETL
-#include "etl/experimental/strong_type/strong_type.hpp"
-
 #include "catch2/catch.hpp"
+
+#include "etl/experimental/strong_type/strong_type.hpp"
 
 TEMPLATE_TEST_CASE("experimental/strong_type: construct", "[experimental]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
