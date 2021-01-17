@@ -131,3 +131,27 @@ TEMPLATE_TEST_CASE_SIG("bitset: compare", "[bitset]", ((size_t Num), Num), 8, 16
     CHECK(rhs != lhs);
     CHECK(lhs != rhs);
 }
+
+TEMPLATE_TEST_CASE_SIG("bitset: reference", "[bitset]", ((size_t Num), Num), 8, 16, 32,
+                       64)
+{
+    using ref_type = typename etl::bitset<Num>::reference;
+    auto bits      = etl::bitset<Num> {};
+
+    ref_type r1 = bits[0];
+    CHECK_FALSE(static_cast<bool>(r1));
+
+    r1 = true;
+    CHECK(static_cast<bool>(r1));
+
+    r1 = false;
+    CHECK(~r1);
+    CHECK_FALSE(static_cast<bool>(r1));
+
+    bits.set(1);
+    ref_type r2 = bits[1];
+    CHECK(static_cast<bool>(r2));
+
+    r2 = r1;
+    CHECK_FALSE(static_cast<bool>(r2));
+}

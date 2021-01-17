@@ -61,7 +61,7 @@ auto main() -> int
     assert(ref == true);
     assert(~ref == false);
 
-    ref = false;
+    ref.flip();
     assert(ref == false);
     assert(~ref == true);
 
