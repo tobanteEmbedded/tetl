@@ -65,7 +65,13 @@ public:
          */
         constexpr auto operator=(bool value) noexcept -> reference&
         {
-            if (value) { *data_ |= static_cast<uint8_t>(1 << (position_)); }
+            if (value)
+            {
+                *data_ |= static_cast<uint8_t>(1 << (position_));
+                return *this;
+            }
+
+            *data_ &= ~(1UL << static_cast<uint8_t>(position_));
             return *this;
         }
 
@@ -99,7 +105,11 @@ public:
          * @brief Inverts the referenced bit.
          * @returns *this
          */
-        constexpr auto flip() noexcept -> reference&;
+        constexpr auto flip() noexcept -> reference&
+        {
+            *data_ ^= 1UL << static_cast<uint8_t>(position_);
+            return *this;
+        }
 
     private:
         constexpr explicit reference(uint8_t* data, uint8_t position)
@@ -180,6 +190,7 @@ public:
     constexpr auto flip(size_t pos) noexcept -> bitset<N>&
     {
         assert(pos < size());
+        bits_[pos >> 3] ^= 1UL << static_cast<uint8_t>(pos & 0x7);
         return *this;
     }
 

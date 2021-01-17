@@ -53,13 +53,17 @@ auto main() -> int
     bits.reset();
     assert(bits.test(0) == false);
 
-    // etl::bitset<8>::reference ref = bits[0];
-    // assert(ref == true);
-    // assert(~ref == false);
+    etl::bitset<8>::reference ref = bits[0];
+    assert(ref == false);
+    assert(~ref == true);
 
-    // ref = false;
-    // assert(ref == false);
-    // assert(~ref == true);
+    ref = true;
+    assert(ref == true);
+    assert(~ref == false);
+
+    ref = false;
+    assert(ref == false);
+    assert(~ref == true);
 
     return EXIT_SUCCESS;
 }
