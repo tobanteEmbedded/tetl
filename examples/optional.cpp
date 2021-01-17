@@ -24,6 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
+#undef NDEBUG
 #include "etl/optional.hpp"  // for optional
 #include "etl/cassert.hpp"   // for assert
 

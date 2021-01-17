@@ -27,6 +27,8 @@ DAMAGE.
 #include <stdlib.h>
 
 #include "etl/bitset.hpp"
+
+#undef NDEBUG
 #include "etl/cassert.hpp"
 
 auto main() -> int

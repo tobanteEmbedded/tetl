@@ -26,6 +26,7 @@ DAMAGE.
 
 #include <stdio.h>  // for printf
 
+#undef NDEBUG
 #include "etl/cassert.hpp"  // for assert
 #include "etl/utility.hpp"  // for pair
 
