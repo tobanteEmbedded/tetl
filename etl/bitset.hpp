@@ -141,6 +141,7 @@ public:
      */
     constexpr auto set(etl::size_t pos, bool value = true) -> bitset<N>&
     {
+        assert(pos < size());
         if (value) { bits_[pos >> 3] |= static_cast<uint8_t>(1 << (pos & 0x7)); }
         return *this;
     }
@@ -159,7 +160,26 @@ public:
      */
     constexpr auto reset(size_t pos) noexcept -> bitset<N>&
     {
+        assert(pos < size());
         bits_[pos >> 3] &= ~(1UL << static_cast<uint8_t>(pos & 0x7));
+        return *this;
+    }
+
+    /**
+     * @brief Flips all bits (like operator~, but in-place).
+     */
+    constexpr auto flip() noexcept -> bitset<N>&
+    {
+        for (auto& b : bits_) { b = ~b; }
+        return *this;
+    }
+
+    /**
+     * @brief Flips the bit at the position pos.
+     */
+    constexpr auto flip(size_t pos) noexcept -> bitset<N>&
+    {
+        assert(pos < size());
         return *this;
     }
 
@@ -169,6 +189,7 @@ public:
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) -> reference
     {
+        assert(pos < size());
         return reference(&bits_[pos >> 3], static_cast<uint8_t>(pos & 0x7));
     }
 
@@ -178,6 +199,7 @@ public:
      */
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
     {
+        assert(pos < size());
         return test(pos);
     }
 

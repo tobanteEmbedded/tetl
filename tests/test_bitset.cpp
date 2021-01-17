@@ -87,20 +87,31 @@ TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bitset]", ((size_t Num), Num), 8, 1
     }
 }
 
-TEMPLATE_TEST_CASE_SIG("bitset: reset()", "[bitset]", ((size_t Num), Num), 8, 15, 16, 31,
-                       32, 63, 64, 127, 128)
+TEMPLATE_TEST_CASE_SIG("bitset: reset()", "[bitset]", ((size_t Num), Num), 32, 64, 128)
 {
     auto b = etl::bitset<Num> {};
+    CHECK(b.none());
 
     b.set(0);
     b.set(1);
     CHECK(b.test(0));
     CHECK(b.test(1));
+    CHECK(b.any());
 
     b.reset(1);
     CHECK_FALSE(b.test(1));
+    CHECK(b.any());
 
     b.reset();
-    CHECK_FALSE(b.test(0));
-    CHECK_FALSE(b.test(1));
+    CHECK(b.none());
+}
+
+TEMPLATE_TEST_CASE_SIG("bitset: flip()", "[bitset]", ((size_t Num), Num), 8, 16, 32, 64)
+{
+    auto b = etl::bitset<Num> {};
+    CHECK(b.none());
+    b.flip();
+    CHECK(b.all());
+    b.flip();
+    CHECK(b.none());
 }
