@@ -314,6 +314,44 @@ public:
         return !(*this == rhs);
     }
 
+    /**
+     * @brief Sets the bits to the result of binary AND on corresponding pairs of bits of
+     * *this and other.
+     */
+    constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
+    {
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] &= other.bits_[i]; }
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bits to the result of binary OR on corresponding pairs of bits of
+     * *this and other.
+     */
+    constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
+    {
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] |= other.bits_[i]; }
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bits to the result of binary XOR on corresponding pairs of bits of
+     * *this and other.
+     */
+    constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
+    {
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] ^= other.bits_[i]; }
+        return *this;
+    }
+
+    /**
+     * @brief Returns a temporary copy of *this with all bits flipped (binary NOT).
+     */
+    constexpr auto operator~() const noexcept -> bitset<N>
+    {
+        return bitset<N>(*this).flip();
+    }
+
 private:
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
     {
