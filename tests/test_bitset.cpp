@@ -126,6 +126,10 @@ TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bitset]", ((size_t N), N), 8, 16, 3
     {
         bits.set(i);
         CHECK(bits.test(i));
+
+        bits.flip(i);
+        CHECK_FALSE(bits.test(i));
+        CHECK_FALSE(etl::as_const(bits)[i]);
     }
 }
 
@@ -191,6 +195,10 @@ TEMPLATE_TEST_CASE_SIG("bitset: reference", "[bitset]", ((size_t N), N), 8, 16, 
 
     bits.set(1);
     ref_type r2 = bits[1];
+    CHECK(static_cast<bool>(r2));
+    r2.flip();
+    CHECK_FALSE(static_cast<bool>(r2));
+    r2.flip();
     CHECK(static_cast<bool>(r2));
 
     r2 = r1;
