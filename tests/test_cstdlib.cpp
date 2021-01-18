@@ -25,8 +25,6 @@ DAMAGE.
 */
 #include "catch2/catch.hpp"
 
-#include <cstring>
-
 #include "etl/cstdlib.hpp"
 #include "etl/cstring.hpp"
 

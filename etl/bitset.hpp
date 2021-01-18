@@ -32,6 +32,7 @@ DAMAGE.
  * @example bitset.cpp
  */
 
+#include "algorithm.hpp"
 #include "array.hpp"
 #include "definitions.hpp"
 #include "limits.hpp"
@@ -125,9 +126,26 @@ public:
     };
 
     /**
-     * @brief Default constructor. Constructs a bitset with all bits set to zero.
+     * @brief Constructs a bitset with all bits set to zero.
      */
     constexpr bitset() noexcept = default;
+
+    /**
+     * @brief Constructs a bitset, initializing the first (rightmost, least significant) M
+     * bit positions to the corresponding bit values of val, where M is the smaller of the
+     * number of bits in an unsigned long long and the number of bits N in the bitset
+     * being constructed. If M is less than N (the bitset is longer than 64 bits, for
+     * typical implementations of unsigned long long), the remaining bit positions are
+     * initialized to zeroes.
+     */
+    constexpr bitset(unsigned long long val) noexcept : bits_ {0}
+    {
+        auto const n = min<size_t>(numeric_limits<decltype(val)>::digits, size());
+        for (size_t i = 0; i < n; ++i)
+        {
+            if (((val >> i) & 1U) == 1U) { set(i); }
+        }
+    }
 
     /**
      * @brief Sets all bits to true.

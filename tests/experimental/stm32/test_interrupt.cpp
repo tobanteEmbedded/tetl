@@ -26,8 +26,6 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include <bitset>
-
 #include "etl/experimental/hardware/stm32/interrupt.hpp"
 
 using namespace etl::hardware;

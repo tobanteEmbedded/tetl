@@ -28,12 +28,27 @@ DAMAGE.
 
 #include "etl/bitset.hpp"
 
-TEMPLATE_TEST_CASE_SIG("bitset: construct default", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+TEMPLATE_TEST_CASE_SIG("bitset: construct()", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
 {
     auto bits = etl::bitset<N> {};
     CHECK(bits.none());
     CHECK_FALSE(bits.test(0));
+}
+
+TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bitset]",
+                       ((size_t N), N), 8, 16, 32, 64)
+{
+    CHECK(etl::bitset<N>(0b0000'0000).none());
+
+    CHECK(etl::bitset<N>(0b0000'0001).count() == 1);
+    CHECK(etl::bitset<N>(0b0000'0011).count() == 2);
+    CHECK(etl::bitset<N>(0b0000'0111).count() == 3);
+    CHECK(etl::bitset<N>(0b0000'1111).count() == 4);
+
+    CHECK(etl::bitset<N>(0b1000'1111).count() == 5);
+    CHECK(etl::bitset<N>(0b1100'1111).count() == 6);
+    CHECK(etl::bitset<N>(0b1110'1111).count() == 7);
+    CHECK(etl::bitset<N>(0b1111'1111).count() == 8);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
