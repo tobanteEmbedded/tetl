@@ -36,7 +36,7 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/definitions.hpp"
 #include "etl/limits.hpp"
-#include "etl/string.hpp"
+#include "etl/string_view.hpp"
 
 namespace etl
 {
@@ -149,7 +149,7 @@ public:
     }
 
     /**
-     * @brief Constructs a bitset using the characters in the etl::basic_string str.
+     * @brief Constructs a bitset using the characters in the etl::basic_string_view str.
      *
      * @details An optional starting position pos and length n can be provided, as well as
      * characters denoting alternate values for set (one) and unset (zero) bits.
@@ -162,12 +162,11 @@ public:
      * @param zero alternate character for set bits in str
      * @param one alternate character for unset bits in str
      */
-    template <typename CharT, size_t Capacity, typename Traits>
-    explicit bitset(basic_static_string<CharT, Capacity, Traits> const& str,
-                    typename basic_static_string<CharT, Capacity, Traits>::size_type pos
-                    = 0,
-                    typename basic_static_string<CharT, Capacity, Traits>::size_type n
-                    = basic_static_string<CharT, Capacity, Traits>::npos,
+    template <typename CharT, typename Traits>
+    explicit bitset(basic_string_view<CharT, Traits> const& str,
+                    typename basic_string_view<CharT, Traits>::size_type pos = 0,
+                    typename basic_string_view<CharT, Traits>::size_type n
+                    = basic_string_view<CharT, Traits>::npos,
                     CharT zero = CharT('0'), CharT one = CharT('1'))
         : bitset(0ULL)
     {
@@ -180,6 +179,25 @@ public:
             if (Traits::eq(str[i + pos], one)) { set(i, true); }
             if (Traits::eq(str[i + pos], zero)) { set(i, false); }
         }
+    }
+
+    /**
+     * @brief Constructs a bitset using the characters in the char const* str.
+     *
+     * @param str string used to initialize the bitset
+     * @param n number of characters to use from str
+     * @param zero alternate character for set bits in str
+     * @param one alternate character for unset bits in str
+     */
+    template <typename CharT>
+    explicit bitset(CharT const* str,
+                    typename basic_string_view<CharT>::size_type n
+                    = basic_string_view<CharT>::npos,
+                    CharT zero = CharT('0'), CharT one = CharT('1'))
+        : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str)
+                                                     : basic_string_view<CharT>(str, n),
+                 0, n, zero, one)
+    {
     }
 
     /**

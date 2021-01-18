@@ -54,30 +54,58 @@ TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bitset]",
 TEMPLATE_TEST_CASE_SIG("bitset: construct(basic_static_string)", "[bitset]",
                        ((size_t N), N), 8, 16, 32, 64)
 {
-    using String = etl::static_string<16>;
-    CHECK(etl::bitset<N>(String("00000000")).none());
+    using sv = etl::string_view;
+    CHECK(etl::bitset<N>(sv("00000000")).none());
 
-    CHECK(etl::bitset<N>(String("00000001")).count() == 1);
-    CHECK(etl::bitset<N>(String("00000011")).count() == 2);
-    CHECK(etl::bitset<N>(String("00000111")).count() == 3);
-    CHECK(etl::bitset<N>(String("00001111")).count() == 4);
+    CHECK(etl::bitset<N>(sv("00000001")).count() == 1);
+    CHECK(etl::bitset<N>(sv("00000011")).count() == 2);
+    CHECK(etl::bitset<N>(sv("00000111")).count() == 3);
+    CHECK(etl::bitset<N>(sv("00001111")).count() == 4);
 
-    CHECK(etl::bitset<N>(String("10001111")).count() == 5);
-    CHECK(etl::bitset<N>(String("11001111")).count() == 6);
-    CHECK(etl::bitset<N>(String("11101111")).count() == 7);
-    CHECK(etl::bitset<N>(String("11111111")).count() == 8);
+    CHECK(etl::bitset<N>(sv("10001111")).count() == 5);
+    CHECK(etl::bitset<N>(sv("11001111")).count() == 6);
+    CHECK(etl::bitset<N>(sv("11101111")).count() == 7);
+    CHECK(etl::bitset<N>(sv("11111111")).count() == 8);
 
-    CHECK(etl::bitset<N>(String("AAAAAAAA"), 0, String::npos, 'A', 'B').none());
+    CHECK(etl::bitset<N>(sv("AAAAAAAA"), 0, sv::npos, 'A', 'B').none());
 
-    CHECK(etl::bitset<N>(String("AAAAAAAB"), 0, String::npos, 'A', 'B').count() == 1);
-    CHECK(etl::bitset<N>(String("AAAAAABB"), 0, String::npos, 'A', 'B').count() == 2);
-    CHECK(etl::bitset<N>(String("AAAAABBB"), 0, String::npos, 'A', 'B').count() == 3);
-    CHECK(etl::bitset<N>(String("AAAABBBB"), 0, String::npos, 'A', 'B').count() == 4);
+    CHECK(etl::bitset<N>(sv("AAAAAAAB"), 0, sv::npos, 'A', 'B').count() == 1);
+    CHECK(etl::bitset<N>(sv("AAAAAABB"), 0, sv::npos, 'A', 'B').count() == 2);
+    CHECK(etl::bitset<N>(sv("AAAAABBB"), 0, sv::npos, 'A', 'B').count() == 3);
+    CHECK(etl::bitset<N>(sv("AAAABBBB"), 0, sv::npos, 'A', 'B').count() == 4);
 
-    CHECK(etl::bitset<N>(String("BAAABBBB"), 0, String::npos, 'A', 'B').count() == 5);
-    CHECK(etl::bitset<N>(String("BBAABBBB"), 0, String::npos, 'A', 'B').count() == 6);
-    CHECK(etl::bitset<N>(String("BBBABBBB"), 0, String::npos, 'A', 'B').count() == 7);
-    CHECK(etl::bitset<N>(String("BBBBBBBB"), 0, String::npos, 'A', 'B').count() == 8);
+    CHECK(etl::bitset<N>(sv("BAAABBBB"), 0, sv::npos, 'A', 'B').count() == 5);
+    CHECK(etl::bitset<N>(sv("BBAABBBB"), 0, sv::npos, 'A', 'B').count() == 6);
+    CHECK(etl::bitset<N>(sv("BBBABBBB"), 0, sv::npos, 'A', 'B').count() == 7);
+    CHECK(etl::bitset<N>(sv("BBBBBBBB"), 0, sv::npos, 'A', 'B').count() == 8);
+}
+
+TEMPLATE_TEST_CASE_SIG("bitset: construct(char const*)", "[bitset]", ((size_t N), N), 8,
+                       16, 32, 64)
+{
+    CHECK(etl::bitset<N>("00000000").none());
+
+    CHECK(etl::bitset<N>("00000001").count() == 1);
+    CHECK(etl::bitset<N>("00000011").count() == 2);
+    CHECK(etl::bitset<N>("00000111").count() == 3);
+    CHECK(etl::bitset<N>("00001111").count() == 4);
+
+    CHECK(etl::bitset<N>("10001111").count() == 5);
+    CHECK(etl::bitset<N>("11001111").count() == 6);
+    CHECK(etl::bitset<N>("11101111").count() == 7);
+    CHECK(etl::bitset<N>("11111111").count() == 8);
+
+    CHECK(etl::bitset<N>("AAAAAAAA", 8, 'A', 'B').none());
+
+    CHECK(etl::bitset<N>("AAAAAAAB", 8, 'A', 'B').count() == 1);
+    CHECK(etl::bitset<N>("AAAAAABB", 8, 'A', 'B').count() == 2);
+    CHECK(etl::bitset<N>("AAAAABBB", 8, 'A', 'B').count() == 3);
+    CHECK(etl::bitset<N>("AAAABBBB", 8, 'A', 'B').count() == 4);
+
+    CHECK(etl::bitset<N>("BAAABBBB", 8, 'A', 'B').count() == 5);
+    CHECK(etl::bitset<N>("BBAABBBB", 8, 'A', 'B').count() == 6);
+    CHECK(etl::bitset<N>("BBBABBBB", 8, 'A', 'B').count() == 7);
+    CHECK(etl::bitset<N>("BBBBBBBB", 8, 'A', 'B').count() == 8);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
