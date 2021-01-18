@@ -51,6 +51,35 @@ TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bitset]",
     CHECK(etl::bitset<N>(0b1111'1111).count() == 8);
 }
 
+TEMPLATE_TEST_CASE_SIG("bitset: construct(basic_static_string)", "[bitset]",
+                       ((size_t N), N), 8, 16, 32, 64)
+{
+    using String = etl::static_string<16>;
+    CHECK(etl::bitset<N>(String("00000000")).none());
+
+    CHECK(etl::bitset<N>(String("00000001")).count() == 1);
+    CHECK(etl::bitset<N>(String("00000011")).count() == 2);
+    CHECK(etl::bitset<N>(String("00000111")).count() == 3);
+    CHECK(etl::bitset<N>(String("00001111")).count() == 4);
+
+    CHECK(etl::bitset<N>(String("10001111")).count() == 5);
+    CHECK(etl::bitset<N>(String("11001111")).count() == 6);
+    CHECK(etl::bitset<N>(String("11101111")).count() == 7);
+    CHECK(etl::bitset<N>(String("11111111")).count() == 8);
+
+    CHECK(etl::bitset<N>(String("AAAAAAAA"), 0, String::npos, 'A', 'B').none());
+
+    CHECK(etl::bitset<N>(String("AAAAAAAB"), 0, String::npos, 'A', 'B').count() == 1);
+    CHECK(etl::bitset<N>(String("AAAAAABB"), 0, String::npos, 'A', 'B').count() == 2);
+    CHECK(etl::bitset<N>(String("AAAAABBB"), 0, String::npos, 'A', 'B').count() == 3);
+    CHECK(etl::bitset<N>(String("AAAABBBB"), 0, String::npos, 'A', 'B').count() == 4);
+
+    CHECK(etl::bitset<N>(String("BAAABBBB"), 0, String::npos, 'A', 'B').count() == 5);
+    CHECK(etl::bitset<N>(String("BBAABBBB"), 0, String::npos, 'A', 'B').count() == 6);
+    CHECK(etl::bitset<N>(String("BBBABBBB"), 0, String::npos, 'A', 'B').count() == 7);
+    CHECK(etl::bitset<N>(String("BBBBBBBB"), 0, String::npos, 'A', 'B').count() == 8);
+}
+
 TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
 {
     auto bits = etl::bitset<N> {};

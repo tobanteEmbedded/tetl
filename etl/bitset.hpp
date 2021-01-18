@@ -32,10 +32,11 @@ DAMAGE.
  * @example bitset.cpp
  */
 
-#include "algorithm.hpp"
-#include "array.hpp"
-#include "definitions.hpp"
-#include "limits.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/array.hpp"
+#include "etl/definitions.hpp"
+#include "etl/limits.hpp"
+#include "etl/string.hpp"
 
 namespace etl
 {
@@ -53,7 +54,7 @@ class bitset
 {
 public:
     /**
-     * @brief The primary use of std::bitset::reference is to provide an l-value that can
+     * @brief The primary use of etl::bitset::reference is to provide an l-value that can
      * be returned from operator[].
      *
      * @details This class is used as a proxy object to allow users to interact with
@@ -144,6 +145,40 @@ public:
         for (size_t i = 0; i < n; ++i)
         {
             if (((val >> i) & 1U) == 1U) { set(i); }
+        }
+    }
+
+    /**
+     * @brief Constructs a bitset using the characters in the etl::basic_string str.
+     *
+     * @details An optional starting position pos and length n can be provided, as well as
+     * characters denoting alternate values for set (one) and unset (zero) bits.
+     * Traits::eq() is used to compare the character values. The effective length of the
+     * initializing string is min(n, str.size() - pos).
+     *
+     * @param str string used to initialize the bitset
+     * @param pos a starting offset into str
+     * @param n number of characters to use from str
+     * @param zero alternate character for set bits in str
+     * @param one alternate character for unset bits in str
+     */
+    template <typename CharT, size_t Capacity, typename Traits>
+    explicit bitset(basic_static_string<CharT, Capacity, Traits> const& str,
+                    typename basic_static_string<CharT, Capacity, Traits>::size_type pos
+                    = 0,
+                    typename basic_static_string<CharT, Capacity, Traits>::size_type n
+                    = basic_static_string<CharT, Capacity, Traits>::npos,
+                    CharT zero = CharT('0'), CharT one = CharT('1'))
+        : bitset(0ULL)
+    {
+        auto const len = min<decltype(pos)>(n, str.size() - pos);
+        assert(len >= 0);
+        assert(len <= size());
+
+        for (decltype(pos) i = 0; i < len; ++i)
+        {
+            if (Traits::eq(str[i + pos], one)) { set(i, true); }
+            if (Traits::eq(str[i + pos], zero)) { set(i, false); }
         }
     }
 
