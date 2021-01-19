@@ -31,9 +31,10 @@ DAMAGE.
 
 #include "etl/detail/sfinae.hpp"
 
-#ifdef _MSC_VER
+#if __has_include(<math.h>)
 #include <math.h>
 #else
+
 #ifndef NAN
 #define NAN TAETL_BUILTIN_NAN
 #endif
@@ -41,7 +42,8 @@ DAMAGE.
 #ifndef INFINITY
 #define INFINITY TAETL_BUILTIN_INFINITY
 #endif
-#endif
+
+#endif  // has_include<math.h>
 
 namespace etl
 {
