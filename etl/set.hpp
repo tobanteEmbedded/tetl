@@ -149,7 +149,7 @@ public:
 
 protected:
     /**
-     * @brief (unsafe) Changes the container size to \p new_size.
+     * @brief (unsafe) Changes the container size to new_size.
      *
      * @warning No elements are constructed or destroyed.
      */
@@ -306,7 +306,7 @@ public:
 
 protected:
     /**
-     * @brief (unsafe) Changes the container size to \p new_size.
+     * @brief (unsafe) Changes the container size to new_size.
      *
      * @warning No elements are constructed or destroyed.
      */
@@ -634,7 +634,7 @@ public:
 
     /**
      * @brief Returns the number of elements with key that compares equivalent to the
-     * value \p x.
+     * value x.
      */
     template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
     [[nodiscard]] constexpr auto count(K const& x) const -> size_type
@@ -666,7 +666,7 @@ public:
     }
 
     /**
-     * @brief Finds an element with key that compares equivalent to the value \p x.
+     * @brief Finds an element with key that compares equivalent to the value x.
      */
     template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
     constexpr auto find(K const& x) -> iterator
@@ -678,7 +678,7 @@ public:
     }
 
     /**
-     * @brief Finds an element with key that compares equivalent to the value \p x.
+     * @brief Finds an element with key that compares equivalent to the value x.
      */
     template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
     constexpr auto find(K const& x) const -> const_iterator
@@ -701,7 +701,7 @@ public:
     /**
      * @brief Checks if there is an element with key that compares equivalent to the
      value
-     * \p x.
+     * x.
      */
     template <typename K, TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
     [[nodiscard]] constexpr auto contains(K const& x) const -> bool
@@ -746,10 +746,10 @@ public:
     }
 
     /**
-     * @brief Returns a range containing all elements with the given \p key in the
+     * @brief Returns a range containing all elements with the given key in the
      * container. The range is defined by two iterators, one pointing to the first element
-     * that is not less than \p key and another pointing to the first element greater than
-     * \p key. Alternatively, the first iterator may be obtained with lower_bound(), and
+     * that is not less than key and another pointing to the first element greater than
+     * key. Alternatively, the first iterator may be obtained with lower_bound(), and
      * the second with upper_bound().
      */
     [[nodiscard]] constexpr auto equal_range(key_type const& key) -> iterator
@@ -758,10 +758,10 @@ public:
     }
 
     /**
-     * @brief Returns a range containing all elements with the given \p key in the
+     * @brief Returns a range containing all elements with the given key in the
      * container. The range is defined by two iterators, one pointing to the first element
-     * that is not less than \p key and another pointing to the first element greater than
-     * \p key. Alternatively, the first iterator may be obtained with lower_bound(), and
+     * that is not less than key and another pointing to the first element greater than
+     * key. Alternatively, the first iterator may be obtained with lower_bound(), and
      * the second with upper_bound().
      */
     [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> const_iterator

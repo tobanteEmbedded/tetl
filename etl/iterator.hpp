@@ -371,7 +371,7 @@ private:
 
 /**
  * @brief Convenience function template that constructs a etl::reverse_iterator for the
- * given iterator \p i (which must be a LegacyBidirectionalIterator) with the type deduced
+ * given iterator i (which must be a LegacyBidirectionalIterator) with the type deduced
  * from the type of the argument.
  */
 template <typename Iter>

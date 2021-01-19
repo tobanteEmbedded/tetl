@@ -50,8 +50,8 @@ class basic_static_string
 {
     // clang-format off
     template <typename T>
-    constexpr static bool string_view_and_not_char_pointer = 
-        is_convertible_v<T const&, basic_string_view<CharT, Traits>> 
+    constexpr static bool string_view_and_not_char_pointer =
+        is_convertible_v<T const&, basic_string_view<CharT, Traits>>
         && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
 
@@ -101,7 +101,7 @@ public:
     }
 
     /**
-     * @brief Constructs the string with \p count copies of character \p ch.
+     * @brief Constructs the string with count copies of character ch.
      *
      * @details Fails silently if input length is greater then capacity.
      */
@@ -117,7 +117,7 @@ public:
     }
 
     /**
-     * @brief Constructs the string with the contents of the range [ \p first, \p last).
+     * @brief Constructs the string with the contents of the range [ first, last).
      * Fails silently if input length is greater then capacity.
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
@@ -144,7 +144,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then initializes the string
+     * @brief Implicitly converts t to a string view sv, then initializes the string
      * with the contents of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -156,8 +156,8 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then initializes the string
-     * with the subrange [ \p pos, \p pos + \p n ) of sv.
+     * @brief Implicitly converts t to a string view sv, then initializes the string
+     * with the subrange [ pos, pos + n ) of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
@@ -190,7 +190,7 @@ public:
 
     /**
      * @brief Replaces the contents with those of null-terminated character string
-     pointed to by \p s.
+     pointed to by s.
      */
     constexpr auto operator=(const_pointer s) noexcept -> basic_static_string&
     {
@@ -199,7 +199,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents with character \p ch.
+     * @brief Replaces the contents with character ch.
      */
     constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
     {
@@ -208,7 +208,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
+     * @brief Implicitly converts t to a string view sv, then replaces the contents
      * with those of the sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -237,8 +237,8 @@ public:
     }
 
     /**
-     * @brief Replaces the contents with a substring [ \p pos, \p pos + \p count )
-     * of \p str.
+     * @brief Replaces the contents with a substring [ pos, pos + count )
+     * of str.
      */
     constexpr auto assign(basic_static_string const& str, size_type pos,
                           size_type count = npos) noexcept -> basic_static_string&
@@ -248,7 +248,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents with those of \p str using move semantics.
+     * @brief Replaces the contents with those of str using move semantics.
      */
     constexpr auto assign(basic_static_string&& str) noexcept -> basic_static_string&
     {
@@ -258,7 +258,7 @@ public:
 
     /**
      * @brief Replaces the contents with copies of the characters in the range
-     * [ \p s, \p s + \p count ). This range can contain null characters.
+     * [ s, s + count ). This range can contain null characters.
      */
     constexpr auto assign(const_pointer s, size_type count) noexcept
         -> basic_static_string&
@@ -269,7 +269,7 @@ public:
 
     /**
      * @brief Replaces the contents with those of null-terminated character string pointed
-     * to by \p s.
+     * to by s.
      */
     constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
     {
@@ -279,7 +279,7 @@ public:
 
     /**
      * @brief Replaces the contents with copies of the characters in the
-     * range [ \p first , \p last ).
+     * range [ first , last ).
      */
     template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
     constexpr auto assign(InputIt first, InputIt last) noexcept -> basic_static_string&
@@ -289,7 +289,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
+     * @brief Implicitly converts t to a string view sv, then replaces the contents
      * with the characters from sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -301,8 +301,8 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then replaces the contents
-     * with the characters from the subview [ \p pos, \p pos + \p count ) of sv.
+     * @brief Implicitly converts t to a string view sv, then replaces the contents
+     * with the characters from the subview [ pos, pos + count ) of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept
@@ -633,7 +633,7 @@ public:
     };
 
     /**
-     * @brief Appends the null-terminated character string pointed to by \p s. The
+     * @brief Appends the null-terminated character string pointed to by s. The
      * length of the string is determined by the first null character using
      */
     constexpr auto append(const_pointer s) noexcept -> basic_static_string&
@@ -643,7 +643,7 @@ public:
     };
 
     /**
-     * @brief Appends characters in the range [ \p s, \p s + \p count ). This range can
+     * @brief Appends characters in the range [ s, s + count ). This range can
      * contain null characters.
      */
     constexpr auto append(const_pointer s, size_type count) noexcept
@@ -656,7 +656,7 @@ public:
     };
 
     /**
-     * @brief Appends characters in the range [ \p first , \p last ).
+     * @brief Appends characters in the range [ first , last ).
      */
     template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
     constexpr auto append(InputIter first, InputIter last) noexcept
@@ -668,7 +668,7 @@ public:
     }
 
     /**
-     * @brief Appends string \p str.
+     * @brief Appends string str.
      */
     constexpr auto append(basic_static_string const& str) noexcept -> basic_static_string&
     {
@@ -676,7 +676,7 @@ public:
     }
 
     /**
-     * @brief Appends a substring [ \p pos, \p pos + \p count ) of \p str.
+     * @brief Appends a substring [ pos, pos + count ) of str.
      */
     constexpr auto append(basic_static_string const& str, size_type pos,
                           size_type count = npos) noexcept -> basic_static_string&
@@ -685,7 +685,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string_view sv, then appends all characters
+     * @brief Implicitly converts t to a string_view sv, then appends all characters
      * from sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -696,8 +696,8 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string_view sv then appends the characters
-     * from the subview [ \p pos, \p pos + \p count ) of sv.
+     * @brief Implicitly converts t to a string_view sv then appends the characters
+     * from the subview [ pos, pos + count ) of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
     constexpr auto append(T const& t, size_type pos, size_type count = npos)
@@ -708,7 +708,7 @@ public:
     }
 
     /**
-     * @brief Appends string \p str.
+     * @brief Appends string str.
      */
     constexpr auto operator+=(basic_static_string const& str) noexcept
         -> basic_static_string&
@@ -733,7 +733,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then appends characters in the
+     * @brief Implicitly converts t to a string view sv, then appends characters in the
      * string view sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -776,7 +776,7 @@ public:
     }
 
     /**
-     * @brief Inserts string \p str at the position \p index.
+     * @brief Inserts string str at the position index.
      */
     constexpr auto insert(size_type const index, basic_static_string const& str) noexcept
         -> basic_static_string&
@@ -947,7 +947,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then compares the content of
+     * @brief Implicitly converts t to a string view sv, then compares the content of
      * this string to sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -959,7 +959,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then compares a [pos1,
+     * @brief Implicitly converts t to a string view sv, then compares a [pos1,
      * pos1+count1) substring of this string to sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -972,7 +972,7 @@ public:
     }
 
     /**
-     * @brief Implicitly converts \p t to a string view sv, then compares a [pos1,
+     * @brief Implicitly converts t to a string view sv, then compares a [pos1,
      * pos1+count1) substring of this string to a substring [pos2, pos2+count2) of sv.
      */
     template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -1046,7 +1046,7 @@ public:
      * past the end of the string, or if count == npos, the returned substring is [pos,
      * size()).
      *
-     * If \p pos is greater then size(), an empty string will be returned.
+     * If pos is greater then size(), an empty string will be returned.
      */
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const
         -> basic_static_string
@@ -1061,7 +1061,7 @@ public:
      * the copied substring is [pos, size()). The resulting character string is not
      * null-terminated.
      *
-     * If \p pos is greater then size(), nothing will be copied.
+     * If pos is greater then size(), nothing will be copied.
      *
      * @return Number of characters copied.
      */

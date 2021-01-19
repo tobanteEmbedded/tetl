@@ -39,8 +39,8 @@ namespace etl
 #define TAETL_NULL nullptr
 
 /**
- * @brief Copies the character string pointed to by \p src, including the null terminator,
- * to the character array whose first element is pointed to by \p dest.
+ * @brief Copies the character string pointed to by src, including the null terminator,
+ * to the character array whose first element is pointed to by dest.
  *
  * @details The behavior is undefined if the dest array is not large enough. The behavior
  * is undefined if the strings overlap.
@@ -56,8 +56,8 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 }
 
 /**
- * @brief Copies at most \p count characters of the byte string pointed to by \p src
- * (including the terminating null character) to character array pointed to by \p dest.
+ * @brief Copies at most count characters of the byte string pointed to by src
+ * (including the terminating null character) to character array pointed to by dest.
  *
  * @details If count is reached before the entire string src was copied, the resulting
  * character array is not null-terminated. If, after copying the terminating null
@@ -93,8 +93,8 @@ constexpr auto strlen(char const* str) -> etl::size_t
 }
 
 /**
- * @brief Appends a copy of the character string pointed to by \p src to the end of the
- * character string pointed to by \p dest. The character src[0] replaces the null
+ * @brief Appends a copy of the character string pointed to by src to the end of the
+ * character string pointed to by dest. The character src[0] replaces the null
  * terminator at the end of dest. The resulting byte string is null-terminated.
  *
  * @details The behavior is undefined if the destination array is not large enough for the
@@ -110,8 +110,8 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 }
 
 /**
- * @brief Appends a byte string pointed to by \p src to a byte string pointed to by \p
- * dest. At most \p count characters are copied. The resulting byte string is
+ * @brief Appends a byte string pointed to by src to a byte string pointed to by
+ * dest. At most count characters are copied. The resulting byte string is
  * null-terminated.
  *
  * @details The destination byte string must have enough space for the contents of both
@@ -150,12 +150,12 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 }
 
 /**
- * @brief Compares at most \p count characters of two possibly null-terminated arrays. The
+ * @brief Compares at most count characters of two possibly null-terminated arrays. The
  * comparison is done lexicographically. Characters following the null character are not
  * compared.
  *
  * @details The behavior is undefined when access occurs past the end of either array
- * \p lhs or \p rhs. The behavior is undefined when either lhs or rhs is the null pointer.
+ * lhs or rhs. The behavior is undefined when either lhs or rhs is the null pointer.
  */
 constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
 {

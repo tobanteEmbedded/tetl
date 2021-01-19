@@ -48,12 +48,12 @@ public:
     stack() : stack(Container()) { }
 
     /**
-     * @brief Copy-constructs the underlying container c with the contents of \p cont.
+     * @brief Copy-constructs the underlying container c with the contents of cont.
      */
     explicit stack(Container const& cont) : c {cont} { }
 
     /**
-     * @brief Move-constructs the underlying container c with \p cont .
+     * @brief Move-constructs the underlying container c with cont .
      */
     explicit stack(Container&& cont) : c {etl::move(cont)} { }
 

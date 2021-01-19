@@ -357,7 +357,14 @@ template <typename InputIter1, typename InputIter2>
 }
 
 /**
- * @brief Searches the range [first, last) for two consecutive equal elements.
+ * @brief Searches the range [first, last) for two consecutive equal elements. Elements
+ * are compared using the given binary predicate p.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/adjacent_find
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param pred Binary predicate which returns ​true if the elements should be treated as
+ * equal.
  */
 template <typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIter first, ForwardIter last,
@@ -377,15 +384,26 @@ template <typename ForwardIter, typename BinaryPredicate>
 }
 
 /**
- * @brief Searches the range [first, last) for two consecutive equal elements.
+ * @brief Searches the range [first, last) for two consecutive equal elements. Elements
+ * are compared using operator==.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/adjacent_find
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
  */
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
 {
     return adjacent_find(first, last, etl::equal_to<> {});
 }
+
 /**
  * @brief Searches for an element equal to value.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/find
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param value Value to compare the elements to.
  */
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto find(InputIter first, InputIter last,
@@ -400,20 +418,30 @@ template <typename InputIter, typename T>
 
 /**
  * @brief Searches for an element for which predicate p returns true
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/find
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param pred Unary predicate which returns ​true for the required element.
  */
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if(InputIter first, InputIter last,
-                                     UnaryPredicate p) noexcept -> InputIter
+                                     UnaryPredicate pred) noexcept -> InputIter
 {
     for (; first != last; ++first)
     {
-        if (p(*first)) { return first; }
+        if (pred(*first)) { return first; }
     }
     return last;
 }
 
 /**
  * @brief Searches for an element for which predicate q returns false
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/find
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param pred Unary predicate which returns ​true for the required element.
  */
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if_not(InputIter first, InputIter last,
@@ -427,7 +455,16 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
- * @brief
+ * @brief Searches the range [first, last) for any of the elements in the range [s_first,
+ * s_last). Elements are compared using the given binary predicate pred.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/find_first_of
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param s_first The range of elements to search for.
+ * @param s_last The range of elements to search for.
+ * @param pred Binary predicate which returns ​true if the elements should be treated as
+ * equal.
  */
 template <typename InputIter, typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
@@ -446,7 +483,14 @@ template <typename InputIter, typename ForwardIter, typename BinaryPredicate>
 }
 
 /**
- * @brief
+ * @brief Searches the range [first, last) for any of the elements in the range [s_first,
+ * s_last). Elements are compared using operator==.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/find_first_of
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param s_first The range of elements to search for.
+ * @param s_last The range of elements to search for.
  */
 template <typename InputIter, typename ForwardIter>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
@@ -459,7 +503,15 @@ template <typename InputIter, typename ForwardIter>
 /**
  * @brief Searches for the first occurrence of the sequence of elements [s_first,
  * s_last) in the range [first, last). Elements are compared using the given binary
- * predicate \p pred.
+ * predicate pred.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/search
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param s_first The range of elements to search for.
+ * @param s_last The range of elements to search for.
+ * @param pred Binary predicate which returns ​true if the elements should be treated as
+ * equal.
  */
 template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
@@ -472,6 +524,12 @@ template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate
 /**
  * @brief Searches for the first occurrence of the sequence of elements [s_first, s_last)
  * in the range [first, last). Elements are compared using operator==.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/search
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param s_first The range of elements to search for.
+ * @param s_last The range of elements to search for.
  */
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
@@ -484,6 +542,12 @@ template <typename ForwardIter1, typename ForwardIter2>
 /**
  * @brief Searches the sequence [first, last) for the pattern specified in the constructor
  * of searcher.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/search
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param searcher The searcher encapsulating the search algorithm and the pattern to look
+ * for.
  */
 template <typename ForwardIter, typename Searcher>
 [[nodiscard]] constexpr auto search(ForwardIter first, ForwardIter last,
@@ -567,10 +631,10 @@ template <typename ForwardIter, typename T>
 }
 
 /**
- * @brief Copies elements from the range [ \p first , \p last ), to another range
- * beginning at \p destination, omitting the elements which satisfy specific criteria.
+ * @brief Copies elements from the range [ first , last ), to another range
+ * beginning at destination, omitting the elements which satisfy specific criteria.
  * Source and destination ranges cannot overlap. Ignores all elements for which predicate
- * \p p returns true.
+ * p returns true.
  *
  * @return Iterator to the element past the last element copied.
  */
@@ -587,10 +651,10 @@ constexpr auto remove_copy_if(InputIter first, InputIter last, OutputIter destin
 }
 
 /**
- * @brief Copies elements from the range [ \p first , \p last ), to another range
- * beginning at \p destination, omitting the elements which satisfy specific criteria.
+ * @brief Copies elements from the range [ first , last ), to another range
+ * beginning at destination, omitting the elements which satisfy specific criteria.
  * Source and destination ranges cannot overlap. Ignores all elements that are equal to
- * \p value.
+ * value.
  *
  * @return Iterator to the element past the last element copied.
  */
@@ -603,8 +667,8 @@ constexpr auto remove_copy(InputIter first, InputIter last, OutputIter destinati
 }
 
 /**
- * @brief Replaces all elements satisfying specific criteria with \p new_value in the
- * range [ \p first , \p last ). Replaces all elements for which predicate \p p returns
+ * @brief Replaces all elements satisfying specific criteria with new_value in the
+ * range [ first , last ). Replaces all elements for which predicate p returns
  * true.
  */
 template <typename ForwardIt, typename UnaryPredicate, typename T>
@@ -618,8 +682,8 @@ constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
 }
 
 /**
- * @brief Replaces all elements satisfying specific criteria with \p new_value in the
- * range [ \p first , \p last ). Replaces all elements that are equal to \p old_value.
+ * @brief Replaces all elements satisfying specific criteria with new_value in the
+ * range [ first , last ). Replaces all elements that are equal to old_value.
  */
 template <typename ForwardIt, typename T>
 constexpr auto replace(ForwardIt first, ForwardIt last, T const& old_value,
@@ -887,7 +951,7 @@ constexpr auto reverse(BidirIter first, BidirIter last) -> void
 }
 
 /**
- * @brief Copies the elements from the range [ \p first, \p last ) to another range
+ * @brief Copies the elements from the range [ first, last ) to another range
  * beginning at d_first in such a way that the elements in the new range are in
  * reverse order.
  *
@@ -966,7 +1030,7 @@ constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
  * at d_first in such a way that there are no consecutive equal elements. Only the
  * first element of each group of equal elements is copied.
  *
- * @details Elements are compared using the given binary predicate \p pred. The
+ * @details Elements are compared using the given binary predicate pred. The
  * behavior is undefined if it is not an equivalence relation.
  */
 template <typename InputIter, typename OutputIter, typename BinaryPredicate>
@@ -1027,10 +1091,10 @@ constexpr auto partition(ForwardIter first, ForwardIter last, UnaryPredicate p)
 }
 
 /**
- * @brief Copies the elements from the range [ \p first , \p last ) to two different
- * ranges depending on the value returned by the predicate \p p. The elements that satisfy
- * the predicate \p p are copied to the range beginning at \p destination_true. The rest
- * of the elements are copied to the range beginning at \p destination_false.
+ * @brief Copies the elements from the range [ first , last ) to two different
+ * ranges depending on the value returned by the predicate p. The elements that satisfy
+ * the predicate p are copied to the range beginning at destination_true. The rest
+ * of the elements are copied to the range beginning at destination_false.
  *
  * @details The behavior is undefined if the input range overlaps either of the output
  * ranges.
@@ -1059,8 +1123,8 @@ constexpr auto partition_copy(InputIter first, InputIter last,
 }
 
 /**
- * @brief Returns true if all elements in the range [ \p first , \p last ) that satisfy
- * the predicate \p p appear before all elements that don't. Also returns true if the
+ * @brief Returns true if all elements in the range [ first , last ) that satisfy
+ * the predicate p appear before all elements that don't. Also returns true if the
  * range is empty.
  *
  * https://en.cppreference.com/w/cpp/algorithm/is_partitioned
@@ -1083,9 +1147,9 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
- * @brief Examines the partitioned (as if by etl::partition) range [ \p first , \p last )
+ * @brief Examines the partitioned (as if by etl::partition) range [ first , last )
  * and locates the end of the first partition, that is, the first element that does not
- * satisfy p or last if all elements satisfy \p p.
+ * satisfy p or last if all elements satisfy p.
  */
 template <typename ForwardIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto partition_point(ForwardIter first, ForwardIter last,
@@ -1196,9 +1260,9 @@ constexpr auto copy_backward(BidirIter1 first, BidirIter1 last, BidirIter2 d_las
 }
 
 /**
- * @brief Copies the elements from the range [ \p first , \p last ), to another range
- * beginning at \p destination in such a way, that the element \p n_first becomes the
- * first element of the new range and \p n_first - 1 becomes the last element.
+ * @brief Copies the elements from the range [ first , last ), to another range
+ * beginning at destination in such a way, that the element n_first becomes the
+ * first element of the new range and n_first - 1 becomes the last element.
  */
 template <typename ForwardIter, typename OutputIter>
 constexpr auto rotate_copy(ForwardIter first, ForwardIter n_first, ForwardIter last,
@@ -1407,7 +1471,7 @@ template <typename ForwardIter>
 }
 
 /**
- * @brief Checks if the elements in range [ \p first , \p last ) are sorted in
+ * @brief Checks if the elements in range [ first , last ) are sorted in
  * non-descending order. Elements are compared using the given binary comparison function
  * comp.
  */
@@ -1471,10 +1535,10 @@ template <typename ForwardIter, typename T>
 
 /**
  * @brief Returns an iterator pointing to the first element in the range
- * [ \p first , \p last ) that is greater than \p value, or last if no such element is
+ * [ first , last ) that is greater than value, or last if no such element is
  * found.
  *
- * @details The range [ \p first , \p last ) must be partitioned with respect to the
+ * @details The range [ first , last ) must be partitioned with respect to the
  * expression !(value < element) or !comp(value, element), i.e., all elements for which
  * the expression is true must precede all elements for which the expression is false. A
  * fully-sorted range meets this criterion.
@@ -1509,10 +1573,10 @@ template <typename ForwardIter, typename T, typename Compare>
 
 /**
  * @brief Returns an iterator pointing to the first element in the range
- * [ \p first , \p last ) that is greater than \p value, or last if no such element is
+ * [ first , last ) that is greater than value, or last if no such element is
  * found.
  *
- * @details The range [ \p first , \p last ) must be partitioned with respect to the
+ * @details The range [ first , last ) must be partitioned with respect to the
  * expression !(value < element) or !comp(value, element), i.e., all elements for which
  * the expression is true must precede all elements for which the expression is false. A
  * fully-sorted range meets this criterion.
@@ -1552,10 +1616,10 @@ template <typename ForwardIt, typename T>
 }
 
 /**
- * @brief Checks if an element equivalent to value appears within the range [ \p first ,
- * \p last ).
+ * @brief Checks if an element equivalent to value appears within the range [ first ,
+ * last ).
  *
- * @details For etl::binary_search to succeed, the range [ \p first , \p last ) must be at
+ * @details For etl::binary_search to succeed, the range [ first , last ) must be at
  * least partially ordered with respect to value
  *
  * https://en.cppreference.com/w/cpp/algorithm/binary_search
@@ -1569,10 +1633,10 @@ template <typename ForwardIter, typename T, typename Compare>
 }
 
 /**
- * @brief Checks if an element equivalent to value appears within the range [ \p first ,
- * \p last ).
+ * @brief Checks if an element equivalent to value appears within the range [ first ,
+ * last ).
  *
- * @details For etl::binary_search to succeed, the range [ \p first , \p last ) must be at
+ * @details For etl::binary_search to succeed, the range [ first , last ) must be at
  * least partially ordered with respect to value
  *
  * https://en.cppreference.com/w/cpp/algorithm/binary_search

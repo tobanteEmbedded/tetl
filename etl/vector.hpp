@@ -255,7 +255,7 @@ public:
 
 protected:
     /**
-     * @brief (unsafe) Changes the container size to \p new_size.
+     * @brief (unsafe) Changes the container size to new_size.
      *
      * @warning No elements are constructed or destroyed.
      */
@@ -403,7 +403,7 @@ public:
 
 protected:
     /**
-     * @brief (unsafe) Changes the container size to \p new_size.
+     * @brief (unsafe) Changes the container size to new_size.
      *
      * @warning No elements are constructed or destroyed.
      */
@@ -548,7 +548,7 @@ public:
     using base_type::pop_back;
 
     /**
-     * @brief Appends \p value at the end of the vector.
+     * @brief Appends value at the end of the vector.
      *
      * @todo Add noexcept(noexcept(emplace_back(etl::forward<U>(value)))) breaks AVR build
      * GCC8.2 currently.
@@ -745,7 +745,7 @@ public:
     }
 
     /**
-     * @brief Initializes vector with \p n default-constructed elements.
+     * @brief Initializes vector with n default-constructed elements.
      */
     TAETL_REQUIRES(etl::is_copy_constructible_v<T> || etl::is_move_constructible_v<T>)
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
@@ -755,7 +755,7 @@ public:
     }
 
     /**
-     * @brief Initializes vector with \p n with \p value.
+     * @brief Initializes vector with n with value.
      */
     TAETL_REQUIRES(is_copy_constructible_v<T>)
     constexpr static_vector(size_type n,
@@ -809,7 +809,7 @@ public:
     constexpr auto max_size() noexcept -> size_type { return capacity(); }
 
     /**
-     * @brief Resizes the container to contain \p sz elements. If elements need to be
+     * @brief Resizes the container to contain sz elements. If elements need to be
      * appended, these are move-constructed from `T{}` (or copy-constructed if `T` is not
      * `etl::is_move_constructible_v`).
      */
@@ -858,7 +858,7 @@ public:
     }
 
     /**
-     * @brief Unchecked access to element at index \p pos (UB if index not in range)
+     * @brief Unchecked access to element at index pos (UB if index not in range)
      */
     [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
     {
@@ -866,7 +866,7 @@ public:
     }
 
     /**
-     * @brief Unchecked access to element at index \p pos (UB if index not in range)
+     * @brief Unchecked access to element at index pos (UB if index not in range)
      */
     [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept
         -> const_reference
@@ -947,8 +947,8 @@ public:
     }
 
     /**
-     * @brief Resizes the container to contain \p sz elements. If elements need to be
-     * appended, these are copy-constructed from \p value.
+     * @brief Resizes the container to contain sz elements. If elements need to be
+     * appended, these are copy-constructed from value.
      */
     constexpr auto
     resize(size_type sz, T const& value) noexcept(etl::is_nothrow_copy_constructible_v<T>)
