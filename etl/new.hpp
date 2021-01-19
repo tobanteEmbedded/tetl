@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_NEW_HPP
 #define TAETL_NEW_HPP
 
-// Some parts of the new header are declared in the global namespace. To avoid ODR
-// violations, we include the header <new> if it is available.
+// Some parts of the new header are declared in the global namespace. To avoid
+// ODR violations, we include the header <new> if it is available.
 #if __has_include(<new>)
 #include <new>
 #else
@@ -37,27 +37,28 @@ DAMAGE.
 #include "etl/warning.hpp"
 
 /**
- * @brief Called by the standard single-object placement new expression. The standard
- * library implementation performs no action and returns ptr unmodified. The behavior is
- * undefined if this function is called through a placement new expression and ptr is a
- * null pointer.
+ * @brief Called by the standard single-object placement new expression. The
+ * standard library implementation performs no action and returns ptr
+ * unmodified. The behavior is undefined if this function is called through a
+ * placement new expression and ptr is a null pointer.
  */
 [[nodiscard]] auto operator new(etl::size_t count, void* ptr) noexcept -> void*
 {
-    etl::ignore_unused(count);
-    return ptr;
+  etl::ignore_unused(count);
+  return ptr;
 }
 
 /**
- * @brief Called by the standard array form placement new expression. The standard library
- * implementation performs no action and returns ptr unmodified. The behavior is undefined
- * if this function is called through a placement new expression and ptr is a null
- * pointer.
+ * @brief Called by the standard array form placement new expression. The
+ * standard library implementation performs no action and returns ptr
+ * unmodified. The behavior is undefined if this function is called through a
+ * placement new expression and ptr is a null pointer.
  */
-[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept -> void*
+[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept
+  -> void*
 {
-    etl::ignore_unused(count);
-    return ptr;
+  etl::ignore_unused(count);
+  return ptr;
 }
 
 #endif
@@ -65,24 +66,24 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief etl::nothrow_t is an empty class type used to disambiguate the overloads of
- * throwing and non-throwing allocation functions.
+ * @brief etl::nothrow_t is an empty class type used to disambiguate the
+ * overloads of throwing and non-throwing allocation functions.
  */
 struct nothrow_t
 {
-    explicit nothrow_t() = default;
+  explicit nothrow_t() = default;
 };
 
 /**
- * @brief etl::nothrow is a constant of type etl::nothrow_t used to disambiguate the
- * overloads of throwing and non-throwing allocation functions.
+ * @brief etl::nothrow is a constant of type etl::nothrow_t used to disambiguate
+ * the overloads of throwing and non-throwing allocation functions.
  */
 inline constexpr auto nothrow = etl::nothrow_t {};
 
 /**
- * @brief etl::new_handler is the function pointer type (pointer to function that takes no
- * arguments and returns void), which is used by the functions etl::set_new_handler and
- * etl::get_new_handler
+ * @brief etl::new_handler is the function pointer type (pointer to function
+ * that takes no arguments and returns void), which is used by the functions
+ * etl::set_new_handler and etl::get_new_handler
  */
 using new_handler = void (*)();
 }  // namespace etl

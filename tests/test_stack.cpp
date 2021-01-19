@@ -32,6 +32,6 @@ DAMAGE.
 
 TEMPLATE_TEST_CASE("stack: typedefs", "[stack]", char, int, float)
 {
-    STATIC_REQUIRE(true);
-    STATIC_REQUIRE(true);
+  STATIC_REQUIRE(true);
+  STATIC_REQUIRE(true);
 }

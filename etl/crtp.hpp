@@ -35,15 +35,15 @@ namespace etl
 template <typename Type, template <typename> typename CrtpTag>
 struct crtp
 {
-    [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
-    {
-        return static_cast<Type const&>(*this);
-    }
+  [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
+  {
+    return static_cast<Type const&>(*this);
+  }
 
-    [[nodiscard]] constexpr auto underlying() noexcept -> Type&
-    {
-        return static_cast<Type&>(*this);
-    }
+  [[nodiscard]] constexpr auto underlying() noexcept -> Type&
+  {
+    return static_cast<Type&>(*this);
+  }
 };
 
 }  // namespace etl

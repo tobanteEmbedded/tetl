@@ -33,86 +33,92 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Checks if the given character is an alphanumeric character as classified by the
- * default C locale.
+ * @brief Checks if the given character is an alphanumeric character as
+ * classified by the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isalnum
  *
- * @return Non-zero value if the character is an alphanumeric character, 0 otherwise.
+ * @return Non-zero value if the character is an alphanumeric character, 0
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto is_digit = ch >= '0' && ch <= '9';
-    auto is_lower = ch >= 'a' && ch <= 'z';
-    auto is_upper = ch >= 'A' && ch <= 'Z';
+  auto is_digit = ch >= '0' && ch <= '9';
+  auto is_lower = ch >= 'a' && ch <= 'z';
+  auto is_upper = ch >= 'A' && ch <= 'Z';
 
-    return static_cast<int>(is_digit || is_lower || is_upper);
+  return static_cast<int>(is_digit || is_lower || is_upper);
 }
 
 /**
- * @brief Checks if the given character is an alphabetic character as classified by the
- * default C locale.
+ * @brief Checks if the given character is an alphabetic character as classified
+ * by the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isalpha
  *
- * @return Non-zero value if the character is an alphabetic character, 0 otherwise.
+ * @return Non-zero value if the character is an alphabetic character, 0
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto is_lower = ch >= 'a' && ch <= 'z';
-    auto is_upper = ch >= 'A' && ch <= 'Z';
+  auto is_lower = ch >= 'a' && ch <= 'z';
+  auto is_upper = ch >= 'A' && ch <= 'Z';
 
-    return static_cast<int>(is_lower || is_upper);
+  return static_cast<int>(is_lower || is_upper);
 }
 
 /**
- * @brief Checks if the given character is classified as a lowercase character according
- * to the default C locale.
+ * @brief Checks if the given character is classified as a lowercase character
+ * according to the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/islower
  *
- * @return Non-zero value if the character is a lowercase letter, zero otherwise.
+ * @return Non-zero value if the character is a lowercase letter, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch >= 'a' && ch <= 'z');
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
+  return static_cast<int>(ch >= 'a' && ch <= 'z');
 }
 
 /**
- * @brief Checks if the given character is classified as a uppercase character according
- * to the default C locale.
+ * @brief Checks if the given character is classified as a uppercase character
+ * according to the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isupper
  *
- * @return Non-zero value if the character is a uppercase letter, zero otherwise.
+ * @return Non-zero value if the character is a uppercase letter, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch >= 'A' && ch <= 'Z');
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
+  return static_cast<int>(ch >= 'A' && ch <= 'Z');
 }
 
 /**
- * @brief Checks if the given character is one of the 10 decimal digits: 0123456789.
+ * @brief Checks if the given character is one of the 10 decimal digits:
+ * 0123456789.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isdigit
  *
- * @return Non-zero value if the character is a numeric character, zero otherwise.
+ * @return Non-zero value if the character is a numeric character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch >= '0' && ch <= '9');
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
+  return static_cast<int>(ch >= '0' && ch <= '9');
 }
 
 /**
@@ -121,50 +127,51 @@ namespace etl
  *
  * https://en.cppreference.com/w/cpp/string/byte/isxdigit
  *
- * @return Non-zero value if the character is a hexadecimal numeric character, zero
- * otherwise.
+ * @return Non-zero value if the character is a hexadecimal numeric character,
+ * zero otherwise.
  */
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto const is_digit     = ch >= '0' && ch <= '9';
-    auto const is_hex_lower = ch >= 'a' && ch <= 'f';
-    auto const is_hex_upper = ch >= 'A' && ch <= 'F';
+  auto const is_digit     = ch >= '0' && ch <= '9';
+  auto const is_hex_lower = ch >= 'a' && ch <= 'f';
+  auto const is_hex_upper = ch >= 'A' && ch <= 'F';
 
-    return static_cast<int>(is_digit || is_hex_lower || is_hex_upper);
+  return static_cast<int>(is_digit || is_hex_lower || is_hex_upper);
 }
 
 /**
- * @brief Checks if the given character is whitespace character as classified by the
- * default C locale.
+ * @brief Checks if the given character is whitespace character as classified by
+ * the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isspace
  *
- * @return Non-zero value if the character is a whitespace character, zero otherwise.
+ * @return Non-zero value if the character is a whitespace character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto const space           = ch == ' ';
-    auto const form_feed       = ch == '\f';
-    auto const line_feed       = ch == '\n';
-    auto const carriage_return = ch == '\r';
-    auto const horizontal_tab  = ch == '\t';
-    auto const vertical_tab    = ch == '\v';
+  auto const space           = ch == ' ';
+  auto const form_feed       = ch == '\f';
+  auto const line_feed       = ch == '\n';
+  auto const carriage_return = ch == '\r';
+  auto const horizontal_tab  = ch == '\t';
+  auto const vertical_tab    = ch == '\v';
 
-    return static_cast<int>(space || form_feed || line_feed || carriage_return
-                            || horizontal_tab || vertical_tab);
+  return static_cast<int>(space || form_feed || line_feed || carriage_return
+                          || horizontal_tab || vertical_tab);
 }
 
 /**
- * @brief Checks if the given character is a blank character as classified by the
- * currently installed C locale. Blank characters are whitespace characters used to
- * separate words within a sentence. In the default C locale, only space (0x20) and
- * horizontal tab (0x09) are classified as blank characters.
+ * @brief Checks if the given character is a blank character as classified by
+ * the currently installed C locale. Blank characters are whitespace characters
+ * used to separate words within a sentence. In the default C locale, only space
+ * (0x20) and horizontal tab (0x09) are classified as blank characters.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isblank
  *
@@ -172,132 +179,139 @@ namespace etl
  */
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto const space          = ch == ' ';
-    auto const horizontal_tab = ch == '\t';
+  auto const space          = ch == ' ';
+  auto const horizontal_tab = ch == '\t';
 
-    return static_cast<int>(space || horizontal_tab);
+  return static_cast<int>(space || horizontal_tab);
 }
 
 /**
- * @brief Checks if the given character is a punctuation character as classified by the
- * current C locale.
+ * @brief Checks if the given character is a punctuation character as classified
+ * by the current C locale.
  *
- * The default C locale classifies the characters !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ as
- * punctuation.
+ * The default C locale classifies the characters
+ * !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ as punctuation.
  *
  * https://en.cppreference.com/w/cpp/string/byte/ispunct
  *
- * @return Non-zero value if the character is a punctuation character, zero otherwise.
+ * @return Non-zero value if the character is a punctuation character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto const sec_1 = ch >= '!' && ch <= '/';
-    auto const sec_2 = ch >= ':' && ch <= '@';
-    auto const sec_3 = ch >= '[' && ch <= '`';
-    auto const sec_4 = ch >= '{' && ch <= '~';
+  auto const sec_1 = ch >= '!' && ch <= '/';
+  auto const sec_2 = ch >= ':' && ch <= '@';
+  auto const sec_3 = ch >= '[' && ch <= '`';
+  auto const sec_4 = ch >= '{' && ch <= '~';
 
-    return static_cast<int>(sec_1 || sec_2 || sec_3 || sec_4);
+  return static_cast<int>(sec_1 || sec_2 || sec_3 || sec_4);
 }
 
 /**
- * @brief Checks if the given character is graphic (has a graphical representation) as
- * classified by the default C locale.
+ * @brief Checks if the given character is graphic (has a graphical
+ * representation) as classified by the default C locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isgraph
  *
- * @return Non-zero value if the character is a punctuation character, zero otherwise.
+ * @return Non-zero value if the character is a punctuation character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    auto const is_digit = isdigit(ch) != 0;
-    auto const is_upper = isupper(ch) != 0;
-    auto const is_lower = islower(ch) != 0;
-    auto const is_punct = ispunct(ch) != 0;
+  auto const is_digit = isdigit(ch) != 0;
+  auto const is_upper = isupper(ch) != 0;
+  auto const is_lower = islower(ch) != 0;
+  auto const is_punct = ispunct(ch) != 0;
 
-    return static_cast<int>(is_digit || is_lower || is_upper || is_punct);
+  return static_cast<int>(is_digit || is_lower || is_upper || is_punct);
 }
 
 /**
- * @brief Checks if ch is a printable character as classified by the default C locale.
+ * @brief Checks if ch is a printable character as classified by the default C
+ * locale.
  *
  * https://en.cppreference.com/w/cpp/string/byte/isprint
  *
- * @return Non-zero value if the character is a punctuation character, zero otherwise.
+ * @return Non-zero value if the character is a punctuation character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
+  return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
 }
 
 /**
- * @brief Checks if the given character is a control character as classified by the
- * currently installed C locale. In the default, "C" locale, the control characters are
- * the characters with the codes 0x00-0x1F and 0x7F.
+ * @brief Checks if the given character is a control character as classified by
+ * the currently installed C locale. In the default, "C" locale, the control
+ * characters are the characters with the codes 0x00-0x1F and 0x7F.
  *
  * https://en.cppreference.com/w/cpp/string/byte/iscntrl
  *
- * @return Non-zero value if the character is a control character, zero otherwise.
+ * @return Non-zero value if the character is a control character, zero
+ * otherwise.
  */
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
+  return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
 }
 
 /**
- * @brief Converts the given character to lowercase according to the character conversion
- * rules defined by the default C locale.
+ * @brief Converts the given character to lowercase according to the character
+ * conversion rules defined by the default C locale.
  *
- * In the default "C" locale, the following uppercase letters ABCDEFGHIJKLMNOPQRSTUVWXYZ
- * are replaced with respective lowercase letters abcdefghijklmnopqrstuvwxyz.
+ * In the default "C" locale, the following uppercase letters
+ * ABCDEFGHIJKLMNOPQRSTUVWXYZ are replaced with respective lowercase letters
+ * abcdefghijklmnopqrstuvwxyz.
  *
  * https://en.cppreference.com/w/cpp/string/byte/tolower
  *
- * @return Lowercase version of ch or unmodified ch if no lowercase version is listed in
- * the current C locale.
+ * @return Lowercase version of ch or unmodified ch if no lowercase version is
+ * listed in the current C locale.
  */
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
-    return static_cast<int>(ch);
+  if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
+  return static_cast<int>(ch);
 }
 
 /**
- * @brief Converts the given character to uppercase according to the character conversion
- * rules defined by the default C locale.
+ * @brief Converts the given character to uppercase according to the character
+ * conversion rules defined by the default C locale.
  *
- * In the default "C" locale, the following lowercase letters abcdefghijklmnopqrstuvwxyz
- * are replaced with respective uppercase letters ABCDEFGHIJKLMNOPQRSTUVWXYZ.
+ * In the default "C" locale, the following lowercase letters
+ * abcdefghijklmnopqrstuvwxyz are replaced with respective uppercase letters
+ * ABCDEFGHIJKLMNOPQRSTUVWXYZ.
  *
  * https://en.cppreference.com/w/cpp/string/byte/toupper
  *
- * @return Converted character or ch if no uppercase version is defined by the current C
- * locale.
+ * @return Converted character or ch if no uppercase version is defined by the
+ * current C locale.
  */
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    assert(static_cast<unsigned char>(ch) == ch);
+  // ch must de representable as a unsigned char
+  assert(static_cast<unsigned char>(ch) == ch);
 
-    if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
-    return static_cast<int>(ch);
+  if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
+  return static_cast<int>(ch);
 }
 }  // namespace etl
 #endif  // TAETL_CCTYPE_HPP

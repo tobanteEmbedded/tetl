@@ -43,17 +43,17 @@ namespace etl
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...>
 {
-    tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
+  tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
 
-    First first;
+  First first;
 };
 
 template <typename First>
 struct tuple<First>
 {
-    tuple(First f) : first(f) { }
+  tuple(First f) : first(f) { }
 
-    First first;
+  First first;
 };
 
 namespace detail
@@ -61,29 +61,29 @@ namespace detail
 template <int index, typename First, typename... Rest>
 struct get_impl
 {
-    static constexpr auto value(tuple<First, Rest...> const* t)
-        -> decltype(get_impl<index - 1, Rest...>::value(t))
-    {
-        return get_impl<index - 1, Rest...>::value(t);
-    }
+  static constexpr auto value(tuple<First, Rest...> const* t)
+    -> decltype(get_impl<index - 1, Rest...>::value(t))
+  {
+    return get_impl<index - 1, Rest...>::value(t);
+  }
 };
 
 template <typename First, typename... Rest>
 struct get_impl<0, First, Rest...>
 {
-    static constexpr auto value(tuple<First, Rest...> const* t) -> First
-    {
-        return t->first;
-    }
+  static constexpr auto value(tuple<First, Rest...> const* t) -> First
+  {
+    return t->first;
+  }
 };
 
 }  // namespace detail
 
 template <int index, typename First, typename... Rest>
 constexpr auto get(tuple<First, Rest...> const& t)
-    -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
+  -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
 {
-    return detail::get_impl<index, First, Rest...>::value(&t);
+  return detail::get_impl<index, First, Rest...>::value(&t);
 }
 
 // namespace detail
@@ -99,15 +99,17 @@ constexpr auto get(tuple<First, Rest...> const& t)
 // }  // namespace detail
 
 // /**
-//  * @brief An object of unspecified type such that any value can be assigned to it with
-//  no
-//  * effect. Intended for use with etl::tie when unpacking a etl::tuple, as a placeholder
+//  * @brief An object of unspecified type such that any value can be assigned
+//  to it with no
+//  * effect. Intended for use with etl::tie when unpacking a etl::tuple, as a
+//  placeholder
 //  * for the arguments that are not used.
 //  */
 // inline constexpr detail::ignore_t ignore;
 
 // /**
-//  * @brief Creates a tuple of lvalue references to its arguments or instances of
+//  * @brief Creates a tuple of lvalue references to its arguments or instances
+//  of
 //  * etl::ignore.
 //  */
 // template <typename... Types>

@@ -34,23 +34,23 @@ namespace rtos = etl::rtos;
 template <typename LoopType = rtos::once>
 struct example_task
 {
-    auto run() -> void
-    {
-        auto loopControl = LoopType {};
-        while (loopControl()) { rtos::yield_task(); }
+  auto run() -> void
+  {
+    auto loopControl = LoopType {};
+    while (loopControl()) { rtos::yield_task(); }
 
-        rtos::delete_task(nullptr);
-    }
+    rtos::delete_task(nullptr);
+  }
 };
 
 TEST_CASE("experimental/rtos/task: create", "[experimental][rtos]")
 {
-    auto task = example_task<rtos::once> {};
+  auto task = example_task<rtos::once> {};
 
-    rtos::create_task(task, "test", 255);
-    rtos::start_scheduler();
+  rtos::create_task(task, "test", 255);
+  rtos::start_scheduler();
 
-    // Run would normally be called by rtos::start_scheduler(). Only used for
-    // stubs.
-    task.run();
+  // Run would normally be called by rtos::start_scheduler(). Only used for
+  // stubs.
+  task.run();
 }

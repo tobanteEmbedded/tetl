@@ -30,47 +30,47 @@ DAMAGE.
 
 TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
 {
-    SECTION("single")
+  SECTION("single")
+  {
+    auto counter = 0;
     {
-        auto counter = 0;
-        {
-            etl::scope_exit e {[&] { counter++; }};
-        }
-        REQUIRE(counter == 1);
+      etl::scope_exit e {[&] { counter++; }};
     }
+    REQUIRE(counter == 1);
+  }
 
-    SECTION("multiple")
+  SECTION("multiple")
+  {
+    auto counter = 0;
     {
-        auto counter = 0;
-        {
-            etl::scope_exit e1 {[&] { counter++; }};
-            etl::scope_exit e2 {[&] { counter++; }};
-            etl::scope_exit e3 {[&] { counter++; }};
-        }
-        REQUIRE(counter == 3);
+      etl::scope_exit e1 {[&] { counter++; }};
+      etl::scope_exit e2 {[&] { counter++; }};
+      etl::scope_exit e3 {[&] { counter++; }};
     }
+    REQUIRE(counter == 3);
+  }
 
-    SECTION("move")
+  SECTION("move")
+  {
+    auto counter = 0;
     {
-        auto counter = 0;
-        {
-            auto e1 = etl::scope_exit {[&] { counter++; }};
-            {
-                auto e2 {etl::move(e1)};
-                REQUIRE(counter == 0);
-            }
-            REQUIRE(counter == 1);
-        }
-        REQUIRE(counter == 1);
-    }
-
-    SECTION("release")
-    {
-        auto counter = 0;
-        {
-            etl::scope_exit e {[&] { counter++; }};
-            e.release();
-        }
+      auto e1 = etl::scope_exit {[&] { counter++; }};
+      {
+        auto e2 {etl::move(e1)};
         REQUIRE(counter == 0);
+      }
+      REQUIRE(counter == 1);
     }
+    REQUIRE(counter == 1);
+  }
+
+  SECTION("release")
+  {
+    auto counter = 0;
+    {
+      etl::scope_exit e {[&] { counter++; }};
+      e.release();
+    }
+    REQUIRE(counter == 0);
+  }
 }

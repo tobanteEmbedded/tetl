@@ -61,7 +61,7 @@ auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
 template <typename T>
 constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
 {
-    return static_cast<typename etl::remove_reference<T>::type&&>(t);
+  return static_cast<typename etl::remove_reference<T>::type&&>(t);
 }
 
 /**
@@ -77,7 +77,7 @@ constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
 template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
 {
-    return static_cast<T&&>(param);
+  return static_cast<T&&>(param);
 }
 
 /**
@@ -93,7 +93,7 @@ constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
 template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 {
-    return static_cast<T&&>(param);
+  return static_cast<T&&>(param);
 }
 
 /**
@@ -104,9 +104,9 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 template <typename T, typename U = T>
 [[nodiscard]] constexpr auto exchange(T& obj, U&& new_value) -> T
 {
-    T old_value = etl::move(obj);
-    obj         = etl::forward<U>(new_value);
-    return old_value;
+  T old_value = etl::move(obj);
+  obj         = etl::forward<U>(new_value);
+  return old_value;
 }
 
 /**
@@ -115,7 +115,7 @@ template <typename T, typename U = T>
 template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> etl::add_const_t<T>&
 {
-    return t;
+  return t;
 }
 
 /**
@@ -124,21 +124,22 @@ template <typename T>
  */
 template <typename T>
 constexpr auto as_const(T const&&) -> void
-    = delete;
+  = delete;
 
 namespace detail
 {
 template <typename T>
 struct is_integer_and_not_char
     : etl::integral_constant<
-          bool,
-          is_integral_v<
-              T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
+        bool,
+        is_integral_v<
+          T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
 {
 };
 
 template <typename T>
-inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::value;
+inline constexpr auto is_integer_and_not_char_v
+  = is_integer_and_not_char<T>::value;
 
 }  // namespace detail
 
@@ -154,21 +155,21 @@ inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::va
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
-    using UT = etl::make_unsigned_t<T>;
-    using UU = etl::make_unsigned_t<U>;
+  using UT = etl::make_unsigned_t<T>;
+  using UU = etl::make_unsigned_t<U>;
 
-    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t == u; }
-    else if constexpr (etl::is_signed_v<T>)
-    {
-        return t < 0 ? false : UT(t) == u;
-    }
-    else
-    {
-        return u < 0 ? false : t == UU(u);
-    }
+  if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t == u; }
+  else if constexpr (etl::is_signed_v<T>)
+  {
+    return t < 0 ? false : UT(t) == u;
+  }
+  else
+  {
+    return u < 0 ? false : t == UU(u);
+  }
 }
 
 /**
@@ -183,10 +184,10 @@ template <typename T, typename U,
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_equal(t, u);
+  return !cmp_equal(t, u);
 }
 
 /**
@@ -201,20 +202,20 @@ template <typename T, typename U,
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
-    using UT = etl::make_unsigned_t<T>;
-    using UU = etl::make_unsigned_t<U>;
-    if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t < u; }
-    else if constexpr (etl::is_signed_v<T>)
-    {
-        return t < 0 ? true : UT(t) < u;
-    }
-    else
-    {
-        return u < 0 ? false : t < UU(u);
-    }
+  using UT = etl::make_unsigned_t<T>;
+  using UU = etl::make_unsigned_t<U>;
+  if constexpr (etl::is_signed_v<T> == etl::is_signed_v<U>) { return t < u; }
+  else if constexpr (etl::is_signed_v<T>)
+  {
+    return t < 0 ? true : UT(t) < u;
+  }
+  else
+  {
+    return u < 0 ? false : t < UU(u);
+  }
 }
 
 /**
@@ -229,10 +230,10 @@ template <typename T, typename U,
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
-    return cmp_less(u, t);
+  return cmp_less(u, t);
 }
 
 /**
@@ -247,10 +248,10 @@ template <typename T, typename U,
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_greater(t, u);
+  return !cmp_greater(t, u);
 }
 
 /**
@@ -265,10 +266,10 @@ template <typename T, typename U,
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                              detail::is_integer_and_not_char_v<U>)>
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
-    return !cmp_less(t, u);
+  return !cmp_less(t, u);
 }
 
 /**
@@ -282,11 +283,12 @@ template <typename T, typename U,
  *
  * @ref https://en.cppreference.com/w/cpp/utility/in_range
  */
-template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
+template <typename R, typename T,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
-    return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
-           && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());
+  return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
+         && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());
 }
 
 /**
@@ -303,119 +305,121 @@ template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_cha
 template <typename T1, typename T2>
 struct pair
 {
-    using first_type  = T1;
-    using second_type = T2;
+  using first_type  = T1;
+  using second_type = T2;
 
-    /**
-     * @brief Default constructor. Value-initializes both elements of the pair, first and
-     * second.
-     */
-    TAETL_REQUIRES(is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
-    constexpr pair() : first {}, second {} { }
+  /**
+   * @brief Default constructor. Value-initializes both elements of the pair,
+   * first and second.
+   */
+  TAETL_REQUIRES(
+    is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
+  constexpr pair() : first {}, second {} { }
 
-    /**
-     * @brief Initializes first with x and second with y.
-     */
-    TAETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
-    constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
+  /**
+   * @brief Initializes first with x and second with y.
+   */
+  TAETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
+  constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
-    /**
-     * @brief Initializes first with etl::forward<U1>(x) and second with
-     * etl::forward<U2>(y).
-     */
-    template <typename U1, typename U2,
-              TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
-                                  is_constructible_v<U2&&, second_type>)>
-    constexpr pair(U1&& x, U2&& y)
-        : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
-    {
-    }
+  /**
+   * @brief Initializes first with etl::forward<U1>(x) and second with
+   * etl::forward<U2>(y).
+   */
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
+                              is_constructible_v<U2&&, second_type>)>
+  constexpr pair(U1&& x, U2&& y)
+      : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
+  {
+  }
 
-    /**
-     * @brief Initializes first with p.first and second with p.second.
-     */
-    template <typename U1, typename U2,
-              TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
-                                  is_constructible_v<second_type, U2 const&>)>
-    constexpr pair(pair<U1, U2> const& p)
-        : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
-    {
-    }
-    /**
-     * @brief Initializes first with etl::forward<U1>(p.first) and second with
-     * etl::forward<U2>(p.second).
-     */
-    template <typename U1, typename U2,
-              TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
-                                  is_constructible_v<second_type, U2&&>)>
-    constexpr pair(pair<U1, U2>&& p)
-        : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
-    {
-    }
+  /**
+   * @brief Initializes first with p.first and second with p.second.
+   */
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
+                              is_constructible_v<second_type, U2 const&>)>
+  constexpr pair(pair<U1, U2> const& p)
+      : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
+  {
+  }
+  /**
+   * @brief Initializes first with etl::forward<U1>(p.first) and second with
+   * etl::forward<U2>(p.second).
+   */
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
+                              is_constructible_v<second_type, U2&&>)>
+  constexpr pair(pair<U1, U2>&& p)
+      : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
+  {
+  }
 
-    /**
-     * @brief Copy constructor is defaulted, and is constexpr if copying of both elements
-     * satisfies the requirements on constexpr functions.
-     */
-    constexpr pair(pair const& p) = default;
+  /**
+   * @brief Copy constructor is defaulted, and is constexpr if copying of both
+   * elements satisfies the requirements on constexpr functions.
+   */
+  constexpr pair(pair const& p) = default;
 
-    /**
-     * @brief Move constructor is defaulted, and is constexpr if moving of both elements
-     * satisfies the requirements on constexpr functions.
-     */
-    constexpr pair(pair&& p) noexcept = default;
+  /**
+   * @brief Move constructor is defaulted, and is constexpr if moving of both
+   * elements satisfies the requirements on constexpr functions.
+   */
+  constexpr pair(pair&& p) noexcept = default;
 
-    /**
-     * @brief Defaulted destructor.
-     */
-    ~pair() noexcept = default;
+  /**
+   * @brief Defaulted destructor.
+   */
+  ~pair() noexcept = default;
 
-    constexpr auto operator=(pair const& p) -> pair&
-    {
-        if (&p == this) { return *this; }
-        first  = p.first;
-        second = p.second;
-        return *this;
-    }
+  constexpr auto operator=(pair const& p) -> pair&
+  {
+    if (&p == this) { return *this; }
+    first  = p.first;
+    second = p.second;
+    return *this;
+  }
 
-    template <typename U1, typename U2,
-              TAETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
-                                  is_assignable_v<second_type&, U2 const&>)>
-    constexpr auto operator=(pair<U1, U2> const& p) -> pair&
-    {
-        first  = p.first;
-        second = p.second;
-        return *this;
-    }
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
+                              is_assignable_v<second_type&, U2 const&>)>
+  constexpr auto operator=(pair<U1, U2> const& p) -> pair&
+  {
+    first  = p.first;
+    second = p.second;
+    return *this;
+  }
 
-    TAETL_REQUIRES(is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
-    constexpr auto operator=(pair&& p) noexcept -> pair&
-    {
-        first  = etl::move(p.first);
-        second = etl::move(p.second);
-        return *this;
-    }
+  TAETL_REQUIRES(
+    is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
+  constexpr auto operator=(pair&& p) noexcept -> pair&
+  {
+    first  = etl::move(p.first);
+    second = etl::move(p.second);
+    return *this;
+  }
 
-    template <typename U1, typename U2,
-              TAETL_REQUIRES_(
-                  is_assignable_v<first_type&, U1>&& is_assignable_v<second_type&, U2>)>
-    constexpr auto operator=(pair<U1, U2>&& p) -> pair&
-    {
-        first  = etl::move(p.first);
-        second = etl::move(p.second);
-        return *this;
-    }
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
+                              is_assignable_v<second_type&, U2>)>
+  constexpr auto operator=(pair<U1, U2>&& p) -> pair&
+  {
+    first  = etl::move(p.first);
+    second = etl::move(p.second);
+    return *this;
+  }
 
-    constexpr void swap(pair& other) noexcept(
-        (is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
-    {
-        using ::etl::swap;
-        swap(first, other.first);
-        swap(second, other.second);
-    }
+  constexpr void swap(pair& other) noexcept((
+    is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+  {
+    using ::etl::swap;
+    swap(first, other.first);
+    swap(second, other.second);
+  }
 
-    T1 first;
-    T2 second;
+  T1 first;
+  T2 second;
 
 };  // namespace etl
 
@@ -426,7 +430,7 @@ template <class T1, class T2>
 constexpr auto swap(pair<T1, T2>& lhs,
                     pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
-    lhs.swap(rhs);
+  lhs.swap(rhs);
 }
 
 /**
@@ -441,9 +445,9 @@ constexpr auto swap(pair<T1, T2>& lhs,
  */
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
-    -> etl::pair<typename etl::decay<T1>::type, typename etl::decay<T2>::type>
+  -> etl::pair<typename etl::decay<T1>::type, typename etl::decay<T2>::type>
 {
-    return {t, u};
+  return {t, u};
 }
 
 /**
@@ -451,10 +455,10 @@ template <typename T1, typename T2>
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <typename T1, typename T2>
-constexpr auto operator==(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator==(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
 {
-    return (lhs.first == rhs.first) && (lhs.second == rhs.second);
+  return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
 
 /**
@@ -462,10 +466,10 @@ constexpr auto operator==(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <typename T1, typename T2>
-constexpr auto operator!=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
 {
-    return !(lhs == rhs);
+  return !(lhs == rhs);
 }
 
 /**
@@ -474,13 +478,13 @@ constexpr auto operator!=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator<(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator<(etl::pair<T1, T2> const& lhs,
+                         etl::pair<T1, T2> const& rhs) -> bool
 {
-    if (lhs.first < rhs.first) { return true; }
-    if (rhs.first < lhs.first) { return false; }
-    if (lhs.second < rhs.second) { return true; }
-    return false;
+  if (lhs.first < rhs.first) { return true; }
+  if (rhs.first < lhs.first) { return false; }
+  if (lhs.second < rhs.second) { return true; }
+  return false;
 }
 
 /**
@@ -489,10 +493,10 @@ constexpr auto operator<(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& 
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator<=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
 {
-    return !(rhs < lhs);
+  return !(rhs < lhs);
 }
 
 /**
@@ -501,10 +505,10 @@ constexpr auto operator<=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator>(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator>(etl::pair<T1, T2> const& lhs,
+                         etl::pair<T1, T2> const& rhs) -> bool
 {
-    return rhs < lhs;
+  return rhs < lhs;
 }
 
 /**
@@ -513,10 +517,10 @@ constexpr auto operator>(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& 
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator>=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
+                          etl::pair<T1, T2> const& rhs) -> bool
 {
-    return !(lhs < rhs);
+  return !(lhs < rhs);
 }
 
 /**
@@ -533,7 +537,7 @@ constexpr auto operator>=(etl::pair<T1, T2> const& lhs, etl::pair<T1, T2> const&
  */
 struct piecewise_construct_t
 {
-    explicit piecewise_construct_t() = default;
+  explicit piecewise_construct_t() = default;
 };
 
 /**
@@ -555,7 +559,7 @@ inline constexpr piecewise_construct_t piecewise_construct {};
 
 struct in_place_t
 {
-    explicit in_place_t() = default;
+  explicit in_place_t() = default;
 };
 
 inline constexpr auto in_place = in_place_t {};
@@ -573,7 +577,7 @@ inline constexpr auto in_place = in_place_t {};
 template <typename T>
 struct in_place_type_t
 {
-    explicit in_place_type_t() = default;
+  explicit in_place_type_t() = default;
 };
 
 template <typename T>
@@ -592,7 +596,7 @@ inline constexpr auto in_place_type = in_place_type_t<T> {};
 template <size_t I>
 struct in_place_index_t
 {
-    explicit in_place_index_t() = default;
+  explicit in_place_index_t() = default;
 };
 
 template <size_t I>

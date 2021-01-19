@@ -33,26 +33,27 @@ DAMAGE.
 
 auto main() -> int
 {
-    // Basic usage
-    etl::static_set<int, 16> set_1;
-    set_1.insert(3);  // 3
-    set_1.insert(1);  // 1, 3
-    set_1.insert(2);  // 1, 2, 3
-    set_1.insert(4);  // 1, 2, 3, 4
-    set_1.insert(4);  // 1, 2, 3, 4
+  // Basic usage
+  etl::static_set<int, 16> set_1;
+  set_1.insert(3);  // 3
+  set_1.insert(1);  // 1, 3
+  set_1.insert(2);  // 1, 2, 3
+  set_1.insert(4);  // 1, 2, 3, 4
+  set_1.insert(4);  // 1, 2, 3, 4
 
-    etl::for_each(begin(set_1), end(set_1), [](auto key) { printf("%d\n", key); });
+  etl::for_each(begin(set_1), end(set_1),
+                [](auto key) { printf("%d\n", key); });
 
-    assert(set_1.contains(2));
-    assert(set_1.contains(5) == false);
+  assert(set_1.contains(2));
+  assert(set_1.contains(5) == false);
 
-    // Construct from range
-    auto data  = etl::array {1.0f, 2.0f, 3.0f};
-    auto set_2 = etl::static_set<float, 3> {begin(data), end(data)};
+  // Construct from range
+  auto data  = etl::array {1.0f, 2.0f, 3.0f};
+  auto set_2 = etl::static_set<float, 3> {begin(data), end(data)};
 
-    assert(set_2.full());
-    assert(set_2.size() == 3);
-    assert(set_2.count(1.0f) == 1);
+  assert(set_2.full());
+  assert(set_2.size() == 3);
+  assert(set_2.count(1.0f) == 1);
 
-    return 0;
+  return 0;
 }

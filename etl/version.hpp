@@ -43,11 +43,11 @@ namespace etl
  */
 enum class language_standard
 {
-    cpp_98 = 1998,
-    cpp_11 = 2011,
-    cpp_14 = 2014,
-    cpp_17 = 2017,
-    cpp_20 = 2020,
+  cpp_98 = 1998,
+  cpp_11 = 2011,
+  cpp_14 = 2014,
+  cpp_17 = 2017,
+  cpp_20 = 2020,
 };
 
 // #if __cplusplus < 201703L
@@ -70,12 +70,13 @@ constexpr auto current_standard = language_standard::cpp_20;
  */
 [[nodiscard]] constexpr auto is_language_standard(language_standard ls) -> bool
 {
-    return ls == current_standard;
+  return ls == current_standard;
 }
 
-[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls) -> bool
+[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls)
+  -> bool
 {
-    return static_cast<long>(ls) > static_cast<long>(current_standard);
+  return static_cast<long>(ls) > static_cast<long>(current_standard);
 }
 }  // namespace etl
 

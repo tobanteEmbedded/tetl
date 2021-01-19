@@ -48,115 +48,125 @@ namespace detail
 template <typename T>
 class static_vector_zero_storage
 {
-public:
-    using size_type       = uint8_t;
-    using value_type      = T;
-    using difference_type = ptrdiff_t;
-    using pointer         = T*;
-    using const_pointer   = T const*;
+  public:
+  using size_type       = uint8_t;
+  using value_type      = T;
+  using difference_type = ptrdiff_t;
+  using pointer         = T*;
+  using const_pointer   = T const*;
 
-    /**
-     * @brief Defaulted constructor.
-     */
-    constexpr static_vector_zero_storage() = default;
+  /**
+   * @brief Defaulted constructor.
+   */
+  constexpr static_vector_zero_storage() = default;
 
-    /**
-     * @brief Defaulted copy constructor.
-     */
-    constexpr static_vector_zero_storage(static_vector_zero_storage const&) = default;
+  /**
+   * @brief Defaulted copy constructor.
+   */
+  constexpr static_vector_zero_storage(static_vector_zero_storage const&)
+    = default;
 
-    /**
-     * @brief Defaulted copy assignment .
-     */
-    constexpr auto operator            =(static_vector_zero_storage const&) noexcept
-        -> static_vector_zero_storage& = default;
+  /**
+   * @brief Defaulted copy assignment .
+   */
+  constexpr auto operator          =(static_vector_zero_storage const&) noexcept
+    -> static_vector_zero_storage& = default;
 
-    /**
-     * @brief Defaulted move constructor.
-     */
-    constexpr static_vector_zero_storage(static_vector_zero_storage&&) noexcept = default;
+  /**
+   * @brief Defaulted move constructor.
+   */
+  constexpr static_vector_zero_storage(
+    static_vector_zero_storage&&) noexcept = default;
 
-    /**
-     * @brief Defaulted move assignment.
-     */
-    constexpr auto operator            =(static_vector_zero_storage&&) noexcept
-        -> static_vector_zero_storage& = default;
+  /**
+   * @brief Defaulted move assignment.
+   */
+  constexpr auto operator          =(static_vector_zero_storage&&) noexcept
+    -> static_vector_zero_storage& = default;
 
-    /**
-     * @brief Defaulted destructor.
-     */
-    ~static_vector_zero_storage() = default;
+  /**
+   * @brief Defaulted destructor.
+   */
+  ~static_vector_zero_storage() = default;
 
-    /**
-     * @brief Pointer to the data in the storage.
-     */
-    [[nodiscard]] static constexpr auto data() noexcept -> pointer { return nullptr; }
+  /**
+   * @brief Pointer to the data in the storage.
+   */
+  [[nodiscard]] static constexpr auto data() noexcept -> pointer
+  {
+    return nullptr;
+  }
 
-    /**
-     * @brief Number of elements currently stored.
-     */
-    [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
+  /**
+   * @brief Number of elements currently stored.
+   */
+  [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
 
-    /**
-     * @brief Capacity of the storage.
-     */
-    [[nodiscard]] static constexpr auto capacity() noexcept -> size_type { return 0; }
+  /**
+   * @brief Capacity of the storage.
+   */
+  [[nodiscard]] static constexpr auto capacity() noexcept -> size_type
+  {
+    return 0;
+  }
 
-    /**
-     * @brief Is the storage empty?
-     */
-    [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
+  /**
+   * @brief Is the storage empty?
+   */
+  [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
 
-    /**
-     * @brief Is the storage full?
-     */
-    [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
+  /**
+   * @brief Is the storage full?
+   */
+  [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
 
-    /**
-     * @brief Constructs a new element at the end of the storagein-place. Increases size
-     * of the storage by one. Always fails for empty storage.
-     */
-    template <typename... Args, TAETL_REQUIRES_((is_constructible_v<T, Args...>))>
-    static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
-    {
-        assert(false && "tried to emplace_back on empty storage");
-    }
+  /**
+   * @brief Constructs a new element at the end of the storagein-place.
+   * Increases size of the storage by one. Always fails for empty storage.
+   */
+  template <typename... Args, TAETL_REQUIRES_((is_constructible_v<T, Args...>))>
+  static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
+  {
+    assert(false && "tried to emplace_back on empty storage");
+  }
 
-    /**
-     * @brief Removes the last element of the storage. Always fails for empty storage.
-     */
-    static constexpr void pop_back() noexcept
-    {
-        assert(false && "tried to pop_back on empty storage");
-    }
+  /**
+   * @brief Removes the last element of the storage. Always fails for empty
+   * storage.
+   */
+  static constexpr void pop_back() noexcept
+  {
+    assert(false && "tried to pop_back on empty storage");
+  }
 
-protected:
-    /**
-     * @brief Changes the size of the storage without adding or removing elements
-     * (unsafe). The size of an empty storage can only be changed to 0.
-     */
-    static constexpr void unsafe_set_size([[maybe_unused]] size_t new_size) noexcept
-    {
-        assert(new_size == 0
-               && "tried to change size of empty storage to "
-                  "non-zero value");
-    }
+  protected:
+  /**
+   * @brief Changes the size of the storage without adding or removing elements
+   * (unsafe). The size of an empty storage can only be changed to 0.
+   */
+  static constexpr void unsafe_set_size([
+    [maybe_unused]] size_t new_size) noexcept
+  {
+    assert(new_size == 0
+           && "tried to change size of empty storage to "
+              "non-zero value");
+  }
 
-    /**
-     * @brief Destroys all elements of the storage in range [begin, end) without changings
-     * its size (unsafe). Nothing to destroy since the storage is empty.
-     */
-    template <typename InputIt>
-    static constexpr auto unsafe_destroy(InputIt /* begin */, InputIt /* end */) noexcept
-        -> void
-    {
-    }
+  /**
+   * @brief Destroys all elements of the storage in range [begin, end) without
+   * changings its size (unsafe). Nothing to destroy since the storage is empty.
+   */
+  template <typename InputIt>
+  static constexpr auto unsafe_destroy(InputIt /* begin */,
+                                       InputIt /* end */) noexcept -> void
+  {
+  }
 
-    /**
-     * @brief Destroys all elements of the storage without changing its size (unsafe).
-     * Nothing to destroy since the storage is empty.
-     */
-    static constexpr void unsafe_destroy_all() noexcept { }
+  /**
+   * @brief Destroys all elements of the storage without changing its size
+   * (unsafe). Nothing to destroy since the storage is empty.
+   */
+  static constexpr void unsafe_destroy_all() noexcept { }
 };
 
 /**
@@ -165,131 +175,144 @@ protected:
 template <typename T, size_t Capacity>
 class static_vector_trivial_storage
 {
-    static_assert(etl::is_trivial_v<T>,
-                  "storage::trivial<T, C> requires etl::is_trivial_v<T>");
-    static_assert(Capacity != size_t {0}, "Capacity must be greater "
-                                          "than zero (use "
-                                          "storage::static_vector_zero_storage instead)");
+  static_assert(etl::is_trivial_v<T>,
+                "storage::trivial<T, C> requires etl::is_trivial_v<T>");
+  static_assert(Capacity != size_t {0},
+                "Capacity must be greater "
+                "than zero (use "
+                "storage::static_vector_zero_storage instead)");
 
-public:
-    using size_type       = smallest_size_t<Capacity>;
-    using value_type      = T;
-    using difference_type = ptrdiff_t;
-    using pointer         = T*;
-    using const_pointer   = T const*;
+  public:
+  using size_type       = smallest_size_t<Capacity>;
+  using value_type      = T;
+  using difference_type = ptrdiff_t;
+  using pointer         = T*;
+  using const_pointer   = T const*;
 
-    constexpr static_vector_trivial_storage() noexcept = default;
+  constexpr static_vector_trivial_storage() noexcept = default;
 
-    constexpr static_vector_trivial_storage(
-        static_vector_trivial_storage const&) noexcept = default;
-    constexpr auto operator               =(static_vector_trivial_storage const&) noexcept
-        -> static_vector_trivial_storage& = default;
+  constexpr static_vector_trivial_storage(
+    static_vector_trivial_storage const&) noexcept = default;
+  constexpr auto operator=(static_vector_trivial_storage const&) noexcept
+    -> static_vector_trivial_storage& = default;
 
-    constexpr static_vector_trivial_storage(
-        static_vector_trivial_storage&&) noexcept = default;
-    constexpr auto operator               =(static_vector_trivial_storage&&) noexcept
-        -> static_vector_trivial_storage& = default;
+  constexpr static_vector_trivial_storage(
+    static_vector_trivial_storage&&) noexcept = default;
+  constexpr auto operator=(static_vector_trivial_storage&&) noexcept
+    -> static_vector_trivial_storage& = default;
 
-    ~static_vector_trivial_storage() = default;
+  ~static_vector_trivial_storage() = default;
 
-    /**
-     * @brief Direct access to the underlying storage.
-     */
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
-    {
-        return data_.data();
-    }
+  /**
+   * @brief Direct access to the underlying storage.
+   */
+  [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
+  {
+    return data_.data();
+  }
 
-    /**
-     * @brief Direct access to the underlying storage.
-     */
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return data_.data(); }
+  /**
+   * @brief Direct access to the underlying storage.
+   */
+  [[nodiscard]] constexpr auto data() noexcept -> pointer
+  {
+    return data_.data();
+  }
 
-    /**
-     * @brief Number of elements in the storage.
-     */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+  /**
+   * @brief Number of elements in the storage.
+   */
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return size_;
+  }
 
-    /**
-     * @brief Maximum number of elements that can be allocated in the storage.
-     */
-    [[nodiscard]] constexpr auto capacity() noexcept -> size_type { return Capacity; }
+  /**
+   * @brief Maximum number of elements that can be allocated in the storage.
+   */
+  [[nodiscard]] constexpr auto capacity() noexcept -> size_type
+  {
+    return Capacity;
+  }
 
-    /**
-     * @brief Is the storage empty?
-     */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size() == size_type {0};
-    }
+  /**
+   * @brief Is the storage empty?
+   */
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool
+  {
+    return size() == size_type {0};
+  }
 
-    /**
-     * @brief Is the storage full?
-     */
-    [[nodiscard]] constexpr auto full() const noexcept -> bool
-    {
-        return size() == Capacity;
-    }
+  /**
+   * @brief Is the storage full?
+   */
+  [[nodiscard]] constexpr auto full() const noexcept -> bool
+  {
+    return size() == Capacity;
+  }
 
-    /**
-     * @brief Constructs an element in-place at the end of the storage.
-     */
-    template <typename... Args>
-    constexpr auto emplace_back(Args&&... args) noexcept -> etl::enable_if_t<
-        etl::is_constructible_v<T, Args...> and etl::is_assignable_v<value_type&, T>,
-        void>
-    {
-        assert(!full() && "tried to emplace_back on full storage!");
-        index(data_, size()) = T(etl::forward<Args>(args)...);
-        unsafe_set_size(static_cast<size_type>(size() + 1));
-    }
+  /**
+   * @brief Constructs an element in-place at the end of the storage.
+   */
+  template <typename... Args>
+  constexpr auto emplace_back(Args&&... args) noexcept
+    -> etl::enable_if_t<etl::is_constructible_v<
+                          T, Args...> and etl::is_assignable_v<value_type&, T>,
+                        void>
+  {
+    assert(!full() && "tried to emplace_back on full storage!");
+    index(data_, size()) = T(etl::forward<Args>(args)...);
+    unsafe_set_size(static_cast<size_type>(size() + 1));
+  }
 
-    /**
-     * @brief Remove the last element from the container.
-     */
-    constexpr auto pop_back() noexcept -> void
-    {
-        assert(!empty() && "tried to pop_back from empty storage!");
-        unsafe_set_size(static_cast<size_type>(size() - 1));
-    }
+  /**
+   * @brief Remove the last element from the container.
+   */
+  constexpr auto pop_back() noexcept -> void
+  {
+    assert(!empty() && "tried to pop_back from empty storage!");
+    unsafe_set_size(static_cast<size_type>(size() - 1));
+  }
 
-protected:
-    /**
-     * @brief (unsafe) Changes the container size to new_size.
-     *
-     * @warning No elements are constructed or destroyed.
-     */
-    constexpr auto unsafe_set_size(size_t new_size) noexcept -> void
-    {
-        assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity]");
-        size_ = size_type(new_size);
-    }
+  protected:
+  /**
+   * @brief (unsafe) Changes the container size to new_size.
+   *
+   * @warning No elements are constructed or destroyed.
+   */
+  constexpr auto unsafe_set_size(size_t new_size) noexcept -> void
+  {
+    assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity]");
+    size_ = size_type(new_size);
+  }
 
-    /**
-     * @brief (unsafe) Destroy elements in the range [begin, end).
-     *
-     * @warning The size of the storage is not changed.
-     */
-    template <typename InputIt>
-    constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept -> void
-    {
-    }
+  /**
+   * @brief (unsafe) Destroy elements in the range [begin, end).
+   *
+   * @warning The size of the storage is not changed.
+   */
+  template <typename InputIt>
+  constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept
+    -> void
+  {
+  }
 
-    /**
-     * @brief (unsafe) Destroys all elements of the storage.
-     *
-     * @warning The size of the storage is not changed.
-     */
-    constexpr auto unsafe_destroy_all() noexcept -> void { }
+  /**
+   * @brief (unsafe) Destroys all elements of the storage.
+   *
+   * @warning The size of the storage is not changed.
+   */
+  constexpr auto unsafe_destroy_all() noexcept -> void { }
 
-private:
-    // If the value_type is const, make a const array of
-    // non-const elements:
-    using data_t = etl::conditional_t<!etl::is_const_v<T>, etl::array<T, Capacity>,
-                                      const etl::array<etl::remove_const_t<T>, Capacity>>;
-    alignas(alignof(T)) data_t data_ {};
+  private:
+  // If the value_type is const, make a const array of
+  // non-const elements:
+  using data_t
+    = etl::conditional_t<!etl::is_const_v<T>, etl::array<T, Capacity>,
+                         const etl::array<etl::remove_const_t<T>, Capacity>>;
+  alignas(alignof(T)) data_t data_ {};
 
-    size_type size_ = 0;
+  size_type size_ = 0;
 };
 
 /**
@@ -298,153 +321,166 @@ private:
 template <typename T, size_t Capacity>
 class static_vector_non_trivial_storage
 {
-    static_assert(!etl::is_trivial_v<T>,
-                  "use storage::trivial for etl::is_trivial_v<T> elements");
-    static_assert(Capacity != size_t {0}, "Capacity must be greater than zero!");
+  static_assert(!etl::is_trivial_v<T>,
+                "use storage::trivial for etl::is_trivial_v<T> elements");
+  static_assert(Capacity != size_t {0}, "Capacity must be greater than zero!");
 
-public:
-    using size_type       = smallest_size_t<Capacity>;
-    using value_type      = T;
-    using difference_type = ptrdiff_t;
-    using pointer         = T*;
-    using const_pointer   = T const*;
+  public:
+  using size_type       = smallest_size_t<Capacity>;
+  using value_type      = T;
+  using difference_type = ptrdiff_t;
+  using pointer         = T*;
+  using const_pointer   = T const*;
 
-    constexpr static_vector_non_trivial_storage() = default;
+  constexpr static_vector_non_trivial_storage() = default;
 
-    constexpr static_vector_non_trivial_storage(static_vector_non_trivial_storage const&)
-        = default;
-    constexpr auto operator                   =(static_vector_non_trivial_storage const&)
-        -> static_vector_non_trivial_storage& = default;
+  constexpr static_vector_non_trivial_storage(
+    static_vector_non_trivial_storage const&)
+    = default;
+  constexpr auto operator=(static_vector_non_trivial_storage const&)
+    -> static_vector_non_trivial_storage& = default;
 
-    constexpr static_vector_non_trivial_storage(
-        static_vector_non_trivial_storage&&) noexcept = default;
-    constexpr auto operator=(static_vector_non_trivial_storage&&) noexcept
-        -> static_vector_non_trivial_storage& = default;
+  constexpr static_vector_non_trivial_storage(
+    static_vector_non_trivial_storage&&) noexcept = default;
+  constexpr auto operator=(static_vector_non_trivial_storage&&) noexcept
+    -> static_vector_non_trivial_storage& = default;
 
-    ~static_vector_non_trivial_storage() noexcept(etl::is_nothrow_destructible_v<T>)
-    {
-        unsafe_destroy_all();
-    }
+  ~static_vector_non_trivial_storage() noexcept(
+    etl::is_nothrow_destructible_v<T>)
+  {
+    unsafe_destroy_all();
+  }
 
-    /**
-     * @brief Direct access to the underlying storage.
-     */
-    [[nodiscard]] auto data() const noexcept -> const_pointer
-    {
-        return reinterpret_cast<const_pointer>(data_);
-    }
+  /**
+   * @brief Direct access to the underlying storage.
+   */
+  [[nodiscard]] auto data() const noexcept -> const_pointer
+  {
+    return reinterpret_cast<const_pointer>(data_);
+  }
 
-    /**
-     * @brief Direct access to the underlying storage.
-     */
-    [[nodiscard]] auto data() noexcept -> pointer
-    {
-        return reinterpret_cast<pointer>(data_);
-    }
+  /**
+   * @brief Direct access to the underlying storage.
+   */
+  [[nodiscard]] auto data() noexcept -> pointer
+  {
+    return reinterpret_cast<pointer>(data_);
+  }
 
-    /**
-     * @brief Pointer to one-past-the-end.
-     */
-    [[nodiscard]] auto end() const noexcept -> const_pointer { return data() + size(); }
+  /**
+   * @brief Pointer to one-past-the-end.
+   */
+  [[nodiscard]] auto end() const noexcept -> const_pointer
+  {
+    return data() + size();
+  }
 
-    /**
-     * @brief Pointer to one-past-the-end.
-     */
-    [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
+  /**
+   * @brief Pointer to one-past-the-end.
+   */
+  [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
 
-    /**
-     * @brief Number of elements in the storage.
-     */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+  /**
+   * @brief Number of elements in the storage.
+   */
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return size_;
+  }
 
-    /**
-     * @brief Maximum number of elements that can be allocated in the storage.
-     */
-    [[nodiscard]] constexpr auto capacity() noexcept -> size_type { return Capacity; }
+  /**
+   * @brief Maximum number of elements that can be allocated in the storage.
+   */
+  [[nodiscard]] constexpr auto capacity() noexcept -> size_type
+  {
+    return Capacity;
+  }
 
-    /**
-     * @brief Is the storage empty?
-     */
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size() == size_type {0};
-    }
+  /**
+   * @brief Is the storage empty?
+   */
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool
+  {
+    return size() == size_type {0};
+  }
 
-    /**
-     * @brief Is the storage full?
-     */
-    [[nodiscard]] constexpr auto full() const noexcept -> bool
-    {
-        return size() == Capacity;
-    }
+  /**
+   * @brief Is the storage full?
+   */
+  [[nodiscard]] constexpr auto full() const noexcept -> bool
+  {
+    return size() == Capacity;
+  }
 
-    /**
-     * @brief Constructs an element in-place at the end of the embedded storage.
-     */
-    template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<T>)>
-    auto emplace_back(Args&&... args) noexcept(
-        noexcept(new (end()) T(etl::forward<Args>(args)...))) -> void
-    {
-        assert(!full() && "tried to emplace_back on full storage");
-        new (end()) T(etl::forward<Args>(args)...);
-        unsafe_set_size(static_cast<size_type>(size() + 1));
-    }
+  /**
+   * @brief Constructs an element in-place at the end of the embedded storage.
+   */
+  template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<T>)>
+  auto emplace_back(Args&&... args) noexcept(
+    noexcept(new (end()) T(etl::forward<Args>(args)...))) -> void
+  {
+    assert(!full() && "tried to emplace_back on full storage");
+    new (end()) T(etl::forward<Args>(args)...);
+    unsafe_set_size(static_cast<size_type>(size() + 1));
+  }
 
-    /**
-     * @brief Remove the last element from the container.
-     */
-    auto pop_back() noexcept(etl::is_nothrow_destructible_v<T>) -> void
-    {
-        assert(!empty() && "tried to pop_back from empty storage!");
-        auto* ptr = end() - 1;
-        ptr->~T();
-        unsafe_set_size(static_cast<size_type>(size() - 1));
-    }
+  /**
+   * @brief Remove the last element from the container.
+   */
+  auto pop_back() noexcept(etl::is_nothrow_destructible_v<T>) -> void
+  {
+    assert(!empty() && "tried to pop_back from empty storage!");
+    auto* ptr = end() - 1;
+    ptr->~T();
+    unsafe_set_size(static_cast<size_type>(size() - 1));
+  }
 
-protected:
-    /**
-     * @brief (unsafe) Changes the container size to new_size.
-     *
-     * @warning No elements are constructed or destroyed.
-     */
-    constexpr void unsafe_set_size(size_t new_size) noexcept
-    {
-        assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
-        size_ = size_type(new_size);
-    }
+  protected:
+  /**
+   * @brief (unsafe) Changes the container size to new_size.
+   *
+   * @warning No elements are constructed or destroyed.
+   */
+  constexpr void unsafe_set_size(size_t new_size) noexcept
+  {
+    assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
+    size_ = size_type(new_size);
+  }
 
-    /**
-     * @brief (unsafe) Destroy elements in the range [begin, end).
-     *
-     * @warning The size of the storage is not changed.
-     */
-    template <typename InputIt>
-    void unsafe_destroy(InputIt first,
-                        InputIt last) noexcept(etl::is_nothrow_destructible_v<T>)
-    {
-        assert(first >= data() && first <= end() && "first is out-of-bounds");
-        assert(last >= data() && last <= end() && "last is out-of-bounds");
-        for (; first != last; ++first) { first->~T(); }
-    }
+  /**
+   * @brief (unsafe) Destroy elements in the range [begin, end).
+   *
+   * @warning The size of the storage is not changed.
+   */
+  template <typename InputIt>
+  void unsafe_destroy(InputIt first,
+                      InputIt last) noexcept(etl::is_nothrow_destructible_v<T>)
+  {
+    assert(first >= data() && first <= end() && "first is out-of-bounds");
+    assert(last >= data() && last <= end() && "last is out-of-bounds");
+    for (; first != last; ++first) { first->~T(); }
+  }
 
-    /**
-     * @brief (unsafe) Destroys all elements of the storage.
-     *
-     * @warning The size of the storage is not changed.
-     */
-    void unsafe_destroy_all() noexcept(etl::is_nothrow_destructible_v<T>)
-    {
-        unsafe_destroy(data(), end());
-    }
+  /**
+   * @brief (unsafe) Destroys all elements of the storage.
+   *
+   * @warning The size of the storage is not changed.
+   */
+  void unsafe_destroy_all() noexcept(etl::is_nothrow_destructible_v<T>)
+  {
+    unsafe_destroy(data(), end());
+  }
 
-private:
-    using raw_type          = etl::remove_const_t<T>;
-    using aligned_storage_t = etl::aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
-    using storage_type      = etl::conditional_t<!etl::is_const_v<T>, aligned_storage_t,
-                                            const aligned_storage_t>;
+  private:
+  using raw_type = etl::remove_const_t<T>;
+  using aligned_storage_t
+    = etl::aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
+  using storage_type
+    = etl::conditional_t<!etl::is_const_v<T>, aligned_storage_t,
+                         const aligned_storage_t>;
 
-    alignas(alignof(T)) storage_type data_[Capacity];
-    size_type size_ = 0;
+  alignas(alignof(T)) storage_type data_[Capacity];
+  size_type size_ = 0;
 };
 
 /**
@@ -452,9 +488,10 @@ private:
  */
 template <typename T, size_t Capacity>
 using static_vector_storage_type = etl::conditional_t<
-    Capacity == 0, static_vector_zero_storage<T>,
-    etl::conditional_t<etl::is_trivial_v<T>, static_vector_trivial_storage<T, Capacity>,
-                       static_vector_non_trivial_storage<T, Capacity>>>;
+  Capacity == 0, static_vector_zero_storage<T>,
+  etl::conditional_t<etl::is_trivial_v<T>,
+                     static_vector_trivial_storage<T, Capacity>,
+                     static_vector_non_trivial_storage<T, Capacity>>>;
 
 }  // namespace detail
 
@@ -464,647 +501,682 @@ using static_vector_storage_type = etl::conditional_t<
 template <typename T, size_t Capacity>
 class static_vector : private detail::static_vector_storage_type<T, Capacity>
 {
-private:
-    static_assert(etl::is_nothrow_destructible_v<T>, "T must be nothrow destructible");
-    using base_type = detail::static_vector_storage_type<T, Capacity>;
-    using self      = static_vector<T, Capacity>;
+  private:
+  static_assert(etl::is_nothrow_destructible_v<T>,
+                "T must be nothrow destructible");
+  using base_type = detail::static_vector_storage_type<T, Capacity>;
+  using self      = static_vector<T, Capacity>;
 
-    using base_type::unsafe_destroy;
-    using base_type::unsafe_destroy_all;
-    using base_type::unsafe_set_size;
+  using base_type::unsafe_destroy;
+  using base_type::unsafe_destroy_all;
+  using base_type::unsafe_set_size;
 
-public:
-    using value_type             = typename base_type::value_type;
-    using difference_type        = ptrdiff_t;
-    using reference              = value_type&;
-    using const_reference        = value_type const&;
-    using pointer                = typename base_type::pointer;
-    using const_pointer          = typename base_type::const_pointer;
-    using iterator               = typename base_type::pointer;
-    using const_iterator         = typename base_type::const_pointer;
-    using size_type              = size_t;
-    using reverse_iterator       = etl::reverse_iterator<iterator>;
-    using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
+  public:
+  using value_type             = typename base_type::value_type;
+  using difference_type        = ptrdiff_t;
+  using reference              = value_type&;
+  using const_reference        = value_type const&;
+  using pointer                = typename base_type::pointer;
+  using const_pointer          = typename base_type::const_pointer;
+  using iterator               = typename base_type::pointer;
+  using const_iterator         = typename base_type::const_pointer;
+  using size_type              = size_t;
+  using reverse_iterator       = etl::reverse_iterator<iterator>;
+  using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
-private:
-    TAETL_REQUIRES(etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>)
-    constexpr auto emplace_n(size_type n) noexcept(
-        (etl::is_move_constructible_v<T> && etl::is_nothrow_move_constructible_v<T>)
-        || (etl::is_copy_constructible_v<T> && etl::is_nothrow_copy_constructible_v<T>))
-        -> void
+  private:
+  TAETL_REQUIRES(
+    etl::is_move_constructible_v<T> or etl::is_copy_constructible_v<T>)
+  constexpr auto emplace_n(size_type n) noexcept(
+    (etl::is_move_constructible_v<T> && etl::is_nothrow_move_constructible_v<T>)
+    || (etl::is_copy_constructible_v<
+          T> && etl::is_nothrow_copy_constructible_v<T>)) -> void
+  {
+    assert(n <= capacity()
+           && "static_vector cannot be "
+              "resized to a size greater than "
+              "capacity");
+    while (n != size()) { emplace_back(T {}); }
+  }
+
+  public:
+  [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data(); }
+  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+  {
+    return data();
+  }
+  [[nodiscard]] constexpr auto end() noexcept -> iterator
+  {
+    return data() + size();
+  }
+  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+  {
+    return data() + size();
+  }
+
+  [[nodiscard]] auto rbegin() noexcept -> reverse_iterator
+  {
+    return reverse_iterator(end());
+  }
+  [[nodiscard]] auto rbegin() const noexcept -> const_reverse_iterator
+  {
+    return const_reverse_iterator(end());
+  }
+  [[nodiscard]] auto rend() noexcept -> reverse_iterator
+  {
+    return reverse_iterator(begin());
+  }
+  [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
+  {
+    return const_reverse_iterator(begin());
+  }
+
+  [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator
+  {
+    return begin();
+  }
+  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+  {
+    return begin();
+  }
+  [[nodiscard]] constexpr auto cend() noexcept -> const_iterator
+  {
+    return end();
+  }
+  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+  {
+    return end();
+  }
+
+  /**
+   * @brief
+   */
+  using base_type::emplace_back;
+
+  /**
+   * @brief
+   */
+  using base_type::pop_back;
+
+  /**
+   * @brief Appends value at the end of the vector.
+   *
+   * @todo Add noexcept(noexcept(emplace_back(etl::forward<U>(value)))) breaks
+   * AVR build GCC8.2 currently.
+   */
+  template <typename U, TAETL_REQUIRES_(is_constructible_v<T, U>&&
+                                          is_assignable_v<reference, U&&>)>
+  constexpr auto push_back(U&& value) noexcept(false) -> void
+  {
+    assert(!full() && "vector is full!");
+    emplace_back(etl::forward<U>(value));
+  }
+
+  /**
+   * @brief
+   */
+  template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
+  constexpr auto
+  move_insert(const_iterator position, InputIt first,
+              InputIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
+    -> iterator
+  {
+    assert_iterator_in_range(position);
+    assert_valid_iterator_pair(first, last);
+    if constexpr (detail::RandomAccessIterator<InputIt>)
     {
-        assert(n <= capacity()
-               && "static_vector cannot be "
-                  "resized to a size greater than "
-                  "capacity");
-        while (n != size()) { emplace_back(T {}); }
+      assert(size() + static_cast<size_type>(last - first) <= capacity()
+             && "trying to insert beyond capacity!");
+    }
+    iterator b = end();
+
+    // we insert at the end and then just rotate:
+    for (; first != last; ++first) { emplace_back(etl::move(*first)); }
+    auto* writable_position = begin() + (position - begin());
+    etl::rotate<iterator>(writable_position, b, end());
+    return writable_position;
+  }
+
+  /**
+   * @brief
+   */
+  template <typename... Args, TAETL_REQUIRES_(is_constructible_v<T, Args...>)>
+  constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
+    noexcept(move_insert(position, etl::declval<value_type*>(),
+                         etl::declval<value_type*>()))) -> iterator
+  {
+    assert(!full() && "tried emplace on full static_vector!");
+    assert_iterator_in_range(position);
+    value_type a(etl::forward<Args>(args)...);
+    return move_insert(position, &a, &a + 1);
+  }
+
+  /**
+   * @brief Data access
+   */
+  using base_type::data;
+
+  /**
+   * @brief
+   */
+  constexpr auto
+  insert(const_iterator position,
+         value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
+    -> etl::enable_if_t<etl::is_move_constructible_v<T>, iterator>
+  {
+    assert(!full() && "tried insert on full static_vector!");
+    assert_iterator_in_range(position);
+    return move_insert(position, &x, &x + 1);
+  }
+
+  /**
+   * @brief
+   */
+  constexpr auto insert(const_iterator position, size_type n,
+                        const T& x) noexcept(noexcept(push_back(x)))
+    -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
+  {
+    assert_iterator_in_range(position);
+    assert(size() + n <= capacity() && "trying to insert beyond capacity!");
+    auto* b = end();
+    while (n != 0)
+    {
+      push_back(x);
+      --n;
     }
 
-public:
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data(); }
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+    auto* writable_position = begin() + (position - begin());
+    etl::rotate(writable_position, b, end());
+    return writable_position;
+  }
+
+  /**
+   * @brief
+   */
+  constexpr auto insert(const_iterator position, const_reference x) noexcept(
+    noexcept(insert(position, size_type(1), x)))
+    -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
+  {
+    assert(!full() && "tried insert on full static_vector!");
+    assert_iterator_in_range(position);
+    return insert(position, size_type(1), x);
+  }
+
+  /**
+   * @brief
+   */
+  template <typename InputIt,
+            TAETL_REQUIRES_(detail::InputIterator<InputIt>&& is_constructible_v<
+                            value_type, detail::iterator_reference_t<InputIt>>)>
+  constexpr auto insert(const_iterator position, InputIt first,
+                        InputIt last) noexcept(noexcept(emplace_back(*first)))
+    -> iterator
+  {
+    assert_iterator_in_range(position);
+    assert_valid_iterator_pair(first, last);
+    if constexpr (detail::RandomAccessIterator<InputIt>)
     {
-        return data();
+      assert(size() + static_cast<size_type>(last - first) <= capacity()
+             && "trying to insert beyond capacity!");
     }
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return data() + size(); }
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    auto* b = end();
+
+    // insert at the end and then just rotate:
+    for (; first != last; ++first) { emplace_back(*first); }
+
+    auto* writable_position = begin() + (position - begin());
+    etl::rotate(writable_position, b, end());
+    return writable_position;
+  }
+
+  /**
+   * @brief Clears the vector.
+   */
+  constexpr void clear() noexcept
+  {
+    unsafe_destroy_all();
+    unsafe_set_size(0);
+  }
+
+  /**
+   * @brief Default constructor.
+   */
+  constexpr static_vector() = default;
+
+  /**
+   * @brief Copy constructor.
+   */
+  constexpr static_vector(static_vector const& other) noexcept(
+    noexcept(insert(begin(), other.begin(), other.end())))
+  {
+    // Nothing to assert: size of other cannot exceed capacity because both
+    // vectors have the same type
+    insert(begin(), other.begin(), other.end());
+  }
+
+  /**
+   * @brief Move constructor.
+   */
+  constexpr static_vector(static_vector&& other) noexcept(
+    noexcept(move_insert(begin(), other.begin(), other.end())))
+  {
+    // Nothing to assert: size of other cannot exceed capacity because both
+    // vectors have the same type
+    move_insert(begin(), other.begin(), other.end());
+  }
+
+  /**
+   * @brief Copy assignment.
+   */
+  constexpr auto operator=(static_vector const& other) noexcept(
+    noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
+    -> etl::enable_if_t<etl::is_assignable_v<reference, const_reference>,
+                        static_vector&>
+  {
+    // Nothing to assert: size of other cannot exceed capacity because both
+    // vectors have the same type
+    clear();
+    insert(begin(), other.begin(), other.end());
+    return *this;
+  }
+
+  /**
+   * @brief Move assignment.
+   */
+  constexpr auto operator=(static_vector&& other) noexcept(noexcept(
+    clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
+    -> etl::enable_if_t<etl::is_assignable_v<reference, reference>,
+                        static_vector&>
+  {
+    // Nothing to assert: size of other cannot exceed capacity because both
+    // vectors have the same type
+    clear();
+    move_insert(begin(), other.begin(), other.end());
+    return *this;
+  }
+
+  /**
+   * @brief Initializes vector with n default-constructed elements.
+   */
+  TAETL_REQUIRES(
+    etl::is_copy_constructible_v<T> || etl::is_move_constructible_v<T>)
+  explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
+  {
+    assert(n <= capacity() && "size exceeds capacity");
+    emplace_n(n);
+  }
+
+  /**
+   * @brief Initializes vector with n with value.
+   */
+  TAETL_REQUIRES(is_copy_constructible_v<T>)
+  constexpr static_vector(size_type n,
+                          T const& value) noexcept(noexcept(insert(begin(), n,
+                                                                   value)))
+  {
+    assert(n <= capacity() && "size exceeds capacity");
+    insert(begin(), n, value);
+  }
+
+  /**
+   * @brief Initialize vector from range [first, last).
+   */
+  template <typename InputIter,
+            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+  constexpr static_vector(InputIter first, InputIter last)
+  {
+    if constexpr (detail::RandomAccessIterator<InputIter>)
     {
-        return data() + size();
+      assert(last - first >= 0);
+      assert(static_cast<size_type>(last - first) <= capacity()
+             && "range size exceeds capacity");
     }
+    insert(begin(), first, last);
+  }
 
-    [[nodiscard]] auto rbegin() noexcept -> reverse_iterator
+  /**
+   * @brief Is the storage empty?
+   */
+  using base_type::empty;
+
+  /**
+   * @brief Is the storage full?
+   */
+  using base_type::full;
+
+  /**
+   * @brief Number of elements in the vector
+   */
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return base_type::size();
+  }
+
+  /**
+   * @brief Maximum number of elements that can be allocated in the vector
+   */
+  constexpr auto capacity() noexcept -> size_type
+  {
+    return base_type::capacity();
+  }
+
+  /**
+   * @brief Maximum number of elements that can be allocated in the vector
+   */
+  constexpr auto max_size() noexcept -> size_type { return capacity(); }
+
+  /**
+   * @brief Resizes the container to contain sz elements. If elements need to be
+   * appended, these are move-constructed from `T{}` (or copy-constructed if `T`
+   * is not `etl::is_move_constructible_v`).
+   */
+  constexpr auto resize(size_type sz) noexcept(
+    (etl::is_move_constructible_v<T> && etl::is_nothrow_move_constructible_v<T>)
+    || (etl::is_copy_constructible_v<
+          T> && etl::is_nothrow_copy_constructible_v<T>))
+    -> etl::enable_if_t<detail::is_movable_v<value_type>, void>
+  {
+    if (sz == size()) { return; }
+
+    if (sz > size())
     {
-        return reverse_iterator(end());
-    }
-    [[nodiscard]] auto rbegin() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(end());
-    }
-    [[nodiscard]] auto rend() noexcept -> reverse_iterator
-    {
-        return reverse_iterator(begin());
-    }
-    [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
-    {
-        return const_reverse_iterator(begin());
-    }
-
-    [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator { return begin(); }
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
-    {
-        return begin();
-    }
-    [[nodiscard]] constexpr auto cend() noexcept -> const_iterator { return end(); }
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
-
-    /**
-     * @brief
-     */
-    using base_type::emplace_back;
-
-    /**
-     * @brief
-     */
-    using base_type::pop_back;
-
-    /**
-     * @brief Appends value at the end of the vector.
-     *
-     * @todo Add noexcept(noexcept(emplace_back(etl::forward<U>(value)))) breaks AVR build
-     * GCC8.2 currently.
-     */
-    template <typename U,
-              TAETL_REQUIRES_(is_constructible_v<T, U>&& is_assignable_v<reference, U&&>)>
-    constexpr auto push_back(U&& value) noexcept(false) -> void
-    {
-        assert(!full() && "vector is full!");
-        emplace_back(etl::forward<U>(value));
-    }
-
-    /**
-     * @brief
-     */
-    template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
-    constexpr auto
-    move_insert(const_iterator position, InputIt first,
-                InputIt last) noexcept(noexcept(emplace_back(etl::move(*first))))
-        -> iterator
-    {
-        assert_iterator_in_range(position);
-        assert_valid_iterator_pair(first, last);
-        if constexpr (detail::RandomAccessIterator<InputIt>)
-        {
-            assert(size() + static_cast<size_type>(last - first) <= capacity()
-                   && "trying to insert beyond capacity!");
-        }
-        iterator b = end();
-
-        // we insert at the end and then just rotate:
-        for (; first != last; ++first) { emplace_back(etl::move(*first)); }
-        auto* writable_position = begin() + (position - begin());
-        etl::rotate<iterator>(writable_position, b, end());
-        return writable_position;
-    }
-
-    /**
-     * @brief
-     */
-    template <typename... Args, TAETL_REQUIRES_(is_constructible_v<T, Args...>)>
-    constexpr auto emplace(const_iterator position, Args&&... args) noexcept(noexcept(
-        move_insert(position, etl::declval<value_type*>(), etl::declval<value_type*>())))
-        -> iterator
-    {
-        assert(!full() && "tried emplace on full static_vector!");
-        assert_iterator_in_range(position);
-        value_type a(etl::forward<Args>(args)...);
-        return move_insert(position, &a, &a + 1);
-    }
-
-    /**
-     * @brief Data access
-     */
-    using base_type::data;
-
-    /**
-     * @brief
-     */
-    constexpr auto
-    insert(const_iterator position,
-           value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
-        -> etl::enable_if_t<etl::is_move_constructible_v<T>, iterator>
-    {
-        assert(!full() && "tried insert on full static_vector!");
-        assert_iterator_in_range(position);
-        return move_insert(position, &x, &x + 1);
-    }
-
-    /**
-     * @brief
-     */
-    constexpr auto insert(const_iterator position, size_type n,
-                          const T& x) noexcept(noexcept(push_back(x)))
-        -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
-    {
-        assert_iterator_in_range(position);
-        assert(size() + n <= capacity() && "trying to insert beyond capacity!");
-        auto* b = end();
-        while (n != 0)
-        {
-            push_back(x);
-            --n;
-        }
-
-        auto* writable_position = begin() + (position - begin());
-        etl::rotate(writable_position, b, end());
-        return writable_position;
-    }
-
-    /**
-     * @brief
-     */
-    constexpr auto
-    insert(const_iterator position,
-           const_reference x) noexcept(noexcept(insert(position, size_type(1), x)))
-        -> etl::enable_if_t<etl::is_copy_constructible_v<T>, iterator>
-    {
-        assert(!full() && "tried insert on full static_vector!");
-        assert_iterator_in_range(position);
-        return insert(position, size_type(1), x);
-    }
-
-    /**
-     * @brief
-     */
-    template <typename InputIt,
-              TAETL_REQUIRES_(detail::InputIterator<InputIt>&& is_constructible_v<
-                              value_type, detail::iterator_reference_t<InputIt>>)>
-    constexpr auto insert(const_iterator position, InputIt first,
-                          InputIt last) noexcept(noexcept(emplace_back(*first)))
-        -> iterator
-    {
-        assert_iterator_in_range(position);
-        assert_valid_iterator_pair(first, last);
-        if constexpr (detail::RandomAccessIterator<InputIt>)
-        {
-            assert(size() + static_cast<size_type>(last - first) <= capacity()
-                   && "trying to insert beyond capacity!");
-        }
-        auto* b = end();
-
-        // insert at the end and then just rotate:
-        for (; first != last; ++first) { emplace_back(*first); }
-
-        auto* writable_position = begin() + (position - begin());
-        etl::rotate(writable_position, b, end());
-        return writable_position;
-    }
-
-    /**
-     * @brief Clears the vector.
-     */
-    constexpr void clear() noexcept
-    {
-        unsafe_destroy_all();
-        unsafe_set_size(0);
-    }
-
-    /**
-     * @brief Default constructor.
-     */
-    constexpr static_vector() = default;
-
-    /**
-     * @brief Copy constructor.
-     */
-    constexpr static_vector(static_vector const& other) noexcept(
-        noexcept(insert(begin(), other.begin(), other.end())))
-    {
-        // Nothing to assert: size of other cannot exceed capacity because both vectors
-        // have the same type
-        insert(begin(), other.begin(), other.end());
+      emplace_n(sz);
+      return;
     }
 
-    /**
-     * @brief Move constructor.
-     */
-    constexpr static_vector(static_vector&& other) noexcept(
-        noexcept(move_insert(begin(), other.begin(), other.end())))
+    erase(end() - (size() - sz), end());
+  }
+
+  /**
+   * @brief
+   */
+  template <typename InputIter,
+            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+  constexpr auto assign(InputIter first, InputIter last) noexcept(
+    noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
+  {
+    if constexpr (detail::RandomAccessIterator<InputIter>)
     {
-        // Nothing to assert: size of other cannot exceed capacity because both vectors
-        // have the same type
-        move_insert(begin(), other.begin(), other.end());
+      assert(last - first >= 0);
+      assert(static_cast<size_type>(last - first) <= capacity()
+             && "range size exceeds capacity");
+    }
+    clear();
+    insert(begin(), first, last);
+  }
+
+  /**
+   * @brief
+   */
+  constexpr auto assign(size_type n, T const& u)
+    -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
+  {
+    assert(n <= capacity() && "size exceeds capacity");
+    clear();
+    insert(begin(), n, u);
+  }
+
+  /**
+   * @brief Unchecked access to element at index pos (UB if index not in range)
+   */
+  [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
+  {
+    return detail::index(*this, pos);
+  }
+
+  /**
+   * @brief Unchecked access to element at index pos (UB if index not in range)
+   */
+  [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept
+    -> const_reference
+  {
+    return detail::index(*this, pos);
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto front() noexcept -> reference
+  {
+    return detail::index(*this, 0);
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto front() const noexcept -> const_reference
+  {
+    return detail::index(*this, 0);
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto back() noexcept -> reference
+  {
+    assert(!empty() && "calling back on an empty vector");
+    return detail::index(*this, static_cast<size_type>(size() - 1));
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto back() const noexcept -> const_reference
+  {
+    assert(!empty() && "calling back on an empty vector");
+    return detail::index(*this, static_cast<size_type>(size() - 1));
+  }
+
+  /**
+   * @brief
+   */
+  constexpr auto erase(const_iterator position) noexcept
+    -> etl::enable_if_t<detail::is_movable_v<value_type>, iterator>
+  {
+    assert_iterator_in_range(position);
+    return erase(position, position + 1);
+  }
+
+  /**
+   * @brief
+   */
+  constexpr auto erase(const_iterator first, const_iterator last) noexcept
+    -> etl::enable_if_t<detail::is_movable_v<value_type>, iterator>
+  {
+    assert_iterator_pair_in_range(first, last);
+    iterator p = begin() + (first - begin());
+    if (first != last)
+    {
+      unsafe_destroy(etl::move(p + (last - first), end(), p), end());
+      unsafe_set_size(size() - static_cast<size_type>(last - first));
     }
 
-    /**
-     * @brief Copy assignment.
-     */
-    constexpr auto operator=(static_vector const& other) noexcept(
-        noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
-        -> etl::enable_if_t<etl::is_assignable_v<reference, const_reference>,
-                            static_vector&>
+    return p;
+  }
+
+  /**
+   * @brief Exchanges the contents of the container with those of other.
+   */
+  constexpr auto
+  swap(static_vector& other) noexcept(etl::is_nothrow_swappable_v<T>)
+    -> etl::enable_if_t<etl::is_assignable_v<T&, T&&>, void>
+  {
+    static_vector tmp = etl::move(other);
+    other             = etl::move(*this);
+    (*this)           = etl::move(tmp);
+  }
+
+  /**
+   * @brief Resizes the container to contain sz elements. If elements need to be
+   * appended, these are copy-constructed from value.
+   */
+  constexpr auto
+  resize(size_type sz,
+         T const& value) noexcept(etl::is_nothrow_copy_constructible_v<T>)
+    -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
+  {
+    if (sz == size()) { return; }
+    if (sz > size())
     {
-        // Nothing to assert: size of other cannot exceed capacity because both vectors
-        // have the same type
-        clear();
-        insert(begin(), other.begin(), other.end());
-        return *this;
+      assert(sz <= capacity()
+             && "static_vector cannot be resized to "
+                "a size greater than capacity");
+      insert(end(), sz - size(), value);
     }
-
-    /**
-     * @brief Move assignment.
-     */
-    constexpr auto operator=(static_vector&& other) noexcept(
-        noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
-        -> etl::enable_if_t<etl::is_assignable_v<reference, reference>, static_vector&>
+    else
     {
-        // Nothing to assert: size of other cannot exceed capacity because both vectors
-        // have the same type
-        clear();
-        move_insert(begin(), other.begin(), other.end());
-        return *this;
+      erase(end() - (size() - sz), end());
     }
+  }
 
-    /**
-     * @brief Initializes vector with n default-constructed elements.
-     */
-    TAETL_REQUIRES(etl::is_copy_constructible_v<T> || etl::is_move_constructible_v<T>)
-    explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
-    {
-        assert(n <= capacity() && "size exceeds capacity");
-        emplace_n(n);
-    }
+  private:
+  template <typename It>
+  constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
+  {
+    static_assert(etl::is_pointer_v<It>);
+    assert(begin() <= it && "iterator not in range");
+    assert(it <= end() && "iterator not in range");
+  }
 
-    /**
-     * @brief Initializes vector with n with value.
-     */
-    TAETL_REQUIRES(is_copy_constructible_v<T>)
-    constexpr static_vector(size_type n,
-                            T const& value) noexcept(noexcept(insert(begin(), n, value)))
-    {
-        assert(n <= capacity() && "size exceeds capacity");
-        insert(begin(), n, value);
-    }
+  template <typename It0, typename It1>
+  constexpr void assert_valid_iterator_pair([[maybe_unused]] It0 first,
+                                            [[maybe_unused]] It1 last) noexcept
+  {
+    static_assert(etl::is_pointer_v<It0>);
+    static_assert(etl::is_pointer_v<It1>);
+    assert(first <= last && "invalid iterator pair");
+  }
 
-    /**
-     * @brief Initialize vector from range [first, last).
-     */
-    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    constexpr static_vector(InputIter first, InputIter last)
-    {
-        if constexpr (detail::RandomAccessIterator<InputIter>)
-        {
-            assert(last - first >= 0);
-            assert(static_cast<size_type>(last - first) <= capacity()
-                   && "range size exceeds capacity");
-        }
-        insert(begin(), first, last);
-    }
-
-    /**
-     * @brief Is the storage empty?
-     */
-    using base_type::empty;
-
-    /**
-     * @brief Is the storage full?
-     */
-    using base_type::full;
-
-    /**
-     * @brief Number of elements in the vector
-     */
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return base_type::size();
-    }
-
-    /**
-     * @brief Maximum number of elements that can be allocated in the vector
-     */
-    constexpr auto capacity() noexcept -> size_type { return base_type::capacity(); }
-
-    /**
-     * @brief Maximum number of elements that can be allocated in the vector
-     */
-    constexpr auto max_size() noexcept -> size_type { return capacity(); }
-
-    /**
-     * @brief Resizes the container to contain sz elements. If elements need to be
-     * appended, these are move-constructed from `T{}` (or copy-constructed if `T` is not
-     * `etl::is_move_constructible_v`).
-     */
-    constexpr auto resize(size_type sz) noexcept(
-        (etl::is_move_constructible_v<T> && etl::is_nothrow_move_constructible_v<T>)
-        || (etl::is_copy_constructible_v<T> && etl::is_nothrow_copy_constructible_v<T>))
-        -> etl::enable_if_t<detail::is_movable_v<value_type>, void>
-    {
-        if (sz == size()) { return; }
-
-        if (sz > size())
-        {
-            emplace_n(sz);
-            return;
-        }
-
-        erase(end() - (size() - sz), end());
-    }
-
-    /**
-     * @brief
-     */
-    template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    constexpr auto assign(InputIter first, InputIter last) noexcept(
-        noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
-    {
-        if constexpr (detail::RandomAccessIterator<InputIter>)
-        {
-            assert(last - first >= 0);
-            assert(static_cast<size_type>(last - first) <= capacity()
-                   && "range size exceeds capacity");
-        }
-        clear();
-        insert(begin(), first, last);
-    }
-
-    /**
-     * @brief
-     */
-    constexpr auto assign(size_type n, T const& u)
-        -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
-    {
-        assert(n <= capacity() && "size exceeds capacity");
-        clear();
-        insert(begin(), n, u);
-    }
-
-    /**
-     * @brief Unchecked access to element at index pos (UB if index not in range)
-     */
-    [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
-    {
-        return detail::index(*this, pos);
-    }
-
-    /**
-     * @brief Unchecked access to element at index pos (UB if index not in range)
-     */
-    [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept
-        -> const_reference
-    {
-        return detail::index(*this, pos);
-    }
-
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto front() noexcept -> reference
-    {
-        return detail::index(*this, 0);
-    }
-
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference
-    {
-        return detail::index(*this, 0);
-    }
-
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto back() noexcept -> reference
-    {
-        assert(!empty() && "calling back on an empty vector");
-        return detail::index(*this, static_cast<size_type>(size() - 1));
-    }
-
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference
-    {
-        assert(!empty() && "calling back on an empty vector");
-        return detail::index(*this, static_cast<size_type>(size() - 1));
-    }
-
-    /**
-     * @brief
-     */
-    constexpr auto erase(const_iterator position) noexcept
-        -> etl::enable_if_t<detail::is_movable_v<value_type>, iterator>
-    {
-        assert_iterator_in_range(position);
-        return erase(position, position + 1);
-    }
-
-    /**
-     * @brief
-     */
-    constexpr auto erase(const_iterator first, const_iterator last) noexcept
-        -> etl::enable_if_t<detail::is_movable_v<value_type>, iterator>
-    {
-        assert_iterator_pair_in_range(first, last);
-        iterator p = begin() + (first - begin());
-        if (first != last)
-        {
-            unsafe_destroy(etl::move(p + (last - first), end(), p), end());
-            unsafe_set_size(size() - static_cast<size_type>(last - first));
-        }
-
-        return p;
-    }
-
-    /**
-     * @brief Exchanges the contents of the container with those of other.
-     */
-    constexpr auto swap(static_vector& other) noexcept(etl::is_nothrow_swappable_v<T>)
-        -> etl::enable_if_t<etl::is_assignable_v<T&, T&&>, void>
-    {
-        static_vector tmp = etl::move(other);
-        other             = etl::move(*this);
-        (*this)           = etl::move(tmp);
-    }
-
-    /**
-     * @brief Resizes the container to contain sz elements. If elements need to be
-     * appended, these are copy-constructed from value.
-     */
-    constexpr auto
-    resize(size_type sz, T const& value) noexcept(etl::is_nothrow_copy_constructible_v<T>)
-        -> etl::enable_if_t<etl::is_copy_constructible_v<T>, void>
-    {
-        if (sz == size()) { return; }
-        if (sz > size())
-        {
-            assert(sz <= capacity()
-                   && "static_vector cannot be resized to "
-                      "a size greater than capacity");
-            insert(end(), sz - size(), value);
-        }
-        else
-        {
-            erase(end() - (size() - sz), end());
-        }
-    }
-
-private:
-    template <typename It>
-    constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
-    {
-        static_assert(etl::is_pointer_v<It>);
-        assert(begin() <= it && "iterator not in range");
-        assert(it <= end() && "iterator not in range");
-    }
-
-    template <typename It0, typename It1>
-    constexpr void assert_valid_iterator_pair([[maybe_unused]] It0 first,
-                                              [[maybe_unused]] It1 last) noexcept
-    {
-        static_assert(etl::is_pointer_v<It0>);
-        static_assert(etl::is_pointer_v<It1>);
-        assert(first <= last && "invalid iterator pair");
-    }
-
-    template <typename It0, typename It1>
-    constexpr void assert_iterator_pair_in_range([[maybe_unused]] It0 first,
-                                                 [[maybe_unused]] It1 last) noexcept
-    {
-        assert_iterator_in_range(first);
-        assert_iterator_in_range(last);
-        assert_valid_iterator_pair(first, last);
-    }
+  template <typename It0, typename It1>
+  constexpr void
+  assert_iterator_pair_in_range([[maybe_unused]] It0 first,
+                                [[maybe_unused]] It1 last) noexcept
+  {
+    assert_iterator_in_range(first);
+    assert_iterator_in_range(last);
+    assert_valid_iterator_pair(first, last);
+  }
 };
 
 /**
- * @brief Specializes the etl::swap algorithm for etl::static_vector. Swaps the contents
- * of lhs and rhs.
+ * @brief Specializes the etl::swap algorithm for etl::static_vector. Swaps the
+ * contents of lhs and rhs.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto swap(static_vector<T, Capacity>& lhs,
                     static_vector<T, Capacity>& rhs) noexcept -> void
 {
-    lhs.swap(rhs);
+  lhs.swap(rhs);
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
- * number of elements and each element in lhs compares equal with the element in rhs at
- * the same position.
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have
+ * the same number of elements and each element in lhs compares equal with the
+ * element in rhs at the same position.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
-                          static_vector<T, Capacity> const& rhs) noexcept -> bool
+                          static_vector<T, Capacity> const& rhs) noexcept
+  -> bool
 {
-    if (size(lhs) == size(rhs))
-    {
-        return etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), etl::equal_to<> {});
-    }
+  if (size(lhs) == size(rhs))
+  {
+    return etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs),
+                      etl::equal_to<> {});
+  }
 
-    return false;
+  return false;
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Checks if the contents of lhs and rhs are equal, that is, they have the same
- * number of elements and each element in lhs compares equal with the element in rhs at
- * the same position.
+ * @details Checks if the contents of lhs and rhs are equal, that is, they have
+ * the same number of elements and each element in lhs compares equal with the
+ * element in rhs at the same position.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
-                          static_vector<T, Capacity> const& rhs) noexcept -> bool
+                          static_vector<T, Capacity> const& rhs) noexcept
+  -> bool
 {
-    return !(lhs == rhs);
+  return !(lhs == rhs);
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The comparison is
- * performed by a function equivalent to etl::lexicographical_compare.
+ * @details Compares the contents of lhs and rhs lexicographically. The
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
+  return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The comparison is
- * performed by a function equivalent to etl::lexicographical_compare.
+ * @details Compares the contents of lhs and rhs lexicographically. The
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
-                          static_vector<T, Capacity> const& rhs) noexcept -> bool
+                          static_vector<T, Capacity> const& rhs) noexcept
+  -> bool
 {
-    return !(rhs < lhs);
+  return !(rhs < lhs);
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The comparison is
- * performed by a function equivalent to etl::lexicographical_compare.
+ * @details Compares the contents of lhs and rhs lexicographically. The
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    return rhs < lhs;
+  return rhs < lhs;
 }
 
 /**
  * @brief Compares the contents of two vectors.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The comparison is
- * performed by a function equivalent to etl::lexicographical_compare.
+ * @details Compares the contents of lhs and rhs lexicographically. The
+ * comparison is performed by a function equivalent to
+ * etl::lexicographical_compare.
  */
 template <typename T, etl::size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
-                          static_vector<T, Capacity> const& rhs) noexcept -> bool
+                          static_vector<T, Capacity> const& rhs) noexcept
+  -> bool
 {
-    return !(lhs < rhs);
+  return !(lhs < rhs);
 }
 
 /**
- * @brief Erases all elements that satisfy the predicate pred from the container.
+ * @brief Erases all elements that satisfy the predicate pred from the
+ * container.
  * @details https://en.cppreference.com/w/cpp/container/vector/erase2
  * @return The number of erased elements.
  */
 template <typename T, etl::size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
-    typename static_vector<T, Capacity>::size_type
+  typename static_vector<T, Capacity>::size_type
 {
-    auto it = etl::remove_if(c.begin(), c.end(), pred);
-    auto r  = etl::distance(it, c.end());
-    c.erase(it, c.end());
-    return static_cast<typename static_vector<T, Capacity>::size_type>(r);
+  auto it = etl::remove_if(c.begin(), c.end(), pred);
+  auto r  = etl::distance(it, c.end());
+  c.erase(it, c.end());
+  return static_cast<typename static_vector<T, Capacity>::size_type>(r);
 }
 
 /**
@@ -1114,9 +1186,9 @@ constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
  */
 template <typename T, etl::size_t Capacity, typename U>
 constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
-    typename static_vector<T, Capacity>::size_type
+  typename static_vector<T, Capacity>::size_type
 {
-    return erase_if(c, [&value](auto const& item) { return item == value; });
+  return erase_if(c, [&value](auto const& item) { return item == value; });
 }
 
 }  // namespace etl

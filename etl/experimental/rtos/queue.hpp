@@ -42,61 +42,63 @@ namespace rtos
 template <typename ValueType, etl::uint32_t Size>
 class queue
 {
-public:
-    using value_type = ValueType;
-    using size_type  = etl::uint32_t;
+  public:
+  using value_type = ValueType;
+  using size_type  = etl::uint32_t;
 
-    queue() : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
+  queue()
+      : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
 
-    queue(queue&&)      = delete;
-    queue(queue const&) = delete;
-    auto operator=(queue&&) -> queue& = delete;
-    auto operator=(queue const&) -> queue& = delete;
+  queue(queue&&)      = delete;
+  queue(queue const&) = delete;
+  auto operator=(queue&&) -> queue& = delete;
+  auto operator=(queue const&) -> queue& = delete;
 
-    ~queue()
-    {
-        if (handle_ != nullptr) { vQueueDelete(handle_); }
-    }
+  ~queue()
+  {
+    if (handle_ != nullptr) { vQueueDelete(handle_); }
+  }
 
-    [[nodiscard]] auto capacity() const -> size_type { return Size; }
+  [[nodiscard]] auto capacity() const -> size_type { return Size; }
 
-    [[nodiscard]] auto send(ValueType const& data, TickType_t ticksToWait = 0) const
-        -> bool
-    {
-        const auto* const rawData = static_cast<const void*>(&data);
-        auto const success        = xQueueSend(handle_, rawData, ticksToWait);
-        return static_cast<bool>(success);
-    }
+  [[nodiscard]] auto send(ValueType const& data,
+                          TickType_t ticksToWait = 0) const -> bool
+  {
+    const auto* const rawData = static_cast<const void*>(&data);
+    auto const success        = xQueueSend(handle_, rawData, ticksToWait);
+    return static_cast<bool>(success);
+  }
 
-    auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
-    {
-        auto* const rawData = static_cast<void*>(&data);
-        auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
-        return static_cast<bool>(success);
-    }
+  auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
+  {
+    auto* const rawData = static_cast<void*>(&data);
+    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+    return static_cast<bool>(success);
+  }
 
-    [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const -> pair<bool, ValueType>
-    {
-        auto value          = ValueType {};
-        auto* const rawData = static_cast<void*>(&value);
-        auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
-        return {static_cast<bool>(success), value};
-    }
+  [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
+    -> pair<bool, ValueType>
+  {
+    auto value          = ValueType {};
+    auto* const rawData = static_cast<void*>(&value);
+    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+    return {static_cast<bool>(success), value};
+  }
 
-    [[nodiscard]] auto reset() const -> bool
-    {
-        auto const result = xQueueReset(handle_);
-        return static_cast<bool>(result);
-    }
+  [[nodiscard]] auto reset() const -> bool
+  {
+    auto const result = xQueueReset(handle_);
+    return static_cast<bool>(result);
+  }
 
-    [[nodiscard]] auto messages_waiting() const -> etl::uint32_t
-    {
-        auto const result = uxQueueMessagesWaiting(handle_);
-        return static_cast<etl::uint32_t>(result);
-    }
+  [[nodiscard]] auto messages_waiting() const -> etl::uint32_t
+  {
+    auto const result = uxQueueMessagesWaiting(handle_);
+    return static_cast<etl::uint32_t>(result);
+  }
 
-private:
-    QueueHandle_t handle_ = nullptr;
+  private:
+  QueueHandle_t handle_ = nullptr;
 };
 }  // namespace rtos
 }  // namespace etl

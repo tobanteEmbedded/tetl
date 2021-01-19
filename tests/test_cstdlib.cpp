@@ -30,77 +30,77 @@ DAMAGE.
 
 TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
 {
-    SECTION("0")
-    {
-        int val         = 0;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 1);
-        REQUIRE(etl::strcmp(result, "0") == 0);
-    }
+  SECTION("0")
+  {
+    int val         = 0;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 1);
+    REQUIRE(etl::strcmp(result, "0") == 0);
+  }
 
-    SECTION("10")
-    {
-        int val         = 10;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 2);
-        REQUIRE(etl::strcmp(result, "10") == 0);
-    }
+  SECTION("10")
+  {
+    int val         = 10;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 2);
+    REQUIRE(etl::strcmp(result, "10") == 0);
+  }
 
-    SECTION("999")
-    {
-        int val         = 999;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 3);
-        REQUIRE(etl::strcmp(result, "999") == 0);
-    }
+  SECTION("999")
+  {
+    int val         = 999;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 3);
+    REQUIRE(etl::strcmp(result, "999") == 0);
+  }
 
-    SECTION("1002")
-    {
-        int val         = 1002;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 4);
-        REQUIRE(etl::strcmp(result, "1002") == 0);
-    }
+  SECTION("1002")
+  {
+    int val         = 1002;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 4);
+    REQUIRE(etl::strcmp(result, "1002") == 0);
+  }
 
-    SECTION("44444")
-    {
-        int val         = 44444;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 5);
-        REQUIRE(etl::strcmp(result, "44444") == 0);
-    }
+  SECTION("44444")
+  {
+    int val         = 44444;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 5);
+    REQUIRE(etl::strcmp(result, "44444") == 0);
+  }
 
-    SECTION("123456789")
-    {
-        int val         = 123456789;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 9);
-        REQUIRE(etl::strcmp(result, "123456789") == 0);
-    }
+  SECTION("123456789")
+  {
+    int val         = 123456789;
+    char buffer[12] = {};
+    auto* result    = etl::itoa(val, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::strlen(result) == 9);
+    REQUIRE(etl::strcmp(result, "123456789") == 0);
+  }
 }
 
 TEST_CASE("cstdlib: atol", "[cstdlib]")
 {
-    SECTION("positive")
-    {
-        REQUIRE(etl::atol("0") == long {0});
-        REQUIRE(etl::atol("10") == long {10});
-        REQUIRE(etl::atol("100") == long {100});
-        REQUIRE(etl::atol("1000") == long {1000});
-        REQUIRE(etl::atol("10000") == long {10000});
-        REQUIRE(etl::atol("999999") == long {999999});
-        REQUIRE(etl::atol("9999999") == long {9999999});
-    }
+  SECTION("positive")
+  {
+    REQUIRE(etl::atol("0") == long {0});
+    REQUIRE(etl::atol("10") == long {10});
+    REQUIRE(etl::atol("100") == long {100});
+    REQUIRE(etl::atol("1000") == long {1000});
+    REQUIRE(etl::atol("10000") == long {10000});
+    REQUIRE(etl::atol("999999") == long {999999});
+    REQUIRE(etl::atol("9999999") == long {9999999});
+  }
 }

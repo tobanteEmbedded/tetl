@@ -32,17 +32,19 @@ DAMAGE.
 
 auto main() -> int
 {
-    auto src = etl::array {1, 2, 3, 4};  // size & type are deduced
-    for (auto& item : src) { printf("%d\n", item); }
+  auto src = etl::array {1, 2, 3, 4};  // size & type are deduced
+  for (auto& item : src) { printf("%d\n", item); }
 
-    src.fill(42);
-    assert(etl::all_of(begin(src), end(src), [](auto val) { return val == 42; }));
+  src.fill(42);
+  assert(etl::all_of(begin(src), end(src), [](auto val) { return val == 42; }));
 
-    decltype(src) dest = {};
-    assert(etl::all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
+  decltype(src) dest = {};
+  assert(
+    etl::all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
 
-    etl::copy(begin(src), end(src), begin(dest));
-    assert(etl::all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
+  etl::copy(begin(src), end(src), begin(dest));
+  assert(
+    etl::all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
 
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

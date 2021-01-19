@@ -32,18 +32,18 @@ DAMAGE.
 
 auto main() -> int
 {
-    etl::static_string<32> str {};
+  etl::static_string<32> str {};
 
-    const char* cptr = "C-string";
-    str.append(cptr, 4);
+  const char* cptr = "C-string";
+  str.append(cptr, 4);
 
-    printf("\"%s\"\n", str.c_str());
+  printf("\"%s\"\n", str.c_str());
 
-    for (auto& c : str) { printf("%c", c); }
+  for (auto& c : str) { printf("%c", c); }
 
-    printf("\nSize: %zu\n", str.size());
-    printf("Length: %zu\n", str.length());
-    printf("Capacity: %zu\n", str.capacity());
+  printf("\nSize: %zu\n", str.size());
+  printf("Length: %zu\n", str.length());
+  printf("Capacity: %zu\n", str.capacity());
 
-    return 0;
+  return 0;
 }

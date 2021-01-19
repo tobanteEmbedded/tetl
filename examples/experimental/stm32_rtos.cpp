@@ -38,34 +38,34 @@ namespace stm32 = etl::hardware::stm32;
 template <typename LoopType = rtos::forever>
 struct example_task
 {
-    auto run() -> void
+  auto run() -> void
+  {
+    auto loopControl = LoopType {};
+    while (loopControl())
     {
-        auto loopControl = LoopType {};
-        while (loopControl())
-        {
-            stm32::gpio_memory_layout memory {};
-            auto& gpio_port = stm32::port::place_at(&memory);
-            gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
-            gpio_port.toggle_pin(stm32::pin_number::pin_13);
+      stm32::gpio_memory_layout memory {};
+      auto& gpio_port = stm32::port::place_at(&memory);
+      gpio_port.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
+      gpio_port.toggle_pin(stm32::pin_number::pin_13);
 
-            rtos::yield_task();
-            rtos::delay(1);
-            rtos::delay_until(1, 1);
-        }
-
-        rtos::delete_task(nullptr);
+      rtos::yield_task();
+      rtos::delay(1);
+      rtos::delay_until(1, 1);
     }
+
+    rtos::delete_task(nullptr);
+  }
 };
 
 static example_task<rtos::once> task {};
 
 auto main() -> int
 {
-    rtos::create_task(task, "test", 255);
-    rtos::start_scheduler();
+  rtos::create_task(task, "test", 255);
+  rtos::start_scheduler();
 
-    // Run would normally be called by rtos::start_scheduler(). Only used for
-    // stubs.
-    task.run();
-    return 0;
+  // Run would normally be called by rtos::start_scheduler(). Only used for
+  // stubs.
+  task.run();
+  return 0;
 }

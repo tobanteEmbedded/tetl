@@ -35,7 +35,8 @@ DAMAGE.
 #define DBL_MANT_DIG __DBL_MANT_DIG__
 #define LDBL_MANT_DIG __LDBL_MANT_DIG__
 
-#if __STDC_VERSION__ >= 199901L || !defined(__STRICT_ANSI__) || __cplusplus >= 201103L
+#if __STDC_VERSION__ >= 199901L || !defined(__STRICT_ANSI__)                   \
+  || __cplusplus >= 201103L
 #define DECIMAL_DIG __DECIMAL_DIG__
 #endif
 

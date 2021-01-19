@@ -44,174 +44,180 @@ namespace etl
  * internally. If used on micro controllers, the base address should be set to
  * the start of RAM. See your linker script.
  */
-template <typename Type, intptr_t BaseAddress = 0, typename StorageType = uint16_t>
+template <typename Type, intptr_t BaseAddress = 0,
+          typename StorageType = uint16_t>
 class small_ptr
 {
-public:
-    /**
-     * @brief Default construct empty small_ptr. May contain garbage.
-     */
-    small_ptr() = default;
+  public:
+  /**
+   * @brief Default construct empty small_ptr. May contain garbage.
+   */
+  small_ptr() = default;
 
-    /**
-     * @brief Construct from nullptr.
-     */
-    small_ptr(nullptr_t null) : value_ {0} { ignore_unused(null); }
+  /**
+   * @brief Construct from nullptr.
+   */
+  small_ptr(nullptr_t null) : value_ {0} { ignore_unused(null); }
 
-    /**
-     * @brief Construct from raw pointer.
-     */
-    small_ptr(Type* ptr) : value_ {compress(ptr)} { }
+  /**
+   * @brief Construct from raw pointer.
+   */
+  small_ptr(Type* ptr) : value_ {compress(ptr)} { }
 
-    /**
-     * @brief Returns a raw pointer to Type.
-     */
-    [[nodiscard]] auto get() noexcept -> Type*
-    {
-        return reinterpret_cast<Type*>(BaseAddress + value_);
-    }
+  /**
+   * @brief Returns a raw pointer to Type.
+   */
+  [[nodiscard]] auto get() noexcept -> Type*
+  {
+    return reinterpret_cast<Type*>(BaseAddress + value_);
+  }
 
-    /**
-     * @brief Returns a raw pointer to const Type.
-     */
-    [[nodiscard]] auto get() const noexcept -> Type const*
-    {
-        return reinterpret_cast<Type const*>(BaseAddress + value_);
-    }
+  /**
+   * @brief Returns a raw pointer to const Type.
+   */
+  [[nodiscard]] auto get() const noexcept -> Type const*
+  {
+    return reinterpret_cast<Type const*>(BaseAddress + value_);
+  }
 
-    /**
-     * @brief Returns the compressed underlying integer address.
-     */
-    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return value_; }
+  /**
+   * @brief Returns the compressed underlying integer address.
+   */
+  [[nodiscard]] auto compressed_value() const noexcept -> StorageType
+  {
+    return value_;
+  }
 
-    /**
-     * @brief Returns a raw pointer to Type.
-     */
-    [[nodiscard]] auto operator->() const -> Type* { return get(); }
+  /**
+   * @brief Returns a raw pointer to Type.
+   */
+  [[nodiscard]] auto operator->() const -> Type* { return get(); }
 
-    /**
-     * @brief Dereference pointer to Type&.
-     */
-    [[nodiscard]] auto operator*() -> Type& { return *get(); }
+  /**
+   * @brief Dereference pointer to Type&.
+   */
+  [[nodiscard]] auto operator*() -> Type& { return *get(); }
 
-    /**
-     * @brief Dereference pointer to Type const&.
-     */
-    [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
+  /**
+   * @brief Dereference pointer to Type const&.
+   */
+  [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
 
-    /**
-     * @brief Pre increment of pointer.
-     */
-    [[nodiscard]] auto operator++(int) noexcept -> small_ptr
-    {
-        auto temp = *this;
-        auto* ptr = get();
-        ++ptr;
-        value_ = compress(ptr);
-        return temp;
-    }
+  /**
+   * @brief Pre increment of pointer.
+   */
+  [[nodiscard]] auto operator++(int) noexcept -> small_ptr
+  {
+    auto temp = *this;
+    auto* ptr = get();
+    ++ptr;
+    value_ = compress(ptr);
+    return temp;
+  }
 
-    /**
-     * @brief Post increment of pointer.
-     */
-    [[nodiscard]] auto operator++() noexcept -> small_ptr&
-    {
-        auto* ptr = get();
-        ptr++;
-        value_ = compress(ptr);
-        return *this;
-    }
+  /**
+   * @brief Post increment of pointer.
+   */
+  [[nodiscard]] auto operator++() noexcept -> small_ptr&
+  {
+    auto* ptr = get();
+    ptr++;
+    value_ = compress(ptr);
+    return *this;
+  }
 
-    /**
-     * @brief Pre decrement of pointer.
-     */
-    [[nodiscard]] auto operator--(int) noexcept -> small_ptr
-    {
-        auto temp = *this;
-        auto* ptr = get();
-        --ptr;
-        value_ = compress(ptr);
-        return temp;
-    }
+  /**
+   * @brief Pre decrement of pointer.
+   */
+  [[nodiscard]] auto operator--(int) noexcept -> small_ptr
+  {
+    auto temp = *this;
+    auto* ptr = get();
+    --ptr;
+    value_ = compress(ptr);
+    return temp;
+  }
 
-    /**
-     * @brief Post decrement of pointer.
-     */
-    [[nodiscard]] auto operator--() noexcept -> small_ptr&
-    {
-        auto* ptr = get();
-        ptr--;
-        value_ = compress(ptr);
-        return *this;
-    }
+  /**
+   * @brief Post decrement of pointer.
+   */
+  [[nodiscard]] auto operator--() noexcept -> small_ptr&
+  {
+    auto* ptr = get();
+    ptr--;
+    value_ = compress(ptr);
+    return *this;
+  }
 
-    /**
-     * @brief Returns distance from this to other.
-     */
-    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
-    {
-        return get() - other.get();
-    }
+  /**
+   * @brief Returns distance from this to other.
+   */
+  [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
+  {
+    return get() - other.get();
+  }
 
-    /**
-     * @brief Implicit conversion to raw pointer to mutable.
-     */
-    [[nodiscard]] operator Type*() noexcept { return get(); }
+  /**
+   * @brief Implicit conversion to raw pointer to mutable.
+   */
+  [[nodiscard]] operator Type*() noexcept { return get(); }
 
-    /**
-     * @brief Implicit conversion to raw pointer to const.
-     */
-    [[nodiscard]] operator Type const *() const noexcept { return get(); }
+  /**
+   * @brief Implicit conversion to raw pointer to const.
+   */
+  [[nodiscard]] operator Type const *() const noexcept { return get(); }
 
-private:
-    [[nodiscard]] static auto compress(Type* ptr) -> StorageType
-    {
-        auto const obj = reinterpret_cast<intptr_t>(ptr);
-        return StorageType(obj - BaseAddress);
-    }
+  private:
+  [[nodiscard]] static auto compress(Type* ptr) -> StorageType
+  {
+    auto const obj = reinterpret_cast<intptr_t>(ptr);
+    return StorageType(obj - BaseAddress);
+  }
 
-    StorageType value_;
+  StorageType value_;
 };
 
 template <typename T>
 class default_delete
 {
-public:
-    constexpr default_delete() noexcept = default;
+  public:
+  constexpr default_delete() noexcept = default;
 
-    template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
-    default_delete(default_delete<U> const& /*unused*/) noexcept
-    {
-    }
+  template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
+  default_delete(default_delete<U> const& /*unused*/) noexcept
+  {
+  }
 
-    auto operator()(T* ptr) const noexcept -> void { delete ptr; }
+  auto operator()(T* ptr) const noexcept -> void { delete ptr; }
 
-private:
-    static_assert(!etl::is_function<T>::value);
-    static_assert(sizeof(T));
-    static_assert(!etl::is_void<T>::value);
+  private:
+  static_assert(!etl::is_function<T>::value);
+  static_assert(sizeof(T));
+  static_assert(!etl::is_void<T>::value);
 };
 
 template <typename T>
 class default_delete<T[]>
 {
-public:
-    constexpr default_delete() noexcept = default;
+  public:
+  constexpr default_delete() noexcept = default;
 
-    template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
-    default_delete(default_delete<U[]> const& /*unused*/) noexcept
-    {
-    }
+  template <typename U,
+            TAETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
+  default_delete(default_delete<U[]> const& /*unused*/) noexcept
+  {
+  }
 
-    template <typename U, TAETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
-    auto operator()(U* array_ptr) const noexcept -> void
-    {
-        delete[] array_ptr;
-    }
+  template <typename U,
+            TAETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
+  auto operator()(U* array_ptr) const noexcept -> void
+  {
+    delete[] array_ptr;
+  }
 
-private:
-    static_assert(sizeof(T));
-    static_assert(!etl::is_void<T>::value);
+  private:
+  static_assert(sizeof(T));
+  static_assert(!etl::is_void<T>::value);
 };
 
 /**
@@ -221,8 +227,8 @@ private:
 template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
 auto addressof(T& arg) noexcept -> T*
 {
-    return reinterpret_cast<T*>(
-        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+  return reinterpret_cast<T*>(
+    &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
 }
 
 /**
@@ -232,7 +238,7 @@ auto addressof(T& arg) noexcept -> T*
 template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
 auto addressof(T& arg) noexcept -> T*
 {
-    return &arg;
+  return &arg;
 }
 
 /**
@@ -251,14 +257,14 @@ auto addressof(T const&&) = delete;
 template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
-    if constexpr (etl::is_array_v<T>)
-    {
-        for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
-    }
-    else
-    {
-        p->~T();
-    }
+  if constexpr (etl::is_array_v<T>)
+  {
+    for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
+  }
+  else
+  {
+    p->~T();
+  }
 }
 
 /**
@@ -267,7 +273,7 @@ constexpr auto destroy_at(T* p) -> void
 template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {
-    for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
+  for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
 }
 
 /**
@@ -276,8 +282,8 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
-    for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
-    return first;
+  for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
+  return first;
 }
 
 }  // namespace etl

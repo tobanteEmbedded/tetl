@@ -43,10 +43,10 @@ template <typename T, typename U>
 concept same_as = detail::same_helper<T, U>&& detail::same_helper<U, T>;
 
 template <typename From, typename To>
-concept convertible_to
-    = etl::is_convertible_v<From, To>&& requires(etl::add_rvalue_reference_t<From> (&f)())
+concept convertible_to = etl::is_convertible_v<From, To>&& requires(
+  etl::add_rvalue_reference_t<From> (&f)())
 {
-    static_cast<To>(f());
+  static_cast<To>(f());
 };
 
 template <typename T>

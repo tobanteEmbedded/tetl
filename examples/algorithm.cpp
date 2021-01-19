@@ -31,36 +31,36 @@ DAMAGE.
 
 auto main() -> int
 {
-    etl::static_vector<double, 16> vec;
-    vec.push_back(1.0);
-    vec.push_back(2.0);
-    vec.push_back(3.0);
-    vec.push_back(4.0);
+  etl::static_vector<double, 16> vec;
+  vec.push_back(1.0);
+  vec.push_back(2.0);
+  vec.push_back(3.0);
+  vec.push_back(4.0);
 
-    // FOR_EACH
-    auto print = [](auto& x) { printf("%f\n", x); };
+  // FOR_EACH
+  auto print = [](auto& x) { printf("%f\n", x); };
 
-    etl::for_each(vec.begin(), vec.end(), print);
-    etl::for_each_n(vec.begin(), 3, [](auto const& x) { printf("%f\n", x * 2); });
+  etl::for_each(vec.begin(), vec.end(), print);
+  etl::for_each_n(vec.begin(), 3, [](auto const& x) { printf("%f\n", x * 2); });
 
-    // FIND FIND_IF
-    double n1 = 3.0;
-    double n2 = 5;
+  // FIND FIND_IF
+  double n1 = 3.0;
+  double n2 = 5;
 
-    auto* result1 = etl::find(vec.begin(), vec.end(), n1);
-    auto* result2 = etl::find(vec.begin(), vec.end(), n2);
+  auto* result1 = etl::find(vec.begin(), vec.end(), n1);
+  auto* result2 = etl::find(vec.begin(), vec.end(), n2);
 
-    if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
-    else
-    {
-        printf("v does not contain: %f\n", n1);
-    }
+  if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
+  else
+  {
+    printf("v does not contain: %f\n", n1);
+  }
 
-    if (result2 != vec.end()) { printf("v contains: %f\n", n2); }
-    else
-    {
-        printf("v does not contain: %f\n", n2);
-    }
+  if (result2 != vec.end()) { printf("v contains: %f\n", n2); }
+  else
+  {
+    printf("v does not contain: %f\n", n2);
+  }
 
-    return 0;
+  return 0;
 }

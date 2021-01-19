@@ -32,56 +32,56 @@ DAMAGE.
 
 auto main() -> int
 {
-    // SWAP
-    auto v1 = 42;
-    auto v2 = 100;
-    etl::swap(v1, v2);
-    assert(v1 == 100);
-    assert(v2 == 42);
+  // SWAP
+  auto v1 = 42;
+  auto v2 = 100;
+  etl::swap(v1, v2);
+  assert(v1 == 100);
+  assert(v2 == 42);
 
-    // EXCHANGE
-    auto val = 1;
-    assert(etl::exchange(val, 2) == 1);
+  // EXCHANGE
+  auto val = 1;
+  assert(etl::exchange(val, 2) == 1);
 
-    // AS CONST
-    auto c = 1;
-    assert(!etl::is_const_v<decltype(c)>);
-    assert(etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>);
+  // AS CONST
+  auto c = 1;
+  assert(!etl::is_const_v<decltype(c)>);
+  assert(etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>);
 
-    // CMP
-    assert(etl::cmp_equal(42, 42));
-    assert(!etl::cmp_equal(42UL, 100UL));
-    assert(etl::cmp_not_equal(42UL, 100UL));
+  // CMP
+  assert(etl::cmp_equal(42, 42));
+  assert(!etl::cmp_equal(42UL, 100UL));
+  assert(etl::cmp_not_equal(42UL, 100UL));
 
-    // IN_RANGE
-    using etl::int32_t;
-    using etl::int64_t;
-    assert(etl::in_range<int64_t>(0));
-    assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::min()));
-    assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::max()));
-    assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::min()));
-    assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::max()));
+  // IN_RANGE
+  using etl::int32_t;
+  using etl::int64_t;
+  assert(etl::in_range<int64_t>(0));
+  assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::min()));
+  assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::max()));
+  assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::min()));
+  assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::max()));
 
-    // PAIR construct
-    auto p1 = etl::pair<int, float> {1, 42.0f};
-    assert(p1.first == 1);
+  // PAIR construct
+  auto p1 = etl::pair<int, float> {1, 42.0f};
+  assert(p1.first == 1);
 
-    auto p2 = etl::make_pair(2, 1.43f);
-    assert(p2.first == 2);
+  auto p2 = etl::make_pair(2, 1.43f);
+  assert(p2.first == 2);
 
-    auto p3 = p1;
-    assert(p3.first == 1);
+  auto p3 = p1;
+  assert(p3.first == 1);
 
-    // PAIR compare
-    assert(p1 == p3);
-    assert(p1 != p2);
-    assert(p2 > p3);
-    assert(p3 < p2);
+  // PAIR compare
+  assert(p1 == p3);
+  assert(p1 != p2);
+  assert(p2 > p3);
+  assert(p3 < p2);
 
-    // PAIR swap
-    etl::swap(p2, p3);
-    assert(p2.first == 1);
-    assert(p3.first == 2);
+  // PAIR swap
+  etl::swap(p2, p3);
+  assert(p2.first == 1);
+  assert(p3.first == 2);
 
-    return 0;
+  return 0;
 }

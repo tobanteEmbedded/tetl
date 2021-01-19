@@ -47,51 +47,53 @@ namespace etl
 enum class endian
 {
 #ifdef _WIN32
-    little = 0,
-    big    = 1,
-    native = little
+  little = 0,
+  big    = 1,
+  native = little
 #else
-    little = __ORDER_LITTLE_ENDIAN__,
-    big    = __ORDER_BIG_ENDIAN__,
-    native = __BYTE_ORDER__
+  little = __ORDER_LITTLE_ENDIAN__,
+  big    = __ORDER_BIG_ENDIAN__,
+  native = __BYTE_ORDER__
 #endif
 };
 
 /**
- * @brief Obtain a value of type To by reinterpreting the object representation of from.
- * Every bit in the value representation of the returned To object is equal to the
- * corresponding bit in the object representation of from.
+ * @brief Obtain a value of type To by reinterpreting the object representation
+ * of from. Every bit in the value representation of the returned To object is
+ * equal to the corresponding bit in the object representation of from.
  *
- * @details The values of padding bits in the returned To object are unspecified. If there
- * is no value of type To corresponding to the value representation produced, the behavior
- * is undefined. If there are multiple such values, which value is produced is
- * unspecified. This overload only participates in overload resolution if sizeof(To) ==
- * sizeof(From) and both To and From are TriviallyCopyable types.
+ * @details The values of padding bits in the returned To object are
+ * unspecified. If there is no value of type To corresponding to the value
+ * representation produced, the behavior is undefined. If there are multiple
+ * such values, which value is produced is unspecified. This overload only
+ * participates in overload resolution if sizeof(To) == sizeof(From) and both To
+ * and From are TriviallyCopyable types.
  *
  * @ref https://en.cppreference.com/w/cpp/numeric/bit_cast
  */
-template <
-    typename To, typename From,
-    TAETL_REQUIRES_((sizeof(To) == sizeof(From))
-                    && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
+template <typename To, typename From,
+          TAETL_REQUIRES_(
+            (sizeof(To) == sizeof(From))
+            && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
 constexpr auto bit_cast(From const& src) noexcept -> To
 {
-    static_assert(is_trivially_constructible_v<To>,
-                  "This implementation additionally requires destination type to be "
-                  "trivially constructible");
+  static_assert(
+    is_trivially_constructible_v<To>,
+    "This implementation additionally requires destination type to be "
+    "trivially constructible");
 
-    To dst;
-    etl::memcpy(&dst, &src, sizeof(To));
-    return dst;
+  To dst;
+  etl::memcpy(&dst, &src, sizeof(To));
+  return dst;
 }
 
 namespace detail
 {
 template <typename T>
-using bit_unsigned_int = etl::bool_constant<
-    etl::disjunction_v<etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
-                       etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
-                       etl::is_same<T, unsigned long long>>>;
+using bit_unsigned_int = etl::bool_constant<etl::disjunction_v<
+  etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
+  etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
+  etl::is_same<T, unsigned long long>>>;
 
 template <typename T>
 inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
@@ -99,29 +101,29 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 }  // namespace detail
 
 /**
- * @brief Computes the result of bitwise left-rotating the value of x by s positions. This
- * operation is also known as a left circular shift.
+ * @brief Computes the result of bitwise left-rotating the value of x by s
+ * positions. This operation is also known as a left circular shift.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
-    auto const cnt    = static_cast<unsigned>(s);
-    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-    if ((cnt % digits) == 0) { return t; }
-    return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
+  auto const cnt    = static_cast<unsigned>(s);
+  auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+  if ((cnt % digits) == 0) { return t; }
+  return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
 }
 
 /**
- * @brief Computes the result of bitwise right-rotating the value of x by s positions.
- * This operation is also known as a right circular shift.
+ * @brief Computes the result of bitwise right-rotating the value of x by s
+ * positions. This operation is also known as a right circular shift.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
-    auto const cnt    = static_cast<unsigned>(s);
-    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-    if ((cnt % digits) == 0) { return t; }
-    return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
+  auto const cnt    = static_cast<unsigned>(s);
+  auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+  if ((cnt % digits) == 0) { return t; }
+  return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
 }
 
 /**
@@ -135,13 +137,13 @@ constexpr auto rotr(T t, int s) noexcept -> T
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
-    auto count = T {0};
-    while (input)
-    {
-        count = count + (input & T(1));
-        input = input >> T(1);
-    }
-    return static_cast<int>(count);
+  auto count = T {0};
+  while (input)
+  {
+    count = count + (input & T(1));
+    input = input >> T(1);
+  }
+  return static_cast<int>(count);
 }
 
 /**
@@ -156,7 +158,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
-    return popcount(x) == 1;
+  return popcount(x) == 1;
 }
 
 /**
@@ -173,17 +175,17 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
-    auto const total_bits = etl::numeric_limits<T>::digits;
-    if (x == T {0}) { return etl::numeric_limits<T>::digits; }
+  auto const total_bits = etl::numeric_limits<T>::digits;
+  if (x == T {0}) { return etl::numeric_limits<T>::digits; }
 
-    int res = 0;
-    while (!(x & (T {1} << (total_bits - 1))))
-    {
-        x = (x << T {1});
-        res++;
-    }
+  int res = 0;
+  while (!(x & (T {1} << (total_bits - 1))))
+  {
+    x = (x << T {1});
+    res++;
+  }
 
-    return res;
+  return res;
 }
 
 /**
@@ -200,17 +202,17 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
-    auto const total_bits = etl::numeric_limits<T>::digits;
-    if (x == etl::numeric_limits<T>::max()) { return total_bits; }
+  auto const total_bits = etl::numeric_limits<T>::digits;
+  if (x == etl::numeric_limits<T>::max()) { return total_bits; }
 
-    int res = 0;
-    while (x & (T {1} << (total_bits - 1)))
-    {
-        x = (x << T {1});
-        res++;
-    }
+  int res = 0;
+  while (x & (T {1} << (total_bits - 1)))
+  {
+    x = (x << T {1});
+    res++;
+  }
 
-    return res;
+  return res;
 }
 
 /**
@@ -224,7 +226,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
-    return etl::numeric_limits<T>::digits - etl::countl_zero(x);
+  return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
 
 }  // namespace etl

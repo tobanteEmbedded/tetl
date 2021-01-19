@@ -33,15 +33,15 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief A BitmaskType used to specify floating-point formatting for etl::to_chars and
- * etl::from_chars
+ * @brief A BitmaskType used to specify floating-point formatting for
+ * etl::to_chars and etl::from_chars
  */
 enum class chars_format : etl::uint8_t
 {
-    scientific = 0x1,
-    fixed      = 0x2,
-    hex        = 0x4,
-    general    = fixed | scientific
+  scientific = 0x1,
+  fixed      = 0x2,
+  hex        = 0x4,
+  general    = fixed | scientific
 };
 
 /**
@@ -49,14 +49,14 @@ enum class chars_format : etl::uint8_t
  */
 struct to_chars_result
 {
-    char* ptr;
-    etl::errc ec;
+  char* ptr;
+  etl::errc ec;
 
-    friend auto operator==(to_chars_result const& lhs,
-                           to_chars_result const& rhs) noexcept -> bool
-    {
-        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
-    }
+  friend auto operator==(to_chars_result const& lhs,
+                         to_chars_result const& rhs) noexcept -> bool
+  {
+    return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+  }
 };
 
 /**
@@ -64,14 +64,14 @@ struct to_chars_result
  */
 struct from_chars_result
 {
-    char* ptr;
-    etl::errc ec;
+  char* ptr;
+  etl::errc ec;
 
-    friend auto operator==(from_chars_result const& lhs,
-                           from_chars_result const& rhs) noexcept -> bool
-    {
-        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
-    }
+  friend auto operator==(from_chars_result const& lhs,
+                         from_chars_result const& rhs) noexcept -> bool
+  {
+    return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+  }
 };
 }  // namespace etl
 

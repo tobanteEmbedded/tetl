@@ -30,19 +30,19 @@ DAMAGE.
 
 auto main() -> int
 {
-    etl::static_vector<double, 16> vec1;
-    vec1.push_back(1.0);
-    vec1.push_back(2.0);
-    vec1.push_back(3.0);
-    vec1.push_back(4.0);
+  etl::static_vector<double, 16> vec1;
+  vec1.push_back(1.0);
+  vec1.push_back(2.0);
+  vec1.push_back(3.0);
+  vec1.push_back(4.0);
 
-    for (auto item : vec1) { printf("%f\n", item); }
+  for (auto item : vec1) { printf("%f\n", item); }
 
-    auto foo = [](auto& vec2) {
-        for (auto item : vec2) { printf("%f\n", item); }
-    };
+  auto foo = [](auto& vec2) {
+    for (auto item : vec2) { printf("%f\n", item); }
+  };
 
-    foo(vec1);
+  foo(vec1);
 
-    return 0;
+  return 0;
 }

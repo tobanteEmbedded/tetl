@@ -32,21 +32,22 @@ namespace etl::detail
 /**
  * Needed by algorithm.hpp & function.hpp (default_searcher)
  */
-template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
-[[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
-                                         ForwardIter2 s_first, ForwardIter2 s_last,
-                                         BinaryPredicate pred) -> ForwardIter1
+template <typename ForwardIter1, typename ForwardIter2,
+          typename BinaryPredicate>
+[[nodiscard]] constexpr auto
+search_impl(ForwardIter1 first, ForwardIter1 last, ForwardIter2 s_first,
+            ForwardIter2 s_last, BinaryPredicate pred) -> ForwardIter1
 {
-    for (;; ++first)
+  for (;; ++first)
+  {
+    auto it = first;
+    for (auto s_it = s_first;; ++it, ++s_it)
     {
-        auto it = first;
-        for (auto s_it = s_first;; ++it, ++s_it)
-        {
-            if (s_it == s_last) { return first; }
-            if (it == last) { return last; }
-            if (!pred(*it, *s_it)) { break; }
-        }
+      if (s_it == s_last) { return first; }
+      if (it == last) { return last; }
+      if (!pred(*it, *s_it)) { break; }
     }
+  }
 }
 }  // namespace etl::detail
 

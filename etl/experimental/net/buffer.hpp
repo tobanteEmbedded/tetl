@@ -36,12 +36,12 @@ namespace net
 {
 inline auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer
 {
-    return mutable_buffer {data, size};
+  return mutable_buffer {data, size};
 }
 
 inline auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
 {
-    return const_buffer {data, size};
+  return const_buffer {data, size};
 }
 }  // namespace net
 }  // namespace etl

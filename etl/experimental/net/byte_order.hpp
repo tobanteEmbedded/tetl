@@ -40,16 +40,16 @@ constexpr auto ntoh(uint8_t v) noexcept -> uint8_t { return v; }
 constexpr auto ntoh(int8_t v) noexcept -> int8_t { return v; }
 constexpr auto ntoh(uint16_t v) noexcept -> uint16_t
 {
-    return uint16_t(v << uint16_t(8)) | uint16_t(v >> uint16_t(8));
+  return uint16_t(v << uint16_t(8)) | uint16_t(v >> uint16_t(8));
 }
 constexpr auto ntoh(uint32_t v) noexcept -> uint32_t
 {
-    auto const a = v << 24;
-    auto const b = (v & 0x0000FF00) << 8;
-    auto const c = (v & 0x00FF0000) >> 8;
-    auto const d = v >> 24;
+  auto const a = v << 24;
+  auto const b = (v & 0x0000FF00) << 8;
+  auto const c = (v & 0x00FF0000) >> 8;
+  auto const d = v >> 24;
 
-    return a | b | c | d;
+  return a | b | c | d;
 }
 
 template <typename T>

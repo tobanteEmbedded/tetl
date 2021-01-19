@@ -38,7 +38,8 @@ DAMAGE.
 namespace etl::detail
 {
 template <typename T>
-inline constexpr bool is_movable_v = etl::is_object_v<T>&& etl::is_assignable_v<T&, T>&&
+inline constexpr bool is_movable_v
+  = etl::is_object_v<T>&& etl::is_assignable_v<T&, T>&&
     etl::is_move_constructible_v<T>&& etl::is_swappable_v<T&>;
 
 template <typename Rng>
@@ -66,26 +67,28 @@ template <typename T>
 static constexpr bool InputIterator = Iterator_<T, etl::input_iterator_tag> {};
 
 template <typename T>
-static constexpr bool ForwardIterator = Iterator_<T, etl::forward_iterator_tag> {};
+static constexpr bool ForwardIterator
+  = Iterator_<T, etl::forward_iterator_tag> {};
 
 template <typename T>
 static constexpr bool OutputIterator
-    = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
+  = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
 
 template <typename T>
 static constexpr bool BidirectionalIterator
-    = Iterator_<T, etl::bidirectional_iterator_tag> {};
+  = Iterator_<T, etl::bidirectional_iterator_tag> {};
 
 template <typename T>
 static constexpr bool RandomAccessIterator
-    = Iterator_<T, etl::random_access_iterator_tag> {};
+  = Iterator_<T, etl::random_access_iterator_tag> {};
 
 template <typename T>
-static constexpr bool RandomAccessRange = RandomAccessIterator<range_iterator_t<T>>;
+static constexpr bool RandomAccessRange
+  = RandomAccessIterator<range_iterator_t<T>>;
 
 /**
- * @brief Smallest fixed-width unsigned integer type that can represent values in the
- * range [0, N].
+ * @brief Smallest fixed-width unsigned integer type that can represent values
+ * in the range [0, N].
  */
 // clang-format off
 template<size_t N>
@@ -103,8 +106,8 @@ using smallest_size_t =
 template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr decltype(auto) index(Rng&& rng, Index&& i) noexcept
 {
-    assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
-    return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
+  assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
+  return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
 }  // namespace etl::detail
 #endif  // TAETL_CONTAINER_UTILS_HPP

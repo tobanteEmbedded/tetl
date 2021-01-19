@@ -30,57 +30,57 @@ DAMAGE.
 
 TEST_CASE("version: language_standard", "[vector]")
 {
-    using etl::language_standard;
+  using etl::language_standard;
 
-    auto less = [](auto lhs, auto rhs) {
-        return static_cast<long>(lhs) < static_cast<long>(rhs);
-    };
+  auto less = [](auto lhs, auto rhs) {
+    return static_cast<long>(lhs) < static_cast<long>(rhs);
+  };
 
-    auto greater = [](auto lhs, auto rhs) {
-        return static_cast<long>(lhs) > static_cast<long>(rhs);
-    };
+  auto greater = [](auto lhs, auto rhs) {
+    return static_cast<long>(lhs) > static_cast<long>(rhs);
+  };
 
-    WHEN("C++11")
-    {
-        REQUIRE(greater(language_standard::cpp_11, language_standard::cpp_98));
+  WHEN("C++11")
+  {
+    REQUIRE(greater(language_standard::cpp_11, language_standard::cpp_98));
 
-        REQUIRE(less(language_standard::cpp_11, language_standard::cpp_14));
-        REQUIRE(less(language_standard::cpp_11, language_standard::cpp_17));
-        REQUIRE(less(language_standard::cpp_11, language_standard::cpp_20));
-    }
+    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_14));
+    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_17));
+    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_20));
+  }
 
-    WHEN("C++14")
-    {
-        REQUIRE(greater(language_standard::cpp_14, language_standard::cpp_11));
+  WHEN("C++14")
+  {
+    REQUIRE(greater(language_standard::cpp_14, language_standard::cpp_11));
 
-        REQUIRE(less(language_standard::cpp_14, language_standard::cpp_17));
-        REQUIRE(less(language_standard::cpp_14, language_standard::cpp_20));
-    }
+    REQUIRE(less(language_standard::cpp_14, language_standard::cpp_17));
+    REQUIRE(less(language_standard::cpp_14, language_standard::cpp_20));
+  }
 
-    WHEN("C++17")
-    {
-        REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_11));
-        REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_14));
+  WHEN("C++17")
+  {
+    REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_11));
+    REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_14));
 
-        REQUIRE(less(language_standard::cpp_17, language_standard::cpp_20));
-    }
+    REQUIRE(less(language_standard::cpp_17, language_standard::cpp_20));
+  }
 
-    WHEN("C++20")
-    {
-        REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_98));
-        REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_11));
-        REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_14));
-        REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_17));
-    }
+  WHEN("C++20")
+  {
+    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_98));
+    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_11));
+    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_14));
+    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_17));
+  }
 }
 
 TEST_CASE("version: current_standard", "[vector]")
 {
 #if defined(TAEL_CPP_STANDARD_17)
-    REQUIRE(etl::current_standard == etl::language_standard::cpp_17);
+  REQUIRE(etl::current_standard == etl::language_standard::cpp_17);
 #endif
 
 #if defined(TAEL_CPP_STANDARD_20)
-    REQUIRE(etl::current_standard == etl::language_standard::cpp_20);
+  REQUIRE(etl::current_standard == etl::language_standard::cpp_20);
 #endif
 }

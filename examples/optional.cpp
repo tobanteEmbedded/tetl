@@ -30,41 +30,41 @@ DAMAGE.
 
 auto main() -> int
 {
-    // construct default (implicit empty)
-    auto opt0 = etl::optional<short>();
-    assert(opt0.has_value() == false);
-    assert(static_cast<bool>(opt0) == false);
+  // construct default (implicit empty)
+  auto opt0 = etl::optional<short>();
+  assert(opt0.has_value() == false);
+  assert(static_cast<bool>(opt0) == false);
 
-    // construct explicit empty
-    auto opt1 = etl::optional<int>(etl::nullopt);
-    assert(opt1.has_value() == false);
-    assert(static_cast<bool>(opt1) == false);
+  // construct explicit empty
+  auto opt1 = etl::optional<int>(etl::nullopt);
+  assert(opt1.has_value() == false);
+  assert(static_cast<bool>(opt1) == false);
 
-    // construct explicit with value
-    auto opt2 = etl::optional<float>(42.0f);
-    assert(opt2.has_value());
-    assert(static_cast<bool>(opt2));
+  // construct explicit with value
+  auto opt2 = etl::optional<float>(42.0f);
+  assert(opt2.has_value());
+  assert(static_cast<bool>(opt2));
 
-    // assign copy
-    auto const opt3 = opt2;
-    assert(opt3.has_value());
-    assert(static_cast<bool>(opt3));
+  // assign copy
+  auto const opt3 = opt2;
+  assert(opt3.has_value());
+  assert(static_cast<bool>(opt3));
 
-    // assign move
-    auto const opt4 = etl::move(opt2);
-    assert(opt4.has_value());
-    assert(static_cast<bool>(opt4));
+  // assign move
+  auto const opt4 = etl::move(opt2);
+  assert(opt4.has_value());
+  assert(static_cast<bool>(opt4));
 
-    // value & value_or
-    assert(etl::optional<int>().value() == nullptr);
-    assert(etl::optional<int>().value_or(1) == 1);
-    assert(*etl::optional<int>(1).value() == 1);
+  // value & value_or
+  assert(etl::optional<int>().value() == nullptr);
+  assert(etl::optional<int>().value_or(1) == 1);
+  assert(*etl::optional<int>(1).value() == 1);
 
-    // reset
-    auto opt5 = etl::optional<float>(1.0f);
-    assert(opt5.has_value());
-    opt5.reset();
-    assert(opt5.has_value() == false);
+  // reset
+  auto opt5 = etl::optional<float>(1.0f);
+  assert(opt5.has_value());
+  opt5.reset();
+  assert(opt5.has_value() == false);
 
-    return 0;
+  return 0;
 }

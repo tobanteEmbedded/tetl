@@ -36,7 +36,7 @@ namespace detail
 template <typename T>
 constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 {
-    return static_cast<etl::remove_reference_t<T>&&>(t);
+  return static_cast<etl::remove_reference_t<T>&&>(t);
 }
 }  // namespace detail
 
@@ -52,9 +52,9 @@ constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void
 {
-    T temp(etl::detail::internal_move(a));
-    a = etl::detail::internal_move(b);
-    b = etl::detail::internal_move(temp);
+  T temp(etl::detail::internal_move(a));
+  a = etl::detail::internal_move(b);
+  b = etl::detail::internal_move(temp);
 }
 
 }  // namespace etl

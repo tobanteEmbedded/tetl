@@ -42,7 +42,7 @@ inline auto delay(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
 
 inline auto delay_until(etl::uint32_t previous, etl::uint32_t increment) -> void
 {
-    vTaskDelayUntil(&previous, increment);
+  vTaskDelayUntil(&previous, increment);
 }
 
 }  // namespace rtos

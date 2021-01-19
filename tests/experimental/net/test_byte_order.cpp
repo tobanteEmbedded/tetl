@@ -31,40 +31,40 @@ DAMAGE.
 
 TEST_CASE("experimental/net: ntoh/hton char", "[experimental][net]")
 {
-    using namespace etl::net;
-    REQUIRE(ntoh(hton(char {0})) == 0);
-    REQUIRE(ntoh(hton(char {1})) == 1);
-    REQUIRE(ntoh(hton(char {42})) == 42);
+  using namespace etl::net;
+  REQUIRE(ntoh(hton(char {0})) == 0);
+  REQUIRE(ntoh(hton(char {1})) == 1);
+  REQUIRE(ntoh(hton(char {42})) == 42);
 }
 
 TEST_CASE("experimental/net: ntoh/hton etl::int8_t", "[experimental][net]")
 {
-    using namespace etl::net;
-    REQUIRE(ntoh(hton(etl::int8_t {0})) == 0);
-    REQUIRE(ntoh(hton(etl::int8_t {1})) == 1);
-    REQUIRE(ntoh(hton(etl::int8_t {42})) == 42);
+  using namespace etl::net;
+  REQUIRE(ntoh(hton(etl::int8_t {0})) == 0);
+  REQUIRE(ntoh(hton(etl::int8_t {1})) == 1);
+  REQUIRE(ntoh(hton(etl::int8_t {42})) == 42);
 }
 
 TEST_CASE("experimental/net: ntoh/hton etl::uint8_t", "[experimental][net]")
 {
-    using namespace etl::net;
-    REQUIRE(ntoh(hton(etl::uint8_t {0})) == 0);
-    REQUIRE(ntoh(hton(etl::uint8_t {1})) == 1);
-    REQUIRE(ntoh(hton(etl::uint8_t {42})) == 42);
+  using namespace etl::net;
+  REQUIRE(ntoh(hton(etl::uint8_t {0})) == 0);
+  REQUIRE(ntoh(hton(etl::uint8_t {1})) == 1);
+  REQUIRE(ntoh(hton(etl::uint8_t {42})) == 42);
 }
 
 TEST_CASE("experimental/net: ntoh/hton etl::uint16_t", "[experimental][net]")
 {
-    using namespace etl::net;
-    REQUIRE(ntoh(hton(etl::uint16_t {0})) == 0);
-    REQUIRE(ntoh(hton(etl::uint16_t {1})) == 1);
-    REQUIRE(ntoh(hton(etl::uint16_t {42})) == 42);
+  using namespace etl::net;
+  REQUIRE(ntoh(hton(etl::uint16_t {0})) == 0);
+  REQUIRE(ntoh(hton(etl::uint16_t {1})) == 1);
+  REQUIRE(ntoh(hton(etl::uint16_t {42})) == 42);
 }
 
 TEST_CASE("experimental/net: ntoh/hton etl::uint32_t", "[experimental][net]")
 {
-    using namespace etl::net;
-    REQUIRE(ntoh(hton(etl::uint32_t {0})) == 0);
-    REQUIRE(ntoh(hton(etl::uint32_t {1})) == 1);
-    REQUIRE(ntoh(hton(etl::uint32_t {42})) == 42);
+  using namespace etl::net;
+  REQUIRE(ntoh(hton(etl::uint32_t {0})) == 0);
+  REQUIRE(ntoh(hton(etl::uint32_t {1})) == 1);
+  REQUIRE(ntoh(hton(etl::uint32_t {42})) == 42);
 }

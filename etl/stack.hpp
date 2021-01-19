@@ -35,98 +35,103 @@ namespace etl
 template <typename T, typename Container>
 class stack
 {
-public:
-    using value_type      = typename Container::value_type;
-    using reference       = typename Container::reference;
-    using const_reference = typename Container::const_reference;
-    using size_type       = typename Container::size_type;
-    using container_type  = Container;
+  public:
+  using value_type      = typename Container::value_type;
+  using reference       = typename Container::reference;
+  using const_reference = typename Container::const_reference;
+  using size_type       = typename Container::size_type;
+  using container_type  = Container;
 
-    /**
-     * @brief Default constructor. Value-initializes the container.
-     */
-    stack() : stack(Container()) { }
+  /**
+   * @brief Default constructor. Value-initializes the container.
+   */
+  stack() : stack(Container()) { }
 
-    /**
-     * @brief Copy-constructs the underlying container c with the contents of cont.
-     */
-    explicit stack(Container const& cont) : c {cont} { }
+  /**
+   * @brief Copy-constructs the underlying container c with the contents of
+   * cont.
+   */
+  explicit stack(Container const& cont) : c {cont} { }
 
-    /**
-     * @brief Move-constructs the underlying container c with cont .
-     */
-    explicit stack(Container&& cont) : c {etl::move(cont)} { }
+  /**
+   * @brief Move-constructs the underlying container c with cont .
+   */
+  explicit stack(Container&& cont) : c {etl::move(cont)} { }
 
-    /**
-     * @brief Copy constructor.
-     */
-    stack(stack const& other) = default;
+  /**
+   * @brief Copy constructor.
+   */
+  stack(stack const& other) = default;
 
-    /**
-     * @brief Move constructor.
-     */
-    stack(stack&& other) noexcept = default;
+  /**
+   * @brief Move constructor.
+   */
+  stack(stack&& other) noexcept = default;
 
-    /**
-     * @brief
-     */
-    [[nodiscard]] auto empty() const -> bool { return c.empty(); }
+  /**
+   * @brief
+   */
+  [[nodiscard]] auto empty() const -> bool { return c.empty(); }
 
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto size() const -> size_type { return c.size(); }
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto size() const -> size_type { return c.size(); }
 
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto top() -> reference { return c.back(); }
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto top() -> reference { return c.back(); }
 
-    /**
-     * @brief
-     */
-    [[nodiscard]] constexpr auto top() const -> const_reference { return c.back(); }
+  /**
+   * @brief
+   */
+  [[nodiscard]] constexpr auto top() const -> const_reference
+  {
+    return c.back();
+  }
 
-    /**
-     * @brief
-     */
-    constexpr auto push(const value_type& x) -> void { c.push_back(x); }
+  /**
+   * @brief
+   */
+  constexpr auto push(const value_type& x) -> void { c.push_back(x); }
 
-    /**
-     * @brief
-     */
-    constexpr auto push(value_type&& x) -> void { c.push_back(etl::move(x)); }
+  /**
+   * @brief
+   */
+  constexpr auto push(value_type&& x) -> void { c.push_back(etl::move(x)); }
 
-    /**
-     * @brief
-     */
-    template <typename... Args>
-    auto emplace(Args&&... args) -> decltype(auto)
-    {
-        return c.emplace_back(etl::forward<Args>(args)...);
-    }
+  /**
+   * @brief
+   */
+  template <typename... Args>
+  auto emplace(Args&&... args) -> decltype(auto)
+  {
+    return c.emplace_back(etl::forward<Args>(args)...);
+  }
 
-    /**
-     * @brief
-     */
-    constexpr auto pop() -> void { c.pop_back(); }
+  /**
+   * @brief
+   */
+  constexpr auto pop() -> void { c.pop_back(); }
 
-    /**
-     * @brief
-     */
-    constexpr auto swap(stack& s) noexcept(is_nothrow_swappable_v<Container>) -> void
-    {
-        using etl::swap;
-        swap(c, s.c);
-    }
+  /**
+   * @brief
+   */
+  constexpr auto swap(stack& s) noexcept(is_nothrow_swappable_v<Container>)
+    -> void
+  {
+    using etl::swap;
+    swap(c, s.c);
+  }
 
-protected:
-    Container c;
+  protected:
+  Container c;
 };
 
 /**
- * @brief These deduction guides are provided for stack to allow deduction from underlying
- * container type.
+ * @brief These deduction guides are provided for stack to allow deduction from
+ * underlying container type.
  */
 template <typename Container>
 stack(Container) -> stack<typename Container::value_type, Container>;

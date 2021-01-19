@@ -32,68 +32,68 @@ namespace
 {
 class dummy_mutex
 {
-public:
-    dummy_mutex() noexcept  = default;
-    ~dummy_mutex() noexcept = default;
+  public:
+  dummy_mutex() noexcept  = default;
+  ~dummy_mutex() noexcept = default;
 
-    auto operator=(dummy_mutex const&) -> dummy_mutex& = delete;
-    dummy_mutex(dummy_mutex const&)                    = delete;
+  auto operator=(dummy_mutex const&) -> dummy_mutex& = delete;
+  dummy_mutex(dummy_mutex const&)                    = delete;
 
-    auto operator=(dummy_mutex&&) -> dummy_mutex& = default;
-    dummy_mutex(dummy_mutex&&)                    = default;
+  auto operator=(dummy_mutex&&) -> dummy_mutex& = default;
+  dummy_mutex(dummy_mutex&&)                    = default;
 
-    auto lock() noexcept { is_locked_ = true; }
-    auto unlock() noexcept { is_locked_ = false; }
+  auto lock() noexcept { is_locked_ = true; }
+  auto unlock() noexcept { is_locked_ = false; }
 
-    [[nodiscard]] auto is_locked() const noexcept { return is_locked_; }
+  [[nodiscard]] auto is_locked() const noexcept { return is_locked_; }
 
-private:
-    bool is_locked_ = false;
+  private:
+  bool is_locked_ = false;
 };
 }  // namespace
 
 TEST_CASE("mutex/lock_guard: construct", "[mutex]")
 {
-    SECTION("not locked")
+  SECTION("not locked")
+  {
+    dummy_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
     {
-        dummy_mutex mtx {};
-        REQUIRE_FALSE(mtx.is_locked());
-        {
-            etl::lock_guard lock {mtx};
-            REQUIRE(mtx.is_locked());
-            etl::ignore_unused(lock);
-        }
-        REQUIRE_FALSE(mtx.is_locked());
+      etl::lock_guard lock {mtx};
+      REQUIRE(mtx.is_locked());
+      etl::ignore_unused(lock);
     }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
 
-    SECTION("already locked")
+  SECTION("already locked")
+  {
+    dummy_mutex mtx {};
+    mtx.lock();
     {
-        dummy_mutex mtx {};
-        mtx.lock();
-        {
-            etl::lock_guard lock {mtx, etl::adopt_lock};
-            REQUIRE(mtx.is_locked());
-            etl::ignore_unused(lock);
-        }
-        REQUIRE_FALSE(mtx.is_locked());
+      etl::lock_guard lock {mtx, etl::adopt_lock};
+      REQUIRE(mtx.is_locked());
+      etl::ignore_unused(lock);
     }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
 }
 
 TEST_CASE("mutex/scoped_lock: construct", "[mutex]")
 {
-    dummy_mutex mtx {};
-    etl::scoped_lock lock {mtx};
-    REQUIRE(mtx.is_locked());
-    etl::ignore_unused(lock);
+  dummy_mutex mtx {};
+  etl::scoped_lock lock {mtx};
+  REQUIRE(mtx.is_locked());
+  etl::ignore_unused(lock);
 }
 
 TEST_CASE("mutex/scoped_lock: lock/unlock", "[mutex]")
 {
-    dummy_mutex mtx {};
-    REQUIRE_FALSE(mtx.is_locked());
-    {
-        etl::scoped_lock lock {mtx};
-        REQUIRE(mtx.is_locked());
-    }
-    REQUIRE_FALSE(mtx.is_locked());
+  dummy_mutex mtx {};
+  REQUIRE_FALSE(mtx.is_locked());
+  {
+    etl::scoped_lock lock {mtx};
+    REQUIRE(mtx.is_locked());
+  }
+  REQUIRE_FALSE(mtx.is_locked());
 }

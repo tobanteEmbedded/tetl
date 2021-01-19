@@ -28,19 +28,20 @@ DAMAGE.
 
 #include "etl/numbers.hpp"
 
-TEMPLATE_TEST_CASE("numbers: constants", "[numbers]", float, double, long double)
+TEMPLATE_TEST_CASE("numbers: constants", "[numbers]", float, double,
+                   long double)
 {
-    REQUIRE(etl::numbers::e_v<TestType> == Approx(2.7182818));
-    REQUIRE(etl::numbers::log2e_v<TestType> == Approx(1.44269504));
-    REQUIRE(etl::numbers::log10e_v<TestType> == Approx(0.4342944));
-    REQUIRE(etl::numbers::pi_v<TestType> == Approx(3.1415926));
-    REQUIRE(etl::numbers::inv_sqrtpi_v<TestType> == Approx(0.5641895));
-    REQUIRE(etl::numbers::inv_pi_v<TestType> == Approx(0.3183098));
-    REQUIRE(etl::numbers::ln2_v<TestType> == Approx(0.6931471));
-    REQUIRE(etl::numbers::ln10_v<TestType> == Approx(2.3025850));
-    REQUIRE(etl::numbers::sqrt2_v<TestType> == Approx(1.4142135));
-    REQUIRE(etl::numbers::sqrt3_v<TestType> == Approx(1.7320508));
-    REQUIRE(etl::numbers::inv_sqrt3_v<TestType> == Approx(0.5773502));
-    REQUIRE(etl::numbers::egamma_v<TestType> == Approx(0.5772156));
-    REQUIRE(etl::numbers::phi_v<TestType> == Approx(1.6180339));
+  REQUIRE(etl::numbers::e_v<TestType> == Approx(2.7182818));
+  REQUIRE(etl::numbers::log2e_v<TestType> == Approx(1.44269504));
+  REQUIRE(etl::numbers::log10e_v<TestType> == Approx(0.4342944));
+  REQUIRE(etl::numbers::pi_v<TestType> == Approx(3.1415926));
+  REQUIRE(etl::numbers::inv_sqrtpi_v<TestType> == Approx(0.5641895));
+  REQUIRE(etl::numbers::inv_pi_v<TestType> == Approx(0.3183098));
+  REQUIRE(etl::numbers::ln2_v<TestType> == Approx(0.6931471));
+  REQUIRE(etl::numbers::ln10_v<TestType> == Approx(2.3025850));
+  REQUIRE(etl::numbers::sqrt2_v<TestType> == Approx(1.4142135));
+  REQUIRE(etl::numbers::sqrt3_v<TestType> == Approx(1.7320508));
+  REQUIRE(etl::numbers::inv_sqrt3_v<TestType> == Approx(0.5773502));
+  REQUIRE(etl::numbers::egamma_v<TestType> == Approx(0.5772156));
+  REQUIRE(etl::numbers::phi_v<TestType> == Approx(1.6180339));
 }

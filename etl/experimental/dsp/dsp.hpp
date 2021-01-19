@@ -38,130 +38,131 @@ namespace dsp
 {
 struct identity
 {
-    constexpr identity() = default;
+  constexpr identity() = default;
 
-    template <typename T>
-    constexpr auto operator()(T val) const
-    {
-        return val;
-    }
+  template <typename T>
+  constexpr auto operator()(T val) const
+  {
+    return val;
+  }
 };
 
 template <typename T = float>
 struct constant
 {
-    constexpr constant(T val) : val_ {val} { }
+  constexpr constant(T val) : val_ {val} { }
 
-    template <typename... Args>
-    constexpr auto operator()(Args... /*unused*/) const
-    {
-        return val_;
-    }
+  template <typename... Args>
+  constexpr auto operator()(Args... /*unused*/) const
+  {
+    return val_;
+  }
 
-private:
-    T const val_;
+  private:
+  T const val_;
 };
 
 namespace literals
 {
 constexpr auto operator""_K(long double val) -> constant<long double>
 {
-    return constant {val};
+  return constant {val};
 }
-constexpr auto operator""_K(unsigned long long val) -> constant<unsigned long long>
+constexpr auto operator""_K(unsigned long long val)
+  -> constant<unsigned long long>
 {
-    return constant {val};
+  return constant {val};
 }
 }  // namespace literals
 
 template <typename L, typename R>
 struct pipe
 {
-    constexpr pipe(L lhs, R rhs) : lhs_ {lhs}, rhs_ {rhs} { }
+  constexpr pipe(L lhs, R rhs) : lhs_ {lhs}, rhs_ {rhs} { }
 
-    template <typename... T>
-    constexpr auto operator()(T... val)
-    {
-        return call_rhs(lhs_(val...));
-    }
+  template <typename... T>
+  constexpr auto operator()(T... val)
+  {
+    return call_rhs(lhs_(val...));
+  }
 
-private:
-    template <typename... T>
-    constexpr auto call_rhs(T... val)
-    {
-        return rhs_(etl::forward<T>(val)...);
-    }
+  private:
+  template <typename... T>
+  constexpr auto call_rhs(T... val)
+  {
+    return rhs_(etl::forward<T>(val)...);
+  }
 
-    L lhs_;
-    R rhs_;
+  L lhs_;
+  R rhs_;
 };
 
 template <typename L, typename R>
 constexpr auto operator|(L lhs, R rhs)
 {
-    return pipe<L, R> {lhs, rhs};
+  return pipe<L, R> {lhs, rhs};
 }
 
 template <typename T, int Z>
 struct delay
 {
-    constexpr delay() = default;
-    constexpr delay(T v)
-    {
-        for (auto& val : z_buffer_) { val = v; }
-    }
+  constexpr delay() = default;
+  constexpr delay(T v)
+  {
+    for (auto& val : z_buffer_) { val = v; }
+  }
 
-    constexpr auto operator()(T const& val)
-    {
-        z_buffer_[head_] = val;
-        if (++head_ > Z) { head_ = 0; }
+  constexpr auto operator()(T const& val)
+  {
+    z_buffer_[head_] = val;
+    if (++head_ > Z) { head_ = 0; }
 
-        if (++tail_ > Z) { tail_ = 0; }
-        return z_buffer_[tail_];
-    };
+    if (++tail_ > Z) { tail_ = 0; }
+    return z_buffer_[tail_];
+  };
 
-private:
-    using z_buffer_t                     = etl::array<T, static_cast<size_t>(Z) + 1>;
-    typename z_buffer_t::size_type head_ = 0;
-    typename z_buffer_t::size_type tail_ = 0;
-    z_buffer_t z_buffer_                 = {};
+  private:
+  using z_buffer_t = etl::array<T, static_cast<size_t>(Z) + 1>;
+  typename z_buffer_t::size_type head_ = 0;
+  typename z_buffer_t::size_type tail_ = 0;
+  z_buffer_t z_buffer_                 = {};
 };
 
 template <int I, typename T = float>
 constexpr auto Z(T val = T {})
 {
-    static_assert(I <= 0, "Delay should be negative");
-    return delay<T, I * -1> {val};
+  static_assert(I <= 0, "Delay should be negative");
+  return delay<T, I * -1> {val};
 }
 
 template <typename T = float>
 struct feedback_drain
 {
-    constexpr feedback_drain() = default;
-    constexpr auto operator()(T const& in)
-    {
-        auto const out = in + feedback_;
-        feedback_      = T {0};
-        return out;
-    }
-    constexpr auto push(T const& val) { feedback_ = val; }
+  constexpr feedback_drain() = default;
+  constexpr auto operator()(T const& in)
+  {
+    auto const out = in + feedback_;
+    feedback_      = T {0};
+    return out;
+  }
+  constexpr auto push(T const& val) { feedback_ = val; }
 
-private:
-    T feedback_ = {};
+  private:
+  T feedback_ = {};
 };
 
 template <typename T = float>
 struct feedback_tap
 {
-    constexpr feedback_tap(feedback_drain<T>& d) : drain_ {d} { }
-    constexpr auto operator()(T const& in) const
-    {
-        drain_.push(in);
-        return in;
-    }
+  constexpr feedback_tap(feedback_drain<T>& d) : drain_ {d} { }
+  constexpr auto operator()(T const& in) const
+  {
+    drain_.push(in);
+    return in;
+  }
 
-private:
-    feedback_drain<T>& drain_;
+  private:
+  feedback_drain<T>& drain_;
 };
 
 namespace detail
@@ -175,32 +176,32 @@ namespace detail
 template <typename Tuple, typename... Tn>
 void for_each_fork(Tuple&& /*tuple*/, Tn... /*val*/)
 {
-    // constexpr etl::size_t N
-    //     = etl::tuple_size<etl::remove_reference_t<Tuple>>::value;
-    // for_each_fork_impl(etl::forward<Tuple>(tuple),
-    //                    etl::make_index_sequence<N> {}, val...);
+  // constexpr etl::size_t N
+  //     = etl::tuple_size<etl::remove_reference_t<Tuple>>::value;
+  // for_each_fork_impl(etl::forward<Tuple>(tuple),
+  //                    etl::make_index_sequence<N> {}, val...);
 }
 
 template <typename... T>
 struct fork_impl
 {
-    fork_impl(T&&... val) : nodes_ {etl::forward<T>(val)...} { }
+  fork_impl(T&&... val) : nodes_ {etl::forward<T>(val)...} { }
 
-    template <typename... Tn>
-    void operator()(Tn... val) const
-    {
-        for_each_fork(nodes_, val...);
-    }
+  template <typename... Tn>
+  void operator()(Tn... val) const
+  {
+    for_each_fork(nodes_, val...);
+  }
 
-private:
-    etl::tuple<T...> nodes_;
+  private:
+  etl::tuple<T...> nodes_;
 };
 }  // namespace detail
 
 template <typename... T>
 auto fork(T&&... val)
 {
-    return detail::fork_impl<T...> {etl::forward<T>(val)...};
+  return detail::fork_impl<T...> {etl::forward<T>(val)...};
 }
 
 }  // namespace dsp

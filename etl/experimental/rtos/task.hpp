@@ -43,7 +43,7 @@ namespace rtos
  */
 struct never
 {
-    [[nodiscard]] auto operator()() const -> bool { return false; }
+  [[nodiscard]] auto operator()() const -> bool { return false; }
 };
 
 /**
@@ -51,7 +51,7 @@ struct never
  */
 struct forever
 {
-    [[nodiscard]] auto operator()() const -> bool { return true; }
+  [[nodiscard]] auto operator()() const -> bool { return true; }
 };
 
 /**
@@ -60,8 +60,8 @@ struct forever
 template <etl::size_t Count>
 struct times
 {
-    etl::size_t run_count = Count;
-    [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
+  etl::size_t run_count = Count;
+  [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
 };
 
 /**
@@ -80,7 +80,7 @@ using twice = times<2>;
 template <typename TaskType>
 inline auto rtos_task(void* task) -> void
 {
-    static_cast<TaskType*>(task)->run();
+  static_cast<TaskType*>(task)->run();
 }
 
 /**
@@ -88,11 +88,11 @@ inline auto rtos_task(void* task) -> void
  */
 template <typename TaskType>
 inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
-                        UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr)
-    -> void
+                        UBaseType_t prio           = 0,
+                        TaskHandle_t* const handle = nullptr) -> void
 {
-    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio,
-                handle);
+  xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio,
+              handle);
 }
 
 /**
