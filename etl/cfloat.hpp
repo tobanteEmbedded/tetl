@@ -27,6 +27,10 @@ DAMAGE.
 #ifndef TAETL_CFLOAT_HPP
 #define TAETL_CFLOAT_HPP
 
+#if __has_include(<float.h>)
+#include <float.h>
+#else
+
 #define FLT_EVAL_METHOD __FLT_EVAL_METHOD__
 #define FLT_ROUNDS (__builtin_flt_rounds())
 #define FLT_RADIX __FLT_RADIX__
@@ -71,5 +75,7 @@ DAMAGE.
 #define FLT_MIN __FLT_MIN__
 #define DBL_MIN __DBL_MIN__
 #define LDBL_MIN __LDBL_MIN__
+
+#endif  // has_include <float.h>
 
 #endif  // TAETL_CFLOAT_HPP

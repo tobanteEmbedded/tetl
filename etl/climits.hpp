@@ -27,6 +27,10 @@ DAMAGE.
 #ifndef TAETL_CLIMITS_HPP
 #define TAETL_CLIMITS_HPP
 
+#if __has_include(<limits.h>)
+#include <limits.h>
+#else
+
 #ifndef MB_LEN_MAX
 #define MB_LEN_MAX 1
 #endif
@@ -64,5 +68,7 @@ DAMAGE.
 #define LLONG_MIN (-__LONG_LONG_MAX__ - 1LL)
 #define ULLONG_MAX (__LONG_LONG_MAX__ * 2ULL + 1ULL)
 #endif
+
+#endif  // has_include <limits.h>
 
 #endif  // TAETL_CLIMITS_HPP
