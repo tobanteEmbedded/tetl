@@ -7,11 +7,11 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_array.cpp
     test_bit.cpp
     test_bitset.cpp
-    test_byte.cpp
     test_cctype.cpp
     test_charconv.cpp
     test_chrono.cpp
     test_cmath.cpp
+    test_cstddef.cpp
     test_cstdlib.cpp
     test_cstring.cpp
     test_concepts.cpp
@@ -60,8 +60,8 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         tobanteAudio::etl
         tobanteAudio::CompilerOptions
-        tobanteAudio::CompilerWarnings 
-        tobanteAudio::CodeCoverage 
+        tobanteAudio::CompilerWarnings
+        tobanteAudio::CodeCoverage
         Catch2::Catch2
 )
 

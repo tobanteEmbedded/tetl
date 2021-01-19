@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_FUNCTIONAL_HPP
 #define TAETL_FUNCTIONAL_HPP
 
-#include "etl/byte.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/definitions.hpp"
 #include "etl/iterator.hpp"
 #include "etl/new.hpp"

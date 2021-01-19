@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_CSTRING_HPP
 #define TAETL_CSTRING_HPP
 
-#include "byte.hpp"
 #include "cassert.hpp"
+#include "cstddef.hpp"
 #include "definitions.hpp"
 
 namespace etl

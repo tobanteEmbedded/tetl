@@ -24,8 +24,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_BYTE_HPP
-#define TAETL_BYTE_HPP
+#ifndef TAETL_CSTDDEF_HPP
+#define TAETL_CSTDDEF_HPP
 
 #include "definitions.hpp"
 #include "type_traits.hpp"
@@ -157,4 +157,4 @@ constexpr auto operator^=(etl::byte& l, etl::byte r) noexcept -> etl::byte&
 
 }  // namespace etl
 
-#endif  // TAETL_BYTE_HPP
+#endif  // TAETL_CSTDDEF_HPP
