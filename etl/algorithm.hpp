@@ -56,10 +56,13 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 }
 
 /**
- * @brief Exchanges elements between range [ \p first1 , \p last1 ) and another range
- * starting at \p first2.
+ * @brief Exchanges elements between range [first1 ,last1) and another range
+ * starting at first2.
  *
- * https://en.cppreference.com/w/cpp/algorithm/iter_swap
+ * @details https://en.cppreference.com/w/cpp/algorithm/swap_ranges
+ * @param first1 the first range of elements to swap
+ * @param last1 the first range of elements to swap
+ * @param first2 beginning of the second range of elements to swap
  */
 template <typename ForwardIter1, typename ForwardIter2>
 constexpr auto swap_ranges(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2 first2)
@@ -76,10 +79,16 @@ constexpr auto swap_ranges(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2
 }
 
 /**
- * @brief Moves the elements in the range [[ \p first , \p last ), to another range
- * beginning at \p destination, starting from first and proceeding to \p last - 1. After
+ * @brief Moves the elements in the range [first, last), to another range
+ * beginning at destination, starting from first and proceeding to last - 1. After
  * this operation the elements in the moved-from range will still contain valid values of
  * the appropriate type, but not necessarily the same values as before the move.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/move
+ * @param first The range of elements to move.
+ * @param last The range of elements to move.
+ * @param destination The beginning of the destination range.
+ * @returns Output iterator to the element past the last element moved.
  */
 template <typename InputIter, typename OutputIter>
 constexpr auto move(InputIter first, InputIter last, OutputIter destination) -> OutputIter
@@ -89,13 +98,15 @@ constexpr auto move(InputIter first, InputIter last, OutputIter destination) -> 
 }
 
 /**
- * @brief Moves the elements from the range [ \p first , \p last ), to another range
- * ending at \p destination. The elements are moved in reverse order (the last element is
+ * @brief Moves the elements from the range [first, last), to another range
+ * ending at destination. The elements are moved in reverse order (the last element is
  * moved first), but their relative order is preserved.
  *
- * https://en.cppreference.com/w/cpp/algorithm/move_backward
- *
- * @return Iterator in the destination range, pointing at the last element moved.
+ * @details https://en.cppreference.com/w/cpp/algorithm/move_backward
+ * @param first The range of elements to move.
+ * @param last The range of elements to move.
+ * @param destination End of the destination range.
+ * @returns Iterator in the destination range, pointing at the last element moved.
  */
 template <typename BidirIter1, typename BidirIter2>
 constexpr auto move_backward(BidirIter1 first, BidirIter1 last, BidirIter2 destination)
@@ -107,7 +118,13 @@ constexpr auto move_backward(BidirIter1 first, BidirIter1 last, BidirIter2 desti
 
 /**
  * @brief Applies the given function object f to the result of dereferencing
- * every iterator in the range [ \p first , \p last ) in order.
+ * every iterator in the range [first, last) in order.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/for_each
+ * @param first The range to apply the function to.
+ * @param last The range to apply the function to.
+ * @param f Function object, to be applied to the result of dereferencing every iterator
+ * in the range.
  */
 template <typename InputIter, typename UnaryFunction>
 constexpr auto for_each(InputIter first, InputIter last, UnaryFunction f) noexcept
@@ -118,8 +135,14 @@ constexpr auto for_each(InputIter first, InputIter last, UnaryFunction f) noexce
 }
 
 /**
- * @brief Applies the given function object \p f to the result of dereferencing
- * every iterator in the range [ \p first , \p first + \p n] in order.
+ * @brief Applies the given function object f to the result of dereferencing
+ * every iterator in the range [first, first + n] in order.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/for_each_n
+ * @param first The beginning of the range to apply the function to.
+ * @param n The number of elements to apply the function to.
+ * @param f Function object, to be applied to the result of dereferencing every iterator
+ * in the range.
  */
 template <typename InputIter, typename Size, typename UnaryFunction>
 constexpr auto for_each_n(InputIter first, Size n, UnaryFunction f) noexcept -> InputIter
@@ -130,26 +153,35 @@ constexpr auto for_each_n(InputIter first, Size n, UnaryFunction f) noexcept -> 
 
 /**
  * @brief Applies the given function to a range and stores the result in
- * another range, beginning at \p destination. The unary operation unary_op is applied to
- * the range defined by [ \p first , \p last ).
+ * another range, beginning at dest. The unary operation op is applied to
+ * the range defined by [first, last).
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/transform
+ * @details https://en.cppreference.com/w/cpp/algorithm/transform
+ * @param first The first range of elements to transform.
+ * @param last The first range of elements to transform.
+ * @param dest The beginning of the destination range, may be equal to first.
+ * @param op Unary operation function object that will be applied.
  */
 template <typename InputIter, typename OutputIter, typename UnaryOperation>
-constexpr auto transform(InputIter first, InputIter last, OutputIter destination,
+constexpr auto transform(InputIter first, InputIter last, OutputIter dest,
                          UnaryOperation op) -> OutputIter
 {
-    for (; first != last; ++first, ++destination) { *destination = op(*first); }
-    return destination;
+    for (; first != last; ++first, ++dest) { *dest = op(*first); }
+    return dest;
 }
 
 /**
  * @brief Applies the given function to a range and stores the result in
- * another range, beginning at destination. The binary operation \p op is applied to
- * pairs of elements from two ranges: one defined by  [ \p first1 , \p last1 ) and the
- * other beginning at \p first2.
+ * another range, beginning at destination. The binary operation op is applied to
+ * pairs of elements from two ranges: one defined by [first1, last1) and the
+ * other beginning at first2.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/transform
+ * @details https://en.cppreference.com/w/cpp/algorithm/transform
+ * @param first1 The first range of elements to transform.
+ * @param last1 The first range of elements to transform.
+ * @param first2 The beginning of the second range of elements to transform.
+ * @param dest The beginning of the destination range, may be equal to first.
+ * @param op Unary operation function object that will be applied.
  */
 template <typename InputIter1, typename InputIter2, typename OutputIter,
           typename BinaryOperation>
@@ -161,10 +193,13 @@ constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 }
 
 /**
- * @brief Assigns each element in range [ \p first , \p last ) a value generated by the
- * given function object \p g.
+ * @brief Assigns each element in range [first, last) a value generated by the
+ * given function object g.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/generate
+ * @details https://en.cppreference.com/w/cpp/algorithm/generate
+ * @param first The range of elements to generate.
+ * @param last The range of elements to generate.
+ * @param g Generator function object that will be called.
  */
 template <typename ForwardIter, typename Generator>
 constexpr auto generate(ForwardIter first, ForwardIter last, Generator g) -> void
@@ -173,10 +208,13 @@ constexpr auto generate(ForwardIter first, ForwardIter last, Generator g) -> voi
 }
 
 /**
- * @brief Assigns values, generated by given function object \p g, to the first count
- * elements in the range beginning at \p first, if \p count > 0. Does nothing otherwise.
+ * @brief Assigns values, generated by given function object g, to the first count
+ * elements in the range beginning at first, if count > 0. Does nothing otherwise.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/generate_n
+ * @details https://en.cppreference.com/w/cpp/algorithm/generate_n
+ * @param first The range of elements to generate.
+ * @param count Number of the elements to generate.
+ * @param g Generator function object that will be called.
  */
 template <typename OutputIter, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIter first, SizeT count, Generator g) -> OutputIter
@@ -186,8 +224,13 @@ constexpr auto generate_n(OutputIter first, SizeT count, Generator g) -> OutputI
 }
 
 /**
- * @brief Returns the number of elements in the range [ \p first , \p last ) satisfying
+ * @brief Returns the number of elements in the range [first, last) satisfying
  * specific criteria. Counts the elements that are equal to value.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/count
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param value The value to search for.
  */
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto count(InputIter first, InputIter last, T const& value) ->
@@ -202,8 +245,13 @@ template <typename InputIter, typename T>
 }
 
 /**
- * @brief Returns the number of elements in the range [ \p first , \p last ) satisfying
- * specific criteria. Counts elements for which predicate \p p returns true.
+ * @brief Returns the number of elements in the range [first, last) satisfying
+ * specific criteria. Counts elements for which predicate p returns true.
+ *
+ * @details https://en.cppreference.com/w/cpp/algorithm/count
+ * @param first The range of elements to examine.
+ * @param last The range of elements to examine.
+ * @param p Unary predicate which returns ​true for the required elements.
  */
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto count_if(InputIter first, InputIter last, UnaryPredicate p)
@@ -220,9 +268,15 @@ template <typename InputIter, typename UnaryPredicate>
 /**
  * @brief Returns the first mismatching pair of elements from two ranges: one defined by
  * [first1, last1) and another defined by [first2,last2). If last2 is not provided
- * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ * (overloads (1-4)), it denotes first2 + (last1 - first1). Elements are compared using
+ * the given binary predicate pred.
  *
- * @details Elements are compared using the given binary predicate p.
+ * @details https://en.cppreference.com/w/cpp/algorithm/mismatch
+ * @param first1 The first range of the elements.
+ * @param last1 The first range of the elements.
+ * @param first2 The second range of the elements.
+ * @param pred Binary predicate which returns ​true if the elements should be treated as
+ * equal.
  */
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
@@ -240,9 +294,13 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 /**
  * @brief Returns the first mismatching pair of elements from two ranges: one defined
  * by [first1, last1) and another defined by [first2,last2). If last2 is not provided
- * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ * (overloads (1-4)), it denotes first2 + (last1 - first1). Elements are compared using
+ * operator==.
  *
- * @details Elements are compared using operator==.
+ * @details https://en.cppreference.com/w/cpp/algorithm/mismatch
+ * @param first1 The first range of the elements.
+ * @param last1 The first range of the elements.
+ * @param first2 The second range of the elements.
  */
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
@@ -254,10 +312,16 @@ template <typename InputIter1, typename InputIter2>
 
 /**
  * @brief Returns the first mismatching pair of elements from two ranges: one defined by
- * [first1, last1) and another defined by [first2,last2). If last2 is not provided
- * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ * [first1, last1) and another defined by [first2, last2). Elements are compared using
+ * the given binary predicate pred.
  *
- * @details Elements are compared using the given binary predicate p.
+ * @details https://en.cppreference.com/w/cpp/algorithm/mismatch
+ * @param first1 The first range of the elements.
+ * @param last1 The first range of the elements.
+ * @param first2 The second range of the elements.
+ * @param last2 The second range of the elements.
+ * @param pred Binary predicate which returns ​true if the elements should be treated as
+ * equal.
  */
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
@@ -275,10 +339,14 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 
 /**
  * @brief Returns the first mismatching pair of elements from two ranges: one defined
- * by [first1, last1) and another defined by [first2,last2). If last2 is not provided
- * (overloads (1-4)), it denotes first2 + (last1 - first1).
+ * by [first1, last1) and another defined by [first2,last2). Elements are compared using
+ * operator==.
  *
- * @details Elements are compared using operator==.
+ * @details https://en.cppreference.com/w/cpp/algorithm/mismatch
+ * @param first1 The first range of the elements.
+ * @param last1 The first range of the elements.
+ * @param first2 The second range of the elements.
+ * @param last2 The second range of the elements.
  */
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
@@ -1223,7 +1291,7 @@ template <typename InputIter1, typename InputIter2>
  * less than the second range [first2, last2). Elements are compared using
  * the given binary comparison function comp.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+ * @details https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
 template <typename InputIter1, typename InputIter2, typename Compare>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIter1 first1, InputIter1 last1,
@@ -1243,7 +1311,7 @@ template <typename InputIter1, typename InputIter2, typename Compare>
  * less than the second range [first2, last2). Elements are compared using
  * operator<.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+ * @details https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto lexicographical_compare(InputIter1 first1, InputIter1 last1,
@@ -1263,7 +1331,7 @@ template <typename InputIter1, typename InputIter2>
  * valid iterator pointing to an element of the sequence, comp(*(it + n), *it) (or
  * *(it + n) < *it) evaluates to false. Bubble sort implementation.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/sort
+ * https://en.cppreference.com/w/cpp/algorithm/sort
  */
 template <typename RandomIter, typename Compare>
 constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
@@ -1287,7 +1355,7 @@ constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
  * valid iterator pointing to an element of the sequence, comp(*(it + n), *it) (or
  * *(it + n) < *it) evaluates to false. Bubble sort implementation.
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/sort
+ * https://en.cppreference.com/w/cpp/algorithm/sort
  */
 template <typename RandomIter>
 constexpr auto sort(RandomIter first, RandomIter last) -> void
