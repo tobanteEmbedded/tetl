@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_RTOS_STUBS_HPP
 #define TAETL_RTOS_STUBS_HPP
 
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 // BASE

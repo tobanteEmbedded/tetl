@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_CONTAINER_UTILS_HPP
 #define TAETL_CONTAINER_UTILS_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"

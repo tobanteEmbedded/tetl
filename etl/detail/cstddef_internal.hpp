@@ -24,51 +24,48 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch.hpp"
+#ifndef TAETL_DETAIL_CSTDDEF_INTERNAL_HPP
+#define TAETL_DETAIL_CSTDDEF_INTERNAL_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/detail/intrinsics.hpp"
 
-TEST_CASE("definitions: int8_t", "[definitions]")
+namespace etl
 {
-  REQUIRE(sizeof(etl::int8_t) == sizeof(int8_t));
-}
+/**
+ * @brief etl::size_t is the unsigned integer type of the result of the sizeof
+ * operator.
+ *
+ * @details https://en.cppreference.com/w/cpp/types/size_t
+ */
+using size_t = TAETL_BUILTIN_SIZET;
 
-TEST_CASE("definitions: int16_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::int16_t) == sizeof(int16_t));
-}
+/**
+ * @brief etl::ptrdiff_t is the signed integer type of the result of subtracting
+ * two pointers.
+ *
+ * @details https://en.cppreference.com/w/cpp/types/ptrdiff_t
+ */
+using ptrdiff_t = TAETL_BUILTIN_PTRDIFF;
 
-TEST_CASE("definitions: int32_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::int32_t) == sizeof(int32_t));
-}
+/**
+ * @brief etl::nullptr_t is the type of the null pointer literal, nullptr. It is
+ * a distinct type that is not itself a pointer type or a pointer to member
+ * type.
+ *
+ * @details https://en.cppreference.com/w/cpp/types/nullptr_t
+ */
+using nullptr_t = decltype(nullptr);
 
-TEST_CASE("definitions: int64_t", "[definitions]")
+/**
+ * @brief etl::max_align_t is a trivial standard-layout type whose alignment
+ * requirement is at least as strict (as large) as that of every scalar type.
+ *
+ * @details https://en.cppreference.com/w/cpp/types/max_align_t
+ */
+struct alignas(long double) max_align_t
 {
-  REQUIRE(sizeof(etl::int64_t) == sizeof(int64_t));
-}
+};
 
-TEST_CASE("definitions: uint8_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::uint8_t) == sizeof(uint8_t));
-}
+}  // namespace etl
 
-TEST_CASE("definitions: uint16_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::uint16_t) == sizeof(uint16_t));
-}
-
-TEST_CASE("definitions: uint32_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::uint32_t) == sizeof(uint32_t));
-}
-
-TEST_CASE("definitions: uint64_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::uint64_t) == sizeof(uint64_t));
-}
-
-TEST_CASE("definitions: size_t", "[definitions]")
-{
-  REQUIRE(sizeof(etl::size_t) == sizeof(size_t));
-}
+#endif  // TAETL_DETAIL_CSTDDEF_INTERNAL_HPP

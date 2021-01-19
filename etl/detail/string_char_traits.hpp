@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_STRING_CHAR_TRAITS_HPP
 #define TAETL_STRING_CHAR_TRAITS_HPP
 
+#include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
-#include "etl/definitions.hpp"
 #include "etl/ios.hpp"
 #include "etl/type_traits.hpp"
 

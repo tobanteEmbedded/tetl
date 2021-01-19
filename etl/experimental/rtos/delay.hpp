@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_RTOS_DELAY_HPP
 #define TAETL_RTOS_DELAY_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 #if defined(TAETL_RTOS_USE_STUBS)

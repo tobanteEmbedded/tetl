@@ -24,45 +24,46 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_CONCEPTS_HPP
-#define TAETL_CONCEPTS_HPP
+#include "catch2/catch.hpp"
 
-#include "cstddef.hpp"
-#include "type_traits.hpp"
+#include "etl/cstdint.hpp"
 
-#if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
-namespace etl
+TEST_CASE("cstdint: int8_t", "[cstdint]")
 {
-namespace detail
-{
-template <typename T, typename U>
-concept same_helper = etl::is_same_v<T, U>;
+  REQUIRE(sizeof(etl::int8_t) == sizeof(int8_t));
 }
 
-template <typename T, typename U>
-concept same_as = detail::same_helper<T, U>&& detail::same_helper<U, T>;
-
-template <typename From, typename To>
-concept convertible_to = etl::is_convertible_v<From, To>&& requires(
-  etl::add_rvalue_reference_t<From> (&f)())
+TEST_CASE("cstdint: int16_t", "[cstdint]")
 {
-  static_cast<To>(f());
-};
+  REQUIRE(sizeof(etl::int16_t) == sizeof(int16_t));
+}
 
-template <typename T>
-concept integral = etl::is_integral_v<T>;
+TEST_CASE("cstdint: int32_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::int32_t) == sizeof(int32_t));
+}
 
-template <typename T>
-concept signed_integral = etl::integral<T>&& etl::is_signed_v<T>;
+TEST_CASE("cstdint: int64_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::int64_t) == sizeof(int64_t));
+}
 
-template <typename T>
-concept unsigned_integral = etl::integral<T>&& etl::is_unsigned_v<T>;
+TEST_CASE("cstdint: uint8_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::uint8_t) == sizeof(uint8_t));
+}
 
-template <typename T>
-concept floating_point = etl::is_floating_point_v<T>;
+TEST_CASE("cstdint: uint16_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::uint16_t) == sizeof(uint16_t));
+}
 
-}  // namespace etl
+TEST_CASE("cstdint: uint32_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::uint32_t) == sizeof(uint32_t));
+}
 
-#endif
-
-#endif  // TAETL_CONCEPTS_HPP
+TEST_CASE("cstdint: uint64_t", "[cstdint]")
+{
+  REQUIRE(sizeof(etl::uint64_t) == sizeof(uint64_t));
+}

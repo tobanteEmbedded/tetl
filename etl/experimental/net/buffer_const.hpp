@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_NET_BUFFER_CONST_HPP
 
 #include "etl/array.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 
 namespace etl
 {

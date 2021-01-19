@@ -29,7 +29,6 @@ DAMAGE.
 
 #include "cassert.hpp"
 #include "cstddef.hpp"
-#include "definitions.hpp"
 
 namespace etl
 {

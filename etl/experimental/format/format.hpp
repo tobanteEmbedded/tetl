@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_EXPERIMENTAL_FORMAT_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_HPP
 
+#include "etl/cstdint.hpp"
 #include "etl/cstring.hpp"
-#include "etl/definitions.hpp"
 #include "etl/iterator.hpp"
 #include "etl/string.hpp"
 #include "etl/string_view.hpp"

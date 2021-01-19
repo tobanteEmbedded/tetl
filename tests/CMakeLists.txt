@@ -12,10 +12,10 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_chrono.cpp
     test_cmath.cpp
     test_cstddef.cpp
+    test_cstdint.cpp
     test_cstdlib.cpp
     test_cstring.cpp
     test_concepts.cpp
-    test_definitions.cpp
     test_functional.cpp
     test_iterator.cpp
     test_limits.cpp

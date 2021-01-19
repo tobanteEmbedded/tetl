@@ -26,7 +26,7 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "etl/definitions.hpp"                  // for int8_t, uint16_t, uin...
+#include "etl/cstdint.hpp"                      // for int8_t, uint16_t, uin...
 #include "etl/experimental/net/byte_order.hpp"  // for hton, ntoh, net
 
 TEST_CASE("experimental/net: ntoh/hton char", "[experimental][net]")

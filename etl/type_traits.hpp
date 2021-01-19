@@ -31,8 +31,9 @@ DAMAGE.
 #ifndef TAETL_TYPETRAITS_HPP
 #define TAETL_TYPETRAITS_HPP
 
-#include "etl/definitions.hpp"        // for size_t, max_align_t, nullptr_t
-#include "etl/detail/intrinsics.hpp"  // for TAETL_IS_CLASS, TAETL_IS_ENUM
+#include "etl/detail/cstddef_internal.hpp"  // for size_t, max_align_t, nullptr_t
+#include "etl/detail/intrinsics.hpp"        // for TAETL_IS_CLASS, TAETL_IS_ENUM
+#include "etl/detail/sfinae.hpp"            // for enable_if
 #include "etl/detail/type_traits_decl.hpp"  // for is_fundamental
 
 namespace etl
@@ -2051,24 +2052,6 @@ struct is_base_of
 
 template <typename Base, typename Derived>
 inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
-
-/**
- * @brief Define a member typedef only if a boolean constant is true.
- */
-template <bool, typename Type = void>
-struct enable_if
-{
-};
-
-// Partial specialization for true.
-template <typename Type>
-struct enable_if<true, Type>
-{
-  using type = Type;
-};
-
-template <bool B, typename T = void>
-using enable_if_t = typename enable_if<B, T>::type;
 
 /**
  * @brief If Type is an array type, provides the member constant value equal to

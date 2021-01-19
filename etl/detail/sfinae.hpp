@@ -27,6 +27,28 @@ DAMAGE.
 #ifndef TAETL_SFINAE_HPP
 #define TAETL_SFINAE_HPP
 
+namespace etl
+{
+/**
+ * @brief Define a member typedef only if a boolean constant is true.
+ */
+template <bool, typename Type = void>
+struct enable_if
+{
+};
+
+// Partial specialization for true.
+template <typename Type>
+struct enable_if<true, Type>
+{
+  using type = Type;
+};
+
+template <bool B, typename T = void>
+using enable_if_t = typename enable_if<B, T>::type;
+
+}  // namespace etl
+
 #define TAETL_CONCEPT_PP_CAT_(X, Y) X##Y
 #define TAETL_CONCEPT_PP_CAT(X, Y) TAETL_CONCEPT_PP_CAT_(X, Y)
 

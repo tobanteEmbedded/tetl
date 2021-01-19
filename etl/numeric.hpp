@@ -32,7 +32,7 @@ DAMAGE.
 #ifndef TAETL_NUMERIC_HPP
 #define TAETL_NUMERIC_HPP
 
-#include "definitions.hpp"
+#include "cstddef.hpp"
 #include "functional.hpp"
 #include "limits.hpp"
 #include "type_traits.hpp"

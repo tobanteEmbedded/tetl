@@ -26,9 +26,9 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "etl/algorithm.hpp"    // for for_each
-#include "etl/definitions.hpp"  // for size_t
-#include "etl/string.hpp"       // for static_string
+#include "etl/algorithm.hpp"  // for for_each
+#include "etl/cstddef.hpp"    // for size_t
+#include "etl/string.hpp"     // for static_string
 
 TEST_CASE("string/char_traits: <char>::length", "[string]")
 {

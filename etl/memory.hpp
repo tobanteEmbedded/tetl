@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_MEMORY_HPP
 #define TAETL_MEMORY_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/warning.hpp"

@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_CRTP_HPP
 
 // TAETL
-#include "definitions.hpp"
+#include "cstddef.hpp"
 
 namespace etl
 {

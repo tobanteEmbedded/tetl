@@ -26,11 +26,11 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "etl/array.hpp"        // for array
-#include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
-#include "etl/limits.hpp"       // for numeric_limits
-#include "etl/numeric.hpp"      // for midpoint, accumulate, gcd
-#include "etl/vector.hpp"       // for static_vector
+#include "etl/array.hpp"    // for array
+#include "etl/cstdint.hpp"  // for int16_t, int32_t, int64_t, int8_t
+#include "etl/limits.hpp"   // for numeric_limits
+#include "etl/numeric.hpp"  // for midpoint, accumulate, gcd
+#include "etl/vector.hpp"   // for static_vector
 
 TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t)

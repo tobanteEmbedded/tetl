@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_RTOS_QUEUE_HPP
 #define TAETL_RTOS_QUEUE_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 

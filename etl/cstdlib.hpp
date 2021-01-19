@@ -28,8 +28,8 @@ DAMAGE.
 #define TAETL_CSTDLIB_HPP
 
 #include "cassert.hpp"
+#include "cstddef.hpp"
 #include "cstring.hpp"
-#include "definitions.hpp"
 
 namespace etl
 {

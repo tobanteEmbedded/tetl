@@ -37,7 +37,7 @@ DAMAGE.
 #include "cmath.hpp"
 #endif
 
-#include "definitions.hpp"
+#include "cstdint.hpp"
 
 namespace etl
 {

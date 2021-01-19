@@ -27,14 +27,20 @@ DAMAGE.
 #ifndef TAETL_CSTDDEF_HPP
 #define TAETL_CSTDDEF_HPP
 
-#include "definitions.hpp"
-#include "type_traits.hpp"
-
+#include "etl/detail/cstddef_internal.hpp"
+#include "etl/detail/intrinsics.hpp"
 #include "etl/detail/sfinae.hpp"
 
+#include "etl/type_traits.hpp"
 namespace etl
 {
-enum class byte : uint8_t
+/**
+ * @brief etl::byte is a distinct type that implements the concept of byte as
+ * specified in the C++ language definition.
+ *
+ * @details https://en.cppreference.com/w/cpp/types/byte
+ */
+enum class byte : unsigned char
 {
 };
 

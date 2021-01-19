@@ -28,7 +28,6 @@ DAMAGE.
 #define TAETL_FUNCTIONAL_HPP
 
 #include "etl/cstddef.hpp"
-#include "etl/definitions.hpp"
 #include "etl/iterator.hpp"
 #include "etl/new.hpp"
 #include "etl/utility.hpp"

@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_NET_BYTE_ORDER_HPP
 #define TAETL_NET_BYTE_ORDER_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstdint.hpp"
 
 namespace etl
 {

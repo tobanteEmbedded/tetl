@@ -26,9 +26,9 @@ DAMAGE.
 
 #include "catch2/catch.hpp"
 
-#include "etl/definitions.hpp"  // for int16_t, int32_t, int64_t, int8_t
-#include "etl/tuple.hpp"        // for get, tuple
-#include "etl/warning.hpp"      // for ignore_unused
+#include "etl/cstdint.hpp"  // for int16_t, int32_t, int64_t, int8_t
+#include "etl/tuple.hpp"    // for get, tuple
+#include "etl/warning.hpp"  // for ignore_unused
 
 TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,

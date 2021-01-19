@@ -34,7 +34,7 @@ DAMAGE.
 
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 

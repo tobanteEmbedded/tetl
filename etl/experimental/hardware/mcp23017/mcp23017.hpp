@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_HARDWARE_MCP23017_MCP23017_HPP
 #define TAETL_HARDWARE_MCP23017_MCP23017_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 namespace etl::hardware::mcp23017

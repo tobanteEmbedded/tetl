@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_RATIO_HPP
 #define TAETL_RATIO_HPP
 
-#include "definitions.hpp"
+#include "cstddef.hpp"
 #include "numeric.hpp"
 #include "type_traits.hpp"
 

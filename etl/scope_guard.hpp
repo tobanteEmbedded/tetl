@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_SCOPE_GUARD_HPP
 #define TAETL_SCOPE_GUARD_HPP
 
-#include "definitions.hpp"
+#include "cstddef.hpp"
 #include "type_traits.hpp"
 #include "utility.hpp"
 

@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_HARDWARE_STM32_GPIO_HPP
 #define TAETL_HARDWARE_STM32_GPIO_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 namespace etl::hardware::stm32

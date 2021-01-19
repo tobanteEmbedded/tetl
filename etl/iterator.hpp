@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_ITERATOR_HPP
 #define TAETL_ITERATOR_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/memory.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"

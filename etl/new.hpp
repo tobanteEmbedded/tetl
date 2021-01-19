@@ -33,7 +33,7 @@ DAMAGE.
 #include <new>
 #else
 
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/warning.hpp"
 
 /**

@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_DSP_DSP_HPP
 
 #include "etl/array.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"
 #include "etl/utility.hpp"
 

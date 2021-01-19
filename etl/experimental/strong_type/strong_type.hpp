@@ -28,7 +28,6 @@ DAMAGE.
 #define TAETL_STRONG_TYPES_STRONG_TYPES_HPP
 
 #include "etl/crtp.hpp"
-#include "etl/definitions.hpp"
 #include "etl/utility.hpp"
 
 namespace etl::experimental

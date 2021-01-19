@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_HARDWARE_STM32_INTERRUPT_HPP
 
 #include "etl/array.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 
 namespace etl::hardware::stm32
 {

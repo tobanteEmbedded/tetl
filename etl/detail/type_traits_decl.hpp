@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_TYPETRAITS_DECL_HPP
 #define TAETL_TYPETRAITS_DECL_HPP
 
-#include "etl/definitions.hpp"
+// #include "etl/cstddef.hpp"
 #include "etl/detail/intrinsics.hpp"
 
 namespace etl

@@ -33,7 +33,7 @@ DAMAGE.
 #define TAETL_ALGORITHM_HPP
 
 #include "etl/cassert.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"

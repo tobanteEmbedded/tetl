@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_SYSTEM_ERROR_HPP
 #define TAETL_SYSTEM_ERROR_HPP
 
-#include "definitions.hpp"
+#include "cstddef.hpp"
 #include "type_traits.hpp"
 
 namespace etl

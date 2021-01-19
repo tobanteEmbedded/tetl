@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_VARIANT_HPP
 #define TAETL_VARIANT_HPP
 
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/new.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"

@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_STRING_VIEW_HPP
 
 #include "algorithm.hpp"
-#include "definitions.hpp"
+#include "cstddef.hpp"
 #include "iterator.hpp"
 #include "memory.hpp"
 

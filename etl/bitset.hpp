@@ -34,7 +34,7 @@ DAMAGE.
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
-#include "etl/definitions.hpp"
+#include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
 #include "etl/string_view.hpp"
 
