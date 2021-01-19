@@ -98,7 +98,7 @@ struct contiguous_iterator_tag : public random_access_iterator_tag
  * the information about the iterator can be retrieved even if the type does not
  * provide the usual typedefs.
  *
- * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
+ * https://en.cppreference.com/w/cpp/iterator/iterator_traits
  */
 template <typename Iter>
 struct iterator_traits;
@@ -112,7 +112,7 @@ struct iterator_traits;
  * the information about the iterator can be retrieved even if the type does not
  * provide the usual typedefs.
  *
- * @ref https://en.cppreference.com/w/cpp/iterator/iterator_traits
+ * https://en.cppreference.com/w/cpp/iterator/iterator_traits
  */
 template <typename T>
 struct iterator_traits<T*>
@@ -130,7 +130,7 @@ struct iterator_traits<T*>
  * iterator is decremented. In this case, InputIt must meet the requirements of
  * LegacyBidirectionalIterator, otherwise the behavior is undefined.
  *
- * @ref https://en.cppreference.com/w/cpp/iterator/advance
+ * https://en.cppreference.com/w/cpp/iterator/advance
  */
 template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void
@@ -162,7 +162,7 @@ constexpr auto advance(It& it, Distance n) -> void
 /**
  * @brief Returns the number of hops from first to last.
  *
- * @ref https://en.cppreference.com/w/cpp/iterator/distance
+ * https://en.cppreference.com/w/cpp/iterator/distance
  */
 template <typename It>
 constexpr auto distance(It first, It last) ->

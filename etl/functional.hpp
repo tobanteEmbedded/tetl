@@ -56,7 +56,7 @@ struct is_transparent<
  * @brief Function object for performing addition. Effectively calls operator+
  * on two instances of type T.
  *
- * * @ref https://en.cppreference.com/w/cpp/utility/functional/plus
+ * @details https://en.cppreference.com/w/cpp/utility/functional/plus
  */
 template <typename T = void>
 struct plus
@@ -76,7 +76,7 @@ struct plus
  * etl::plus when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/plus_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/plus_void
  */
 template <>
 struct plus<void>
@@ -105,7 +105,7 @@ struct plus<void>
  * @brief Function object for performing subtraction. Effectively calls
  * operator- on two instances of type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/minus
+ * @details https://en.cppreference.com/w/cpp/utility/functional/minus
  */
 template <typename T = void>
 struct minus
@@ -125,7 +125,7 @@ struct minus
  * specialization of etl::minus when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/minus_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/minus_void
  */
 template <>
 struct minus<void>
@@ -154,7 +154,7 @@ struct minus<void>
  * @brief Function object for performing multiplication. Effectively calls
  * operator* on two instances of type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies
+ * @details https://en.cppreference.com/w/cpp/utility/functional/multiplies
  */
 template <typename T = void>
 struct multiplies
@@ -174,7 +174,7 @@ struct multiplies
  * specialization of etl::multiplies when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
  */
 template <>
 struct multiplies<void>
@@ -203,7 +203,7 @@ struct multiplies<void>
  * @brief Function object for performing division. Effectively calls operator/
  * on two instances of type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/divides
+ * @details https://en.cppreference.com/w/cpp/utility/functional/divides
  */
 template <typename T = void>
 struct divides
@@ -220,7 +220,7 @@ struct divides
  * etl::divides when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/divides_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/divides_void
  */
 template <>
 struct divides<void>
@@ -246,7 +246,7 @@ struct divides<void>
  * @brief Function object for computing remainders of divisions. Implements
  * operator% for type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus
+ * @details https://en.cppreference.com/w/cpp/utility/functional/modulus
  */
 template <typename T = void>
 struct modulus
@@ -263,7 +263,7 @@ struct modulus
  * etl::modulus when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/modulus_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/modulus_void
  */
 template <>
 struct modulus<void>
@@ -289,7 +289,7 @@ struct modulus<void>
  * @brief Function object for performing negation. Effectively calls operator-
  * on an instance of type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/negate
+ * @details https://en.cppreference.com/w/cpp/utility/functional/negate
  */
 template <typename T = void>
 struct negate
@@ -306,7 +306,7 @@ struct negate
  * etl::negate when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/negate_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/negate_void
  */
 template <>
 struct negate<void>
@@ -332,7 +332,7 @@ struct negate<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator== on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/equal_to
+ * @details https://en.cppreference.com/w/cpp/utility/functional/equal_to
  */
 template <typename T = void>
 struct equal_to
@@ -349,7 +349,7 @@ struct equal_to
  * of etl::equal_to when T is not specified, which leaves the parameter types
  * and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/equal_to_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/equal_to_void
  */
 template <>
 struct equal_to<void>
@@ -375,7 +375,7 @@ struct equal_to<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator!= on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
+ * @details https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
  */
 template <typename T = void>
 struct not_equal_to
@@ -392,7 +392,8 @@ struct not_equal_to
  * of etl::not_equal_to when T is not specified, which leaves the parameter
  * types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void
+ * @details
+ * https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void
  */
 template <>
 struct not_equal_to<void>
@@ -418,7 +419,7 @@ struct not_equal_to<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator> on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/greater
+ * @details https://en.cppreference.com/w/cpp/utility/functional/greater
  */
 template <typename T = void>
 struct greater
@@ -435,7 +436,7 @@ struct greater
  * of etl::greater when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/greater_void
  */
 template <>
 struct greater<void>
@@ -461,7 +462,7 @@ struct greater<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator>= on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal
+ * @details https://en.cppreference.com/w/cpp/utility/functional/greater_equal
  */
 template <typename T = void>
 struct greater_equal
@@ -478,7 +479,8 @@ struct greater_equal
  * of etl::greater_equal when T is not specified, which leaves the parameter
  * types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void
+ * @details
+ * https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void
  */
 template <>
 struct greater_equal<void>
@@ -504,7 +506,7 @@ struct greater_equal<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator< on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/less
+ * @details https://en.cppreference.com/w/cpp/utility/functional/less
  */
 template <typename T = void>
 struct less
@@ -522,7 +524,7 @@ struct less
  * of etl::less when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/less_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/less_void
  */
 template <>
 struct less<void>
@@ -548,7 +550,7 @@ struct less<void>
  * @brief Function object for performing comparisons. Unless specialised,
  * invokes operator<= on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/less_equal
+ * @details https://en.cppreference.com/w/cpp/utility/functional/less_equal
  */
 template <typename T = void>
 struct less_equal
@@ -566,7 +568,7 @@ struct less_equal
  * of etl::less_equal when T is not specified, which leaves the parameter types
  * and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/less_equal_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/less_equal_void
  */
 template <>
 struct less_equal<void>
@@ -592,7 +594,7 @@ struct less_equal<void>
  * @brief Function object for performing logical AND (logical conjunction).
  * Effectively calls operator&& on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and
+ * @details https://en.cppreference.com/w/cpp/utility/functional/logical_and
  */
 template <typename T = void>
 struct logical_and
@@ -610,7 +612,8 @@ struct logical_and
  * specialization of etl::logical_and when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_and_void
+ * @details
+ * https://en.cppreference.com/w/cpp/utility/functional/logical_and_void
  */
 template <>
 struct logical_and<void>
@@ -636,7 +639,7 @@ struct logical_and<void>
  * @brief Function object for performing logical OR (logical disjunction).
  * Effectively calls operator|| on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or
+ * @details https://en.cppreference.com/w/cpp/utility/functional/logical_or
  */
 template <typename T = void>
 struct logical_or
@@ -654,7 +657,7 @@ struct logical_or
  * specialization of etl::logical_or when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
  */
 template <>
 struct logical_or<void>
@@ -680,7 +683,7 @@ struct logical_or<void>
  * @brief Function object for performing logical NOT (logical negation).
  * Effectively calls operator! for type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not
+ * @details https://en.cppreference.com/w/cpp/utility/functional/logical_not
  */
 template <typename T = void>
 struct logical_not
@@ -697,7 +700,8 @@ struct logical_not
  * specialization of etl::logical_not when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/logical_not_void
+ * @details
+ * https://en.cppreference.com/w/cpp/utility/functional/logical_not_void
  */
 template <>
 struct logical_not<void>
@@ -723,7 +727,7 @@ struct logical_not<void>
  * @brief Function object for performing bitwise AND. Effectively
  * calls operator& on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_and
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_and
  */
 template <typename T = void>
 struct bit_and
@@ -740,7 +744,7 @@ struct bit_and
  * etl::bit_and when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_and_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_and_void
  */
 template <>
 struct bit_and<void>
@@ -766,7 +770,7 @@ struct bit_and<void>
  * @brief Function object for performing bitwise OR. Effectively calls operator|
  * on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_or
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_or
  */
 template <typename T = void>
 struct bit_or
@@ -783,7 +787,7 @@ struct bit_or
  * T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_or_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_or_void
  */
 template <>
 struct bit_or<void>
@@ -809,7 +813,7 @@ struct bit_or<void>
  * @brief Function object for performing bitwise XOR. Effectively calls
  * operator^ on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_xor
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_xor
  */
 template <typename T = void>
 struct bit_xor
@@ -826,7 +830,7 @@ struct bit_xor
  * etl::bit_xor when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void
  */
 template <>
 struct bit_xor<void>
@@ -852,7 +856,7 @@ struct bit_xor<void>
  * @brief Function object for performing bitwise NOT.
  * Effectively calls operator~ on type T.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_not
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_not
  */
 template <typename T = void>
 struct bit_not
@@ -869,7 +873,7 @@ struct bit_not
  * etl::bit_not when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/functional/bit_not_void
+ * @details https://en.cppreference.com/w/cpp/utility/functional/bit_not_void
  */
 template <>
 struct bit_not<void>

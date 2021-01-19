@@ -187,9 +187,9 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
  * @details BinaryFunction must not invalidate any iterators, including the end
  * iterators, or modify any elements of the range involved.
  *
- * @return Iterator to the element past the last element written.
+ * https://en.cppreference.com/w/cpp/algorithm/partial_sum
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
+ * @return Iterator to the element past the last element written.
  */
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
@@ -217,9 +217,9 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
  * @details BinaryFunction must not invalidate any iterators, including the end
  * iterators, or modify any elements of the range involved.
  *
- * @return Iterator to the element past the last element written.
+ * https://en.cppreference.com/w/cpp/algorithm/partial_sum
  *
- * @ref https://en.cppreference.com/w/cpp/algorithm/partial_sum
+ * @return Iterator to the element past the last element written.
  */
 template <typename InputIt, typename OutputIt>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)

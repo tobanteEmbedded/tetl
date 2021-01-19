@@ -1947,7 +1947,7 @@ inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
  * possibly cv-qualified), provides the member constant value equal to true. For
  * any other type, value is false.
  *
- * @ref https://en.cppreference.com/w/cpp/types/is_trivial
+ * @details https://en.cppreference.com/w/cpp/types/is_trivial
  */
 template <typename T>
 struct is_trivial
@@ -2038,7 +2038,7 @@ auto test_pre_is_base_of(int)
  * the same type (ignoring cv-qualification), Derived shall be a complete type;
  * otherwise the behavior is undefined.
  *
- * @ref https://en.cppreference.com/w/cpp/types/is_base_of
+ * @details https://en.cppreference.com/w/cpp/types/is_base_of
  */
 template <typename Base, typename Derived>
 struct is_base_of
@@ -2123,7 +2123,7 @@ using decay_t = typename decay<T>::type;
  * T... can be implicitly converted to. If such a type exists (as determined
  * according to the rules below), the member type names that type. Otherwise,
  * there is no member type.
- * @ref https://en.cppreference.com/w/cpp/types/common_type
+ * @details https://en.cppreference.com/w/cpp/types/common_type
  */
 // primary template (used for zero types)
 template <typename...>

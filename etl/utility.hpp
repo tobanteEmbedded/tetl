@@ -72,7 +72,7 @@ constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
  * parameter), this overload forwards the argument to another function with the
  * value category it had when passed to the calling function.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/forward
+ * https://en.cppreference.com/w/cpp/utility/forward
  */
 template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
@@ -88,7 +88,7 @@ constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
  * (such as function call), which may be rvalue or lvalue, as the original value
  * category of a forwarding reference argument.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/forward
+ * https://en.cppreference.com/w/cpp/utility/forward
  */
 template <typename T>
 constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
@@ -151,7 +151,7 @@ inline constexpr auto is_integer_and_not_char_v
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -180,7 +180,7 @@ template <typename T, typename U,
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -198,7 +198,7 @@ template <typename T, typename U,
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -226,7 +226,7 @@ template <typename T, typename U,
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -244,7 +244,7 @@ template <typename T, typename U,
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -262,7 +262,7 @@ template <typename T, typename U,
  * @details It is a compile-time error if either T or U is not a signed or
  * unsigned integer type (including standard integer type and extended integer
  * type).
- * @ref https://en.cppreference.com/w/cpp/utility/intcmp
+ * https://en.cppreference.com/w/cpp/utility/intcmp
  */
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
@@ -281,7 +281,7 @@ template <typename T, typename U,
  * type). This function cannot be used with etl::byte, char, char8_t, char16_t,
  * char32_t, wchar_t and bool.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/in_range
+ * https://en.cppreference.com/w/cpp/utility/in_range
  */
 template <typename R, typename T,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
@@ -298,7 +298,7 @@ template <typename R, typename T,
  * class type with non-trivial destructor, or array thereof, the destructor of
  * pair is trivial.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/pair
+ * https://en.cppreference.com/w/cpp/utility/pair
  *
  * @todo Add conditional explicit when C++20 is available.
  */
@@ -441,7 +441,7 @@ constexpr auto swap(pair<T1, T2>& lhs,
  * etl::decay<T2>::type (the usual type transformations applied to arguments of
  * functions passed by value).
  *
- * @ref https://en.cppreference.com/w/cpp/utility/pair/make_pair
+ * https://en.cppreference.com/w/cpp/utility/pair/make_pair
  */
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
@@ -533,7 +533,7 @@ constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
  * construct, piecewise, a new object of specified type, which will become the
  * element of the pair.
  *
- * @ref https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
+ * https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
  */
 struct piecewise_construct_t
 {
