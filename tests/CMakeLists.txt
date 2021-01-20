@@ -16,6 +16,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_cstdlib.cpp
     test_cstring.cpp
     test_concepts.cpp
+    test_ctime.cpp
     test_functional.cpp
     test_iterator.cpp
     test_limits.cpp
