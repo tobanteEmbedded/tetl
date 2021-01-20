@@ -1,4 +1,4 @@
-name: Linux GCC C++20
+name: GCC C++20
 
 on:
   push:

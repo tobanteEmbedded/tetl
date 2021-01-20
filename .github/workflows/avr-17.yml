@@ -1,4 +1,4 @@
-name: AVR
+name: AVR C++17
 
 on:
   push:

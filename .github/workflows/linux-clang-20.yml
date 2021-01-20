@@ -1,4 +1,4 @@
-name: Linux Clang C++20
+name: Clang C++20
 
 on:
   push:

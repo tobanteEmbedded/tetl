@@ -1,4 +1,4 @@
-name: Linux GCC C++17
+name: GCC C++17
 
 on:
   push:
