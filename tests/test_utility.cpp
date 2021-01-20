@@ -58,9 +58,9 @@ TEMPLATE_TEST_CASE("utility: as_const", "[utility]", etl::uint8_t, etl::int8_t,
   REQUIRE(original == ref);
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE(etl::cmp_equal(0, TestType {0}));
@@ -75,9 +75,9 @@ TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint8_t, etl::int8_t,
   REQUIRE_FALSE(etl::cmp_equal(TestType {42}, TestType {43}));
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE(etl::cmp_not_equal(-1, TestType {0}));
@@ -92,9 +92,9 @@ TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint8_t,
   REQUIRE(etl::cmp_not_equal(TestType {42}, TestType {43}));
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE(etl::cmp_less(-1, TestType {0}));
@@ -109,9 +109,9 @@ TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint8_t, etl::int8_t,
   REQUIRE_FALSE(etl::cmp_less(TestType {44}, TestType {43}));
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE_FALSE(etl::cmp_greater(-1, TestType {0}));
@@ -126,9 +126,9 @@ TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint8_t,
   REQUIRE(etl::cmp_greater(TestType {44}, TestType {43}));
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE(etl::cmp_less_equal(-1, TestType {0}));
@@ -144,9 +144,9 @@ TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint8_t,
   REQUIRE_FALSE(etl::cmp_less_equal(TestType {44}, TestType {43}));
 }
 
-TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t)
 
 {
   REQUIRE_FALSE(etl::cmp_greater_equal(-1, TestType {0}));
@@ -180,9 +180,9 @@ TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint16_t,
   REQUIRE_FALSE(etl::in_range<TestType>(-1));
 }
 
-TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
 
 {
   auto p1 = etl::pair {TestType {0}, 143.0F};
