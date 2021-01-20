@@ -180,64 +180,67 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator++", "[memory]", int, float, long)
   }
 }
 
-TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(default)", "[memory]", int, float,
-                   long)
-{
-  using etl::uint32_t;
-  using pointer_type = etl::ptr_with_int<TestType, 20, 12, uint32_t, uint32_t>;
+// TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(default)", "[memory]", int,
+// float,
+//                    long)
+// {
+//   using etl::uint32_t;
+//   using pointer_type = etl::ptr_with_int<TestType, 20, 12, uint32_t,
+//   uint32_t>;
 
-  auto ptr = pointer_type();
-  CHECK(ptr.get_ptr() == nullptr);
-  CHECK(ptr.operator->() == nullptr);
-  CHECK(ptr.get_int() == 0);
+//   auto ptr = pointer_type();
+//   CHECK(ptr.get_ptr() == nullptr);
+//   CHECK(ptr.operator->() == nullptr);
+//   CHECK(ptr.get_int() == 0);
 
-  auto const cptr = pointer_type();
-  CHECK(cptr.get_ptr() == nullptr);
-  CHECK(cptr.operator->() == nullptr);
-  CHECK(cptr.get_int() == 0);
-}
+//   auto const cptr = pointer_type();
+//   CHECK(cptr.get_ptr() == nullptr);
+//   CHECK(cptr.operator->() == nullptr);
+//   CHECK(cptr.get_int() == 0);
+// }
 
-TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(pointer)", "[memory]", int, float,
-                   long)
-{
-  using pointer_type
-    = etl::ptr_with_int<TestType, 50, 14, size_t, etl::uint64_t>;
+// TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(pointer)", "[memory]", int,
+// float,
+//                    long)
+// {
+//   using pointer_type
+//     = etl::ptr_with_int<TestType, 50, 14, size_t, etl::uint64_t>;
 
-  auto ptr = pointer_type((TestType*)((etl::uintptr_t)(143)));
-  CHECK((etl::uintptr_t)(ptr.get_ptr()) == 143);
-  CHECK(ptr.get_int() == 0);
+//   auto ptr = pointer_type((TestType*)((etl::uintptr_t)(143)));
+//   CHECK((etl::uintptr_t)(ptr.get_ptr()) == 143);
+//   CHECK(ptr.get_int() == 0);
 
-  auto const cptr = pointer_type((TestType*)((etl::uintptr_t)(143)));
-  CHECK((etl::uintptr_t)(cptr.get_ptr()) == 143);
-  CHECK(cptr.get_int() == 0);
-}
+//   auto const cptr = pointer_type((TestType*)((etl::uintptr_t)(143)));
+//   CHECK((etl::uintptr_t)(cptr.get_ptr()) == 143);
+//   CHECK(cptr.get_int() == 0);
+// }
 
-TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(pointer,integer)", "[memory]",
-                   int, float, long)
-{
-  using pointer_type
-    = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
+// TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(pointer,integer)", "[memory]",
+//                    int, float, long)
+// {
+//   using pointer_type
+//     = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
 
-  auto ptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 42);
-  CHECK((etl::uintptr_t)(ptr.get_ptr()) == 143);
-  CHECK(ptr.get_int() == 42);
+//   auto ptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 42);
+//   CHECK((etl::uintptr_t)(ptr.get_ptr()) == 143);
+//   CHECK(ptr.get_int() == 42);
 
-  auto const cptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
-  CHECK((etl::uintptr_t)(cptr.get_ptr()) == 143);
-  CHECK(cptr.get_int() == 1000);
-}
+//   auto const cptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
+//   CHECK((etl::uintptr_t)(cptr.get_ptr()) == 143);
+//   CHECK(cptr.get_int() == 1000);
+// }
 
-TEMPLATE_TEST_CASE("memory/ptr_with_int: operator pointer", "[memory]", int,
-                   float, long)
-{
-  using pointer_type
-    = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
-  auto func = [](TestType* ptr) { CHECK((etl::uintptr_t)(ptr) == 143); };
-  auto ptr  = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
-  CHECK(ptr.get_int() == 1000);
-  func(ptr);
-  func(etl::as_const(ptr));
-}
+// TEMPLATE_TEST_CASE("memory/ptr_with_int: operator pointer", "[memory]", int,
+//                    float, long)
+// {
+//   using pointer_type
+//     = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
+//   auto func = [](TestType* ptr) { CHECK((etl::uintptr_t)(ptr) == 143); };
+//   auto ptr  = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
+//   CHECK(ptr.get_int() == 1000);
+//   func(ptr);
+//   func(etl::as_const(ptr));
+// }
 
 // broken on msvc, clang & appleclang
 // TEMPLATE_TEST_CASE("memory/ptr_with_int: operator*", "[memory]", int, float,
@@ -256,20 +259,21 @@ TEMPLATE_TEST_CASE("memory/ptr_with_int: operator pointer", "[memory]", int,
 //   CHECK(*cptr == TestType {42});
 // }
 
-TEMPLATE_TEST_CASE("memory/ptr_with_int: set_int", "[memory]", int, float, long)
-{
-  using pointer_type
-    = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
+// TEMPLATE_TEST_CASE("memory/ptr_with_int: set_int", "[memory]", int, float,
+// long)
+// {
+//   using pointer_type
+//     = etl::ptr_with_int<TestType, 48, 16, size_t, etl::uint64_t>;
 
-  auto ptr = pointer_type(nullptr);
-  CHECK(ptr.get_int() == 0);
+//   auto ptr = pointer_type(nullptr);
+//   CHECK(ptr.get_int() == 0);
 
-  ptr.set_int(42);
-  CHECK(ptr.get_int() == 42);
+//   ptr.set_int(42);
+//   CHECK(ptr.get_int() == 42);
 
-  ptr.set_int(143);
-  CHECK(ptr.get_int() == 143);
-}
+//   ptr.set_int(143);
+//   CHECK(ptr.get_int() == 143);
+// }
 
 TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)
 {
