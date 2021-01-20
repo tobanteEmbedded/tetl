@@ -29,14 +29,6 @@ DAMAGE.
 #include "etl/cstdint.hpp"                      // for int8_t, uint16_t, uin...
 #include "etl/experimental/net/byte_order.hpp"  // for hton, ntoh, net
 
-TEST_CASE("experimental/net: ntoh/hton char", "[experimental][net]")
-{
-  using namespace etl::net;
-  REQUIRE(ntoh(hton(char {0})) == 0);
-  REQUIRE(ntoh(hton(char {1})) == 1);
-  REQUIRE(ntoh(hton(char {42})) == 42);
-}
-
 TEST_CASE("experimental/net: ntoh/hton etl::int8_t", "[experimental][net]")
 {
   using namespace etl::net;

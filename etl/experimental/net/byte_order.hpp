@@ -35,7 +35,6 @@ namespace net
 {
 template <typename T>
 constexpr auto ntoh(T) -> T = delete;
-constexpr auto ntoh(char v) noexcept -> char { return v; }
 constexpr auto ntoh(uint8_t v) noexcept -> uint8_t { return v; }
 constexpr auto ntoh(int8_t v) noexcept -> int8_t { return v; }
 constexpr auto ntoh(uint16_t v) noexcept -> uint16_t
@@ -54,7 +53,6 @@ constexpr auto ntoh(uint32_t v) noexcept -> uint32_t
 
 template <typename T>
 constexpr auto hton(T) -> T = delete;
-constexpr auto hton(char v) noexcept -> char { return v; }
 constexpr auto hton(int8_t v) noexcept -> int8_t { return v; }
 constexpr auto hton(uint8_t v) noexcept -> uint8_t { return v; }
 constexpr auto hton(uint16_t v) noexcept -> uint16_t { return ntoh(v); }
