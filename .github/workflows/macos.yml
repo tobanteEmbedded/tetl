@@ -27,7 +27,7 @@ jobs:
         run: cmake --build build_Debug --config "Debug"
 
       - name: Show artefacts -- Debug
-        run: cd build_Debug && ls -la
+        run: cd build_Debug && ls -la tests
 
       - name: Run tests -- Debug
         run: cd build_Debug && ctest -C Debug
