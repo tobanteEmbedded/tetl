@@ -27,12 +27,28 @@ DAMAGE.
 #ifndef TAETL_CSTDLIB_HPP
 #define TAETL_CSTDLIB_HPP
 
-#include "cassert.hpp"
-#include "cstddef.hpp"
-#include "cstring.hpp"
+#include "etl/cassert.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/cstring.hpp"
+
+#include "etl/detail/cstddef_internal.hpp"
 
 namespace etl
 {
+#if not defined(EXIT_SUCCESS)
+/**
+ * @brief Successful execution of a program.
+ */
+#define EXIT_SUCCESS 0
+#endif
+
+#if not defined(EXIT_FAILURE)
+/**
+ * @brief Unsuccessful execution of a program.
+ */
+#define EXIT_FAILURE 1
+#endif
+
 /**
  * @brief Converts an integer value to a null-terminated string using the
  * specified base and stores the result in the array given by str parameter.
