@@ -13,6 +13,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_cmath.cpp
     test_cstddef.cpp
     test_cstdint.cpp
+    test_cstdio.cpp
     test_cstdlib.cpp
     test_cstring.cpp
     test_concepts.cpp
