@@ -200,12 +200,17 @@ class ptr_with_int
   using int_type                       = IntType;
   using storage_type                   = StorageType;
   static constexpr size_t pointer_bits = PointerBits;
-  static constexpr size_t integer_bits = IntBits;
+  static constexpr size_t int_bits     = IntBits;
 
   /**
    * @brief Construct an empty ptr_with_int. Initialized to zero.
    */
   ptr_with_int() noexcept = default;
+
+  /**
+   * @brief Construct from nullptr.
+   */
+  ptr_with_int(nullptr_t /*null*/) noexcept : storage_ {0} { }
 
   /**
    * @brief Construct an ptr_with_int with the given pointer. The integer
@@ -237,7 +242,7 @@ class ptr_with_int
   /**
    * @brief Returns the contained pointer.
    */
-  [[nodiscard]] auto get_ptr() const noexcept -> const_pointer
+  [[nodiscard]] auto get_ptr() const noexcept -> pointer
   {
     return internal_load_ptr();
   }
@@ -250,41 +255,83 @@ class ptr_with_int
     return internal_load_int();
   }
 
+  /**
+   * @brief Returns a raw pointer to value_type.
+   */
+  [[nodiscard]] auto operator->() const -> pointer { return get_ptr(); }
+
+  /**
+   * @brief Dereference pointer to value_type&.
+   */
+  [[nodiscard]] auto operator*() -> reference { return *get_ptr(); }
+
+  /**
+   * @brief Dereference pointer to value_type const&.
+   */
+  [[nodiscard]] auto operator*() const -> const_reference { return *get_ptr(); }
+
+  /**
+   * @brief Implicit conversion to raw pointer to mutable.
+   */
+  [[nodiscard]] operator pointer() noexcept { return get_ptr(); }
+
+  /**
+   * @brief Implicit conversion to raw pointer to const.
+   */
+  [[nodiscard]] operator pointer() const noexcept { return get_ptr(); }
+
   private:
-  static_assert(pointer_bits + integer_bits == sizeof(storage_type) * 8);
+  static_assert(int_bits >= 0);
+  static_assert(pointer_bits > 0);
+  static_assert(pointer_bits + int_bits == sizeof(storage_type) * 8);
 
   static constexpr storage_type pointer_mask = [] {
-    auto result = storage_type {0};
-    for (auto i = storage_type {0}; i < pointer_bits; ++i)
-    { result |= 1UL << (i + integer_bits); }
-    return result;
+    auto mask = storage_type {0};
+    for (storage_type i = 0; i < pointer_bits; ++i)
+    { mask |= 1UL << (i + int_bits); }
+    return mask;
   }();
 
   static constexpr storage_type integer_mask = [] {
-    auto result = storage_type {0};
-    for (auto i = storage_type {0}; i < integer_bits; ++i)
-    { result |= 1UL << i; }
-    return result;
+    auto mask = storage_type {0};
+    for (storage_type i = 0; i < int_bits; ++i) { mask |= 1UL << i; }
+    return mask;
   }();
 
-  auto internal_store_ptr(pointer ptr) -> void
+  auto internal_store_ptr(pointer ptr) noexcept -> void
   {
     auto const tmp = reinterpret_cast<uintptr_t>(ptr);
-    storage_ |= static_cast<storage_type>(tmp) << pointer_bits;
+    if constexpr (int_bits > 0)
+    {
+      storage_ |= static_cast<storage_type>(tmp) << pointer_bits;
+      return;
+    }
+    storage_ |= static_cast<storage_type>(tmp);
   }
 
-  auto internal_store_int(int_type integer) -> void { storage_ |= integer; }
+  auto internal_store_int(int_type integer) noexcept -> void
+  {
+    storage_ |= integer;
+  }
 
   [[nodiscard]] auto internal_load_ptr() noexcept -> pointer
   {
-    auto const tmp = storage_ & pointer_mask;
-    return reinterpret_cast<pointer>(tmp >> pointer_bits);
+    if constexpr (int_bits > 0)
+    {
+      auto const tmp = storage_ & pointer_mask;
+      return reinterpret_cast<pointer>(tmp >> pointer_bits);
+    }
+    return reinterpret_cast<pointer>(storage_ & pointer_mask);
   }
 
-  [[nodiscard]] auto internal_load_ptr() const noexcept -> const_pointer
+  [[nodiscard]] auto internal_load_ptr() const noexcept -> pointer
   {
-    auto const tmp = storage_ & pointer_mask;
-    return reinterpret_cast<const_pointer>(tmp >> pointer_bits);
+    if constexpr (int_bits > 0)
+    {
+      auto const tmp = storage_ & pointer_mask;
+      return reinterpret_cast<pointer>(tmp >> pointer_bits);
+    }
+    return reinterpret_cast<pointer>(storage_ & pointer_mask);
   }
 
   [[nodiscard]] auto internal_load_int() const noexcept -> int_type

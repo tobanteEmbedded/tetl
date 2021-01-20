@@ -188,10 +188,12 @@ TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(default)", "[memory]", int, float,
 
   auto ptr = pointer_type();
   CHECK(ptr.get_ptr() == nullptr);
+  CHECK(ptr.operator->() == nullptr);
   CHECK(ptr.get_int() == 0);
 
   auto const cptr = pointer_type();
   CHECK(cptr.get_ptr() == nullptr);
+  CHECK(cptr.operator->() == nullptr);
   CHECK(cptr.get_int() == 0);
 }
 
@@ -221,6 +223,39 @@ TEMPLATE_TEST_CASE("memory/ptr_with_int: ctor(pointer,integer)", "[memory]",
   auto const cptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
   CHECK((etl::uintptr_t)(cptr.get_ptr()) == 143);
   CHECK(cptr.get_int() == 1000);
+}
+
+TEMPLATE_TEST_CASE("memory/ptr_with_int: operator pointer", "[memory]", int,
+                   float, long)
+{
+  using pointer_type = etl::ptr_with_int<TestType, 48, 16>;
+  auto func = [](TestType* ptr) { CHECK((etl::uintptr_t)(ptr) == 143); };
+  auto ptr  = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
+  CHECK(ptr.get_int() == 1000);
+  func(ptr);
+}
+
+TEMPLATE_TEST_CASE("memory/ptr_with_int: operator const_pointer", "[memory]",
+                   int, float, long)
+{
+  using pointer_type = etl::ptr_with_int<TestType, 48, 16>;
+  auto func = [](TestType const* ptr) { CHECK((etl::uintptr_t)(ptr) == 143); };
+  auto const ptr = pointer_type((TestType*)((etl::uintptr_t)(143)), 1000);
+  CHECK(ptr.get_int() == 1000);
+  func(ptr);
+}
+
+TEMPLATE_TEST_CASE("memory/ptr_with_int: operator*", "[memory]", int, float,
+                   long)
+{
+  using pointer_type = etl::ptr_with_int<TestType, 64, 0>;
+  auto val           = TestType {42};
+
+  auto ptr = pointer_type(&val);
+  CHECK(*ptr == TestType {42});
+
+  auto const cptr = pointer_type(&val);
+  CHECK(*cptr == TestType {42});
 }
 
 TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)
