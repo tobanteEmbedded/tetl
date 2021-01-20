@@ -17,6 +17,12 @@ DEFINES += -DSTM32F103xB
 
 INCLUDES += -I../
 
+ifdef DEBUG
+DEBUGFLAGS = -Og -g
+else
+DEBUGFLAGS = -Os -flto
+endif
+
 ARCH += -mcpu=cortex-m3
 ARCH += -mthumb
 ARCH += -mfloat-abi=soft

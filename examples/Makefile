@@ -1,9 +1,3 @@
-ifdef DEBUG
-DEBUGFLAGS = -Og -g
-else
-DEBUGFLAGS = -Os -flto
-endif
-
 ifndef CXXSTD
 	CXXSTD := 17
 endif
@@ -14,6 +8,10 @@ endif
 
 ifdef ARM
 include mk/arm_stm32f103.mk
+endif
+
+ifdef X86
+include mk/x86_linux.mk
 endif
 
 
@@ -39,6 +37,9 @@ ifdef ARM
 EXE := ${addsuffix .o, ${EXAMPLES}}
 endif
 
+ifdef X86
+EXE := ${addsuffix .elf, ${EXAMPLES}}
+endif
 
 .PHONY: all
 all: ${EXE}
