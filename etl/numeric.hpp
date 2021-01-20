@@ -32,11 +32,11 @@ DAMAGE.
 #ifndef TAETL_NUMERIC_HPP
 #define TAETL_NUMERIC_HPP
 
-#include "cstddef.hpp"
-#include "functional.hpp"
-#include "limits.hpp"
-#include "type_traits.hpp"
-#include "utility.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/functional.hpp"
+#include "etl/limits.hpp"
+#include "etl/type_traits.hpp"
+#include "etl/utility.hpp"
 
 namespace etl
 {

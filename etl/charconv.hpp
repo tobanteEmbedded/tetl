@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_CHARCONV_HPP
 #define TAETL_CHARCONV_HPP
 
-#include "cstdint.hpp"
-#include "system_error.hpp"
+#include "etl/cstdint.hpp"
+#include "etl/system_error.hpp"
 
 namespace etl
 {

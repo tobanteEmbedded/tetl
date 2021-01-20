@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_CCTYPE_HPP
 #define TAETL_CCTYPE_HPP
 
-#include "cassert.hpp"
-#include "limits.hpp"
+#include "etl/cassert.hpp"
+#include "etl/limits.hpp"
 
 namespace etl
 {

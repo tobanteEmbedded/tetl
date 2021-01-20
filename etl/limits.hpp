@@ -32,12 +32,12 @@ DAMAGE.
 #include <limits.h>
 #include <math.h>
 #else
-#include "cfloat.hpp"
-#include "climits.hpp"
-#include "cmath.hpp"
+#include "etl/cfloat.hpp"
+#include "etl/climits.hpp"
+#include "etl/cmath.hpp"
 #endif
 
-#include "cstdint.hpp"
+#include "etl/cstdint.hpp"
 
 namespace etl
 {

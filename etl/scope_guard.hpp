@@ -27,9 +27,9 @@ DAMAGE.
 #ifndef TAETL_SCOPE_GUARD_HPP
 #define TAETL_SCOPE_GUARD_HPP
 
-#include "cstddef.hpp"
-#include "type_traits.hpp"
-#include "utility.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/type_traits.hpp"
+#include "etl/utility.hpp"
 
 namespace etl
 {

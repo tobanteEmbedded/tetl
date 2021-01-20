@@ -27,8 +27,9 @@ DAMAGE.
 #ifndef TAETL_CSTDINT_HPP
 #define TAETL_CSTDINT_HPP
 
-#include "detail/intrinsics.hpp"
-#include "version.hpp"
+#include "etl/version.hpp"
+
+#include "etl/detail/intrinsics.hpp"
 
 namespace etl
 {

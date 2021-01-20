@@ -27,7 +27,7 @@ DAMAGE.
 #ifndef TAETL_NUMBERS_HPP
 #define TAETL_NUMBERS_HPP
 
-#include "type_traits.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl::numbers
 {

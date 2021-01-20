@@ -27,10 +27,10 @@ DAMAGE.
 #ifndef TAETL_STRING_VIEW_HPP
 #define TAETL_STRING_VIEW_HPP
 
-#include "algorithm.hpp"
-#include "cstddef.hpp"
-#include "iterator.hpp"
-#include "memory.hpp"
+#include "etl/algorithm.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/iterator.hpp"
+#include "etl/memory.hpp"
 
 #include "etl/detail/container_utils.hpp"
 #include "etl/detail/sfinae.hpp"

@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_CONCEPTS_HPP
 #define TAETL_CONCEPTS_HPP
 
-#include "cstddef.hpp"
-#include "type_traits.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/type_traits.hpp"
 
 #if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace etl

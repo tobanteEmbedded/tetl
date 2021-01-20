@@ -27,9 +27,9 @@ DAMAGE.
 #ifndef TAETL_RATIO_HPP
 #define TAETL_RATIO_HPP
 
-#include "cstddef.hpp"
-#include "numeric.hpp"
-#include "type_traits.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/numeric.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl
 {
