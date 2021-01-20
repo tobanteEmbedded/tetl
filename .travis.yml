@@ -22,28 +22,8 @@ script-anchors:
     - cmake --build . -- -j
     - ctest -j
 
-  - &script-macOS
-    - cd $TRAVIS_BUILD_DIR
-    - mkdir build
-    - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
-    - cmake --build . -- -j2
-    - ctest -j2
-    - rm -rf *
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
-    - cmake --build . -- -j2
-    - ctest -j2
-
 matrix:
   include:
-    - os: osx
-      osx_image: xcode12
-      script: *script-macOS
-
-    - os: osx
-      osx_image: xcode11.6
-      script: *script-macOS
-
     - os: linux
       dist: focal
       addons:

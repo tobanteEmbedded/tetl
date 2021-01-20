@@ -1,0 +1,37 @@
+name: macOS
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download git submodules
+        run: git submodule update --recursive --init
+
+      - name: CMake configure -- Debug
+        run: cmake -S . -B build_Debug
+
+      - name: CMake build -- Debug
+        run: cmake --build build_Debug --config "Debug"
+
+      - name: Run tests -- Debug
+        run: cd build_Debug && ctest -C Debug
+
+      - name: CMake configure -- Release
+        run: cmake -S . -B build_Release
+
+      - name: CMake build -- Release
+        run: cmake --build build_Release --config "Release"
+
+      - name: Run tests -- Release
+        run: cd build_Release && ctest -C Release
+
