@@ -22,8 +22,3 @@ jobs:
       - name: Build examples project (C++17, Release)
         run: make -C examples clean all
 
-      - name: Build examples project (C++20, Debug)
-        run: CXXSTD=2a DEBUG=1 make -C examples clean all
-
-      - name: Build examples project (C++20, Release)
-        run: CXXSTD=2a make -C examples clean all

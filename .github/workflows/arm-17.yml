@@ -1,4 +1,4 @@
-name: ARM
+name: ARM C++17
 
 on:
   push:

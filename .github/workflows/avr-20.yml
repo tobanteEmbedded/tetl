@@ -1,0 +1,23 @@
+name: AVR C++20
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: tobante/avr-gcc:9.2
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build examples project (C++20, Debug)
+        run: CXXSTD=2a DEBUG=1 make -C examples clean all
+
+      - name: Build examples project (C++20, Release)
+        run: CXXSTD=2a make -C examples clean all
