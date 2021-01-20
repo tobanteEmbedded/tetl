@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: CMake configure -- Debug
-        run: cmake -H. -Bbuild_Debug -G "Visual Studio 16 2019"
+        run: cmake -S . -B build_Debug -G "Visual Studio 16 2019"
 
       - name: CMake build -- Debug
         run: cmake --build build_Debug --config "Debug"
@@ -24,7 +24,7 @@ jobs:
         run: .\build_Debug\tests\Debug\etl-tests.exe
 
       - name: CMake configure -- Release
-        run: cmake -H. -Bbuild_Release -G "Visual Studio 16 2019"
+        run: cmake -S . -B build_Release -G "Visual Studio 16 2019"
 
       - name: CMake build -- Release
         run: cmake --build build_Release --config "Release"
