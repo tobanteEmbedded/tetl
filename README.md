@@ -17,10 +17,10 @@ The tobanteAudio embedded template library is intended for micro controller wher
 
 ### Freestanding
 
-| **Standard** | **AVR - GCC**                                                                                                                               | **ARM - GCC**                                                                                                                               |     |     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
-| C++17        | [![AVR](https://github.com/tobanteAudio/taetl/workflows/AVR/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3AAVR) | [![ARM](https://github.com/tobanteAudio/taetl/workflows/ARM/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3AARM) |     |     |
-| C++20        |                                                                                                                                             |                                                                                                                                             |     |     |
+| **Standard** | **AVR - GCC**                                                                                                                                                             | **ARM - GCC**                                                                                                                               |     |     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --- | --- |
+| C++17        | [![AVR](https://github.com/tobanteAudio/taetl/workflows/AVR/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3AAVR)                               | [![ARM](https://github.com/tobanteAudio/taetl/workflows/ARM/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3AARM) |     |     |
+| C++20        | [![AVR C++20](https://github.com/tobanteAudio/taetl/workflows/AVR%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22AVR+C%2B%2B20%22) |                                                                                                                                             |     |     |
 
 ## Quick Start
 

@@ -1,0 +1,40 @@
+name: macOS C++17
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download git submodules
+        run: git submodule update --recursive --init
+
+      - name: Install ninja-build
+        run: brew install ninja
+
+      - name: CMake configure -- Debug
+        run: cmake -S . -G Ninja -B build_Debug -DCMAKE_BUILD_TYPE=Debug
+
+      - name: CMake build -- Debug
+        run: cmake --build build_Debug
+
+      - name: Run tests -- Debug
+        run: ./build_Debug/tests/etl-tests
+
+      - name: CMake configure -- Release
+        run: cmake -S . -G Ninja -B build_Release -DCMAKE_BUILD_TYPE=Release
+
+      - name: CMake build -- Release
+        run: cmake --build build_Release
+
+      - name: Run tests -- Release
+        run: ./build_Release/tests/etl-tests
+

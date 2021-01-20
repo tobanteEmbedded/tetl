@@ -1,0 +1,36 @@
+name: Windows C++20
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-2019
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download git submodules
+        run: git submodule update --recursive --init
+
+      - name: CMake configure -- Debug
+        run: cmake -S . -B build_Debug -G "Visual Studio 16 2019" -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+
+      - name: CMake build -- Debug
+        run: cmake --build build_Debug --config "Debug"
+
+      - name: Run tests -- Debug
+        run: .\build_Debug\tests\Debug\etl-tests.exe
+
+      - name: CMake configure -- Release
+        run: cmake -S . -B build_Release -G "Visual Studio 16 2019" -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+
+      - name: CMake build -- Release
+        run: cmake --build build_Release --config "Release"
+
+      - name: Run tests -- Release
+        run: .\build_Release\tests\Release\etl-tests.exe
+
