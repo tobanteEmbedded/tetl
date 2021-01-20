@@ -53,4 +53,4 @@ git clone https://github.com/tobanteAudio/taetl.git
 
 ## Usage
 
-For detailed examples look at the `examples` subdirectory or the test files in `tests`.
+For detailed examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
