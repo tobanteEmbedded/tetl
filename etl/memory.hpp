@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_MEMORY_HPP
 #define TAETL_MEMORY_HPP
 
+#include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
@@ -194,9 +195,7 @@ class ptr_with_int
   public:
   using value_type                     = T;
   using pointer                        = T*;
-  using const_pointer                  = T const*;
   using reference                      = T&;
-  using const_reference                = T const&;
   using int_type                       = IntType;
   using storage_type                   = StorageType;
   static constexpr size_t pointer_bits = PointerBits;
@@ -256,6 +255,16 @@ class ptr_with_int
   }
 
   /**
+   * @brief Stores a new pointer.
+   */
+  auto set_ptr(pointer ptr) noexcept -> void { internal_store_ptr(ptr); }
+
+  /**
+   * @brief Stores a new integer value.
+   */
+  auto set_int(int_type const val) noexcept -> void { internal_store_int(val); }
+
+  /**
    * @brief Returns a raw pointer to value_type.
    */
   [[nodiscard]] auto operator->() const -> pointer { return get_ptr(); }
@@ -266,17 +275,17 @@ class ptr_with_int
   [[nodiscard]] auto operator*() -> reference { return *get_ptr(); }
 
   /**
-   * @brief Dereference pointer to value_type const&.
+   * @brief Dereference pointer to value_type&.
    */
-  [[nodiscard]] auto operator*() const -> const_reference { return *get_ptr(); }
+  [[nodiscard]] auto operator*() const -> reference { return *get_ptr(); }
 
   /**
-   * @brief Implicit conversion to raw pointer to mutable.
+   * @brief Implicit conversion to raw pointer.
    */
   [[nodiscard]] operator pointer() noexcept { return get_ptr(); }
 
   /**
-   * @brief Implicit conversion to raw pointer to const.
+   * @brief Implicit conversion to raw pointer.
    */
   [[nodiscard]] operator pointer() const noexcept { return get_ptr(); }
 
@@ -303,6 +312,7 @@ class ptr_with_int
     auto const tmp = reinterpret_cast<uintptr_t>(ptr);
     if constexpr (int_bits > 0)
     {
+      assert(tmp <= (1UL << pointer_bits));
       storage_ |= static_cast<storage_type>(tmp) << pointer_bits;
       return;
     }
@@ -311,17 +321,9 @@ class ptr_with_int
 
   auto internal_store_int(int_type integer) noexcept -> void
   {
-    storage_ |= integer;
-  }
-
-  [[nodiscard]] auto internal_load_ptr() noexcept -> pointer
-  {
-    if constexpr (int_bits > 0)
-    {
-      auto const tmp = storage_ & pointer_mask;
-      return reinterpret_cast<pointer>(tmp >> pointer_bits);
-    }
-    return reinterpret_cast<pointer>(storage_ & pointer_mask);
+    assert(integer <= (1UL << int_bits));
+    storage_ &= (~integer_mask);
+    storage_ |= (integer & integer_mask);
   }
 
   [[nodiscard]] auto internal_load_ptr() const noexcept -> pointer

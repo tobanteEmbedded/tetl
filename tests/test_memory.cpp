@@ -250,12 +250,29 @@ TEMPLATE_TEST_CASE("memory/ptr_with_int: operator*", "[memory]", int, float,
 {
   using pointer_type = etl::ptr_with_int<TestType, 64, 0>;
   auto val           = TestType {42};
+  auto val2          = TestType {143};
 
   auto ptr = pointer_type(&val);
   CHECK(*ptr == TestType {42});
+  ptr.set_ptr(&val2);
+  CHECK(*ptr == TestType {143});
 
   auto const cptr = pointer_type(&val);
   CHECK(*cptr == TestType {42});
+}
+
+TEMPLATE_TEST_CASE("memory/ptr_with_int: set_int", "[memory]", int, float, long)
+{
+  using pointer_type = etl::ptr_with_int<TestType, 48, 16>;
+
+  auto ptr = pointer_type(nullptr);
+  CHECK(ptr.get_int() == 0);
+
+  ptr.set_int(42);
+  CHECK(ptr.get_int() == 42);
+
+  ptr.set_int(143);
+  CHECK(ptr.get_int() == 143);
 }
 
 TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)
