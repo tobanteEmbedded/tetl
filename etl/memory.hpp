@@ -177,6 +177,124 @@ class small_ptr
   StorageType value_;
 };
 
+/**
+ * @brief Wraps a pointer and an integer value. Uses as much space as sizeof of
+ * the StorageType template parameter.
+ *
+ * @tparam T The value_type of the wrapped pointer.
+ * @tparam PointerBits How many bits to use for storing the pointer.
+ * @tparam IntBits How many bits to use for storing the integer.
+ * @tparam IntType The type of integer to be stored.
+ * @tparam StorageType The underlying storage for both pinter & integer.
+ */
+template <typename T, size_t PointerBits, size_t IntBits,
+          typename IntType = size_t, typename StorageType = uintptr_t>
+class ptr_with_int
+{
+  public:
+  using value_type                     = T;
+  using pointer                        = T*;
+  using const_pointer                  = T const*;
+  using reference                      = T&;
+  using const_reference                = T const&;
+  using int_type                       = IntType;
+  using storage_type                   = StorageType;
+  static constexpr size_t pointer_bits = PointerBits;
+  static constexpr size_t integer_bits = IntBits;
+
+  /**
+   * @brief Construct an empty ptr_with_int. Initialized to zero.
+   */
+  ptr_with_int() noexcept = default;
+
+  /**
+   * @brief Construct an ptr_with_int with the given pointer. The integer
+   * value is initialized to zero.
+   */
+  explicit ptr_with_int(pointer ptr) noexcept
+  {
+    internal_store_ptr(ptr);
+    internal_store_int(0);
+  }
+
+  /**
+   * @brief Construct an ptr_with_int with the given pointer aand integer.
+   */
+  ptr_with_int(pointer ptr, int_type const integer) noexcept
+  {
+    internal_store_ptr(ptr);
+    internal_store_int(integer);
+  }
+
+  /**
+   * @brief Returns the contained pointer.
+   */
+  [[nodiscard]] auto get_ptr() noexcept -> pointer
+  {
+    return internal_load_ptr();
+  }
+
+  /**
+   * @brief Returns the contained pointer.
+   */
+  [[nodiscard]] auto get_ptr() const noexcept -> const_pointer
+  {
+    return internal_load_ptr();
+  }
+
+  /**
+   * @brief Returns the contained integer.
+   */
+  [[nodiscard]] auto get_int() const noexcept -> int_type
+  {
+    return internal_load_int();
+  }
+
+  private:
+  static_assert(pointer_bits + integer_bits == sizeof(storage_type) * 8);
+
+  static constexpr storage_type pointer_mask = [] {
+    auto result = storage_type {0};
+    for (auto i = storage_type {0}; i < pointer_bits; ++i)
+    { result |= 1UL << (i + integer_bits); }
+    return result;
+  }();
+
+  static constexpr storage_type integer_mask = [] {
+    auto result = storage_type {0};
+    for (auto i = storage_type {0}; i < integer_bits; ++i)
+    { result |= 1UL << i; }
+    return result;
+  }();
+
+  auto internal_store_ptr(pointer ptr) -> void
+  {
+    auto const tmp = reinterpret_cast<uintptr_t>(ptr);
+    storage_ |= static_cast<storage_type>(tmp) << pointer_bits;
+  }
+
+  auto internal_store_int(int_type integer) -> void { storage_ |= integer; }
+
+  [[nodiscard]] auto internal_load_ptr() noexcept -> pointer
+  {
+    auto const tmp = storage_ & pointer_mask;
+    return reinterpret_cast<pointer>(tmp >> pointer_bits);
+  }
+
+  [[nodiscard]] auto internal_load_ptr() const noexcept -> const_pointer
+  {
+    auto const tmp = storage_ & pointer_mask;
+    return reinterpret_cast<const_pointer>(tmp >> pointer_bits);
+  }
+
+  [[nodiscard]] auto internal_load_int() const noexcept -> int_type
+  {
+    return storage_ & integer_mask;
+  }
+
+  storage_type storage_ = 0;
+};
+
 template <typename T>
 class default_delete
 {
