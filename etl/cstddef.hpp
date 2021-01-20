@@ -34,6 +34,14 @@ DAMAGE.
 #include "etl/type_traits.hpp"
 namespace etl
 {
+#if not defined(offsetof)
+/**
+ * @brief Offset of member MEMBER in a struct of type TYPE.
+ */
+#define offsetof(TYPE, MEMBER) __builtin_offsetof(TYPE, MEMBER)
+
+#endif
+
 /**
  * @brief etl::byte is a distinct type that implements the concept of byte as
  * specified in the C++ language definition.
