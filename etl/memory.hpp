@@ -38,6 +38,128 @@ DAMAGE.
 namespace etl
 {
 /**
+ * @brief Obtains the actual address of the object or function arg, even in
+ * presence of overloaded operator&.
+ */
+template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
+auto addressof(T& arg) noexcept -> T*
+{
+  return reinterpret_cast<T*>(
+    &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+}
+
+/**
+ * @brief Obtains the actual address of the object or function arg, even in
+ * presence of overloaded operator&.
+ */
+template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
+auto addressof(T& arg) noexcept -> T*
+{
+  return &arg;
+}
+
+/**
+ * @brief Rvalue overload is deleted to prevent taking the address of const
+ * rvalues.
+ */
+template <typename T>
+auto addressof(T const&&) = delete;
+
+/**
+ * @brief If T is not an array type, calls the destructor of the object pointed
+ * to by p, as if by p->~T(). If T is an array type, recursively destroys
+ * elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
+ * etl::end(*p)).
+ */
+template <typename T>
+constexpr auto destroy_at(T* p) -> void
+{
+  if constexpr (etl::is_array_v<T>)
+  {
+    for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
+  }
+  else
+  {
+    p->~T();
+  }
+}
+
+/**
+ * @brief Destroys the objects in the range [first, last).
+ */
+template <typename ForwardIt>
+constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
+{
+  for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
+}
+
+/**
+ * @brief Destroys the n objects in the range starting at first.
+ */
+template <typename ForwardIt, typename Size>
+constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
+{
+  for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
+  return first;
+}
+
+/**
+ * @brief The pointer_traits class template provides the standardized way to
+ * access certain properties of pointer-like types.
+ *
+ * @details https://en.cppreference.com/w/cpp/memory/pointer_traits
+ */
+template <typename Ptr>
+struct pointer_traits
+{
+  using pointer         = Ptr;
+  using element_type    = typename Ptr::element_type;
+  using difference_type = typename Ptr::difference_type;
+
+  /**
+   * @brief Constructs a dereferenceable pointer or pointer-like object ("fancy
+   * pointer") to its argument.
+   *
+   * @details https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+   * @param r  Reference to an object of type element_type&.
+   * @returns A pointer to r, of the type pointer_traits::pointer.
+   */
+  [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
+  {
+    return Ptr::pointer_to(r);
+  }
+};
+
+/**
+ * @brief The pointer_traits class template provides the standardized way to
+ * access certain properties of pointer-like types.
+ *
+ * @details https://en.cppreference.com/w/cpp/memory/pointer_traits
+ */
+template <class T>
+struct pointer_traits<T*>
+{
+  using pointer         = T*;
+  using element_type    = T;
+  using difference_type = ::etl::ptrdiff_t;
+  template <class U>
+  using rebind = U*;
+
+  /**
+   * @brief Constructs a dereferenceable pointer or pointer-like object ("fancy
+   * pointer") to its argument.
+   *
+   * @details https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+   * @param r  Reference to an object of type element_type&.
+   * @returns A pointer to r, of the type pointer_traits::pointer.
+   */
+  [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
+  {
+    return addressof(r);
+  }
+};
+
+/**
  * @brief Compressed pointer to specified size. Intended to be used as a drop in
  * replacement for native pointers.
  *
@@ -386,72 +508,6 @@ class default_delete<T[]>
   static_assert(sizeof(T));
   static_assert(!etl::is_void<T>::value);
 };
-
-/**
- * @brief Obtains the actual address of the object or function arg, even in
- * presence of overloaded operator&.
- */
-template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
-auto addressof(T& arg) noexcept -> T*
-{
-  return reinterpret_cast<T*>(
-    &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
-}
-
-/**
- * @brief Obtains the actual address of the object or function arg, even in
- * presence of overloaded operator&.
- */
-template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
-auto addressof(T& arg) noexcept -> T*
-{
-  return &arg;
-}
-
-/**
- * @brief Rvalue overload is deleted to prevent taking the address of const
- * rvalues.
- */
-template <typename T>
-auto addressof(T const&&) = delete;
-
-/**
- * @brief If T is not an array type, calls the destructor of the object pointed
- * to by p, as if by p->~T(). If T is an array type, recursively destroys
- * elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
- * etl::end(*p)).
- */
-template <typename T>
-constexpr auto destroy_at(T* p) -> void
-{
-  if constexpr (etl::is_array_v<T>)
-  {
-    for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
-  }
-  else
-  {
-    p->~T();
-  }
-}
-
-/**
- * @brief Destroys the objects in the range [first, last).
- */
-template <typename ForwardIt>
-constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
-{
-  for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
-}
-
-/**
- * @brief Destroys the n objects in the range starting at first.
- */
-template <typename ForwardIt, typename Size>
-constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
-{
-  for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
-  return first;
-}
 
 }  // namespace etl
 #endif  // TAETL_MEMORY_HPP
