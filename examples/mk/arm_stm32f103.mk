@@ -1,8 +1,8 @@
+TOOLCHAIN 	= arm-none-eabi-
 TOOLCHAIN_ROOT ?= $(shell which arm-none-eabi-gcc | sed 's/\/bin\/arm-none-eabi-gcc//g')
 TOOLCHAIN_BIN ?= $(TOOLCHAIN_ROOT)/bin
 TOOLCHAIN_VERSION := $(strip $(shell $(TOOLCHAIN_ROOT)/bin/arm-none-eabi-g++ --version | head -n 1 | grep -Po '\d+\.\d+\.\d+'))
 
-TOOLCHAIN 	= arm-none-eabi-
 
 AS 			= $(TOOLCHAIN_BIN)/$(TOOLCHAIN)gcc
 CC 			= $(TOOLCHAIN_BIN)/$(TOOLCHAIN)gcc
