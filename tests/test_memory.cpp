@@ -24,7 +24,9 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_template_test_macros.hpp"
+
+#include "catch2/generators/catch_generators.hpp"
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"

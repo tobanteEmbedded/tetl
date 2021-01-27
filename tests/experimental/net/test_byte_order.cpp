@@ -24,7 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
 #include "etl/cstdint.hpp"                      // for int8_t, uint16_t, uin...
 #include "etl/experimental/net/byte_order.hpp"  // for hton, ntoh, net

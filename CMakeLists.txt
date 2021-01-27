@@ -11,7 +11,7 @@ option(TOBANTEAUDIO_ETL_BUILD_MSAN      "Build with memory sanitizer enabled" OF
 option(TOBANTEAUDIO_ETL_BUILD_TSAN      "Build with thread sanitizer enabled" OFF)
 option(TOBANTEAUDIO_ETL_BUILD_COVERAGE  "Build with coverage reporting for gcc/clang" OFF)
 
-# Only do these if this is the main project, 
+# Only do these if this is the main project,
 # and not if it is included through add_subdirectory.
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     if(TOBANTEAUDIO_ETL_BUILD_CPP20)
@@ -19,7 +19,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     else()
       set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
     endif(TOBANTEAUDIO_ETL_BUILD_CPP20)
-    
+
     set(CMAKE_CXX_STANDARD_REQUIRED YES)
     set(CMAKE_CXX_EXTENSIONS NO)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -39,11 +39,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
 
 if(NOT CMAKE_CROSSCOMPILING)
   if(TOBANTEAUDIO_ETL_BUILD_TESTS)
-      list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/Catch2/contrib")
       enable_testing()
-      add_subdirectory(3rd_party/Catch2 ${CMAKE_CURRENT_BINARY_DIR}/3rd_party/Catch2 EXCLUDE_FROM_ALL)
+      add_subdirectory(3rd_party/Catch2 EXCLUDE_FROM_ALL)
       include(CTest)
-      include(Catch)
       add_subdirectory(tests)
   endif()
 

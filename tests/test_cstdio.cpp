@@ -28,7 +28,7 @@ DAMAGE.
 
 #include "etl/cstddef.hpp"
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
 TEST_CASE("cstdio: NULL", "[cstdio]")
 {

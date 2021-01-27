@@ -24,7 +24,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
 #define TAETL_RTOS_USE_STUBS
 #include "etl/experimental/rtos/task.hpp"

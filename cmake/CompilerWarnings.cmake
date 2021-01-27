@@ -18,13 +18,13 @@ else()
         -Wall
         -Wextra
         -Wpedantic
-        -Wshadow 
-        -Wsign-conversion
+        -Wshadow
+        # -Wsign-conversion
         # -Wconversion
         # -Wdouble-promotion
   )
 
-  # GCC 
+  # GCC
   target_compile_options(
     compiler_warnings
     INTERFACE
@@ -38,12 +38,12 @@ else()
     >
   )
 
-  # CLANG 
+  # CLANG
   target_compile_options(
     compiler_warnings
     INTERFACE
     $<$<CXX_COMPILER_ID:Clang>:
-        -Wshadow-all 
+        -Wshadow-all
     >
   )
 endif()

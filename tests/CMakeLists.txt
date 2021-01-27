@@ -1,7 +1,6 @@
 project(etl-tests)
 
-add_executable(${PROJECT_NAME} test_main.cpp)
-
+add_executable(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
     test_algorithm.cpp
     test_array.cpp
@@ -64,9 +63,9 @@ target_link_libraries(${PROJECT_NAME}
         tobanteAudio::CompilerOptions
         tobanteAudio::CompilerWarnings
         tobanteAudio::CodeCoverage
-        Catch2::Catch2
+        Catch2WithMain
 )
 
-catch_discover_tests(${PROJECT_NAME})
+add_test(NAME unit_tests COMMAND ${PROJECT_NAME})
 
 
