@@ -2,12 +2,17 @@ CONFIG ?= release
 BUILD_DIR_BASE = cmake-build
 BUILD_DIR ?= $(BUILD_DIR_BASE)-$(CONFIG)
 
+CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-12
+CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-12
+CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
+CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
+
 .PHONY: all
 all: config build test
 
 .PHONY: config
 config:
-	cmake -S. -B$(BUILD_DIR) -DCMAKE_BUILD_TYPE:STRING=$(CONFIG) -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+	cmake -S. -B$(BUILD_DIR) -D CMAKE_BUILD_TYPE:STRING=$(CONFIG) -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON
 
 .PHONY: build
 build:
@@ -26,7 +31,7 @@ COVERAGE_DIR=$(BUILD_DIR_BASE)_coverage
 .PHONY: coverage
 coverage:
 	mkdir -p $(COVERAGE_DIR)
-	cmake -S . -G Ninja -B$(COVERAGE_DIR) -DTOBANTEAUDIO_ETL_BUILD_COVERAGE=ON -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+	cmake -S . -G Ninja -B$(COVERAGE_DIR) -D TOBANTEAUDIO_ETL_BUILD_COVERAGE=ON -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON
 	cmake --build $(COVERAGE_DIR) -- -j6
 	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
 	cd $(COVERAGE_DIR) && ctest -j12
@@ -48,11 +53,13 @@ docs:
 
 .PHONY: tidy-check
 tidy-check:
-	 ./scripts/run-clang-tidy.py -clang-tidy-binary clang-tidy-12 -clang-apply-replacements-binary clang-apply-replacements-12 -j $(shell nproc) -quiet -p $(BUILD_DIR) -header-filter $(shell realpath ./etl) $(shell realpath ./tests)
+	 ./scripts/run-clang-tidy.py ${CLANG_TIDY_ARGS} $(shell realpath ./examples)
+	 ./scripts/run-clang-tidy.py ${CLANG_TIDY_ARGS} $(shell realpath ./tests)
 
 .PHONY: tidy-fix
 tidy-fix:
-	 ./scripts/run-clang-tidy.py -clang-tidy-binary clang-tidy-12 -clang-apply-replacements-binary clang-apply-replacements-12 -j $(shell nproc) -fix -quiet -p $(BUILD_DIR) -header-filter $(shell realpath ./etl) $(shell realpath ./tests)
+	 ./scripts/run-clang-tidy.py -fix ${CLANG_TIDY_ARGS} $(shell realpath ./examples)
+	 ./scripts/run-clang-tidy.py -fix ${CLANG_TIDY_ARGS} $(shell realpath ./tests)
 
 
 .PHONY: clean

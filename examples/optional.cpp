@@ -41,7 +41,7 @@ auto main() -> int
   assert(static_cast<bool>(opt1) == false);
 
   // construct explicit with value
-  auto opt2 = etl::optional<float>(42.0f);
+  auto opt2 = etl::optional<float>(42.0F);
   assert(opt2.has_value());
   assert(static_cast<bool>(opt2));
 
@@ -56,12 +56,12 @@ auto main() -> int
   assert(static_cast<bool>(opt4));
 
   // value & value_or
-  assert(etl::optional<int>().value() == nullptr);
-  assert(etl::optional<int>().value_or(1) == 1);
-  assert(*etl::optional<int>(1).value() == 1);
+  static_assert(etl::optional<int>().value() == nullptr, "");
+  static_assert(etl::optional<int>().value_or(1) == 1, "");
+  static_assert(*etl::optional<int>(1).value() == 1, "");
 
   // reset
-  auto opt5 = etl::optional<float>(1.0f);
+  auto opt5 = etl::optional<float>(1.0F);
   assert(opt5.has_value());
   opt5.reset();
   assert(opt5.has_value() == false);

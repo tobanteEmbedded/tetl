@@ -45,28 +45,33 @@ auto main() -> int
 
   // AS CONST
   auto c = 1;
-  assert(!etl::is_const_v<decltype(c)>);
-  assert(etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>);
+  static_assert(!etl::is_const_v<decltype(c)>, "");
+  static_assert(
+    etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>, "");
 
   // CMP
-  assert(etl::cmp_equal(42, 42));
-  assert(!etl::cmp_equal(42UL, 100UL));
-  assert(etl::cmp_not_equal(42UL, 100UL));
+  static_assert(etl::cmp_equal(42, 42), "");
+  static_assert(!etl::cmp_equal(42UL, 100UL), "");
+  static_assert(etl::cmp_not_equal(42UL, 100UL), "");
 
   // IN_RANGE
   using etl::int32_t;
   using etl::int64_t;
-  assert(etl::in_range<int64_t>(0));
-  assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::min()));
-  assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::max()));
-  assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::min()));
-  assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::max()));
+  static_assert(etl::in_range<int64_t>(0), "");
+  static_assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::min()),
+                "");
+  static_assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::max()),
+                "");
+  static_assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::min()),
+                "");
+  static_assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::max()),
+                "");
 
   // PAIR construct
-  auto p1 = etl::pair<int, float> {1, 42.0f};
+  auto p1 = etl::pair<int, float> {1, 42.0F};
   assert(p1.first == 1);
 
-  auto p2 = etl::make_pair(2, 1.43f);
+  auto p2 = etl::make_pair(2, 1.43F);
   assert(p2.first == 2);
 
   auto p3 = p1;

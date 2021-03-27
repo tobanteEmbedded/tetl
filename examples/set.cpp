@@ -48,12 +48,12 @@ auto main() -> int
   assert(set_1.contains(5) == false);
 
   // Construct from range
-  auto data  = etl::array {1.0f, 2.0f, 3.0f};
+  auto data  = etl::array {1.0F, 2.0F, 3.0F};
   auto set_2 = etl::static_set<float, 3> {begin(data), end(data)};
 
   assert(set_2.full());
   assert(set_2.size() == 3);
-  assert(set_2.count(1.0f) == 1);
+  assert(set_2.count(1.0F) == 1);
 
   return 0;
 }
