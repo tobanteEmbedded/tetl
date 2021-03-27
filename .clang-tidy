@@ -1,3 +1,4 @@
----
-Checks:          '*,-fuchsia-*,-google-*,-hicpp-*,-zircon-*,-abseil-*,-llvm-*,-cert-oop54-cpp,-modernize-use-default-member-init,-cppcoreguidelines-owning-memory,-cppcoreguidelines-special-member-functions,-cppcoreguidelines-pro-type-union-access,-cppcoreguidelines-pro-type-const-cast,-clang-diagnostic-c++17-extensions,-readability-redundant-declaration,-readability-convert-member-functions-to-static,-modernize-deprecated-headers,-bugprone-exception-escape,-cppcoreguidelines-avoid-magic-numbers,-cppcoreguidelines-macro-usage,-misc-non-private-member-variables-in-classes,-readability-magic-numbers,-readability-container-size-empty,-modernize-avoid-c-arrays,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-reinterpret-cast,-cppcoreguidelines-pro-bounds-constant-array-index,-cppcoreguidelines-avoid-c-arrays,-cert-err58-cpp'
-WarningsAsErrors: '-*'
+Checks:          '*-,bugprone-*,-bugprone-forwarding-reference-overload,-bugprone-unhandled-self-assignment,-clang-analyzer-core.*,cert-*,-cert-oop54-cpp,-cert-err58-cpp,concurrency-*,modernize-*,-modernize-avoid-c-arrays,-modernize-deprecated-headers,-modernize-use-equals-default,performance-*,-performance-no-int-to-ptr,readability-*,-readability-container-size-empty,-readability-magic-numbers,-readability-function-cognitive-complexity'
+WarningsAsErrors: '*'
+FormatStyle:     none
+...

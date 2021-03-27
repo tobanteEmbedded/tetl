@@ -1616,7 +1616,9 @@ template <typename ForwardIter, typename T, typename Compare>
       count -= step + 1;
     }
     else
+    {
       count = step;
+    }
   }
 
   return first;

@@ -641,7 +641,7 @@ class static_set
    */
   constexpr auto erase(key_type const& key) noexcept -> size_type
   {
-    if (auto pos = etl::lower_bound(begin(), end(), key); pos != end())
+    if (auto* pos = etl::lower_bound(begin(), end(), key); pos != end())
     {
       erase(pos);
       return 1;

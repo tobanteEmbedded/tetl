@@ -140,7 +140,7 @@ private:
    * bitset is longer than 64 bits, for typical implementations of unsigned long
    * long), the remaining bit positions are initialized to zeroes.
    */
-  constexpr bitset(unsigned long long val) noexcept : bits_ {0}
+  constexpr bitset(unsigned long long val) noexcept
   {
     auto const n = min<size_t>(numeric_limits<decltype(val)>::digits, size());
     for (size_t i = 0; i < n; ++i)

@@ -1,6 +1,6 @@
-CONFIG ?= Release
-BUILD_DIR_BASE = build
-BUILD_DIR = $(BUILD_DIR_BASE)_$(CONFIG)
+CONFIG ?= release
+BUILD_DIR_BASE = cmake-build
+BUILD_DIR ?= $(BUILD_DIR_BASE)-$(CONFIG)
 
 .PHONY: all
 all: config build test
@@ -46,11 +46,14 @@ report:
 docs:
 	doxygen Doxyfile.in
 
-.PHONY: tidy
-tidy:
-	cp .clang-tidy $(BUILD_DIR)/
-	cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../examples -p . -fix -header-filter="etl/.*"
-	# cd $(BUILD_DIR) && ../scripts/run-clang-tidy.py ../tests -p . -fix -header-filter="etl/.*"
+.PHONY: tidy-check
+tidy-check:
+	 ./scripts/run-clang-tidy.py -clang-tidy-binary clang-tidy-12 -clang-apply-replacements-binary clang-apply-replacements-12 -j $(shell nproc) -quiet -p $(BUILD_DIR) -header-filter $(shell realpath ./etl) $(shell realpath ./tests)
+
+.PHONY: tidy-fix
+tidy-fix:
+	 ./scripts/run-clang-tidy.py -clang-tidy-binary clang-tidy-12 -clang-apply-replacements-binary clang-apply-replacements-12 -j $(shell nproc) -fix -quiet -p $(BUILD_DIR) -header-filter $(shell realpath ./etl) $(shell realpath ./tests)
+
 
 .PHONY: clean
 clean:

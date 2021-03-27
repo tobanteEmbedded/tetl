@@ -1413,7 +1413,7 @@ class basic_static_string
     -> void
   {
     // Insert text at end.
-    auto current_end = end();
+    auto* current_end = end();
     append(text, count);
 
     // Rotate to correct position

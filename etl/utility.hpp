@@ -46,7 +46,7 @@ namespace etl
  * constructors.
  */
 template <typename T>
-auto declval() noexcept -> typename etl::add_rvalue_reference<T>::type;
+auto declval() noexcept -> etl::add_rvalue_reference_t<T>;  // NOLINT
 
 /**
  * @brief etl::move is used to indicate that an object t may be "moved from",
@@ -418,8 +418,8 @@ struct pair
     swap(second, other.second);
   }
 
-  T1 first;
-  T2 second;
+  T1 first;   // NOLINT(modernize-use-default-member-init)
+  T2 second;  // NOLINT(modernize-use-default-member-init)
 
 };  // namespace etl
 

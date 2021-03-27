@@ -1173,8 +1173,8 @@ template <typename T, etl::size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   typename static_vector<T, Capacity>::size_type
 {
-  auto it = etl::remove_if(c.begin(), c.end(), pred);
-  auto r  = etl::distance(it, c.end());
+  auto* it = etl::remove_if(c.begin(), c.end(), pred);
+  auto r   = etl::distance(it, c.end());
   c.erase(it, c.end());
   return static_cast<typename static_vector<T, Capacity>::size_type>(r);
 }

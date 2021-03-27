@@ -331,7 +331,7 @@ class ptr_with_int
   /**
    * @brief Construct from nullptr.
    */
-  ptr_with_int(nullptr_t /*null*/) noexcept : storage_ {0} { }
+  ptr_with_int(nullptr_t /*null*/) noexcept { }
 
   /**
    * @brief Construct an ptr_with_int with the given pointer. The integer
@@ -463,7 +463,7 @@ class ptr_with_int
     return storage_ & integer_mask;
   }
 
-  storage_type storage_ = 0;
+  storage_type storage_ {};
 };
 
 template <typename T>

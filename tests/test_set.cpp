@@ -32,9 +32,8 @@ DAMAGE.
 #include "etl/string.hpp"
 
 TEMPLATE_TEST_CASE("set/static_set: typedefs", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using set_t = etl::static_set<TestType, 16>;
 
@@ -51,9 +50,8 @@ TEMPLATE_TEST_CASE("set/static_set: typedefs", "[set]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   SECTION("0")
   {
@@ -88,9 +86,8 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: ctor(first,last)", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using T   = TestType;
   auto data = etl::array {T(2), T(1), T(0), T(1)};
@@ -102,9 +99,8 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(first,last)", "[set]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: begin/end", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   auto set = etl::static_set<TestType, 4>();
   CHECK(begin(set) == end(set));
@@ -121,9 +117,8 @@ TEMPLATE_TEST_CASE("set/static_set: begin/end", "[set]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: rbegin/rend", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   auto set = etl::static_set<TestType, 4>();
   CHECK(rbegin(set) == rend(set));
@@ -146,9 +141,9 @@ TEMPLATE_TEST_CASE("set/static_set: rbegin/rend", "[set]", etl::uint8_t,
   CHECK(it == rend(set));
 }
 
-TEMPLATE_TEST_CASE("set/static_set: clear", "[set]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("set/static_set: clear", "[set]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double)
 {
   auto set = etl::static_set<TestType, 2>();
   set.emplace(TestType(1));
@@ -162,9 +157,8 @@ TEMPLATE_TEST_CASE("set/static_set: clear", "[set]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   auto set = etl::static_set<TestType, 4>();
 
@@ -214,9 +208,9 @@ TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t,
   CHECK_FALSE(set.contains(5));
 }
 
-TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double)
 {
   using T   = TestType;
   auto data = etl::array {T(1), T(2), T(3), T(4)};
@@ -238,9 +232,9 @@ TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t, etl::int8_t,
   // CHECK_FALSE(set.contains(T(2)));
 }
 
-TEMPLATE_TEST_CASE("set/static_set: find", "[set]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("set/static_set: find", "[set]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double)
 {
   auto set = etl::static_set<TestType, 4>();
   CHECK(set.find(0) == end(set));
@@ -257,9 +251,8 @@ TEMPLATE_TEST_CASE("set/static_set: find", "[set]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: contains", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   auto set = etl::static_set<TestType, 4>();
   CHECK_FALSE(set.contains(0));
@@ -274,9 +267,8 @@ TEMPLATE_TEST_CASE("set/static_set: contains", "[set]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: key_comp/value_comp", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using T = TestType;
 
@@ -291,9 +283,9 @@ TEMPLATE_TEST_CASE("set/static_set: key_comp/value_comp", "[set]", etl::uint8_t,
   CHECK(k_cmp(T(2), T(1)) == v_cmp(T(2), T(1)));
 }
 
-TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double)
 {
   using T = TestType;
   using etl::swap;
@@ -361,9 +353,8 @@ TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+                   etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   SECTION("empty")
   {
@@ -417,8 +408,8 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
 
 // TEMPLATE_TEST_CASE("set/static_set: erase_if", "[set]", etl::uint8_t,
 // etl::int8_t,
-//                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-//                    etl::uint64_t, etl::int64_t, float, double, long double)
+//                    etl::uint16_t,  etl::uint32_t, etl::int32_t,
+//                    etl::uint64_t, etl::int64_t, float, double)
 // {
 //     auto predicate = [](auto const& val) { return val == TestType {1}; };
 

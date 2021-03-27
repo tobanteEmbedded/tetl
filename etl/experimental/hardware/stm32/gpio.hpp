@@ -83,7 +83,7 @@ struct port
   auto operator=(port&&) -> port& = delete;
   auto operator=(port const&) -> port& = delete;
 
-  [[nodiscard]] auto read(pin_number const pin) -> pin_state
+  [[nodiscard]] static auto read(pin_number const pin) -> pin_state
   {
     ignore_unused(val(pin));
     return {};

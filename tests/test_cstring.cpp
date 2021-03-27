@@ -34,7 +34,10 @@ TEST_CASE("cstring: strcpy", "[cstring]")
 {
   char source[32] = {"test"};
   char dest[32] {};
+
+  // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
   etl::strcpy(dest, source);
+
   CHECK(etl::strlen(dest) == 4);
 }
 
@@ -51,8 +54,12 @@ TEST_CASE("cstring: strcat", "[cstring]")
 {
   char str[50]  = "Hello ";
   char str2[50] = "World!";
+
+  // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
   etl::strcat(str, str2);
   CHECK(etl::string_view {str} == etl::string_view {"Hello World!"});
+
+  // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
   etl::strcat(str, " Goodbye World!");
   CHECK(etl::string_view {str}
         == etl::string_view {"Hello World! Goodbye World!"});
@@ -62,6 +69,8 @@ TEST_CASE("cstring: strncat", "[cstring]")
 {
   char str[50]  = "Hello ";
   char str2[50] = "World!";
+
+  // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
   etl::strcat(str, str2);
   CHECK(etl::string_view {str} == etl::string_view {"Hello World!"});
   etl::strncat(str, " Goodbye World!", 3);

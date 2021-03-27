@@ -72,11 +72,13 @@ TEMPLATE_TEST_CASE("map: move construct", "[map]", etl::uint8_t, etl::int8_t,
 {
   auto original = etl::map<TestType, TestType, 4> {};
   original.emplace(TestType {1}, TestType {42});
-  auto copy = etl::map<TestType, TestType, 4> {etl::move(original)};
+  auto moved {etl::move(original)};
 
-  REQUIRE(copy.size() == 1);
+  REQUIRE(moved.size() == 1);
+  REQUIRE(moved.at(TestType {1}) == 42);
+
+  // NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
   REQUIRE(original.size() == 0);
-  REQUIRE(copy.at(TestType {1}) == 42);
 }
 
 TEMPLATE_TEST_CASE("map: operator=", "[map]", etl::uint8_t, etl::int8_t,
@@ -103,8 +105,10 @@ TEMPLATE_TEST_CASE("map: operator=", "[map]", etl::uint8_t, etl::int8_t,
     moved      = etl::map<TestType, TestType, 4> {etl::move(original)};
 
     REQUIRE(moved.size() == 1);
-    REQUIRE(original.size() == 0);
     REQUIRE(moved.at(TestType {1}) == 42);
+
+    // NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
+    REQUIRE(original.size() == 0);
   }
 }
 

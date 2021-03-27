@@ -104,7 +104,7 @@ using smallest_size_t =
  * @brief Index a range doing bound checks in debug builds
  */
 template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
-constexpr decltype(auto) index(Rng&& rng, Index&& i) noexcept
+constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
   assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
   return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];

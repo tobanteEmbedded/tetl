@@ -78,7 +78,7 @@ struct optional_destruct_base<ValueType, false>
     if (has_value_) { value_.~value_type(); }
   }
 
-  constexpr optional_destruct_base() noexcept : null_state_() { }
+  constexpr optional_destruct_base() noexcept { }
 
   template <typename... Args>
   constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/,
@@ -107,10 +107,10 @@ struct optional_destruct_base<ValueType, false>
 template <typename ValueType>
 struct optional_destruct_base<ValueType, true>
 {
-  typedef ValueType value_type;
+  using value_type = ValueType;
   static_assert(etl::is_object_v<value_type>, "undefined behavior");
 
-  constexpr optional_destruct_base() noexcept : null_state_() { }
+  constexpr optional_destruct_base() noexcept { }
 
   template <typename... Args>
   constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/,

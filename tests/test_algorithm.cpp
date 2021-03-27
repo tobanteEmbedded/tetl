@@ -622,7 +622,7 @@ TEMPLATE_TEST_CASE("algorithm: rotate_copy", "[algorithm]", etl::uint8_t,
   {
     etl::static_vector<T, 5> src {};
     etl::static_vector<T, 5> dest {};
-    auto pivot = etl::find(begin(src), end(src), T(3));
+    auto* pivot = etl::find(begin(src), end(src), T(3));
 
     etl::rotate_copy(src.begin(), pivot, src.end(), etl::back_inserter(dest));
     CHECK(dest.empty());
@@ -631,8 +631,8 @@ TEMPLATE_TEST_CASE("algorithm: rotate_copy", "[algorithm]", etl::uint8_t,
 
   SECTION("cppreference example")
   {
-    auto src   = etl::array {T(1), T(2), T(3), T(4), T(5)};
-    auto pivot = etl::find(begin(src), end(src), T(3));
+    auto src    = etl::array {T(1), T(2), T(3), T(4), T(5)};
+    auto* pivot = etl::find(begin(src), end(src), T(3));
 
     // From 1, 2, 3, 4, 5 to 3, 4, 5, 1, 2
     etl::static_vector<T, 5> dest {};
@@ -843,7 +843,7 @@ TEMPLATE_TEST_CASE("algorithm: partition_point", "[algorithm]", etl::uint8_t,
   {
     auto data = etl::static_vector<T, 5> {};
     auto pred = [](auto v) { return v < 10; };
-    auto res  = etl::partition_point(begin(data), end(data), pred);
+    auto* res = etl::partition_point(begin(data), end(data), pred);
     CHECK(res == end(data));
   }
 
@@ -851,7 +851,7 @@ TEMPLATE_TEST_CASE("algorithm: partition_point", "[algorithm]", etl::uint8_t,
   {
     auto data = etl::array {T(1), T(2), T(10), T(11)};
     auto pred = [](auto v) { return v < 10; };
-    auto res  = etl::partition_point(begin(data), end(data), pred);
+    auto* res = etl::partition_point(begin(data), end(data), pred);
     CHECK_FALSE(res == end(data));
     CHECK(*res == T(10));
   }
@@ -1126,7 +1126,7 @@ TEMPLATE_TEST_CASE("algorithm: move", "[algorithm]", etl::uint8_t, etl::int8_t,
       copy = true;
     }
 
-    S(S&& s)
+    S(S&& s) noexcept
     {
       data = s.data;
       move = true;

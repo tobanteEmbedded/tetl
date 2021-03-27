@@ -27,6 +27,7 @@ DAMAGE.
 #include "catch2/catch_template_test_macros.hpp"
 
 #include "etl/optional.hpp"
+#include "etl/warning.hpp"
 
 TEMPLATE_TEST_CASE("optional: construct()", "[optional]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
@@ -102,10 +103,10 @@ TEST_CASE("optional: construct() non_trivial", "[optional]")
   struct S
   {
     S() = default;
-    S(S const&) { }
-    S(S&&) { }
-    S& operator=(S const&) { return *this; }
-    S& operator=(S&&) { return *this; }
+    S(S const& /*unused*/) { }
+    S(S&& /*unused*/) noexcept { }
+    auto operator=(S const& /*unused*/) -> S& { return *this; }
+    auto operator=(S&& /*unused*/) noexcept -> S& { return *this; }
     ~S() { }
   };
 
@@ -123,6 +124,7 @@ TEST_CASE("optional: construct() non_trivial", "[optional]")
     auto const opt_3 {etl::move(opt_2)};
     CHECK(opt_3.has_value());
 
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
     auto const opt_4 {opt_3};
     CHECK(opt_4.has_value());
   }
@@ -207,11 +209,11 @@ TEST_CASE("optional: operator=() non_trivial", "[optional]")
   struct S
   {
     S() = default;
-    S(S const&) { }
-    S(S&&) { }
-    S& operator=(S const&) { return *this; }
-    S& operator=(S&&) { return *this; }
-    ~S() { }
+    S(S const& /*s*/) { }           // NOLINT(modernize-use-equals-default)
+    S(S&& /*unused*/) noexcept { }  // NOLINT(modernize-use-equals-default)
+    auto operator=(S const& /*s*/) -> S& { return *this; }
+    auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
+    ~S() { }  // NOLINT(modernize-use-equals-default)
   };
 
   STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<S>);
@@ -231,6 +233,7 @@ TEST_CASE("optional: operator=() non_trivial", "[optional]")
     auto const opt_3 = etl::move(opt_2);
     CHECK(opt_3.has_value());
 
+    // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
     auto const opt_4 = opt_3;
     CHECK(opt_4.has_value());
   }
@@ -726,34 +729,36 @@ TEMPLATE_TEST_CASE("optional: deduction guide", "[optional]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
 {
+  using etl::is_same_v;
+
   SECTION("implicit")
   {
     {
       etl::optional opt {TestType {}};
-      STATIC_REQUIRE(
-        etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+      etl::ignore_unused(opt);
+      STATIC_REQUIRE(is_same_v<typename decltype(opt)::value_type, TestType>);
     }
 
     {
       TestType data {};
       etl::optional opt {data};
-      STATIC_REQUIRE(
-        etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+      etl::ignore_unused(opt);
+      STATIC_REQUIRE(is_same_v<typename decltype(opt)::value_type, TestType>);
     }
 
     {
       TestType const data {42};
       etl::optional opt {data};
-      STATIC_REQUIRE(
-        etl::is_same_v<typename decltype(opt)::value_type, TestType>);
+      etl::ignore_unused(opt);
+      STATIC_REQUIRE(is_same_v<typename decltype(opt)::value_type, TestType>);
     }
   }
 
-  SECTION("explicit")
+  SECTION("explicit deduction guide")
   {
     TestType data[2];
-    etl::optional opt {data};  // explicit deduction guide is used in this case
-    STATIC_REQUIRE(
-      etl::is_same_v<typename decltype(opt)::value_type, TestType*>);
+    etl::optional opt {data};
+    etl::ignore_unused(opt);
+    STATIC_REQUIRE(is_same_v<typename decltype(opt)::value_type, TestType*>);
   }
 }
