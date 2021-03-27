@@ -27,9 +27,7 @@ DAMAGE.
 #include <assert.h>  // for assert
 
 #undef NDEBUG
-#include "etl/cstdint.hpp"           // for int64_t, int32_t
 #include "etl/detail/algo_swap.hpp"  // for swap
-#include "etl/limits.hpp"            // for numeric_limits
 #include "etl/type_traits.hpp"       // for is_const_v, remove_reference_t
 #include "etl/utility.hpp"           // for in_range, pair, cmp_equal, as_const
 
@@ -48,27 +46,14 @@ auto main() -> int
 
   // AS CONST
   auto c = 1;
-  static_assert(!etl::is_const_v<decltype(c)>, "");
+  static_assert(!etl::is_const_v<decltype(c)>);
   static_assert(
-    etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>, "");
+    etl::is_const_v<etl::remove_reference_t<decltype(etl::as_const(c))>>);
 
   // CMP
-  static_assert(etl::cmp_equal(42, 42), "");
-  static_assert(!etl::cmp_equal(42UL, 100UL), "");
-  static_assert(etl::cmp_not_equal(42UL, 100UL), "");
-
-  // IN_RANGE
-  using etl::int32_t;
-  using etl::int64_t;
-  static_assert(etl::in_range<int64_t>(0), "");
-  static_assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::min()),
-                "");
-  static_assert(etl::in_range<int64_t>(etl::numeric_limits<int64_t>::max()),
-                "");
-  static_assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::min()),
-                "");
-  static_assert(!etl::in_range<int32_t>(etl::numeric_limits<int64_t>::max()),
-                "");
+  static_assert(etl::cmp_equal(42, 42));
+  static_assert(!etl::cmp_equal(42UL, 100UL));
+  static_assert(etl::cmp_not_equal(42UL, 100UL));
 
   // PAIR construct
   auto p1 = etl::pair<int, float> {1, 42.0F};
