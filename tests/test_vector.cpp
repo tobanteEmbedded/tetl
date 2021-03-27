@@ -362,43 +362,43 @@ TEMPLATE_TEST_CASE("vector/static_vector: operator==/!=", "[vector]",
 {
   SECTION("empty")
   {
-    auto lhs_1       = etl::static_vector<TestType, 4> {};
-    auto const rhs_1 = etl::static_vector<TestType, 4> {};
-    CHECK(lhs_1 == rhs_1);
-    CHECK_FALSE(lhs_1 != rhs_1);
+    auto lhs1       = etl::static_vector<TestType, 4> {};
+    auto const rhs1 = etl::static_vector<TestType, 4> {};
+    CHECK(lhs1 == rhs1);
+    CHECK_FALSE(lhs1 != rhs1);
 
-    auto const lhs_2 = etl::static_vector<TestType, 4>();
-    auto const rhs_2 = etl::static_vector<TestType, 4>(2);
-    CHECK(lhs_2 != rhs_2);
-    CHECK_FALSE(lhs_2 == rhs_2);
+    auto const lhs2 = etl::static_vector<TestType, 4>();
+    auto const rhs2 = etl::static_vector<TestType, 4>(2);
+    CHECK(lhs2 != rhs2);
+    CHECK_FALSE(lhs2 == rhs2);
 
-    auto const lhs_3 = etl::static_vector<TestType, 4>(2);
-    auto const rhs_3 = etl::static_vector<TestType, 4>();
-    CHECK(lhs_3 != rhs_3);
-    CHECK_FALSE(lhs_3 == rhs_3);
+    auto const lhs3 = etl::static_vector<TestType, 4>(2);
+    auto const rhs3 = etl::static_vector<TestType, 4>();
+    CHECK(lhs3 != rhs3);
+    CHECK_FALSE(lhs3 == rhs3);
   }
 
   SECTION("with elements")
   {
-    auto lhs_1 = etl::static_vector<TestType, 4> {};
-    lhs_1.push_back(TestType(1));
-    lhs_1.push_back(TestType(2));
-    auto rhs_1 = etl::static_vector<TestType, 4> {};
-    rhs_1.push_back(TestType(1));
-    rhs_1.push_back(TestType(2));
+    auto lhs1 = etl::static_vector<TestType, 4> {};
+    lhs1.push_back(TestType(1));
+    lhs1.push_back(TestType(2));
+    auto rhs1 = etl::static_vector<TestType, 4> {};
+    rhs1.push_back(TestType(1));
+    rhs1.push_back(TestType(2));
 
-    CHECK(lhs_1 == rhs_1);
-    CHECK_FALSE(lhs_1 != rhs_1);
+    CHECK(lhs1 == rhs1);
+    CHECK_FALSE(lhs1 != rhs1);
 
-    auto lhs_2 = etl::static_vector<TestType, 4> {};
-    lhs_2.push_back(TestType(1));
-    lhs_2.push_back(TestType(2));
-    auto rhs_2 = etl::static_vector<TestType, 4> {};
-    rhs_2.push_back(TestType(1));
-    rhs_2.push_back(TestType(3));
+    auto lhs2 = etl::static_vector<TestType, 4> {};
+    lhs2.push_back(TestType(1));
+    lhs2.push_back(TestType(2));
+    auto rhs2 = etl::static_vector<TestType, 4> {};
+    rhs2.push_back(TestType(1));
+    rhs2.push_back(TestType(3));
 
-    CHECK(lhs_2 != rhs_2);
-    CHECK_FALSE(lhs_2 == rhs_2);
+    CHECK(lhs2 != rhs2);
+    CHECK_FALSE(lhs2 == rhs2);
   }
 }
 
@@ -490,18 +490,18 @@ namespace
 template <typename T>
 struct Vertex
 {
-  T x;
-  T y;
-  T z;
+  Vertex(T x, T y, T z) : x_ {x}, y_ {y}, z_ {z} { }
 
-  Vertex(T _x, T _y, T _z) : x {_x}, y {_y}, z {_z} { }
+  T x_;
+  T y_;
+  T z_;
 };
 
 template <typename T>
 [[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs,
                                         Vertex<T> const& rhs) -> bool
 {
-  return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
+  return (lhs.x_ == rhs.x_) && (lhs.y_ == rhs.y_) && (lhs.z_ == rhs.z_);
 }
 
 template <typename T>

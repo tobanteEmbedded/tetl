@@ -499,9 +499,9 @@ class default_delete<T[]>
 
   template <typename U,
             TAETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
-  auto operator()(U* array_ptr) const noexcept -> void
+  auto operator()(U* arrayPtr) const noexcept -> void
   {
-    delete[] array_ptr;
+    delete[] arrayPtr;
   }
 
   private:

@@ -145,14 +145,14 @@ TEMPLATE_TEST_CASE("string: ctor(string,pos)", "[string]",
 {
   TestType src {"testabc"};
 
-  TestType dest_1(src, 0);
-  CHECK(etl::string_view(dest_1) == etl::string_view(src));
+  TestType dest1(src, 0);
+  CHECK(etl::string_view(dest1) == etl::string_view(src));
 
-  TestType dest_2(src, 4);
-  CHECK(etl::string_view(dest_2) == etl::string_view("abc"));
+  TestType dest2(src, 4);
+  CHECK(etl::string_view(dest2) == etl::string_view("abc"));
 
-  auto dest_3 = TestType(src, 9);
-  CHECK(etl::string_view(dest_3) == etl::string_view(""));
+  auto dest3 = TestType(src, 9);
+  CHECK(etl::string_view(dest3) == etl::string_view(""));
 }
 
 TEMPLATE_TEST_CASE("string: ctor(string,pos,count)", "[string]",
@@ -161,14 +161,14 @@ TEMPLATE_TEST_CASE("string: ctor(string,pos,count)", "[string]",
 {
   TestType src {"testabc"};
 
-  TestType dest_1(src, 0, 2);
-  CHECK(etl::string_view(dest_1) == etl::string_view("te"));
+  TestType dest1(src, 0, 2);
+  CHECK(etl::string_view(dest1) == etl::string_view("te"));
 
-  TestType dest_2(src, 4, 2);
-  CHECK(etl::string_view(dest_2) == etl::string_view("ab"));
+  TestType dest2(src, 4, 2);
+  CHECK(etl::string_view(dest2) == etl::string_view("ab"));
 
-  auto dest_3 = TestType(src, 9, 2);
-  CHECK(etl::string_view(dest_3) == etl::string_view(""));
+  auto dest3 = TestType(src, 9, 2);
+  CHECK(etl::string_view(dest3) == etl::string_view(""));
 }
 
 TEMPLATE_TEST_CASE("string: ctor(string_view)", "[string]",
@@ -206,73 +206,73 @@ TEMPLATE_TEST_CASE("string: operator=", "[string]", etl::static_string<12>,
 {
   SECTION("string")
   {
-    TestType src_1 {};
-    TestType str_1 {};
-    str_1 = src_1;
-    CHECK(str_1.size() == 0);
-    CHECK(str_1.empty());
+    TestType src1 {};
+    TestType str1 {};
+    str1 = src1;
+    CHECK(str1.size() == 0);
+    CHECK(str1.empty());
 
-    TestType src_2 {"test"};
-    TestType str_2 {};
-    str_2 = src_2;
-    CHECK(str_2.size() == 4);
-    CHECK(etl::string_view(str_2) == etl::string_view("test"));
+    TestType src2 {"test"};
+    TestType str2 {};
+    str2 = src2;
+    CHECK(str2.size() == 4);
+    CHECK(etl::string_view(str2) == etl::string_view("test"));
 
-    auto src_3 = TestType {"abc"};
-    TestType str_3;
-    str_3 = src_3;
-    CHECK(str_3.size() == 3);
-    CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    auto src3 = TestType {"abc"};
+    TestType str3;
+    str3 = src3;
+    CHECK(str3.size() == 3);
+    CHECK(etl::string_view(str3) == etl::string_view("abc"));
   }
 
   SECTION("char const*")
   {
-    auto const* src_2 = "test";
-    TestType str_2 {};
-    str_2 = src_2;
-    CHECK(str_2.size() == 4);
-    CHECK(etl::string_view(str_2) == etl::string_view("test"));
+    auto const* src2 = "test";
+    TestType str2 {};
+    str2 = src2;
+    CHECK(str2.size() == 4);
+    CHECK(etl::string_view(str2) == etl::string_view("test"));
 
-    auto const* src_3 = "abc";
-    TestType str_3;
-    str_3 = src_3;
-    CHECK(str_3.size() == 3);
-    CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    auto const* src3 = "abc";
+    TestType str3;
+    str3 = src3;
+    CHECK(str3.size() == 3);
+    CHECK(etl::string_view(str3) == etl::string_view("abc"));
   }
 
   SECTION("char")
   {
-    auto const src_2 = 'a';
-    TestType str_2 {};
-    str_2 = src_2;
-    CHECK(str_2.size() == 1);
-    CHECK(etl::string_view(str_2) == etl::string_view("a"));
+    auto const src2 = 'a';
+    TestType str2 {};
+    str2 = src2;
+    CHECK(str2.size() == 1);
+    CHECK(etl::string_view(str2) == etl::string_view("a"));
 
-    auto const src_3 = 'b';
-    TestType str_3;
-    str_3 = src_3;
-    CHECK(str_3.size() == 1);
-    CHECK(etl::string_view(str_3) == etl::string_view("b"));
+    auto const src3 = 'b';
+    TestType str3;
+    str3 = src3;
+    CHECK(str3.size() == 1);
+    CHECK(etl::string_view(str3) == etl::string_view("b"));
   }
 
   SECTION("string_view")
   {
-    etl::string_view src_1 {};
-    TestType str_1 {};
-    str_1 = src_1;
-    CHECK(str_1.size() == 0);
+    etl::string_view src1 {};
+    TestType str1 {};
+    str1 = src1;
+    CHECK(str1.size() == 0);
 
-    etl::string_view src_2 {"test"};
-    TestType str_2 {};
-    str_2 = src_2;
-    CHECK(str_2.size() == 4);
-    CHECK(etl::string_view(str_2) == etl::string_view("test"));
+    etl::string_view src2 {"test"};
+    TestType str2 {};
+    str2 = src2;
+    CHECK(str2.size() == 4);
+    CHECK(etl::string_view(str2) == etl::string_view("test"));
 
-    auto src_3 = etl::string_view {"abc"};
-    TestType str_3;
-    str_3 = src_3;
-    CHECK(str_3.size() == 3);
-    CHECK(etl::string_view(str_3) == etl::string_view("abc"));
+    auto src3 = etl::string_view {"abc"};
+    TestType str3;
+    str3 = src3;
+    CHECK(str3.size() == 3);
+    CHECK(etl::string_view(str3) == etl::string_view("abc"));
   }
 }
 
@@ -283,23 +283,23 @@ TEMPLATE_TEST_CASE("string: assign", "[string]", etl::static_string<12>,
   {
     TestType dest {};
 
-    auto const src_1 = TestType {};
-    dest.assign(src_1);
+    auto const src1 = TestType {};
+    dest.assign(src1);
     CHECK(dest.size() == 0);
     CHECK(dest.empty());
 
-    auto const src_2 = TestType {"test"};
-    dest.assign(src_2);
+    auto const src2 = TestType {"test"};
+    dest.assign(src2);
     CHECK(dest.size() == 4);
     CHECK(etl::string_view(dest) == etl::string_view("test"));
 
-    auto src_3 = TestType {"abc"};
-    dest.assign(etl::move(src_3));
+    auto src3 = TestType {"abc"};
+    dest.assign(etl::move(src3));
     CHECK(dest.size() == 3);
     CHECK(etl::string_view(dest) == etl::string_view("abc"));
 
-    auto const src_4 = TestType {"abc"};
-    dest.assign(src_4, 1, 1);
+    auto const src4 = TestType {"abc"};
+    dest.assign(src4, 1, 1);
     CHECK(dest.size() == 1);
     CHECK(etl::string_view(dest) == etl::string_view("b"));
   }
@@ -346,13 +346,13 @@ TEMPLATE_TEST_CASE("string: assign", "[string]", etl::static_string<12>,
   {
     TestType dest {};
 
-    auto src_1 = etl::string_view("test");
-    dest.assign(begin(src_1), end(src_1));
+    auto src1 = etl::string_view("test");
+    dest.assign(begin(src1), end(src1));
     CHECK(dest.size() == 4);
     CHECK(etl::string_view(dest) == etl::string_view("test"));
 
-    auto src_2 = etl::string_view("abc");
-    dest.assign(begin(src_2), end(src_2) - 1);
+    auto src2 = etl::string_view("abc");
+    dest.assign(begin(src2), end(src2) - 1);
     CHECK(dest.size() == 2);
     CHECK(etl::string_view(dest) == etl::string_view("ab"));
   }
@@ -450,14 +450,14 @@ TEMPLATE_TEST_CASE("string: rbegin/rend", "[string]", etl::static_string<12>,
   TestType empty {};
   CHECK(empty.rbegin() == empty.rend());
 
-  TestType str_1 {"test"};
-  CHECK(str_1.rbegin() != str_1.rend());
-  auto begin_1 = str_1.rbegin();
-  CHECK(*begin_1++ == 't');
-  CHECK(*begin_1++ == 's');
-  CHECK(*begin_1++ == 'e');
-  CHECK(*begin_1++ == 't');
-  CHECK(begin_1 == str_1.rend());
+  TestType str1 {"test"};
+  CHECK(str1.rbegin() != str1.rend());
+  auto begin1 = str1.rbegin();
+  CHECK(*begin1++ == 't');
+  CHECK(*begin1++ == 's');
+  CHECK(*begin1++ == 'e');
+  CHECK(*begin1++ == 't');
+  CHECK(begin1 == str1.rend());
 }
 
 TEMPLATE_TEST_CASE("string: crbegin/crend", "[string]", etl::static_string<12>,
@@ -467,14 +467,14 @@ TEMPLATE_TEST_CASE("string: crbegin/crend", "[string]", etl::static_string<12>,
   TestType empty {};
   CHECK(empty.crbegin() == empty.crend());
 
-  TestType str_1 {"test"};
-  CHECK(str_1.crbegin() != str_1.crend());
-  auto begin_1 = str_1.crbegin();
-  CHECK(*begin_1++ == 't');
-  CHECK(*begin_1++ == 's');
-  CHECK(*begin_1++ == 'e');
-  CHECK(*begin_1++ == 't');
-  CHECK(begin_1 == str_1.crend());
+  TestType str1 {"test"};
+  CHECK(str1.crbegin() != str1.crend());
+  auto begin1 = str1.crbegin();
+  CHECK(*begin1++ == 't');
+  CHECK(*begin1++ == 's');
+  CHECK(*begin1++ == 'e');
+  CHECK(*begin1++ == 't');
+  CHECK(begin1 == str1.crend());
 }
 
 TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]",
@@ -531,14 +531,14 @@ TEMPLATE_TEST_CASE("string: append(first,last)", "[string]",
 {
   SECTION("empty")
   {
-    etl::string_view empty_src {""};
+    etl::string_view emptySrc {""};
 
     TestType empty {};
-    empty.append(begin(empty_src), end(empty_src));
+    empty.append(begin(emptySrc), end(emptySrc));
     CHECK(empty.empty());
 
     TestType str {"abc"};
-    str.append(begin(empty_src), end(empty_src));
+    str.append(begin(emptySrc), end(emptySrc));
     CHECK(etl::string_view(str) == etl::string_view("abc"));
   }
 
@@ -557,14 +557,14 @@ TEMPLATE_TEST_CASE("string: append(string)", "[string]", etl::static_string<12>,
 {
   SECTION("empty")
   {
-    TestType empty_src {""};
+    TestType emptySrc {""};
 
     TestType empty {};
-    empty.append(empty_src);
+    empty.append(emptySrc);
     CHECK(empty.empty());
 
     TestType str {"abc"};
-    str.append(empty_src);
+    str.append(emptySrc);
     CHECK(etl::string_view(str) == etl::string_view("abc"));
   }
 
@@ -583,14 +583,14 @@ TEMPLATE_TEST_CASE("string: append(string,pos,count)", "[string]",
 {
   SECTION("empty")
   {
-    TestType empty_src {""};
+    TestType emptySrc {""};
 
     TestType empty {};
-    empty.append(empty_src, 0);
+    empty.append(emptySrc, 0);
     CHECK(empty.empty());
 
     TestType str {"abc"};
-    str.append(empty_src, 1);
+    str.append(emptySrc, 1);
     CHECK(etl::string_view(str) == etl::string_view("abc"));
   }
 
@@ -609,14 +609,14 @@ TEMPLATE_TEST_CASE("string: append(string_view)", "[string]",
 {
   SECTION("empty")
   {
-    etl::string_view empty_src {""};
+    etl::string_view emptySrc {""};
 
     TestType empty {};
-    empty.append(empty_src);
+    empty.append(emptySrc);
     CHECK(empty.empty());
 
     TestType str {"abc"};
-    str.append(empty_src);
+    str.append(emptySrc);
     CHECK(etl::string_view(str) == etl::string_view("abc"));
   }
 
@@ -635,10 +635,10 @@ TEMPLATE_TEST_CASE("string: append(string_view,pos,count)", "[string]",
 {
   SECTION("empty")
   {
-    etl::string_view empty_src {};
+    etl::string_view emptySrc {};
 
     TestType empty {};
-    empty.append(empty_src, 0);
+    empty.append(emptySrc, 0);
     CHECK(empty.empty());
   }
 

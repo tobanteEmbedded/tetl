@@ -279,11 +279,11 @@ TEMPLATE_TEST_CASE("array: tuple_size", "[array]", etl::uint8_t, etl::int8_t,
   STATIC_REQUIRE(etl::tuple_size_v<etl::array<TestType, 2>> == 2);
   STATIC_REQUIRE(etl::tuple_size_v<etl::array<TestType, 3>> == 3);
 
-  auto arr_4 = etl::array {TestType(1), TestType(2), TestType(3), TestType(4)};
-  STATIC_REQUIRE(etl::tuple_size_v<decltype(arr_4)> == 4);
+  auto arr4 = etl::array {TestType(1), TestType(2), TestType(3), TestType(4)};
+  STATIC_REQUIRE(etl::tuple_size_v<decltype(arr4)> == 4);
 
-  auto arr_5 = etl::array {1, 2, 3, 4, 5};
-  STATIC_REQUIRE(etl::tuple_size_v<decltype(arr_5)> == 5);
+  auto arr5 = etl::array {1, 2, 3, 4, 5};
+  STATIC_REQUIRE(etl::tuple_size_v<decltype(arr5)> == 5);
 }
 
 TEMPLATE_TEST_CASE("array: tuple_element", "[array]", etl::uint8_t, etl::int8_t,

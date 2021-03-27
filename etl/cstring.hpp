@@ -124,12 +124,12 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
   -> char*
 {
-  auto* ptr                 = dest + etl::strlen(dest);
-  etl::size_t local_counter = 0;
-  while (*src != '\0' && local_counter != count)
+  auto* ptr                = dest + etl::strlen(dest);
+  etl::size_t localCounter = 0;
+  while (*src != '\0' && localCounter != count)
   {
     *ptr++ = *src++;
-    ++local_counter;
+    ++localCounter;
   }
 
   *ptr = '\0';
@@ -168,8 +168,8 @@ constexpr auto strncmp(char const* lhs, char const* rhs,
   unsigned char u1 {};
   unsigned char u2 {};
 
-  auto local_count = count;
-  while (local_count-- > 0)
+  auto localCount = count;
+  while (localCount-- > 0)
   {
     u1 = static_cast<unsigned char>(*lhs++);
     u2 = static_cast<unsigned char>(*rhs++);

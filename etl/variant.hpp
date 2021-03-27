@@ -119,12 +119,12 @@ struct variant_storage<Head>
   // alignas(Head) unsigned char data[sizeof(Head)];
 
   template <typename T>
-  void construct(T&& head_init, union_index_type& union_index)
+  void construct(T&& headInit, union_index_type& unionIndex)
   {
     static_assert(etl::is_same_v<T, Head>,
                   "Tried to access non-existent type in union");
-    new (&data) Head(etl::forward<T>(head_init));
-    union_index = 0;
+    new (&data) Head(etl::forward<T>(headInit));
+    unionIndex = 0;
   }
 
   void destruct(union_index_type /*unused*/)
@@ -145,41 +145,41 @@ struct variant_storage<Head, Tail...>
     variant_storage<Tail...> tail;
   };
 
-  void construct(Head const& head_init, union_index_type& union_index)
+  void construct(Head const& headInit, union_index_type& unionIndex)
   {
-    new (&data) Head(head_init);
-    union_index = 0;
+    new (&data) Head(headInit);
+    unionIndex = 0;
   }
 
-  void construct(Head& head_init, union_index_type& union_index)
+  void construct(Head& headInit, union_index_type& unionIndex)
   {
-    const auto& head_cref = head_init;
-    construct(head_cref, union_index);
+    const auto& headCref = headInit;
+    construct(headCref, unionIndex);
   }
 
-  void construct(Head&& head_init, union_index_type& union_index)
+  void construct(Head&& headInit, union_index_type& unionIndex)
   {
     using etl::move;
-    new (&data) Head(move(head_init));
-    union_index = 0;
+    new (&data) Head(move(headInit));
+    unionIndex = 0;
   }
 
   template <typename T>
-  void construct(T&& t, union_index_type& union_index)
+  void construct(T&& t, union_index_type& unionIndex)
   {
-    tail.construct(etl::forward<T>(t), union_index);
-    ++union_index;
+    tail.construct(etl::forward<T>(t), unionIndex);
+    ++unionIndex;
   }
 
-  void destruct(union_index_type union_index)
+  void destruct(union_index_type unionIndex)
   {
-    if (union_index == 0)
+    if (unionIndex == 0)
     {
       static_cast<Head*>(static_cast<void*>(&data))->~Head();
       return;
     }
 
-    tail.destruct(union_index - 1);
+    tail.destruct(unionIndex - 1);
   }
 };
 template <typename...>
@@ -285,7 +285,7 @@ class variant
   template <typename T>
   explicit variant(T&& t)
   {
-    data_.construct(etl::forward<T>(t), union_index_);
+    data_.construct(etl::forward<T>(t), unionIndex_);
   }
 
   /**
@@ -297,7 +297,7 @@ class variant
    */
   ~variant()
   {
-    if (!valueless_by_exception()) { data_.destruct(union_index_); }
+    if (!valueless_by_exception()) { data_.destruct(unionIndex_); }
   }
 
   /**
@@ -332,7 +332,7 @@ class variant
    */
   [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t
   {
-    return valueless_by_exception() ? variant_npos : union_index_;
+    return valueless_by_exception() ? variant_npos : unionIndex_;
   }
 
   /**
@@ -352,7 +352,7 @@ class variant
 
   private:
   detail::variant_storage<Types...> data_;
-  detail::union_index_type union_index_;
+  detail::union_index_type unionIndex_;
 };
 
 /**

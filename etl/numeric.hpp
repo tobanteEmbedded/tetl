@@ -277,17 +277,17 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
 
   auto sign = 1;
   auto m    = static_cast<U>(a);
-  auto M    = static_cast<U>(b);
+  auto n    = static_cast<U>(b);
 
   if (a > b)
   {
     sign = -1;
     m    = static_cast<U>(b);
-    M    = static_cast<U>(a);
+    n    = static_cast<U>(a);
   }
 
   return static_cast<Int>(
-    a + static_cast<Int>(sign * static_cast<Int>(U(M - m) >> 1)));
+    a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
 /**

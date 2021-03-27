@@ -46,7 +46,7 @@ namespace etl
  * character types. If an operation on traits emits an exception, the behavior
  * is undefined.
  */
-template <typename charT>
+template <typename CharT>
 struct char_traits;
 
 /**

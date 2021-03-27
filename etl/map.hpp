@@ -270,15 +270,15 @@ class map_view
     auto* obj        = ::new (addr) value_type {etl::forward<Args>(args)...};
 
     // Check if the key from the newly created object has already existed.
-    auto* key_existed = find_if(begin(), end(), [&](auto const& item) {
+    auto* keyExisted = find_if(begin(), end(), [&](auto const& item) {
       return item.first == obj->first;
     });
 
     // If so, return its iterator and false for insertion.
-    if (key_existed != end())
+    if (keyExisted != end())
     {
       obj->~value_type();
-      return {key_existed, false};
+      return {keyExisted, false};
     }
 
     // Key has not existed before. Array needs to be sorted.
@@ -291,8 +291,8 @@ class map_view
    */
   [[nodiscard]] constexpr auto find(KeyType const& key) noexcept -> iterator
   {
-    auto keys_match = [&key](auto const& item) { return item.first == key; };
-    auto iter       = etl::find_if(begin(), end(), keys_match);
+    auto keysMatch = [&key](auto const& item) { return item.first == key; };
+    auto iter      = etl::find_if(begin(), end(), keysMatch);
     return iter != end() ? iter : nullptr;
   }
 
@@ -302,8 +302,8 @@ class map_view
   [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept
     -> const_iterator
   {
-    auto keys_match = [&key](auto const& item) { return item.first == key; };
-    auto iter       = etl::find_if(begin(), end(), keys_match);
+    auto keysMatch = [&key](auto const& item) { return item.first == key; };
+    auto iter      = etl::find_if(begin(), end(), keysMatch);
     return iter != end() ? iter : nullptr;
   }
 

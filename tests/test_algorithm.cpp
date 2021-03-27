@@ -74,15 +74,15 @@ TEMPLATE_TEST_CASE("algorithm: for_each", "[algorithm]", etl::uint8_t,
 
   // Check how often for_each calls the unary function
   int counter {};
-  auto increment_counter = [&counter](auto& /*unused*/) { counter += 1; };
+  auto incrementCounter = [&counter](auto& /*unused*/) { counter += 1; };
 
   // for_each
-  etl::for_each(vec.begin(), vec.end(), increment_counter);
+  etl::for_each(vec.begin(), vec.end(), incrementCounter);
   REQUIRE(counter == 4);
 
   // for_each_n
   counter = 0;
-  etl::for_each_n(vec.begin(), 2, increment_counter);
+  etl::for_each_n(vec.begin(), 2, incrementCounter);
   REQUIRE(counter == 2);
 }
 
@@ -513,25 +513,25 @@ TEMPLATE_TEST_CASE("algorithm: minmax_element", "[algorithm]", etl::uint8_t,
 {
   using T = TestType;
 
-  auto test_0 = etl::array {T(1), T(2), T(3)};
-  auto res_0  = etl::minmax_element(begin(test_0), end(test_0));
-  CHECK(*res_0.first == T(1));
-  CHECK(*res_0.second == T(3));
+  auto test0 = etl::array {T(1), T(2), T(3)};
+  auto res0  = etl::minmax_element(begin(test0), end(test0));
+  CHECK(*res0.first == T(1));
+  CHECK(*res0.second == T(3));
 
-  auto test_1 = etl::array {T(1), T(2), T(3), T(4), T(5), T(6)};
-  auto res_1  = etl::minmax_element(begin(test_1), end(test_1));
-  CHECK(*res_1.first == T(1));
-  CHECK(*res_1.second == T(6));
+  auto test1 = etl::array {T(1), T(2), T(3), T(4), T(5), T(6)};
+  auto res1  = etl::minmax_element(begin(test1), end(test1));
+  CHECK(*res1.first == T(1));
+  CHECK(*res1.second == T(6));
 
-  auto test_2 = etl::array {T(1), T(4), T(5), T(3), T(2)};
-  auto res_2  = etl::minmax_element(begin(test_2), end(test_2));
-  CHECK(*res_2.first == T(1));
-  CHECK(*res_2.second == T(5));
+  auto test2 = etl::array {T(1), T(4), T(5), T(3), T(2)};
+  auto res2  = etl::minmax_element(begin(test2), end(test2));
+  CHECK(*res2.first == T(1));
+  CHECK(*res2.second == T(5));
 
-  auto test_3 = etl::array {T(100), T(99), T(0)};
-  auto res_3  = etl::minmax_element(begin(test_3), end(test_3));
-  CHECK(*res_3.first == T(0));
-  CHECK(*res_3.second == T(100));
+  auto test3 = etl::array {T(100), T(99), T(0)};
+  auto res3  = etl::minmax_element(begin(test3), end(test3));
+  CHECK(*res3.first == T(0));
+  CHECK(*res3.second == T(100));
 }
 
 TEMPLATE_TEST_CASE("algorithm: clamp", "[algorithm]", etl::uint8_t, etl::int8_t,
@@ -803,32 +803,32 @@ TEMPLATE_TEST_CASE("algorithm: partition_copy", "[algorithm]", etl::uint8_t,
 
   SECTION("empty range")
   {
-    auto src     = etl::static_vector<T, 5> {};
-    auto d_true  = etl::array<T, 5> {};
-    auto d_false = etl::array<T, 5> {};
-    auto pred    = [](auto n) { return n < 10; };
+    auto src    = etl::static_vector<T, 5> {};
+    auto dTrue  = etl::array<T, 5> {};
+    auto dFalse = etl::array<T, 5> {};
+    auto pred   = [](auto n) { return n < 10; };
 
-    auto res = etl::partition_copy(begin(src), end(src), begin(d_true),
-                                   begin(d_false), pred);
-    CHECK(res.first == begin(d_true));
-    CHECK(res.second == begin(d_false));
+    auto res = etl::partition_copy(begin(src), end(src), begin(dTrue),
+                                   begin(dFalse), pred);
+    CHECK(res.first == begin(dTrue));
+    CHECK(res.second == begin(dFalse));
   }
 
   SECTION("range")
   {
     auto src       = etl::array {T(11), T(1), T(12), T(13), T(2), T(3), T(4)};
-    auto d_true    = etl::static_vector<T, 5> {};
-    auto d_false   = etl::static_vector<T, 5> {};
+    auto dTrue     = etl::static_vector<T, 5> {};
+    auto dFalse    = etl::static_vector<T, 5> {};
     auto predicate = [](auto n) { return n < 10; };
 
-    auto false_it = etl::back_inserter(d_false);
-    auto true_it  = etl::back_inserter(d_true);
-    etl::partition_copy(begin(src), end(src), true_it, false_it, predicate);
+    auto falseIt = etl::back_inserter(dFalse);
+    auto trueIt  = etl::back_inserter(dTrue);
+    etl::partition_copy(begin(src), end(src), trueIt, falseIt, predicate);
 
-    CHECK(d_true.size() == 4);
-    CHECK(all_of(begin(d_true), end(d_true), [](auto v) { return v < 10; }));
-    CHECK(d_false.size() == 3);
-    CHECK(all_of(begin(d_false), end(d_false), [](auto v) { return v >= 10; }));
+    CHECK(dTrue.size() == 4);
+    CHECK(all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
+    CHECK(dFalse.size() == 3);
+    CHECK(all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; }));
   }
 }
 
@@ -1234,11 +1234,11 @@ TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
     TestType source[4] = {};
     etl::fill(etl::begin(source), etl::end(source), TestType {42});
 
-    auto const all_42
+    auto const all42
       = etl::all_of(etl::begin(source), etl::end(source),
                     [](auto const& val) { return val == TestType {42}; });
 
-    REQUIRE(all_42);
+    REQUIRE(all42);
   }
 
   SECTION("etl::array")
@@ -1246,11 +1246,11 @@ TEMPLATE_TEST_CASE("algorithm: fill", "[algorithm]", etl::uint8_t, etl::int8_t,
     auto source = etl::array<TestType, 4> {};
     etl::fill(begin(source), end(source), TestType {42});
 
-    auto const all_42
+    auto const all42
       = etl::all_of(begin(source), end(source),
                     [](auto const& val) { return val == TestType {42}; });
 
-    REQUIRE(all_42);
+    REQUIRE(all42);
   }
 }
 
@@ -1403,25 +1403,25 @@ TEMPLATE_TEST_CASE("algorithm: is_partitioned", "[algorithm]", etl::uint8_t,
   {
     auto predicate = [](auto const& val) { return val < T(1); };
 
-    auto test_1 = etl::array {T(2), T(2), T(2)};
-    CHECK(etl::is_partitioned(begin(test_1), end(test_1), predicate));
+    auto test1 = etl::array {T(2), T(2), T(2)};
+    CHECK(etl::is_partitioned(begin(test1), end(test1), predicate));
 
-    auto test_2 = etl::array {T(0), T(0), T(2), T(3)};
-    CHECK(etl::is_partitioned(begin(test_2), end(test_2), predicate));
+    auto test2 = etl::array {T(0), T(0), T(2), T(3)};
+    CHECK(etl::is_partitioned(begin(test2), end(test2), predicate));
 
-    auto test_3 = etl::array {T(1), T(1), T(2)};
-    CHECK(etl::is_partitioned(begin(test_3), end(test_3), predicate));
+    auto test3 = etl::array {T(1), T(1), T(2)};
+    CHECK(etl::is_partitioned(begin(test3), end(test3), predicate));
   }
 
   SECTION("false")
   {
     auto predicate = [](auto const& val) { return val < T(1); };
 
-    auto test_1 = etl::array {T(2), T(0), T(2)};
-    CHECK_FALSE(etl::is_partitioned(begin(test_1), end(test_1), predicate));
+    auto test1 = etl::array {T(2), T(0), T(2)};
+    CHECK_FALSE(etl::is_partitioned(begin(test1), end(test1), predicate));
 
-    auto test_2 = etl::array {T(0), T(0), T(2), T(0)};
-    CHECK_FALSE(etl::is_partitioned(begin(test_2), end(test_2), predicate));
+    auto test2 = etl::array {T(0), T(0), T(2), T(0)};
+    CHECK_FALSE(etl::is_partitioned(begin(test2), end(test2), predicate));
   }
 }
 
@@ -1542,12 +1542,12 @@ TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t,
     auto const v6 = etl::array {'a', 'c', 'g'};
     auto const v7 = etl::array {'A', 'B', 'C'};
 
-    auto no_case
+    auto noCase
       = [](char a, char b) { return etl::tolower(a) < etl::tolower(b); };
 
     CHECK(etl::includes(v1.begin(), v1.end(), v2.begin(), v2.end()));
     CHECK(etl::includes(v1.begin(), v1.end(), v3.begin(), v3.end()));
-    CHECK(etl::includes(v1.begin(), v1.end(), v7.begin(), v7.end(), no_case));
+    CHECK(etl::includes(v1.begin(), v1.end(), v7.begin(), v7.end(), noCase));
 
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v4.begin(), v4.end()));
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v5.begin(), v5.end()));

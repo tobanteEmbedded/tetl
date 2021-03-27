@@ -906,48 +906,48 @@ class function_view<Result(Arguments...)>
   function_view(function_view const& other)
   {
     if (&other == this) { return; }
-    if (create_ptr_ != nullptr) { destroy_ptr_(storage_); }
-    if (other.create_ptr_ != nullptr)
+    if (createPtr_ != nullptr) { destroyPtr_(storage_); }
+    if (other.createPtr_ != nullptr)
     {
-      invoke_ptr_  = other.invoke_ptr_;
-      create_ptr_  = other.create_ptr_;
-      destroy_ptr_ = other.destroy_ptr_;
-      create_ptr_(storage_, const_cast<etl::byte*>(other.storage_));
+      invokePtr_  = other.invokePtr_;
+      createPtr_  = other.createPtr_;
+      destroyPtr_ = other.destroyPtr_;
+      createPtr_(storage_, const_cast<etl::byte*>(other.storage_));
     }
   }
 
   auto operator=(function_view const& other) noexcept -> function_view&
   {
     if (&other == this) { return *this; }
-    if (create_ptr_ != nullptr) { destroy_ptr_(storage_); }
-    if (other.create_ptr_ != nullptr)
+    if (createPtr_ != nullptr) { destroyPtr_(storage_); }
+    if (other.createPtr_ != nullptr)
     {
-      invoke_ptr_  = other.invoke_ptr_;
-      create_ptr_  = other.create_ptr_;
-      destroy_ptr_ = other.destroy_ptr_;
-      create_ptr_(storage_, const_cast<etl::byte*>(other.storage_));
+      invokePtr_  = other.invokePtr_;
+      createPtr_  = other.createPtr_;
+      destroyPtr_ = other.destroyPtr_;
+      createPtr_(storage_, const_cast<etl::byte*>(other.storage_));
     }
 
     return *this;
   }
 
-  ~function_view() noexcept { destroy_ptr_(storage_); }
+  ~function_view() noexcept { destroyPtr_(storage_); }
 
   [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
   {
-    return invoke_ptr_(const_cast<etl::byte*>(storage_),
-                       etl::forward<Arguments>(args)...);  // NOLINT
+    return invokePtr_(const_cast<etl::byte*>(storage_),
+                      etl::forward<Arguments>(args)...);  // NOLINT
   }
 
   protected:
   template <typename Functor>
   function_view(Functor f, etl::byte* storage)
-      : invoke_ptr_ {reinterpret_cast<invoke_pointer_t>(invoke<Functor>)}
-      , create_ptr_ {reinterpret_cast<create_pointer_t>(create<Functor>)}
-      , destroy_ptr_ {reinterpret_cast<destroy_pointer_t>(destroy<Functor>)}
+      : invokePtr_ {reinterpret_cast<invoke_pointer_t>(invoke<Functor>)}
+      , createPtr_ {reinterpret_cast<create_pointer_t>(create<Functor>)}
+      , destroyPtr_ {reinterpret_cast<destroy_pointer_t>(destroy<Functor>)}
       , storage_ {storage}
   {
-    create_ptr_(storage_, &f);
+    createPtr_(storage_, &f);
   }
 
   private:
@@ -973,9 +973,9 @@ class function_view<Result(Arguments...)>
   using create_pointer_t  = void (*)(void*, void*);
   using destroy_pointer_t = void (*)(void*);
 
-  invoke_pointer_t invoke_ptr_   = nullptr;
-  create_pointer_t create_ptr_   = nullptr;
-  destroy_pointer_t destroy_ptr_ = nullptr;
+  invoke_pointer_t invokePtr_   = nullptr;
+  create_pointer_t createPtr_   = nullptr;
+  destroy_pointer_t destroyPtr_ = nullptr;
 
   etl::byte* storage_ = nullptr;
 };

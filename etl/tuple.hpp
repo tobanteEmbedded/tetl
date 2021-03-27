@@ -58,13 +58,13 @@ struct tuple<First>
 
 namespace detail
 {
-template <int index, typename First, typename... Rest>
+template <int Index, typename First, typename... Rest>
 struct get_impl
 {
   static constexpr auto value(tuple<First, Rest...> const* t)
-    -> decltype(get_impl<index - 1, Rest...>::value(t))
+    -> decltype(get_impl<Index - 1, Rest...>::value(t))
   {
-    return get_impl<index - 1, Rest...>::value(t);
+    return get_impl<Index - 1, Rest...>::value(t);
   }
 };
 
@@ -79,11 +79,11 @@ struct get_impl<0, First, Rest...>
 
 }  // namespace detail
 
-template <int index, typename First, typename... Rest>
+template <int Index, typename First, typename... Rest>
 constexpr auto get(tuple<First, Rest...> const& t)
-  -> decltype(detail::get_impl<index, First, Rest...>::value(&t))
+  -> decltype(detail::get_impl<Index, First, Rest...>::value(&t))
 {
-  return detail::get_impl<index, First, Rest...>::value(&t);
+  return detail::get_impl<Index, First, Rest...>::value(&t);
 }
 
 // namespace detail

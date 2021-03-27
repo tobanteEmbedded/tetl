@@ -39,12 +39,12 @@ DAMAGE.
 namespace etl
 {
 // integral_constant
-template <typename Type, Type val>
+template <typename Type, Type Val>
 struct integral_constant
 {
-  static constexpr Type value = val;
+  static constexpr Type value = Val;
   using value_type            = Type;
-  using type                  = integral_constant<Type, val>;
+  using type                  = integral_constant<Type, Val>;
   constexpr operator value_type() const noexcept { return value; }
   constexpr auto operator()() const noexcept -> value_type { return value; }
 };

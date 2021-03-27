@@ -102,11 +102,11 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
  * @return The old value of obj.
  */
 template <typename T, typename U = T>
-[[nodiscard]] constexpr auto exchange(T& obj, U&& new_value) -> T
+[[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
 {
-  T old_value = etl::move(obj);
-  obj         = etl::forward<U>(new_value);
-  return old_value;
+  T oldValue = etl::move(obj);
+  obj        = etl::forward<U>(newValue);
+  return oldValue;
 }
 
 /**

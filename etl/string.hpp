@@ -528,7 +528,7 @@ class basic_static_string
   /**
    * @brief Reserve is deleted, since the capacity is fixed.
    */
-  constexpr auto reserve(size_type new_cap) -> void = delete;
+  constexpr auto reserve(size_type newCap) -> void = delete;
 
   /**
    * @brief Shrink to fit is deleted, since the capacity is fixed.
@@ -596,8 +596,8 @@ class basic_static_string
   constexpr auto erase(size_type index = 0, size_type count = npos) noexcept
     -> basic_static_string&
   {
-    auto safe_count = etl::min(count, size() - index);
-    erase(begin() + index, begin() + index + safe_count);
+    auto safeCount = etl::min(count, size() - index);
+    erase(begin() + index, begin() + index + safeCount);
     return *this;
   }
 
@@ -654,9 +654,9 @@ class basic_static_string
   constexpr auto append(size_type const count, value_type const s) noexcept
     -> basic_static_string&
   {
-    auto const safe_count = etl::min(count, capacity() - size() - 1);
-    for (size_type i = 0; i < safe_count; i++) { data_[size() + i] = s; }
-    unsafe_set_size(size() + safe_count);
+    auto const safeCount = etl::min(count, capacity() - size() - 1);
+    for (size_type i = 0; i < safeCount; i++) { data_[size() + i] = s; }
+    unsafe_set_size(size() + safeCount);
     return *this;
   };
 
@@ -677,9 +677,9 @@ class basic_static_string
   constexpr auto append(const_pointer s, size_type count) noexcept
     -> basic_static_string&
   {
-    auto const safe_count = etl::min(count, capacity() - size() - 1);
-    for (size_type i = 0; i < safe_count; i++) { data_[size() + i] = s[i]; }
-    unsafe_set_size(size() + safe_count);
+    auto const safeCount = etl::min(count, capacity() - size() - 1);
+    for (size_type i = 0; i < safeCount; i++) { data_[size() + i] = s[i]; }
+    unsafe_set_size(size() + safeCount);
     return *this;
   };
 
@@ -822,12 +822,12 @@ class basic_static_string
    * position index.
    */
   constexpr auto insert(size_type const index, basic_static_string const& str,
-                        size_type const index_str,
+                        size_type const indexStr,
                         size_type const count = npos) noexcept
     -> basic_static_string&
   {
     using view_type = basic_string_view<value_type, traits_type>;
-    auto sv         = view_type(str).substr(index_str, count);
+    auto sv         = view_type(str).substr(indexStr, count);
     insert_impl(begin() + index, sv.data(), sv.size());
     return *this;
   }
@@ -882,13 +882,13 @@ class basic_static_string
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto insert(size_type const index, T const& t,
-                        size_type const index_str,
+                        size_type const indexStr,
                         size_type const count = npos) noexcept
     -> basic_static_string&
   {
     basic_string_view<value_type, traits_type> sv = t;
 
-    auto sub = sv.substr(index_str, count);
+    auto sub = sv.substr(indexStr, count);
     insert_impl(begin() + index, sub.data(), sub.size());
     return *this;
   }
@@ -1388,10 +1388,10 @@ class basic_static_string
   constexpr static size_type npos = static_cast<size_type>(-1);
 
   private:
-  constexpr auto unsafe_set_size(size_type const new_size_) noexcept -> void
+  constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
   {
-    assert(new_size_ <= Capacity - 1);
-    size_        = new_size_;
+    assert(newSize <= Capacity - 1);
+    size_        = newSize;
     data_[size_] = '\0';
   }
 
@@ -1413,22 +1413,22 @@ class basic_static_string
     -> void
   {
     // Insert text at end.
-    auto* current_end = end();
+    auto* currentEnd = end();
     append(text, count);
 
     // Rotate to correct position
-    etl::rotate(pos, current_end, end());
+    etl::rotate(pos, currentEnd, end());
   }
 
   [[nodiscard]] constexpr auto
-  compare_impl(const_pointer lhs, size_type lhs_size, const_pointer rhs,
-               size_type rhs_size) const noexcept -> int
+  compare_impl(const_pointer lhs, size_type lhsSize, const_pointer rhs,
+               size_type rhsSize) const noexcept -> int
   {
-    auto const min_size = etl::min(lhs_size, rhs_size);
-    auto const result   = traits_type::compare(lhs, rhs, min_size);
+    auto const minSize = etl::min(lhsSize, rhsSize);
+    auto const result  = traits_type::compare(lhs, rhs, minSize);
     if (result != 0) { return result; }
-    if (lhs_size < rhs_size) { return -1; }
-    if (lhs_size > rhs_size) { return 1; }
+    if (lhsSize < rhsSize) { return -1; }
+    if (lhsSize > rhsSize) { return 1; }
     return 0;
   }
 

@@ -83,14 +83,14 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<char const*>",
   auto ctx       = fmt::format_context<string_t> {etl::back_inserter(str)};
   auto formatter = fmt::formatter<char const*, char> {};
 
-  auto const* c_str_1 = "test";
-  formatter.format(c_str_1, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(c_str_1));
+  auto const* cStr1 = "test";
+  formatter.format(cStr1, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(cStr1));
 
   str.clear();
-  auto const* c_str_2 = "abcdef";
-  formatter.format(c_str_2, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(c_str_2));
+  auto const* cStr2 = "abcdef";
+  formatter.format(cStr2, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(cStr2));
 }
 
 TEMPLATE_TEST_CASE("experimental/format: formatter<string_view>",
@@ -104,14 +104,14 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<string_view>",
   auto ctx       = fmt::format_context<string_t> {etl::back_inserter(str)};
   auto formatter = fmt::formatter<etl::string_view, char> {};
 
-  etl::string_view str_1 = "test";
-  formatter.format(str_1, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(str_1));
+  etl::string_view str1 = "test";
+  formatter.format(str1, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(str1));
 
   str.clear();
-  etl::string_view str_2 = "abcdef";
-  formatter.format(str_2, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(str_2));
+  etl::string_view str2 = "abcdef";
+  formatter.format(str2, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
 TEMPLATE_TEST_CASE("experimental/format: formatter<static_string<Capacity>>",
@@ -125,14 +125,14 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<static_string<Capacity>>",
   auto ctx       = fmt::format_context<string_t> {etl::back_inserter(str)};
   auto formatter = fmt::formatter<string_t, char> {};
 
-  string_t str_1 = "test";
-  formatter.format(str_1, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(str_1));
+  string_t str1 = "test";
+  formatter.format(str1, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(str1));
 
   str.clear();
-  string_t str_2 = "abcdef";
-  formatter.format(str_2, ctx);
-  CHECK(etl::string_view(str.data()) == etl::string_view(str_2));
+  string_t str2 = "abcdef";
+  formatter.format(str2, ctx);
+  CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
 TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
@@ -149,13 +149,13 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 
   SECTION("no arg escaped")
   {
-    auto str_1 = etl::static_string<32> {};
-    fmt::format_to(etl::back_inserter(str_1), "{{test}}");
-    CHECK(etl::string_view(str_1) == etl::string_view("{test}"));
+    auto str1 = etl::static_string<32> {};
+    fmt::format_to(etl::back_inserter(str1), "{{test}}");
+    CHECK(etl::string_view(str1) == etl::string_view("{test}"));
 
-    auto str_2 = etl::static_string<32> {};
-    fmt::format_to(etl::back_inserter(str_2), "{{abc}} {{def}}");
-    CHECK(etl::string_view(str_2) == etl::string_view("{abc} {def}"));
+    auto str2 = etl::static_string<32> {};
+    fmt::format_to(etl::back_inserter(str2), "{{abc}} {{def}}");
+    CHECK(etl::string_view(str2) == etl::string_view("{abc} {def}"));
   }
 
   SECTION("single arg")
@@ -168,9 +168,9 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 
   SECTION("escape single arg")
   {
-    auto str_1 = etl::static_string<32> {};
-    fmt::format_to(etl::back_inserter(str_1), "{} {{test}}", 'a');
-    CHECK(etl::string_view(str_1) == etl::string_view("a {test}"));
+    auto str1 = etl::static_string<32> {};
+    fmt::format_to(etl::back_inserter(str1), "{} {{test}}", 'a');
+    CHECK(etl::string_view(str1) == etl::string_view("a {test}"));
 
     // auto str_2 = etl::static_string<32> {};
     // fmt::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
@@ -179,14 +179,14 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
 
   SECTION("replace multiple args")
   {
-    auto str_1 = etl::static_string<32> {};
-    fmt::format_to(etl::back_inserter(str_1), "{} {} {}", 'a', 'b', 'c');
-    CHECK(etl::string_view(str_1) == etl::string_view("a b c"));
+    auto str1 = etl::static_string<32> {};
+    fmt::format_to(etl::back_inserter(str1), "{} {} {}", 'a', 'b', 'c');
+    CHECK(etl::string_view(str1) == etl::string_view("a b c"));
 
-    auto str_2 = etl::static_string<32> {};
-    auto fmt_2 = etl::string_view("some {} text {} mixed {}");
-    fmt::format_to(etl::back_inserter(str_2), fmt_2, 'a', 'b', 'c');
-    CHECK(etl::string_view(str_2) == etl::string_view("some a text b mixed c"));
+    auto str2 = etl::static_string<32> {};
+    auto fmt2 = etl::string_view("some {} text {} mixed {}");
+    fmt::format_to(etl::back_inserter(str2), fmt2, 'a', 'b', 'c');
+    CHECK(etl::string_view(str2) == etl::string_view("some a text b mixed c"));
   }
 }
 
@@ -339,37 +339,37 @@ TEST_CASE("experimental/format: detail::format_escaped_sequences",
 
   SECTION("single with noise")
   {
-    auto str_1 = string_t {};
-    auto ctx_1 = fmt::format_context<string_t> {etl::back_inserter(str_1)};
-    fmt::detail::format_escaped_sequences("foobar {{test}}", ctx_1);
-    CHECK(etl::string_view(str_1) == "foobar {test}"_sv);
+    auto str1 = string_t {};
+    auto ctx1 = fmt::format_context<string_t> {etl::back_inserter(str1)};
+    fmt::detail::format_escaped_sequences("foobar {{test}}", ctx1);
+    CHECK(etl::string_view(str1) == "foobar {test}"_sv);
 
-    auto str_2 = string_t {};
-    auto ctx_2 = fmt::format_context<string_t> {etl::back_inserter(str_2)};
-    fmt::detail::format_escaped_sequences("foobar__{{test}}", ctx_2);
-    CHECK(etl::string_view(str_2) == "foobar__{test}"_sv);
+    auto str2 = string_t {};
+    auto ctx2 = fmt::format_context<string_t> {etl::back_inserter(str2)};
+    fmt::detail::format_escaped_sequences("foobar__{{test}}", ctx2);
+    CHECK(etl::string_view(str2) == "foobar__{test}"_sv);
 
-    auto str_3 = string_t {};
-    auto ctx_3 = fmt::format_context<string_t> {etl::back_inserter(str_3)};
-    fmt::detail::format_escaped_sequences("{{test}} foobar", ctx_3);
-    CHECK(etl::string_view(str_3) == "{test} foobar"_sv);
+    auto str3 = string_t {};
+    auto ctx3 = fmt::format_context<string_t> {etl::back_inserter(str3)};
+    fmt::detail::format_escaped_sequences("{{test}} foobar", ctx3);
+    CHECK(etl::string_view(str3) == "{test} foobar"_sv);
 
-    auto str_4 = string_t {};
-    auto ctx_4 = fmt::format_context<string_t> {etl::back_inserter(str_4)};
-    fmt::detail::format_escaped_sequences("{{test}}__foobar", ctx_4);
-    CHECK(etl::string_view(str_4) == "{test}__foobar"_sv);
+    auto str4 = string_t {};
+    auto ctx4 = fmt::format_context<string_t> {etl::back_inserter(str4)};
+    fmt::detail::format_escaped_sequences("{{test}}__foobar", ctx4);
+    CHECK(etl::string_view(str4) == "{test}__foobar"_sv);
   }
 
   SECTION("multiple")
   {
-    auto str_1 = string_t {};
-    auto ctx_1 = fmt::format_context<string_t> {etl::back_inserter(str_1)};
-    fmt::detail::format_escaped_sequences("{{test}} {{abc}}", ctx_1);
-    CHECK(etl::string_view(str_1) == "{test} {abc}"_sv);
+    auto str1 = string_t {};
+    auto ctx1 = fmt::format_context<string_t> {etl::back_inserter(str1)};
+    fmt::detail::format_escaped_sequences("{{test}} {{abc}}", ctx1);
+    CHECK(etl::string_view(str1) == "{test} {abc}"_sv);
 
-    auto str_2 = string_t {};
-    auto ctx_2 = fmt::format_context<string_t> {etl::back_inserter(str_2)};
-    fmt::detail::format_escaped_sequences("{{test}}{{abc}}", ctx_2);
-    CHECK(etl::string_view(str_2) == "{test}{abc}"_sv);
+    auto str2 = string_t {};
+    auto ctx2 = fmt::format_context<string_t> {etl::back_inserter(str2)};
+    fmt::detail::format_escaped_sequences("{{test}}{{abc}}", ctx2);
+    CHECK(etl::string_view(str2) == "{test}{abc}"_sv);
   }
 }

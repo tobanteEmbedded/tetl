@@ -185,8 +185,8 @@ inline constexpr auto token_end   = '}';
 template <typename ValueT, typename FormatContext>
 auto format_argument(ValueT const& val, FormatContext& fc) -> decltype(fc.out())
 {
-  auto formatter_ = formatter<ValueT, char> {};
-  return formatter_.format(val, fc);
+  auto f = formatter<ValueT, char> {};
+  return f.format(val, fc);
 }
 
 inline auto split_at_next_argument(etl::string_view str)
@@ -215,31 +215,30 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
   while (true)
   {
     // Find open sequence {{
-    const auto* const open_first = ::etl::find(first, end(str), token_begin);
-    const auto* const open_sec   = ::etl::next(open_first);
-    auto const escape_start      = open_first != end(str)  //
-                              && open_sec != end(str)      //
-                              && *open_sec == token_begin;
+    const auto* const openFirst = ::etl::find(first, end(str), token_begin);
+    const auto* const openSec   = ::etl::next(openFirst);
+    auto const escapeStart      = openFirst != end(str)  //
+                             && openSec != end(str)      //
+                             && *openSec == token_begin;
 
-    if (escape_start)
+    if (escapeStart)
     {
       // Copy upto {{
-      detail::format_argument(etl::string_view(first, open_first), ctx);
+      detail::format_argument(etl::string_view(first, openFirst), ctx);
 
       // Find sequence }}
-      auto const* close_first
-        = ::etl::find(::etl::next(open_sec), end(str), token_end);
-      auto const* close_sec = ::etl::next(close_first);
-      auto escape_close     = close_first != end(str)  //
-                          && close_sec != end(str)     //
-                          && *close_sec == token_end;
+      auto const* closeFirst
+        = ::etl::find(::etl::next(openSec), end(str), token_end);
+      auto const* closeSec = ::etl::next(closeFirst);
+      auto escapeClose     = closeFirst != end(str)  //
+                         && closeSec != end(str)     //
+                         && *closeSec == token_end;
 
       // Copy everything between {{ ... }}, but only one curly each.
-      if (escape_close)
+      if (escapeClose)
       {
-        detail::format_argument(etl::string_view(open_sec, close_first + 1),
-                                ctx);
-        first = close_first + 2;
+        detail::format_argument(etl::string_view(openSec, closeFirst + 1), ctx);
+        first = closeFirst + 2;
       }
       else
       {
@@ -286,11 +285,11 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
       detail::format_argument(args, ctx);
 
       // Split format text at next argument
-      auto const rest_slices = detail::split_at_next_argument(rest);
-      detail::format_escaped_sequences(rest_slices.first, ctx);
+      auto const restSlices = detail::split_at_next_argument(rest);
+      detail::format_escaped_sequences(restSlices.first, ctx);
 
       // Save rest of format string for the next arguments
-      rest = rest_slices.second;
+      rest = restSlices.second;
     }(),
     ...);
 
@@ -333,12 +332,12 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
   auto indices = ::etl::static_vector<::etl::size_t, sizeof...(args)> {};
   auto result  = format_to_n_result<OutputIter> {out, {}};
 
-  auto write_char = [&result](auto ch) {
+  auto writeChar = [&result](auto ch) {
     *result.out++ = ch;
     result.size++;
   };
 
-  auto var_start = ::etl::size_t {};
+  auto varStart = ::etl::size_t {};
   for (decltype(fmt)::size_type i {}; i < fmt.size(); ++i)
   {
     auto ch = fmt[i];
@@ -347,11 +346,11 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
       if (fmt[i + 1] == '{')
       {
         ++i;
-        write_char('{');
+        writeChar('{');
         continue;
       }
 
-      var_start = i;
+      varStart = i;
       continue;
     }
 
@@ -360,29 +359,28 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
       if (fmt[i + 1] == '}')
       {
         ++i;
-        write_char('}');
+        writeChar('}');
         continue;
       }
 
-      indices.push_back(var_start);
-      write_char('0');
+      indices.push_back(varStart);
+      writeChar('0');
       continue;
     }
 
-    write_char(ch);
+    writeChar(ch);
   }
 
   if (indices.size() > 0)
   {
-    [[maybe_unused]] auto replace_char_at
-      = [n](auto output, auto pos, char val) {
-          ::etl::ignore_unused(n);
-          // assert((long)pos < n);
-          output[pos] = val;
-        };
+    [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val) {
+      ::etl::ignore_unused(n);
+      // assert((long)pos < n);
+      output[pos] = val;
+    };
 
     [[maybe_unused]] typename decltype(indices)::size_type i {};
-    (replace_char_at(out, indices[i++], args), ...);
+    (replaceCharAt(out, indices[i++], args), ...);
   }
 
   return result;

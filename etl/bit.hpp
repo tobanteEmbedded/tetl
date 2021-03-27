@@ -175,11 +175,11 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
-  auto const total_bits = etl::numeric_limits<T>::digits;
+  auto const totalBits = etl::numeric_limits<T>::digits;
   if (x == T {0}) { return etl::numeric_limits<T>::digits; }
 
   int res = 0;
-  while (!(x & (T {1} << (total_bits - 1))))
+  while (!(x & (T {1} << (totalBits - 1))))
   {
     x = (x << T {1});
     res++;
@@ -202,11 +202,11 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
-  auto const total_bits = etl::numeric_limits<T>::digits;
-  if (x == etl::numeric_limits<T>::max()) { return total_bits; }
+  auto const totalBits = etl::numeric_limits<T>::digits;
+  if (x == etl::numeric_limits<T>::max()) { return totalBits; }
 
   int res = 0;
-  while (x & (T {1} << (total_bits - 1)))
+  while (x & (T {1} << (totalBits - 1)))
   {
     x = (x << T {1});
     res++;

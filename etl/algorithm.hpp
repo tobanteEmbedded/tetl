@@ -482,12 +482,12 @@ template <typename InputIter, typename UnaryPredicate>
  */
 template <typename InputIter, typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto
-find_first_of(InputIter first, InputIter last, ForwardIter s_first,
-              ForwardIter s_last, BinaryPredicate pred) -> InputIter
+find_first_of(InputIter first, InputIter last, ForwardIter sFirst,
+              ForwardIter sLast, BinaryPredicate pred) -> InputIter
 {
   for (; first != last; ++first)
   {
-    for (auto it = s_first; it != s_last; ++it)
+    for (auto it = sFirst; it != sLast; ++it)
     {
       if (pred(*first, *it)) { return first; }
     }
@@ -508,10 +508,10 @@ find_first_of(InputIter first, InputIter last, ForwardIter s_first,
  */
 template <typename InputIter, typename ForwardIter>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
-                                           ForwardIter s_first,
-                                           ForwardIter s_last) -> InputIter
+                                           ForwardIter sFirst,
+                                           ForwardIter sLast) -> InputIter
 {
-  return find_first_of(first, last, s_first, s_last, etl::equal_to<> {});
+  return find_first_of(first, last, sFirst, sLast, etl::equal_to<> {});
 }
 
 /**
@@ -530,10 +530,10 @@ template <typename InputIter, typename ForwardIter>
 template <typename ForwardIter1, typename ForwardIter2,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
-                                    ForwardIter2 s_first, ForwardIter2 s_last,
+                                    ForwardIter2 sFirst, ForwardIter2 sLast,
                                     BinaryPredicate pred) -> ForwardIter1
 {
-  return detail::search_impl(first, last, s_first, s_last, pred);
+  return detail::search_impl(first, last, sFirst, sLast, pred);
 }
 
 /**
@@ -549,10 +549,10 @@ template <typename ForwardIter1, typename ForwardIter2,
  */
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
-                                    ForwardIter2 s_first, ForwardIter2 s_last)
+                                    ForwardIter2 sFirst, ForwardIter2 sLast)
   -> ForwardIter1
 {
-  return search(first, last, s_first, s_last, etl::equal_to<> {});
+  return search(first, last, sFirst, sLast, etl::equal_to<> {});
 }
 
 /**
@@ -584,22 +584,22 @@ template <typename ForwardIter, typename Size, typename ValueT,
 {
   if (count <= Size {}) { return first; }
 
-  auto local_counter = Size {};
-  ForwardIter found  = nullptr;
+  auto localCounter = Size {};
+  ForwardIter found = nullptr;
 
   for (; first != last; ++first)
   {
     if (pred(*first, value))
     {
-      local_counter++;
+      localCounter++;
       if (found == nullptr) { found = first; }
     }
     else
     {
-      local_counter = 0;
+      localCounter = 0;
     }
 
-    if (local_counter == count) { return found; }
+    if (localCounter == count) { return found; }
   }
 
   return last;
@@ -633,16 +633,16 @@ template <typename ForwardIter, typename Size, typename ValueT>
 template <typename ForwardIter1, typename ForwardIter2,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
-                                      ForwardIter2 s_first, ForwardIter2 s_last,
+                                      ForwardIter2 sFirst, ForwardIter2 sLast,
                                       BinaryPredicate p) -> ForwardIter1
 {
-  if (s_first == s_last) { return last; }
+  if (sFirst == sLast) { return last; }
   auto result = last;
   while (true)
   {
-    auto new_result = search(first, last, s_first, s_last, p);
-    if (new_result == last) { break; }
-    result = new_result;
+    auto newResult = search(first, last, sFirst, sLast, p);
+    if (newResult == last) { break; }
+    result = newResult;
     first  = result;
     ++first;
   }
@@ -663,10 +663,10 @@ template <typename ForwardIter1, typename ForwardIter2,
  */
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
-                                      ForwardIter2 s_first, ForwardIter2 s_last)
+                                      ForwardIter2 sFirst, ForwardIter2 sLast)
   -> ForwardIter1
 {
-  return find_end(first, last, s_first, s_last, equal_to<> {});
+  return find_end(first, last, sFirst, sLast, equal_to<> {});
 }
 
 /**
@@ -748,11 +748,11 @@ constexpr auto remove_copy(InputIter first, InputIter last,
  */
 template <typename ForwardIt, typename UnaryPredicate, typename T>
 constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
-                          T const& new_value) -> void
+                          T const& newValue) -> void
 {
   for (; first != last; ++first)
   {
-    if (p(*first)) { *first = new_value; }
+    if (p(*first)) { *first = newValue; }
   }
 }
 
@@ -762,11 +762,11 @@ constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
  * old_value.
  */
 template <typename ForwardIt, typename T>
-constexpr auto replace(ForwardIt first, ForwardIt last, T const& old_value,
-                       T const& new_value) -> void
+constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue,
+                       T const& newValue) -> void
 {
-  auto predicate = [&old_value](auto const& item) { return item == old_value; };
-  replace_if(first, last, predicate, new_value);
+  auto predicate = [&oldValue](auto const& item) { return item == oldValue; };
+  replace_if(first, last, predicate, newValue);
 }
 
 /**
@@ -1059,23 +1059,23 @@ constexpr auto reverse_copy(BidirIter first, BidirIter last,
  * function is that [first, n_first) and [n_first, last) are valid ranges.
  */
 template <typename ForwardIter>
-constexpr auto rotate(ForwardIter first, ForwardIter n_first, ForwardIter last)
+constexpr auto rotate(ForwardIter first, ForwardIter nFirst, ForwardIter last)
   -> ForwardIter
 {
-  if (first == n_first) { return last; }
-  if (n_first == last) { return first; }
+  if (first == nFirst) { return last; }
+  if (nFirst == last) { return first; }
 
-  auto read      = n_first;
-  auto write     = first;
-  auto next_read = first;
+  auto read     = nFirst;
+  auto write    = first;
+  auto nextRead = first;
 
   while (read != last)
   {
-    if (write == next_read) { next_read = read; }
+    if (write == nextRead) { nextRead = read; }
     etl::iter_swap(write++, read++);
   }
 
-  rotate(write, next_read, last);
+  rotate(write, nextRead, last);
   return write;
 }
 
@@ -1190,25 +1190,25 @@ constexpr auto partition(ForwardIter first, ForwardIter last, UnaryPredicate p)
 template <typename InputIter, typename OutputIter1, typename OutputIter2,
           typename UnaryPredicate>
 constexpr auto partition_copy(InputIter first, InputIter last,
-                              OutputIter1 destination_true,
-                              OutputIter2 destination_false, UnaryPredicate p)
+                              OutputIter1 destinationTrue,
+                              OutputIter2 destinationFalse, UnaryPredicate p)
   -> etl::pair<OutputIter1, OutputIter2>
 {
   for (; first != last; ++first)
   {
     if (p(*first))
     {
-      *destination_true = *first;
-      ++destination_true;
+      *destinationTrue = *first;
+      ++destinationTrue;
     }
     else
     {
-      *destination_false = *first;
-      ++destination_false;
+      *destinationFalse = *first;
+      ++destinationFalse;
     }
   }
 
-  return etl::make_pair(destination_true, destination_false);
+  return etl::make_pair(destinationTrue, destinationFalse);
 }
 
 /**
@@ -1302,15 +1302,15 @@ constexpr auto copy(InputIter first, InputIter last, OutputIter destination)
  * last element copied.
  */
 template <typename InputIter, typename OutputIter, typename UnaryPredicate>
-constexpr auto copy_if(InputIter first, InputIter last, OutputIter d_first,
+constexpr auto copy_if(InputIter first, InputIter last, OutputIter dFirst,
                        UnaryPredicate pred) -> OutputIter
 {
   while (first != last)
   {
-    if (pred(*first)) { *d_first++ = *first; }
+    if (pred(*first)) { *dFirst++ = *first; }
     first++;
   }
-  return d_first;
+  return dFirst;
 }
 
 /**
@@ -1347,10 +1347,10 @@ constexpr auto copy_n(InputIter first, Size count, OutputIter result)
  */
 template <typename BidirIter1, typename BidirIter2>
 constexpr auto copy_backward(BidirIter1 first, BidirIter1 last,
-                             BidirIter2 d_last) -> BidirIter2
+                             BidirIter2 dLast) -> BidirIter2
 {
-  while (first != last) { *(--d_last) = *(--last); }
-  return d_last;
+  while (first != last) { *(--dLast) = *(--last); }
+  return dLast;
 }
 
 /**
@@ -1359,12 +1359,12 @@ constexpr auto copy_backward(BidirIter1 first, BidirIter1 last,
  * first element of the new range and n_first - 1 becomes the last element.
  */
 template <typename ForwardIter, typename OutputIter>
-constexpr auto rotate_copy(ForwardIter first, ForwardIter n_first,
+constexpr auto rotate_copy(ForwardIter first, ForwardIter nFirst,
                            ForwardIter last, OutputIter destination)
   -> OutputIter
 {
-  destination = etl::copy(n_first, last, destination);
-  return etl::copy(first, n_first, destination);
+  destination = etl::copy(nFirst, last, destination);
+  return etl::copy(first, nFirst, destination);
 }
 
 /**

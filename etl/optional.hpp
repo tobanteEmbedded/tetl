@@ -488,11 +488,10 @@ class optional : private detail::optional_move_assign_base<ValueType>,
    * default_value.
    */
   template <typename U>
-  [[nodiscard]] constexpr auto value_or(U&& default_value) const& -> value_type
+  [[nodiscard]] constexpr auto value_or(U&& defaultValue) const& -> value_type
   {
-    return has_value()
-             ? *this->value()
-             : static_cast<value_type>(etl::forward<U>(default_value));
+    return has_value() ? *this->value()
+                       : static_cast<value_type>(etl::forward<U>(defaultValue));
   }
 
   /**
@@ -500,11 +499,10 @@ class optional : private detail::optional_move_assign_base<ValueType>,
    * default_value.
    */
   template <typename U>
-  [[nodiscard]] constexpr auto value_or(U&& default_value) && -> value_type
+  [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
   {
-    return has_value()
-             ? etl::move(*this->value())
-             : static_cast<value_type>(etl::forward<U>(default_value));
+    return has_value() ? etl::move(*this->value())
+                       : static_cast<value_type>(etl::forward<U>(defaultValue));
   }
 
   /**

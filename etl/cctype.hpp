@@ -46,11 +46,11 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto is_digit = ch >= '0' && ch <= '9';
-  auto is_lower = ch >= 'a' && ch <= 'z';
-  auto is_upper = ch >= 'A' && ch <= 'Z';
+  auto isDigit = ch >= '0' && ch <= '9';
+  auto isLower = ch >= 'a' && ch <= 'z';
+  auto isUpper = ch >= 'A' && ch <= 'Z';
 
-  return static_cast<int>(is_digit || is_lower || is_upper);
+  return static_cast<int>(isDigit || isLower || isUpper);
 }
 
 /**
@@ -67,10 +67,10 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto is_lower = ch >= 'a' && ch <= 'z';
-  auto is_upper = ch >= 'A' && ch <= 'Z';
+  auto isLower = ch >= 'a' && ch <= 'z';
+  auto isUpper = ch >= 'A' && ch <= 'Z';
 
-  return static_cast<int>(is_lower || is_upper);
+  return static_cast<int>(isLower || isUpper);
 }
 
 /**
@@ -135,11 +135,11 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto const is_digit     = ch >= '0' && ch <= '9';
-  auto const is_hex_lower = ch >= 'a' && ch <= 'f';
-  auto const is_hex_upper = ch >= 'A' && ch <= 'F';
+  auto const isDigit    = ch >= '0' && ch <= '9';
+  auto const isHexLower = ch >= 'a' && ch <= 'f';
+  auto const isHexUpper = ch >= 'A' && ch <= 'F';
 
-  return static_cast<int>(is_digit || is_hex_lower || is_hex_upper);
+  return static_cast<int>(isDigit || isHexLower || isHexUpper);
 }
 
 /**
@@ -156,15 +156,15 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto const space           = ch == ' ';
-  auto const form_feed       = ch == '\f';
-  auto const line_feed       = ch == '\n';
-  auto const carriage_return = ch == '\r';
-  auto const horizontal_tab  = ch == '\t';
-  auto const vertical_tab    = ch == '\v';
+  auto const space          = ch == ' ';
+  auto const formFeed       = ch == '\f';
+  auto const lineFeed       = ch == '\n';
+  auto const carriageReturn = ch == '\r';
+  auto const horizontalTab  = ch == '\t';
+  auto const verticalTab    = ch == '\v';
 
-  return static_cast<int>(space || form_feed || line_feed || carriage_return
-                          || horizontal_tab || vertical_tab);
+  return static_cast<int>(space || formFeed || lineFeed || carriageReturn
+                          || horizontalTab || verticalTab);
 }
 
 /**
@@ -182,10 +182,10 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto const space          = ch == ' ';
-  auto const horizontal_tab = ch == '\t';
+  auto const space         = ch == ' ';
+  auto const horizontalTab = ch == '\t';
 
-  return static_cast<int>(space || horizontal_tab);
+  return static_cast<int>(space || horizontalTab);
 }
 
 /**
@@ -205,12 +205,12 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto const sec_1 = ch >= '!' && ch <= '/';
-  auto const sec_2 = ch >= ':' && ch <= '@';
-  auto const sec_3 = ch >= '[' && ch <= '`';
-  auto const sec_4 = ch >= '{' && ch <= '~';
+  auto const sec1 = ch >= '!' && ch <= '/';
+  auto const sec2 = ch >= ':' && ch <= '@';
+  auto const sec3 = ch >= '[' && ch <= '`';
+  auto const sec4 = ch >= '{' && ch <= '~';
 
-  return static_cast<int>(sec_1 || sec_2 || sec_3 || sec_4);
+  return static_cast<int>(sec1 || sec2 || sec3 || sec4);
 }
 
 /**
@@ -227,12 +227,12 @@ namespace etl
   // ch must de representable as a unsigned char
   assert(static_cast<unsigned char>(ch) == ch);
 
-  auto const is_digit = isdigit(ch) != 0;
-  auto const is_upper = isupper(ch) != 0;
-  auto const is_lower = islower(ch) != 0;
-  auto const is_punct = ispunct(ch) != 0;
+  auto const isDigit = isdigit(ch) != 0;
+  auto const isUpper = isupper(ch) != 0;
+  auto const isLower = islower(ch) != 0;
+  auto const isPunct = ispunct(ch) != 0;
 
-  return static_cast<int>(is_digit || is_lower || is_upper || is_punct);
+  return static_cast<int>(isDigit || isLower || isUpper || isPunct);
 }
 
 /**

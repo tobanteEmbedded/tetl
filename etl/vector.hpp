@@ -145,9 +145,9 @@ class static_vector_zero_storage
    * (unsafe). The size of an empty storage can only be changed to 0.
    */
   static constexpr void unsafe_set_size([
-    [maybe_unused]] size_t new_size) noexcept
+    [maybe_unused]] size_t newSize) noexcept
   {
-    assert(new_size == 0
+    assert(newSize == 0
            && "tried to change size of empty storage to "
               "non-zero value");
   }
@@ -280,10 +280,10 @@ class static_vector_trivial_storage
    *
    * @warning No elements are constructed or destroyed.
    */
-  constexpr auto unsafe_set_size(size_t new_size) noexcept -> void
+  constexpr auto unsafe_set_size(size_t newSize) noexcept -> void
   {
-    assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity]");
-    size_ = size_type(new_size);
+    assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity]");
+    size_ = size_type(newSize);
   }
 
   /**
@@ -441,10 +441,10 @@ class static_vector_non_trivial_storage
    *
    * @warning No elements are constructed or destroyed.
    */
-  constexpr void unsafe_set_size(size_t new_size) noexcept
+  constexpr void unsafe_set_size(size_t newSize) noexcept
   {
-    assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
-    size_ = size_type(new_size);
+    assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity)");
+    size_ = size_type(newSize);
   }
 
   /**
@@ -632,9 +632,9 @@ class static_vector : private detail::static_vector_storage_type<T, Capacity>
 
     // we insert at the end and then just rotate:
     for (; first != last; ++first) { emplace_back(etl::move(*first)); }
-    auto* writable_position = begin() + (position - begin());
-    etl::rotate<iterator>(writable_position, b, end());
-    return writable_position;
+    auto* writablePosition = begin() + (position - begin());
+    etl::rotate<iterator>(writablePosition, b, end());
+    return writablePosition;
   }
 
   /**
@@ -685,9 +685,9 @@ class static_vector : private detail::static_vector_storage_type<T, Capacity>
       --n;
     }
 
-    auto* writable_position = begin() + (position - begin());
-    etl::rotate(writable_position, b, end());
-    return writable_position;
+    auto* writablePosition = begin() + (position - begin());
+    etl::rotate(writablePosition, b, end());
+    return writablePosition;
   }
 
   /**
@@ -724,9 +724,9 @@ class static_vector : private detail::static_vector_storage_type<T, Capacity>
     // insert at the end and then just rotate:
     for (; first != last; ++first) { emplace_back(*first); }
 
-    auto* writable_position = begin() + (position - begin());
-    etl::rotate(writable_position, b, end());
-    return writable_position;
+    auto* writablePosition = begin() + (position - begin());
+    etl::rotate(writablePosition, b, end());
+    return writablePosition;
   }
 
   /**

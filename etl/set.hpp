@@ -160,9 +160,9 @@ class static_set_zero_storage
    *
    * @warning No elements are constructed or destroyed.
    */
-  constexpr void unsafe_set_size([[maybe_unused]] size_t new_size) noexcept
+  constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
   {
-    assert(new_size == 0 && "new_size out-of-bounds for empty storage");
+    assert(newSize == 0 && "new_size out-of-bounds for empty storage");
   }
 
   /**
@@ -330,10 +330,10 @@ class static_set_trivial_storage
    *
    * @warning No elements are constructed or destroyed.
    */
-  constexpr void unsafe_set_size(size_t new_size) noexcept
+  constexpr void unsafe_set_size(size_t newSize) noexcept
   {
-    assert(new_size <= Capacity && "new_size out-of-bounds [0, Capacity)");
-    size_ = size_type(new_size);
+    assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity)");
+    size_ = size_type(newSize);
   }
 
   /**

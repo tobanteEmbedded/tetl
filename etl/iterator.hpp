@@ -237,14 +237,14 @@ class reverse_iterator
    * the corresponding operations on a value-initialized Iterator also have
    * defined behavior.
    */
-  constexpr reverse_iterator() : current() { }
+  constexpr reverse_iterator() : current_() { }
 
   /**
    * @brief Constructs a new iterator adaptor.
    *
    * @details The underlying iterator is initialized with x.
    */
-  constexpr explicit reverse_iterator(Iter x) : current(x) { }
+  constexpr explicit reverse_iterator(Iter x) : current_(x) { }
 
   /**
    * @brief Constructs a new iterator adaptor.
@@ -253,7 +253,7 @@ class reverse_iterator
    */
   template <class Other>
   constexpr reverse_iterator(reverse_iterator<Other> const& other)
-      : current(other.base())
+      : current_(other.base())
   {
   }
 
@@ -265,21 +265,21 @@ class reverse_iterator
   constexpr auto operator=(reverse_iterator<Other> const& other)
     -> reverse_iterator&
   {
-    current = other.base();
+    current_ = other.base();
     return *this;
   }
 
   /**
    * @brief Returns the underlying base iterator.
    */
-  [[nodiscard]] constexpr auto base() const -> Iter { return current; }
+  [[nodiscard]] constexpr auto base() const -> Iter { return current_; }
 
   /**
    * @brief Returns a reference to the element previous to current.
    */
   constexpr auto operator*() const -> reference
   {
-    auto tmp = current;
+    auto tmp = current_;
     return *--tmp;
   }
 
@@ -296,7 +296,7 @@ class reverse_iterator
    */
   constexpr auto operator++() -> reverse_iterator&
   {
-    --current;
+    --current_;
     return *this;
   }
 
@@ -306,7 +306,7 @@ class reverse_iterator
   constexpr auto operator++(int) -> reverse_iterator
   {
     auto tmp(*this);
-    --current;
+    --current_;
     return tmp;
   }
 
@@ -315,7 +315,7 @@ class reverse_iterator
    */
   constexpr auto operator--() -> reverse_iterator&
   {
-    ++current;
+    ++current_;
     return *this;
   }
 
@@ -325,7 +325,7 @@ class reverse_iterator
   constexpr auto operator--(int) -> reverse_iterator
   {
     auto tmp(*this);
-    ++current;
+    ++current_;
     return tmp;
   }
 
@@ -334,7 +334,7 @@ class reverse_iterator
    */
   constexpr auto operator+(difference_type n) const -> reverse_iterator
   {
-    return reverse_iterator(current - n);
+    return reverse_iterator(current_ - n);
   }
 
   /**
@@ -342,7 +342,7 @@ class reverse_iterator
    */
   constexpr auto operator+=(difference_type n) -> reverse_iterator&
   {
-    current -= n;
+    current_ -= n;
     return *this;
   }
 
@@ -351,7 +351,7 @@ class reverse_iterator
    */
   constexpr auto operator-(difference_type n) const -> reverse_iterator
   {
-    return reverse_iterator(current + n);
+    return reverse_iterator(current_ + n);
   }
 
   /**
@@ -359,7 +359,7 @@ class reverse_iterator
    */
   constexpr auto operator-=(difference_type n) -> reverse_iterator&
   {
-    current += n;
+    current_ += n;
     return *this;
   }
 
@@ -372,7 +372,7 @@ class reverse_iterator
   }
 
   private:
-  Iter current;
+  Iter current_;
 };
 
 /**

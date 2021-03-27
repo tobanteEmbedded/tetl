@@ -836,8 +836,8 @@ struct Ex2
 
 struct Ex3
 {
-  Ex3(int& _n) : n {_n} { }
-  int& n;
+  Ex3(int& n) : n_ {n} { }
+  int& n_;
 };
 
 }  // namespace

@@ -101,10 +101,10 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
     = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0});
   REQUIRE(product == TestType {21});
 
-  auto pairwise_matches
+  auto pairwiseMatches
     = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0},
                          etl::plus<> {}, etl::equal_to<> {});
-  REQUIRE(pairwise_matches == TestType {2});
+  REQUIRE(pairwiseMatches == TestType {2});
 }
 
 // TEMPLATE_TEST_CASE("numeric: partial_sum", "[numeric]", etl::int16_t,
