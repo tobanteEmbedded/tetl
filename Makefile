@@ -2,6 +2,13 @@ CONFIG ?= release
 BUILD_DIR_BASE = cmake-build
 BUILD_DIR ?= $(BUILD_DIR_BASE)-$(CONFIG)
 
+ifneq (,$(findstring clang,$(CXX)))
+    LCOV = lcov --gcov-tool llvm-gcov.sh
+else
+    LCOV = lcov
+endif
+COVERAGE_DIR=$(BUILD_DIR_BASE)-coverage
+
 CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-12
 CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-12
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
@@ -22,12 +29,7 @@ build:
 test:
 	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
 
-ifneq (,$(findstring clang,$(CXX)))
-    LCOV = lcov --gcov-tool llvm-gcov.sh
-else
-    LCOV = lcov
-endif
-COVERAGE_DIR=$(BUILD_DIR_BASE)_coverage
+
 .PHONY: coverage
 coverage:
 	mkdir -p $(COVERAGE_DIR)

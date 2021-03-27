@@ -967,6 +967,27 @@ TEMPLATE_TEST_CASE("algorithm: search_n", "[algorithm]", etl::uint8_t,
   }
 }
 
+TEMPLATE_TEST_CASE("algorithm: find_end", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+
+  SECTION("cppreference.com example")
+  {
+    etl::array<T, 12> v {1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
+    etl::array<T, 3> t1 {1, 2, 3};
+
+    auto* result = etl::find_end(begin(v), end(v), begin(t1), end(t1));
+    CHECK(etl::distance(begin(v), result) == 8);
+
+    etl::array<T, 3> t2 {4, 5, 6};
+    result = etl::find_end(begin(v), end(v), begin(t2), end(t2));
+    CHECK(result == end(v));
+  }
+}
+
 TEMPLATE_TEST_CASE("algorithm: copy", "[algorithm]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)

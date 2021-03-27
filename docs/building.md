@@ -16,7 +16,7 @@ Needs `gcov` & `lcov` installed:
 
 ```sh
 make coverage report
-firefox build_coverage/lcov/index.html
+firefox cmake-build-coverage/lcov/index.html
 ```
 
 ### Documentation

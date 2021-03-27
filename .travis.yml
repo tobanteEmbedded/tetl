@@ -8,7 +8,7 @@ script-anchors:
   - &script-coverage
     - cd $TRAVIS_BUILD_DIR
     - make coverage
-    - bash <(curl -s https://codecov.io/bash) -f build_coverage/cov.info
+    - bash <(curl -s https://codecov.io/bash) -f cmake-build-coverage/cov.info
 
   - &script-docs
     - cd $TRAVIS_BUILD_DIR

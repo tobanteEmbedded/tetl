@@ -617,6 +617,59 @@ template <typename ForwardIter, typename Size, typename ValueT>
 }
 
 /**
+ * @brief Searches for the last occurrence of the sequence [s_first, s_last) in
+ * the range [first, last). Elements are compared using the given binary
+ * predicate p.
+ *
+ * @param first The range of elements to examine
+ * @param last The range of elements to examine
+ * @param s_first The range of elements to search for
+ * @param s_last The range of elements to search for
+ * @param p Binary predicate
+ * @return Iterator to the beginning of last occurrence of the sequence
+ * [s_first, s_last) in range [first, last). If [s_first, s_last) is empty or if
+ * no such sequence is found, last is returned.
+ */
+template <typename ForwardIter1, typename ForwardIter2,
+          typename BinaryPredicate>
+[[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
+                                      ForwardIter2 s_first, ForwardIter2 s_last,
+                                      BinaryPredicate p) -> ForwardIter1
+{
+  if (s_first == s_last) { return last; }
+  auto result = last;
+  while (true)
+  {
+    auto new_result = search(first, last, s_first, s_last, p);
+    if (new_result == last) { break; }
+    result = new_result;
+    first  = result;
+    ++first;
+  }
+  return result;
+}
+
+/**
+ * @brief Searches for the last occurrence of the sequence [s_first, s_last) in
+ * the range [first, last). Elements are compared using operator==.
+ *
+ * @param first The range of elements to examine
+ * @param last The range of elements to examine
+ * @param s_first The range of elements to search for
+ * @param s_last The range of elements to search for
+ * @return Iterator to the beginning of last occurrence of the sequence
+ * [s_first, s_last) in range [first, last). If [s_first, s_last) is empty or if
+ * no such sequence is found, last is returned.
+ */
+template <typename ForwardIter1, typename ForwardIter2>
+[[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
+                                      ForwardIter2 s_first, ForwardIter2 s_last)
+  -> ForwardIter1
+{
+  return find_end(first, last, s_first, s_last, equal_to<> {});
+}
+
+/**
  * @brief Removes all elements satisfying specific criteria from the range
  * [first, last) and returns a past-the-end iterator for the new end of the
  * range.
