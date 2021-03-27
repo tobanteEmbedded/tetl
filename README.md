@@ -6,7 +6,7 @@ The tobanteAudio embedded template library is intended for micro controller wher
 
 | **License**                                                                                                                 | **Issues**                                                                                                                     | **Code Coverage**                                                                                                              | **Codacy**                                                                                                                                                                                                                                                |
 | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg)](https://GitHub.com/tobanteAudio/taetl/issues/) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/master/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/taetl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/taetl&utm_campaign=Badge_Grade_Dashboard) |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg)](https://GitHub.com/tobanteAudio/taetl/issues/) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/80518b423ad649649e782a3773d4e17b)](https://app.codacy.com/app/tobanteAudio/taetl?utm_source=github.com&utm_medium=referral&utm_content=tobanteAudio/taetl&utm_campaign=Badge_Grade_Dashboard) |
 
 ### Hosted
 
@@ -34,7 +34,7 @@ git clone https://github.com/tobanteAudio/taetl.git
 - [Project Integration](docs/project_integration.md)
 - [Building Tests & Documentation](docs/building.md)
 - [API Reference](https://tobanteaudio.github.io/taetl/index.html)
-- [Examples](https://github.com/tobanteAudio/taetl/tree/master/examples)
+- [Examples](https://github.com/tobanteAudio/taetl/tree/main/examples)
 
 ## Design Goals
 

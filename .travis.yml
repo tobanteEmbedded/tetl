@@ -1,6 +1,6 @@
 branches:
   only:
-    - master
+    - main
 
 language: cpp
 
@@ -72,7 +72,7 @@ matrix:
         github_token: $GITHUB_TOKEN
         keep_history: true
         on:
-          branch: master
+          branch: main
 
 before_install:
   - eval "${MATRIX_EVAL}"
