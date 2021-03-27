@@ -31,7 +31,7 @@ DAMAGE.
 #ifndef TAETL_TUPLE_HPP
 #define TAETL_TUPLE_HPP
 
-#include "etl/detail/tuple_size.hpp"
+// #include "etl/detail/tuple_size.hpp"
 
 namespace etl
 {

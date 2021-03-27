@@ -23,14 +23,13 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
 
 #include "etl/new.hpp"
 
 #define TAETL_RTOS_USE_STUBS
-#include "etl/experimental/hardware/stm32/gpio.hpp"
-#include "etl/experimental/rtos/delay.hpp"
-#include "etl/experimental/rtos/task.hpp"
+#include "etl/experimental/hardware/stm32/gpio.hpp"  // for port, pin_number
+#include "etl/experimental/rtos/delay.hpp"           // for delay, delay_until
+#include "etl/experimental/rtos/task.hpp"            // for once, create_task
 
 namespace rtos  = etl::rtos;
 namespace stm32 = etl::hardware::stm32;

@@ -25,7 +25,9 @@ DAMAGE.
 */
 
 #include "etl/type_traits.hpp"
-#include "etl/cstdint.hpp"  // for uint16_t
+
+#include "etl/cstdint.hpp"        // for uint16_t
+#include "etl/detail/sfinae.hpp"  // for enable_if
 
 template <typename T>
 auto func(T val) ->

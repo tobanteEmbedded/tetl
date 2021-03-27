@@ -23,28 +23,33 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
-#include <stdlib.h>
+#undef NDEBUG
 
-#include "etl/algorithm.hpp"
-#include "etl/array.hpp"
-#include "etl/cassert.hpp"
+#include <assert.h>  // for assert
+#include <stdio.h>   // for printf
+#include <stdlib.h>  // for EXIT_SUCCESS
+
+#include "etl/algorithm.hpp"  // for all_of, copy
+#include "etl/array.hpp"      // for array
+#include "etl/iterator.hpp"   // for begin, end
 
 auto main() -> int
 {
-  auto src = etl::array {1, 2, 3, 4};  // size & type are deduced
+  using etl::all_of;
+  using etl::array;
+  using etl::copy;
+
+  auto src = array {1, 2, 3, 4};  // size & type are deduced
   for (auto& item : src) { printf("%d\n", item); }
 
   src.fill(42);
-  assert(etl::all_of(begin(src), end(src), [](auto val) { return val == 42; }));
+  assert(all_of(begin(src), end(src), [](auto val) { return val == 42; }));
 
   decltype(src) dest = {};
-  assert(
-    etl::all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
+  assert(all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
 
-  etl::copy(begin(src), end(src), begin(dest));
-  assert(
-    etl::all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
+  copy(begin(src), end(src), begin(dest));
+  assert(all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
 
   return EXIT_SUCCESS;
 }

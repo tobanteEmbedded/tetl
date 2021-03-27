@@ -23,13 +23,12 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "etl/bitset.hpp"
-
 #undef NDEBUG
-#include "etl/cassert.hpp"
+
+#include <assert.h>  // for assert
+#include <stdlib.h>  // for EXIT_SUCCESS
+
+#include "etl/bitset.hpp"  // for bitset, bitset<>::reference
 
 auto main() -> int
 {

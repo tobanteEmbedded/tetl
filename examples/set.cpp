@@ -23,33 +23,38 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#undef NDEBUG
 
 #include <assert.h>  // for assert
 #include <stdio.h>   // for printf
 
 #include "etl/algorithm.hpp"  // for for_each
 #include "etl/array.hpp"      // for array
+#include "etl/iterator.hpp"   // for begin, end
 #include "etl/set.hpp"        // for static_set
 
 auto main() -> int
 {
+  using etl::array;
+  using etl::for_each;
+  using etl::static_set;
+
   // Basic usage
-  etl::static_set<int, 16> set_1;
+  static_set<int, 16> set_1;
   set_1.insert(3);  // 3
   set_1.insert(1);  // 1, 3
   set_1.insert(2);  // 1, 2, 3
   set_1.insert(4);  // 1, 2, 3, 4
   set_1.insert(4);  // 1, 2, 3, 4
 
-  etl::for_each(begin(set_1), end(set_1),
-                [](auto key) { printf("%d\n", key); });
+  for_each(begin(set_1), end(set_1), [](auto key) { printf("%d\n", key); });
 
   assert(set_1.contains(2));
   assert(set_1.contains(5) == false);
 
   // Construct from range
-  auto data  = etl::array {1.0F, 2.0F, 3.0F};
-  auto set_2 = etl::static_set<float, 3> {begin(data), end(data)};
+  auto data  = array {1.0F, 2.0F, 3.0F};
+  auto set_2 = static_set<float, 3> {begin(data), end(data)};
 
   assert(set_2.full());
   assert(set_2.size() == 3);

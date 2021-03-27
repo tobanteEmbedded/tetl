@@ -32,13 +32,11 @@ DAMAGE.
 #ifndef TAETL_OPTIONAL_HPP
 #define TAETL_OPTIONAL_HPP
 
-#include "etl/algorithm.hpp"
-#include "etl/cassert.hpp"
-#include "etl/memory.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
-
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/sfinae.hpp"  // for enable_if_t, TAETL_REQUIRES_, sfina...
+#include "etl/memory.hpp"         // for addressof
+#include "etl/new.hpp"            // for operator new
+#include "etl/type_traits.hpp"    // for remove_cvref_t, is_same (ptr only)
+#include "etl/utility.hpp"        // for forward, in_place, in_place_t, move
 
 namespace etl
 {

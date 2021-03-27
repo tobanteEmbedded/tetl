@@ -25,8 +25,9 @@ DAMAGE.
 */
 
 #undef NDEBUG
+#include <assert.h>  // for assert
+
 #include "etl/optional.hpp"  // for optional
-#include "etl/cassert.hpp"   // for assert
 
 auto main() -> int
 {

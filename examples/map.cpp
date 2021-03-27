@@ -23,11 +23,12 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include <stdio.h>
+#undef NDEBUG
 
-#include "etl/algorithm.hpp"
-#include "etl/map.hpp"
-#include "etl/warning.hpp"
+#include <stdio.h>  // for printf, size_t
+
+#include "etl/map.hpp"      // for map
+#include "etl/warning.hpp"  // for ignore_unused
 
 auto basic_usage() -> void
 {
@@ -36,19 +37,19 @@ auto basic_usage() -> void
   printf("size: %d", static_cast<int>(map.size()));
 }
 
+// Custom key type.
+struct Key
+{
+  constexpr explicit Key(size_t val) : val_ {val} { }
+
+  [[nodiscard]] constexpr auto key() const -> size_t { return val_; }
+
+  private:
+  size_t val_;
+};
+
 auto custom_compare() -> void
 {
-  // Custom key type.
-  struct Key
-  {
-    constexpr explicit Key(size_t val) : val_ {val} { }
-
-    [[nodiscard]] constexpr auto key() const -> size_t { return val_; }
-
-private:
-    size_t val_;
-  };
-
   // Lambda for comparing to objects of type Key.
   constexpr auto compare
     = [](Key& lhs, Key& rhs) { return lhs.key() < rhs.key(); };

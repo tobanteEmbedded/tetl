@@ -24,11 +24,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include <stdio.h>  // for printf
+#include <assert.h>  // for assert
 
 #undef NDEBUG
-#include "etl/cassert.hpp"  // for assert
-#include "etl/utility.hpp"  // for pair
+#include "etl/cstdint.hpp"           // for int64_t, int32_t
+#include "etl/detail/algo_swap.hpp"  // for swap
+#include "etl/limits.hpp"            // for numeric_limits
+#include "etl/type_traits.hpp"       // for is_const_v, remove_reference_t
+#include "etl/utility.hpp"           // for in_range, pair, cmp_equal, as_const
 
 auto main() -> int
 {
