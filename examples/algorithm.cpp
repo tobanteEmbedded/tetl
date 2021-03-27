@@ -31,7 +31,12 @@ DAMAGE.
 
 auto main() -> int
 {
-  etl::static_vector<double, 16> vec;
+  using etl::find;
+  using etl::for_each;
+  using etl::for_each_n;
+  using etl::static_vector;
+
+  static_vector<double, 16> vec;
   vec.push_back(1.0);
   vec.push_back(2.0);
   vec.push_back(3.0);
@@ -40,15 +45,15 @@ auto main() -> int
   // FOR_EACH
   auto print = [](auto& x) { printf("%f\n", x); };
 
-  etl::for_each(vec.begin(), vec.end(), print);
-  etl::for_each_n(vec.begin(), 3, [](auto const& x) { printf("%f\n", x * 2); });
+  for_each(vec.begin(), vec.end(), print);
+  for_each_n(vec.begin(), 3, [](auto const& x) { printf("%f\n", x * 2); });
 
   // FIND FIND_IF
   double n1 = 3.0;
   double n2 = 5;
 
-  auto* result1 = etl::find(vec.begin(), vec.end(), n1);
-  auto* result2 = etl::find(vec.begin(), vec.end(), n2);
+  auto* result1 = find(vec.begin(), vec.end(), n1);
+  auto* result2 = find(vec.begin(), vec.end(), n2);
 
   if (result1 != vec.end()) { printf("v contains: %f\n", n1); }
   else
