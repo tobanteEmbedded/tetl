@@ -47,7 +47,7 @@ coverage:
 
 .PHONY: report
 report:
-	cd $(BUILD_DIR_BASE)_coverage && genhtml cov.info --output-directory lcov
+	cd $(COVERAGE_DIR) && genhtml cov.info --output-directory lcov
 
 .PHONY: docs
 docs:
