@@ -23,10 +23,10 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
+#undef NDEBUG
 
 #include <assert.h>  // for assert
 
-#undef NDEBUG
 #include "etl/detail/algo_swap.hpp"  // for swap
 #include "etl/type_traits.hpp"       // for is_const_v, remove_reference_t
 #include "etl/utility.hpp"           // for in_range, pair, cmp_equal, as_const
