@@ -3,6 +3,9 @@ add_library(tobanteAudio::CompilerOptions ALIAS compiler_options)
 
 if(MSVC)
   target_compile_options(compiler_options INTERFACE "/permissive-" "/Zc:__cplusplus")
+else()
+  target_compile_options(compiler_options INTERFACE -fno-builtin)
+  target_link_libraries(compiler_options INTERFACE -fno-builtin)
 endif(MSVC)
 
 # Sanitizers

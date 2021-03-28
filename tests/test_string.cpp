@@ -1059,8 +1059,8 @@ TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: copy", "[string]", (etl::static_string<12>),
+                   (etl::static_string<32>))
 {
   SECTION("empty")
   {
