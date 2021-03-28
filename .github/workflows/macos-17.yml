@@ -30,7 +30,7 @@ jobs:
         run: ./build_Debug/tests/etl-tests
 
       - name: CMake configure -- Release
-        run: cmake -S . -G Ninja -B build_Release -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -G Ninja -B build_Release -DCMAKE_BUILD_TYPE=Release -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build build_Release
