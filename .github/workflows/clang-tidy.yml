@@ -1,0 +1,36 @@
+name: Clang-Tidy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download git submodules
+        run: git submodule update --recursive --init
+
+      - name: Add LLVM Key
+        run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+
+      - name: Add LLVM Repo
+        run: sudo add-apt-repository 'deb http://apt.llvm.org/focal/   llvm-toolchain-focal-12  main'
+
+      - name: Update
+        run: sudo apt update -y
+
+      - name: Install clang-tidy
+        run: sudo apt install -y clang-tidy-12
+
+      - name: CMake configure
+        run: cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+
+      - name: CMake build -- Debug
+        run: BUILD_DIR=cmake-build-tidy make tidy-check
