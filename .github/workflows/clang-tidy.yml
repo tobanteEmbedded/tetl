@@ -27,7 +27,7 @@ jobs:
         run: sudo apt update -y
 
       - name: Install clang-tidy
-        run: sudo apt install -y clang-tidy-12
+        run: sudo apt install -y clang-tidy-12 ninja-build
 
       - name: CMake configure
         run: cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
