@@ -1,5 +1,5 @@
 PROJECT_NAME           = taetl
-PROJECT_NUMBER         = 0.3.0
+PROJECT_NUMBER         = 0.4.0
 
 USE_MDFILE_AS_MAINPAGE = README.md
 INPUT                  = ./README.md   \
