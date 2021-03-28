@@ -1075,7 +1075,8 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", etl::static_string<12>,
   SECTION("non empty")
   {
     char destination[32] = {};
-    auto str             = TestType("abcd");
+    auto const* src      = "abcd";
+    auto str             = TestType(src);
     CHECK(str.size() == 4);
 
     CHECK(str.copy(destination, 1, 100) == 0);

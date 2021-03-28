@@ -317,7 +317,7 @@ TEMPLATE_TEST_CASE("map: insert(value_type &&)", "[map]", etl::uint8_t,
   REQUIRE(map.count(3) == 1);
   REQUIRE(map.find(3)->second == TestType {42});
 
-  map.insert(etl::pair<float, TestType> {14.3, TestType {100}});
+  map.insert(etl::pair<short, TestType> {14, TestType {100}});
   REQUIRE(map.size() == 3);
   REQUIRE(map.count(14) == 1);
   REQUIRE(map.find(14)->second == TestType {100});
