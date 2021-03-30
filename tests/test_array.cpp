@@ -304,3 +304,18 @@ TEMPLATE_TEST_CASE("array: tuple_element", "[array]", etl::uint8_t, etl::int8_t,
     etl::is_same_v<
       typename etl::tuple_element<1, etl::array<TestType, 2>>::type, TestType>);
 }
+
+TEMPLATE_TEST_CASE("array: get", "[array]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+  auto a = etl::array<TestType, 3> {};
+
+  etl::get<0>(a) = TestType {1};
+  etl::get<1>(a) = TestType {2};
+  etl::get<2>(a) = TestType {3};
+
+  REQUIRE(etl::get<0>(a) == TestType {1});
+  REQUIRE(etl::get<1>(a) == TestType {2});
+  REQUIRE(etl::get<2>(a) == TestType {3});
+}

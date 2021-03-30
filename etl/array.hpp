@@ -70,7 +70,7 @@ struct array
   using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
 
   /**
-   * @brief Accesses the specified item with bounds checking.
+   * @brief Accesses the specified item with range checking.
    */
   [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
   {
@@ -79,7 +79,7 @@ struct array
   }
 
   /**
-   * @brief Accesses the specified const item with bounds checking.
+   * @brief Accesses the specified const item with range checking.
    */
   [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
     -> const_reference
@@ -89,7 +89,7 @@ struct array
   }
 
   /**
-   * @brief Accesses the specified item with bounds checking.
+   * @brief Accesses the specified item with range checking.
    */
   [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
     -> reference
@@ -99,7 +99,7 @@ struct array
   }
 
   /**
-   * @brief Accesses the specified item with bounds checking.
+   * @brief Accesses the specified item with range checking.
    */
   [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
     -> const_reference
@@ -442,6 +442,56 @@ template <typename T, etl::size_t N>
                                         etl::array<T, N> const& rhs) -> bool
 {
   return !(lhs < rhs);
+}
+
+/**
+ * @brief Extracts the Ith element element from the array. I must be an integer
+ * value in range [0, N). This is enforced at compile time as opposed to at() or
+ * operator[].
+ */
+template <size_t Index, typename Type, size_t Size>
+[[nodiscard]] constexpr auto get(array<Type, Size>& array) noexcept -> Type&
+{
+  static_assert(Index < Size, "array index out of range");
+  return array[Index];
+}
+
+/**
+ * @brief Extracts the Ith element element from the array. I must be an integer
+ * value in range [0, N). This is enforced at compile time as opposed to at() or
+ * operator[].
+ */
+template <size_t Index, typename Type, size_t Size>
+[[nodiscard]] constexpr auto get(array<Type, Size> const& array) noexcept
+  -> const Type&
+{
+  static_assert(Index < Size, "array index out of range");
+  return array[Index];
+}
+
+/**
+ * @brief Extracts the Ith element element from the array. I must be an integer
+ * value in range [0, N). This is enforced at compile time as opposed to at() or
+ * operator[].
+ */
+template <size_t Index, typename Type, size_t Size>
+[[nodiscard]] constexpr auto get(array<Type, Size>&& array) noexcept -> Type&&
+{
+  static_assert(Index < Size, "array index out of range");
+  return move(array[Index]);
+}
+
+/**
+ * @brief Extracts the Ith element element from the array. I must be an integer
+ * value in range [0, N). This is enforced at compile time as opposed to at() or
+ * operator[].
+ */
+template <size_t Index, typename Type, size_t Size>
+[[nodiscard]] constexpr auto get(array<Type, Size> const&& array) noexcept
+  -> const Type&&
+{
+  static_assert(Index < Size, "array index out of range");
+  return move(array[Index]);
 }
 
 }  // namespace etl
