@@ -137,13 +137,13 @@ struct pointer_traits
  *
  * @details https://en.cppreference.com/w/cpp/memory/pointer_traits
  */
-template <class T>
+template <typename T>
 struct pointer_traits<T*>
 {
   using pointer         = T*;
   using element_type    = T;
   using difference_type = ::etl::ptrdiff_t;
-  template <class U>
+  template <typename U>
   using rebind = U*;
 
   /**
@@ -159,6 +159,52 @@ struct pointer_traits<T*>
     return addressof(r);
   }
 };
+
+/**
+ * @brief allocator_arg_t is an empty class type used to disambiguate the
+ * overloads of constructors and member functions of allocator-aware objects.
+ */
+struct allocator_arg_t
+{
+  explicit allocator_arg_t() = default;
+};
+
+/**
+ * @brief allocator_arg is a constant of type std::allocator_arg_t used to
+ * disambiguate, at call site, the overloads of the constructors and member
+ * functions of allocator-aware objects.
+ */
+inline constexpr allocator_arg_t allocator_arg {};
+
+namespace detail
+{
+template <typename Type, typename Alloc, typename = void>
+struct uses_allocator_impl : false_type
+{
+};
+
+template <typename Type, typename Alloc>
+struct uses_allocator_impl<Type, Alloc, void_t<typename Type::allocator_type>>
+    : is_convertible<Alloc, typename Type::allocator_type>::type
+{
+};
+}  // namespace detail
+
+/**
+ * @brief If T has a member typedef allocator_type which is convertible from
+ * Alloc, the member constant value is true. Otherwise value is false.
+ */
+template <typename Type, typename Alloc>
+struct uses_allocator : detail::uses_allocator_impl<Type, Alloc>::type
+{
+};
+
+/**
+ * @brief If T has a member typedef allocator_type which is convertible from
+ * Alloc, the member constant value is true. Otherwise value is false.
+ */
+template <typename Type, typename Alloc>
+inline constexpr auto uses_allocator_v = uses_allocator<Type, Alloc>::value;
 
 /**
  * @brief Compressed pointer to specified size. Intended to be used as a drop in
