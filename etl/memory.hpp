@@ -510,7 +510,6 @@ class ptr_with_int
     return storage_ & integer_mask;
   }
 
-  private:
   storage_type storage_ {};
 };
 
