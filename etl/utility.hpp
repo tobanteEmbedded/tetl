@@ -681,10 +681,10 @@ template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>>&&
 {
-  if constexpr (I == 0) { return p.first; }
+  if constexpr (I == 0) { return move(p.first); }
   else
   {
-    return p.second;
+    return move(p.second);
   }
 }
 
@@ -699,10 +699,10 @@ template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>> const&&
 {
-  if constexpr (I == 0) { return p.first; }
+  if constexpr (I == 0) { return move(p.first); }
   else
   {
-    return p.second;
+    return move(p.second);
   }
 }
 

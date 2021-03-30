@@ -592,14 +592,12 @@ TEMPLATE_TEST_CASE("utility/pair: get<Index>", "[utility]", etl::uint8_t,
     REQUIRE(second == 143.0F);
   }
 
-  // SECTION("mutable rvalue ref")
-  // {
-  //   auto&& first = etl::get<0>(pair {TestType {42}, 143.0F});
-  //   STATIC_REQUIRE(is_same_v<decltype(first), TestType&&>);
-  //   REQUIRE(first == TestType {42});
+  SECTION("mutable rvalue ref")
+  {
+    auto&& first = etl::get<0>(pair {TestType {42}, 143.0F});
+    STATIC_REQUIRE(is_same_v<decltype(first), TestType&&>);
 
-  //   auto&& second = etl::get<1>(pair {TestType {42}, 143.0F});
-  //   STATIC_REQUIRE(is_same_v<decltype(second), float&&>);
-  //   REQUIRE(second == 143.0F);
-  // }
+    auto&& second = etl::get<1>(pair {TestType {42}, 143.0F});
+    STATIC_REQUIRE(is_same_v<decltype(second), float&&>);
+  }
 }
