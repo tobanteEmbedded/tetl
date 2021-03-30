@@ -131,7 +131,7 @@ class duration
    * sources. The copy constructor is defaulted (makes a bitwise copy of the
    * tick count).
    */
-  duration(duration const&) noexcept = default;
+  constexpr duration(duration const&) noexcept = default;
 
   /**
    * @brief Constructs a duration with r ticks.
