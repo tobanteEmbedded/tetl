@@ -515,3 +515,15 @@ TEMPLATE_TEST_CASE("utility/pair: operator>=", "[utility]", etl::uint8_t,
   REQUIRE_FALSE(p2 >= p3);
   REQUIRE_FALSE(p1 >= p3);
 }
+
+TEMPLATE_TEST_CASE("utility/pair: tuple_element", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  using etl::tuple_element_t;
+  auto p = etl::pair<TestType, float> {TestType {42}, 143.0F};
+  STATIC_REQUIRE(is_same_v<TestType, tuple_element_t<0, decltype(p)>>);
+  STATIC_REQUIRE(is_same_v<float, tuple_element_t<1, decltype(p)>>);
+}

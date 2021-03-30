@@ -602,6 +602,61 @@ constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
   return !(lhs < rhs);
 }
 
+/**
+ * @brief The partial specializations of etl::tuple_element for pairs provide
+ * compile-time access to the types of the pair's elements, using tuple-like
+ * syntax. The program is ill-formed if I >= 2.
+ */
+template <size_t I, typename T>
+struct tuple_element;
+
+/**
+ * @brief The partial specializations of etl::tuple_element for pairs provide
+ * compile-time access to the types of the pair's elements, using tuple-like
+ * syntax. The program is ill-formed if I >= 2.
+ */
+template <size_t I, typename T, typename U>
+struct tuple_element<I, pair<T, U>>
+{
+  static_assert(I < 2, "pair has only 2 elements!");
+};
+
+/**
+ * @brief The partial specializations of etl::tuple_element for pairs provide
+ * compile-time access to the types of the pair's elements, using tuple-like
+ * syntax. The program is ill-formed if I >= 2.
+ */
+template <typename T, typename U>
+struct tuple_element<0, pair<T, U>>
+{
+  using type = T;
+};
+
+/**
+ * @brief The partial specializations of etl::tuple_element for pairs provide
+ * compile-time access to the types of the pair's elements, using tuple-like
+ * syntax. The program is ill-formed if I >= 2.
+ */
+template <typename T, typename U>
+struct tuple_element<1, pair<T, U>>
+{
+  using type = U;
+};
+
+template <size_t I, class T>
+using tuple_element_t = typename tuple_element<I, T>::type;
+
+template <size_t I, typename T, typename U>
+[[nodiscard]] constexpr auto get(pair<T, U>& p)
+  -> tuple_element_t<I, pair<T, U>>&
+{
+  if constexpr (I == 0) { return p.first; }
+  else
+  {
+    return p.second;
+  }
+}
+
 }  // namespace etl
 
 #endif  // TAETL_UTILITY_HPP
