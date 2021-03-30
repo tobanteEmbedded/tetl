@@ -30,8 +30,22 @@ DAMAGE.
 
 #include "etl/vector.hpp"
 
-TEMPLATE_TEST_CASE("stack: typedefs", "[stack]", char, int, float)
+TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", char, int, float)
 {
-  STATIC_REQUIRE(true);
-  STATIC_REQUIRE(true);
+  using stack_type = etl::stack<TestType, etl::static_vector<TestType, 4>>;
+
+  auto stack = stack_type {};
+  REQUIRE(stack.empty());
+
+  stack.push(TestType {1});
+  REQUIRE_FALSE(stack.empty());
+  REQUIRE(stack.size() == 1);
+
+  stack.emplace(TestType {1});
+  REQUIRE_FALSE(stack.empty());
+  REQUIRE(stack.size() == 2);
+
+  stack.pop();
+  REQUIRE_FALSE(stack.empty());
+  REQUIRE(stack.size() == 1);
 }

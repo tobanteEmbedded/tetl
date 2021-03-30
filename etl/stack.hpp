@@ -32,6 +32,16 @@ DAMAGE.
 
 namespace etl
 {
+/**
+ * @brief The stack class is a container adapter that gives the programmer
+ * the functionality of a stack - specifically, a LIFO (last-in, first-out) data
+ * structure.
+ *
+ * @details The class template acts as a wrapper to the underlying container -
+ * only a specific set of functions is provided. The stack pushes and pops the
+ * element from the back of the underlying container, known as the top of the
+ * stack.
+ */
 template <typename T, typename Container>
 class stack
 {
@@ -45,46 +55,48 @@ class stack
   /**
    * @brief Default constructor. Value-initializes the container.
    */
-  stack() : stack(Container()) { }
+  constexpr stack() : stack(Container()) { }
 
   /**
    * @brief Copy-constructs the underlying container c with the contents of
    * cont.
    */
-  explicit stack(Container const& cont) : c {cont} { }
+  constexpr explicit stack(Container const& cont) : c {cont} { }
 
   /**
    * @brief Move-constructs the underlying container c with cont .
    */
-  explicit stack(Container&& cont) : c {etl::move(cont)} { }
+  constexpr explicit stack(Container&& cont) : c {etl::move(cont)} { }
 
   /**
    * @brief Copy constructor.
    */
-  stack(stack const& other) = default;
+  constexpr stack(stack const& other) = default;
 
   /**
    * @brief Move constructor.
    */
-  stack(stack&& other) noexcept = default;
+  constexpr stack(stack&& other) noexcept = default;
 
   /**
-   * @brief
+   * @brief Checks if the underlying container has no elements.
    */
-  [[nodiscard]] auto empty() const -> bool { return c.empty(); }
+  [[nodiscard]] constexpr auto empty() const -> bool { return c.empty(); }
 
   /**
-   * @brief
+   * @brief Returns the number of elements in the underlying container.
    */
   [[nodiscard]] constexpr auto size() const -> size_type { return c.size(); }
 
   /**
-   * @brief
+   * @brief Returns reference to the top element in the stack. This is the most
+   * recently pushed element. This element will be removed on a call to pop().
    */
   [[nodiscard]] constexpr auto top() -> reference { return c.back(); }
 
   /**
-   * @brief
+   * @brief Returns reference to the top element in the stack. This is the most
+   * recently pushed element. This element will be removed on a call to pop().
    */
   [[nodiscard]] constexpr auto top() const -> const_reference
   {
@@ -92,31 +104,34 @@ class stack
   }
 
   /**
-   * @brief
+   * @brief Pushes the given element value to the top of the stack.
    */
-  constexpr auto push(const value_type& x) -> void { c.push_back(x); }
+  constexpr auto push(value_type const& x) -> void { c.push_back(x); }
 
   /**
-   * @brief
+   * @brief Pushes the given element value to the top of the stack.
    */
-  constexpr auto push(value_type&& x) -> void { c.push_back(etl::move(x)); }
+  constexpr auto push(value_type&& x) -> void { c.push_back(move(x)); }
 
   /**
-   * @brief
+   * @brief Pushes a new element on top of the stack. The element is constructed
+   * in-place, i.e. no copy or move operations are performed. The constructor of
+   * the element is called with exactly the same arguments as supplied to the
+   * function.
    */
   template <typename... Args>
-  auto emplace(Args&&... args) -> decltype(auto)
+  constexpr auto emplace(Args&&... args) -> decltype(auto)
   {
-    return c.emplace_back(etl::forward<Args>(args)...);
+    return c.emplace_back(forward<Args>(args)...);
   }
 
   /**
-   * @brief
+   * @brief Removes the top element from the stack.
    */
   constexpr auto pop() -> void { c.pop_back(); }
 
   /**
-   * @brief
+   * @brief Exchanges the contents of the container adaptor with those of other.
    */
   constexpr auto swap(stack& s) noexcept(is_nothrow_swappable_v<Container>)
     -> void
