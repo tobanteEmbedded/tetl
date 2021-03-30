@@ -330,6 +330,15 @@ struct array
 };
 
 /**
+ * @brief One deduction guide is provided for array to provide an equivalent of
+ * experimental::make_array for construction of array from a variadic parameter
+ * pack. The program is ill-formed if (is_same_v<T, U> && ...) is not true. Note
+ * that it is true when sizeof...(U) is zero.
+ */
+template <typename T, typename... U>
+array(T, U...) -> array<T, 1 + sizeof...(U)>;
+
+/**
  * @brief Specializes the etl::swap algorithm for etl::array. Swaps the contents
  * of lhs and rhs.
  */
@@ -434,12 +443,6 @@ template <typename T, etl::size_t N>
 {
   return !(lhs < rhs);
 }
-
-/**
- * @brief Deduction guide.
- */
-template <typename T, typename... U>
-array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 }  // namespace etl
 

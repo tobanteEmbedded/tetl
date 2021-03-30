@@ -42,6 +42,16 @@ TEMPLATE_TEST_CASE("array: construct default", "[array]", etl::uint8_t,
   REQUIRE(arr[1] == TestType {0});
 }
 
+TEMPLATE_TEST_CASE("array: deduction guide", "[array]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  auto const x = TestType {10};
+  auto a       = etl::array {TestType {1}, TestType {2}, x};
+  REQUIRE(a.size() == 3);
+}
+
 TEMPLATE_TEST_CASE("array: size", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
