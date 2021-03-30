@@ -66,7 +66,7 @@ class stack
   /**
    * @brief Move-constructs the underlying container c with cont .
    */
-  constexpr explicit stack(Container&& cont) : c {etl::move(cont)} { }
+  constexpr explicit stack(Container&& cont) : c {move(cont)} { }
 
   /**
    * @brief Copy constructor.
@@ -150,6 +150,92 @@ class stack
  */
 template <typename Container>
 stack(Container) -> stack<typename Container::value_type, Container>;
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator==(stack<T, Container> const& lhs,
+                                        stack<T, Container> const& rhs) -> bool
+{
+  return lhs == rhs;
+}
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator!=(stack<T, Container> const& lhs,
+                                        stack<T, Container> const& rhs) -> bool
+{
+  return lhs != rhs;
+}
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator<(stack<T, Container> const& lhs,
+                                       stack<T, Container> const& rhs) -> bool
+{
+  return lhs < rhs;
+}
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator<=(stack<T, Container> const& lhs,
+                                        stack<T, Container> const& rhs) -> bool
+{
+  return lhs <= rhs;
+}
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator>(stack<T, Container> const& lhs,
+                                       stack<T, Container> const& rhs) -> bool
+{
+  return lhs > rhs;
+}
+
+/**
+ * @brief Compares the contents of the underlying containers of two container
+ * adaptors. The comparison is done by applying the corresponding operator to
+ * the underlying containers.
+ */
+template <typename T, typename Container>
+[[nodiscard]] constexpr auto operator>=(stack<T, Container> const& lhs,
+                                        stack<T, Container> const& rhs) -> bool
+{
+  return lhs >= rhs;
+}
+
+/**
+ * @brief Specializes the swap algorithm for stack. Swaps the contents of lhs
+ * and rhs. This overload only participates in overload resolution if
+ * is_swappable<Container>::value is true.
+ */
+template <typename T, typename Container,
+          TAETL_REQUIRES_(is_swappable_v<Container>)>
+constexpr auto swap(stack<T, Container>& lhs,
+                    stack<T, Container>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+  -> void
+{
+  lhs.swap(rhs);
+}
 
 }  // namespace etl
 
