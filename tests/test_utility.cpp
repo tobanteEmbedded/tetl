@@ -364,6 +364,20 @@ TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t,
   }
 }
 
+TEMPLATE_TEST_CASE("utility/pair: deduction guide", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  TestType a[2];
+  TestType b[3];
+  etl::pair p {a, b};  // explicit deduction guide is used in this case
+
+  STATIC_REQUIRE(is_same_v<TestType*, decltype(p.first)>);
+  STATIC_REQUIRE(is_same_v<TestType*, decltype(p.second)>);
+}
+
 TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,

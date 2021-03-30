@@ -503,6 +503,16 @@ struct pair
 };  // namespace etl
 
 /**
+ * @brief One deduction guide is provided for std::pair to account for the edge
+ * cases missed by the implicit deduction guides. In particular, non-copyable
+ * arguments and array to pointer conversion.
+ *
+ * https://en.cppreference.com/w/cpp/utility/pair/deduction_guides
+ */
+template <typename T1, typename T2>
+pair(T1, T2) -> pair<T1, T2>;
+
+/**
  * @brief Swaps the contents of x and y. Equivalent to x.swap(y).
  */
 template <typename T1, typename T2>
