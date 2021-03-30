@@ -39,7 +39,7 @@ auto main() -> int
   // need. Apart from that it behaves almost the same as the standard version.
   etl::static_string<32> str {};
   assert(str.empty());
-  static_assert(str.capacity() == 32, "");
+  static_assert(str.capacity() == 32);
 
   // You can append/push_back characters, c-strings, string_view and other
   // strings of same or different capacity.
