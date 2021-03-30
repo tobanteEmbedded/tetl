@@ -86,5 +86,62 @@ inline constexpr auto nothrow = etl::nothrow_t {};
  * etl::set_new_handler and etl::get_new_handler
  */
 using new_handler = void (*)();
+
+/**
+ * Cache line sizes for ARM values are not strictly correct since cache
+ * line sizes depend on implementations, not architectures.  There are even
+ * implementations with cache line sizes configurable at boot time.
+ */
+#if defined(__aarch64__)
+#define TAETL_CACHELINE_SIZE 64
+#elif defined(__ARM_ARCH_5T__)
+#define TAETL_CACHELINE_SIZE 32
+#elif defined(__ARM_ARCH_7A__)
+#define TAETL_CACHELINE_SIZE 64
+#elif defined(__PPC64__)
+#define TAETL_CACHELINE_SIZE 128
+#elif defined(__i386__) || defined(__x86_64__)
+#define TAETL_CACHELINE_SIZE 64
+#else
+#define TAETL_CACHELINE_SIZE alignof(max_align_t)
+#endif
+
+/**
+ * @brief Minimum offset between two objects to avoid false sharing. Guaranteed
+ * to be at least alignof(max_align_t).
+ */
+constexpr auto hardware_constructive_interference_size = TAETL_CACHELINE_SIZE;
+
+/**
+ * @brief Maximum size of contiguous memory to promote true sharing. Guaranteed
+ * to be at least alignof(max_align_t).
+ */
+constexpr auto hardware_destructive_interference_size = TAETL_CACHELINE_SIZE;
+
+/**
+ * @brief Both new-expression and delete-expression, when used with objects
+ * whose alignment requirement is greater than the default, pass that alignment
+ * requirement as an argument of type align_val_t to the selected
+ * allocation/deallocation function.
+ */
+enum struct align_val_t : size_t
+{
+};
+
+/**
+ * @brief Tag type used to identify the destroying delete form of operator
+ * delete.
+ */
+struct destroying_delete_t
+{
+  explicit destroying_delete_t() = default;
+};
+
+/**
+ * @brief Tag type used to identify the destroying delete form of operator
+ * delete.
+ */
+inline constexpr auto destroying_delete = destroying_delete_t {};
+
 }  // namespace etl
 #endif  // TAETL_NEW_HPP
