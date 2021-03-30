@@ -28,6 +28,8 @@ DAMAGE.
 
 #include "etl/utility.hpp"
 
+using etl::is_same_v;
+
 TEMPLATE_TEST_CASE("utility: exchange", "[utility]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
@@ -180,42 +182,70 @@ TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint16_t,
   REQUIRE_FALSE(etl::in_range<TestType>(-1));
 }
 
+TEMPLATE_TEST_CASE("utility/pair: default", "[utility]", etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
+
+{
+  SECTION("mutable")
+  {
+    auto p = etl::pair<TestType, int> {};
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<int, decltype(p.second)>);
+    REQUIRE(p.first == TestType {});
+    REQUIRE(p.second == int {});
+  }
+
+  SECTION("const")
+  {
+    auto const p = etl::pair<TestType, int> {};
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<int, decltype(p.second)>);
+    REQUIRE(p.first == TestType {});
+    REQUIRE(p.second == int {});
+  }
+
+  SECTION("same type twice")
+  {
+    auto p = etl::pair<TestType, TestType> {};
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.second)>);
+    REQUIRE(p.first == TestType {});
+    REQUIRE(p.second == TestType {});
+  }
+
+  SECTION("same type twice no auto")
+  {
+    etl::pair<TestType, TestType> p {};
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<TestType, decltype(p.second)>);
+    REQUIRE(p.first == TestType {});
+    REQUIRE(p.second == TestType {});
+  }
+}
+
 TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint16_t,
                    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
                    etl::int64_t, float, double, long double)
 
 {
   auto p1 = etl::pair {TestType {0}, 143.0F};
-  STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p1.first)>);
-  STATIC_REQUIRE(etl::is_same_v<float, decltype(p1.second)>);
+  STATIC_REQUIRE(is_same_v<TestType, decltype(p1.first)>);
+  STATIC_REQUIRE(is_same_v<float, decltype(p1.second)>);
   REQUIRE(p1.first == 0);
   REQUIRE(p1.second == 143.0);
 
   auto p2 = etl::pair {1.2, TestType {42}};
-  STATIC_REQUIRE(etl::is_same_v<double, decltype(p2.first)>);
-  STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p2.second)>);
+  STATIC_REQUIRE(is_same_v<double, decltype(p2.first)>);
+  STATIC_REQUIRE(is_same_v<TestType, decltype(p2.second)>);
   REQUIRE(p2.first == 1.2);
   REQUIRE(p2.second == TestType {42});
 
   auto p3 = etl::pair {TestType {2}, TestType {42}};
-  STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p3.first)>);
-  STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p3.second)>);
+  STATIC_REQUIRE(is_same_v<TestType, decltype(p3.first)>);
+  STATIC_REQUIRE(is_same_v<TestType, decltype(p3.second)>);
   REQUIRE(p3.first == TestType {2});
   REQUIRE(p3.second == TestType {42});
-}
-
-TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
-
-{
-  auto p = etl::make_pair(TestType {0}, 143.0F);
-  STATIC_REQUIRE(etl::is_same_v<TestType, decltype(p.first)>);
-  STATIC_REQUIRE(etl::is_same_v<float, decltype(p.second)>);
-
-  REQUIRE(p.first == 0);
-  REQUIRE(p.second == 143.0);
 }
 
 TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t,
@@ -224,13 +254,56 @@ TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t,
                    long double)
 
 {
-  auto p = etl::make_pair(TestType {0}, 143.0F);
   SECTION("same types")
   {
+    auto p = etl::make_pair(TestType {0}, 143.0F);
     auto other {p};
 
-    STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
-    STATIC_REQUIRE(etl::is_same_v<decltype(other.second), decltype(p.second)>);
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<decltype(other.second), decltype(p.second)>);
+
+    REQUIRE(other.first == p.first);
+    REQUIRE(other.second == p.second);
+  }
+
+  SECTION("different types")
+  {
+    auto p     = etl::make_pair(TestType {0}, 143.0F);
+    auto other = etl::pair<TestType, double> {p};
+
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
+
+    REQUIRE(other.first == p.first);
+    REQUIRE(other.second == p.second);
+  }
+}
+
+TEMPLATE_TEST_CASE("utility/pair: move construct", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  SECTION("same types")
+  {
+    auto p = etl::make_pair(TestType {0}, 143.0F);
+    auto other {etl::move(p)};
+
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE(is_same_v<decltype(other.second), decltype(p.second)>);
+
+    REQUIRE(other.first == p.first);
+    REQUIRE(other.second == p.second);
+  }
+
+  SECTION("different types")
+  {
+    auto p     = etl::make_pair(TestType {0}, 143.0F);
+    auto other = etl::pair<TestType, double> {etl::move(p)};
+
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
 
     REQUIRE(other.first == p.first);
     REQUIRE(other.second == p.second);
@@ -256,9 +329,8 @@ TEMPLATE_TEST_CASE("utility/pair: copy assign", "[utility]", etl::uint8_t,
     auto other = etl::pair<TestType, double> {};
     other      = p;
 
-    STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
-    STATIC_REQUIRE_FALSE(
-      etl::is_same_v<decltype(other.second), decltype(p.second)>);
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
 
     REQUIRE(other.first == p.first);
     REQUIRE(other.second == (float)p.second);
@@ -284,13 +356,26 @@ TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t,
     auto other = etl::pair<TestType, double> {};
     other      = etl::move(p);
 
-    STATIC_REQUIRE(etl::is_same_v<decltype(other.first), decltype(p.first)>);
-    STATIC_REQUIRE_FALSE(
-      etl::is_same_v<decltype(other.second), decltype(p.second)>);
+    STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
+    STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
 
     REQUIRE(other.first == p.first);
     REQUIRE(other.second == (float)p.second);
   }
+}
+
+TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  auto p = etl::make_pair(TestType {0}, 143.0F);
+  STATIC_REQUIRE(is_same_v<TestType, decltype(p.first)>);
+  STATIC_REQUIRE(is_same_v<float, decltype(p.second)>);
+
+  REQUIRE(p.first == 0);
+  REQUIRE(p.second == 143.0);
 }
 
 TEMPLATE_TEST_CASE("utility/pair: swap", "[utility]", etl::uint8_t, etl::int8_t,
