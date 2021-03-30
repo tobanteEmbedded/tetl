@@ -505,7 +505,7 @@ struct pair
 /**
  * @brief Swaps the contents of x and y. Equivalent to x.swap(y).
  */
-template <class T1, class T2>
+template <typename T1, typename T2>
 constexpr auto swap(pair<T1, T2>& lhs,
                     pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
@@ -603,6 +603,16 @@ constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
 }
 
 /**
+ * @brief The partial specialization of tuple_size for pairs provides a
+ * compile-time way to obtain the number of elements in a pair, which is always
+ * 2, using tuple-like syntax.
+ */
+template <typename T1, typename T2>
+struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2>
+{
+};
+
+/**
  * @brief The partial specializations of etl::tuple_element for pairs provide
  * compile-time access to the types of the pair's elements, using tuple-like
  * syntax. The program is ill-formed if I >= 2.
@@ -643,7 +653,7 @@ struct tuple_element<1, pair<T, U>>
   using type = U;
 };
 
-template <size_t I, class T>
+template <size_t I, typename T>
 using tuple_element_t = typename tuple_element<I, T>::type;
 
 template <size_t I, typename T, typename U>

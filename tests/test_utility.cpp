@@ -516,6 +516,22 @@ TEMPLATE_TEST_CASE("utility/pair: operator>=", "[utility]", etl::uint8_t,
   REQUIRE_FALSE(p1 >= p3);
 }
 
+TEMPLATE_TEST_CASE("utility/pair: tuple_size", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  STATIC_REQUIRE(etl::tuple_size<etl::pair<TestType, TestType>>::value == 2);
+  STATIC_REQUIRE(etl::tuple_size_v<etl::pair<TestType, TestType>> == 2);
+
+  STATIC_REQUIRE(etl::tuple_size<etl::pair<TestType, float>>::value == 2);
+  STATIC_REQUIRE(etl::tuple_size_v<etl::pair<TestType, float>> == 2);
+
+  STATIC_REQUIRE(etl::tuple_size<etl::pair<float, TestType>>::value == 2);
+  STATIC_REQUIRE(etl::tuple_size_v<etl::pair<float, TestType>> == 2);
+}
+
 TEMPLATE_TEST_CASE("utility/pair: tuple_element", "[utility]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
