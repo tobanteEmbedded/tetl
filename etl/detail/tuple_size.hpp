@@ -65,6 +65,12 @@ struct tuple_size<const volatile T>
 template <typename T>
 inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
 
+template <size_t I, typename T>
+struct tuple_element;
+
+template <size_t I, typename T>
+using tuple_element_t = typename tuple_element<I, T>::type;
+
 }  // namespace etl
 
 #endif  // TAETL_TUPLE_SIZE_HPP

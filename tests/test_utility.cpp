@@ -543,3 +543,49 @@ TEMPLATE_TEST_CASE("utility/pair: tuple_element", "[utility]", etl::uint8_t,
   STATIC_REQUIRE(is_same_v<TestType, tuple_element_t<0, decltype(p)>>);
   STATIC_REQUIRE(is_same_v<float, tuple_element_t<1, decltype(p)>>);
 }
+
+TEMPLATE_TEST_CASE("utility/pair: get<Index>", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+
+{
+  using etl::pair;
+
+  SECTION("mutable lvalue ref")
+  {
+    auto p = pair<TestType, float> {TestType {42}, 143.0F};
+
+    auto& first = etl::get<0>(p);
+    STATIC_REQUIRE(is_same_v<decltype(first), TestType&>);
+    REQUIRE(first == TestType {42});
+
+    auto& second = etl::get<1>(p);
+    STATIC_REQUIRE(is_same_v<decltype(second), float&>);
+    REQUIRE(second == 143.0F);
+  }
+
+  SECTION("const lvalue ref")
+  {
+    auto const p = pair<TestType, float> {TestType {42}, 143.0F};
+
+    auto& first = etl::get<0>(p);
+    STATIC_REQUIRE(is_same_v<decltype(first), TestType const&>);
+    REQUIRE(first == TestType {42});
+
+    auto& second = etl::get<1>(p);
+    STATIC_REQUIRE(is_same_v<decltype(second), float const&>);
+    REQUIRE(second == 143.0F);
+  }
+
+  // SECTION("mutable rvalue ref")
+  // {
+  //   auto&& first = etl::get<0>(pair {TestType {42}, 143.0F});
+  //   STATIC_REQUIRE(is_same_v<decltype(first), TestType&&>);
+  //   REQUIRE(first == TestType {42});
+
+  //   auto&& second = etl::get<1>(pair {TestType {42}, 143.0F});
+  //   STATIC_REQUIRE(is_same_v<decltype(second), float&&>);
+  //   REQUIRE(second == 143.0F);
+  // }
+}

@@ -617,48 +617,77 @@ struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2>
  * compile-time access to the types of the pair's elements, using tuple-like
  * syntax. The program is ill-formed if I >= 2.
  */
-template <size_t I, typename T>
-struct tuple_element;
-
-/**
- * @brief The partial specializations of etl::tuple_element for pairs provide
- * compile-time access to the types of the pair's elements, using tuple-like
- * syntax. The program is ill-formed if I >= 2.
- */
-template <size_t I, typename T, typename U>
-struct tuple_element<I, pair<T, U>>
+template <size_t I, typename T1, typename T2>
+struct tuple_element<I, pair<T1, T2>>
 {
-  static_assert(I < 2, "pair has only 2 elements!");
+  static_assert(I < 2, "pair index out of range");
+  using type = conditional_t<I == 0, T1, T2>;
 };
 
 /**
- * @brief The partial specializations of etl::tuple_element for pairs provide
- * compile-time access to the types of the pair's elements, using tuple-like
- * syntax. The program is ill-formed if I >= 2.
+ * @brief Extracts an element from the pair using tuple-like interface.
+ *
+ * @details The index-based overloads (1-4) fail to compile if the index I is
+ * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+ * 46:00. https://youtu.be/ovxNM865WaU
  */
-template <typename T, typename U>
-struct tuple_element<0, pair<T, U>>
+template <size_t I, typename T1, typename T2>
+constexpr auto get(pair<T1, T2>& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>>&
 {
-  using type = T;
-};
+  if constexpr (I == 0) { return p.first; }
+  else
+  {
+    return p.second;
+  }
+}
 
 /**
- * @brief The partial specializations of etl::tuple_element for pairs provide
- * compile-time access to the types of the pair's elements, using tuple-like
- * syntax. The program is ill-formed if I >= 2.
+ * @brief Extracts an element from the pair using tuple-like interface.
+ *
+ * @details The index-based overloads (1-4) fail to compile if the index I is
+ * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+ * 46:00. https://youtu.be/ovxNM865WaU
  */
-template <typename T, typename U>
-struct tuple_element<1, pair<T, U>>
+template <size_t I, typename T1, typename T2>
+[[nodiscard]] constexpr auto get(pair<T1, T2> const& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>> const&
 {
-  using type = U;
-};
+  if constexpr (I == 0) { return p.first; }
+  else
+  {
+    return p.second;
+  }
+}
 
-template <size_t I, typename T>
-using tuple_element_t = typename tuple_element<I, T>::type;
+/**
+ * @brief Extracts an element from the pair using tuple-like interface.
+ *
+ * @details The index-based overloads (1-4) fail to compile if the index I is
+ * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+ * 46:00. https://youtu.be/ovxNM865WaU
+ */
+template <size_t I, typename T1, typename T2>
+[[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>>&&
+{
+  if constexpr (I == 0) { return p.first; }
+  else
+  {
+    return p.second;
+  }
+}
 
-template <size_t I, typename T, typename U>
-[[nodiscard]] constexpr auto get(pair<T, U>& p)
-  -> tuple_element_t<I, pair<T, U>>&
+/**
+ * @brief Extracts an element from the pair using tuple-like interface.
+ *
+ * @details The index-based overloads (1-4) fail to compile if the index I is
+ * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+ * 46:00. https://youtu.be/ovxNM865WaU
+ */
+template <size_t I, typename T1, typename T2>
+[[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>> const&&
 {
   if constexpr (I == 0) { return p.first; }
   else
