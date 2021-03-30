@@ -27,6 +27,7 @@ DAMAGE.
 #ifndef TAETL_MEMORY_HPP
 #define TAETL_MEMORY_HPP
 
+#include "etl/bit.hpp"
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
@@ -463,6 +464,7 @@ class ptr_with_int
     return storage_ & integer_mask;
   }
 
+  private:
   storage_type storage_ {};
 };
 
@@ -508,6 +510,30 @@ class default_delete<T[]>
   static_assert(sizeof(T));
   static_assert(!etl::is_void<T>::value);
 };
+
+/**
+ * @brief Given a pointer ptr to a buffer of size space, returns a pointer
+ * aligned by the specified alignment for size number of bytes and decreases
+ * space argument by the number of bytes used for alignment. The first aligned
+ * address is returned.
+ *
+ * The function modifies the pointer only if it would be possible to fit the
+ * wanted number of bytes aligned by the given alignment into the buffer. If the
+ * buffer is too small, the function does nothing and returns nullptr.
+ *
+ * The behavior is undefined if alignment is not a power of two.
+ */
+[[nodiscard]] inline auto align(size_t alignment, size_t size, void*& ptr,
+                                size_t& space) noexcept -> void*
+{
+  auto off = static_cast<size_t>(bit_cast<uintptr_t>(ptr) & (alignment - 1));
+  if (off != 0) { off = alignment - off; }
+  if (space < off || space - off < size) { return nullptr; }
+
+  ptr = static_cast<char*>(ptr) + off;
+  space -= off;
+  return ptr;
+}
 
 }  // namespace etl
 #endif  // TAETL_MEMORY_HPP
