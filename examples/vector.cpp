@@ -52,7 +52,7 @@ auto main() -> int
   // need. Apart from that it behaves almost the same as the standard version.
   etl::static_vector<Person, 32> people {};
   assert(people.empty());
-  assert(people.capacity() == 32);
+  static_assert(people.capacity() == 32, "");
 
   // You can push_back/emplace_back into the vector
   people.push_back(Person {20, 0});

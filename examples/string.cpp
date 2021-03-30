@@ -39,7 +39,7 @@ auto main() -> int
   // need. Apart from that it behaves almost the same as the standard version.
   etl::static_string<32> str {};
   assert(str.empty());
-  assert(str.capacity() == 32);
+  static_assert(str.capacity() == 32, "");
 
   // You can append/push_back characters, c-strings, string_view and other
   // strings of same or different capacity.
@@ -69,8 +69,7 @@ auto main() -> int
   assert(copy == str);
 
   // You can apply algorithms.
-  auto toUpper = [](char ch) -> char { return etl::toupper(ch); };
-  etl::transform(begin(str), end(str), begin(str), toUpper);
+  etl::transform(begin(str), end(str), begin(str), etl::toupper);
   assert(str == "HELLO WORLD");
   assert(copy != str);
 
