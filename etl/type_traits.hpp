@@ -803,12 +803,12 @@ namespace detail
 template <typename T>
 struct is_empty_test_struct_1 : public T
 {
-  char _dummy_data_;
+  char dummy_data;
 };
 
 struct is_empty_test_struct_2
 {
-  char _dummy_data_;
+  char dummy_data;
 };
 
 template <typename T, bool = ::etl::is_class<T>::value>

@@ -68,13 +68,14 @@ namespace detail
 struct scope_exit_impl
 {
   scope_exit_impl() = default;
-  scope_exit_impl(scope_exit_impl&& rhs) noexcept : execute_ {rhs.execute_}
+  scope_exit_impl(scope_exit_impl&& rhs) noexcept
+      : should_execute {rhs.should_execute}
   {
     rhs.release();
   }
-  void release() noexcept { execute_ = false; }
-  explicit operator bool() const noexcept { return execute_; }
-  bool execute_ = true;
+  void release() noexcept { should_execute = false; }
+  explicit operator bool() const noexcept { return should_execute; }
+  bool should_execute = true;
 };
 }  // namespace detail
 

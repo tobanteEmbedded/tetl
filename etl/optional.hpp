@@ -73,7 +73,7 @@ struct optional_destruct_base<ValueType, false>
 
   ~optional_destruct_base()
   {
-    if (has_value_) { value_.~value_type(); }
+    if (internal_has_value) { internal_value.~value_type(); }
   }
 
   constexpr optional_destruct_base() noexcept { }
@@ -81,25 +81,26 @@ struct optional_destruct_base<ValueType, false>
   template <typename... Args>
   constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/,
                                             Args&&... args)
-      : value_(etl::forward<Args>(args)...), has_value_(true)
+      : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
   {
   }
 
   void reset() noexcept
   {
-    if (has_value_)
+    if (internal_has_value)
     {
-      value_.~value_type();
-      has_value_ = false;
+      internal_value.~value_type();
+      internal_has_value = false;
     }
   }
 
   union
   {
-    char null_state_ {};
-    value_type value_;
+    char internal_null_state {};
+    value_type internal_value;
   };
-  bool has_value_ = false;
+
+  bool internal_has_value = false;
 };
 
 template <typename ValueType>
@@ -113,21 +114,22 @@ struct optional_destruct_base<ValueType, true>
   template <typename... Args>
   constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/,
                                             Args&&... args)
-      : value_(etl::forward<Args>(args)...), has_value_(true)
+      : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
   {
   }
 
   void reset() noexcept
   {
-    if (has_value_) { has_value_ = false; }
+    if (internal_has_value) { internal_has_value = false; }
   }
 
   union
   {
-    char null_state_ {};
-    value_type value_;
+    char internal_null_state {};
+    value_type internal_value;
   };
-  bool has_value_ {false};
+
+  bool internal_has_value {false};
 };
 
 template <typename ValueType, bool = etl::is_reference<ValueType>::value>
@@ -139,36 +141,36 @@ struct optional_storage_base : optional_destruct_base<ValueType>
 
   [[nodiscard]] constexpr auto has_value() const noexcept -> bool
   {
-    return this->has_value_;
+    return this->internal_has_value;
   }
 
   [[nodiscard]] constexpr auto get() & noexcept -> value_type&
   {
-    return this->value_;
+    return this->internal_value;
   }
 
   [[nodiscard]] constexpr auto get() const& noexcept -> const value_type&
   {
-    return this->value_;
+    return this->internal_value;
   }
 
   [[nodiscard]] constexpr auto get() && noexcept -> value_type&&
   {
-    return etl::move(this->value_);
+    return etl::move(this->internal_value);
   }
 
   [[nodiscard]] constexpr auto get() const&& noexcept -> const value_type&&
   {
-    return etl::move(this->value_);
+    return etl::move(this->internal_value);
   }
 
   template <typename... Args>
 
   void construct(Args&&... args)
   {
-    ::new ((void*)etl::addressof(this->value_))
+    ::new ((void*)etl::addressof(this->internal_value))
       value_type(etl::forward<Args>(args)...);
-    this->has_value_ = true;
+    this->internal_has_value = true;
   }
 
   template <typename T>
@@ -180,13 +182,14 @@ struct optional_storage_base : optional_destruct_base<ValueType>
   template <typename T>
   void assign_from(T&& opt)
   {
-    if (this->has_value_ == opt.has_value())
+    if (this->internal_has_value == opt.has_value())
     {
-      if (this->has_value_) { this->value_ = etl::forward<T>(opt).get(); }
+      if (this->internal_has_value)
+      { this->internal_value = etl::forward<T>(opt).get(); }
     }
     else
     {
-      if (this->has_value_) { this->reset(); }
+      if (this->internal_has_value) { this->reset(); }
       else
       {
         construct(etl::forward<T>(opt).get());

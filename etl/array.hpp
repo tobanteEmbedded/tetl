@@ -75,7 +75,7 @@ struct array
   [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
   {
     assert(pos < Size);
-    return _data[pos];
+    return _internal_data[pos];
   }
 
   /**
@@ -85,7 +85,7 @@ struct array
     -> const_reference
   {
     assert(pos < Size);
-    return _data[pos];
+    return _internal_data[pos];
   }
 
   /**
@@ -95,7 +95,7 @@ struct array
     -> reference
   {
     assert(pos < Size);
-    return _data[pos];
+    return _internal_data[pos];
   }
 
   /**
@@ -105,7 +105,7 @@ struct array
     -> const_reference
   {
     assert(pos < Size);
-    return _data[pos];
+    return _internal_data[pos];
   }
 
   /**
@@ -113,7 +113,7 @@ struct array
    */
   [[nodiscard]] constexpr auto front() noexcept -> reference
   {
-    return _data[0];
+    return _internal_data[0];
   }
 
   /**
@@ -121,7 +121,7 @@ struct array
    */
   [[nodiscard]] constexpr auto front() const noexcept -> const_reference
   {
-    return _data[0];
+    return _internal_data[0];
   }
 
   /**
@@ -129,7 +129,7 @@ struct array
    */
   [[nodiscard]] constexpr auto back() noexcept -> reference
   {
-    return _data[Size - 1];
+    return _internal_data[Size - 1];
   }
 
   /**
@@ -137,7 +137,7 @@ struct array
    */
   [[nodiscard]] constexpr auto back() const noexcept -> const_reference
   {
-    return _data[Size - 1];
+    return _internal_data[Size - 1];
   }
 
   /**
@@ -146,7 +146,10 @@ struct array
    * always a valid range, even if the container is empty (data() is not
    * dereferenceable in that case).
    */
-  [[nodiscard]] constexpr auto data() noexcept -> pointer { return &_data[0]; }
+  [[nodiscard]] constexpr auto data() noexcept -> pointer
+  {
+    return &_internal_data[0];
+  }
 
   /**
    * @brief Returns pointer to the underlying array serving as element
@@ -156,7 +159,7 @@ struct array
    */
   [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
   {
-    return &_data[0];
+    return &_internal_data[0];
   }
 
   /**
@@ -164,7 +167,7 @@ struct array
    */
   [[nodiscard]] constexpr auto begin() noexcept -> iterator
   {
-    return &_data[0];
+    return &_internal_data[0];
   }
 
   /**
@@ -172,7 +175,7 @@ struct array
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
-    return &_data[0];
+    return &_internal_data[0];
   }
 
   /**
@@ -180,7 +183,7 @@ struct array
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
-    return &_data[0];
+    return &_internal_data[0];
   }
 
   /**
@@ -188,7 +191,7 @@ struct array
    */
   [[nodiscard]] constexpr auto end() noexcept -> iterator
   {
-    return &_data[0] + size();
+    return &_internal_data[0] + size();
   }
 
   /**
@@ -196,7 +199,7 @@ struct array
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
   {
-    return &_data[0] + size();
+    return &_internal_data[0] + size();
   }
 
   /**
@@ -204,7 +207,7 @@ struct array
    */
   [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
   {
-    return &_data[0] + size();
+    return &_internal_data[0] + size();
   }
 
   /**
@@ -322,7 +325,8 @@ struct array
     { swap((*this)[i], other[i]); }
   }
 
-  Type _data[Size];
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  Type _internal_data[Size];
 };
 
 /**

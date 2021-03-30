@@ -415,10 +415,10 @@ TEMPLATE_TEST_CASE("optional: emplace", "[optional]", etl::uint8_t, etl::int8_t,
 {
   struct S
   {
-    S(TestType x, TestType y) : x_ {x}, y_ {y} { }
+    S(TestType xInit, TestType yInit) : x {xInit}, y {yInit} { }
 
-    TestType x_;
-    TestType y_;
+    TestType x;
+    TestType y;
   };
 
   SECTION("built-in types")

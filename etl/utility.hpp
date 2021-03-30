@@ -292,6 +292,85 @@ template <typename R, typename T,
 }
 
 /**
+ * @brief etl::piecewise_construct_t is an empty class tag type used to
+ * disambiguate between different functions that take two tuple arguments.
+ *
+ * @details The overloads that do not use etl::piecewise_construct_t assume that
+ * each tuple argument becomes the element of a pair. The overloads that use
+ * etl::piecewise_construct_t assume that each tuple argument is used to
+ * construct, piecewise, a new object of specified type, which will become the
+ * element of the pair.
+ *
+ * https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
+ */
+struct piecewise_construct_t
+{
+  explicit piecewise_construct_t() = default;
+};
+
+/**
+ * @brief The constant etl::piecewise_construct is an instance of an empty
+ * struct tag type etl::piecewise_construct_t.
+ */
+inline constexpr piecewise_construct_t piecewise_construct {};
+
+/**
+ * @brief Disambiguation tags that can be passed to the constructors of
+ * etl::optional, etl::variant, and etl::any to indicate that the contained
+ * object should be constructed in-place, and (for the latter two) the type of
+ * the object to be constructed.
+ *
+ * @details The corresponding type/type templates etl::in_place_t,
+ * etl::in_place_type_t and etl::in_place_index_t can be used in the
+ * constructor's parameter list to match the intended tag.
+ */
+
+struct in_place_t
+{
+  explicit in_place_t() = default;
+};
+
+inline constexpr auto in_place = in_place_t {};
+
+/**
+ * @brief Disambiguation tags that can be passed to the constructors of
+ * etl::optional, etl::variant, and etl::any to indicate that the contained
+ * object should be constructed in-place, and (for the latter two) the type of
+ * the object to be constructed.
+ *
+ * @details The corresponding type/type templates etl::in_place_t,
+ * etl::in_place_type_t and etl::in_place_index_t can be used in the
+ * constructor's parameter list to match the intended tag.
+ */
+template <typename T>
+struct in_place_type_t
+{
+  explicit in_place_type_t() = default;
+};
+
+template <typename T>
+inline constexpr auto in_place_type = in_place_type_t<T> {};
+
+/**
+ * @brief Disambiguation tags that can be passed to the constructors of
+ * etl::optional, etl::variant, and etl::any to indicate that the contained
+ * object should be constructed in-place, and (for the latter two) the type of
+ * the object to be constructed.
+ *
+ * @details The corresponding type/type templates etl::in_place_t,
+ * etl::in_place_type_t and etl::in_place_index_t can be used in the
+ * constructor's parameter list to match the intended tag.
+ */
+template <size_t I>
+struct in_place_index_t
+{
+  explicit in_place_index_t() = default;
+};
+
+template <size_t I>
+inline constexpr auto in_place_index = in_place_index_t<I> {};
+
+/**
  * @brief etl::pair is a class template that provides a way to store two
  * heterogeneous objects as a single unit. A pair is a specific case of a
  * etl::tuple with two elements. If neither T1 nor T2 is a possibly cv-qualified
@@ -445,7 +524,7 @@ constexpr auto swap(pair<T1, T2>& lhs,
  */
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
-  -> etl::pair<typename etl::decay<T1>::type, typename etl::decay<T2>::type>
+  -> etl::pair<etl::decay_t<T1>, etl::decay_t<T2>>
 {
   return {t, u};
 }
@@ -522,85 +601,6 @@ constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
 {
   return !(lhs < rhs);
 }
-
-/**
- * @brief etl::piecewise_construct_t is an empty class tag type used to
- * disambiguate between different functions that take two tuple arguments.
- *
- * @details The overloads that do not use etl::piecewise_construct_t assume that
- * each tuple argument becomes the element of a pair. The overloads that use
- * etl::piecewise_construct_t assume that each tuple argument is used to
- * construct, piecewise, a new object of specified type, which will become the
- * element of the pair.
- *
- * https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
- */
-struct piecewise_construct_t
-{
-  explicit piecewise_construct_t() = default;
-};
-
-/**
- * @brief The constant etl::piecewise_construct is an instance of an empty
- * struct tag type etl::piecewise_construct_t.
- */
-inline constexpr piecewise_construct_t piecewise_construct {};
-
-/**
- * @brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * @details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
-
-struct in_place_t
-{
-  explicit in_place_t() = default;
-};
-
-inline constexpr auto in_place = in_place_t {};
-
-/**
- * @brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * @details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
-template <typename T>
-struct in_place_type_t
-{
-  explicit in_place_type_t() = default;
-};
-
-template <typename T>
-inline constexpr auto in_place_type = in_place_type_t<T> {};
-
-/**
- * @brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * @details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
-template <size_t I>
-struct in_place_index_t
-{
-  explicit in_place_index_t() = default;
-};
-
-template <size_t I>
-inline constexpr auto in_place_index = in_place_index_t<I> {};
 
 }  // namespace etl
 

@@ -490,18 +490,18 @@ namespace
 template <typename T>
 struct Vertex
 {
-  Vertex(T x, T y, T z) : x_ {x}, y_ {y}, z_ {z} { }
+  Vertex(T xInit, T yInit, T zInit) : x {xInit}, y {yInit}, z {zInit} { }
 
-  T x_;
-  T y_;
-  T z_;
+  T x;
+  T y;
+  T z;
 };
 
 template <typename T>
 [[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs,
                                         Vertex<T> const& rhs) -> bool
 {
-  return (lhs.x_ == rhs.x_) && (lhs.y_ == rhs.y_) && (lhs.z_ == rhs.z_);
+  return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
 }
 
 template <typename T>

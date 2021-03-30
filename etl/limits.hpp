@@ -83,13 +83,20 @@ class numeric_limits
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept { return T(); }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept { return T(); }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept { return T(); }
   static constexpr auto denorm_min() noexcept { return T(); }
 
@@ -128,13 +135,20 @@ class numeric_limits<bool>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> bool { return false; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> bool { return false; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> bool { return false; }
   static constexpr auto denorm_min() noexcept -> bool { return false; }
 
@@ -173,13 +187,20 @@ class numeric_limits<char>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept { return char {}; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept { return char {}; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept { return char {}; }
   static constexpr auto denorm_min() noexcept { return char {}; }
 
@@ -218,13 +239,20 @@ class numeric_limits<signed char>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> signed char { return {}; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> signed char { return {}; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> signed char { return {}; }
   static constexpr auto denorm_min() noexcept -> signed char { return {}; }
 
@@ -263,13 +291,20 @@ class numeric_limits<unsigned char>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> unsigned char { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned char { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> unsigned char { return 0; }
   static constexpr auto denorm_min() noexcept -> unsigned char { return 0; }
 
@@ -308,13 +343,20 @@ class numeric_limits<short>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept { return short {}; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept { return short {}; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept { return short {}; }
   static constexpr auto denorm_min() noexcept { return short {}; }
 
@@ -353,13 +395,20 @@ class numeric_limits<unsigned short>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> unsigned short { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned short { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> unsigned short { return 0; }
   static constexpr auto denorm_min() noexcept -> unsigned short { return 0; }
 
@@ -398,13 +447,20 @@ class numeric_limits<int>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept { return int {}; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept { return int {}; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept { return int {}; }
   static constexpr auto denorm_min() noexcept { return int {}; }
 
@@ -443,13 +499,20 @@ class numeric_limits<unsigned int>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> unsigned int { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned int { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> unsigned int { return 0; }
   static constexpr auto denorm_min() noexcept -> unsigned int { return 0; }
 
@@ -488,13 +551,20 @@ class numeric_limits<long>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept { return long {}; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept { return long {}; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept { return long {}; }
   static constexpr auto denorm_min() noexcept { return long {}; }
 
@@ -533,13 +603,20 @@ class numeric_limits<unsigned long>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> unsigned long { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned long { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> unsigned long { return 0; }
   static constexpr auto denorm_min() noexcept -> unsigned long { return 0; }
 
@@ -579,13 +656,20 @@ class numeric_limits<long long>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> long long { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> long long { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> long long { return 0; }
   static constexpr auto denorm_min() noexcept -> long long { return 0; }
 
@@ -632,13 +716,20 @@ class numeric_limits<unsigned long long>
   static constexpr int max_exponent   = 0;
   static constexpr int max_exponent10 = 0;
 
-  static constexpr bool has_infinity             = false;
-  static constexpr bool has_quiet_NaN            = false;
+  static constexpr bool has_infinity = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = false;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = false;
   static constexpr float_denorm_style has_denorm = denorm_absent;
   static constexpr bool has_denorm_loss          = false;
   static constexpr auto infinity() noexcept -> unsigned long long { return 0; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned long long { return 0; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> unsigned long long
   {
     return 0;
@@ -684,13 +775,20 @@ class numeric_limits<float>
   static constexpr int max_exponent   = FLT_MAX_EXP;
   static constexpr int max_exponent10 = FLT_MAX_10_EXP;
 
-  static constexpr bool has_infinity             = true;
-  static constexpr bool has_quiet_NaN            = true;
+  static constexpr bool has_infinity = true;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = true;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = true;
   static constexpr float_denorm_style has_denorm = denorm_present;
   static constexpr bool has_denorm_loss          = false;
   // static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> float { return NAN; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> float { return NAN; }
   static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
@@ -729,13 +827,20 @@ class numeric_limits<double>
   static constexpr int max_exponent   = DBL_MAX_EXP;
   static constexpr int max_exponent10 = DBL_MAX_10_EXP;
 
-  static constexpr bool has_infinity             = true;
-  static constexpr bool has_quiet_NaN            = true;
+  static constexpr bool has_infinity = true;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  static constexpr bool has_quiet_NaN = true;
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr bool has_signaling_NaN        = true;
   static constexpr float_denorm_style has_denorm = denorm_present;
   static constexpr bool has_denorm_loss          = false;
   // static constexpr auto infinity() noexcept -> double { return HUGE_VAL; }
+
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> double { return NAN; }
+  // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto signaling_NaN() noexcept -> double { return NAN; }
   static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 

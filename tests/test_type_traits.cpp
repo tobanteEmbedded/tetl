@@ -497,7 +497,7 @@ TEMPLATE_TEST_CASE("type_traits: is_fundamental", "[type_traits]", bool,
 {
   struct S
   {
-    TestType data_;
+    TestType data;
   };
 
   STATIC_REQUIRE(etl::is_fundamental_v<void>);
@@ -836,8 +836,9 @@ struct Ex2
 
 struct Ex3
 {
-  Ex3(int& n) : n_ {n} { }
-  int& n_;
+  Ex3(int& n) : ref {n} { }
+
+  int& ref;
 };
 
 }  // namespace
