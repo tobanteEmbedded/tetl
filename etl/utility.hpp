@@ -526,7 +526,7 @@ template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
   -> etl::pair<etl::decay_t<T1>, etl::decay_t<T2>>
 {
-  return {t, u};
+  return {forward<T1>(t), forward<T2>(u)};
 }
 
 /**
