@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_CSTDLIB_HPP
 
 #include "etl/cassert.hpp"
+#include "etl/cmath.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
 
@@ -228,20 +229,53 @@ template <typename T>
  * is found, then takes as many characters as possible to form a valid integer
  * number representation and converts them to an integer value.
  */
-
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
   return detail::ascii_to_integer<int>(string);
 }
 
+/**
+ * @brief Interprets an integer value in a byte string pointed to by str.
+ * Discards any whitespace characters until the first non-whitespace character
+ * is found, then takes as many characters as possible to form a valid integer
+ * number representation and converts them to an integer value.
+ */
 [[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
 {
   return detail::ascii_to_integer<long>(string);
 }
 
+/**
+ * @brief Interprets an integer value in a byte string pointed to by str.
+ * Discards any whitespace characters until the first non-whitespace character
+ * is found, then takes as many characters as possible to form a valid integer
+ * number representation and converts them to an integer value.
+ */
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
   return detail::ascii_to_integer<long long>(string);
+}
+
+/**
+ * @brief Computes the absolute value of an integer number. The behavior is
+ * undefined if the result cannot be represented by the return type. If abs
+ * is called with an unsigned integral argument that cannot be converted to int
+ * by integral promotion, the program is ill-formed.
+ */
+[[nodiscard]] constexpr auto labs(long n) noexcept -> long
+{
+  return detail::abs_impl<long>(n);
+}
+
+/**
+ * @brief Computes the absolute value of an integer number. The behavior is
+ * undefined if the result cannot be represented by the return type. If abs
+ * is called with an unsigned integral argument that cannot be converted to int
+ * by integral promotion, the program is ill-formed.
+ */
+[[nodiscard]] constexpr auto llabs(long long n) noexcept -> long long
+{
+  return detail::abs_impl<long long>(n);
 }
 }  // namespace etl
 
