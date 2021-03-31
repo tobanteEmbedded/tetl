@@ -26,11 +26,12 @@ DAMAGE.
 
 #include "catch2/catch_template_test_macros.hpp"
 
-#include "etl/array.hpp"    // for array
-#include "etl/cstdint.hpp"  // for int16_t, int32_t, int64_t, int8_t
-#include "etl/limits.hpp"   // for numeric_limits
-#include "etl/numeric.hpp"  // for midpoint, accumulate, gcd
-#include "etl/vector.hpp"   // for static_vector
+#include "etl/array.hpp"     // for array
+#include "etl/cstdint.hpp"   // for int16_t, int32_t, int64_t, int8_t
+#include "etl/iterator.hpp"  // for next, prev
+#include "etl/limits.hpp"    // for numeric_limits
+#include "etl/numeric.hpp"   // for midpoint, accumulate, gcd
+#include "etl/vector.hpp"    // for static_vector
 
 TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t)
@@ -74,6 +75,38 @@ TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,
     CHECK(data[1] == 43);
     CHECK(data[2] == 44);
     CHECK(data[3] == 45);
+  }
+}
+
+TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
+                   etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t, float, double, long double)
+{
+  using etl::adjacent_difference;
+  using etl::array;
+  using etl::begin;
+  using etl::end;
+  using etl::next;
+  using etl::plus;
+  using etl::prev;
+
+  SECTION("cppreference.com example")
+  {
+    array a {TestType(2), TestType(4), TestType(6)};
+    adjacent_difference(a.begin(), a.end(), a.begin());
+    REQUIRE(a[0] == 2);
+    REQUIRE(a[1] == 2);
+    REQUIRE(a[2] == 2);
+  }
+
+  SECTION("cppreference.com example fibonacci")
+  {
+    array<TestType, 4> a {TestType(1)};
+    adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<> {});
+    REQUIRE(a[0] == 1);
+    REQUIRE(a[1] == 1);
+    REQUIRE(a[2] == 2);
+    REQUIRE(a[3] == 3);
   }
 }
 
