@@ -6,6 +6,7 @@ foreach(_target
   "bitset"
   "chrono"
   "map"
+  "memory"
   "numeric"
   "optional"
   "set"

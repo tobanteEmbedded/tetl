@@ -347,170 +347,244 @@ class small_ptr
   StorageType value_;
 };
 
+namespace detail
+{
+// Compile time version of log2 that handles 0.
+static constexpr size_t log2(size_t value)
+{
+  return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
+}
+
+}  // namespace detail
+
 /**
- * @brief Wraps a pointer and an integer value. Uses as much space as sizeof of
- * the StorageType template parameter.
- *
- * @tparam T The value_type of the wrapped pointer.
- * @tparam PointerBits How many bits to use for storing the pointer.
- * @tparam IntBits How many bits to use for storing the integer.
- * @tparam IntType The type of integer to be stored.
- * @tparam StorageType The underlying storage for both pinter & integer.
+ * @brief A traits type that is used to handle pointer types and things that are
+ * just wrappers for pointers as a uniform entity.
  */
-template <typename T, size_t PointerBits, size_t IntBits,
-          typename IntType = size_t, typename StorageType = uintptr_t>
-class ptr_with_int
+template <typename T>
+struct pointer_like_traits;
+
+/**
+ * @brief Provide pointer_like_traits for non-cvr pointers.
+ */
+template <typename T>
+struct pointer_like_traits<T*>
+{
+  static auto get_as_void_pointer(T* P) -> void* { return P; }
+  static auto get_from_void_pointer(void* P) -> T*
+  {
+    return static_cast<T*>(P);
+  }
+
+  static constexpr int free_bits = detail::log2(alignof(T));
+};
+
+// Provide pointer_like_traits for const things.
+template <typename T>
+struct pointer_like_traits<const T>
+{
+  typedef pointer_like_traits<T> non_const;
+
+  static const void* get_as_void_pointer(const T P)
+  {
+    return non_const::get_as_void_pointer(P);
+  }
+  static const T get_from_void_pointer(const void* P)
+  {
+    return non_const::get_from_void_pointer(const_cast<void*>(P));
+  }
+  static constexpr int free_bits = non_const::free_bits;
+};
+
+// Provide pointer_like_traits for const pointers.
+template <typename T>
+struct pointer_like_traits<const T*>
+{
+  typedef pointer_like_traits<T*> non_const;
+
+  static const void* get_as_void_pointer(const T* P)
+  {
+    return non_const::get_as_void_pointer(const_cast<T*>(P));
+  }
+  static const T* get_from_void_pointer(const void* P)
+  {
+    return non_const::get_from_void_pointer(const_cast<void*>(P));
+  }
+  static constexpr int free_bits = non_const::free_bits;
+};
+
+// Provide pointer_like_traits for uintptr_t.
+template <>
+struct pointer_like_traits<uintptr_t>
+{
+  static void* get_as_void_pointer(uintptr_t P)
+  {
+    return reinterpret_cast<void*>(P);
+  }
+  static uintptr_t get_from_void_pointer(void* P)
+  {
+    return reinterpret_cast<uintptr_t>(P);
+  }
+  // No bits are available!
+  static constexpr int free_bits = 0;
+};
+
+template <typename PointerT, unsigned IntBits, typename PtrTraits>
+struct pointer_int_pair_info
+{
+  static_assert(PtrTraits::free_bits < numeric_limits<uintptr_t>::digits,
+                "cannot use a pointer type that has all bits free");
+  static_assert(IntBits <= PtrTraits::free_bits,
+                "pointer_int_pair with integer size too large for pointer");
+  /// ptr_mask - The bits that come from the pointer.
+  static constexpr auto ptr_mask
+    = ~(uintptr_t)(((intptr_t)1 << PtrTraits::free_bits) - 1);
+
+  /// The number of low bits that we reserve for other uses; and keep zero.
+  static constexpr auto int_shift = (uintptr_t)PtrTraits::free_bits - IntBits;
+
+  /// int_mask - This is the unshifted mask for valid bits of the int type.
+  static constexpr auto int_mask = (uintptr_t)(((intptr_t)1 << IntBits) - 1);
+
+  // shifted_int_mask - This is the bits for the integer shifted in place.
+  static constexpr auto shifted_int_mask = (uintptr_t)(int_mask << int_shift);
+
+  [[nodiscard]] static auto get_pointer(intptr_t Value) -> PointerT
+  {
+    return PtrTraits::get_from_void_pointer(
+      reinterpret_cast<void*>(Value & ptr_mask));
+  }
+
+  [[nodiscard]] static auto get_int(intptr_t Value) -> intptr_t
+  {
+    return (Value >> int_shift) & int_mask;
+  }
+
+  [[nodiscard]] static auto update_ptr(intptr_t originalValue, PointerT ptr)
+    -> intptr_t
+  {
+    // Preserve all low bits, just update the pointer.
+    auto* voidPtr    = PtrTraits::get_as_void_pointer(ptr);
+    auto pointerWord = reinterpret_cast<intptr_t>(voidPtr);
+    return pointerWord | (originalValue & ~ptr_mask);
+  }
+
+  [[nodiscard]] static auto update_int(intptr_t originalValue, intptr_t integer)
+    -> intptr_t
+  {
+    // Preserve all bits other than the ones we are updating.
+    auto const integerWord = static_cast<intptr_t>(integer);
+    return (originalValue & ~shifted_int_mask) | integerWord << int_shift;
+  }
+};
+
+/// pointer_int_pair - This class implements a pair of a pointer and small
+/// integer.  It is designed to represent this in the space required by one
+/// pointer by bitmangling the integer into the low part of the pointer.  This
+/// can only be done for small integers: typically up to 3 bits, but it depends
+/// on the number of bits available according to pointer_like_traits for the
+/// type.
+///
+/// Note that pointer_int_pair always puts the IntVal part in the highest bits
+/// possible.  For example, pointer_int_pair<void*, 1, bool> will put the bit
+/// for the bool into bit #2, not bit #0, which allows the low two bits to be
+/// used for something else.  For example, this allows:
+///   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
+/// ... and the two bools will land in different bits.
+template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
+          typename PtrTraits = pointer_like_traits<PointerT>,
+          typename Info = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
+class pointer_int_pair
 {
   public:
-  using value_type                     = T;
-  using pointer                        = T*;
-  using reference                      = T&;
-  using int_type                       = IntType;
-  using storage_type                   = StorageType;
-  static constexpr size_t pointer_bits = PointerBits;
-  static constexpr size_t int_bits     = IntBits;
+  constexpr pointer_int_pair() = default;
 
-  /**
-   * @brief Construct an empty ptr_with_int. Initialized to zero.
-   */
-  ptr_with_int() noexcept = default;
-
-  /**
-   * @brief Construct from nullptr.
-   */
-  ptr_with_int(nullptr_t /*null*/) noexcept { }
-
-  /**
-   * @brief Construct an ptr_with_int with the given pointer. The integer
-   * value is initialized to zero.
-   */
-  explicit ptr_with_int(pointer ptr) noexcept
+  pointer_int_pair(PointerT PtrVal, IntType IntVal)
   {
-    internal_store_ptr(ptr);
-    internal_store_int(0);
+    set_ptr_and_int(PtrVal, IntVal);
   }
 
-  /**
-   * @brief Construct an ptr_with_int with the given pointer aand integer.
-   */
-  ptr_with_int(pointer ptr, int_type const integer) noexcept
+  explicit pointer_int_pair(PointerT PtrVal) { init_with_ptr(PtrVal); }
+
+  PointerT get_pointer() const { return Info::get_pointer(value); }
+
+  IntType get_int() const { return (IntType)Info::get_int(value); }
+
+  void set_pointer(PointerT PtrVal) { value = Info::update_ptr(value, PtrVal); }
+
+  void set_int(IntType IntVal)
   {
-    internal_store_ptr(ptr);
-    internal_store_int(integer);
+    value = Info::update_int(value, static_cast<intptr_t>(IntVal));
   }
 
-  /**
-   * @brief Returns the contained pointer.
-   */
-  [[nodiscard]] auto get_ptr() noexcept -> pointer
+  void init_with_ptr(PointerT PtrVal) { value = Info::update_ptr(0, PtrVal); }
+
+  void set_ptr_and_int(PointerT PtrVal, IntType IntVal)
   {
-    return internal_load_ptr();
+    value = Info::update_int(Info::update_ptr(0, PtrVal),
+                             static_cast<intptr_t>(IntVal));
   }
 
-  /**
-   * @brief Returns the contained pointer.
-   */
-  [[nodiscard]] auto get_ptr() const noexcept -> pointer
+  PointerT const* getAddrOfPointer() const
   {
-    return internal_load_ptr();
+    return const_cast<pointer_int_pair*>(this)->getAddrOfPointer();
   }
 
-  /**
-   * @brief Returns the contained integer.
-   */
-  [[nodiscard]] auto get_int() const noexcept -> int_type
+  PointerT* getAddrOfPointer() { return reinterpret_cast<PointerT*>(&value); }
+
+  void* getOpaquevalue() const { return reinterpret_cast<void*>(value); }
+
+  void setFromOpaquevalue(void* Val)
   {
-    return internal_load_int();
+    value = reinterpret_cast<intptr_t>(Val);
   }
 
-  /**
-   * @brief Stores a new pointer.
-   */
-  auto set_ptr(pointer ptr) noexcept -> void { internal_store_ptr(ptr); }
+  static pointer_int_pair get_from_opaque_value(void* V)
+  {
+    pointer_int_pair P;
+    P.setFromOpaqueValue(V);
+    return P;
+  }
 
-  /**
-   * @brief Stores a new integer value.
-   */
-  auto set_int(int_type const val) noexcept -> void { internal_store_int(val); }
+  // Allow pointer_int_pairs to be created from const void * if and only if the
+  // pointer type could be created from a const void *.
+  static pointer_int_pair get_from_opaque_value(const void* V)
+  {
+    (void)PtrTraits::get_from_void_pointer(V);
+    return get_from_opaque_value(const_cast<void*>(V));
+  }
 
-  /**
-   * @brief Returns a raw pointer to value_type.
-   */
-  [[nodiscard]] auto operator->() const -> pointer { return get_ptr(); }
+  bool operator==(const pointer_int_pair& other) const
+  {
+    return value == other.value;
+  }
 
-  /**
-   * @brief Dereference pointer to value_type&.
-   */
-  [[nodiscard]] auto operator*() -> reference { return *get_ptr(); }
+  bool operator!=(const pointer_int_pair& other) const
+  {
+    return value != other.value;
+  }
 
-  /**
-   * @brief Dereference pointer to value_type&.
-   */
-  [[nodiscard]] auto operator*() const -> reference { return *get_ptr(); }
+  bool operator<(const pointer_int_pair& other) const
+  {
+    return value < other.value;
+  }
+  bool operator>(const pointer_int_pair& other) const
+  {
+    return value > other.value;
+  }
 
-  /**
-   * @brief Implicit conversion to raw pointer.
-   */
-  [[nodiscard]] operator pointer() noexcept { return get_ptr(); }
+  bool operator<=(const pointer_int_pair& other) const
+  {
+    return value <= other.value;
+  }
 
-  /**
-   * @brief Implicit conversion to raw pointer.
-   */
-  [[nodiscard]] operator pointer() const noexcept { return get_ptr(); }
+  bool operator>=(const pointer_int_pair& other) const
+  {
+    return value >= other.value;
+  }
 
   private:
-  static_assert(int_bits >= 0);
-  static_assert(pointer_bits > 0);
-  static_assert(pointer_bits + int_bits == sizeof(storage_type) * 8);
-
-  static constexpr storage_type pointer_mask = [] {
-    auto mask = storage_type {0};
-    for (storage_type i = 0; i < pointer_bits; ++i)
-    { mask |= 1UL << (i + int_bits); }
-    return mask;
-  }();
-
-  static constexpr storage_type integer_mask = [] {
-    auto mask = storage_type {0};
-    for (storage_type i = 0; i < int_bits; ++i) { mask |= 1UL << i; }
-    return mask;
-  }();
-
-  auto internal_store_ptr(pointer ptr) noexcept -> void
-  {
-    auto const tmp = reinterpret_cast<uintptr_t>(ptr);
-    if constexpr (int_bits > 0)
-    {
-      assert(tmp <= (1UL << pointer_bits));
-      storage_ |= static_cast<storage_type>(tmp) << pointer_bits;
-      return;
-    }
-    storage_ |= static_cast<storage_type>(tmp);
-  }
-
-  auto internal_store_int(int_type integer) noexcept -> void
-  {
-    assert(integer <= (1UL << int_bits));
-    storage_ &= (~integer_mask);
-    storage_ |= (integer & integer_mask);
-  }
-
-  [[nodiscard]] auto internal_load_ptr() const noexcept -> pointer
-  {
-    if constexpr (int_bits > 0)
-    {
-      auto const tmp = storage_ & pointer_mask;
-      return reinterpret_cast<pointer>(tmp >> pointer_bits);
-    }
-    return reinterpret_cast<pointer>(storage_ & pointer_mask);
-  }
-
-  [[nodiscard]] auto internal_load_int() const noexcept -> int_type
-  {
-    return storage_ & integer_mask;
-  }
-
-  storage_type storage_ {};
+  intptr_t value = 0;
 };
 
 template <typename T>
