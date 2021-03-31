@@ -102,43 +102,50 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
   }
 }
 
-/**
- * @brief Parses the C-string str interpreting its content as an integral
- * number, which is returned as a value of type long int.
- */
-constexpr auto atol(char const* str) -> long
+namespace detail
 {
-  constexpr long pow10[] = {
-    // 10000000000000000000L,
-    1000000000000000000L,
-    100000000000000000L,
-    10000000000000000L,
-    1000000000000000L,
-    100000000000000L,
-    10000000000000L,
-    1000000000000L,
-    100000000000L,
-    10000000000L,
-    1000000000L,
-    100000000L,
-    10000000L,
-    1000000L,
-    100000L,
-    10000L,
-    1000L,
-    100L,
-    10L,
-    1L,
-  };
+/**
+ * @brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
+ */
+template <typename T>
+[[nodiscard]] constexpr auto ascii_to_integer(char const* string) noexcept -> T
+{
+  // Iterate through all characters
+  // of input string and update result
+  // take ASCII character of corosponding digit and
+  // subtract the code from '0' to get numerical
+  // value and multiply res by 10 to shuffle
+  // digits left to update running total
+  auto res = T {0};
+  for (size_t i {0}; string[i] != '\0'; ++i)
+  {
+    auto const digit = string[i] - '0';
+    res              = res * 10 + digit;
+  }
+  return res;
+}
+}  // namespace detail
 
-  auto const* first = &str[0];
-  auto const* last  = first + etl::strlen(first);
+/**
+ * @brief Interprets an integer value in a byte string pointed to by str.
+ * Discards any whitespace characters until the first non-whitespace character
+ * is found, then takes as many characters as possible to form a valid integer
+ * number representation and converts them to an integer value.
+ */
 
-  long result = 0;
-  auto i      = sizeof(pow10) / sizeof(pow10[0]) - unsigned(last - first);
-  for (; first != last; ++first) { result += pow10[i++] * (*first - '0'); }
+[[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
+{
+  return detail::ascii_to_integer<int>(string);
+}
 
-  return result;
+[[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
+{
+  return detail::ascii_to_integer<long>(string);
+}
+
+[[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
+{
+  return detail::ascii_to_integer<long long>(string);
 }
 }  // namespace etl
 

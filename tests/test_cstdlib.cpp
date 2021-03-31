@@ -91,16 +91,44 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
   }
 }
 
+TEST_CASE("cstdlib: atoi", "[cstdlib]")
+{
+  SECTION("positive")
+  {
+    REQUIRE(etl::atoi("0") == 0);
+    REQUIRE(etl::atoi("10") == 10);
+    REQUIRE(etl::atoi("100") == 100);
+    REQUIRE(etl::atoi("1000") == 1000);
+    REQUIRE(etl::atoi("10000") == 10000);
+    REQUIRE(etl::atoi("999999") == 999999);
+    REQUIRE(etl::atoi("9999999") == 9999999);
+  }
+}
+
 TEST_CASE("cstdlib: atol", "[cstdlib]")
 {
   SECTION("positive")
   {
-    REQUIRE(etl::atol("0") == long {0});
-    REQUIRE(etl::atol("10") == long {10});
-    REQUIRE(etl::atol("100") == long {100});
-    REQUIRE(etl::atol("1000") == long {1000});
-    REQUIRE(etl::atol("10000") == long {10000});
-    REQUIRE(etl::atol("999999") == long {999999});
-    REQUIRE(etl::atol("9999999") == long {9999999});
+    REQUIRE(etl::atol("0") == 0L);
+    REQUIRE(etl::atol("10") == 10L);
+    REQUIRE(etl::atol("100") == 100L);
+    REQUIRE(etl::atol("1000") == 1000L);
+    REQUIRE(etl::atol("10000") == 10000L);
+    REQUIRE(etl::atol("999999") == 999999L);
+    REQUIRE(etl::atol("9999999") == 9999999L);
+  }
+}
+
+TEST_CASE("cstdlib: atoll", "[cstdlib]")
+{
+  SECTION("positive")
+  {
+    REQUIRE(etl::atoll("0") == 0LL);
+    REQUIRE(etl::atoll("10") == 10LL);
+    REQUIRE(etl::atoll("100") == 100LL);
+    REQUIRE(etl::atoll("1000") == 1000LL);
+    REQUIRE(etl::atoll("10000") == 10000LL);
+    REQUIRE(etl::atoll("999999") == 999999LL);
+    REQUIRE(etl::atoll("9999999") == 9999999LL);
   }
 }
