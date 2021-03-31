@@ -235,6 +235,55 @@ template <typename Float>
   return detail::lerp_impl<long double>(a, b, t);
 }
 
+namespace detail
+{
+template <typename T>
+[[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
+{
+  constexpr auto isInt      = is_same_v<T, int>;
+  constexpr auto isLong     = is_same_v<T, long>;
+  constexpr auto isLongLong = is_same_v<T, long long>;
+  static_assert(isInt || isLong || isLongLong);
+
+  if (n >= T(0)) { return n; }
+  return n * T(-1);
+}
+
+}  // namespace detail
+
+/**
+ * @brief Computes the absolute value of an integer number. The behavior is
+ * undefined if the result cannot be represented by the return type. If abs
+ * is called with an unsigned integral argument that cannot be converted to int
+ * by integral promotion, the program is ill-formed.
+ */
+[[nodiscard]] constexpr auto abs(int n) noexcept -> int
+{
+  return detail::abs_impl<int>(n);
+}
+
+/**
+ * @brief Computes the absolute value of an integer number. The behavior is
+ * undefined if the result cannot be represented by the return type. If abs
+ * is called with an unsigned integral argument that cannot be converted to int
+ * by integral promotion, the program is ill-formed.
+ */
+[[nodiscard]] constexpr auto abs(long n) noexcept -> long
+{
+  return detail::abs_impl<long>(n);
+}
+
+/**
+ * @brief Computes the absolute value of an integer number. The behavior is
+ * undefined if the result cannot be represented by the return type. If abs
+ * is called with an unsigned integral argument that cannot be converted to int
+ * by integral promotion, the program is ill-formed.
+ */
+[[nodiscard]] constexpr auto abs(long long n) noexcept -> long long
+{
+  return detail::abs_impl<long long>(n);
+}
+
 }  // namespace etl
 
 #endif  // TAETL_CMATH_HPP

@@ -82,3 +82,18 @@ TEMPLATE_TEST_CASE("cmath: lerp", "[cmath]", float, double, long double)
   CHECK(etl::lerp(T(-10), T(-20), T(0.5)) == T(-15));
   CHECK(etl::lerp(T(-10), T(-20), T(2)) == T(-30));
 }
+
+TEMPLATE_TEST_CASE("cmath: abs", "[cmath]", int, long, long long)
+{
+  using T = TestType;
+
+  CHECK(etl::abs(T(0)) == T(0));
+
+  CHECK(etl::abs(T(1)) == T(1));
+  CHECK(etl::abs(T(2)) == T(2));
+  CHECK(etl::abs(T(3)) == T(3));
+
+  CHECK(etl::abs(T(-1)) == T(1));
+  CHECK(etl::abs(T(-2)) == T(2));
+  CHECK(etl::abs(T(-3)) == T(3));
+}
