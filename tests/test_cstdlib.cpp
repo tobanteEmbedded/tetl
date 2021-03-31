@@ -132,3 +132,45 @@ TEST_CASE("cstdlib: atoll", "[cstdlib]")
     REQUIRE(etl::atoll("9999999") == 9999999LL);
   }
 }
+
+TEST_CASE("cstdlib: div", "[cstdlib]")
+{
+  SECTION("int")
+  {
+    REQUIRE(etl::div(2, 1).quot == 2);
+    REQUIRE(etl::div(2, 1).rem == 0);
+
+    REQUIRE(etl::div(1, 2).quot == 0);
+    REQUIRE(etl::div(1, 2).rem == 1);
+  }
+
+  SECTION("long")
+  {
+    REQUIRE(etl::div(2L, 1L).quot == 2L);
+    REQUIRE(etl::div(2L, 1L).rem == 0L);
+
+    REQUIRE(etl::div(1L, 2L).quot == 0L);
+    REQUIRE(etl::div(1L, 2L).rem == 1L);
+
+    REQUIRE(etl::ldiv(2LL, 1LL).quot == 2LL);
+    REQUIRE(etl::ldiv(2LL, 1LL).rem == 0LL);
+
+    REQUIRE(etl::ldiv(1LL, 2LL).quot == 0LL);
+    REQUIRE(etl::ldiv(1LL, 2LL).rem == 1LL);
+  }
+
+  SECTION("long long")
+  {
+    REQUIRE(etl::div(2LL, 1LL).quot == 2LL);
+    REQUIRE(etl::div(2LL, 1LL).rem == 0LL);
+
+    REQUIRE(etl::div(1LL, 2LL).quot == 0LL);
+    REQUIRE(etl::div(1LL, 2LL).rem == 1LL);
+
+    REQUIRE(etl::lldiv(2LL, 1LL).quot == 2LL);
+    REQUIRE(etl::lldiv(2LL, 1LL).rem == 0LL);
+
+    REQUIRE(etl::lldiv(1LL, 2LL).quot == 0LL);
+    REQUIRE(etl::lldiv(1LL, 2LL).rem == 1LL);
+  }
+}

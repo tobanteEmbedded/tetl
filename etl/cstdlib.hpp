@@ -49,6 +49,102 @@ namespace etl
 #define EXIT_FAILURE 1
 #endif
 
+#if not defined(NULL)
+/**
+ * @brief The macro NULL is an implementation-defined null pointer constant,
+ * which may be a prvalue of type nullptr_t.
+ */
+#define NULL nullptr
+#endif
+
+/**
+ * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ */
+struct div_t
+{
+  int quot;
+  int rem;
+};
+
+/**
+ * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ */
+struct ldiv_t
+{
+  long quot;
+  long rem;
+};
+
+/**
+ * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ */
+struct lldiv_t
+{
+  long long quot;
+  long long rem;
+};
+
+/**
+ * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ */
+struct imaxdiv_t
+{
+  intmax_t quot;
+  intmax_t rem;
+};
+
+/**
+ * @brief Computes both the quotient and the remainder of the division of the
+ * numerator x by the denominator y. The quotient is the result of the
+ * expression x/y. The remainder is the result of the expression x%y.
+ */
+[[nodiscard]] constexpr auto div(int x, int y) noexcept -> std::div_t
+{
+  return {x / y, x % y};
+}
+
+/**
+ * @brief Computes both the quotient and the remainder of the division of the
+ * numerator x by the denominator y. The quotient is the result of the
+ * expression x/y. The remainder is the result of the expression x%y.
+ */
+[[nodiscard]] constexpr auto div(long x, long y) noexcept -> std::ldiv_t
+{
+  return {x / y, x % y};
+}
+
+/**
+ * @brief Computes both the quotient and the remainder of the division of the
+ * numerator x by the denominator y. The quotient is the result of the
+ * expression x/y. The remainder is the result of the expression x%y.
+ */
+[[nodiscard]] constexpr auto div(long long x, long long y) noexcept
+  -> std::lldiv_t
+{
+  return {x / y, x % y};
+}
+
+/**
+ * @brief Computes both the quotient and the remainder of the division of the
+ * numerator x by the denominator y. The quotient is the result of the
+ * expression x/y. The remainder is the result of the expression x%y.
+ */
+[[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> std::ldiv_t
+{
+  return {x / y, x % y};
+}
+
+/**
+ * @brief Computes both the quotient and the remainder of the division of the
+ * numerator x by the denominator y. The quotient is the result of the
+ * expression x/y. The remainder is the result of the expression x%y.
+ */
+[[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept
+  -> std::lldiv_t
+{
+  return {x / y, x % y};
+}
+
 /**
  * @brief Converts an integer value to a null-terminated string using the
  * specified base and stores the result in the array given by str parameter.
