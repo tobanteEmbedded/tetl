@@ -350,7 +350,7 @@ class small_ptr
 namespace detail
 {
 // Compile time version of log2 that handles 0.
-static constexpr size_t log2(size_t value)
+static constexpr auto log2(size_t value) -> size_t
 {
   return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
 }
@@ -370,10 +370,10 @@ struct pointer_like_traits;
 template <typename T>
 struct pointer_like_traits<T*>
 {
-  static auto get_as_void_pointer(T* P) -> void* { return P; }
-  static auto get_from_void_pointer(void* P) -> T*
+  static auto get_as_void_pointer(T* p) -> void* { return p; }
+  static auto get_from_void_pointer(void* p) -> T*
   {
-    return static_cast<T*>(P);
+    return static_cast<T*>(p);
   }
 
   static constexpr int free_bits = detail::log2(alignof(T));
@@ -383,15 +383,17 @@ struct pointer_like_traits<T*>
 template <typename T>
 struct pointer_like_traits<const T>
 {
-  typedef pointer_like_traits<T> non_const;
+  using non_const = pointer_like_traits<T>;
 
-  static const void* get_as_void_pointer(const T P)
+  static auto get_as_void_pointer(const T p) -> const void*
   {
-    return non_const::get_as_void_pointer(P);
+    return non_const::get_as_void_pointer(p);
   }
-  static const T get_from_void_pointer(const void* P)
+
+  // NOLINTNEXTLINE(readability-const-return-type)
+  static auto get_from_void_pointer(const void* p) -> const T
   {
-    return non_const::get_from_void_pointer(const_cast<void*>(P));
+    return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
   static constexpr int free_bits = non_const::free_bits;
 };
@@ -400,15 +402,15 @@ struct pointer_like_traits<const T>
 template <typename T>
 struct pointer_like_traits<const T*>
 {
-  typedef pointer_like_traits<T*> non_const;
+  using non_const = pointer_like_traits<T*>;
 
-  static const void* get_as_void_pointer(const T* P)
+  static auto get_as_void_pointer(const T* p) -> const void*
   {
-    return non_const::get_as_void_pointer(const_cast<T*>(P));
+    return non_const::get_as_void_pointer(const_cast<T*>(p));
   }
-  static const T* get_from_void_pointer(const void* P)
+  static auto get_from_void_pointer(const void* p) -> const T*
   {
-    return non_const::get_from_void_pointer(const_cast<void*>(P));
+    return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
   static constexpr int free_bits = non_const::free_bits;
 };
@@ -417,13 +419,13 @@ struct pointer_like_traits<const T*>
 template <>
 struct pointer_like_traits<uintptr_t>
 {
-  static void* get_as_void_pointer(uintptr_t P)
+  static auto get_as_void_pointer(uintptr_t p) -> void*
   {
-    return reinterpret_cast<void*>(P);
+    return reinterpret_cast<void*>(p);
   }
-  static uintptr_t get_from_void_pointer(void* P)
+  static auto get_from_void_pointer(void* p) -> uintptr_t
   {
-    return reinterpret_cast<uintptr_t>(P);
+    return reinterpret_cast<uintptr_t>(p);
   }
   // No bits are available!
   static constexpr int free_bits = 0;
@@ -449,15 +451,15 @@ struct pointer_int_pair_info
   // shifted_int_mask - This is the bits for the integer shifted in place.
   static constexpr auto shifted_int_mask = (uintptr_t)(int_mask << int_shift);
 
-  [[nodiscard]] static auto get_pointer(intptr_t Value) -> PointerT
+  [[nodiscard]] static auto get_pointer(intptr_t value) -> PointerT
   {
     return PtrTraits::get_from_void_pointer(
-      reinterpret_cast<void*>(Value & ptr_mask));
+      reinterpret_cast<void*>(value & ptr_mask));
   }
 
-  [[nodiscard]] static auto get_int(intptr_t Value) -> intptr_t
+  [[nodiscard]] static auto get_int(intptr_t value) -> intptr_t
   {
-    return (Value >> int_shift) & int_mask;
+    return (value >> int_shift) & int_mask;
   }
 
   [[nodiscard]] static auto update_ptr(intptr_t originalValue, PointerT ptr)
@@ -499,92 +501,107 @@ class pointer_int_pair
   public:
   constexpr pointer_int_pair() = default;
 
-  pointer_int_pair(PointerT PtrVal, IntType IntVal)
+  pointer_int_pair(PointerT ptrVal, IntType intVal)
   {
-    set_ptr_and_int(PtrVal, IntVal);
+    set_ptr_and_int(ptrVal, intVal);
   }
 
-  explicit pointer_int_pair(PointerT PtrVal) { init_with_ptr(PtrVal); }
+  explicit pointer_int_pair(PointerT ptrVal) { init_with_ptr(ptrVal); }
 
-  PointerT get_pointer() const { return Info::get_pointer(value); }
-
-  IntType get_int() const { return (IntType)Info::get_int(value); }
-
-  void set_pointer(PointerT PtrVal) { value = Info::update_ptr(value, PtrVal); }
-
-  void set_int(IntType IntVal)
+  [[nodiscard]] auto get_pointer() const -> PointerT
   {
-    value = Info::update_int(value, static_cast<intptr_t>(IntVal));
+    return Info::get_pointer(value_);
   }
 
-  void init_with_ptr(PointerT PtrVal) { value = Info::update_ptr(0, PtrVal); }
-
-  void set_ptr_and_int(PointerT PtrVal, IntType IntVal)
+  [[nodiscard]] auto get_int() const -> IntType
   {
-    value = Info::update_int(Info::update_ptr(0, PtrVal),
-                             static_cast<intptr_t>(IntVal));
+    return (IntType)Info::get_int(value_);
   }
 
-  PointerT const* getAddrOfPointer() const
+  void set_pointer(PointerT ptrVal)
   {
-    return const_cast<pointer_int_pair*>(this)->getAddrOfPointer();
+    value_ = Info::update_ptr(value_, ptrVal);
   }
 
-  PointerT* getAddrOfPointer() { return reinterpret_cast<PointerT*>(&value); }
-
-  void* getOpaquevalue() const { return reinterpret_cast<void*>(value); }
-
-  void setFromOpaquevalue(void* Val)
+  void set_int(IntType intVal)
   {
-    value = reinterpret_cast<intptr_t>(Val);
+    value_ = Info::update_int(value_, static_cast<intptr_t>(intVal));
   }
 
-  static pointer_int_pair get_from_opaque_value(void* V)
+  void init_with_ptr(PointerT ptrVal) { value_ = Info::update_ptr(0, ptrVal); }
+
+  void set_ptr_and_int(PointerT ptrVal, IntType intVal)
   {
-    pointer_int_pair P;
-    P.setFromOpaqueValue(V);
-    return P;
+    value_ = Info::update_int(Info::update_ptr(0, ptrVal),
+                              static_cast<intptr_t>(intVal));
+  }
+
+  [[nodiscard]] auto get_addr_of_pointer() const -> PointerT const*
+  {
+    return const_cast<pointer_int_pair*>(this)->get_addr_of_pointer();
+  }
+
+  auto get_addr_of_pointer() -> PointerT*
+  {
+    return reinterpret_cast<PointerT*>(&value_);
+  }
+
+  [[nodiscard]] auto get_opaquevalue() const -> void*
+  {
+    return reinterpret_cast<void*>(value_);
+  }
+
+  void set_from_opaque_value(void* val)
+  {
+    value_ = reinterpret_cast<intptr_t>(val);
+  }
+
+  static auto get_from_opaque_value(void* v) -> pointer_int_pair
+  {
+    pointer_int_pair p;
+    p.set_from_opaque_value(v);
+    return p;
   }
 
   // Allow pointer_int_pairs to be created from const void * if and only if the
   // pointer type could be created from a const void *.
-  static pointer_int_pair get_from_opaque_value(const void* V)
+  static auto get_from_opaque_value(const void* v) -> pointer_int_pair
   {
-    (void)PtrTraits::get_from_void_pointer(V);
-    return get_from_opaque_value(const_cast<void*>(V));
+    (void)PtrTraits::get_from_void_pointer(v);
+    return get_from_opaque_value(const_cast<void*>(v));
   }
 
-  bool operator==(const pointer_int_pair& other) const
+  auto operator==(const pointer_int_pair& other) const -> bool
   {
-    return value == other.value;
+    return value_ == other.value_;
   }
 
-  bool operator!=(const pointer_int_pair& other) const
+  auto operator!=(const pointer_int_pair& other) const -> bool
   {
-    return value != other.value;
+    return value_ != other.value_;
   }
 
-  bool operator<(const pointer_int_pair& other) const
+  auto operator<(const pointer_int_pair& other) const -> bool
   {
-    return value < other.value;
+    return value_ < other.value_;
   }
-  bool operator>(const pointer_int_pair& other) const
+  auto operator>(const pointer_int_pair& other) const -> bool
   {
-    return value > other.value;
-  }
-
-  bool operator<=(const pointer_int_pair& other) const
-  {
-    return value <= other.value;
+    return value_ > other.value_;
   }
 
-  bool operator>=(const pointer_int_pair& other) const
+  auto operator<=(const pointer_int_pair& other) const -> bool
   {
-    return value >= other.value;
+    return value_ <= other.value_;
+  }
+
+  auto operator>=(const pointer_int_pair& other) const -> bool
+  {
+    return value_ >= other.value_;
   }
 
   private:
-  intptr_t value = 0;
+  intptr_t value_ = 0;
 };
 
 template <typename T>

@@ -255,7 +255,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   {
     // for types subject to integral promotion
     auto offset = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
-    return T(1u << (bit_width(T(x - 1)) + offset) >> offset);
+    return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
   }
 }
 
