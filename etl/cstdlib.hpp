@@ -99,7 +99,7 @@ struct imaxdiv_t
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
-[[nodiscard]] constexpr auto div(int x, int y) noexcept -> std::div_t
+[[nodiscard]] constexpr auto div(int x, int y) noexcept -> div_t
 {
   return {x / y, x % y};
 }
@@ -109,7 +109,7 @@ struct imaxdiv_t
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
-[[nodiscard]] constexpr auto div(long x, long y) noexcept -> std::ldiv_t
+[[nodiscard]] constexpr auto div(long x, long y) noexcept -> ldiv_t
 {
   return {x / y, x % y};
 }
@@ -119,8 +119,7 @@ struct imaxdiv_t
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
-[[nodiscard]] constexpr auto div(long long x, long long y) noexcept
-  -> std::lldiv_t
+[[nodiscard]] constexpr auto div(long long x, long long y) noexcept -> lldiv_t
 {
   return {x / y, x % y};
 }
@@ -130,7 +129,7 @@ struct imaxdiv_t
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
-[[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> std::ldiv_t
+[[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> ldiv_t
 {
   return {x / y, x % y};
 }
@@ -140,8 +139,7 @@ struct imaxdiv_t
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
-[[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept
-  -> std::lldiv_t
+[[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept -> lldiv_t
 {
   return {x / y, x % y};
 }

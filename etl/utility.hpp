@@ -503,7 +503,7 @@ struct pair
 };  // namespace etl
 
 /**
- * @brief One deduction guide is provided for std::pair to account for the edge
+ * @brief One deduction guide is provided for pair to account for the edge
  * cases missed by the implicit deduction guides. In particular, non-copyable
  * arguments and array to pointer conversion.
  *

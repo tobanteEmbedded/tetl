@@ -170,7 +170,7 @@ struct allocator_arg_t
 };
 
 /**
- * @brief allocator_arg is a constant of type std::allocator_arg_t used to
+ * @brief allocator_arg is a constant of type allocator_arg_t used to
  * disambiguate, at call site, the overloads of the constructors and member
  * functions of allocator-aware objects.
  */
