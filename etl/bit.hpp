@@ -229,6 +229,53 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
 
+/**
+ * @brief Calculates the smallest integral power of two that is not smaller than
+ * x. If that value is not representable in T, the behavior is undefined. Call
+ * to this function is permitted in constant evaluation only if the undefined
+ * behavior does not occur.
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @return The smallest integral power of two that is not smaller than x.
+ */
+template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
+[[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
+{
+  if (x <= 1U) { return T(1); }
+
+  if constexpr (is_same_v<T, decltype(+x)>)
+  {
+    //
+    return T(1) << bit_width(T(x - 1));
+  }
+  else
+  {
+    // for types subject to integral promotion
+    auto offset = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
+    return T(1u << (bit_width(T(x - 1)) + offset) >> offset);
+  }
+}
+
+/**
+ * @brief If x is not zero, calculates the largest integral power of two that is
+ * not greater than x. If x is zero, returns zero.
+ *
+ * @details This overload only participates in overload resolution if T is an
+ * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+ * unsigned long, unsigned long long, or an extended unsigned integer type).
+ *
+ * @return Zero if x is zero; otherwise, the largest integral power of two that
+ * is not greater than x.
+ */
+template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
+[[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
+{
+  if (x != 0) { return T {1} << (bit_width(x) - 1); }
+  return 0;
+}
 }  // namespace etl
 
 #endif  // TAETL_BIT_HPP

@@ -123,6 +123,34 @@ TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t,
   REQUIRE_FALSE(etl::has_single_bit(TestType {3 << 4}));
 }
 
+TEST_CASE("bit: bit_ceil", "[bit]")
+{
+  REQUIRE(etl::bit_ceil(0b00000000U) == 0b00000001U);
+  REQUIRE(etl::bit_ceil(0b00000001U) == 0b00000001U);
+  REQUIRE(etl::bit_ceil(0b00000010U) == 0b00000010U);
+  REQUIRE(etl::bit_ceil(0b00000011U) == 0b00000100U);
+  REQUIRE(etl::bit_ceil(0b00000100U) == 0b00000100U);
+  REQUIRE(etl::bit_ceil(0b00000101U) == 0b00001000U);
+  REQUIRE(etl::bit_ceil(0b00000110U) == 0b00001000U);
+  REQUIRE(etl::bit_ceil(0b00000111U) == 0b00001000U);
+  REQUIRE(etl::bit_ceil(0b00001000U) == 0b00001000U);
+  REQUIRE(etl::bit_ceil(0b00001001U) == 0b00010000U);
+}
+
+TEST_CASE("bit: bit_floor", "[bit]")
+{
+  REQUIRE(etl::bit_floor(0b00000000UL) == 0b00000000UL);
+  REQUIRE(etl::bit_floor(0b00000001UL) == 0b00000001UL);
+  REQUIRE(etl::bit_floor(0b00000010UL) == 0b00000010UL);
+  REQUIRE(etl::bit_floor(0b00000011UL) == 0b00000010UL);
+  REQUIRE(etl::bit_floor(0b00000100UL) == 0b00000100UL);
+  REQUIRE(etl::bit_floor(0b00000101UL) == 0b00000100UL);
+  REQUIRE(etl::bit_floor(0b00000110UL) == 0b00000100UL);
+  REQUIRE(etl::bit_floor(0b00000111UL) == 0b00000100UL);
+  REQUIRE(etl::bit_floor(0b00001000UL) == 0b00001000UL);
+  REQUIRE(etl::bit_floor(0b00001001UL) == 0b00001000UL);
+}
+
 TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t,
                    etl::uint32_t, etl::uint64_t)
 {
