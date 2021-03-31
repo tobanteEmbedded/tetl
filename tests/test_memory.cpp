@@ -185,12 +185,53 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator++", "[memory]", int, float, long)
 TEMPLATE_TEST_CASE("memory/pointer_int_pair: pointer_int_pair", "[memory]",
                    long long, double)
 {
-  using pointer_type = etl::pointer_int_pair<TestType*, 2>;
+  using etl::pointer_int_pair;
 
-  pointer_type ptr {new TestType(42), 1U};
-  CHECK(*ptr.get_pointer() == TestType(42));
-  CHECK(ptr.get_int() == 1U);
-  delete ptr.get_pointer();
+  SECTION("simple")
+  {
+    using pointer_type = pointer_int_pair<TestType*, 2>;
+
+    auto ptrValue = TestType(42);
+    pointer_type ptr {&ptrValue, 1U};
+    CHECK(*ptr.get_pointer() == ptrValue);
+    CHECK(ptr.get_int() == 1U);
+
+    auto otherValue = TestType(143);
+    ptr.set_pointer(&otherValue);
+    ptr.set_int(2U);
+    CHECK(*ptr.get_pointer() == otherValue);
+    CHECK(ptr.get_int() == 2U);
+  }
+
+  SECTION("nested")
+  {
+    using inner_type  = pointer_int_pair<TestType*, 1, bool>;
+    using outter_type = pointer_int_pair<inner_type, 1, bool>;
+
+    auto innerValue = TestType {1};
+    auto inner      = inner_type {&innerValue};
+    auto outter     = outter_type {inner, true};
+    CHECK(*inner.get_pointer() == TestType {1});
+    CHECK(inner.get_int() == false);
+    CHECK(outter.get_int() == true);
+
+    *inner.get_pointer() = TestType {2};
+    inner.set_int(true);
+    outter.set_int(false);
+
+    CHECK(*inner.get_pointer() == TestType {2});
+    CHECK(inner.get_int() == true);
+    CHECK(outter.get_int() == false);
+
+    auto copy = outter;
+    CHECK(copy == outter);
+    CHECK(copy <= outter);
+    CHECK(copy >= outter);
+
+    CHECK_FALSE(copy != outter);
+    CHECK_FALSE(copy < outter);
+    CHECK_FALSE(copy > outter);
+  }
 }
 
 TEMPLATE_TEST_CASE("memory: addressof(object)", "[memory]", int, float, long)

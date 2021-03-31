@@ -350,7 +350,7 @@ class small_ptr
 namespace detail
 {
 // Compile time version of log2 that handles 0.
-static constexpr auto log2(size_t value) -> size_t
+[[nodiscard]] static constexpr auto log2(size_t value) -> size_t
 {
   return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
 }
@@ -370,8 +370,8 @@ struct pointer_like_traits;
 template <typename T>
 struct pointer_like_traits<T*>
 {
-  static auto get_as_void_pointer(T* p) -> void* { return p; }
-  static auto get_from_void_pointer(void* p) -> T*
+  [[nodiscard]] static auto get_as_void_pointer(T* p) -> void* { return p; }
+  [[nodiscard]] static auto get_from_void_pointer(void* p) -> T*
   {
     return static_cast<T*>(p);
   }
@@ -385,13 +385,13 @@ struct pointer_like_traits<const T>
 {
   using non_const = pointer_like_traits<T>;
 
-  static auto get_as_void_pointer(const T p) -> const void*
+  [[nodiscard]] static auto get_as_void_pointer(const T p) -> const void*
   {
     return non_const::get_as_void_pointer(p);
   }
 
   // NOLINTNEXTLINE(readability-const-return-type)
-  static auto get_from_void_pointer(const void* p) -> const T
+  [[nodiscard]] static auto get_from_void_pointer(const void* p) -> const T
   {
     return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
@@ -404,11 +404,11 @@ struct pointer_like_traits<const T*>
 {
   using non_const = pointer_like_traits<T*>;
 
-  static auto get_as_void_pointer(const T* p) -> const void*
+  [[nodiscard]] static auto get_as_void_pointer(const T* p) -> const void*
   {
     return non_const::get_as_void_pointer(const_cast<T*>(p));
   }
-  static auto get_from_void_pointer(const void* p) -> const T*
+  [[nodiscard]] static auto get_from_void_pointer(const void* p) -> const T*
   {
     return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
@@ -419,42 +419,58 @@ struct pointer_like_traits<const T*>
 template <>
 struct pointer_like_traits<uintptr_t>
 {
-  static auto get_as_void_pointer(uintptr_t p) -> void*
+  [[nodiscard]] static auto get_as_void_pointer(uintptr_t p) -> void*
   {
-    return reinterpret_cast<void*>(p);
+    return bit_cast<void*>(p);
   }
-  static auto get_from_void_pointer(void* p) -> uintptr_t
+  [[nodiscard]] static auto get_from_void_pointer(void* p) -> uintptr_t
   {
-    return reinterpret_cast<uintptr_t>(p);
+    return bit_cast<uintptr_t>(p);
   }
   // No bits are available!
   static constexpr int free_bits = 0;
 };
 
 template <typename PointerT, unsigned IntBits, typename PtrTraits>
-struct pointer_int_pair_info
+class pointer_int_pair_info
 {
-  static_assert(PtrTraits::free_bits < numeric_limits<uintptr_t>::digits,
-                "cannot use a pointer type that has all bits free");
-  static_assert(IntBits <= PtrTraits::free_bits,
-                "pointer_int_pair with integer size too large for pointer");
-  /// ptr_mask - The bits that come from the pointer.
-  static constexpr auto ptr_mask
-    = ~(uintptr_t)(((intptr_t)1 << PtrTraits::free_bits) - 1);
+  // clang-format off
+  static_assert(PtrTraits::free_bits < numeric_limits<uintptr_t>::digits, "cannot use a pointer type that has all bits free");
+  static_assert(IntBits <= PtrTraits::free_bits, "pointer_int_pair with integer size too large for pointer");
+  // clang-format on
 
-  /// The number of low bits that we reserve for other uses; and keep zero.
-  static constexpr auto int_shift = (uintptr_t)PtrTraits::free_bits - IntBits;
+  public:
+  using pointer_type              = PointerT;
+  using pointer_traits            = PtrTraits;
+  static constexpr auto int_bits  = IntBits;
+  static constexpr auto free_bits = pointer_traits::free_bits;
 
-  /// int_mask - This is the unshifted mask for valid bits of the int type.
-  static constexpr auto int_mask = (uintptr_t)(((intptr_t)1 << IntBits) - 1);
+  /**
+   * @brief The bits that come from the pointer.
+   */
+  static constexpr auto ptr_mask = ~(uintptr_t)(((intptr_t)1 << free_bits) - 1);
 
-  // shifted_int_mask - This is the bits for the integer shifted in place.
+  /**
+   * @brief The number of low bits that we reserve for other uses; and keep
+   * zero.
+   */
+  static constexpr auto int_shift = pointer_traits::free_bits - int_bits;
+
+  /**
+   * @brief This is the unshifted mask for valid bits of the int
+   * type.
+   */
+  static constexpr auto int_mask = (uintptr_t)(((intptr_t)1 << int_bits) - 1);
+
+  /**
+   * @brief This is the bits for the integer shifted in place.
+   */
   static constexpr auto shifted_int_mask = (uintptr_t)(int_mask << int_shift);
 
-  [[nodiscard]] static auto get_pointer(intptr_t value) -> PointerT
+  [[nodiscard]] static auto get_pointer(intptr_t value) -> pointer_type
   {
-    return PtrTraits::get_from_void_pointer(
-      reinterpret_cast<void*>(value & ptr_mask));
+    return pointer_traits::get_from_void_pointer(
+      bit_cast<void*>(value & ptr_mask));
   }
 
   [[nodiscard]] static auto get_int(intptr_t value) -> intptr_t
@@ -462,12 +478,12 @@ struct pointer_int_pair_info
     return (value >> int_shift) & int_mask;
   }
 
-  [[nodiscard]] static auto update_ptr(intptr_t originalValue, PointerT ptr)
+  [[nodiscard]] static auto update_ptr(intptr_t originalValue, pointer_type ptr)
     -> intptr_t
   {
     // Preserve all low bits, just update the pointer.
-    auto* voidPtr    = PtrTraits::get_as_void_pointer(ptr);
-    auto pointerWord = reinterpret_cast<intptr_t>(voidPtr);
+    auto* voidPtr    = pointer_traits::get_as_void_pointer(ptr);
+    auto pointerWord = bit_cast<intptr_t>(voidPtr);
     return pointerWord | (originalValue & ~ptr_mask);
   }
 
@@ -480,82 +496,126 @@ struct pointer_int_pair_info
   }
 };
 
-/// pointer_int_pair - This class implements a pair of a pointer and small
-/// integer.  It is designed to represent this in the space required by one
-/// pointer by bitmangling the integer into the low part of the pointer.  This
-/// can only be done for small integers: typically up to 3 bits, but it depends
-/// on the number of bits available according to pointer_like_traits for the
-/// type.
-///
-/// Note that pointer_int_pair always puts the IntVal part in the highest bits
-/// possible.  For example, pointer_int_pair<void*, 1, bool> will put the bit
-/// for the bool into bit #2, not bit #0, which allows the low two bits to be
-/// used for something else.  For example, this allows:
-///   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
-/// ... and the two bools will land in different bits.
+/**
+ * @brief This class implements a pair of a pointer and small integer.  It is
+ * designed to represent this in the space required by one pointer by
+ * bitmangling the integer into the low part of the pointer.  This can only be
+ * done for small integers: typically up to 3 bits, but it depends on the number
+ * of bits available according to pointer_like_traits for the type.
+ *
+ * @details Note that pointer_int_pair always puts the IntVal part in the
+ * highest bits possible.  For example, pointer_int_pair<void*, 1, bool> will
+ * put the bit for the bool into bit #2, not bit #0, which allows the low two
+ * bits to be used for something else.  For example, this allows:
+ *   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
+ * ... and the two bools will land in different bits.
+ */
 template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
           typename PtrTraits = pointer_like_traits<PointerT>,
           typename Info = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
 class pointer_int_pair
 {
   public:
+  using pointer_type             = PointerT;
+  using pointer_traits           = PtrTraits;
+  using pointer_info             = Info;
+  using int_type                 = IntType;
+  static constexpr auto int_bits = IntBits;
+
+  /**
+   * @brief
+   */
   constexpr pointer_int_pair() = default;
 
-  pointer_int_pair(PointerT ptrVal, IntType intVal)
+  /**
+   * @brief
+   */
+  pointer_int_pair(pointer_type pointerValue, int_type intValue)
   {
-    set_ptr_and_int(ptrVal, intVal);
+    set_ptr_and_int(pointerValue, intValue);
   }
 
-  explicit pointer_int_pair(PointerT ptrVal) { init_with_ptr(ptrVal); }
-
-  [[nodiscard]] auto get_pointer() const -> PointerT
+  /**
+   * @brief
+   */
+  explicit pointer_int_pair(pointer_type pointerValue)
   {
-    return Info::get_pointer(value_);
+    init_with_ptr(pointerValue);
   }
 
-  [[nodiscard]] auto get_int() const -> IntType
+  /**
+   * @brief
+   */
+  void set_pointer(pointer_type pointerValue)
   {
-    return (IntType)Info::get_int(value_);
+    value_ = pointer_info::update_ptr(value_, pointerValue);
   }
 
-  void set_pointer(PointerT ptrVal)
+  /**
+   * @brief
+   */
+  void set_int(int_type intValue)
   {
-    value_ = Info::update_ptr(value_, ptrVal);
+    value_ = pointer_info::update_int(value_, static_cast<intptr_t>(intValue));
   }
 
-  void set_int(IntType intVal)
+  /**
+   * @brief
+   */
+  [[nodiscard]] auto get_pointer() const -> pointer_type
   {
-    value_ = Info::update_int(value_, static_cast<intptr_t>(intVal));
+    return pointer_info::get_pointer(value_);
   }
 
-  void init_with_ptr(PointerT ptrVal) { value_ = Info::update_ptr(0, ptrVal); }
-
-  void set_ptr_and_int(PointerT ptrVal, IntType intVal)
+  /**
+   * @brief
+   */
+  [[nodiscard]] auto get_int() const -> int_type
   {
-    value_ = Info::update_int(Info::update_ptr(0, ptrVal),
-                              static_cast<intptr_t>(intVal));
+    return (int_type)pointer_info::get_int(value_);
   }
 
-  [[nodiscard]] auto get_addr_of_pointer() const -> PointerT const*
+  /**
+   * @brief
+   */
+  void set_ptr_and_int(pointer_type pointerValue, int_type intValue)
+  {
+    value_ = pointer_info::update_int(pointer_info::update_ptr(0, pointerValue),
+                                      static_cast<intptr_t>(intValue));
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] auto get_addr_of_pointer() const -> pointer_type const*
   {
     return const_cast<pointer_int_pair*>(this)->get_addr_of_pointer();
   }
 
-  auto get_addr_of_pointer() -> PointerT*
+  /**
+   * @brief
+   */
+  auto get_addr_of_pointer() -> pointer_type*
   {
-    return reinterpret_cast<PointerT*>(&value_);
+    return bit_cast<pointer_type*>(&value_);
   }
 
-  [[nodiscard]] auto get_opaquevalue() const -> void*
+  /**
+   * @brief
+   */
+  [[nodiscard]] auto get_opaque_value() const -> void*
   {
-    return reinterpret_cast<void*>(value_);
+    return bit_cast<void*>(value_);
   }
 
-  void set_from_opaque_value(void* val)
-  {
-    value_ = reinterpret_cast<intptr_t>(val);
-  }
+  /**
+   * @brief
+   */
+  void set_from_opaque_value(void* val) { value_ = bit_cast<intptr_t>(val); }
 
+  /**
+   * @brief
+   */
   static auto get_from_opaque_value(void* v) -> pointer_int_pair
   {
     pointer_int_pair p;
@@ -563,45 +623,101 @@ class pointer_int_pair
     return p;
   }
 
-  // Allow pointer_int_pairs to be created from const void * if and only if the
-  // pointer type could be created from a const void *.
+  /**
+   * @brief Allow pointer_int_pairs to be created from const void * if and only
+   * if the pointer type could be created from a const void *.
+   */
   static auto get_from_opaque_value(const void* v) -> pointer_int_pair
   {
-    (void)PtrTraits::get_from_void_pointer(v);
+    (void)pointer_traits::get_from_void_pointer(v);
     return get_from_opaque_value(const_cast<void*>(v));
   }
 
-  auto operator==(const pointer_int_pair& other) const -> bool
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator==(pointer_int_pair const& lhs,
+                                       pointer_int_pair const& rhs) -> bool
   {
-    return value_ == other.value_;
+    return lhs.value_ == rhs.value_;
   }
 
-  auto operator!=(const pointer_int_pair& other) const -> bool
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator!=(pointer_int_pair const& lhs,
+                                       pointer_int_pair const& rhs) -> bool
   {
-    return value_ != other.value_;
+    return lhs.value_ != rhs.value_;
   }
 
-  auto operator<(const pointer_int_pair& other) const -> bool
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator<(pointer_int_pair const& lhs,
+                                      pointer_int_pair const& rhs) -> bool
   {
-    return value_ < other.value_;
-  }
-  auto operator>(const pointer_int_pair& other) const -> bool
-  {
-    return value_ > other.value_;
-  }
-
-  auto operator<=(const pointer_int_pair& other) const -> bool
-  {
-    return value_ <= other.value_;
+    return lhs.value_ < rhs.value_;
   }
 
-  auto operator>=(const pointer_int_pair& other) const -> bool
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator>(pointer_int_pair const& lhs,
+                                      pointer_int_pair const& rhs) -> bool
   {
-    return value_ >= other.value_;
+    return lhs.value_ > rhs.value_;
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator<=(pointer_int_pair const& lhs,
+                                       pointer_int_pair const& rhs) -> bool
+  {
+    return lhs.value_ <= rhs.value_;
+  }
+
+  /**
+   * @brief
+   */
+  [[nodiscard]] friend auto operator>=(pointer_int_pair const& lhs,
+                                       pointer_int_pair const& rhs) -> bool
+  {
+    return lhs.value_ >= rhs.value_;
   }
 
   private:
+  auto init_with_ptr(pointer_type pointerValue) -> void
+  {
+    value_ = pointer_info::update_ptr(0, pointerValue);
+  }
+
   intptr_t value_ = 0;
+};
+
+template <typename PtrT, unsigned IntBits, typename IntT, typename PtrTraits>
+struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>>
+{
+  static auto
+  get_as_void_pointer(const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
+  {
+    return p.get_opaque_value();
+  }
+
+  static auto get_from_void_pointer(void* p)
+    -> pointer_int_pair<PtrT, IntBits, IntT>
+  {
+    return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
+  }
+
+  static auto get_from_void_pointer(const void* p)
+    -> pointer_int_pair<PtrT, IntBits, IntT>
+  {
+    return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
+  }
+
+  static constexpr int free_bits = PtrTraits::free_bits - IntBits;
 };
 
 template <typename T>
