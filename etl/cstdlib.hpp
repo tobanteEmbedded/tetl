@@ -33,6 +33,7 @@ DAMAGE.
 #include "etl/cstring.hpp"
 
 #include "etl/detail/cstddef_internal.hpp"
+#include "etl/detail/string_conversion.hpp"
 
 namespace etl
 {
@@ -156,70 +157,8 @@ struct imaxdiv_t
  */
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
-  switch (base)
-  {
-  case 10:
-  {
-    auto digits10 = [](auto x) {
-      auto result = 1;
-      while (true)
-      {
-        if (x < 10) { return result; }
-        if (x < 100) { return result + 1; }
-        if (x < 1'000) { return result + 2; }
-        if (x < 10'000) { return result + 3; }
-
-        x /= 10'000;
-        result += 4;
-      }
-
-      return result;
-    };
-
-    auto const result = digits10(val);
-    auto pos          = result - 1;
-    while (val >= 10)
-    {
-      auto const q  = val / 10;
-      auto const r  = static_cast<char>(val % 10);
-      buffer[pos--] = static_cast<char>('0' + r);
-      val           = q;
-    }
-
-    *buffer = static_cast<char>(val + '0');
-    return buffer;
-  }
-  default:
-  {
-    assert(false);
-    return buffer;
-  }
-  }
+  return detail::integer_to_ascii<int>(val, buffer, base);
 }
-
-namespace detail
-{
-/**
- * @brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
- */
-template <typename T>
-[[nodiscard]] constexpr auto ascii_to_integer(char const* string) noexcept -> T
-{
-  // Iterate through all characters
-  // of input string and update result
-  // take ASCII character of corosponding digit and
-  // subtract the code from '0' to get numerical
-  // value and multiply res by 10 to shuffle
-  // digits left to update running total
-  auto res = T {0};
-  for (size_t i {0}; string[i] != '\0'; ++i)
-  {
-    auto const digit = string[i] - '0';
-    res              = res * 10 + digit;
-  }
-  return res;
-}
-}  // namespace detail
 
 /**
  * @brief Interprets an integer value in a byte string pointed to by str.
