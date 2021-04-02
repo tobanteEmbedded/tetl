@@ -69,3 +69,13 @@ target_link_libraries(${PROJECT_NAME}
 add_test(NAME unit_tests COMMAND ${PROJECT_NAME})
 
 
+add_executable(${PROJECT_NAME}_testing experimental/testing/test_testing.cpp)
+target_link_libraries(${PROJECT_NAME}_testing
+    PRIVATE
+        tobanteAudio::etl
+        tobanteAudio::CompilerOptions
+        tobanteAudio::CompilerWarnings
+        tobanteAudio::CodeCoverage
+)
+
+add_test(NAME ${PROJECT_NAME}_testing COMMAND ${PROJECT_NAME}_testing)

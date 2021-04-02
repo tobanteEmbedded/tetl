@@ -28,6 +28,7 @@ DAMAGE.
 #define TAETL_EXPERIMENTAL_FORMAT_HPP
 
 #include "etl/cstdint.hpp"
+#include "etl/cstdlib.hpp"
 #include "etl/cstring.hpp"
 #include "etl/iterator.hpp"
 #include "etl/string.hpp"
@@ -169,6 +170,21 @@ struct formatter<etl::static_string<Capacity>, char>
                         FormatContext& fc) -> decltype(fc.out())
   {
     return formatter<::etl::string_view>().format(str, fc);
+  }
+};
+
+/**
+ * @brief Standard specializations for etl::string_view.
+ */
+template <>
+struct formatter<int, char>
+{
+  template <typename FormatContext>
+  constexpr auto format(int val, FormatContext& fc) -> decltype(fc.out())
+  {
+    char str[32] {};
+    ::etl::itoa(val, &str[0], 10);
+    return formatter<::etl::string_view>().format(etl::string_view {str}, fc);
   }
 };
 
