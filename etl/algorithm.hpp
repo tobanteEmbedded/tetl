@@ -1767,6 +1767,45 @@ template <typename ForwardIter, class T>
 }
 
 /**
+ * @brief Merges two sorted ranges [first1, last1) and [first2, last2) into one
+ * sorted range beginning at d_first. Elements are compared using the given
+ * binary comparison function comp.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt,
+          typename Compare>
+constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                     InputIt2 last2, OutputIt destination, Compare comp)
+  -> OutputIt
+{
+  for (; first1 != last1; ++destination)
+  {
+    if (first2 == last2) { return copy(first1, last1, destination); }
+    if (comp(*first2, *first1))
+    {
+      *destination = *first2;
+      ++first2;
+    }
+    else
+    {
+      *destination = *first1;
+      ++first1;
+    }
+  }
+  return copy(first2, last2, destination);
+}
+
+/**
+ * @brief Merges two sorted ranges [first1, last1) and [first2, last2) into one
+ * sorted range beginning at destination. Elements are compared using operator<.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt>
+constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                     InputIt2 last2, OutputIt destination) -> OutputIt
+{
+  return merge(first1, last1, first2, last2, destination, less<> {});
+}
+
+/**
  * @brief Returns true if the sorted range [first2, last2) is a subsequence of
  * the sorted range [first1, last1). Both ranges must be sorted with operator<.
  */
