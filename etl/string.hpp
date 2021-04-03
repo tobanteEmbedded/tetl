@@ -36,6 +36,7 @@ DAMAGE.
 
 #include "etl/detail/container_utils.hpp"
 #include "etl/detail/string_char_traits.hpp"
+#include "etl/detail/string_conversion.hpp"
 
 namespace etl
 {
@@ -1436,7 +1437,13 @@ class basic_static_string
 
   size_type size_            = 0;
   value_type data_[Capacity] = {};
-};  // namespace etl
+};
+
+/**
+ * @brief
+ */
+template <etl::size_t Capacity>
+using static_string = basic_static_string<char, Capacity>;
 
 /**
  * @brief Compares the contents of a string with another string or a
@@ -1666,8 +1673,113 @@ constexpr auto erase_if(basic_static_string<CharT, Capacity, Traits>& c,
   return static_cast<return_type>(r);
 }
 
-template <etl::size_t Capacity>
-using static_string = basic_static_string<char, Capacity>;
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(int value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<int>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(long value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<long>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(long long value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<long long>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(unsigned value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<unsigned>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(unsigned long value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<unsigned long>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(unsigned long long value) noexcept
+  -> static_string<Capacity>
+{
+  char buffer[Capacity] {};
+  detail::integer_to_ascii<unsigned long long>(value, &buffer[0], 10);
+  return static_string<Capacity> {&buffer[0]};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(float value) noexcept
+  -> static_string<Capacity>
+{
+  assert(false);
+  ignore_unused(value);
+  return {};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(double value) noexcept
+  -> static_string<Capacity>
+{
+  assert(false);
+  ignore_unused(value);
+  return {};
+}
+
+/**
+ * @brief Converts a numeric value to etl::static_string.
+ */
+template <size_t Capacity>
+[[nodiscard]] constexpr auto to_string(long double value) noexcept
+  -> static_string<Capacity>
+{
+  assert(false);
+  ignore_unused(value);
+  return {};
+}
 
 }  // namespace etl
 

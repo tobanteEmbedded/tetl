@@ -36,8 +36,7 @@ template <typename T>
  * @todo Only base 10 is currently supported. Negative not implemented as well.
  */
 template <typename T>
-[[nodiscard]] constexpr auto integer_to_ascii(T val, char* const buffer,
-                                              int base) -> char*
+constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 {
   assert(base == 10);
 

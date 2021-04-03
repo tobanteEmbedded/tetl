@@ -1576,3 +1576,18 @@ TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
     CHECK_FALSE(etl::static_string<2> {"a"} >= string("test"));
   }
 }
+
+TEMPLATE_TEST_CASE("string: to_string", "[string]", int, long, long long,
+                   unsigned int, unsigned long, unsigned long long)
+{
+  CHECK(etl::to_string<8>(TestType {1}) == "1");
+  CHECK(etl::to_string<16>(TestType {1}) == "1");
+  CHECK(etl::to_string<32>(TestType {1}) == "1");
+  CHECK(etl::to_string<64>(TestType {1}) == "1");
+
+  CHECK(etl::to_string<32>(TestType {0}) == "0");
+  CHECK(etl::to_string<32>(TestType {2}) == "2");
+  CHECK(etl::to_string<32>(TestType {10}) == "10");
+  CHECK(etl::to_string<32>(TestType {100}) == "100");
+  CHECK(etl::to_string<32>(TestType {9999}) == "9999");
+}
