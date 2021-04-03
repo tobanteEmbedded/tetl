@@ -1577,6 +1577,66 @@ TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
   }
 }
 
+TEMPLATE_TEST_CASE("string: stoi", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+  using string_t = TestType;
+  CHECK(etl::stoi(string_t {"0"}) == 0);
+  CHECK(etl::stoi(string_t {"1"}) == 1);
+  CHECK(etl::stoi(string_t {"2"}) == 2);
+  CHECK(etl::stoi(string_t {"10"}) == 10);
+  CHECK(etl::stoi(string_t {"99"}) == 99);
+  CHECK(etl::stoi(string_t {"11123"}) == 11123);
+}
+
+TEMPLATE_TEST_CASE("string: stol", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+  using string_t = TestType;
+  CHECK(etl::stol(string_t {"0"}) == 0L);
+  CHECK(etl::stol(string_t {"1"}) == 1L);
+  CHECK(etl::stol(string_t {"2"}) == 2L);
+  CHECK(etl::stol(string_t {"10"}) == 10L);
+  CHECK(etl::stol(string_t {"99"}) == 99L);
+  CHECK(etl::stol(string_t {"11123"}) == 11123L);
+}
+
+TEMPLATE_TEST_CASE("string: stoll", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+  using string_t = TestType;
+  CHECK(etl::stoll(string_t {"0"}) == 0LL);
+  CHECK(etl::stoll(string_t {"1"}) == 1LL);
+  CHECK(etl::stoll(string_t {"2"}) == 2LL);
+  CHECK(etl::stoll(string_t {"10"}) == 10LL);
+  CHECK(etl::stoll(string_t {"99"}) == 99LL);
+  CHECK(etl::stoll(string_t {"11123"}) == 11123LL);
+}
+
+TEMPLATE_TEST_CASE("string: stoul", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+  using string_t = TestType;
+  CHECK(etl::stoul(string_t {"0"}) == 0UL);
+  CHECK(etl::stoul(string_t {"1"}) == 1UL);
+  CHECK(etl::stoul(string_t {"2"}) == 2UL);
+  CHECK(etl::stoul(string_t {"10"}) == 10UL);
+  CHECK(etl::stoul(string_t {"99"}) == 99UL);
+  CHECK(etl::stoul(string_t {"11123"}) == 11123UL);
+}
+
+TEMPLATE_TEST_CASE("string: stoull", "[string]", etl::static_string<12>,
+                   etl::static_string<32>)
+{
+  using string_t = TestType;
+  CHECK(etl::stoull(string_t {"0"}) == 0ULL);
+  CHECK(etl::stoull(string_t {"1"}) == 1ULL);
+  CHECK(etl::stoull(string_t {"2"}) == 2ULL);
+  CHECK(etl::stoull(string_t {"10"}) == 10ULL);
+  CHECK(etl::stoull(string_t {"99"}) == 99ULL);
+  CHECK(etl::stoull(string_t {"11123"}) == 11123ULL);
+}
+
 TEMPLATE_TEST_CASE("string: to_string", "[string]", int, long, long long,
                    unsigned int, unsigned long, unsigned long long)
 {
