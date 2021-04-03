@@ -1960,6 +1960,20 @@ struct is_trivial
 template <typename T>
 inline constexpr bool is_trivial_v = is_trivial<T>::value;
 
+/**
+ * @brief If T is a standard layout type (that is, a scalar type, a
+ * standard-layout class, or an array of such type/class, possibly
+ * cv-qualified), provides the member constant value equal to true. For any
+ * other type, value is false.
+ */
+template <typename T>
+struct is_standard_layout : bool_constant<TAETL_IS_STANDARD_LAYOUT(T)>
+{
+};
+
+template <typename T>
+inline constexpr bool is_standard_layout_v = is_standard_layout<T>::value;
+
 namespace detail
 {
 template <typename T, bool = ::etl::is_arithmetic_v<T>>

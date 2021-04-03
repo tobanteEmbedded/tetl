@@ -132,6 +132,20 @@ union E
 
 }  // namespace
 
+TEMPLATE_TEST_CASE("type_traits: is_standard_layout = true", "[type_traits]", A,
+                   B, C, E)
+{
+  STATIC_REQUIRE(etl::is_standard_layout<TestType>::value);
+  STATIC_REQUIRE(etl::is_standard_layout_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_standard_layout = false", "[type_traits]",
+                   D)
+{
+  STATIC_REQUIRE_FALSE(etl::is_standard_layout<TestType>::value);
+  STATIC_REQUIRE_FALSE(etl::is_standard_layout_v<TestType>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_empty = true", "[type_traits]", A, C)
 {
   STATIC_REQUIRE(etl::is_empty<TestType>::value);

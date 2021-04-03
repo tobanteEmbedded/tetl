@@ -27,9 +27,40 @@ DAMAGE.
 #ifndef TAETL_INTRINSICS_HPP
 #define TAETL_INTRINSICS_HPP
 
+#if defined(__clang__)
+#define TAETL_CLANG 1
+#elif defined(__GNUC__)
+#define TAETL_GCC 1
+#elif defined(_MSC_VER)
+#define TAETL_MSVC 1
+#elif defined(__INTEL_COMPILER)
+#define TAETL_INTEL 1
+#elif defined(__EMSCRIPTEN__)
+#define TAETL_EMSCRIPTEN 1
+#else
+#error "unknown compiler"
+#endif
+
+// Resolve which function signature macro will be used.
+#if defined(__GNUC__)
+#define TAETL_FUNC_SIG __PRETTY_FUNCTION__
+#elif defined(__cplusplus) && (__cplusplus >= 201103)
+#define TAETL_FUNC_SIG __func__
+#else
+#error "TAETL_FUNC_SIG unknown!"
+#endif
+
 #define TAETL_IS_ENUM(Type) __is_enum(Type)
 #define TAETL_IS_CLASS(Type) __is_class(Type)
 #define TAETL_IS_UNION(Type) __is_union(Type)
+
+#if not defined(TAETL_IS_STANDARD_LAYOUT)
+#if defined(TAETL_GCC) or defined(TAETL_CLANG) or defined(TAETL_MSVC)
+#define TAETL_IS_STANDARD_LAYOUT(S) __is_standard_layout(S)
+#else
+#error "Untested compiler for __is_standard_layout"
+#endif
+#endif  // TAETL_IS_STANDARD_LAYOUT
 
 #define TAETL_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
 #define TAETL_IS_FINAL(Type) __is_final(Type)
@@ -90,29 +121,6 @@ DAMAGE.
 #define TAETL_BUILTIN_UINTMAX __UINTMAX_TYPE__
 #define TAETL_BUILTIN_SIZET __SIZE_TYPE__
 #define TAETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
-#endif
-
-#if defined(__GNUC__)
-#define TAETL_COMPILER_GCC 1
-#elif defined(__clang__)
-#define TAETL_COMPILER_CLANG 1
-#elif defined(_MSC_VER)
-#define TAETL_COMPILER_MSVC 1
-#elif defined(__INTEL_COMPILER)
-#define TAETL_COMPILER_INTEL 1
-#elif defined(__EMSCRIPTEN__)
-#define TAETL_COMPILER_EMSCRIPTEN 1
-#else
-#error "unknown compiler"
-#endif
-
-// Resolve which function signature macro will be used.
-#if defined(__GNUC__)
-#define TAETL_FUNC_SIG __PRETTY_FUNCTION__
-#elif defined(__cplusplus) && (__cplusplus >= 201103)
-#define TAETL_FUNC_SIG __func__
-#else
-#error "TAETL_FUNC_SIG unknown!"
 #endif
 
 #endif  // TAETL_INTRINSICS_HPP
