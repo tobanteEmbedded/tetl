@@ -58,7 +58,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int,
   REQUIRE(ptr_t {nullptr}.compressed_value() == 0U);
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", int, float, long)
+TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", long long, double)
 {
   using namespace Catch::Generators;
   using ptr_t = etl::small_ptr<TestType const, 16, uintptr_t>;
@@ -281,7 +281,9 @@ TEST_CASE("memory: destroy_at", "[memory]")
 
   auto counter = 0;
   for (auto i = 0U; i < 8; ++i)
-  { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+  {
+    new (buffer + sizeof(Counter) * i) Counter {counter};
+  }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -303,7 +305,9 @@ TEST_CASE("memory: destroy", "[memory]")
 
   auto counter = 0;
   for (auto i = 0U; i < 8; ++i)
-  { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+  {
+    new (buffer + sizeof(Counter) * i) Counter {counter};
+  }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -325,7 +329,9 @@ TEST_CASE("memory: destroy_n", "[memory]")
 
   auto counter = 0;
   for (auto i = 0U; i < 8; ++i)
-  { new (&buffer[0] + sizeof(Counter) * i) Counter {counter}; }
+  {
+    new (&buffer[0] + sizeof(Counter) * i) Counter {counter};
+  }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
