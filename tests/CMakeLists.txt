@@ -42,6 +42,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 
     experimental/dsp/test_dsp.cpp
     experimental/format/test_format.cpp
+    experimental/format/test_formatter.cpp
 
     experimental/net/test_buffer.cpp
     experimental/net/test_byte_order.cpp
