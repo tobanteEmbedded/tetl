@@ -123,16 +123,11 @@ struct C
 
 struct D
 {
-  virtual ~D();
+  virtual ~D() = default;
 };
 
 union E
 {
-};
-
-struct F
-{
-  [[no_unique_address]] E e;
 };
 
 }  // namespace
