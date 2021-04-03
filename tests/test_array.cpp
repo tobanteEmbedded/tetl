@@ -93,7 +93,8 @@ TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t,
 {
   SECTION("const")
   {
-    auto const arr = []() {
+    auto const arr = []()
+    {
       etl::array<TestType, 4> a {};
       etl::iota(etl::begin(a), etl::end(a), TestType {0});
       return a;
@@ -103,7 +104,9 @@ TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t,
 
     auto counter = 0;
     for (auto const& x : arr)
-    { REQUIRE(x == static_cast<TestType>(counter++)); }
+    {
+      REQUIRE(x == static_cast<TestType>(counter++));
+    }
   }
 }
 
@@ -140,7 +143,8 @@ TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-  auto arr = []() {
+  auto arr = []()
+  {
     etl::array<TestType, 4> a {};
     etl::iota(etl::begin(a), etl::end(a), TestType {0});
     return a;
@@ -161,7 +165,8 @@ TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-  auto const arr = []() {
+  auto const arr = []()
+  {
     etl::array<TestType, 4> a {};
     etl::iota(etl::begin(a), etl::end(a), TestType {0});
     return a;
@@ -182,7 +187,8 @@ TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t)
 {
-  auto arr = []() {
+  auto arr = []()
+  {
     etl::array<TestType, 4> a {};
     etl::iota(etl::begin(a), etl::end(a), TestType {0});
     return a;
@@ -196,7 +202,8 @@ TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-  auto const arr = []() {
+  auto const arr = []()
+  {
     etl::array<TestType, 4> a {};
     etl::iota(etl::begin(a), etl::end(a), TestType {0});
     return a;

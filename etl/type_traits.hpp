@@ -2043,10 +2043,10 @@ auto test_pre_is_base_of(int)
  */
 template <typename Base, typename Derived>
 struct is_base_of
-    : etl::bool_constant<etl::is_class<Base>::value
-                         && etl::is_class<Derived>::value&& decltype(
-                           detail::test_pre_is_base_of<Base, Derived>(
-                             0))::value>
+    : etl::bool_constant<
+        etl::is_class<Base>::value
+        && etl::is_class<Derived>::value&& decltype(detail::test_pre_is_base_of<
+                                                    Base, Derived>(0))::value>
 {
 };
 
@@ -2200,8 +2200,9 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
 template <typename From, typename To>
 struct is_convertible
     : etl::integral_constant<
-        bool, (decltype(detail::test_returnable<To>(0))::value&& decltype(
-                detail::test_nonvoid_convertible<From, To>(0))::value)
+        bool, (decltype(detail::test_returnable<To>(0))::
+                 value&& decltype(detail::test_nonvoid_convertible<From, To>(
+                   0))::value)
                 || (etl::is_void<From>::value && etl::is_void<To>::value)>
 {
 };

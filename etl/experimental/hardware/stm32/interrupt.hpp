@@ -70,7 +70,9 @@ struct isr
     -> void
   {
     if (callbacks[static_cast<size_t>(id)] != nullptr)
-    { callbacks[static_cast<size_t>(id)](); }
+    {
+      callbacks[static_cast<size_t>(id)]();
+    }
   }
 };
 }  // namespace etl::hardware::stm32

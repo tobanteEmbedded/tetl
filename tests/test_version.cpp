@@ -32,13 +32,11 @@ TEST_CASE("version: language_standard", "[vector]")
 {
   using etl::language_standard;
 
-  auto less = [](auto lhs, auto rhs) {
-    return static_cast<long>(lhs) < static_cast<long>(rhs);
-  };
+  auto less = [](auto lhs, auto rhs)
+  { return static_cast<long>(lhs) < static_cast<long>(rhs); };
 
-  auto greater = [](auto lhs, auto rhs) {
-    return static_cast<long>(lhs) > static_cast<long>(rhs);
-  };
+  auto greater = [](auto lhs, auto rhs)
+  { return static_cast<long>(lhs) > static_cast<long>(rhs); };
 
   WHEN("C++11")
   {

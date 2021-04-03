@@ -144,8 +144,8 @@ class static_vector_zero_storage
    * @brief Changes the size of the storage without adding or removing elements
    * (unsafe). The size of an empty storage can only be changed to 0.
    */
-  static constexpr void unsafe_set_size([
-    [maybe_unused]] size_t newSize) noexcept
+  static constexpr void
+  unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
   {
     assert(newSize == 0
            && "tried to change size of empty storage to "

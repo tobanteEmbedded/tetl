@@ -54,7 +54,8 @@ TEST_CASE("string/char_traits: <char>::lt", "[string]")
 
 TEST_CASE("string/char_traits: <char>::assign(char,char)", "[string]")
 {
-  auto ch = [](char const& b) {
+  auto ch = [](char const& b)
+  {
     auto a = 'a';
     etl::char_traits<char>::assign(a, b);
     return a;
@@ -394,7 +395,8 @@ TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
   STATIC_REQUIRE(str1.size() == 0);
   STATIC_REQUIRE(str1.length() == 0);
 
-  constexpr auto str2 = []() {
+  constexpr auto str2 = []()
+  {
     TestType str {};
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";

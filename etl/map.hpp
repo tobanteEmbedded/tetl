@@ -270,9 +270,8 @@ class map_view
     auto* obj        = ::new (addr) value_type {etl::forward<Args>(args)...};
 
     // Check if the key from the newly created object has already existed.
-    auto* keyExisted = find_if(begin(), end(), [&](auto const& item) {
-      return item.first == obj->first;
-    });
+    auto predicate = [&](auto const& item) { return item.first == obj->first; };
+    auto* keyExisted = find_if(begin(), end(), predicate);
 
     // If so, return its iterator and false for insertion.
     if (keyExisted != end())

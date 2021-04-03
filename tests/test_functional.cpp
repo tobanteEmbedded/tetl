@@ -252,7 +252,8 @@ TEMPLATE_TEST_CASE("functional: function_view - ctor", "[functional]", int,
 {
   using function_t = etl::function<16, TestType(TestType)>;
   auto func        = function_t {[](TestType val) { return TestType {val}; }};
-  auto handler     = [](etl::function_view<TestType(TestType)> f) {
+  auto handler     = [](etl::function_view<TestType(TestType)> f)
+  {
     REQUIRE(f(1) == TestType {1});
     REQUIRE(f(2) == TestType {2});
   };

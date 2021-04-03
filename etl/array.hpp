@@ -322,7 +322,9 @@ struct array
   {
     using etl::swap;
     for (auto i = size_type {0}; i < size(); ++i)
-    { swap((*this)[i], other[i]); }
+    {
+      swap((*this)[i], other[i]);
+    }
   }
 
   // NOLINTNEXTLINE(readability-identifier-naming)

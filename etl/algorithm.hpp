@@ -96,7 +96,9 @@ constexpr auto move(InputIter first, InputIter last, OutputIter destination)
   -> OutputIter
 {
   for (; first != last; ++first, ++destination)
-  { *destination = etl::move(*first); }
+  {
+    *destination = etl::move(*first);
+  }
   return destination;
 }
 
@@ -194,7 +196,9 @@ constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
                          OutputIter dest, BinaryOperation op) -> OutputIter
 {
   for (; first1 != last1; ++first1, ++first2, ++dest)
-  { *dest = op(*first1, *first2); }
+  {
+    *dest = op(*first1, *first2);
+  }
   return dest;
 }
 
@@ -1030,7 +1034,9 @@ template <typename BidirIter>
 constexpr auto reverse(BidirIter first, BidirIter last) -> void
 {
   while ((first != last) && (first != --last))
-  { etl::iter_swap(first++, last); }
+  {
+    etl::iter_swap(first++, last);
+  }
 }
 
 /**
@@ -1094,7 +1100,9 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
   while (++first != last)
   {
     if (!pred(*result, *first) && ++result != first)
-    { *result = etl::move(*first); }
+    {
+      *result = etl::move(*first);
+    }
   }
   return ++result;
 }
@@ -1434,7 +1442,9 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
                                    BinaryPredicate p) -> bool
 {
   if (etl::distance(first1, last1) != etl::distance(first2, last2))
-  { return false; }
+  {
+    return false;
+  }
   return etl::equal(first1, last1, first2, p);
 }
 

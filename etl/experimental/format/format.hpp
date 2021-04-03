@@ -61,7 +61,8 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
   ::etl::ignore_unused(rest);
 
   (
-    [&] {
+    [&]
+    {
       // Format argument
       detail::format_argument(args, ctx);
 
@@ -113,7 +114,8 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
   auto indices = ::etl::static_vector<::etl::size_t, sizeof...(args)> {};
   auto result  = format_to_n_result<OutputIter> {out, {}};
 
-  auto writeChar = [&result](auto ch) {
+  auto writeChar = [&result](auto ch)
+  {
     *result.out++ = ch;
     result.size++;
   };
@@ -154,7 +156,8 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
 
   if (indices.size() > 0)
   {
-    [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val) {
+    [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val)
+    {
       ::etl::ignore_unused(n);
       // assert((long)pos < n);
       output[pos] = val;

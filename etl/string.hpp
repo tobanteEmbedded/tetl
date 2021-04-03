@@ -781,7 +781,9 @@ class basic_static_string
                         value_type const ch) noexcept -> basic_static_string&
   {
     for (size_type i = 0; i < count; ++i)
-    { insert_impl(begin() + index, etl::addressof(ch), 1); }
+    {
+      insert_impl(begin() + index, etl::addressof(ch), 1);
+    }
     return *this;
   }
 

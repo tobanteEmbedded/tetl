@@ -713,10 +713,12 @@ class static_set
             TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
   constexpr auto find(K const& x) -> iterator
   {
-    return etl::find_if(begin(), end(), [&x](auto const& val) {
-      auto comp = key_compare();
-      return comp(val, x);
-    });
+    return etl::find_if(begin(), end(),
+                        [&x](auto const& val)
+                        {
+                          auto comp = key_compare();
+                          return comp(val, x);
+                        });
   }
 
   /**
@@ -726,10 +728,12 @@ class static_set
             TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
   constexpr auto find(K const& x) const -> const_iterator
   {
-    return etl::find_if(cbegin(), cend(), [&x](auto const& val) {
-      auto comp = key_compare();
-      return comp(val, x);
-    });
+    return etl::find_if(cbegin(), cend(),
+                        [&x](auto const& val)
+                        {
+                          auto comp = key_compare();
+                          return comp(val, x);
+                        });
   }
 
   /**

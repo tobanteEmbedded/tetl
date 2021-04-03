@@ -67,7 +67,8 @@ TEMPLATE_TEST_CASE("span: deduction guides", "[span]", char, int, float)
 
   SECTION("from Container const")
   {
-    auto const vec = []() {
+    auto const vec = []()
+    {
       auto v = etl::static_vector<TestType, 8> {};
       v.push_back(TestType {});
       v.push_back(TestType {});
@@ -168,7 +169,8 @@ TEMPLATE_TEST_CASE("span: begin/end", "[span]", char, int, float)
 
 TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
 {
-  auto rng = []() {
+  auto rng = []()
+  {
     static auto i = TestType {127};
     return TestType {i--};
   };

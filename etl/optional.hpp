@@ -185,7 +185,9 @@ struct optional_storage_base : optional_destruct_base<ValueType>
     if (this->internal_has_value == opt.has_value())
     {
       if (this->internal_has_value)
-      { this->internal_value = etl::forward<T>(opt).get(); }
+      {
+        this->internal_value = etl::forward<T>(opt).get();
+      }
     }
     else
     {

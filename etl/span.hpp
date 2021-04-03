@@ -270,8 +270,9 @@ span(Container&) -> span<Element>;
 /**
  * @brief Deduction Guides. From Container const.
  */
-template <typename Container, typename Element = etl::remove_pointer_t<decltype(
-                                etl::declval<Container const&>().data())>>
+template <typename Container,
+          typename Element = etl::remove_pointer_t<
+            decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 }  // namespace etl
 
