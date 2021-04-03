@@ -33,7 +33,7 @@ DAMAGE.
 
 #include "etl/type_traits.hpp"
 
-#if not defined(TAETL_COMPILER_MSVC) and not defined(offsetof)
+#if not defined(TAETL_MSVC) and not defined(offsetof)
 /**
  * @brief Offset of member MEMBER in a struct of type TYPE.
  */
