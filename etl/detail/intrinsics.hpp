@@ -59,6 +59,11 @@ DAMAGE.
 #define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
 #endif  // TAETL_HAS_VIRTUAL_DESTRUCTOR
 
+#if not defined(TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION)
+#define TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                           \
+  __has_unique_object_representations(Type)
+#endif  // TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION
+
 #if not defined(TAETL_IS_ABSTRACT)
 #define TAETL_IS_ABSTRACT(Type) __is_abstract(Type)
 #endif  // TAETL_IS_ABSTRACT
