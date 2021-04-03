@@ -187,8 +187,8 @@ constexpr auto strncmp(char const* lhs, char const* rhs,
  */
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
-  auto* dp       = static_cast<etl::byte*>(dest);
-  auto const* sp = static_cast<etl::byte const*>(src);
+  auto* dp       = static_cast<unsigned char*>(dest);
+  auto const* sp = static_cast<unsigned char const*>(src);
   while (n-- != 0) { *dp++ = *sp++; }
   return dest;
 }
@@ -199,8 +199,8 @@ constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
  */
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
-  auto* p = static_cast<etl::byte*>(s);
-  while (n-- != 0) { *p++ = static_cast<etl::byte>(c); }
+  auto* p = static_cast<unsigned char*>(s);
+  while (n-- != 0) { *p++ = static_cast<unsigned char>(c); }
   return s;
 }
 
@@ -213,8 +213,8 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
  */
 constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 {
-  auto const* ps = static_cast<etl::byte const*>(src);
-  auto* pd       = static_cast<etl::byte*>(dest);
+  auto const* ps = static_cast<unsigned char const*>(src);
+  auto* pd       = static_cast<unsigned char*>(dest);
 
   if (ps < pd)
   {

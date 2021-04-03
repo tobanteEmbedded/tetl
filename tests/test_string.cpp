@@ -1076,11 +1076,8 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", (etl::static_string<12>),
   {
     char destination[32] = {};
     auto const* src      = "abcd";
-    auto str             = TestType(src);
+    auto str             = TestType {src};
     CHECK(str.size() == 4);
-
-    CHECK(str.copy(destination, 1, 100) == 0);
-    CHECK(destination[0] == '\0');
 
     CHECK(str.copy(destination, 1, 0) == 1);
     CHECK(destination[0] == 'a');
