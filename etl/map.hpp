@@ -350,9 +350,9 @@ class map : public map_view<KeyT, ValueT, Compare>
    */
   constexpr map(map const& other) : map {}
   {
-    etl::for_each(other.begin(), other.end(), [this](auto element) {
-      this->base_t::insert(etl::move(element));
-    });
+    etl::for_each(other.begin(), other.end(),
+                  [this](auto element)
+                  { this->base_t::insert(etl::move(element)); });
   }
 
   /**
@@ -363,9 +363,9 @@ class map : public map_view<KeyT, ValueT, Compare>
    */
   constexpr map(map&& other) noexcept : map {}
   {
-    etl::for_each(other.begin(), other.end(), [this](auto& element) {
-      this->base_t::insert(etl::move(element));
-    });
+    etl::for_each(other.begin(), other.end(),
+                  [this](auto& element)
+                  { this->base_t::insert(etl::move(element)); });
     other.clear();
   }
 
@@ -377,9 +377,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   {
     if (this == &other) { return *this; }
 
-    etl::for_each(other.begin(), other.end(), [this](auto element) {
-      this->base_t::insert(etl::move(element));
-    });
+    etl::for_each(other.begin(), other.end(),
+                  [this](auto element)
+                  { this->base_t::insert(etl::move(element)); });
     return *this;
   }
 
@@ -391,9 +391,9 @@ class map : public map_view<KeyT, ValueT, Compare>
    */
   constexpr auto operator=(map&& other) noexcept -> map&
   {
-    etl::for_each(other.begin(), other.end(), [this](auto& element) {
-      this->base_t::insert(etl::move(element));
-    });
+    etl::for_each(other.begin(), other.end(),
+                  [this](auto& element)
+                  { this->base_t::insert(etl::move(element)); });
     other.clear();
     return *this;
   }

@@ -1572,3 +1572,34 @@ TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t,
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v6.begin(), v6.end()));
   }
 }
+
+TEMPLATE_TEST_CASE("algorithm: is_permutation", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+
+  SECTION("same data")
+  {
+    auto const a = etl::array {T(1), T(2), T(3)};
+    auto const b = etl::array {T(1), T(2), T(3)};
+    CHECK(etl::is_permutation(begin(a), end(a), begin(b), end(b)));
+  }
+
+  SECTION("reverse data")
+  {
+    auto const a = etl::array {T(1), T(2), T(3)};
+    auto const b = etl::array {T(3), T(2), T(1)};
+    CHECK(etl::is_permutation(begin(a), end(a), begin(b), end(b)));
+  }
+
+  SECTION("cppreference.com example")
+  {
+    auto const a = {T(1), T(2), T(3), T(4), T(5)};
+    auto const b = {T(3), T(5), T(4), T(1), T(2)};
+    auto const c = {T(3), T(5), T(4), T(1), T(1)};
+    CHECK(etl::is_permutation(begin(a), end(a), begin(b), end(b)));
+    CHECK_FALSE(etl::is_permutation(begin(a), end(a), begin(c), end(c)));
+  }
+}
