@@ -376,7 +376,7 @@ struct pointer_like_traits<T*>
     return static_cast<T*>(p);
   }
 
-  static constexpr int free_bits = detail::log2(alignof(T));
+  static constexpr size_t free_bits = detail::log2(alignof(T));
 };
 
 // Provide pointer_like_traits for const things.
@@ -395,7 +395,7 @@ struct pointer_like_traits<const T>
   {
     return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
-  static constexpr int free_bits = non_const::free_bits;
+  static constexpr size_t free_bits = non_const::free_bits;
 };
 
 // Provide pointer_like_traits for const pointers.
@@ -412,7 +412,7 @@ struct pointer_like_traits<const T*>
   {
     return non_const::get_from_void_pointer(const_cast<void*>(p));
   }
-  static constexpr int free_bits = non_const::free_bits;
+  static constexpr size_t free_bits = non_const::free_bits;
 };
 
 // Provide pointer_like_traits for uintptr_t.
@@ -428,7 +428,7 @@ struct pointer_like_traits<uintptr_t>
     return bit_cast<uintptr_t>(p);
   }
   // No bits are available!
-  static constexpr int free_bits = 0;
+  static constexpr size_t free_bits = 0;
 };
 
 template <typename PointerT, unsigned IntBits, typename PtrTraits>
@@ -717,7 +717,7 @@ struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>>
     return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
   }
 
-  static constexpr int free_bits = PtrTraits::free_bits - IntBits;
+  static constexpr size_t free_bits = PtrTraits::free_bits - IntBits;
 };
 
 template <typename T>
