@@ -3,6 +3,7 @@
 
 #include "etl/cassert.hpp"
 #include "etl/cctype.hpp"
+#include "etl/warning.hpp"
 
 namespace etl::detail
 {
