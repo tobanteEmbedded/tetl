@@ -23,10 +23,11 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/cstdlib.hpp"
 #include "etl/cstring.hpp"
+
+#include "catch2/catch_approx.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
 TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
 {
@@ -130,6 +131,48 @@ TEST_CASE("cstdlib: atoll", "[cstdlib]")
     REQUIRE(etl::atoll("10000") == 10000LL);
     REQUIRE(etl::atoll("999999") == 999999LL);
     REQUIRE(etl::atoll("9999999") == 9999999LL);
+  }
+}
+
+TEST_CASE("cstdlib: strtof", "[cstdlib]")
+{
+  SECTION("positive")
+  {
+    REQUIRE(etl::strtof("0") == Catch::Approx(0.0F));
+    REQUIRE(etl::strtof("10") == Catch::Approx(10.0F));
+    REQUIRE(etl::strtof("100.0") == Catch::Approx(100.0F));
+    REQUIRE(etl::strtof("1000.000") == Catch::Approx(1000.0F));
+    REQUIRE(etl::strtof("10000") == Catch::Approx(10000.0F));
+    REQUIRE(etl::strtof("999999.0") == Catch::Approx(999999.0F));
+    REQUIRE(etl::strtof("9999999") == Catch::Approx(9999999.0F));
+  }
+}
+
+TEST_CASE("cstdlib: strtod", "[cstdlib]")
+{
+  SECTION("positive")
+  {
+    REQUIRE(etl::strtod("0") == Catch::Approx(0.0));
+    REQUIRE(etl::strtod("10") == Catch::Approx(10.0));
+    REQUIRE(etl::strtod("100.0") == Catch::Approx(100.0));
+    REQUIRE(etl::strtod("1000.000") == Catch::Approx(1000.0));
+    REQUIRE(etl::strtod("10000") == Catch::Approx(10000.0));
+    REQUIRE(etl::strtod("999999.0") == Catch::Approx(999999.0));
+    REQUIRE(etl::strtod("9999999") == Catch::Approx(9999999.0));
+  }
+}
+
+TEST_CASE("cstdlib: strtold", "[cstdlib]")
+{
+  SECTION("positive")
+  {
+    REQUIRE(etl::strtold("0") == Catch::Approx(0.0));
+    REQUIRE(etl::strtold("10") == Catch::Approx(10.0));
+    REQUIRE(etl::strtold("100.0") == Catch::Approx(100.0));
+    REQUIRE(etl::strtold("1000.000") == Catch::Approx(1000.0));
+    REQUIRE(etl::strtold("10000") == Catch::Approx(10000.0));
+    REQUIRE(etl::strtold("999999.0") == Catch::Approx(999999.0));
+    REQUIRE(etl::strtold("9999999") == Catch::Approx(9999999.0));
   }
 }
 

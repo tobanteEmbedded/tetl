@@ -2,6 +2,7 @@
 #define ETL_DETAIL_STRING_CONVERSION_HPP
 
 #include "etl/cassert.hpp"
+#include "etl/cctype.hpp"
 
 namespace etl::detail
 {
@@ -80,6 +81,57 @@ constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 
   *buffer = static_cast<char>(val + '0');
   return buffer;
+}
+
+/**
+ * @brief Interprets a floating point value in a byte string pointed to by str.
+ * @tparam FloatT The floating point type to convert to.
+ * @param str Pointer to the null-terminated byte string to be interpreted.
+ * @param last Pointer to a pointer to character.
+ * @return Floating point value corresponding to the contents of str on success.
+ */
+template <typename FloatT>
+[[nodiscard]] constexpr auto
+ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept
+  -> FloatT
+{
+  auto res               = FloatT {0};
+  auto div               = FloatT {1};
+  auto afterDecimalPoint = false;
+  auto leadingSpaces     = true;
+
+  auto const* ptr = str;
+  for (; *ptr != '\0'; ++ptr)
+  {
+    if (isspace(*ptr) && leadingSpaces) { continue; }
+    leadingSpaces = false;
+
+    if (isdigit(*ptr))
+    {
+      if (!afterDecimalPoint)
+      {
+        res *= 10;          // Shift the previous digits to the left
+        res += *ptr - '0';  // Add the new one
+      }
+      else
+      {
+        div *= 10;
+        res += static_cast<FloatT>(*ptr - '0') / div;
+      }
+    }
+    else if (*ptr == '.')
+    {
+      afterDecimalPoint = true;
+    }
+    else
+    {
+      break;
+    }
+  }
+
+  if (last != nullptr) { *last = ptr; }
+
+  return res;
 }
 
 }  // namespace etl::detail
