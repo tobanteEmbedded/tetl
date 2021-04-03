@@ -58,11 +58,12 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int,
   REQUIRE(ptr_t {nullptr}.compressed_value() == 0U);
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: offset", "[memory]", long long, double)
+TEMPLATE_TEST_CASE("memory/small_ptr: offset(64bit)", "[memory]", long long,
+                   double)
 {
   using namespace Catch::Generators;
   using ptr_t = etl::small_ptr<TestType const, 16, uintptr_t>;
-  auto [addr] = GENERATE(table<int>({
+  auto [addr] = GENERATE(table<long long>({
     {32},
     {2048},
     {4100},
