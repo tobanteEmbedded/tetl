@@ -41,53 +41,79 @@ DAMAGE.
 #error "unknown compiler"
 #endif
 
-// Resolve which function signature macro will be used.
 #if defined(__GNUC__)
 #define TAETL_FUNC_SIG __PRETTY_FUNCTION__
-#elif defined(__cplusplus) && (__cplusplus >= 201103)
-#define TAETL_FUNC_SIG __func__
 #else
-#error "TAETL_FUNC_SIG unknown!"
+#define TAETL_FUNC_SIG __func__
 #endif
 
-#define TAETL_IS_ENUM(Type) __is_enum(Type)
+#if not defined(TAETL_BUILTIN_NAN)
+#define TAETL_BUILTIN_NAN (__builtin_nanf(""))
+#endif  // TAETL_BUILTIN_NAN
+
+#if not defined(TAETL_BUILTIN_INFINITY)
+#define TAETL_BUILTIN_INFINITY (__builtin_inff())
+#endif  // TAETL_BUILTIN_INFINITY
+
+#if not defined(TAETL_HAS_VIRTUAL_DESTRUCTOR)
+#define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
+#endif  // TAETL_HAS_VIRTUAL_DESTRUCTOR
+
+#if not defined(TAETL_IS_ABSTRACT)
+#define TAETL_IS_ABSTRACT(Type) __is_abstract(Type)
+#endif  // TAETL_IS_ABSTRACT
+
+#if not defined(TAETL_IS_AGGREGATE)
+#define TAETL_IS_AGGREGATE(Type) __is_aggregate(Type)
+#endif  // TAETL_IS_AGGREGATE
+
+#if not defined(TAETL_IS_ASSIGNABLE)
+#define TAETL_IS_ASSIGNABLE(Type, Arg) __is_assignable(Type, Arg)
+#endif  // TAETL_IS_ASSIGNABLE
+
+#if not defined(TAETL_IS_CONSTANT_EVALUATED)
+#define TAETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
+#endif  // TAETL_IS_CONSTANT_EVALUATED
+
+#if not defined(TAETL_IS_CONSTRUCTIBLE)
+#define TAETL_IS_CONSTRUCTIBLE(Type, Args) __is_constructible(Type, Args)
+#endif  // TAETL_IS_CONSTRUCTIBLE
+
+#if not defined(TAETL_IS_CLASS)
 #define TAETL_IS_CLASS(Type) __is_class(Type)
-#define TAETL_IS_UNION(Type) __is_union(Type)
+#endif  // TAETL_IS_CLASS
+
+#if not defined(TAETL_IS_ENUM)
+#define TAETL_IS_ENUM(Type) __is_enum(Type)
+#endif  // TAETL_IS_ENUM
+
+#if not defined(TAETL_IS_FINAL)
+#define TAETL_IS_FINAL(Type) __is_final(Type)
+#endif  // TAETL_IS_FINAL
+
+#if not defined(TAETL_IS_POLYMORPHIC)
+#define TAETL_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
+#endif  // TAETL_IS_POLYMORPHIC
 
 #if not defined(TAETL_IS_STANDARD_LAYOUT)
-#if defined(TAETL_GCC) or defined(TAETL_CLANG) or defined(TAETL_MSVC)
-#define TAETL_IS_STANDARD_LAYOUT(S) __is_standard_layout(S)
-#else
-#error "Untested compiler for __is_standard_layout"
-#endif
+#define TAETL_IS_STANDARD_LAYOUT(Type) __is_standard_layout(Type)
 #endif  // TAETL_IS_STANDARD_LAYOUT
 
-#define TAETL_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
-#define TAETL_IS_FINAL(Type) __is_final(Type)
-#define TAETL_IS_ABSTRACT(Type) __is_abstract(Type)
-
-#define TAETL_IS_AGGREGATE(Type) __is_aggregate(Type)
-
-#define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
-
-#define TAETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)
-
-// Macro not available in GCC8.2
-#if defined(__is_nothrow_constructible)
-#define TAETL_IS_NOTHROW_CONSTRUCTIBLE(Type) __is_nothrow_constructible(Type)
-#else
-#define TAETL_IS_NOTHROW_CONSTRUCTIBLE(Type) true
-#endif
-
-#define TAETL_IS_TRIVIAL_DESTRUCTIBLE(Type) __has_trivial_destructor(Type)
-
-#define TAETL_IS_ASSIGNABLE(T, Arg) __is_assignable(T, Arg)
+#if not defined(TAETL_IS_TRIVIALLY_ASSIGNABLE)
 #define TAETL_IS_TRIVIALLY_ASSIGNABLE(T, Arg) __is_trivially_assignable(T, Arg)
+#endif  // TAETL_IS_TRIVIALLY_ASSIGNABLE
 
-#define TAETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
+#if not defined(TAETL_IS_TRIVIAL_CONSTRUCTIBLE)
+#define TAETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)
+#endif  // TAETL_IS_TRIVIAL_CONSTRUCTIBLE
 
-#define TAETL_BUILTIN_NAN (__builtin_nanf(""))
-#define TAETL_BUILTIN_INFINITY (__builtin_inff())
+#if not defined(TAETL_IS_TRIVIAL_DESTRUCTIBLE)
+#define TAETL_IS_TRIVIAL_DESTRUCTIBLE(Type) __has_trivial_destructor(Type)
+#endif  // TAETL_IS_TRIVIAL_DESTRUCTIBLE
+
+#if not defined(TAETL_IS_UNION)
+#define TAETL_IS_UNION(Type) __is_union(Type)
+#endif  // TAETL_IS_UNION
 
 #ifdef _MSC_VER
 #define TAETL_BUILTIN_INT8 __int8
