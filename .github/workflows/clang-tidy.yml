@@ -30,7 +30,7 @@ jobs:
         run: sudo apt install -y clang-tidy-12 ninja-build
 
       - name: cmake configure
-        run: cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
 
       - name: clang-tidy check
         run: BUILD_DIR=cmake-build-tidy make tidy-check

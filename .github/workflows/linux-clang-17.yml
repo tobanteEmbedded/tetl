@@ -21,7 +21,7 @@ jobs:
         run: sudo apt install -y ninja-build
 
       - name: CMake configure -- Debug
-        run: CC=clang-10 CXX=clang++-10 cmake -S . -G Ninja -B build_Debug -DCMAKE_BUILD_TYPE=Debug
+        run: CC=clang-10 CXX=clang++-10 cmake -S . -G Ninja -B build_Debug -DCMAKE_BUILD_TYPE=Debug -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build build_Debug

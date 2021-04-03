@@ -17,7 +17,7 @@ jobs:
         run: git submodule update --recursive --init
 
       - name: CMake configure -- Debug
-        run: cmake -S . -B build_Debug -G "Visual Studio 16 2019" -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+        run: cmake -S . -B build_Debug -G "Visual Studio 16 2019" -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build build_Debug --config "Debug"
@@ -26,7 +26,7 @@ jobs:
         run: .\build_Debug\tests\Debug\etl-tests.exe
 
       - name: CMake configure -- Release
-        run: cmake -S . -B build_Release -G "Visual Studio 16 2019" -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+        run: cmake -S . -B build_Release -G "Visual Studio 16 2019" -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build build_Release --config "Release"
