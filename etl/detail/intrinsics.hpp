@@ -115,6 +115,10 @@ DAMAGE.
 #define TAETL_IS_UNION(Type) __is_union(Type)
 #endif  // TAETL_IS_UNION
 
+#if not defined(TAETL_IS_UNDERLYING_TYPE)
+#define TAETL_IS_UNDERLYING_TYPE(Type) __underlying_type(Type)
+#endif  // TAETL_IS_UNDERLYING_TYPE
+
 #ifdef _MSC_VER
 #define TAETL_BUILTIN_INT8 __int8
 #define TAETL_BUILTIN_INT16 __int16

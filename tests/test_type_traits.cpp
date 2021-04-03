@@ -913,3 +913,33 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_destructible(false)",
   STATIC_REQUIRE_FALSE(etl::is_trivially_destructible<TestType>::value);
   STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<TestType>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: underlying_type", "[type_traits]", char, short,
+                   int, long, unsigned, unsigned long)
+{
+  using etl::is_same_v;
+  using etl::underlying_type;
+  using etl::underlying_type_t;
+
+  enum CEnum : TestType
+  {
+    foobar
+  };
+
+  enum struct EnumStruct : TestType
+  {
+    a,
+    b,
+    c
+  };
+
+  enum class EnumClass : TestType
+  {
+    x,
+    y,
+  };
+
+  STATIC_REQUIRE(is_same_v<TestType, typename underlying_type<CEnum>::type>);
+  STATIC_REQUIRE(is_same_v<TestType, underlying_type_t<EnumStruct>>);
+  STATIC_REQUIRE(is_same_v<TestType, underlying_type_t<EnumClass>>);
+}
