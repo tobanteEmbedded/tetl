@@ -124,6 +124,14 @@ DAMAGE.
 #define TAETL_IS_UNDERLYING_TYPE(Type) __underlying_type(Type)
 #endif  // TAETL_IS_UNDERLYING_TYPE
 
+#if not defined(TAETL_MAKE_INTEGER_SEQ)
+#if defined(TAETL_CLANG) or defined(TAETL_MSVC)
+#define TAETL_MAKE_INTEGER_SEQ(T, N) __make_integer_seq<integer_sequence, T, N>
+#else
+#define TAETL_MAKE_INTEGER_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
+#endif
+#endif  // TAETL_MAKE_INTEGER_SEQ
+
 #ifdef _MSC_VER
 #define TAETL_BUILTIN_INT8 __int8
 #define TAETL_BUILTIN_INT16 __int16

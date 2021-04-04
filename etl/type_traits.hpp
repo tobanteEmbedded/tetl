@@ -842,6 +842,31 @@ struct make_unsigned : detail::make_unsigned_helper<Type>
 template <typename T>
 using make_unsigned_t = typename make_unsigned<T>::type;
 
+template <typename T, T... Ints>
+struct integer_sequence
+{
+  static_assert(is_integral_v<T>, "T must be an integral type.");
+
+  using value_type = T;
+
+  [[nodiscard]] static constexpr auto size() noexcept -> size_t
+  {
+    return sizeof...(Ints);
+  }
+};
+
+template <typename T, T Size>
+using make_integer_sequence = TAETL_MAKE_INTEGER_SEQ(T, Size);
+
+template <size_t... Ints>
+using index_sequence = integer_sequence<size_t, Ints...>;
+
+template <size_t Size>
+using make_index_sequence = make_integer_sequence<size_t, Size>;
+
+template <typename... T>
+using index_sequence_for = make_index_sequence<sizeof...(T)>;
+
 /**
  * @brief Checks whether T is a floating-point type. Provides the member
  * constant value which is equal to true, if T is the type float, double, long

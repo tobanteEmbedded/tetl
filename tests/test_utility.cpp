@@ -601,3 +601,27 @@ TEMPLATE_TEST_CASE("utility/pair: get<Index>", "[utility]", etl::uint8_t,
     STATIC_REQUIRE(is_same_v<decltype(second), float&&>);
   }
 }
+
+TEMPLATE_TEST_CASE("utility: integer_sequence", "[utility]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t)
+
+{
+  using etl::is_same_v;
+
+  auto seq0 = etl::make_integer_sequence<TestType, 0> {};
+  STATIC_REQUIRE(is_same_v<TestType, typename decltype(seq0)::value_type>);
+  STATIC_REQUIRE(seq0.size() == 0);
+
+  auto seq1 = etl::make_integer_sequence<TestType, 1> {};
+  STATIC_REQUIRE(is_same_v<TestType, typename decltype(seq1)::value_type>);
+  STATIC_REQUIRE(seq1.size() == 1);
+
+  auto seq2 = etl::make_integer_sequence<TestType, 2> {};
+  STATIC_REQUIRE(is_same_v<TestType, typename decltype(seq2)::value_type>);
+  STATIC_REQUIRE(seq2.size() == 2);
+
+  auto seqI = etl::make_index_sequence<10> {};
+  STATIC_REQUIRE(is_same_v<etl::size_t, typename decltype(seqI)::value_type>);
+  STATIC_REQUIRE(seqI.size() == 10);
+}
