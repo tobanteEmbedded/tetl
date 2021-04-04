@@ -326,3 +326,50 @@ TEMPLATE_TEST_CASE("array: get", "[array]", etl::uint8_t, etl::int8_t,
   REQUIRE(etl::get<1>(a) == TestType {2});
   REQUIRE(etl::get<2>(a) == TestType {3});
 }
+
+TEMPLATE_TEST_CASE("array: to_array", "[array]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+  SECTION("cppreference.com example")
+  {
+    // copies a string literal
+    auto a1 = etl::to_array("foo");
+    STATIC_REQUIRE(a1.size() == 4);
+
+    // deduces both element type and length
+    auto a2 = etl::to_array({0, 2, 1, 3});
+    STATIC_REQUIRE(etl::is_same_v<decltype(a2), etl::array<int, 4>>);
+
+    // deduces length with element type specified
+    // implicit conversion happens
+    auto a3 = etl::to_array<TestType>({0, 1, 3});
+    STATIC_REQUIRE(etl::is_same_v<decltype(a3), etl::array<TestType, 3>>);
+
+    auto a4 = etl::to_array<etl::pair<TestType, float>>({
+      {TestType {3}, 0.0F},
+      {TestType {4}, 0.1F},
+      {TestType {4}, 0.1e23F},
+    });
+    STATIC_REQUIRE(a4.size() == 3);
+
+    struct non_copy
+    {
+      TestType val;
+
+      non_copy(TestType init) : val {init} { }
+      non_copy(non_copy&&) noexcept = default;
+      non_copy(non_copy const&)     = delete;
+      auto operator=(non_copy&&) noexcept -> non_copy& = default;
+      auto operator=(non_copy const&) -> non_copy& = delete;
+    };
+
+    // creates a non-copyable etl::array
+    auto a5 = etl::to_array({non_copy(TestType {42})});
+    STATIC_REQUIRE(a5.size() == 1);
+
+    // error: copying multidimensional arrays is not supported
+    //    char s[2][6] = {"nice", "thing"};
+    //    auto a6      = etl::to_array(s);
+  }
+}

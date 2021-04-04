@@ -496,6 +496,46 @@ template <size_t Index, typename Type, size_t Size>
   return move(array[Index]);
 }
 
+namespace detail
+{
+template <typename T, size_t N, size_t... I>
+[[nodiscard]] constexpr auto to_array_impl(T (&a)[N], index_sequence<I...>)
+  -> array<remove_cv_t<T>, N>
+{
+  return {{a[I]...}};
+}
+
+template <typename T, size_t N, size_t... I>
+[[nodiscard]] constexpr auto to_array_impl(T(&&a)[N], index_sequence<I...>)
+  -> array<remove_cv_t<T>, N>
+{
+  return {{move(a[I])...}};
+}
+
+}  // namespace detail
+
+/**
+ * @brief Creates a array from the one dimensional built-in array a. The
+ * elements of the array are copy-initialized from the corresponding element of
+ * a. Copying or moving multidimensional built-in array is not supported.
+ */
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto to_array(T (&a)[N]) -> array<remove_cv_t<T>, N>
+{
+  return detail::to_array_impl(a, make_index_sequence<N> {});
+}
+
+/**
+ * @brief Creates a array from the one dimensional built-in array a. The
+ * elements of the array are copy-initialized from the corresponding element of
+ * a. Copying or moving multidimensional built-in array is not supported.
+ */
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto to_array(T(&&a)[N])
+{
+  return detail::to_array_impl(move(a), make_index_sequence<N> {});
+}
+
 }  // namespace etl
 
 #endif  // TAETL_ARRAY_HPP
