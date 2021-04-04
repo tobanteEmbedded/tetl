@@ -29,6 +29,8 @@ DAMAGE.
 #include "etl/chrono.hpp"
 #include "etl/warning.hpp"
 
+#include <chrono>
+
 TEMPLATE_TEST_CASE("chrono/duration: construct", "[chrono]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
@@ -292,4 +294,22 @@ TEST_CASE("chrono/duration: operator\"\"_ns (nanoseconds)", "[chrono]")
   using namespace etl::literals;
   auto const nanoseconds = 10_ns;
   REQUIRE(nanoseconds.count() == etl::chrono::nanoseconds {10}.count());
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: time_point", "[chrono]", etl::int8_t,
+                   etl::int16_t, etl::int32_t, etl::int64_t, float, double)
+{
+  struct null_clock
+  {
+    using rep            = TestType;
+    using period         = etl::ratio<1>;
+    using duration       = etl::chrono::duration<rep, period>;
+    using time_point     = etl::chrono::time_point<null_clock>;
+    bool const is_steady = false;
+
+    [[nodiscard]] auto now() noexcept -> time_point { return time_point {}; }
+  };
+
+  auto null = etl::chrono::time_point<null_clock> {};
+  CHECK(null.time_since_epoch().count() == TestType {0});
 }

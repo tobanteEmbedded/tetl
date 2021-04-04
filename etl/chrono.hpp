@@ -150,7 +150,7 @@ class duration
     typename Rep2,
     TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
       treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
-  constexpr explicit duration(Rep2 const& r) noexcept : data_(r)
+  constexpr explicit duration(Rep2 const& r) noexcept : rep_(r)
   {
   }
 
@@ -178,7 +178,7 @@ class duration
                             || (ratio_divide<Period2, period>::den == 1
                                 && !treat_as_floating_point_v<Rep2>))>
   constexpr duration(duration<Rep2, Period2> const& other) noexcept
-      : data_(
+      : rep_(
         static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
   {
   }
@@ -191,7 +191,7 @@ class duration
   /**
    * @brief Returns the number of ticks for this duration.
    */
-  [[nodiscard]] constexpr auto count() const -> rep { return data_; }
+  [[nodiscard]] constexpr auto count() const -> rep { return rep_; }
 
   /**
    * @brief Returns a zero-length duration.
@@ -230,43 +230,249 @@ class duration
    */
   [[nodiscard]] constexpr auto operator-() const -> etl::common_type_t<duration>
   {
-    return etl::common_type_t<duration>(-data_);
+    return etl::common_type_t<duration>(-rep_);
   }
 
   /**
    * @brief Increments or decrements the number of ticks for this duration.
-   * Equivalent to ++data_; return *this;
+   * Equivalent to ++rep_; return *this;
    */
   constexpr auto operator++() -> duration&
   {
-    ++data_;
+    ++rep_;
     return *this;
   }
 
   /**
    * @brief Increments or decrements the number of ticks for this duration.
-   * Equivalent to return duration(data_++)
+   * Equivalent to return duration(rep_++)
    */
-  constexpr auto operator++(int) -> duration { return duration(data_++); }
+  constexpr auto operator++(int) -> duration { return duration(rep_++); }
 
   /**
    * @brief Increments or decrements the number of ticks for this duration.
-   * Equivalent to --data_; return *this;
+   * Equivalent to --rep_; return *this;
    */
   constexpr auto operator--() -> duration&
   {
-    --data_;
+    --rep_;
     return *this;
   }
 
   /**
    * @brief Increments or decrements the number of ticks for this duration.
-   * Equivalent to return duration(data_--);
+   * Equivalent to return duration(rep_--);
    */
-  constexpr auto operator--(int) -> duration { return duration(data_--); }
+  constexpr auto operator--(int) -> duration { return duration(rep_--); }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator+=(duration const& d) noexcept -> duration&
+  {
+    return rep_ += d.count();
+    return *this;
+  }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator-=(duration const& d) noexcept -> duration&
+  {
+    return rep_ -= d.count();
+    return *this;
+  }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator*=(rep const& rhs) noexcept -> duration&
+  {
+    return rep_ *= rhs;
+    return *this;
+  }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator/=(rep const& rhs) noexcept -> duration&
+  {
+    return rep_ /= rhs;
+    return *this;
+  }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator%=(rep const& rhs) noexcept -> duration&
+  {
+    return rep_ %= rhs;
+    return *this;
+  }
+
+  /**
+   * @brief Performs compound assignments between two durations with the same
+   * period or between a duration and a tick count value.
+   */
+  constexpr auto operator%=(duration const& rhs) noexcept -> duration&
+  {
+    return rep_ %= rhs.count();
+    return *this;
+  }
 
   private:
-  rep data_ {};
+  rep rep_ {};
+};
+
+/**
+ * @brief Class template time_point represents a point in time. It is
+ * implemented as if it stores a value of type Duration indicating the time
+ * interval from the start of the Clock's epoch.
+ * @tparam Clock Must meet the requirements for Clock
+ * https://en.cppreference.com/w/cpp/named_req/Clock
+ */
+template <typename Clock, typename Duration = typename Clock::duration>
+class time_point
+{
+  public:
+  /**
+   * @brief Clock, the clock on which this time point is measured.
+   */
+  using clock = Clock;
+
+  /**
+   * @brief Duration, a duration type used to measure the time since epoch.
+   */
+  using duration = Duration;
+
+  /**
+   * @brief Rep, an arithmetic type representing the number of ticks of the
+   * duration.
+   */
+  using rep = typename duration::rep;
+
+  /**
+   * @brief Period, a ratio type representing the tick period of the duration.
+   */
+  using period = typename duration::period;
+
+  /**
+   * @brief Constructs a new time_point from one of several optional data
+   * sources. Default constructor, creates a time_point representing the Clock's
+   * epoch (i.e., time_since_epoch() is zero).
+   */
+  constexpr time_point() noexcept = default;
+
+  /**
+   * @brief Constructs a new time_point from one of several optional data
+   * sources. Constructs a time_point at Clock's epoch plus d.
+   */
+  constexpr explicit time_point(duration const& d) noexcept : d_ {d} { }
+
+  /**
+   * @brief Constructs a new time_point from one of several optional data
+   * sources. Constructs a time_point by converting t to duration. This
+   * constructor only participates in overload resolution if Duration2 is
+   * implicitly convertible to duration.
+   */
+  template <typename Dur2, TAETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
+  constexpr time_point(time_point<clock, Dur2> const& t)
+      : d_ {t.time_since_epch()}
+  {
+  }
+
+  /**
+   * @brief Returns a duration representing the amount of time between *this and
+   * the clock's epoch.
+   */
+  [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration
+  {
+    return d_;
+  }
+
+  /**
+   * @brief Modifies the time point by the given duration. Applies the offset d
+   * to pt. Effectively, d is added to the internally stored duration d_ as d_
+   * += d.
+   */
+  constexpr auto operator+=(duration const& d) noexcept -> time_point&
+  {
+    d_ += d;
+    return *this;
+  }
+
+  /**
+   * @brief Modifies the time point by the given duration. Applies the offset d
+   * to pt in negative direction. Effectively, d is subtracted from internally
+   * stored duration d_ as d_ -= d.
+   */
+  constexpr auto operator-=(duration const& d) noexcept -> time_point&
+  {
+    d_ -= d;
+    return *this;
+  }
+
+  /**
+   * @brief Modifies the point in time *this represents by one tick of the
+   * duration.
+   */
+  constexpr auto operator++() noexcept -> time_point&
+  {
+    ++d_;
+    return *this;
+  }
+
+  /**
+   * @brief Modifies the point in time *this represents by one tick of the
+   * duration.
+   */
+  constexpr auto operator++(int) noexcept -> time_point
+  {
+    return time_point(d_++);
+  }
+
+  /**
+   * @brief Modifies the point in time *this represents by one tick of the
+   * duration.
+   */
+  constexpr auto operator--() noexcept -> time_point&
+  {
+    --d_;
+    return *this;
+  }
+
+  /**
+   * @brief Modifies the point in time *this represents by one tick of the
+   * duration.
+   */
+  constexpr auto operator--(int) noexcept -> time_point
+  {
+    return time_point(d_--);
+  }
+
+  /**
+   * @brief Returns a time_point with the smallest possible duration,
+   */
+  [[nodiscard]] static constexpr auto min() noexcept -> time_point
+  {
+    return time_point(duration::min());
+  }
+
+  /**
+   * @brief Returns a time_point with the largest possible duration,
+   */
+  [[nodiscard]] static constexpr auto max() noexcept -> time_point
+  {
+    return time_point(duration::max());
+  }
+
+  private:
+  duration d_ {};
 };
 
 /**
@@ -344,6 +550,78 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
   -> bool
 {
   return !(lhs < rhs);
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator==(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return lhs.time_since_epoch() == rhs.time_since_epoch();
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator!=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return !(lhs == rhs);
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator<(time_point<Clock, Dur1> const& lhs,
+          time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return lhs.time_since_epoch() < rhs.time_since_epoch();
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator<=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return lhs.time_since_epoch() <= rhs.time_since_epoch();
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator>(time_point<Clock, Dur1> const& lhs,
+          time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return lhs.time_since_epoch() > rhs.time_since_epoch();
+}
+
+/**
+ * @brief  Compares two time points. The comparison is done by comparing the
+ * results time_since_epoch() for the time points.
+ */
+template <typename Clock, typename Dur1, typename Dur2>
+[[nodiscard]] constexpr auto
+operator>=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
+{
+  return lhs.time_since_epoch() >= rhs.time_since_epoch();
 }
 
 /**
@@ -431,6 +709,15 @@ constexpr auto duration_cast(duration<Rep, Period> const& d) -> ToDuration
 //     if (t > d) { return t - To {1}; }
 //     return t;
 // }
+
+template <typename ToDuration, typename Clock, typename Duration>
+constexpr auto time_point_cast(time_point<Clock, Duration> const& tp)
+  -> enable_if_t<detail::is_duration<ToDuration>::value,
+                 time_point<Clock, ToDuration>>
+{
+  using time_point_t = time_point<Clock, ToDuration>;
+  return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
+}
 
 /**
  * @brief Returns the absolute value of the duration d. Specifically, if d >=
