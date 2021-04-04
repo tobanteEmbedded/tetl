@@ -627,52 +627,52 @@ operator>=(time_point<Clock, Dur1> const& lhs,
 /**
  * @brief Signed integer type of at least 64 bits.
  */
-using nanoseconds = duration<etl::int64_t, etl::nano>;
+using nanoseconds = duration<long long, nano>;
 
 /**
  * @brief Signed integer type of at least 55 bits.
  */
-using microseconds = duration<etl::int64_t, etl::micro>;
+using microseconds = duration<long long, micro>;
 
 /**
  * @brief Signed integer type of at least 45 bits.
  */
-using milliseconds = duration<etl::int64_t, etl::milli>;
+using milliseconds = duration<long long, milli>;
 
 /**
  * @brief Signed integer type of at least 35 bits.
  */
-using seconds = duration<etl::int64_t>;
+using seconds = duration<long long>;
 
 /**
  * @brief Signed integer type of at least 29 bits.
  */
-using minutes = duration<etl::int32_t, etl::ratio<60>>;
+using minutes = duration<int, ratio<60>>;
 
 /**
  * @brief Signed integer type of at least 23 bits.
  */
-using hours = duration<etl::int32_t, etl::ratio<3600>>;
+using hours = duration<int, ratio<3600>>;
 
 /**
  * @brief Signed integer type of at least 25 bits.
  */
-using days = duration<etl::int32_t, etl::ratio<86'400>>;
+using days = duration<int, ratio<86400>>;
 
 /**
  * @brief Signed integer type of at least 22 bits.
  */
-using weeks = duration<etl::int32_t, etl::ratio<604'800>>;
-
-/**
- * @brief Signed integer type of at least 20 bits.
- */
-using months = duration<etl::int32_t, etl::ratio<2'629'746>>;
+using weeks = duration<int, ratio<604800>>;
 
 /**
  * @brief Signed integer type of at least 17 bits.
  */
-using years = duration<etl::int32_t, etl::ratio<31'556'952>>;
+using years = duration<int, ratio<2629746>>;
+
+/**
+ * @brief Signed integer type of at least 20 bits.
+ */
+using months = duration<int, ratio<31556952>>;
 
 namespace detail
 {
@@ -772,10 +772,24 @@ duration_cast(duration<Rep, Period> const& duration) noexcept(
  */
 template <typename To, typename Rep, typename Period,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
-constexpr auto floor(duration<Rep, Period> const& d) -> To
+[[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d) noexcept(
+  is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
-  auto const t = etl::chrono::duration_cast<To>(d);
-  if (t > d) { return t - To {1}; }
+  auto const t {duration_cast<To>(d)};
+  if (t > d) { return To {t.count() - static_cast<typename To::rep>(1)}; }
+  return t;
+}
+
+/**
+ * @brief
+ */
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto ceil(duration<Rep, Period> const& d) noexcept(
+  is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
+{
+  auto const t {duration_cast<To>(d)};
+  if (t < d) { return To {t.count() + static_cast<typename To::rep>(1)}; }
   return t;
 }
 
@@ -814,13 +828,26 @@ namespace etl
  * least common multiple of Period1::den and Period2::den.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-struct common_type<etl::chrono::duration<Rep1, Period1>,
-                   etl::chrono::duration<Rep2, Period2>>
+struct common_type<chrono::duration<Rep1, Period1>,
+                   chrono::duration<Rep2, Period2>>
 {
-  using type
-    = etl::chrono::duration<typename etl::common_type<Rep1, Rep2>::type,
-                            ratio<etl::gcd(Period1::num, Period2::num),
-                                  etl::lcm(Period1::den, Period2::den)>>;
+  private:
+  static constexpr auto num = gcd(Period1::num, Period2::num);
+  static constexpr auto den = lcm(Period1::den, Period2::den);
+
+  public:
+  using type = chrono::duration<common_type_t<Rep1, Rep2>, ratio<num, den>>;
+};
+
+/**
+ * @brief Exposes the type named type, which is the common type of two
+ * chrono::time_points.
+ */
+template <typename Clock, typename Duration1, typename Duration2>
+struct common_type<chrono::time_point<Clock, Duration1>,
+                   chrono::time_point<Clock, Duration2>>
+{
+  using type = chrono::time_point<Clock, common_type_t<Duration1, Duration2>>;
 };
 
 inline namespace literals
