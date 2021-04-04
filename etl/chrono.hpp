@@ -677,38 +677,107 @@ using years = duration<etl::int32_t, etl::ratio<31'556'952>>;
 namespace detail
 {
 template <typename T>
-struct is_duration : etl::false_type
+struct is_duration : ::etl::false_type
 {
 };
+
 template <typename Rep, typename Period>
-struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type
+struct is_duration<::etl::chrono::duration<Rep, Period>> : ::etl::true_type
 {
 };
+
+template <typename ToDuration, typename CF, typename CR, bool NumIsOne = false,
+          bool DenIsOne = false>
+struct duration_cast_impl
+{
+  template <typename Rep, typename Period>
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
+  {
+    using to_rep = typename ToDuration::rep;
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          * static_cast<CR>(CF::num)
+                                          / static_cast<CR>(CF::den)));
+  }
+};
+
+template <typename ToDuration, typename CF, typename CR>
+struct duration_cast_impl<ToDuration, CF, CR, true, false>
+{
+  template <typename Rep, typename Period>
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
+  {
+    using to_rep = typename ToDuration::rep;
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          / static_cast<CR>(CF::den)));
+  }
+};
+
+template <typename ToDuration, typename CF, typename CR>
+struct duration_cast_impl<ToDuration, CF, CR, false, true>
+{
+  template <typename Rep, typename Period>
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
+  {
+    using to_rep = typename ToDuration::rep;
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          * static_cast<CR>(CF::num)));
+  }
+};
+
+template <typename ToDuration, typename CF, typename CR>
+struct duration_cast_impl<ToDuration, CF, CR, true, true>
+{
+  template <typename Rep, typename Period>
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
+  {
+    using to_rep = typename ToDuration::rep;
+    return ToDuration(static_cast<to_rep>(duration.count()));
+  }
+};
+
 }  // namespace detail
 
 /**
- * @brief Converts a etl::chrono::duration to a duration of different type
- * ToDuration.
+ * @brief Converts a duration to a duration of different type ToDur.
  */
-template <typename ToDuration, typename Rep, typename Period>
-constexpr auto duration_cast(duration<Rep, Period> const& d) -> ToDuration
+template <typename ToDur, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<ToDur>::value)>
+[[nodiscard]] constexpr auto
+duration_cast(duration<Rep, Period> const& duration) noexcept(
+  is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDur::rep>) -> ToDur
 {
-  return ToDuration(d);
+  using detail::duration_cast_impl;
+  using cf   = ratio_divide<Period, typename ToDur::period>;
+  using cr   = common_type_t<typename ToDur::rep, Rep, intmax_t>;
+  using impl = duration_cast_impl<ToDur, cf, cr, cf::num == 1, cf::den == 1>;
+  return impl::cast(duration);
 }
 
-// /**
-//  * @brief Returns the greatest duration t representable in ToDuration that is
-//  * less or equal to d. The function does not participate in the overload
-//  * resolution unless ToDuration is an instance of etl::chrono::duration.
-//  */
-// template <typename To, typename Rep, typename Period,
-//           typename = etl::enable_if_t<detail::is_duration<To>::value>>
-// constexpr auto floor(duration <Rep, Period> const&   d) -> To
-// {
-//     auto const t = etl::chrono::duration_cast<To>(d);
-//     if (t > d) { return t - To {1}; }
-//     return t;
-// }
+/**
+ * @brief Returns the greatest duration t representable in ToDuration that is
+ * less or equal to d. The function does not participate in the overload
+ * resolution unless ToDuration is an instance of etl::chrono::duration.
+ */
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+constexpr auto floor(duration<Rep, Period> const& d) -> To
+{
+  auto const t = etl::chrono::duration_cast<To>(d);
+  if (t > d) { return t - To {1}; }
+  return t;
+}
 
 template <typename ToDuration, typename Clock, typename Duration>
 constexpr auto time_point_cast(time_point<Clock, Duration> const& tp)

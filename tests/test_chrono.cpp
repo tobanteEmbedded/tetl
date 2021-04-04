@@ -241,18 +241,19 @@ TEST_CASE("chrono/duration: duration_cast", "[chrono]")
   using etl::chrono::duration_cast;
   using etl::chrono::microseconds;
   using etl::chrono::milliseconds;
+  using etl::chrono::seconds;
 
-  auto milli = milliseconds {1};
-  auto micro = duration_cast<microseconds>(milli);
-  REQUIRE(micro.count() == 1'000);
+  REQUIRE(duration_cast<microseconds>(milliseconds {1}).count() == 1'000);
+  REQUIRE(duration_cast<seconds>(milliseconds {1'000}).count() == 1);
+  REQUIRE(duration_cast<microseconds>(milliseconds {143}).count() == 143'000);
 }
 
 // TEST_CASE("chrono/duration: floor", "[chrono]")
-// {
-//     using ms = etl::chrono::milliseconds;
-//     using us = etl::chrono::microseconds;
-//     REQUIRE(etl::chrono::floor<us>(ms {30}).count() == us {30}.count());
-// }
+//{
+//  using ms = etl::chrono::milliseconds;
+//  using us = etl::chrono::microseconds;
+//  REQUIRE(etl::chrono::floor<us>(ms {30}).count() == us {30}.count());
+//}
 
 TEST_CASE("chrono/duration: operator\"\"_h (hour)", "[chrono]")
 {
