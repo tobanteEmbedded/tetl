@@ -476,6 +476,30 @@ class time_point
 };
 
 /**
+ * @brief
+ */
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+[[nodiscard]] constexpr auto operator+(duration<Rep1, Period1> const& lhs,
+                                       duration<Rep2, Period2> const& rhs)
+  -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+{
+  using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
+  return CD(CD(lhs).count() + CD(rhs).count());
+}
+
+/**
+ * @brief
+ */
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+[[nodiscard]] constexpr auto operator-(duration<Rep1, Period1> const& lhs,
+                                       duration<Rep2, Period2> const& rhs)
+  -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+{
+  using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
+  return CD(CD(lhs).count() - CD(rhs).count());
+}
+
+/**
  * @brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
  * number of ticks for the type common to both durations are equal.
  */
@@ -793,13 +817,21 @@ template <typename To, typename Rep, typename Period,
   return t;
 }
 
-template <typename ToDuration, typename Clock, typename Duration>
-constexpr auto time_point_cast(time_point<Clock, Duration> const& tp)
-  -> enable_if_t<detail::is_duration<ToDuration>::value,
-                 time_point<Clock, ToDuration>>
+/**
+ * @brief
+ */
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
+  is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
-  using time_point_t = time_point<Clock, ToDuration>;
-  return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
+  auto const low      = floor<To>(dur);
+  auto const high     = low + To {1};
+  auto const lowDiff  = dur - low;
+  auto const highDiff = high - dur;
+  if (lowDiff < highDiff) { return low; }
+  if (lowDiff > highDiff) { return high; }
+  return low.count() & 1 ? high : low;
 }
 
 /**
@@ -809,9 +841,56 @@ constexpr auto time_point_cast(time_point<Clock, Duration> const& tp)
  */
 template <typename Rep, typename Period,
           TAETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
-constexpr auto abs(duration<Rep, Period> d) -> duration<Rep, Period>
+constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
+  -> duration<Rep, Period>
 {
-  return d >= d.zero() ? d : -d;
+  return d < duration<Rep, Period>::zero() ? duration<Rep, Period>::zero() - d
+                                           : d;
+}
+
+/**
+ * @brief
+ */
+template <typename ToDuration, typename Clock, typename Duration,
+          TAETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
+[[nodiscard]] constexpr auto
+time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
+{
+  using time_point_t = time_point<Clock, ToDuration>;
+  return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
+}
+
+/**
+ * @brief
+ */
+template <typename To, typename Clock, typename Duration,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
+{
+  return time_point<Clock, To> {floor<To>(tp.time_since_epoch())};
+}
+
+/**
+ * @brief
+ */
+template <typename To, typename Clock, typename Duration,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
+{
+  return time_point<Clock, To> {ceil<To>(tp.time_since_epoch())};
+}
+
+/**
+ * @brief
+ */
+template <typename To, typename Clock, typename Duration,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
+{
+  return time_point<Clock, To> {round<To>(tp.time_since_epoch())};
 }
 
 }  // namespace etl::chrono
