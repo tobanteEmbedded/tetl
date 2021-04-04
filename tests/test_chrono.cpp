@@ -297,20 +297,21 @@ TEST_CASE("chrono/duration: operator\"\"_ns (nanoseconds)", "[chrono]")
   REQUIRE(nanoseconds.count() == etl::chrono::nanoseconds {10}.count());
 }
 
+template <typename T>
+struct null_clock
+{
+  using rep            = T;
+  using period         = etl::ratio<1>;
+  using duration       = etl::chrono::duration<rep, period>;
+  using time_point     = etl::chrono::time_point<null_clock>;
+  bool const is_steady = false;
+
+  [[nodiscard]] auto now() noexcept -> time_point { return time_point {}; }
+};
+
 TEMPLATE_TEST_CASE("chrono/duration: time_point", "[chrono]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t, float, double)
 {
-  struct null_clock
-  {
-    using rep            = TestType;
-    using period         = etl::ratio<1>;
-    using duration       = etl::chrono::duration<rep, period>;
-    using time_point     = etl::chrono::time_point<null_clock>;
-    bool const is_steady = false;
-
-    [[nodiscard]] auto now() noexcept -> time_point { return time_point {}; }
-  };
-
-  auto null = etl::chrono::time_point<null_clock> {};
+  auto null = etl::chrono::time_point<null_clock<TestType>> {};
   CHECK(null.time_since_epoch().count() == TestType {0});
 }
