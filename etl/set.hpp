@@ -33,10 +33,9 @@ DAMAGE.
 #define TAETL_SET_HPP
 
 #include "etl/algorithm.hpp"   // for lower_bound, rotate
-#include "etl/array.hpp"       // for array
 #include "etl/functional.hpp"  // for less
 #include "etl/iterator.hpp"    // for reverse_iterator
-#include "etl/utility.hpp"     // for forward
+#include "etl/utility.hpp"     // for forward, move
 #include "etl/vector.hpp"      // for static_vector
 
 #include "etl/detail/container_utils.hpp"
@@ -54,7 +53,14 @@ template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set
 {
   private:
-  static_assert(is_nothrow_destructible_v<Key>);
+  // TODO: Currently static_set only supports default constructible comparators.
+  // This is because storing the Compare object would take up at least 1 extra
+  // byte. Probably even more because of alignment. The fix is to create a
+  // conditional storage struct depending on if the Compare template argument
+  // can be default constructed. If so: construct it on demand. If not: store it
+  // as a member.
+  static_assert(is_default_constructible_v<Compare>);
+
   using storage_type = static_vector<Key, Capacity>;
   storage_type memory_ {};
 
@@ -83,6 +89,8 @@ struct static_set
    * @brief Constructs with the contents of the range [first, last). If multiple
    * elements in the range have keys that compare equivalent, all but the first
    * will be discarded.
+   *
+   * @todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
    */
   template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
   static_set(InputIt first, InputIt last)
@@ -298,7 +306,7 @@ struct static_set
    * @todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
    * breaks GCC 9.3 Ubuntu Focal build
    */
-  auto insert(value_type const& value)
+  constexpr auto insert(value_type const& value)
     -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
   {
     value_type tmp = value;
@@ -312,9 +320,9 @@ struct static_set
    */
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-  auto insert(InputIter first,
-              InputIter last) noexcept(noexcept(insert(declval<key_type>())))
-    -> void
+  constexpr auto
+  insert(InputIter first,
+         InputIter last) noexcept(noexcept(insert(declval<key_type>()))) -> void
   {
     for (; first != last; ++first) { insert(*first); }
   }
@@ -325,7 +333,8 @@ struct static_set
    */
   template <typename... Args,
             TAETL_REQUIRES_(is_copy_constructible_v<key_type>)>
-  auto emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
+  constexpr auto
+  emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
     -> pair<iterator, bool>
   {
     return insert(value_type(forward<Args>(args)...));
@@ -404,8 +413,7 @@ struct static_set
    * @brief Returns the number of elements with key that compares equivalent to
    * the value x.
    */
-  template <typename K,
-            TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto count(K const& x) const -> size_type
   {
     return contains(x) ? 1 : 0;
@@ -437,8 +445,7 @@ struct static_set
   /**
    * @brief Finds an element with key that compares equivalent to the value x.
    */
-  template <typename K,
-            TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) -> iterator
   {
     return find_if(begin(), end(),
@@ -452,8 +459,7 @@ struct static_set
   /**
    * @brief Finds an element with key that compares equivalent to the value x.
    */
-  template <typename K,
-            TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) const -> const_iterator
   {
     return find_if(cbegin(), cend(),
@@ -479,8 +485,7 @@ struct static_set
    the value
    * x.
    */
-  template <typename K,
-            TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto contains(K const& x) const -> bool
   {
     return find(x) != end();
@@ -506,6 +511,26 @@ struct static_set
   }
 
   /**
+   * @brief Returns an iterator pointing to the first element that is not less
+   * than (i.e. greater or equal to) key.
+   */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
+  {
+    return ::etl::lower_bound(begin(), end(), key, key_compare {});
+  }
+
+  /**
+   * @brief Returns an iterator pointing to the first element that is not less
+   * than (i.e. greater or equal to) key.
+   */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
+  {
+    return ::etl::lower_bound(begin(), end(), key, key_compare {});
+  }
+
+  /**
    * @brief Returns an iterator pointing to the first element that is greater
    than key.
    */
@@ -520,6 +545,26 @@ struct static_set
    */
   [[nodiscard]] constexpr auto upper_bound(key_type const& key) const
     -> const_iterator
+  {
+    return ::etl::upper_bound(begin(), end(), key, key_compare {});
+  }
+
+  /**
+ * @brief Returns an iterator pointing to the first element that is greater
+ than key.
+ */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator
+  {
+    return ::etl::upper_bound(begin(), end(), key, key_compare {});
+  }
+
+  /**
+   * @brief Returns an iterator pointing to the first element that is greater
+   than key.
+   */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator
   {
     return ::etl::upper_bound(begin(), end(), key, key_compare {});
   }
@@ -548,6 +593,33 @@ struct static_set
   {
     return ::etl::equal_range(begin(), end(), key, key_compare {});
   }
+
+  /**
+   * @brief Returns a range containing all elements with the given key in the
+   * container. The range is defined by two iterators, one pointing to the first
+   * element that is not less than key and another pointing to the first element
+   * greater than key. Alternatively, the first iterator may be obtained with
+   * lower_bound(), and the second with upper_bound().
+   */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto equal_range(K const& key) -> iterator
+  {
+    return ::etl::equal_range(begin(), end(), key, key_compare {});
+  }
+
+  /**
+   * @brief Returns a range containing all elements with the given key in the
+   * container. The range is defined by two iterators, one pointing to the first
+   * element that is not less than key and another pointing to the first element
+   * greater than key. Alternatively, the first iterator may be obtained with
+   * lower_bound(), and the second with upper_bound().
+   */
+  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  [[nodiscard]] constexpr auto equal_range(K const& key) const -> const_iterator
+  {
+    return ::etl::equal_range(begin(), end(), key, key_compare {});
+  }
+
   /**
    * @brief Returns the function object that compares the keys, which is a copy
    * of this container's constructor argument comp. It is the same as

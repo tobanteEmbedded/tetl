@@ -23,37 +23,56 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/set.hpp"
 
-#include "etl/array.hpp"
 #include "etl/string.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("set/static_set: typedefs", "[set]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
+  using etl::is_same_v;
   using set_t = etl::static_set<TestType, 16>;
 
-  STATIC_REQUIRE(etl::is_same_v<TestType, typename set_t::value_type>);
-  STATIC_REQUIRE(etl::is_same_v<TestType&, typename set_t::reference>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const&, typename set_t::const_reference>);
-  STATIC_REQUIRE(etl::is_same_v<TestType*, typename set_t::pointer>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const*, typename set_t::const_pointer>);
-  STATIC_REQUIRE(etl::is_same_v<TestType*, typename set_t::iterator>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const*, typename set_t::const_iterator>);
+  STATIC_REQUIRE(is_same_v<TestType, typename set_t::value_type>);
+  STATIC_REQUIRE(is_same_v<TestType&, typename set_t::reference>);
+  STATIC_REQUIRE(is_same_v<TestType const&, typename set_t::const_reference>);
+  STATIC_REQUIRE(is_same_v<TestType*, typename set_t::pointer>);
+  STATIC_REQUIRE(is_same_v<TestType const*, typename set_t::const_pointer>);
+  STATIC_REQUIRE(is_same_v<TestType*, typename set_t::iterator>);
+  STATIC_REQUIRE(is_same_v<TestType const*, typename set_t::const_iterator>);
+}
+
+TEMPLATE_TEST_CASE("set/static_set: trivial", "[set]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using set_t = etl::static_set<TestType, 16>;
+
+  STATIC_REQUIRE(etl::is_trivial_v<TestType>);
+  STATIC_REQUIRE(etl::is_default_constructible_v<set_t>);
+  STATIC_REQUIRE(etl::is_trivially_copyable_v<set_t>);
+  STATIC_REQUIRE(etl::is_trivially_destructible_v<set_t>);
+
+  struct NonTrivial
+  {
+    ~NonTrivial() { }  // NOLINT
+  };
+
+  using non_trivial_set_t = etl::static_set<NonTrivial, 16>;
+
+  STATIC_REQUIRE_FALSE(etl::is_trivial_v<NonTrivial>);
+  STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<non_trivial_set_t>);
 }
 
 TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::uint32_t, etl::int32_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-  SECTION("0")
+  SECTION("capacity = 0")
   {
     auto set = etl::static_set<TestType, 0>();
     CHECK(set.size() == 0);
@@ -66,7 +85,7 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t,
     CHECK(etl::as_const(set).end() == nullptr);
   }
 
-  SECTION("4")
+  SECTION("capacity = 4")
   {
     auto set = etl::static_set<TestType, 4>();
     CHECK(set.size() == 0);
@@ -75,7 +94,7 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(default)", "[set]", etl::uint8_t,
     CHECK_FALSE(set.full());
   }
 
-  SECTION("16")
+  SECTION("capacity = 16")
   {
     auto set = etl::static_set<TestType, 16>();
     CHECK(set.size() == 0);
@@ -90,7 +109,7 @@ TEMPLATE_TEST_CASE("set/static_set: ctor(first,last)", "[set]", etl::uint8_t,
                    etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using T   = TestType;
-  auto data = etl::array {T(2), T(1), T(0), T(1)};
+  auto data = {T(2), T(1), T(0), T(1)};
   auto set  = etl::static_set<TestType, 4>(begin(data), end(data));
   CHECK(set.size() == 3);
   CHECK(set.max_size() == 4);
@@ -213,7 +232,7 @@ TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t,
                    etl::int64_t, float, double)
 {
   using T   = TestType;
-  auto data = etl::array {T(1), T(2), T(3), T(4)};
+  auto data = {T(1), T(2), T(3), T(4)};
   auto set  = etl::static_set<T, 4>(begin(data), end(data));
 
   CHECK(set.contains(T(3)));
@@ -308,8 +327,8 @@ TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::uint16_t,
 
   SECTION("same size")
   {
-    auto lhsData = etl::array {T(1), T(2), T(3)};
-    auto rhsData = etl::array {T(4), T(5), T(6)};
+    auto lhsData = {T(1), T(2), T(3)};
+    auto rhsData = {T(4), T(5), T(6)};
     auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
     auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
     CHECK(lhs.size() == rhs.size());
@@ -329,8 +348,8 @@ TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::uint16_t,
 
   SECTION("different size")
   {
-    auto lhsData = etl::array {T(1), T(2), T(3)};
-    auto rhsData = etl::array {T(4), T(5)};
+    auto lhsData = {T(1), T(2), T(3)};
+    auto rhsData = {T(4), T(5)};
     auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
     auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
     CHECK(lhs.size() == 3);
@@ -349,6 +368,43 @@ TEMPLATE_TEST_CASE("set/static_set: swap", "[set]", etl::uint8_t, etl::uint16_t,
     CHECK(rhs.size() == 2);
     CHECK(*lhs.begin() == T(1));
     CHECK(*rhs.begin() == T(4));
+  }
+}
+
+TEMPLATE_TEST_CASE("set/static_set: lower_bound/upper_bound", "[set]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+
+  SECTION("empty")
+  {
+    auto set = etl::static_set<T, 4> {};
+    CHECK(set.lower_bound(T {}) == set.end());
+    CHECK(set.upper_bound(T {}) == set.end());
+  }
+
+  SECTION("full")
+  {
+    auto data = {T(1), T(2), T(3), T(4)};
+    auto set  = etl::static_set<T, 4> {begin(data), end(data)};
+    CHECK(set.lower_bound(T {1}) == set.begin());
+    CHECK(set.upper_bound(T {1}) == etl::next(set.begin(), 1));
+  }
+}
+
+TEST_CASE("set/static_set: lower_bound/upper_bound(transparent)", "[set]")
+{
+  using namespace etl::literals;
+  using string_t = etl::static_string<32>;
+
+  SECTION("full")
+  {
+    auto data = {string_t {"test"}, string_t {"test"}, string_t {"test"}};
+    auto set  = etl::static_set<string_t, 4> {begin(data), end(data)};
+    CHECK(set.lower_bound("test") == set.begin());
+    CHECK(set.upper_bound("test") == etl::next(set.begin(), 1));
   }
 }
 
@@ -373,7 +429,7 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
 
   SECTION("equal")
   {
-    auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+    auto data = {TestType(1), TestType(2), TestType(3)};
     auto lhs  = etl::static_set<TestType, 4>(begin(data), end(data));
     auto rhs  = etl::static_set<TestType, 4>(begin(data), end(data));
 
@@ -390,7 +446,7 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
 
   SECTION("not equal")
   {
-    auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+    auto data = {TestType(1), TestType(2), TestType(3)};
     auto lhs  = etl::static_set<TestType, 4>(begin(data), end(data) - 1);
     auto rhs  = etl::static_set<TestType, 4>(begin(data), end(data));
 
@@ -425,7 +481,7 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
 
 //     SECTION("not empty")
 //     {
-//         auto data = etl::array {TestType(1), TestType(2), TestType(3)};
+//         auto data =  {TestType(1), TestType(2), TestType(3)};
 //         auto set  = etl::static_set<TestType, 4>();
 //         CHECK(set.contains(TestType {1}));
 //         CHECK(etl::erase_if(set, predicate) == 0);

@@ -50,6 +50,10 @@ struct is_transparent<
                        bool>> : ::etl::true_type
 {
 };
+
+template <typename T, typename U>
+inline constexpr auto transparent_v = is_transparent<T, U>::value;
+
 }  // namespace detail
 /**
  * @brief Function object for performing addition. Effectively calls operator+
