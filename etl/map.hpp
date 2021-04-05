@@ -321,8 +321,7 @@ class map_view
 /**
  * @brief etl::map is a sorted associative container that contains key-value
  * pairs with unique keys. Keys are sorted by using the comparison function
- * Compare. Search, removal, and insertion operations have logarithmic
- * complexity. Uses an inline key-value pair array as storage.
+ * Compare. Uses an inline key-value pair array as storage.
  *
  * @details Everywhere the standard library uses the Compare requirements,
  * uniqueness is determined by using the equivalence relation. In imprecise
