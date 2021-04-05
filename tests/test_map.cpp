@@ -365,7 +365,7 @@ TEMPLATE_TEST_CASE("map: static_map<int, TestType>", "[map]", etl::uint8_t,
   REQUIRE(etl::as_const(map).begin() == etl::as_const(map).end());
   REQUIRE(etl::as_const(map).rbegin() == etl::as_const(map).rend());
 
-  auto res = map.template emplace(143, TestType {1});
+  auto res = map.emplace(143, TestType {1});
   REQUIRE(res.second);
   REQUIRE(res.first->first == 143);
   REQUIRE(res.first->second == TestType {1});
@@ -376,4 +376,25 @@ TEMPLATE_TEST_CASE("map: static_map<int, TestType>", "[map]", etl::uint8_t,
   REQUIRE(map.rbegin() != map.rend());
   REQUIRE(etl::as_const(map).begin() != etl::as_const(map).end());
   REQUIRE(etl::as_const(map).rbegin() != etl::as_const(map).rend());
+
+  auto p    = etl::make_pair(42, TestType {2});
+  auto ires = map.insert(p);
+  REQUIRE(ires.second);
+  REQUIRE(ires.first->first == 42);
+  REQUIRE(ires.first->second == TestType {2});
+  REQUIRE(map.size() == 2);
+
+  auto ires2 = map.insert(etl::pair<long, TestType>(10, TestType {2}));
+  REQUIRE(ires2.second);
+  REQUIRE(ires2.first->first == 10);
+  REQUIRE(ires2.first->second == TestType {2});
+  REQUIRE(map.size() == 3);
+
+  auto range = etl::array {
+    etl::pair<int, TestType> {1, TestType {1}},
+    etl::pair<int, TestType> {2, TestType {2}},
+    etl::pair<int, TestType> {3, TestType {3}},
+  };
+  map.insert(range.begin(), range.end());
+  REQUIRE(map.size() == 6);
 }

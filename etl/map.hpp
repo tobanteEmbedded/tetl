@@ -629,6 +629,83 @@ private:
     return make_pair(memory_.insert(pos, p), true);
   }
 
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  constexpr auto insert(value_type const& value) -> pair<iterator, bool>
+  {
+    value_type copy = value;
+    return insert(move(copy));
+  }
+
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  template <typename P, TAETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
+  constexpr auto insert(P&& value) -> pair<iterator, bool>
+  {
+    return emplace(forward<P>(value));
+  }
+
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  constexpr auto insert(value_type&& value) -> pair<iterator, bool>
+  {
+    // Check if the key from the newly created object already existed.
+    auto pos = lower_bound(memory_.begin(), memory_.end(), value, value_comp());
+
+    // If so, return its iterator and false for insertion.
+    if (pos != memory_.end() && pos->first == value.first)
+    {
+      return make_pair(pos, false);
+    }
+
+    // Otherwise insert at the correct position.
+    return make_pair(memory_.insert(pos, move(value)), true);
+  }
+
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  constexpr auto insert(const_iterator hint, value_type const& value)
+    -> iterator
+  {
+    ignore_unused(hint);
+    return insert(value).first;
+  }
+
+  template <typename P, TAETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
+  constexpr auto insert(const_iterator hint, P&& value) -> iterator
+  {
+    ignore_unused(hint);
+    return emplace(value).first;
+  }
+
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  constexpr auto insert(const_iterator hint, value_type&& value) -> iterator
+  {
+    ignore_unused(hint);
+    return insert(value).first;
+  }
+
+  /**
+   * @brief Inserts element(s) into the container, if the container doesn't
+   * already contain an element with an equivalent key.
+   */
+  template <typename InputIter>
+  constexpr auto insert(InputIter first, InputIter last) -> void
+  {
+    for_each(first, last, [&](auto const& value) { insert(value); });
+  }
+
   [[nodiscard]] constexpr auto key_comp() const -> key_compare
   {
     return key_compare {};
