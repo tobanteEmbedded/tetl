@@ -415,7 +415,7 @@ template <typename KeyT, typename ValueT, size_t Capacity,
 struct static_map
 {
   private:
-  using storage_type = static_vector<pair<KeyT const, ValueT>, Capacity>;
+  using storage_type = static_vector<pair<KeyT, ValueT>, Capacity>;
   storage_type memory_ {};
 
   public:
@@ -626,8 +626,7 @@ private:
     }
 
     // Otherwise insert at the correct position.
-    return make_pair(end(), false);
-    //    return make_pair(memory_.insert(pos, p), true);
+    return make_pair(memory_.insert(pos, p), true);
   }
 
   [[nodiscard]] constexpr auto key_comp() const -> key_compare

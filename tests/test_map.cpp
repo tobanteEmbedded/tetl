@@ -365,15 +365,15 @@ TEMPLATE_TEST_CASE("map: static_map<int, TestType>", "[map]", etl::uint8_t,
   REQUIRE(etl::as_const(map).begin() == etl::as_const(map).end());
   REQUIRE(etl::as_const(map).rbegin() == etl::as_const(map).rend());
 
-  //  auto res = map.template emplace(143, TestType {1});
-  //  REQUIRE(res.second);
-  //  REQUIRE(res.first->first == 143);
-  //  REQUIRE(res.first->second == TestType {1});
-  //  REQUIRE(map.size() == 1);
-  //  REQUIRE(map.max_size() == 16);
-  //  REQUIRE_FALSE(map.empty());
-  //  REQUIRE(map.begin() != map.end());
-  //  REQUIRE(map.rbegin() != map.rend());
-  //  REQUIRE(etl::as_const(map).begin() != etl::as_const(map).end());
-  //  REQUIRE(etl::as_const(map).rbegin() != etl::as_const(map).rend());
+  auto res = map.template emplace(143, TestType {1});
+  REQUIRE(res.second);
+  REQUIRE(res.first->first == 143);
+  REQUIRE(res.first->second == TestType {1});
+  REQUIRE(map.size() == 1);
+  REQUIRE(map.max_size() == 16);
+  REQUIRE_FALSE(map.empty());
+  REQUIRE(map.begin() != map.end());
+  REQUIRE(map.rbegin() != map.rend());
+  REQUIRE(etl::as_const(map).begin() != etl::as_const(map).end());
+  REQUIRE(etl::as_const(map).rbegin() != etl::as_const(map).rend());
 }
