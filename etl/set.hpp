@@ -282,7 +282,7 @@ struct static_set
       auto* p  = ::etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
       if (p == memory_.end() || *(p) != value)
       {
-        memory_.template push_back(move(value));
+        memory_.push_back(move(value));
         auto* pos = rotate(p, memory_.end() - 1, memory_.end());
         return make_pair(pos, true);
       }
