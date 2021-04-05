@@ -35,9 +35,9 @@ DAMAGE.
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
+#include "etl/set.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
-#include "etl/vector.hpp"
 
 namespace etl
 {
@@ -415,7 +415,17 @@ template <typename KeyT, typename ValueT, size_t Capacity,
 struct static_map
 {
   private:
-  using storage_type = static_vector<pair<KeyT, ValueT>, Capacity>;
+  struct compare_type
+  {
+    [[nodiscard]] constexpr auto operator()(pair<KeyT, ValueT> const& lhs,
+                                            pair<KeyT, ValueT> const& rhs) const
+      -> bool
+    {
+      return lhs.first < rhs.first;
+    }
+  };
+
+  using storage_type = static_set<pair<KeyT, ValueT>, Capacity, compare_type>;
   storage_type memory_ {};
 
   public:
@@ -610,23 +620,7 @@ private:
   template <typename... Args>
   constexpr auto emplace(Args&&... args) -> pair<iterator, bool>
   {
-    // Return if no capacity is left.
-    if (full()) { return make_pair(end(), false); }
-
-    // Construct the key-value pair
-    auto p = value_type {forward<Args>(args)...};
-
-    // Check if the key from the newly created object already existed.
-    auto pos = lower_bound(memory_.begin(), memory_.end(), p, value_comp());
-
-    // If so, return its iterator and false for insertion.
-    if (pos != memory_.end() && pos->first == p.first)
-    {
-      return make_pair(pos, false);
-    }
-
-    // Otherwise insert at the correct position.
-    return make_pair(memory_.insert(pos, p), true);
+    return memory_.emplace(forward<Args>(args)...);
   }
 
   /**
@@ -655,17 +649,7 @@ private:
    */
   constexpr auto insert(value_type&& value) -> pair<iterator, bool>
   {
-    // Check if the key from the newly created object already existed.
-    auto pos = lower_bound(memory_.begin(), memory_.end(), value, value_comp());
-
-    // If so, return its iterator and false for insertion.
-    if (pos != memory_.end() && pos->first == value.first)
-    {
-      return make_pair(pos, false);
-    }
-
-    // Otherwise insert at the correct position.
-    return make_pair(memory_.insert(pos, move(value)), true);
+    return memory_.insert(move(value));
   }
 
   /**
