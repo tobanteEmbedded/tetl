@@ -350,3 +350,30 @@ TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t,
   func(map);
   REQUIRE(map.size() == 1);
 }
+
+TEMPLATE_TEST_CASE("map: static_map<int, TestType>", "[map]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  etl::static_map<int, TestType, 16> map {};
+  REQUIRE(map.empty());
+  REQUIRE(map.size() == 0);  // NOLINT
+  REQUIRE(map.max_size() == 16);
+  REQUIRE(map.begin() == map.end());
+  REQUIRE(map.rbegin() == map.rend());
+  REQUIRE(etl::as_const(map).begin() == etl::as_const(map).end());
+  REQUIRE(etl::as_const(map).rbegin() == etl::as_const(map).rend());
+
+  //  auto res = map.template emplace(143, TestType {1});
+  //  REQUIRE(res.second);
+  //  REQUIRE(res.first->first == 143);
+  //  REQUIRE(res.first->second == TestType {1});
+  //  REQUIRE(map.size() == 1);
+  //  REQUIRE(map.max_size() == 16);
+  //  REQUIRE_FALSE(map.empty());
+  //  REQUIRE(map.begin() != map.end());
+  //  REQUIRE(map.rbegin() != map.rend());
+  //  REQUIRE(etl::as_const(map).begin() != etl::as_const(map).end());
+  //  REQUIRE(etl::as_const(map).rbegin() != etl::as_const(map).rend());
+}

@@ -230,7 +230,7 @@ class static_vector_trivial_storage
   /**
    * @brief Maximum number of elements that can be allocated in the storage.
    */
-  [[nodiscard]] constexpr auto capacity() noexcept -> size_type
+  [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return Capacity;
   }
@@ -387,7 +387,7 @@ class static_vector_non_trivial_storage
   /**
    * @brief Maximum number of elements that can be allocated in the storage.
    */
-  [[nodiscard]] constexpr auto capacity() noexcept -> size_type
+  [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return Capacity;
   }
@@ -839,7 +839,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   /**
    * @brief Maximum number of elements that can be allocated in the vector
    */
-  constexpr auto capacity() noexcept -> size_type
+  [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return base_type::capacity();
   }
@@ -847,7 +847,10 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   /**
    * @brief Maximum number of elements that can be allocated in the vector
    */
-  constexpr auto max_size() noexcept -> size_type { return capacity(); }
+  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+  {
+    return capacity();
+  }
 
   /**
    * @brief Resizes the container to contain sz elements. If elements need to be

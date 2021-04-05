@@ -423,6 +423,7 @@ struct pair
       : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
   {
   }
+
   /**
    * @brief Initializes first with etl::forward<U1>(p.first) and second with
    * etl::forward<U2>(p.second).
