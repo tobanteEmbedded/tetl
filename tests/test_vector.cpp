@@ -34,18 +34,39 @@ TEMPLATE_TEST_CASE("vector/static_vector: typedefs", "[vector]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-  using vector_t = etl::static_vector<TestType, 16>;
+  using vec_t = etl::static_vector<TestType, 16>;
 
-  STATIC_REQUIRE(etl::is_same_v<TestType, typename vector_t::value_type>);
-  STATIC_REQUIRE(etl::is_same_v<TestType&, typename vector_t::reference>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const&, typename vector_t::const_reference>);
-  STATIC_REQUIRE(etl::is_same_v<TestType*, typename vector_t::pointer>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const*, typename vector_t::const_pointer>);
-  STATIC_REQUIRE(etl::is_same_v<TestType*, typename vector_t::iterator>);
-  STATIC_REQUIRE(
-    etl::is_same_v<TestType const*, typename vector_t::const_iterator>);
+  using etl::is_same_v;
+  STATIC_REQUIRE(is_same_v<TestType, typename vec_t::value_type>);
+  STATIC_REQUIRE(is_same_v<TestType&, typename vec_t::reference>);
+  STATIC_REQUIRE(is_same_v<TestType const&, typename vec_t::const_reference>);
+  STATIC_REQUIRE(is_same_v<TestType*, typename vec_t::pointer>);
+  STATIC_REQUIRE(is_same_v<TestType const*, typename vec_t::const_pointer>);
+  STATIC_REQUIRE(is_same_v<TestType*, typename vec_t::iterator>);
+  STATIC_REQUIRE(is_same_v<TestType const*, typename vec_t::const_iterator>);
+}
+
+TEMPLATE_TEST_CASE("vector/static_vector: trivial", "[vector]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using vec_t = etl::static_vector<TestType, 16>;
+
+  STATIC_REQUIRE(etl::is_trivial_v<TestType>);
+  STATIC_REQUIRE(etl::is_default_constructible_v<vec_t>);
+  STATIC_REQUIRE(etl::is_trivially_copyable_v<vec_t>);
+  STATIC_REQUIRE(etl::is_trivially_destructible_v<vec_t>);
+
+  struct NonTrivial
+  {
+    ~NonTrivial() { }  // NOLINT
+  };
+
+  using non_trivial_vec_t = etl::static_vector<NonTrivial, 16>;
+
+  STATIC_REQUIRE_FALSE(etl::is_trivial_v<NonTrivial>);
+  STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<non_trivial_vec_t>);
 }
 
 TEMPLATE_TEST_CASE("vector/static_vector: zero sized", "[vector]", etl::uint8_t,
@@ -211,26 +232,25 @@ TEMPLATE_TEST_CASE("vector/static_vector: resize", "[vector]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using etl::all_of;
+
   auto vec = etl::static_vector<TestType, 4> {};
   CHECK(vec.size() == 0);
 
   // grow
   vec.resize(etl::size_t {2});
   CHECK(vec.size() == 2);
-  CHECK(
-    etl::all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
+  CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
 
   // grow full capacity
   vec.resize(etl::size_t {4});
   CHECK(vec.size() == 4);
-  CHECK(
-    etl::all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
+  CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
 
   // same size
   vec.resize(etl::size_t {4});
   CHECK(vec.size() == 4);
-  CHECK(
-    etl::all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
+  CHECK(all_of(begin(vec), end(vec), [](auto x) { return x == TestType(); }));
 
   // shrink
   vec.resize(etl::size_t {2});
@@ -242,24 +262,25 @@ TEMPLATE_TEST_CASE("vector/static_vector: assign", "[vector]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using etl::all_of;
+  using etl::as_const;
+
   auto a = etl::static_vector<TestType, 4> {};
   a.assign(4, TestType {42});
   CHECK(a.size() == 4);
   CHECK(a.front() == 42);
   CHECK(a.back() == 42);
-  CHECK(etl::as_const(a).size() == 4);
-  CHECK(etl::as_const(a).front() == 42);
-  CHECK(etl::as_const(a).back() == 42);
-  CHECK(etl::all_of(begin(a), end(a),
-                    [](auto val) { return val == TestType(42); }));
+  CHECK(as_const(a).size() == 4);
+  CHECK(as_const(a).front() == 42);
+  CHECK(as_const(a).back() == 42);
+  CHECK(all_of(begin(a), end(a), [](auto val) { return val == TestType(42); }));
 
   auto b = etl::static_vector<TestType, 4> {4};
   b.assign(a.begin(), a.end());
   CHECK(b.size() == 4);
   CHECK(b.front() == 42);
   CHECK(b.back() == 42);
-  CHECK(etl::all_of(begin(b), end(b),
-                    [](auto val) { return val == TestType(42); }));
+  CHECK(all_of(begin(b), end(b), [](auto val) { return val == TestType(42); }));
 }
 
 TEMPLATE_TEST_CASE("vector/static_vector: pop_back", "[vector]", etl::uint8_t,

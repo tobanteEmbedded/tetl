@@ -2103,8 +2103,8 @@ inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
  */
 template <typename T>
 struct is_trivial
-    : bool_constant<is_trivially_copyable<T>::value
-                    && is_trivially_default_constructible<T>::value>
+    : bool_constant<
+        is_trivially_copyable_v<T> and is_trivially_default_constructible_v<T>>
 {
 };
 
