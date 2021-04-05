@@ -34,10 +34,17 @@ DAMAGE.
 #define FLT_RADIX __FLT_RADIX__
 
 #define DECIMAL_DIG __DECIMAL_DIG__
+#define FLT_DECIMAL_DIG __FLT_DECIMAL_DIG__
+#define DBL_DECIMAL_DIG __DBL_DECIMAL_DIG__
+#define LDBL_DECIMAL_DIG __LDBL_DECIMAL_DIG__
 
 #define FLT_MIN __FLT_MIN__
 #define DBL_MIN __DBL_MIN__
 #define LDBL_MIN __LDBL_MIN__
+
+#define FLT_TRUE_MIN __FLT_DENORM_MIN__
+#define DBL_TRUE_MIN __DBL_DENORM_MIN__
+#define LDBL_TRUE_MIN __LDBL_DENORM_MIN__
 
 #define FLT_MAX __FLT_MAX__
 #define DBL_MAX __DBL_MAX__
@@ -74,6 +81,10 @@ DAMAGE.
 #define FLT_ROUNDS (__builtin_flt_rounds())
 
 #define FLT_EVAL_METHOD __FLT_EVAL_METHOD__
+
+#define FLT_HAS_SUBNORM __FLT_HAS_DENORM__
+#define DBL_HAS_SUBNORM __DBL_HAS_DENORM__
+#define LDBL_HAS_SUBNORM __LDBL_HAS_DENORM__
 
 #endif  // has_include <float.h>
 
