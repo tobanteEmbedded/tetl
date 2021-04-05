@@ -37,342 +37,12 @@ DAMAGE.
 #include "etl/functional.hpp"  // for less
 #include "etl/iterator.hpp"    // for reverse_iterator
 #include "etl/utility.hpp"     // for forward
+#include "etl/vector.hpp"      // for static_vector
 
 #include "etl/detail/container_utils.hpp"
 
 namespace etl
 {
-namespace detail
-{
-/**
- * @brief Storage for zero elements.
- */
-template <typename Key>
-class static_set_zero_storage
-{
-  public:
-  using value_type      = Key;
-  using key_type        = Key;
-  using size_type       = uint8_t;
-  using difference_type = ptrdiff_t;
-  using pointer         = Key*;
-  using const_pointer   = Key const*;
-  using iterator        = Key*;
-  using const_iterator  = Key const*;
-
-  /**
-   * @brief Defaulted constructor.
-   */
-  constexpr static_set_zero_storage() = default;
-
-  /**
-   * @brief Defaulted copy constructor.
-   */
-  constexpr static_set_zero_storage(static_set_zero_storage const&) = default;
-
-  /**
-   * @brief Defaulted copy assignment .
-   */
-  constexpr auto operator       =(static_set_zero_storage const&) noexcept
-    -> static_set_zero_storage& = default;
-
-  /**
-   * @brief Defaulted move constructor.
-   */
-  constexpr static_set_zero_storage(
-    static_set_zero_storage&&) noexcept = default;
-
-  /**
-   * @brief Defaulted move assignment.
-   */
-  constexpr auto operator       =(static_set_zero_storage&&) noexcept
-    -> static_set_zero_storage& = default;
-
-  /**
-   * @brief Defaulted destructor.
-   */
-  ~static_set_zero_storage() = default;
-
-  /**
-   * @brief Returns an iterator to the first element of the set.
-   */
-  [[nodiscard]] constexpr auto begin() noexcept -> iterator { return nullptr; }
-
-  /**
-   * @brief Returns an iterator to the first element of the set.
-   */
-  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-  {
-    return nullptr;
-  }
-
-  /**
-   * @brief Returns an iterator to the element following the last element of the
-   * set.
-   */
-  [[nodiscard]] constexpr auto end() noexcept -> iterator { return nullptr; }
-
-  /**
-   * @brief Returns an iterator to the element following the last element of the
-   * set.
-   */
-  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-  {
-    return nullptr;
-  }
-
-  /**
-   * @brief Number of elements currently stored.
-   */
-  [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
-
-  /**
-   * @brief Capacity of the storage.
-   */
-  [[nodiscard]] static constexpr auto max_size() noexcept -> size_type
-  {
-    return 0;
-  }
-
-  /**
-   * @brief Is the storage empty?
-   */
-  [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
-
-  /**
-   * @brief Is the storage full?
-   */
-  [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
-
-  /**
-   * @brief
-   */
-  static constexpr auto insert(value_type&& /*value*/) -> pair<iterator, bool>
-  {
-    assert(false && "tried to insert on empty storage");
-    return pair<iterator, bool> {nullptr, false};
-  }
-
-  protected:
-  /**
-   * @brief (unsafe) Changes the container size to new_size.
-   *
-   * @warning No elements are constructed or destroyed.
-   */
-  constexpr void unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
-  {
-    assert(newSize == 0 && "new_size out-of-bounds for empty storage");
-  }
-
-  /**
-   * @brief Destroys all elements of the storage in range [begin, end) without
-   * changings its size (unsafe). Nothing to destroy since the storage is empty.
-   */
-  template <typename InputIt>
-  static constexpr auto unsafe_destroy(InputIt /* begin */,
-                                       InputIt /* end */) noexcept -> void
-  {
-  }
-
-  /**
-   * @brief Destroys all elements of the storage without changing its size
-   * (unsafe). Nothing to destroy since the storage is empty.
-   */
-  static constexpr void unsafe_destroy_all() noexcept { }
-};
-
-/**
- * @brief Storage for trivial types.
- */
-template <typename Key, size_t Capacity, typename Compare>
-class static_set_trivial_storage
-{
-  static_assert(is_trivial_v<Key>);
-  static_assert(Capacity != size_t());
-
-  public:
-  using value_type      = Key;
-  using key_type        = Key;
-  using size_type       = smallest_size_t<Capacity>;
-  using difference_type = ptrdiff_t;
-  using pointer         = Key*;
-  using const_pointer   = Key const*;
-  using iterator        = Key*;
-  using const_iterator  = Key const*;
-  using key_compare     = Compare;
-  using value_compare   = Compare;
-
-  /**
-   * @brief Default ctor.
-   */
-  constexpr static_set_trivial_storage() noexcept = default;
-
-  /**
-   * @brief Default copy.
-   */
-  constexpr static_set_trivial_storage(
-    static_set_trivial_storage const&) noexcept = default;
-
-  /**
-   * @brief Default copy assignment.
-   */
-  constexpr auto operator          =(static_set_trivial_storage const&) noexcept
-    -> static_set_trivial_storage& = default;
-
-  /**
-   * @brief Default move.
-   */
-  constexpr static_set_trivial_storage(
-    static_set_trivial_storage&&) noexcept = default;
-
-  /**
-   * @brief Default move assignment.
-   */
-  constexpr auto operator          =(static_set_trivial_storage&&) noexcept
-    -> static_set_trivial_storage& = default;
-
-  /**
-   * @brief Default dtor.
-   */
-  ~static_set_trivial_storage() = default;
-
-  /**
-   * @brief Returns an iterator to the first element of the set.
-   */
-  [[nodiscard]] constexpr auto begin() noexcept -> iterator
-  {
-    return data_.data();
-  }
-
-  /**
-   * @brief Returns an iterator to the first element of the set.
-   */
-  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-  {
-    return data_.data();
-  }
-
-  /**
-   * @brief Returns an iterator to the element following the last element of the
-   * set.
-   */
-  [[nodiscard]] constexpr auto end() noexcept -> iterator
-  {
-    return data_.data() + size_;
-  }
-
-  /**
-   * @brief Returns an iterator to the element following the last element of the
-   * set.
-   */
-  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-  {
-    return data_.data() + size_;
-  }
-
-  /**
-   * @brief Number of elements in the storage.
-   */
-  [[nodiscard]] constexpr auto size() const noexcept -> size_type
-  {
-    return size_;
-  }
-
-  /**
-   * @brief Maximum number of elements that can be allocated in the storage.
-   */
-  [[nodiscard]] constexpr auto max_size() noexcept -> size_type
-  {
-    return Capacity;
-  }
-
-  /**
-   * @brief Is the storage empty?
-   */
-  [[nodiscard]] constexpr auto empty() const noexcept -> bool
-  {
-    return size() == size_type {0};
-  }
-
-  /**
-   * @brief Is the storage full?
-   */
-  [[nodiscard]] constexpr auto full() const noexcept -> bool
-  {
-    return size() == Capacity;
-  }
-
-  /**
-   * @brief
-   */
-  constexpr auto insert(value_type&& value)
-    -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
-  {
-    if (!full())
-    {
-      auto* p = lower_bound(begin(), end(), value, key_compare {});
-      if (p == end() || *(p) != value)
-      {
-        data_[size_++] = move(value);
-        auto* pos      = rotate(p, end() - 1, end());
-        return make_pair(pos, true);
-      }
-    }
-
-    return pair<iterator, bool>(nullptr, false);
-  }
-
-  protected:
-  /**
-   * @brief (unsafe) Changes the container size to new_size.
-   *
-   * @warning No elements are constructed or destroyed.
-   */
-  constexpr void unsafe_set_size(size_t newSize) noexcept
-  {
-    assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity)");
-    size_ = size_type(newSize);
-  }
-
-  /**
-   * @brief (unsafe) Destroy elements in the range [begin, end).
-   *
-   * @warning The size of the storage is not changed.
-   */
-  template <typename InputIt>
-  constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept
-    -> void
-  {
-  }
-
-  /**
-   * @brief (unsafe) Destroys all elements of the storage.
-   *
-   * @warning The size of the storage is not changed.
-   */
-  constexpr auto unsafe_destroy_all() noexcept -> void { }
-
-  private:
-  // If the value_type is const, make a const array of non-const elements:
-  static constexpr auto condition = !is_const_v<Key>;
-  using mutable_storage_t         = array<Key, Capacity>;
-  using const_storage_t           = array<remove_const_t<Key>, Capacity> const;
-  using storage_t
-    = conditional_t<condition, mutable_storage_t, const_storage_t>;
-
-  alignas(alignof(Key)) storage_t data_ {};
-  size_type size_ = 0;
-};
-
-/**
- * @brief Selects the vector storage.
- */
-template <typename Key, size_t Capacity, typename Compare = less<Key>>
-using static_set_storage_type
-  = conditional_t<Capacity == 0, static_set_zero_storage<Key>,
-                  static_set_trivial_storage<Key, Capacity, Compare>>;
-}  // namespace detail
-
 /**
  * @brief static_set is an associative container that contains a sorted set
  * of unique objects of type Key. Sorting is done using the key comparison
@@ -381,52 +51,43 @@ using static_set_storage_type
  * @include set.cpp
  */
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
-class static_set
-    : private detail::static_set_storage_type<Key, Capacity, Compare>
+struct static_set
 {
   private:
   static_assert(is_nothrow_destructible_v<Key>);
-  using base_type = detail::static_set_storage_type<Key, Capacity>;
-  using self      = static_set<Key, Capacity>;
-
-  using base_type::unsafe_destroy;
-  using base_type::unsafe_destroy_all;
-  using base_type::unsafe_set_size;
+  using storage_type = static_vector<Key, Capacity>;
+  storage_type memory_ {};
 
   public:
-  using key_type               = typename base_type::key_type;
-  using value_type             = typename base_type::value_type;
+  using key_type               = typename storage_type::value_type;
+  using value_type             = typename storage_type::value_type;
   using size_type              = size_t;
   using difference_type        = ptrdiff_t;
   using key_compare            = Compare;
   using value_compare          = Compare;
   using reference              = value_type&;
   using const_reference        = value_type const&;
-  using pointer                = typename base_type::pointer;
-  using const_pointer          = typename base_type::const_pointer;
-  using iterator               = typename base_type::pointer;
-  using const_iterator         = typename base_type::const_pointer;
+  using pointer                = typename storage_type::pointer;
+  using const_pointer          = typename storage_type::const_pointer;
+  using iterator               = typename storage_type::pointer;
+  using const_iterator         = typename storage_type::const_pointer;
   using reverse_iterator       = etl::reverse_iterator<iterator>;
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
   /**
-   * @brief Default constructor. Constructs empty container.
+   * @brief Constructs empty container.
    */
   static_set() = default;
 
   /**
-   * @brief Constructs the container with the contents of the range [first,
-   * last).
-   *
-   * @details If multiple elements in the range have keys that compare
-   * equivalent, it is unspecified which element is inserted (pending LWG2844).
+   * @brief Constructs with the contents of the range [first, last). If multiple
+   * elements in the range have keys that compare equivalent, all but the first
+   * will be discarded.
    */
-  template <typename InputIter,
-            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
-  static_set(InputIter first, InputIter last) noexcept(
-    noexcept(base_type::insert(declval<key_type>())))
+  template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
+  static_set(InputIt first, InputIt last)
   {
-    if constexpr (detail::RandomAccessIterator<InputIter>)
+    if constexpr (detail::RandomAccessIterator<InputIt>)
     {
       assert(last - first >= 0);
       assert(static_cast<size_type>(last - first) <= max_size());
@@ -436,9 +97,43 @@ class static_set
   }
 
   /**
+   * @brief
+   */
+  constexpr static_set(static_set const& other) = default;
+
+  /**
+   * @brief
+   */
+  constexpr static_set(static_set&& other) noexcept(
+    noexcept(move(declval<storage_type>())))
+    = default;
+
+  /**
+   * @brief
+   */
+  constexpr auto operator=(static_set const& other) -> static_set& = default;
+
+  /**
+   * @brief
+   */
+  constexpr auto operator=(static_set&& other) noexcept(
+    noexcept(move(declval<storage_type>()))) -> static_set& = default;
+
+  /**
    * @brief Returns an iterator to the first element of the set.
    */
-  using base_type::begin;
+  [[nodiscard]] constexpr auto begin() noexcept -> iterator
+  {
+    return memory_.begin();
+  }
+
+  /**
+   * @brief Returns an iterator to the first element of the set.
+   */
+  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+  {
+    return memory_.begin();
+  }
 
   /**
    * @brief Returns an iterator to the first element of the set.
@@ -452,7 +147,19 @@ class static_set
    * @brief Returns an iterator to the element following the last element of the
    * set.
    */
-  using base_type::end;
+  [[nodiscard]] constexpr auto end() noexcept -> iterator
+  {
+    return memory_.end();
+  }
+
+  /**
+   * @brief Returns an iterator to the element following the last element of the
+   * set.
+   */
+  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+  {
+    return memory_.end();
+  }
 
   /**
    * @brief Returns an iterator to the element following the last element of the
@@ -525,40 +232,64 @@ class static_set
    * @brief Checks if the container has no elements, i.e. whether begin() ==
    * end().
    */
-  using base_type::empty;
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool
+  {
+    return memory_.empty();
+  }
 
   /**
    * @brief Checks if the container full, i.e. whether size() == Capacity.
    */
-  using base_type::full;
+  [[nodiscard]] constexpr auto full() const noexcept -> bool
+  {
+    return memory_.full();
+  }
 
   /**
    * @brief Returns the number of elements in the container, i.e.
    * distance(begin(), end()).
    */
-  using base_type::size;
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return memory_.size();
+  }
 
   /**
    * @brief Returns the maximum number of elements the container is able to
    * hold.
    */
-  using base_type::max_size;
+  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+  {
+    return memory_.max_size();
+  }
 
   /**
    * @brief Erases all elements from the container. After this call, size()
    * returns zero.
    */
-  constexpr auto clear() noexcept -> void
-  {
-    unsafe_destroy_all();
-    unsafe_set_size(0);
-  }
+  constexpr auto clear() noexcept -> void { memory_.clear(); }
 
   /**
    * @brief Inserts element into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
-  using base_type::insert;
+  constexpr auto insert(value_type&& value)
+    -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
+  {
+    if (!full())
+    {
+      auto cmp = key_compare {};
+      auto* p  = ::etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
+      if (p == memory_.end() || *(p) != value)
+      {
+        memory_.template push_back(move(value));
+        auto* pos = rotate(p, memory_.end() - 1, memory_.end());
+        return make_pair(pos, true);
+      }
+    }
+
+    return pair<iterator, bool>(nullptr, false);
+  }
 
   /**
    * @brief Inserts element into the container, if the container doesn't
@@ -609,9 +340,7 @@ class static_set
    */
   constexpr auto erase(iterator pos) noexcept -> iterator
   {
-    rotate(pos, pos + 1, end());
-    unsafe_set_size(static_cast<size_type>(size() - 1));
-    return pos + 1;
+    return memory_.erase(pos);
   }
 
   /**
