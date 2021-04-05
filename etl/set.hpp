@@ -147,11 +147,10 @@ class static_set_zero_storage
   /**
    * @brief
    */
-  static constexpr auto insert(value_type&& /*value*/)
-    -> etl::pair<iterator, bool>
+  static constexpr auto insert(value_type&& /*value*/) -> pair<iterator, bool>
   {
     assert(false && "tried to insert on empty storage");
-    return etl::pair<iterator, bool> {nullptr, false};
+    return pair<iterator, bool> {nullptr, false};
   }
 
   protected:
@@ -188,7 +187,7 @@ class static_set_zero_storage
 template <typename Key, size_t Capacity, typename Compare>
 class static_set_trivial_storage
 {
-  static_assert(etl::is_trivial_v<Key>);
+  static_assert(is_trivial_v<Key>);
   static_assert(Capacity != size_t());
 
   public:
@@ -307,21 +306,20 @@ class static_set_trivial_storage
    * @brief
    */
   constexpr auto insert(value_type&& value)
-    -> enable_if_t<is_move_constructible_v<value_type>,
-                   etl::pair<iterator, bool>>
+    -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
   {
     if (!full())
     {
       auto* p = lower_bound(begin(), end(), value, key_compare {});
       if (p == end() || *(p) != value)
       {
-        data_[size_++] = etl::move(value);
-        auto* pos      = etl::rotate(p, end() - 1, end());
-        return etl::make_pair(pos, true);
+        data_[size_++] = move(value);
+        auto* pos      = rotate(p, end() - 1, end());
+        return make_pair(pos, true);
       }
     }
 
-    return etl::pair<iterator, bool>(nullptr, false);
+    return pair<iterator, bool>(nullptr, false);
   }
 
   protected:
@@ -356,11 +354,11 @@ class static_set_trivial_storage
 
   private:
   // If the value_type is const, make a const array of non-const elements:
-  static constexpr auto condition = !etl::is_const_v<Key>;
-  using mutable_storage_t         = etl::array<Key, Capacity>;
-  using const_storage_t = etl::array<etl::remove_const_t<Key>, Capacity> const;
+  static constexpr auto condition = !is_const_v<Key>;
+  using mutable_storage_t         = array<Key, Capacity>;
+  using const_storage_t           = array<remove_const_t<Key>, Capacity> const;
   using storage_t
-    = etl::conditional_t<condition, mutable_storage_t, const_storage_t>;
+    = conditional_t<condition, mutable_storage_t, const_storage_t>;
 
   alignas(alignof(Key)) storage_t data_ {};
   size_type size_ = 0;
@@ -369,25 +367,25 @@ class static_set_trivial_storage
 /**
  * @brief Selects the vector storage.
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
+template <typename Key, size_t Capacity, typename Compare = less<Key>>
 using static_set_storage_type
-  = etl::conditional_t<Capacity == 0, static_set_zero_storage<Key>,
-                       static_set_trivial_storage<Key, Capacity, Compare>>;
+  = conditional_t<Capacity == 0, static_set_zero_storage<Key>,
+                  static_set_trivial_storage<Key, Capacity, Compare>>;
 }  // namespace detail
 
 /**
- * @brief etl::static_set is an associative container that contains a sorted set
+ * @brief static_set is an associative container that contains a sorted set
  * of unique objects of type Key. Sorting is done using the key comparison
  * function Compare.
  *
  * @include set.cpp
  */
-template <typename Key, etl::size_t Capacity, typename Compare = etl::less<Key>>
+template <typename Key, size_t Capacity, typename Compare = less<Key>>
 class static_set
     : private detail::static_set_storage_type<Key, Capacity, Compare>
 {
   private:
-  static_assert(etl::is_nothrow_destructible_v<Key>);
+  static_assert(is_nothrow_destructible_v<Key>);
   using base_type = detail::static_set_storage_type<Key, Capacity>;
   using self      = static_set<Key, Capacity>;
 
@@ -398,8 +396,8 @@ class static_set
   public:
   using key_type               = typename base_type::key_type;
   using value_type             = typename base_type::value_type;
-  using size_type              = etl::size_t;
-  using difference_type        = etl::ptrdiff_t;
+  using size_type              = size_t;
+  using difference_type        = ptrdiff_t;
   using key_compare            = Compare;
   using value_compare          = Compare;
   using reference              = value_type&;
@@ -536,7 +534,7 @@ class static_set
 
   /**
    * @brief Returns the number of elements in the container, i.e.
-   * etl::distance(begin(), end()).
+   * distance(begin(), end()).
    */
   using base_type::size;
 
@@ -570,11 +568,10 @@ class static_set
    * breaks GCC 9.3 Ubuntu Focal build
    */
   auto insert(value_type const& value)
-    -> enable_if_t<is_copy_constructible_v<value_type>,
-                   etl::pair<iterator, bool>>
+    -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
   {
     value_type tmp = value;
-    return insert(etl::move(tmp));
+    return insert(move(tmp));
   }
 
   /**
@@ -598,9 +595,9 @@ class static_set
   template <typename... Args,
             TAETL_REQUIRES_(is_copy_constructible_v<key_type>)>
   auto emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
-    -> etl::pair<iterator, bool>
+    -> pair<iterator, bool>
   {
-    return insert(value_type(etl::forward<Args>(args)...));
+    return insert(value_type(forward<Args>(args)...));
   }
 
   /**
@@ -612,7 +609,7 @@ class static_set
    */
   constexpr auto erase(iterator pos) noexcept -> iterator
   {
-    etl::rotate(pos, pos + 1, end());
+    rotate(pos, pos + 1, end());
     unsafe_set_size(static_cast<size_type>(size() - 1));
     return pos + 1;
   }
@@ -641,7 +638,7 @@ class static_set
    */
   constexpr auto erase(key_type const& key) noexcept -> size_type
   {
-    if (auto* pos = etl::lower_bound(begin(), end(), key); pos != end())
+    if (auto* pos = ::etl::lower_bound(begin(), end(), key); pos != end())
     {
       erase(pos);
       return 1;
@@ -656,9 +653,11 @@ class static_set
   swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
     -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
   {
-    static_set tmp = etl::move(other);
-    other          = etl::move(*this);
-    (*this)        = etl::move(tmp);
+    using ::etl::move;
+
+    static_set tmp = move(other);
+    other          = move(*this);
+    (*this)        = move(tmp);
   }
 
   /**
@@ -691,7 +690,7 @@ class static_set
    */
   [[nodiscard]] constexpr auto find(key_type const& key) noexcept -> iterator
   {
-    return etl::find(begin(), end(), key);
+    return ::etl::find(begin(), end(), key);
   }
 
   /**
@@ -703,7 +702,7 @@ class static_set
   [[nodiscard]] constexpr auto find(key_type const& key) const noexcept
     -> const_iterator
   {
-    return etl::find(begin(), end(), key);
+    return ::etl::find(begin(), end(), key);
   }
 
   /**
@@ -713,12 +712,12 @@ class static_set
             TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
   constexpr auto find(K const& x) -> iterator
   {
-    return etl::find_if(begin(), end(),
-                        [&x](auto const& val)
-                        {
-                          auto comp = key_compare();
-                          return comp(val, x);
-                        });
+    return find_if(begin(), end(),
+                   [&x](auto const& val)
+                   {
+                     auto comp = key_compare();
+                     return comp(val, x);
+                   });
   }
 
   /**
@@ -728,12 +727,12 @@ class static_set
             TAETL_REQUIRES_(detail::is_transparent<key_compare, K>::value)>
   constexpr auto find(K const& x) const -> const_iterator
   {
-    return etl::find_if(cbegin(), cend(),
-                        [&x](auto const& val)
-                        {
-                          auto comp = key_compare();
-                          return comp(val, x);
-                        });
+    return find_if(cbegin(), cend(),
+                   [&x](auto const& val)
+                   {
+                     auto comp = key_compare();
+                     return comp(val, x);
+                   });
   }
 
   /**
@@ -764,7 +763,7 @@ class static_set
    */
   [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
   {
-    return etl::lower_bound(begin(), end(), key, key_compare {});
+    return ::etl::lower_bound(begin(), end(), key, key_compare {});
   }
 
   /**
@@ -774,7 +773,7 @@ class static_set
   [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
     -> const_iterator
   {
-    return etl::lower_bound(begin(), end(), key, key_compare {});
+    return ::etl::lower_bound(begin(), end(), key, key_compare {});
   }
 
   /**
@@ -783,7 +782,7 @@ class static_set
    */
   [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
   {
-    return etl::upper_bound(begin(), end(), key, key_compare {});
+    return ::etl::upper_bound(begin(), end(), key, key_compare {});
   }
 
   /**
@@ -793,7 +792,7 @@ class static_set
   [[nodiscard]] constexpr auto upper_bound(key_type const& key) const
     -> const_iterator
   {
-    return etl::upper_bound(begin(), end(), key, key_compare {});
+    return ::etl::upper_bound(begin(), end(), key, key_compare {});
   }
 
   /**
@@ -805,7 +804,7 @@ class static_set
    */
   [[nodiscard]] constexpr auto equal_range(key_type const& key) -> iterator
   {
-    return etl::equal_range(begin(), end(), key, key_compare {});
+    return ::etl::equal_range(begin(), end(), key, key_compare {});
   }
 
   /**
@@ -818,7 +817,7 @@ class static_set
   [[nodiscard]] constexpr auto equal_range(key_type const& key) const
     -> const_iterator
   {
-    return etl::equal_range(begin(), end(), key, key_compare {});
+    return ::etl::equal_range(begin(), end(), key, key_compare {});
   }
   /**
    * @brief Returns the function object that compares the keys, which is a copy
@@ -851,13 +850,12 @@ class static_set
  * the same number of elements and each element in lhs compares equal with the
  * element in rhs at the same position.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator==(etl::static_set<Key, Capacity, Comp> const& lhs,
-           etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator==(static_set<Key, Capacity, Comp> const& lhs,
+           static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-  return lhs.size() == rhs.size()
-         && etl::equal(begin(lhs), end(lhs), begin(rhs));
+  return lhs.size() == rhs.size() && equal(begin(lhs), end(lhs), begin(rhs));
 }
 
 /**
@@ -867,10 +865,10 @@ operator==(etl::static_set<Key, Capacity, Comp> const& lhs,
  * the same number of elements and each element in lhs compares equal with the
  * element in rhs at the same position.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator!=(etl::static_set<Key, Capacity, Comp> const& lhs,
-           etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator!=(static_set<Key, Capacity, Comp> const& lhs,
+           static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
   return !(lhs == rhs);
 }
@@ -880,16 +878,15 @@ operator!=(etl::static_set<Key, Capacity, Comp> const& lhs,
  *
  * @details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare. This comparison ignores the set's ordering
+ * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator<(etl::static_set<Key, Capacity, Comp> const& lhs,
-          etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator<(static_set<Key, Capacity, Comp> const& lhs,
+          static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
-  return etl::lexicographical_compare(begin(lhs), end(lhs), begin(rhs),
-                                      end(rhs));
+  return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
 /**
@@ -897,13 +894,13 @@ operator<(etl::static_set<Key, Capacity, Comp> const& lhs,
  *
  * @details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare. This comparison ignores the set's ordering
+ * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator<=(etl::static_set<Key, Capacity, Comp> const& lhs,
-           etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator<=(static_set<Key, Capacity, Comp> const& lhs,
+           static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
   return !(rhs < lhs);
 }
@@ -913,13 +910,13 @@ operator<=(etl::static_set<Key, Capacity, Comp> const& lhs,
  *
  * @details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare. This comparison ignores the set's ordering
+ * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator>(etl::static_set<Key, Capacity, Comp> const& lhs,
-          etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator>(static_set<Key, Capacity, Comp> const& lhs,
+          static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
   return rhs < lhs;
 }
@@ -929,25 +926,26 @@ operator>(etl::static_set<Key, Capacity, Comp> const& lhs,
  *
  * @details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare. This comparison ignores the set's ordering
+ * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
  */
-template <typename Key, etl::size_t Capacity, typename Comp>
+template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto
-operator>=(etl::static_set<Key, Capacity, Comp> const& lhs,
-           etl::static_set<Key, Capacity, Comp> const& rhs) -> bool
+operator>=(static_set<Key, Capacity, Comp> const& lhs,
+           static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
   return !(lhs < rhs);
 }
 
 /**
- * @brief Specializes the etl::swap algorithm for etl::set. Swaps the contents
+ * @brief Specializes the swap algorithm for set. Swaps the contents
  * of lhs and rhs. Calls lhs.swap(rhs).
  */
-template <typename Key, etl::size_t Capacity, typename Compare>
-constexpr auto swap(etl::static_set<Key, Capacity, Compare>& lhs,
-                    etl::static_set<Key, Capacity, Compare>&
-                      rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+template <typename Key, size_t Capacity, typename Compare>
+constexpr auto
+swap(static_set<Key, Capacity, Compare>& lhs,
+     static_set<Key, Capacity, Compare>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+  -> void
 {
   lhs.swap(rhs);
 }
@@ -958,10 +956,10 @@ constexpr auto swap(etl::static_set<Key, Capacity, Compare>& lhs,
 //  *
 //  * https://en.cppreference.com/w/cpp/container/set/erase_if
 //  */
-// template <typename Key, etl::size_t Capacity, typename Compare, typename
-// Predicate> constexpr auto erase_if(etl::static_set<Key, Capacity, Compare>&
+// template <typename Key, size_t Capacity, typename Compare, typename
+// Predicate> constexpr auto erase_if(static_set<Key, Capacity, Compare>&
 // c, Predicate pred) ->
-//     typename etl::static_set<Key, Capacity, Compare>::size_type
+//     typename static_set<Key, Capacity, Compare>::size_type
 // {
 //     auto const old_size = c.size();
 //     for (auto i = c.begin(), last = c.end(); i != last;)
