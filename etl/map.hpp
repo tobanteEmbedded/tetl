@@ -404,10 +404,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   ~map() noexcept { base_t::clear(); }
 
   private:
-  using base_t = map_view<KeyT, ValueT, Compare>;
-  using pair_t = typename base_t::value_type;
-  using storage_t =
-    typename aligned_storage<sizeof(pair_t), alignof(pair_t)>::type;
+  using base_t    = map_view<KeyT, ValueT, Compare>;
+  using pair_t    = typename base_t::value_type;
+  using storage_t = aligned_storage_t<sizeof(pair_t), alignof(pair_t)>;
   storage_t memory_[Size] {};
 };
 }  // namespace etl

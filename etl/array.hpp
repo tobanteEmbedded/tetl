@@ -43,23 +43,23 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief etl::array is a container that encapsulates fixed size arrays.
+ * @brief array is a container that encapsulates fixed size arrays.
  *
  * @details This container is an aggregate type with the same semantics as a
  * struct holding a C-style array Type[N] as its only non-static data member.
  * Unlike a C-style array, it doesn't decay to Type* automatically. As an
  * aggregate type, it can be initialized with aggregate-initialization given at
- * most N initializers that are convertible to Type: etl::array<int, 3> a =
+ * most N initializers that are convertible to Type: array<int, 3> a =
  * {1,2,3};.
  *
  * @include array.cpp
  */
-template <typename Type, etl::size_t Size>
+template <typename Type, size_t Size>
 struct array
 {
   using value_type             = Type;
-  using size_type              = etl::size_t;
-  using difference_type        = etl::ptrdiff_t;
+  using size_type              = size_t;
+  using difference_type        = ptrdiff_t;
   using pointer                = Type*;
   using const_pointer          = const Type*;
   using reference              = Type&;
@@ -285,7 +285,7 @@ struct array
 
   /**
    * @brief Returns the number of elements in the container, i.e.
-   * etl::distance(begin(), end()).
+   * distance(begin(), end()).
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
@@ -295,9 +295,9 @@ struct array
   /**
    * @brief Returns the maximum number of elements the container is able to hold
    * due to system or library implementation limitations, i.e.
-   * etl::distance(begin(), end()) for the largest container.
+   * distance(begin(), end()) for the largest container.
    *
-   * @details Because each etl::array<T, N> is a fixed-size container, the value
+   * @details Because each array<T, N> is a fixed-size container, the value
    * returned by max_size equals N (which is also the value returned by size)
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
@@ -317,7 +317,7 @@ struct array
    * @brief Exchanges the contents of the container with those of other. Does
    * not cause iterators and references to associate with the other container.
    */
-  constexpr auto swap(array& other) noexcept(etl::is_nothrow_swappable_v<Type>)
+  constexpr auto swap(array& other) noexcept(is_nothrow_swappable_v<Type>)
     -> void
   {
     using etl::swap;
@@ -341,23 +341,22 @@ template <typename T, typename... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 /**
- * @brief Specializes the etl::swap algorithm for etl::array. Swaps the contents
+ * @brief Specializes the swap algorithm for array. Swaps the contents
  * of lhs and rhs.
  */
-template <typename T, etl::size_t N>
-constexpr auto swap(etl::array<T, N>& lhs,
-                    etl::array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs)))
-  -> void
+template <typename T, size_t N>
+constexpr auto swap(array<T, N>& lhs,
+                    array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
   lhs.swap(rhs);
 }
 
 /**
- * @brief Provides access to the number of elements in an etl::array as a
+ * @brief Provides access to the number of elements in an array as a
  * compile-time constant expression.
  */
-template <typename T, etl::size_t N>
-struct tuple_size<etl::array<T, N>> : etl::integral_constant<etl::size_t, N>
+template <typename T, size_t N>
+struct tuple_size<array<T, N>> : integral_constant<size_t, N>
 {
 };
 
@@ -365,15 +364,15 @@ struct tuple_size<etl::array<T, N>> : etl::integral_constant<etl::size_t, N>
  * @brief Provides compile-time indexed access to the type of the elements of
  * the array using tuple-like interface.
  */
-template <etl::size_t I, typename T>
+template <size_t I, typename T>
 struct tuple_element;
 
 /**
  * @brief Provides compile-time indexed access to the type of the elements of
  * the array using tuple-like interface.
  */
-template <etl::size_t I, typename T, etl::size_t N>
-struct tuple_element<I, etl::array<T, N>>
+template <size_t I, typename T, size_t N>
+struct tuple_element<I, array<T, N>>
 {
   using type = T;
 };
@@ -383,65 +382,65 @@ struct tuple_element<I, etl::array<T, N>>
  * the same number of elements and each element in lhs compares equal with the
  * element in rhs at the same position.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator==(etl::array<T, N> const& lhs,
-                                        etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator==(array<T, N> const& lhs,
+                                        array<T, N> const& rhs) -> bool
 {
-  return etl::equal(lhs.begin(), lhs.end(), rhs.begin());
+  return equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 /**
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison
- * is performed by a function equivalent to etl::lexicographical_compare.
+ * is performed by a function equivalent to lexicographical_compare.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator!=(etl::array<T, N> const& lhs,
-                                        etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator!=(array<T, N> const& lhs,
+                                        array<T, N> const& rhs) -> bool
 {
   return !(lhs == rhs);
 }
 
 /**
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison
- * is performed by a function equivalent to etl::lexicographical_compare.
+ * is performed by a function equivalent to lexicographical_compare.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator<(etl::array<T, N> const& lhs,
-                                       etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator<(array<T, N> const& lhs,
+                                       array<T, N> const& rhs) -> bool
 {
-  return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                      rhs.end());
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                 rhs.end());
 }
 
 /**
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison
- * is performed by a function equivalent to etl::lexicographical_compare.
+ * is performed by a function equivalent to lexicographical_compare.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator<=(etl::array<T, N> const& lhs,
-                                        etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator<=(array<T, N> const& lhs,
+                                        array<T, N> const& rhs) -> bool
 {
   return !(rhs < lhs);
 }
 
 /**
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison
- * is performed by a function equivalent to etl::lexicographical_compare.
+ * is performed by a function equivalent to lexicographical_compare.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator>(etl::array<T, N> const& lhs,
-                                       etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator>(array<T, N> const& lhs,
+                                       array<T, N> const& rhs) -> bool
 {
   return rhs < lhs;
 }
 
 /**
  * @brief Compares the contents of lhs and rhs lexicographically. The comparison
- * is performed by a function equivalent to etl::lexicographical_compare.
+ * is performed by a function equivalent to lexicographical_compare.
  */
-template <typename T, etl::size_t N>
-[[nodiscard]] constexpr auto operator>=(etl::array<T, N> const& lhs,
-                                        etl::array<T, N> const& rhs) -> bool
+template <typename T, size_t N>
+[[nodiscard]] constexpr auto operator>=(array<T, N> const& lhs,
+                                        array<T, N> const& rhs) -> bool
 {
   return !(lhs < rhs);
 }

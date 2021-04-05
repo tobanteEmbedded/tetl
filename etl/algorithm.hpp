@@ -70,7 +70,7 @@ constexpr auto swap_ranges(ForwardIter1 first1, ForwardIter1 last1,
 {
   while (first1 != last1)
   {
-    etl::iter_swap(first1, first2);
+    iter_swap(first1, first2);
     ++first1;
     ++first2;
   }
@@ -95,10 +95,7 @@ template <typename InputIter, typename OutputIter>
 constexpr auto move(InputIter first, InputIter last, OutputIter destination)
   -> OutputIter
 {
-  for (; first != last; ++first, ++destination)
-  {
-    *destination = etl::move(*first);
-  }
+  for (; first != last; ++first, ++destination) { *destination = move(*first); }
   return destination;
 }
 
@@ -118,7 +115,7 @@ template <typename BidirIter1, typename BidirIter2>
 constexpr auto move_backward(BidirIter1 first, BidirIter1 last,
                              BidirIter2 destination) -> BidirIter2
 {
-  for (; first != last;) { *(--destination) = etl::move(*--last); }
+  for (; first != last;) { *(--destination) = move(*--last); }
   return destination;
 }
 
@@ -296,14 +293,14 @@ template <typename InputIter, typename UnaryPredicate>
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, BinaryPredicate pred)
-  -> etl::pair<InputIter1, InputIter2>
+  -> pair<InputIter1, InputIter2>
 {
   for (; first1 != last1; ++first1, ++first2)
   {
     if (!pred(*first1, *first2)) { break; }
   }
 
-  return etl::pair<InputIter1, InputIter2>(first1, first2);
+  return pair<InputIter1, InputIter2>(first1, first2);
 }
 
 /**
@@ -320,9 +317,9 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2)
-  -> etl::pair<InputIter1, InputIter2>
+  -> pair<InputIter1, InputIter2>
 {
-  return mismatch(first1, last1, first2, etl::equal_to<> {});
+  return mismatch(first1, last1, first2, equal_to<> {});
 }
 
 /**
@@ -342,14 +339,14 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2,
                                       BinaryPredicate pred)
-  -> etl::pair<InputIter1, InputIter2>
+  -> pair<InputIter1, InputIter2>
 {
   for (; first1 != last1 && first2 != last2; ++first1, ++first2)
   {
     if (!pred(*first1, *first2)) { break; }
   }
 
-  return etl::pair<InputIter1, InputIter2>(first1, first2);
+  return pair<InputIter1, InputIter2>(first1, first2);
 }
 
 /**
@@ -366,9 +363,9 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2)
-  -> etl::pair<InputIter1, InputIter2>
+  -> pair<InputIter1, InputIter2>
 {
-  return mismatch(first1, last1, first2, last2, etl::equal_to<> {});
+  return mismatch(first1, last1, first2, last2, equal_to<> {});
 }
 
 /**
@@ -410,7 +407,7 @@ template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last)
   -> ForwardIt
 {
-  return adjacent_find(first, last, etl::equal_to<> {});
+  return adjacent_find(first, last, equal_to<> {});
 }
 
 /**
@@ -515,7 +512,7 @@ template <typename InputIter, typename ForwardIter>
                                            ForwardIter sFirst,
                                            ForwardIter sLast) -> InputIter
 {
-  return find_first_of(first, last, sFirst, sLast, etl::equal_to<> {});
+  return find_first_of(first, last, sFirst, sLast, equal_to<> {});
 }
 
 /**
@@ -556,7 +553,7 @@ template <typename ForwardIter1, typename ForwardIter2>
                                     ForwardIter2 sFirst, ForwardIter2 sLast)
   -> ForwardIter1
 {
-  return search(first, last, sFirst, sLast, etl::equal_to<> {});
+  return search(first, last, sFirst, sLast, equal_to<> {});
 }
 
 /**
@@ -617,7 +614,7 @@ template <typename ForwardIter, typename Size, typename ValueT>
                                       Size count, ValueT const& value)
   -> ForwardIter
 {
-  return search_n(first, last, count, value, etl::equal_to<> {});
+  return search_n(first, last, count, value, equal_to<> {});
 }
 
 /**
@@ -682,13 +679,13 @@ template <typename ForwardIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto remove_if(ForwardIter first, ForwardIter last,
                                        UnaryPredicate pred) -> ForwardIter
 {
-  first = etl::find_if(first, last, pred);
+  first = find_if(first, last, pred);
 
   if (first != last)
   {
     for (auto i = first; ++i != last;)
     {
-      if (!pred(*i)) { *first++ = etl::move(*i); }
+      if (!pred(*i)) { *first++ = move(*i); }
     }
   }
 
@@ -898,9 +895,9 @@ template <typename ForwardIterator, typename Compare>
  */
 template <typename T, typename Compare>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b, Compare comp)
-  -> etl::pair<T const&, T const&>
+  -> pair<T const&, T const&>
 {
-  using return_type = etl::pair<T const&, T const&>;
+  using return_type = pair<T const&, T const&>;
   return comp(b, a) ? return_type(b, a) : return_type(a, b);
 }
 
@@ -909,9 +906,9 @@ template <typename T, typename Compare>
  */
 template <typename T>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b)
-  -> etl::pair<T const&, T const&>
+  -> pair<T const&, T const&>
 {
-  return etl::minmax(a, b, etl::less<> {});
+  return minmax(a, b, less<> {});
 }
 
 /**
@@ -920,7 +917,7 @@ template <typename T>
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last,
                                             Compare comp)
-  -> etl::pair<ForwardIter, ForwardIter>
+  -> pair<ForwardIter, ForwardIter>
 {
   auto min = first;
   auto max = first;
@@ -966,10 +963,10 @@ template <typename ForwardIter, typename Compare>
  */
 template <typename ForwardIter>
 [[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last)
-  -> etl::pair<ForwardIter, ForwardIter>
+  -> pair<ForwardIter, ForwardIter>
 {
-  using value_type = typename etl::iterator_traits<ForwardIter>::value_type;
-  return etl::minmax_element(first, last, etl::less<value_type>());
+  using value_type = typename iterator_traits<ForwardIter>::value_type;
+  return minmax_element(first, last, less<value_type>());
 }
 
 /**
@@ -981,7 +978,7 @@ template <typename Type>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
                                    Type const& hi) noexcept -> Type const&
 {
-  return clamp(v, lo, hi, etl::less<Type>());
+  return clamp(v, lo, hi, less<Type>());
 }
 
 template <typename Type, typename Compare>
@@ -1000,7 +997,7 @@ template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto all_of(InputIter first, InputIter last,
                                     UnaryPredicate p) -> bool
 {
-  return etl::find_if_not(first, last, p) == last;
+  return find_if_not(first, last, p) == last;
 }
 
 /**
@@ -1011,7 +1008,7 @@ template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto any_of(InputIter first, InputIter last,
                                     UnaryPredicate p) -> bool
 {
-  return etl::find_if(first, last, p) != last;
+  return find_if(first, last, p) != last;
 }
 
 /**
@@ -1022,21 +1019,18 @@ template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto none_of(InputIter first, InputIter last,
                                      UnaryPredicate p) -> bool
 {
-  return etl::find_if(first, last, p) == last;
+  return find_if(first, last, p) == last;
 }
 
 /**
  * @brief Reverses the order of the elements in the range [first, last). Behaves
- * as if applying etl::iter_swap to every pair of iterators first+i, (last-i) -
+ * as if applying iter_swap to every pair of iterators first+i, (last-i) -
  * 1 for each non-negative i < (last-first)/2.
  */
 template <typename BidirIter>
 constexpr auto reverse(BidirIter first, BidirIter last) -> void
 {
-  while ((first != last) && (first != --last))
-  {
-    etl::iter_swap(first++, last);
-  }
+  while ((first != last) && (first != --last)) { iter_swap(first++, last); }
 }
 
 /**
@@ -1059,7 +1053,7 @@ constexpr auto reverse_copy(BidirIter first, BidirIter last,
 /**
  * @brief Performs a left rotation on a range of elements.
  *
- * @details Specifically, etl::rotate swaps the elements in the range [first,
+ * @details Specifically, rotate swaps the elements in the range [first,
  * last) in such a way that the element n_first becomes the first element of the
  * new range and n_first - 1 becomes the last element. A precondition of this
  * function is that [first, n_first) and [n_first, last) are valid ranges.
@@ -1078,7 +1072,7 @@ constexpr auto rotate(ForwardIter first, ForwardIter nFirst, ForwardIter last)
   while (read != last)
   {
     if (write == nextRead) { nextRead = read; }
-    etl::iter_swap(write++, read++);
+    iter_swap(write++, read++);
   }
 
   rotate(write, nextRead, last);
@@ -1099,10 +1093,7 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
   auto result = first;
   while (++first != last)
   {
-    if (!pred(*result, *first) && ++result != first)
-    {
-      *result = etl::move(*first);
-    }
+    if (!pred(*result, *first) && ++result != first) { *result = move(*first); }
   }
   return ++result;
 }
@@ -1115,7 +1106,7 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
 template <typename ForwardIter>
 constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 {
-  return unique(first, last, etl::equal_to<> {});
+  return unique(first, last, equal_to<> {});
 }
 
 /**
@@ -1158,7 +1149,7 @@ template <typename InputIter, typename OutputIter>
 constexpr auto unique_copy(InputIter first, InputIter last,
                            OutputIter destination) -> OutputIter
 {
-  return etl::unique_copy(first, last, destination, etl::equal_to<> {});
+  return unique_copy(first, last, destination, equal_to<> {});
 }
 
 /**
@@ -1200,7 +1191,7 @@ template <typename InputIter, typename OutputIter1, typename OutputIter2,
 constexpr auto partition_copy(InputIter first, InputIter last,
                               OutputIter1 destinationTrue,
                               OutputIter2 destinationFalse, UnaryPredicate p)
-  -> etl::pair<OutputIter1, OutputIter2>
+  -> pair<OutputIter1, OutputIter2>
 {
   for (; first != last; ++first)
   {
@@ -1216,7 +1207,7 @@ constexpr auto partition_copy(InputIter first, InputIter last,
     }
   }
 
-  return etl::make_pair(destinationTrue, destinationFalse);
+  return make_pair(destinationTrue, destinationFalse);
 }
 
 /**
@@ -1244,7 +1235,7 @@ template <typename InputIter, typename UnaryPredicate>
 }
 
 /**
- * @brief Examines the partitioned (as if by etl::partition) range [ first ,
+ * @brief Examines the partitioned (as if by partition) range [ first ,
  * last ) and locates the end of the first partition, that is, the first element
  * that does not satisfy p or last if all elements satisfy p.
  */
@@ -1284,7 +1275,7 @@ constexpr auto stable_partition(BidirIter f, BidirIter l, UnaryPredicate p)
  *
  * @details Copies all elements in the range [first, last) starting from first
  * and proceeding to last - 1. The behavior is undefined if destination is
- * within the range [first, last). In this case, etl::copy_backward may be used
+ * within the range [first, last). In this case, copy_backward may be used
  * instead.
  *
  * @return Output iterator to the element in the destination range, one past the
@@ -1349,7 +1340,7 @@ constexpr auto copy_n(InputIter first, Size count, OutputIter result)
  * last element is copied first), but their relative order is preserved.
  *
  * @details The behavior is undefined if d_last is within (first, last].
- * etl::copy must be used instead of etl::copy_backward in that case.
+ * copy must be used instead of copy_backward in that case.
  *
  * @return Iterator to the last element copied.
  */
@@ -1371,8 +1362,8 @@ constexpr auto rotate_copy(ForwardIter first, ForwardIter nFirst,
                            ForwardIter last, OutputIter destination)
   -> OutputIter
 {
-  destination = etl::copy(nFirst, last, destination);
-  return etl::copy(first, nFirst, destination);
+  destination = copy(nFirst, last, destination);
+  return copy(first, nFirst, destination);
 }
 
 /**
@@ -1441,11 +1432,8 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
                                    InputIter2 first2, InputIter2 last2,
                                    BinaryPredicate p) -> bool
 {
-  if (etl::distance(first1, last1) != etl::distance(first2, last2))
-  {
-    return false;
-  }
-  return etl::equal(first1, last1, first2, p);
+  if (distance(first1, last1) != distance(first2, last2)) { return false; }
+  return equal(first1, last1, first2, p);
 }
 
 /**
@@ -1456,7 +1444,7 @@ template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1,
                                    InputIter2 first2, InputIter2 last2) -> bool
 {
-  return etl::equal(first1, last1, first2, last2, equal_to<> {});
+  return equal(first1, last1, first2, last2, equal_to<> {});
 }
 
 /**
@@ -1492,7 +1480,7 @@ lexicographical_compare(InputIter1 first1, InputIter1 last1, InputIter2 first2,
                         InputIter2 last2) -> bool
 {
   return lexicographical_compare(first1, last1, first2, last2,
-                                 etl::less<decltype(*first1)> {});
+                                 less<decltype(*first1)> {});
 }
 
 /**
@@ -1514,7 +1502,7 @@ constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
   {
     for (auto j = first; j < i; ++j)
     {
-      if (comp(*i, *j)) { etl::iter_swap(i, j); }
+      if (comp(*i, *j)) { iter_swap(i, j); }
     }
   }
 }
@@ -1535,7 +1523,7 @@ constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
 template <typename RandomIter>
 constexpr auto sort(RandomIter first, RandomIter last) -> void
 {
-  sort(first, last, etl::less<> {});
+  sort(first, last, less<> {});
 }
 
 /**
@@ -1547,7 +1535,7 @@ template <typename ForwardIter>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIter first,
                                              ForwardIter last) -> ForwardIter
 {
-  return is_sorted_until(first, last, etl::less<>());
+  return is_sorted_until(first, last, less<>());
 }
 
 /**
@@ -1580,7 +1568,7 @@ template <typename ForwardIter>
 [[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last)
   -> bool
 {
-  return etl::is_sorted_until(first, last) == last;
+  return is_sorted_until(first, last) == last;
 }
 
 /**
@@ -1592,7 +1580,7 @@ template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last,
                                        Compare comp) -> bool
 {
-  return etl::is_sorted_until(first, last, comp) == last;
+  return is_sorted_until(first, last, comp) == last;
 }
 
 /**
@@ -1607,17 +1595,17 @@ template <typename ForwardIter, typename T, typename Compare>
                                          T const& value, Compare comp) noexcept
   -> ForwardIter
 {
-  using diff_t = typename etl::iterator_traits<ForwardIter>::difference_type;
+  using diff_t = typename iterator_traits<ForwardIter>::difference_type;
   ForwardIter it;
   diff_t count;
   diff_t step;
-  count = etl::distance(first, last);
+  count = distance(first, last);
 
   while (count > 0)
   {
     it   = first;
     step = count / 2;
-    etl::advance(it, step);
+    advance(it, step);
     if (comp(*it, value))
     {
       first = ++it;
@@ -1643,7 +1631,7 @@ template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
                                          T const& value) noexcept -> ForwardIter
 {
-  return lower_bound(first, last, value, etl::less<> {});
+  return lower_bound(first, last, value, less<> {});
 }
 
 /**
@@ -1661,18 +1649,18 @@ template <typename ForwardIter, typename T, typename Compare>
                                          T const& value, Compare comp)
   -> ForwardIter
 {
-  using diff_t = typename etl::iterator_traits<ForwardIter>::difference_type;
+  using diff_t = typename iterator_traits<ForwardIter>::difference_type;
 
   ForwardIter it;
   diff_t count;
   diff_t step;
-  count = etl::distance(first, last);
+  count = distance(first, last);
 
   while (count > 0)
   {
     it   = first;
     step = count / 2;
-    etl::advance(it, step);
+    advance(it, step);
     if (!comp(value, *it))
     {
       first = ++it;
@@ -1701,7 +1689,7 @@ template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto upper_bound(ForwardIter first, ForwardIter last,
                                          T const& value) -> ForwardIter
 {
-  return upper_bound(first, last, value, etl::less<> {});
+  return upper_bound(first, last, value, less<> {});
 }
 
 /**
@@ -1713,10 +1701,10 @@ template <typename ForwardIter, typename T>
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
                                          T const& value, Compare comp)
-  -> etl::pair<ForwardIt, ForwardIt>
+  -> pair<ForwardIt, ForwardIt>
 {
-  return etl::make_pair(etl::lower_bound(first, last, value, comp),
-                        etl::upper_bound(first, last, value, comp));
+  return make_pair(lower_bound(first, last, value, comp),
+                   upper_bound(first, last, value, comp));
 }
 
 /**
@@ -1728,16 +1716,16 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
                                          T const& value)
-  -> etl::pair<ForwardIt, ForwardIt>
+  -> pair<ForwardIt, ForwardIt>
 {
-  return equal_range(first, last, value, etl::less<> {});
+  return equal_range(first, last, value, less<> {});
 }
 
 /**
  * @brief Checks if an element equivalent to value appears within the range [
  * first , last ).
  *
- * @details For etl::binary_search to succeed, the range [ first , last ) must
+ * @details For binary_search to succeed, the range [ first , last ) must
  * be at least partially ordered with respect to value
  *
  * https://en.cppreference.com/w/cpp/algorithm/binary_search
@@ -1746,7 +1734,7 @@ template <typename ForwardIter, typename T, typename Compare>
 [[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
                                            T const& value, Compare comp) -> bool
 {
-  first = etl::lower_bound(first, last, value, comp);
+  first = lower_bound(first, last, value, comp);
   return (!(first == last) && !(comp(value, *first)));
 }
 
@@ -1754,7 +1742,7 @@ template <typename ForwardIter, typename T, typename Compare>
  * @brief Checks if an element equivalent to value appears within the range [
  * first , last ).
  *
- * @details For etl::binary_search to succeed, the range [ first , last ) must
+ * @details For binary_search to succeed, the range [ first , last ) must
  * be at least partially ordered with respect to value
  *
  * https://en.cppreference.com/w/cpp/algorithm/binary_search
@@ -1763,7 +1751,7 @@ template <typename ForwardIter, class T>
 [[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
                                            T const& value) -> bool
 {
-  return binary_search(first, last, value, etl::less<> {});
+  return binary_search(first, last, value, less<> {});
 }
 
 /**
