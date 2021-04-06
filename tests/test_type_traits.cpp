@@ -441,6 +441,34 @@ TEMPLATE_TEST_CASE("type_traits: is_rvalue_reference", "[type_traits]",
   STATIC_REQUIRE_FALSE(etl::is_rvalue_reference<TestType const*>::value);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_member_function_pointer", "[type_traits]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using etl::is_member_function_pointer_v;
+
+  class CA
+  {
+public:
+    void memberF() { }    // NOLINT
+    TestType memberV {};  // NOLINT
+  };
+
+  struct SA
+  {
+public:
+    void memberF() { }    // NOLINT
+    TestType memberV {};  // NOLINT
+  };
+
+  STATIC_REQUIRE_FALSE(is_member_function_pointer_v<decltype(&CA::memberV)>);
+  STATIC_REQUIRE(is_member_function_pointer_v<decltype(&CA::memberF)>);
+
+  STATIC_REQUIRE_FALSE(is_member_function_pointer_v<decltype(&SA::memberV)>);
+  STATIC_REQUIRE(is_member_function_pointer_v<decltype(&SA::memberF)>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_class = false", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
@@ -657,6 +685,21 @@ TEMPLATE_TEST_CASE("type_traits: is_unsigned = true", "[type_traits]",
                    etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
   STATIC_REQUIRE(etl::is_unsigned<TestType>::value);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_signed = true", "[type_traits]",
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double)
+{
+  STATIC_REQUIRE(etl::is_signed<TestType>::value);
+  STATIC_REQUIRE(etl::is_signed_v<TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_signed = false", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, A,
+                   B, C)
+{
+  STATIC_REQUIRE_FALSE(etl::is_signed<TestType>::value);
 }
 
 TEMPLATE_TEST_CASE("type_traits: alignment_of = 1", "[type_traits]",
