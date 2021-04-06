@@ -31,14 +31,50 @@ DAMAGE.
 #include "etl/map.hpp"
 #include "etl/vector.hpp"
 
-TEST_CASE("type_traits: true_type", "[type_traits]")
+TEMPLATE_TEST_CASE("type_traits: integral_constant", "[type_traits]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
-  STATIC_REQUIRE(etl::true_type::value == true);
+  using T = TestType;
+
+  constexpr auto constant = etl::integral_constant<T, T {0}> {};
+  STATIC_REQUIRE(decltype(constant)::value == T {0});
+  STATIC_REQUIRE(constant() == T {0});
+  STATIC_REQUIRE(static_cast<T>(constant) == T {0});
+  STATIC_REQUIRE(etl::is_same_v<T, typename decltype(constant)::value_type>);
 }
 
-TEST_CASE("type_traits: false_type", "[type_traits]")
+TEST_CASE("type_traits: bool_constant", "[type_traits]")
 {
-  STATIC_REQUIRE(etl::false_type::value == false);
+  SECTION("false")
+  {
+    constexpr auto constant = etl::bool_constant<false> {};
+    STATIC_REQUIRE(decltype(constant)::value == false);
+    STATIC_REQUIRE(constant() == false);
+    STATIC_REQUIRE(static_cast<bool>(constant) == false);
+    STATIC_REQUIRE(etl::is_same_v<bool, decltype(constant)::value_type>);
+  }
+
+  SECTION("true")
+  {
+    constexpr auto constant = etl::bool_constant<true> {};
+    STATIC_REQUIRE(decltype(constant)::value == true);
+    STATIC_REQUIRE(constant() == true);
+    STATIC_REQUIRE(static_cast<bool>(constant) == true);
+    STATIC_REQUIRE(etl::is_same_v<bool, decltype(constant)::value_type>);
+  }
+
+  SECTION("true_type")
+  {
+    STATIC_REQUIRE(etl::is_same_v<bool, etl::true_type::value_type>);
+    STATIC_REQUIRE(etl::true_type::value == true);
+  }
+
+  SECTION("false_type")
+  {
+    STATIC_REQUIRE(etl::is_same_v<bool, etl::false_type::value_type>);
+    STATIC_REQUIRE(etl::false_type::value == false);
+  }
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_same = false", "[type_traits]",
