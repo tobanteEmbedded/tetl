@@ -710,20 +710,6 @@ TEMPLATE_TEST_CASE("type_traits: remove_cv", "[type_traits]", etl::uint8_t,
   STATIC_REQUIRE(is_same_v<remove_cv_t<TestType const volatile>, TestType>);
 }
 
-TEMPLATE_TEST_CASE("type_traits: remove_reference", "[type_traits]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
-{
-  using etl::is_same_v;
-  using etl::remove_reference_t;
-  STATIC_REQUIRE(is_same_v<remove_reference_t<TestType>, TestType>);
-  STATIC_REQUIRE(is_same_v<remove_reference_t<TestType&>, TestType>);
-  STATIC_REQUIRE(is_same_v<remove_reference_t<TestType&&>, TestType>);
-  STATIC_REQUIRE(
-    is_same_v<remove_reference_t<TestType const&>, TestType const>);
-}
-
 TEMPLATE_TEST_CASE("type_traits: remove_cvref", "[type_traits]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
@@ -742,12 +728,70 @@ TEMPLATE_TEST_CASE("type_traits: add_pointer", "[type_traits]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using T = TestType;
   using etl::add_pointer_t;
   using etl::is_same_v;
-  STATIC_REQUIRE(is_same_v<add_pointer_t<TestType>, TestType*>);
-  STATIC_REQUIRE(is_same_v<add_pointer_t<TestType const>, TestType const*>);
-  STATIC_REQUIRE(
-    is_same_v<add_pointer_t<TestType volatile>, TestType volatile*>);
+
+  STATIC_REQUIRE(is_same_v<add_pointer_t<T>, T*>);
+  STATIC_REQUIRE(is_same_v<add_pointer_t<T const>, T const*>);
+  STATIC_REQUIRE(is_same_v<add_pointer_t<T volatile>, T volatile*>);
+  STATIC_REQUIRE(is_same_v<add_pointer_t<T volatile const>, T volatile const*>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_pointer", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T   = TestType;
+  using CT  = TestType const;
+  using VT  = TestType volatile;
+  using CVT = TestType const volatile;
+
+  using etl::is_same_v;
+  using etl::remove_pointer_t;
+
+  STATIC_REQUIRE(is_same_v<remove_pointer_t<T*>, T>);
+  STATIC_REQUIRE(is_same_v<remove_pointer_t<CT*>, CT>);
+  STATIC_REQUIRE(is_same_v<remove_pointer_t<VT*>, VT>);
+  STATIC_REQUIRE(is_same_v<remove_pointer_t<CVT*>, CVT>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_reference", "[type_traits]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T   = TestType;
+  using CT  = TestType const;
+  using VT  = TestType volatile;
+  using CVT = TestType const volatile;
+
+  using etl::is_same_v;
+  using etl::remove_reference_t;
+
+  SECTION("cppreference.com example")
+  {
+    STATIC_REQUIRE(is_same_v<T, T>);
+    STATIC_REQUIRE_FALSE(is_same_v<T, T&>);
+    STATIC_REQUIRE_FALSE(is_same_v<T, T&&>);
+
+    STATIC_REQUIRE(is_same_v<T, remove_reference_t<T>>);
+    STATIC_REQUIRE(is_same_v<T, remove_reference_t<T&>>);
+    STATIC_REQUIRE(is_same_v<T, remove_reference_t<T&&>>);
+
+    STATIC_REQUIRE(is_same_v<CT, remove_reference_t<CT>>);
+    STATIC_REQUIRE(is_same_v<CT, remove_reference_t<CT&>>);
+    STATIC_REQUIRE(is_same_v<CT, remove_reference_t<CT&&>>);
+
+    STATIC_REQUIRE(is_same_v<VT, remove_reference_t<VT>>);
+    STATIC_REQUIRE(is_same_v<VT, remove_reference_t<VT&>>);
+    STATIC_REQUIRE(is_same_v<VT, remove_reference_t<VT&&>>);
+
+    STATIC_REQUIRE(is_same_v<CVT, remove_reference_t<CVT>>);
+    STATIC_REQUIRE(is_same_v<CVT, remove_reference_t<CVT&>>);
+    STATIC_REQUIRE(is_same_v<CVT, remove_reference_t<CVT&&>>);
+  }
 }
 
 TEMPLATE_TEST_CASE("type_traits: add_cv", "[type_traits]", etl::uint8_t,
