@@ -104,12 +104,25 @@ TEST_CASE("mutex/lock_guard: construct", "[mutex]")
 
 TEST_CASE("mutex/unique_lock: RAII", "[mutex]")
 {
+  SECTION("default construction")
+  {
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock<test_mutex> lock {};
+      REQUIRE(lock.mutex() == nullptr);
+      REQUIRE_FALSE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
+
   SECTION("lock on construction")
   {
     test_mutex mtx {};
     REQUIRE_FALSE(mtx.is_locked());
     {
       etl::unique_lock lock {mtx};
+      REQUIRE(lock.mutex() == &mtx);
       REQUIRE(mtx.is_locked());
     }
     REQUIRE_FALSE(mtx.is_locked());
@@ -155,5 +168,65 @@ TEST_CASE("mutex/unique_lock: RAII", "[mutex]")
       REQUIRE(mtx.is_locked());
     }
     REQUIRE_FALSE(mtx.is_locked());
+  }
+
+  SECTION("move")
+  {
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock l1 {mtx};
+      REQUIRE(l1.owns_lock());
+      REQUIRE(mtx.is_locked());
+
+      etl::unique_lock l2 {etl::move(l1)};
+      REQUIRE_FALSE(l1.owns_lock());
+      REQUIRE(l2.owns_lock());
+      REQUIRE(mtx.is_locked());
+
+      etl::unique_lock<test_mutex> l3 {};
+      l3 = etl::move(l2);
+      REQUIRE_FALSE(l2.owns_lock());
+      REQUIRE(l3.owns_lock());
+      REQUIRE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
+
+  SECTION("swap")
+  {
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock l1 {mtx};
+      REQUIRE(l1.owns_lock());
+      REQUIRE(mtx.is_locked());
+
+      decltype(l1) l2 {};
+      etl::swap(l1, l2);
+
+      REQUIRE_FALSE(l1.owns_lock());
+      REQUIRE(l2.owns_lock());
+      REQUIRE_FALSE(static_cast<bool>(l1));
+      REQUIRE(static_cast<bool>(l2));
+      REQUIRE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
+
+  SECTION("release")
+  {
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock lock {mtx};
+      REQUIRE(lock.owns_lock());
+      REQUIRE(mtx.is_locked());
+
+      auto* m = lock.release();
+      REQUIRE_FALSE(lock.owns_lock());
+      REQUIRE(m->is_locked());
+    }
+    REQUIRE(mtx.is_locked());
   }
 }
