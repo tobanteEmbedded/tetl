@@ -54,8 +54,7 @@ auto declval() noexcept -> etl::add_rvalue_reference_t<T>;  // NOLINT
  * In particular, etl::move produces an xvalue expression that identifies its
  * argument t. It is exactly equivalent to a static_cast to an rvalue reference
  * type.
- * @tparam T
- * @param t
+ *
  * @return static_cast<typename etl::remove_reference<T>::type&&>(t)
  */
 template <typename T>

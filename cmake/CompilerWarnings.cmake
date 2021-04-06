@@ -19,7 +19,7 @@ else ()
         -Wshadow
         -Wunused-parameter
         -Wnarrowing
-        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>: -Wshadow-all >
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>: -Wshadow-all -Wdocumentation>
         $<$<CXX_COMPILER_ID:AppleClang>:  -Wno-poison-system-directories >
         $<$<CXX_COMPILER_ID:GNU>: -Wmisleading-indentation -Wlogical-op -Wduplicated-branches -Wduplicated-cond -Wno-parentheses -Wno-sequence-point >
     )

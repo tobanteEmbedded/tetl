@@ -458,26 +458,26 @@ template <typename InputIter, typename UnaryPredicate>
  */
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if_not(InputIter first, InputIter last,
-                                         UnaryPredicate predicate) noexcept
+                                         UnaryPredicate pred) noexcept
   -> InputIter
 {
   for (; first != last; ++first)
   {
-    if (!predicate(*first)) { return first; }
+    if (!pred(*first)) { return first; }
   }
   return last;
 }
 
 /**
  * @brief Searches the range [first, last) for any of the elements in the range
- * [s_first, s_last). Elements are compared using the given binary predicate
+ * [sFirst, sLast). Elements are compared using the given binary predicate
  * pred.
  *
  * @details https://en.cppreference.com/w/cpp/algorithm/find_first_of
  * @param first The range of elements to examine.
  * @param last The range of elements to examine.
- * @param s_first The range of elements to search for.
- * @param s_last The range of elements to search for.
+ * @param sFirst The range of elements to search for.
+ * @param sLast The range of elements to search for.
  * @param pred Binary predicate which returns ​true if the elements should be
  * treated as equal.
  */
@@ -499,13 +499,13 @@ find_first_of(InputIter first, InputIter last, ForwardIter sFirst,
 
 /**
  * @brief Searches the range [first, last) for any of the elements in the range
- * [s_first, s_last). Elements are compared using operator==.
+ * [sFirst, sLast). Elements are compared using operator==.
  *
  * @details https://en.cppreference.com/w/cpp/algorithm/find_first_of
  * @param first The range of elements to examine.
  * @param last The range of elements to examine.
- * @param s_first The range of elements to search for.
- * @param s_last The range of elements to search for.
+ * @param sFirst The range of elements to search for.
+ * @param sLast The range of elements to search for.
  */
 template <typename InputIter, typename ForwardIter>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
@@ -517,14 +517,14 @@ template <typename InputIter, typename ForwardIter>
 
 /**
  * @brief Searches for the first occurrence of the sequence of elements
- * [s_first, s_last) in the range [first, last). Elements are compared using the
+ * [sFirst, sLast) in the range [first, last). Elements are compared using the
  * given binary predicate pred.
  *
  * @details https://en.cppreference.com/w/cpp/algorithm/search
  * @param first The range of elements to examine.
  * @param last The range of elements to examine.
- * @param s_first The range of elements to search for.
- * @param s_last The range of elements to search for.
+ * @param sFirst The range of elements to search for.
+ * @param sLast The range of elements to search for.
  * @param pred Binary predicate which returns ​true if the elements should be
  * treated as equal.
  */
@@ -539,14 +539,14 @@ template <typename ForwardIter1, typename ForwardIter2,
 
 /**
  * @brief Searches for the first occurrence of the sequence of elements
- * [s_first, s_last) in the range [first, last). Elements are compared using
+ * [sFirst, sLast) in the range [first, last). Elements are compared using
  * operator==.
  *
  * @details https://en.cppreference.com/w/cpp/algorithm/search
  * @param first The range of elements to examine.
  * @param last The range of elements to examine.
- * @param s_first The range of elements to search for.
- * @param s_last The range of elements to search for.
+ * @param sFirst The range of elements to search for.
+ * @param sLast The range of elements to search for.
  */
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
@@ -618,17 +618,17 @@ template <typename ForwardIter, typename Size, typename ValueT>
 }
 
 /**
- * @brief Searches for the last occurrence of the sequence [s_first, s_last) in
+ * @brief Searches for the last occurrence of the sequence [sFirst, sLast) in
  * the range [first, last). Elements are compared using the given binary
  * predicate p.
  *
  * @param first The range of elements to examine
  * @param last The range of elements to examine
- * @param s_first The range of elements to search for
- * @param s_last The range of elements to search for
+ * @param sFirst The range of elements to search for
+ * @param sLast The range of elements to search for
  * @param p Binary predicate
  * @return Iterator to the beginning of last occurrence of the sequence
- * [s_first, s_last) in range [first, last). If [s_first, s_last) is empty or if
+ * [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
  * no such sequence is found, last is returned.
  */
 template <typename ForwardIter1, typename ForwardIter2,
@@ -651,15 +651,15 @@ template <typename ForwardIter1, typename ForwardIter2,
 }
 
 /**
- * @brief Searches for the last occurrence of the sequence [s_first, s_last) in
+ * @brief Searches for the last occurrence of the sequence [sFirst, sLast) in
  * the range [first, last). Elements are compared using operator==.
  *
  * @param first The range of elements to examine
  * @param last The range of elements to examine
- * @param s_first The range of elements to search for
- * @param s_last The range of elements to search for
+ * @param sFirst The range of elements to search for
+ * @param sLast The range of elements to search for
  * @return Iterator to the beginning of last occurrence of the sequence
- * [s_first, s_last) in range [first, last). If [s_first, s_last) is empty or if
+ * [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
  * no such sequence is found, last is returned.
  */
 template <typename ForwardIter1, typename ForwardIter2>

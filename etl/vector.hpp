@@ -575,14 +575,8 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return end();
   }
 
-  /**
-   * @brief
-   */
   using base_type::emplace_back;
 
-  /**
-   * @brief
-   */
   using base_type::pop_back;
 
   /**
@@ -599,9 +593,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     emplace_back(forward<U>(value));
   }
 
-  /**
-   * @brief
-   */
   template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
   constexpr auto
   move_insert(const_iterator position, InputIt first,
@@ -624,9 +615,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return writablePosition;
   }
 
-  /**
-   * @brief
-   */
   template <typename... Args, TAETL_REQUIRES_(is_constructible_v<T, Args...>)>
   constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
     noexcept(move_insert(position, declval<value_type*>(),
@@ -643,9 +631,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
    */
   using base_type::data;
 
-  /**
-   * @brief
-   */
   constexpr auto
   insert(const_iterator position,
          value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
@@ -656,9 +641,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return move_insert(position, &x, &x + 1);
   }
 
-  /**
-   * @brief
-   */
   constexpr auto insert(const_iterator position, size_type n,
                         const T& x) noexcept(noexcept(push_back(x)))
     -> enable_if_t<is_copy_constructible_v<T>, iterator>
@@ -677,9 +659,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return writablePosition;
   }
 
-  /**
-   * @brief
-   */
   constexpr auto insert(const_iterator position, const_reference x) noexcept(
     noexcept(insert(position, size_type(1), x)))
     -> enable_if_t<is_copy_constructible_v<T>, iterator>
@@ -689,9 +668,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return insert(position, size_type(1), x);
   }
 
-  /**
-   * @brief
-   */
   template <typename InputIt,
             TAETL_REQUIRES_(detail::InputIterator<InputIt>&& is_constructible_v<
                             value_type, detail::iterator_reference_t<InputIt>>)>
@@ -873,9 +849,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     erase(end() - (size() - sz), end());
   }
 
-  /**
-   * @brief
-   */
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr auto assign(InputIter first, InputIter last) noexcept(
@@ -891,9 +864,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     insert(begin(), first, last);
   }
 
-  /**
-   * @brief
-   */
   constexpr auto assign(size_type n, T const& u)
     -> enable_if_t<is_copy_constructible_v<T>, void>
   {
@@ -919,43 +889,28 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return detail::index(*this, pos);
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] constexpr auto front() noexcept -> reference
   {
     return detail::index(*this, 0);
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] constexpr auto front() const noexcept -> const_reference
   {
     return detail::index(*this, 0);
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] constexpr auto back() noexcept -> reference
   {
     assert(!empty() && "calling back on an empty vector");
     return detail::index(*this, static_cast<size_type>(size() - 1));
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] constexpr auto back() const noexcept -> const_reference
   {
     assert(!empty() && "calling back on an empty vector");
     return detail::index(*this, static_cast<size_type>(size() - 1));
   }
 
-  /**
-   * @brief
-   */
   constexpr auto erase(const_iterator position) noexcept
     -> enable_if_t<detail::is_movable_v<value_type>, iterator>
   {
@@ -963,9 +918,6 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return erase(position, position + 1);
   }
 
-  /**
-   * @brief
-   */
   constexpr auto erase(const_iterator first, const_iterator last) noexcept
     -> enable_if_t<detail::is_movable_v<value_type>, iterator>
   {

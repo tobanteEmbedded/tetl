@@ -475,9 +475,6 @@ class time_point
   duration d_ {};
 };
 
-/**
- * @brief
- */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator+(duration<Rep1, Period1> const& lhs,
                                        duration<Rep2, Period2> const& rhs)
@@ -487,9 +484,6 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
   return CD(CD(lhs).count() + CD(rhs).count());
 }
 
-/**
- * @brief
- */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator-(duration<Rep1, Period1> const& lhs,
                                        duration<Rep2, Period2> const& rhs)
@@ -804,9 +798,6 @@ template <typename To, typename Rep, typename Period,
   return t;
 }
 
-/**
- * @brief
- */
 template <typename To, typename Rep, typename Period,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto ceil(duration<Rep, Period> const& d) noexcept(
@@ -817,9 +808,6 @@ template <typename To, typename Rep, typename Period,
   return t;
 }
 
-/**
- * @brief
- */
 template <typename To, typename Rep, typename Period,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
@@ -848,9 +836,6 @@ constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
                                            : d;
 }
 
-/**
- * @brief
- */
 template <typename ToDuration, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
 [[nodiscard]] constexpr auto
@@ -860,9 +845,6 @@ time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
   return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
 }
 
-/**
- * @brief
- */
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp)
@@ -871,9 +853,6 @@ template <typename To, typename Clock, typename Duration,
   return time_point<Clock, To> {floor<To>(tp.time_since_epoch())};
 }
 
-/**
- * @brief
- */
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp)
@@ -882,9 +861,6 @@ template <typename To, typename Clock, typename Duration,
   return time_point<Clock, To> {ceil<To>(tp.time_since_epoch())};
 }
 
-/**
- * @brief
- */
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)

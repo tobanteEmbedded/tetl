@@ -1441,9 +1441,6 @@ class basic_static_string
   value_type data_[Capacity] = {};
 };
 
-/**
- * @brief
- */
 template <etl::size_t Capacity>
 using static_string = basic_static_string<char, Capacity>;
 

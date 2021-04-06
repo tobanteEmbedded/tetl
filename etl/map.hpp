@@ -590,7 +590,7 @@ private:
   }
 
   /**
-   * @brief
+   * @brief Checks if the container full, i.e. whether size() == Capacity.
    */
   [[nodiscard]] constexpr auto full() const noexcept -> bool
   {

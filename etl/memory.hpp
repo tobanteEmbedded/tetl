@@ -522,100 +522,61 @@ class pointer_int_pair
   using int_type                 = IntType;
   static constexpr auto int_bits = IntBits;
 
-  /**
-   * @brief
-   */
   constexpr pointer_int_pair() = default;
 
-  /**
-   * @brief
-   */
   pointer_int_pair(pointer_type pointerValue, int_type intValue)
   {
     set_ptr_and_int(pointerValue, intValue);
   }
 
-  /**
-   * @brief
-   */
   explicit pointer_int_pair(pointer_type pointerValue)
   {
     init_with_ptr(pointerValue);
   }
 
-  /**
-   * @brief
-   */
   void set_pointer(pointer_type pointerValue)
   {
     value_ = pointer_info::update_ptr(value_, pointerValue);
   }
 
-  /**
-   * @brief
-   */
   void set_int(int_type intValue)
   {
     value_ = pointer_info::update_int(value_, static_cast<intptr_t>(intValue));
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] auto get_pointer() const -> pointer_type
   {
     return pointer_info::get_pointer(value_);
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] auto get_int() const -> int_type
   {
     return (int_type)pointer_info::get_int(value_);
   }
 
-  /**
-   * @brief
-   */
   void set_ptr_and_int(pointer_type pointerValue, int_type intValue)
   {
     value_ = pointer_info::update_int(pointer_info::update_ptr(0, pointerValue),
                                       static_cast<intptr_t>(intValue));
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] auto get_addr_of_pointer() const -> pointer_type const*
   {
     return const_cast<pointer_int_pair*>(this)->get_addr_of_pointer();
   }
 
-  /**
-   * @brief
-   */
   auto get_addr_of_pointer() -> pointer_type*
   {
     return bit_cast<pointer_type*>(&value_);
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] auto get_opaque_value() const -> void*
   {
     return bit_cast<void*>(value_);
   }
 
-  /**
-   * @brief
-   */
   void set_from_opaque_value(void* val) { value_ = bit_cast<intptr_t>(val); }
 
-  /**
-   * @brief
-   */
   static auto get_from_opaque_value(void* v) -> pointer_int_pair
   {
     pointer_int_pair p;
@@ -633,54 +594,36 @@ class pointer_int_pair
     return get_from_opaque_value(const_cast<void*>(v));
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator==(pointer_int_pair const& lhs,
                                        pointer_int_pair const& rhs) -> bool
   {
     return lhs.value_ == rhs.value_;
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator!=(pointer_int_pair const& lhs,
                                        pointer_int_pair const& rhs) -> bool
   {
     return lhs.value_ != rhs.value_;
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator<(pointer_int_pair const& lhs,
                                       pointer_int_pair const& rhs) -> bool
   {
     return lhs.value_ < rhs.value_;
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator>(pointer_int_pair const& lhs,
                                       pointer_int_pair const& rhs) -> bool
   {
     return lhs.value_ > rhs.value_;
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator<=(pointer_int_pair const& lhs,
                                        pointer_int_pair const& rhs) -> bool
   {
     return lhs.value_ <= rhs.value_;
   }
 
-  /**
-   * @brief
-   */
   [[nodiscard]] friend auto operator>=(pointer_int_pair const& lhs,
                                        pointer_int_pair const& rhs) -> bool
   {

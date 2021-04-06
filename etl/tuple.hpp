@@ -36,8 +36,6 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief
- *
  * @todo Implement index_sequence & tuple_size
  */
 template <typename First, typename... Rest>
