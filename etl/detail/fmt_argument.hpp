@@ -3,7 +3,7 @@
 
 #include "etl/detail/fmt_formatter.hpp"
 
-namespace etl::experimental::format::detail
+namespace etl::detail
 {
 // Escape tokens
 inline constexpr auto token_begin = '{';
@@ -82,6 +82,6 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
   }
 }
 
-}  // namespace etl::experimental::format::detail
+}  // namespace etl::detail
 
 #endif  // TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP

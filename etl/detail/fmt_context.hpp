@@ -5,7 +5,7 @@
 #include "etl/iterator.hpp"
 #include "etl/warning.hpp"
 
-namespace etl::experimental::format
+namespace etl
 {
 template <typename T, typename CharT>
 struct formatter;
@@ -65,6 +65,6 @@ template <typename ContainerT>
 using format_context
   = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
 
-}  // namespace etl::experimental::format
+}  // namespace etl
 
 #endif  // TAETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP

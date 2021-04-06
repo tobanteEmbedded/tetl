@@ -7,7 +7,7 @@
 #include "etl/numeric.hpp"
 #include "etl/string.hpp"
 
-namespace etl::experimental::format
+namespace etl
 {
 /**
  * @brief The enabled specializations of formatter define formatting rules for a
@@ -212,6 +212,6 @@ struct formatter<unsigned long long, char>
   }
 };
 
-}  // namespace etl::experimental::format
+}  // namespace etl
 
 #endif  // TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP

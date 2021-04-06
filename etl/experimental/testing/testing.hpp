@@ -28,9 +28,8 @@ inline auto fail_binary_test(binary_test_case const& tc) -> void
 template <typename T>
 [[nodiscard]] auto format_argument(T const& t) -> ::etl::static_string<32>
 {
-  using namespace etl::experimental::format;
   auto str = etl::static_string<32> {};
-  format_to(etl::back_inserter(str), "{}", t);
+  ::etl::format_to(etl::back_inserter(str), "{}", t);
   return str;
 }
 

@@ -32,7 +32,7 @@ DAMAGE.
 
 #include "etl/vector.hpp"
 
-namespace etl::experimental::format
+namespace etl
 {
 template <typename It>
 using diff_t =
@@ -169,6 +169,6 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
 
   return result;
 }
-}  // namespace etl::experimental::format
+}  // namespace etl
 
 #endif  // TAETL_EXPERIMENTAL_FORMAT_HPP
