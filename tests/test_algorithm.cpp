@@ -1175,38 +1175,34 @@ TEMPLATE_TEST_CASE("algorithm: move", "[algorithm]", etl::uint8_t, etl::int8_t,
   SECTION("move forward")
   {
     // move
-    auto source
-      = etl::array {S {TestType {1}}, S {TestType {1}}, S {TestType {1}}};
-    decltype(source) dest {};
-    etl::move(begin(source), end(source), begin(dest));
+    using etl::array;
+    auto source = array {S {TestType {1}}, S {TestType {1}}, S {TestType {1}}};
+    decltype(source) d {};
+    etl::move(begin(source), end(source), begin(d));
 
     // assert
     using etl::all_of;
-    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move; }));
-    CHECK(
-      all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy; }));
-    CHECK(all_of(begin(dest), end(dest),
-                 [](auto const& s) { return s.data == 1; }));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; }));
   }
 
   SECTION("move backward")
   {
     // move
-    auto source
-      = etl::array {S {TestType {1}}, S {TestType {2}}, S {TestType {3}}};
-    decltype(source) dest {};
-    etl::move_backward(begin(source), end(source), end(dest));
+    using etl::array;
+    auto source = array {S {TestType {1}}, S {TestType {2}}, S {TestType {3}}};
+    decltype(source) d {};
+    etl::move_backward(begin(source), end(source), end(d));
 
     // assert
     using etl::all_of;
-    CHECK(all_of(begin(dest), end(dest), [](auto const& s) { return s.move; }));
-    CHECK(
-      all_of(begin(dest), end(dest), [](auto const& s) { return !s.copy; }));
-    CHECK(all_of(begin(dest), end(dest),
-                 [](auto const& s) { return s.data != 0; }));
-    CHECK(dest[0].data == TestType(1));
-    CHECK(dest[1].data == TestType(2));
-    CHECK(dest[2].data == TestType(3));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+    CHECK(all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
+    CHECK(d[0].data == TestType(1));
+    CHECK(d[1].data == TestType(2));
+    CHECK(d[2].data == TestType(3));
   }
 }
 
@@ -1603,6 +1599,153 @@ TEMPLATE_TEST_CASE("algorithm: includes", "[algorithm]", etl::uint8_t,
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v4.begin(), v4.end()));
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v5.begin(), v5.end()));
     CHECK_FALSE(etl::includes(v1.begin(), v1.end(), v6.begin(), v6.end()));
+  }
+}
+
+TEMPLATE_TEST_CASE("algorithm: set_difference", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+
+  using etl::back_inserter;
+  using etl::begin;
+  using etl::end;
+  using etl::set_difference;
+
+  SECTION("cppreference.com example #1")
+  {
+    auto const v1 = etl::array {T(1), T(2), T(5), T(5), T(5), T(9)};
+    auto const v2 = etl::array {T(2), T(5), T(7)};
+    auto diff     = etl::static_vector<T, 4> {};
+
+    set_difference(begin(v1), end(v1), begin(v2), end(v2), back_inserter(diff));
+
+    CHECK(diff[0] == T {1});
+    CHECK(diff[1] == T {5});
+    CHECK(diff[2] == T {5});
+    CHECK(diff[3] == T {9});
+  }
+
+  SECTION("cppreference.com example #2")
+  {
+    // we want to know which orders "cut" between old and new states:
+    etl::array<T, 4> oldOrders {T(1), T(2), T(5), T(9)};
+    etl::array<T, 3> newOrders {T(2), T(5), T(7)};
+    etl::static_vector<T, 2> cutOrders {};
+
+    set_difference(oldOrders.begin(), oldOrders.end(), newOrders.begin(),
+                   newOrders.end(), back_inserter(cutOrders), etl::less<> {});
+
+    CHECK(oldOrders[0] == T {1});
+    CHECK(oldOrders[1] == T {2});
+    CHECK(oldOrders[2] == T {5});
+    CHECK(oldOrders[3] == T {9});
+
+    CHECK(newOrders[0] == T {2});
+    CHECK(newOrders[1] == T {5});
+    CHECK(newOrders[2] == T {7});
+
+    CHECK(cutOrders[0] == T {1});
+    CHECK(cutOrders[1] == T {9});
+  }
+}
+
+TEMPLATE_TEST_CASE("algorithm: set_intersection", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+
+  SECTION("cppreference.com example")
+  {
+    etl::array<T, 8> v1 {T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
+    etl::array<T, 4> v2 {T(5), T(7), T(9), T(10)};
+    etl::sort(v1.begin(), v1.end());
+    etl::sort(v2.begin(), v2.end());
+
+    etl::static_vector<T, 2> intersection {};
+    etl::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(),
+                          etl::back_inserter(intersection));
+
+    CHECK(intersection[0] == T {5});
+    CHECK(intersection[1] == T {7});
+  }
+}
+
+TEMPLATE_TEST_CASE("algorithm: set_symmetric_difference", "[algorithm]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+
+  SECTION("cppreference.com example")
+  {
+    etl::array<T, 8> v1 {T(1), T(2), T(3), T(4), T(5), T(6), T(7), T(8)};
+    etl::array<T, 4> v2 {T(5), T(7), T(9), T(10)};
+    etl::sort(v1.begin(), v1.end());
+    etl::sort(v2.begin(), v2.end());
+
+    etl::static_vector<T, 8> symDifference {};
+    etl::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(),
+                                  etl::back_inserter(symDifference));
+
+    CHECK(symDifference[0] == T {1});
+    CHECK(symDifference[1] == T {2});
+    CHECK(symDifference[2] == T {3});
+    CHECK(symDifference[3] == T {4});
+    CHECK(symDifference[4] == T {6});
+    CHECK(symDifference[5] == T {8});
+    CHECK(symDifference[6] == T {9});
+    CHECK(symDifference[7] == T {10});
+  }
+}
+
+TEMPLATE_TEST_CASE("algorithm: set_union", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+  using etl::back_inserter;
+
+  SECTION("cppreference.com example #1")
+  {
+    etl::array<T, 5> v1 = {T(1), T(2), T(3), T(4), T(5)};
+    etl::array<T, 5> v2 = {T(3), T(4), T(5), T(6), T(7)};
+    etl::static_vector<T, 7> dest;
+
+    etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
+
+    CHECK(dest[0] == T {1});
+    CHECK(dest[1] == T {2});
+    CHECK(dest[2] == T {3});
+    CHECK(dest[3] == T {4});
+    CHECK(dest[4] == T {5});
+    CHECK(dest[5] == T {6});
+    CHECK(dest[6] == T {7});
+  }
+
+  SECTION("cppreference.com example #1")
+  {
+    etl::array<T, 7> v1 = {T(1), T(2), T(3), T(4), T(5), T(5), T(5)};
+    etl::array<T, 5> v2 = {T(3), T(4), T(5), T(6), T(7)};
+    etl::static_vector<T, 9> dest;
+
+    etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
+
+    CHECK(dest[0] == T {1});
+    CHECK(dest[1] == T {2});
+    CHECK(dest[2] == T {3});
+    CHECK(dest[3] == T {4});
+    CHECK(dest[4] == T {5});
+    CHECK(dest[5] == T {5});
+    CHECK(dest[6] == T {5});
+    CHECK(dest[7] == T {6});
+    CHECK(dest[8] == T {7});
   }
 }
 

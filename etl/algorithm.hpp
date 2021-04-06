@@ -1829,6 +1829,183 @@ template <typename InputIter1, typename InputIter2, typename Compare>
 }
 
 /**
+ * @brief Copies the elements from the sorted range [first1, last1) which are
+ * not found in the sorted range [first2, last2) to the range beginning at
+ * destination. Elements are compared using the given binary comparison function
+ * comp and the ranges must be sorted with respect to the same.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt,
+          typename Compare>
+constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                              InputIt2 last2, OutputIt destination,
+                              Compare comp) -> OutputIt
+{
+  while (first1 != last1)
+  {
+    if (first2 == last2) { return copy(first1, last1, destination); }
+
+    if (comp(*first1, *first2)) { *destination++ = *first1++; }
+    else
+    {
+      if (!comp(*first2, *first1)) { ++first1; }
+      ++first2;
+    }
+  }
+  return destination;
+}
+
+/**
+ * @brief Copies the elements from the sorted range [first1, last1) which are
+ * not found in the sorted range [first2, last2) to the range beginning at
+ * destination. Elements are compared using operator< and the ranges must be
+ * sorted with respect to the same.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt>
+constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                              InputIt2 last2, OutputIt destination) -> OutputIt
+{
+  return set_difference(first1, last1, first2, last2, destination, less<> {});
+}
+
+/**
+ * @brief Constructs a sorted range beginning at d_first consisting of elements
+ * that are found in both sorted ranges [first1, last1) and [first2, last2). If
+ * some element is found m times in [first1, last1) and n times in [first2,
+ * last2), the first min(m, n) elements will be copied from the first range to
+ * the destination range. The order of equivalent elements is preserved. The
+ * resulting range cannot overlap with either of the input ranges.
+ *
+ * Elements are compared using the given binary comparison function comp and the
+ * ranges must be sorted with respect to the same.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt,
+          typename Compare>
+constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
+                                InputIt2 first2, InputIt2 last2, OutputIt dest,
+                                Compare comp) -> OutputIt
+{
+  while (first1 != last1 && first2 != last2)
+  {
+    if (comp(*first1, *first2)) { ++first1; }
+    else
+    {
+      if (!comp(*first2, *first1)) { *dest++ = *first1++; }
+      ++first2;
+    }
+  }
+  return dest;
+}
+
+/**
+ * @brief Constructs a sorted range beginning at d_first consisting of elements
+ * that are found in both sorted ranges [first1, last1) and [first2, last2). If
+ * some element is found m times in [first1, last1) and n times in [first2,
+ * last2), the first min(m, n) elements will be copied from the first range to
+ * the destination range. The order of equivalent elements is preserved. The
+ * resulting range cannot overlap with either of the input ranges.
+ *
+ * Elements are compared using operator< and the ranges must be sorted with
+ * respect to the same.
+ */
+template <typename InputIt1, typename InputIt2, typename OutputIt>
+constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
+                                InputIt2 first2, InputIt2 last2, OutputIt dest)
+  -> OutputIt
+{
+  return set_intersection(first1, last1, first2, last2, dest, less<>());
+}
+
+/**
+ * @brief Computes symmetric difference of two sorted ranges: the elements that
+ * are found in either of the ranges, but not in both of them are copied to the
+ * range beginning at destination. The resulting range is also sorted. Elements
+ * are compared using the given binary comparison function comp and the ranges
+ * must be sorted with respect to the same.
+ */
+template <typename InputIter1, typename InputIter2, typename OutputIter,
+          typename Compare>
+constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
+                                        InputIter2 first2, InputIter2 last2,
+                                        OutputIter destination, Compare comp)
+  -> OutputIter
+{
+  while (first1 != last1)
+  {
+    if (first2 == last2) { return copy(first1, last1, destination); }
+
+    if (comp(*first1, *first2)) { *destination++ = *first1++; }
+    else
+    {
+      if (comp(*first2, *first1)) { *destination++ = *first2; }
+      else
+      {
+        ++first1;
+      }
+      ++first2;
+    }
+  }
+  return copy(first2, last2, destination);
+}
+
+/**
+ * @brief Computes symmetric difference of two sorted ranges: the elements that
+ * are found in either of the ranges, but not in both of them are copied to the
+ * range beginning at destination. The resulting range is also sorted. Elements
+ * are compared using operator< and the ranges must be sorted with respect to
+ * the same.
+ */
+template <typename InputIter1, typename InputIter2, typename OutputIter>
+constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
+                                        InputIter2 first2, InputIter2 last2,
+                                        OutputIter dest) -> OutputIter
+{
+  return set_symmetric_difference(first1, last1, first2, last2, dest, less<>());
+}
+
+/**
+ * @brief Constructs a sorted union beginning at destination consisting of the
+ * set of elements present in one or both sorted ranges [first1, last1) and
+ * [first2, last2). The resulting range cannot overlap with either of the input
+ * ranges. Elements are compared using the given binary comparison function comp
+ * and the ranges must be sorted with respect to the same.
+ */
+template <typename InputIter1, typename InputIter2, typename OutputIter,
+          typename Compare>
+constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
+                         InputIter2 last2, OutputIter destination, Compare comp)
+  -> OutputIter
+{
+  for (; first1 != last1; ++destination)
+  {
+    if (first2 == last2) { return copy(first1, last1, destination); }
+    if (comp(*first2, *first1))
+    {
+      *destination = *first2++;
+      continue;
+    }
+
+    *destination = *first1;
+    if (!comp(*first1, *first2)) { ++first2; }
+    ++first1;
+  }
+  return copy(first2, last2, destination);
+}
+
+/**
+ * @brief Constructs a sorted union beginning at destination consisting of the
+ * set of elements present in one or both sorted ranges [first1, last1) and
+ * [first2, last2). The resulting range cannot overlap with either of the input
+ * ranges. Elements are compared using operator< and the ranges must be sorted
+ * with respect to the same.
+ */
+template <typename InputIter1, typename InputIter2, typename OutputIter>
+constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
+                         InputIter2 last2, OutputIter destination) -> OutputIter
+{
+  return set_union(first1, last1, first2, last2, destination, etl::less<> {});
+}
+
+/**
  * @brief Returns true if there exists a permutation of the elements in the
  * range [first1, last1) that makes that range equal to the range
  * [first2,last2), where last2 denotes first2 + (last1 - first1) if it was not
