@@ -1,7 +1,7 @@
 #ifndef TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
 
-#include "etl/experimental/format/detail/context.hpp"
+#include "etl/detail/fmt_context.hpp"
 
 #include "etl/cstdlib.hpp"
 #include "etl/numeric.hpp"

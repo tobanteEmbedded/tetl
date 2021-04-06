@@ -27,8 +27,8 @@ DAMAGE.
 #ifndef TAETL_EXPERIMENTAL_FORMAT_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_HPP
 
-#include "etl/experimental/format/detail/argument.hpp"
-#include "etl/experimental/format/detail/context.hpp"
+#include "etl/detail/fmt_argument.hpp"
+#include "etl/detail/fmt_context.hpp"
 
 #include "etl/vector.hpp"
 

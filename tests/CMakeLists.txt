@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_concepts.cpp
     test_ctime.cpp
     test_expected.cpp
+    test_format.cpp
     test_functional.cpp
     test_iterator.cpp
     test_limits.cpp
@@ -42,8 +43,6 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_version.cpp
 
     experimental/dsp/test_dsp.cpp
-    experimental/format/test_format.cpp
-    experimental/format/test_formatter.cpp
 
     experimental/net/test_buffer.cpp
     experimental/net/test_byte_order.cpp

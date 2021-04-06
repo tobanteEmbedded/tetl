@@ -1,7 +1,7 @@
 #ifndef TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
 #define TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
 
-#include "etl/experimental/format/detail/formatter.hpp"
+#include "etl/detail/fmt_formatter.hpp"
 
 namespace etl::experimental::format::detail
 {

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "etl/experimental/format/format.hpp"
+#include "etl/format.hpp"
 
 namespace etl::experimental::testing::detail
 {
