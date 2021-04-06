@@ -29,9 +29,8 @@ DAMAGE.
 
 #include "etl/format.hpp"
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<char>",
-                   "[experimental][format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -49,9 +48,8 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<char>",
   CHECK(str[2] == '1');
 }
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<char[N]>",
-                   "[experimental][format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char[N]>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -68,9 +66,8 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<char[N]>",
   CHECK(etl::string_view(str.data()) == etl::string_view("foobar"));
 }
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<char const*>",
-                   "[experimental][format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char const*>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -88,9 +85,8 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<char const*>",
   CHECK(etl::string_view(str.data()) == etl::string_view(cStr2));
 }
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<string_view>",
-                   "[experimental][format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<string_view>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -108,9 +104,8 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<string_view>",
   CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<static_string<Capacity>>",
-                   "[experimental][format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<static_string<Capacity>>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -128,9 +123,8 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<static_string<Capacity>>",
   CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
-TEMPLATE_TEST_CASE("experimental/format: formatter<Integer>",
-                   "[experimental][format]", short, int, long, long long,
-                   unsigned short, unsigned int, unsigned long,
+TEMPLATE_TEST_CASE("format: formatter<Integer>", "[format]", short, int, long,
+                   long long, unsigned short, unsigned int, unsigned long,
                    unsigned long long)
 {
   auto [test_input, expected]
@@ -163,7 +157,7 @@ TEMPLATE_TEST_CASE("experimental/format: formatter<Integer>",
   CHECK(str == expected);
 }
 
-TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
+TEST_CASE("format: format_to<char>", "[format]")
 {
   SECTION("no arg")
   {
@@ -216,7 +210,7 @@ TEST_CASE("experimental/format: format_to<char>", "[experimental][format]")
   }
 }
 
-TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
+TEST_CASE("format: format_to<char[N]>", "[format]")
 {
   SECTION("single arg")
   {
@@ -257,7 +251,7 @@ TEST_CASE("experimental/format: format_to<char[N]>", "[experimental][format]")
   //     }
 }
 
-TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
+TEST_CASE("format: format_to_n", "[format]")
 {
   SECTION("escape")
   {
@@ -293,8 +287,7 @@ TEST_CASE("experimental/format: format_to_n", "[experimental][format]")
   // }
 }
 
-TEST_CASE("experimental/format: detail::split_at_next_argument",
-          "[experimental][format]")
+TEST_CASE("format: detail::split_at_next_argument", "[format]")
 {
   using namespace etl::literals;
 
@@ -334,8 +327,7 @@ TEST_CASE("experimental/format: detail::split_at_next_argument",
   }
 }
 
-TEST_CASE("experimental/format: detail::format_escaped_sequences",
-          "[experimental][format]")
+TEST_CASE("format: detail::format_escaped_sequences", "[format]")
 {
   using namespace etl::literals;
 
