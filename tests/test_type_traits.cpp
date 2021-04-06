@@ -400,7 +400,6 @@ TEST_CASE("type_traits: is_function", "[type_traits]")
     using T = PM_traits<decltype(&AAA::fun)>::member_type;  // T is int() const&
 
     STATIC_REQUIRE_FALSE(etl::is_function_v<A>);
-    STATIC_REQUIRE(etl::is_function_v<int(int)>);
     STATIC_REQUIRE(etl::is_function_v<decltype(f)>);
     STATIC_REQUIRE_FALSE(etl::is_function_v<int>);
     STATIC_REQUIRE(etl::is_function_v<T>);
