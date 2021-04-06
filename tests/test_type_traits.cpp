@@ -441,6 +441,9 @@ TEMPLATE_TEST_CASE("type_traits: is_rvalue_reference", "[type_traits]",
   STATIC_REQUIRE_FALSE(etl::is_rvalue_reference<TestType const*>::value);
 }
 
+// TODO: Fix on MSVC. Compiles but emits warnings
+#if not defined(TAETL_MSVC)
+
 TEMPLATE_TEST_CASE("type_traits: is_member_function_pointer", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
@@ -483,6 +486,8 @@ TEMPLATE_TEST_CASE("type_traits: is_member_pointer", "[type_traits]",
   STATIC_REQUIRE(is_member_pointer_v<TestType(Cls::*)>);
   STATIC_REQUIRE_FALSE(is_member_pointer_v<TestType>);
 }
+
+#endif
 
 TEMPLATE_TEST_CASE("type_traits: is_class = false", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
