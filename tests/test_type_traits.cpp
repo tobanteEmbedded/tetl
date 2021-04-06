@@ -567,6 +567,46 @@ TEMPLATE_TEST_CASE("type_traits: is_object", "[type_traits]", bool,
   STATIC_REQUIRE_FALSE(etl::is_object_v<TestType const&>);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_compound = false", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double, etl::nullptr_t)
+{
+  STATIC_REQUIRE_FALSE(etl::is_compound<TestType>::value);
+  STATIC_REQUIRE_FALSE(etl::is_compound_v<TestType>);
+  STATIC_REQUIRE(etl::is_compound_v<TestType*>);
+  STATIC_REQUIRE(etl::is_compound_v<TestType&>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_compound = true", "[type_traits]",
+                   struct StructIsCompound, class ClassIsCompound,
+                   union UnionIsCompound)
+{
+  STATIC_REQUIRE(etl::is_compound<TestType>::value);
+  STATIC_REQUIRE(etl::is_compound_v<TestType>);
+  STATIC_REQUIRE(etl::is_compound_v<TestType*>);
+  STATIC_REQUIRE(etl::is_compound_v<TestType&>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_reference", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double, struct ReferenceToStruct,
+                   class ReferenceToClass, union ReferenceToUnion)
+{
+  STATIC_REQUIRE_FALSE(etl::is_reference<TestType>::value);
+  STATIC_REQUIRE_FALSE(etl::is_reference_v<TestType>);
+
+  STATIC_REQUIRE(etl::is_reference_v<TestType&&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType const&&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType const&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType volatile&&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType volatile&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType volatile const&&>);
+  STATIC_REQUIRE(etl::is_reference_v<TestType volatile const&>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_fundamental", "[type_traits]", bool,
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
