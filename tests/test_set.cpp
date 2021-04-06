@@ -225,6 +225,8 @@ TEMPLATE_TEST_CASE("set/static_set: emplace", "[set]", etl::uint8_t,
   CHECK(res.second == false);
   CHECK(set.size() == 4);
   CHECK_FALSE(set.contains(5));
+
+  CHECK(etl::is_sorted(set.begin(), set.end()));
 }
 
 TEMPLATE_TEST_CASE("set/static_set: erase", "[set]", etl::uint8_t,

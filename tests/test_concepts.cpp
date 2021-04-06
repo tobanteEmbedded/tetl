@@ -24,9 +24,11 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/concepts.hpp"
+
+#include "etl/cstdint.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
 
 #if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace
@@ -40,7 +42,7 @@ TEST_CASE("concepts: floating_point", "[concepts]")
 {
   CHECK(floating_point_test(143.0));
   CHECK(floating_point_test(143.0F));
-  CHECK(floating_point_test(143.0l));
+  CHECK(floating_point_test(143.0L));
 
   CHECK_FALSE(floating_point_test(etl::int8_t(42)));
   CHECK_FALSE(floating_point_test(etl::uint8_t(42)));
@@ -76,7 +78,7 @@ TEST_CASE("concepts: integral", "[concepts]")
 
   CHECK_FALSE(integral_test(143.0));
   CHECK_FALSE(integral_test(143.0F));
-  CHECK_FALSE(integral_test(143.0l));
+  CHECK_FALSE(integral_test(143.0L));
 }
 
 namespace
@@ -101,7 +103,7 @@ TEST_CASE("concepts: signed_integral", "[concepts]")
   CHECK_FALSE(signed_integral_test(143U));
   CHECK_FALSE(signed_integral_test(143.0));
   CHECK_FALSE(signed_integral_test(143.0F));
-  CHECK_FALSE(signed_integral_test(143.0l));
+  CHECK_FALSE(signed_integral_test(143.0L));
 }
 
 namespace
@@ -129,7 +131,23 @@ TEST_CASE("concepts: unsigned_integral", "[concepts]")
   CHECK_FALSE(unsigned_integral_test(143));
   CHECK_FALSE(unsigned_integral_test(143.0));
   CHECK_FALSE(unsigned_integral_test(143.0F));
-  CHECK_FALSE(unsigned_integral_test(143.0l));
+  CHECK_FALSE(unsigned_integral_test(143.0L));
+}
+
+namespace
+{
+auto destructible_test(etl::destructible auto /*unused*/) { return true; }
+
+auto destructible_test(auto /*unused*/) { return false; }
+}  // namespace
+
+TEST_CASE("concepts: destructible", "[concepts]")
+{
+  CHECK(destructible_test(etl::uint8_t(42)));
+  CHECK(destructible_test(etl::uint16_t(143)));
+  CHECK(destructible_test(etl::uint32_t(143)));
+  CHECK(destructible_test(etl::uint64_t(143)));
+  CHECK(destructible_test(143U));
 }
 
 #endif
