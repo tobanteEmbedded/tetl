@@ -469,6 +469,21 @@ public:
   STATIC_REQUIRE(is_member_function_pointer_v<decltype(&SA::memberF)>);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_member_pointer", "[type_traits]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using etl::is_member_pointer_v;
+
+  class Cls
+  {
+  };
+
+  STATIC_REQUIRE(is_member_pointer_v<TestType(Cls::*)>);
+  STATIC_REQUIRE_FALSE(is_member_pointer_v<TestType>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: is_class = false", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
