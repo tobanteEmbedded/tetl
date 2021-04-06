@@ -23,31 +23,54 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/mutex.hpp"
 #include "etl/warning.hpp"
 
+#include "catch2/catch_template_test_macros.hpp"
+
 namespace
 {
-class dummy_mutex
+class test_mutex
 {
   public:
-  dummy_mutex() noexcept  = default;
-  ~dummy_mutex() noexcept = default;
+  test_mutex(bool failOnTryLock = false) noexcept
+      : failOnTryLock_ {failOnTryLock}
+  {
+  }
 
-  auto operator=(dummy_mutex const&) -> dummy_mutex& = delete;
-  dummy_mutex(dummy_mutex const&)                    = delete;
+  ~test_mutex() noexcept = default;
 
-  auto operator=(dummy_mutex&&) -> dummy_mutex& = default;
-  dummy_mutex(dummy_mutex&&)                    = default;
+  auto operator=(test_mutex const&) -> test_mutex& = delete;
+  test_mutex(test_mutex const&)                    = delete;
 
-  auto lock() noexcept { isLocked_ = true; }
-  auto unlock() noexcept { isLocked_ = false; }
+  auto operator=(test_mutex&&) -> test_mutex& = default;
+  test_mutex(test_mutex&&)                    = default;
+
+  auto lock() noexcept
+  {
+    if (not isLocked_) { isLocked_ = true; }
+  }
+
+  auto try_lock() noexcept -> bool
+  {
+    if (not isLocked_ && not failOnTryLock_)
+    {
+      isLocked_ = true;
+      return true;
+    }
+
+    return false;
+  }
+
+  auto unlock() noexcept
+  {
+    if (isLocked_) { isLocked_ = false; }
+  }
 
   [[nodiscard]] auto is_locked() const noexcept { return isLocked_; }
 
   private:
+  bool failOnTryLock_ {false};
   bool isLocked_ = false;
 };
 }  // namespace
@@ -56,7 +79,7 @@ TEST_CASE("mutex/lock_guard: construct", "[mutex]")
 {
   SECTION("not locked")
   {
-    dummy_mutex mtx {};
+    test_mutex mtx {};
     REQUIRE_FALSE(mtx.is_locked());
     {
       etl::lock_guard lock {mtx};
@@ -68,7 +91,7 @@ TEST_CASE("mutex/lock_guard: construct", "[mutex]")
 
   SECTION("already locked")
   {
-    dummy_mutex mtx {};
+    test_mutex mtx {};
     mtx.lock();
     {
       etl::lock_guard lock {mtx, etl::adopt_lock};
@@ -79,21 +102,58 @@ TEST_CASE("mutex/lock_guard: construct", "[mutex]")
   }
 }
 
-TEST_CASE("mutex/scoped_lock: construct", "[mutex]")
+TEST_CASE("mutex/unique_lock: RAII", "[mutex]")
 {
-  dummy_mutex mtx {};
-  etl::scoped_lock lock {mtx};
-  REQUIRE(mtx.is_locked());
-  etl::ignore_unused(lock);
-}
-
-TEST_CASE("mutex/scoped_lock: lock/unlock", "[mutex]")
-{
-  dummy_mutex mtx {};
-  REQUIRE_FALSE(mtx.is_locked());
+  SECTION("lock on construction")
   {
-    etl::scoped_lock lock {mtx};
-    REQUIRE(mtx.is_locked());
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock lock {mtx};
+      REQUIRE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
   }
-  REQUIRE_FALSE(mtx.is_locked());
+
+  SECTION("try_lock on construction")
+  {
+    test_mutex success {false};
+    REQUIRE_FALSE(success.is_locked());
+    {
+      etl::unique_lock lock {success, etl::try_to_lock};
+      REQUIRE(success.is_locked());
+    }
+    REQUIRE_FALSE(success.is_locked());
+
+    test_mutex fail {true};
+    REQUIRE_FALSE(fail.is_locked());
+    {
+      etl::unique_lock lock {fail, etl::try_to_lock};
+      REQUIRE_FALSE(fail.is_locked());
+    }
+    REQUIRE_FALSE(fail.is_locked());
+  }
+
+  SECTION("defer lock on construction")
+  {
+    test_mutex mtx {};
+    REQUIRE_FALSE(mtx.is_locked());
+    {
+      etl::unique_lock lock {mtx, etl::defer_lock};
+      REQUIRE_FALSE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
+
+  SECTION("adopt lock on construction")
+  {
+    test_mutex mtx {};
+    mtx.lock();
+    REQUIRE(mtx.is_locked());
+    {
+      etl::unique_lock lock {mtx, etl::adopt_lock};
+      REQUIRE(mtx.is_locked());
+    }
+    REQUIRE_FALSE(mtx.is_locked());
+  }
 }
