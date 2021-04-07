@@ -1122,7 +1122,6 @@ TEMPLATE_TEST_CASE("type_traits: rank", "[type_traits]", bool, etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
-
 {
   STATIC_REQUIRE(etl::rank<TestType>::value == 0);
   STATIC_REQUIRE(etl::rank_v<TestType> == 0);
@@ -1130,6 +1129,46 @@ TEMPLATE_TEST_CASE("type_traits: rank", "[type_traits]", bool, etl::uint8_t,
   STATIC_REQUIRE(etl::rank<TestType[5]>::value == 1);
   STATIC_REQUIRE(etl::rank<TestType[5][5]>::value == 2);
   STATIC_REQUIRE(etl::rank<TestType[][5][5]>::value == 3);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_extent", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::is_same_v;
+  using etl::remove_extent_t;
+
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T>, T>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T*>, T*>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T&>, T&>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T const>, T const>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T[]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T[1]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T[16]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T[1][2]>, T[2]>);
+  STATIC_REQUIRE(is_same_v<remove_extent_t<T[1][2][3]>, T[2][3]>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: remove_all_extents", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::is_same_v;
+  using etl::remove_all_extents_t;
+
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T>, T>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T*>, T*>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T&>, T&>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T const>, T const>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[1]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[16]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[1][2]>, T>);
+  STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[1][2][3]>, T>);
 }
 
 TEST_CASE("type_traits: make_signed", "[type_traits]")
