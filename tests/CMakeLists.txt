@@ -68,7 +68,7 @@ target_link_libraries(${PROJECT_NAME}
         Catch2WithMain
 )
 
-add_test(NAME unit_tests COMMAND ${PROJECT_NAME})
+catch_discover_tests(${PROJECT_NAME})
 
 
 add_executable(${PROJECT_NAME}_testing experimental/testing/test_testing.cpp)

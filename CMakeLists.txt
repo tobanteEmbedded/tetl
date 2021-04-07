@@ -39,9 +39,10 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
 
 if(NOT CMAKE_CROSSCOMPILING)
   if(TOBANTEAUDIO_ETL_BUILD_TESTS)
-      enable_testing()
       add_subdirectory(3rd_party/Catch2 EXCLUDE_FROM_ALL)
+      list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/Catch2/extras")
       include(CTest)
+      include(Catch)
       add_subdirectory(tests)
   endif()
 
