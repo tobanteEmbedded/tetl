@@ -1171,6 +1171,75 @@ TEMPLATE_TEST_CASE("type_traits: remove_all_extents", "[type_traits]", bool,
   STATIC_REQUIRE(is_same_v<remove_all_extents_t<T[1][2][3]>, T>);
 }
 
+TEMPLATE_TEST_CASE("type_traits: decay", "[type_traits]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+  using etl::decay_t;
+  using etl::is_same_v;
+
+  STATIC_REQUIRE(is_same_v<decay_t<T>, T>);
+  STATIC_REQUIRE(is_same_v<decay_t<T&>, T>);
+  STATIC_REQUIRE(is_same_v<decay_t<T&&>, T>);
+  STATIC_REQUIRE(is_same_v<decay_t<T const&>, T>);
+  STATIC_REQUIRE(is_same_v<decay_t<T[2]>, T*>);
+  STATIC_REQUIRE(is_same_v<decay_t<T(T)>, T (*)(T)>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: common_type", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
+{
+  using T = TestType;
+  using etl::common_type_t;
+  using etl::is_same_v;
+
+  STATIC_REQUIRE(is_same_v<common_type_t<T>, T>);
+  STATIC_REQUIRE(is_same_v<common_type_t<T, T>, T>);
+  STATIC_REQUIRE(is_same_v<common_type_t<T, T const>, T>);
+  STATIC_REQUIRE(is_same_v<common_type_t<T, T volatile>, T>);
+  STATIC_REQUIRE(is_same_v<common_type_t<T, T const volatile>, T>);
+
+  STATIC_REQUIRE(is_same_v<common_type_t<T, double>, double>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: conjunction", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
+{
+  using T = TestType;
+  using etl::conjunction_v;
+  using etl::is_same;
+
+  STATIC_REQUIRE(conjunction_v<etl::true_type>);
+  STATIC_REQUIRE(conjunction_v<etl::true_type, etl::true_type>);
+  STATIC_REQUIRE_FALSE(conjunction_v<etl::false_type>);
+
+  STATIC_REQUIRE(conjunction_v<is_same<T, T>, is_same<T const, T const>>);
+  STATIC_REQUIRE_FALSE(conjunction_v<is_same<T, T>, etl::false_type>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: disjunction", "[type_traits]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
+{
+  using T = TestType;
+  using etl::disjunction_v;
+  using etl::is_same;
+
+  STATIC_REQUIRE_FALSE(disjunction_v<etl::false_type>);
+  STATIC_REQUIRE_FALSE(disjunction_v<etl::false_type, etl::false_type>);
+
+  STATIC_REQUIRE(disjunction_v<etl::true_type>);
+  STATIC_REQUIRE(disjunction_v<etl::true_type, etl::true_type>);
+  STATIC_REQUIRE(disjunction_v<etl::true_type, etl::false_type>);
+
+  STATIC_REQUIRE(disjunction_v<is_same<T, T>, is_same<T const, T const>>);
+  STATIC_REQUIRE(disjunction_v<is_same<T, T>, etl::false_type>);
+}
+
 TEST_CASE("type_traits: make_signed", "[type_traits]")
 {
   using etl::is_same_v;
