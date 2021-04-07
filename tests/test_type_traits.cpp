@@ -1386,3 +1386,73 @@ TEMPLATE_TEST_CASE("type_traits: is_swappable_with", "[type_traits]", bool,
   STATIC_REQUIRE(is_swappable_with_v<T volatile&, T volatile&>);
   STATIC_REQUIRE(is_swappable_with_v<T const volatile&, T const volatile&>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: has_virtual_destructor", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::has_virtual_destructor_v;
+
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T volatile>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const volatile>);
+
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T&>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const&>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T volatile&>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const volatile&>);
+
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T*>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const*>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T volatile*>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<T const volatile*>);
+
+  struct NVS
+  {
+    ~NVS() { }  // NOLINT
+    TestType value {};
+  };
+
+  struct VS
+  {
+    virtual ~VS() { }  // NOLINT
+    TestType value {};
+  };
+
+  class NVC
+  {
+public:
+    ~NVC() { }  // NOLINT
+    TestType value {};
+  };
+
+  class VC
+  {
+public:
+    virtual ~VC() { }  // NOLINT
+    TestType value {};
+  };
+
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVS>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVS const>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVS volatile>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVS const volatile>);
+
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVC>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVC const>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVC volatile>);
+  STATIC_REQUIRE_FALSE(has_virtual_destructor_v<NVC const volatile>);
+
+  STATIC_REQUIRE(has_virtual_destructor_v<VS>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VS const>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VS volatile>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VS const volatile>);
+
+  STATIC_REQUIRE(has_virtual_destructor_v<VC>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VC const>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VC volatile>);
+  STATIC_REQUIRE(has_virtual_destructor_v<VC const volatile>);
+}
