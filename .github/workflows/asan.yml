@@ -21,7 +21,7 @@ jobs:
         run: cmake -S . -B cmake-build-asan -D TOBANTEAUDIO_ETL_BUILD_ASAN=ON
 
       - name: dump config
-        run: cat cmake-build-asan/compile-commands.json
+        run: cat cmake-build-asan/compile_commands.json
 
       - name: cmake build
         run: cmake --build cmake-build-asan -- -j

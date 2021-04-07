@@ -21,7 +21,7 @@ jobs:
         run: cmake -S . -B cmake-build-ubsan -D TOBANTEAUDIO_ETL_BUILD_UBSAN=ON
 
       - name: dump config
-        run: cat cmake-build-ubsan/compile-commands.json
+        run: cat cmake-build-ubsan/compile_commands.json
 
       - name: cmake build
         run: cmake --build cmake-build-ubsan -- -j
