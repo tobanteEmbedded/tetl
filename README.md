@@ -1,61 +1,5 @@
 # TAETL - Embedded Template **Library**
 
-- [Quick Start](#quick-start)
-- [Design Goals](#design-goals)
-- [Usage](#usage)
-- [Status](#status)
-  - [Hosted](#hosted)
-  - [Freestanding](#freestanding)
-- [Project Integration](#project-integration)
-  - [Command Line / Makefile](#command-line---makefile)
-  - [CMake](#cmake)
-  - [PlatformIO](#platformio)
-- [Header Overview](#header-overview)
-- [Header Detail](#header-detail)
-
-It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that projects like
-static_vector already existed. My actual goal has turned into a mammoth project. A standard library for microcontrollers
-and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms
-work identically, pair and friend are available and containers like set, map and vector are also implemented.
-
-Here, however, the first clear differences already come to light. All containers work only with memory on the stack.
-This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
-RTTI are deactivated. This results in the problem that not all members of a container can be implemented. Any function
-that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If
-exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. All
-functions return pointers instead. It is the caller's responsibility to check if the return value is null.
-
-## Quick Start
-
-```sh
-git clone https://github.com/tobanteAudio/taetl.git
-```
-
-- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
-- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
-- [Examples](https://github.com/tobanteAudio/taetl/tree/main/examples)
-
-## Design Goals
-
-- 100% portable (no STL headers required, minimum of C headers)
-- Header only
-- C++17
-- Similar api to the STL
-- No dynamic memory
-- `constexpr` all the things
-- Easy desktop development (cmake)
-  - Stubs for external dependencies (FreeRTOS)
-- Experimental headers
-  - Strong types
-  - Networking (buffers, ntoh, ...)
-  - FreeRTOS Abstraction
-  - STM32 HAL
-  - DSP DSL via Template Meta Programming
-
-## Usage
-
-For detailed examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
-
 ## Status
 
 | **License**                                                                                                                 | **Issues**                                                                                                                     | **Lines of Code**                               |
@@ -83,6 +27,55 @@ For detailed examples look at the [examples](./examples) subdirectory or the tes
 | **Clang-Tidy**                                                                                                                                                            | **ASAN**                                                                                                                                                | **UBSAN**                                                                                                                                                  | **Coverage**                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | [![Clang-Tidy](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) |
+
+- [Status](#status)
+  - [Hosted](#hosted)
+  - [Freestanding](#freestanding)
+  - [Analysis](#analysis)
+- [Design Goals](#design-goals)
+- [Quick Start](#quick-start)
+- [Project Integration](#project-integration)
+  - [Command Line / Makefile](#command-line---makefile)
+  - [CMake](#cmake)
+  - [PlatformIO](#platformio)
+- [Header Overview](#header-overview)
+- [Header Detail](#header-detail)
+
+## Design Goals
+
+- 100% portable (no STL headers required, minimum of C headers)
+- Header only
+- C++17
+- Similar api to the STL
+- No dynamic memory
+- `constexpr` all the things
+- Easy desktop development (cmake)
+  - Stubs for external dependencies (FreeRTOS)
+- Experimental headers
+  - Strong types
+  - Networking (buffers, ntoh, ...)
+  - FreeRTOS Abstraction
+  - STM32 HAL
+  - DSP DSL via Template Meta Programming
+
+It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that projects like
+static_vector already existed. My actual goal has turned into a mammoth project. A standard library for microcontrollers
+and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms
+work identically, pair and friend are available and containers like set, map and vector are also implemented.
+
+Here, however, the first clear differences already come to light. All containers work only with memory on the stack.
+This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
+RTTI are deactivated. This results in the problem that not all members of a container can be implemented. Any function
+that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If
+exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. All
+functions return pointers instead. It is the caller's responsibility to check if the return value is null.
+
+## Quick Start
+
+- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
+- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
+
+For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
 
 ## Project Integration
 
@@ -160,7 +153,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 |            cwctype            |         Strings          |        :x:         |                   |
 |             deque             |        Containers        |        :x:         |       TODO        |
 |           exception           | Utility / Error Handling |        :x:         |                   |
-|           execution           |        Algorithms        |        :x:         |       TODO        |
+|           execution           |        Algorithms        |        :x:         |                   |
 |     [expected](#expected)     | Utility / Error Handling | :heavy_check_mark: | Not standard yet. |
 |          filesystem           |        Filesystem        |        :x:         |                   |
 |       [format](#format)       |         Strings          | :heavy_check_mark: |                   |
