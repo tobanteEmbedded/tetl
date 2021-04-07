@@ -1586,6 +1586,7 @@ TEMPLATE_TEST_CASE("type_traits: is_copy_constructible", "[type_traits]", bool,
 
   class CopyableC
   {
+public:
     TestType value {};
   };
 
@@ -1597,6 +1598,7 @@ TEMPLATE_TEST_CASE("type_traits: is_copy_constructible", "[type_traits]", bool,
 
   class NonCopyableC
   {
+public:
     NonCopyableC(NonCopyableC const&) = delete;  // NOLINT
     TestType value {};
   };
