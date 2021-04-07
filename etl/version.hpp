@@ -26,6 +26,8 @@ DAMAGE.
 #ifndef TAETL_VERSION_HPP
 #define TAETL_VERSION_HPP
 
+#include "etl/detail/intrinsics.hpp"
+
 #define TAETL_REVISION_MAJOR 0
 #define TAETL_REVISION_MINOR 3
 #define TAETL_REVISION_PATCH 0

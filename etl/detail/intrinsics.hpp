@@ -54,6 +54,10 @@ DAMAGE.
 #define TAETL_BUILTIN_INFINITY (__builtin_inff())
 #endif  // TAETL_BUILTIN_INFINITY
 
+#if not defined(TAETL_BUILTIN_VA_LIST)
+#define TAETL_BUILTIN_VA_LIST __builtin_va_list
+#endif  // TAETL_BUILTIN_VA_LIST
+
 #if not defined(TAETL_HAS_VIRTUAL_DESTRUCTOR)
 #define TAETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
 #endif  // TAETL_HAS_VIRTUAL_DESTRUCTOR

@@ -1,6 +1,12 @@
 #ifndef TAETL_CSTDARG_HPP
 #define TAETL_CSTDARG_HPP
 
+#include "etl/version.hpp"
+
+#if defined(TAETL_MSVC)
+#include <cstdarg>
+#endif
+
 namespace etl
 {
 /**
@@ -15,8 +21,11 @@ namespace etl
  *
  * https://en.cppreference.com/w/cpp/utility/variadic/va_list
  */
-using va_list = __builtin_va_list;
-
+#if not defined(TAETL_MSVC)
+using va_list = TAETL_BUILTIN_VA_LIST;
+#else
+using va_list = ::std::va_list;
+#endif
 }  // namespace etl
 
 #if not defined(va_start)
