@@ -1348,3 +1348,41 @@ TEMPLATE_TEST_CASE("type_traits: aligned_union", "[type_traits]", bool,
   STATIC_REQUIRE(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
   STATIC_REQUIRE(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
 }
+
+TEMPLATE_TEST_CASE("type_traits: is_swappable", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::is_swappable_v;
+
+  STATIC_REQUIRE(is_swappable_v<T&>);
+  STATIC_REQUIRE(is_swappable_v<T const&>);
+  STATIC_REQUIRE(is_swappable_v<T volatile&>);
+  STATIC_REQUIRE(is_swappable_v<T const volatile&>);
+
+  STATIC_REQUIRE(is_swappable_v<T*>);
+  STATIC_REQUIRE(is_swappable_v<T const*>);
+  STATIC_REQUIRE(is_swappable_v<T volatile*>);
+  STATIC_REQUIRE(is_swappable_v<T const volatile*>);
+
+  STATIC_REQUIRE(is_swappable_v<void*>);
+  STATIC_REQUIRE(is_swappable_v<void const*>);
+  STATIC_REQUIRE(is_swappable_v<void volatile*>);
+  STATIC_REQUIRE(is_swappable_v<void const volatile*>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_swappable_with", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::is_swappable_with_v;
+
+  STATIC_REQUIRE(is_swappable_with_v<T&, T&>);
+  STATIC_REQUIRE(is_swappable_with_v<T const&, T const&>);
+  STATIC_REQUIRE(is_swappable_with_v<T volatile&, T volatile&>);
+  STATIC_REQUIRE(is_swappable_with_v<T const volatile&, T const volatile&>);
+}
