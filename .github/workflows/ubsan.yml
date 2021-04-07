@@ -1,0 +1,30 @@
+name: UBSAN
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+
+      - name: download git submodules
+        run: git submodule update --recursive --init
+
+      - name: cmake configure
+        run: cmake -S . -B cmake-build-ubsan -D TOBANTEAUDIO_ETL_BUILD_UBSAN=ON
+
+      - name: dump config
+        run: cat cmake-build-ubsan/compile-commands.json
+
+      - name: cmake build
+        run: cmake --build cmake-build-ubsan -- -j
+
+      - name: run tests
+        run: cd cmake-build-ubsan; ctest; cd -

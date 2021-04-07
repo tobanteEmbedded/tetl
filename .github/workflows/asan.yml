@@ -1,0 +1,30 @@
+name: ASAN
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+
+      - name: download git submodules
+        run: git submodule update --recursive --init
+
+      - name: cmake configure
+        run: cmake -S . -B cmake-build-asan -D TOBANTEAUDIO_ETL_BUILD_ASAN=ON
+
+      - name: dump config
+        run: cat cmake-build-asan/compile-commands.json
+
+      - name: cmake build
+        run: cmake --build cmake-build-asan -- -j
+
+      - name: run tests
+        run: cd cmake-build-asan; ctest; cd -
