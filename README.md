@@ -140,7 +140,6 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 |     [concepts](#concepts)     |         Concepts         | :heavy_check_mark: |                   |
 |      condition_variable       |          Thread          |        :x:         |                   |
 |           coroutine           |        Coroutines        |        :x:         |                   |
-|         [crtp](#crtp)         |         Utility          | :heavy_check_mark: |   Not standard.   |
 |            csetjmp            |         Utility          |        :x:         |                   |
 |            csignal            |         Utility          |        :x:         |                   |
 |      [cstdarg](#cstdarg)      |         Utility          | :heavy_check_mark: |                   |
@@ -261,25 +260,25 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 
 | **Library** |           **Source**           |                 **Tests**                  | **Example** |                     **cppreference**                      |
 | :---------: | :----------------------------: | :----------------------------------------: | :---------: | :-------------------------------------------------------: |
-| Containers  | [cctype.hpp](./etl/cctype.hpp) | [test_cctype.cpp](./tests/test_cctype.cpp) |    TODO     | [cctype](https://en.cppreference.com/w/cpp/header/cctype) |
+|   Strings   | [cctype.hpp](./etl/cctype.hpp) | [test_cctype.cpp](./tests/test_cctype.cpp) |    TODO     | [cctype](https://en.cppreference.com/w/cpp/header/cctype) |
 
 ### cfloat
 
-| **Library** |           **Source**           |                 **Tests**                  | **Example** |                     **cppreference**                      |
-| :---------: | :----------------------------: | :----------------------------------------: | :---------: | :-------------------------------------------------------: |
-| Containers  | [cfloat.hpp](./etl/cfloat.hpp) | [test_cfloat.cpp](./tests/test_cfloat.cpp) |    TODO     | [cfloat](https://en.cppreference.com/w/cpp/header/cfloat) |
+|       **Library**        |           **Source**           |                 **Tests**                  | **Example** |                     **cppreference**                      |
+| :----------------------: | :----------------------------: | :----------------------------------------: | :---------: | :-------------------------------------------------------: |
+| Utility / Numeric Limits | [cfloat.hpp](./etl/cfloat.hpp) | [test_cfloat.cpp](./tests/test_cfloat.cpp) |    TODO     | [cfloat](https://en.cppreference.com/w/cpp/header/cfloat) |
 
 ### charconv
 
 | **Library** |             **Source**             |                   **Tests**                    | **Example** |                       **cppreference**                        |
 | :---------: | :--------------------------------: | :--------------------------------------------: | :---------: | :-----------------------------------------------------------: |
-| Containers  | [charconv.hpp](./etl/charconv.hpp) | [test_charconv.cpp](./tests/test_charconv.cpp) |    TODO     | [charconv](https://en.cppreference.com/w/cpp/header/charconv) |
+|   Strings   | [charconv.hpp](./etl/charconv.hpp) | [test_charconv.cpp](./tests/test_charconv.cpp) |    TODO     | [charconv](https://en.cppreference.com/w/cpp/header/charconv) |
 
 ### chrono
 
 | **Library** |           **Source**           |                 **Tests**                  |             **Example**             |                     **cppreference**                      |
 | :---------: | :----------------------------: | :----------------------------------------: | :---------------------------------: | :-------------------------------------------------------: |
-| Containers  | [chrono.hpp](./etl/chrono.hpp) | [test_chrono.cpp](./tests/test_chrono.cpp) | [chrono.cpp](./examples/chrono.cpp) | [chrono](https://en.cppreference.com/w/cpp/header/chrono) |
+|   Utility   | [chrono.hpp](./etl/chrono.hpp) | [test_chrono.cpp](./tests/test_chrono.cpp) | [chrono.cpp](./examples/chrono.cpp) | [chrono](https://en.cppreference.com/w/cpp/header/chrono) |
 
 ### climits
 
@@ -299,12 +298,6 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 | :---------: | :--------------------------------: | :--------------------------------------------: | :---------: | :-----------------------------------------------------------: |
 |  Concepts   | [concepts.hpp](./etl/concepts.hpp) | [test_concepts.cpp](./tests/test_concepts.cpp) |    TODO     | [concepts](https://en.cppreference.com/w/cpp/header/concepts) |
 
-### crtp
-
-| **Library** |         **Source**         |               **Tests**                | **Example** | cppreference |
-| :---------: | :------------------------: | :------------------------------------: | :---------: | :----------: |
-| Containers  | [crtp.hpp](./etl/crtp.hpp) | [test_crtp.cpp](./tests/test_crtp.cpp) |    TODO     |              |
-
 ### cstdarg
 
 | **Library** |            **Source**            |                  **Tests**                   | **Example** |                      **cppreference**                       |
@@ -319,15 +312,15 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 
 ### cstdint
 
-| **Library** |            **Source**            |                  **Tests**                   | **Example** |                      **cppreference**                       |
-| :---------: | :------------------------------: | :------------------------------------------: | :---------: | :---------------------------------------------------------: |
-|   Utility   | [cstdint.hpp](./etl/cstdint.hpp) | [test_cstdint.cpp](./tests/test_cstdint.cpp) |    TODO     | [cstdint](https://en.cppreference.com/w/cpp/header/cstdint) |
+|       **Library**        |            **Source**            |                  **Tests**                   | **Example** |                      **cppreference**                       |
+| :----------------------: | :------------------------------: | :------------------------------------------: | :---------: | :---------------------------------------------------------: |
+| Utility / Numeric Limits | [cstdint.hpp](./etl/cstdint.hpp) | [test_cstdint.cpp](./tests/test_cstdint.cpp) |    TODO     | [cstdint](https://en.cppreference.com/w/cpp/header/cstdint) |
 
 ### cstdio
 
-| **Library** |           **Source**           |                 **Tests**                  | **Example** |                     **cppreference**                      |
-| :---------: | :----------------------------: | :----------------------------------------: | :---------: | :-------------------------------------------------------: |
-| Containers  | [cstdio.hpp](./etl/cstdio.hpp) | [test_cstdio.cpp](./tests/test_cstdio.cpp) |    TODO     | [cstdio](https://en.cppreference.com/w/cpp/header/cstdio) |
+| **Library**  |           **Source**           |                 **Tests**                  | **Example** |                     **cppreference**                      |
+| :----------: | :----------------------------: | :----------------------------------------: | :---------: | :-------------------------------------------------------: |
+| Input/Output | [cstdio.hpp](./etl/cstdio.hpp) | [test_cstdio.cpp](./tests/test_cstdio.cpp) |    TODO     | [cstdio](https://en.cppreference.com/w/cpp/header/cstdio) |
 
 ### cstdlib
 
