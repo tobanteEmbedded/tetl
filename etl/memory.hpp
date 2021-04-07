@@ -677,9 +677,9 @@ class default_delete
   auto operator()(T* ptr) const noexcept -> void { delete ptr; }
 
   private:
-  static_assert(!etl::is_function<T>::value);
+  static_assert(!is_function_v<T>);
+  static_assert(!is_void_v<T>);
   static_assert(sizeof(T));
-  static_assert(!etl::is_void<T>::value);
 };
 
 template <typename T>
@@ -703,7 +703,7 @@ class default_delete<T[]>
 
   private:
   static_assert(sizeof(T));
-  static_assert(!etl::is_void<T>::value);
+  static_assert(not is_void_v<T>);
 };
 
 /**

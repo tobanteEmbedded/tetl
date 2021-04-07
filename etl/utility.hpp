@@ -46,21 +46,21 @@ namespace etl
  * constructors.
  */
 template <typename T>
-auto declval() noexcept -> etl::add_rvalue_reference_t<T>;  // NOLINT
+auto declval() noexcept -> add_rvalue_reference_t<T>;  // NOLINT
 
 /**
- * @brief etl::move is used to indicate that an object t may be "moved from",
+ * @brief move is used to indicate that an object t may be "moved from",
  * i.e. allowing the efficient transfer of resources from t to another object.
- * In particular, etl::move produces an xvalue expression that identifies its
+ * In particular, move produces an xvalue expression that identifies its
  * argument t. It is exactly equivalent to a static_cast to an rvalue reference
  * type.
  *
- * @return static_cast<typename etl::remove_reference<T>::type&&>(t)
+ * @return static_cast<remove_reference_t<T>&&>(t)
  */
 template <typename T>
-constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
+constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 {
-  return static_cast<typename etl::remove_reference<T>::type&&>(t);
+  return static_cast<remove_reference_t<T>&&>(t);
 }
 
 /**
@@ -74,7 +74,7 @@ constexpr auto move(T&& t) noexcept -> typename etl::remove_reference<T>::type&&
  * https://en.cppreference.com/w/cpp/utility/forward
  */
 template <typename T>
-constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
+constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
 {
   return static_cast<T&&>(param);
 }
@@ -90,7 +90,7 @@ constexpr auto forward(etl::remove_reference_t<T>& param) noexcept -> T&&
  * https://en.cppreference.com/w/cpp/utility/forward
  */
 template <typename T>
-constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
+constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 {
   return static_cast<T&&>(param);
 }
@@ -103,8 +103,8 @@ constexpr auto forward(etl::remove_reference_t<T>&& param) noexcept -> T&&
 template <typename T, typename U = T>
 [[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
 {
-  T oldValue = etl::move(obj);
-  obj        = etl::forward<U>(newValue);
+  T oldValue = move(obj);
+  obj        = forward<U>(newValue);
   return oldValue;
 }
 
@@ -112,7 +112,7 @@ template <typename T, typename U = T>
  * @brief Forms lvalue reference to const type of t.
  */
 template <typename T>
-[[nodiscard]] constexpr auto as_const(T& t) noexcept -> etl::add_const_t<T>&
+[[nodiscard]] constexpr auto as_const(T& t) noexcept -> add_const_t<T>&
 {
   return t;
 }
@@ -127,14 +127,20 @@ constexpr auto as_const(T const&&) -> void
 
 namespace detail
 {
+// clang-format off
 template <typename T>
 struct is_integer_and_not_char
-    : etl::integral_constant<
-        bool,
-        is_integral_v<
-          T> && (!is_same_v<T, bool> && !is_same_v<T, char> && !is_same_v<T, char16_t> && !is_same_v<T, char32_t> && !is_same_v<T, wchar_t>)>
+    : bool_constant<
+        is_integral_v<T>
+        && (!is_same_v<T, bool>
+        && !is_same_v<T, char>
+        && !is_same_v<T, char16_t>
+        && !is_same_v<T, char32_t>
+        && !is_same_v<T, wchar_t>)>
 {
 };
+
+// clang-format on
 
 template <typename T>
 inline constexpr auto is_integer_and_not_char_v
@@ -534,7 +540,7 @@ constexpr auto swap(pair<T1, T2>& lhs,
  */
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
-  -> etl::pair<etl::decay_t<T1>, etl::decay_t<T2>>
+  -> pair<decay_t<T1>, decay_t<T2>>
 {
   return {forward<T1>(t), forward<T2>(u)};
 }
@@ -544,8 +550,8 @@ template <typename T1, typename T2>
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <typename T1, typename T2>
-constexpr auto operator==(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
@@ -555,8 +561,8 @@ constexpr auto operator==(etl::pair<T1, T2> const& lhs,
  * lhs.first with rhs.first and lhs.second with rhs.second.
  */
 template <typename T1, typename T2>
-constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(lhs == rhs);
 }
@@ -567,8 +573,8 @@ constexpr auto operator!=(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator<(etl::pair<T1, T2> const& lhs,
-                         etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   if (lhs.first < rhs.first) { return true; }
   if (rhs.first < lhs.first) { return false; }
@@ -582,8 +588,8 @@ constexpr auto operator<(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(rhs < lhs);
 }
@@ -594,8 +600,8 @@ constexpr auto operator<=(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator>(etl::pair<T1, T2> const& lhs,
-                         etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return rhs < lhs;
 }
@@ -606,8 +612,8 @@ constexpr auto operator>(etl::pair<T1, T2> const& lhs,
  * elements.
  */
 template <typename T1, typename T2>
-constexpr auto operator>=(etl::pair<T1, T2> const& lhs,
-                          etl::pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(lhs < rhs);
 }
@@ -623,7 +629,7 @@ struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2>
 };
 
 /**
- * @brief The partial specializations of etl::tuple_element for pairs provide
+ * @brief The partial specializations of tuple_element for pairs provide
  * compile-time access to the types of the pair's elements, using tuple-like
  * syntax. The program is ill-formed if I >= 2.
  */

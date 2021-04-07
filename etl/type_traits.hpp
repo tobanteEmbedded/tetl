@@ -1409,20 +1409,19 @@ struct nothrow_constructible_impl<true, T[Size]>
 {
 };
 
-// TODO: Test in C++20 mode.
-//#if __cpp_aggregate_paren_init
-// template <typename T, size_t Size, typename Arg>
-// struct nothrow_constructible_impl<true, T[Size], Arg>
-//    : nothrow_constructible_impl<true, T, Arg>
-//{
-//};
-//
-// template <typename T, size_t Size, typename... Args>
-// struct nothrow_constructible_impl<true, T[Size], Args...>
-//    : meta_and<nothrow_constructible_impl<true, T, Args>...>
-//{
-//};
-//#endif
+#if defined(__cpp_aggregate_paren_init)
+template <typename T, size_t Size, typename Arg>
+struct nothrow_constructible_impl<true, T[Size], Arg>
+    : nothrow_constructible_impl<true, T, Arg>
+{
+};
+
+template <typename T, size_t Size, typename... Args>
+struct nothrow_constructible_impl<true, T[Size], Args...>
+    : meta_and<nothrow_constructible_impl<true, T, Args>...>
+{
+};
+#endif
 
 template <typename T, typename... Args>
 using is_nothrow_constructible_helper
@@ -2389,9 +2388,11 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
  */
 template <typename From, typename To>
 struct is_convertible
-    : bool_constant<(decltype(detail::test_returnable<To>(0))::value&& decltype(
-                      detail::test_nonvoid_convertible<From, To>(0))::value)
-                    || (is_void_v<From> && is_void_v<To>)>
+    : bool_constant<
+        (decltype(detail::test_returnable<To>(
+          0))::value&& decltype(detail::test_nonvoid_convertible<From,
+                                                                 To>(0))::value)
+        || (is_void_v<From> && is_void_v<To>)>
 {
 };
 

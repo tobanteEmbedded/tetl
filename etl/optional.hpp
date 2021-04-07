@@ -62,7 +62,7 @@ inline constexpr auto nullopt = etl::nullopt_t {{}};
 namespace detail
 {
 template <typename ValueType,
-          bool = etl::is_trivially_destructible<ValueType>::value>
+          bool = etl::is_trivially_destructible_v<ValueType>>
 struct optional_destruct_base;
 
 template <typename ValueType>
@@ -132,7 +132,7 @@ struct optional_destruct_base<ValueType, true>
   bool internal_has_value {false};
 };
 
-template <typename ValueType, bool = etl::is_reference<ValueType>::value>
+template <typename ValueType, bool = etl::is_reference_v<ValueType>>
 struct optional_storage_base : optional_destruct_base<ValueType>
 {
   using base_t     = optional_destruct_base<ValueType>;
@@ -201,7 +201,7 @@ struct optional_storage_base : optional_destruct_base<ValueType>
 };
 
 template <typename ValueType,
-          bool = etl::is_trivially_copy_constructible<ValueType>::value>
+          bool = etl::is_trivially_copy_constructible_v<ValueType>>
 struct optional_copy_base : optional_storage_base<ValueType>
 {
   using optional_storage_base<ValueType>::optional_storage_base;
@@ -228,7 +228,7 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType>
 };
 
 template <typename ValueType,
-          bool = etl::is_trivially_move_constructible<ValueType>::value>
+          bool = etl::is_trivially_move_constructible_v<ValueType>>
 struct optional_move_base : optional_copy_base<ValueType>
 {
   using optional_copy_base<ValueType>::optional_copy_base;
@@ -257,9 +257,9 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType>
 };
 
 template <typename ValueType,
-          bool = etl::is_trivially_destructible<ValueType>::value&&
-            etl::is_trivially_copy_constructible<ValueType>::value&&
-              etl::is_trivially_copy_assignable<ValueType>::value>
+          bool = etl::is_trivially_destructible_v<ValueType>&&
+            etl::is_trivially_copy_constructible_v<ValueType>&&
+              etl::is_trivially_copy_assignable_v<ValueType>>
 struct optional_copy_assign_base : optional_move_base<ValueType>
 {
   using optional_move_base<ValueType>::optional_move_base;
@@ -289,9 +289,9 @@ struct optional_copy_assign_base<ValueType, false>
 };
 
 template <typename ValueType,
-          bool = etl::is_trivially_destructible<ValueType>::value&&
-            etl::is_trivially_move_constructible<ValueType>::value&&
-              etl::is_trivially_move_assignable<ValueType>::value>
+          bool = etl::is_trivially_destructible_v<ValueType>&&
+            etl::is_trivially_move_constructible_v<ValueType>&&
+              etl::is_trivially_move_assignable_v<ValueType>>
 struct optional_move_assign_base : optional_copy_assign_base<ValueType>
 {
   using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
@@ -325,15 +325,15 @@ struct optional_move_assign_base<ValueType, false>
 
 template <typename ValueType>
 using optional_sfinae_ctor_base_t
-  = sfinae_ctor_base<etl::is_copy_constructible<ValueType>::value,
-                     etl::is_move_constructible<ValueType>::value>;
+  = sfinae_ctor_base<etl::is_copy_constructible_v<ValueType>,
+                     etl::is_move_constructible_v<ValueType>>;
 
 template <typename ValueType>
 using optional_sfinae_assign_base_t
-  = sfinae_assign_base<(etl::is_copy_constructible<ValueType>::value
-                        && etl::is_copy_assignable<ValueType>::value),
-                       (etl::is_move_constructible<ValueType>::value
-                        && etl::is_move_assignable<ValueType>::value)>;
+  = sfinae_assign_base<(etl::is_copy_constructible_v<
+                          ValueType> && etl::is_copy_assignable_v<ValueType>),
+                       (etl::is_move_constructible_v<
+                          ValueType> && etl::is_move_assignable_v<ValueType>)>;
 
 }  // namespace detail
 
@@ -344,15 +344,14 @@ class optional : private detail::optional_move_assign_base<ValueType>,
 {
   using base_type = detail::optional_move_assign_base<ValueType>;
 
-  static_assert(
-    !etl::is_same_v<etl::remove_cvref_t<ValueType>, etl::in_place_t>,
-    "instantiation of optional with in_place_t is ill-formed");
-  static_assert(!etl::is_same_v<etl::remove_cvref_t<ValueType>, etl::nullopt_t>,
+  static_assert(!is_same_v<remove_cvref_t<ValueType>, in_place_t>,
+                "instantiation of optional with in_place_t is ill-formed");
+  static_assert(!is_same_v<remove_cvref_t<ValueType>, nullopt_t>,
                 "instantiation of optional with nullopt_t is ill-formed");
   static_assert(
-    !etl::is_reference_v<ValueType>,
+    !is_reference_v<ValueType>,
     "instantiation of optional with a reference type is ill-formed");
-  static_assert(!etl::is_array_v<ValueType>,
+  static_assert(!is_array_v<ValueType>,
                 "instantiation of optional with an array type is ill-formed");
 
   public:
