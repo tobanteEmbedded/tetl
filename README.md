@@ -33,7 +33,7 @@ git clone https://github.com/tobanteAudio/taetl.git
 
 - [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
 - [API Reference](https://tobanteaudio.github.io/taetl/index.html)
-- [**Example**s](https://github.com/tobanteAudio/taetl/tree/main/examples)
+- [Examples](https://github.com/tobanteAudio/taetl/tree/main/examples)
 
 ## Design Goals
 
@@ -58,9 +58,9 @@ For detailed examples look at the [examples](./examples) subdirectory or the tes
 
 ## Status
 
-| **License**                                                                                                                 | **Issues**                                                                                                                     | **Code Coverage**                                                                                                            | **Clang-Tidy**                                                                                                                                                            | **Lines of Code**                                |
-| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg)](https://GitHub.com/tobanteAudio/taetl/issues/) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) | [![Clang-Tidy](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml) | [![](https://sloc.xyz/github/tobanteAudio/taetl) |
+| **License**                                                                                                                 | **Issues**                                                                                                                     | **Lines of Code**                               |
+| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg)](https://GitHub.com/tobanteAudio/taetl/issues/) | ![](https://sloc.xyz/github/tobanteAudio/taetl) |
 
 ### Hosted
 
@@ -77,6 +77,12 @@ For detailed examples look at the [examples](./examples) subdirectory or the tes
 | :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | **AVR GCC**  | [![AVR C++17](https://github.com/tobanteAudio/taetl/workflows/AVR%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22AVR+C%2B%2B17%22) | [![AVR C++20](https://github.com/tobanteAudio/taetl/workflows/AVR%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22AVR+C%2B%2B20%22) |
 | **ARM GCC**  | [![ARM C++17](https://github.com/tobanteAudio/taetl/workflows/ARM%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22ARM+C%2B%2B17%22) | [![ARM C++20](https://github.com/tobanteAudio/taetl/workflows/ARM%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22ARM+C%2B%2B20%22) |
+
+### Analysis
+
+| **Clang-Tidy**                                                                                                                                                            | **ASAN**                                                                                                                                                | **UBSAN**                                                                                                                                                  | **Coverage**                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [![Clang-Tidy](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) |
 
 ## Project Integration
 
