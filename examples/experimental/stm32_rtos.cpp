@@ -30,8 +30,8 @@ DAMAGE.
 #include "etl/experimental/rtos/delay.hpp"           // for delay, delay_until
 #include "etl/experimental/rtos/task.hpp"            // for once, create_task
 
-namespace rtos  = etl::rtos;
-namespace stm32 = etl::hardware::stm32;
+namespace rtos  = etl::experimental::rtos;
+namespace stm32 = etl::experimental::hardware::stm32;
 
 template <typename LoopType = rtos::forever>
 struct example_task

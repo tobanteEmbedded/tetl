@@ -29,9 +29,7 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 
-namespace etl
-{
-namespace net
+namespace etl::experimental::net
 {
 class const_buffer
 {
@@ -99,7 +97,6 @@ inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept
   return b + n;
 }
 
-}  // namespace net
-}  // namespace etl
+}  // namespace etl::experimental::net
 
 #endif  // TAETL_NET_BUFFER_CONST_HPP

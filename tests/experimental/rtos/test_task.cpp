@@ -28,7 +28,7 @@ DAMAGE.
 #define TAETL_RTOS_USE_STUBS
 #include "etl/experimental/rtos/task.hpp"
 
-namespace rtos = etl::rtos;
+namespace rtos = etl::experimental::rtos;
 
 template <typename LoopType = rtos::once>
 struct example_task

@@ -33,9 +33,7 @@ DAMAGE.
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl
-{
-namespace rtos
+namespace etl::experimental::rtos
 {
 inline auto delay(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
 
@@ -44,7 +42,6 @@ inline auto delay_until(etl::uint32_t previous, etl::uint32_t increment) -> void
   vTaskDelayUntil(&previous, increment);
 }
 
-}  // namespace rtos
-}  // namespace etl
+}  // namespace etl::experimental::rtos
 
 #endif  // TAETL_RTOS_DELAY_HPP

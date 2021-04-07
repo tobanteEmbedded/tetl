@@ -34,9 +34,7 @@ DAMAGE.
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl
-{
-namespace rtos
+namespace etl::experimental::rtos
 {
 template <typename ValueType, etl::uint32_t Size>
 class queue
@@ -99,7 +97,7 @@ class queue
   private:
   QueueHandle_t handle_ = nullptr;
 };
-}  // namespace rtos
-}  // namespace etl
+
+}  // namespace etl::experimental::rtos
 
 #endif  // TAETL_RTOS_QUEUE_HPP

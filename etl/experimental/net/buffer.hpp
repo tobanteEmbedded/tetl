@@ -29,9 +29,7 @@ DAMAGE.
 #include "etl/experimental/net/buffer_const.hpp"
 #include "etl/experimental/net/buffer_mutable.hpp"
 
-namespace etl
-{
-namespace net
+namespace etl::experimental::net
 {
 inline auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer
 {
@@ -42,7 +40,6 @@ inline auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
 {
   return const_buffer {data, size};
 }
-}  // namespace net
-}  // namespace etl
+}  // namespace etl::experimental::net
 
 #endif  // TAETL_NET_BUFFER_HPP

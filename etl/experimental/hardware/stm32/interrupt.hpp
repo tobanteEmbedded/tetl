@@ -29,7 +29,7 @@ DAMAGE.
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 
-namespace etl::hardware::stm32
+namespace etl::experimental::hardware::stm32
 {
 // EXAMPLE
 // extern isr::vector_t callbacks;
@@ -74,6 +74,6 @@ struct isr
     }
   }
 };
-}  // namespace etl::hardware::stm32
+}  // namespace etl::experimental::hardware::stm32
 
 #endif  // TAETL_HARDWARE_STM32_INTERRUPT_HPP

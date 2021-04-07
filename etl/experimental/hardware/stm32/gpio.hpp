@@ -29,7 +29,7 @@ DAMAGE.
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
-namespace etl::hardware::stm32
+namespace etl::experimental::hardware::stm32
 {
 enum class pin_number : etl::uint16_t
 {
@@ -111,6 +111,6 @@ struct port
   private:
   gpio_memory_layout memory_;
 };
-}  // namespace etl::hardware::stm32
+}  // namespace etl::experimental::hardware::stm32
 
 #endif  // TAETL_HARDWARE_STM32_GPIO_HPP

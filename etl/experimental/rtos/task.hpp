@@ -33,9 +33,7 @@ DAMAGE.
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl
-{
-namespace rtos
+namespace etl::experimental::rtos
 {
 /**
  * @brief Runs the task loop 0 times.
@@ -110,7 +108,7 @@ inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
  * tasks.
  */
 inline auto start_scheduler() -> void { vTaskStartScheduler(); }
-}  // namespace rtos
-}  // namespace etl
+
+}  // namespace etl::experimental::rtos
 
 #endif  // TAETL_RTOS_TASK_HPP

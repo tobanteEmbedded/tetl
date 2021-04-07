@@ -27,7 +27,7 @@ DAMAGE.
 
 #include "etl/experimental/hardware/mcp23017/mcp23017.hpp"
 
-using namespace etl::hardware;
+using namespace etl::experimental::hardware;
 
 struct driver
 {

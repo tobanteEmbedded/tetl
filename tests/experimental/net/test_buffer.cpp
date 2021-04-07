@@ -33,7 +33,7 @@ DAMAGE.
 TEST_CASE("experimental/net/mutable_buffer: construct empty",
           "[experimental][net]")
 {
-  auto const buffer = etl::net::mutable_buffer {};
+  auto const buffer = etl::experimental::net::mutable_buffer {};
   REQUIRE(buffer.data() == nullptr);
   REQUIRE(buffer.size() == 0);
 }
@@ -42,7 +42,7 @@ TEST_CASE("experimental/net/mutable_buffer: construct range",
           "[experimental][net]")
 {
   auto mem    = etl::array<char, 32> {};
-  auto buffer = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer = etl::experimental::net::make_buffer(mem.data(), mem.size());
   REQUIRE(mem.data() == buffer.data());
   REQUIRE(mem.size() == buffer.size());
 }
@@ -50,7 +50,7 @@ TEST_CASE("experimental/net/mutable_buffer: construct range",
 TEST_CASE("experimental/net/mutable_buffer: operator+=", "[experimental][net]")
 {
   auto mem    = etl::array<char, 32> {};
-  auto buffer = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer = etl::experimental::net::make_buffer(mem.data(), mem.size());
   buffer += 4;
   REQUIRE(mem.data() != buffer.data());
 }
@@ -58,7 +58,7 @@ TEST_CASE("experimental/net/mutable_buffer: operator+=", "[experimental][net]")
 TEST_CASE("experimental/net/mutable_buffer: operator+", "[experimental][net]")
 {
   auto mem    = etl::array<char, 32> {};
-  auto buffer = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer = etl::experimental::net::make_buffer(mem.data(), mem.size());
 
   WHEN("offset is on rhs")
   {
@@ -76,7 +76,7 @@ TEST_CASE("experimental/net/mutable_buffer: operator+", "[experimental][net]")
 TEST_CASE("experimental/net/const_buffer: construct empty",
           "[experimental][net]")
 {
-  auto const buffer = etl::net::const_buffer {};
+  auto const buffer = etl::experimental::net::const_buffer {};
   REQUIRE(buffer.data() == nullptr);
   REQUIRE(buffer.size() == 0);
 }
@@ -85,7 +85,7 @@ TEST_CASE("experimental/net/const_buffer: construct range",
           "[experimental][net]")
 {
   auto const mem = etl::array<char, 32> {};
-  auto buffer    = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer    = etl::experimental::net::make_buffer(mem.data(), mem.size());
   REQUIRE(mem.data() == buffer.data());
   REQUIRE(mem.size() == buffer.size());
 }
@@ -93,7 +93,7 @@ TEST_CASE("experimental/net/const_buffer: construct range",
 TEST_CASE("experimental/net/const_buffer: operator+=", "[experimental][net]")
 {
   auto const mem = etl::array<char, 32> {};
-  auto buffer    = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer    = etl::experimental::net::make_buffer(mem.data(), mem.size());
   buffer += 4;
   REQUIRE(mem.data() != buffer.data());
   REQUIRE(mem.size() - 4 == buffer.size());
@@ -102,7 +102,7 @@ TEST_CASE("experimental/net/const_buffer: operator+=", "[experimental][net]")
 TEST_CASE("experimental/net/const_buffer: operator+", "[experimental][net]")
 {
   auto const mem = etl::array<char, 32> {};
-  auto buffer    = etl::net::make_buffer(mem.data(), mem.size());
+  auto buffer    = etl::experimental::net::make_buffer(mem.data(), mem.size());
 
   WHEN("offset is on rhs")
   {

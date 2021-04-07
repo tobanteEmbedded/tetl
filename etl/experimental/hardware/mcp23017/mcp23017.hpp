@@ -29,7 +29,7 @@ DAMAGE.
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
-namespace etl::hardware::mcp23017
+namespace etl::experimental::hardware::mcp23017
 {
 // ports
 enum class port : etl::uint16_t
@@ -143,6 +143,6 @@ class device
     etl::ignore_unused(p, direction);
   }
 };
-}  // namespace etl::hardware::mcp23017
+}  // namespace etl::experimental::hardware::mcp23017
 
 #endif  // TAETL_HARDWARE_MCP23017_MCP23017_HPP

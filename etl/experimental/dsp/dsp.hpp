@@ -31,9 +31,7 @@ DAMAGE.
 #include "etl/tuple.hpp"
 #include "etl/utility.hpp"
 
-namespace etl
-{
-namespace dsp
+namespace etl::experimental::dsp
 {
 struct identity
 {
@@ -203,7 +201,6 @@ auto fork(T&&... val)
   return detail::fork_impl<T...> {etl::forward<T>(val)...};
 }
 
-}  // namespace dsp
-}  // namespace etl
+}  // namespace etl::experimental::dsp
 
 #endif  // TAETL_DSP_DSP_HPP

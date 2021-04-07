@@ -27,7 +27,7 @@ DAMAGE.
 #define TAETL_RTOS_USE_STUBS
 #include "etl/experimental/rtos/queue.hpp"
 
-namespace rtos = etl::rtos;
+namespace rtos = etl::experimental::rtos;
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,

@@ -28,9 +28,7 @@ DAMAGE.
 
 #include "etl/cstdint.hpp"
 
-namespace etl
-{
-namespace net
+namespace etl::experimental::net
 {
 template <typename T>
 constexpr auto ntoh(T) -> T = delete;
@@ -57,7 +55,6 @@ constexpr auto hton(uint8_t v) noexcept -> uint8_t { return v; }
 constexpr auto hton(uint16_t v) noexcept -> uint16_t { return ntoh(v); }
 constexpr auto hton(uint32_t v) noexcept -> uint32_t { return ntoh(v); }
 
-}  // namespace net
-}  // namespace etl
+}  // namespace etl::experimental::net
 
 #endif  // TAETL_NET_BYTE_ORDER_HPP

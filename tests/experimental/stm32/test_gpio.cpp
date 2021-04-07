@@ -28,7 +28,7 @@ DAMAGE.
 
 #include "etl/bitset.hpp"
 
-using namespace etl::hardware;
+using namespace etl::experimental::hardware;
 using register_bits = etl::bitset<32>;
 
 TEST_CASE("experimental/stm32: gpio", "[stm32][hardware][experimental]")
