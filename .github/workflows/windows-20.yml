@@ -23,7 +23,7 @@ jobs:
         run: cmake --build cmake-build-debug --config "Debug"
 
       - name: Run tests -- Debug
-        run: cd cmake-build-debug; ctest; cd -
+        run: cd cmake-build-debug; ctest -C Debug; cd -
 
       - name: CMake configure -- Release
         run: cmake -S . -B cmake-build-release -G "Visual Studio 16 2019" -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
@@ -32,5 +32,5 @@ jobs:
         run: cmake --build cmake-build-release --config "Release"
 
       - name: Run tests -- Release
-        run: cd cmake-build-release; ctest; cd -
+        run: cd cmake-build-release; ctest -C Release; cd -
 

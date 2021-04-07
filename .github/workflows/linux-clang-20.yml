@@ -27,7 +27,7 @@ jobs:
         run: cmake --build cmake-build-debug
 
       - name: Run tests -- Debug
-        run: cd ./cmake-build-debug; ctest; cd -
+        run: cd cmake-build-debug; ctest; cd -
 
       - name: CMake configure -- Release
         run: CC=clang-10 CXX=clang++-10 cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
@@ -36,4 +36,4 @@ jobs:
         run: cmake --build cmake-build-release
 
       - name: Run tests -- Release
-        run: cd ./cmake-build-release; ctest; cd -
+        run: cd cmake-build-release; ctest; cd -
