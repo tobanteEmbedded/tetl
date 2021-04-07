@@ -10,6 +10,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_charconv.cpp
     test_chrono.cpp
     test_cmath.cpp
+    test_cstdarg.cpp
     test_cstddef.cpp
     test_cstdint.cpp
     test_cstdio.cpp

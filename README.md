@@ -143,7 +143,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 |         [crtp](#crtp)         |         Utility          | :heavy_check_mark: |   Not standard.   |
 |            csetjmp            |         Utility          |        :x:         |                   |
 |            csignal            |         Utility          |        :x:         |                   |
-|            cstdarg            |         Utility          |        :x:         |       TODO        |
+|      [cstdarg](#cstdarg)      |         Utility          | :heavy_check_mark: |                   |
 |      [cstddef](#cstddef)      |         Utility          | :heavy_check_mark: |                   |
 |      [cstdint](#cstdint)      | Utility / Numeric Limits | :heavy_check_mark: |                   |
 |       [cstdio](#cstdio)       |       Input/Output       | :heavy_check_mark: |                   |
@@ -304,6 +304,12 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 | **Library** |         **Source**         |               **Tests**                | **Example** | cppreference |
 | :---------: | :------------------------: | :------------------------------------: | :---------: | :----------: |
 | Containers  | [crtp.hpp](./etl/crtp.hpp) | [test_crtp.cpp](./tests/test_crtp.cpp) |    TODO     |              |
+
+### cstdarg
+
+| **Library** |            **Source**            |                  **Tests**                   | **Example** |                      **cppreference**                       |
+| :---------: | :------------------------------: | :------------------------------------------: | :---------: | :---------------------------------------------------------: |
+|   Utility   | [cstdarg.hpp](./etl/cstdarg.hpp) | [test_cstdarg.cpp](./tests/test_cstdarg.cpp) |    TODO     | [cstdarg](https://en.cppreference.com/w/cpp/header/cstdarg) |
 
 ### cstddef
 
