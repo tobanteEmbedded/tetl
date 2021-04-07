@@ -1456,3 +1456,59 @@ public:
   STATIC_REQUIRE(has_virtual_destructor_v<VC volatile>);
   STATIC_REQUIRE(has_virtual_destructor_v<VC const volatile>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: is_copy_constructible", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
+{
+  using T = TestType;
+  using etl::is_copy_constructible_v;
+
+  STATIC_REQUIRE(is_copy_constructible_v<T&>);
+  STATIC_REQUIRE(is_copy_constructible_v<T const&>);
+  STATIC_REQUIRE(is_copy_constructible_v<T volatile&>);
+  STATIC_REQUIRE(is_copy_constructible_v<T const volatile&>);
+
+  struct CopyableS
+  {
+    TestType value {};
+  };
+
+  class CopyableC
+  {
+    TestType value {};
+  };
+
+  struct NonCopyableS
+  {
+    NonCopyableS(NonCopyableS const&) = delete;  // NOLINT
+    TestType value {};
+  };
+
+  class NonCopyableC
+  {
+    NonCopyableC(NonCopyableC const&) = delete;  // NOLINT
+    TestType value {};
+  };
+
+  STATIC_REQUIRE(is_copy_constructible_v<CopyableS>);
+  STATIC_REQUIRE(is_copy_constructible_v<CopyableS const>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<CopyableS volatile>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<CopyableS const volatile>);
+
+  STATIC_REQUIRE(is_copy_constructible_v<CopyableC>);
+  STATIC_REQUIRE(is_copy_constructible_v<CopyableC const>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<CopyableC volatile>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<CopyableC const volatile>);
+
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableS>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableS const>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableS volatile>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableS const volatile>);
+
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC const>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC volatile>);
+  STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC const volatile>);
+}
