@@ -1465,6 +1465,7 @@ TEMPLATE_TEST_CASE("type_traits: is_copy_constructible", "[type_traits]", bool,
   using T = TestType;
   using etl::is_copy_constructible_v;
 
+  STATIC_REQUIRE(is_copy_constructible_v<T>);
   STATIC_REQUIRE(is_copy_constructible_v<T&>);
   STATIC_REQUIRE(is_copy_constructible_v<T const&>);
   STATIC_REQUIRE(is_copy_constructible_v<T volatile&>);
@@ -1511,4 +1512,45 @@ TEMPLATE_TEST_CASE("type_traits: is_copy_constructible", "[type_traits]", bool,
   STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC const>);
   STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC volatile>);
   STATIC_REQUIRE_FALSE(is_copy_constructible_v<NonCopyableC const volatile>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_trivially_copy_constructible",
+                   "[type_traits]", bool, etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
+{
+  using T = TestType;
+  using etl::is_trivially_copy_constructible_v;
+
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<T>);
+
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<T*>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<T const*>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<T volatile*>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<T const volatile*>);
+
+  STATIC_REQUIRE_FALSE(is_trivially_copy_constructible_v<T&>);
+  STATIC_REQUIRE_FALSE(is_trivially_copy_constructible_v<T const&>);
+  STATIC_REQUIRE_FALSE(is_trivially_copy_constructible_v<T volatile&>);
+  STATIC_REQUIRE_FALSE(is_trivially_copy_constructible_v<T const volatile&>);
+
+  struct TCS
+  {
+  };
+
+  class TCC
+  {
+public:
+    TestType value;
+  };
+
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCS>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCS const>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCS volatile>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCS const volatile>);
+
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC const>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC volatile>);
+  STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC const volatile>);
 }
