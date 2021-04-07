@@ -1199,3 +1199,31 @@ TEMPLATE_TEST_CASE("type_traits: underlying_type", "[type_traits]", char, short,
   STATIC_REQUIRE(is_same_v<TestType, underlying_type_t<EnumStruct>>);
   STATIC_REQUIRE(is_same_v<TestType, underlying_type_t<EnumClass>>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: is_scoped_enum", "[type_traits]", char, short,
+                   int, long, unsigned, unsigned long)
+{
+  class SomeClass
+  {
+  };
+
+  enum CEnum : TestType
+  {
+  };
+
+  enum struct Es
+  {
+    oz
+  };
+
+  enum class Ec : TestType
+  {
+  };
+
+  STATIC_REQUIRE_FALSE(etl::is_scoped_enum_v<TestType>);
+  STATIC_REQUIRE_FALSE(etl::is_scoped_enum<SomeClass>::value);
+  STATIC_REQUIRE_FALSE(etl::is_scoped_enum<CEnum>::value);
+
+  STATIC_REQUIRE(etl::is_scoped_enum<Es>::value);
+  STATIC_REQUIRE(etl::is_scoped_enum_v<Ec>);
+}

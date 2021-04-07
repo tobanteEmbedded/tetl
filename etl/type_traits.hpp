@@ -2446,6 +2446,28 @@ struct underlying_type : detail::underlying_type_impl<T>
 template <typename T>
 using underlying_type_t = typename underlying_type<T>::type;
 
+template <typename T, bool = is_enum_v<T>>
+struct is_scoped_enum : false_type
+{
+};
+
+template <typename T>
+struct is_scoped_enum<T, true>
+    : bool_constant<!is_convertible_v<T, underlying_type_t<T>>>
+{
+};
+
+/**
+ * @brief Checks whether T is an scoped enumeration type. Provides the member
+ * constant value which is equal to true, if T is an scoped enumeration type.
+ * Otherwise, value is equal to false. The behavior of a program that adds
+ * specializations for is_scoped_enum or is_scoped_enum_v is undefined.
+ *
+ * https://en.cppreference.com/w/cpp/types/is_scoped_enum
+ */
+template <typename T>
+inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
+
 /**
  * @brief Detects whether the function call occurs within a constant-evaluated
  * context. Returns true if the evaluation of the call occurs within the
