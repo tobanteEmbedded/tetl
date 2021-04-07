@@ -239,7 +239,7 @@ struct IsFinal_A
 
 struct IsFinal_B
 {
-  virtual void foo();
+  virtual void foo();  // NOLINT
 };
 
 struct IsFinal_C final : IsFinal_B
@@ -721,6 +721,122 @@ TEMPLATE_TEST_CASE("type_traits: is_signed = false", "[type_traits]",
   STATIC_REQUIRE_FALSE(etl::is_signed<TestType>::value);
 }
 
+TEMPLATE_TEST_CASE("type_traits: is_bounded_array", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double, A, B, C)
+{
+  STATIC_REQUIRE(etl::is_bounded_array_v<TestType[1]>);
+  STATIC_REQUIRE(etl::is_bounded_array_v<TestType[2]>);
+  STATIC_REQUIRE(etl::is_bounded_array_v<TestType[64]>);
+
+  STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType>);
+  STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType>);
+  STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType*>);
+  STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType[]>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_unbounded_array", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double, A, B, C)
+{
+  STATIC_REQUIRE(etl::is_unbounded_array_v<TestType[]>);
+
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType>);
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType*>);
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType&>);
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[1]>);
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[2]>);
+  STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[64]>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_constructible", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double, A, B, C)
+{
+  STATIC_REQUIRE(etl::is_constructible_v<TestType>);
+  STATIC_REQUIRE(etl::is_constructible_v<TestType*>);
+  STATIC_REQUIRE(etl::is_constructible_v<TestType, TestType&>);
+  STATIC_REQUIRE(etl::is_constructible_v<TestType, TestType const&>);
+
+  STATIC_REQUIRE_FALSE(etl::is_constructible_v<TestType&>);
+  STATIC_REQUIRE_FALSE(etl::is_constructible_v<TestType const&>);
+
+  class Foo
+  {
+    TestType v1;  // NOLINT
+    double v2;    // NOLINT
+
+public:
+    Foo(TestType n) : v1(n), v2() { }
+    Foo(TestType n, double f) noexcept : v1(n), v2(f) { }
+  };
+
+  STATIC_REQUIRE(etl::is_constructible_v<Foo, TestType>);
+  STATIC_REQUIRE(etl::is_constructible_v<Foo, TestType, double>);
+  STATIC_REQUIRE_FALSE(etl::is_constructible_v<Foo, TestType, struct S>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_nothrow_constructible", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double, A, B, C)
+{
+  using etl::is_nothrow_constructible_v;
+
+  STATIC_REQUIRE(is_nothrow_constructible_v<TestType>);
+  STATIC_REQUIRE(is_nothrow_constructible_v<TestType*>);
+  STATIC_REQUIRE(is_nothrow_constructible_v<TestType, TestType&>);
+  STATIC_REQUIRE(is_nothrow_constructible_v<TestType, TestType const&>);
+
+  STATIC_REQUIRE_FALSE(is_nothrow_constructible_v<TestType&>);
+  STATIC_REQUIRE_FALSE(is_nothrow_constructible_v<TestType const&>);
+
+  class Foo
+  {
+    TestType v1;  // NOLINT
+    double v2;    // NOLINT
+
+public:
+    Foo(TestType n) : v1(n), v2() { }
+    Foo(TestType n, double f) noexcept : v1(n), v2(f) { }
+  };
+
+  STATIC_REQUIRE(is_nothrow_constructible_v<Foo, TestType, double>);
+  STATIC_REQUIRE_FALSE(is_nothrow_constructible_v<Foo, TestType>);
+}
+
+TEMPLATE_TEST_CASE("type_traits: is_trivially_constructible", "[type_traits]",
+                   etl::uint8_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+                   etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t, float,
+                   double, long double, A, B, C)
+{
+  using etl::is_trivially_constructible_v;
+
+  STATIC_REQUIRE(is_trivially_constructible_v<TestType>);
+  STATIC_REQUIRE(is_trivially_constructible_v<TestType*>);
+  STATIC_REQUIRE(is_trivially_constructible_v<TestType, TestType&>);
+  STATIC_REQUIRE(is_trivially_constructible_v<TestType, TestType const&>);
+
+  STATIC_REQUIRE_FALSE(is_trivially_constructible_v<TestType&>);
+  STATIC_REQUIRE_FALSE(is_trivially_constructible_v<TestType const&>);
+
+  class Foo
+  {
+    TestType v1;  // NOLINT
+    double v2;    // NOLINT
+
+public:
+    Foo(TestType n) : v1(n), v2() { }
+    Foo(TestType n, double f) noexcept : v1(n), v2(f) { }
+  };
+
+  STATIC_REQUIRE_FALSE(is_trivially_constructible_v<Foo, TestType, double>);
+  STATIC_REQUIRE_FALSE(is_trivially_constructible_v<Foo, TestType>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: alignment_of = 1", "[type_traits]",
                    etl::uint8_t, etl::int8_t, char)
 {
@@ -738,12 +854,13 @@ TEMPLATE_TEST_CASE("type_traits: remove_volatile", "[type_traits]",
                    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
                    float, double, long double)
 {
+  using T = TestType;
   using etl::is_same_v;
   using etl::remove_volatile_t;
-  STATIC_REQUIRE(is_same_v<remove_volatile_t<TestType const>, TestType const>);
-  STATIC_REQUIRE(is_same_v<remove_volatile_t<TestType volatile>, TestType>);
-  STATIC_REQUIRE(
-    is_same_v<remove_volatile_t<TestType const volatile>, TestType const>);
+
+  STATIC_REQUIRE(is_same_v<remove_volatile_t<T const>, T const>);
+  STATIC_REQUIRE(is_same_v<remove_volatile_t<T volatile>, T>);
+  STATIC_REQUIRE(is_same_v<remove_volatile_t<T const volatile>, T const>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: remove_const", "[type_traits]", etl::uint8_t,
@@ -751,13 +868,13 @@ TEMPLATE_TEST_CASE("type_traits: remove_const", "[type_traits]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using T = TestType;
   using etl::is_same_v;
   using etl::remove_const_t;
-  STATIC_REQUIRE(is_same_v<remove_const_t<TestType const>, TestType>);
-  STATIC_REQUIRE(
-    is_same_v<remove_const_t<TestType volatile>, TestType volatile>);
-  STATIC_REQUIRE(
-    is_same_v<remove_const_t<TestType const volatile>, TestType volatile>);
+
+  STATIC_REQUIRE(is_same_v<remove_const_t<T const>, T>);
+  STATIC_REQUIRE(is_same_v<remove_const_t<T volatile>, T volatile>);
+  STATIC_REQUIRE(is_same_v<remove_const_t<T const volatile>, T volatile>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: remove_cv", "[type_traits]", etl::uint8_t,
@@ -767,6 +884,7 @@ TEMPLATE_TEST_CASE("type_traits: remove_cv", "[type_traits]", etl::uint8_t,
 {
   using etl::is_same_v;
   using etl::remove_cv_t;
+
   STATIC_REQUIRE(is_same_v<remove_cv_t<TestType const>, TestType>);
   STATIC_REQUIRE(is_same_v<remove_cv_t<TestType volatile>, TestType>);
   STATIC_REQUIRE(is_same_v<remove_cv_t<TestType const volatile>, TestType>);
@@ -779,6 +897,7 @@ TEMPLATE_TEST_CASE("type_traits: remove_cvref", "[type_traits]", etl::uint8_t,
 {
   using etl::is_same_v;
   using etl::remove_cvref_t;
+
   STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType>, TestType>);
   STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType&>, TestType>);
   STATIC_REQUIRE(is_same_v<remove_cvref_t<TestType&&>, TestType>);
@@ -914,14 +1033,14 @@ TEMPLATE_TEST_CASE("type_traits: add_const", "[type_traits]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using T = TestType;
   using etl::add_const_t;
   using etl::is_same_v;
-  STATIC_REQUIRE(is_same_v<add_const_t<TestType>, TestType const>);
-  STATIC_REQUIRE(is_same_v<add_const_t<TestType const>, TestType const>);
-  STATIC_REQUIRE(
-    is_same_v<add_const_t<TestType volatile>, TestType const volatile>);
-  STATIC_REQUIRE(
-    is_same_v<add_const_t<TestType const volatile>, TestType const volatile>);
+
+  STATIC_REQUIRE(is_same_v<add_const_t<T>, T const>);
+  STATIC_REQUIRE(is_same_v<add_const_t<T const>, T const>);
+  STATIC_REQUIRE(is_same_v<add_const_t<T volatile>, T const volatile>);
+  STATIC_REQUIRE(is_same_v<add_const_t<T const volatile>, T const volatile>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: add_volatile", "[type_traits]", etl::uint8_t,
@@ -929,15 +1048,14 @@ TEMPLATE_TEST_CASE("type_traits: add_volatile", "[type_traits]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
+  using T = TestType;
   using etl::add_volatile_t;
   using etl::is_same_v;
-  STATIC_REQUIRE(is_same_v<add_volatile_t<TestType>, TestType volatile>);
-  STATIC_REQUIRE(
-    is_same_v<add_volatile_t<TestType const>, TestType const volatile>);
-  STATIC_REQUIRE(
-    is_same_v<add_volatile_t<TestType volatile>, TestType volatile>);
-  STATIC_REQUIRE(is_same_v<add_volatile_t<TestType const volatile>,
-                           TestType const volatile>);
+
+  STATIC_REQUIRE(is_same_v<add_volatile_t<T>, T volatile>);
+  STATIC_REQUIRE(is_same_v<add_volatile_t<T const>, T const volatile>);
+  STATIC_REQUIRE(is_same_v<add_volatile_t<T volatile>, T volatile>);
+  STATIC_REQUIRE(is_same_v<add_volatile_t<T const volatile>, T const volatile>);
 }
 
 TEST_CASE("type_traits: conditional", "[type_traits]")
@@ -966,12 +1084,9 @@ TEST_CASE("type_traits: conjunction", "[type_traits]")
   STATIC_REQUIRE(conjunction_v<is_same<short, short>, is_same<float, float>>);
   STATIC_REQUIRE(conjunction_v<is_same<int, int>, is_same<double, double>>);
 
-  STATIC_REQUIRE_FALSE(
-    conjunction_v<is_same<float, int>, is_same<short, short>>);
-  STATIC_REQUIRE_FALSE(
-    conjunction_v<is_same<int, short>, is_same<float, float>>);
-  STATIC_REQUIRE_FALSE(
-    conjunction_v<is_same<int, int>, is_same<double, float>>);
+  STATIC_REQUIRE_FALSE(conjunction_v<is_same<float, int>, is_same<char, char>>);
+  STATIC_REQUIRE_FALSE(conjunction_v<is_same<int, short>, is_same<char, char>>);
+  STATIC_REQUIRE_FALSE(conjunction_v<is_same<int, int>, is_same<char, float>>);
 }
 
 TEST_CASE("type_traits: disjunction", "[type_traits]")
@@ -987,11 +1102,9 @@ TEST_CASE("type_traits: disjunction", "[type_traits]")
   STATIC_REQUIRE(disjunction_v<is_same<int, short>, is_same<float, float>>);
   STATIC_REQUIRE(disjunction_v<is_same<int, int>, is_same<double, float>>);
 
-  STATIC_REQUIRE_FALSE(
-    disjunction_v<is_same<float, int>, is_same<short, double>>);
+  STATIC_REQUIRE_FALSE(disjunction_v<is_same<char, int>, is_same<short, char>>);
   STATIC_REQUIRE_FALSE(disjunction_v<is_same<int, short>, is_same<float, int>>);
-  STATIC_REQUIRE_FALSE(
-    disjunction_v<is_same<bool, int>, is_same<double, float>>);
+  STATIC_REQUIRE_FALSE(disjunction_v<is_same<bool, int>, is_same<char, float>>);
 }
 
 TEST_CASE("type_traits: negation", "[type_traits]")
@@ -1021,67 +1134,60 @@ TEMPLATE_TEST_CASE("type_traits: rank", "[type_traits]", bool, etl::uint8_t,
 
 TEST_CASE("type_traits: make_signed", "[type_traits]")
 {
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<int8_t>, int8_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<int16_t>, int16_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<int32_t>, int32_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<int64_t>, int64_t>);
+  using etl::is_same_v;
+  using etl::make_signed_t;
 
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<uint8_t>, int8_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<uint16_t>, int16_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<uint32_t>, int32_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<uint64_t>, int64_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<int8_t>, int8_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<int16_t>, int16_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<int32_t>, int32_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<int64_t>, int64_t>);
 
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<signed char>, signed char>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<short>, signed short>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<int>, signed int>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<long>, signed long>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_signed_t<long long>, signed long long>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<uint8_t>, int8_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<uint16_t>, int16_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<uint32_t>, int32_t>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<uint64_t>, int64_t>);
 
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_signed_t<unsigned char>, signed char>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_signed_t<unsigned short>, signed short>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_signed_t<unsigned int>, signed int>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_signed_t<unsigned long>, signed long>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_signed_t<unsigned long long>, long long>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<signed char>, signed char>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<short>, short>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<int>, int>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<long>, long>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<long long>, long long>);
+
+  STATIC_REQUIRE(is_same_v<make_signed_t<unsigned char>, signed char>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<unsigned short>, short>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<unsigned int>, int>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<unsigned long>, long>);
+  STATIC_REQUIRE(is_same_v<make_signed_t<unsigned long long>, long long>);
 }
 
 TEST_CASE("type_traits: make_unsigned", "[type_traits]")
 {
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int8_t>, uint8_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int16_t>, uint16_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int32_t>, uint32_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<int64_t>, uint64_t>);
+  using etl::is_same_v;
+  using etl::make_unsigned_t;
 
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint8_t>, uint8_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint16_t>, uint16_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint32_t>, uint32_t>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<uint64_t>, uint64_t>);
+  // clang-format off
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<int8_t>, uint8_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<int16_t>, uint16_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<int32_t>, uint32_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<int64_t>, uint64_t>);
 
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<signed char>, unsigned char>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<signed short>, unsigned short>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<signed int>, unsigned int>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<signed long>, unsigned long>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<signed long long>, unsigned long long>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint8_t>, uint8_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint16_t>, uint16_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint32_t>, uint32_t>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint64_t>, uint64_t>);
 
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<unsigned char>, unsigned char>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<unsigned short>, unsigned short>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<unsigned int>, unsigned int>);
-  STATIC_REQUIRE(
-    etl::is_same_v<etl::make_unsigned_t<unsigned long>, unsigned long>);
-  STATIC_REQUIRE(etl::is_same_v<etl::make_unsigned_t<unsigned long long>,
-                                unsigned long long>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<signed char>, unsigned char>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<short>, unsigned short>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<int>, unsigned int>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<long>, unsigned long>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<long long>, unsigned long long>);
+
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned char>, unsigned char>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned short>, unsigned short>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned int>, unsigned int>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long>, unsigned long>);
+  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long long>, unsigned long long>);
+  // clang-format on
 }
 
 namespace
