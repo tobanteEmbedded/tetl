@@ -1,5 +1,18 @@
 # TAETL - Embedded Template Library
 
+- [Status](#status)
+  - [Hosted](#hosted)
+  - [Freestanding](#freestanding)
+- [Quick Start](#quick-start)
+- [Design Goals](#design-goals)
+- [Usage](#usage)
+- [Project Integration](#project-integration)
+  - [Command Line / Makefile](#command-line---makefile)
+  - [CMake](#cmake)
+  - [PlatformIO](#platformio)
+- [Header Overview](#header-overview)
+- [Header Detail](#header-detail)
+
 It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that projects like static_vector already existed. My actual goal has turned into a mammoth project. A standard library for microcontrollers and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms work identically, pair and friend are available and containers like set, map and vector are also implemented.
 
 Here, however, the first clear differences already come to light. All containers work only with memory on the stack. This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and RTTI are deactivated. This results in the problem that not all members of a container can be implemented. Any function that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. All functions return pointers instead. It is the caller's responsibility to check if the return value is null.
