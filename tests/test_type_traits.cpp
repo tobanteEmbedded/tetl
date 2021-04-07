@@ -1333,3 +1333,18 @@ TEMPLATE_TEST_CASE("type_traits: is_scoped_enum", "[type_traits]", char, short,
   STATIC_REQUIRE(etl::is_scoped_enum<Es>::value);
   STATIC_REQUIRE(etl::is_scoped_enum_v<Ec>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: aligned_union", "[type_traits]", bool,
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double)
+{
+  using T = TestType;
+
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<0, char>) == 1);
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<2, char>) == 2);
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<2, char[3]>) == 3);
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<3, char[4]>) == 4);
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<1, char, T, double>) == 8);
+  STATIC_REQUIRE(sizeof(etl::aligned_union_t<12, char, T, double>) == 16);
+}
