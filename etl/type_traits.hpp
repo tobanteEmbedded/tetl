@@ -668,8 +668,7 @@ struct is_integral_helper<unsigned long long> : ::etl::true_type
 
 // is_integral
 template <typename Type>
-struct is_integral
-    : detail::is_integral_helper<typename remove_cv<Type>::type>::type
+struct is_integral : detail::is_integral_helper<remove_cv_t<Type>>::type
 {
 };
 
@@ -1406,7 +1405,7 @@ struct nothrow_constructible_impl<true, T> : bool_constant<noexcept(T())>
 
 template <typename T, size_t Size>
 struct nothrow_constructible_impl<true, T[Size]>
-    : bool_constant<noexcept(typename remove_all_extents<T>::type())>
+    : bool_constant<noexcept(remove_all_extents_t<T>())>
 {
 };
 
@@ -1651,7 +1650,7 @@ struct is_destructible_safe;
 
 template <typename T>
 struct is_destructible_safe<T, false, false>
-    : is_destructible_impl<typename ::etl::remove_all_extents<T>::type>::type
+    : is_destructible_impl<typename ::etl::remove_all_extents_t<T>>::type
 {
 };
 
@@ -1731,7 +1730,7 @@ struct is_nothrow_destructible_helper<true, Type>
  */
 template <typename Type>
 struct is_nothrow_destructible
-    : detail::is_nothrow_destructible_helper<is_destructible<Type>::value, Type>
+    : detail::is_nothrow_destructible_helper<is_destructible_v<Type>, Type>
 {
 };
 
@@ -2241,9 +2240,8 @@ auto test_pre_is_base_of(int)
 template <typename Base, typename Derived>
 struct is_base_of
     : bool_constant<
-        is_class<Base>::value
-        && is_class<Derived>::value&& decltype(detail::test_pre_is_base_of<
-                                               Base, Derived>(0))::value>
+        is_class_v<
+          Base> and is_class_v<Derived>and decltype(detail::test_pre_is_base_of<Base, Derived>(0))::value>
 {
 };
 
@@ -2391,11 +2389,9 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
  */
 template <typename From, typename To>
 struct is_convertible
-    : bool_constant<
-        (decltype(detail::test_returnable<To>(
-          0))::value&& decltype(detail::test_nonvoid_convertible<From,
-                                                                 To>(0))::value)
-        || (is_void_v<From> && is_void_v<To>)>
+    : bool_constant<(decltype(detail::test_returnable<To>(0))::value&& decltype(
+                      detail::test_nonvoid_convertible<From, To>(0))::value)
+                    || (is_void_v<From> && is_void_v<To>)>
 {
 };
 
