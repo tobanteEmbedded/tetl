@@ -2430,6 +2430,96 @@ struct is_convertible
 template <typename From, typename To>
 inline constexpr bool is_convertible_v = is_convertible<From, To>::value;
 
+namespace detail
+{
+template <typename T>
+constexpr auto xforward(remove_reference_t<T>&& param) noexcept -> T&&
+{
+  return static_cast<T&&>(param);
+}
+
+template <class T>
+struct is_reference_wrapper : ::etl::false_type
+{
+};
+
+// TODO: Enable once reference_wrapper is implemented.
+// template <class U>
+// struct is_reference_wrapper<::etl::reference_wrapper<U>> : ::etl::true_type
+// {
+// };
+
+template <class T>
+struct invoke_impl
+{
+  template <class F, class... Args>
+  static auto call(F&& f, Args&&... args)
+    -> decltype(xforward<F>(f)(xforward<Args>(args)...));
+};
+
+template <typename B, typename MT>
+struct invoke_impl<MT B::*>
+{
+  template <typename T, typename Td = ::etl::decay_t<T>,
+            typename = ::etl::enable_if_t<::etl::is_base_of_v<B, Td>>>
+  static auto get(T&& t) -> T&&;
+
+  template <typename T, typename Td = ::etl::decay_t<T>,
+            typename = ::etl::enable_if_t<is_reference_wrapper<Td>::value>>
+  static auto get(T&& t) -> decltype(t.get());
+
+  template <typename T, typename Td = ::etl::decay_t<T>,
+            typename = ::etl::enable_if_t<!::etl::is_base_of_v<B, Td>>,
+            typename = ::etl::enable_if_t<!is_reference_wrapper<Td>::value>>
+  static auto get(T&& t) -> decltype(*xforward<T>(t));
+
+  template <typename T, typename... Args, typename MT1,
+            typename = ::etl::enable_if_t<::etl::is_function_v<MT1>>>
+  static auto call(MT1 B::*pmf, T&& t, Args&&... args)
+    -> decltype((invoke_impl::get(xforward<T>(t))
+                 .*pmf)(xforward<Args>(args)...));
+
+  template <typename T>
+  static auto call(MT B::*pmd, T&& t)
+    -> decltype(invoke_impl::get(xforward<T>(t)).*pmd);
+};
+
+template <typename F, typename... Args, typename Fd = ::etl::decay_t<F>>
+auto INVOKE(F&& f, Args&&... args)
+  -> decltype(invoke_impl<Fd>::call(xforward<F>(f), xforward<Args>(args)...));
+
+template <typename AlwaysVoid, typename, typename...>
+struct invoke_result
+{
+};
+template <typename F, typename... Args>
+struct invoke_result<decltype(void(detail::INVOKE(::etl::declval<F>(),
+                                                  ::etl::declval<Args>()...))),
+                     F, Args...>
+{
+  using type
+    = decltype(detail::INVOKE(::etl::declval<F>(), ::etl::declval<Args>()...));
+};
+}  // namespace detail
+
+/**
+ * @brief Deduces the return type of an INVOKE expression at compile time.
+ *
+ * @details F and all types in ArgTypes can be any complete type, array of
+ * unknown bound, or (possibly cv-qualified) void. The behavior of a program
+ * that adds specializations for any of the templates described on this page is
+ * undefined. This implementation is copied from cppreference.com:
+ *
+ * https://en.cppreference.com/w/cpp/types/result_of
+ */
+template <typename F, typename... ArgTypes>
+struct invoke_result : detail::invoke_result<void, F, ArgTypes...>
+{
+};
+
+template <typename F, typename... ArgTypes>
+using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
+
 /**
  * @brief Provides the nested type type, which is a trivial standard-layout type
  * suitable for use as uninitialized storage for any object whose size is at
