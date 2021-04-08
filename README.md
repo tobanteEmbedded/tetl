@@ -367,7 +367,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/cstdint.hpp`](./etl/cstdint.hpp)
 - **Tests:** [test_cstdint.cpp](./tests/test_cstdint.cpp)
 - **Example:** TODO
-- **Progress:** TODO
+- **Progress:** [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)
 - **Changes:**
   - None
 
