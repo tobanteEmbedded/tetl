@@ -188,7 +188,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 |             regex             |   Regular Expressions    |        :x:         |                                                                                                                        |
 |        [ratio](#ratio)        |         Numeric          | :heavy_check_mark: |    [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)    |
 |       scoped_allocator        | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
-|  [scope_guard](#scope_guard)  |         Utility          | :heavy_check_mark: |                                                                                                                        |
+|        [scope](#scope)        |         Utility          | :heavy_check_mark: |                                                                                                                        |
 |           semaphore           |          Thread          |        :x:         |                                                                                                                        |
 |        source_location        |         Utility          |        :x:         |                                                                                                                        |
 |          [set](#set)          |        Containers        | :heavy_check_mark: |     [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)      |
@@ -551,11 +551,11 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Changes:**
   - TODO
 
-### scope_guard
+### scope
 
 - **Library:** Utility
-- **Include:** [`etl/scope_guard.hpp`](./etl/scope_guard.hpp)
-- **Tests:** [test_scope_guard.cpp](./tests/test_scope_guard.cpp)
+- **Include:** [`etl/scope.hpp`](./etl/scope.hpp)
+- **Tests:** [test_scope.cpp](./tests/test_scope.cpp)
 - **Example:** TODO
 - **Progress:** TODO
 - **Changes:**

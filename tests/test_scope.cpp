@@ -25,9 +25,9 @@ DAMAGE.
 
 #include "catch2/catch_template_test_macros.hpp"
 
-#include "etl/scope_guard.hpp"
+#include "etl/scope.hpp"
 
-TEST_CASE("scope_guard: scope_exit", "[scope_guard]")
+TEST_CASE("scope: scope_exit", "[scope]")
 {
   SECTION("single")
   {

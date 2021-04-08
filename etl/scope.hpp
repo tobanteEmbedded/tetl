@@ -23,8 +23,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#ifndef TAETL_SCOPE_GUARD_HPP
-#define TAETL_SCOPE_GUARD_HPP
+#ifndef TAETL_SCOPE_HPP
+#define TAETL_SCOPE_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/type_traits.hpp"
@@ -88,4 +88,4 @@ template <typename FuncT>
 scope_exit(FuncT) -> scope_exit<etl::decay_t<FuncT>>;
 }  // namespace etl
 
-#endif  // TAETL_SCOPE_GUARD_HPP
+#endif  // TAETL_SCOPE_HPP

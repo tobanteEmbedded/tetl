@@ -30,7 +30,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     test_numeric.cpp
     test_optional.cpp
     test_ratio.cpp
-    test_scope_guard.cpp
+    test_scope.cpp
     test_set.cpp
     test_span.cpp
     test_stack.cpp
