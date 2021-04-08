@@ -457,7 +457,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/iterator.hpp`](./etl/iterator.hpp)
 - **Tests:** [test_iterator.cpp](./tests/test_iterator.cpp)
 - **Example:** TODO
-- **Progress:** [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1722716093)
 - **Changes:**
   - TODO
 
@@ -467,7 +467,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/limits.hpp`](./etl/limits.hpp)
 - **Tests:** [test_limits.cpp](./tests/test_limits.cpp)
 - **Example:** TODO
-- **Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1966217100)
 - **Changes:**
   - None
 
@@ -477,7 +477,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/map.hpp`](./etl/map.hpp)
 - **Tests:** [test_map.cpp](./tests/test_map.cpp)
 - **Example:** [map.cpp](./examples/map.cpp)
-- **Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1845210258)
 - **Changes:**
   - Renamed `map` to `static_map`. Fixed compile-time capacity.
 
@@ -487,7 +487,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/memory.hpp`](./etl/memory.hpp)
 - **Tests:** [test_memory.cpp](./tests/test_memory.cpp)
 - **Example:** [memory.cpp](./examples/memory.cpp)
-- **Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1321444012)
 - **Changes:**
   - Non-standard class templates `small_ptr` (compressed pointer) & `pointer_int_pair` (pointer + integer) are provided.
 
@@ -497,7 +497,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/mutex.hpp`](./etl/mutex.hpp)
 - **Tests:** [test_mutex.cpp](./tests/test_mutex.cpp)
 - **Example:** [mutex.cpp](./examples/mutex.cpp)
-- **Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=965791558)
 - **Changes:**
   - Only RAII lock types are implemented. You have to provide a mutex type that at least meets the [BasicLockable](https://en.cppreference.com/w/cpp/named_req/BasicLockable) requirements.
 
@@ -507,7 +507,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/new.hpp`](./etl/new.hpp)
 - **Tests:** [test_new.cpp](./tests/test_new.cpp)
 - **Example:** TODO
-- **Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1146466573)
 - **Changes:**
   - None
   - If the standard `<new>` is availble it is used to define the global placement new functions to avoid ODR violations when mixing `std` & `etl` headers.
