@@ -429,7 +429,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)
 - **Changes:**
-  - TODO
+  - WIP. Don't use.
 
 ### functional
 
@@ -560,7 +560,9 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Tests:** [test_scope.cpp](./tests/test_scope.cpp)
 - **Example:** TODO
 - **Progress:** TODO
+- **Reference:** [en.cppreference.com/w/cpp/experimental/scope_exit](https://en.cppreference.com/w/cpp/experimental/scope_exit)
 - **Changes:**
+  - Based on [p0052r8](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0052r8.pdf)
   - Only provides `scope_exit`
 
 ### set
@@ -572,6 +574,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
 - **Changes:**
   - Renamed `set` to `static_set`. Fixed compile-time capacity.
+  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_copyable_v<static_set<T, Capacity>>)`
+  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_destructible_v<static_set<T, Capacity>>)`
 
 ### span
 
@@ -581,7 +585,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)
 - **Changes:**
-  - TODO
+  - None. Available in C++17.
 
 ### stack
 
@@ -601,7 +605,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [string.cpp](./examples/string.cpp)
 - **Progress:** [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)
 - **Changes:**
-  - Renamed `string` to `static_string`. Fixed compile-time capacity.
+  - Only implemeted for type `char` at the moment.
+  - Renamed `basic_string` to `basic_static_string`. Fixed compile-time capacity.
 
 ### string_view
 
@@ -612,6 +617,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Progress:** [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736)
 - **Changes:**
   - None
+  - Only implemeted for type `char` at the moment.
 
 ### system_error
 
@@ -621,7 +627,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347)
 - **Changes:**
-  - TODO
+  - Only provides `errc` enum and helper traits.
 
 ### tuple
 
@@ -631,7 +637,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [tuple.cpp](./examples/tuple.cpp)
 - **Progress:** [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)
 - **Changes:**
-  - TODO
+  - Broken at the moment.
 
 ### type_traits
 
@@ -661,7 +667,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)
 - **Changes:**
-  - TODO
+  - Broken at the moment.
 
 ### vector
 
@@ -672,6 +678,9 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Progress:** [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)
 - **Changes:**
   - Renamed `vector` to `static_vector`. Fixed compile-time capacity.
+  - Based on `P0843r3` and the reference implementation from [github.com/gnzlbg/static_vector](https://github.com/gnzlbg/static_vector).
+  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_copyable_v<static_vector<T, Capacity>>)`
+  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_destructible_v<static_vector<T, Capacity>>)`
 
 ### version
 
