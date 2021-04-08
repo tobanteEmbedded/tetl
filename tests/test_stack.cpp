@@ -23,28 +23,54 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/stack.hpp"
 
 #include "etl/vector.hpp"
 
-TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", char, int, float)
+#include "catch2/catch_template_test_macros.hpp"
+
+TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
-  using stack_type = etl::stack<TestType, etl::static_vector<TestType, 4>>;
+  using pair_t  = etl::pair<int, TestType>;
+  using stack_t = etl::stack<pair_t, etl::static_vector<pair_t, 4>>;
 
-  auto stack = stack_type {};
-  REQUIRE(stack.empty());
+  stack_t s {};
+  REQUIRE(s.empty());
 
-  stack.push(TestType {1});
-  REQUIRE_FALSE(stack.empty());
-  REQUIRE(stack.size() == 1);
+  s.push(etl::make_pair(1, TestType {2}));
+  s.push(etl::make_pair(2, TestType {6}));
+  s.push(etl::make_pair(3, TestType {51}));
+  REQUIRE(s.size() == 3);
+  REQUIRE(s.top().second == TestType {51});
+  REQUIRE(s.size() == 3);
 
-  stack.emplace(TestType {1});
-  REQUIRE_FALSE(stack.empty());
-  REQUIRE(stack.size() == 2);
+  s.pop();
+  REQUIRE(etl::as_const(s).top().second == TestType {6});
+  REQUIRE(s.size() == 2);
 
-  stack.pop();
-  REQUIRE_FALSE(stack.empty());
-  REQUIRE(stack.size() == 1);
+  s.emplace(42, TestType {1});
+  REQUIRE(s.size() == 3);
+  REQUIRE(s.top().first == 42);
+  REQUIRE(s.top().second == TestType {1});
+
+  auto sCopy = s;
+  REQUIRE(sCopy == s);
+  REQUIRE(s == sCopy);
+  REQUIRE_FALSE(sCopy != s);
+  REQUIRE_FALSE(s != sCopy);
+
+  sCopy.pop();
+  REQUIRE(sCopy != s);
+  REQUIRE(s != sCopy);
+  REQUIRE_FALSE(sCopy == s);
+  REQUIRE_FALSE(s == sCopy);
+
+  decltype(sCopy) sSwap {};
+  sCopy.swap(sSwap);
+
+  REQUIRE(sCopy.empty());
+  REQUIRE(sSwap.size() == 2);
 }
