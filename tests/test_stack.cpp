@@ -34,10 +34,10 @@ TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", etl::uint8_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
                    long double)
 {
-  using pair_t  = etl::pair<int, TestType>;
-  using stack_t = etl::stack<pair_t, etl::static_vector<pair_t, 4>>;
+  using pair_type  = etl::pair<int, TestType>;
+  using stack_type = etl::stack<pair_type, etl::static_vector<pair_type, 4>>;
 
-  stack_t s {};
+  stack_type s {};
   REQUIRE(s.empty());
 
   s.push(etl::make_pair(1, TestType {2}));
