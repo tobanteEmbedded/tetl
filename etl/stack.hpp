@@ -150,7 +150,7 @@ class stack
   /**
    * @brief Removes the top element from the stack.
    */
-  constexpr auto pop() noexcept(noexcept(declval<container_type>().pop_back))
+  constexpr auto pop() noexcept(noexcept(declval<container_type>().pop_back()))
     -> void
   {
     c.pop_back();
