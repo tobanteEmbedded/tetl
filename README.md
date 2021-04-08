@@ -1,5 +1,18 @@
 # TAETL - Embedded Template **Library**
 
+- [Status](#status)
+  - [Hosted](#hosted)
+  - [Freestanding](#freestanding)
+  - [Analysis](#analysis)
+- [Design Goals](#design-goals)
+- [Quick Start](#quick-start)
+- [Project Integration](#project-integration)
+  - [Command Line / Makefile](#command-line---makefile)
+  - [CMake](#cmake)
+  - [PlatformIO](#platformio)
+- [Header Overview](#header-overview)
+- [Header Detail](#header-detail)
+
 ## Status
 
 | **License**                                                                                                                 | **Issues**                                                                                                                     | **Lines of Code**                               |
@@ -24,29 +37,16 @@
 
 ### Analysis
 
-| **Clang-Tidy**                                                                                                                                                            | **ASAN**                                                                                                                                                | **UBSAN**                                                                                                                                                  | **Coverage**                                                                                                                 |
+| **Clang-Tidy**                                                                                                                                                            | **Address Sanitizer**                                                                                                                                   | **UndefinedBehavior Sanitizer**                                                                                                                            | **Coverage**                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | [![Clang-Tidy](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) |
-
-- [Status](#status)
-  - [Hosted](#hosted)
-  - [Freestanding](#freestanding)
-  - [Analysis](#analysis)
-- [Design Goals](#design-goals)
-- [Quick Start](#quick-start)
-- [Project Integration](#project-integration)
-  - [Command Line / Makefile](#command-line---makefile)
-  - [CMake](#cmake)
-  - [PlatformIO](#platformio)
-- [Header Overview](#header-overview)
-- [Header Detail](#header-detail)
 
 ## Design Goals
 
 - 100% portable (no STL headers required, minimum of C headers)
 - Header only
-- C++17
-- Similar api to the STL
+- C++17 and beyond (freestanding or hosted)
+- Similar API to the STL
 - No dynamic memory
 - `constexpr` all the things
 - Easy desktop development (cmake)
@@ -391,7 +391,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 
 | **Library** |          **Source**          |                **Tests**                 | **Example** |                    **cppreference**                     |
 | :---------: | :--------------------------: | :--------------------------------------: | :---------: | :-----------------------------------------------------: |
-|   Thread    | [mutex.hpp](./etl/mutex.hpp) | [test_mutex.cpp](./tests/test_mutex.cpp) |   TODO a    | [mutex](https://en.cppreference.com/w/cpp/header/mutex) |
+|   Thread    | [mutex.hpp](./etl/mutex.hpp) | [test_mutex.cpp](./tests/test_mutex.cpp) |    TODO     | [mutex](https://en.cppreference.com/w/cpp/header/mutex) |
 
 ### new
 
