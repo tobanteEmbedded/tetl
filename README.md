@@ -307,7 +307,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/chrono.hpp`](./etl/chrono.hpp)
 - **Tests:** [test_chrono.cpp](./tests/test_chrono.cpp)
 - **Example:** [chrono.cpp](./examples/chrono.cpp)
-- **Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)a
+- **Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)
 - **Changes:**
   - None
 
