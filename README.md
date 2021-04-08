@@ -228,7 +228,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [algorithm.cpp](./examples/algorithm.cpp)
 - **Progress:** [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)
 - **Changes:**
-  - Implementations are optimize for code size.
+  - Implementations are optimize for code size. See [etl::search vs. libstdc++ (godbolt.org)](https://godbolt.org/z/dY9zPf8cs) as an example.
   - All overloads using an execution policy are not implemented.
 
 ### array
@@ -309,7 +309,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [chrono.cpp](./examples/chrono.cpp)
 - **Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)
 - **Changes:**
-  - None
+  - No clocks are implemented. You have to provide your own, which must at least meet the requirements of [Clock](https://en.cppreference.com/w/cpp/named_req/Clock).
 
 ### climits
 
@@ -469,7 +469,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
-  - TODO
+  - None
 
 ### map
 
@@ -479,7 +479,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [map.cpp](./examples/map.cpp)
 - **Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
-  - TODO
+  - Renamed `map` to `static_map`. Fixed compile-time capacity.
 
 ### memory
 
@@ -489,7 +489,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [memory.cpp](./examples/memory.cpp)
 - **Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
-  - TODO
+  - Non-standard class templates `small_ptr` (compressed pointer) & `pointer_int_pair` (pointer + integer) are provided.
 
 ### mutex
 
@@ -499,7 +499,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [mutex.cpp](./examples/mutex.cpp)
 - **Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
-  - TODO
+  - Only RAII lock types are implemented. You have to provide a mutex type that at least meets the [BasicLockable](https://en.cppreference.com/w/cpp/named_req/BasicLockable) requirements.
 
 ### new
 
@@ -509,7 +509,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
-  - TODO
+  - None
+  - If the standard `<new>` is availble it is used to define the global placement new functions to avoid ODR violations when mixing `std` & `etl` headers.
 
 ### numbers
 
@@ -529,7 +530,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [numeric.cpp](./examples/numeric.cpp)
 - **Progress:** [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)
 - **Changes:**
-  - TODO
+  - Implementations are optimize for code size. See [etl::search vs. libstdc++ (godbolt.org)](https://godbolt.org/z/dY9zPf8cs) as an example.
+  - All overloads using an execution policy are not implemented.
 
 ### optional
 
@@ -549,7 +551,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [ratio.cpp](./examples/ratio.cpp)
 - **Progress:** [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)
 - **Changes:**
-  - TODO
+  - None
 
 ### scope
 
@@ -559,7 +561,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** TODO
 - **Changes:**
-  - TODO
+  - Only provides `scope_exit`
 
 ### set
 
@@ -569,7 +571,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [set.cpp](./examples/set.cpp)
 - **Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
 - **Changes:**
-  - TODO
+  - Renamed `set` to `static_set`. Fixed compile-time capacity.
 
 ### span
 
@@ -589,7 +591,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** TODO
 - **Progress:** [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)
 - **Changes:**
-  - TODO
+  - None. Works with `static_vector`.
 
 ### string
 
@@ -599,7 +601,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [string.cpp](./examples/string.cpp)
 - **Progress:** [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)
 - **Changes:**
-  - TODO
+  - Renamed `string` to `static_string`. Fixed compile-time capacity.
 
 ### string_view
 
@@ -639,7 +641,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [type_traits.cpp](./examples/type_traits.cpp)
 - **Progress:** [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448)
 - **Changes:**
-  - TODO
+  - None
 
 ### utility
 
@@ -649,7 +651,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [utility.cpp](./examples/utility.cpp)
 - **Progress:** [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)
 - **Changes:**
-  - TODO
+  - None
 
 ### variant
 
@@ -669,24 +671,45 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [vector.cpp](./examples/vector.cpp)
 - **Progress:** [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)
 - **Changes:**
-  - TODO
+  - Renamed `vector` to `static_vector`. Fixed compile-time capacity.
 
 ### version
 
 - **Library:** Utility
 - **Include:** [`etl/version.hpp`](./etl/version.hpp)
 - **Tests:** [test_version.cpp](./tests/test_version.cpp)
-- **Example:** TODO
-- **Progress:** TODO
-- **Changes:**
-  - TODO
+
+Get access to all intrinsic macros & library version macro and constants.
+
+```cpp
+#include "etl/version.hpp"
+
+#include <stdio.h>
+
+auto main() -> int
+{
+#if defined(TAETL_MSVC)
+  puts("msvc");
+#else
+  puts("other compiler");
+#endif
+  return 0;
+}
+```
 
 ### warning
 
 - **Library:** Utility
 - **Include:** [`etl/warning.hpp`](./etl/warning.hpp)
 - **Tests:** [test_warning.cpp](./tests/test_warning.cpp)
-- **Example:** TODO
-- **Progress:** TODO
-- **Changes:**
-  - TODO
+
+```cpp
+#include "etl/warning.hpp"
+
+auto main(int argc, char** argv) -> int
+{
+  // Explicitly ignore unused arguments or variables.
+  etl::ignore_unused(argc, argv);
+  return 0;
+}
+```
