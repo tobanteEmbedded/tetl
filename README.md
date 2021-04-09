@@ -176,7 +176,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 |          [map](#map)          |        Containers        | :heavy_check_mark: |     [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
 |       [memory](#memory)       | Utility / Dynamic Memory | :heavy_check_mark: |   [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
 |        memory_resource        | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
-|        [mutex](#mutex)        |      Thread Support      | :heavy_check_mark: |    [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
+|        [mutex](#mutex)        |          Thread          | :heavy_check_mark: |    [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
 |          [new](#new)          | Utility / Dynamic Memory | :heavy_check_mark: |     [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
 |      [numbers](#numbers)      |         Numeric          | :heavy_check_mark: |   [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)    |
 |      [numeric](#numeric)      |         Numeric          | :heavy_check_mark: |   [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)   |
@@ -574,8 +574,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
 - **Changes:**
   - Renamed `set` to `static_set`. Fixed compile-time capacity.
-  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_copyable_v<static_set<T, Capacity>>)`
-  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_destructible_v<static_set<T, Capacity>>)`
+  - If `is_trivial_v<T>`, then `is_trivially_copyable_v<static_set<T, Capacity>>`
+  - If `is_trivial_v<T>`, then `is_trivially_destructible_v<static_set<T, Capacity>>`
 
 ### span
 
@@ -679,8 +679,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Changes:**
   - Renamed `vector` to `static_vector`. Fixed compile-time capacity.
   - Based on `P0843r3` and the reference implementation from [github.com/gnzlbg/static_vector](https://github.com/gnzlbg/static_vector).
-  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_copyable_v<static_vector<T, Capacity>>)`
-  - If `static_assert(is_trivial_v<T>)`, then `static_assert(is_trivially_destructible_v<static_vector<T, Capacity>>)`
+  - If `is_trivial_v<T>`, then `is_trivially_copyable_v<static_vector<T, Capacity>>`
+  - If `is_trivial_v<T>`, then `is_trivially_destructible_v<static_vector<T, Capacity>>`
 
 ### version
 
