@@ -24,10 +24,11 @@ DAMAGE.
 */
 
 #include "catch2/catch_template_test_macros.hpp"
+#include "catch2/generators/catch_generators.hpp"
 
 #include "etl/string_view.hpp"
 
-TEST_CASE("string_view: construct default", "[string_view]")
+TEST_CASE("string_view: string_view::string_view()", "[string_view]")
 {
   constexpr auto sv = etl::string_view {};
 
@@ -41,13 +42,45 @@ TEST_CASE("string_view: construct default", "[string_view]")
   STATIC_REQUIRE(sv.length() == 0);
 }
 
-TEST_CASE("string_view: construct(first,last)", "[string_view]")
+TEST_CASE("string_view: string_view", "[string_view]")
 {
-  auto const sv   = etl::string_view {"test"};
+  using namespace etl::literals;
+  using namespace Catch::Generators;
+
+  auto [input, expected] = GENERATE(table<char const*, etl::size_t>({
+    {"", 0},
+    {"a", 1},
+    {"ab", 2},
+    {"abc", 3},
+    {"abcd", 4},
+    {"abcde", 5},
+    {"0000000000", 10},
+  }));
+
+  REQUIRE(etl::string_view(input).size() == expected);
+  REQUIRE(etl::string_view(input, etl::strlen(input)).size() == expected);
+
+  REQUIRE(etl::string_view(input).length() == expected);
+  REQUIRE(etl::string_view(input, etl::strlen(input)).length() == expected);
+
+  REQUIRE(etl::string_view {input}.size() == expected);
+  REQUIRE(etl::string_view {input, etl::strlen(input)}.size() == expected);
+
+  REQUIRE(etl::string_view {input}.length() == expected);
+  REQUIRE(etl::string_view {input, etl::strlen(input)}.length() == expected);
+
+  auto const sv   = etl::string_view {input};
   auto const copy = etl::string_view(begin(sv), end(sv));
   REQUIRE(copy.data() == sv.data());
   REQUIRE(copy.size() == sv.size());
+  REQUIRE(copy.length() == sv.length());
   REQUIRE(copy == sv);
+
+  auto original = etl::string_view {input};
+  auto other    = "other"_sv;
+  original.swap(other);
+  REQUIRE(other == etl::string_view {input});
+  REQUIRE(original == "other"_sv);
 }
 
 TEST_CASE("string_view: construct copy", "[string_view]")
@@ -569,6 +602,8 @@ TEST_CASE("string_view: substr", "[string_view]")
 
 TEST_CASE("string_view: compare(string)", "[string]")
 {
+  using namespace etl::literals;
+
   SECTION("empty string same capacity")
   {
     auto lhs = etl::string_view();
@@ -580,46 +615,39 @@ TEST_CASE("string_view: compare(string)", "[string]")
 
   SECTION("same size equal")
   {
-    auto const lhs = etl::string_view("test");
-    auto const rhs = etl::string_view("test");
+    auto const lhs = "test"_sv;
+    auto const rhs = "test"_sv;
 
     CHECK(lhs.compare("test") == 0);
-    CHECK(lhs.compare(etl::string_view("test")) == 0);
+    CHECK(lhs.compare("test"_sv) == 0);
     CHECK(lhs.compare(rhs) == 0);
     CHECK(rhs.compare(lhs) == 0);
 
     CHECK(lhs.compare(1, 1, "test") < 0);
-    CHECK(lhs.compare(1, 1, etl::string_view("test")) < 0);
+    CHECK(lhs.compare(1, 1, "test"_sv) < 0);
     CHECK(lhs.compare(1, 1, rhs) < 0);
     CHECK(rhs.compare(1, 1, lhs) < 0);
 
     CHECK(lhs.compare(1, 1, rhs, 1, 1) == 0);
     CHECK(rhs.compare(1, 1, lhs, 1, 1) == 0);
 
-    CHECK(etl::string_view("te").compare(0, 2, etl::string_view("test"), 0, 2)
-          == 0);
-    CHECK(
-      etl::string_view("abcabc").compare(3, 3, etl::string_view("abc"), 0, 3)
-      == 0);
-    CHECK(
-      etl::string_view("abcabc").compare(3, 1, etl::string_view("abc"), 0, 3)
-      < 0);
-    CHECK(
-      etl::string_view("abcabc").compare(3, 3, etl::string_view("abc"), 0, 1)
-      > 0);
+    CHECK("te"_sv.compare(0, 2, "test"_sv, 0, 2) == 0);
+    CHECK("abcabc"_sv.compare(3, 3, "abc"_sv, 0, 3) == 0);
+    CHECK("abcabc"_sv.compare(3, 1, "abc"_sv, 0, 3) < 0);
+    CHECK("abcabc"_sv.compare(3, 3, "abc"_sv, 0, 1) > 0);
 
-    CHECK(etl::string_view("abcabc").compare(3, 3, "abc", 3) == 0);
-    CHECK(etl::string_view("abcabc").compare(3, 1, "abc", 0, 3) < 0);
-    CHECK(etl::string_view("abcabc").compare(3, 3, "abc", 0, 1) > 0);
+    CHECK("abcabc"_sv.compare(3, 3, "abc", 3) == 0);
+    CHECK("abcabc"_sv.compare(3, 1, "abc", 0, 3) < 0);
+    CHECK("abcabc"_sv.compare(3, 3, "abc", 0, 1) > 0);
   }
 
   SECTION("different size equal")
   {
-    auto const lhs = etl::string_view("test");
-    auto const rhs = etl::string_view("te");
+    auto const lhs = "test"_sv;
+    auto const rhs = "te"_sv;
 
     CHECK(lhs.compare(rhs) > 0);
-    CHECK(rhs.compare(etl::string_view("test")) < 0);
+    CHECK(rhs.compare("test"_sv) < 0);
   }
 }
 

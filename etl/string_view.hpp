@@ -27,6 +27,7 @@ DAMAGE.
 #define TAETL_STRING_VIEW_HPP
 
 #include "etl/algorithm.hpp"
+#include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
 #include "etl/memory.hpp"
@@ -124,7 +125,7 @@ class basic_string_view
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
-    return begin_;
+    return cbegin();
   }
 
   /**
@@ -142,7 +143,7 @@ class basic_string_view
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
   {
-    return begin_ + size_;
+    return cend();
   }
 
   /**
@@ -161,7 +162,7 @@ class basic_string_view
    */
   [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
   {
-    return const_reverse_iterator(end());
+    return crbegin();
   }
 
   /**
@@ -184,7 +185,7 @@ class basic_string_view
    */
   [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
   {
-    return const_reverse_iterator(begin());
+    return crend();
   }
 
   /**
@@ -245,7 +246,7 @@ class basic_string_view
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
-    return size_;
+    return length();
   }
 
   /**
@@ -695,7 +696,7 @@ class basic_string_view
                                             size_type pos = npos) const noexcept
     -> size_type
   {
-    auto offset = etl::clamp<size_type>(pos, 0, size());
+    auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
     do {
       auto const current = unsafe_at(offset);
       for (auto const ch : v)
@@ -833,6 +834,7 @@ class basic_string_view
   private:
   [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference
   {
+    assert(pos < size());
     return begin_[pos];
   }
 

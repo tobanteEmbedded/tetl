@@ -125,7 +125,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
     auto ch = fmt[i];
     if (ch == '{')
     {
-      if (fmt[i + 1] == '{')
+      if ((fmt.size() > i + 1) && (fmt[i + 1] == '{'))
       {
         ++i;
         writeChar('{');
@@ -138,7 +138,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
 
     if (ch == '}')
     {
-      if (fmt[i + 1] == '}')
+      if ((fmt.size() > i + 1) && (fmt[i + 1] == '}'))
       {
         ++i;
         writeChar('}');
