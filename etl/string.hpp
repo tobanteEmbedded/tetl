@@ -496,7 +496,7 @@ class basic_static_string
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
-    return size_;
+    return length();
   }
 
   /**
@@ -504,7 +504,7 @@ class basic_static_string
    */
   [[nodiscard]] constexpr auto length() const noexcept -> size_type
   {
-    return size();
+    return size_;
   }
 
   /**
@@ -553,7 +553,7 @@ class basic_static_string
    */
   [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
   {
-    return &data_[0];
+    return c_str();
   };
 
   /**
@@ -566,7 +566,7 @@ class basic_static_string
    */
   [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer
   {
-    return data();
+    return &data_[0];
   };
 
   /**
