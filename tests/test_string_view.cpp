@@ -654,26 +654,57 @@ TEST_CASE("string_view: compare(string)", "[string]")
 
 TEST_CASE("string_view: operator==", "[string_view]")
 {
-  auto const sv  = "test"_sv;
-  auto const str = etl::static_string<16> {"test"};
-  REQUIRE(sv == sv);
-  REQUIRE(sv == "test"_sv);
-  REQUIRE(sv == str);
-  REQUIRE(str == sv);
-  REQUIRE_FALSE(sv == sv.substr(0, 1));
-  REQUIRE_FALSE(sv == "abc"_sv);
+  auto [lhs, rhs, equal] = GENERATE(table<char const*, char const*, bool>({
+    {"", "", true},
+    {"a", "a", true},
+    {"ab", "ab", true},
+    {"abc", "abc", true},
+    {"abcd", "abcd", true},
+    {"abcde", "abcde", true},
+    {"0000000000", "0000000000", true},
+    {"abc", "foo", false},
+    {"abcd", "foo", false},
+    {"abcde", "foo", false},
+  }));
+
+  REQUIRE((etl::string_view {lhs} == etl::string_view {rhs}) == equal);
+  REQUIRE((etl::string_view {rhs} == etl::string_view {lhs}) == equal);
+
+  REQUIRE((etl::string_view {lhs} == etl::static_string<16> {rhs}) == equal);
+  REQUIRE((etl::string_view {rhs} == etl::static_string<16> {lhs}) == equal);
+
+  REQUIRE((etl::static_string<16> {lhs} == etl::string_view {rhs}) == equal);
+  REQUIRE((etl::static_string<16> {rhs} == etl::string_view {lhs}) == equal);
+
+  REQUIRE_FALSE(etl::string_view {lhs} == "test"_sv);
+  REQUIRE_FALSE("test"_sv == etl::string_view {lhs});
 }
 
 TEST_CASE("string_view: operator!=", "[string_view]")
 {
-  auto const sv  = "test"_sv;
-  auto const str = etl::static_string<16> {"test"};
-  REQUIRE_FALSE(sv != sv);
-  REQUIRE_FALSE(sv != "test"_sv);
-  REQUIRE(sv != sv.substr(0, 1));
-  REQUIRE(sv != "abc"_sv);
-  REQUIRE_FALSE(sv != str);
-  REQUIRE_FALSE(str != sv);
+  auto [lhs, rhs, equal] = GENERATE(table<char const*, char const*, bool>({
+    {"a", "a", false},
+    {"ab", "ab", false},
+    {"abc", "abc", false},
+    {"abcd", "abcd", false},
+    {"abcde", "abcde", false},
+    {"0000000000", "0000000000", false},
+    {"abc", "foo", true},
+    {"abcd", "foo", true},
+    {"abcde", "foo", true},
+  }));
+
+  REQUIRE((etl::string_view {lhs} != etl::string_view {rhs}) == equal);
+  REQUIRE((etl::string_view {rhs} != etl::string_view {lhs}) == equal);
+
+  REQUIRE((etl::string_view {lhs} != etl::static_string<16> {rhs}) == equal);
+  REQUIRE((etl::string_view {rhs} != etl::static_string<16> {lhs}) == equal);
+
+  REQUIRE((etl::static_string<16> {lhs} != etl::string_view {rhs}) == equal);
+  REQUIRE((etl::static_string<16> {rhs} != etl::string_view {lhs}) == equal);
+
+  REQUIRE(etl::string_view {lhs} != "test"_sv);
+  REQUIRE("test"_sv != etl::string_view {lhs});
 }
 
 TEST_CASE("string_view: operator<", "[string_view]")
@@ -690,8 +721,7 @@ TEST_CASE("string_view: operator<", "[string_view]")
 
 TEST_CASE("string_view: operator<=", "[string_view]")
 {
-  auto const sv  = "test"_sv;
-  auto const str = etl::static_string<16> {"test"};
+  auto const sv = "test"_sv;
   REQUIRE(sv <= sv);
   REQUIRE(etl::string_view {""} <= sv);
   REQUIRE(sv.substr(0, 1) <= sv);
@@ -700,8 +730,7 @@ TEST_CASE("string_view: operator<=", "[string_view]")
 
 TEST_CASE("string_view: operator>", "[string_view]")
 {
-  auto const sv  = "test"_sv;
-  auto const str = etl::static_string<16> {"test"};
+  auto const sv = "test"_sv;
   REQUIRE_FALSE(sv > sv);
   REQUIRE(etl::string_view {"xxxxxx"} > sv);
   REQUIRE(sv > sv.substr(0, 1));
@@ -710,8 +739,7 @@ TEST_CASE("string_view: operator>", "[string_view]")
 
 TEST_CASE("string_view: operator>=", "[string_view]")
 {
-  auto const sv  = "test"_sv;
-  auto const str = etl::static_string<16> {"test"};
+  auto const sv = "test"_sv;
   REQUIRE(sv >= sv);
   REQUIRE(etl::string_view {"xxxxxx"} >= sv);
   REQUIRE(sv >= sv.substr(0, 1));
