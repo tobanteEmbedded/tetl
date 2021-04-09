@@ -852,11 +852,29 @@ class basic_string_view
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator==(etl::basic_string_view<CharType, Traits> lhs,
-           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator==(basic_string_view<CharType, Traits> lhs,
+           basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   if (lhs.size() != rhs.size()) { return false; }
-  return Traits::compare(lhs.data(), rhs.data(), lhs.size()) == 0;
+  return lhs.compare(rhs) == 0;
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator==(decay_t<basic_string_view<CharT, Traits>> const lhs,
+           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  if (lhs.size() != rhs.size()) { return false; }
+  return lhs.compare(rhs) == 0;
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator==(basic_string_view<CharT, Traits> const lhs,
+           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+{
+  if (lhs.size() != rhs.size()) { return false; }
+  return lhs.compare(rhs) == 0;
 }
 
 /**
@@ -869,8 +887,24 @@ operator==(etl::basic_string_view<CharType, Traits> lhs,
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator!=(etl::basic_string_view<CharType, Traits> lhs,
-           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator!=(basic_string_view<CharType, Traits> lhs,
+           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+  return !(lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator!=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  return !(lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator!=(basic_string_view<CharT, Traits> const lhs,
+           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
 {
   return !(lhs == rhs);
 }
@@ -881,15 +915,33 @@ operator!=(etl::basic_string_view<CharType, Traits> lhs,
  *
  * @details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare.
+ * lexicographical_compare.
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator<(etl::basic_string_view<CharType, Traits> lhs,
-          etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator<(basic_string_view<CharType, Traits> lhs,
+          basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-  return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                      rhs.end());
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                 rhs.end());
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator<(decay_t<basic_string_view<CharT, Traits>> const lhs,
+          basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                 rhs.end());
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator<(basic_string_view<CharT, Traits> const lhs,
+          decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+{
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
+                                 rhs.end());
 }
 
 /**
@@ -898,12 +950,28 @@ operator<(etl::basic_string_view<CharType, Traits> lhs,
  *
  * @details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare.
+ * lexicographical_compare.
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator<=(etl::basic_string_view<CharType, Traits> lhs,
-           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator<=(basic_string_view<CharType, Traits> lhs,
+           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+  return (lhs < rhs) || (lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator<=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  return (lhs < rhs) || (lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator<=(basic_string_view<CharT, Traits> const lhs,
+           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
 {
   return (lhs < rhs) || (lhs == rhs);
 }
@@ -914,12 +982,28 @@ operator<=(etl::basic_string_view<CharType, Traits> lhs,
  *
  * @details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare.
+ * lexicographical_compare.
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator>(etl::basic_string_view<CharType, Traits> lhs,
-          etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator>(basic_string_view<CharType, Traits> lhs,
+          basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+  return !(lhs < rhs) && !(lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator>(decay_t<basic_string_view<CharT, Traits>> const lhs,
+          basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  return !(lhs < rhs) && !(lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator>(basic_string_view<CharT, Traits> const lhs,
+          decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
 {
   return !(lhs < rhs) && !(lhs == rhs);
 }
@@ -930,12 +1014,28 @@ operator>(etl::basic_string_view<CharType, Traits> lhs,
  *
  * @details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
- * etl::lexicographical_compare.
+ * lexicographical_compare.
  */
 template <typename CharType, typename Traits>
 [[nodiscard]] constexpr auto
-operator>=(etl::basic_string_view<CharType, Traits> lhs,
-           etl::basic_string_view<CharType, Traits> rhs) noexcept -> bool
+operator>=(basic_string_view<CharType, Traits> lhs,
+           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+{
+  return (lhs > rhs) || (lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator>=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+{
+  return (lhs > rhs) || (lhs == rhs);
+}
+
+template <typename CharT, typename Traits>
+[[nodiscard]] constexpr auto
+operator>=(basic_string_view<CharT, Traits> const lhs,
+           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
 {
   return (lhs > rhs) || (lhs == rhs);
 }
