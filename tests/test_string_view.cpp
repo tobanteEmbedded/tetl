@@ -748,7 +748,6 @@ TEST_CASE("string_view: operator>=", "[string_view]")
 
 TEST_CASE("string_view: operator\"\"", "[string_view]")
 {
-  using namespace etl::literals;
   auto const sv = "test"_sv;
   REQUIRE(sv.size() >= 4);
   REQUIRE(sv[0] >= 't');
