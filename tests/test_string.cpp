@@ -22,53 +22,118 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
-
-#include "catch2/catch_template_test_macros.hpp"
+#include "etl/string.hpp"  // for static_string
 
 #include "etl/algorithm.hpp"    // for for_each
 #include "etl/cstddef.hpp"      // for size_t
-#include "etl/string.hpp"       // for static_string
 #include "etl/string_view.hpp"  // for string_view
 
+#include "catch2/catch_template_test_macros.hpp"
+#include "catch2/generators/catch_generators.hpp"
+
 using namespace etl::literals;
+using namespace Catch::Generators;
 
 TEST_CASE("string/char_traits: <char>::length", "[string]")
 {
-  STATIC_REQUIRE(etl::char_traits<char>::length("") == 0);
-  STATIC_REQUIRE(etl::char_traits<char>::length("a") == 1);
-  STATIC_REQUIRE(etl::char_traits<char>::length("to") == 2);
-  STATIC_REQUIRE(etl::char_traits<char>::length("xxxxxxxxxx") == 10);
+  auto [input, expected] = GENERATE(table<char const*, etl::size_t>({
+    {"", 0},
+    {"a", 1},
+    {"ab", 2},
+    {"to", 2},
+    {"abc", 3},
+    {"xxxxxxxxxx", 10},
+    {"xxxxxxxxxxxxxxxxxxxx", 20},
+  }));
+
+  REQUIRE(etl::char_traits<char>::length(input) == expected);
 }
 
 TEST_CASE("string/char_traits: <char>::eq", "[string]")
 {
-  STATIC_REQUIRE(etl::char_traits<char>::eq('a', 'a') == true);
-  STATIC_REQUIRE(etl::char_traits<char>::eq('a', 'b') == false);
-  STATIC_REQUIRE(etl::char_traits<char>::eq('b', 'a') == false);
+  auto [lhs, rhs, expected] = GENERATE(table<char, char, bool>({
+    {'0', '0', true},  {'1', '1', true},  {'2', '2', true},  {'3', '3', true},
+    {'4', '4', true},  {'5', '5', true},  {'6', '6', true},  {'7', '7', true},
+    {'8', '8', true},  {'9', '9', true},
+
+    {'a', 'a', true},  {'b', 'b', true},  {'c', 'c', true},  {'d', 'd', true},
+    {'e', 'e', true},  {'f', 'f', true},  {'g', 'g', true},  {'h', 'h', true},
+    {'i', 'i', true},  {'j', 'j', true},  {'k', 'k', true},  {'l', 'l', true},
+    {'m', 'm', true},  {'n', 'n', true},  {'o', 'o', true},  {'p', 'p', true},
+    {'q', 'q', true},  {'r', 'r', true},  {'s', 's', true},  {'t', 't', true},
+    {'u', 'u', true},  {'v', 'v', true},  {'w', 'w', true},  {'x', 'x', true},
+    {'y', 'y', true},  {'z', 'z', true},
+
+    {'A', 'A', true},  {'B', 'B', true},  {'C', 'C', true},  {'D', 'D', true},
+    {'E', 'E', true},  {'F', 'F', true},  {'G', 'G', true},  {'H', 'H', true},
+    {'I', 'I', true},  {'J', 'J', true},  {'K', 'K', true},  {'L', 'L', true},
+    {'M', 'M', true},  {'N', 'N', true},  {'O', 'O', true},  {'P', 'P', true},
+    {'Q', 'Q', true},  {'R', 'R', true},  {'S', 'S', true},  {'T', 'T', true},
+    {'U', 'U', true},  {'V', 'V', true},  {'W', 'W', true},  {'X', 'X', true},
+    {'Y', 'Y', true},  {'Z', 'Z', true},
+
+    {'a', 'b', false}, {'b', 'a', false}, {'1', '2', false}, {'2', '1', false},
+    {'a', '3', false}, {'3', 'a', false}, {'a', 'A', false}, {'b', 'B', false},
+  }));
+
+  REQUIRE(etl::char_traits<char>::eq(lhs, rhs) == expected);
 }
 
 TEST_CASE("string/char_traits: <char>::lt", "[string]")
 {
-  STATIC_REQUIRE(etl::char_traits<char>::lt('a', 'a') == false);
-  STATIC_REQUIRE(etl::char_traits<char>::lt('a', 'b') == true);
-  STATIC_REQUIRE(etl::char_traits<char>::lt('b', 'a') == false);
+  auto [lhs, rhs, expected] = GENERATE(table<char, char, bool>({
+    {'0', '0', false}, {'1', '1', false}, {'2', '2', false}, {'3', '3', false},
+    {'4', '4', false}, {'5', '5', false}, {'6', '6', false}, {'7', '7', false},
+    {'8', '8', false}, {'9', '9', false},
+
+    {'a', 'a', false}, {'b', 'b', false}, {'c', 'c', false}, {'d', 'd', false},
+    {'e', 'e', false}, {'f', 'f', false}, {'g', 'g', false}, {'h', 'h', false},
+    {'i', 'i', false}, {'j', 'j', false}, {'k', 'k', false}, {'l', 'l', false},
+    {'m', 'm', false}, {'n', 'n', false}, {'o', 'o', false}, {'p', 'p', false},
+    {'q', 'q', false}, {'r', 'r', false}, {'s', 's', false}, {'t', 't', false},
+    {'u', 'u', false}, {'v', 'v', false}, {'w', 'w', false}, {'x', 'x', false},
+    {'y', 'y', false}, {'z', 'z', false},
+
+    {'A', 'A', false}, {'B', 'B', false}, {'C', 'C', false}, {'D', 'D', false},
+    {'E', 'E', false}, {'F', 'F', false}, {'G', 'G', false}, {'H', 'H', false},
+    {'I', 'I', false}, {'J', 'J', false}, {'K', 'K', false}, {'L', 'L', false},
+    {'M', 'M', false}, {'N', 'N', false}, {'O', 'O', false}, {'P', 'P', false},
+    {'Q', 'Q', false}, {'R', 'R', false}, {'S', 'S', false}, {'T', 'T', false},
+    {'U', 'U', false}, {'V', 'V', false}, {'W', 'W', false}, {'X', 'X', false},
+    {'Y', 'Y', false}, {'Z', 'Z', false},
+
+    {'a', 'A', false}, {'2', '1', false}, {'b', 'a', false}, {'a', '3', false},
+
+    {'a', 'b', true},  {'1', '2', true},  {'3', 'a', true},
+
+  }));
+
+  REQUIRE(etl::char_traits<char>::lt(lhs, rhs) == expected);
 }
 
 TEST_CASE("string/char_traits: <char>::assign(char,char)", "[string]")
 {
-  auto ch = [](char const& b)
-  {
-    auto a = 'a';
-    etl::char_traits<char>::assign(a, b);
-    return a;
-  };
+  auto [ch] = GENERATE(table<char>({
+    {'0'}, {'1'}, {'2'}, {'3'}, {'4'}, {'5'}, {'6'}, {'7'}, {'8'}, {'9'},
 
-  STATIC_REQUIRE(ch('b') == 'b');
+    {'a'}, {'b'}, {'c'}, {'d'}, {'e'}, {'f'}, {'g'}, {'h'}, {'i'}, {'j'},
+    {'k'}, {'l'}, {'m'}, {'n'}, {'o'}, {'p'}, {'q'}, {'r'}, {'s'}, {'t'},
+    {'u'}, {'v'}, {'w'}, {'x'}, {'y'}, {'z'},
+
+    {'A'}, {'B'}, {'C'}, {'D'}, {'E'}, {'F'}, {'G'}, {'H'}, {'I'}, {'J'},
+    {'K'}, {'L'}, {'M'}, {'N'}, {'O'}, {'P'}, {'Q'}, {'R'}, {'S'}, {'T'},
+    {'U'}, {'V'}, {'W'}, {'X'}, {'Y'}, {'Z'},
+
+  }));
+
+  char other {};
+  etl::char_traits<char>::assign(other, ch);
+  REQUIRE(other == ch);
 }
 
-TEMPLATE_TEST_CASE("string: ctor()", "[string]", etl::static_string<12>,
-                   etl::static_string<32>, etl::static_string<12> const,
-                   etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string()", "[string]",
+                   etl::static_string<12>, etl::static_string<32>,
+                   etl::static_string<12> const, etl::static_string<32> const)
 {
   TestType str {};
 
@@ -79,86 +144,134 @@ TEMPLATE_TEST_CASE("string: ctor()", "[string]", etl::static_string<12>,
   CHECK(str.length() == etl::size_t(0));
 }
 
-TEMPLATE_TEST_CASE("string: ctor(size_t,char)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>,
-                   etl::static_string<12> const, etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string(size_t,char)", "[string]",
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<24> const, etl::static_string<32> const)
 {
-  auto str = TestType(10, 'a');
+  using string_t = TestType;
+
+  auto [size, ch] = GENERATE(table<etl::size_t, char>({
+    {1, 'x'},
+    {2, 'x'},
+    {2, 'x'},
+    {3, 'x'},
+    {10, 'x'},
+    {20, 'x'},
+  }));
+
+  auto str = string_t {size, ch};
+
   CHECK_FALSE(str.empty());
   CHECK_FALSE(str.full());
-  CHECK(str.size() == etl::size_t(10));
-  CHECK(etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; }));
+
+  CHECK(str.size() == size);
+  CHECK(str.size() == etl::strlen(str.c_str()));
+  CHECK(etl::all_of(begin(str), end(str), [ch](auto c) { return c == ch; }));
 }
 
-TEMPLATE_TEST_CASE("string: ctor(char const*)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(char const*)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
-  TestType str {"abc"};
+  auto [input, size] = GENERATE(table<char const*, etl::size_t>({
+    {"", 0},
+    {"a", 1},
+    {"ab", 2},
+    {"to", 2},
+    {"abc", 3},
+    {"foo_bar", 7},
+    {"foo bar", 7},
+    {"foo?bar", 7},
+    {"foo\nbar", 7},
+    {"xxxxxxxxxx", 10},
+  }));
+
+  TestType str {input};
 
   CHECK_FALSE(str.full());
-  CHECK_FALSE(str.empty());
+
   CHECK(str.capacity() == str.max_size());
-  CHECK(etl::strlen(str.data()) == etl::size_t(3));
-  CHECK(str.size() == etl::size_t(3));
-  CHECK(str.length() == etl::size_t(3));
-  CHECK(str[0] == 'a');
-  CHECK(str[1] == 'b');
-  CHECK(str[2] == 'c');
+  CHECK(etl::strlen(str.data()) == size);
+  CHECK(str.size() == size);
+  CHECK(str.length() == size);
+  CHECK(str == etl::string_view {input});
 }
 
-TEMPLATE_TEST_CASE("string: ctor(char const*, size_t)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(char const*, size_t)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
-  auto const* src = "abc";
-  TestType str {src, etl::strlen(src)};
+  auto [input, size] = GENERATE(table<char const*, etl::size_t>({
+    {"a", 1},
+    {"ab", 2},
+    {"to", 2},
+    {"abc", 3},
+    {"foo_bar", 7},
+    {"foo bar", 7},
+    {"foo?bar", 7},
+    {"foo\nbar", 7},
+    {"xxxxxxxxxx", 10},
+  }));
+
+  TestType str {input, size};
 
   CHECK_FALSE(str.full());
   CHECK_FALSE(str.empty());
-  CHECK(etl::strlen(str.data()) == etl::size_t(3));
+
+  CHECK(etl::strlen(str.data()) == size);
   CHECK(str.capacity() == str.max_size());
-  CHECK(str.size() == etl::size_t(3));
-  CHECK(str.length() == etl::size_t(3));
-  CHECK(str[0] == 'a');
-  CHECK(str[1] == 'b');
-  CHECK(str[2] == 'c');
+  CHECK(str.size() == size);
+  CHECK(str.length() == size);
+  CHECK(str == etl::string_view {input});
 }
 
-TEMPLATE_TEST_CASE("string: ctor(first,last)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(first,last)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
-  TestType src {"test"};
-  TestType dest {begin(src), end(src)};
+  auto [input, size] = GENERATE(table<char const*, etl::size_t>({
+    {"a", 1},
+    {"ab", 2},
+    {"to", 2},
+    {"abc", 3},
+    {"foo_bar", 7},
+    {"foo bar", 7},
+    {"foo?bar", 7},
+    {"foo\nbar", 7},
+    {"xxxxxxxxxx", 10},
+  }));
 
-  CHECK_FALSE(dest.full());
-  CHECK(etl::strlen(dest.data()) == etl::size_t(4));
-  CHECK(dest.size() == etl::size_t(4));
-  CHECK(dest.length() == etl::size_t(4));
-  CHECK(dest[0] == 't');
-  CHECK(dest[1] == 'e');
-  CHECK(dest[2] == 's');
-  CHECK(dest[3] == 't');
+  auto str = TestType {input, etl::next(input, size)};
+
+  CHECK(str.size() == size);
+  CHECK(etl::strlen(str.c_str()) == size);
+  CHECK(str == etl::string_view {input});
+  CHECK_FALSE(str.full());
 }
 
-TEMPLATE_TEST_CASE("string: ctor(string,pos)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(string,pos)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
-  TestType src {"testabc"};
+  using etl::size_t;
+  using etl::string_view;
 
-  TestType dest1(src, 0);
-  CHECK(dest1 == etl::string_view(src));
+  auto [in, pos, expected] = GENERATE(table<char const*, size_t, string_view>({
+    {"0123456789", 0, "0123456789"_sv},
+    {"0123456789", 4, "456789"_sv},
+    {"0123456789", 9, "9"_sv},
 
-  TestType dest2(src, 4);
-  CHECK(dest2 == "abc"_sv);
+    {"testabc", 0, "testabc"_sv},
+    {"testabc", 4, "abc"_sv},
+    {"testabc", 9, ""_sv},
+  }));
 
-  auto dest3 = TestType(src, 9);
-  CHECK(dest3 == ""_sv);
+  TestType src {in};
+  TestType destination(src, pos);
+  CHECK(destination == expected);
 }
 
-TEMPLATE_TEST_CASE("string: ctor(string,pos,count)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(string,pos,count)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
@@ -174,7 +287,7 @@ TEMPLATE_TEST_CASE("string: ctor(string,pos,count)", "[string]",
   CHECK(dest3 == ""_sv);
 }
 
-TEMPLATE_TEST_CASE("string: ctor(string_view)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(string_view)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
@@ -190,7 +303,7 @@ TEMPLATE_TEST_CASE("string: ctor(string_view)", "[string]",
   CHECK(dest[3] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: ctor(string_view,pos,n)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string(string_view,pos,n)", "[string]",
                    etl::static_string<12>, etl::static_string<32>,
                    etl::static_string<12> const, etl::static_string<32> const)
 {
@@ -204,8 +317,8 @@ TEMPLATE_TEST_CASE("string: ctor(string_view,pos,n)", "[string]",
   CHECK(dest[1] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: operator=", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator=", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("string")
   {
@@ -279,8 +392,8 @@ TEMPLATE_TEST_CASE("string: operator=", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: assign", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::assign", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("string")
   {
@@ -387,8 +500,9 @@ TEMPLATE_TEST_CASE("string: assign", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::constexpr", "[string]",
+                   etl::static_string<8>, etl::static_string<12>,
+                   etl::static_string<32>)
 {
   constexpr TestType str1 {};
 
@@ -417,9 +531,9 @@ TEMPLATE_TEST_CASE("string: constexpr", "[string]", etl::static_string<8>,
   STATIC_REQUIRE(str2[3] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::static_string<12>,
-                   etl::static_string<32>, etl::static_string<12> const,
-                   etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string::operator[]", "[string]",
+                   etl::static_string<12>, etl::static_string<32>,
+                   etl::static_string<12> const, etl::static_string<32> const)
 {
   TestType str {"abc"};
   REQUIRE(str[0] == 'a');
@@ -427,8 +541,8 @@ TEMPLATE_TEST_CASE("string: operator[]", "[string]", etl::static_string<12>,
   REQUIRE(str[2] == 'c');
 }
 
-TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::begin/end", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {"aaa"};
 
@@ -437,9 +551,9 @@ TEMPLATE_TEST_CASE("string: begin/end", "[string]", etl::static_string<12>,
   for (auto const& c : str) { REQUIRE(c == char('a')); };
 }
 
-TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::static_string<12>,
-                   etl::static_string<32>, etl::static_string<12> const,
-                   etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string::cbegin/cend", "[string]",
+                   etl::static_string<12>, etl::static_string<32>,
+                   etl::static_string<12> const, etl::static_string<32> const)
 {
   TestType str {"aaa"};
 
@@ -447,9 +561,9 @@ TEMPLATE_TEST_CASE("string: cbegin/cend", "[string]", etl::static_string<12>,
                 [](auto const& c) { REQUIRE(c == char('a')); });
 }
 
-TEMPLATE_TEST_CASE("string: rbegin/rend", "[string]", etl::static_string<12>,
-                   etl::static_string<32>, etl::static_string<12> const,
-                   etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string::rbegin/rend", "[string]",
+                   etl::static_string<12>, etl::static_string<32>,
+                   etl::static_string<12> const, etl::static_string<32> const)
 {
   TestType empty {};
   CHECK(empty.rbegin() == empty.rend());
@@ -464,9 +578,9 @@ TEMPLATE_TEST_CASE("string: rbegin/rend", "[string]", etl::static_string<12>,
   CHECK(begin1 == str1.rend());
 }
 
-TEMPLATE_TEST_CASE("string: crbegin/crend", "[string]", etl::static_string<12>,
-                   etl::static_string<32>, etl::static_string<12> const,
-                   etl::static_string<32> const)
+TEMPLATE_TEST_CASE("string: static_string::crbegin/crend", "[string]",
+                   etl::static_string<12>, etl::static_string<32>,
+                   etl::static_string<12> const, etl::static_string<32> const)
 {
   TestType empty {};
   CHECK(empty.crbegin() == empty.crend());
@@ -481,7 +595,7 @@ TEMPLATE_TEST_CASE("string: crbegin/crend", "[string]", etl::static_string<12>,
   CHECK(begin1 == str1.crend());
 }
 
-TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::append(count, CharType)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   auto str = TestType();
@@ -495,8 +609,8 @@ TEMPLATE_TEST_CASE("string: append(count, CharType)", "[string]",
   REQUIRE(str[3] == 'a');
 }
 
-TEMPLATE_TEST_CASE("string: append(const_pointer, count)", "[string]",
-                   etl::static_string<8>, etl::static_string<12>,
+TEMPLATE_TEST_CASE("string: static_string::append(const_pointer, count)",
+                   "[string]", etl::static_string<8>, etl::static_string<12>,
                    etl::static_string<32>)
 {
   TestType str {};
@@ -515,7 +629,7 @@ TEMPLATE_TEST_CASE("string: append(const_pointer, count)", "[string]",
   REQUIRE(str[3] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::append(const_pointer)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {};
@@ -530,7 +644,7 @@ TEMPLATE_TEST_CASE("string: append(const_pointer)", "[string]",
   REQUIRE(str[3] == 't');
 }
 
-TEMPLATE_TEST_CASE("string: append(first,last)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::append(first,last)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
@@ -556,8 +670,8 @@ TEMPLATE_TEST_CASE("string: append(first,last)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: append(string)", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::append(string)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
   {
@@ -582,8 +696,8 @@ TEMPLATE_TEST_CASE("string: append(string)", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: append(string,pos,count)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::append(string,pos,count)",
+                   "[string]", etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
   {
@@ -608,7 +722,7 @@ TEMPLATE_TEST_CASE("string: append(string,pos,count)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: append(string_view)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::append(string_view)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
@@ -634,8 +748,8 @@ TEMPLATE_TEST_CASE("string: append(string_view)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: append(string_view,pos,count)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::append(string_view,pos,count)",
+                   "[string]", etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
   {
@@ -656,8 +770,8 @@ TEMPLATE_TEST_CASE("string: append(string_view,pos,count)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator+=", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator+=", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("string")
   {
@@ -707,8 +821,8 @@ TEMPLATE_TEST_CASE("string: algorithms", "[string]", etl::static_string<12>,
   REQUIRE(str.back() == 'b');
 }
 
-TEMPLATE_TEST_CASE("string: front/back", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::front/back", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {"junk"};
   CHECK(str.front() == 'j');
@@ -718,8 +832,8 @@ TEMPLATE_TEST_CASE("string: front/back", "[string]", etl::static_string<12>,
   CHECK(etl::as_const(str).back() == 'k');
 }
 
-TEMPLATE_TEST_CASE("string: data/c_str", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::data/c_str", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {"junk"};
   CHECK(str.data() == str.c_str());
@@ -727,7 +841,7 @@ TEMPLATE_TEST_CASE("string: data/c_str", "[string]", etl::static_string<12>,
   CHECK(str.c_str()[0] == 'j');
 }
 
-TEMPLATE_TEST_CASE("string: operator string_view", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::operator string_view", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {"junk"};
@@ -735,8 +849,8 @@ TEMPLATE_TEST_CASE("string: operator string_view", "[string]",
   CHECK(sv.data()[0] == 'j');
 }
 
-TEMPLATE_TEST_CASE("string: clear", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::clear", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   // setup
   TestType str {"junk"};
@@ -749,8 +863,8 @@ TEMPLATE_TEST_CASE("string: clear", "[string]", etl::static_string<12>,
   REQUIRE(str.size() == etl::size_t(0));
 }
 
-TEMPLATE_TEST_CASE("string: push_back", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::push_back", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {""};
   str.push_back('a');
@@ -759,8 +873,8 @@ TEMPLATE_TEST_CASE("string: push_back", "[string]", etl::static_string<12>,
   REQUIRE(str.size() == 2);
 }
 
-TEMPLATE_TEST_CASE("string: pop_back", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::pop_back", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   TestType str {"abc"};
   str.pop_back();
@@ -770,8 +884,8 @@ TEMPLATE_TEST_CASE("string: pop_back", "[string]", etl::static_string<12>,
   REQUIRE(str.size() == 1);
 }
 
-TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::insert(index, count, CharType)",
+                   "[string]", etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("on empty string")
   {
@@ -815,8 +929,8 @@ TEMPLATE_TEST_CASE("string: insert(index, count, CharType)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::insert(index, CharType const*)",
+                   "[string]", etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("on empty string")
   {
@@ -861,8 +975,9 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE(
+  "string: static_string::insert(index, CharType const*, count)", "[string]",
+  etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("on empty string")
   {
@@ -907,8 +1022,8 @@ TEMPLATE_TEST_CASE("string: insert(index, CharType const*, count)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: erase", "[string]", etl::static_string<32>,
-                   etl::static_string<64>)
+TEMPLATE_TEST_CASE("string: static_string::erase", "[string]",
+                   etl::static_string<32>, etl::static_string<64>)
 {
   SECTION("cpprefrence example")
   {
@@ -928,8 +1043,8 @@ TEMPLATE_TEST_CASE("string: erase", "[string]", etl::static_string<32>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::resize", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("default char")
   {
@@ -970,8 +1085,8 @@ TEMPLATE_TEST_CASE("string: resize", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::starts_with", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using namespace etl::literals;
 
@@ -1005,8 +1120,8 @@ TEMPLATE_TEST_CASE("string: starts_with", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::ends_with", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using namespace etl::literals;
 
@@ -1040,8 +1155,8 @@ TEMPLATE_TEST_CASE("string: ends_with", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::substr", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using namespace etl::literals;
 
@@ -1063,8 +1178,8 @@ TEMPLATE_TEST_CASE("string: substr", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: copy", "[string]", (etl::static_string<12>),
-                   (etl::static_string<32>))
+TEMPLATE_TEST_CASE("string: static_string::copy", "[string]",
+                   (etl::static_string<12>), (etl::static_string<32>))
 {
   SECTION("empty")
   {
@@ -1101,8 +1216,8 @@ TEMPLATE_TEST_CASE("string: copy", "[string]", (etl::static_string<12>),
   }
 }
 
-TEMPLATE_TEST_CASE("string: swap", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::swap", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty")
   {
@@ -1143,7 +1258,7 @@ TEMPLATE_TEST_CASE("string: swap", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: compare(string)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::compare(string)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string same capacity")
@@ -1206,8 +1321,8 @@ TEMPLATE_TEST_CASE("string: compare(string)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::find(string)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
   {
@@ -1234,7 +1349,7 @@ TEMPLATE_TEST_CASE("string: find(string)", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: find(char const*)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::find(char const*)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
@@ -1262,8 +1377,8 @@ TEMPLATE_TEST_CASE("string: find(char const*)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::find(char)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
   {
@@ -1290,8 +1405,8 @@ TEMPLATE_TEST_CASE("string: find(char)", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: rfind(string)", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::rfind(string)", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
   {
@@ -1320,7 +1435,7 @@ TEMPLATE_TEST_CASE("string: rfind(string)", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: rfind(char const*)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::rfind(char const*)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
@@ -1351,7 +1466,7 @@ TEMPLATE_TEST_CASE("string: rfind(char const*)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::find_first_of(string)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
@@ -1379,8 +1494,8 @@ TEMPLATE_TEST_CASE("string: find_first_of(string)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: find_first_of(char const*)", "[string]",
-                   etl::static_string<12>, etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::find_first_of(char const*)",
+                   "[string]", etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
   {
@@ -1407,7 +1522,7 @@ TEMPLATE_TEST_CASE("string: find_first_of(char const*)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: find_first_of(char)", "[string]",
+TEMPLATE_TEST_CASE("string: static_string::find_first_of(char)", "[string]",
                    etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string")
@@ -1435,8 +1550,8 @@ TEMPLATE_TEST_CASE("string: find_first_of(char)", "[string]",
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator==/!=", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   SECTION("empty string same capacity")
   {
@@ -1465,8 +1580,8 @@ TEMPLATE_TEST_CASE("string: operator==/!=", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator<", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string = TestType;
 
@@ -1493,8 +1608,8 @@ TEMPLATE_TEST_CASE("string: operator<", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator<=", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator<=", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string = TestType;
 
@@ -1522,8 +1637,8 @@ TEMPLATE_TEST_CASE("string: operator<=", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator>", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator>", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string = TestType;
 
@@ -1550,8 +1665,8 @@ TEMPLATE_TEST_CASE("string: operator>", "[string]", etl::static_string<12>,
   }
 }
 
-TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("string: static_string::operator>=", "[string]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string = TestType;
 
@@ -1579,76 +1694,166 @@ TEMPLATE_TEST_CASE("string: operator>=", "[string]", etl::static_string<12>,
 }
 
 TEMPLATE_TEST_CASE("string: stoi", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<48>, etl::static_string<64>)
 {
   using string_t = TestType;
-  CHECK(etl::stoi(string_t {"0"}) == 0);
-  CHECK(etl::stoi(string_t {"1"}) == 1);
-  CHECK(etl::stoi(string_t {"2"}) == 2);
-  CHECK(etl::stoi(string_t {"10"}) == 10);
-  CHECK(etl::stoi(string_t {"99"}) == 99);
-  CHECK(etl::stoi(string_t {"11123"}) == 11123);
+
+  auto [input, expected] = GENERATE(table<string_t, int>({
+    {string_t {"0"}, 0},
+    {string_t {"1"}, 1},
+    {string_t {"2"}, 2},
+    {string_t {"3"}, 3},
+    {string_t {"4"}, 4},
+    {string_t {"5"}, 5},
+    {string_t {"6"}, 6},
+    {string_t {"7"}, 7},
+    {string_t {"8"}, 8},
+    {string_t {"9"}, 9},
+    {string_t {"10"}, 10},
+    {string_t {"11"}, 11},
+    {string_t {"99"}, 99},
+    {string_t {"11123"}, 11123},
+
+  }));
+
+  CHECK(etl::stoi(input) == expected);
 }
 
 TEMPLATE_TEST_CASE("string: stol", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<48>, etl::static_string<64>)
 {
   using string_t = TestType;
-  CHECK(etl::stol(string_t {"0"}) == 0L);
-  CHECK(etl::stol(string_t {"1"}) == 1L);
-  CHECK(etl::stol(string_t {"2"}) == 2L);
-  CHECK(etl::stol(string_t {"10"}) == 10L);
-  CHECK(etl::stol(string_t {"99"}) == 99L);
-  CHECK(etl::stol(string_t {"11123"}) == 11123L);
+
+  auto [input, expected] = GENERATE(table<string_t, long>({
+    {string_t {"0"}, 0L},
+    {string_t {"1"}, 1L},
+    {string_t {"2"}, 2L},
+    {string_t {"3"}, 3L},
+    {string_t {"4"}, 4L},
+    {string_t {"5"}, 5L},
+    {string_t {"6"}, 6L},
+    {string_t {"7"}, 7L},
+    {string_t {"8"}, 8L},
+    {string_t {"9"}, 9L},
+    {string_t {"10"}, 10L},
+    {string_t {"11"}, 11L},
+    {string_t {"99"}, 99L},
+    {string_t {"11123"}, 11123L},
+
+  }));
+
+  CHECK(etl::stol(input) == expected);
 }
 
 TEMPLATE_TEST_CASE("string: stoll", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<48>, etl::static_string<64>)
 {
   using string_t = TestType;
-  CHECK(etl::stoll(string_t {"0"}) == 0LL);
-  CHECK(etl::stoll(string_t {"1"}) == 1LL);
-  CHECK(etl::stoll(string_t {"2"}) == 2LL);
-  CHECK(etl::stoll(string_t {"10"}) == 10LL);
-  CHECK(etl::stoll(string_t {"99"}) == 99LL);
-  CHECK(etl::stoll(string_t {"11123"}) == 11123LL);
+
+  auto [input, expected] = GENERATE(table<string_t, long long>({
+    {string_t {"0"}, 0LL},
+    {string_t {"1"}, 1LL},
+    {string_t {"2"}, 2LL},
+    {string_t {"3"}, 3LL},
+    {string_t {"4"}, 4LL},
+    {string_t {"5"}, 5LL},
+    {string_t {"6"}, 6LL},
+    {string_t {"7"}, 7LL},
+    {string_t {"8"}, 8LL},
+    {string_t {"9"}, 9LL},
+    {string_t {"10"}, 10LL},
+    {string_t {"11"}, 11LL},
+    {string_t {"99"}, 99LL},
+    {string_t {"11123"}, 11123LL},
+
+  }));
+
+  CHECK(etl::stoll(input) == expected);
 }
 
 TEMPLATE_TEST_CASE("string: stoul", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<48>, etl::static_string<64>)
 {
   using string_t = TestType;
-  CHECK(etl::stoul(string_t {"0"}) == 0UL);
-  CHECK(etl::stoul(string_t {"1"}) == 1UL);
-  CHECK(etl::stoul(string_t {"2"}) == 2UL);
-  CHECK(etl::stoul(string_t {"10"}) == 10UL);
-  CHECK(etl::stoul(string_t {"99"}) == 99UL);
-  CHECK(etl::stoul(string_t {"11123"}) == 11123UL);
+
+  auto [input, expected] = GENERATE(table<string_t, unsigned long>({
+    {string_t {"0"}, 0UL},
+    {string_t {"1"}, 1UL},
+    {string_t {"2"}, 2UL},
+    {string_t {"3"}, 3UL},
+    {string_t {"4"}, 4UL},
+    {string_t {"5"}, 5UL},
+    {string_t {"6"}, 6UL},
+    {string_t {"7"}, 7UL},
+    {string_t {"8"}, 8UL},
+    {string_t {"9"}, 9UL},
+    {string_t {"10"}, 10UL},
+    {string_t {"11"}, 11UL},
+    {string_t {"99"}, 99UL},
+    {string_t {"11123"}, 11123UL},
+
+  }));
+
+  CHECK(etl::stoul(input) == expected);
 }
 
 TEMPLATE_TEST_CASE("string: stoull", "[string]", etl::static_string<12>,
-                   etl::static_string<32>)
+                   etl::static_string<24>, etl::static_string<32>,
+                   etl::static_string<48>, etl::static_string<64>)
 {
   using string_t = TestType;
-  CHECK(etl::stoull(string_t {"0"}) == 0ULL);
-  CHECK(etl::stoull(string_t {"1"}) == 1ULL);
-  CHECK(etl::stoull(string_t {"2"}) == 2ULL);
-  CHECK(etl::stoull(string_t {"10"}) == 10ULL);
-  CHECK(etl::stoull(string_t {"99"}) == 99ULL);
-  CHECK(etl::stoull(string_t {"11123"}) == 11123ULL);
+
+  auto [input, expected] = GENERATE(table<string_t, unsigned long long>({
+    {string_t {"0"}, 0ULL},
+    {string_t {"1"}, 1ULL},
+    {string_t {"2"}, 2ULL},
+    {string_t {"3"}, 3ULL},
+    {string_t {"4"}, 4ULL},
+    {string_t {"5"}, 5ULL},
+    {string_t {"6"}, 6ULL},
+    {string_t {"7"}, 7ULL},
+    {string_t {"8"}, 8ULL},
+    {string_t {"9"}, 9ULL},
+    {string_t {"10"}, 10ULL},
+    {string_t {"11"}, 11ULL},
+    {string_t {"99"}, 99ULL},
+    {string_t {"11123"}, 11123ULL},
+
+  }));
+
+  CHECK(etl::stoull(input) == expected);
 }
 
 TEMPLATE_TEST_CASE("string: to_string", "[string]", int, long, long long,
                    unsigned int, unsigned long, unsigned long long)
 {
-  CHECK(etl::to_string<8>(TestType {1}) == "1");
-  CHECK(etl::to_string<16>(TestType {1}) == "1");
-  CHECK(etl::to_string<32>(TestType {1}) == "1");
-  CHECK(etl::to_string<64>(TestType {1}) == "1");
+  auto [input, expected] = GENERATE(table<TestType, etl::string_view>({
+    {TestType {0}, "0"_sv},
+    {TestType {1}, "1"_sv},
+    {TestType {2}, "2"_sv},
+    {TestType {3}, "3"_sv},
+    {TestType {4}, "4"_sv},
+    {TestType {5}, "5"_sv},
+    {TestType {6}, "6"_sv},
+    {TestType {7}, "7"_sv},
+    {TestType {8}, "8"_sv},
+    {TestType {9}, "9"_sv},
+    {TestType {10}, "10"_sv},
+    {TestType {11}, "11"_sv},
+    {TestType {99}, "99"_sv},
+    {TestType {100}, "100"_sv},
+    {TestType {999}, "999"_sv},
+    {TestType {9999}, "9999"_sv},
+    {TestType {12345}, "12345"_sv},
 
-  CHECK(etl::to_string<32>(TestType {0}) == "0");
-  CHECK(etl::to_string<32>(TestType {2}) == "2");
-  CHECK(etl::to_string<32>(TestType {10}) == "10");
-  CHECK(etl::to_string<32>(TestType {100}) == "100");
-  CHECK(etl::to_string<32>(TestType {9999}) == "9999");
+  }));
+
+  CHECK(etl::to_string<8>(input) == expected);
+  CHECK(etl::to_string<16>(input) == expected);
+  CHECK(etl::to_string<32>(input) == expected);
+  CHECK(etl::to_string<64>(input) == expected);
 }
