@@ -23,9 +23,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-/**
- * \example vector.cpp
- */
+/// \example vector.cpp
 
 #ifndef TAETL_VECTOR_HPP
 #define TAETL_VECTOR_HPP
@@ -41,9 +39,7 @@ namespace etl
 {
 namespace detail
 {
-/**
- * \brief Storage for zero elements.
- */
+/// \brief Storage for zero elements.
 template <typename T>
 class static_vector_zero_storage
 {
@@ -54,95 +50,67 @@ class static_vector_zero_storage
   using pointer         = T*;
   using const_pointer   = T const*;
 
-  /**
-   * \brief Defaulted constructor.
-   */
+  /// \brief Defaulted constructor.
   constexpr static_vector_zero_storage() = default;
 
-  /**
-   * \brief Defaulted copy constructor.
-   */
+  /// \brief Defaulted copy constructor.
   constexpr static_vector_zero_storage(static_vector_zero_storage const&)
     = default;
 
-  /**
-   * \brief Defaulted copy assignment .
-   */
+  /// \brief Defaulted copy assignment .
   constexpr auto operator          =(static_vector_zero_storage const&) noexcept
     -> static_vector_zero_storage& = default;
 
-  /**
-   * \brief Defaulted move constructor.
-   */
+  /// \brief Defaulted move constructor.
   constexpr static_vector_zero_storage(
     static_vector_zero_storage&&) noexcept = default;
 
-  /**
-   * \brief Defaulted move assignment.
-   */
+  /// \brief Defaulted move assignment.
   constexpr auto operator          =(static_vector_zero_storage&&) noexcept
     -> static_vector_zero_storage& = default;
 
-  /**
-   * \brief Defaulted destructor.
-   */
+  /// \brief Defaulted destructor.
   ~static_vector_zero_storage() = default;
 
-  /**
-   * \brief Pointer to the data in the storage.
-   */
+  /// \brief Pointer to the data in the storage.
   [[nodiscard]] static constexpr auto data() noexcept -> pointer
   {
     return nullptr;
   }
 
-  /**
-   * \brief Number of elements currently stored.
-   */
+  /// \brief Number of elements currently stored.
   [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
 
-  /**
-   * \brief Capacity of the storage.
-   */
+  /// \brief Capacity of the storage.
   [[nodiscard]] static constexpr auto capacity() noexcept -> size_type
   {
     return 0;
   }
 
-  /**
-   * \brief Is the storage empty?
-   */
+  /// \brief Is the storage empty?
   [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
 
-  /**
-   * \brief Is the storage full?
-   */
+  /// \brief Is the storage full?
   [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
 
-  /**
-   * \brief Constructs a new element at the end of the storagein-place.
-   * Increases size of the storage by one. Always fails for empty storage.
-   */
+  /// \brief Constructs a new element at the end of the storagein-place.
+  /// Increases size of the storage by one. Always fails for empty storage.
   template <typename... Args, TAETL_REQUIRES_((is_constructible_v<T, Args...>))>
   static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
   {
     assert(false && "tried to emplace_back on empty storage");
   }
 
-  /**
-   * \brief Removes the last element of the storage. Always fails for empty
-   * storage.
-   */
+  /// \brief Removes the last element of the storage. Always fails for empty
+  /// storage.
   static constexpr void pop_back() noexcept
   {
     assert(false && "tried to pop_back on empty storage");
   }
 
   protected:
-  /**
-   * \brief Changes the size of the storage without adding or removing elements
-   * (unsafe). The size of an empty storage can only be changed to 0.
-   */
+  /// \brief Changes the size of the storage without adding or removing elements
+  /// (unsafe). The size of an empty storage can only be changed to 0.
   static constexpr void
   unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
   {
@@ -151,26 +119,21 @@ class static_vector_zero_storage
               "non-zero value");
   }
 
-  /**
-   * \brief Destroys all elements of the storage in range [begin, end) without
-   * changings its size (unsafe). Nothing to destroy since the storage is empty.
-   */
+  /// \brief Destroys all elements of the storage in range [begin, end) without
+  /// changings its size (unsafe). Nothing to destroy since the storage is
+  /// empty.
   template <typename InputIt>
   static constexpr auto unsafe_destroy(InputIt /* begin */,
                                        InputIt /* end */) noexcept -> void
   {
   }
 
-  /**
-   * \brief Destroys all elements of the storage without changing its size
-   * (unsafe). Nothing to destroy since the storage is empty.
-   */
+  /// \brief Destroys all elements of the storage without changing its size
+  /// (unsafe). Nothing to destroy since the storage is empty.
   static constexpr void unsafe_destroy_all() noexcept { }
 };
 
-/**
- * \brief Storage for trivial types.
- */
+/// \brief Storage for trivial types.
 template <typename T, size_t Capacity>
 class static_vector_trivial_storage
 {
@@ -202,57 +165,43 @@ class static_vector_trivial_storage
 
   ~static_vector_trivial_storage() = default;
 
-  /**
-   * \brief Direct access to the underlying storage.
-   */
+  /// \brief Direct access to the underlying storage.
   [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
   {
     return data_.data();
   }
 
-  /**
-   * \brief Direct access to the underlying storage.
-   */
+  /// \brief Direct access to the underlying storage.
   [[nodiscard]] constexpr auto data() noexcept -> pointer
   {
     return data_.data();
   }
 
-  /**
-   * \brief Number of elements in the storage.
-   */
+  /// \brief Number of elements in the storage.
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
     return size_;
   }
 
-  /**
-   * \brief Maximum number of elements that can be allocated in the storage.
-   */
+  /// \brief Maximum number of elements that can be allocated in the storage.
   [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return Capacity;
   }
 
-  /**
-   * \brief Is the storage empty?
-   */
+  /// \brief Is the storage empty?
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
     return size() == size_type {0};
   }
 
-  /**
-   * \brief Is the storage full?
-   */
+  /// \brief Is the storage full?
   [[nodiscard]] constexpr auto full() const noexcept -> bool
   {
     return size() == Capacity;
   }
 
-  /**
-   * \brief Constructs an element in-place at the end of the storage.
-   */
+  /// \brief Constructs an element in-place at the end of the storage.
   template <typename... Args>
   constexpr auto emplace_back(Args&&... args) noexcept -> enable_if_t<
     is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>, void>
@@ -262,9 +211,7 @@ class static_vector_trivial_storage
     unsafe_set_size(static_cast<size_type>(size() + 1));
   }
 
-  /**
-   * \brief Remove the last element from the container.
-   */
+  /// \brief Remove the last element from the container.
   constexpr auto pop_back() noexcept -> void
   {
     assert(!empty() && "tried to pop_back from empty storage!");
@@ -272,33 +219,27 @@ class static_vector_trivial_storage
   }
 
   protected:
-  /**
-   * \brief (unsafe) Changes the container size to new_size.
-   *
-   * \warning No elements are constructed or destroyed.
-   */
+  /// \brief (unsafe) Changes the container size to new_size.
+  ///
+  /// \warning No elements are constructed or destroyed.
   constexpr auto unsafe_set_size(size_t newSize) noexcept -> void
   {
     assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity]");
     size_ = size_type(newSize);
   }
 
-  /**
-   * \brief (unsafe) Destroy elements in the range [begin, end).
-   *
-   * \warning The size of the storage is not changed.
-   */
+  /// \brief (unsafe) Destroy elements in the range [begin, end).
+  ///
+  /// \warning The size of the storage is not changed.
   template <typename InputIt>
   constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept
     -> void
   {
   }
 
-  /**
-   * \brief (unsafe) Destroys all elements of the storage.
-   *
-   * \warning The size of the storage is not changed.
-   */
+  /// \brief (unsafe) Destroys all elements of the storage.
+  ///
+  /// \warning The size of the storage is not changed.
   constexpr auto unsafe_destroy_all() noexcept -> void { }
 
   private:
@@ -311,9 +252,7 @@ class static_vector_trivial_storage
   size_type size_ = 0;
 };
 
-/**
- * \brief Storage for non-trivial elements.
- */
+/// \brief Storage for non-trivial elements.
 template <typename T, size_t Capacity>
 class static_vector_non_trivial_storage
 {
@@ -346,70 +285,52 @@ class static_vector_non_trivial_storage
     unsafe_destroy_all();
   }
 
-  /**
-   * \brief Direct access to the underlying storage.
-   */
+  /// \brief Direct access to the underlying storage.
   [[nodiscard]] auto data() const noexcept -> const_pointer
   {
     return reinterpret_cast<const_pointer>(data_);
   }
 
-  /**
-   * \brief Direct access to the underlying storage.
-   */
+  /// \brief Direct access to the underlying storage.
   [[nodiscard]] auto data() noexcept -> pointer
   {
     return reinterpret_cast<pointer>(data_);
   }
 
-  /**
-   * \brief Pointer to one-past-the-end.
-   */
+  /// \brief Pointer to one-past-the-end.
   [[nodiscard]] auto end() const noexcept -> const_pointer
   {
     return data() + size();
   }
 
-  /**
-   * \brief Pointer to one-past-the-end.
-   */
+  /// \brief Pointer to one-past-the-end.
   [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
 
-  /**
-   * \brief Number of elements in the storage.
-   */
+  /// \brief Number of elements in the storage.
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
     return size_;
   }
 
-  /**
-   * \brief Maximum number of elements that can be allocated in the storage.
-   */
+  /// \brief Maximum number of elements that can be allocated in the storage.
   [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return Capacity;
   }
 
-  /**
-   * \brief Is the storage empty?
-   */
+  /// \brief Is the storage empty?
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
     return size() == size_type {0};
   }
 
-  /**
-   * \brief Is the storage full?
-   */
+  /// \brief Is the storage full?
   [[nodiscard]] constexpr auto full() const noexcept -> bool
   {
     return size() == Capacity;
   }
 
-  /**
-   * \brief Constructs an element in-place at the end of the embedded storage.
-   */
+  /// \brief Constructs an element in-place at the end of the embedded storage.
   template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<T>)>
   auto emplace_back(Args&&... args) noexcept(
     noexcept(new (end()) T(forward<Args>(args)...))) -> void
@@ -419,9 +340,7 @@ class static_vector_non_trivial_storage
     unsafe_set_size(static_cast<size_type>(size() + 1));
   }
 
-  /**
-   * \brief Remove the last element from the container.
-   */
+  /// \brief Remove the last element from the container.
   auto pop_back() noexcept(is_nothrow_destructible_v<T>) -> void
   {
     assert(!empty() && "tried to pop_back from empty storage!");
@@ -431,22 +350,18 @@ class static_vector_non_trivial_storage
   }
 
   protected:
-  /**
-   * \brief (unsafe) Changes the container size to new_size.
-   *
-   * \warning No elements are constructed or destroyed.
-   */
+  /// \brief (unsafe) Changes the container size to new_size.
+  ///
+  /// \warning No elements are constructed or destroyed.
   constexpr void unsafe_set_size(size_t newSize) noexcept
   {
     assert(newSize <= Capacity && "new_size out-of-bounds [0, Capacity)");
     size_ = size_type(newSize);
   }
 
-  /**
-   * \brief (unsafe) Destroy elements in the range [begin, end).
-   *
-   * \warning The size of the storage is not changed.
-   */
+  /// \brief (unsafe) Destroy elements in the range [begin, end).
+  ///
+  /// \warning The size of the storage is not changed.
   template <typename InputIt>
   void unsafe_destroy(InputIt first,
                       InputIt last) noexcept(is_nothrow_destructible_v<T>)
@@ -456,11 +371,9 @@ class static_vector_non_trivial_storage
     for (; first != last; ++first) { first->~T(); }
   }
 
-  /**
-   * \brief (unsafe) Destroys all elements of the storage.
-   *
-   * \warning The size of the storage is not changed.
-   */
+  /// \brief (unsafe) Destroys all elements of the storage.
+  ///
+  /// \warning The size of the storage is not changed.
   void unsafe_destroy_all() noexcept(is_nothrow_destructible_v<T>)
   {
     unsafe_destroy(data(), end());
@@ -475,9 +388,7 @@ class static_vector_non_trivial_storage
   size_type size_ = 0;
 };
 
-/**
- * \brief Selects the vector storage.
- */
+/// \brief Selects the vector storage.
 template <typename T, size_t Capacity>
 using static_vector_storage_type = conditional_t<
   Capacity == 0, static_vector_zero_storage<T>,
@@ -486,9 +397,7 @@ using static_vector_storage_type = conditional_t<
 
 }  // namespace detail
 
-/**
- * \brief Dynamically-resizable fixed-capacity vector.
- */
+/// \brief Dynamically-resizable fixed-capacity vector.
 template <typename T, size_t Capacity>
 struct static_vector : detail::static_vector_storage_type<T, Capacity>
 {
@@ -578,12 +487,10 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
 
   using base_type::pop_back;
 
-  /**
-   * \brief Appends value at the end of the vector.
-   *
-   * \todo Add noexcept(noexcept(emplace_back(forward<U>(value)))) breaks
-   * AVR build GCC8.2 currently.
-   */
+  /// \brief Appends value at the end of the vector.
+  ///
+  /// \todo Add noexcept(noexcept(emplace_back(forward<U>(value)))) breaks
+  /// AVR build GCC8.2 currently.
   template <typename U, TAETL_REQUIRES_(is_constructible_v<T, U>&&
                                           is_assignable_v<reference, U&&>)>
   constexpr auto push_back(U&& value) noexcept(false) -> void
@@ -625,9 +532,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return move_insert(position, &a, &a + 1);
   }
 
-  /**
-   * \brief Data access
-   */
+  /// \brief Data access
   using base_type::data;
 
   constexpr auto
@@ -691,23 +596,17 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return writablePosition;
   }
 
-  /**
-   * \brief Clears the vector.
-   */
+  /// \brief Clears the vector.
   constexpr void clear() noexcept
   {
     unsafe_destroy_all();
     unsafe_set_size(0);
   }
 
-  /**
-   * \brief Default constructor.
-   */
+  /// \brief Default constructor.
   constexpr static_vector() = default;
 
-  /**
-   * \brief Copy constructor.
-   */
+  /// \brief Copy constructor.
   constexpr static_vector(static_vector const& other) noexcept(
     noexcept(insert(begin(), other.begin(), other.end())))
   {
@@ -716,9 +615,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     insert(begin(), other.begin(), other.end());
   }
 
-  /**
-   * \brief Move constructor.
-   */
+  /// \brief Move constructor.
   constexpr static_vector(static_vector&& other) noexcept(
     noexcept(move_insert(begin(), other.begin(), other.end())))
   {
@@ -727,9 +624,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     move_insert(begin(), other.begin(), other.end());
   }
 
-  /**
-   * \brief Copy assignment.
-   */
+  /// \brief Copy assignment.
   constexpr auto operator=(static_vector const& other) noexcept(
     noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
     -> enable_if_t<is_assignable_v<reference, const_reference>, static_vector&>
@@ -741,9 +636,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return *this;
   }
 
-  /**
-   * \brief Move assignment.
-   */
+  /// \brief Move assignment.
   constexpr auto operator=(static_vector&& other) noexcept(noexcept(
     clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
     -> enable_if_t<is_assignable_v<reference, reference>, static_vector&>
@@ -755,9 +648,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return *this;
   }
 
-  /**
-   * \brief Initializes vector with n default-constructed elements.
-   */
+  /// \brief Initializes vector with n default-constructed elements.
   TAETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
   explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
   {
@@ -765,9 +656,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     emplace_n(n);
   }
 
-  /**
-   * \brief Initializes vector with n with value.
-   */
+  /// \brief Initializes vector with n with value.
   TAETL_REQUIRES(is_copy_constructible_v<T>)
   constexpr static_vector(size_type n,
                           T const& value) noexcept(noexcept(insert(begin(), n,
@@ -777,9 +666,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     insert(begin(), n, value);
   }
 
-  /**
-   * \brief Initialize vector from range [first, last).
-   */
+  /// \brief Initialize vector from range [first, last).
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr static_vector(InputIter first, InputIter last)
@@ -793,45 +680,33 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     insert(begin(), first, last);
   }
 
-  /**
-   * \brief Is the storage empty?
-   */
+  /// \brief Is the storage empty?
   using base_type::empty;
 
-  /**
-   * \brief Is the storage full?
-   */
+  /// \brief Is the storage full?
   using base_type::full;
 
-  /**
-   * \brief Number of elements in the vector
-   */
+  /// \brief Number of elements in the vector
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
     return base_type::size();
   }
 
-  /**
-   * \brief Maximum number of elements that can be allocated in the vector
-   */
+  /// \brief Maximum number of elements that can be allocated in the vector
   [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
   {
     return base_type::capacity();
   }
 
-  /**
-   * \brief Maximum number of elements that can be allocated in the vector
-   */
+  /// \brief Maximum number of elements that can be allocated in the vector
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
   {
     return capacity();
   }
 
-  /**
-   * \brief Resizes the container to contain sz elements. If elements need to be
-   * appended, these are move-constructed from `T{}` (or copy-constructed if `T`
-   * is not `is_move_constructible_v`).
-   */
+  /// \brief Resizes the container to contain sz elements. If elements need to
+  /// be appended, these are move-constructed from `T{}` (or copy-constructed if
+  /// `T` is not `is_move_constructible_v`).
   constexpr auto resize(size_type sz) noexcept(
     (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
     || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
@@ -871,17 +746,13 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     insert(begin(), n, u);
   }
 
-  /**
-   * \brief Unchecked access to element at index pos (UB if index not in range)
-   */
+  /// \brief Unchecked access to element at index pos (UB if index not in range)
   [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
   {
     return detail::index(*this, pos);
   }
 
-  /**
-   * \brief Unchecked access to element at index pos (UB if index not in range)
-   */
+  /// \brief Unchecked access to element at index pos (UB if index not in range)
   [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept
     -> const_reference
   {
@@ -931,9 +802,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     return p;
   }
 
-  /**
-   * \brief Exchanges the contents of the container with those of other.
-   */
+  /// \brief Exchanges the contents of the container with those of other.
   constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>)
     -> enable_if_t<is_assignable_v<T&, T&&>, void>
   {
@@ -944,10 +813,8 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     (*this)           = move(tmp);
   }
 
-  /**
-   * \brief Resizes the container to contain sz elements. If elements need to be
-   * appended, these are copy-constructed from value.
-   */
+  /// \brief Resizes the container to contain sz elements. If elements need to
+  /// be appended, these are copy-constructed from value.
   constexpr auto
   resize(size_type sz,
          T const& value) noexcept(is_nothrow_copy_constructible_v<T>)
@@ -996,10 +863,8 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   }
 };
 
-/**
- * \brief Specializes the swap algorithm for static_vector. Swaps the
- * contents of lhs and rhs.
- */
+/// \brief Specializes the swap algorithm for static_vector. Swaps the
+/// contents of lhs and rhs.
 template <typename T, size_t Capacity>
 constexpr auto swap(static_vector<T, Capacity>& lhs,
                     static_vector<T, Capacity>& rhs) noexcept -> void
@@ -1007,13 +872,11 @@ constexpr auto swap(static_vector<T, Capacity>& lhs,
   lhs.swap(rhs);
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Checks if the contents of lhs and rhs are equal, that is, they have
- * the same number of elements and each element in lhs compares equal with the
- * element in rhs at the same position.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Checks if the contents of lhs and rhs are equal, that is, they have
+/// the same number of elements and each element in lhs compares equal with the
+/// element in rhs at the same position.
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept
@@ -1027,13 +890,11 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
   return false;
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Checks if the contents of lhs and rhs are equal, that is, they have
- * the same number of elements and each element in lhs compares equal with the
- * element in rhs at the same position.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Checks if the contents of lhs and rhs are equal, that is, they have
+/// the same number of elements and each element in lhs compares equal with the
+/// element in rhs at the same position.
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept
@@ -1042,13 +903,11 @@ constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
   return !(lhs == rhs);
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Compares the contents of lhs and rhs lexicographically. The
- * comparison is performed by a function equivalent to
- * lexicographical_compare.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Compares the contents of lhs and rhs lexicographically. The
+/// comparison is performed by a function equivalent to
+/// lexicographical_compare.
 template <typename T, size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -1056,13 +915,11 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs,
   return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Compares the contents of lhs and rhs lexicographically. The
- * comparison is performed by a function equivalent to
- * lexicographical_compare.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Compares the contents of lhs and rhs lexicographically. The
+/// comparison is performed by a function equivalent to
+/// lexicographical_compare.
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept
@@ -1071,13 +928,11 @@ constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
   return !(rhs < lhs);
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Compares the contents of lhs and rhs lexicographically. The
- * comparison is performed by a function equivalent to
- * lexicographical_compare.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Compares the contents of lhs and rhs lexicographically. The
+/// comparison is performed by a function equivalent to
+/// lexicographical_compare.
 template <typename T, size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -1085,13 +940,11 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs,
   return rhs < lhs;
 }
 
-/**
- * \brief Compares the contents of two vectors.
- *
- * \details Compares the contents of lhs and rhs lexicographically. The
- * comparison is performed by a function equivalent to
- * lexicographical_compare.
- */
+/// \brief Compares the contents of two vectors.
+///
+/// \details Compares the contents of lhs and rhs lexicographically. The
+/// comparison is performed by a function equivalent to
+/// lexicographical_compare.
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept
@@ -1100,12 +953,10 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
   return !(lhs < rhs);
 }
 
-/**
- * \brief Erases all elements that satisfy the predicate pred from the
- * container.
- * \details https://en.cppreference.com/w/cpp/container/vector/erase2
- * \return The number of erased elements.
- */
+/// \brief Erases all elements that satisfy the predicate pred from the
+/// container.
+/// \details https://en.cppreference.com/w/cpp/container/vector/erase2
+/// \return The number of erased elements.
 template <typename T, size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   typename static_vector<T, Capacity>::size_type
@@ -1116,11 +967,9 @@ constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   return static_cast<typename static_vector<T, Capacity>::size_type>(r);
 }
 
-/**
- * \brief Erases all elements that compare equal to value from the container.
- * \details https://en.cppreference.com/w/cpp/container/vector/erase2
- * \return The number of erased elements.
- */
+/// \brief Erases all elements that compare equal to value from the container.
+/// \details https://en.cppreference.com/w/cpp/container/vector/erase2
+/// \return The number of erased elements.
 template <typename T, size_t Capacity, typename U>
 constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
   typename static_vector<T, Capacity>::size_type
