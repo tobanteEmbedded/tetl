@@ -9,18 +9,14 @@
 
 namespace etl
 {
-/**
- * \brief The enabled specializations of formatter define formatting rules for a
- * given type. Enabled specializations meet the Formatter requirements.
- *
- * https://en.cppreference.com/w/cpp/utility/format/formatter
- */
+/// \brief The enabled specializations of formatter define formatting rules for
+/// a given type. Enabled specializations meet the Formatter requirements.
+///
+/// https://en.cppreference.com/w/cpp/utility/format/formatter
 template <typename T, typename CharT = char>
 struct formatter;
 
-/**
- * \brief Standard specializations for basic type char.
- */
+/// \brief Standard specializations for basic type char.
 template <>
 struct formatter<char, char>
 {
@@ -33,9 +29,7 @@ struct formatter<char, char>
   }
 };
 
-/**
- * \brief Standard specializations for basic type char const*.
- */
+/// \brief Standard specializations for basic type char const*.
 template <>
 struct formatter<char const*, char>
 {
@@ -47,9 +41,7 @@ struct formatter<char const*, char>
   }
 };
 
-/**
- * \brief Standard specializations for basic type char array.
- */
+/// \brief Standard specializations for basic type char array.
 template <::etl::size_t N>
 struct formatter<char[N], char>
 {
@@ -61,9 +53,7 @@ struct formatter<char[N], char>
   }
 };
 
-/**
- * \brief Standard specializations for etl::string_view.
- */
+/// \brief Standard specializations for etl::string_view.
 template <>
 struct formatter<etl::string_view, char>
 {
@@ -75,9 +65,7 @@ struct formatter<etl::string_view, char>
   }
 };
 
-/**
- * \brief Standard specializations for etl::static_string<Capacity>.
- */
+/// \brief Standard specializations for etl::static_string<Capacity>.
 template <etl::size_t Capacity>
 struct formatter<etl::static_string<Capacity>, char>
 {
@@ -89,9 +77,7 @@ struct formatter<etl::static_string<Capacity>, char>
   }
 };
 
-/**
- * \brief Standard specializations for short.
- */
+/// \brief Standard specializations for short.
 template <>
 struct formatter<short, char>
 {
@@ -104,9 +90,7 @@ struct formatter<short, char>
   }
 };
 
-/**
- * \brief Standard specializations for int.
- */
+/// \brief Standard specializations for int.
 template <>
 struct formatter<int, char>
 {
@@ -119,9 +103,7 @@ struct formatter<int, char>
   }
 };
 
-/**
- * \brief Standard specializations for long.
- */
+/// \brief Standard specializations for long.
 template <>
 struct formatter<long, char>
 {
@@ -134,9 +116,7 @@ struct formatter<long, char>
   }
 };
 
-/**
- * \brief Standard specializations for long long.
- */
+/// \brief Standard specializations for long long.
 template <>
 struct formatter<long long, char>
 {
@@ -149,9 +129,7 @@ struct formatter<long long, char>
   }
 };
 
-/**
- * \brief Standard specializations for unsigned short.
- */
+/// \brief Standard specializations for unsigned short.
 template <>
 struct formatter<unsigned short, char>
 {
@@ -165,9 +143,7 @@ struct formatter<unsigned short, char>
   }
 };
 
-/**
- * \brief Standard specializations for unsigned.
- */
+/// \brief Standard specializations for unsigned.
 template <>
 struct formatter<unsigned, char>
 {
@@ -180,9 +156,7 @@ struct formatter<unsigned, char>
   }
 };
 
-/**
- * \brief Standard specializations for unsigned long.
- */
+/// \brief Standard specializations for unsigned long.
 template <>
 struct formatter<unsigned long, char>
 {
@@ -196,9 +170,7 @@ struct formatter<unsigned long, char>
   }
 };
 
-/**
- * \brief Standard specializations for unsigned long long.
- */
+/// \brief Standard specializations for unsigned long long.
 template <>
 struct formatter<unsigned long long, char>
 {

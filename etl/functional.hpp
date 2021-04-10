@@ -809,8 +809,8 @@ struct reference_wrapper
   /// reference_wrapper and the expression FUN(declval<U>()) is well-formed,
   /// where FUN names the set of imaginary functions:
   ///
-  ///  void FUN(T&) noexcept;
-  ///  void FUN(T&&) = delete;
+  /// void FUN(T&) noexcept;
+  /// void FUN(T&&) = delete;
   ///
   /// https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper
   template <

@@ -7,9 +7,7 @@
 
 namespace etl::detail
 {
-/**
- * \brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
- */
+/// \brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
 template <typename T>
 [[nodiscard]] constexpr auto ascii_to_integer(char const* str) noexcept -> T
 {
@@ -27,16 +25,14 @@ template <typename T>
   return res;
 }
 
-/**
- * \brief Converts an integer value to a null-terminated string using the
- * specified base and stores the result in the array given by str parameter.
- *
- * \details If base is 10 and value is negative, the resulting string is
- * preceded with a minus sign (-). With any other base, value is always
- * considered unsigned.
- *
- * \todo Only base 10 is currently supported. Negative not implemented as well.
- */
+/// \brief Converts an integer value to a null-terminated string using the
+/// specified base and stores the result in the array given by str parameter.
+///
+/// \details If base is 10 and value is negative, the resulting string is
+/// preceded with a minus sign (-). With any other base, value is always
+/// considered unsigned.
+///
+/// \todo Only base 10 is currently supported. Negative not implemented as well.
 template <typename T>
 constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 {
@@ -86,13 +82,12 @@ constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
   return buffer;
 }
 
-/**
- * \brief Interprets a floating point value in a byte string pointed to by str.
- * \tparam FloatT The floating point type to convert to.
- * \param str Pointer to the null-terminated byte string to be interpreted.
- * \param last Pointer to a pointer to character.
- * \return Floating point value corresponding to the contents of str on success.
- */
+/// \brief Interprets a floating point value in a byte string pointed to by str.
+/// \tparam FloatT The floating point type to convert to.
+/// \param str Pointer to the null-terminated byte string to be interpreted.
+/// \param last Pointer to a pointer to character.
+/// \return Floating point value corresponding to the contents of str on
+/// success.
 template <typename FloatT>
 [[nodiscard]] constexpr auto
 ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept

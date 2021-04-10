@@ -122,11 +122,8 @@ struct skill
   };
 };
 
-/**
- * \brief Wraps a built-in type.
- * \details Based on C++ on Sea 2019 talk from Barney Dellar.
- * https://www.youtube.com/watch?v=fWcnp7Bulc8&t=264s
- */
+/// \brief Wraps a built-in type. Based on C++ on Sea 2019 talk from Barney
+/// Dellar. https://www.youtube.com/watch?v=fWcnp7Bulc8&t=264s
 template <typename ValueType, typename Tag,
           template <typename> typename... Skills>
 struct strong_type : Skills<strong_type<ValueType, Tag, Skills...>>...

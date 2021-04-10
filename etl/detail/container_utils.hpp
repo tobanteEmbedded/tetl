@@ -85,10 +85,8 @@ template <typename T>
 static constexpr bool RandomAccessRange
   = RandomAccessIterator<range_iterator_t<T>>;
 
-/**
- * \brief Smallest fixed-width unsigned integer type that can represent values
- * in the range [0, N].
- */
+/// \brief Smallest fixed-width unsigned integer type that can represent values
+/// in the range [0, N].
 // clang-format off
 template<size_t N>
 using smallest_size_t =
@@ -99,9 +97,7 @@ using smallest_size_t =
                                                                  size_t>>>>;
 // clang-format on
 
-/**
- * \brief Index a range doing bound checks in debug builds
- */
+/// \brief Index a range doing bound checks in debug builds
 template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {

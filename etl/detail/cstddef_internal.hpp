@@ -30,37 +30,29 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief etl::size_t is the unsigned integer type of the result of the sizeof
- * operator.
- *
- * \details https://en.cppreference.com/w/cpp/types/size_t
- */
+/// \brief etl::size_t is the unsigned integer type of the result of the sizeof
+/// operator.
+///
+/// \details https://en.cppreference.com/w/cpp/types/size_t
 using size_t = TAETL_BUILTIN_SIZET;
 
-/**
- * \brief etl::ptrdiff_t is the signed integer type of the result of subtracting
- * two pointers.
- *
- * \details https://en.cppreference.com/w/cpp/types/ptrdiff_t
- */
+/// \brief etl::ptrdiff_t is the signed integer type of the result of
+/// subtracting two pointers.
+///
+/// \details https://en.cppreference.com/w/cpp/types/ptrdiff_t
 using ptrdiff_t = TAETL_BUILTIN_PTRDIFF;
 
-/**
- * \brief etl::nullptr_t is the type of the null pointer literal, nullptr. It is
- * a distinct type that is not itself a pointer type or a pointer to member
- * type.
- *
- * \details https://en.cppreference.com/w/cpp/types/nullptr_t
- */
+/// \brief etl::nullptr_t is the type of the null pointer literal, nullptr. It
+/// is a distinct type that is not itself a pointer type or a pointer to member
+/// type.
+///
+/// \details https://en.cppreference.com/w/cpp/types/nullptr_t
 using nullptr_t = decltype(nullptr);
 
-/**
- * \brief etl::max_align_t is a trivial standard-layout type whose alignment
- * requirement is at least as strict (as large) as that of every scalar type.
- *
- * \details https://en.cppreference.com/w/cpp/types/max_align_t
- */
+/// \brief etl::max_align_t is a trivial standard-layout type whose alignment
+/// requirement is at least as strict (as large) as that of every scalar type.
+///
+/// \details https://en.cppreference.com/w/cpp/types/max_align_t
 struct alignas(long double) max_align_t
 {
 };

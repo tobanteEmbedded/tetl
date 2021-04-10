@@ -35,24 +35,20 @@ DAMAGE.
 #include "etl/cstddef.hpp"
 #include "etl/warning.hpp"
 
-/**
- * \brief Called by the standard single-object placement new expression. The
- * standard library implementation performs no action and returns ptr
- * unmodified. The behavior is undefined if this function is called through a
- * placement new expression and ptr is a null pointer.
- */
+/// \brief Called by the standard single-object placement new expression. The
+/// standard library implementation performs no action and returns ptr
+/// unmodified. The behavior is undefined if this function is called through a
+/// placement new expression and ptr is a null pointer.
 [[nodiscard]] auto operator new(etl::size_t count, void* ptr) noexcept -> void*
 {
   etl::ignore_unused(count);
   return ptr;
 }
 
-/**
- * \brief Called by the standard array form placement new expression. The
- * standard library implementation performs no action and returns ptr
- * unmodified. The behavior is undefined if this function is called through a
- * placement new expression and ptr is a null pointer.
- */
+/// \brief Called by the standard array form placement new expression. The
+/// standard library implementation performs no action and returns ptr
+/// unmodified. The behavior is undefined if this function is called through a
+/// placement new expression and ptr is a null pointer.
 [[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept
   -> void*
 {
@@ -64,33 +60,26 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief etl::nothrow_t is an empty class type used to disambiguate the
- * overloads of throwing and non-throwing allocation functions.
- */
+/// \brief etl::nothrow_t is an empty class type used to disambiguate the
+/// overloads of throwing and non-throwing allocation functions.
 struct nothrow_t
 {
   explicit nothrow_t() = default;
 };
 
-/**
- * \brief etl::nothrow is a constant of type etl::nothrow_t used to disambiguate
- * the overloads of throwing and non-throwing allocation functions.
- */
+/// \brief etl::nothrow is a constant of type etl::nothrow_t used to
+/// disambiguate the overloads of throwing and non-throwing allocation
+/// functions.
 inline constexpr auto nothrow = etl::nothrow_t {};
 
-/**
- * \brief etl::new_handler is the function pointer type (pointer to function
- * that takes no arguments and returns void), which is used by the functions
- * etl::set_new_handler and etl::get_new_handler
- */
+/// \brief etl::new_handler is the function pointer type (pointer to function
+/// that takes no arguments and returns void), which is used by the functions
+/// etl::set_new_handler and etl::get_new_handler
 using new_handler = void (*)();
 
-/**
- * Cache line sizes for ARM values are not strictly correct since cache
- * line sizes depend on implementations, not architectures.  There are even
- * implementations with cache line sizes configurable at boot time.
- */
+/// Cache line sizes for ARM values are not strictly correct since cache
+/// line sizes depend on implementations, not architectures.  There are even
+/// implementations with cache line sizes configurable at boot time.
 #if defined(__aarch64__)
 #define TAETL_CACHELINE_SIZE 64
 #elif defined(__ARM_ARCH_5T__)
@@ -105,41 +94,31 @@ using new_handler = void (*)();
 #define TAETL_CACHELINE_SIZE alignof(max_align_t)
 #endif
 
-/**
- * \brief Minimum offset between two objects to avoid false sharing. Guaranteed
- * to be at least alignof(max_align_t).
- */
+/// \brief Minimum offset between two objects to avoid false sharing. Guaranteed
+/// to be at least alignof(max_align_t).
 constexpr auto hardware_constructive_interference_size = TAETL_CACHELINE_SIZE;
 
-/**
- * \brief Maximum size of contiguous memory to promote true sharing. Guaranteed
- * to be at least alignof(max_align_t).
- */
+/// \brief Maximum size of contiguous memory to promote true sharing. Guaranteed
+/// to be at least alignof(max_align_t).
 constexpr auto hardware_destructive_interference_size = TAETL_CACHELINE_SIZE;
 
-/**
- * \brief Both new-expression and delete-expression, when used with objects
- * whose alignment requirement is greater than the default, pass that alignment
- * requirement as an argument of type align_val_t to the selected
- * allocation/deallocation function.
- */
+/// \brief Both new-expression and delete-expression, when used with objects
+/// whose alignment requirement is greater than the default, pass that alignment
+/// requirement as an argument of type align_val_t to the selected
+/// allocation/deallocation function.
 enum struct align_val_t : size_t
 {
 };
 
-/**
- * \brief Tag type used to identify the destroying delete form of operator
- * delete.
- */
+/// \brief Tag type used to identify the destroying delete form of operator
+/// delete.
 struct destroying_delete_t
 {
   explicit destroying_delete_t() = default;
 };
 
-/**
- * \brief Tag type used to identify the destroying delete form of operator
- * delete.
- */
+/// \brief Tag type used to identify the destroying delete form of operator
+/// delete.
 inline constexpr auto destroying_delete = destroying_delete_t {};
 
 }  // namespace etl

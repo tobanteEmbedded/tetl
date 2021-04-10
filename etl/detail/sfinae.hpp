@@ -28,9 +28,7 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief Define a member typedef only if a boolean constant is true.
- */
+/// \brief Define a member typedef only if a boolean constant is true.
 template <bool, typename Type = void>
 struct enable_if
 {
@@ -51,11 +49,9 @@ using enable_if_t = typename enable_if<B, T>::type;
 #define TAETL_CONCEPT_PP_CAT_(X, Y) X##Y
 #define TAETL_CONCEPT_PP_CAT(X, Y) TAETL_CONCEPT_PP_CAT_(X, Y)
 
-/**
- * \brief Requires-clause emulation with SFINAE (for templates).
- *
- * Copied from https://github.com/gnzlbg/static_vector
- */
+/// \brief Requires-clause emulation with SFINAE (for templates).
+///
+/// Copied from https://github.com/gnzlbg/static_vector
 #define TAETL_REQUIRES_(...)                                                   \
   int TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                       \
     = 42,                                                                      \
@@ -64,11 +60,9 @@ using enable_if_t = typename enable_if<B, T>::type;
       || (__VA_ARGS__),                                                        \
     int > = 0
 
-/**
- * \brief Requires-clause emulation with SFINAE (for "non-templates").
- *
- * Copied from https://github.com/gnzlbg/static_vector
- */
+/// \brief Requires-clause emulation with SFINAE (for "non-templates").
+///
+/// Copied from https://github.com/gnzlbg/static_vector
 #define TAETL_REQUIRES(...)                                                    \
   template <int TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,       \
             ::etl::enable_if_t<                                                \

@@ -35,25 +35,19 @@ DAMAGE.
 
 namespace etl::experimental::rtos
 {
-/**
- * \brief Runs the task loop 0 times.
- */
+/// \brief Runs the task loop 0 times.
 struct never
 {
   [[nodiscard]] auto operator()() const -> bool { return false; }
 };
 
-/**
- * \brief Runs the task loop forever.
- */
+/// \brief Runs the task loop forever.
 struct forever
 {
   [[nodiscard]] auto operator()() const -> bool { return true; }
 };
 
-/**
- * \brief Runs the task loop Count times.
- */
+/// \brief Runs the task loop Count times.
 template <etl::size_t Count>
 struct times
 {
@@ -61,28 +55,20 @@ struct times
   [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
 };
 
-/**
- * \brief Runs the task loop once.
- */
+/// \brief Runs the task loop once.
 using once = times<1>;
 
-/**
- * \brief Runs the task loop twice.
- */
+/// \brief Runs the task loop twice.
 using twice = times<2>;
 
-/**
- * \brief Wrapper for an rtos task struct. Calls the run() member.
- */
+/// \brief Wrapper for an rtos task struct. Calls the run() member.
 template <typename TaskType>
 inline auto rtos_task(void* task) -> void
 {
   static_cast<TaskType*>(task)->run();
 }
 
-/**
- * \brief Create a rtos task. TaskType needs a `void run()` public method.
- */
+/// \brief Create a rtos task. TaskType needs a `void run()` public method.
 template <typename TaskType>
 inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
                         UBaseType_t prio           = 0,
@@ -92,21 +78,15 @@ inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
               handle);
 }
 
-/**
- * \brief Yield is used to request a context switch to another task.
- */
+/// \brief Yield is used to request a context switch to another task.
 inline auto yield_task() -> void { taskYIELD(); }
 
-/**
- * \brief Delete a rtos task. If handle is nullptr, the current task will be
- * deleted.
- */
+/// \brief Delete a rtos task. If handle is nullptr, the current task will be
+/// deleted.
 inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
 
-/**
- * \brief Start the RTOS, this function will never return and will schedule the
- * tasks.
- */
+/// \brief Start the RTOS, this function will never return and will schedule the
+/// tasks.
 inline auto start_scheduler() -> void { vTaskStartScheduler(); }
 
 }  // namespace etl::experimental::rtos

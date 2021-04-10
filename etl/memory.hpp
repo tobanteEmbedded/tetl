@@ -433,7 +433,7 @@ class pointer_int_pair_info
 /// highest bits possible.  For example, pointer_int_pair<void*, 1, bool> will
 /// put the bit for the bool into bit #2, not bit #0, which allows the low two
 /// bits to be used for something else.  For example, this allows:
-///   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
+///  pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
 /// ... and the two bools will land in different bits.
 template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
           typename PtrTraits = pointer_like_traits<PointerT>,

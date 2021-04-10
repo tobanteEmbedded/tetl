@@ -35,13 +35,11 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief Enumeration for the currently selected C++ standard version.
- *
- * \details Unlike the official macro __cplusplus, these values only include the
- * published year. This is to make the actual values smaller and therfore fit on
- * smaller word sized chips.
- */
+/// \brief Enumeration for the currently selected C++ standard version.
+///
+/// \details Unlike the official macro __cplusplus, these values only include
+/// the published year. This is to make the actual values smaller and therfore
+/// fit on smaller word sized chips.
 enum class language_standard
 {
   cpp_98 = 1998,
@@ -65,10 +63,8 @@ constexpr auto current_standard = language_standard::cpp_17;
 constexpr auto current_standard = language_standard::cpp_20;
 #endif
 
-/**
- * \brief Returns true, if the given standard and the currently configurated in
- * the compiler match.
- */
+/// \brief Returns true, if the given standard and the currently configurated in
+/// the compiler match.
 [[nodiscard]] constexpr auto is_language_standard(language_standard ls) -> bool
 {
   return ls == current_standard;

@@ -41,10 +41,8 @@ struct is_error_condition_enum : public false_type
 {
 };
 
-/**
- * \brief The scoped enumeration etl::errc defines the values of portable error
- * conditions that correspond to the POSIX error codes.
- */
+/// \brief The scoped enumeration etl::errc defines the values of portable error
+/// conditions that correspond to the POSIX error codes.
 enum class errc
 {
   address_family_not_supported,        // EAFNOSUPPORT

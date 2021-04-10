@@ -28,9 +28,7 @@ DAMAGE.
 
 namespace etl::detail
 {
-/**
- * Needed by algorithm.hpp & function.hpp (default_searcher)
- */
+/// Needed by algorithm.hpp & function.hpp (default_searcher)
 template <typename ForwardIter1, typename ForwardIter2,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto

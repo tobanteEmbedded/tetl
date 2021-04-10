@@ -34,31 +34,21 @@ namespace etl::experimental::net
 class const_buffer
 {
   public:
-  /**
-   * \brief Construct an empty buffer.
-   */
+  /// \brief Construct an empty buffer.
   const_buffer() noexcept = default;
 
-  /**
-   * \brief Construct a buffer to represent a given memory range.
-   */
+  /// \brief Construct a buffer to represent a given memory range.
   const_buffer(void const* data, etl::size_t size) : data_ {data}, size_ {size}
   {
   }
 
-  /**
-   * \brief Get a pointer to the beginning of the memory range.
-   */
+  /// \brief Get a pointer to the beginning of the memory range.
   [[nodiscard]] auto data() const noexcept -> void const* { return data_; }
 
-  /**
-   * \brief Get the size of the memory range.
-   */
+  /// \brief Get the size of the memory range.
   [[nodiscard]] auto size() const noexcept -> etl::size_t { return size_; }
 
-  /**
-   * \brief Move the start of the buffer by the specified number of bytes.
-   */
+  /// \brief Move the start of the buffer by the specified number of bytes.
   auto operator+=(etl::size_t n) noexcept -> const_buffer&
   {
     auto const offset = n < size_ ? n : size_;
@@ -72,11 +62,9 @@ class const_buffer
   etl::size_t size_ = 0;
 };
 
-/**
- * \brief Create a new modifiable buffer that is offset from the start of
- * another.
- * \relates const_buffer
- */
+/// \brief Create a new modifiable buffer that is offset from the start of
+/// another.
+/// \relates const_buffer
 inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
   -> const_buffer
 {
@@ -86,11 +74,9 @@ inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept
   return const_buffer {data, size};
 }
 
-/**
- * \brief Create a new modifiable buffer that is offset from the start of
- * another.
- * \relates const_buffer
- */
+/// \brief Create a new modifiable buffer that is offset from the start of
+/// another.
+/// \relates const_buffer
 inline auto operator+(etl::size_t const n, const_buffer const& b) noexcept
   -> const_buffer
 {

@@ -549,7 +549,7 @@ class basic_static_string
     return *this;
   };
 
-  ///  \brief Appends characters in the range [ first , last ).
+  /// \brief Appends characters in the range [ first , last ).
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr auto append(InputIter first, InputIter last) noexcept
@@ -561,22 +561,22 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Appends string str.
+  /// \brief Appends string str.
   constexpr auto append(basic_static_string const& str) noexcept
     -> basic_static_string&
   {
     return append(str.begin(), str.end());
   }
 
-  ///  \brief Appends a substring [ pos, pos + count ) of str.
+  /// \brief Appends a substring [ pos, pos + count ) of str.
   constexpr auto append(basic_static_string const& str, size_type pos,
                         size_type count = npos) noexcept -> basic_static_string&
   {
     return append(str.substr(pos, count));
   }
 
-  ///  \brief Implicitly converts t to a string_view sv, then appends all
-  ///  characters from sv.
+  /// \brief Implicitly converts t to a string_view sv, then appends all
+  /// characters from sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto append(T const& t) -> basic_static_string&
   {
@@ -584,8 +584,8 @@ class basic_static_string
     return append(sv.data(), sv.size());
   }
 
-  ///  \brief Implicitly converts t to a string_view sv then appends the
-  ///  characters from the subview [ pos, pos + count ) of sv.
+  /// \brief Implicitly converts t to a string_view sv then appends the
+  /// characters from the subview [ pos, pos + count ) of sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto append(T const& t, size_type pos, size_type count = npos)
     -> basic_static_string&
@@ -594,34 +594,34 @@ class basic_static_string
     return append(sv.substr(pos, count));
   }
 
-  ///  \brief Appends string str.
+  /// \brief Appends string str.
   constexpr auto operator+=(basic_static_string const& str) noexcept
     -> basic_static_string&
   {
     return append(str);
   }
 
-  ///  \brief Appends character ch.
+  /// \brief Appends character ch.
   constexpr auto operator+=(value_type ch) noexcept -> basic_static_string&
   {
     return append(1, ch);
   }
 
-  ///  \brief Appends the null-terminated character string pointed to by s.
+  /// \brief Appends the null-terminated character string pointed to by s.
   constexpr auto operator+=(const_pointer s) noexcept -> basic_static_string&
   {
     return append(s);
   }
 
-  ///  \brief Implicitly converts t to a string view sv, then appends characters
-  ///  in the string view sv.
+  /// \brief Implicitly converts t to a string view sv, then appends characters
+  /// in the string view sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto operator+=(T const& t) noexcept -> basic_static_string&
   {
     return append(t);
   }
 
-  ///  \brief Inserts count copies of character ch at the position index.
+  /// \brief Inserts count copies of character ch at the position index.
   constexpr auto insert(size_type const index, size_type const count,
                         value_type const ch) noexcept -> basic_static_string&
   {
@@ -632,8 +632,8 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Inserts null-terminated character string pointed to by s at the
-  ///  position index.
+  /// \brief Inserts null-terminated character string pointed to by s at the
+  /// position index.
   constexpr auto insert(size_type const index, const_pointer s) noexcept
     -> basic_static_string&
   {
@@ -641,8 +641,8 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Inserts the characters in the range [s, s+count) at the position
-  ///  index. The range can contain null characters.
+  /// \brief Inserts the characters in the range [s, s+count) at the position
+  /// index. The range can contain null characters.
   constexpr auto insert(size_type const index, const_pointer s,
                         size_type const count) noexcept -> basic_static_string&
   {
@@ -650,7 +650,7 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Inserts string str at the position index.
+  /// \brief Inserts string str at the position index.
   constexpr auto insert(size_type const index,
                         basic_static_string const& str) noexcept
     -> basic_static_string&
@@ -659,8 +659,8 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Inserts a string, obtained by str.substr(index_str, count) at the
-  ///  position index.
+  /// \brief Inserts a string, obtained by str.substr(index_str, count) at the
+  /// position index.
   constexpr auto insert(size_type const index, basic_static_string const& str,
                         size_type const indexStr,
                         size_type const count = npos) noexcept
@@ -699,8 +699,8 @@ class basic_static_string
   // {
   // }
 
-  ///  \brief Implicitly converts t to a string view sv, then inserts the
-  ///  elements from sv before the element (if any) pointed by pos.
+  /// \brief Implicitly converts t to a string view sv, then inserts the
+  /// elements from sv before the element (if any) pointed by pos.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto insert(size_type const pos, T const& t) noexcept
     -> basic_static_string&
@@ -710,9 +710,9 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Implicitly converts t to a string view sv, then inserts, before
-  ///  the element (if any) pointed by pos, the characters from the subview
-  ///  [index_str, index_str+count) of sv.
+  /// \brief Implicitly converts t to a string view sv, then inserts, before
+  /// the element (if any) pointed by pos, the characters from the subview
+  /// [index_str, index_str+count) of sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto insert(size_type const index, T const& t,
                         size_type const indexStr,
@@ -726,14 +726,14 @@ class basic_static_string
     return *this;
   }
 
-  ///  \brief Compares this string to str.
+  /// \brief Compares this string to str.
   [[nodiscard]] constexpr auto
   compare(basic_static_string const& str) const noexcept -> int
   {
     return compare_impl(data(), size(), str.data(), str.size());
   }
 
-  ///  \brief Compares this string to str with other capacity.
+  /// \brief Compares this string to str with other capacity.
   template <size_type OtherCapacity>
   [[nodiscard]] constexpr auto compare(
     basic_static_string<value_type, OtherCapacity, traits_type> const& str)
@@ -742,8 +742,8 @@ class basic_static_string
     return compare_impl(data(), size(), str.data(), str.size());
   }
 
-  ///  \brief Compares a [pos, pos+count) substring of this string to str. If
-  ///  count > size() - pos the substring is [pos, size()).
+  /// \brief Compares a [pos, pos+count) substring of this string to str. If
+  /// count > size() - pos the substring is [pos, size()).
   [[nodiscard]] constexpr auto compare(size_type const pos,
                                        size_type const count,
                                        basic_static_string const& str) const
@@ -754,10 +754,10 @@ class basic_static_string
     return sub.compare(str);
   }
 
-  ///  \brief Compares a [pos1, pos1+count1) substring of this string to a
-  ///  substring [pos2, pos2+count2) of str. If count1 > size() - pos1 the first
-  ///  substring is [pos1, size()). Likewise, count2 > str.size() - pos2 the
-  ///  second substring is [pos2, str.size()).
+  /// \brief Compares a [pos1, pos1+count1) substring of this string to a
+  /// substring [pos2, pos2+count2) of str. If count1 > size() - pos1 the first
+  /// substring is [pos1, size()). Likewise, count2 > str.size() - pos2 the
+  /// second substring is [pos2, str.size()).
   [[nodiscard]] constexpr auto
   compare(size_type const pos1, size_type const count1,
           basic_static_string const& str, size_type const pos2,
@@ -772,18 +772,18 @@ class basic_static_string
     return sub1.compare(sub2);
   }
 
-  ///  \brief Compares this string to the null-terminated character sequence
-  ///  beginning at the character pointed to by s with length
-  ///  traits_type::length(s).
+  /// \brief Compares this string to the null-terminated character sequence
+  /// beginning at the character pointed to by s with length
+  /// traits_type::length(s).
   [[nodiscard]] constexpr auto compare(const_pointer s) const -> int
   {
     return compare_impl(data(), size(), s, traits_type::length(s));
   }
 
-  ///  \brief Compares a [pos1, pos1+count1) substring of this string to the
-  ///  null-terminated character sequence beginning at the character pointed to
-  ///  by s with length traits_type::length(s). If count1 > size() - pos1 the
-  ///  substring is [pos1, size()).
+  /// \brief Compares a [pos1, pos1+count1) substring of this string to the
+  /// null-terminated character sequence beginning at the character pointed to
+  /// by s with length traits_type::length(s). If count1 > size() - pos1 the
+  /// substring is [pos1, size()).
   [[nodiscard]] constexpr auto compare(size_type const pos,
                                        size_type const count,
                                        const_pointer s) const -> int
@@ -793,10 +793,10 @@ class basic_static_string
     return compare_impl(sub.data(), sub.size(), s, traits_type::length(s));
   }
 
-  ///  \brief  Compares a [pos1, pos1+count1) substring of this string to the
-  ///  characters in the range [s, s + count2). If count1 > size() - pos1 the
-  ///  substring is [pos1, size()). (Note: the characters in the range [s, s +
-  ///  count2) may include null characters.)
+  /// \brief  Compares a [pos1, pos1+count1) substring of this string to the
+  /// characters in the range [s, s + count2). If count1 > size() - pos1 the
+  /// substring is [pos1, size()). (Note: the characters in the range [s, s +
+  /// count2) may include null characters.)
   [[nodiscard]] constexpr auto compare(size_type const pos1,
                                        size_type const count1, const_pointer s,
                                        size_type const count2) const -> int
@@ -806,8 +806,8 @@ class basic_static_string
     return compare_impl(sub.data(), sub.size(), s, count2);
   }
 
-  ///  \brief Implicitly converts t to a string view sv, then compares the
-  ///  content of this string to sv.
+  /// \brief Implicitly converts t to a string view sv, then compares the
+  /// content of this string to sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
   {
@@ -816,8 +816,8 @@ class basic_static_string
     return view_type(*this).compare(sv);
   }
 
-  ///  \brief Implicitly converts t to a string view sv, then compares a [pos1,
-  ///  pos1+count1) substring of this string to sv.
+  /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
+  /// pos1+count1) substring of this string to sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
                                        T const& t) const noexcept -> int
@@ -827,9 +827,9 @@ class basic_static_string
     return view_type(*this).substr(pos1, count1).compare(sv);
   }
 
-  ///  \brief Implicitly converts t to a string view sv, then compares a [pos1,
-  ///  pos1+count1) substring of this string to a substring [pos2, pos2+count2)
-  ///  of sv.
+  /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
+  /// pos1+count1) substring of this string to a substring [pos2, pos2+count2)
+  /// of sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
                                        T const& t, size_type pos2,
@@ -843,7 +843,7 @@ class basic_static_string
       .compare(sv.substr(pos2, count2));
   }
 
-  ///  \brief Checks if the string begins with the given prefix.
+  /// \brief Checks if the string begins with the given prefix.
   [[nodiscard]] constexpr auto
   starts_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept
     -> bool
@@ -852,21 +852,21 @@ class basic_static_string
       .starts_with(sv);
   }
 
-  ///  \brief Checks if the string begins with the given prefix.
+  /// \brief Checks if the string begins with the given prefix.
   [[nodiscard]] constexpr auto starts_with(value_type c) const noexcept -> bool
   {
     return etl::basic_string_view<value_type, traits_type>(data(), size())
       .starts_with(c);
   }
 
-  ///  \brief Checks if the string begins with the given prefix.
+  /// \brief Checks if the string begins with the given prefix.
   [[nodiscard]] constexpr auto starts_with(const_pointer str) const -> bool
   {
     return etl::basic_string_view<value_type, traits_type>(data(), size())
       .starts_with(str);
   }
 
-  ///  \brief Checks if the string ends with the given prefix.
+  /// \brief Checks if the string ends with the given prefix.
   [[nodiscard]] constexpr auto
   ends_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept
     -> bool
@@ -875,25 +875,25 @@ class basic_static_string
       .ends_with(sv);
   }
 
-  ///  \brief Checks if the string ends with the given prefix.
+  /// \brief Checks if the string ends with the given prefix.
   [[nodiscard]] constexpr auto ends_with(value_type c) const noexcept -> bool
   {
     return etl::basic_string_view<value_type, traits_type>(data(), size())
       .ends_with(c);
   }
 
-  ///  \brief Checks if the string ends with the given prefix.
+  /// \brief Checks if the string ends with the given prefix.
   [[nodiscard]] constexpr auto ends_with(const_pointer str) const -> bool
   {
     return etl::basic_string_view<value_type, traits_type>(data(), size())
       .ends_with(str);
   }
 
-  ///  \brief Returns a substring [pos, pos+count). If the requested substring
-  ///  extends past the end of the string, or if count == npos, the returned
-  ///  substring is [pos, size()).
+  /// \brief Returns a substring [pos, pos+count). If the requested substring
+  /// extends past the end of the string, or if count == npos, the returned
+  /// substring is [pos, size()).
   ///
-  ///  If pos is greater then size(), an empty string will be returned.
+  /// If pos is greater then size(), an empty string will be returned.
   [[nodiscard]] constexpr auto substr(size_type pos   = 0,
                                       size_type count = npos) const
     -> basic_static_string
@@ -902,14 +902,14 @@ class basic_static_string
     return basic_static_string(data() + pos, etl::min(count, size() - pos));
   }
 
-  ///  \brief Copies a substring [pos, pos+count) to character string pointed to
-  ///  by dest. If the requested substring lasts past the end of the string, or
-  ///  if count == npos, the copied substring is [pos, size()). The resulting
-  ///  character string is not null-terminated.
+  /// \brief Copies a substring [pos, pos+count) to character string pointed to
+  /// by dest. If the requested substring lasts past the end of the string, or
+  /// if count == npos, the copied substring is [pos, size()). The resulting
+  /// character string is not null-terminated.
   ///
-  ///  If pos is greater then size(), nothing will be copied.
+  /// If pos is greater then size(), nothing will be copied.
   ///
-  ///  \return Number of characters copied.
+  /// \return Number of characters copied.
   constexpr auto copy(pointer destination, size_type count,
                       size_type pos = 0) const -> size_type
   {
@@ -921,29 +921,29 @@ class basic_static_string
     return static_cast<size_type>(res - dest);
   }
 
-  ///  \brief Resizes the string to contain count characters.
+  /// \brief Resizes the string to contain count characters.
   ///
-  ///  \details If the current size is less than count, additional characters
-  ///  are appended, maximum up to it's capacity. If the current size is greater
-  ///  than count, the string is reduced to its first count elements.
+  /// \details If the current size is less than count, additional characters
+  /// are appended, maximum up to it's capacity. If the current size is greater
+  /// than count, the string is reduced to its first count elements.
   constexpr auto resize(size_type count, value_type ch) noexcept -> void
   {
     if (size() > count) { unsafe_set_size(count); }
     if (size() < count) { append(count, ch); }
   }
 
-  ///  \brief Resizes the string to contain count characters.
+  /// \brief Resizes the string to contain count characters.
   ///
-  ///  \details If the current size is less than count, additional characters
-  ///  are appended, maximum up to it's capacity. If the current size is greater
-  ///  than count, the string is reduced to its first count elements.
+  /// \details If the current size is less than count, additional characters
+  /// are appended, maximum up to it's capacity. If the current size is greater
+  /// than count, the string is reduced to its first count elements.
   constexpr auto resize(size_type count) noexcept -> void
   {
     resize(count, value_type());
   }
 
-  ///  \brief Exchanges the contents of the string with those of other. All
-  ///  iterators and references may be invalidated.
+  /// \brief Exchanges the contents of the string with those of other. All
+  /// iterators and references may be invalidated.
   constexpr auto swap(basic_static_string& other) noexcept -> void
   {
     auto temp(etl::move(other));
@@ -989,14 +989,14 @@ class basic_static_string
     return npos;
   }
 
-  ///  \brief Finds the first substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position preceding pos.
+  /// \brief Finds the first substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position preceding pos.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/find
+  /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found.
   [[nodiscard]] constexpr auto find(const_pointer s,
                                     size_type pos = 0) const noexcept
     -> size_type
@@ -1004,14 +1004,14 @@ class basic_static_string
     return find(s, pos, traits_type::length(s));
   }
 
-  ///  \brief Finds the first substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position preceding pos.
+  /// \brief Finds the first substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position preceding pos.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/find
+  /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found.
   [[nodiscard]] constexpr auto find(value_type ch,
                                     size_type pos = 0) const noexcept
     -> size_type
@@ -1019,16 +1019,16 @@ class basic_static_string
     return find(etl::addressof(ch), pos, 1);
   }
 
-  ///  \brief Finds the last substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position following pos. If npos or any value not smaller than size()-1 is
-  ///  passed as pos, whole string will be searched.
+  /// \brief Finds the last substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position following pos. If npos or any value not smaller than size()-1 is
+  /// passed as pos, whole string will be searched.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/rfind
+  /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found. Note that this is an offset from the start of
-  ///  the string, not the end.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found. Note that this is an offset from the start of
+  /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(basic_static_string const& str,
                                      size_type pos = 0) const noexcept
     -> size_type
@@ -1036,18 +1036,18 @@ class basic_static_string
     return rfind(str.c_str(), pos, str.size());
   }
 
-  ///  \brief Finds the last substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position following pos. If npos or any value not smaller than size()-1 is
-  ///  passed as pos, whole string will be searched.
+  /// \brief Finds the last substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position following pos. If npos or any value not smaller than size()-1 is
+  /// passed as pos, whole string will be searched.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/rfind
+  /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found. Note that this is an offset from the start of
-  ///  the string, not the end.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found. Note that this is an offset from the start of
+  /// the string, not the end.
   ///
-  ///  \todo Fix. See tests.
+  /// \todo Fix. See tests.
   [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos,
                                      size_type count) const noexcept
     -> size_type
@@ -1062,16 +1062,16 @@ class basic_static_string
     return view.rfind(s, pos, count);
   }
 
-  ///  \brief Finds the last substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position following pos. If npos or any value not smaller than size()-1 is
-  ///  passed as pos, whole string will be searched.
+  /// \brief Finds the last substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position following pos. If npos or any value not smaller than size()-1 is
+  /// passed as pos, whole string will be searched.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/rfind
+  /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found. Note that this is an offset from the start of
-  ///  the string, not the end.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found. Note that this is an offset from the start of
+  /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(const_pointer s,
                                      size_type pos = 0) const noexcept
     -> size_type
@@ -1079,16 +1079,16 @@ class basic_static_string
     return rfind(s, pos, traits_type::length(s));
   }
 
-  ///  \brief Finds the last substring equal to the given character sequence.
-  ///  Search begins at pos, i.e. the found substring must not begin in a
-  ///  position following pos. If npos or any value not smaller than size()-1 is
-  ///  passed as pos, whole string will be searched.
+  /// \brief Finds the last substring equal to the given character sequence.
+  /// Search begins at pos, i.e. the found substring must not begin in a
+  /// position following pos. If npos or any value not smaller than size()-1 is
+  /// passed as pos, whole string will be searched.
   ///
-  ///  https://en.cppreference.com/w/cpp/string/basic_string/rfind
+  /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  ///  \return Position of the first character of the found substring or npos if
-  ///  no such substring is found. Note that this is an offset from the start of
-  ///  the string, not the end.
+  /// \return Position of the first character of the found substring or npos if
+  /// no such substring is found. Note that this is an offset from the start of
+  /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(value_type ch,
                                      size_type pos = 0) const noexcept
     -> size_type
@@ -1096,10 +1096,10 @@ class basic_static_string
     return rfind(etl::addressof(ch), pos, 1);
   }
 
-  ///  \brief Finds the first character equal to one of the characters in the
-  ///  given character sequence. The search considers only the interval [pos,
-  ///  size()). If the character is not present in the interval, npos will be
-  ///  returned.
+  /// \brief Finds the first character equal to one of the characters in the
+  /// given character sequence. The search considers only the interval [pos,
+  /// size()). If the character is not present in the interval, npos will be
+  /// returned.
   [[nodiscard]] constexpr auto find_first_of(basic_static_string const& str,
                                              size_type pos = 0) const noexcept
     -> size_type
@@ -1107,10 +1107,10 @@ class basic_static_string
     return find_first_of(str.c_str(), pos, str.size());
   }
 
-  ///  \brief Finds the first character equal to one of the characters in the
-  ///  given character sequence. The search considers only the interval [pos,
-  ///  size()). If the character is not present in the interval, npos will be
-  ///  returned.
+  /// \brief Finds the first character equal to one of the characters in the
+  /// given character sequence. The search considers only the interval [pos,
+  /// size()). If the character is not present in the interval, npos will be
+  /// returned.
   [[nodiscard]] constexpr auto find_first_of(const_pointer s, size_type pos,
                                              size_type count) const -> size_type
   {
@@ -1123,10 +1123,10 @@ class basic_static_string
     return npos;
   }
 
-  ///  \brief Finds the first character equal to one of the characters in the
-  ///  given character sequence. The search considers only the interval [pos,
-  ///  size()). If the character is not present in the interval, npos will be
-  ///  returned.
+  /// \brief Finds the first character equal to one of the characters in the
+  /// given character sequence. The search considers only the interval [pos,
+  /// size()). If the character is not present in the interval, npos will be
+  /// returned.
   [[nodiscard]] constexpr auto find_first_of(const_pointer s,
                                              size_type pos = 0) const
     -> size_type
@@ -1134,10 +1134,10 @@ class basic_static_string
     return find_first_of(s, pos, traits_type::length(s));
   }
 
-  ///  \brief Finds the first character equal to one of the characters in the
-  ///  given character sequence. The search considers only the interval [pos,
-  ///  size()). If the character is not present in the interval, npos will be
-  ///  returned.
+  /// \brief Finds the first character equal to one of the characters in the
+  /// given character sequence. The search considers only the interval [pos,
+  /// size()). If the character is not present in the interval, npos will be
+  /// returned.
   [[nodiscard]] constexpr auto find_first_of(value_type ch,
                                              size_type pos = 0) const noexcept
     -> size_type
@@ -1145,11 +1145,11 @@ class basic_static_string
     return find_first_of(etl::addressof(ch), pos, 1);
   }
 
-  ///  \brief This is a special value equal to the maximum value representable
-  ///  by the type size_type. The exact meaning depends on context, but it is
-  ///  generally used either as end of string indicator by the functions that
-  ///  expect a string index or as the error indicator by the functions that
-  ///  return a string index.
+  /// \brief This is a special value equal to the maximum value representable
+  /// by the type size_type. The exact meaning depends on context, but it is
+  /// generally used either as end of string indicator by the functions that
+  /// expect a string index or as the error indicator by the functions that
+  /// return a string index.
   constexpr static size_type npos = static_cast<size_type>(-1);
 
   private:
