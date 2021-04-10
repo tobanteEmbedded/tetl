@@ -1607,6 +1607,54 @@ constexpr auto partial_sort(RandomIter first, RandomIter middle,
 }
 
 /**
+ * @brief nth_element is a partial sorting algorithm that rearranges elements in
+ * [first, last) such that:
+ *
+ * The element pointed at by nth is changed to whatever element would occur in
+ * that position if [first, last) were sorted.
+ *
+ * All of the elements before this new nth element are less than or equal to the
+ * elements after the new nth element.
+ *
+ * Elements are compared using the given binary comparison function comp.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/nth_element
+ *
+ * @todo Improve. Currently forwards to regular sort.
+ */
+template <typename RandomIter, typename Compare>
+constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last,
+                           Compare comp) -> void
+{
+  etl::ignore_unused(nth);
+  etl::sort(first, last, comp);
+}
+
+/**
+ * @brief nth_element is a partial sorting algorithm that rearranges elements in
+ * [first, last) such that:
+ *
+ * The element pointed at by nth is changed to whatever element would occur in
+ * that position if [first, last) were sorted.
+ *
+ * All of the elements before this new nth element are less than or equal to the
+ * elements after the new nth element.
+ *
+ * Elements are compared using operator<.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/nth_element
+ *
+ * @todo Improve. Currently forwards to regular sort.
+ */
+template <typename RandomIter>
+constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last)
+  -> void
+{
+  etl::ignore_unused(nth);
+  etl::sort(first, last);
+}
+
+/**
  * @brief Examines the range [first, last) and finds the largest range beginning
  * at first in which the elements are sorted in non-descending order. Elements
  * are compared using operator<.
