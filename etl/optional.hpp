@@ -24,8 +24,8 @@ DAMAGE.
 */
 
 /**
- * @file optional.hpp
- * @example optional.cpp
+ * \file optional.hpp
+ * \example optional.cpp
  */
 
 #ifndef TAETL_OPTIONAL_HPP
@@ -40,12 +40,12 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief etl::nullopt_t is an empty class type used to indicate optional type
+ * \brief etl::nullopt_t is an empty class type used to indicate optional type
  * with uninitialized state. In particular, etl::optional has a constructor with
  * nullopt_t as a single argument, which creates an optional that does not
  * contain a value.
  *
- * @include optional.cpp
+ * \include optional.cpp
  */
 struct nullopt_t
 {
@@ -53,7 +53,7 @@ struct nullopt_t
 };
 
 /**
- * @brief etl::nullopt is a constant of type etl::nullopt_t that is used to
+ * \brief etl::nullopt is a constant of type etl::nullopt_t that is used to
  * indicate optional type with uninitialized state.
  */
 inline constexpr auto nullopt = etl::nullopt_t {{}};
@@ -357,29 +357,29 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   using value_type = ValueType;
 
   /**
-   * @brief Constructs an object that does not contain a value.
+   * \brief Constructs an object that does not contain a value.
    */
   constexpr optional() noexcept = default;
 
   /**
-   * @brief Constructs an object that does not contain a value.
+   * \brief Constructs an object that does not contain a value.
    */
   constexpr optional(etl::nullopt_t /*unused*/) noexcept { }
 
   /**
-   * @brief Copy constructor.
+   * \brief Copy constructor.
    */
   constexpr optional(optional const&) = default;
 
   /**
-   * @brief Move constructor.
+   * \brief Move constructor.
    */
   constexpr optional(optional&&) noexcept(
     etl::is_nothrow_move_constructible_v<value_type>)
     = default;
 
   /**
-   * @brief Constructs an optional object that contains a value, initialized as
+   * \brief Constructs an optional object that contains a value, initialized as
    * if direct-initializing.
    */
   template <typename... Args,
@@ -390,7 +390,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Constructs an optional object that contains a value, initialized as
+   * \brief Constructs an optional object that contains a value, initialized as
    * if direct-initializing.
    */
   template <typename U = value_type,
@@ -404,7 +404,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief If *this contains a value before the call, the contained value is
+   * \brief If *this contains a value before the call, the contained value is
    * destroyed by calling its destructor as if by value().T::~T(). *this does
    * not contain a value after this call.
    */
@@ -415,7 +415,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Assigns the state of other.
+   * \brief Assigns the state of other.
    */
   constexpr auto operator=(optional const& other) -> optional&
   {
@@ -424,9 +424,9 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Perfect-forwarded assignment.
+   * \brief Perfect-forwarded assignment.
    *
-   * @todo Cleanup & fix SFINAE.
+   * \todo Cleanup & fix SFINAE.
    */
   template <typename U = ValueType>
   constexpr auto operator=(U&& value) -> etl::enable_if_t<
@@ -449,12 +449,12 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Checks whether *this contains a value.
+   * \brief Checks whether *this contains a value.
    */
   using base_type::has_value;
 
   /**
-   * @brief Checks whether *this contains a value.
+   * \brief Checks whether *this contains a value.
    */
   [[nodiscard]] constexpr explicit operator bool() const noexcept
   {
@@ -462,14 +462,14 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief If *this contains a value, destroy that value as if by
+   * \brief If *this contains a value, destroy that value as if by
    * value().~value_type(). Otherwise, there are no effects. *this does not
    * contain a value after this call.
    */
   using base_type::reset;
 
   /**
-   * @brief If the optional contains a value, returns a pointer. If empty the
+   * \brief If the optional contains a value, returns a pointer. If empty the
    * pointer will be null.
    */
   [[nodiscard]] constexpr auto value() -> value_type*
@@ -478,7 +478,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief If the optional contains a value, returns a pointer. If empty the
+   * \brief If the optional contains a value, returns a pointer. If empty the
    * pointer will be null.
    */
   [[nodiscard]] constexpr auto value() const -> const value_type*
@@ -487,7 +487,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Returns the contained value if *this has a value, otherwise returns
+   * \brief Returns the contained value if *this has a value, otherwise returns
    * default_value.
    */
   template <typename U>
@@ -498,7 +498,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Returns the contained value if *this has a value, otherwise returns
+   * \brief Returns the contained value if *this has a value, otherwise returns
    * default_value.
    */
   template <typename U>
@@ -509,7 +509,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Returns a pointer to the contained value. The pointer is null if the
+   * \brief Returns a pointer to the contained value. The pointer is null if the
    * optional is empty.
    */
   [[nodiscard]] constexpr auto operator->() const -> const value_type*
@@ -518,7 +518,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Returns a pointer to the contained value. The pointer is null if the
+   * \brief Returns a pointer to the contained value. The pointer is null if the
    * optional is empty.
    */
   [[nodiscard]] constexpr auto operator->() -> value_type*
@@ -527,7 +527,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Swaps the contents with those of other.
+   * \brief Swaps the contents with those of other.
    */
   constexpr auto swap(optional& other) noexcept(
     etl::is_nothrow_move_constructible_v<value_type>&&
@@ -561,7 +561,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Constructs the contained value in-place. If *this already contains a
+   * \brief Constructs the contained value in-place. If *this already contains a
    * value before the call, the contained value is destroyed by calling its
    * destructor.
    */
@@ -574,13 +574,13 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   }
 
   /**
-   * @brief Implementation detail. Do not use!
+   * \brief Implementation detail. Do not use!
    */
   using base_type::get;
 };
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& lhs,
@@ -592,7 +592,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& lhs,
@@ -604,7 +604,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs,
@@ -616,7 +616,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs,
@@ -628,7 +628,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs,
@@ -640,7 +640,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares two optional objects, lhs and rhs.
+ * \brief Compares two optional objects, lhs and rhs.
  */
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs,
@@ -652,7 +652,7 @@ template <typename T, typename U>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -664,7 +664,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -675,7 +675,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -687,7 +687,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -698,7 +698,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -710,7 +710,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -721,7 +721,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -733,7 +733,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -745,7 +745,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -757,7 +757,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -769,7 +769,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -781,7 +781,7 @@ template <typename T>
 }
 
 /**
- * @brief Compares opt with a nullopt. Equivalent to when comparing to an
+ * \brief Compares opt with a nullopt. Equivalent to when comparing to an
  * optional that does not contain a value.
  */
 template <typename T>
@@ -792,7 +792,7 @@ template <typename T>
 }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -807,7 +807,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -822,7 +822,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -837,7 +837,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -852,7 +852,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -867,7 +867,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -882,7 +882,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -897,7 +897,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -912,7 +912,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -927,7 +927,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -942,7 +942,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -957,7 +957,7 @@ template <typename T>
 // }
 
 // /**
-//  * @brief Compares opt with a value. The values are compared (using the
+//  * \brief Compares opt with a value. The values are compared (using the
 //  corresponding
 //  * operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
@@ -972,7 +972,7 @@ template <typename T>
 // }
 
 /**
- * @brief Creates an optional object from value.
+ * \brief Creates an optional object from value.
  */
 template <typename ValueType>
 constexpr auto make_optional(ValueType&& value)
@@ -982,7 +982,7 @@ constexpr auto make_optional(ValueType&& value)
 }
 
 /**
- * @brief Creates an optional object constructed in-place from args...
+ * \brief Creates an optional object constructed in-place from args...
  */
 template <typename ValueType, typename... Args>
 constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
@@ -991,7 +991,7 @@ constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
 }
 
 /**
- * @brief One deduction guide is provided for etl::optional to account for the
+ * \brief One deduction guide is provided for etl::optional to account for the
  * edge cases missed by the implicit deduction guides, in particular,
  * non-copyable arguments and array to pointer conversion.
  */

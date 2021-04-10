@@ -29,7 +29,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Define a member typedef only if a boolean constant is true.
+ * \brief Define a member typedef only if a boolean constant is true.
  */
 template <bool, typename Type = void>
 struct enable_if
@@ -52,7 +52,7 @@ using enable_if_t = typename enable_if<B, T>::type;
 #define TAETL_CONCEPT_PP_CAT(X, Y) TAETL_CONCEPT_PP_CAT_(X, Y)
 
 /**
- * @brief Requires-clause emulation with SFINAE (for templates).
+ * \brief Requires-clause emulation with SFINAE (for templates).
  *
  * Copied from https://github.com/gnzlbg/static_vector
  */
@@ -65,7 +65,7 @@ using enable_if_t = typename enable_if<B, T>::type;
     int > = 0
 
 /**
- * @brief Requires-clause emulation with SFINAE (for "non-templates").
+ * \brief Requires-clause emulation with SFINAE (for "non-templates").
  *
  * Copied from https://github.com/gnzlbg/static_vector
  */

@@ -33,15 +33,15 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief etl::dynamic_extent is a constant of type etl::size_t that is used to
+ * \brief etl::dynamic_extent is a constant of type etl::size_t that is used to
  * differentiate etl::span of static and dynamic extent.
  */
 inline constexpr auto dynamic_extent = size_t(-1);
 
 /**
- * @brief A non-owning view over a contiguous sequence of objects.
+ * \brief A non-owning view over a contiguous sequence of objects.
  *
- * @details The class template span describes an object that can refer to a
+ * \details The class template span describes an object that can refer to a
  * contiguous sequence of objects with the first element of the sequence at
  * position zero. A span can either have a static extent, in which case the
  * number of elements in the sequence is known and encoded in the type, or a
@@ -67,26 +67,26 @@ class span
   // using reverse_iterator = etl::reverse_iterator<iterator>;
 
   /**
-   * @brief The number of elements in the sequence, or etl::dynamic_extent
+   * \brief The number of elements in the sequence, or etl::dynamic_extent
    * if dynamic.
    */
   static constexpr size_type extent = Extent;
 
   /**
-   * @brief Constructs a span. Constructs an empty span whose
+   * \brief Constructs a span. Constructs an empty span whose
    * data() == nullptr and size() == 0.
    *
-   * @details This overload only participates in overload resolution
+   * \details This overload only participates in overload resolution
    * if extent == 0 || extent == etl::dynamic_extent.
    *
-   * @todo Remove from overload with concepts once available.
+   * \todo Remove from overload with concepts once available.
    */
   constexpr span() noexcept = default;
 
   /**
-   * @brief Constructs a span.
+   * \brief Constructs a span.
    *
-   * @details Constructs a span that is a view over the range [first, first +
+   * \details Constructs a span that is a view over the range [first, first +
    * count); the resulting span has data() == etl::to_address(first) and size()
    * == count. The behavior is undefined if [first, first + count) is not a
    * valid range, if It does not actually model contiguous_iterator, or if
@@ -95,7 +95,7 @@ class span
    * and the conversion from etl::iter_reference_t<It> to element_type is at
    * most a qualification conversion.
    *
-   * @todo Add explicit(extent != etl::dynamic_extent).
+   * \todo Add explicit(extent != etl::dynamic_extent).
    */
   template <typename It>
   constexpr span(It first, size_type count) : data_ {first}, size_ {count}
@@ -103,14 +103,14 @@ class span
   }
 
   // /**
-  //  * @brief Constructs a span.
-  //  * @todo Add explicit(extent != etl::dynamic_extent).
+  //  * \brief Constructs a span.
+  //  * \todo Add explicit(extent != etl::dynamic_extent).
   //  */
   // template <typename It, typename End>
   // constexpr span(It first, End last);
 
   /**
-   * @brief Constructs a span. From a c style array.
+   * \brief Constructs a span. From a c style array.
    */
   template <etl::size_t N>
   constexpr span(element_type (&arr)[N]) noexcept : data_ {&arr[0]}, size_ {N}
@@ -118,7 +118,7 @@ class span
   }
 
   /**
-   * @brief Constructs a span. From a etl::array<Type,Size>.
+   * \brief Constructs a span. From a etl::array<Type,Size>.
    */
   template <typename U, etl::size_t N>
   constexpr span(etl::array<U, N>& arr) noexcept
@@ -127,7 +127,7 @@ class span
   }
 
   /**
-   * @brief Constructs a span. From a etl::array<Type,Size> const.
+   * \brief Constructs a span. From a etl::array<Type,Size> const.
    */
   template <typename U, etl::size_t N>
   constexpr span(etl::array<U, N> const& arr) noexcept
@@ -136,9 +136,9 @@ class span
   }
 
   /**
-   * @brief Constructs a span.
+   * \brief Constructs a span.
    *
-   * @todo Add explicit(extent != etl::dynamic_extent)
+   * \todo Add explicit(extent != etl::dynamic_extent)
    */
   template <typename R>
   constexpr span(R&& r) : data_ {r.data()}, size_ {r.size()}
@@ -146,7 +146,7 @@ class span
   }
 
   // /**
-  //  * @brief Constructs a span.
+  //  * \brief Constructs a span.
   //  */
   // template <typename U, etl::size_t N>
   // explicit(extent != etl::dynamic_extent
@@ -155,12 +155,12 @@ class span
   //                                                          s) noexcept;
 
   /**
-   * @brief Constructs a span.
+   * \brief Constructs a span.
    */
   constexpr span(span const& other) noexcept = default;
 
   /**
-   * @brief Returns an iterator to the first element of the span. If the span is
+   * \brief Returns an iterator to the first element of the span. If the span is
    * empty, the returned iterator will be equal to end().
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> iterator
@@ -169,7 +169,7 @@ class span
   }
 
   /**
-   * @brief Returns an iterator to the element following the last element of the
+   * \brief Returns an iterator to the element following the last element of the
    * span. This element acts as a placeholder; attempting to access it results
    * in undefined behavior
    */
@@ -179,13 +179,13 @@ class span
   }
 
   /**
-   * @brief Returns a reference to the first element in the span. Calling front
+   * \brief Returns a reference to the first element in the span. Calling front
    * on an empty span results in undefined behavior.
    */
   [[nodiscard]] constexpr auto front() const -> reference { return *begin(); }
 
   /**
-   * @brief Returns a reference to the last element in the span. Calling front
+   * \brief Returns a reference to the last element in the span. Calling front
    * on an empty span results in undefined behavior.
    */
   [[nodiscard]] constexpr auto back() const -> reference
@@ -194,7 +194,7 @@ class span
   }
 
   /**
-   * @brief Returns a reference to the idx-th element of the sequence. The
+   * \brief Returns a reference to the idx-th element of the sequence. The
    * behavior is undefined if idx is out of range (i.e., if it is greater than
    * or equal to size()).
    */
@@ -204,7 +204,7 @@ class span
   }
 
   /**
-   * @brief Returns a pointer to the beginning of the sequence.
+   * \brief Returns a pointer to the beginning of the sequence.
    */
   [[nodiscard]] constexpr auto data() const noexcept -> pointer
   {
@@ -212,7 +212,7 @@ class span
   }
 
   /**
-   * @brief Returns the number of elements in the span.
+   * \brief Returns the number of elements in the span.
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
@@ -220,7 +220,7 @@ class span
   }
 
   /**
-   * @brief Returns the number of elements in the span.
+   * \brief Returns the number of elements in the span.
    */
   [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type
   {
@@ -228,7 +228,7 @@ class span
   }
 
   /**
-   * @brief Checks if the span is empty.
+   * \brief Checks if the span is empty.
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
@@ -241,25 +241,25 @@ class span
 };
 
 /**
- * @brief Deduction Guides. From raw array.
+ * \brief Deduction Guides. From raw array.
  */
 template <typename Type, etl::size_t Extent>
 span(Type (&)[Extent]) -> span<Type, Extent>;
 
 /**
- * @brief Deduction Guides. From etl::array<Type, Size>.
+ * \brief Deduction Guides. From etl::array<Type, Size>.
  */
 template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size>&) -> span<Type, Size>;
 
 /**
- * @brief Deduction Guides. From etl::array<Type const, Size>.
+ * \brief Deduction Guides. From etl::array<Type const, Size>.
  */
 template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 /**
- * @brief Deduction Guides. From Container.
+ * \brief Deduction Guides. From Container.
  */
 template <typename Container,
           typename Element
@@ -267,7 +267,7 @@ template <typename Container,
 span(Container&) -> span<Element>;
 
 /**
- * @brief Deduction Guides. From Container const.
+ * \brief Deduction Guides. From Container const.
  */
 template <typename Container,
           typename Element = etl::remove_pointer_t<

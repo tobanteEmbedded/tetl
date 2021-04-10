@@ -40,14 +40,14 @@ concept same_helper = ::etl::is_same_v<T, U>;
 }
 
 /**
- * @brief The concept same_as<T, U> is satisfied if and only if T and U denote
+ * \brief The concept same_as<T, U> is satisfied if and only if T and U denote
  * the same type. same_as<T, U> subsumes same_as<U, T> and vice versa.
  */
 template <typename T, typename U>
 concept same_as = detail::same_helper<T, U> && detail::same_helper<U, T>;
 
 /**
- * @brief The concept derived_from<Derived, Base> is satisfied if and only if
+ * \brief The concept derived_from<Derived, Base> is satisfied if and only if
  * Base is a class type that is either Derived or a public and unambiguous base
  * of Derived, ignoring cv-qualifiers. Note that this behaviour is different to
  * is_base_of when Base is a private or protected base of Derived.
@@ -58,7 +58,7 @@ concept derived_from
                                                     const volatile Base*>;
 
 /**
- * @brief The concept convertible_to<From, To> specifies that an expression of
+ * \brief The concept convertible_to<From, To> specifies that an expression of
  * the same type and value category as those of declval<From>() can be
  * implicitly and explicitly converted to the type To, and the two forms of
  * conversion are equivalent.
@@ -71,35 +71,35 @@ concept convertible_to
 };
 
 /**
- * @brief The concept integral<T> is satisfied if and only if T is an integral
+ * \brief The concept integral<T> is satisfied if and only if T is an integral
  * type.
  */
 template <typename T>
 concept integral = is_integral_v<T>;
 
 /**
- * @brief The concept signed_integral<T> is satisfied if and only if T is an
+ * \brief The concept signed_integral<T> is satisfied if and only if T is an
  * integral type and is_signed_v<T> is true.
  */
 template <typename T>
 concept signed_integral = integral<T> && is_signed_v<T>;
 
 /**
- * @brief The concept unsigned_integral<T> is satisfied if and only if T is an
+ * \brief The concept unsigned_integral<T> is satisfied if and only if T is an
  * integral type and is_signed_v<T> is false.
  */
 template <typename T>
 concept unsigned_integral = integral<T> && is_unsigned_v<T>;
 
 /**
- * @brief The concept floating_point<T> is satisfied if and only if T is a
+ * \brief The concept floating_point<T> is satisfied if and only if T is a
  * floating-point type.
  */
 template <typename T>
 concept floating_point = is_floating_point_v<T>;
 
 /**
- * @brief The concept destructible specifies the concept of all types whose
+ * \brief The concept destructible specifies the concept of all types whose
  * instances can safely be destroyed at the end of their lifetime (including
  * reference types).
  */
@@ -107,14 +107,14 @@ template <typename T>
 concept destructible = is_nothrow_destructible_v<T>;
 
 /**
- * @brief The constructible_from concept specifies that a variable of type T can
+ * \brief The constructible_from concept specifies that a variable of type T can
  * be initialized with the given set of argument types Args....
  */
 template <typename T, typename... Args>
 concept constructible_from = destructible<T> && is_constructible_v<T, Args...>;
 
 /**
- * @brief The default_initializable concept checks whether variables of type T
+ * \brief The default_initializable concept checks whether variables of type T
  * can be value-initialized (T() is well-formed); direct-list-initialized from
  * an empty initializer list (T{} is well-formed); and default-initialized (T t;
  * is well-formed). Access checking is performed as if in a context unrelated to
@@ -130,7 +130,7 @@ concept default_initializable =
 // clang-format on
 
 /**
- * @brief The concept move_constructible is satisfied if T is a reference type,
+ * \brief The concept move_constructible is satisfied if T is a reference type,
  * or if it is an object type where an object of that type can be constructed
  * from an rvalue of that type in both direct- and copy-initialization contexts,
  * with the usual semantics.
@@ -141,7 +141,7 @@ template <typename T>
 concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 
 /**
- * @brief The concept copy_constructible is satisfied if T is an lvalue
+ * \brief The concept copy_constructible is satisfied if T is an lvalue
  * reference type, or if it is a move_constructible object type where an object
  * of that type can constructed from a (possibly const) lvalue or const rvalue
  * of that type in both direct- and copy-initialization contexts with the usual

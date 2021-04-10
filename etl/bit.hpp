@@ -35,9 +35,9 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Indicates the endianness of all scalar types.
+ * \brief Indicates the endianness of all scalar types.
  *
- * @details If all scalar types are little-endian, etl::endian::native equals
+ * \details If all scalar types are little-endian, etl::endian::native equals
  * etl::endian::little. If all scalar types are big-endian,
  * etl::endian::native equals etl::endian::big
  *
@@ -57,11 +57,11 @@ enum class endian
 };
 
 /**
- * @brief Obtain a value of type To by reinterpreting the object representation
+ * \brief Obtain a value of type To by reinterpreting the object representation
  * of from. Every bit in the value representation of the returned To object is
  * equal to the corresponding bit in the object representation of from.
  *
- * @details The values of padding bits in the returned To object are
+ * \details The values of padding bits in the returned To object are
  * unspecified. If there is no value of type To corresponding to the value
  * representation produced, the behavior is undefined. If there are multiple
  * such values, which value is produced is unspecified. This overload only
@@ -100,7 +100,7 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 }  // namespace detail
 
 /**
- * @brief Computes the result of bitwise left-rotating the value of x by s
+ * \brief Computes the result of bitwise left-rotating the value of x by s
  * positions. This operation is also known as a left circular shift.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
@@ -113,7 +113,7 @@ constexpr auto rotl(T t, int s) noexcept -> T
 }
 
 /**
- * @brief Computes the result of bitwise right-rotating the value of x by s
+ * \brief Computes the result of bitwise right-rotating the value of x by s
  * positions. This operation is also known as a right circular shift.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
@@ -126,9 +126,9 @@ constexpr auto rotr(T t, int s) noexcept -> T
 }
 
 /**
- * @brief Returns the number of 1 bits in the value of x.
+ * \brief Returns the number of 1 bits in the value of x.
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
@@ -146,13 +146,13 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief Checks if x is an integral power of two.
+ * \brief Checks if x is an integral power of two.
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @return true if x is an integral power of two; otherwise false.
+ * \return true if x is an integral power of two; otherwise false.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
@@ -161,14 +161,14 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief Returns the number of consecutive 0 bits in the value of x, starting
+ * \brief Returns the number of consecutive 0 bits in the value of x, starting
  * from the most significant bit ("left").
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @return The number of consecutive 0 bits in the value of x, starting from the
+ * \return The number of consecutive 0 bits in the value of x, starting from the
  * most significant bit.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
@@ -188,14 +188,14 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief Returns the number of consecutive 1 ("one") bits in the value of x,
+ * \brief Returns the number of consecutive 1 ("one") bits in the value of x,
  * starting from the most significant bit ("left").
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @return The number of consecutive 1 bits in the value of x, starting from the
+ * \return The number of consecutive 1 bits in the value of x, starting from the
  * most significant bit.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
@@ -215,10 +215,10 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief If x is not zero, calculates the number of bits needed to store the
+ * \brief If x is not zero, calculates the number of bits needed to store the
  * value x, that is, 1+⌊log2(x)⌋. If x is zero, returns zero.
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  */
@@ -229,16 +229,16 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief Calculates the smallest integral power of two that is not smaller than
+ * \brief Calculates the smallest integral power of two that is not smaller than
  * x. If that value is not representable in T, the behavior is undefined. Call
  * to this function is permitted in constant evaluation only if the undefined
  * behavior does not occur.
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @return The smallest integral power of two that is not smaller than x.
+ * \return The smallest integral power of two that is not smaller than x.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
@@ -259,14 +259,14 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 }
 
 /**
- * @brief If x is not zero, calculates the largest integral power of two that is
+ * \brief If x is not zero, calculates the largest integral power of two that is
  * not greater than x. If x is zero, returns zero.
  *
- * @details This overload only participates in overload resolution if T is an
+ * \details This overload only participates in overload resolution if T is an
  * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
  * unsigned long, unsigned long long, or an extended unsigned integer type).
  *
- * @return Zero if x is zero; otherwise, the largest integral power of two that
+ * \return Zero if x is zero; otherwise, the largest integral power of two that
  * is not greater than x.
  */
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>

@@ -36,9 +36,9 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Enumeration for the currently selected C++ standard version.
+ * \brief Enumeration for the currently selected C++ standard version.
  *
- * @details Unlike the official macro __cplusplus, these values only include the
+ * \details Unlike the official macro __cplusplus, these values only include the
  * published year. This is to make the actual values smaller and therfore fit on
  * smaller word sized chips.
  */
@@ -66,7 +66,7 @@ constexpr auto current_standard = language_standard::cpp_20;
 #endif
 
 /**
- * @brief Returns true, if the given standard and the currently configurated in
+ * \brief Returns true, if the given standard and the currently configurated in
  * the compiler match.
  */
 [[nodiscard]] constexpr auto is_language_standard(language_standard ls) -> bool

@@ -40,13 +40,13 @@ constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 }  // namespace detail
 
 /**
- * @brief Exchanges the given values. Swaps the values a and b. This overload
+ * \brief Exchanges the given values. Swaps the values a and b. This overload
  * does not participate in overload resolution unless
  * etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
  *
  * https://en.cppreference.com/w/cpp/algorithm/swap
  *
- * @todo Fix noexcept specifier.
+ * \todo Fix noexcept specifier.
  */
 template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void

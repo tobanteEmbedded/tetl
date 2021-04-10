@@ -40,9 +40,9 @@ DAMAGE.
 namespace etl::chrono
 {
 /**
- * @brief The etl::chrono::duration_values type defines three common durations.
+ * \brief The etl::chrono::duration_values type defines three common durations.
  *
- * @details The zero, min, and max methods in etl::chrono::duration forward
+ * \details The zero, min, and max methods in etl::chrono::duration forward
  * their work to these methods. This type can be specialized if the
  * representation Rep requires a specific implementation to return these
  * duration objects.
@@ -52,12 +52,12 @@ struct duration_values
 {
   public:
   /**
-   * @brief Returns a zero-length representation.
+   * \brief Returns a zero-length representation.
    */
   [[nodiscard]] static constexpr auto zero() -> Rep { return Rep {}; }
 
   /**
-   * @brief Returns the smallest possible representation.
+   * \brief Returns the smallest possible representation.
    */
   [[nodiscard]] static constexpr auto min() -> Rep
   {
@@ -65,7 +65,7 @@ struct duration_values
   }
 
   /**
-   * @brief Returns the special duration value max.
+   * \brief Returns the special duration value max.
    */
   [[nodiscard]] static constexpr auto max() -> Rep
   {
@@ -74,15 +74,15 @@ struct duration_values
 };
 
 /**
- * @brief The etl::chrono::treat_as_floating_point trait helps determine if a
+ * \brief The etl::chrono::treat_as_floating_point trait helps determine if a
  * duration can be converted to another duration with a different tick period.
  *
- * @details Implicit conversions between two durations normally depends on the
+ * \details Implicit conversions between two durations normally depends on the
  * tick period of the durations. However, implicit conversions can happen
  * regardless of tick period if
  * etl::chrono::treat_as_floating_point<Rep>::value == true.
  *
- * @note etl::chrono::treat_as_floating_point may be specialized for
+ * \note etl::chrono::treat_as_floating_point may be specialized for
  * program-defined types.
  */
 template <typename Rep>
@@ -95,9 +95,9 @@ inline constexpr bool treat_as_floating_point_v
   = treat_as_floating_point<Rep>::value;
 
 /**
- * @brief Class template etl::chrono::duration represents a time interval.
+ * \brief Class template etl::chrono::duration represents a time interval.
  *
- * @details It consists of a count of ticks of type Rep and a tick period, where
+ * \details It consists of a count of ticks of type Rep and a tick period, where
  * the tick period is a compile-time rational constant representing the number
  * of seconds from one tick to the next. The only data stored in a duration is a
  * tick count of type Rep. If Rep is floating point, then the duration can
@@ -109,33 +109,33 @@ class duration
 {
   public:
   /**
-   * @brief Rep, an arithmetic type representing the number of ticks.
+   * \brief Rep, an arithmetic type representing the number of ticks.
    */
   using rep = Rep;
 
   /**
-   * @brief A etl::ratio representing the tick period (i.e. the number of
+   * \brief A etl::ratio representing the tick period (i.e. the number of
    * seconds per tick).
    */
   using period = typename Period::type;
 
   /**
-   * @brief Constructs a new duration from one of several optional data
+   * \brief Constructs a new duration from one of several optional data
    * sources. The default constructor is defaulted.
    */
   constexpr duration() noexcept = default;
 
   /**
-   * @brief Constructs a new duration from one of several optional data
+   * \brief Constructs a new duration from one of several optional data
    * sources. The copy constructor is defaulted (makes a bitwise copy of the
    * tick count).
    */
   constexpr duration(duration const&) noexcept = default;
 
   /**
-   * @brief Constructs a duration with r ticks.
+   * \brief Constructs a duration with r ticks.
    *
-   * @details  Note that this constructor only participates in overload
+   * \details  Note that this constructor only participates in overload
    * resolution if const Rep2& (the argument type) is implicitly convertible
    * to rep (the type of this duration's ticks) and
    * treat_as_floating_point<rep>::value is true, or
@@ -154,10 +154,10 @@ class duration
   }
 
   /**
-   * @brief  Constructs a duration by converting d to an appropriate period
+   * \brief  Constructs a duration by converting d to an appropriate period
    * and tick count, as if by duration_cast<duration>(d).count().
    *
-   * @details In order to prevent truncation during conversion, this
+   * \details In order to prevent truncation during conversion, this
    * constructor only participates in overload resolution if computation of
    * the conversion factor (by etl::ratio_divide<Period2, Period>) does not
    * overflow and:
@@ -183,17 +183,17 @@ class duration
   }
 
   /**
-   * @brief Assigns the contents of one duration to another.
+   * \brief Assigns the contents of one duration to another.
    */
   auto operator=(duration const& other) -> duration& = default;
 
   /**
-   * @brief Returns the number of ticks for this duration.
+   * \brief Returns the number of ticks for this duration.
    */
   [[nodiscard]] constexpr auto count() const -> rep { return rep_; }
 
   /**
-   * @brief Returns a zero-length duration.
+   * \brief Returns a zero-length duration.
    */
   [[nodiscard]] static constexpr auto zero() noexcept -> duration
   {
@@ -201,7 +201,7 @@ class duration
   }
 
   /**
-   * @brief Returns a duration with the lowest possible value.
+   * \brief Returns a duration with the lowest possible value.
    */
   [[nodiscard]] static constexpr auto min() noexcept -> duration
   {
@@ -209,7 +209,7 @@ class duration
   }
 
   /**
-   * @brief Returns a duration with the largest possible value.
+   * \brief Returns a duration with the largest possible value.
    */
   [[nodiscard]] static constexpr auto max() noexcept -> duration
   {
@@ -217,7 +217,7 @@ class duration
   }
 
   /**
-   * @brief Implements unary plus and unary minus for the durations.
+   * \brief Implements unary plus and unary minus for the durations.
    */
   [[nodiscard]] constexpr auto operator+() const -> etl::common_type_t<duration>
   {
@@ -225,7 +225,7 @@ class duration
   }
 
   /**
-   * @brief Implements unary plus and unary minus for the durations.
+   * \brief Implements unary plus and unary minus for the durations.
    */
   [[nodiscard]] constexpr auto operator-() const -> etl::common_type_t<duration>
   {
@@ -233,7 +233,7 @@ class duration
   }
 
   /**
-   * @brief Increments or decrements the number of ticks for this duration.
+   * \brief Increments or decrements the number of ticks for this duration.
    * Equivalent to ++rep_; return *this;
    */
   constexpr auto operator++() -> duration&
@@ -243,13 +243,13 @@ class duration
   }
 
   /**
-   * @brief Increments or decrements the number of ticks for this duration.
+   * \brief Increments or decrements the number of ticks for this duration.
    * Equivalent to return duration(rep_++)
    */
   constexpr auto operator++(int) -> duration { return duration(rep_++); }
 
   /**
-   * @brief Increments or decrements the number of ticks for this duration.
+   * \brief Increments or decrements the number of ticks for this duration.
    * Equivalent to --rep_; return *this;
    */
   constexpr auto operator--() -> duration&
@@ -259,13 +259,13 @@ class duration
   }
 
   /**
-   * @brief Increments or decrements the number of ticks for this duration.
+   * \brief Increments or decrements the number of ticks for this duration.
    * Equivalent to return duration(rep_--);
    */
   constexpr auto operator--(int) -> duration { return duration(rep_--); }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator+=(duration const& d) noexcept -> duration&
@@ -275,7 +275,7 @@ class duration
   }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator-=(duration const& d) noexcept -> duration&
@@ -285,7 +285,7 @@ class duration
   }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator*=(rep const& rhs) noexcept -> duration&
@@ -295,7 +295,7 @@ class duration
   }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator/=(rep const& rhs) noexcept -> duration&
@@ -305,7 +305,7 @@ class duration
   }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator%=(rep const& rhs) noexcept -> duration&
@@ -315,7 +315,7 @@ class duration
   }
 
   /**
-   * @brief Performs compound assignments between two durations with the same
+   * \brief Performs compound assignments between two durations with the same
    * period or between a duration and a tick count value.
    */
   constexpr auto operator%=(duration const& rhs) noexcept -> duration&
@@ -329,10 +329,10 @@ class duration
 };
 
 /**
- * @brief Class template time_point represents a point in time. It is
+ * \brief Class template time_point represents a point in time. It is
  * implemented as if it stores a value of type Duration indicating the time
  * interval from the start of the Clock's epoch.
- * @tparam Clock Must meet the requirements for Clock
+ * \tparam Clock Must meet the requirements for Clock
  * https://en.cppreference.com/w/cpp/named_req/Clock
  */
 template <typename Clock, typename Duration = typename Clock::duration>
@@ -340,41 +340,41 @@ class time_point
 {
   public:
   /**
-   * @brief Clock, the clock on which this time point is measured.
+   * \brief Clock, the clock on which this time point is measured.
    */
   using clock = Clock;
 
   /**
-   * @brief Duration, a duration type used to measure the time since epoch.
+   * \brief Duration, a duration type used to measure the time since epoch.
    */
   using duration = Duration;
 
   /**
-   * @brief Rep, an arithmetic type representing the number of ticks of the
+   * \brief Rep, an arithmetic type representing the number of ticks of the
    * duration.
    */
   using rep = typename duration::rep;
 
   /**
-   * @brief Period, a ratio type representing the tick period of the duration.
+   * \brief Period, a ratio type representing the tick period of the duration.
    */
   using period = typename duration::period;
 
   /**
-   * @brief Constructs a new time_point from one of several optional data
+   * \brief Constructs a new time_point from one of several optional data
    * sources. Default constructor, creates a time_point representing the Clock's
    * epoch (i.e., time_since_epoch() is zero).
    */
   constexpr time_point() noexcept = default;
 
   /**
-   * @brief Constructs a new time_point from one of several optional data
+   * \brief Constructs a new time_point from one of several optional data
    * sources. Constructs a time_point at Clock's epoch plus d.
    */
   constexpr explicit time_point(duration const& d) noexcept : d_ {d} { }
 
   /**
-   * @brief Constructs a new time_point from one of several optional data
+   * \brief Constructs a new time_point from one of several optional data
    * sources. Constructs a time_point by converting t to duration. This
    * constructor only participates in overload resolution if Duration2 is
    * implicitly convertible to duration.
@@ -386,7 +386,7 @@ class time_point
   }
 
   /**
-   * @brief Returns a duration representing the amount of time between *this and
+   * \brief Returns a duration representing the amount of time between *this and
    * the clock's epoch.
    */
   [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration
@@ -395,7 +395,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the time point by the given duration. Applies the offset d
+   * \brief Modifies the time point by the given duration. Applies the offset d
    * to pt. Effectively, d is added to the internally stored duration d_ as d_
    * += d.
    */
@@ -406,7 +406,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the time point by the given duration. Applies the offset d
+   * \brief Modifies the time point by the given duration. Applies the offset d
    * to pt in negative direction. Effectively, d is subtracted from internally
    * stored duration d_ as d_ -= d.
    */
@@ -417,7 +417,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the point in time *this represents by one tick of the
+   * \brief Modifies the point in time *this represents by one tick of the
    * duration.
    */
   constexpr auto operator++() noexcept -> time_point&
@@ -427,7 +427,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the point in time *this represents by one tick of the
+   * \brief Modifies the point in time *this represents by one tick of the
    * duration.
    */
   constexpr auto operator++(int) noexcept -> time_point
@@ -436,7 +436,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the point in time *this represents by one tick of the
+   * \brief Modifies the point in time *this represents by one tick of the
    * duration.
    */
   constexpr auto operator--() noexcept -> time_point&
@@ -446,7 +446,7 @@ class time_point
   }
 
   /**
-   * @brief Modifies the point in time *this represents by one tick of the
+   * \brief Modifies the point in time *this represents by one tick of the
    * duration.
    */
   constexpr auto operator--(int) noexcept -> time_point
@@ -455,7 +455,7 @@ class time_point
   }
 
   /**
-   * @brief Returns a time_point with the smallest possible duration,
+   * \brief Returns a time_point with the smallest possible duration,
    */
   [[nodiscard]] static constexpr auto min() noexcept -> time_point
   {
@@ -463,7 +463,7 @@ class time_point
   }
 
   /**
-   * @brief Returns a time_point with the largest possible duration,
+   * \brief Returns a time_point with the largest possible duration,
    */
   [[nodiscard]] static constexpr auto max() noexcept -> time_point
   {
@@ -493,7 +493,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
+ * \brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
  * number of ticks for the type common to both durations are equal.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -508,7 +508,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
+ * \brief Compares two durations. Checks if lhs and rhs are equal, i.e. the
  * number of ticks for the type common to both durations are equal.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -520,7 +520,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
+ * \brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -534,7 +534,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
+ * \brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -546,7 +546,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
+ * \brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -558,7 +558,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief Compares two durations. Compares lhs to rhs, i.e. compares the number
+ * \brief Compares two durations. Compares lhs to rhs, i.e. compares the number
  * of ticks for the type common to both durations.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
@@ -570,7 +570,7 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -582,7 +582,7 @@ operator==(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -594,7 +594,7 @@ operator!=(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -606,7 +606,7 @@ operator<(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -618,7 +618,7 @@ operator<=(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -630,7 +630,7 @@ operator>(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief  Compares two time points. The comparison is done by comparing the
+ * \brief  Compares two time points. The comparison is done by comparing the
  * results time_since_epoch() for the time points.
  */
 template <typename Clock, typename Dur1, typename Dur2>
@@ -642,52 +642,52 @@ operator>=(time_point<Clock, Dur1> const& lhs,
 }
 
 /**
- * @brief Signed integer type of at least 64 bits.
+ * \brief Signed integer type of at least 64 bits.
  */
 using nanoseconds = duration<long long, nano>;
 
 /**
- * @brief Signed integer type of at least 55 bits.
+ * \brief Signed integer type of at least 55 bits.
  */
 using microseconds = duration<long long, micro>;
 
 /**
- * @brief Signed integer type of at least 45 bits.
+ * \brief Signed integer type of at least 45 bits.
  */
 using milliseconds = duration<long long, milli>;
 
 /**
- * @brief Signed integer type of at least 35 bits.
+ * \brief Signed integer type of at least 35 bits.
  */
 using seconds = duration<long long>;
 
 /**
- * @brief Signed integer type of at least 29 bits.
+ * \brief Signed integer type of at least 29 bits.
  */
 using minutes = duration<int, ratio<60>>;
 
 /**
- * @brief Signed integer type of at least 23 bits.
+ * \brief Signed integer type of at least 23 bits.
  */
 using hours = duration<int, ratio<3600>>;
 
 /**
- * @brief Signed integer type of at least 25 bits.
+ * \brief Signed integer type of at least 25 bits.
  */
 using days = duration<int, ratio<86400>>;
 
 /**
- * @brief Signed integer type of at least 22 bits.
+ * \brief Signed integer type of at least 22 bits.
  */
 using weeks = duration<int, ratio<604800>>;
 
 /**
- * @brief Signed integer type of at least 17 bits.
+ * \brief Signed integer type of at least 17 bits.
  */
 using years = duration<int, ratio<2629746>>;
 
 /**
- * @brief Signed integer type of at least 20 bits.
+ * \brief Signed integer type of at least 20 bits.
  */
 using months = duration<int, ratio<31556952>>;
 
@@ -767,7 +767,7 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true>
 }  // namespace detail
 
 /**
- * @brief Converts a duration to a duration of different type ToDur.
+ * \brief Converts a duration to a duration of different type ToDur.
  */
 template <typename ToDur, typename Rep, typename Period,
           TAETL_REQUIRES_(detail::is_duration<ToDur>::value)>
@@ -783,7 +783,7 @@ duration_cast(duration<Rep, Period> const& duration) noexcept(
 }
 
 /**
- * @brief Returns the greatest duration t representable in ToDuration that is
+ * \brief Returns the greatest duration t representable in ToDuration that is
  * less or equal to d. The function does not participate in the overload
  * resolution unless ToDuration is an instance of etl::chrono::duration.
  */
@@ -822,7 +822,7 @@ template <typename To, typename Rep, typename Period,
 }
 
 /**
- * @brief Returns the absolute value of the duration d. Specifically, if d >=
+ * \brief Returns the absolute value of the duration d. Specifically, if d >=
  * d.zero(), return d, otherwise return -d. The function does not participate in
  * the overload resolution unless etl::numeric_limits<Rep>::is_signed is true.
  */
@@ -873,11 +873,11 @@ template <typename To, typename Clock, typename Duration,
 namespace etl
 {
 /**
- * @brief Exposes the type named type, which is the common type of two
+ * \brief Exposes the type named type, which is the common type of two
  * etl::chrono::durations, whose period is the greatest common divisor of
  * Period1 and Period2.
  *
- * @details The period of the resulting duration can be computed by forming a
+ * \details The period of the resulting duration can be computed by forming a
  * ratio of the greatest common divisor of Period1::num and Period2::num and the
  * least common multiple of Period1::den and Period2::den.
  */
@@ -894,7 +894,7 @@ struct common_type<chrono::duration<Rep1, Period1>,
 };
 
 /**
- * @brief Exposes the type named type, which is the common type of two
+ * \brief Exposes the type named type, which is the common type of two
  * chrono::time_points.
  */
 template <typename Clock, typename Duration1, typename Duration2>
@@ -909,7 +909,7 @@ inline namespace literals
 inline namespace chrono_literals
 {
 /**
- * @brief Forms a etl::chrono::duration literal representing hours. Integer
+ * \brief Forms a etl::chrono::duration literal representing hours. Integer
  * literal, returns exactly etl::chrono::hours(hrs).
  */
 constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
@@ -918,7 +918,7 @@ constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing hours.
+ * \brief Forms a etl::chrono::duration literal representing hours.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::hours.
  */
@@ -929,7 +929,7 @@ constexpr auto operator""_h(long double h)
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing minutes. Integer
+ * \brief Forms a etl::chrono::duration literal representing minutes. Integer
  * literal, returns exactly etl::chrono::minutes(mins).
  */
 constexpr auto operator""_min(unsigned long long m) -> etl::chrono::minutes
@@ -938,7 +938,7 @@ constexpr auto operator""_min(unsigned long long m) -> etl::chrono::minutes
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing minutes.
+ * \brief Forms a etl::chrono::duration literal representing minutes.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::minutes.
  */
@@ -949,7 +949,7 @@ constexpr auto operator""_min(long double m)
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing seconds. Integer
+ * \brief Forms a etl::chrono::duration literal representing seconds. Integer
  * literal, returns exactly etl::chrono::seconds(mins).
  */
 constexpr auto operator""_s(unsigned long long m) -> etl::chrono::seconds
@@ -958,7 +958,7 @@ constexpr auto operator""_s(unsigned long long m) -> etl::chrono::seconds
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing seconds.
+ * \brief Forms a etl::chrono::duration literal representing seconds.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::seconds.
  */
@@ -968,7 +968,7 @@ constexpr auto operator""_s(long double m) -> etl::chrono::duration<long double>
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing milliseconds.
+ * \brief Forms a etl::chrono::duration literal representing milliseconds.
  * Integer literal, returns exactly etl::chrono::milliseconds(mins).
  */
 constexpr auto operator""_ms(unsigned long long m) -> etl::chrono::milliseconds
@@ -978,7 +978,7 @@ constexpr auto operator""_ms(unsigned long long m) -> etl::chrono::milliseconds
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing milliseconds.
+ * \brief Forms a etl::chrono::duration literal representing milliseconds.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::milliseconds.
  */
@@ -989,7 +989,7 @@ constexpr auto operator""_ms(long double m)
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing microseconds.
+ * \brief Forms a etl::chrono::duration literal representing microseconds.
  * Integer literal, returns exactly etl::chrono::microseconds(mins).
  */
 constexpr auto operator""_us(unsigned long long m) -> etl::chrono::microseconds
@@ -999,7 +999,7 @@ constexpr auto operator""_us(unsigned long long m) -> etl::chrono::microseconds
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing microseconds.
+ * \brief Forms a etl::chrono::duration literal representing microseconds.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::microseconds.
  */
@@ -1010,7 +1010,7 @@ constexpr auto operator""_us(long double m)
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing nanoseconds.
+ * \brief Forms a etl::chrono::duration literal representing nanoseconds.
  * Integer literal, returns exactly etl::chrono::nanoseconds(mins).
  */
 constexpr auto operator""_ns(unsigned long long m) -> etl::chrono::nanoseconds
@@ -1020,7 +1020,7 @@ constexpr auto operator""_ns(unsigned long long m) -> etl::chrono::nanoseconds
 }
 
 /**
- * @brief Forms a etl::chrono::duration literal representing nanoseconds.
+ * \brief Forms a etl::chrono::duration literal representing nanoseconds.
  * Floating-point literal, returns a floating-point duration equivalent to
  * etl::chrono::nanoseconds.
  */

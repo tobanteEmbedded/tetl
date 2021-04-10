@@ -38,28 +38,28 @@ namespace etl
 {
 #if not defined(EXIT_SUCCESS)
 /**
- * @brief Successful execution of a program.
+ * \brief Successful execution of a program.
  */
 #define EXIT_SUCCESS 0
 #endif
 
 #if not defined(EXIT_FAILURE)
 /**
- * @brief Unsuccessful execution of a program.
+ * \brief Unsuccessful execution of a program.
  */
 #define EXIT_FAILURE 1
 #endif
 
 #if not defined(NULL)
 /**
- * @brief The macro NULL is an implementation-defined null pointer constant,
+ * \brief The macro NULL is an implementation-defined null pointer constant,
  * which may be a prvalue of type nullptr_t.
  */
 #define NULL nullptr
 #endif
 
 /**
- * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ * \brief Return type for div, ldiv, lldiv & imaxdiv.
  */
 struct div_t
 {
@@ -68,7 +68,7 @@ struct div_t
 };
 
 /**
- * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ * \brief Return type for div, ldiv, lldiv & imaxdiv.
  */
 struct ldiv_t
 {
@@ -77,7 +77,7 @@ struct ldiv_t
 };
 
 /**
- * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ * \brief Return type for div, ldiv, lldiv & imaxdiv.
  */
 struct lldiv_t
 {
@@ -86,7 +86,7 @@ struct lldiv_t
 };
 
 /**
- * @brief Return type for div, ldiv, lldiv & imaxdiv.
+ * \brief Return type for div, ldiv, lldiv & imaxdiv.
  */
 struct imaxdiv_t
 {
@@ -95,7 +95,7 @@ struct imaxdiv_t
 };
 
 /**
- * @brief Computes both the quotient and the remainder of the division of the
+ * \brief Computes both the quotient and the remainder of the division of the
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
@@ -105,7 +105,7 @@ struct imaxdiv_t
 }
 
 /**
- * @brief Computes both the quotient and the remainder of the division of the
+ * \brief Computes both the quotient and the remainder of the division of the
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
@@ -115,7 +115,7 @@ struct imaxdiv_t
 }
 
 /**
- * @brief Computes both the quotient and the remainder of the division of the
+ * \brief Computes both the quotient and the remainder of the division of the
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
@@ -125,7 +125,7 @@ struct imaxdiv_t
 }
 
 /**
- * @brief Computes both the quotient and the remainder of the division of the
+ * \brief Computes both the quotient and the remainder of the division of the
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
@@ -135,7 +135,7 @@ struct imaxdiv_t
 }
 
 /**
- * @brief Computes both the quotient and the remainder of the division of the
+ * \brief Computes both the quotient and the remainder of the division of the
  * numerator x by the denominator y. The quotient is the result of the
  * expression x/y. The remainder is the result of the expression x%y.
  */
@@ -145,14 +145,14 @@ struct imaxdiv_t
 }
 
 /**
- * @brief Converts an integer value to a null-terminated string using the
+ * \brief Converts an integer value to a null-terminated string using the
  * specified base and stores the result in the array given by str parameter.
  *
- * @details If base is 10 and value is negative, the resulting string is
+ * \details If base is 10 and value is negative, the resulting string is
  * preceded with a minus sign (-). With any other base, value is always
  * considered unsigned.
  *
- * @todo Only base 10 is currently supported.
+ * \todo Only base 10 is currently supported.
  */
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
@@ -160,7 +160,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets an integer value in a byte string pointed to by str.
+ * \brief Interprets an integer value in a byte string pointed to by str.
  * Discards any whitespace characters until the first non-whitespace character
  * is found, then takes as many characters as possible to form a valid integer
  * number representation and converts them to an integer value.
@@ -171,7 +171,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets an integer value in a byte string pointed to by str.
+ * \brief Interprets an integer value in a byte string pointed to by str.
  * Discards any whitespace characters until the first non-whitespace character
  * is found, then takes as many characters as possible to form a valid integer
  * number representation and converts them to an integer value.
@@ -182,7 +182,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets an integer value in a byte string pointed to by str.
+ * \brief Interprets an integer value in a byte string pointed to by str.
  * Discards any whitespace characters until the first non-whitespace character
  * is found, then takes as many characters as possible to form a valid integer
  * number representation and converts them to an integer value.
@@ -193,10 +193,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets a floating point value in a byte string pointed to by str.
- * @param str Pointer to the null-terminated byte string to be interpreted.
- * @param last Pointer to a pointer to character.
- * @return Floating point value corresponding to the contents of str on success.
+ * \brief Interprets a floating point value in a byte string pointed to by str.
+ * \param str Pointer to the null-terminated byte string to be interpreted.
+ * \param last Pointer to a pointer to character.
+ * \return Floating point value corresponding to the contents of str on success.
  * If the converted value falls out of range of corresponding return type, range
  * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
  * conversion can be performed, `0` is returned and *last is set to str.
@@ -209,10 +209,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets a floating point value in a byte string pointed to by str.
- * @param str Pointer to the null-terminated byte string to be interpreted.
- * @param last Pointer to a pointer to character.
- * @return Floating point value corresponding to the contents of str on success.
+ * \brief Interprets a floating point value in a byte string pointed to by str.
+ * \param str Pointer to the null-terminated byte string to be interpreted.
+ * \param last Pointer to a pointer to character.
+ * \return Floating point value corresponding to the contents of str on success.
  * If the converted value falls out of range of corresponding return type, range
  * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
  * conversion can be performed, `0` is returned and *last is set to str.
@@ -225,10 +225,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Interprets a floating point value in a byte string pointed to by str.
- * @param str Pointer to the null-terminated byte string to be interpreted.
- * @param last Pointer to a pointer to character.
- * @return Floating point value corresponding to the contents of str on success.
+ * \brief Interprets a floating point value in a byte string pointed to by str.
+ * \param str Pointer to the null-terminated byte string to be interpreted.
+ * \param last Pointer to a pointer to character.
+ * \return Floating point value corresponding to the contents of str on success.
  * If the converted value falls out of range of corresponding return type, range
  * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
  * conversion can be performed, `0` is returned and *last is set to str.
@@ -240,7 +240,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
   return detail::ascii_to_floating_point<float>(str, last);
 }
 /**
- * @brief Computes the absolute value of an integer number. The behavior is
+ * \brief Computes the absolute value of an integer number. The behavior is
  * undefined if the result cannot be represented by the return type. If abs
  * is called with an unsigned integral argument that cannot be converted to int
  * by integral promotion, the program is ill-formed.
@@ -251,7 +251,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 
 /**
- * @brief Computes the absolute value of an integer number. The behavior is
+ * \brief Computes the absolute value of an integer number. The behavior is
  * undefined if the result cannot be represented by the return type. If abs
  * is called with an unsigned integral argument that cannot be converted to int
  * by integral promotion, the program is ill-formed.

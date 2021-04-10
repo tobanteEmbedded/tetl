@@ -32,11 +32,11 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief The stack class is a container adapter that gives the programmer
+ * \brief The stack class is a container adapter that gives the programmer
  * the functionality of a stack - specifically, a LIFO (last-in, first-out) data
  * structure.
  *
- * @details The class template acts as a wrapper to the underlying container -
+ * \details The class template acts as a wrapper to the underlying container -
  * only a specific set of functions is provided. The stack pushes and pops the
  * element from the back of the underlying container, known as the top of the
  * stack.
@@ -52,33 +52,33 @@ class stack
   using container_type  = Container;
 
   /**
-   * @brief Default constructor. Value-initializes the container.
+   * \brief Default constructor. Value-initializes the container.
    */
   constexpr stack() : stack(Container()) { }
 
   /**
-   * @brief Copy-constructs the underlying container c with the contents of
+   * \brief Copy-constructs the underlying container c with the contents of
    * cont.
    */
   constexpr explicit stack(Container const& cont) : c {cont} { }
 
   /**
-   * @brief Move-constructs the underlying container c with cont .
+   * \brief Move-constructs the underlying container c with cont .
    */
   constexpr explicit stack(Container&& cont) : c {move(cont)} { }
 
   /**
-   * @brief Copy constructor.
+   * \brief Copy constructor.
    */
   constexpr stack(stack const& other) = default;
 
   /**
-   * @brief Move constructor.
+   * \brief Move constructor.
    */
   constexpr stack(stack&& other) noexcept = default;
 
   /**
-   * @brief Checks if the underlying container has no elements.
+   * \brief Checks if the underlying container has no elements.
    */
   [[nodiscard]] constexpr auto empty() const
     noexcept(noexcept(declval<container_type>().empty())) -> bool
@@ -87,7 +87,7 @@ class stack
   }
 
   /**
-   * @brief Returns the number of elements in the underlying container.
+   * \brief Returns the number of elements in the underlying container.
    */
   [[nodiscard]] constexpr auto size() const
     noexcept(noexcept(declval<container_type>().size())) -> size_type
@@ -96,7 +96,7 @@ class stack
   }
 
   /**
-   * @brief Returns reference to the top element in the stack. This is the most
+   * \brief Returns reference to the top element in the stack. This is the most
    * recently pushed element. This element will be removed on a call to pop().
    */
   [[nodiscard]] constexpr auto
@@ -106,7 +106,7 @@ class stack
   }
 
   /**
-   * @brief Returns reference to the top element in the stack. This is the most
+   * \brief Returns reference to the top element in the stack. This is the most
    * recently pushed element. This element will be removed on a call to pop().
    */
   [[nodiscard]] constexpr auto top() const
@@ -116,7 +116,7 @@ class stack
   }
 
   /**
-   * @brief Pushes the given element value to the top of the stack.
+   * \brief Pushes the given element value to the top of the stack.
    */
   constexpr auto push(value_type const& x) noexcept(
     noexcept(declval<container_type>().push_back(x))) -> void
@@ -125,7 +125,7 @@ class stack
   }
 
   /**
-   * @brief Pushes the given element value to the top of the stack.
+   * \brief Pushes the given element value to the top of the stack.
    */
   constexpr auto push(value_type&& x) noexcept(
     noexcept(declval<container_type>().push_back(move(x)))) -> void
@@ -134,7 +134,7 @@ class stack
   }
 
   /**
-   * @brief Pushes a new element on top of the stack. The element is constructed
+   * \brief Pushes a new element on top of the stack. The element is constructed
    * in-place, i.e. no copy or move operations are performed. The constructor of
    * the element is called with exactly the same arguments as supplied to the
    * function.
@@ -148,7 +148,7 @@ class stack
   }
 
   /**
-   * @brief Removes the top element from the stack.
+   * \brief Removes the top element from the stack.
    */
   constexpr auto pop() noexcept(noexcept(declval<container_type>().pop_back()))
     -> void
@@ -157,7 +157,7 @@ class stack
   }
 
   /**
-   * @brief Exchanges the contents of the container adaptor with those of other.
+   * \brief Exchanges the contents of the container adaptor with those of other.
    */
   constexpr auto swap(stack& s) noexcept(is_nothrow_swappable_v<Container>)
     -> void
@@ -167,7 +167,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -179,7 +179,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -191,7 +191,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -203,7 +203,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -215,7 +215,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -227,7 +227,7 @@ class stack
   }
 
   /**
-   * @brief Compares the contents of the underlying containers of two container
+   * \brief Compares the contents of the underlying containers of two container
    * adaptors. The comparison is done by applying the corresponding operator to
    * the underlying containers.
    */
@@ -243,14 +243,14 @@ class stack
 };
 
 /**
- * @brief These deduction guides are provided for stack to allow deduction from
+ * \brief These deduction guides are provided for stack to allow deduction from
  * underlying container type.
  */
 template <typename Container>
 stack(Container) -> stack<typename Container::value_type, Container>;
 
 /**
- * @brief Specializes the swap algorithm for stack. Swaps the contents of lhs
+ * \brief Specializes the swap algorithm for stack. Swaps the contents of lhs
  * and rhs. This overload only participates in overload resolution if
  * is_swappable<Container>::value is true.
  */

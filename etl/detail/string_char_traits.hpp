@@ -34,7 +34,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief The char_traits class is a traits class template that abstracts basic
+ * \brief The char_traits class is a traits class template that abstracts basic
  * character and string operations for a given character type. The defined
  * operation set is such that generic algorithms almost always can be
  * implemented in terms of it. It is thus possible to use such algorithms with
@@ -49,7 +49,7 @@ template <typename CharT>
 struct char_traits;
 
 /**
- * @brief Specializations of char_traits for type char.
+ * \brief Specializations of char_traits for type char.
  */
 template <>
 struct char_traits<char>
@@ -62,7 +62,7 @@ struct char_traits<char>
   // using comparison_category = strong_ordering;
 
   /**
-   * @brief Assigns character a to character r.
+   * \brief Assigns character a to character r.
    */
   static constexpr auto assign(char_type& a, char_type const& b) noexcept
     -> void
@@ -71,7 +71,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Returns true if a and b are equal, false otherwise.
+   * \brief Returns true if a and b are equal, false otherwise.
    */
   static constexpr auto eq(char_type a, char_type b) noexcept -> bool
   {
@@ -79,7 +79,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Returns true if a is less than b, false otherwise.
+   * \brief Returns true if a is less than b, false otherwise.
    */
   static constexpr auto lt(char_type a, char_type b) noexcept -> bool
   {
@@ -87,7 +87,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Compares the first count characters of the character strings s1
+   * \brief Compares the first count characters of the character strings s1
    * and s2. The comparison is done lexicographically. If count is zero,
    * strings are considered equal.
    */
@@ -106,7 +106,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Returns the length of the character sequence pointed to by s, that
+   * \brief Returns the length of the character sequence pointed to by s, that
    * is, the position of the terminating null character (CharT()).
    */
   static constexpr auto length(char_type const* str) -> size_t
@@ -115,10 +115,10 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Searches for character ch within the first count characters of the
+   * \brief Searches for character ch within the first count characters of the
    * sequence pointed to by p.
    *
-   * @return A pointer to the first character in the range specified by [p, p
+   * \return A pointer to the first character in the range specified by [p, p
    * + count) that compares equal to ch, or a null pointer if not found.
    */
   static constexpr auto find(char_type const* str, size_t count,
@@ -133,7 +133,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Copies count characters from the character string pointed to by
+   * \brief Copies count characters from the character string pointed to by
    * src to the character string pointed to by dest. Performs correctly even
    * if the copied character ranges overlap, i.e. src is in [dest, dest +
    * count).
@@ -146,7 +146,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Copies count characters from the character string pointed to by
+   * \brief Copies count characters from the character string pointed to by
    * src to the character string pointed to by dest. Formally, for each i in
    * [0, count), performs assign(src[i], dest[i]). The behavior is undefined
    * if copied character ranges overlap, i.e. src is in [dest, dest + count).
@@ -159,7 +159,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Assigns character a to each character in count characters in the
+   * \brief Assigns character a to each character in count characters in the
    * character sequence pointed to by p.
    */
   static constexpr auto assign(char_type* str, size_t count, char_type token)
@@ -170,7 +170,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Converts a value of int_type to char_type. If there are no
+   * \brief Converts a value of int_type to char_type. If there are no
    * equivalent value (such as when c is a copy of the eof() value), the
    * result is unspecified. Formally, returns the value x such that
    * char_type<char>::eq_int_type(c, char_type<char>::to_int_type(x)) is true,
@@ -179,7 +179,7 @@ struct char_traits<char>
   static constexpr auto to_char_type(int_type c) noexcept -> char_type;
 
   /**
-   * @brief Converts a value of char_type to int_type.
+   * \brief Converts a value of char_type to int_type.
    */
   static constexpr auto to_int_type(char_type c) noexcept -> int_type
   {
@@ -187,9 +187,9 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Checks whether two values of type int_type are equal.
+   * \brief Checks whether two values of type int_type are equal.
    *
-   * @details https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
+   * \details https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
    */
   static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
   {
@@ -200,7 +200,7 @@ struct char_traits<char>
   }
 
   /**
-   * @brief Returns a value not equivalent to any valid value of type
+   * \brief Returns a value not equivalent to any valid value of type
    * char_type. Formally, returns a value e such that
    * char_type<char>::eq_int_type(e, char_type<char>::to_int_type(c)) is false
    * for all values c
@@ -208,9 +208,9 @@ struct char_traits<char>
   static constexpr auto eof() noexcept -> int_type { return -1; }
 
   /**
-   * @brief Checks whether e is not equivalent to eof value.
+   * \brief Checks whether e is not equivalent to eof value.
    *
-   * @details Formally if char_type<char>::eq_int_type(e,
+   * \details Formally if char_type<char>::eq_int_type(e,
    * char_type<char>::eof()) is false, returns e otherwise, returns a value f
    * such that char_type<char>::eq_int_type(f, char_type<char>::eof()) is
    * false

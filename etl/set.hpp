@@ -24,8 +24,8 @@ DAMAGE.
 */
 
 /**
- * @file set.hpp
- * @example set.cpp
+ * \file set.hpp
+ * \example set.cpp
  */
 
 #ifndef TAETL_SET_HPP
@@ -42,11 +42,11 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief static_set is an associative container that contains a sorted set
+ * \brief static_set is an associative container that contains a sorted set
  * of unique objects of type Key. Sorting is done using the key comparison
  * function Compare.
  *
- * @include set.cpp
+ * \include set.cpp
  */
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set
@@ -80,16 +80,16 @@ struct static_set
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
   /**
-   * @brief Constructs empty container.
+   * \brief Constructs empty container.
    */
   static_set() = default;
 
   /**
-   * @brief Constructs with the contents of the range [first, last). If multiple
+   * \brief Constructs with the contents of the range [first, last). If multiple
    * elements in the range have keys that compare equivalent, all but the first
    * will be discarded.
    *
-   * @todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
+   * \todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
    */
   template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
   static_set(InputIt first, InputIt last)
@@ -104,30 +104,30 @@ struct static_set
   }
 
   /**
-   * @brief
+   * \brief
    */
   constexpr static_set(static_set const& other) = default;
 
   /**
-   * @brief
+   * \brief
    */
   constexpr static_set(static_set&& other) noexcept(
     noexcept(move(declval<storage_type>())))
     = default;
 
   /**
-   * @brief
+   * \brief
    */
   constexpr auto operator=(static_set const& other) -> static_set& = default;
 
   /**
-   * @brief
+   * \brief
    */
   constexpr auto operator=(static_set&& other) noexcept(
     noexcept(move(declval<storage_type>()))) -> static_set& = default;
 
   /**
-   * @brief Returns an iterator to the first element of the set.
+   * \brief Returns an iterator to the first element of the set.
    */
   [[nodiscard]] constexpr auto begin() noexcept -> iterator
   {
@@ -135,7 +135,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator to the first element of the set.
+   * \brief Returns an iterator to the first element of the set.
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
@@ -143,7 +143,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator to the first element of the set.
+   * \brief Returns an iterator to the first element of the set.
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
@@ -151,7 +151,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator to the element following the last element of the
+   * \brief Returns an iterator to the element following the last element of the
    * set.
    */
   [[nodiscard]] constexpr auto end() noexcept -> iterator
@@ -160,7 +160,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator to the element following the last element of the
+   * \brief Returns an iterator to the element following the last element of the
    * set.
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
@@ -169,7 +169,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator to the element following the last element of the
+   * \brief Returns an iterator to the element following the last element of the
    * set.
    */
   [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
@@ -178,7 +178,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed set.
+   * \brief Returns a reverse iterator to the first element of the reversed set.
    * It corresponds to the last element of the non-reversed set.
    */
   [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
@@ -187,7 +187,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed set.
+   * \brief Returns a reverse iterator to the first element of the reversed set.
    * It corresponds to the last element of the non-reversed set.
    */
   [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
@@ -196,7 +196,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed set.
+   * \brief Returns a reverse iterator to the first element of the reversed set.
    * It corresponds to the last element of the non-reversed set.
    */
   [[nodiscard]] constexpr auto crbegin() const noexcept
@@ -206,7 +206,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed set. It corresponds to the element preceding the first
    * element of the non-reversed set.
    */
@@ -216,7 +216,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed set. It corresponds to the element preceding the first
    * element of the non-reversed set.
    */
@@ -226,7 +226,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed set. It corresponds to the element preceding the first
    * element of the non-reversed set.
    */
@@ -236,7 +236,7 @@ struct static_set
   }
 
   /**
-   * @brief Checks if the container has no elements, i.e. whether begin() ==
+   * \brief Checks if the container has no elements, i.e. whether begin() ==
    * end().
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
@@ -245,7 +245,7 @@ struct static_set
   }
 
   /**
-   * @brief Checks if the container full, i.e. whether size() == Capacity.
+   * \brief Checks if the container full, i.e. whether size() == Capacity.
    */
   [[nodiscard]] constexpr auto full() const noexcept -> bool
   {
@@ -253,7 +253,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns the number of elements in the container, i.e.
+   * \brief Returns the number of elements in the container, i.e.
    * distance(begin(), end()).
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
@@ -262,7 +262,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns the maximum number of elements the container is able to
+   * \brief Returns the maximum number of elements the container is able to
    * hold.
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
@@ -271,13 +271,13 @@ struct static_set
   }
 
   /**
-   * @brief Erases all elements from the container. After this call, size()
+   * \brief Erases all elements from the container. After this call, size()
    * returns zero.
    */
   constexpr auto clear() noexcept -> void { memory_.clear(); }
 
   /**
-   * @brief Inserts element into the container, if the container doesn't
+   * \brief Inserts element into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   constexpr auto insert(value_type&& value)
@@ -299,10 +299,10 @@ struct static_set
   }
 
   /**
-   * @brief Inserts element into the container, if the container doesn't
+   * \brief Inserts element into the container, if the container doesn't
    * already contain an element with an equivalent key.
    *
-   * @todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
+   * \todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
    * breaks GCC 9.3 Ubuntu Focal build
    */
   constexpr auto insert(value_type const& value)
@@ -313,7 +313,7 @@ struct static_set
   }
 
   /**
-   * @brief Inserts elements from range [first, last). If multiple elements in
+   * \brief Inserts elements from range [first, last). If multiple elements in
    * the range have keys that compare equivalent, it is unspecified which
    * element is inserted (pending LWG2844).
    */
@@ -327,7 +327,7 @@ struct static_set
   }
 
   /**
-   * @brief Inserts a new element into the container constructed in-place with
+   * \brief Inserts a new element into the container constructed in-place with
    * the given args if there is no element with the key in the container.
    */
   template <typename... Args,
@@ -340,11 +340,11 @@ struct static_set
   }
 
   /**
-   * @brief Removes the element at pos.
+   * \brief Removes the element at pos.
    *
    * https://en.cppreference.com/w/cpp/container/set/erase
    *
-   * @return Iterator following the last removed element.
+   * \return Iterator following the last removed element.
    */
   constexpr auto erase(iterator pos) noexcept -> iterator
   {
@@ -352,12 +352,12 @@ struct static_set
   }
 
   /**
-   * @brief Removes the elements in the range [first; last), which must be a
+   * \brief Removes the elements in the range [first; last), which must be a
    * valid range in *this.
    *
    * https://en.cppreference.com/w/cpp/container/set/erase
    *
-   * @return Iterator following the last removed element.
+   * \return Iterator following the last removed element.
    */
   constexpr auto erase(iterator first, iterator last) -> iterator
   {
@@ -367,11 +367,11 @@ struct static_set
   }
 
   /**
-   * @brief Removes the element (if one exists) with the key equivalent to key.
+   * \brief Removes the element (if one exists) with the key equivalent to key.
    *
    * https://en.cppreference.com/w/cpp/container/set/erase
    *
-   * @return Number of elements removed.
+   * \return Number of elements removed.
    */
   constexpr auto erase(key_type const& key) noexcept -> size_type
   {
@@ -384,7 +384,7 @@ struct static_set
   }
 
   /**
-   * @brief Exchanges the contents of the container with those of other.
+   * \brief Exchanges the contents of the container with those of other.
    */
   constexpr auto
   swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
@@ -398,7 +398,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns the number of elements with key that compares equivalent to
+   * \brief Returns the number of elements with key that compares equivalent to
    * the specified argument, which is either 1 or 0 since this container does
    * not allow duplicates.
    */
@@ -409,7 +409,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns the number of elements with key that compares equivalent to
+   * \brief Returns the number of elements with key that compares equivalent to
    * the value x.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
@@ -419,9 +419,9 @@ struct static_set
   }
 
   /**
-   * @brief Finds an element with key equivalent to key.
+   * \brief Finds an element with key equivalent to key.
    *
-   * @return Iterator to an element with key equivalent to key. If no such
+   * \return Iterator to an element with key equivalent to key. If no such
    * element is found, past-the-end (see end()) iterator is returned.
    */
   [[nodiscard]] constexpr auto find(key_type const& key) noexcept -> iterator
@@ -430,9 +430,9 @@ struct static_set
   }
 
   /**
-   * @brief Finds an element with key equivalent to key.
+   * \brief Finds an element with key equivalent to key.
    *
-   * @return Iterator to an element with key equivalent to key. If no such
+   * \return Iterator to an element with key equivalent to key. If no such
    * element is found, past-the-end (see end()) iterator is returned.
    */
   [[nodiscard]] constexpr auto find(key_type const& key) const noexcept
@@ -442,7 +442,7 @@ struct static_set
   }
 
   /**
-   * @brief Finds an element with key that compares equivalent to the value x.
+   * \brief Finds an element with key that compares equivalent to the value x.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) -> iterator
@@ -456,7 +456,7 @@ struct static_set
   }
 
   /**
-   * @brief Finds an element with key that compares equivalent to the value x.
+   * \brief Finds an element with key that compares equivalent to the value x.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) const -> const_iterator
@@ -470,7 +470,7 @@ struct static_set
   }
 
   /**
-   * @brief Checks if there is an element with key equivalent to key in the
+   * \brief Checks if there is an element with key equivalent to key in the
    * container.
    */
   [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept
@@ -480,7 +480,7 @@ struct static_set
   }
 
   /**
-   * @brief Checks if there is an element with key that compares equivalent to
+   * \brief Checks if there is an element with key that compares equivalent to
    the value
    * x.
    */
@@ -491,7 +491,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is not less
+   * \brief Returns an iterator pointing to the first element that is not less
    * than (i.e. greater or equal to) key.
    */
   [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
@@ -500,7 +500,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is not less
+   * \brief Returns an iterator pointing to the first element that is not less
    * than (i.e. greater or equal to) key.
    */
   [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
@@ -510,7 +510,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is not less
+   * \brief Returns an iterator pointing to the first element that is not less
    * than (i.e. greater or equal to) key.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
@@ -520,7 +520,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is not less
+   * \brief Returns an iterator pointing to the first element that is not less
    * than (i.e. greater or equal to) key.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
@@ -530,7 +530,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is greater
+   * \brief Returns an iterator pointing to the first element that is greater
    than key.
    */
   [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
@@ -539,7 +539,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is greater
+   * \brief Returns an iterator pointing to the first element that is greater
    than key.
    */
   [[nodiscard]] constexpr auto upper_bound(key_type const& key) const
@@ -549,7 +549,7 @@ struct static_set
   }
 
   /**
- * @brief Returns an iterator pointing to the first element that is greater
+ * \brief Returns an iterator pointing to the first element that is greater
  than key.
  */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
@@ -559,7 +559,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns an iterator pointing to the first element that is greater
+   * \brief Returns an iterator pointing to the first element that is greater
    than key.
    */
   template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
@@ -569,7 +569,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a range containing all elements with the given key in the
+   * \brief Returns a range containing all elements with the given key in the
    * container. The range is defined by two iterators, one pointing to the first
    * element that is not less than key and another pointing to the first element
    * greater than key. Alternatively, the first iterator may be obtained with
@@ -581,7 +581,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a range containing all elements with the given key in the
+   * \brief Returns a range containing all elements with the given key in the
    * container. The range is defined by two iterators, one pointing to the first
    * element that is not less than key and another pointing to the first element
    * greater than key. Alternatively, the first iterator may be obtained with
@@ -594,7 +594,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a range containing all elements with the given key in the
+   * \brief Returns a range containing all elements with the given key in the
    * container. The range is defined by two iterators, one pointing to the first
    * element that is not less than key and another pointing to the first element
    * greater than key. Alternatively, the first iterator may be obtained with
@@ -607,7 +607,7 @@ struct static_set
   }
 
   /**
-   * @brief Returns a range containing all elements with the given key in the
+   * \brief Returns a range containing all elements with the given key in the
    * container. The range is defined by two iterators, one pointing to the first
    * element that is not less than key and another pointing to the first element
    * greater than key. Alternatively, the first iterator may be obtained with
@@ -620,11 +620,11 @@ struct static_set
   }
 
   /**
-   * @brief Returns the function object that compares the keys, which is a copy
+   * \brief Returns the function object that compares the keys, which is a copy
    * of this container's constructor argument comp. It is the same as
    * value_comp.
    *
-   * @return The key comparison function object.
+   * \return The key comparison function object.
    */
   [[nodiscard]] auto key_comp() const noexcept -> key_compare
   {
@@ -632,10 +632,10 @@ struct static_set
   }
 
   /**
-   * @brief Returns the function object that compares the values. It is the same
+   * \brief Returns the function object that compares the values. It is the same
    * as key_comp.
    *
-   * @return The value comparison function object.
+   * \return The value comparison function object.
    */
   [[nodiscard]] auto value_comp() const noexcept -> value_compare
   {
@@ -644,9 +644,9 @@ struct static_set
 };
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Checks if the contents of lhs and rhs are equal, that is, they have
+ * \details Checks if the contents of lhs and rhs are equal, that is, they have
  * the same number of elements and each element in lhs compares equal with the
  * element in rhs at the same position.
  */
@@ -659,9 +659,9 @@ operator==(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Checks if the contents of lhs and rhs are equal, that is, they have
+ * \details Checks if the contents of lhs and rhs are equal, that is, they have
  * the same number of elements and each element in lhs compares equal with the
  * element in rhs at the same position.
  */
@@ -674,9 +674,9 @@ operator!=(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The
+ * \details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
  * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
@@ -690,9 +690,9 @@ operator<(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The
+ * \details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
  * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
@@ -706,9 +706,9 @@ operator<=(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The
+ * \details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
  * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
@@ -722,9 +722,9 @@ operator>(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Compares the contents of two sets.
+ * \brief Compares the contents of two sets.
  *
- * @details Compares the contents of lhs and rhs lexicographically. The
+ * \details Compares the contents of lhs and rhs lexicographically. The
  * comparison is performed by a function equivalent to
  * lexicographical_compare. This comparison ignores the set's ordering
  * Compare.
@@ -738,7 +738,7 @@ operator>=(static_set<Key, Capacity, Comp> const& lhs,
 }
 
 /**
- * @brief Specializes the swap algorithm for set. Swaps the contents
+ * \brief Specializes the swap algorithm for set. Swaps the contents
  * of lhs and rhs. Calls lhs.swap(rhs).
  */
 template <typename Key, size_t Capacity, typename Compare>
@@ -751,7 +751,7 @@ swap(static_set<Key, Capacity, Compare>& lhs,
 }
 
 // /**
-//  * @brief Erases all elements that satisfy the predicate pred from the
+//  * \brief Erases all elements that satisfy the predicate pred from the
 //  container.
 //  *
 //  * https://en.cppreference.com/w/cpp/container/set/erase_if

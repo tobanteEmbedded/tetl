@@ -24,8 +24,8 @@ DAMAGE.
 */
 
 /**
- * @file numeric.hpp
- * @example numeric.cpp
+ * \file numeric.hpp
+ * \example numeric.cpp
  */
 
 #ifndef TAETL_NUMERIC_HPP
@@ -40,7 +40,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Computes the sum of the given value init and the elements in the range
+ * \brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses operator+ to sum up the elements.
  */
 template <typename InputIt, typename Type>
@@ -52,7 +52,7 @@ template <typename InputIt, typename Type>
 }
 
 /**
- * @brief Computes the sum of the given value init and the elements in the range
+ * \brief Computes the sum of the given value init and the elements in the range
  * [first, last). Uses the BinaryOperation to sum up the elements.
  */
 template <typename InputIt, typename Type, typename BinaryOperation>
@@ -64,7 +64,7 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 }
 
 /**
- * @brief Similar to etl::accumulate.
+ * \brief Similar to etl::accumulate.
  *
  * https://en.cppreference.com/w/cpp/algorithm/reduce
  */
@@ -76,7 +76,7 @@ template <typename InputIter, typename T, typename BinaryOp>
 }
 
 /**
- * @brief Similar to etl::accumulate.
+ * \brief Similar to etl::accumulate.
  *
  * https://en.cppreference.com/w/cpp/algorithm/reduce
  */
@@ -88,7 +88,7 @@ template <typename InputIter, typename T>
 }
 
 /**
- * @brief Similar to etl::accumulate.
+ * \brief Similar to etl::accumulate.
  *
  * https://en.cppreference.com/w/cpp/algorithm/reduce
  */
@@ -101,7 +101,7 @@ template <typename InputIter>
 }
 
 /**
- * @brief Computes the differences between the second and the first of each
+ * \brief Computes the differences between the second and the first of each
  * adjacent pair of elements of the range [first, last) and writes them to the
  * range beginning at destination + 1. An unmodified copy of *first is written
  * to *destination.
@@ -129,7 +129,7 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 }
 
 /**
- * @brief Computes the differences between the second and the first of each
+ * \brief Computes the differences between the second and the first of each
  * adjacent pair of elements of the range [first, last) and writes them to the
  * range beginning at destination + 1. An unmodified copy of *first is written
  * to *destination.
@@ -156,7 +156,7 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 }
 
 /**
- * @brief Returns the absolute value.
+ * \brief Returns the absolute value.
  */
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
@@ -174,7 +174,7 @@ template <typename Type>
 }
 
 /**
- * @brief Fills the range [first, last) with sequentially increasing values,
+ * \brief Fills the range [first, last) with sequentially increasing values,
  * starting with value and repetitively evaluating ++value.
  */
 template <typename ForwardIt, typename T>
@@ -188,11 +188,11 @@ constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 }
 
 /**
- * @brief Computes inner product (i.e. sum of products) or performs ordered
+ * \brief Computes inner product (i.e. sum of products) or performs ordered
  * map/reduce operation on the range [first1, last1) and the range beginning at
  * first2.
  *
- * @details Initializes the accumulator acc with the initial value init and then
+ * \details Initializes the accumulator acc with the initial value init and then
  * modifies it with the expression acc = etl::move(acc) + *first1 * *first2,
  * then modifies again with the expression acc = etl::move(acc) + *(first1+1) *
  * *(first2+1), etc until reaching last1. For built-in meaning of + and *, this
@@ -210,11 +210,11 @@ template <typename InputIt1, typename InputIt2, typename T>
 }
 
 /**
- * @brief Computes inner product (i.e. sum of products) or performs ordered
+ * \brief Computes inner product (i.e. sum of products) or performs ordered
  * map/reduce operation on the range [first1, last1) and the range beginning at
  * first2.
  *
- * @details Initializes the accumulator acc with the initial value init and then
+ * \details Initializes the accumulator acc with the initial value init and then
  * modifies it with the expression acc = op1(etl::move(acc), op2(*first1,
  * *first2)), then modifies again with the expression acc = op1(etl::move(acc),
  * op2(*(first1+1),
@@ -237,17 +237,17 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
 }
 
 /**
- * @brief Computes the partial sums of the elements in the subranges of the
+ * \brief Computes the partial sums of the elements in the subranges of the
  * range [first, last) and writes them to the range beginning at destination.
  * This version uses the given binary function op, both applying etl::move to
  * their operands on the left hand side.
  *
- * @details BinaryFunction must not invalidate any iterators, including the end
+ * \details BinaryFunction must not invalidate any iterators, including the end
  * iterators, or modify any elements of the range involved.
  *
  * https://en.cppreference.com/w/cpp/algorithm/partial_sum
  *
- * @return Iterator to the element past the last element written.
+ * \return Iterator to the element past the last element written.
  */
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
@@ -268,16 +268,16 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
 }
 
 /**
- * @brief Computes the partial sums of the elements in the subranges of the
+ * \brief Computes the partial sums of the elements in the subranges of the
  * range [first, last) and writes them to the range beginning at destination.
  * This version uses operator+ to sum up the elements.
  *
- * @details BinaryFunction must not invalidate any iterators, including the end
+ * \details BinaryFunction must not invalidate any iterators, including the end
  * iterators, or modify any elements of the range involved.
  *
  * https://en.cppreference.com/w/cpp/algorithm/partial_sum
  *
- * @return Iterator to the element past the last element written.
+ * \return Iterator to the element past the last element written.
  */
 template <typename InputIt, typename OutputIt>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
@@ -287,9 +287,9 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
 }
 
 /**
- * @brief Computes the greatest common divisor of the integers m and n.
+ * \brief Computes the greatest common divisor of the integers m and n.
  *
- * @return If both m and n are zero, returns zero. Otherwise, returns the
+ * \return If both m and n are zero, returns zero. Otherwise, returns the
  * greatest common divisor of |m| and |n|.
  */
 template <typename M, typename N>
@@ -300,9 +300,9 @@ template <typename M, typename N>
 }
 
 /**
- * @brief Computes the least common multiple of the integers m and n.
+ * \brief Computes the least common multiple of the integers m and n.
  *
- * @return If either m or n is zero, returns zero. Otherwise, returns the least
+ * \return If either m or n is zero, returns zero. Otherwise, returns the least
  * common multiple of |m| and |n|.
  */
 template <
@@ -318,10 +318,10 @@ template <
 }
 
 /**
- * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * \brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  *
- * @details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
+ * \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
  *
  * https://www.youtube.com/watch?v=sBtAGxBh-XI
  *
@@ -349,10 +349,10 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
 }
 
 /**
- * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * \brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  *
- * @details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
+ * \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
  *
  * https://www.youtube.com/watch?v=sBtAGxBh-XI
  *
@@ -374,10 +374,10 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
 }
 
 /**
- * @brief Returns half the sum of a + b. If the sum is odd, the result is
+ * \brief Returns half the sum of a + b. If the sum is odd, the result is
  * rounded towards a.
  *
- * @details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
+ * \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
  *
  * https://www.youtube.com/watch?v=sBtAGxBh-XI
  *

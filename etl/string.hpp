@@ -24,7 +24,7 @@ DAMAGE.
 */
 
 /**
- * @example string.cpp
+ * \example string.cpp
  */
 
 #ifndef TAETL_STRING_HPP
@@ -40,10 +40,10 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief basic_static_string class with fixed size capacity.
+ * \brief basic_static_string class with fixed size capacity.
  *
- * @tparam CharT Build in type for character size (mostly 'char')
- * @tparam Capacity Capacity for basic_static_string
+ * \tparam CharT Build in type for character size (mostly 'char')
+ * \tparam Capacity Capacity for basic_static_string
  */
 template <typename CharT, etl::size_t Capacity,
           typename Traits = etl::char_traits<CharT>>
@@ -70,14 +70,14 @@ class basic_static_string
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
   /**
-   * @brief Default constructor.
+   * \brief Default constructor.
    */
   constexpr basic_static_string() = default;
 
   /**
-   * @brief Character pointer constructor.
+   * \brief Character pointer constructor.
    *
-   * @details Fails silently if input len is greater then capacity.
+   * \details Fails silently if input len is greater then capacity.
    */
   constexpr basic_static_string(const_pointer str, size_type const len) noexcept
   {
@@ -93,9 +93,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Character pointer constructor. Calls etl::strlen.
+   * \brief Character pointer constructor. Calls etl::strlen.
    *
-   * @details Fails silently if input length is greater then capacity.
+   * \details Fails silently if input length is greater then capacity.
    */
   constexpr basic_static_string(const_pointer str) noexcept
       : basic_static_string(str, etl::strlen(str))
@@ -103,9 +103,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Constructs the string with count copies of character ch.
+   * \brief Constructs the string with count copies of character ch.
    *
-   * @details Fails silently if input length is greater then capacity.
+   * \details Fails silently if input length is greater then capacity.
    */
   constexpr basic_static_string(size_type count, value_type ch) noexcept
   {
@@ -120,7 +120,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Constructs the string with the contents of the range [ first, last).
+   * \brief Constructs the string with the contents of the range [ first, last).
    * Fails silently if input length is greater then capacity.
    */
   template <typename InputIter,
@@ -132,7 +132,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Constructs the string with a substring [pos, pos+count) of other.
+   * \brief Constructs the string with a substring [pos, pos+count) of other.
    */
   constexpr basic_static_string(basic_static_string const& other, size_type pos,
                                 size_type count)
@@ -141,7 +141,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Constructs the string with a substring [pos, other.size()).
+   * \brief Constructs the string with a substring [pos, other.size()).
    */
   constexpr basic_static_string(basic_static_string const& other, size_type pos)
       : basic_static_string {other.substr(pos, other.size())}
@@ -149,7 +149,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then initializes the
+   * \brief Implicitly converts t to a string view sv, then initializes the
    * string with the contents of sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -161,7 +161,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then initializes the
+   * \brief Implicitly converts t to a string view sv, then initializes the
    * string with the subrange [ pos, pos + n ) of sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -172,31 +172,31 @@ class basic_static_string
   }
 
   /**
-   * @brief Defaulted copy constructor.
+   * \brief Defaulted copy constructor.
    */
   constexpr basic_static_string(
     basic_static_string const& /*str*/) noexcept = default;
 
   /**
-   * @brief Defaulted move constructor.
+   * \brief Defaulted move constructor.
    */
   constexpr basic_static_string(
     basic_static_string&& /*str*/) noexcept = default;
 
   /**
-   * @brief Defaulted copy assignment.
+   * \brief Defaulted copy assignment.
    */
   constexpr auto operator   =(basic_static_string const& /*str*/) noexcept
     -> basic_static_string& = default;
 
   /**
-   * @brief Defaulted move assignment.
+   * \brief Defaulted move assignment.
    */
   constexpr auto operator   =(basic_static_string&& /*str*/) noexcept
     -> basic_static_string& = default;
 
   /**
-   * @brief Replaces the contents with those of null-terminated character string
+   * \brief Replaces the contents with those of null-terminated character string
    pointed to by s.
    */
   constexpr auto operator=(const_pointer s) noexcept -> basic_static_string&
@@ -206,7 +206,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with character ch.
+   * \brief Replaces the contents with character ch.
    */
   constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
   {
@@ -215,7 +215,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then replaces the
+   * \brief Implicitly converts t to a string view sv, then replaces the
    * contents with those of the sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -226,7 +226,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with count copies of character ch.
+   * \brief Replaces the contents with count copies of character ch.
    */
   constexpr auto assign(size_type count, value_type ch) noexcept
     -> basic_static_string&
@@ -236,7 +236,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with a copy of str.
+   * \brief Replaces the contents with a copy of str.
    */
   constexpr auto assign(basic_static_string const& str) noexcept
     -> basic_static_string&
@@ -246,7 +246,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with a substring [ pos, pos + count )
+   * \brief Replaces the contents with a substring [ pos, pos + count )
    * of str.
    */
   constexpr auto assign(basic_static_string const& str, size_type pos,
@@ -257,7 +257,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with those of str using move semantics.
+   * \brief Replaces the contents with those of str using move semantics.
    */
   constexpr auto assign(basic_static_string&& str) noexcept
     -> basic_static_string&
@@ -267,7 +267,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with copies of the characters in the range
+   * \brief Replaces the contents with copies of the characters in the range
    * [ s, s + count ). This range can contain null characters.
    */
   constexpr auto assign(const_pointer s, size_type count) noexcept
@@ -278,7 +278,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with those of null-terminated character string
+   * \brief Replaces the contents with those of null-terminated character string
    * pointed to by s.
    */
   constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
@@ -288,7 +288,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Replaces the contents with copies of the characters in the
+   * \brief Replaces the contents with copies of the characters in the
    * range [ first , last ).
    */
   template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
@@ -300,7 +300,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then replaces the
+   * \brief Implicitly converts t to a string view sv, then replaces the
    * contents with the characters from sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -312,7 +312,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then replaces the
+   * \brief Implicitly converts t to a string view sv, then replaces the
    * contents with the characters from the subview [ pos, pos + count ) of sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -325,12 +325,12 @@ class basic_static_string
   }
 
   /**
-   * @brief Trivial defaulted destructor
+   * \brief Trivial defaulted destructor
    */
   ~basic_static_string() noexcept = default;
 
   /**
-   * @brief Accesses the specified character without bounds checking.
+   * \brief Accesses the specified character without bounds checking.
    */
   constexpr auto operator[](size_type index) noexcept -> reference
   {
@@ -338,7 +338,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Accesses the specified character without bounds checking.
+   * \brief Accesses the specified character without bounds checking.
    */
   constexpr auto operator[](size_type index) const noexcept -> const_reference
   {
@@ -346,12 +346,12 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns an iterator to the beginning.
+   * \brief Returns an iterator to the beginning.
    */
   constexpr auto begin() noexcept -> iterator { return data(); }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
@@ -359,7 +359,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
@@ -367,12 +367,12 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns an iterator to the end.
+   * \brief Returns an iterator to the end.
    */
   constexpr auto end() noexcept -> iterator { return begin() + size(); }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
   {
@@ -380,7 +380,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
   {
@@ -388,7 +388,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
@@ -397,7 +397,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
@@ -406,7 +406,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto crbegin() const noexcept
@@ -416,7 +416,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
@@ -425,7 +425,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
@@ -434,7 +434,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * string. It corresponds to the last character of the non-reversed string.
    */
   [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
@@ -443,7 +443,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Accesses the first character.
+   * \brief Accesses the first character.
    */
   [[nodiscard]] constexpr auto front() noexcept -> reference
   {
@@ -451,7 +451,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Accesses the first character.
+   * \brief Accesses the first character.
    */
   [[nodiscard]] constexpr auto front() const noexcept -> const_reference
   {
@@ -459,7 +459,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Accesses the last character.
+   * \brief Accesses the last character.
    */
   [[nodiscard]] constexpr auto back() noexcept -> reference
   {
@@ -467,7 +467,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Accesses the last character.
+   * \brief Accesses the last character.
    */
   [[nodiscard]] constexpr auto back() const noexcept -> const_reference
   {
@@ -475,7 +475,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks whether the string is empty.
+   * \brief Checks whether the string is empty.
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
@@ -483,7 +483,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks whether the string is full. Equals to capacity - 1, for the
+   * \brief Checks whether the string is full. Equals to capacity - 1, for the
    * null termination character.
    */
   [[nodiscard]] constexpr auto full() const noexcept -> bool
@@ -492,7 +492,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns the number of characters.
+   * \brief Returns the number of characters.
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
@@ -500,7 +500,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns the number of characters.
+   * \brief Returns the number of characters.
    */
   [[nodiscard]] constexpr auto length() const noexcept -> size_type
   {
@@ -508,7 +508,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns the number of characters that can be held in allocated
+   * \brief Returns the number of characters that can be held in allocated
    * storage, including the space for the null terminator.
    */
   [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
@@ -517,7 +517,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns the number of characters that can be held in allocated
+   * \brief Returns the number of characters that can be held in allocated
    * storage, including the space for the null terminator.
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
@@ -526,30 +526,30 @@ class basic_static_string
   }
 
   /**
-   * @brief Reserve is deleted, since the capacity is fixed.
+   * \brief Reserve is deleted, since the capacity is fixed.
    */
   constexpr auto reserve(size_type newCap) -> void = delete;
 
   /**
-   * @brief Shrink to fit is deleted, since the capacity is fixed.
+   * \brief Shrink to fit is deleted, since the capacity is fixed.
    */
   constexpr auto shrink_to_fit() -> void = delete;
 
   /**
-   * @brief Returns a pointer to the underlying array serving as character
+   * \brief Returns a pointer to the underlying array serving as character
    * storage. The pointer is such that the range [data(); data() + size()) is
    * valid and the values in it correspond to the values stored in the string.
    *
-   * @details Always null-terminated.
+   * \details Always null-terminated.
    */
   [[nodiscard]] constexpr auto data() noexcept -> pointer { return &data_[0]; };
 
   /**
-   * @brief Returns a pointer to the underlying array serving as character
+   * \brief Returns a pointer to the underlying array serving as character
    * storage. The pointer is such that the range [data(); data() + size()) is
    * valid and the values in it correspond to the values stored in the string.
    *
-   * @details Always null-terminated.
+   * \details Always null-terminated.
    */
   [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
   {
@@ -557,7 +557,7 @@ class basic_static_string
   };
 
   /**
-   * @brief Returns a pointer to a null-terminated character array.
+   * \brief Returns a pointer to a null-terminated character array.
    *
    * The data is equivalent to those stored in the string. The pointer is such
    * that the range [c_str(); c_str() + size()] is valid and the values in it
@@ -570,7 +570,7 @@ class basic_static_string
   };
 
   /**
-   * @brief Returns a etl::basic_string_view.
+   * \brief Returns a etl::basic_string_view.
    */
   [[nodiscard]] constexpr
   operator basic_string_view<value_type, traits_type>() const noexcept
@@ -579,7 +579,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Removes all characters from the string. Sets size to 0 and overrides
+   * \brief Removes all characters from the string. Sets size to 0 and overrides
    * the buffer with zeros.
    */
   constexpr auto clear() noexcept -> void
@@ -589,9 +589,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Removes min(count, size() - index) characters starting at index.
+   * \brief Removes min(count, size() - index) characters starting at index.
    *
-   * @return *this
+   * \return *this
    */
   constexpr auto erase(size_type index = 0, size_type count = npos) noexcept
     -> basic_static_string&
@@ -602,9 +602,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Removes the character at position.
+   * \brief Removes the character at position.
    *
-   * @return iterator pointing to the character immediately following the
+   * \return iterator pointing to the character immediately following the
    * character erased, or end() if no such character exists.
    */
   constexpr auto erase(const_iterator position) noexcept -> iterator
@@ -613,9 +613,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Removes the characters in the range [first, last).
+   * \brief Removes the characters in the range [first, last).
    *
-   * @return iterator pointing to the character last pointed to before the
+   * \return iterator pointing to the character last pointed to before the
    * erase, or end() if no such character exists.
    */
   constexpr auto erase(const_iterator first, const_iterator last) noexcept
@@ -630,7 +630,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends the given character ch to the end of the string. Does
+   * \brief Appends the given character ch to the end of the string. Does
    * nothing if the string is full.
    */
   constexpr auto push_back(value_type ch) noexcept -> void
@@ -640,7 +640,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Removes the last character from the string. Does nothing if the
+   * \brief Removes the last character from the string. Does nothing if the
    * string is empty.
    */
   constexpr auto pop_back() noexcept -> void
@@ -649,7 +649,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends count copies of character s.
+   * \brief Appends count copies of character s.
    */
   constexpr auto append(size_type const count, value_type const s) noexcept
     -> basic_static_string&
@@ -661,7 +661,7 @@ class basic_static_string
   };
 
   /**
-   * @brief Appends the null-terminated character string pointed to by s. The
+   * \brief Appends the null-terminated character string pointed to by s. The
    * length of the string is determined by the first null character using
    */
   constexpr auto append(const_pointer s) noexcept -> basic_static_string&
@@ -671,7 +671,7 @@ class basic_static_string
   };
 
   /**
-   * @brief Appends characters in the range [ s, s + count ). This range can
+   * \brief Appends characters in the range [ s, s + count ). This range can
    * contain null characters.
    */
   constexpr auto append(const_pointer s, size_type count) noexcept
@@ -684,7 +684,7 @@ class basic_static_string
   };
 
   /**
-   * @brief Appends characters in the range [ first , last ).
+   * \brief Appends characters in the range [ first , last ).
    */
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
@@ -698,7 +698,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends string str.
+   * \brief Appends string str.
    */
   constexpr auto append(basic_static_string const& str) noexcept
     -> basic_static_string&
@@ -707,7 +707,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends a substring [ pos, pos + count ) of str.
+   * \brief Appends a substring [ pos, pos + count ) of str.
    */
   constexpr auto append(basic_static_string const& str, size_type pos,
                         size_type count = npos) noexcept -> basic_static_string&
@@ -716,7 +716,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string_view sv, then appends all
+   * \brief Implicitly converts t to a string_view sv, then appends all
    * characters from sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -727,7 +727,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string_view sv then appends the
+   * \brief Implicitly converts t to a string_view sv then appends the
    * characters from the subview [ pos, pos + count ) of sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -739,7 +739,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends string str.
+   * \brief Appends string str.
    */
   constexpr auto operator+=(basic_static_string const& str) noexcept
     -> basic_static_string&
@@ -748,7 +748,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends character ch.
+   * \brief Appends character ch.
    */
   constexpr auto operator+=(value_type ch) noexcept -> basic_static_string&
   {
@@ -756,7 +756,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Appends the null-terminated character string pointed to by s.
+   * \brief Appends the null-terminated character string pointed to by s.
    */
   constexpr auto operator+=(const_pointer s) noexcept -> basic_static_string&
   {
@@ -764,7 +764,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then appends characters
+   * \brief Implicitly converts t to a string view sv, then appends characters
    * in the string view sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -774,7 +774,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Inserts count copies of character ch at the position index.
+   * \brief Inserts count copies of character ch at the position index.
    */
   constexpr auto insert(size_type const index, size_type const count,
                         value_type const ch) noexcept -> basic_static_string&
@@ -787,7 +787,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Inserts null-terminated character string pointed to by s at the
+   * \brief Inserts null-terminated character string pointed to by s at the
    * position index.
    */
   constexpr auto insert(size_type const index, const_pointer s) noexcept
@@ -798,7 +798,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Inserts the characters in the range [s, s+count) at the position
+   * \brief Inserts the characters in the range [s, s+count) at the position
    * index. The range can contain null characters.
    */
   constexpr auto insert(size_type const index, const_pointer s,
@@ -809,7 +809,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Inserts string str at the position index.
+   * \brief Inserts string str at the position index.
    */
   constexpr auto insert(size_type const index,
                         basic_static_string const& str) noexcept
@@ -820,7 +820,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Inserts a string, obtained by str.substr(index_str, count) at the
+   * \brief Inserts a string, obtained by str.substr(index_str, count) at the
    * position index.
    */
   constexpr auto insert(size_type const index, basic_static_string const& str,
@@ -835,7 +835,7 @@ class basic_static_string
   }
 
   // /**
-  //  * @brief Inserts character ch before the character pointed by pos.
+  //  * \brief Inserts character ch before the character pointed by pos.
   //  */
   // constexpr auto insert(const_iterator pos, value_type const ch) noexcept ->
   // iterator
@@ -843,7 +843,7 @@ class basic_static_string
   // }
 
   // /**
-  //  * @brief Inserts count copies of character ch before the element (if any)
+  //  * \brief Inserts count copies of character ch before the element (if any)
   //  pointed by
   //  * pos.
   //  */
@@ -853,7 +853,7 @@ class basic_static_string
   // }
 
   // /**
-  //  * @brief Inserts characters from the range [first, last) before the
+  //  * \brief Inserts characters from the range [first, last) before the
   //  element (if any)
   //  * pointed by pos.
   //  */
@@ -865,7 +865,7 @@ class basic_static_string
   // }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then inserts the elements
+   * \brief Implicitly converts t to a string view sv, then inserts the elements
    * from sv before the element (if any) pointed by pos.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -878,7 +878,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then inserts, before the
+   * \brief Implicitly converts t to a string view sv, then inserts, before the
    * element (if any) pointed by pos, the characters from the subview
    * [index_str, index_str+count) of sv.
    */
@@ -896,7 +896,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares this string to str.
+   * \brief Compares this string to str.
    */
   [[nodiscard]] constexpr auto
   compare(basic_static_string const& str) const noexcept -> int
@@ -905,7 +905,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares this string to str with other capacity.
+   * \brief Compares this string to str with other capacity.
    */
   template <size_type OtherCapacity>
   [[nodiscard]] constexpr auto compare(
@@ -916,7 +916,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares a [pos, pos+count) substring of this string to str. If
+   * \brief Compares a [pos, pos+count) substring of this string to str. If
    * count > size() - pos the substring is [pos, size()).
    */
   [[nodiscard]] constexpr auto compare(size_type const pos,
@@ -930,7 +930,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares a [pos1, pos1+count1) substring of this string to a
+   * \brief Compares a [pos1, pos1+count1) substring of this string to a
    * substring [pos2, pos2+count2) of str. If count1 > size() - pos1 the first
    * substring is [pos1, size()). Likewise, count2 > str.size() - pos2 the
    * second substring is [pos2, str.size()).
@@ -950,7 +950,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares this string to the null-terminated character sequence
+   * \brief Compares this string to the null-terminated character sequence
    * beginning at the character pointed to by s with length
    * traits_type::length(s).
    */
@@ -960,7 +960,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Compares a [pos1, pos1+count1) substring of this string to the
+   * \brief Compares a [pos1, pos1+count1) substring of this string to the
    * null-terminated character sequence beginning at the character pointed to by
    * s with length traits_type::length(s). If count1 > size() - pos1 the
    * substring is [pos1, size()).
@@ -975,7 +975,7 @@ class basic_static_string
   }
 
   /**
-   * @brief  Compares a [pos1, pos1+count1) substring of this string to the
+   * \brief  Compares a [pos1, pos1+count1) substring of this string to the
    * characters in the range [s, s + count2). If count1 > size() - pos1 the
    * substring is [pos1, size()). (Note: the characters in the range [s, s +
    * count2) may include null characters.)
@@ -990,7 +990,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then compares the content
+   * \brief Implicitly converts t to a string view sv, then compares the content
    * of this string to sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -1002,7 +1002,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then compares a [pos1,
+   * \brief Implicitly converts t to a string view sv, then compares a [pos1,
    * pos1+count1) substring of this string to sv.
    */
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
@@ -1015,7 +1015,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Implicitly converts t to a string view sv, then compares a [pos1,
+   * \brief Implicitly converts t to a string view sv, then compares a [pos1,
    * pos1+count1) substring of this string to a substring [pos2, pos2+count2) of
    * sv.
    */
@@ -1033,7 +1033,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string begins with the given prefix.
+   * \brief Checks if the string begins with the given prefix.
    */
   [[nodiscard]] constexpr auto
   starts_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept
@@ -1044,7 +1044,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string begins with the given prefix.
+   * \brief Checks if the string begins with the given prefix.
    */
   [[nodiscard]] constexpr auto starts_with(value_type c) const noexcept -> bool
   {
@@ -1053,7 +1053,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string begins with the given prefix.
+   * \brief Checks if the string begins with the given prefix.
    */
   [[nodiscard]] constexpr auto starts_with(const_pointer str) const -> bool
   {
@@ -1062,7 +1062,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string ends with the given prefix.
+   * \brief Checks if the string ends with the given prefix.
    */
   [[nodiscard]] constexpr auto
   ends_with(etl::basic_string_view<value_type, traits_type> sv) const noexcept
@@ -1073,7 +1073,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string ends with the given prefix.
+   * \brief Checks if the string ends with the given prefix.
    */
   [[nodiscard]] constexpr auto ends_with(value_type c) const noexcept -> bool
   {
@@ -1082,7 +1082,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Checks if the string ends with the given prefix.
+   * \brief Checks if the string ends with the given prefix.
    */
   [[nodiscard]] constexpr auto ends_with(const_pointer str) const -> bool
   {
@@ -1091,7 +1091,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Returns a substring [pos, pos+count). If the requested substring
+   * \brief Returns a substring [pos, pos+count). If the requested substring
    * extends past the end of the string, or if count == npos, the returned
    * substring is [pos, size()).
    *
@@ -1106,14 +1106,14 @@ class basic_static_string
   }
 
   /**
-   * @brief Copies a substring [pos, pos+count) to character string pointed to
+   * \brief Copies a substring [pos, pos+count) to character string pointed to
    * by dest. If the requested substring lasts past the end of the string, or if
    * count == npos, the copied substring is [pos, size()). The resulting
    * character string is not null-terminated.
    *
    * If pos is greater then size(), nothing will be copied.
    *
-   * @return Number of characters copied.
+   * \return Number of characters copied.
    */
   constexpr auto copy(pointer destination, size_type count,
                       size_type pos = 0) const -> size_type
@@ -1127,9 +1127,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Resizes the string to contain count characters.
+   * \brief Resizes the string to contain count characters.
    *
-   * @details If the current size is less than count, additional characters are
+   * \details If the current size is less than count, additional characters are
    * appended, maximum up to it's capacity. If the current size is greater than
    * count, the string is reduced to its first count elements.
    */
@@ -1140,9 +1140,9 @@ class basic_static_string
   }
 
   /**
-   * @brief Resizes the string to contain count characters.
+   * \brief Resizes the string to contain count characters.
    *
-   * @details If the current size is less than count, additional characters are
+   * \details If the current size is less than count, additional characters are
    * appended, maximum up to it's capacity. If the current size is greater than
    * count, the string is reduced to its first count elements.
    */
@@ -1152,7 +1152,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Exchanges the contents of the string with those of other. All
+   * \brief Exchanges the contents of the string with those of other. All
    * iterators and references may be invalidated.
    */
   constexpr auto swap(basic_static_string& other) noexcept -> void
@@ -1163,13 +1163,13 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * preceding pos.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/find
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto find(basic_static_string const& str,
@@ -1180,13 +1180,13 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * preceding pos.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/find
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto find(const_pointer s, size_type pos,
@@ -1205,13 +1205,13 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * preceding pos.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/find
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto find(const_pointer s,
@@ -1222,13 +1222,13 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * preceding pos.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/find
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto find(value_type ch,
@@ -1239,14 +1239,14 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * following pos. If npos or any value not smaller than size()-1 is passed as
    * pos, whole string will be searched.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/rfind
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found. Note that this is an offset from the start of
    * the string, not the end.
    */
@@ -1258,18 +1258,18 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * following pos. If npos or any value not smaller than size()-1 is passed as
    * pos, whole string will be searched.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/rfind
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found. Note that this is an offset from the start of
    * the string, not the end.
    *
-   * @todo Fix. See tests.
+   * \todo Fix. See tests.
    */
   [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos,
                                      size_type count) const noexcept
@@ -1286,14 +1286,14 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * following pos. If npos or any value not smaller than size()-1 is passed as
    * pos, whole string will be searched.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/rfind
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found. Note that this is an offset from the start of
    * the string, not the end.
    */
@@ -1305,14 +1305,14 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Search begins at pos, i.e. the found substring must not begin in a position
    * following pos. If npos or any value not smaller than size()-1 is passed as
    * pos, whole string will be searched.
    *
    * https://en.cppreference.com/w/cpp/string/basic_string/rfind
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found. Note that this is an offset from the start of
    * the string, not the end.
    */
@@ -1324,7 +1324,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first character equal to one of the characters in the
+   * \brief Finds the first character equal to one of the characters in the
    * given character sequence. The search considers only the interval [pos,
    * size()). If the character is not present in the interval, npos will be
    * returned.
@@ -1337,7 +1337,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first character equal to one of the characters in the
+   * \brief Finds the first character equal to one of the characters in the
    * given character sequence. The search considers only the interval [pos,
    * size()). If the character is not present in the interval, npos will be
    * returned.
@@ -1355,7 +1355,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first character equal to one of the characters in the
+   * \brief Finds the first character equal to one of the characters in the
    * given character sequence. The search considers only the interval [pos,
    * size()). If the character is not present in the interval, npos will be
    * returned.
@@ -1368,7 +1368,7 @@ class basic_static_string
   }
 
   /**
-   * @brief Finds the first character equal to one of the characters in the
+   * \brief Finds the first character equal to one of the characters in the
    * given character sequence. The search considers only the interval [pos,
    * size()). If the character is not present in the interval, npos will be
    * returned.
@@ -1381,7 +1381,7 @@ class basic_static_string
   }
 
   /**
-   * @brief This is a special value equal to the maximum value representable by
+   * \brief This is a special value equal to the maximum value representable by
    * the type size_type. The exact meaning depends on context, but it is
    * generally used either as end of string indicator by the functions that
    * expect a string index or as the error indicator by the functions that
@@ -1444,10 +1444,10 @@ template <etl::size_t Capacity>
 using static_string = basic_static_string<char, Capacity>;
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details Two strings are equal if both the size of lhs and rhs are equal and
+ * \details Two strings are equal if both the size of lhs and rhs are equal and
  * each character in lhs has equivalent character in rhs at the same position.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
@@ -1461,10 +1461,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details Two strings are equal if both the size of lhs and rhs are equal and
+ * \details Two strings are equal if both the size of lhs and rhs are equal and
  * each character in lhs has equivalent character in rhs at the same position.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1>
@@ -1476,10 +1476,10 @@ operator==(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details Two strings are equal if both the size of lhs and rhs are equal and
+ * \details Two strings are equal if both the size of lhs and rhs are equal and
  * each character in lhs has equivalent character in rhs at the same position.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
@@ -1493,10 +1493,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details Two strings are equal if both the size of lhs and rhs are equal and
+ * \details Two strings are equal if both the size of lhs and rhs are equal and
  * each character in lhs has equivalent character in rhs at the same position.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1>
@@ -1508,10 +1508,10 @@ operator!=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
           etl::size_t Capacity2>
@@ -1523,10 +1523,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
@@ -1537,10 +1537,10 @@ operator<(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
           etl::size_t Capacity2>
@@ -1552,10 +1552,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
@@ -1566,10 +1566,10 @@ operator<=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
           etl::size_t Capacity2>
@@ -1581,10 +1581,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1>
 [[nodiscard]] constexpr auto
@@ -1595,10 +1595,10 @@ operator>(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity1,
           etl::size_t Capacity2>
@@ -1610,10 +1610,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1,
 }
 
 /**
- * @brief Compares the contents of a string with another string or a
+ * \brief Compares the contents of a string with another string or a
  * null-terminated array of CharT.
  *
- * @details The ordering comparisons are done lexicographically.
+ * \details The ordering comparisons are done lexicographically.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity>
 [[nodiscard]] constexpr auto
@@ -1624,7 +1624,7 @@ operator>=(etl::basic_static_string<CharT, Capacity, Traits> const& lhs,
 }
 
 /**
- * @brief Specializes the etl::swap algorithm for etl::basic_static_string.
+ * \brief Specializes the etl::swap algorithm for etl::basic_static_string.
  * Swaps the contents of lhs and rhs. Equivalent to lhs.swap(rhs).
  */
 template <typename CharT, typename Traits, etl::size_t Capacity>
@@ -1636,7 +1636,7 @@ constexpr auto swap(etl::basic_static_string<CharT, Capacity, Traits>& lhs,
 }
 
 /**
- * @brief Erases all elements that compare equal to value from the container.
+ * \brief Erases all elements that compare equal to value from the container.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity, typename U>
 constexpr auto erase(basic_static_string<CharT, Capacity, Traits>& c,
@@ -1653,7 +1653,7 @@ constexpr auto erase(basic_static_string<CharT, Capacity, Traits>& c,
 }
 
 /**
- * @brief Erases all elements that satisfy the predicate pred from the
+ * \brief Erases all elements that satisfy the predicate pred from the
  * container.
  */
 template <typename CharT, typename Traits, etl::size_t Capacity,
@@ -1672,11 +1672,11 @@ constexpr auto erase_if(basic_static_string<CharT, Capacity, Traits>& c,
 }
 
 /**
- * @brief Interprets a signed integer value in the string str.
- * @param str The string to convert.
- * @param pos Address of an integer to store the number of characters processed.
- * @param base The number base.
- * @return Integer value corresponding to the content of str.
+ * \brief Interprets a signed integer value in the string str.
+ * \param str The string to convert.
+ * \param pos Address of an integer to store the number of characters processed.
+ * \param base The number base.
+ * \return Integer value corresponding to the content of str.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoi(static_string<Capacity> const& str,
@@ -1687,11 +1687,11 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Interprets a signed integer value in the string str.
- * @param str The string to convert.
- * @param pos Address of an integer to store the number of characters processed.
- * @param base The number base.
- * @return Integer value corresponding to the content of str.
+ * \brief Interprets a signed integer value in the string str.
+ * \param str The string to convert.
+ * \param pos Address of an integer to store the number of characters processed.
+ * \param base The number base.
+ * \return Integer value corresponding to the content of str.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stol(static_string<Capacity> const& str,
@@ -1702,11 +1702,11 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Interprets a signed integer value in the string str.
- * @param str The string to convert.
- * @param pos Address of an integer to store the number of characters processed.
- * @param base The number base.
- * @return Integer value corresponding to the content of str.
+ * \brief Interprets a signed integer value in the string str.
+ * \param str The string to convert.
+ * \param pos Address of an integer to store the number of characters processed.
+ * \param base The number base.
+ * \return Integer value corresponding to the content of str.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoll(static_string<Capacity> const& str,
@@ -1718,11 +1718,11 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Interprets a unsigned integer value in the string str.
- * @param str The string to convert.
- * @param pos Address of an integer to store the number of characters processed.
- * @param base The number base.
- * @return Integer value corresponding to the content of str.
+ * \brief Interprets a unsigned integer value in the string str.
+ * \param str The string to convert.
+ * \param pos Address of an integer to store the number of characters processed.
+ * \param base The number base.
+ * \return Integer value corresponding to the content of str.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoul(static_string<Capacity> const& str,
@@ -1734,11 +1734,11 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Interprets a unsigned integer value in the string str.
- * @param str The string to convert.
- * @param pos Address of an integer to store the number of characters processed.
- * @param base The number base.
- * @return Integer value corresponding to the content of str.
+ * \brief Interprets a unsigned integer value in the string str.
+ * \param str The string to convert.
+ * \param pos Address of an integer to store the number of characters processed.
+ * \param base The number base.
+ * \return Integer value corresponding to the content of str.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoull(static_string<Capacity> const& str,
@@ -1750,7 +1750,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(int value) noexcept
@@ -1762,7 +1762,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(long value) noexcept
@@ -1774,7 +1774,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(long long value) noexcept
@@ -1786,7 +1786,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(unsigned value) noexcept
@@ -1798,7 +1798,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(unsigned long value) noexcept
@@ -1810,7 +1810,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(unsigned long long value) noexcept
@@ -1822,7 +1822,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(float value) noexcept
@@ -1834,7 +1834,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(double value) noexcept
@@ -1846,7 +1846,7 @@ template <size_t Capacity>
 }
 
 /**
- * @brief Converts a numeric value to etl::static_string.
+ * \brief Converts a numeric value to etl::static_string.
  */
 template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(long double value) noexcept

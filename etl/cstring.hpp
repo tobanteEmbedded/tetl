@@ -32,18 +32,18 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief The macro NULL is an implementation-defined null pointer constant.
+ * \brief The macro NULL is an implementation-defined null pointer constant.
  */
 #define TAETL_NULL nullptr
 
 /**
- * @brief Copies the character string pointed to by src, including the null
+ * \brief Copies the character string pointed to by src, including the null
  * terminator, to the character array whose first element is pointed to by dest.
  *
- * @details The behavior is undefined if the dest array is not large enough. The
+ * \details The behavior is undefined if the dest array is not large enough. The
  * behavior is undefined if the strings overlap.
  *
- * @return dest
+ * \return dest
  */
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
@@ -54,17 +54,17 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 }
 
 /**
- * @brief Copies at most count characters of the byte string pointed to by src
+ * \brief Copies at most count characters of the byte string pointed to by src
  * (including the terminating null character) to character array pointed to by
  * dest.
  *
- * @details If count is reached before the entire string src was copied, the
+ * \details If count is reached before the entire string src was copied, the
  * resulting character array is not null-terminated. If, after copying the
  * terminating null character from src, count is not reached, additional null
  * characters are written to dest until the total of count characters have been
  * written. If the strings overlap, the behavior is undefined.
  *
- * @return dest
+ * \return dest
  */
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
   -> char*
@@ -83,7 +83,7 @@ constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
 }
 
 /**
- * @brief Returns the length of the C string str.
+ * \brief Returns the length of the C string str.
  */
 constexpr auto strlen(char const* str) -> etl::size_t
 {
@@ -93,12 +93,12 @@ constexpr auto strlen(char const* str) -> etl::size_t
 }
 
 /**
- * @brief Appends a copy of the character string pointed to by src to the end of
+ * \brief Appends a copy of the character string pointed to by src to the end of
  * the character string pointed to by dest. The character src[0] replaces the
  * null terminator at the end of dest. The resulting byte string is
  * null-terminated.
  *
- * @details The behavior is undefined if the destination array is not large
+ * \details The behavior is undefined if the destination array is not large
  * enough for the contents of both src and dest and the terminating null
  * character. The behavior is undefined if the strings overlap.
  */
@@ -111,11 +111,11 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 }
 
 /**
- * @brief Appends a byte string pointed to by src to a byte string pointed to by
+ * \brief Appends a byte string pointed to by src to a byte string pointed to by
  * dest. At most count characters are copied. The resulting byte string is
  * null-terminated.
  *
- * @details The destination byte string must have enough space for the contents
+ * \details The destination byte string must have enough space for the contents
  * of both dest and src plus the terminating null character, except that the
  * size of src is limited to count. The behavior is undefined if the strings
  * overlap.
@@ -136,9 +136,9 @@ constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
 }
 
 /**
- * @brief Compares the C string lhs to the C string rhs.
+ * \brief Compares the C string lhs to the C string rhs.
  *
- * @details This function starts comparing the first character of each string.
+ * \details This function starts comparing the first character of each string.
  * If they are equal to each other, it continues with the following pairs until
  * the characters differ or until a terminating null-character is reached.
  */
@@ -153,11 +153,11 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 }
 
 /**
- * @brief Compares at most count characters of two possibly null-terminated
+ * \brief Compares at most count characters of two possibly null-terminated
  * arrays. The comparison is done lexicographically. Characters following the
  * null character are not compared.
  *
- * @details The behavior is undefined when access occurs past the end of either
+ * \details The behavior is undefined when access occurs past the end of either
  * array lhs or rhs. The behavior is undefined when either lhs or rhs is the
  * null pointer.
  */
@@ -180,7 +180,7 @@ constexpr auto strncmp(char const* lhs, char const* rhs,
 }
 
 /**
- * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
+ * \brief Copy the first n bytes pointed to by src to the buffer pointed to by
  * dest. Source and destination may not overlap. If source and destination might
  * overlap, memmove() must be used instead.
  */
@@ -193,7 +193,7 @@ constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 }
 
 /**
- * @brief Copies the value of c (converted to an unsigned char) into each of the
+ * \brief Copies the value of c (converted to an unsigned char) into each of the
  * ﬁrst n characters of the object pointed to by s.
  */
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
@@ -204,10 +204,10 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 }
 
 /**
- * @brief Copy the first n bytes pointed to by src to the buffer pointed to by
+ * \brief Copy the first n bytes pointed to by src to the buffer pointed to by
  * dest. Source and destination may overlap.
  *
- * @todo Check original implementation. They use __np_anyptrlt which is not
+ * \todo Check original implementation. They use __np_anyptrlt which is not
  * portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
  */
 constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*

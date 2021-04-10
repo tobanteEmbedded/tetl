@@ -38,7 +38,7 @@ using diff_t =
   typename ::etl::iterator_traits<::etl::remove_cvref_t<It>>::difference_type;
 
 /**
- * @brief Format args according to the format string fmt, and write the result
+ * \brief Format args according to the format string fmt, and write the result
  * to the output iterator out.
  *
  * https://en.cppreference.com/w/cpp/utility/format/format_to
@@ -86,7 +86,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
 }
 
 /**
- * @brief etl::format_to_n_result has no base classes, or members other than
+ * \brief etl::format_to_n_result has no base classes, or members other than
  * out, size and implicitly declared special member functions.
  *
  * https://en.cppreference.com/w/cpp/utility/format/format_to_n
@@ -99,7 +99,7 @@ struct format_to_n_result
 };
 
 /**
- * @brief Format args according to the format string fmt, and write the result
+ * \brief Format args according to the format string fmt, and write the result
  * to the output iterator out. At most n characters are written.
  *
  * https://en.cppreference.com/w/cpp/utility/format/format_to_n

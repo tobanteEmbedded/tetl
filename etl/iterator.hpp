@@ -35,7 +35,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -44,7 +44,7 @@ struct input_iterator_tag
 };
 
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -53,7 +53,7 @@ struct output_iterator_tag
 };
 
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -62,7 +62,7 @@ struct forward_iterator_tag : public input_iterator_tag
 };
 
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -71,7 +71,7 @@ struct bidirectional_iterator_tag : public forward_iterator_tag
 };
 
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -80,7 +80,7 @@ struct random_access_iterator_tag : public bidirectional_iterator_tag
 };
 
 /**
- * @brief Defines the category of an iterator. Each tag is an empty type and
+ * \brief Defines the category of an iterator. Each tag is an empty type and
  * corresponds to one of the five (until C++20) six (since C++20) iterator
  * categories.
  */
@@ -89,11 +89,11 @@ struct contiguous_iterator_tag : public random_access_iterator_tag
 };
 
 /**
- * @brief etl::iterator_traits is the type trait class that provides uniform
+ * \brief etl::iterator_traits is the type trait class that provides uniform
  * interface to the properties of LegacyIterator types. This makes it possible
  * to implement algorithms only in terms of iterators.
  *
- * @details The template can be specialized for user-defined iterators so that
+ * \details The template can be specialized for user-defined iterators so that
  * the information about the iterator can be retrieved even if the type does not
  * provide the usual typedefs.
  *
@@ -103,11 +103,11 @@ template <typename Iter>
 struct iterator_traits;
 
 /**
- * @brief etl::iterator_traits is the type trait class that provides uniform
+ * \brief etl::iterator_traits is the type trait class that provides uniform
  * interface to the properties of LegacyIterator types. This makes it possible
  * to implement algorithms only in terms of iterators.
  *
- * @details The template can be specialized for user-defined iterators so that
+ * \details The template can be specialized for user-defined iterators so that
  * the information about the iterator can be retrieved even if the type does not
  * provide the usual typedefs.
  *
@@ -125,7 +125,7 @@ struct iterator_traits<T*>
 };
 
 /**
- * @brief Increments given iterator it by n elements. If n is negative, the
+ * \brief Increments given iterator it by n elements. If n is negative, the
  * iterator is decremented. In this case, InputIt must meet the requirements of
  * LegacyBidirectionalIterator, otherwise the behavior is undefined.
  *
@@ -161,7 +161,7 @@ constexpr auto advance(It& it, Distance n) -> void
 }
 
 /**
- * @brief Returns the number of hops from first to last.
+ * \brief Returns the number of hops from first to last.
  *
  * https://en.cppreference.com/w/cpp/iterator/distance
  */
@@ -189,7 +189,7 @@ constexpr auto distance(It first, It last) ->
 }
 
 /**
- * @brief Return the nth successor of iterator it.
+ * \brief Return the nth successor of iterator it.
  */
 template <typename InputIt>
 [[nodiscard]] constexpr auto
@@ -201,7 +201,7 @@ next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
 }
 
 /**
- * @brief Return the nth predecessor of iterator it.
+ * \brief Return the nth predecessor of iterator it.
  */
 template <typename BidirIt>
 [[nodiscard]] constexpr auto
@@ -213,13 +213,13 @@ prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1)
 }
 
 /**
- * @brief etl::reverse_iterator is an iterator adaptor that reverses the
+ * \brief etl::reverse_iterator is an iterator adaptor that reverses the
  * direction of a given iterator. In other words, when provided with a
  * bidirectional iterator, etl::reverse_iterator produces a new iterator that
  * moves from the end to the beginning of the sequence defined by the underlying
  * bidirectional iterator.
  *
- * @details This is the iterator returned by member functions rbegin() and
+ * \details This is the iterator returned by member functions rbegin() and
  * rend() of the standard library containers.
  */
 template <class Iter>
@@ -233,9 +233,9 @@ class reverse_iterator
   using pointer         = typename etl::iterator_traits<Iter>::pointer;
 
   /**
-   * @brief Constructs a new iterator adaptor.
+   * \brief Constructs a new iterator adaptor.
    *
-   * @details Default constructor. The underlying iterator is value-initialized.
+   * \details Default constructor. The underlying iterator is value-initialized.
    * Operations on the resulting iterator have defined behavior if and only if
    * the corresponding operations on a value-initialized Iterator also have
    * defined behavior.
@@ -243,16 +243,16 @@ class reverse_iterator
   constexpr reverse_iterator() : current_() { }
 
   /**
-   * @brief Constructs a new iterator adaptor.
+   * \brief Constructs a new iterator adaptor.
    *
-   * @details The underlying iterator is initialized with x.
+   * \details The underlying iterator is initialized with x.
    */
   constexpr explicit reverse_iterator(Iter x) : current_(x) { }
 
   /**
-   * @brief Constructs a new iterator adaptor.
+   * \brief Constructs a new iterator adaptor.
    *
-   * @details The underlying iterator is initialized with that of other.
+   * \details The underlying iterator is initialized with that of other.
    */
   template <class Other>
   constexpr reverse_iterator(reverse_iterator<Other> const& other)
@@ -261,7 +261,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief The underlying iterator is assigned the value of the underlying
+   * \brief The underlying iterator is assigned the value of the underlying
    * iterator of other, i.e. other.base().
    */
   template <class Other>
@@ -273,12 +273,12 @@ class reverse_iterator
   }
 
   /**
-   * @brief Returns the underlying base iterator.
+   * \brief Returns the underlying base iterator.
    */
   [[nodiscard]] constexpr auto base() const -> Iter { return current_; }
 
   /**
-   * @brief Returns a reference to the element previous to current.
+   * \brief Returns a reference to the element previous to current.
    */
   constexpr auto operator*() const -> reference
   {
@@ -287,7 +287,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Returns a pointer to the element previous to current.
+   * \brief Returns a pointer to the element previous to current.
    */
   constexpr auto operator->() const -> pointer
   {
@@ -295,7 +295,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Pre-increments by one respectively.
+   * \brief Pre-increments by one respectively.
    */
   constexpr auto operator++() -> reverse_iterator&
   {
@@ -304,7 +304,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Pre-increments by one respectively.
+   * \brief Pre-increments by one respectively.
    */
   constexpr auto operator++(int) -> reverse_iterator
   {
@@ -314,7 +314,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Pre-decrements by one respectively.
+   * \brief Pre-decrements by one respectively.
    */
   constexpr auto operator--() -> reverse_iterator&
   {
@@ -323,7 +323,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Pre-decrements by one respectively.
+   * \brief Pre-decrements by one respectively.
    */
   constexpr auto operator--(int) -> reverse_iterator
   {
@@ -333,7 +333,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Returns an iterator which is advanced by n positions.
+   * \brief Returns an iterator which is advanced by n positions.
    */
   constexpr auto operator+(difference_type n) const -> reverse_iterator
   {
@@ -341,7 +341,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Advances the iterator by n or -n positions respectively.
+   * \brief Advances the iterator by n or -n positions respectively.
    */
   constexpr auto operator+=(difference_type n) -> reverse_iterator&
   {
@@ -350,7 +350,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Returns an iterator which is advanced by -n positions.
+   * \brief Returns an iterator which is advanced by -n positions.
    */
   constexpr auto operator-(difference_type n) const -> reverse_iterator
   {
@@ -358,7 +358,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Advances the iterator by n or -n positions respectively.
+   * \brief Advances the iterator by n or -n positions respectively.
    */
   constexpr auto operator-=(difference_type n) -> reverse_iterator&
   {
@@ -367,7 +367,7 @@ class reverse_iterator
   }
 
   /**
-   * @brief Returns a reference to the element at specified relative location.
+   * \brief Returns a reference to the element at specified relative location.
    */
   constexpr auto operator[](difference_type n) const -> reference
   {
@@ -379,7 +379,7 @@ class reverse_iterator
 };
 
 /**
- * @brief Convenience function template that constructs a etl::reverse_iterator
+ * \brief Convenience function template that constructs a etl::reverse_iterator
  * for the given iterator i (which must be a LegacyBidirectionalIterator) with
  * the type deduced from the type of the argument.
  */
@@ -391,7 +391,7 @@ template <typename Iter>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -403,7 +403,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -415,7 +415,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -427,7 +427,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -439,7 +439,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -451,7 +451,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief Compares the underlying iterators. Inverse comparisons are applied in
+ * \brief Compares the underlying iterators. Inverse comparisons are applied in
  * order to take into account that the iterator order is reversed.
  */
 template <typename Iter1, typename Iter2>
@@ -463,7 +463,7 @@ template <typename Iter1, typename Iter2>
 }
 
 /**
- * @brief etl::back_insert_iterator is a LegacyOutputIterator that appends to a
+ * \brief etl::back_insert_iterator is a LegacyOutputIterator that appends to a
  * container for which it was constructed. The container's push_back() member
  * function is called whenever the iterator (whether dereferenced or not) is
  * assigned to. Incrementing the etl::back_insert_iterator is a no-op.
@@ -480,12 +480,12 @@ class back_insert_iterator
   using container_type    = Container;
 
   /**
-   * @brief Initializes the underlying pointer to container with nullptr.
+   * \brief Initializes the underlying pointer to container with nullptr.
    */
   constexpr back_insert_iterator() noexcept = default;
 
   /**
-   * @brief Initializes the underlying pointer to the container to
+   * \brief Initializes the underlying pointer to the container to
    * etl::addressof(c).
    */
   constexpr explicit back_insert_iterator(Container& container)
@@ -494,7 +494,7 @@ class back_insert_iterator
   }
 
   /**
-   * @brief Inserts the given value value to the container.
+   * \brief Inserts the given value value to the container.
    */
   constexpr auto operator=(typename Container::value_type const& value)
     -> back_insert_iterator&
@@ -504,7 +504,7 @@ class back_insert_iterator
   }
 
   /**
-   * @brief Inserts the given value value to the container.
+   * \brief Inserts the given value value to the container.
    */
   constexpr auto operator=(typename Container::value_type&& value)
     -> back_insert_iterator&
@@ -514,7 +514,7 @@ class back_insert_iterator
   }
 
   /**
-   * @brief Does nothing, this member function is provided to satisfy the
+   * \brief Does nothing, this member function is provided to satisfy the
    * requirements of LegacyOutputIterator. It returns the iterator itself,
    * which makes it possible to use code such as *iter = value to output
    * (insert) the value into the underlying container.
@@ -522,7 +522,7 @@ class back_insert_iterator
   constexpr auto operator*() -> back_insert_iterator& { return *this; }
 
   /**
-   * @brief Does nothing. These operator overloads are provided to satisfy the
+   * \brief Does nothing. These operator overloads are provided to satisfy the
    * requirements of LegacyOutputIterator. They make it possible for the
    * expressions *iter++=value and *++iter=value to be used to output (insert)
    * a value into the underlying container.
@@ -530,7 +530,7 @@ class back_insert_iterator
   constexpr auto operator++() -> back_insert_iterator& { return *this; }
 
   /**
-   * @brief Does nothing. These operator overloads are provided to satisfy the
+   * \brief Does nothing. These operator overloads are provided to satisfy the
    * requirements of LegacyOutputIterator. They make it possible for the
    * expressions *iter++=value and *++iter=value to be used to output (insert)
    * a value into the underlying container.
@@ -554,13 +554,13 @@ template <typename Container>
 }
 
 /**
- * @brief etl::front_insert_iterator is an LegacyOutputIterator that prepends
+ * \brief etl::front_insert_iterator is an LegacyOutputIterator that prepends
  * elements to a container for which it was constructed. The container's
  * push_front() member function is called whenever the iterator (whether
  * dereferenced or not) is assigned to. Incrementing the
  * etl::front_insert_iterator is a no-op.
  *
- * @todo Add tests when a container with push_front has been implemented.
+ * \todo Add tests when a container with push_front has been implemented.
  */
 template <typename Container>
 class front_insert_iterator
@@ -577,12 +577,12 @@ class front_insert_iterator
   using container_type    = Container;
 
   /**
-   * @brief Initializes the underlying pointer to container with nullptr.
+   * \brief Initializes the underlying pointer to container with nullptr.
    */
   constexpr front_insert_iterator() noexcept = default;
 
   /**
-   * @brief Initializes the underlying pointer to the container to
+   * \brief Initializes the underlying pointer to the container to
    * etl::addressof(c).
    */
   constexpr explicit front_insert_iterator(Container& container)
@@ -591,7 +591,7 @@ class front_insert_iterator
   }
 
   /**
-   * @brief Inserts the given value value to the container.
+   * \brief Inserts the given value value to the container.
    */
   constexpr auto operator=(typename Container::value_type const& value)
     -> front_insert_iterator&
@@ -601,7 +601,7 @@ class front_insert_iterator
   }
 
   /**
-   * @brief Inserts the given value value to the container.
+   * \brief Inserts the given value value to the container.
    */
   constexpr auto operator=(typename Container::value_type&& value)
     -> front_insert_iterator&
@@ -611,7 +611,7 @@ class front_insert_iterator
   }
 
   /**
-   * @brief Does nothing, this member function is provided to satisfy the
+   * \brief Does nothing, this member function is provided to satisfy the
    * requirements of LegacyOutputIterator. It returns the iterator itself,
    * which makes it possible to use code such as *iter = value to output
    * (insert) the value into the underlying container.
@@ -619,7 +619,7 @@ class front_insert_iterator
   constexpr auto operator*() -> front_insert_iterator& { return *this; }
 
   /**
-   * @brief Does nothing. These operator overloads are provided to satisfy the
+   * \brief Does nothing. These operator overloads are provided to satisfy the
    * requirements of LegacyOutputIterator. They make it possible for the
    * expressions *iter++=value and *++iter=value to be used to output (insert)
    * a value into the underlying container.
@@ -627,7 +627,7 @@ class front_insert_iterator
   constexpr auto operator++() -> front_insert_iterator& { return *this; }
 
   /**
-   * @brief Does nothing. These operator overloads are provided to satisfy the
+   * \brief Does nothing. These operator overloads are provided to satisfy the
    * requirements of LegacyOutputIterator. They make it possible for the
    * expressions *iter++=value and *++iter=value to be used to output (insert)
    * a value into the underlying container.
@@ -636,7 +636,7 @@ class front_insert_iterator
 };
 
 /**
- * @brief front_inserter is a convenience function template that constructs a
+ * \brief front_inserter is a convenience function template that constructs a
  * etl::front_insert_iterator for the container c with the type deduced from the
  * type of the argument.
  */
@@ -648,13 +648,13 @@ template <typename Container>
 }
 
 /**
- * @brief Returns an iterator to the beginning of the given container c or array
+ * \brief Returns an iterator to the beginning of the given container c or array
  * array. These templates rely on C::begin() having a reasonable implementation.
  * Returns exactly c.begin(), which is typically an iterator to the beginning of
  * the sequence represented by c. If C is a standard Container, this returns
  * C::iterator when c is not const-qualified, and C::const_iterator otherwise.
  *
- * @details Custom overloads of begin may be provided for classes that do not
+ * \details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
 template <typename C>
@@ -664,13 +664,13 @@ constexpr auto begin(C& c) -> decltype(c.begin())
 }
 
 /**
- * @brief Returns an iterator to the beginning of the given container c or array
+ * \brief Returns an iterator to the beginning of the given container c or array
  * array. These templates rely on C::begin() having a reasonable implementation.
  * Returns exactly c.begin(), which is typically an iterator to the beginning of
  * the sequence represented by c. If C is a standard Container, this returns
  * C::iterator when c is not const-qualified, and C::const_iterator otherwise.
  *
- * @details Custom overloads of begin may be provided for classes that do not
+ * \details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
 template <typename C>
@@ -680,11 +680,11 @@ constexpr auto begin(C const& c) -> decltype(c.begin())
 }
 
 /**
- * @brief Returns an iterator to the beginning of the given container c or array
+ * \brief Returns an iterator to the beginning of the given container c or array
  * array. These templates rely on C::begin() having a reasonable implementation.
  * Returns a pointer to the beginning of the array.
  *
- * @details Custom overloads of begin may be provided for classes that do not
+ * \details Custom overloads of begin may be provided for classes that do not
  * expose a suitable begin() member function, yet can be iterated.
  */
 template <typename T, etl::size_t N>
@@ -694,13 +694,13 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
 }
 
 /**
- * @brief Returns an iterator to the beginning of the given container c or
+ * \brief Returns an iterator to the beginning of the given container c or
  * array array. These templates rely on C::begin() having a reasonable
  * implementation. Returns exactly etl::begin(c), with c always treated as
  * const-qualified. If C is a standard Container, this always returns
  * C::const_iterator.
  *
- * @details Custom overloads of begin may be provided for classes that do
+ * \details Custom overloads of begin may be provided for classes that do
  * not expose a suitable begin() member function, yet can be iterated.
  */
 template <typename C>
@@ -711,7 +711,7 @@ constexpr auto cbegin(C const& c) noexcept(noexcept(etl::begin(c)))
 }
 
 /**
- * @brief Returns an iterator to the end (i.e. the element after the last
+ * \brief Returns an iterator to the end (i.e. the element after the last
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
@@ -722,7 +722,7 @@ constexpr auto end(C& c) -> decltype(c.end())
 }
 
 /**
- * @brief Returns an iterator to the end (i.e. the element after the last
+ * \brief Returns an iterator to the end (i.e. the element after the last
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
@@ -733,7 +733,7 @@ constexpr auto end(C const& c) -> decltype(c.end())
 }
 
 /**
- * @brief Returns an iterator to the end (i.e. the element after the last
+ * \brief Returns an iterator to the end (i.e. the element after the last
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
@@ -744,7 +744,7 @@ constexpr auto end(T (&array)[N]) noexcept -> T*
 }
 
 /**
- * @brief Returns an iterator to the end (i.e. the element after the last
+ * \brief Returns an iterator to the end (i.e. the element after the last
  * element) of the given container c or array array. These templates rely on
  * C::end() having a reasonable implementation.
  */
@@ -756,7 +756,7 @@ constexpr auto cend(C const& c) noexcept(noexcept(etl::end(c)))
 }
 
 /**
- * @brief Returns an iterator to the reverse-beginning of the given container.
+ * \brief Returns an iterator to the reverse-beginning of the given container.
  */
 template <typename Container>
 constexpr auto rbegin(Container& c) -> decltype(c.rbegin())
@@ -765,7 +765,7 @@ constexpr auto rbegin(Container& c) -> decltype(c.rbegin())
 }
 
 /**
- * @brief Returns an iterator to the reverse-beginning of the given container.
+ * \brief Returns an iterator to the reverse-beginning of the given container.
  */
 template <typename Container>
 constexpr auto rbegin(Container const& c) -> decltype(c.rbegin())
@@ -774,7 +774,7 @@ constexpr auto rbegin(Container const& c) -> decltype(c.rbegin())
 }
 
 /**
- * @brief Returns an iterator to the reverse-beginning of the given array.
+ * \brief Returns an iterator to the reverse-beginning of the given array.
  */
 template <typename T, etl::size_t N>
 constexpr auto rbegin(T (&array)[N]) -> reverse_iterator<T*>
@@ -783,7 +783,7 @@ constexpr auto rbegin(T (&array)[N]) -> reverse_iterator<T*>
 }
 
 /**
- * @brief Returns an iterator to the reverse-beginning of the given container.
+ * \brief Returns an iterator to the reverse-beginning of the given container.
  */
 template <typename Container>
 constexpr auto crbegin(Container const& c) -> decltype(etl::rbegin(c))
@@ -792,7 +792,7 @@ constexpr auto crbegin(Container const& c) -> decltype(etl::rbegin(c))
 }
 
 /**
- * @brief Returns an iterator to the reverse-end of the given container.
+ * \brief Returns an iterator to the reverse-end of the given container.
  */
 template <typename Container>
 constexpr auto rend(Container& c) -> decltype(c.rend())
@@ -801,7 +801,7 @@ constexpr auto rend(Container& c) -> decltype(c.rend())
 }
 
 /**
- * @brief Returns an iterator to the reverse-end of the given container.
+ * \brief Returns an iterator to the reverse-end of the given container.
  */
 template <typename Container>
 constexpr auto rend(Container const& c) -> decltype(c.rend())
@@ -810,7 +810,7 @@ constexpr auto rend(Container const& c) -> decltype(c.rend())
 }
 
 /**
- * @brief Returns an iterator to the reverse-end of the given array.
+ * \brief Returns an iterator to the reverse-end of the given array.
  */
 template <typename T, etl::size_t N>
 constexpr auto rend(T (&array)[N]) -> reverse_iterator<T*>
@@ -819,7 +819,7 @@ constexpr auto rend(T (&array)[N]) -> reverse_iterator<T*>
 }
 
 /**
- * @brief Returns an iterator to the reverse-end of the given container.
+ * \brief Returns an iterator to the reverse-end of the given container.
  */
 template <typename Container>
 constexpr auto crend(Container const& c) -> decltype(etl::rend(c))
@@ -828,7 +828,7 @@ constexpr auto crend(Container const& c) -> decltype(etl::rend(c))
 }
 
 /**
- * @brief Returns the size of the given container c or array array. Returns
+ * \brief Returns the size of the given container c or array array. Returns
  * c.size(), converted to the return type if necessary.
  */
 template <typename C>
@@ -839,7 +839,7 @@ constexpr auto size(C const& c) noexcept(noexcept(c.size()))
 }
 
 /**
- * @brief Returns the size of the given container c or array array. Returns N.
+ * \brief Returns the size of the given container c or array array. Returns N.
  */
 template <typename T, etl::size_t N>
 constexpr auto size(T const (&array)[N]) noexcept -> etl::size_t
@@ -849,7 +849,7 @@ constexpr auto size(T const (&array)[N]) noexcept -> etl::size_t
 }
 
 /**
- * @brief Returns whether the given container is empty.
+ * \brief Returns whether the given container is empty.
  */
 template <typename C>
 constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
@@ -859,7 +859,7 @@ constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
 }
 
 /**
- * @brief Returns whether the given container is empty.
+ * \brief Returns whether the given container is empty.
  */
 template <typename T, etl::size_t N>
 constexpr auto empty(T (&array)[N]) noexcept -> bool
@@ -869,7 +869,7 @@ constexpr auto empty(T (&array)[N]) noexcept -> bool
 }
 
 /**
- * @brief Returns a pointer to the block of memory containing the elements of
+ * \brief Returns a pointer to the block of memory containing the elements of
  * the container. Returns c.data().
  */
 template <typename C>
@@ -879,7 +879,7 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 }
 
 /**
- * @brief Returns a pointer to the block of memory containing the elements of
+ * \brief Returns a pointer to the block of memory containing the elements of
  * the container. Returns c.data().
  */
 template <typename C>
@@ -890,7 +890,7 @@ constexpr auto data(C const& c) noexcept(noexcept(c.data()))
 }
 
 /**
- * @brief Returns a pointer to the block of memory containing the elements of
+ * \brief Returns a pointer to the block of memory containing the elements of
  * the container. Returns &array[0].
  */
 template <typename T, etl::size_t N>

@@ -39,7 +39,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief The class template basic_string_view describes an object that can
+ * \brief The class template basic_string_view describes an object that can
  * refer to a constant contiguous sequence of char-like objects with the first
  * element of the sequence at position zero. A typical implementation holds only
  * two members: a pointer to constant CharType and a size.
@@ -62,13 +62,13 @@ class basic_string_view
   using reverse_iterator       = const_reverse_iterator;
 
   /**
-   * @brief Default constructor. Constructs an empty basic_string_view. After
+   * \brief Default constructor. Constructs an empty basic_string_view. After
    * construction, data() is equal to nullptr, and size() is equal to 0.
    */
   constexpr basic_string_view() noexcept = default;
 
   /**
-   * @brief Copy constructor. Constructs a view of the same content as other.
+   * \brief Copy constructor. Constructs a view of the same content as other.
    * After construction, data() is equal to other.data(), and size() is equal
    * to other.size().
    */
@@ -76,7 +76,7 @@ class basic_string_view
     basic_string_view const& other) noexcept = default;
 
   /**
-   * @brief Constructs a view of the first count characters of the character
+   * \brief Constructs a view of the first count characters of the character
    * array starting with the element pointed by s. s can contain null
    * characters. The behavior is undefined if [s, s+count) is not a valid
    * range (even though the constructor may not access any of the elements of
@@ -89,7 +89,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Constructs a view of the null-terminated character string pointed
+   * \brief Constructs a view of the null-terminated character string pointed
    * to by s, not including the terminating null character. The length of the
    * view is determined as if by Traits::length(s). The behavior is undefined
    * if [s, s+Traits::length(s)) is not a valid range. After construction,
@@ -101,10 +101,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Constructs a basic_string_view over the range [first, last). The
+   * \brief Constructs a basic_string_view over the range [first, last). The
    * behavior is undefined if [first, last) is not a valid range.
    *
-   * @todo Improve SFINAE protection. See C++20 standard.
+   * \todo Improve SFINAE protection. See C++20 standard.
    */
   template <typename Iter, TAETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
   constexpr basic_string_view(Iter first, Iter last)
@@ -115,13 +115,13 @@ class basic_string_view
   ~basic_string_view() noexcept = default;
 
   /**
-   * @brief Replaces the view with that of view.
+   * \brief Replaces the view with that of view.
    */
   constexpr auto operator =(basic_string_view const& view) noexcept
     -> basic_string_view& = default;
 
   /**
-   * @brief Returns an iterator to the first character of the view.
+   * \brief Returns an iterator to the first character of the view.
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
@@ -129,7 +129,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns an iterator to the first character of the view.
+   * \brief Returns an iterator to the first character of the view.
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
@@ -137,7 +137,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns an iterator to the character following the last character
+   * \brief Returns an iterator to the character following the last character
    * of the view. This character acts as a placeholder, attempting to access
    * it results in undefined behavior.
    */
@@ -147,7 +147,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns an iterator to the character following the last character
+   * \brief Returns an iterator to the character following the last character
    * of the view. This character acts as a placeholder, attempting to access
    * it results in undefined behavior.
    */
@@ -157,7 +157,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * view. It corresponds to the last character of the non-reversed view.
    */
   [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
@@ -166,7 +166,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a reverse iterator to the first character of the reversed
+   * \brief Returns a reverse iterator to the first character of the reversed
    * view. It corresponds to the last character of the non-reversed view.
    */
   [[nodiscard]] constexpr auto crbegin() const noexcept
@@ -176,7 +176,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a reverse iterator to the character following the last
+   * \brief Returns a reverse iterator to the character following the last
    * character of the reversed view.
    *
    * It corresponds to the character preceding the first character of the
@@ -189,7 +189,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a reverse iterator to the character following the last
+   * \brief Returns a reverse iterator to the character following the last
    * character of the reversed view.
    *
    * It corresponds to the character preceding the first character of the
@@ -202,7 +202,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a const reference to the character at specified location
+   * \brief Returns a const reference to the character at specified location
    * pos. No bounds checking is performed: the behavior is undefined if pos >=
    * size().
    */
@@ -213,7 +213,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns reference to the first character in the view. The behavior
+   * \brief Returns reference to the first character in the view. The behavior
    * is undefined if empty() == true.
    */
   [[nodiscard]] constexpr auto front() const -> const_reference
@@ -222,7 +222,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns reference to the last character in the view. The behavior
+   * \brief Returns reference to the last character in the view. The behavior
    * is undefined if empty() == true.
    */
   [[nodiscard]] constexpr auto back() const -> const_reference
@@ -231,7 +231,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a pointer to the underlying character array. The pointer
+   * \brief Returns a pointer to the underlying character array. The pointer
    * is such that the range [data(); data() + size()) is valid and the values
    * in it correspond to the values of the view.
    */
@@ -241,7 +241,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns the number of CharT elements in the view, i.e.
+   * \brief Returns the number of CharT elements in the view, i.e.
    * etl::distance(begin(), end()).
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
@@ -250,7 +250,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns the number of CharT elements in the view, i.e.
+   * \brief Returns the number of CharT elements in the view, i.e.
    * etl::distance(begin(), end()).
    */
   [[nodiscard]] constexpr auto length() const noexcept -> size_type
@@ -259,7 +259,7 @@ class basic_string_view
   }
 
   /**
-   * @brief The largest possible number of char-like objects that can be
+   * \brief The largest possible number of char-like objects that can be
    * referred to by a basic_string_view.
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
@@ -268,7 +268,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the view has no characters, i.e. whether size() == 0.
+   * \brief Checks if the view has no characters, i.e. whether size() == 0.
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
@@ -276,7 +276,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Moves the start of the view forward by n characters. The behavior
+   * \brief Moves the start of the view forward by n characters. The behavior
    * is undefined if n > size().
    */
   constexpr auto remove_prefix(size_type n) -> void
@@ -286,13 +286,13 @@ class basic_string_view
   }
 
   /**
-   * @brief Moves the end of the view back by n characters. The behavior is
+   * \brief Moves the end of the view back by n characters. The behavior is
    * undefined if n > size().
    */
   constexpr auto remove_suffix(size_type n) -> void { size_ = size_ - n; }
 
   /**
-   * @brief Exchanges the view with that of v.
+   * \brief Exchanges the view with that of v.
    */
   constexpr void swap(basic_string_view& v) noexcept
   {
@@ -302,7 +302,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Copies the substring [pos, pos + rcount) to the character array
+   * \brief Copies the substring [pos, pos + rcount) to the character array
    * pointed to by dest, where rcount is the smaller of count and size() -
    * pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
    */
@@ -315,7 +315,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Returns a view of the substring [pos, pos + rcount), where rcount
+   * \brief Returns a view of the substring [pos, pos + rcount), where rcount
    * is the smaller of count and size() - pos.
    */
   [[nodiscard]] constexpr auto substr(size_type pos   = 0,
@@ -327,9 +327,9 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences.
+   * \brief Compares two character sequences.
    *
-   * @details https://en.cppreference.com/w/cpp/string/basic_string_view/compare
+   * \details https://en.cppreference.com/w/cpp/string/basic_string_view/compare
    */
   [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept
     -> int
@@ -347,7 +347,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences. Equivalent to substr(pos1,
+   * \brief Compares two character sequences. Equivalent to substr(pos1,
    * count1).compare(v).
    */
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
@@ -357,7 +357,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences. Equivalent to substr(pos1,
+   * \brief Compares two character sequences. Equivalent to substr(pos1,
    * count1).compare(v.substr(pos2, count2))
    */
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
@@ -368,7 +368,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences. Equivalent to
+   * \brief Compares two character sequences. Equivalent to
    * compare(basic_string_view(s)).
    */
   [[nodiscard]] constexpr auto compare(CharType const* s) const -> int
@@ -377,7 +377,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences. Equivalent to substr(pos1,
+   * \brief Compares two character sequences. Equivalent to substr(pos1,
    * count1).compare(basic_string_view(s)).
    */
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
@@ -387,7 +387,7 @@ class basic_string_view
   }
 
   /**
-   * @brief Compares two character sequences. Equivalent to substr(pos1,
+   * \brief Compares two character sequences. Equivalent to substr(pos1,
    * count1).compare(basic_string_view(s, count2)).
    */
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
@@ -398,10 +398,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view begins with the given prefix, where the
+   * \brief Checks if the string view begins with the given prefix, where the
    * prefix is a string view.
    *
-   * @details Effectively returns substr(0, sv.size()) == sv
+   * \details Effectively returns substr(0, sv.size()) == sv
    */
   [[nodiscard]] constexpr auto starts_with(basic_string_view sv) const noexcept
     -> bool
@@ -410,10 +410,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view begins with the given prefix, where the
+   * \brief Checks if the string view begins with the given prefix, where the
    * prefix is a single character.
    *
-   * @details Effectively returns !empty() && Traits::eq(front(), c)
+   * \details Effectively returns !empty() && Traits::eq(front(), c)
    */
   [[nodiscard]] constexpr auto starts_with(CharType c) const noexcept -> bool
   {
@@ -421,10 +421,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view begins with the given prefix, where the
+   * \brief Checks if the string view begins with the given prefix, where the
    * the prefix is a null-terminated character string.
    *
-   * @details Effectively returns starts_with(basic_string_view(s))
+   * \details Effectively returns starts_with(basic_string_view(s))
    */
   [[nodiscard]] constexpr auto starts_with(CharType const* str) const -> bool
   {
@@ -432,10 +432,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view ends with the given suffix, where the
+   * \brief Checks if the string view ends with the given suffix, where the
    * prefix is a string view.
    *
-   * @details Effectively returns size() >= sv.size() && compare(size() -
+   * \details Effectively returns size() >= sv.size() && compare(size() -
    * sv.size(), npos, sv) == 0
    */
   [[nodiscard]] constexpr auto ends_with(basic_string_view sv) const noexcept
@@ -445,10 +445,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view ends with the given suffix, where the
+   * \brief Checks if the string view ends with the given suffix, where the
    * prefix is a single character.
    *
-   * @details Effectively returns !empty() && Traits::eq(back(), c)
+   * \details Effectively returns !empty() && Traits::eq(back(), c)
    */
   [[nodiscard]] constexpr auto ends_with(CharType c) const noexcept -> bool
   {
@@ -456,10 +456,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Checks if the string view ends with the given suffix, where the
+   * \brief Checks if the string view ends with the given suffix, where the
    * the prefix is a null-terminated character string.
    *
-   * @details Effectively returns ends_with(basic_string_view(s))
+   * \details Effectively returns ends_with(basic_string_view(s))
    */
   constexpr auto ends_with(CharType const* str) const -> bool
   {
@@ -467,10 +467,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Finds the first occurence of v in this view, starting at position pos.
    *
-   * @return Position of the first character of the found substring, or npos
+   * \return Position of the first character of the found substring, or npos
    * if no such substring is found.
    */
   [[nodiscard]] constexpr auto find(basic_string_view v,
@@ -502,10 +502,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Equivalent to find(basic_string_view(etl::addressof(ch), 1), pos)
    *
-   * @return Position of the first character of the found substring, or npos
+   * \return Position of the first character of the found substring, or npos
    * if no such substring is found.
    */
   [[nodiscard]] constexpr auto find(CharType ch,
@@ -516,10 +516,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Equivalent to find(basic_string_view(s, count), pos)
    *
-   * @return Position of the first character of the found substring, or npos
+   * \return Position of the first character of the found substring, or npos
    * if no such substring is found.
    */
   constexpr auto find(CharType const* s, size_type pos, size_type count) const
@@ -529,10 +529,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first substring equal to the given character sequence.
+   * \brief Finds the first substring equal to the given character sequence.
    * Equivalent to find(basic_string_view(s), pos)
    *
-   * @return Position of the first character of the found substring, or npos
+   * \return Position of the first character of the found substring, or npos
    * if no such substring is found.
    */
   constexpr auto find(CharType const* s, size_type pos = 0) const -> size_type
@@ -541,10 +541,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Finds the last occurence of v in this view, starting at position pos.
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto rfind(basic_string_view v,
@@ -576,10 +576,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Equivalent to rfind(basic_string_view(etl::addressof(c), 1), pos).
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   [[nodiscard]] constexpr auto rfind(CharType c,
@@ -591,10 +591,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Equivalent to rfind(basic_string_view(s, count), pos).
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   constexpr auto rfind(CharType const* s, size_type pos, size_type count) const
@@ -604,10 +604,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last substring equal to the given character sequence.
+   * \brief Finds the last substring equal to the given character sequence.
    * Equivalent to rfind(basic_string_view(s), pos).
    *
-   * @return Position of the first character of the found substring or npos if
+   * \return Position of the first character of the found substring or npos if
    * no such substring is found.
    */
   constexpr auto rfind(CharType const* s, size_type pos = npos) const
@@ -617,11 +617,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first character equal to any of the characters in the
+   * \brief Finds the first character equal to any of the characters in the
    * given character sequence. Finds the first occurence of any of the
    * characters of v in this view, starting at position pos.
    *
-   * @return Position of the first occurrence of any character of the
+   * \return Position of the first occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_first_of(basic_string_view v,
@@ -640,11 +640,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first character equal to any of the characters in the
+   * \brief Finds the first character equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_first_of(basic_string_view(etl::addressof(c), 1), pos)
    *
-   * @return Position of the first occurrence of any character of the
+   * \return Position of the first occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_first_of(CharType c,
@@ -655,11 +655,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first character equal to any of the characters in the
+   * \brief Finds the first character equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_first_of(basic_string_view(s, count), pos)
    *
-   * @return Position of the first occurrence of any character of the
+   * \return Position of the first occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   constexpr auto find_first_of(CharType const* s, size_type pos,
@@ -669,11 +669,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the first character equal to any of the characters in the
+   * \brief Finds the first character equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_first_of(basic_string_view(s), pos)
    *
-   * @return Position of the first occurrence of any character of the
+   * \return Position of the first occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   constexpr auto find_first_of(CharType const* s, size_type pos = 0) const
@@ -683,13 +683,13 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character equal to one of characters in the given
+   * \brief Finds the last character equal to one of characters in the given
    * character sequence. Exact search algorithm is not specified. The search
    * considers only the interval [0; pos]. If the character is not present in
    * the interval, npos will be returned. Finds the last occurence of any of
    * the characters of v in this view, ending at position pos.
    *
-   * @return Position of the last occurrence of any character of the
+   * \return Position of the last occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_last_of(basic_string_view v,
@@ -709,13 +709,13 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character equal to one of characters in the given
+   * \brief Finds the last character equal to one of characters in the given
    * character sequence. Exact search algorithm is not specified. The search
    * considers only the interval [0; pos]. If the character is not present in
    * the interval, npos will be returned. Equivalent to
    * find_last_of(basic_string_view(etl::addressof(c), 1), pos).
    *
-   * @return Position of the last occurrence of any character of the
+   * \return Position of the last occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_last_of(CharType c,
@@ -726,13 +726,13 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character equal to one of characters in the given
+   * \brief Finds the last character equal to one of characters in the given
    * character sequence. Exact search algorithm is not specified. The search
    * considers only the interval [0; pos]. If the character is not present in
    * the interval, npos will be returned. Equivalent to
    * find_last_of(basic_string_view(s, count), pos).
    *
-   * @return Position of the last occurrence of any character of the
+   * \return Position of the last occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   constexpr auto find_last_of(CharType const* s, size_type pos,
@@ -742,13 +742,13 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character equal to one of characters in the given
+   * \brief Finds the last character equal to one of characters in the given
    * character sequence. Exact search algorithm is not specified. The search
    * considers only the interval [0; pos]. If the character is not present in
    * the interval, npos will be returned. Equivalent to
    * find_last_of(basic_string_view(s), pos).
    *
-   * @return Position of the last occurrence of any character of the
+   * \return Position of the last occurrence of any character of the
    * substring, or npos if no such character is found.
    */
   constexpr auto find_last_of(CharType const* s, size_type pos = npos) const
@@ -758,10 +758,10 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character not equal to any of the characters of v
+   * \brief Finds the last character not equal to any of the characters of v
    * in this view, starting at position pos.
    *
-   * @return Position of the last character not equal to any of the characters
+   * \return Position of the last character not equal to any of the characters
    * in the given string, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto
@@ -778,11 +778,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character not equal to any of the characters in the
+   * \brief Finds the last character not equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_last_not_of(basic_string_view(etl::addressof(c), 1), pos).
    *
-   * @return Position of the last character not equal to any of the characters
+   * \return Position of the last character not equal to any of the characters
    * in the given string, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto
@@ -792,11 +792,11 @@ class basic_string_view
   }
 
   /**
-   * @brief Finds the last character not equal to any of the characters in the
+   * \brief Finds the last character not equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_last_not_of(basic_string_view(s, count), pos).
    *
-   * @return Position of the last character not equal to any of the characters
+   * \return Position of the last character not equal to any of the characters
    * in the given string, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_last_not_of(const_pointer s, size_type pos,
@@ -806,11 +806,11 @@ class basic_string_view
     return find_last_not_of(basic_string_view(s, count), pos);
   }
   /**
-   * @brief Finds the last character not equal to any of the characters in the
+   * \brief Finds the last character not equal to any of the characters in the
    * given character sequence. Equivalent to
    * find_last_not_of(basic_string_view(s), pos)
    *
-   * @return Position of the last character not equal to any of the characters
+   * \return Position of the last character not equal to any of the characters
    * in the given string, or npos if no such character is found.
    */
   [[nodiscard]] constexpr auto find_last_not_of(const_pointer s,
@@ -821,10 +821,10 @@ class basic_string_view
   }
 
   /**
-   * @brief This is a special value equal to the maximum value
+   * \brief This is a special value equal to the maximum value
    * representable by the type size_type.
    *
-   * @details The exact meaning depends on context, but it is generally
+   * \details The exact meaning depends on context, but it is generally
    * used either as end of view indicator by the functions that expect a
    * view index or as the error indicator by the functions that return a
    * view index.
@@ -843,10 +843,10 @@ class basic_string_view
 };
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details Two views are equal if both the size of lhs and rhs are equal and
+ * \details Two views are equal if both the size of lhs and rhs are equal and
  * each character in lhs has an equivalent character in rhs at the same
  * position.
  */
@@ -878,10 +878,10 @@ operator==(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details Two views are equal if both the size of lhs and rhs are equal and
+ * \details Two views are equal if both the size of lhs and rhs are equal and
  * each character in lhs has an equivalent character in rhs at the same
  * position.
  */
@@ -910,10 +910,10 @@ operator!=(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details The ordering comparisons are done lexicographically -- the
+ * \details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
  * lexicographical_compare.
  */
@@ -945,10 +945,10 @@ operator<(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details The ordering comparisons are done lexicographically -- the
+ * \details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
  * lexicographical_compare.
  */
@@ -977,10 +977,10 @@ operator<=(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details The ordering comparisons are done lexicographically -- the
+ * \details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
  * lexicographical_compare.
  */
@@ -1009,10 +1009,10 @@ operator>(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Compares two views. All comparisons are done via the compare() member
+ * \brief Compares two views. All comparisons are done via the compare() member
  * function (which itself is defined in terms of Traits::compare()):
  *
- * @details The ordering comparisons are done lexicographically -- the
+ * \details The ordering comparisons are done lexicographically -- the
  * comparison is performed by a function equivalent to
  * lexicographical_compare.
  */
@@ -1041,7 +1041,7 @@ operator>=(basic_string_view<CharT, Traits> const lhs,
 }
 
 /**
- * @brief Typedefs for common character type
+ * \brief Typedefs for common character type
  */
 using string_view = basic_string_view<char, etl::char_traits<char>>;
 
@@ -1050,7 +1050,7 @@ inline namespace literals
 inline namespace string_view_literals
 {
 /**
- * @brief Forms a string view of a character literal. Returns
+ * \brief Forms a string view of a character literal. Returns
  * etl::string_view{str, len}
  */
 constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept

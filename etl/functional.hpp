@@ -55,16 +55,16 @@ inline constexpr auto transparent_v = is_transparent<T, U>::value;
 
 }  // namespace detail
 /**
- * @brief Function object for performing addition. Effectively calls operator+
+ * \brief Function object for performing addition. Effectively calls operator+
  * on two instances of type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/plus
+ * \details https://en.cppreference.com/w/cpp/utility/functional/plus
  */
 template <typename T = void>
 struct plus
 {
   /**
-   * @brief Returns the sum of lhs and rhs.
+   * \brief Returns the sum of lhs and rhs.
    */
   [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
   {
@@ -73,18 +73,18 @@ struct plus
 };
 
 /**
- * @brief Function object for performing addition. Effectively calls operator+
+ * \brief Function object for performing addition. Effectively calls operator+
  * on two instances of type T. The standard library provides a specialization of
  * etl::plus when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/plus_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/plus_void
  */
 template <>
 struct plus<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -93,7 +93,7 @@ struct plus<void>
   using is_transparent = void;
 
   /**
-   * @brief Returns the sum of lhs and rhs.
+   * \brief Returns the sum of lhs and rhs.
    */
   template <typename T, typename U>
   [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
@@ -104,16 +104,16 @@ struct plus<void>
 };
 
 /**
- * @brief Function object for performing subtraction. Effectively calls
+ * \brief Function object for performing subtraction. Effectively calls
  * operator- on two instances of type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/minus
+ * \details https://en.cppreference.com/w/cpp/utility/functional/minus
  */
 template <typename T = void>
 struct minus
 {
   /**
-   * @brief Returns the difference between lhs and rhs.
+   * \brief Returns the difference between lhs and rhs.
    */
   [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
   {
@@ -122,18 +122,18 @@ struct minus
 };
 
 /**
- * @brief Function object for performing subtraction. Effectively calls
+ * \brief Function object for performing subtraction. Effectively calls
  * operator- on two instances of type T. The standard library provides a
  * specialization of etl::minus when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/minus_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/minus_void
  */
 template <>
 struct minus<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -142,7 +142,7 @@ struct minus<void>
   using is_transparent = void;
 
   /**
-   * @brief Returns the difference between lhs and rhs.
+   * \brief Returns the difference between lhs and rhs.
    */
   template <typename T, typename U>
   [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
@@ -153,16 +153,16 @@ struct minus<void>
 };
 
 /**
- * @brief Function object for performing multiplication. Effectively calls
+ * \brief Function object for performing multiplication. Effectively calls
  * operator* on two instances of type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/multiplies
+ * \details https://en.cppreference.com/w/cpp/utility/functional/multiplies
  */
 template <typename T = void>
 struct multiplies
 {
   /**
-   * @brief Returns the product between lhs and rhs.
+   * \brief Returns the product between lhs and rhs.
    */
   [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
   {
@@ -171,18 +171,18 @@ struct multiplies
 };
 
 /**
- * @brief Function object for performing multiplication. Effectively calls
+ * \brief Function object for performing multiplication. Effectively calls
  * operator* on two instances of type T. The standard library provides a
  * specialization of etl::multiplies when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/multiplies_void
  */
 template <>
 struct multiplies<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -191,7 +191,7 @@ struct multiplies<void>
   using is_transparent = void;
 
   /**
-   * @brief Returns the product between lhs and rhs.
+   * \brief Returns the product between lhs and rhs.
    */
   template <typename T, typename U>
   [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
@@ -202,10 +202,10 @@ struct multiplies<void>
 };
 
 /**
- * @brief Function object for performing division. Effectively calls operator/
+ * \brief Function object for performing division. Effectively calls operator/
  * on two instances of type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/divides
+ * \details https://en.cppreference.com/w/cpp/utility/functional/divides
  */
 template <typename T = void>
 struct divides
@@ -217,18 +217,18 @@ struct divides
 };
 
 /**
- * @brief Function object for performing division. Effectively calls operator/
+ * \brief Function object for performing division. Effectively calls operator/
  * on two instances of type T. The standard library provides a specialization of
  * etl::divides when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/divides_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/divides_void
  */
 template <>
 struct divides<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -245,10 +245,10 @@ struct divides<void>
 };
 
 /**
- * @brief Function object for computing remainders of divisions. Implements
+ * \brief Function object for computing remainders of divisions. Implements
  * operator% for type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/modulus
+ * \details https://en.cppreference.com/w/cpp/utility/functional/modulus
  */
 template <typename T = void>
 struct modulus
@@ -260,18 +260,18 @@ struct modulus
 };
 
 /**
- * @brief Function object for computing remainders of divisions. Implements
+ * \brief Function object for computing remainders of divisions. Implements
  * operator% for type T. The standard library provides a specialization of
  * etl::modulus when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/modulus_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/modulus_void
  */
 template <>
 struct modulus<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -288,10 +288,10 @@ struct modulus<void>
 };
 
 /**
- * @brief Function object for performing negation. Effectively calls operator-
+ * \brief Function object for performing negation. Effectively calls operator-
  * on an instance of type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/negate
+ * \details https://en.cppreference.com/w/cpp/utility/functional/negate
  */
 template <typename T = void>
 struct negate
@@ -303,18 +303,18 @@ struct negate
 };
 
 /**
- * @brief Function object for performing negation. Effectively calls operator-
+ * \brief Function object for performing negation. Effectively calls operator-
  * on an instance of type T. The standard library provides a specialization of
  * etl::negate when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/negate_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/negate_void
  */
 template <>
 struct negate<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -331,10 +331,10 @@ struct negate<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator== on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/equal_to
+ * \details https://en.cppreference.com/w/cpp/utility/functional/equal_to
  */
 template <typename T = void>
 struct equal_to
@@ -346,18 +346,18 @@ struct equal_to
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator== on type T. The standard library provides a specialization
  * of etl::equal_to when T is not specified, which leaves the parameter types
  * and return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/equal_to_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/equal_to_void
  */
 template <>
 struct equal_to<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -374,10 +374,10 @@ struct equal_to<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator!= on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
+ * \details https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
  */
 template <typename T = void>
 struct not_equal_to
@@ -389,19 +389,19 @@ struct not_equal_to
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator!= on type T. The standard library provides a specialization
  * of etl::not_equal_to when T is not specified, which leaves the parameter
  * types and return type to be deduced.
  *
- * @details
+ * \details
  * https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void
  */
 template <>
 struct not_equal_to<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -418,10 +418,10 @@ struct not_equal_to<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator> on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/greater
+ * \details https://en.cppreference.com/w/cpp/utility/functional/greater
  */
 template <typename T = void>
 struct greater
@@ -433,18 +433,18 @@ struct greater
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator> on type T. The standard library provides a specialization
  * of etl::greater when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/greater_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/greater_void
  */
 template <>
 struct greater<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -461,10 +461,10 @@ struct greater<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator>= on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/greater_equal
+ * \details https://en.cppreference.com/w/cpp/utility/functional/greater_equal
  */
 template <typename T = void>
 struct greater_equal
@@ -476,19 +476,19 @@ struct greater_equal
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator> on type T. The standard library provides a specialization
  * of etl::greater_equal when T is not specified, which leaves the parameter
  * types and return type to be deduced.
  *
- * @details
+ * \details
  * https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void
  */
 template <>
 struct greater_equal<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -505,10 +505,10 @@ struct greater_equal<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator< on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/less
+ * \details https://en.cppreference.com/w/cpp/utility/functional/less
  */
 template <typename T = void>
 struct less
@@ -521,18 +521,18 @@ struct less
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator< on type T. The standard library provides a specialization
  * of etl::less when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/less_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/less_void
  */
 template <>
 struct less<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -549,10 +549,10 @@ struct less<void>
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator<= on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/less_equal
+ * \details https://en.cppreference.com/w/cpp/utility/functional/less_equal
  */
 template <typename T = void>
 struct less_equal
@@ -565,18 +565,18 @@ struct less_equal
 };
 
 /**
- * @brief Function object for performing comparisons. Unless specialised,
+ * \brief Function object for performing comparisons. Unless specialised,
  * invokes operator< on type T. The standard library provides a specialization
  * of etl::less_equal when T is not specified, which leaves the parameter types
  * and return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/less_equal_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/less_equal_void
  */
 template <>
 struct less_equal<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -593,10 +593,10 @@ struct less_equal<void>
 };
 
 /**
- * @brief Function object for performing logical AND (logical conjunction).
+ * \brief Function object for performing logical AND (logical conjunction).
  * Effectively calls operator&& on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/logical_and
+ * \details https://en.cppreference.com/w/cpp/utility/functional/logical_and
  */
 template <typename T = void>
 struct logical_and
@@ -609,19 +609,19 @@ struct logical_and
 };
 
 /**
- * @brief Function object for performing logical AND (logical conjunction).
+ * \brief Function object for performing logical AND (logical conjunction).
  * Effectively calls operator&& on type T. The standard library provides a
  * specialization of etl::logical_and when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @details
+ * \details
  * https://en.cppreference.com/w/cpp/utility/functional/logical_and_void
  */
 template <>
 struct logical_and<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -638,10 +638,10 @@ struct logical_and<void>
 };
 
 /**
- * @brief Function object for performing logical OR (logical disjunction).
+ * \brief Function object for performing logical OR (logical disjunction).
  * Effectively calls operator|| on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/logical_or
+ * \details https://en.cppreference.com/w/cpp/utility/functional/logical_or
  */
 template <typename T = void>
 struct logical_or
@@ -654,18 +654,18 @@ struct logical_or
 };
 
 /**
- * @brief Function object for performing logical OR (logical disjunction).
+ * \brief Function object for performing logical OR (logical disjunction).
  * Effectively calls operator|| on type T. The standard library provides a
  * specialization of etl::logical_or when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/logical_or_void
  */
 template <>
 struct logical_or<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -682,10 +682,10 @@ struct logical_or<void>
 };
 
 /**
- * @brief Function object for performing logical NOT (logical negation).
+ * \brief Function object for performing logical NOT (logical negation).
  * Effectively calls operator! for type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/logical_not
+ * \details https://en.cppreference.com/w/cpp/utility/functional/logical_not
  */
 template <typename T = void>
 struct logical_not
@@ -697,19 +697,19 @@ struct logical_not
 };
 
 /**
- * @brief Function object for performing logical NOT (logical negation).
+ * \brief Function object for performing logical NOT (logical negation).
  * Effectively calls operator! for type T. The standard library provides a
  * specialization of etl::logical_not when T is not specified, which leaves the
  * parameter types and return type to be deduced.
  *
- * @details
+ * \details
  * https://en.cppreference.com/w/cpp/utility/functional/logical_not_void
  */
 template <>
 struct logical_not<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -726,10 +726,10 @@ struct logical_not<void>
 };
 
 /**
- * @brief Function object for performing bitwise AND. Effectively
+ * \brief Function object for performing bitwise AND. Effectively
  * calls operator& on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_and
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_and
  */
 template <typename T = void>
 struct bit_and
@@ -741,18 +741,18 @@ struct bit_and
 };
 
 /**
- * @brief Function object for performing bitwise AND. Effectively
+ * \brief Function object for performing bitwise AND. Effectively
  * calls operator& on type T. The standard library provides a specialization of
  * etl::bit_and when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_and_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_and_void
  */
 template <>
 struct bit_and<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -769,10 +769,10 @@ struct bit_and<void>
 };
 
 /**
- * @brief Function object for performing bitwise OR. Effectively calls operator|
+ * \brief Function object for performing bitwise OR. Effectively calls operator|
  * on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_or
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_or
  */
 template <typename T = void>
 struct bit_or
@@ -784,18 +784,18 @@ struct bit_or
 };
 
 /**
- * @brief Function object for performing bitwise OR. Effectively calls operator|
+ * \brief Function object for performing bitwise OR. Effectively calls operator|
  * on type T. The standard library provides a specialization of etl::bit_or when
  * T is not specified, which leaves the parameter types and return type to be
  * deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_or_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_or_void
  */
 template <>
 struct bit_or<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -812,10 +812,10 @@ struct bit_or<void>
 };
 
 /**
- * @brief Function object for performing bitwise XOR. Effectively calls
+ * \brief Function object for performing bitwise XOR. Effectively calls
  * operator^ on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_xor
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_xor
  */
 template <typename T = void>
 struct bit_xor
@@ -827,18 +827,18 @@ struct bit_xor
 };
 
 /**
- * @brief Function object for performing bitwise XOR. Effectively calls
+ * \brief Function object for performing bitwise XOR. Effectively calls
  * operator^ on type T. The standard library provides a specialization of
  * etl::bit_xor when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void
  */
 template <>
 struct bit_xor<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -855,10 +855,10 @@ struct bit_xor<void>
 };
 
 /**
- * @brief Function object for performing bitwise NOT.
+ * \brief Function object for performing bitwise NOT.
  * Effectively calls operator~ on type T.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_not
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_not
  */
 template <typename T = void>
 struct bit_not
@@ -870,18 +870,18 @@ struct bit_not
 };
 
 /**
- * @brief Function object for performing bitwise NOT. Effectively calls
+ * \brief Function object for performing bitwise NOT. Effectively calls
  * operator~ on type T. The standard library provides a specialization of
  * etl::bit_not when T is not specified, which leaves the parameter types and
  * return type to be deduced.
  *
- * @details https://en.cppreference.com/w/cpp/utility/functional/bit_not_void
+ * \details https://en.cppreference.com/w/cpp/utility/functional/bit_not_void
  */
 template <>
 struct bit_not<void>
 {
   /**
-   * @brief The member type is_transparent indicates to the caller that this
+   * \brief The member type is_transparent indicates to the caller that this
    * function object is a transparent function object: it accepts arguments of
    * arbitrary types and uses perfect forwarding, which avoids unnecessary
    * copying and conversion when the function object is used in heterogeneous
@@ -911,7 +911,7 @@ void FUN(T&&) = delete;
 }  // namespace detail
 
 /**
- * @brief reference_wrapper is a class template that wraps a reference in a
+ * \brief reference_wrapper is a class template that wraps a reference in a
  * copyable, assignable object. It is frequently used as a mechanism to store
  * references inside standard containers (like etl::static_vector) which cannot
  * normally hold references. Specifically, reference_wrapper is a
@@ -928,7 +928,7 @@ struct reference_wrapper
   using type = T;
 
   /**
-   * @brief Constructs a new reference wrapper. Converts x to T& as if by T& t =
+   * \brief Constructs a new reference wrapper. Converts x to T& as if by T& t =
    * forward<U>(x);, then stores a reference to t. This overload only
    * participates in overload resolution if decay_t<U> is not the same type as
    * reference_wrapper and the expression FUN(declval<U>()) is well-formed,
@@ -951,34 +951,34 @@ struct reference_wrapper
   }
 
   /**
-   * @brief Constructs a new reference wrapper. Copy constructor. Stores a
+   * \brief Constructs a new reference wrapper. Copy constructor. Stores a
    * reference to other.get().
    */
   constexpr reference_wrapper(reference_wrapper const& x) noexcept = default;
 
   /**
-   * @brief Copy assignment operator. Drops the current reference and stores a
+   * \brief Copy assignment operator. Drops the current reference and stores a
    * reference to other.get().
    */
   constexpr auto operator =(reference_wrapper const& x) noexcept
     -> reference_wrapper& = default;
 
   /**
-   * @brief Returns the stored reference.
+   * \brief Returns the stored reference.
    */
   [[nodiscard]] constexpr operator type&() const noexcept { return *ptr_; }
 
   /**
-   * @brief Returns the stored reference.
+   * \brief Returns the stored reference.
    */
   [[nodiscard]] constexpr auto get() const noexcept -> type& { return *ptr_; }
 
   /**
-   * @brief Calls the Callable object, reference to which is stored. This
+   * \brief Calls the Callable object, reference to which is stored. This
    * function is available only if the stored reference points to a Callable
    * object. T must be a complete type.
    *
-   * @returns The return value of the called function.
+   * \returns The return value of the called function.
    */
   template <typename... Args>
   constexpr auto operator()(Args&&... args) const
@@ -993,7 +993,7 @@ struct reference_wrapper
 };
 
 /**
- * @brief One deduction guide is provided for std::reference_wrapper to support
+ * \brief One deduction guide is provided for std::reference_wrapper to support
  * deduction of the sole class template parameter.
  *
  * https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/deduction_guides
@@ -1002,7 +1002,7 @@ template <typename T>
 reference_wrapper(T&) -> reference_wrapper<T>;
 
 /**
- * @brief Function templates ref and cref are helper functions that generate an
+ * \brief Function templates ref and cref are helper functions that generate an
  * object of type reference_wrapper, using template argument deduction to
  * determine the template argument of the result.
  */
@@ -1013,7 +1013,7 @@ template <typename T>
 }
 
 /**
- * @brief Function templates ref and cref are helper functions that generate an
+ * \brief Function templates ref and cref are helper functions that generate an
  * object of type reference_wrapper, using template argument deduction to
  * determine the template argument of the result.
  */
@@ -1025,7 +1025,7 @@ template <typename T>
 }
 
 /**
- * @brief Function templates ref and cref are helper functions that generate an
+ * \brief Function templates ref and cref are helper functions that generate an
  * object of type reference_wrapper, using template argument deduction to
  * determine the template argument of the result.
  */
@@ -1037,7 +1037,7 @@ template <typename T>
 }
 
 /**
- * @brief Function templates ref and cref are helper functions that generate an
+ * \brief Function templates ref and cref are helper functions that generate an
  * object of type reference_wrapper, using template argument deduction to
  * determine the template argument of the result.
  */
@@ -1049,7 +1049,7 @@ template <typename T>
 }
 
 /**
- * @brief Function templates ref and cref are helper functions that generate an
+ * \brief Function templates ref and cref are helper functions that generate an
  * object of type reference_wrapper, using template argument deduction to
  * determine the template argument of the result.
  */
@@ -1165,7 +1165,7 @@ class function<Capacity, Result(Arguments...)>
 };
 
 /**
- * @brief Default searcher. A class suitable for use with Searcher overload of
+ * \brief Default searcher. A class suitable for use with Searcher overload of
  * etl::search that delegates the search operation to the pre-C++17 standard
  * library's etl::search.
  */

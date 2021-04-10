@@ -11,7 +11,7 @@ template <typename T, typename CharT>
 struct formatter;
 
 /**
- * @brief Provides access to formatting state consisting of the formatting
+ * \brief Provides access to formatting state consisting of the formatting
  * arguments and the output iterator.
  *
  * The behavior is undefined if OutputIt does not model output_iterator<const
@@ -33,12 +33,12 @@ class basic_format_context
   using formatter_type = formatter<T, CharT>;
 
   /**
-   * @brief Returns the iterator to the output buffer.
+   * \brief Returns the iterator to the output buffer.
    */
   [[nodiscard]] constexpr auto out() noexcept -> iterator { return pos_; }
 
   /**
-   * @brief Sets the output iterator to it. After a call to advance_to,
+   * \brief Sets the output iterator to it. After a call to advance_to,
    * subsequent calls to out() will return a copy of it.
    */
   constexpr auto advance_to(iterator it) noexcept -> void { pos_ = it; }
@@ -48,10 +48,10 @@ class basic_format_context
 };
 
 /**
- * @brief Provides access to formatting state consisting of the formatting
+ * \brief Provides access to formatting state consisting of the formatting
  * arguments and the output iterator.
  *
- * @details The first template argument is an output iterator that appends to
+ * \details The first template argument is an output iterator that appends to
  * etl::static_string, such as etl::back_insert_iterator<etl::static_string>.
  * Implementations are encouraged to use an iterator to type-erased buffer type
  * that supports appending to any contiguous and resizable container.

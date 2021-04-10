@@ -24,7 +24,7 @@ DAMAGE.
 */
 
 /**
- * @example type_traits.cpp
+ * \example type_traits.cpp
  */
 
 #ifndef TAETL_TYPETRAITS_HPP
@@ -64,7 +64,7 @@ struct type_identity
 };
 
 /**
- * @brief Provides member typedef type, which is defined as T if B is true at
+ * \brief Provides member typedef type, which is defined as T if B is true at
  * compile time, or as F if B is false.
  */
 template <bool B, typename T, typename F>
@@ -83,7 +83,7 @@ template <bool B, typename T, typename F>
 using conditional_t = typename conditional<B, T, F>::type;
 
 /**
- * @brief Forms the logical conjunction of the type traits B..., effectively
+ * \brief Forms the logical conjunction of the type traits B..., effectively
  * performing a logical AND on the sequence of traits.
  */
 template <typename...>
@@ -106,7 +106,7 @@ template <typename... B>
 inline constexpr bool conjunction_v = conjunction<B...>::value;
 
 /**
- * @brief Forms the logical disjunction of the type traits B..., effectively
+ * \brief Forms the logical disjunction of the type traits B..., effectively
  * performing a logical OR on the sequence of traits.
  */
 template <typename...>
@@ -127,7 +127,7 @@ template <typename... B>
 inline constexpr bool disjunction_v = disjunction<B...>::value;
 
 /**
- * @brief Forms the logical negation of the type trait B.
+ * \brief Forms the logical negation of the type trait B.
  */
 template <typename B>
 struct negation : bool_constant<!bool(B::value)>
@@ -291,7 +291,7 @@ struct extent<T[I], N> : extent<T, N - 1>
 };
 
 /**
- * @brief If T is an array of some type X, provides the member typedef type
+ * \brief If T is an array of some type X, provides the member typedef type
  * equal to X, otherwise type is T. Note that if T is a multidimensional array,
  * only the first dimension is removed. The behavior of a program that adds
  * specializations for remove_extent is undefined.
@@ -318,7 +318,7 @@ template <typename T>
 using remove_extent_t = typename remove_extent<T>::type;
 
 /**
- * @brief If T is a multidimensional array of some type X, provides the member
+ * \brief If T is a multidimensional array of some type X, provides the member
  * typedef type equal to X, otherwise type is T. The behavior of a program that
  * adds specializations for remove_all_extents is undefined.
  */
@@ -329,7 +329,7 @@ struct remove_all_extents
 };
 
 /**
- * @brief If T is a multidimensional array of some type X, provides the member
+ * \brief If T is a multidimensional array of some type X, provides the member
  * typedef type equal to X, otherwise type is T. The behavior of a program that
  * adds specializations for remove_all_extents is undefined.
  */
@@ -340,7 +340,7 @@ struct remove_all_extents<T[]>
 };
 
 /**
- * @brief If T is a multidimensional array of some type X, provides the member
+ * \brief If T is a multidimensional array of some type X, provides the member
  * typedef type equal to X, otherwise type is T. The behavior of a program that
  * adds specializations for remove_all_extents is undefined.
  */
@@ -351,7 +351,7 @@ struct remove_all_extents<T[N]>
 };
 
 /**
- * @brief If T is a multidimensional array of some type X, provides the member
+ * \brief If T is a multidimensional array of some type X, provides the member
  * typedef type equal to X, otherwise type is T. The behavior of a program that
  * adds specializations for remove_all_extents is undefined.
  */
@@ -359,9 +359,9 @@ template <typename T>
 using remove_all_extents_t = typename remove_all_extents<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except that
+ * \brief Provides the member typedef type which is the same as T, except that
  * its topmost cv-qualifiers are removed. Removes the topmost const.
- * @details The behavior of a program that adds specializations for any of the
+ * \details The behavior of a program that adds specializations for any of the
  * templates described on this page is undefined.
  */
 template <typename Type>
@@ -380,9 +380,9 @@ template <typename T>
 using remove_const_t = typename remove_const<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except that
+ * \brief Provides the member typedef type which is the same as T, except that
  * its topmost cv-qualifiers are removed. Removes the topmost volatile.
- * @details The behavior of a program that adds specializations for any of the
+ * \details The behavior of a program that adds specializations for any of the
  * templates described on this page is undefined.
  */
 
@@ -402,10 +402,10 @@ template <typename T>
 using remove_volatile_t = typename remove_volatile<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except that
+ * \brief Provides the member typedef type which is the same as T, except that
  * its topmost cv-qualifiers are removed. Removes the topmost const, or the
  * topmost volatile, or both, if present.
- * @details The behavior of a program that adds specializations for any of the
+ * \details The behavior of a program that adds specializations for any of the
  * templates described on this page is undefined.
  */
 template <typename Type>
@@ -439,11 +439,11 @@ template <typename T>
 using remove_reference_t = typename remove_reference<T>::type;
 
 /**
- * @brief If the type T is a reference type, provides the member typedef type
+ * \brief If the type T is a reference type, provides the member typedef type
  * which is the type referred to by T with its topmost cv-qualifiers removed.
  * Otherwise type is T with its topmost cv-qualifiers removed.
  *
- * @details The behavior of a program that adds specializations for remove_cvref
+ * \details The behavior of a program that adds specializations for remove_cvref
  * is undefined.
  */
 template <typename T>
@@ -456,7 +456,7 @@ template <typename T>
 using remove_cvref_t = typename remove_cvref<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the type pointed to by T,
+ * \brief Provides the member typedef type which is the type pointed to by T,
  * or, if T is not a pointer, then type is the same as T. The behavior of a
  * program that adds specializations for remove_pointer is undefined.
  */
@@ -500,7 +500,7 @@ auto try_add_pointer(...) -> ::etl::type_identity<T>;
 }  // namespace detail
 
 /**
- * @brief If T is a reference type, then provides the member typedef type which
+ * \brief If T is a reference type, then provides the member typedef type which
  * is a pointer to the referred type. Otherwise, if T names an object type, a
  * function type that is not cv- or ref-qualified, or a (possibly cv-qualified)
  * void type, provides the member typedef type which is the type T*. Otherwise
@@ -517,7 +517,7 @@ template <typename T>
 using add_pointer_t = typename add_pointer<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except it has
+ * \brief Provides the member typedef type which is the same as T, except it has
  * a cv-qualifier added (unless T is a function, a reference, or already has
  * this cv-qualifier). Adds both const and volatile.
  */
@@ -531,7 +531,7 @@ template <typename T>
 using add_cv_t = typename add_cv<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except it has
+ * \brief Provides the member typedef type which is the same as T, except it has
  * a cv-qualifier added (unless T is a function, a reference, or already has
  * this cv-qualifier). Adds const.
  */
@@ -545,7 +545,7 @@ template <typename T>
 using add_const_t = typename add_const<T>::type;
 
 /**
- * @brief Provides the member typedef type which is the same as T, except it has
+ * \brief Provides the member typedef type which is the same as T, except it has
  * a cv-qualifier added (unless T is a function, a reference, or already has
  * this cv-qualifier). Adds volatile.
  */
@@ -559,7 +559,7 @@ template <typename T>
 using add_volatile_t = typename add_volatile<T>::type;
 
 /**
- * @brief If T and U name the same type (taking into account const/volatile
+ * \brief If T and U name the same type (taking into account const/volatile
  * qualifications), provides the member constant value equal to true. Otherwise
  * value is false.
  */
@@ -577,7 +577,7 @@ template <typename T, typename U>
 inline constexpr bool is_same_v = is_same<T, U>::value;
 
 /**
- * @brief Define a member typedef only if a boolean constant is true.
+ * \brief Define a member typedef only if a boolean constant is true.
  */
 template <typename T>
 struct is_void : is_same<void, typename remove_cv<T>::type>
@@ -742,7 +742,7 @@ struct make_signed_helper<unsigned long long>
 }  // namespace detail
 
 /**
- * @brief If T is an integral (except bool) or enumeration type, provides the
+ * \brief If T is an integral (except bool) or enumeration type, provides the
  * member typedef type which is the unsigned integer type corresponding to T,
  * with the same cv-qualifiers. If T is signed or unsigned char, short, int,
  * long, long long; the unsigned type from this list corresponding to T is
@@ -825,7 +825,7 @@ struct make_unsigned_helper<unsigned long long>
 }  // namespace detail
 
 /**
- * @brief If T is an integral (except bool) or enumeration type, provides the
+ * \brief If T is an integral (except bool) or enumeration type, provides the
  * member typedef type which is the unsigned integer type corresponding to T,
  * with the same cv-qualifiers. If T is signed or unsigned char, short, int,
  * long, long long; the unsigned type from this list corresponding to T is
@@ -866,12 +866,12 @@ template <typename... T>
 using index_sequence_for = make_index_sequence<sizeof...(T)>;
 
 /**
- * @brief Checks whether T is a floating-point type. Provides the member
+ * \brief Checks whether T is a floating-point type. Provides the member
  * constant value which is equal to true, if T is the type float, double, long
  * double, including any cv-qualified variants. Otherwise, value is equal to
  * false.
  *
- * @details The behavior of a program that adds specializations for
+ * \details The behavior of a program that adds specializations for
  * is_floating_point or is_floating_point_v is undefined.
  */
 template <typename T>
@@ -888,7 +888,7 @@ template <typename T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 
 /**
- * @brief If T is a const-qualified type (that is, const, or const volatile),
+ * \brief If T is a const-qualified type (that is, const, or const volatile),
  * provides the member constant value equal to true. For any other type, value
  * is false.
  */
@@ -943,7 +943,7 @@ struct is_empty_helper<T, false> : ::etl::false_type
 }  // namespace detail
 
 /**
- * @brief f T is an empty type (that is, a non-union class type with no
+ * \brief f T is an empty type (that is, a non-union class type with no
  * non-static data members other than bit-fields of size 0, no virtual
  * functions, no virtual base classes, and no non-empty base classes), provides
  * the member constant value equal to true. For any other type, value is false.
@@ -957,7 +957,7 @@ template <typename T>
 inline constexpr bool is_empty_v = is_empty<T>::value;
 
 /**
- * @brief is_polymorphic
+ * \brief is_polymorphic
  */
 template <typename T>
 struct is_polymorphic : bool_constant<TAETL_IS_POLYMORPHIC(T)>
@@ -968,7 +968,7 @@ template <typename T>
 inline constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
 
 /**
- * @brief If T is a final class (that is, a class declared with the final
+ * \brief If T is a final class (that is, a class declared with the final
  * specifier), provides the member constant value equal true. For any other
  * type, value is false. If T is a class type, T shall be a complete type;
  * otherwise, the behavior is undefined.
@@ -982,7 +982,7 @@ template <typename T>
 inline constexpr bool is_final_v = is_final<T>::value;
 
 /**
- * @brief is_abstract
+ * \brief is_abstract
  */
 template <typename T>
 struct is_abstract : bool_constant<TAETL_IS_ABSTRACT(T)>
@@ -993,7 +993,7 @@ template <typename T>
 inline constexpr bool is_abstract_v = is_abstract<T>::value;
 
 /**
- * @brief is_aggregate
+ * \brief is_aggregate
  */
 template <typename T>
 struct is_aggregate : bool_constant<TAETL_IS_AGGREGATE(remove_cv_t<T>)>
@@ -1004,7 +1004,7 @@ template <typename T>
 inline constexpr bool is_aggregate_v = is_aggregate<T>::value;
 
 /**
- * @brief If T is a reference type (lvalue reference or rvalue reference),
+ * \brief If T is a reference type (lvalue reference or rvalue reference),
  * provides the member constant value equal true. For any other type, value is
  * false. The behavior of a program that adds specializations for is_reference
  * or is_reference_v is undefined.
@@ -1033,10 +1033,10 @@ template <typename T>
 inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 
 /**
- * @brief Checks whether T is an array type. Provides the member constant value
+ * \brief Checks whether T is an array type. Provides the member constant value
  * which is equal to true, if T is an array type. Otherwise, value is equal to
  * false.
- * @details The behavior of a program that adds specializations for is_array or
+ * \details The behavior of a program that adds specializations for is_array or
  * is_array_v is undefined.
  */
 template <typename T>
@@ -1058,12 +1058,12 @@ template <typename T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
 /**
- * @brief Checks whether T is a function type. Types like etl::function,
+ * \brief Checks whether T is a function type. Types like etl::function,
  * lambdas, classes with overloaded operator() and pointers to functions don't
  * count as function types. Provides the member constant value which is equal to
  * true, if T is a function type. Otherwise, value is equal to false.
  *
- * @details The behavior of a program that adds specializations for is_function
+ * \details The behavior of a program that adds specializations for is_function
  * or is_function_v is undefined.
  */
 template <typename T>
@@ -1087,12 +1087,12 @@ struct is_pointer_helper<T*> : ::etl::true_type
 }  // namespace detail
 
 /**
- * @brief Checks whether T is a pointer to object or a pointer to function (but
+ * \brief Checks whether T is a pointer to object or a pointer to function (but
  * not a pointer to member/member function). Provides the member constant value
  * which is equal to true, if T is a object/function pointer type. Otherwise,
  * value is equal to false.
  *
- * @details The behavior of a program that adds specializations for is_pointer
+ * \details The behavior of a program that adds specializations for is_pointer
  * or is_pointer_v is undefined.
  */
 template <typename T>
@@ -1104,7 +1104,7 @@ template <typename T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;
 
 /**
- * @brief Checks whether T is a lvalue reference type. Provides the member
+ * \brief Checks whether T is a lvalue reference type. Provides the member
  * constant value which is equal to true, if T is a lvalue reference type.
  * Otherwise, value is equal to false.
  */
@@ -1121,7 +1121,7 @@ template <typename T>
 inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
 
 /**
- * @brief Checks whether T is a rvalue reference type. Provides the member
+ * \brief Checks whether T is a rvalue reference type. Provides the member
  * constant value which is equal to true, if T is a rvalue reference type.
  * Otherwise, value is equal to false.
  */
@@ -1175,7 +1175,7 @@ struct is_member_pointer_helper<T U::*> : ::etl::true_type
 }  // namespace detail
 
 /**
- * @brief If T is pointer to non-static member object or a pointer to non-static
+ * \brief If T is pointer to non-static member object or a pointer to non-static
  * member function, provides the member constant value equal true. For any other
  * type, value is false. The behavior of a program that adds specializations for
  * is_member_pointer or is_member_pointer_v (since C++17) is undefined.
@@ -1203,7 +1203,7 @@ struct is_member_function_pointer_helper<T U::*> : ::etl::is_function<T>
 }  // namespace detail
 
 /**
- * @brief Checks whether T is a non-static member function pointer. Provides the
+ * \brief Checks whether T is a non-static member function pointer. Provides the
  * member constant value which is equal to true, if T is a non-static member
  * function pointer type. Otherwise, value is equal to false.
  */
@@ -1218,7 +1218,7 @@ inline constexpr bool is_member_function_pointer_v
   = is_member_function_pointer<T>::value;
 
 /**
- * @brief Checks whether T is a non-static member object pointer. Provides the
+ * \brief Checks whether T is a non-static member object pointer. Provides the
  * member constant value which is equal to true, if T is a non-static member
  * object pointer type. Otherwise, value is equal to false.
  */
@@ -1233,7 +1233,7 @@ inline constexpr bool is_member_object_pointer_v
   = is_member_object_pointer<T>::value;
 
 /**
- * @brief If T is an arithmetic type (that is, an integral type or a
+ * \brief If T is an arithmetic type (that is, an integral type or a
  * floating-point type) or a cv-qualified version thereof, provides the member
  * constant value equal true. For any other type, value is false. The behavior
  * of a program that adds specializations for is_arithmetic or is_arithmetic_v
@@ -1248,7 +1248,7 @@ template <typename T>
 inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
 
 /**
- * @brief If T is a fundamental type (that is, arithmetic type, void, or
+ * \brief If T is a fundamental type (that is, arithmetic type, void, or
  * nullptr_t), provides the member constant value equal true. For any other
  * type, value is false.
  */
@@ -1262,7 +1262,7 @@ template <typename T>
 inline constexpr bool is_fundamental_v = is_fundamental<T>::value;
 
 /**
- * @brief If T is a scalar type (that is a possibly cv-qualified arithmetic,
+ * \brief If T is a scalar type (that is a possibly cv-qualified arithmetic,
  * pointer, pointer to member, enumeration, or etl::nullptr_t type), provides
  * the member constant value equal true. For any other type, value is false.
  */
@@ -1278,7 +1278,7 @@ template <typename T>
 inline constexpr bool is_scalar_v = is_scalar<T>::value;
 
 /**
- * @brief If T is an object type (that is any possibly cv-qualified type other
+ * \brief If T is an object type (that is any possibly cv-qualified type other
  * than function, reference, or void types), provides the member constant value
  * equal true. For any other type, value is false.
  */
@@ -1293,7 +1293,7 @@ template <typename T>
 inline constexpr bool is_object_v = is_object<T>::value;
 
 /**
- * @brief If T is a compound type (that is, array, function, object pointer,
+ * \brief If T is a compound type (that is, array, function, object pointer,
  * function pointer, member object pointer, member function pointer, reference,
  * class, union, or enumeration, including any cv-qualified variants), provides
  * the member constant value equal true. For any other type, value is false.
@@ -1307,7 +1307,7 @@ template <typename T>
 inline constexpr bool is_compound_v = is_compound<T>::value;
 
 /**
- * @brief Checks whether T is an array type of known bound. Provides the member
+ * \brief Checks whether T is an array type of known bound. Provides the member
  * constant value which is equal to true, if T is an array type of known bound.
  * Otherwise, value is equal to false.
  */
@@ -1325,7 +1325,7 @@ template <typename T>
 inline constexpr bool is_bounded_array_v = is_bounded_array<T>::value;
 
 /**
- * @brief Checks whether T is an array type of unknown bound. Provides the
+ * \brief Checks whether T is an array type of unknown bound. Provides the
  * member constant value which is equal to true, if T is an array type of
  * unknown bound. Otherwise, value is equal to false.
  */
@@ -1364,7 +1364,7 @@ template <typename T, typename... Args>
 inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
 
 /**
- * @brief The variable definition does not call any operation that is not
+ * \brief The variable definition does not call any operation that is not
  * trivial. For the purposes of this check, the call to etl::declval is
  * considered trivial.
  */
@@ -1428,7 +1428,7 @@ using is_nothrow_constructible_helper
 }  // namespace detail
 
 /**
- * @brief The variable definition does not call any operation that is not
+ * \brief The variable definition does not call any operation that is not
  * trivial. For the purposes of this check, the call to etl::declval is
  * considered trivial.
  */
@@ -1443,10 +1443,10 @@ inline constexpr bool is_nothrow_constructible_v
   = is_nothrow_constructible<T, Args...>::value;
 
 /**
- * @brief If etl::is_constructible<T>::value is true, provides the member
+ * \brief If etl::is_constructible<T>::value is true, provides the member
  * constant value equal to true, otherwise value is false.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1465,10 +1465,10 @@ inline constexpr bool is_default_constructible_v
   = is_default_constructible<T>::value;
 
 /**
- * @brief  If etl::is_trivially_constructible<T>::value is true, provides the
+ * \brief  If etl::is_trivially_constructible<T>::value is true, provides the
  * member constant value equal to true, otherwise value is false.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1487,10 +1487,10 @@ inline constexpr bool is_trivially_default_constructible_v
   = is_trivially_default_constructible<T>::value;
 
 /**
- * @brief If etl::is_nothrow_constructible<T>::value is true, provides the
+ * \brief If etl::is_nothrow_constructible<T>::value is true, provides the
  * member constant value equal to true, otherwise value is false.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1509,12 +1509,12 @@ inline constexpr bool is_nothrow_default_constructible_v
   = is_nothrow_default_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_constructible<T, T const&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1533,9 +1533,9 @@ template <typename T>
 inline constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
 
 /**
- * @brief Same as copy, but uses etl::is_trivially_constructible<T, T const&>.
+ * \brief Same as copy, but uses etl::is_trivially_constructible<T, T const&>.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1555,9 +1555,9 @@ inline constexpr bool is_trivially_copy_constructible_v
   = is_trivially_copy_constructible<T>::value;
 
 /**
- * @brief Same as copy, but uses etl::is_nothrow_constructible<T, T const&>.
+ * \brief Same as copy, but uses etl::is_nothrow_constructible<T, T const&>.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1577,7 +1577,7 @@ inline constexpr bool is_nothrow_copy_constructible_v
   = is_nothrow_copy_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_constructible<T, T&&>::value.
@@ -1591,7 +1591,7 @@ template <typename T>
 inline constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_trivially_constructible<T, T&&>::value.
@@ -1607,7 +1607,7 @@ inline constexpr bool is_trivially_move_constructible_v
   = is_trivially_move_constructible<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_nothrow_constructible<T, T&&>::value.
@@ -1665,7 +1665,7 @@ struct is_destructible_safe<T, false, true> : ::etl::true_type
 }  // namespace detail
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ * \brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T>
@@ -1675,7 +1675,7 @@ struct is_destructible : detail::is_destructible_safe<T>
 };
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ * \brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <typename Type>
 struct is_destructible<Type[]> : false_type
@@ -1683,7 +1683,7 @@ struct is_destructible<Type[]> : false_type
 };
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ * \brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <>
 struct is_destructible<void> : false_type
@@ -1694,7 +1694,7 @@ template <typename T>
 inline constexpr auto is_destructible_v = is_destructible<T>::value;
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ * \brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <typename T>
 struct is_trivially_destructible
@@ -1724,7 +1724,7 @@ struct is_nothrow_destructible_helper<true, Type>
 }  // namespace detail
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/is_destructible
+ * \brief https://en.cppreference.com/w/cpp/types/is_destructible
  */
 template <typename Type>
 struct is_nothrow_destructible
@@ -1752,7 +1752,7 @@ inline constexpr bool is_nothrow_destructible_v
   = is_nothrow_destructible<T>::value;
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+ * \brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
  */
 template <typename T>
 struct has_virtual_destructor : bool_constant<TAETL_HAS_VIRTUAL_DESTRUCTOR(T)>
@@ -1760,14 +1760,14 @@ struct has_virtual_destructor : bool_constant<TAETL_HAS_VIRTUAL_DESTRUCTOR(T)>
 };
 
 /**
- * @brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+ * \brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
  */
 template <typename T>
 inline constexpr auto has_virtual_destructor_v
   = has_virtual_destructor<T>::value;
 
 /**
- * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
+ * \brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
  * in unevaluated context, provides the member constant value equal true.
  * Otherwise, value is false. Access checks are performed as if from a context
  * unrelated to either type.
@@ -1781,7 +1781,7 @@ template <typename T, typename U>
 inline constexpr bool is_assignable_v = is_assignable<T, U>::value;
 
 /**
- * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
+ * \brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
  * in unevaluated context, provides the member constant value equal true.
  * Otherwise, value is false. Access checks are performed as if from a context
  * unrelated to either type.
@@ -1806,7 +1806,7 @@ struct is_nothrow_assignable_helper
 }  // namespace detail
 
 /**
- * @brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
+ * \brief If the expression etl::declval<T>() = etl::declval<U>() is well-formed
  * in unevaluated context, provides the member constant value equal true.
  * Otherwise, value is false. Access checks are performed as if from a context
  * unrelated to either type.
@@ -1824,12 +1824,12 @@ inline constexpr bool is_nothrow_assignable_v
   = is_nothrow_assignable<T, U>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_assignable<T&, T const&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1847,12 +1847,12 @@ template <typename T>
 inline constexpr bool is_copy_assignable_v = is_copy_assignable<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_trivially_assignable<T&, T const&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1872,12 +1872,12 @@ inline constexpr bool is_trivially_copy_assignable_v
   = is_trivially_copy_assignable<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_nothrow_assignable<T&, T const&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1897,12 +1897,12 @@ inline constexpr bool is_nothrow_copy_assignable_v
   = is_nothrow_copy_assignable<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_assignable<T&, T&&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1920,12 +1920,12 @@ template <typename T>
 inline constexpr bool is_move_assignable_v = is_move_assignable<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_assignable<T&, T&&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1945,12 +1945,12 @@ inline constexpr bool is_trivially_move_assignable_v
   = is_trivially_move_assignable<T>::value;
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_assignable<T&, T&&>::value.
  *
- * @details T shall be a complete type, (possibly cv-qualified) void, or an
+ * \details T shall be a complete type, (possibly cv-qualified) void, or an
  * array of unknown bound. Otherwise, the behavior is undefined. If an
  * instantiation of a template above depends, directly or indirectly, on an
  * incomplete type, and that instantiation could yield a different result if
@@ -1993,7 +1993,7 @@ struct is_swappable_helper
 }  // namespace detail
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_swappable_with<T&, T&>::value
@@ -2021,7 +2021,7 @@ struct is_nothrow_swappable_helper<false, T> : ::etl::false_type
 }  // namespace detail
 
 /**
- * @brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+ * \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
  * a function type with a cv-qualifier-seq or a ref-qualifier), provides a
  * member constant value equal to false. Otherwise, provides a member constant
  * value equal to etl::is_nothrow_swappable_with<T&, T&>::value
@@ -2051,7 +2051,7 @@ struct is_swappable_with_impl<
 }  // namespace detail
 
 /**
- * @brief If the expressions swap(etl::declval<T>(), etl::declval<U>()) and
+ * \brief If the expressions swap(etl::declval<T>(), etl::declval<U>()) and
  * swap(etl::declval<U>(), etl::declval<T>()) are both well-formed in
  * unevaluated context after using etl::swap; provides the member constant value
  * equal true. Otherwise, value is false. Access checks are performed as if from
@@ -2068,7 +2068,7 @@ template <typename T, typename U>
 inline constexpr bool is_swappable_with_v = is_swappable_with<T, U>::value;
 
 /**
- * @brief alignment_of
+ * \brief alignment_of
  */
 template <typename T>
 struct alignment_of : integral_constant<size_t, alignof(T)>
@@ -2079,7 +2079,7 @@ template <typename T>
 inline constexpr size_t alignment_of_v = alignment_of<T>::value;
 
 /**
- * @brief If T is a TriviallyCopyable type, provides the member constant value
+ * \brief If T is a TriviallyCopyable type, provides the member constant value
  * equal to true. For any other type, value is false. The only trivially
  * copyable types are scalar types, trivially copyable classes, and arrays of
  * such types/classes (possibly cv-qualified).
@@ -2123,12 +2123,12 @@ template <typename T>
 inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
 
 /**
- * @brief If T is TrivialType (that is, a scalar type, a trivially copyable
+ * \brief If T is TrivialType (that is, a scalar type, a trivially copyable
  * class with a trivial default constructor, or array of such type/class,
  * possibly cv-qualified), provides the member constant value equal to true. For
  * any other type, value is false.
  *
- * @details https://en.cppreference.com/w/cpp/types/is_trivial
+ * \details https://en.cppreference.com/w/cpp/types/is_trivial
  */
 template <typename T>
 struct is_trivial
@@ -2141,7 +2141,7 @@ template <typename T>
 inline constexpr bool is_trivial_v = is_trivial<T>::value;
 
 /**
- * @brief If T is a standard layout type (that is, a scalar type, a
+ * \brief If T is a standard layout type (that is, a scalar type, a
  * standard-layout class, or an array of such type/class, possibly
  * cv-qualified), provides the member constant value equal to true. For any
  * other type, value is false.
@@ -2155,11 +2155,11 @@ template <typename T>
 inline constexpr bool is_standard_layout_v = is_standard_layout<T>::value;
 
 /**
- * @brief If T is TriviallyCopyable and if any two objects of type T with the
+ * \brief If T is TriviallyCopyable and if any two objects of type T with the
  * same value have the same object representation, provides the member constant
  * value equal true. For any other type, value is false.
  *
- * @details For the purpose of this trait, two arrays have the same value if
+ * \details For the purpose of this trait, two arrays have the same value if
  * their elements have the same values, two non-union classes have the same
  * value if their direct subobjects have the same value, and two unions have the
  * same value if they have the same active member and the value of that member
@@ -2200,7 +2200,7 @@ struct is_unsigned<T, false> : ::etl::false_type
 }  // namespace detail
 
 /**
- * @brief If T is an arithmetic type, provides the member constant value equal
+ * \brief If T is an arithmetic type, provides the member constant value equal
  * to true if T(0) < T(-1): this results in true for the unsigned integer types
  * and the type bool and in false for the signed integer types and the
  * floating-point types. For any other type, value is false. The behavior of a
@@ -2229,7 +2229,7 @@ struct is_signed<T, false> : ::etl::false_type
 }  // namespace detail
 
 /**
- * @brief If T is an arithmetic type, provides the member constant value equal
+ * \brief If T is an arithmetic type, provides the member constant value equal
  * to true if T(-1) < T(0): this results in true for the floating-point types
  * and the signed integer types, and in false for the unsigned integer types and
  * the type bool. For any other type, value is false.
@@ -2257,15 +2257,15 @@ auto test_pre_is_base_of(int)
 }  // namespace detail
 
 /**
- * @brief If Derived is derived from Base or if both are the same non-union
+ * \brief If Derived is derived from Base or if both are the same non-union
  * class (in both cases ignoring cv-qualification), provides the member constant
  * value equal to true. Otherwise value is false.
  *
- * @details If both Base and Derived are non-union class types, and they are not
+ * \details If both Base and Derived are non-union class types, and they are not
  * the same type (ignoring cv-qualification), Derived shall be a complete type;
  * otherwise the behavior is undefined.
  *
- * @details https://en.cppreference.com/w/cpp/types/is_base_of
+ * \details https://en.cppreference.com/w/cpp/types/is_base_of
  */
 template <typename Base, typename Derived>
 struct is_base_of
@@ -2279,7 +2279,7 @@ template <typename Base, typename Derived>
 inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;
 
 /**
- * @brief If Type is an array type, provides the member constant value equal to
+ * \brief If Type is an array type, provides the member constant value equal to
  * the number of dimensions of the array. For any other type, value is 0. The
  * behavior of a program that adds specializations for rank or rank_v is
  * undefined.
@@ -2323,11 +2323,11 @@ template <typename T>
 using decay_t = typename decay<T>::type;
 
 /**
- * @brief Determines the common type among all types T..., that is the type all
+ * \brief Determines the common type among all types T..., that is the type all
  * T... can be implicitly converted to. If such a type exists (as determined
  * according to the rules below), the member type names that type. Otherwise,
  * there is no member type.
- * @details https://en.cppreference.com/w/cpp/types/common_type
+ * \details https://en.cppreference.com/w/cpp/types/common_type
  */
 // primary template (used for zero types)
 template <typename...>
@@ -2407,7 +2407,7 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
 }  // namespace detail
 
 /**
- * @brief If the imaginary function definition To test() { return
+ * \brief If the imaginary function definition To test() { return
  * etl::declval<From>(); } is well-formed, (that is, either etl::declval<From>()
  * can be converted to To using implicit conversions, or both From and To are
  * possibly cv-qualified void), provides the member constant value equal to
@@ -2503,9 +2503,9 @@ struct invoke_result<decltype(void(detail::INVOKE(::etl::declval<F>(),
 }  // namespace detail
 
 /**
- * @brief Deduces the return type of an INVOKE expression at compile time.
+ * \brief Deduces the return type of an INVOKE expression at compile time.
  *
- * @details F and all types in ArgTypes can be any complete type, array of
+ * \details F and all types in ArgTypes can be any complete type, array of
  * unknown bound, or (possibly cv-qualified) void. The behavior of a program
  * that adds specializations for any of the templates described on this page is
  * undefined. This implementation is copied from cppreference.com:
@@ -2521,11 +2521,11 @@ template <typename F, typename... ArgTypes>
 using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
 
 /**
- * @brief Provides the nested type type, which is a trivial standard-layout type
+ * \brief Provides the nested type type, which is a trivial standard-layout type
  * suitable for use as uninitialized storage for any object whose size is at
  * most Len and whose alignment requirement is a divisor of Align.
  *
- * @details The default value of Align is the most stringent (the largest)
+ * \details The default value of Align is the most stringent (the largest)
  * alignment requirement for any object whose size is at most Len. If the
  * default value is not used, Align must be the value of alignof(T) for some
  * type T, or the behavior is undefined.
@@ -2558,7 +2558,7 @@ template <typename T0, typename T1, typename... Ts>
 }  // namespace detail
 
 /**
- * @brief Provides the nested type type, which is a trivial standard-layout type
+ * \brief Provides the nested type type, which is a trivial standard-layout type
  * of a size and alignment suitable for use as uninitialized storage for an
  * object of any of the types listed in Types. The size of the storage is at
  * least Len. aligned_union also determines the strictest (largest) alignment
@@ -2599,7 +2599,7 @@ struct underlying_type_impl<T, false>
 }  // namespace detail
 
 /**
- * @brief The underlying type of an enum.
+ * \brief The underlying type of an enum.
  */
 template <typename T>
 struct underlying_type : detail::underlying_type_impl<T>
@@ -2621,7 +2621,7 @@ struct is_scoped_enum<T, true>
 };
 
 /**
- * @brief Checks whether T is an scoped enumeration type. Provides the member
+ * \brief Checks whether T is an scoped enumeration type. Provides the member
  * constant value which is equal to true, if T is an scoped enumeration type.
  * Otherwise, value is equal to false. The behavior of a program that adds
  * specializations for is_scoped_enum or is_scoped_enum_v is undefined.
@@ -2632,7 +2632,7 @@ template <typename T>
 inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 
 /**
- * @brief Detects whether the function call occurs within a constant-evaluated
+ * \brief Detects whether the function call occurs within a constant-evaluated
  * context. Returns true if the evaluation of the call occurs within the
  * evaluation of an expression or conversion that is manifestly
  * constant-evaluated; otherwise returns false.

@@ -38,7 +38,7 @@ template <typename... Types>
 class variant;
 
 /**
- * @brief Unit type intended for use as a well-behaved empty alternative in
+ * \brief Unit type intended for use as a well-behaved empty alternative in
  * etl::variant. In particular, a variant of non-default-constructible types may
  * list etl::monostate as its first alternative: this makes the variant itself
  * default-constructible
@@ -48,7 +48,7 @@ struct monostate
 };
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator==(monostate /*lhs*/,
                                         monostate /*rhs*/) noexcept -> bool
@@ -57,7 +57,7 @@ struct monostate
 }
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator!=(monostate /*lhs*/,
                                         monostate /*rhs*/) noexcept -> bool
@@ -66,7 +66,7 @@ struct monostate
 }
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator<(monostate /*lhs*/,
                                        monostate /*rhs*/) noexcept -> bool
@@ -75,7 +75,7 @@ struct monostate
 }
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator>(monostate /*lhs*/,
                                        monostate /*rhs*/) noexcept -> bool
@@ -84,7 +84,7 @@ struct monostate
 }
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator<=(monostate /*lhs*/,
                                         monostate /*rhs*/) noexcept -> bool
@@ -93,7 +93,7 @@ struct monostate
 }
 
 /**
- * @brief All instances of etl::monostate compare equal.
+ * \brief All instances of etl::monostate compare equal.
  */
 [[nodiscard]] constexpr auto operator>=(monostate /*lhs*/,
                                         monostate /*rhs*/) noexcept -> bool
@@ -222,21 +222,21 @@ struct variant_storage_type_get<Target, variant_storage<Head, Tail...>>
 }  // namespace detail
 
 /**
- * @brief Provides compile-time indexed access to the types of the alternatives
+ * \brief Provides compile-time indexed access to the types of the alternatives
  * of the possibly cv-qualified variant, combining cv-qualifications of the
  * variant (if any) with the cv-qualifications of the alternative.
  *
- * @todo Implement
+ * \todo Implement
  */
 template <etl::size_t I, typename T>
 struct variant_alternative;
 
 /**
- * @brief Provides compile-time indexed access to the types of the alternatives
+ * \brief Provides compile-time indexed access to the types of the alternatives
  * of the possibly cv-qualified variant, combining cv-qualifications of the
  * variant (if any) with the cv-qualifications of the alternative.
  *
- * @todo Implement
+ * \todo Implement
  */
 template <etl::size_t I, typename... Types>
 struct variant_alternative<I, variant<Types...>>
@@ -245,11 +245,11 @@ struct variant_alternative<I, variant<Types...>>
 };
 
 /**
- * @brief Provides compile-time indexed access to the types of the alternatives
+ * \brief Provides compile-time indexed access to the types of the alternatives
  * of the possibly cv-qualified variant, combining cv-qualifications of the
  * variant (if any) with the cv-qualifications of the alternative.
  *
- * @todo Implement
+ * \todo Implement
  */
 template <etl::size_t I, typename T>
 struct variant_alternative<I, T const>
@@ -261,14 +261,14 @@ template <size_t I, typename T>
 using variant_alternative_t = typename variant_alternative<I, T>::type;
 
 /**
- * @brief This is a special value equal to the largest value representable by
+ * \brief This is a special value equal to the largest value representable by
  * the type etl::size_t, used as the return value of index() when
  * valueless_by_exception() is true.
  */
 inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
 
 /**
- * @brief The class template etl::variant represents a type-safe union. An
+ * \brief The class template etl::variant represents a type-safe union. An
  * instance of etl::variant at any given time either holds a value of one of its
  * alternative types.
  */
@@ -277,9 +277,9 @@ class variant
 {
   public:
   /**
-   * @brief Converting constructor.
+   * \brief Converting constructor.
    *
-   * @details Constructs a variant holding the alternative type T.
+   * \details Constructs a variant holding the alternative type T.
    */
   template <typename T>
   explicit variant(T&& t)
@@ -288,10 +288,10 @@ class variant
   }
 
   /**
-   * @brief If valueless_by_exception is true, does nothing. Otherwise, destroys
+   * \brief If valueless_by_exception is true, does nothing. Otherwise, destroys
    * the currently contained value.
    *
-   * @todo This destructor is trivial if etl::is_trivially_destructible_v<T_i>
+   * \todo This destructor is trivial if etl::is_trivially_destructible_v<T_i>
    * is true for all T_i in Types...
    */
   ~variant()
@@ -300,9 +300,9 @@ class variant
   }
 
   /**
-   * @brief Copy-assignment
+   * \brief Copy-assignment
    *
-   * @details  If both *this and rhs are valueless by exception, does nothing.
+   * \details  If both *this and rhs are valueless by exception, does nothing.
    *
    * Otherwise, if rhs holds the same alternative as *this, assigns the value
    * contained in rhs to the value contained in *this. If an exception is
@@ -325,7 +325,7 @@ class variant
   }
 
   /**
-   * @brief Returns the zero-based index of the alternative that is currently
+   * \brief Returns the zero-based index of the alternative that is currently
    * held by the variant. If the variant is valueless_by_exception, returns
    * variant_npos.
    */
@@ -335,7 +335,7 @@ class variant
   }
 
   /**
-   * @brief Returns false if and only if the variant holds a value. Currently
+   * \brief Returns false if and only if the variant holds a value. Currently
    * always returns false, since there is no default constructor.
    */
   [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool
@@ -344,7 +344,7 @@ class variant
   }
 
   /**
-   * @todo Remove & replace with friendship for etl::get_if.
+   * \todo Remove & replace with friendship for etl::get_if.
    */
   [[nodiscard]] auto data() const noexcept { return &data_; }
   auto data() noexcept { return &data_; }
@@ -355,7 +355,7 @@ class variant
 };
 
 /**
- * @brief Checks if the variant v holds the alternative T. The call is
+ * \brief Checks if the variant v holds the alternative T. The call is
  * ill-formed if T does not appear exactly once in Types...
  */
 template <typename T, typename... Types>
@@ -367,13 +367,13 @@ constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
 }
 
 /**
- * @brief Index-based non-throwing accessor: If pv is not a null pointer and
+ * \brief Index-based non-throwing accessor: If pv is not a null pointer and
  * pv->index()
  * == I, returns a pointer to the value stored in the variant pointed to by pv.
  * Otherwise, returns a null pointer value. The call is ill-formed if I is not a
  * valid index in the variant.
  *
- * @todo Implement
+ * \todo Implement
  */
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
@@ -384,13 +384,13 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 }
 
 /**
- * @brief Index-based non-throwing accessor: If pv is not a null pointer and
+ * \brief Index-based non-throwing accessor: If pv is not a null pointer and
  * pv->index()
  * == I, returns a pointer to the value stored in the variant pointed to by pv.
  * Otherwise, returns a null pointer value. The call is ill-formed if I is not a
  * valid index in the variant.
  *
- * @todo Implement
+ * \todo Implement
  */
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
@@ -402,7 +402,7 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 }
 
 /**
- * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a
+ * \brief Type-based non-throwing accessor: The call is ill-formed if T is not a
  * unique element of Types....
  */
 template <typename T, typename... Types>
@@ -419,7 +419,7 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 }
 
 /**
- * @brief Type-based non-throwing accessor: The call is ill-formed if T is not a
+ * \brief Type-based non-throwing accessor: The call is ill-formed if T is not a
  * unique element of Types....
  */
 template <typename T, typename... Types>

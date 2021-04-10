@@ -24,7 +24,7 @@ DAMAGE.
 */
 
 /**
- * @example tuple.cpp
+ * \example tuple.cpp
  */
 
 #ifndef TAETL_TUPLE_HPP
@@ -35,7 +35,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @todo Implement index_sequence & tuple_size
+ * \todo Implement index_sequence & tuple_size
  */
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...>
@@ -96,7 +96,7 @@ constexpr auto get(tuple<First, Rest...> const& t)
 // }  // namespace detail
 
 // /**
-//  * @brief An object of unspecified type such that any value can be assigned
+//  * \brief An object of unspecified type such that any value can be assigned
 //  to it with no
 //  * effect. Intended for use with etl::tie when unpacking a etl::tuple, as a
 //  placeholder
@@ -105,7 +105,7 @@ constexpr auto get(tuple<First, Rest...> const& t)
 // inline constexpr detail::ignore_t ignore;
 
 // /**
-//  * @brief Creates a tuple of lvalue references to its arguments or instances
+//  * \brief Creates a tuple of lvalue references to its arguments or instances
 //  of
 //  * etl::ignore.
 //  */

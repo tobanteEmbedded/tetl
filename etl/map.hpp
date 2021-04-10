@@ -24,8 +24,8 @@ DAMAGE.
 */
 
 /**
- * @file map.hpp
- * @example map.cpp
+ * \file map.hpp
+ * \example map.cpp
  */
 #ifndef TAETL_MAP_HPP
 #define TAETL_MAP_HPP
@@ -41,7 +41,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Interface base class for etl::map. Use this class for function
+ * \brief Interface base class for etl::map. Use this class for function
  * parameters. To create an instance, use etl::map.
  */
 template <typename KeyType, typename ValueType,
@@ -63,14 +63,14 @@ class map_view
   using const_iterator  = value_type const*;
 
   /**
-   * @todo Reverse iterators & node type. reverse_iterator
+   * \todo Reverse iterators & node type. reverse_iterator
    * etl::reverse_iterator<iterator> const_reverse_iterator
    * etl::reverse_iterator<const_iterator> node_type a specialization of node
    * handle representing a container node insert_return_type
    */
 
   /**
-   * @brief Returns a reference to the mapped value of the element with key
+   * \brief Returns a reference to the mapped value of the element with key
    * equivalent to key. If no such element exists, you are in UB land.
    */
   [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&
@@ -80,7 +80,7 @@ class map_view
   }
 
   /**
-   * @brief Returns a reference to the mapped value of the element with key
+   * \brief Returns a reference to the mapped value of the element with key
    * equivalent to key. If no such element exists, you are in UB land.
    */
   [[nodiscard]] constexpr auto at(key_type const& key) const
@@ -91,7 +91,7 @@ class map_view
   }
 
   /**
-   * @brief Returns a reference to the value that is mapped to a key
+   * \brief Returns a reference to the value that is mapped to a key
    * equivalent to key, performing an insertion if such key does not already
    * exist.
    */
@@ -107,12 +107,12 @@ class map_view
   }
 
   /**
-   * @brief Returns an iterator to the beginning.
+   * \brief Returns an iterator to the beginning.
    */
   [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
@@ -120,7 +120,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
@@ -128,7 +128,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an iterator to the end.
+   * \brief Returns an iterator to the end.
    */
   [[nodiscard]] constexpr auto end() noexcept -> iterator
   {
@@ -136,7 +136,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
   {
@@ -144,7 +144,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
   {
@@ -152,7 +152,7 @@ class map_view
   }
 
   /**
-   * @brief Returns the current element count.
+   * \brief Returns the current element count.
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
@@ -160,7 +160,7 @@ class map_view
   }
 
   /**
-   * @brief Returns the capacity.
+   * \brief Returns the capacity.
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
   {
@@ -168,7 +168,7 @@ class map_view
   }
 
   /**
-   * @brief Returns true if the size == 0.
+   * \brief Returns true if the size == 0.
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
@@ -176,7 +176,7 @@ class map_view
   }
 
   /**
-   * @brief Returns 1 if the key is present, otherwise 0.
+   * \brief Returns 1 if the key is present, otherwise 0.
    */
   [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
     -> size_type
@@ -185,7 +185,7 @@ class map_view
   }
 
   /**
-   * @brief  Checks if there is an element with key equivalent to key in the
+   * \brief  Checks if there is an element with key equivalent to key in the
    * container.
    */
   [[nodiscard]] constexpr auto contains(key_type const& key) const -> bool
@@ -194,7 +194,7 @@ class map_view
   }
 
   /**
-   * @brief Erases all elements from the container. After this call, size()
+   * \brief Erases all elements from the container. After this call, size()
    * returns zero.
    */
   constexpr auto clear() noexcept -> void
@@ -204,9 +204,9 @@ class map_view
   }
 
   /**
-   * @brief Inserts a value pair into the map.
+   * \brief Inserts a value pair into the map.
    *
-   * @details Returns a pair consisting of an iterator to the inserted element
+   * \details Returns a pair consisting of an iterator to the inserted element
    * (or to the element that prevented the insertion) and a bool denoting
    * whether the insertion took place.
    */
@@ -221,9 +221,9 @@ class map_view
   }
 
   /**
-   * @brief Inserts a value pair into the map.
+   * \brief Inserts a value pair into the map.
    *
-   * @details Returns a pair consisting of an iterator to the inserted element
+   * \details Returns a pair consisting of an iterator to the inserted element
    * (or to the element that prevented the insertion) and a bool denoting
    * whether the insertion took place.
    */
@@ -234,9 +234,9 @@ class map_view
   }
 
   /**
-   * @brief Inserts a value pair into the map.
+   * \brief Inserts a value pair into the map.
    *
-   * @details Returns a pair consisting of an iterator to the inserted element
+   * \details Returns a pair consisting of an iterator to the inserted element
    * (or to the element that prevented the insertion) and a bool denoting
    * whether the insertion took place.
    */
@@ -250,10 +250,10 @@ class map_view
   }
 
   /**
-   * @brief Inserts a new element into the container constructed in-place with
+   * \brief Inserts a new element into the container constructed in-place with
    * the given args if there is no element with the key in the container.
    *
-   * @details Careful use of emplace allows the new element to be constructed
+   * \details Careful use of emplace allows the new element to be constructed
    * while avoiding unnecessary copy or move operations. The constructor of the
    * new element (i.e. etl::pair<Key const, T>) is called with exactly the same
    * arguments as supplied to emplace, forwarded via
@@ -286,7 +286,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an element with key equivalent to key. Nullptr if not found.
+   * \brief Returns an element with key equivalent to key. Nullptr if not found.
    */
   [[nodiscard]] constexpr auto find(KeyType const& key) noexcept -> iterator
   {
@@ -296,7 +296,7 @@ class map_view
   }
 
   /**
-   * @brief Returns an element with key equivalent to key. Nullptr if not found.
+   * \brief Returns an element with key equivalent to key. Nullptr if not found.
    */
   [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept
     -> const_iterator
@@ -319,16 +319,16 @@ class map_view
 };
 
 /**
- * @brief etl::map is a sorted associative container that contains key-value
+ * \brief etl::map is a sorted associative container that contains key-value
  * pairs with unique keys. Keys are sorted by using the comparison function
  * Compare. Uses an inline key-value pair array as storage.
  *
- * @details Everywhere the standard library uses the Compare requirements,
+ * \details Everywhere the standard library uses the Compare requirements,
  * uniqueness is determined by using the equivalence relation. In imprecise
  * terms, two objects a and b are considered equivalent (not unique) if neither
  * compares less than the other: !comp(a, b) && !comp(b, a).
  *
- * @include map.cpp
+ * \include map.cpp
  */
 template <typename KeyT, typename ValueT, size_t Size,
           typename Compare = etl::less<KeyT>>
@@ -336,7 +336,7 @@ class map : public map_view<KeyT, ValueT, Compare>
 {
   public:
   /**
-   * @brief Default constructor.
+   * \brief Default constructor.
    */
   constexpr explicit map() noexcept
       : base_t {reinterpret_cast<pair_t*>(&memory_[0]), Size}
@@ -344,7 +344,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   }
 
   /**
-   * @brief Copy constructor. Constructs the container with the copy of the
+   * \brief Copy constructor. Constructs the container with the copy of the
    * contents of other.
    */
   constexpr map(map const& other) : map {}
@@ -355,7 +355,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   }
 
   /**
-   * @brief Move constructor. Constructs the container with the contents of
+   * \brief Move constructor. Constructs the container with the contents of
    * other using move semantics. Allocator is obtained by move-construction
    * from the allocator belonging to other. After the move, other is
    * guaranteed to be empty().
@@ -369,7 +369,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   }
 
   /**
-   * @brief Replaces the contents of the container. Copy assignment operator.
+   * \brief Replaces the contents of the container. Copy assignment operator.
    * Replaces the contents with a copy of the contents of other.
    */
   constexpr auto operator=(map const& other) -> map&
@@ -383,7 +383,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   }
 
   /**
-   * @brief Replaces the contents of the container. Move assignment operator.
+   * \brief Replaces the contents of the container. Move assignment operator.
    * Replaces the contents with those of other using move semantics (i.e. the
    * data in other is moved from other into this container). other is in a
    * valid but unspecified state afterwards.
@@ -398,7 +398,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   }
 
   /**
-   * @brief Destructor. Deletes all elements.
+   * \brief Destructor. Deletes all elements.
    */
   ~map() noexcept { base_t::clear(); }
 
@@ -461,7 +461,7 @@ private:
   };
 
   /**
-   * @brief Returns an iterator to the beginning.
+   * \brief Returns an iterator to the beginning.
    */
   [[nodiscard]] constexpr auto begin() noexcept -> iterator
   {
@@ -469,7 +469,7 @@ private:
   }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
   {
@@ -477,7 +477,7 @@ private:
   }
 
   /**
-   * @brief Returns an const iterator to the beginning.
+   * \brief Returns an const iterator to the beginning.
    */
   [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
   {
@@ -485,7 +485,7 @@ private:
   }
 
   /**
-   * @brief Returns an iterator to the end.
+   * \brief Returns an iterator to the end.
    */
   [[nodiscard]] constexpr auto end() noexcept -> iterator
   {
@@ -493,7 +493,7 @@ private:
   }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
   {
@@ -501,7 +501,7 @@ private:
   }
 
   /**
-   * @brief Returns an const iterator to the end.
+   * \brief Returns an const iterator to the end.
    */
   [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
   {
@@ -509,7 +509,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed map.
+   * \brief Returns a reverse iterator to the first element of the reversed map.
    * It corresponds to the last element of the non-reversed map. If the map is
    * empty, the returned iterator is equal to rend().
    */
@@ -519,7 +519,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed map.
+   * \brief Returns a reverse iterator to the first element of the reversed map.
    * It corresponds to the last element of the non-reversed map. If the map is
    * empty, the returned iterator is equal to rend().
    */
@@ -529,7 +529,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the first element of the reversed map.
+   * \brief Returns a reverse iterator to the first element of the reversed map.
    * It corresponds to the last element of the non-reversed map. If the map is
    * empty, the returned iterator is equal to rend().
    */
@@ -540,7 +540,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed map. It corresponds to the element preceding the first
    * element of the non-reversed map. This element acts as a placeholder,
    * attempting to access it results in undefined behavior.
@@ -551,7 +551,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed map. It corresponds to the element preceding the first
    * element of the non-reversed map. This element acts as a placeholder,
    * attempting to access it results in undefined behavior.
@@ -562,7 +562,7 @@ private:
   }
 
   /**
-   * @brief Returns a reverse iterator to the element following the last element
+   * \brief Returns a reverse iterator to the element following the last element
    * of the reversed map. It corresponds to the element preceding the first
    * element of the non-reversed map. This element acts as a placeholder,
    * attempting to access it results in undefined behavior.
@@ -573,7 +573,7 @@ private:
   }
 
   /**
-   * @brief Checks if the container has no elements.
+   * \brief Checks if the container has no elements.
    */
   [[nodiscard]] constexpr auto empty() const noexcept -> bool
   {
@@ -581,7 +581,7 @@ private:
   }
 
   /**
-   * @brief Returns the number of elements in the container.
+   * \brief Returns the number of elements in the container.
    */
   [[nodiscard]] constexpr auto size() const noexcept -> size_type
   {
@@ -589,7 +589,7 @@ private:
   }
 
   /**
-   * @brief Checks if the container full, i.e. whether size() == Capacity.
+   * \brief Checks if the container full, i.e. whether size() == Capacity.
    */
   [[nodiscard]] constexpr auto full() const noexcept -> bool
   {
@@ -597,7 +597,7 @@ private:
   }
 
   /**
-   * @brief Returns the maximum number of elements the container is able to
+   * \brief Returns the maximum number of elements the container is able to
    * hold, i.e. max_size() == Capacity.
    */
   [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
@@ -606,14 +606,14 @@ private:
   }
 
   /**
-   * @brief Erases all elements from the container. After this call, size()
+   * \brief Erases all elements from the container. After this call, size()
    * returns zero. Invalidates any references, pointers, or iterators referring
    * to contained elements. Any past-the-end iterator remains valid.
    */
   constexpr auto clear() noexcept -> void { memory_.clear(); }
 
   /**
-   * @brief Inserts a new element into the container constructed in-place with
+   * \brief Inserts a new element into the container constructed in-place with
    * the given args if there is no element with the key in the container.
    */
   template <typename... Args>
@@ -623,7 +623,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   constexpr auto insert(value_type const& value) -> pair<iterator, bool>
@@ -633,7 +633,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   template <typename P, TAETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
@@ -643,7 +643,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   constexpr auto insert(value_type&& value) -> pair<iterator, bool>
@@ -652,7 +652,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   constexpr auto insert(const_iterator hint, value_type const& value)
@@ -670,7 +670,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   constexpr auto insert(const_iterator hint, value_type&& value) -> iterator
@@ -680,7 +680,7 @@ private:
   }
 
   /**
-   * @brief Inserts element(s) into the container, if the container doesn't
+   * \brief Inserts element(s) into the container, if the container doesn't
    * already contain an element with an equivalent key.
    */
   template <typename InputIter>

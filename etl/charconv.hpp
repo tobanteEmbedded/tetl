@@ -32,7 +32,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief A BitmaskType used to specify floating-point formatting for
+ * \brief A BitmaskType used to specify floating-point formatting for
  * etl::to_chars and etl::from_chars
  */
 enum class chars_format : etl::uint8_t
@@ -44,7 +44,7 @@ enum class chars_format : etl::uint8_t
 };
 
 /**
- * @brief Primitive numerical output conversion.
+ * \brief Primitive numerical output conversion.
  */
 struct to_chars_result
 {
@@ -59,7 +59,7 @@ struct to_chars_result
 };
 
 /**
- * @brief Primitive numerical input conversion
+ * \brief Primitive numerical input conversion
  */
 struct from_chars_result
 {

@@ -31,10 +31,10 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief Empty class tag types used to specify locking strategy for
+ * \brief Empty class tag types used to specify locking strategy for
  * etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
  *
- * @details Do not acquire ownership of the mutex.
+ * \details Do not acquire ownership of the mutex.
  */
 struct defer_lock_t
 {
@@ -42,10 +42,10 @@ struct defer_lock_t
 };
 
 /**
- * @brief Empty class tag types used to specify locking strategy for
+ * \brief Empty class tag types used to specify locking strategy for
  * etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
  *
- * @details Try to acquire ownership of the mutex without blocking.
+ * \details Try to acquire ownership of the mutex without blocking.
  */
 struct try_to_lock_t
 {
@@ -53,10 +53,10 @@ struct try_to_lock_t
 };
 
 /**
- * @brief Empty class tag types used to specify locking strategy for
+ * \brief Empty class tag types used to specify locking strategy for
  * etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
  *
- * @details Assume the calling thread already has ownership of the mutex.
+ * \details Assume the calling thread already has ownership of the mutex.
  */
 struct adopt_lock_t
 {
@@ -64,22 +64,22 @@ struct adopt_lock_t
 };
 
 /**
- * @brief Instances of empty struct tag types. See defer_lock_t.
+ * \brief Instances of empty struct tag types. See defer_lock_t.
  */
 inline constexpr defer_lock_t defer_lock {};
 
 /**
- * @brief Instances of empty struct tag types. See try_to_lock_t.
+ * \brief Instances of empty struct tag types. See try_to_lock_t.
  */
 inline constexpr try_to_lock_t try_to_lock {};
 
 /**
- * @brief Instances of empty struct tag types. See adopt_lock_t.
+ * \brief Instances of empty struct tag types. See adopt_lock_t.
  */
 inline constexpr adopt_lock_t adopt_lock {};
 
 /**
- * @brief The class lock_guard is a mutex wrapper that provides a convenient
+ * \brief The class lock_guard is a mutex wrapper that provides a convenient
  * RAII-style mechanism for owning a mutex for the duration of a scoped block.
  * When a lock_guard object is created, it attempts to take ownership of the
  * mutex it is given. When control leaves the scope in which the lock_guard
@@ -104,11 +104,11 @@ struct lock_guard
 };
 
 /**
- * @brief The class unique_lock is a general-purpose mutex ownership wrapper
+ * \brief The class unique_lock is a general-purpose mutex ownership wrapper
  * allowing deferred locking, time-constrained attempts at locking, recursive
  * locking, transfer of lock ownership, and use with condition variables.
  *
- * @details The class unique_lock is movable, but not copyable -- it meets the
+ * \details The class unique_lock is movable, but not copyable -- it meets the
  * requirements of MoveConstructible and MoveAssignable but not of
  * CopyConstructible or CopyAssignable. The class unique_lock meets the
  * BasicLockable requirements. If Mutex meets the Lockable requirements,
@@ -126,12 +126,12 @@ struct unique_lock
   public:
   using mutex_type = Mutex;
   /**
-   * @brief Constructs a unique_lock with no associated mutex.
+   * \brief Constructs a unique_lock with no associated mutex.
    */
   unique_lock() noexcept = default;
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Locks the associated mutex by calling m.lock(). The behavior
    * is undefined if the current thread already owns the mutex except when the
    * mutex is recursive.
@@ -139,13 +139,13 @@ struct unique_lock
   explicit unique_lock(mutex_type& m) : mutex_ {&m} { lock(); }
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Does not lock the associated mutex.
    */
   unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept : mutex_ {&m} { }
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Tries to lock the associated mutex without blocking by
    * calling m.try_lock(). The behavior is undefined if the current thread
    * already owns the mutex except when the mutex is recursive.
@@ -156,7 +156,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Assumes the calling thread already owns m.
    */
   unique_lock(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ {&m}, owns_ {true}
@@ -164,7 +164,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Tries to lock the associated mutex by calling
    * m.try_lock_until(timeout_time). Blocks until specified timeout_time has
    * been reached or the lock is acquired, whichever comes first. May block for
@@ -179,7 +179,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Constructs a unique_lock with m as the associated mutex.
+   * \brief Constructs a unique_lock with m as the associated mutex.
    * Additionally: Tries to lock the associated mutex by calling
    * m.try_lock_for(timeout_duration). Blocks until specified timeout_duration
    * has elapsed or the lock is acquired, whichever comes first. May block for
@@ -194,17 +194,17 @@ struct unique_lock
   }
 
   /**
-   * @brief Deleted copy constructor. unique_lock is move only.
+   * \brief Deleted copy constructor. unique_lock is move only.
    */
   unique_lock(unique_lock const&) = delete;
 
   /**
-   * @brief Deleted copy assignment. unique_lock is move only.
+   * \brief Deleted copy assignment. unique_lock is move only.
    */
   auto operator=(unique_lock const&) -> unique_lock& = delete;
 
   /**
-   * @brief Move constructor. Initializes the unique_lock with the contents of
+   * \brief Move constructor. Initializes the unique_lock with the contents of
    * other. Leaves other with no associated mutex.
    */
   unique_lock(unique_lock&& u) noexcept
@@ -214,7 +214,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Move assignment operator. Replaces the contents with those of other
+   * \brief Move assignment operator. Replaces the contents with those of other
    * using move semantics. If prior to the call *this has an associated mutex
    * and has acquired ownership of it, the mutex is unlocked.
    */
@@ -229,7 +229,7 @@ struct unique_lock
   ~unique_lock() noexcept { unlock(); }
 
   /**
-   * @brief Locks (i.e., takes ownership of) the associated mutex.
+   * \brief Locks (i.e., takes ownership of) the associated mutex.
    */
   auto lock() noexcept(noexcept(mutex_->lock())) -> void
   {
@@ -241,9 +241,9 @@ struct unique_lock
   };
 
   /**
-   * @brief Tries to lock (i.e., takes ownership of) the associated mutex
+   * \brief Tries to lock (i.e., takes ownership of) the associated mutex
    * without blocking.
-   * @returns true if the ownership of the mutex has been acquired successfully,
+   * \returns true if the ownership of the mutex has been acquired successfully,
    * false otherwise.
    */
   auto try_lock() noexcept(noexcept(mutex_->try_lock())) -> bool
@@ -261,7 +261,7 @@ struct unique_lock
   };
 
   /**
-   * @brief Tries to lock (i.e., takes ownership of) the associated mutex.
+   * \brief Tries to lock (i.e., takes ownership of) the associated mutex.
    * Blocks until specified timeout_duration has elapsed or the lock is
    * acquired, whichever comes first. On successful lock acquisition returns
    * true, otherwise returns false. Effectively calls
@@ -284,7 +284,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Tries to lock (i.e., takes ownership of) the associated mutex
+   * \brief Tries to lock (i.e., takes ownership of) the associated mutex
    * without blocking.
    */
   template <typename Clock, typename Duration>
@@ -303,7 +303,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Unlocks (i.e., releases ownership of) the associated mutex and
+   * \brief Unlocks (i.e., releases ownership of) the associated mutex and
    * releases ownership. Silently does nothing, if there is no associated mutex
    * or if the mutex is not locked.
    */
@@ -317,7 +317,7 @@ struct unique_lock
   }
 
   /**
-   * @brief Exchanges the internal states of the lock objects.
+   * \brief Exchanges the internal states of the lock objects.
    */
   auto swap(unique_lock& other) noexcept -> void
   {
@@ -327,11 +327,11 @@ struct unique_lock
   }
 
   /**
-   * @brief Breaks the association of the associated mutex, if any, and *this.
+   * \brief Breaks the association of the associated mutex, if any, and *this.
    * No locks are unlocked. If the *this held ownership of the associated mutex
    * prior to the call, the caller is now responsible to unlock the mutex.
    *
-   * @returns Pointer to the associated mutex or a null pointer if there was no
+   * \returns Pointer to the associated mutex or a null pointer if there was no
    * associated mutex.
    */
   [[nodiscard]] auto release() noexcept -> mutex_type*
@@ -341,24 +341,24 @@ struct unique_lock
   }
 
   /**
-   * @brief Checks whether *this owns a locked mutex or not.
+   * \brief Checks whether *this owns a locked mutex or not.
    */
   [[nodiscard]] auto owns_lock() const noexcept -> bool { return owns_; }
 
   /**
-   * @brief Checks whether *this owns a locked mutex or not.
+   * \brief Checks whether *this owns a locked mutex or not.
    */
   [[nodiscard]] explicit operator bool() const noexcept { return owns_lock(); }
 
   /**
-   * @brief Returns a pointer to the associated mutex, or a null pointer if
+   * \brief Returns a pointer to the associated mutex, or a null pointer if
    * there is no associated mutex.
    */
   [[nodiscard]] auto mutex() const noexcept -> mutex_type* { return mutex_; }
 };
 
 /**
- * @brief Specializes the swap algorithm for unique_lock. Exchanges the state of
+ * \brief Specializes the swap algorithm for unique_lock. Exchanges the state of
  * lhs with that of rhs.
  */
 template <typename Mutex>

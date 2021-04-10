@@ -36,7 +36,7 @@ DAMAGE.
 #include "etl/warning.hpp"
 
 /**
- * @brief Called by the standard single-object placement new expression. The
+ * \brief Called by the standard single-object placement new expression. The
  * standard library implementation performs no action and returns ptr
  * unmodified. The behavior is undefined if this function is called through a
  * placement new expression and ptr is a null pointer.
@@ -48,7 +48,7 @@ DAMAGE.
 }
 
 /**
- * @brief Called by the standard array form placement new expression. The
+ * \brief Called by the standard array form placement new expression. The
  * standard library implementation performs no action and returns ptr
  * unmodified. The behavior is undefined if this function is called through a
  * placement new expression and ptr is a null pointer.
@@ -65,7 +65,7 @@ DAMAGE.
 namespace etl
 {
 /**
- * @brief etl::nothrow_t is an empty class type used to disambiguate the
+ * \brief etl::nothrow_t is an empty class type used to disambiguate the
  * overloads of throwing and non-throwing allocation functions.
  */
 struct nothrow_t
@@ -74,13 +74,13 @@ struct nothrow_t
 };
 
 /**
- * @brief etl::nothrow is a constant of type etl::nothrow_t used to disambiguate
+ * \brief etl::nothrow is a constant of type etl::nothrow_t used to disambiguate
  * the overloads of throwing and non-throwing allocation functions.
  */
 inline constexpr auto nothrow = etl::nothrow_t {};
 
 /**
- * @brief etl::new_handler is the function pointer type (pointer to function
+ * \brief etl::new_handler is the function pointer type (pointer to function
  * that takes no arguments and returns void), which is used by the functions
  * etl::set_new_handler and etl::get_new_handler
  */
@@ -106,19 +106,19 @@ using new_handler = void (*)();
 #endif
 
 /**
- * @brief Minimum offset between two objects to avoid false sharing. Guaranteed
+ * \brief Minimum offset between two objects to avoid false sharing. Guaranteed
  * to be at least alignof(max_align_t).
  */
 constexpr auto hardware_constructive_interference_size = TAETL_CACHELINE_SIZE;
 
 /**
- * @brief Maximum size of contiguous memory to promote true sharing. Guaranteed
+ * \brief Maximum size of contiguous memory to promote true sharing. Guaranteed
  * to be at least alignof(max_align_t).
  */
 constexpr auto hardware_destructive_interference_size = TAETL_CACHELINE_SIZE;
 
 /**
- * @brief Both new-expression and delete-expression, when used with objects
+ * \brief Both new-expression and delete-expression, when used with objects
  * whose alignment requirement is greater than the default, pass that alignment
  * requirement as an argument of type align_val_t to the selected
  * allocation/deallocation function.
@@ -128,7 +128,7 @@ enum struct align_val_t : size_t
 };
 
 /**
- * @brief Tag type used to identify the destroying delete form of operator
+ * \brief Tag type used to identify the destroying delete form of operator
  * delete.
  */
 struct destroying_delete_t
@@ -137,7 +137,7 @@ struct destroying_delete_t
 };
 
 /**
- * @brief Tag type used to identify the destroying delete form of operator
+ * \brief Tag type used to identify the destroying delete form of operator
  * delete.
  */
 inline constexpr auto destroying_delete = destroying_delete_t {};
