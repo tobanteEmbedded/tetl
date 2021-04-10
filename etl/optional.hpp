@@ -23,10 +23,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-/**
- * \file optional.hpp
- * \example optional.cpp
- */
+/// \file optional.hpp
+/// \example optional.cpp
 
 #ifndef TAETL_OPTIONAL_HPP
 #define TAETL_OPTIONAL_HPP
@@ -39,23 +37,19 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief etl::nullopt_t is an empty class type used to indicate optional type
- * with uninitialized state. In particular, etl::optional has a constructor with
- * nullopt_t as a single argument, which creates an optional that does not
- * contain a value.
- *
- * \include optional.cpp
- */
+/// \brief etl::nullopt_t is an empty class type used to indicate optional type
+/// with uninitialized state. In particular, etl::optional has a constructor
+/// with nullopt_t as a single argument, which creates an optional that does not
+/// contain a value.
+///
+/// \include optional.cpp
 struct nullopt_t
 {
   explicit constexpr nullopt_t(int /*unused*/) { }
 };
 
-/**
- * \brief etl::nullopt is a constant of type etl::nullopt_t that is used to
- * indicate optional type with uninitialized state.
- */
+/// \brief etl::nullopt is a constant of type etl::nullopt_t that is used to
+/// indicate optional type with uninitialized state.
 inline constexpr auto nullopt = etl::nullopt_t {{}};
 
 namespace detail
@@ -356,32 +350,22 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   public:
   using value_type = ValueType;
 
-  /**
-   * \brief Constructs an object that does not contain a value.
-   */
+  /// \brief Constructs an object that does not contain a value.
   constexpr optional() noexcept = default;
 
-  /**
-   * \brief Constructs an object that does not contain a value.
-   */
+  /// \brief Constructs an object that does not contain a value.
   constexpr optional(etl::nullopt_t /*unused*/) noexcept { }
 
-  /**
-   * \brief Copy constructor.
-   */
+  /// \brief Copy constructor.
   constexpr optional(optional const&) = default;
 
-  /**
-   * \brief Move constructor.
-   */
+  /// \brief Move constructor.
   constexpr optional(optional&&) noexcept(
     etl::is_nothrow_move_constructible_v<value_type>)
     = default;
 
-  /**
-   * \brief Constructs an optional object that contains a value, initialized as
-   * if direct-initializing.
-   */
+  /// \brief Constructs an optional object that contains a value, initialized as
+  /// if direct-initializing.
   template <typename... Args,
             TAETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
   constexpr explicit optional(etl::in_place_t /*unused*/, Args&&... arguments)
@@ -389,10 +373,8 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   {
   }
 
-  /**
-   * \brief Constructs an optional object that contains a value, initialized as
-   * if direct-initializing.
-   */
+  /// \brief Constructs an optional object that contains a value, initialized as
+  /// if direct-initializing.
   template <typename U = value_type,
             typename   = typename etl::enable_if_t<conjunction_v<
               is_constructible<ValueType, U&&>,
@@ -403,31 +385,25 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   {
   }
 
-  /**
-   * \brief If *this contains a value before the call, the contained value is
-   * destroyed by calling its destructor as if by value().T::~T(). *this does
-   * not contain a value after this call.
-   */
+  /// \brief If *this contains a value before the call, the contained value is
+  /// destroyed by calling its destructor as if by value().T::~T(). *this does
+  /// not contain a value after this call.
   constexpr auto operator=(etl::nullopt_t /*unused*/) noexcept -> optional&
   {
     reset();
     return *this;
   }
 
-  /**
-   * \brief Assigns the state of other.
-   */
+  /// \brief Assigns the state of other.
   constexpr auto operator=(optional const& other) -> optional&
   {
     this->assign_from(other);
     return *this;
   }
 
-  /**
-   * \brief Perfect-forwarded assignment.
-   *
-   * \todo Cleanup & fix SFINAE.
-   */
+  /// \brief Perfect-forwarded assignment.
+  ///
+  /// \todo Cleanup & fix SFINAE.
   template <typename U = ValueType>
   constexpr auto operator=(U&& value) -> etl::enable_if_t<
     etl::conjunction_v<
@@ -448,48 +424,36 @@ class optional : private detail::optional_move_assign_base<ValueType>,
     return *this;
   }
 
-  /**
-   * \brief Checks whether *this contains a value.
-   */
+  /// \brief Checks whether *this contains a value.
   using base_type::has_value;
 
-  /**
-   * \brief Checks whether *this contains a value.
-   */
+  /// \brief Checks whether *this contains a value.
   [[nodiscard]] constexpr explicit operator bool() const noexcept
   {
     return has_value();
   }
 
-  /**
-   * \brief If *this contains a value, destroy that value as if by
-   * value().~value_type(). Otherwise, there are no effects. *this does not
-   * contain a value after this call.
-   */
+  /// \brief If *this contains a value, destroy that value as if by
+  /// value().~value_type(). Otherwise, there are no effects. *this does not
+  /// contain a value after this call.
   using base_type::reset;
 
-  /**
-   * \brief If the optional contains a value, returns a pointer. If empty the
-   * pointer will be null.
-   */
+  /// \brief If the optional contains a value, returns a pointer. If empty the
+  /// pointer will be null.
   [[nodiscard]] constexpr auto value() -> value_type*
   {
     return this->has_value() ? &this->get() : nullptr;
   }
 
-  /**
-   * \brief If the optional contains a value, returns a pointer. If empty the
-   * pointer will be null.
-   */
+  /// \brief If the optional contains a value, returns a pointer. If empty the
+  /// pointer will be null.
   [[nodiscard]] constexpr auto value() const -> const value_type*
   {
     return this->has_value() ? &this->get() : nullptr;
   }
 
-  /**
-   * \brief Returns the contained value if *this has a value, otherwise returns
-   * default_value.
-   */
+  /// \brief Returns the contained value if *this has a value, otherwise returns
+  /// default_value.
   template <typename U>
   [[nodiscard]] constexpr auto value_or(U&& defaultValue) const& -> value_type
   {
@@ -497,10 +461,8 @@ class optional : private detail::optional_move_assign_base<ValueType>,
                        : static_cast<value_type>(etl::forward<U>(defaultValue));
   }
 
-  /**
-   * \brief Returns the contained value if *this has a value, otherwise returns
-   * default_value.
-   */
+  /// \brief Returns the contained value if *this has a value, otherwise returns
+  /// default_value.
   template <typename U>
   [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
   {
@@ -508,27 +470,21 @@ class optional : private detail::optional_move_assign_base<ValueType>,
                        : static_cast<value_type>(etl::forward<U>(defaultValue));
   }
 
-  /**
-   * \brief Returns a pointer to the contained value. The pointer is null if the
-   * optional is empty.
-   */
+  /// \brief Returns a pointer to the contained value. The pointer is null if
+  /// the optional is empty.
   [[nodiscard]] constexpr auto operator->() const -> const value_type*
   {
     return this->value();
   }
 
-  /**
-   * \brief Returns a pointer to the contained value. The pointer is null if the
-   * optional is empty.
-   */
+  /// \brief Returns a pointer to the contained value. The pointer is null if
+  /// the optional is empty.
   [[nodiscard]] constexpr auto operator->() -> value_type*
   {
     return this->value();
   }
 
-  /**
-   * \brief Swaps the contents with those of other.
-   */
+  /// \brief Swaps the contents with those of other.
   constexpr auto swap(optional& other) noexcept(
     etl::is_nothrow_move_constructible_v<value_type>&&
       etl::is_nothrow_swappable_v<value_type>) -> void
@@ -560,11 +516,9 @@ class optional : private detail::optional_move_assign_base<ValueType>,
     other.reset();
   }
 
-  /**
-   * \brief Constructs the contained value in-place. If *this already contains a
-   * value before the call, the contained value is destroyed by calling its
-   * destructor.
-   */
+  /// \brief Constructs the contained value in-place. If *this already contains
+  /// a value before the call, the contained value is destroyed by calling its
+  /// destructor.
   template <typename... Args>
   constexpr auto emplace(Args&&... args) -> value_type&
   {
@@ -573,15 +527,11 @@ class optional : private detail::optional_move_assign_base<ValueType>,
     return *value();
   }
 
-  /**
-   * \brief Implementation detail. Do not use!
-   */
+  /// \brief Implementation detail. Do not use!
   using base_type::get;
 };
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& lhs,
                                         optional<U> const& rhs) -> bool
@@ -591,9 +541,7 @@ template <typename T, typename U>
   return *lhs.value() == *rhs.value();
 }
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& lhs,
                                         optional<U> const& rhs) -> bool
@@ -603,9 +551,7 @@ template <typename T, typename U>
   return *lhs.value() != *rhs.value();
 }
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs,
                                        optional<U> const& rhs) -> bool
@@ -615,9 +561,7 @@ template <typename T, typename U>
   return *lhs.value() < *rhs.value();
 }
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs,
                                        optional<U> const& rhs) -> bool
@@ -627,9 +571,7 @@ template <typename T, typename U>
   return *lhs.value() > *rhs.value();
 }
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs,
                                         optional<U> const& rhs) -> bool
@@ -639,9 +581,7 @@ template <typename T, typename U>
   return *lhs.value() <= *rhs.value();
 }
 
-/**
- * \brief Compares two optional objects, lhs and rhs.
- */
+/// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs,
                                         optional<U> const& rhs) -> bool
@@ -651,10 +591,8 @@ template <typename T, typename U>
   return *lhs.value() >= *rhs.value();
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator==(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept
@@ -663,10 +601,8 @@ template <typename T>
   return !opt;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator==(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
@@ -674,10 +610,8 @@ template <typename T>
   return !opt;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept
@@ -686,10 +620,8 @@ template <typename T>
   return static_cast<bool>(opt);
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
@@ -697,10 +629,8 @@ template <typename T>
   return static_cast<bool>(opt);
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator<(optional<T> const& /*opt*/,
                                        etl::nullopt_t /*unused*/) noexcept
@@ -709,10 +639,8 @@ template <typename T>
   return false;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator<(etl::nullopt_t /*unused*/,
                                        optional<T> const& opt) noexcept -> bool
@@ -720,10 +648,8 @@ template <typename T>
   return static_cast<bool>(opt);
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& opt,
                                         etl::nullopt_t /*unused*/) noexcept
@@ -732,10 +658,8 @@ template <typename T>
   return !opt;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator<=(etl::nullopt_t /*unused*/,
                                         optional<T> const& /*opt*/) noexcept
@@ -744,10 +668,8 @@ template <typename T>
   return true;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator>(optional<T> const& opt,
                                        etl::nullopt_t /*unused*/) noexcept
@@ -756,10 +678,8 @@ template <typename T>
   return static_cast<bool>(opt);
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator>(etl::nullopt_t /*unused*/,
                                        optional<T> const& /*opt*/) noexcept
@@ -768,10 +688,8 @@ template <typename T>
   return false;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& /*opt*/,
                                         etl::nullopt_t /*unused*/) noexcept
@@ -780,10 +698,8 @@ template <typename T>
   return true;
 }
 
-/**
- * \brief Compares opt with a nullopt. Equivalent to when comparing to an
- * optional that does not contain a value.
- */
+/// \brief Compares opt with a nullopt. Equivalent to when comparing to an
+/// optional that does not contain a value.
 template <typename T>
 [[nodiscard]] constexpr auto operator>=(etl::nullopt_t /*unused*/,
                                         optional<T> const& opt) noexcept -> bool
@@ -791,189 +707,187 @@ template <typename T>
   return !opt;
 }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator==(optional<T> const&, U const &) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator==(T const&, optional<U> const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator!=(optional<T> const&, U const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator!=(T const&, optional<U> const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator<(optional<T> const&, U const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator<(T const&, optional<U> const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator>(optional<T> const&, U const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator>(T const&, optional<U> const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator<=(optional<T> const&, U const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator<=(T const&, optional<U> const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator>=(optional<T> const&, U const&) -> bool
 // {
 // }
 
-// /**
-//  * \brief Compares opt with a value. The values are compared (using the
+//
+// /// \brief Compares opt with a value. The values are compared (using the
 //  corresponding
-//  * operator of T) only if opt contains a value. Otherwise, opt is considered
+// /// operator of T) only if opt contains a value. Otherwise, opt is considered
 //  less than
-//  * value. If the corresponding two-way comparison expression between *opt and
+// /// value. If the corresponding two-way comparison expression between *opt
+// and
 //  value is not
-//  * well-formed, or if its result is not convertible to bool, the program is
+// /// well-formed, or if its result is not convertible to bool, the program is
 //  ill-formed.
-//  */
 // template <typename T, typename U>
 // constexpr auto operator>=(T const&, optional<U> const&) -> bool
 // {
 // }
 
-/**
- * \brief Creates an optional object from value.
- */
+/// \brief Creates an optional object from value.
 template <typename ValueType>
 constexpr auto make_optional(ValueType&& value)
   -> etl::optional<etl::decay_t<ValueType>>
@@ -981,20 +895,16 @@ constexpr auto make_optional(ValueType&& value)
   return etl::optional<etl::decay_t<ValueType>>(etl::forward<ValueType>(value));
 }
 
-/**
- * \brief Creates an optional object constructed in-place from args...
- */
+/// \brief Creates an optional object constructed in-place from args...
 template <typename ValueType, typename... Args>
 constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
 {
   return etl::optional<ValueType>(etl::in_place, etl::forward<Args>(args)...);
 }
 
-/**
- * \brief One deduction guide is provided for etl::optional to account for the
- * edge cases missed by the implicit deduction guides, in particular,
- * non-copyable arguments and array to pointer conversion.
- */
+/// \brief One deduction guide is provided for etl::optional to account for the
+/// edge cases missed by the implicit deduction guides, in particular,
+/// non-copyable arguments and array to pointer conversion.
 template <typename T>
 optional(T) -> optional<T>;
 
