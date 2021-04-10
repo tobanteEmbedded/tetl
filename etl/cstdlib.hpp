@@ -37,170 +37,139 @@ DAMAGE.
 namespace etl
 {
 #if not defined(EXIT_SUCCESS)
-/**
- * \brief Successful execution of a program.
- */
+
+/// \brief Successful execution of a program.
 #define EXIT_SUCCESS 0
 #endif
 
 #if not defined(EXIT_FAILURE)
-/**
- * \brief Unsuccessful execution of a program.
- */
+
+/// \brief Unsuccessful execution of a program.
 #define EXIT_FAILURE 1
 #endif
 
 #if not defined(NULL)
-/**
- * \brief The macro NULL is an implementation-defined null pointer constant,
- * which may be a prvalue of type nullptr_t.
- */
+
+/// \brief The macro NULL is an implementation-defined null pointer constant,
+/// which may be a prvalue of type nullptr_t.
 #define NULL nullptr
 #endif
 
-/**
- * \brief Return type for div, ldiv, lldiv & imaxdiv.
- */
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
 struct div_t
 {
   int quot;
   int rem;
 };
 
-/**
- * \brief Return type for div, ldiv, lldiv & imaxdiv.
- */
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
 struct ldiv_t
 {
   long quot;
   long rem;
 };
 
-/**
- * \brief Return type for div, ldiv, lldiv & imaxdiv.
- */
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
 struct lldiv_t
 {
   long long quot;
   long long rem;
 };
 
-/**
- * \brief Return type for div, ldiv, lldiv & imaxdiv.
- */
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
 struct imaxdiv_t
 {
   intmax_t quot;
   intmax_t rem;
 };
 
-/**
- * \brief Computes both the quotient and the remainder of the division of the
- * numerator x by the denominator y. The quotient is the result of the
- * expression x/y. The remainder is the result of the expression x%y.
- */
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(int x, int y) noexcept -> div_t
 {
   return {x / y, x % y};
 }
 
-/**
- * \brief Computes both the quotient and the remainder of the division of the
- * numerator x by the denominator y. The quotient is the result of the
- * expression x/y. The remainder is the result of the expression x%y.
- */
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(long x, long y) noexcept -> ldiv_t
 {
   return {x / y, x % y};
 }
 
-/**
- * \brief Computes both the quotient and the remainder of the division of the
- * numerator x by the denominator y. The quotient is the result of the
- * expression x/y. The remainder is the result of the expression x%y.
- */
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(long long x, long long y) noexcept -> lldiv_t
 {
   return {x / y, x % y};
 }
 
-/**
- * \brief Computes both the quotient and the remainder of the division of the
- * numerator x by the denominator y. The quotient is the result of the
- * expression x/y. The remainder is the result of the expression x%y.
- */
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> ldiv_t
 {
   return {x / y, x % y};
 }
 
-/**
- * \brief Computes both the quotient and the remainder of the division of the
- * numerator x by the denominator y. The quotient is the result of the
- * expression x/y. The remainder is the result of the expression x%y.
- */
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept -> lldiv_t
 {
   return {x / y, x % y};
 }
 
-/**
- * \brief Converts an integer value to a null-terminated string using the
- * specified base and stores the result in the array given by str parameter.
- *
- * \details If base is 10 and value is negative, the resulting string is
- * preceded with a minus sign (-). With any other base, value is always
- * considered unsigned.
- *
- * \todo Only base 10 is currently supported.
- */
+/// \brief Converts an integer value to a null-terminated string using the
+/// specified base and stores the result in the array given by str parameter.
+///
+/// \details If base is 10 and value is negative, the resulting string is
+/// preceded with a minus sign (-). With any other base, value is always
+/// considered unsigned.
+///
+/// \todo Only base 10 is currently supported.
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
   return detail::integer_to_ascii<int>(val, buffer, base);
 }
 
-/**
- * \brief Interprets an integer value in a byte string pointed to by str.
- * Discards any whitespace characters until the first non-whitespace character
- * is found, then takes as many characters as possible to form a valid integer
- * number representation and converts them to an integer value.
- */
+/// \brief Interprets an integer value in a byte string pointed to by str.
+/// Discards any whitespace characters until the first non-whitespace character
+/// is found, then takes as many characters as possible to form a valid integer
+/// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
   return detail::ascii_to_integer<int>(string);
 }
 
-/**
- * \brief Interprets an integer value in a byte string pointed to by str.
- * Discards any whitespace characters until the first non-whitespace character
- * is found, then takes as many characters as possible to form a valid integer
- * number representation and converts them to an integer value.
- */
+/// \brief Interprets an integer value in a byte string pointed to by str.
+/// Discards any whitespace characters until the first non-whitespace character
+/// is found, then takes as many characters as possible to form a valid integer
+/// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
 {
   return detail::ascii_to_integer<long>(string);
 }
 
-/**
- * \brief Interprets an integer value in a byte string pointed to by str.
- * Discards any whitespace characters until the first non-whitespace character
- * is found, then takes as many characters as possible to form a valid integer
- * number representation and converts them to an integer value.
- */
+/// \brief Interprets an integer value in a byte string pointed to by str.
+/// Discards any whitespace characters until the first non-whitespace character
+/// is found, then takes as many characters as possible to form a valid integer
+/// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
   return detail::ascii_to_integer<long long>(string);
 }
 
-/**
- * \brief Interprets a floating point value in a byte string pointed to by str.
- * \param str Pointer to the null-terminated byte string to be interpreted.
- * \param last Pointer to a pointer to character.
- * \return Floating point value corresponding to the contents of str on success.
- * If the converted value falls out of range of corresponding return type, range
- * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
- * conversion can be performed, `0` is returned and *last is set to str.
- */
+/// \brief Interprets a floating point value in a byte string pointed to by str.
+/// \param str Pointer to the null-terminated byte string to be interpreted.
+/// \param last Pointer to a pointer to character.
+/// \return Floating point value corresponding to the contents of str on
+/// success. If the converted value falls out of range of corresponding return
+/// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
+/// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtof(const char* str,
                                     char const** last = nullptr) noexcept
   -> float
@@ -208,15 +177,13 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
   return detail::ascii_to_floating_point<float>(str, last);
 }
 
-/**
- * \brief Interprets a floating point value in a byte string pointed to by str.
- * \param str Pointer to the null-terminated byte string to be interpreted.
- * \param last Pointer to a pointer to character.
- * \return Floating point value corresponding to the contents of str on success.
- * If the converted value falls out of range of corresponding return type, range
- * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
- * conversion can be performed, `0` is returned and *last is set to str.
- */
+/// \brief Interprets a floating point value in a byte string pointed to by str.
+/// \param str Pointer to the null-terminated byte string to be interpreted.
+/// \param last Pointer to a pointer to character.
+/// \return Floating point value corresponding to the contents of str on
+/// success. If the converted value falls out of range of corresponding return
+/// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
+/// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtod(const char* str,
                                     char const** last = nullptr) noexcept
   -> double
@@ -224,38 +191,33 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
   return detail::ascii_to_floating_point<float>(str, last);
 }
 
-/**
- * \brief Interprets a floating point value in a byte string pointed to by str.
- * \param str Pointer to the null-terminated byte string to be interpreted.
- * \param last Pointer to a pointer to character.
- * \return Floating point value corresponding to the contents of str on success.
- * If the converted value falls out of range of corresponding return type, range
- * error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned. If no
- * conversion can be performed, `0` is returned and *last is set to str.
- */
+/// \brief Interprets a floating point value in a byte string pointed to by str.
+/// \param str Pointer to the null-terminated byte string to be interpreted.
+/// \param last Pointer to a pointer to character.
+/// \return Floating point value corresponding to the contents of str on
+/// success. If the converted value falls out of range of corresponding return
+/// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
+/// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtold(const char* str,
                                      char const** last = nullptr) noexcept
   -> long double
 {
   return detail::ascii_to_floating_point<float>(str, last);
 }
-/**
- * \brief Computes the absolute value of an integer number. The behavior is
- * undefined if the result cannot be represented by the return type. If abs
- * is called with an unsigned integral argument that cannot be converted to int
- * by integral promotion, the program is ill-formed.
- */
+
+/// \brief Computes the absolute value of an integer number. The behavior is
+/// undefined if the result cannot be represented by the return type. If abs
+/// is called with an unsigned integral argument that cannot be converted to int
+/// by integral promotion, the program is ill-formed.
 [[nodiscard]] constexpr auto labs(long n) noexcept -> long
 {
   return detail::abs_impl<long>(n);
 }
 
-/**
- * \brief Computes the absolute value of an integer number. The behavior is
- * undefined if the result cannot be represented by the return type. If abs
- * is called with an unsigned integral argument that cannot be converted to int
- * by integral promotion, the program is ill-formed.
- */
+/// \brief Computes the absolute value of an integer number. The behavior is
+/// undefined if the result cannot be represented by the return type. If abs
+/// is called with an unsigned integral argument that cannot be converted to int
+/// by integral promotion, the program is ill-formed.
 [[nodiscard]] constexpr auto llabs(long long n) noexcept -> long long
 {
   return detail::abs_impl<long long>(n);
