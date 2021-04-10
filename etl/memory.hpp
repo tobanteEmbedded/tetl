@@ -37,10 +37,8 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief Obtains the actual address of the object or function arg, even in
- * presence of overloaded operator&.
- */
+/// \brief Obtains the actual address of the object or function arg, even in
+/// presence of overloaded operator&.
 template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
 auto addressof(T& arg) noexcept -> T*
 {
@@ -48,29 +46,23 @@ auto addressof(T& arg) noexcept -> T*
     &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
 }
 
-/**
- * \brief Obtains the actual address of the object or function arg, even in
- * presence of overloaded operator&.
- */
+/// \brief Obtains the actual address of the object or function arg, even in
+/// presence of overloaded operator&.
 template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
 auto addressof(T& arg) noexcept -> T*
 {
   return &arg;
 }
 
-/**
- * \brief Rvalue overload is deleted to prevent taking the address of const
- * rvalues.
- */
+/// \brief Rvalue overload is deleted to prevent taking the address of const
+/// rvalues.
 template <typename T>
 auto addressof(T const&&) = delete;
 
-/**
- * \brief If T is not an array type, calls the destructor of the object pointed
- * to by p, as if by p->~T(). If T is an array type, recursively destroys
- * elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
- * etl::end(*p)).
- */
+/// \brief If T is not an array type, calls the destructor of the object pointed
+/// to by p, as if by p->~T(). If T is an array type, recursively destroys
+/// elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
+/// etl::end(*p)).
 template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
@@ -84,18 +76,14 @@ constexpr auto destroy_at(T* p) -> void
   }
 }
 
-/**
- * \brief Destroys the objects in the range [first, last).
- */
+/// \brief Destroys the objects in the range [first, last).
 template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {
   for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
 }
 
-/**
- * \brief Destroys the n objects in the range starting at first.
- */
+/// \brief Destroys the n objects in the range starting at first.
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
@@ -103,12 +91,10 @@ constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
   return first;
 }
 
-/**
- * \brief The pointer_traits class template provides the standardized way to
- * access certain properties of pointer-like types.
- *
- * \details https://en.cppreference.com/w/cpp/memory/pointer_traits
- */
+/// \brief The pointer_traits class template provides the standardized way to
+/// access certain properties of pointer-like types.
+///
+/// \details https://en.cppreference.com/w/cpp/memory/pointer_traits
 template <typename Ptr>
 struct pointer_traits
 {
@@ -116,26 +102,23 @@ struct pointer_traits
   using element_type    = typename Ptr::element_type;
   using difference_type = typename Ptr::difference_type;
 
-  /**
-   * \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
-   * pointer") to its argument.
-   *
-   * \details https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
-   * \param r  Reference to an object of type element_type&.
-   * \returns A pointer to r, of the type pointer_traits::pointer.
-   */
+  /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
+  /// pointer") to its argument.
+  ///
+  /// \details
+  /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to \param
+  /// r  Reference to an object of type element_type&. \returns A pointer to r,
+  /// of the type pointer_traits::pointer.
   [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
   {
     return Ptr::pointer_to(r);
   }
 };
 
-/**
- * \brief The pointer_traits class template provides the standardized way to
- * access certain properties of pointer-like types.
- *
- * \details https://en.cppreference.com/w/cpp/memory/pointer_traits
- */
+/// \brief The pointer_traits class template provides the standardized way to
+/// access certain properties of pointer-like types.
+///
+/// \details https://en.cppreference.com/w/cpp/memory/pointer_traits
 template <typename T>
 struct pointer_traits<T*>
 {
@@ -145,34 +128,29 @@ struct pointer_traits<T*>
   template <typename U>
   using rebind = U*;
 
-  /**
-   * \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
-   * pointer") to its argument.
-   *
-   * \details https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
-   * \param r  Reference to an object of type element_type&.
-   * \returns A pointer to r, of the type pointer_traits::pointer.
-   */
+  /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
+  /// pointer") to its argument.
+  ///
+  /// \details
+  /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to \param
+  /// r  Reference to an object of type element_type&. \returns A pointer to r,
+  /// of the type pointer_traits::pointer.
   [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
   {
     return addressof(r);
   }
 };
 
-/**
- * \brief allocator_arg_t is an empty class type used to disambiguate the
- * overloads of constructors and member functions of allocator-aware objects.
- */
+/// \brief allocator_arg_t is an empty class type used to disambiguate the
+/// overloads of constructors and member functions of allocator-aware objects.
 struct allocator_arg_t
 {
   explicit allocator_arg_t() = default;
 };
 
-/**
- * \brief allocator_arg is a constant of type allocator_arg_t used to
- * disambiguate, at call site, the overloads of the constructors and member
- * functions of allocator-aware objects.
- */
+/// \brief allocator_arg is a constant of type allocator_arg_t used to
+/// disambiguate, at call site, the overloads of the constructors and member
+/// functions of allocator-aware objects.
 inline constexpr allocator_arg_t allocator_arg {};
 
 namespace detail
@@ -189,92 +167,66 @@ struct uses_allocator_impl<Type, Alloc, void_t<typename Type::allocator_type>>
 };
 }  // namespace detail
 
-/**
- * \brief If T has a member typedef allocator_type which is convertible from
- * Alloc, the member constant value is true. Otherwise value is false.
- */
+/// \brief If T has a member typedef allocator_type which is convertible from
+/// Alloc, the member constant value is true. Otherwise value is false.
 template <typename Type, typename Alloc>
 struct uses_allocator : detail::uses_allocator_impl<Type, Alloc>::type
 {
 };
 
-/**
- * \brief If T has a member typedef allocator_type which is convertible from
- * Alloc, the member constant value is true. Otherwise value is false.
- */
+/// \brief If T has a member typedef allocator_type which is convertible from
+/// Alloc, the member constant value is true. Otherwise value is false.
 template <typename Type, typename Alloc>
 inline constexpr auto uses_allocator_v = uses_allocator<Type, Alloc>::value;
 
-/**
- * \brief Compressed pointer to specified size. Intended to be used as a drop in
- * replacement for native pointers.
- *
- * \details Uses the base address to calculate an offset, which will be stored
- * internally. If used on micro controllers, the base address should be set to
- * the start of RAM. See your linker script.
- */
+/// \brief Compressed pointer to specified size. Intended to be used as a drop
+/// in replacement for native pointers.
+///
+/// \details Uses the base address to calculate an offset, which will be stored
+/// internally. If used on micro controllers, the base address should be set to
+/// the start of RAM. See your linker script.
 template <typename Type, intptr_t BaseAddress = 0,
           typename StorageType = uint16_t>
 class small_ptr
 {
   public:
-  /**
-   * \brief Default construct empty small_ptr. May contain garbage.
-   */
+  /// \brief Default construct empty small_ptr. May contain garbage.
   small_ptr() = default;
 
-  /**
-   * \brief Construct from nullptr.
-   */
+  /// \brief Construct from nullptr.
   small_ptr(nullptr_t null) : value_ {0} { ignore_unused(null); }
 
-  /**
-   * \brief Construct from raw pointer.
-   */
+  /// \brief Construct from raw pointer.
   small_ptr(Type* ptr) : value_ {compress(ptr)} { }
 
-  /**
-   * \brief Returns a raw pointer to Type.
-   */
+  /// \brief Returns a raw pointer to Type.
   [[nodiscard]] auto get() noexcept -> Type*
   {
     return reinterpret_cast<Type*>(BaseAddress + value_);
   }
 
-  /**
-   * \brief Returns a raw pointer to const Type.
-   */
+  /// \brief Returns a raw pointer to const Type.
   [[nodiscard]] auto get() const noexcept -> Type const*
   {
     return reinterpret_cast<Type const*>(BaseAddress + value_);
   }
 
-  /**
-   * \brief Returns the compressed underlying integer address.
-   */
+  /// \brief Returns the compressed underlying integer address.
   [[nodiscard]] auto compressed_value() const noexcept -> StorageType
   {
     return value_;
   }
 
-  /**
-   * \brief Returns a raw pointer to Type.
-   */
+  /// \brief Returns a raw pointer to Type.
   [[nodiscard]] auto operator->() const -> Type* { return get(); }
 
-  /**
-   * \brief Dereference pointer to Type&.
-   */
+  /// \brief Dereference pointer to Type&.
   [[nodiscard]] auto operator*() -> Type& { return *get(); }
 
-  /**
-   * \brief Dereference pointer to Type const&.
-   */
+  /// \brief Dereference pointer to Type const&.
   [[nodiscard]] auto operator*() const -> Type const& { return *get(); }
 
-  /**
-   * \brief Pre increment of pointer.
-   */
+  /// \brief Pre increment of pointer.
   [[nodiscard]] auto operator++(int) noexcept -> small_ptr
   {
     auto temp = *this;
@@ -284,9 +236,7 @@ class small_ptr
     return temp;
   }
 
-  /**
-   * \brief Post increment of pointer.
-   */
+  /// \brief Post increment of pointer.
   [[nodiscard]] auto operator++() noexcept -> small_ptr&
   {
     auto* ptr = get();
@@ -295,9 +245,7 @@ class small_ptr
     return *this;
   }
 
-  /**
-   * \brief Pre decrement of pointer.
-   */
+  /// \brief Pre decrement of pointer.
   [[nodiscard]] auto operator--(int) noexcept -> small_ptr
   {
     auto temp = *this;
@@ -307,9 +255,7 @@ class small_ptr
     return temp;
   }
 
-  /**
-   * \brief Post decrement of pointer.
-   */
+  /// \brief Post decrement of pointer.
   [[nodiscard]] auto operator--() noexcept -> small_ptr&
   {
     auto* ptr = get();
@@ -318,22 +264,16 @@ class small_ptr
     return *this;
   }
 
-  /**
-   * \brief Returns distance from this to other.
-   */
+  /// \brief Returns distance from this to other.
   [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
   {
     return get() - other.get();
   }
 
-  /**
-   * \brief Implicit conversion to raw pointer to mutable.
-   */
+  /// \brief Implicit conversion to raw pointer to mutable.
   [[nodiscard]] operator Type*() noexcept { return get(); }
 
-  /**
-   * \brief Implicit conversion to raw pointer to const.
-   */
+  /// \brief Implicit conversion to raw pointer to const.
   [[nodiscard]] operator Type const *() const noexcept { return get(); }
 
   private:
@@ -356,16 +296,12 @@ namespace detail
 
 }  // namespace detail
 
-/**
- * \brief A traits type that is used to handle pointer types and things that are
- * just wrappers for pointers as a uniform entity.
- */
+/// \brief A traits type that is used to handle pointer types and things that
+/// are just wrappers for pointers as a uniform entity.
 template <typename T>
 struct pointer_like_traits;
 
-/**
- * \brief Provide pointer_like_traits for non-cvr pointers.
- */
+/// \brief Provide pointer_like_traits for non-cvr pointers.
 template <typename T>
 struct pointer_like_traits<T*>
 {
@@ -444,26 +380,18 @@ class pointer_int_pair_info
   static constexpr auto int_bits  = IntBits;
   static constexpr auto free_bits = pointer_traits::free_bits;
 
-  /**
-   * \brief The bits that come from the pointer.
-   */
+  /// \brief The bits that come from the pointer.
   static constexpr auto ptr_mask = ~(uintptr_t)(((intptr_t)1 << free_bits) - 1);
 
-  /**
-   * \brief The number of low bits that we reserve for other uses; and keep
-   * zero.
-   */
+  /// \brief The number of low bits that we reserve for other uses; and keep
+  /// zero.
   static constexpr auto int_shift = pointer_traits::free_bits - int_bits;
 
-  /**
-   * \brief This is the unshifted mask for valid bits of the int
-   * type.
-   */
+  /// \brief This is the unshifted mask for valid bits of the int
+  /// type.
   static constexpr auto int_mask = (uintptr_t)(((intptr_t)1 << int_bits) - 1);
 
-  /**
-   * \brief This is the bits for the integer shifted in place.
-   */
+  /// \brief This is the bits for the integer shifted in place.
   static constexpr auto shifted_int_mask = (uintptr_t)(int_mask << int_shift);
 
   [[nodiscard]] static auto get_pointer(intptr_t value) -> pointer_type
@@ -495,20 +423,18 @@ class pointer_int_pair_info
   }
 };
 
-/**
- * \brief This class implements a pair of a pointer and small integer.  It is
- * designed to represent this in the space required by one pointer by
- * bitmangling the integer into the low part of the pointer.  This can only be
- * done for small integers: typically up to 3 bits, but it depends on the number
- * of bits available according to pointer_like_traits for the type.
- *
- * \details Note that pointer_int_pair always puts the IntVal part in the
- * highest bits possible.  For example, pointer_int_pair<void*, 1, bool> will
- * put the bit for the bool into bit #2, not bit #0, which allows the low two
- * bits to be used for something else.  For example, this allows:
- *   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
- * ... and the two bools will land in different bits.
- */
+/// \brief This class implements a pair of a pointer and small integer.  It is
+/// designed to represent this in the space required by one pointer by
+/// bitmangling the integer into the low part of the pointer.  This can only be
+/// done for small integers: typically up to 3 bits, but it depends on the
+/// number of bits available according to pointer_like_traits for the type.
+///
+/// \details Note that pointer_int_pair always puts the IntVal part in the
+/// highest bits possible.  For example, pointer_int_pair<void*, 1, bool> will
+/// put the bit for the bool into bit #2, not bit #0, which allows the low two
+/// bits to be used for something else.  For example, this allows:
+///   pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
+/// ... and the two bools will land in different bits.
 template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
           typename PtrTraits = pointer_like_traits<PointerT>,
           typename Info = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
@@ -583,10 +509,8 @@ class pointer_int_pair
     return p;
   }
 
-  /**
-   * \brief Allow pointer_int_pairs to be created from const void * if and only
-   * if the pointer type could be created from a const void *.
-   */
+  /// \brief Allow pointer_int_pairs to be created from const void * if and only
+  /// if the pointer type could be created from a const void *.
   static auto get_from_opaque_value(const void* v) -> pointer_int_pair
   {
     (void)pointer_traits::get_from_void_pointer(v);
@@ -705,18 +629,16 @@ class default_delete<T[]>
   static_assert(not is_void_v<T>);
 };
 
-/**
- * \brief Given a pointer ptr to a buffer of size space, returns a pointer
- * aligned by the specified alignment for size number of bytes and decreases
- * space argument by the number of bytes used for alignment. The first aligned
- * address is returned.
- *
- * The function modifies the pointer only if it would be possible to fit the
- * wanted number of bytes aligned by the given alignment into the buffer. If the
- * buffer is too small, the function does nothing and returns nullptr.
- *
- * The behavior is undefined if alignment is not a power of two.
- */
+/// \brief Given a pointer ptr to a buffer of size space, returns a pointer
+/// aligned by the specified alignment for size number of bytes and decreases
+/// space argument by the number of bytes used for alignment. The first aligned
+/// address is returned.
+///
+/// The function modifies the pointer only if it would be possible to fit the
+/// wanted number of bytes aligned by the given alignment into the buffer. If
+/// the buffer is too small, the function does nothing and returns nullptr.
+///
+/// The behavior is undefined if alignment is not a power of two.
 [[nodiscard]] inline auto align(size_t alignment, size_t size, void*& ptr,
                                 size_t& space) noexcept -> void*
 {
