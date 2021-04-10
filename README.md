@@ -1,17 +1,26 @@
 # TAETL - Embedded Template **Library**
 
+- [Quick Start](#quick-start)
 - [Status](#status)
   - [Hosted](#hosted)
   - [Freestanding](#freestanding)
   - [Analysis](#analysis)
 - [Design Goals](#design-goals)
-- [Quick Start](#quick-start)
 - [Project Integration](#project-integration)
   - [Command Line / Makefile](#command-line---makefile)
   - [CMake](#cmake)
   - [PlatformIO](#platformio)
 - [Header Overview](#header-overview)
 - [Header Detail](#header-detail)
+
+## Quick Start
+
+- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
+- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
+- [Header Overview](#header-overview)
+- [Header Detail](#header-detail)
+
+For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
 
 ## Status
 
@@ -63,19 +72,14 @@ static_vector already existed. My actual goal has turned into a mammoth project.
 and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms
 work identically, pair and friend are available and containers like set, map and vector are also implemented.
 
-Here, however, the first clear differences already come to light. All containers work only with memory on the stack.
-This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
+All containers work only with memory on the stack. This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
 RTTI are deactivated. This results in the problem that not all members of a container can be implemented. Any function
 that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If
-exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. All
-functions return pointers instead. It is the caller's responsibility to check if the return value is null.
+exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. Unsafe methods like `static_vector::operator[]` are still available (with asserts in debug builds), while throwing methods like `static_vector::at` are not implemented.
 
-## Quick Start
+Unlike LLVMs `SmallVector`, `static_vector` & friend do not have a base class which they can slice to. My plan is to add mutable view-like types for each container. A `static_vector` we would have a `vector_ref` which would work mostly like a `span`, but would also provide the vector interface. I don't want to name the types `*_view`, since the word view implies non-mutable in the actual standard. So far no view types apart from `string_view` have been implemented.
 
-- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
-- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
-
-For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
+The [`etl/experimental`](./etl/experimental) subdirectory includes libraries that use `etl` as their foundation. It can be thought of as a mini boost-like library collection. Everything is work in progress.
 
 ## Project Integration
 
