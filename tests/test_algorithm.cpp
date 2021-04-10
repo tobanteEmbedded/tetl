@@ -1373,6 +1373,43 @@ TEMPLATE_TEST_CASE("algorithm: stable_sort", "[algorithm]", etl::uint8_t,
   }
 }
 
+TEMPLATE_TEST_CASE("algorithm: partial_sort", "[algorithm]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
+{
+  using T = TestType;
+
+  SECTION("empty range")
+  {
+    auto source = etl::static_vector<T, 4> {};
+    REQUIRE(source.empty());
+    etl::partial_sort(begin(source), begin(source) + 2, end(source),
+                      etl::less<T> {});
+    REQUIRE(source.empty());
+  }
+
+  SECTION("already sorted")
+  {
+    auto source = etl::array<T, 4> {T {1}, T {2}, T {3}, T {4}};
+    etl::partial_sort(begin(source), begin(source) + 2, end(source));
+    REQUIRE(source[0] == T {1});
+    REQUIRE(source[1] == T {2});
+    REQUIRE(source[2] == T {3});
+    REQUIRE(source[3] == T {4});
+  }
+
+  SECTION("reversed")
+  {
+    auto source = etl::array<T, 4> {T {4}, T {3}, T {2}, T {1}};
+    etl::partial_sort(begin(source), begin(source) + 2, end(source));
+    REQUIRE(source[0] == T {1});
+    REQUIRE(source[1] == T {2});
+    REQUIRE(source[2] == T {3});
+    REQUIRE(source[3] == T {4});
+  }
+}
+
 TEMPLATE_TEST_CASE("algorithm: is_sorted", "[algorithm]", etl::uint8_t,
                    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
                    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,

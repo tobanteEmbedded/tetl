@@ -1569,6 +1569,44 @@ constexpr auto stable_sort(RandomIter first, RandomIter last) -> void
 }
 
 /**
+ * @brief Rearranges elements such that the range [first, middle) contains the
+ * sorted middle - first smallest elements in the range [first, last). The order
+ * of equal elements is not guaranteed to be preserved. The order of the
+ * remaining elements in the range [middle, last) is unspecified. Elements are
+ * compared using the given binary comparison function comp.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/partial_sort
+ *
+ * @todo Improve. Currently forwards to regular sort.
+ */
+template <typename RandomIter, typename Compare>
+constexpr auto partial_sort(RandomIter first, RandomIter middle,
+                            RandomIter last, Compare comp) -> void
+{
+  etl::ignore_unused(middle);
+  etl::sort(first, last, comp);
+}
+
+/**
+ * @brief Rearranges elements such that the range [first, middle) contains the
+ * sorted middle - first smallest elements in the range [first, last). The order
+ * of equal elements is not guaranteed to be preserved. The order of the
+ * remaining elements in the range [middle, last) is unspecified. Elements are
+ * compared using operator<.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/partial_sort
+ *
+ * @todo Improve. Currently forwards to regular sort.
+ */
+template <typename RandomIter>
+constexpr auto partial_sort(RandomIter first, RandomIter middle,
+                            RandomIter last) -> void
+{
+  etl::ignore_unused(middle);
+  etl::sort(first, last);
+}
+
+/**
  * @brief Examines the range [first, last) and finds the largest range beginning
  * at first in which the elements are sorted in non-descending order. Elements
  * are compared using operator<.
