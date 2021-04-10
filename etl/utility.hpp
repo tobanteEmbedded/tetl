@@ -23,9 +23,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 */
 
-/**
- * \example utility.cpp
- */
+/// \example utility.cpp
 
 #ifndef TAETL_UTILITY_HPP
 #define TAETL_UTILITY_HPP
@@ -39,66 +37,56 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief Converts any type T to a reference type, making it possible to use
- * member functions in decltype expressions without the need to go through
- * constructors.
- */
+/// \brief Converts any type T to a reference type, making it possible to use
+/// member functions in decltype expressions without the need to go through
+/// constructors.
 template <typename T>
 auto declval() noexcept -> add_rvalue_reference_t<T>;  // NOLINT
 
-/**
- * \brief move is used to indicate that an object t may be "moved from",
- * i.e. allowing the efficient transfer of resources from t to another object.
- * In particular, move produces an xvalue expression that identifies its
- * argument t. It is exactly equivalent to a static_cast to an rvalue reference
- * type.
- *
- * \return static_cast<remove_reference_t<T>&&>(t)
- */
+/// \brief move is used to indicate that an object t may be "moved from",
+/// i.e. allowing the efficient transfer of resources from t to another object.
+/// In particular, move produces an xvalue expression that identifies its
+/// argument t. It is exactly equivalent to a static_cast to an rvalue reference
+/// type.
+///
+/// \return static_cast<remove_reference_t<T>&&>(t)
 template <typename T>
 constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 {
   return static_cast<remove_reference_t<T>&&>(t);
 }
 
-/**
- * \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
- *
- * \details When t is a forwarding reference (a function argument that is
- * declared as an rvalue reference to a cv-unqualified function template
- * parameter), this overload forwards the argument to another function with the
- * value category it had when passed to the calling function.
- *
- * https://en.cppreference.com/w/cpp/utility/forward
- */
+/// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
+///
+/// \details When t is a forwarding reference (a function argument that is
+/// declared as an rvalue reference to a cv-unqualified function template
+/// parameter), this overload forwards the argument to another function with the
+/// value category it had when passed to the calling function.
+///
+/// https://en.cppreference.com/w/cpp/utility/forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
 {
   return static_cast<T&&>(param);
 }
 
-/**
- * \brief Forwards rvalues as rvalues and prohibits forwarding of rvalues as
- * lvalues.
- *
- * \details This overload makes it possible to forward a result of an expression
- * (such as function call), which may be rvalue or lvalue, as the original value
- * category of a forwarding reference argument.
- *
- * https://en.cppreference.com/w/cpp/utility/forward
- */
+/// \brief Forwards rvalues as rvalues and prohibits forwarding of rvalues as
+/// lvalues.
+///
+/// \details This overload makes it possible to forward a result of an
+/// expression (such as function call), which may be rvalue or lvalue, as the
+/// original value category of a forwarding reference argument.
+///
+/// https://en.cppreference.com/w/cpp/utility/forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 {
   return static_cast<T&&>(param);
 }
 
-/**
- * \brief Replaces the value of obj with new_value and returns the old value of
- * obj.
- * \return The old value of obj.
- */
+/// \brief Replaces the value of obj with new_value and returns the old value of
+/// obj.
+/// \return The old value of obj.
 template <typename T, typename U = T>
 [[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
 {
@@ -107,19 +95,15 @@ template <typename T, typename U = T>
   return oldValue;
 }
 
-/**
- * \brief Forms lvalue reference to const type of t.
- */
+/// \brief Forms lvalue reference to const type of t.
 template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> add_const_t<T>&
 {
   return t;
 }
 
-/**
- * \brief Const rvalue reference overload is deleted to disallow rvalue
- * arguments.
- */
+/// \brief Const rvalue reference overload is deleted to disallow rvalue
+/// arguments.
 template <typename T>
 constexpr auto as_const(T const&&) -> void
   = delete;
@@ -147,16 +131,14 @@ inline constexpr auto is_integer_and_not_char_v
 
 }  // namespace detail
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -176,16 +158,14 @@ template <typename T, typename U,
   }
 }
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -194,16 +174,14 @@ template <typename T, typename U,
   return !cmp_equal(t, u);
 }
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -222,16 +200,14 @@ template <typename T, typename U,
   }
 }
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -240,16 +216,14 @@ template <typename T, typename U,
   return cmp_less(u, t);
 }
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -258,16 +232,14 @@ template <typename T, typename U,
   return !cmp_greater(t, u);
 }
 
-/**
- * \brief Compare the values of two integers t and u. Unlike builtin comparison
- * operators, negative signed integers always compare less than (and not equal
- * to) unsigned integers: the comparison is safe against lossy integer
- * conversion.
- * \details It is a compile-time error if either T or U is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type).
- * https://en.cppreference.com/w/cpp/utility/intcmp
- */
+/// \brief Compare the values of two integers t and u. Unlike builtin comparison
+/// operators, negative signed integers always compare less than (and not equal
+/// to) unsigned integers: the comparison is safe against lossy integer
+/// conversion.
+/// \details It is a compile-time error if either T or U is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type).
+/// https://en.cppreference.com/w/cpp/utility/intcmp
 template <typename T, typename U,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
@@ -276,17 +248,15 @@ template <typename T, typename U,
   return !cmp_less(t, u);
 }
 
-/**
- * \brief Returns true if the value of t is in the range of values that can be
- * represented in R, that is, if t can be converted to R without data loss.
- *
- * \details It is a compile-time error if either T or R is not a signed or
- * unsigned integer type (including standard integer type and extended integer
- * type). This function cannot be used with etl::byte, char, char8_t, char16_t,
- * char32_t, wchar_t and bool.
- *
- * https://en.cppreference.com/w/cpp/utility/in_range
- */
+/// \brief Returns true if the value of t is in the range of values that can be
+/// represented in R, that is, if t can be converted to R without data loss.
+///
+/// \details It is a compile-time error if either T or R is not a signed or
+/// unsigned integer type (including standard integer type and extended integer
+/// type). This function cannot be used with etl::byte, char, char8_t, char16_t,
+/// char32_t, wchar_t and bool.
+///
+/// https://en.cppreference.com/w/cpp/utility/in_range
 template <typename R, typename T,
           TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
@@ -295,39 +265,33 @@ template <typename R, typename T,
          && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());
 }
 
-/**
- * \brief etl::piecewise_construct_t is an empty class tag type used to
- * disambiguate between different functions that take two tuple arguments.
- *
- * \details The overloads that do not use etl::piecewise_construct_t assume that
- * each tuple argument becomes the element of a pair. The overloads that use
- * etl::piecewise_construct_t assume that each tuple argument is used to
- * construct, piecewise, a new object of specified type, which will become the
- * element of the pair.
- *
- * https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
- */
+/// \brief etl::piecewise_construct_t is an empty class tag type used to
+/// disambiguate between different functions that take two tuple arguments.
+///
+/// \details The overloads that do not use etl::piecewise_construct_t assume
+/// that each tuple argument becomes the element of a pair. The overloads that
+/// use etl::piecewise_construct_t assume that each tuple argument is used to
+/// construct, piecewise, a new object of specified type, which will become the
+/// element of the pair.
+///
+/// https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
 struct piecewise_construct_t
 {
   explicit piecewise_construct_t() = default;
 };
 
-/**
- * \brief The constant etl::piecewise_construct is an instance of an empty
- * struct tag type etl::piecewise_construct_t.
- */
+/// \brief The constant etl::piecewise_construct is an instance of an empty
+/// struct tag type etl::piecewise_construct_t.
 inline constexpr piecewise_construct_t piecewise_construct {};
 
-/**
- * \brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * \details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
+/// \brief Disambiguation tags that can be passed to the constructors of
+/// etl::optional, etl::variant, and etl::any to indicate that the contained
+/// object should be constructed in-place, and (for the latter two) the type of
+/// the object to be constructed.
+///
+/// \details The corresponding type/type templates etl::in_place_t,
+/// etl::in_place_type_t and etl::in_place_index_t can be used in the
+/// constructor's parameter list to match the intended tag.
 
 struct in_place_t
 {
@@ -336,16 +300,14 @@ struct in_place_t
 
 inline constexpr auto in_place = in_place_t {};
 
-/**
- * \brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * \details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
+/// \brief Disambiguation tags that can be passed to the constructors of
+/// etl::optional, etl::variant, and etl::any to indicate that the contained
+/// object should be constructed in-place, and (for the latter two) the type of
+/// the object to be constructed.
+///
+/// \details The corresponding type/type templates etl::in_place_t,
+/// etl::in_place_type_t and etl::in_place_index_t can be used in the
+/// constructor's parameter list to match the intended tag.
 template <typename T>
 struct in_place_type_t
 {
@@ -355,16 +317,14 @@ struct in_place_type_t
 template <typename T>
 inline constexpr auto in_place_type = in_place_type_t<T> {};
 
-/**
- * \brief Disambiguation tags that can be passed to the constructors of
- * etl::optional, etl::variant, and etl::any to indicate that the contained
- * object should be constructed in-place, and (for the latter two) the type of
- * the object to be constructed.
- *
- * \details The corresponding type/type templates etl::in_place_t,
- * etl::in_place_type_t and etl::in_place_index_t can be used in the
- * constructor's parameter list to match the intended tag.
- */
+/// \brief Disambiguation tags that can be passed to the constructors of
+/// etl::optional, etl::variant, and etl::any to indicate that the contained
+/// object should be constructed in-place, and (for the latter two) the type of
+/// the object to be constructed.
+///
+/// \details The corresponding type/type templates etl::in_place_t,
+/// etl::in_place_type_t and etl::in_place_index_t can be used in the
+/// constructor's parameter list to match the intended tag.
 template <size_t I>
 struct in_place_index_t
 {
@@ -374,41 +334,33 @@ struct in_place_index_t
 template <size_t I>
 inline constexpr auto in_place_index = in_place_index_t<I> {};
 
-/**
- * \brief etl::pair is a class template that provides a way to store two
- * heterogeneous objects as a single unit. A pair is a specific case of a
- * etl::tuple with two elements. If neither T1 nor T2 is a possibly cv-qualified
- * class type with non-trivial destructor, or array thereof, the destructor of
- * pair is trivial.
- *
- * https://en.cppreference.com/w/cpp/utility/pair
- *
- * \todo Add conditional explicit when C++20 is available.
- */
+/// \brief etl::pair is a class template that provides a way to store two
+/// heterogeneous objects as a single unit. A pair is a specific case of a
+/// etl::tuple with two elements. If neither T1 nor T2 is a possibly
+/// cv-qualified class type with non-trivial destructor, or array thereof, the
+/// destructor of pair is trivial.
+///
+/// https://en.cppreference.com/w/cpp/utility/pair
+///
+/// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
 struct pair
 {
   using first_type  = T1;
   using second_type = T2;
 
-  /**
-   * \brief Default constructor. Value-initializes both elements of the pair,
-   * first and second.
-   */
+  /// \brief Default constructor. Value-initializes both elements of the pair,
+  /// first and second.
   TAETL_REQUIRES(
     is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
   constexpr pair() : first {}, second {} { }
 
-  /**
-   * \brief Initializes first with x and second with y.
-   */
+  /// \brief Initializes first with x and second with y.
   TAETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
   constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
-  /**
-   * \brief Initializes first with etl::forward<U1>(x) and second with
-   * etl::forward<U2>(y).
-   */
+  /// \brief Initializes first with etl::forward<U1>(x) and second with
+  /// etl::forward<U2>(y).
   template <typename U1, typename U2,
             TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
                               is_constructible_v<U2&&, second_type>)>
@@ -417,9 +369,7 @@ struct pair
   {
   }
 
-  /**
-   * \brief Initializes first with p.first and second with p.second.
-   */
+  /// \brief Initializes first with p.first and second with p.second.
   template <typename U1, typename U2,
             TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
                               is_constructible_v<second_type, U2 const&>)>
@@ -428,10 +378,8 @@ struct pair
   {
   }
 
-  /**
-   * \brief Initializes first with etl::forward<U1>(p.first) and second with
-   * etl::forward<U2>(p.second).
-   */
+  /// \brief Initializes first with etl::forward<U1>(p.first) and second with
+  /// etl::forward<U2>(p.second).
   template <typename U1, typename U2,
             TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
                               is_constructible_v<second_type, U2&&>)>
@@ -440,21 +388,15 @@ struct pair
   {
   }
 
-  /**
-   * \brief Copy constructor is defaulted, and is constexpr if copying of both
-   * elements satisfies the requirements on constexpr functions.
-   */
+  /// \brief Copy constructor is defaulted, and is constexpr if copying of both
+  /// elements satisfies the requirements on constexpr functions.
   constexpr pair(pair const& p) = default;
 
-  /**
-   * \brief Move constructor is defaulted, and is constexpr if moving of both
-   * elements satisfies the requirements on constexpr functions.
-   */
+  /// \brief Move constructor is defaulted, and is constexpr if moving of both
+  /// elements satisfies the requirements on constexpr functions.
   constexpr pair(pair&& p) noexcept = default;
 
-  /**
-   * \brief Defaulted destructor.
-   */
+  /// \brief Defaulted destructor.
   ~pair() noexcept = default;
 
   constexpr auto operator=(pair const& p) -> pair&
@@ -507,19 +449,15 @@ struct pair
 
 };  // namespace etl
 
-/**
- * \brief One deduction guide is provided for pair to account for the edge
- * cases missed by the implicit deduction guides. In particular, non-copyable
- * arguments and array to pointer conversion.
- *
- * https://en.cppreference.com/w/cpp/utility/pair/deduction_guides
- */
+/// \brief One deduction guide is provided for pair to account for the edge
+/// cases missed by the implicit deduction guides. In particular, non-copyable
+/// arguments and array to pointer conversion.
+///
+/// https://en.cppreference.com/w/cpp/utility/pair/deduction_guides
 template <typename T1, typename T2>
 pair(T1, T2) -> pair<T1, T2>;
 
-/**
- * \brief Swaps the contents of x and y. Equivalent to x.swap(y).
- */
+/// \brief Swaps the contents of x and y. Equivalent to x.swap(y).
 template <typename T1, typename T2>
 constexpr auto swap(pair<T1, T2>& lhs,
                     pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
@@ -527,16 +465,14 @@ constexpr auto swap(pair<T1, T2>& lhs,
   lhs.swap(rhs);
 }
 
-/**
- * \brief Creates a etl::pair object, deducing the target type from the types of
- * arguments.
- *
- * \details The deduced types V1 and V2 are etl::decay<T1>::type and
- * etl::decay<T2>::type (the usual type transformations applied to arguments of
- * functions passed by value).
- *
- * https://en.cppreference.com/w/cpp/utility/pair/make_pair
- */
+/// \brief Creates a etl::pair object, deducing the target type from the types
+/// of arguments.
+///
+/// \details The deduced types V1 and V2 are etl::decay<T1>::type and
+/// etl::decay<T2>::type (the usual type transformations applied to arguments of
+/// functions passed by value).
+///
+/// https://en.cppreference.com/w/cpp/utility/pair/make_pair
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
   -> pair<decay_t<T1>, decay_t<T2>>
@@ -544,10 +480,8 @@ template <typename T1, typename T2>
   return {forward<T1>(t), forward<T2>(u)};
 }
 
-/**
- * \brief Tests if both elements of lhs and rhs are equal, that is, compares
- * lhs.first with rhs.first and lhs.second with rhs.second.
- */
+/// \brief Tests if both elements of lhs and rhs are equal, that is, compares
+/// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
 constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -555,10 +489,8 @@ constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
 
-/**
- * \brief Tests if both elements of lhs and rhs are equal, that is, compares
- * lhs.first with rhs.first and lhs.second with rhs.second.
- */
+/// \brief Tests if both elements of lhs and rhs are equal, that is, compares
+/// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
 constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -566,11 +498,9 @@ constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return !(lhs == rhs);
 }
 
-/**
- * \brief Compares lhs and rhs lexicographically by operator<, that is, compares
- * the first elements and only if they are equivalent, compares the second
- * elements.
- */
+/// \brief Compares lhs and rhs lexicographically by operator<, that is,
+/// compares the first elements and only if they are equivalent, compares the
+/// second elements.
 template <typename T1, typename T2>
 constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -581,11 +511,9 @@ constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return false;
 }
 
-/**
- * \brief Compares lhs and rhs lexicographically by operator<, that is, compares
- * the first elements and only if they are equivalent, compares the second
- * elements.
- */
+/// \brief Compares lhs and rhs lexicographically by operator<, that is,
+/// compares the first elements and only if they are equivalent, compares the
+/// second elements.
 template <typename T1, typename T2>
 constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -593,11 +521,9 @@ constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return !(rhs < lhs);
 }
 
-/**
- * \brief Compares lhs and rhs lexicographically by operator<, that is, compares
- * the first elements and only if they are equivalent, compares the second
- * elements.
- */
+/// \brief Compares lhs and rhs lexicographically by operator<, that is,
+/// compares the first elements and only if they are equivalent, compares the
+/// second elements.
 template <typename T1, typename T2>
 constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -605,11 +531,9 @@ constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return rhs < lhs;
 }
 
-/**
- * \brief Compares lhs and rhs lexicographically by operator<, that is, compares
- * the first elements and only if they are equivalent, compares the second
- * elements.
- */
+/// \brief Compares lhs and rhs lexicographically by operator<, that is,
+/// compares the first elements and only if they are equivalent, compares the
+/// second elements.
 template <typename T1, typename T2>
 constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   -> bool
@@ -617,21 +541,17 @@ constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
   return !(lhs < rhs);
 }
 
-/**
- * \brief The partial specialization of tuple_size for pairs provides a
- * compile-time way to obtain the number of elements in a pair, which is always
- * 2, using tuple-like syntax.
- */
+/// \brief The partial specialization of tuple_size for pairs provides a
+/// compile-time way to obtain the number of elements in a pair, which is always
+/// 2, using tuple-like syntax.
 template <typename T1, typename T2>
 struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2>
 {
 };
 
-/**
- * \brief The partial specializations of tuple_element for pairs provide
- * compile-time access to the types of the pair's elements, using tuple-like
- * syntax. The program is ill-formed if I >= 2.
- */
+/// \brief The partial specializations of tuple_element for pairs provide
+/// compile-time access to the types of the pair's elements, using tuple-like
+/// syntax. The program is ill-formed if I >= 2.
 template <size_t I, typename T1, typename T2>
 struct tuple_element<I, pair<T1, T2>>
 {
@@ -639,13 +559,11 @@ struct tuple_element<I, pair<T1, T2>>
   using type = conditional_t<I == 0, T1, T2>;
 };
 
-/**
- * \brief Extracts an element from the pair using tuple-like interface.
- *
- * \details The index-based overloads (1-4) fail to compile if the index I is
- * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
- * 46:00. https://youtu.be/ovxNM865WaU
- */
+/// \brief Extracts an element from the pair using tuple-like interface.
+///
+/// \details The index-based overloads (1-4) fail to compile if the index I is
+/// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+/// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
 constexpr auto get(pair<T1, T2>& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>>&
@@ -657,13 +575,11 @@ constexpr auto get(pair<T1, T2>& p) noexcept
   }
 }
 
-/**
- * \brief Extracts an element from the pair using tuple-like interface.
- *
- * \details The index-based overloads (1-4) fail to compile if the index I is
- * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
- * 46:00. https://youtu.be/ovxNM865WaU
- */
+/// \brief Extracts an element from the pair using tuple-like interface.
+///
+/// \details The index-based overloads (1-4) fail to compile if the index I is
+/// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+/// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2> const& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>> const&
@@ -675,13 +591,11 @@ template <size_t I, typename T1, typename T2>
   }
 }
 
-/**
- * \brief Extracts an element from the pair using tuple-like interface.
- *
- * \details The index-based overloads (1-4) fail to compile if the index I is
- * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
- * 46:00. https://youtu.be/ovxNM865WaU
- */
+/// \brief Extracts an element from the pair using tuple-like interface.
+///
+/// \details The index-based overloads (1-4) fail to compile if the index I is
+/// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+/// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>>&&
@@ -693,13 +607,11 @@ template <size_t I, typename T1, typename T2>
   }
 }
 
-/**
- * \brief Extracts an element from the pair using tuple-like interface.
- *
- * \details The index-based overloads (1-4) fail to compile if the index I is
- * neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
- * 46:00. https://youtu.be/ovxNM865WaU
- */
+/// \brief Extracts an element from the pair using tuple-like interface.
+///
+/// \details The index-based overloads (1-4) fail to compile if the index I is
+/// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
+/// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept
   -> tuple_element_t<I, pair<T1, T2>> const&&
