@@ -36,13 +36,19 @@ DAMAGE.
 
 namespace etl::experimental::rtos
 {
+/// Wrapper around a FreeRTOS queue.
+/// \tparam ValueType The type that's being stored inside the queue.
+/// \tparam Size The maximum capacity of the queue.
 template <typename ValueType, etl::uint32_t Size>
 class queue
 {
   public:
+  /// The type that's being stored inside the queue
   using value_type = ValueType;
-  using size_type  = etl::uint32_t;
+  /// The integer type used for the size
+  using size_type = etl::uint32_t;
 
+  /// Creates a new queue
   queue()
       : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
 
@@ -56,8 +62,10 @@ class queue
     if (handle_ != nullptr) { vQueueDelete(handle_); }
   }
 
+  /// Returns the capacity of the internal buffer
   [[nodiscard]] auto capacity() const -> size_type { return Size; }
 
+  /// Push an element on to the queue.
   [[nodiscard]] auto send(ValueType const& data,
                           TickType_t ticksToWait = 0) const -> bool
   {
@@ -66,6 +74,7 @@ class queue
     return static_cast<bool>(success);
   }
 
+  /// Pop an element of the queue.
   auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
   {
     auto* const rawData = static_cast<void*>(&data);
@@ -73,6 +82,7 @@ class queue
     return static_cast<bool>(success);
   }
 
+  /// Pop an element of the queue.
   [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
     -> pair<bool, ValueType>
   {

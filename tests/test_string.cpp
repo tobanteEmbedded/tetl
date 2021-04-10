@@ -512,7 +512,8 @@ TEMPLATE_TEST_CASE("string: static_string::constexpr", "[string]",
   STATIC_REQUIRE(str1.size() == 0);
   STATIC_REQUIRE(str1.length() == 0);
 
-  constexpr auto str2 = []() {
+  constexpr auto str2 = []()
+  {
     TestType str {};
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
