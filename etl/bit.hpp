@@ -34,15 +34,13 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief Indicates the endianness of all scalar types.
- *
- * \details If all scalar types are little-endian, etl::endian::native equals
- * etl::endian::little. If all scalar types are big-endian,
- * etl::endian::native equals etl::endian::big
- *
- * https://en.cppreference.com/w/cpp/types/endian
- */
+/// \brief Indicates the endianness of all scalar types.
+///
+/// \details If all scalar types are little-endian, etl::endian::native equals
+/// etl::endian::little. If all scalar types are big-endian,
+/// etl::endian::native equals etl::endian::big
+///
+/// https://en.cppreference.com/w/cpp/types/endian
 enum class endian
 {
 #ifdef _WIN32
@@ -56,20 +54,18 @@ enum class endian
 #endif
 };
 
-/**
- * \brief Obtain a value of type To by reinterpreting the object representation
- * of from. Every bit in the value representation of the returned To object is
- * equal to the corresponding bit in the object representation of from.
- *
- * \details The values of padding bits in the returned To object are
- * unspecified. If there is no value of type To corresponding to the value
- * representation produced, the behavior is undefined. If there are multiple
- * such values, which value is produced is unspecified. This overload only
- * participates in overload resolution if sizeof(To) == sizeof(From) and both To
- * and From are TriviallyCopyable types.
- *
- * https://en.cppreference.com/w/cpp/numeric/bit_cast
- */
+/// \brief Obtain a value of type To by reinterpreting the object representation
+/// of from. Every bit in the value representation of the returned To object is
+/// equal to the corresponding bit in the object representation of from.
+///
+/// \details The values of padding bits in the returned To object are
+/// unspecified. If there is no value of type To corresponding to the value
+/// representation produced, the behavior is undefined. If there are multiple
+/// such values, which value is produced is unspecified. This overload only
+/// participates in overload resolution if sizeof(To) == sizeof(From) and both
+/// To and From are TriviallyCopyable types.
+///
+/// https://en.cppreference.com/w/cpp/numeric/bit_cast
 template <typename To, typename From,
           TAETL_REQUIRES_(
             (sizeof(To) == sizeof(From))
@@ -99,10 +95,8 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 
 }  // namespace detail
 
-/**
- * \brief Computes the result of bitwise left-rotating the value of x by s
- * positions. This operation is also known as a left circular shift.
- */
+/// \brief Computes the result of bitwise left-rotating the value of x by s
+/// positions. This operation is also known as a left circular shift.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
@@ -112,10 +106,8 @@ constexpr auto rotl(T t, int s) noexcept -> T
   return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
 }
 
-/**
- * \brief Computes the result of bitwise right-rotating the value of x by s
- * positions. This operation is also known as a right circular shift.
- */
+/// \brief Computes the result of bitwise right-rotating the value of x by s
+/// positions. This operation is also known as a right circular shift.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
@@ -125,14 +117,12 @@ constexpr auto rotr(T t, int s) noexcept -> T
   return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
 }
 
-/**
- * \brief Returns the number of 1 bits in the value of x.
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- */
+/// \brief Returns the number of 1 bits in the value of x.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
@@ -145,32 +135,28 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   return static_cast<int>(count);
 }
 
-/**
- * \brief Checks if x is an integral power of two.
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- * \return true if x is an integral power of two; otherwise false.
- */
+/// \brief Checks if x is an integral power of two.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \return true if x is an integral power of two; otherwise false.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
   return popcount(x) == 1;
 }
 
-/**
- * \brief Returns the number of consecutive 0 bits in the value of x, starting
- * from the most significant bit ("left").
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- * \return The number of consecutive 0 bits in the value of x, starting from the
- * most significant bit.
- */
+/// \brief Returns the number of consecutive 0 bits in the value of x, starting
+/// from the most significant bit ("left").
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \return The number of consecutive 0 bits in the value of x, starting from
+/// the most significant bit.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
@@ -187,17 +173,15 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   return res;
 }
 
-/**
- * \brief Returns the number of consecutive 1 ("one") bits in the value of x,
- * starting from the most significant bit ("left").
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- * \return The number of consecutive 1 bits in the value of x, starting from the
- * most significant bit.
- */
+/// \brief Returns the number of consecutive 1 ("one") bits in the value of x,
+/// starting from the most significant bit ("left").
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \return The number of consecutive 1 bits in the value of x, starting from
+/// the most significant bit.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
@@ -214,32 +198,28 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   return res;
 }
 
-/**
- * \brief If x is not zero, calculates the number of bits needed to store the
- * value x, that is, 1+⌊log2(x)⌋. If x is zero, returns zero.
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- */
+/// \brief If x is not zero, calculates the number of bits needed to store the
+/// value x, that is, 1+⌊log2(x)⌋. If x is zero, returns zero.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
   return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
 
-/**
- * \brief Calculates the smallest integral power of two that is not smaller than
- * x. If that value is not representable in T, the behavior is undefined. Call
- * to this function is permitted in constant evaluation only if the undefined
- * behavior does not occur.
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- * \return The smallest integral power of two that is not smaller than x.
- */
+/// \brief Calculates the smallest integral power of two that is not smaller
+/// than x. If that value is not representable in T, the behavior is undefined.
+/// Call to this function is permitted in constant evaluation only if the
+/// undefined behavior does not occur.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \return The smallest integral power of two that is not smaller than x.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
@@ -258,17 +238,15 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
   }
 }
 
-/**
- * \brief If x is not zero, calculates the largest integral power of two that is
- * not greater than x. If x is zero, returns zero.
- *
- * \details This overload only participates in overload resolution if T is an
- * unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
- * unsigned long, unsigned long long, or an extended unsigned integer type).
- *
- * \return Zero if x is zero; otherwise, the largest integral power of two that
- * is not greater than x.
- */
+/// \brief If x is not zero, calculates the largest integral power of two that
+/// is not greater than x. If x is zero, returns zero.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \return Zero if x is zero; otherwise, the largest integral power of two that
+/// is not greater than x.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
 {

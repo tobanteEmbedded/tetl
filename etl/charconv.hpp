@@ -31,10 +31,8 @@ DAMAGE.
 
 namespace etl
 {
-/**
- * \brief A BitmaskType used to specify floating-point formatting for
- * etl::to_chars and etl::from_chars
- */
+/// A BitmaskType used to specify floating-point formatting for to_chars and
+/// from_chars.
 enum class chars_format : etl::uint8_t
 {
   scientific = 0x1,
@@ -43,9 +41,7 @@ enum class chars_format : etl::uint8_t
   general    = fixed | scientific
 };
 
-/**
- * \brief Primitive numerical output conversion.
- */
+/// Primitive numerical output conversion.
 struct to_chars_result
 {
   char* ptr;
@@ -58,9 +54,7 @@ struct to_chars_result
   }
 };
 
-/**
- * \brief Primitive numerical input conversion
- */
+/// Primitive numerical input conversion
 struct from_chars_result
 {
   char* ptr;
@@ -72,6 +66,7 @@ struct from_chars_result
     return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
   }
 };
+
 }  // namespace etl
 
 #endif  // TAETL_CHARCONV_HPP
