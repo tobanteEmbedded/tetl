@@ -150,7 +150,7 @@ TEMPLATE_TEST_CASE("string: static_string(size_t,char)", "[string]",
 {
   using string_t = TestType;
 
-  auto [size, ch] = GENERATE(table<etl::size_t, char>({
+  auto [size, character] = GENERATE(table<etl::size_t, char>({
     {1, 'x'},
     {2, 'x'},
     {2, 'x'},
@@ -159,14 +159,15 @@ TEMPLATE_TEST_CASE("string: static_string(size_t,char)", "[string]",
     {20, 'x'},
   }));
 
-  auto str = string_t {size, ch};
+  auto str = string_t {size, character};
 
   CHECK_FALSE(str.empty());
   CHECK_FALSE(str.full());
 
   CHECK(str.size() == size);
   CHECK(str.size() == etl::strlen(str.c_str()));
-  CHECK(etl::all_of(begin(str), end(str), [ch](auto c) { return c == ch; }));
+  CHECK(etl::all_of(begin(str), end(str),
+                    [ch = character](auto c) { return c == ch; }));
 }
 
 TEMPLATE_TEST_CASE("string: static_string(char const*)", "[string]",
@@ -511,8 +512,7 @@ TEMPLATE_TEST_CASE("string: static_string::constexpr", "[string]",
   STATIC_REQUIRE(str1.size() == 0);
   STATIC_REQUIRE(str1.length() == 0);
 
-  constexpr auto str2 = []()
-  {
+  constexpr auto str2 = []() {
     TestType str {};
     // APPEND 4 CHARACTERS
     const char* cptr = "C-string";
