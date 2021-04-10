@@ -37,7 +37,7 @@ DAMAGE.
 
 namespace etl
 {
-/// \brief basic_static_string class with fixed size capacity.
+/// basic_static_string class with fixed size capacity.
 ///
 /// \tparam CharT Build in type for character size (mostly 'char')
 /// \tparam Capacity Capacity for basic_static_string
@@ -65,10 +65,10 @@ class basic_static_string
   using reverse_iterator       = etl::reverse_iterator<iterator>;
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
-  /// \brief Default constructor.
+  /// Default constructor.
   constexpr basic_static_string() = default;
 
-  /// \brief Character pointer constructor.
+  /// Character pointer constructor.
   ///
   /// \details Fails silently if input len is greater then capacity.
   constexpr basic_static_string(const_pointer str, size_type const len) noexcept
@@ -84,7 +84,7 @@ class basic_static_string
     }
   }
 
-  /// \brief Character pointer constructor. Calls etl::strlen.
+  /// Character pointer constructor. Calls etl::strlen.
   ///
   /// \details Fails silently if input length is greater then capacity.
   constexpr basic_static_string(const_pointer str) noexcept
@@ -92,7 +92,7 @@ class basic_static_string
   {
   }
 
-  /// \brief Constructs the string with count copies of character ch.
+  /// Constructs the string with count copies of character ch.
   ///
   /// \details Fails silently if input length is greater then capacity.
   constexpr basic_static_string(size_type count, value_type ch) noexcept
@@ -107,7 +107,7 @@ class basic_static_string
     }
   }
 
-  /// \brief Constructs the string with the contents of the range [ first,
+  /// Constructs the string with the contents of the range [ first,
   /// last). Fails silently if input length is greater then capacity.
   template <typename InputIter,
             TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
@@ -117,20 +117,20 @@ class basic_static_string
   {
   }
 
-  /// \brief Constructs the string with a substring [pos, pos+count) of other.
+  /// Constructs the string with a substring [pos, pos+count) of other.
   constexpr basic_static_string(basic_static_string const& other, size_type pos,
                                 size_type count)
       : basic_static_string {other.substr(pos, count)}
   {
   }
 
-  /// \brief Constructs the string with a substring [pos, other.size()).
+  /// Constructs the string with a substring [pos, other.size()).
   constexpr basic_static_string(basic_static_string const& other, size_type pos)
       : basic_static_string {other.substr(pos, other.size())}
   {
   }
 
-  /// \brief Implicitly converts t to a string view sv, then initializes the
+  /// Implicitly converts t to a string view sv, then initializes the
   /// string with the contents of sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   explicit constexpr basic_static_string(T const& t) noexcept
@@ -140,7 +140,7 @@ class basic_static_string
     assign(sv.begin(), sv.end());
   }
 
-  /// \brief Implicitly converts t to a string view sv, then initializes the
+  /// Implicitly converts t to a string view sv, then initializes the
   /// string with the subrange [ pos, pos + n ) of sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
@@ -149,23 +149,23 @@ class basic_static_string
   {
   }
 
-  /// \brief Defaulted copy constructor.
+  /// Defaulted copy constructor.
   constexpr basic_static_string(
     basic_static_string const& /*str*/) noexcept = default;
 
-  /// \brief Defaulted move constructor.
+  /// Defaulted move constructor.
   constexpr basic_static_string(
     basic_static_string&& /*str*/) noexcept = default;
 
-  /// \brief Defaulted copy assignment.
+  /// Defaulted copy assignment.
   constexpr auto operator   =(basic_static_string const& /*str*/) noexcept
     -> basic_static_string& = default;
 
-  /// \brief Defaulted move assignment.
+  /// Defaulted move assignment.
   constexpr auto operator   =(basic_static_string&& /*str*/) noexcept
     -> basic_static_string& = default;
 
-  /// \brief Replaces the contents with those of null-terminated character
+  /// Replaces the contents with those of null-terminated character
   /// string pointed to by s.
   constexpr auto operator=(const_pointer s) noexcept -> basic_static_string&
   {
@@ -173,14 +173,14 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with character ch.
+  /// Replaces the contents with character ch.
   constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
   {
     assign(etl::addressof(ch), 1);
     return *this;
   }
 
-  /// \brief Implicitly converts t to a string view sv, then replaces the
+  /// Implicitly converts t to a string view sv, then replaces the
   /// contents with those of the sv.
   template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto operator=(T const& t) noexcept -> basic_static_string&
@@ -189,7 +189,7 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with count copies of character ch.
+  /// Replaces the contents with count copies of character ch.
   constexpr auto assign(size_type count, value_type ch) noexcept
     -> basic_static_string&
   {
@@ -197,7 +197,7 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with a copy of str.
+  /// Replaces the contents with a copy of str.
   constexpr auto assign(basic_static_string const& str) noexcept
     -> basic_static_string&
   {
@@ -205,7 +205,7 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with a substring [ pos, pos + count )
+  /// Replaces the contents with a substring [ pos, pos + count )
   /// of str.
   constexpr auto assign(basic_static_string const& str, size_type pos,
                         size_type count = npos) noexcept -> basic_static_string&
@@ -214,7 +214,7 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with those of str using move semantics.
+  /// Replaces the contents with those of str using move semantics.
   constexpr auto assign(basic_static_string&& str) noexcept
     -> basic_static_string&
   {
@@ -222,7 +222,7 @@ class basic_static_string
     return *this;
   }
 
-  /// \brief Replaces the contents with copies of the characters in the range
+  /// Replaces the contents with copies of the characters in the range
   /// [ s, s + count ). This range can contain null characters.
   constexpr auto assign(const_pointer s, size_type count) noexcept
     -> basic_static_string&
