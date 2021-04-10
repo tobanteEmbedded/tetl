@@ -15,10 +15,12 @@
 
 ## Quick Start
 
+```sh
+g++ -std=c++17 -Itaetl/ ...
+```
+
 - [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
 - [API Reference](https://tobanteaudio.github.io/taetl/index.html)
-- [Header Overview](#header-overview)
-- [Header Detail](#header-detail)
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
 
@@ -59,27 +61,26 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 - No dynamic memory
 - `constexpr` all the things
 - Easy desktop development (cmake)
-  - Stubs for external dependencies (FreeRTOS)
-- Experimental headers
-  - Strong types
-  - Networking (buffers, ntoh, ...)
-  - FreeRTOS Abstraction
-  - STM32 HAL
-  - DSP DSL via Template Meta Programming
 
-It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that projects like
-static_vector already existed. My actual goal has turned into a mammoth project. A standard library for microcontrollers
-and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms
-work identically, pair and friend are available and containers like set, map and vector are also implemented.
+It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that proposals like [github.com/gnzlbg/static_vector](https://github.com/gnzlbg/static_vector) where in the making. My actual goal has turned into a mammoth project. A standard library for microcontrollers and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms work identically, pair and friend are available and containers like set, map and vector are also implemented, but with different names.
 
 All containers work only with memory on the stack. This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
-RTTI are deactivated. This results in the problem that not all members of a container can be implemented. Any function
-that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If
-exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. Unsafe methods like `static_vector::operator[]` are still available (with asserts in debug builds), while throwing methods like `static_vector::at` are not implemented.
+RTTI migth be disabled. This results in the problem that not all members of a container can be implemented. Any function that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. Unsafe methods like `etl::static_vector::operator[]` are still available (with asserts in debug builds), while throwing methods like `etl::static_vector::at` are not implemented.
 
-Unlike LLVMs `SmallVector`, `static_vector` & friend do not have a base class which they can slice to. My plan is to add mutable view-like types for each container. A `static_vector` we would have a `vector_ref` which would work mostly like a `span`, but would also provide the vector interface. I don't want to name the types `*_view`, since the word view implies non-mutable in the actual standard. So far no view types apart from `string_view` have been implemented.
+Unlike LLVMs `SmallVector`, `etl::static_vector` & friends do not have a base class which they can slice to. My plan is to add mutable view-like non-owning types for each container. A `etl::static_vector` we would have a `vector_ref` which would work mostly like a `span`, but would also provide the vector interface. I don't want to name the types `*_view`, since the word `view` implies non-mutable in standard containers like `string_view`. None of the container_ref types have been implemented yet.
 
-The [`etl/experimental`](./etl/experimental) subdirectory includes libraries that use `etl` as their foundation. It can be thought of as a mini boost-like library collection. Everything is work in progress.
+The headers [etl/algorithm.hpp](./etl/algorithm.hpp) and [etl/numeric.hpp](./etl/numeric.hpp) provide all algorithms from the standard. Unlike implementations found in libstdc++ or libc++, mine are primarily optimized for code size and not runtime performance. Overloads with an `ExecutionPolicy` are not implemented.
+
+Headers like [etl/chrono.hpp](./etl/chrono.hpp) and [etl/mutex.hpp](./etl/mutex.hpp) only provide classes & functions that can be implemented in a portable way. Platform specific functionality like `steady_clock` or `mutex` can be provided by the user. The user provided types should meet the requirements listed in [Named Requirements](https://en.cppreference.com/w/cpp/named_req) to work seamlessly with the types provided in the `etl` namespace.
+
+The [etl/experimental](./etl/experimental) subdirectory includes libraries that use `etl` as their foundation. It can be thought of as a mini boost-like library collection. Everything is work in progress.
+
+- Networking (buffers, ntoh, ...)
+- Strong types
+- STM32 HAL
+- DSP DSL
+- FreeRTOS Abstraction
+  - Stubs for unittests run on desktop machines
 
 ## Project Integration
 
@@ -94,7 +95,7 @@ git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
 ### Command Line / Makefile
 
 ```make
-CXXFLAGS += -I3rd_party/taetl
+CXXFLAGS += -std=c++17 -I3rd_party/taetl
 ```
 
 ### CMake
