@@ -1526,6 +1526,49 @@ constexpr auto sort(RandomIter first, RandomIter last) -> void
 }
 
 /**
+ * @brief Sorts the elements in the range [first, last) in non-descending order.
+ * The order of equivalent elements is guaranteed to be preserved. Elements are
+ * compared using the given comparison function comp.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/stable_sort
+ */
+template <typename RandomIter, typename Compare>
+constexpr auto stable_sort(RandomIter first, RandomIter last, Compare cmp)
+  -> void
+{
+  for (; first != last; ++first)
+  {
+    auto min = first;
+    for (auto j = next(first, 1); j != last; ++j)
+    {
+      if (cmp(*j, *min)) { min = j; }
+    }
+
+    auto key = *min;
+    while (min != first)
+    {
+      *min = *prev(min, 1);
+      --min;
+    }
+
+    *first = key;
+  }
+}
+
+/**
+ * @brief Sorts the elements in the range [first, last) in non-descending order.
+ * The order of equivalent elements is guaranteed to be preserved. Elements are
+ * compared using operator<.
+ *
+ * https://en.cppreference.com/w/cpp/algorithm/stable_sort
+ */
+template <typename RandomIter>
+constexpr auto stable_sort(RandomIter first, RandomIter last) -> void
+{
+  stable_sort(first, last, less<> {});
+}
+
+/**
  * @brief Examines the range [first, last) and finds the largest range beginning
  * at first in which the elements are sorted in non-descending order. Elements
  * are compared using operator<.
