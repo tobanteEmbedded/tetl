@@ -20,6 +20,7 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+
 #ifndef TAETL_STRING_HPP
 #define TAETL_STRING_HPP
 
@@ -30,8 +31,6 @@
 #include "etl/detail/string_char_traits.hpp"
 #include "etl/detail/string_conversion.hpp"
 
-/// \file string.hpp
-
 namespace etl
 {
 /// \brief basic_static_string class with fixed size capacity.
@@ -39,33 +38,46 @@ namespace etl
 /// \tparam Capacity Capacity for basic_static_string
 /// \module Strings
 template <typename CharT, etl::size_t Capacity, typename Traits = etl::char_traits<CharT>>
-struct basic_static_string
+class basic_static_string
 {
   private:
   // clang-format off
     template <typename T>
     constexpr static bool string_view_and_not_char_pointer =
-        is_convertible_v<T const&, basic_string_view<CharT, Traits>>
-        && !is_convertible_v<T const&, CharT const*>;
+                              is_convertible_v<T const&, basic_string_view<CharT, Traits>>
+                          && !is_convertible_v<T const&, CharT const*>;
   // clang-format on
 
   public:
-  using traits_type            = Traits;
-  using value_type             = CharT;
-  using size_type              = etl::size_t;
-  using pointer                = CharT*;
-  using const_pointer          = CharT const*;
-  using reference              = CharT&;
-  using const_reference        = CharT const&;
-  using iterator               = CharT*;
-  using const_iterator         = CharT const*;
-  using reverse_iterator       = etl::reverse_iterator<iterator>;
+  /// The character type used
+  using value_type = CharT;
+  /// The size type used
+  using size_type = etl::size_t;
+  /// The size type used
+  using difference_type = etl::ptrdiff_t;
+  /// The character traits type used
+  using traits_type = Traits;
+  /// Pointer to the character type
+  using pointer = CharT*;
+  /// Const pointer to the character type
+  using const_pointer = CharT const*;
+  /// Reference to the character type
+  using reference = CharT&;
+  /// Const reference to the character type
+  using const_reference = CharT const&;
+  /// Iterator to the character type
+  using iterator = CharT*;
+  /// Const iterator to the character type
+  using const_iterator = CharT const*;
+  /// The reverse iterator type used
+  using reverse_iterator = etl::reverse_iterator<iterator>;
+  /// The const reverse iterator type used
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
   /// Default constructor.
   constexpr basic_static_string() = default;
 
-  /// Character pointer constructor.
+  /// \brief Character pointer constructor.
   ///
   /// \details Fails silently if input len is greater then capacity.
   constexpr basic_static_string(const_pointer str, size_type const len) noexcept
@@ -80,7 +92,7 @@ struct basic_static_string
     }
   }
 
-  /// Character pointer constructor. Calls etl::strlen.
+  /// \brief Character pointer constructor. Calls etl::strlen.
   ///
   /// \details Fails silently if input length is greater then capacity.
   constexpr basic_static_string(const_pointer str) noexcept
@@ -1063,6 +1075,7 @@ struct basic_static_string
   value_type data_[Capacity] = {};
 };
 
+/// Typedef for a basic_static_string using 'char'
 template <etl::size_t Capacity>
 using static_string = basic_static_string<char, Capacity>;
 

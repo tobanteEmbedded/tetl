@@ -45,18 +45,30 @@ template <typename CharType, typename Traits = etl::char_traits<CharType>>
 class basic_string_view
 {
   public:
-  using traits_type            = Traits;
-  using value_type             = CharType;
-  using pointer                = CharType*;
-  using const_pointer          = CharType const*;
-  using reference              = CharType&;
-  using const_reference        = CharType const&;
-  using const_iterator         = CharType const*;
-  using iterator               = const_iterator;
-  using size_type              = etl::size_t;
-  using difference_type        = etl::ptrdiff_t;
+  /// The character traits type used
+  using traits_type = Traits;
+  /// The character type used
+  using value_type = CharType;
+  /// Pointer to the character type
+  using pointer = CharType*;
+  /// Const pointer to the character type
+  using const_pointer = CharType const*;
+  /// Reference to the character type
+  using reference = CharType&;
+  /// Const reference to the character type
+  using const_reference = CharType const&;
+  /// Const pointer to the character type
+  using const_iterator = CharType const*;
+  /// Const pointer to the character type
+  using iterator = const_iterator;
+  /// The size type used
+  using size_type = etl::size_t;
+  /// The size type used
+  using difference_type = etl::ptrdiff_t;
+  /// The reverse iterator type used
   using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
-  using reverse_iterator       = const_reverse_iterator;
+  /// The reverse iterator type used
+  using reverse_iterator = const_reverse_iterator;
 
   /// \brief Default constructor. Constructs an empty basic_string_view. After
   /// construction, data() is equal to nullptr, and size() is equal to 0.
@@ -346,8 +358,7 @@ class basic_string_view
     {
       if (unsafe_at(outerIdx) == v.front())
       {
-        auto found = [&]
-        {
+        auto found = [&] {
           for (size_type innerIdx = 0; innerIdx < v.size(); ++innerIdx)
           {
             auto offset = outerIdx + innerIdx;
@@ -409,8 +420,7 @@ class basic_string_view
     do {
       if (unsafe_at(outer) == v.front())
       {
-        auto found = [&]
-        {
+        auto found = [&] {
           for (size_type inner = 0; inner < v.size(); ++inner)
           {
             if (unsafe_at(outer + inner) != v[inner]) { return false; }
