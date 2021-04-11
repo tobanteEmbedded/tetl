@@ -65,8 +65,7 @@ class basic_string_view
   /// \brief Copy constructor. Constructs a view of the same content as other.
   /// After construction, data() is equal to other.data(), and size() is equal
   /// to other.size().
-  constexpr basic_string_view(
-    basic_string_view const& other) noexcept = default;
+  constexpr basic_string_view(basic_string_view const& other) noexcept = default;
 
   /// \brief Constructs a view of the first count characters of the character
   /// array starting with the element pointed by s. s can contain null
@@ -74,10 +73,7 @@ class basic_string_view
   /// range (even though the constructor may not access any of the elements of
   /// this range). After construction, data() is equal to s, and size() is
   /// equal to count.
-  constexpr basic_string_view(CharType const* str, size_type size)
-      : begin_ {str}, size_ {size}
-  {
-  }
+  constexpr basic_string_view(CharType const* str, size_type size) : begin_ {str}, size_ {size} { }
 
   /// \brief Constructs a view of the null-terminated character string pointed
   /// to by s, not including the terminating null character. The length of the
@@ -85,9 +81,7 @@ class basic_string_view
   /// if [s, s+Traits::length(s)) is not a valid range. After construction,
   /// data() is equal to s, and size() is equal to Traits::length(s).
   constexpr basic_string_view(CharType const* str)
-      : begin_ {str}, size_ {traits_type::length(str)}
-  {
-  }
+      : begin_ {str}, size_ {traits_type::length(str)} { }
 
   /// \brief Constructs a basic_string_view over the range [first, last). The
   /// behavior is undefined if [first, last) is not a valid range.
@@ -102,48 +96,31 @@ class basic_string_view
   ~basic_string_view() noexcept = default;
 
   /// \brief Replaces the view with that of view.
-  constexpr auto operator =(basic_string_view const& view) noexcept
-    -> basic_string_view& = default;
+  constexpr auto operator=(basic_string_view const& view) noexcept -> basic_string_view& = default;
 
   /// \brief Returns an iterator to the first character of the view.
-  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-  {
-    return cbegin();
-  }
+  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return cbegin(); }
 
   /// \brief Returns an iterator to the first character of the view.
-  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
-  {
-    return begin_;
-  }
+  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin_; }
 
   /// \brief Returns an iterator to the character following the last character
   /// of the view. This character acts as a placeholder, attempting to access
   /// it results in undefined behavior.
-  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-  {
-    return cend();
-  }
+  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return cend(); }
 
   /// \brief Returns an iterator to the character following the last character
   /// of the view. This character acts as a placeholder, attempting to access
   /// it results in undefined behavior.
-  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
-  {
-    return begin_ + size_;
-  }
+  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return begin_ + size_; }
 
   /// \brief Returns a reverse iterator to the first character of the reversed
   /// view. It corresponds to the last character of the non-reversed view.
-  [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
-  {
-    return crbegin();
-  }
+  [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator { return crbegin(); }
 
   /// \brief Returns a reverse iterator to the first character of the reversed
   /// view. It corresponds to the last character of the non-reversed view.
-  [[nodiscard]] constexpr auto crbegin() const noexcept
-    -> const_reverse_iterator
+  [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
   {
     return const_reverse_iterator(end());
   }
@@ -154,10 +131,7 @@ class basic_string_view
   /// It corresponds to the character preceding the first character of the
   /// non-reversed view. This character acts as a placeholder, attempting to
   /// access it results in undefined behavior.
-  [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
-  {
-    return crend();
-  }
+  [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator { return crend(); }
 
   /// \brief Returns a reverse iterator to the character following the last
   /// character of the reversed view.
@@ -173,60 +147,38 @@ class basic_string_view
   /// \brief Returns a const reference to the character at specified location
   /// pos. No bounds checking is performed: the behavior is undefined if pos >=
   /// size().
-  [[nodiscard]] constexpr auto operator[](size_type pos) const
-    -> const_reference
+  [[nodiscard]] constexpr auto operator[](size_type pos) const -> const_reference
   {
     return unsafe_at(pos);
   }
 
   /// \brief Returns reference to the first character in the view. The behavior
   /// is undefined if empty() == true.
-  [[nodiscard]] constexpr auto front() const -> const_reference
-  {
-    return unsafe_at(0);
-  }
+  [[nodiscard]] constexpr auto front() const -> const_reference { return unsafe_at(0); }
 
   /// \brief Returns reference to the last character in the view. The behavior
   /// is undefined if empty() == true.
-  [[nodiscard]] constexpr auto back() const -> const_reference
-  {
-    return unsafe_at(size_ - 1);
-  }
+  [[nodiscard]] constexpr auto back() const -> const_reference { return unsafe_at(size_ - 1); }
 
   /// \brief Returns a pointer to the underlying character array. The pointer
   /// is such that the range [data(); data() + size()) is valid and the values
   /// in it correspond to the values of the view.
-  [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
-  {
-    return begin_;
-  }
+  [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return begin_; }
 
   /// \brief Returns the number of CharT elements in the view, i.e.
   /// etl::distance(begin(), end()).
-  [[nodiscard]] constexpr auto size() const noexcept -> size_type
-  {
-    return length();
-  }
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type { return length(); }
 
   /// \brief Returns the number of CharT elements in the view, i.e.
   /// etl::distance(begin(), end()).
-  [[nodiscard]] constexpr auto length() const noexcept -> size_type
-  {
-    return size_;
-  }
+  [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size_; }
 
   /// \brief The largest possible number of char-like objects that can be
   /// referred to by a basic_string_view.
-  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
-  {
-    return size_type(-1);
-  }
+  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return size_type(-1); }
 
   /// \brief Checks if the view has no characters, i.e. whether size() == 0.
-  [[nodiscard]] constexpr auto empty() const noexcept -> bool
-  {
-    return size_ == 0;
-  }
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
 
   /// \brief Moves the start of the view forward by n characters. The behavior
   /// is undefined if n > size().
@@ -251,8 +203,8 @@ class basic_string_view
   /// \brief Copies the substring [pos, pos + rcount) to the character array
   /// pointed to by dest, where rcount is the smaller of count and size() -
   /// pos. Equivalent to Traits::copy(dest, data() + pos, rcount).
-  [[nodiscard]] constexpr auto copy(CharType* dest, size_type count,
-                                    size_type pos = 0) const -> size_type
+  [[nodiscard]] constexpr auto copy(CharType* dest, size_type count, size_type pos = 0) const
+    -> size_type
   {
     auto const rcount = etl::min(count, size() - pos);
     traits_type::copy(dest, data() + pos, rcount);
@@ -261,8 +213,7 @@ class basic_string_view
 
   /// \brief Returns a view of the substring [pos, pos + rcount), where rcount
   /// is the smaller of count and size() - pos.
-  [[nodiscard]] constexpr auto substr(size_type pos   = 0,
-                                      size_type count = npos) const
+  [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const
     -> basic_string_view
   {
     auto const rcount = etl::min(count, size() - pos);
@@ -273,8 +224,7 @@ class basic_string_view
   ///
   /// \details
   /// https://en.cppreference.com/w/cpp/string/basic_string_view/compare
-  [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept
-    -> int
+  [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept -> int
   {
     auto const rlen = etl::min(size(), v.size());
     auto const res  = traits_type::compare(data(), v.data(), rlen);
@@ -290,17 +240,16 @@ class basic_string_view
 
   /// \brief Compares two character sequences. Equivalent to substr(pos1,
   /// count1).compare(v).
-  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                       basic_string_view v) const -> int
+  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, basic_string_view v) const
+    -> int
   {
     return substr(pos1, count1).compare(v);
   }
 
   /// \brief Compares two character sequences. Equivalent to substr(pos1,
   /// count1).compare(v.substr(pos2, count2))
-  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                       basic_string_view v, size_type pos2,
-                                       size_type count2) const -> int
+  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, basic_string_view v,
+                                       size_type pos2, size_type count2) const -> int
   {
     return substr(pos1, count1).compare(v.substr(pos2, count2));
   }
@@ -314,16 +263,15 @@ class basic_string_view
 
   /// \brief Compares two character sequences. Equivalent to substr(pos1,
   /// count1).compare(basic_string_view(s)).
-  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                       CharType const* s) const -> int
+  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, CharType const* s) const
+    -> int
   {
     return substr(pos1, count1).compare(basic_string_view(s));
   }
 
   /// \brief Compares two character sequences. Equivalent to substr(pos1,
   /// count1).compare(basic_string_view(s, count2)).
-  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
-                                       CharType const* s,
+  [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, CharType const* s,
                                        size_type count2) const -> int
   {
     return substr(pos1, count1).compare(basic_string_view(s, count2));
@@ -333,8 +281,7 @@ class basic_string_view
   /// prefix is a string view.
   ///
   /// \details Effectively returns substr(0, sv.size()) == sv
-  [[nodiscard]] constexpr auto starts_with(basic_string_view sv) const noexcept
-    -> bool
+  [[nodiscard]] constexpr auto starts_with(basic_string_view sv) const noexcept -> bool
   {
     return substr(0, sv.size()) == sv;
   }
@@ -362,8 +309,7 @@ class basic_string_view
   ///
   /// \details Effectively returns size() >= sv.size() && compare(size() -
   /// sv.size(), npos, sv) == 0
-  [[nodiscard]] constexpr auto ends_with(basic_string_view sv) const noexcept
-    -> bool
+  [[nodiscard]] constexpr auto ends_with(basic_string_view sv) const noexcept -> bool
   {
     return size() >= sv.size() && compare(size() - sv.size(), npos, sv) == 0;
   }
@@ -391,8 +337,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring, or npos
   /// if no such substring is found.
-  [[nodiscard]] constexpr auto find(basic_string_view v,
-                                    size_type pos = 0) const noexcept
+  [[nodiscard]] constexpr auto find(basic_string_view v, size_type pos = 0) const noexcept
     -> size_type
   {
     if (v.size() > size() - pos) { return npos; }
@@ -424,9 +369,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring, or npos
   /// if no such substring is found.
-  [[nodiscard]] constexpr auto find(CharType ch,
-                                    size_type pos = 0) const noexcept
-    -> size_type
+  [[nodiscard]] constexpr auto find(CharType ch, size_type pos = 0) const noexcept -> size_type
   {
     return find(basic_string_view(etl::addressof(ch), 1), pos);
   }
@@ -436,8 +379,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring, or npos
   /// if no such substring is found.
-  constexpr auto find(CharType const* s, size_type pos, size_type count) const
-    -> size_type
+  constexpr auto find(CharType const* s, size_type pos, size_type count) const -> size_type
   {
     return find(basic_string_view(s, count), pos);
   }
@@ -457,8 +399,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
-  [[nodiscard]] constexpr auto rfind(basic_string_view v,
-                                     size_type pos = npos) const noexcept
+  [[nodiscard]] constexpr auto rfind(basic_string_view v, size_type pos = npos) const noexcept
     -> size_type
   {
     auto const offset = etl::clamp<size_type>(pos, 0, size());
@@ -490,9 +431,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
-  [[nodiscard]] constexpr auto rfind(CharType c,
-                                     size_type pos = npos) const noexcept
-    -> size_type
+  [[nodiscard]] constexpr auto rfind(CharType c, size_type pos = npos) const noexcept -> size_type
 
   {
     return rfind(basic_string_view(etl::addressof(c), 1), pos);
@@ -503,8 +442,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
-  constexpr auto rfind(CharType const* s, size_type pos, size_type count) const
-    -> size_type
+  constexpr auto rfind(CharType const* s, size_type pos, size_type count) const -> size_type
   {
     return rfind(basic_string_view(s, count), pos);
   }
@@ -514,8 +452,7 @@ class basic_string_view
   ///
   /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
-  constexpr auto rfind(CharType const* s, size_type pos = npos) const
-    -> size_type
+  constexpr auto rfind(CharType const* s, size_type pos = npos) const -> size_type
   {
     return rfind(basic_string_view {s}, pos);
   }
@@ -526,8 +463,7 @@ class basic_string_view
   ///
   /// \returns Position of the first occurrence of any character of the
   /// substring, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_first_of(basic_string_view v,
-                                             size_type pos = 0) const noexcept
+  [[nodiscard]] constexpr auto find_first_of(basic_string_view v, size_type pos = 0) const noexcept
     -> size_type
   {
     for (size_type idx = pos; idx < size(); ++idx)
@@ -547,8 +483,7 @@ class basic_string_view
   ///
   /// \returns Position of the first occurrence of any character of the
   /// substring, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_first_of(CharType c,
-                                             size_type pos = 0) const noexcept
+  [[nodiscard]] constexpr auto find_first_of(CharType c, size_type pos = 0) const noexcept
     -> size_type
   {
     return find_first_of(basic_string_view(etl::addressof(c), 1), pos);
@@ -560,8 +495,7 @@ class basic_string_view
   ///
   /// \returns Position of the first occurrence of any character of the
   /// substring, or npos if no such character is found.
-  constexpr auto find_first_of(CharType const* s, size_type pos,
-                               size_type count) const -> size_type
+  constexpr auto find_first_of(CharType const* s, size_type pos, size_type count) const -> size_type
   {
     return find_first_of(basic_string_view(s, count), pos);
   }
@@ -572,8 +506,7 @@ class basic_string_view
   ///
   /// \returns Position of the first occurrence of any character of the
   /// substring, or npos if no such character is found.
-  constexpr auto find_first_of(CharType const* s, size_type pos = 0) const
-    -> size_type
+  constexpr auto find_first_of(CharType const* s, size_type pos = 0) const -> size_type
   {
     return find_first_of(basic_string_view(s), pos);
   }
@@ -586,8 +519,7 @@ class basic_string_view
   ///
   /// \returns Position of the last occurrence of any character of the
   /// substring, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_last_of(basic_string_view v,
-                                            size_type pos = npos) const noexcept
+  [[nodiscard]] constexpr auto find_last_of(basic_string_view v, size_type pos = npos) const noexcept
     -> size_type
   {
     auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
@@ -610,8 +542,7 @@ class basic_string_view
   ///
   /// \returns Position of the last occurrence of any character of the
   /// substring, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_last_of(CharType c,
-                                            size_type pos = npos) const noexcept
+  [[nodiscard]] constexpr auto find_last_of(CharType c, size_type pos = npos) const noexcept
     -> size_type
   {
     return find_last_of(basic_string_view(etl::addressof(c), 1), pos);
@@ -625,8 +556,7 @@ class basic_string_view
   ///
   /// \returns Position of the last occurrence of any character of the
   /// substring, or npos if no such character is found.
-  constexpr auto find_last_of(CharType const* s, size_type pos,
-                              size_type count) const -> size_type
+  constexpr auto find_last_of(CharType const* s, size_type pos, size_type count) const -> size_type
   {
     return find_last_of(basic_string_view(s, count), pos);
   }
@@ -639,8 +569,7 @@ class basic_string_view
   ///
   /// \returns Position of the last occurrence of any character of the
   /// substring, or npos if no such character is found.
-  constexpr auto find_last_of(CharType const* s, size_type pos = npos) const
-    -> size_type
+  constexpr auto find_last_of(CharType const* s, size_type pos = npos) const -> size_type
   {
     return find_last_of(basic_string_view(s), pos);
   }
@@ -650,9 +579,8 @@ class basic_string_view
   ///
   /// \returns Position of the last character not equal to any of the characters
   /// in the given string, or npos if no such character is found.
-  [[nodiscard]] constexpr auto
-  find_last_not_of(basic_string_view v, size_type pos = npos) const noexcept
-    -> size_type
+  [[nodiscard]] constexpr auto find_last_not_of(basic_string_view v,
+                                                size_type pos = npos) const noexcept -> size_type
   {
     auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
     do {
@@ -669,8 +597,8 @@ class basic_string_view
   ///
   /// \returns Position of the last character not equal to any of the characters
   /// in the given string, or npos if no such character is found.
-  [[nodiscard]] constexpr auto
-  find_last_not_of(CharType c, size_type pos = npos) const noexcept -> size_type
+  [[nodiscard]] constexpr auto find_last_not_of(CharType c, size_type pos = npos) const noexcept
+    -> size_type
   {
     return find_last_not_of(basic_string_view(etl::addressof(c), 1), pos);
   }
@@ -681,8 +609,7 @@ class basic_string_view
   ///
   /// \returns Position of the last character not equal to any of the characters
   /// in the given string, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_last_not_of(const_pointer s, size_type pos,
-                                                size_type count) const
+  [[nodiscard]] constexpr auto find_last_not_of(const_pointer s, size_type pos, size_type count) const
     -> size_type
   {
     return find_last_not_of(basic_string_view(s, count), pos);
@@ -694,8 +621,7 @@ class basic_string_view
   ///
   /// \returns Position of the last character not equal to any of the characters
   /// in the given string, or npos if no such character is found.
-  [[nodiscard]] constexpr auto find_last_not_of(const_pointer s,
-                                                size_type pos = npos) const
+  [[nodiscard]] constexpr auto find_last_not_of(const_pointer s, size_type pos = npos) const
     -> size_type
   {
     return find_last_not_of(basic_string_view(s), pos);
@@ -728,27 +654,25 @@ class basic_string_view
 /// each character in lhs has an equivalent character in rhs at the same
 /// position.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator==(basic_string_view<CharType, Traits> lhs,
-           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(basic_string_view<CharType, Traits> lhs,
+                                        basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   if (lhs.size() != rhs.size()) { return false; }
   return lhs.compare(rhs) == 0;
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator==(decay_t<basic_string_view<CharT, Traits>> const lhs,
-           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                        basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
   if (lhs.size() != rhs.size()) { return false; }
   return lhs.compare(rhs) == 0;
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator==(basic_string_view<CharT, Traits> const lhs,
-           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(basic_string_view<CharT, Traits> const lhs,
+                                        decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
   if (lhs.size() != rhs.size()) { return false; }
   return lhs.compare(rhs) == 0;
@@ -761,25 +685,23 @@ operator==(basic_string_view<CharT, Traits> const lhs,
 /// each character in lhs has an equivalent character in rhs at the same
 /// position.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator!=(basic_string_view<CharType, Traits> lhs,
-           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(basic_string_view<CharType, Traits> lhs,
+                                        basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   return !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator!=(decay_t<basic_string_view<CharT, Traits>> const lhs,
-           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                        basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
   return !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator!=(basic_string_view<CharT, Traits> const lhs,
-           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(basic_string_view<CharT, Traits> const lhs,
+                                        decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
   return !(lhs == rhs);
 }
@@ -791,30 +713,25 @@ operator!=(basic_string_view<CharT, Traits> const lhs,
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator<(basic_string_view<CharType, Traits> lhs,
-          basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(basic_string_view<CharType, Traits> lhs,
+                                       basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                 rhs.end());
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator<(decay_t<basic_string_view<CharT, Traits>> const lhs,
-          basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                       basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
-  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                 rhs.end());
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator<(basic_string_view<CharT, Traits> const lhs,
-          decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(basic_string_view<CharT, Traits> const lhs,
+                                       decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
-  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-                                 rhs.end());
+  return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 /// \brief Compares two views. All comparisons are done via the compare() member
@@ -824,25 +741,23 @@ operator<(basic_string_view<CharT, Traits> const lhs,
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator<=(basic_string_view<CharType, Traits> lhs,
-           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(basic_string_view<CharType, Traits> lhs,
+                                        basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   return (lhs < rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator<=(decay_t<basic_string_view<CharT, Traits>> const lhs,
-           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                        basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
   return (lhs < rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator<=(basic_string_view<CharT, Traits> const lhs,
-           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(basic_string_view<CharT, Traits> const lhs,
+                                        decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
   return (lhs < rhs) || (lhs == rhs);
 }
@@ -854,25 +769,23 @@ operator<=(basic_string_view<CharT, Traits> const lhs,
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator>(basic_string_view<CharType, Traits> lhs,
-          basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(basic_string_view<CharType, Traits> lhs,
+                                       basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   return !(lhs < rhs) && !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator>(decay_t<basic_string_view<CharT, Traits>> const lhs,
-          basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                       basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
   return !(lhs < rhs) && !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator>(basic_string_view<CharT, Traits> const lhs,
-          decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(basic_string_view<CharT, Traits> const lhs,
+                                       decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
   return !(lhs < rhs) && !(lhs == rhs);
 }
@@ -884,25 +797,23 @@ operator>(basic_string_view<CharT, Traits> const lhs,
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto
-operator>=(basic_string_view<CharType, Traits> lhs,
-           basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(basic_string_view<CharType, Traits> lhs,
+                                        basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
   return (lhs > rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto
-operator>=(decay_t<basic_string_view<CharT, Traits>> const lhs,
-           basic_string_view<CharT, Traits> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(decay_t<basic_string_view<CharT, Traits>> const lhs,
+                                        basic_string_view<CharT, Traits> const rhs) noexcept -> bool
 {
   return (lhs > rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto
-operator>=(basic_string_view<CharT, Traits> const lhs,
-           decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(basic_string_view<CharT, Traits> const lhs,
+                                        decay_t<basic_string_view<CharT, Traits>> const rhs) noexcept
+  -> bool
 {
   return (lhs > rhs) || (lhs == rhs);
 }
@@ -916,8 +827,7 @@ inline namespace string_view_literals
 {
 /// \brief Forms a string view of a character literal. Returns
 /// etl::string_view{str, len}
-constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept
-  -> etl::string_view
+constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept -> etl::string_view
 {
   return {str, len};
 }

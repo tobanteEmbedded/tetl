@@ -67,15 +67,13 @@ enum class endian
 /// https://en.cppreference.com/w/cpp/numeric/bit_cast
 /// \module Numeric
 template <typename To, typename From,
-          TAETL_REQUIRES_(
-            (sizeof(To) == sizeof(From))
-            && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
+          TAETL_REQUIRES_((sizeof(To) == sizeof(From))
+                          && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
 constexpr auto bit_cast(From const& src) noexcept -> To
 {
-  static_assert(
-    is_trivially_constructible_v<To>,
-    "This implementation additionally requires destination type to be "
-    "trivially constructible");
+  static_assert(is_trivially_constructible_v<To>,
+                "This implementation additionally requires destination type to be "
+                "trivially constructible");
 
   To dst;
   etl::memcpy(&dst, &src, sizeof(To));
@@ -86,9 +84,8 @@ namespace detail
 {
 template <typename T>
 using bit_unsigned_int = etl::bool_constant<etl::disjunction_v<
-  etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
-  etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
-  etl::is_same<T, unsigned long long>>>;
+  etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
+  etl::is_same<T, unsigned long>, etl::is_same<T, unsigned long long>>>;
 
 template <typename T>
 inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;

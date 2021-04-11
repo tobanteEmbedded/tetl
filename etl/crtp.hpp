@@ -36,10 +36,7 @@ struct crtp
     return static_cast<Type const&>(*this);
   }
 
-  [[nodiscard]] constexpr auto underlying() noexcept -> Type&
-  {
-    return static_cast<Type&>(*this);
-  }
+  [[nodiscard]] constexpr auto underlying() noexcept -> Type& { return static_cast<Type&>(*this); }
 };
 
 }  // namespace etl

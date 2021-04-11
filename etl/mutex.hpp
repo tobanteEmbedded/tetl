@@ -125,16 +125,11 @@ struct unique_lock
   /// Additionally: Tries to lock the associated mutex without blocking by
   /// calling m.try_lock(). The behavior is undefined if the current thread
   /// already owns the mutex except when the mutex is recursive.
-  unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : mutex_ {&m}
-  {
-    try_lock();
-  }
+  unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : mutex_ {&m} { try_lock(); }
 
   /// \brief Constructs a unique_lock with m as the associated mutex.
   /// Additionally: Assumes the calling thread already owns m.
-  unique_lock(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ {&m}, owns_ {true}
-  {
-  }
+  unique_lock(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ {&m}, owns_ {true} { }
 
   /// \brief Constructs a unique_lock with m as the associated mutex.
   /// Additionally: Tries to lock the associated mutex by calling
@@ -142,8 +137,7 @@ struct unique_lock
   /// been reached or the lock is acquired, whichever comes first. May block for
   /// longer than until timeout_time has been reached.
   template <typename Clock, typename Duration>
-  unique_lock(mutex_type& m,
-              chrono::time_point<Clock, Duration> const& abs_time) noexcept
+  unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& abs_time) noexcept
       : mutex_ {&m}
   {
     try_lock_until(abs_time);
@@ -155,9 +149,7 @@ struct unique_lock
   /// has elapsed or the lock is acquired, whichever comes first. May block for
   /// longer than timeout_duration.
   template <typename Rep, typename Period>
-  unique_lock(mutex_type& m,
-              chrono::duration<Rep, Period> const& rel_time) noexcept
-      : mutex_ {&m}
+  unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& rel_time) noexcept : mutex_ {&m}
   {
     try_lock_for(rel_time);
   }
@@ -225,8 +217,9 @@ struct unique_lock
   /// longer than timeout_duration due to scheduling or resource contention
   /// delays.
   template <typename Rep, typename Period>
-  auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(
-    noexcept(mutex_->try_lock_for(dur))) -> bool
+  auto
+  try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(noexcept(mutex_->try_lock_for(dur)))
+    -> bool
   {
     if ((mutex_ != nullptr) && !owns_)
     {
@@ -302,8 +295,7 @@ struct unique_lock
 /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
 /// of lhs with that of rhs.
 template <typename Mutex>
-void swap(unique_lock<Mutex>& lhs,
-          unique_lock<Mutex>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+void swap(unique_lock<Mutex>& lhs, unique_lock<Mutex>& rhs) noexcept(noexcept(lhs.swap(rhs)))
 {
   lhs.swap(rhs);
 }

@@ -29,8 +29,7 @@
 #include "etl/cstddef.hpp"
 #include "etl/memory.hpp"
 
-TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t,
-                   uint32_t, uint64_t)
+TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t, uint32_t, uint64_t)
 {
   using int_ptr_t = etl::small_ptr<int, 0, TestType>;
   STATIC_REQUIRE(sizeof(int_ptr_t) == sizeof(TestType));
@@ -39,8 +38,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t,
   STATIC_REQUIRE(sizeof(float_ptr_t) == sizeof(TestType));
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: construct()", "[memory]", int, float,
-                   long)
+TEMPLATE_TEST_CASE("memory/small_ptr: construct()", "[memory]", int, float, long)
 {
   using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
   auto ptr    = ptr_t {};
@@ -48,15 +46,13 @@ TEMPLATE_TEST_CASE("memory/small_ptr: construct()", "[memory]", int, float,
   REQUIRE(true);
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int,
-                   float, long)
+TEMPLATE_TEST_CASE("memory/small_ptr: construct(nullptr)", "[memory]", int, float, long)
 {
   using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
   REQUIRE(ptr_t {nullptr}.compressed_value() == 0U);
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: offset(64bit)", "[memory]", long long,
-                   double)
+TEMPLATE_TEST_CASE("memory/small_ptr: offset(64bit)", "[memory]", long long, double)
 {
   using namespace Catch::Generators;
   using ptr_t = etl::small_ptr<TestType const, 16, uintptr_t>;
@@ -67,8 +63,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: offset(64bit)", "[memory]", long long,
   }));
   auto ptr    = ptr_t {reinterpret_cast<TestType*>(addr)};
   REQUIRE(ptr.compressed_value() == static_cast<uintptr_t>(addr - 16));
-  REQUIRE(reinterpret_cast<uintptr_t>(ptr.operator->())
-          == static_cast<uintptr_t>(addr));
+  REQUIRE(reinterpret_cast<uintptr_t>(ptr.operator->()) == static_cast<uintptr_t>(addr));
 }
 
 TEMPLATE_TEST_CASE("memory/small_ptr: get", "[memory]", int, float, long)
@@ -109,8 +104,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator*", "[memory]", int, float, long)
   }
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: operator Type*", "[memory]", int, float,
-                   long)
+TEMPLATE_TEST_CASE("memory/small_ptr: operator Type*", "[memory]", int, float, long)
 {
   using ptr_t = etl::small_ptr<TestType, 0, uintptr_t>;
 
@@ -120,8 +114,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator Type*", "[memory]", int, float,
   func(ptr);
 }
 
-TEMPLATE_TEST_CASE("memory/small_ptr: operator Type const*", "[memory]", int,
-                   float, long)
+TEMPLATE_TEST_CASE("memory/small_ptr: operator Type const*", "[memory]", int, float, long)
 {
   using ptr_t = etl::small_ptr<TestType const, 0, uintptr_t>;
 
@@ -180,8 +173,7 @@ TEMPLATE_TEST_CASE("memory/small_ptr: operator++", "[memory]", int, float, long)
   }
 }
 
-TEMPLATE_TEST_CASE("memory/pointer_int_pair: pointer_int_pair", "[memory]",
-                   long long, double)
+TEMPLATE_TEST_CASE("memory/pointer_int_pair: pointer_int_pair", "[memory]", long long, double)
 {
   using etl::pointer_int_pair;
 
@@ -278,10 +270,7 @@ TEST_CASE("memory: destroy_at", "[memory]")
   alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
   auto counter = 0;
-  for (auto i = 0U; i < 8; ++i)
-  {
-    new (buffer + sizeof(Counter) * i) Counter {counter};
-  }
+  for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter {counter}; }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -302,10 +291,7 @@ TEST_CASE("memory: destroy", "[memory]")
   alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
   auto counter = 0;
-  for (auto i = 0U; i < 8; ++i)
-  {
-    new (buffer + sizeof(Counter) * i) Counter {counter};
-  }
+  for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter {counter}; }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -326,10 +312,7 @@ TEST_CASE("memory: destroy_n", "[memory]")
   alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
   auto counter = 0;
-  for (auto i = 0U; i < 8; ++i)
-  {
-    new (&buffer[0] + sizeof(Counter) * i) Counter {counter};
-  }
+  for (auto i = 0U; i < 8; ++i) { new (&buffer[0] + sizeof(Counter) * i) Counter {counter}; }
   REQUIRE(counter == 0);
 
   auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);

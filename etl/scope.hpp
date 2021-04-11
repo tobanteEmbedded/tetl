@@ -65,8 +65,7 @@ namespace detail
 struct scope_exit_impl
 {
   scope_exit_impl() = default;
-  scope_exit_impl(scope_exit_impl&& rhs) noexcept
-      : should_execute {rhs.should_execute}
+  scope_exit_impl(scope_exit_impl&& rhs) noexcept : should_execute {rhs.should_execute}
   {
     rhs.release();
   }

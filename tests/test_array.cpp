@@ -27,10 +27,9 @@
 #include "etl/array.hpp"
 #include "etl/numeric.hpp"
 
-TEMPLATE_TEST_CASE("array: construct default", "[array]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("array: construct default", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   etl::array<TestType, 2> arr {};
 
@@ -39,28 +38,26 @@ TEMPLATE_TEST_CASE("array: construct default", "[array]", etl::uint8_t,
   REQUIRE(arr[1] == TestType {0});
 }
 
-TEMPLATE_TEST_CASE("array: deduction guide", "[array]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("array: deduction guide", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   auto const x = TestType {10};
   auto a       = etl::array {TestType {1}, TestType {2}, x};
   REQUIRE(a.size() == 3);
 }
 
-TEMPLATE_TEST_CASE("array: size", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: size", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
   etl::array<TestType, 4> arr {};
   REQUIRE(arr.size() == arr.max_size());
   REQUIRE(arr.size() == 4);
 }
 
-TEMPLATE_TEST_CASE("array: range-for", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: range-for", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   etl::array<TestType, 4> arr {};
   etl::iota(etl::begin(arr), etl::end(arr), TestType {0});
@@ -69,9 +66,8 @@ TEMPLATE_TEST_CASE("array: range-for", "[array]", etl::uint8_t, etl::int8_t,
   for (auto& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
 }
 
-TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   etl::array<TestType, 4> arr {};
   etl::iota(etl::begin(arr), etl::end(arr), TestType {0});
@@ -84,9 +80,8 @@ TEMPLATE_TEST_CASE("array: range-for-const", "[array]", etl::uint8_t,
   for (auto const& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
 }
 
-TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   SECTION("const")
   {
@@ -100,16 +95,12 @@ TEMPLATE_TEST_CASE("array: begin/end", "[array]", etl::uint8_t, etl::int8_t,
     REQUIRE(*arr.data() == 0);
 
     auto counter = 0;
-    for (auto const& x : arr)
-    {
-      REQUIRE(x == static_cast<TestType>(counter++));
-    }
+    for (auto const& x : arr) { REQUIRE(x == static_cast<TestType>(counter++)); }
   }
 }
 
-TEMPLATE_TEST_CASE("array: rbegin/rend", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: rbegin/rend", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   SECTION("mutable")
   {
@@ -136,9 +127,9 @@ TEMPLATE_TEST_CASE("array: rbegin/rend", "[array]", etl::uint8_t, etl::int8_t,
   }
 }
 
-TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
   auto arr = []()
   {
@@ -158,9 +149,8 @@ TEMPLATE_TEST_CASE("array: at", "[array]", etl::uint8_t, etl::int8_t,
   REQUIRE(arr[3] == TestType {3});
 }
 
-TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   auto const arr = []()
   {
@@ -180,9 +170,8 @@ TEMPLATE_TEST_CASE("array: at const", "[array]", etl::uint8_t, etl::int8_t,
   REQUIRE(arr[3] == TestType {3});
 }
 
-TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   auto arr = []()
   {
@@ -195,9 +184,8 @@ TEMPLATE_TEST_CASE("array: front/back", "[array]", etl::uint8_t, etl::int8_t,
   REQUIRE(arr.back() == 3);
 }
 
-TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   auto const arr = []()
   {
@@ -210,52 +198,43 @@ TEMPLATE_TEST_CASE("array: front/back const", "[array]", etl::uint8_t,
   REQUIRE(arr.back() == 3);
 }
 
-TEMPLATE_TEST_CASE("array: fill", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: fill", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
   etl::array<TestType, 4> arr {};
-  REQUIRE(etl::all_of(begin(arr), end(arr),
-                      [](auto const& val) { return val == 0; }));
+  REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 0; }));
 
   arr.fill(TestType {42});
-  REQUIRE(etl::all_of(begin(arr), end(arr),
-                      [](auto const& val) { return val == 42; }));
+  REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 42; }));
 
   arr.fill(TestType {1});
-  REQUIRE(etl::all_of(begin(arr), end(arr),
-                      [](auto const& val) { return val == 1; }));
+  REQUIRE(etl::all_of(begin(arr), end(arr), [](auto const& val) { return val == 1; }));
 }
 
-TEMPLATE_TEST_CASE("array: swap", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: swap", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
   etl::array<TestType, 4> a {};
   a.fill(TestType {1});
   etl::array<TestType, 4> b {};
 
-  REQUIRE(
-    etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
-  REQUIRE(
-    etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
+  REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
+  REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
 
   a.swap(b);
-  REQUIRE(
-    etl::all_of(begin(a), end(a), [](auto const& val) { return val == 0; }));
-  REQUIRE(
-    etl::all_of(begin(b), end(b), [](auto const& val) { return val == 1; }));
+  REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 0; }));
+  REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 1; }));
 
   etl::swap(a, b);
-  REQUIRE(
-    etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
-  REQUIRE(
-    etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
+  REQUIRE(etl::all_of(begin(a), end(a), [](auto const& val) { return val == 1; }));
+  REQUIRE(etl::all_of(begin(b), end(b), [](auto const& val) { return val == 0; }));
 }
 
-TEMPLATE_TEST_CASE("array: comparsion", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: comparsion", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   SECTION("not equal")
   {
@@ -284,9 +263,9 @@ TEMPLATE_TEST_CASE("array: comparsion", "[array]", etl::uint8_t, etl::int8_t,
   }
 }
 
-TEMPLATE_TEST_CASE("array: tuple_size", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: tuple_size", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   STATIC_REQUIRE(etl::tuple_size<etl::array<TestType, 1>>::value == 1);
 
@@ -300,18 +279,17 @@ TEMPLATE_TEST_CASE("array: tuple_size", "[array]", etl::uint8_t, etl::int8_t,
   STATIC_REQUIRE(etl::tuple_size_v<decltype(arr5)> == 5);
 }
 
-TEMPLATE_TEST_CASE("array: tuple_element", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: tuple_element", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   STATIC_REQUIRE(
-    etl::is_same_v<
-      typename etl::tuple_element<1, etl::array<TestType, 2>>::type, TestType>);
+    etl::is_same_v<typename etl::tuple_element<1, etl::array<TestType, 2>>::type, TestType>);
 }
 
-TEMPLATE_TEST_CASE("array: get", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: get", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 {
   auto a = etl::array<TestType, 3> {};
 
@@ -324,9 +302,9 @@ TEMPLATE_TEST_CASE("array: get", "[array]", etl::uint8_t, etl::int8_t,
   REQUIRE(etl::get<2>(a) == TestType {3});
 }
 
-TEMPLATE_TEST_CASE("array: to_array", "[array]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("array: to_array", "[array]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   SECTION("cppreference.com example")
   {

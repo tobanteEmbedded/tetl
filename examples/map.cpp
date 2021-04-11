@@ -49,8 +49,7 @@ struct Key
 auto custom_compare() -> void
 {
   // Lambda for comparing to objects of type Key.
-  constexpr auto compare
-    = [](Key& lhs, Key& rhs) { return lhs.key() < rhs.key(); };
+  constexpr auto compare = [](Key& lhs, Key& rhs) { return lhs.key() < rhs.key(); };
 
   // Create map of with <Key,int> pair with the comparator compare, no elements
   // and a capacity of 16.

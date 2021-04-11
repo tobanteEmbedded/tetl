@@ -56,10 +56,7 @@ using double_t = double;
 /// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
-[[nodiscard]] constexpr auto isinf(float arg) -> bool
-{
-  return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(float arg) -> bool { return arg == INFINITY; }
 
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
@@ -67,10 +64,7 @@ using double_t = double;
 /// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
-[[nodiscard]] constexpr auto isinf(double arg) -> bool
-{
-  return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(double arg) -> bool { return arg == INFINITY; }
 
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
@@ -78,10 +72,7 @@ using double_t = double;
 /// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
-[[nodiscard]] constexpr auto isinf(long double arg) -> bool
-{
-  return arg == INFINITY;
-}
+[[nodiscard]] constexpr auto isinf(long double arg) -> bool { return arg == INFINITY; }
 
 /// \brief A set of overloads or a function template accepting the arg argument
 /// of any integral type. Equivalent to cast to double.
@@ -89,8 +80,7 @@ using double_t = double;
 /// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
-template <typename IntegralType,
-          TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
+template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
 [[nodiscard]] constexpr auto isinf(IntegralType arg) -> bool
 {
   return isinf(static_cast<double>(arg));
@@ -112,17 +102,13 @@ template <typename IntegralType,
 /// (NaN) value.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
-[[nodiscard]] constexpr auto isnan(long double arg) -> bool
-{
-  return arg != arg;
-}
+[[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg != arg; }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
-template <typename IntegralType,
-          TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
+template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
 [[nodiscard]] constexpr auto isnan(IntegralType arg) -> bool
 {
   return isnan(static_cast<double>(arg));
@@ -184,8 +170,7 @@ template <typename Float>
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
 /// https://en.cppreference.com/w/cpp/numeric/lerp
-[[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept
-  -> double
+[[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept -> double
 {
   return detail::lerp_impl<double>(a, b, t);
 }
@@ -194,8 +179,7 @@ template <typename Float>
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
 /// https://en.cppreference.com/w/cpp/numeric/lerp
-[[nodiscard]] constexpr auto lerp(long double a, long double b,
-                                  long double t) noexcept -> long double
+[[nodiscard]] constexpr auto lerp(long double a, long double b, long double t) noexcept -> long double
 {
   return detail::lerp_impl<long double>(a, b, t);
 }
@@ -220,19 +204,13 @@ template <typename T>
 /// undefined if the result cannot be represented by the return type. If abs
 /// is called with an unsigned integral argument that cannot be converted to int
 /// by integral promotion, the program is ill-formed.
-[[nodiscard]] constexpr auto abs(int n) noexcept -> int
-{
-  return detail::abs_impl<int>(n);
-}
+[[nodiscard]] constexpr auto abs(int n) noexcept -> int { return detail::abs_impl<int>(n); }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
 /// undefined if the result cannot be represented by the return type. If abs
 /// is called with an unsigned integral argument that cannot be converted to int
 /// by integral promotion, the program is ill-formed.
-[[nodiscard]] constexpr auto abs(long n) noexcept -> long
-{
-  return detail::abs_impl<long>(n);
-}
+[[nodiscard]] constexpr auto abs(long n) noexcept -> long { return detail::abs_impl<long>(n); }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
 /// undefined if the result cannot be represented by the return type. If abs

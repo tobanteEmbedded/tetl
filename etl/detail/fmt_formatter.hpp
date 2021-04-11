@@ -57,8 +57,7 @@ template <>
 struct formatter<char const*, char>
 {
   template <typename FormatContext>
-  constexpr auto format(char const* val, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
   {
     return etl::copy(val, val + etl::strlen(val), fc.out());
   }
@@ -69,8 +68,7 @@ template <::etl::size_t N>
 struct formatter<char[N], char>
 {
   template <typename FormatContext>
-  constexpr auto format(char const* val, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
   {
     return etl::copy(val, val + N, fc.out());
   }
@@ -81,8 +79,7 @@ template <>
 struct formatter<etl::string_view, char>
 {
   template <typename FormatContext>
-  constexpr auto format(etl::string_view str, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(etl::string_view str, FormatContext& fc) -> decltype(fc.out())
   {
     return etl::copy(begin(str), end(str), fc.out());
   }
@@ -93,8 +90,8 @@ template <etl::size_t Capacity>
 struct formatter<etl::static_string<Capacity>, char>
 {
   template <typename FormatContext>
-  constexpr auto format(etl::static_string<Capacity> const& str,
-                        FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(etl::static_string<Capacity> const& str, FormatContext& fc)
+    -> decltype(fc.out())
   {
     return formatter<::etl::string_view>().format(str, fc);
   }
@@ -157,8 +154,7 @@ template <>
 struct formatter<unsigned short, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned short val, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(unsigned short val, FormatContext& fc) -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);
@@ -184,8 +180,7 @@ template <>
 struct formatter<unsigned long, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned long val, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(unsigned long val, FormatContext& fc) -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);
@@ -198,8 +193,7 @@ template <>
 struct formatter<unsigned long long, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned long long val, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(unsigned long long val, FormatContext& fc) -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);

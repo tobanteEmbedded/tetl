@@ -25,6 +25,7 @@
 #define TAETL_WARNING_HPP
 namespace etl
 {
+/// Explicitly ignore arguments or variables.
 template <typename... Types>
 auto ignore_unused(Types&&... /*unused*/) -> void
 {

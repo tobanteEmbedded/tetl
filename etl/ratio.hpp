@@ -65,8 +65,7 @@ struct ratio
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
-using ratio_add
-  = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
+using ratio_add = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
 
 /// \brief The alias template etl::ratio_subtract denotes the result of
 /// subtracting two exact rational fractions represented by the etl::ratio
@@ -79,8 +78,7 @@ using ratio_add
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
-using ratio_subtract
-  = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
+using ratio_subtract = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
 
 /// \brief The alias template etl::ratio_multiply denotes the result of
 /// multiplying two exact rational fractions represented by the etl::ratio
@@ -112,9 +110,7 @@ using ratio_divide = ratio<R1::num * R2::den, R1::den * R2::num>;
 /// ratios R1 and R2 are equal, provides the member constant value equal true.
 /// Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_equal
-    : public etl::integral_constant<bool,
-                                    R1::num == R2::num && R1::den == R2::den>
+struct ratio_equal : public etl::integral_constant<bool, R1::num == R2::num && R1::den == R2::den>
 {
 };
 
@@ -125,8 +121,7 @@ inline constexpr bool ratio_equal_v = ratio_equal<R1, R2>::value;
 /// ratios R1 and R2 are not equal, provides the member constant value equal
 /// true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_not_equal
-    : etl::integral_constant<bool, !etl::ratio_equal_v<R1, R2>>
+struct ratio_not_equal : etl::integral_constant<bool, !etl::ratio_equal_v<R1, R2>>
 {
 };
 
@@ -137,9 +132,7 @@ inline constexpr bool ratio_not_equal_v = ratio_not_equal<R1, R2>::value;
 /// R1 is less than the ratio R2, provides the member constant value equal true.
 /// Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_less
-    : public etl::integral_constant<bool,
-                                    (R1::num * R2::den < R2::num * R1::den)>
+struct ratio_less : public etl::integral_constant<bool, (R1::num * R2::den < R2::num * R1::den)>
 {
 };
 
@@ -151,8 +144,7 @@ inline constexpr bool ratio_less_v = ratio_less<R1, R2>::value;
 /// equal true. Otherwise, value is false.
 template <typename R1, typename R2>
 struct ratio_less_equal
-    : public etl::integral_constant<bool,
-                                    (R1::num * R2::den <= R2::num * R1::den)>
+    : public etl::integral_constant<bool, (R1::num * R2::den <= R2::num * R1::den)>
 {
 };
 
@@ -163,9 +155,7 @@ inline constexpr bool ratio_less_equal_v = ratio_less_equal<R1, R2>::value;
 /// R1 is greater than the ratio R2, provides the member constant value equal
 /// true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_greater
-    : public etl::integral_constant<bool,
-                                    (R1::num * R2::den > R2::num * R1::den)>
+struct ratio_greater : public etl::integral_constant<bool, (R1::num * R2::den > R2::num * R1::den)>
 {
 };
 
@@ -177,14 +167,12 @@ inline constexpr bool ratio_greater_v = ratio_greater<R1, R2>::value;
 /// value equal true. Otherwise, value is false.
 template <typename R1, typename R2>
 struct ratio_greater_equal
-    : public etl::integral_constant<bool,
-                                    (R1::num * R2::den >= R2::num * R1::den)>
+    : public etl::integral_constant<bool, (R1::num * R2::den >= R2::num * R1::den)>
 {
 };
 
 template <typename R1, typename R2>
-inline constexpr bool ratio_greater_equal_v
-  = ratio_greater_equal<R1, R2>::value;
+inline constexpr bool ratio_greater_equal_v = ratio_greater_equal<R1, R2>::value;
 
 using atto  = ratio<1, 1'000'000'000'000'000'000>;
 using femto = ratio<1, 1'000'000'000'000'000>;

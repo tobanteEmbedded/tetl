@@ -31,10 +31,7 @@ namespace
 class test_mutex
 {
   public:
-  test_mutex(bool failOnTryLock = false) noexcept
-      : failOnTryLock_ {failOnTryLock}
-  {
-  }
+  test_mutex(bool failOnTryLock = false) noexcept : failOnTryLock_ {failOnTryLock} { }
 
   ~test_mutex() noexcept = default;
 

@@ -118,10 +118,7 @@ constexpr auto advance(It& it, Distance n) -> void
   static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
 
   auto dist = typename etl::iterator_traits<It>::difference_type(n);
-  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
-  {
-    it += dist;
-  }
+  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>) { it += dist; }
   else
   {
     while (dist > 0)
@@ -144,16 +141,12 @@ constexpr auto advance(It& it, Distance n) -> void
 ///
 /// https://en.cppreference.com/w/cpp/iterator/distance
 template <typename It>
-constexpr auto distance(It first, It last) ->
-  typename etl::iterator_traits<It>::difference_type
+constexpr auto distance(It first, It last) -> typename etl::iterator_traits<It>::difference_type
 {
   using category = typename etl::iterator_traits<It>::iterator_category;
   static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
 
-  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>)
-  {
-    return last - first;
-  }
+  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>) { return last - first; }
   else
   {
     typename etl::iterator_traits<It>::difference_type result = 0;
@@ -168,8 +161,8 @@ constexpr auto distance(It first, It last) ->
 
 /// \brief Return the nth successor of iterator it.
 template <typename InputIt>
-[[nodiscard]] constexpr auto
-next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
+[[nodiscard]] constexpr auto next(InputIt it,
+                                  typename etl::iterator_traits<InputIt>::difference_type n = 1)
   -> InputIt
 {
   etl::advance(it, n);
@@ -178,8 +171,8 @@ next(InputIt it, typename etl::iterator_traits<InputIt>::difference_type n = 1)
 
 /// \brief Return the nth predecessor of iterator it.
 template <typename BidirIt>
-[[nodiscard]] constexpr auto
-prev(BidirIt it, typename etl::iterator_traits<BidirIt>::difference_type n = 1)
+[[nodiscard]] constexpr auto prev(BidirIt it,
+                                  typename etl::iterator_traits<BidirIt>::difference_type n = 1)
   -> BidirIt
 {
   etl::advance(it, -n);
@@ -221,16 +214,14 @@ class reverse_iterator
   ///
   /// \details The underlying iterator is initialized with that of other.
   template <class Other>
-  constexpr reverse_iterator(reverse_iterator<Other> const& other)
-      : current_(other.base())
+  constexpr reverse_iterator(reverse_iterator<Other> const& other) : current_(other.base())
   {
   }
 
   /// \brief The underlying iterator is assigned the value of the underlying
   /// iterator of other, i.e. other.base().
   template <class Other>
-  constexpr auto operator=(reverse_iterator<Other> const& other)
-    -> reverse_iterator&
+  constexpr auto operator=(reverse_iterator<Other> const& other) -> reverse_iterator&
   {
     current_ = other.base();
     return *this;
@@ -247,10 +238,7 @@ class reverse_iterator
   }
 
   /// \brief Returns a pointer to the element previous to current.
-  constexpr auto operator->() const -> pointer
-  {
-    return etl::addressof(operator*());
-  }
+  constexpr auto operator->() const -> pointer { return etl::addressof(operator*()); }
 
   /// \brief Pre-increments by one respectively.
   constexpr auto operator++() -> reverse_iterator&
@@ -309,10 +297,7 @@ class reverse_iterator
   }
 
   /// \brief Returns a reference to the element at specified relative location.
-  constexpr auto operator[](difference_type n) const -> reference
-  {
-    return *(*this + n);
-  }
+  constexpr auto operator[](difference_type n) const -> reference { return *(*this + n); }
 
   private:
   Iter current_;
@@ -322,8 +307,7 @@ class reverse_iterator
 /// for the given iterator i (which must be a LegacyBidirectionalIterator) with
 /// the type deduced from the type of the argument.
 template <typename Iter>
-[[nodiscard]] constexpr auto make_reverse_iterator(Iter i) noexcept
-  -> etl::reverse_iterator<Iter>
+[[nodiscard]] constexpr auto make_reverse_iterator(Iter i) noexcept -> etl::reverse_iterator<Iter>
 {
   return etl::reverse_iterator<Iter>(i);
 }
@@ -332,8 +316,7 @@ template <typename Iter>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator==(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() == rhs.base();
 }
@@ -342,8 +325,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator!=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() != rhs.base();
 }
@@ -352,8 +334,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<(etl::reverse_iterator<Iter1> const& lhs,
-                                       etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() < rhs.base();
 }
@@ -362,8 +343,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() <= rhs.base();
 }
@@ -372,8 +352,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>(etl::reverse_iterator<Iter1> const& lhs,
-                                       etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() > rhs.base();
 }
@@ -382,8 +361,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs)
-  -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
   return lhs.base() >= rhs.base();
 }
@@ -414,16 +392,14 @@ class back_insert_iterator
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type const& value)
-    -> back_insert_iterator&
+  constexpr auto operator=(typename Container::value_type const& value) -> back_insert_iterator&
   {
     container_->push_back(value);
     return *this;
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type&& value)
-    -> back_insert_iterator&
+  constexpr auto operator=(typename Container::value_type&& value) -> back_insert_iterator&
   {
     container_->push_back(etl::move(value));
     return *this;
@@ -455,8 +431,7 @@ class back_insert_iterator
 /// etl::back_insert_iterator for the container c with the type deduced from the
 /// type of the argument.
 template <typename Container>
-[[nodiscard]] constexpr auto back_inserter(Container& container)
-  -> back_insert_iterator<Container>
+[[nodiscard]] constexpr auto back_inserter(Container& container) -> back_insert_iterator<Container>
 {
   return etl::back_insert_iterator<Container>(container);
 }
@@ -493,16 +468,14 @@ class front_insert_iterator
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type const& value)
-    -> front_insert_iterator&
+  constexpr auto operator=(typename Container::value_type const& value) -> front_insert_iterator&
   {
     container_->push_front(value);
     return *this;
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type&& value)
-    -> front_insert_iterator&
+  constexpr auto operator=(typename Container::value_type&& value) -> front_insert_iterator&
   {
     container_->push_front(etl::move(value));
     return *this;
@@ -531,8 +504,7 @@ class front_insert_iterator
 /// etl::front_insert_iterator for the container c with the type deduced from
 /// the type of the argument.
 template <typename Container>
-[[nodiscard]] constexpr auto front_inserter(Container& c)
-  -> etl::front_insert_iterator<Container>
+[[nodiscard]] constexpr auto front_inserter(Container& c) -> etl::front_insert_iterator<Container>
 {
   return etl::front_insert_iterator<Container>(c);
 }
@@ -588,8 +560,7 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
 /// \details Custom overloads of begin may be provided for classes that do
 /// not expose a suitable begin() member function, yet can be iterated.
 template <typename C>
-constexpr auto cbegin(C const& c) noexcept(noexcept(etl::begin(c)))
-  -> decltype(etl::begin(c))
+constexpr auto cbegin(C const& c) noexcept(noexcept(etl::begin(c))) -> decltype(etl::begin(c))
 {
   return etl::begin(c);
 }
@@ -625,8 +596,7 @@ constexpr auto end(T (&array)[N]) noexcept -> T*
 /// element) of the given container c or array array. These templates rely on
 /// C::end() having a reasonable implementation.
 template <typename C>
-constexpr auto cend(C const& c) noexcept(noexcept(etl::end(c)))
-  -> decltype(etl::end(c))
+constexpr auto cend(C const& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
 {
   return etl::end(c);
 }
@@ -690,8 +660,7 @@ constexpr auto crend(Container const& c) -> decltype(etl::rend(c))
 /// \brief Returns the size of the given container c or array array. Returns
 /// c.size(), converted to the return type if necessary.
 template <typename C>
-constexpr auto size(C const& c) noexcept(noexcept(c.size()))
-  -> decltype(c.size())
+constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
 {
   return c.size();
 }
@@ -706,8 +675,7 @@ constexpr auto size(T const (&array)[N]) noexcept -> etl::size_t
 
 /// \brief Returns whether the given container is empty.
 template <typename C>
-constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
-  -> decltype(c.empty())
+constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
 {
   return c.empty();
 }
@@ -731,8 +699,7 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 /// \brief Returns a pointer to the block of memory containing the elements of
 /// the container. Returns c.data().
 template <typename C>
-constexpr auto data(C const& c) noexcept(noexcept(c.data()))
-  -> decltype(c.data())
+constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 {
   return c.data();
 }

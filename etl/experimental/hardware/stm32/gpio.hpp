@@ -55,10 +55,7 @@ enum class pin_state : uint8_t
   set,
 };
 
-inline auto val(pin_number pin) -> etl::uint16_t
-{
-  return static_cast<etl::uint16_t>(pin);
-}
+inline auto val(pin_number pin) -> etl::uint16_t { return static_cast<etl::uint16_t>(pin); }
 
 struct gpio_memory_layout
 {
@@ -101,10 +98,7 @@ struct port
     memory_.output_data = memory_.output_data ^ (1U << val(pin));
   }
 
-  [[nodiscard]] static auto place_at(void* addr) -> port&
-  {
-    return *new (addr) port;
-  }
+  [[nodiscard]] static auto place_at(void* addr) -> port& { return *new (addr) port; }
 
   private:
   gpio_memory_layout memory_;

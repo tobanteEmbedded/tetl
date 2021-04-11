@@ -26,8 +26,7 @@
 #include "etl/bit.hpp"
 #include "etl/limits.hpp"
 
-TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t,
-                   float)
+TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
 {
   SECTION("round trip")
   {
@@ -37,8 +36,7 @@ TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t,
   }
 }
 
-TEMPLATE_TEST_CASE("bit: bit_cast 64bit", "[bit]", etl::uint64_t, etl::int64_t,
-                   double)
+TEMPLATE_TEST_CASE("bit: bit_cast 64bit", "[bit]", etl::uint64_t, etl::int64_t, double)
 {
   SECTION("round trip")
   {
@@ -75,39 +73,33 @@ TEMPLATE_TEST_CASE("bit: rotr", "[bit]", etl::uint8_t)
   CHECK(etl::rotr(i, -1) == 0b00111010);
 }
 
-TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t,
-                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: popcount(unsigned)", "[bit]", etl::uint8_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t)
 {
   REQUIRE(etl::popcount(TestType {1}) == 1);
   REQUIRE(etl::popcount(TestType {2}) == 1);
   REQUIRE(etl::popcount(TestType {3}) == 2);
 }
 
-TEMPLATE_TEST_CASE("bit: popcount(unsigned) constexpr", "[bit]", etl::uint8_t,
-                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: popcount(unsigned) constexpr", "[bit]", etl::uint8_t, etl::uint16_t,
+                   etl::uint32_t, etl::uint64_t)
 {
   STATIC_REQUIRE(etl::popcount(TestType {1}) == 1);
   STATIC_REQUIRE(etl::popcount(TestType {2}) == 1);
   STATIC_REQUIRE(etl::popcount(TestType {3}) == 2);
 }
 
-TEST_CASE("bit: popcount(uint16)", "[bit]")
-{
-  REQUIRE(etl::popcount(uint16_t {0xFFFF}) == 16);
-}
+TEST_CASE("bit: popcount(uint16)", "[bit]") { REQUIRE(etl::popcount(uint16_t {0xFFFF}) == 16); }
 
-TEST_CASE("bit: popcount(uint32)", "[bit]")
-{
-  REQUIRE(etl::popcount(uint32_t {0xFFFFFFFF}) == 32);
-}
+TEST_CASE("bit: popcount(uint32)", "[bit]") { REQUIRE(etl::popcount(uint32_t {0xFFFFFFFF}) == 32); }
 
 TEST_CASE("bit: popcount(uint64)", "[bit]")
 {
   REQUIRE(etl::popcount(uint64_t {0xFFFFFFFFFFFFFFFF}) == 64);
 }
 
-TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: has_single_bit", "[bit]", etl::uint8_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t)
 {
   REQUIRE(etl::has_single_bit(TestType {1 << 0}));
   REQUIRE(etl::has_single_bit(TestType {1 << 1}));
@@ -148,11 +140,10 @@ TEST_CASE("bit: bit_floor", "[bit]")
   REQUIRE(etl::bit_floor(0b00001001UL) == 0b00001000UL);
 }
 
-TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t)
 {
-  REQUIRE(etl::countl_zero(TestType {0})
-          == etl::numeric_limits<TestType>::digits);
+  REQUIRE(etl::countl_zero(TestType {0}) == etl::numeric_limits<TestType>::digits);
 
   REQUIRE(etl::countl_zero(etl::uint8_t {0b1111'1111}) == 0);
   REQUIRE(etl::countl_zero(etl::uint8_t {0b0111'1111}) == 1);
@@ -168,8 +159,8 @@ TEMPLATE_TEST_CASE("bit: countl_zero", "[bit]", etl::uint8_t, etl::uint16_t,
   REQUIRE(etl::countl_zero(etl::uint16_t {0b0000'0000'0000'0001}) == 15);
 }
 
-TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t)
 {
   REQUIRE(etl::countl_one(TestType {etl::numeric_limits<TestType>::max()})
           == etl::numeric_limits<TestType>::digits);
@@ -182,8 +173,8 @@ TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t,
   REQUIRE(etl::countl_one(etl::uint16_t {0b1111'0000'1111'1111}) == 4);
 }
 
-TEMPLATE_TEST_CASE("bit: bit_width", "[bit]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("bit: bit_width", "[bit]", etl::uint8_t, etl::uint16_t, etl::uint32_t,
+                   etl::uint64_t)
 {
   REQUIRE(etl::bit_width(TestType {0}) == 0);
   REQUIRE(etl::bit_width(TestType {1}) == 1);

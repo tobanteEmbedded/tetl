@@ -105,15 +105,13 @@ class span
 
   /// \brief Constructs a span. From a etl::array<Type,Size>.
   template <typename U, etl::size_t N>
-  constexpr span(etl::array<U, N>& arr) noexcept
-      : data_ {arr.data()}, size_ {arr.size()}
+  constexpr span(etl::array<U, N>& arr) noexcept : data_ {arr.data()}, size_ {arr.size()}
   {
   }
 
   /// \brief Constructs a span. From a etl::array<Type,Size> const.
   template <typename U, etl::size_t N>
-  constexpr span(etl::array<U, N> const& arr) noexcept
-      : data_ {arr.data()}, size_ {arr.size()}
+  constexpr span(etl::array<U, N> const& arr) noexcept : data_ {arr.data()}, size_ {arr.size()}
   {
   }
 
@@ -136,18 +134,12 @@ class span
 
   /// \brief Returns an iterator to the first element of the span. If the span
   /// is empty, the returned iterator will be equal to end().
-  [[nodiscard]] constexpr auto begin() const noexcept -> iterator
-  {
-    return &data_[0];
-  }
+  [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return &data_[0]; }
 
   /// \brief Returns an iterator to the element following the last element of
   /// the span. This element acts as a placeholder; attempting to access it
   /// results in undefined behavior
-  [[nodiscard]] constexpr auto end() const noexcept -> iterator
-  {
-    return begin() + size();
-  }
+  [[nodiscard]] constexpr auto end() const noexcept -> iterator { return begin() + size(); }
 
   /// \brief Returns a reference to the first element in the span. Calling
   /// front on an empty span results in undefined behavior.
@@ -155,30 +147,18 @@ class span
 
   /// \brief Returns a reference to the last element in the span. Calling front
   /// on an empty span results in undefined behavior.
-  [[nodiscard]] constexpr auto back() const -> reference
-  {
-    return *(end() - 1);
-  }
+  [[nodiscard]] constexpr auto back() const -> reference { return *(end() - 1); }
 
   /// \brief Returns a reference to the idx-th element of the sequence. The
   /// behavior is undefined if idx is out of range (i.e., if it is greater than
   /// or equal to size()).
-  [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference
-  {
-    return data()[idx];
-  }
+  [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference { return data()[idx]; }
 
   /// \brief Returns a pointer to the beginning of the sequence.
-  [[nodiscard]] constexpr auto data() const noexcept -> pointer
-  {
-    return data_;
-  }
+  [[nodiscard]] constexpr auto data() const noexcept -> pointer { return data_; }
 
   /// \brief Returns the number of elements in the span.
-  [[nodiscard]] constexpr auto size() const noexcept -> size_type
-  {
-    return size_;
-  }
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
   /// \brief Returns the number of elements in the span.
   [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type
@@ -187,10 +167,7 @@ class span
   }
 
   /// \brief Checks if the span is empty.
-  [[nodiscard]] constexpr auto empty() const noexcept -> bool
-  {
-    return size() == 0;
-  }
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
   private:
   pointer data_   = nullptr;
@@ -211,14 +188,12 @@ span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 /// \brief Deduction Guides. From Container.
 template <typename Container,
-          typename Element
-          = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
+          typename Element = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 /// \brief Deduction Guides. From Container const.
 template <typename Container,
-          typename Element = etl::remove_pointer_t<
-            decltype(etl::declval<Container const&>().data())>>
+          typename Element = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 }  // namespace etl
 

@@ -61,8 +61,7 @@
 #endif  // TAETL_HAS_VIRTUAL_DESTRUCTOR
 
 #if not defined(TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION)
-#define TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                           \
-  __has_unique_object_representations(Type)
+#define TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type) __has_unique_object_representations(Type)
 #endif  // TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION
 
 #if not defined(TAETL_IS_ABSTRACT)

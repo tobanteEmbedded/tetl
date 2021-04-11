@@ -68,8 +68,7 @@ constexpr auto current_standard = language_standard::cpp_20;
   return ls == current_standard;
 }
 
-[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls)
-  -> bool
+[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls) -> bool
 {
   return static_cast<long>(ls) > static_cast<long>(current_standard);
 }

@@ -45,8 +45,7 @@ struct to_chars_result
   char* ptr;
   etl::errc ec;
 
-  friend auto operator==(to_chars_result const& lhs,
-                         to_chars_result const& rhs) noexcept -> bool
+  friend auto operator==(to_chars_result const& lhs, to_chars_result const& rhs) noexcept -> bool
   {
     return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
   }
@@ -58,8 +57,7 @@ struct from_chars_result
   char* ptr;
   etl::errc ec;
 
-  friend auto operator==(from_chars_result const& lhs,
-                         from_chars_result const& rhs) noexcept -> bool
+  friend auto operator==(from_chars_result const& lhs, from_chars_result const& rhs) noexcept -> bool
   {
     return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
   }

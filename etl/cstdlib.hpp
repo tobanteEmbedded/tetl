@@ -84,18 +84,12 @@ struct imaxdiv_t
 /// \brief Computes both the quotient and the remainder of the division of the
 /// numerator x by the denominator y. The quotient is the result of the
 /// expression x/y. The remainder is the result of the expression x%y.
-[[nodiscard]] constexpr auto div(int x, int y) noexcept -> div_t
-{
-  return {x / y, x % y};
-}
+[[nodiscard]] constexpr auto div(int x, int y) noexcept -> div_t { return {x / y, x % y}; }
 
 /// \brief Computes both the quotient and the remainder of the division of the
 /// numerator x by the denominator y. The quotient is the result of the
 /// expression x/y. The remainder is the result of the expression x%y.
-[[nodiscard]] constexpr auto div(long x, long y) noexcept -> ldiv_t
-{
-  return {x / y, x % y};
-}
+[[nodiscard]] constexpr auto div(long x, long y) noexcept -> ldiv_t { return {x / y, x % y}; }
 
 /// \brief Computes both the quotient and the remainder of the division of the
 /// numerator x by the denominator y. The quotient is the result of the
@@ -108,10 +102,7 @@ struct imaxdiv_t
 /// \brief Computes both the quotient and the remainder of the division of the
 /// numerator x by the denominator y. The quotient is the result of the
 /// expression x/y. The remainder is the result of the expression x%y.
-[[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> ldiv_t
-{
-  return {x / y, x % y};
-}
+[[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> ldiv_t { return {x / y, x % y}; }
 
 /// \brief Computes both the quotient and the remainder of the division of the
 /// numerator x by the denominator y. The quotient is the result of the
@@ -168,9 +159,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// success. If the converted value falls out of range of corresponding return
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
-[[nodiscard]] constexpr auto strtof(const char* str,
-                                    char const** last = nullptr) noexcept
-  -> float
+[[nodiscard]] constexpr auto strtof(const char* str, char const** last = nullptr) noexcept -> float
 {
   return detail::ascii_to_floating_point<float>(str, last);
 }
@@ -182,9 +171,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// success. If the converted value falls out of range of corresponding return
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
-[[nodiscard]] constexpr auto strtod(const char* str,
-                                    char const** last = nullptr) noexcept
-  -> double
+[[nodiscard]] constexpr auto strtod(const char* str, char const** last = nullptr) noexcept -> double
 {
   return detail::ascii_to_floating_point<float>(str, last);
 }
@@ -196,8 +183,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// success. If the converted value falls out of range of corresponding return
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
-[[nodiscard]] constexpr auto strtold(const char* str,
-                                     char const** last = nullptr) noexcept
+[[nodiscard]] constexpr auto strtold(const char* str, char const** last = nullptr) noexcept
   -> long double
 {
   return detail::ascii_to_floating_point<float>(str, last);
@@ -207,10 +193,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// undefined if the result cannot be represented by the return type. If abs
 /// is called with an unsigned integral argument that cannot be converted to int
 /// by integral promotion, the program is ill-formed.
-[[nodiscard]] constexpr auto labs(long n) noexcept -> long
-{
-  return detail::abs_impl<long>(n);
-}
+[[nodiscard]] constexpr auto labs(long n) noexcept -> long { return detail::abs_impl<long>(n); }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
 /// undefined if the result cannot be represented by the return type. If abs

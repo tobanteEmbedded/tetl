@@ -41,8 +41,7 @@ namespace etl
 /// \group accumulate
 /// \module Algorithm
 template <typename InputIt, typename Type>
-[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
-                                        Type init) noexcept -> Type
+[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init) noexcept -> Type
 {
   for (; first != last; ++first) { init = move(init) + *first; }
   return init;
@@ -63,16 +62,14 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 /// \group reduce
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
-[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init,
-                                    BinaryOp op) -> T
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init, BinaryOp op) -> T
 {
   return accumulate(first, last, init, op);
 }
 
 /// \group reduce
 template <typename InputIter, typename T>
-[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init)
-  -> T
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init) -> T
 {
   return reduce(first, last, init, etl::plus<>());
 }
@@ -93,9 +90,8 @@ template <typename InputIter>
 /// \group adjacent_difference
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
-constexpr auto adjacent_difference(InputIt first, InputIt last,
-                                   OutputIt destination, BinaryOperation op)
-  -> OutputIt
+constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination,
+                                   BinaryOperation op) -> OutputIt
 {
   using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
@@ -116,8 +112,7 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 
 /// \group adjacent_difference
 template <typename InputIt, typename OutputIt>
-constexpr auto adjacent_difference(InputIt first, InputIt last,
-                                   OutputIt destination) -> OutputIt
+constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
   using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
@@ -142,27 +137,20 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 /// \group inner_product
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename T>
-[[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
-                                           InputIt2 first2, T init) -> T
+[[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init)
+  -> T
 {
-  for (; first1 != last1; ++first1, ++first2)
-  {
-    init = etl::move(init) + *first1 * *first2;
-  }
+  for (; first1 != last1; ++first1, ++first2) { init = etl::move(init) + *first1 * *first2; }
   return init;
 }
 
 /// \group inner_product
-template <typename InputIt1, typename InputIt2, typename T,
-          typename BinaryOperation1, typename BinaryOperation2>
-[[nodiscard]] constexpr auto
-inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
-              BinaryOperation1 op1, BinaryOperation2 op2) -> T
+template <typename InputIt1, typename InputIt2, typename T, typename BinaryOperation1,
+          typename BinaryOperation2>
+[[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
+                                           BinaryOperation1 op1, BinaryOperation2 op2) -> T
 {
-  for (; first1 != last1; ++first1, ++first2)
-  {
-    init = op1(etl::move(init), op2(*first1, *first2));
-  }
+  for (; first1 != last1; ++first1, ++first2) { init = op1(etl::move(init), op2(*first1, *first2)); }
   return init;
 }
 
@@ -180,8 +168,8 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
 /// \group partial_sum
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
-constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
-                           BinaryOperation op) -> OutputIt
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, BinaryOperation op)
+  -> OutputIt
 {
   if (first == last) { return destination; }
 
@@ -199,8 +187,7 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
 
 /// \group partial_sum
 template <typename InputIt, typename OutputIt>
-constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
-  -> OutputIt
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
   return etl::partial_sum(first, last, destination, etl::plus<>());
 }
@@ -234,11 +221,9 @@ template <typename M, typename N>
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
-template <
-  typename M, typename N,
-  TAETL_REQUIRES_(
-    (is_integral_v<
-       M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
+template <typename M, typename N,
+          TAETL_REQUIRES_(
+            (is_integral_v<M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
 [[nodiscard]] constexpr auto lcm(M m, N n) ->
 
   etl::common_type_t<M, N>
@@ -271,8 +256,7 @@ template <typename Type>
 ///
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
 /// \group midpoint
-template <typename Int,
-          TAETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+template <typename Int, TAETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
   using U = make_unsigned_t<Int>;
@@ -288,8 +272,7 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
     n    = static_cast<U>(a);
   }
 
-  return static_cast<Int>(
-    a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
+  return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
 /// \group midpoint
@@ -311,8 +294,7 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
 /// \group midpoint
 /// \synopsis_return Pointer
 template <typename Pointer>
-constexpr auto midpoint(Pointer a, Pointer b) noexcept
-  -> enable_if_t<is_pointer_v<Pointer>, Pointer>
+constexpr auto midpoint(Pointer a, Pointer b) noexcept -> enable_if_t<is_pointer_v<Pointer>, Pointer>
 {
   return a + midpoint(ptrdiff_t {0}, b - a);
 }

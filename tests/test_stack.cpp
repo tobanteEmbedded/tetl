@@ -27,10 +27,9 @@
 
 #include "catch2/catch_template_test_macros.hpp"
 
-TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+TEMPLATE_TEST_CASE("stack: stack<static_vector>", "[stack]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
+                   double, long double)
 {
   using pair_type  = etl::pair<int, TestType>;
   using stack_type = etl::stack<pair_type, etl::static_vector<pair_type, 4>>;

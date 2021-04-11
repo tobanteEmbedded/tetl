@@ -105,10 +105,7 @@ TEST_CASE("concepts: signed_integral", "[concepts]")
 
 namespace
 {
-auto unsigned_integral_test(etl::unsigned_integral auto /*unused*/)
-{
-  return true;
-}
+auto unsigned_integral_test(etl::unsigned_integral auto /*unused*/) { return true; }
 
 auto unsigned_integral_test(auto /*unused*/) { return false; }
 }  // namespace

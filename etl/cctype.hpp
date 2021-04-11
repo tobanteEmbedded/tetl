@@ -153,8 +153,8 @@ namespace etl
   auto const horizontalTab  = ch == '\t';
   auto const verticalTab    = ch == '\v';
 
-  return static_cast<int>(space || formFeed || lineFeed || carriageReturn
-                          || horizontalTab || verticalTab);
+  return static_cast<int>(space || formFeed || lineFeed || carriageReturn || horizontalTab
+                          || verticalTab);
 }
 
 /// \brief Checks if the given character is a blank character as classified by

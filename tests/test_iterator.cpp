@@ -30,8 +30,7 @@
 
 #include <list>
 
-TEMPLATE_TEST_CASE("iterator: make_reverse_iterator", "[iterator]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("iterator: make_reverse_iterator", "[iterator]", char, int, float)
 {
   using T   = TestType;
   auto data = etl::array {T(1), T(2), T(3)};
@@ -77,8 +76,7 @@ TEMPLATE_TEST_CASE("iterator: rend", "[iterator]", char, int, float)
     auto cmp  = [](auto val) { return val == T(0); };
     CHECK(etl::all_of(rbegin(data), rend(data), cmp));
     CHECK(etl::all_of(crbegin(data), crend(data), cmp));
-    CHECK(
-      etl::all_of(rbegin(etl::as_const(data)), rend(etl::as_const(data)), cmp));
+    CHECK(etl::all_of(rbegin(etl::as_const(data)), rend(etl::as_const(data)), cmp));
   }
 }
 
@@ -187,8 +185,7 @@ TEMPLATE_TEST_CASE("iterator: prev", "[iterator]", char, int, float)
   }
 }
 
-TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int, float)
 {
   SECTION("insert rvalue")
   {
@@ -224,8 +221,7 @@ TEMPLATE_TEST_CASE("iterator: back_insert_iterator", "[iterator]", char, int,
   }
 }
 
-TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int,
-                   float)
+TEMPLATE_TEST_CASE("iterator: front_insert_iterator", "[iterator]", char, int, float)
 {
   SECTION("construct")
   {

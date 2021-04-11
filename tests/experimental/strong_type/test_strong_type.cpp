@@ -25,10 +25,9 @@
 
 #include "etl/experimental/strong_type/strong_type.hpp"
 
-TEMPLATE_TEST_CASE("experimental/strong_type: construct", "[experimental]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: construct", "[experimental]", etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+                   etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
   using Kilogram = strong_type<TestType, struct Kilogram_tag>;
@@ -38,10 +37,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: construct", "[experimental]",
   REQUIRE(kilo.raw_value() == TestType {0});
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 
@@ -85,10 +83,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: type_traits", "[experimental]",
   STATIC_REQUIRE(!etl::has_virtual_destructor_v<Kilogram>);
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: skill::addable", "[experimental]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::addable", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 
@@ -99,10 +96,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: skill::addable", "[experimental]",
   REQUIRE(sum.raw_value() == TestType(3));
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: skill::subtractable",
-                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::subtractable", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 
@@ -113,10 +109,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: skill::subtractable",
   REQUIRE(sum.raw_value() == TestType(1));
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: skill::multipliable",
-                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::multipliable", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 
@@ -127,10 +122,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: skill::multipliable",
   REQUIRE(sum.raw_value() == TestType(4));
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: skill::divisible",
-                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::divisible", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 
@@ -141,10 +135,9 @@ TEMPLATE_TEST_CASE("experimental/strong_type: skill::divisible",
   REQUIRE(sum.raw_value() == TestType(1));
 }
 
-TEMPLATE_TEST_CASE("experimental/strong_type: skill::comparable",
-                   "[experimental]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/strong_type: skill::comparable", "[experimental]", etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   using namespace etl::experimental;
 

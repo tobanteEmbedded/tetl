@@ -30,8 +30,8 @@
 #include "etl/numeric.hpp"   // for midpoint, accumulate, gcd
 #include "etl/vector.hpp"    // for static_vector
 
-TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
-                   etl::int16_t, etl::int32_t, etl::int64_t)
+TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t, etl::int16_t, etl::int32_t,
+                   etl::int64_t)
 {
   REQUIRE(etl::abs<TestType>(0) == TestType {0});
   REQUIRE(etl::abs<TestType>(1) == TestType {1});
@@ -40,8 +40,7 @@ TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
   REQUIRE(etl::abs<TestType>(-10) == TestType {10});
 }
 
-TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double,
-                   long double)
+TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double, long double)
 {
   REQUIRE(etl::abs<TestType>(0.0) == TestType {0.0});
   REQUIRE(etl::abs<TestType>(1.0) == TestType {1.0});
@@ -50,9 +49,8 @@ TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double,
   REQUIRE(etl::abs<TestType>(-10.0) == TestType {10.0});
 }
 
-TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,
-                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
-                   float, double, long double)
+TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t, etl::int64_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double, long double)
 {
   SECTION("from 0")
   {
@@ -75,9 +73,9 @@ TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,
   }
 }
 
-TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
-                   etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-                   etl::uint64_t, float, double, long double)
+TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t, etl::int32_t,
+                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
+                   long double)
 {
   using etl::adjacent_difference;
   using etl::array;
@@ -107,9 +105,8 @@ TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
   }
 }
 
-TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
-                   etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-                   etl::uint64_t, float, double, long double)
+TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t, etl::int32_t, etl::int64_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double, long double)
 {
   // 0 1 2 3 4
   etl::static_vector<TestType, 6> a {};
@@ -127,13 +124,11 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
   b.push_back(TestType {3});
   b.push_back(TestType {1});
 
-  auto product
-    = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0});
+  auto product = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0});
   REQUIRE(product == TestType {21});
 
-  auto pairwiseMatches
-    = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0},
-                         etl::plus<> {}, etl::equal_to<> {});
+  auto pairwiseMatches = etl::inner_product(a.begin(), a.end(), b.begin(), TestType {0},
+                                            etl::plus<> {}, etl::equal_to<> {});
   REQUIRE(pairwiseMatches == TestType {2});
 }
 
@@ -162,9 +157,8 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
 //     }
 // }
 
-TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
-                   etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-                   etl::uint64_t, float, double, long double)
+TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t, etl::int32_t, etl::int64_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double, long double)
 {
   using T  = TestType;
   auto vec = etl::array {T(1), T(2), T(3), T(4)};
@@ -175,9 +169,8 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
   REQUIRE(etl::accumulate(vec.begin(), vec.end(), T {0}, func) == T(20));
 }
 
-TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
-                   etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
-                   float, double, long double)
+TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t, etl::int64_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double, long double)
 {
   using T  = TestType;
   auto vec = etl::array {T(1), T(2), T(3), T(4)};
@@ -188,9 +181,8 @@ TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
   REQUIRE(etl::reduce(vec.begin(), vec.end(), T {0}, func) == T(20));
 }
 
-TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   REQUIRE(etl::gcd(5, 10) == 5);
   REQUIRE(etl::gcd(10, 5) == 5);
@@ -201,9 +193,8 @@ TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t,
   STATIC_REQUIRE(etl::gcd(105, 30) == 15);
 }
 
-TEMPLATE_TEST_CASE("numeric: lcm", "[numeric]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t)
+TEMPLATE_TEST_CASE("numeric: lcm", "[numeric]", etl::uint8_t, etl::int8_t, etl::uint16_t,
+                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 {
   STATIC_REQUIRE(etl::lcm(TestType {10}, TestType {5}) == TestType {10});
 
@@ -212,8 +203,8 @@ TEMPLATE_TEST_CASE("numeric: lcm", "[numeric]", etl::uint8_t, etl::int8_t,
   REQUIRE(etl::lcm(TestType {30}, TestType {120}) == TestType {120});
 }
 
-TEMPLATE_TEST_CASE("numeric: midpoint(integer)", "[numeric]", signed char,
-                   signed short, signed int, signed long)
+TEMPLATE_TEST_CASE("numeric: midpoint(integer)", "[numeric]", signed char, signed short, signed int,
+                   signed long)
 {
   REQUIRE(etl::midpoint<TestType>(-3, -4) == -3);
   REQUIRE(etl::midpoint<TestType>(-4, -3) == -4);
@@ -226,8 +217,7 @@ TEMPLATE_TEST_CASE("numeric: midpoint(integer)", "[numeric]", signed char,
   STATIC_REQUIRE(etl::midpoint<TestType>(2, 0) == 1);
 }
 
-TEMPLATE_TEST_CASE("numeric: midpoint(floating_point)", "[numeric]", float,
-                   double, long double)
+TEMPLATE_TEST_CASE("numeric: midpoint(floating_point)", "[numeric]", float, double, long double)
 {
   using T = TestType;
 
@@ -264,8 +254,7 @@ TEMPLATE_TEST_CASE("numeric: midpoint(floating_point)", "[numeric]", float,
   }
 }
 
-TEMPLATE_TEST_CASE("numeric: midpoint(pointer)", "[numeric]", char, short, int,
-                   long, float, double)
+TEMPLATE_TEST_CASE("numeric: midpoint(pointer)", "[numeric]", char, short, int, long, float, double)
 {
   using T = TestType;
 

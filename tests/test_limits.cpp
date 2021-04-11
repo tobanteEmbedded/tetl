@@ -74,9 +74,8 @@ TEST_CASE("limits: numeric_limits<bool>", "[limits]")
   REQUIRE(etl::numeric_limits<bool>::denorm_min() == false);
 }
 
-TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
-                   int, long, long long, signed char, signed short, signed int,
-                   signed long, signed long long)
+TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short, int, long, long long,
+                   signed char, signed short, signed int, signed long, signed long long)
 {
   using l = etl::numeric_limits<TestType>;
 
@@ -95,9 +94,8 @@ TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
   REQUIRE(l::denorm_min() == TestType {});
 }
 
-TEMPLATE_TEST_CASE("limits: numeric_limits<unsigned T>", "[limits]",
-                   unsigned char, unsigned short, unsigned int, unsigned long,
-                   unsigned long long)
+TEMPLATE_TEST_CASE("limits: numeric_limits<unsigned T>", "[limits]", unsigned char, unsigned short,
+                   unsigned int, unsigned long, unsigned long long)
 {
   using l = etl::numeric_limits<TestType>;
 

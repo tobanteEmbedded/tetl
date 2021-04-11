@@ -59,8 +59,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 /// been written. If the strings overlap, the behavior is undefined.
 ///
 /// \returns dest
-constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
-  -> char*
+constexpr auto strncpy(char* dest, char const* src, etl::size_t const count) -> char*
 {
   assert(dest != nullptr && src != nullptr);
   auto* temp = dest;
@@ -107,8 +106,7 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 /// of both dest and src plus the terminating null character, except that the
 /// size of src is limited to count. The behavior is undefined if the strings
 /// overlap.
-constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
-  -> char*
+constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
 {
   auto* ptr                = dest + etl::strlen(dest);
   etl::size_t localCounter = 0;
@@ -144,8 +142,7 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 /// \details The behavior is undefined when access occurs past the end of either
 /// array lhs or rhs. The behavior is undefined when either lhs or rhs is the
 /// null pointer.
-constexpr auto strncmp(char const* lhs, char const* rhs,
-                       etl::size_t const count) -> int
+constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
 {
   unsigned char u1 {};
   unsigned char u2 {};
