@@ -147,6 +147,8 @@ constexpr auto for_each_n(InputIter first, Size n, UnaryFunction f) noexcept
 /// \param last The first range of elements to transform.
 /// \param dest The beginning of the destination range, may be equal to first.
 /// \param op Unary operation function object that will be applied.
+/// \group transform
+/// \module algorithm
 template <typename InputIter, typename OutputIter, typename UnaryOperation>
 constexpr auto transform(InputIter first, InputIter last, OutputIter dest,
                          UnaryOperation op) -> OutputIter
@@ -166,6 +168,8 @@ constexpr auto transform(InputIter first, InputIter last, OutputIter dest,
 /// \param first2 The beginning of the second range of elements to transform.
 /// \param dest The beginning of the destination range, may be equal to first.
 /// \param op Unary operation function object that will be applied.
+/// \group transform
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename OutputIter,
           typename BinaryOperation>
 constexpr auto transform(InputIter1 first1, InputIter1 last1, InputIter2 first2,
@@ -215,6 +219,8 @@ constexpr auto generate_n(OutputIter first, SizeT count, Generator g)
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param value The value to search for.
+/// \group count
+/// \module algorithm
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto count(InputIter first, InputIter last,
                                    T const& value) ->
@@ -235,6 +241,8 @@ template <typename InputIter, typename T>
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param p Unary predicate which returns ​true for the required elements.
+/// \group count
+/// \module algorithm
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto count_if(InputIter first, InputIter last,
                                       UnaryPredicate p) ->
@@ -259,6 +267,8 @@ template <typename InputIter, typename UnaryPredicate>
 /// \param first2 The second range of the elements.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+/// \group mismatch
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, BinaryPredicate pred)
@@ -281,6 +291,8 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 /// \param first1 The first range of the elements.
 /// \param last1 The first range of the elements.
 /// \param first2 The second range of the elements.
+/// \group mismatch
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2)
@@ -300,6 +312,8 @@ template <typename InputIter1, typename InputIter2>
 /// \param last2 The second range of the elements.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+/// \group mismatch
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2,
@@ -323,6 +337,8 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 /// \param last1 The first range of the elements.
 /// \param first2 The second range of the elements.
 /// \param last2 The second range of the elements.
+/// \group mismatch
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto mismatch(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2)
@@ -339,6 +355,8 @@ template <typename InputIter1, typename InputIter2>
 /// \param last The range of elements to examine.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+/// \group adjacent_find
+/// \module algorithm
 template <typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIter first, ForwardIter last,
                                            BinaryPredicate pred) -> ForwardIter
@@ -362,6 +380,8 @@ template <typename ForwardIter, typename BinaryPredicate>
 /// \details https://en.cppreference.com/w/cpp/algorithm/adjacent_find
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
+/// \group adjacent_find
+/// \module algorithm
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last)
   -> ForwardIt
@@ -375,6 +395,8 @@ template <typename ForwardIt>
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param value Value to compare the elements to.
+/// \group find
+/// \module algorithm
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto find(InputIter first, InputIter last,
                                   T const& value) noexcept -> InputIter
@@ -392,6 +414,8 @@ template <typename InputIter, typename T>
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param pred Unary predicate which returns ​true for the required element.
+/// \group find
+/// \module algorithm
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if(InputIter first, InputIter last,
                                      UnaryPredicate pred) noexcept -> InputIter
@@ -409,6 +433,8 @@ template <typename InputIter, typename UnaryPredicate>
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param pred Unary predicate which returns ​true for the required element.
+/// \group find
+/// \module algorithm
 template <typename InputIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto find_if_not(InputIter first, InputIter last,
                                          UnaryPredicate pred) noexcept
@@ -432,6 +458,8 @@ template <typename InputIter, typename UnaryPredicate>
 /// \param sLast The range of elements to search for.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+/// \group find_first_of
+/// \module algorithm
 template <typename InputIter, typename ForwardIter, typename BinaryPredicate>
 [[nodiscard]] constexpr auto
 find_first_of(InputIter first, InputIter last, ForwardIter sFirst,
@@ -456,6 +484,8 @@ find_first_of(InputIter first, InputIter last, ForwardIter sFirst,
 /// \param last The range of elements to examine.
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
+/// \group find_first_of
+/// \module algorithm
 template <typename InputIter, typename ForwardIter>
 [[nodiscard]] constexpr auto find_first_of(InputIter first, InputIter last,
                                            ForwardIter sFirst,
@@ -475,6 +505,8 @@ template <typename InputIter, typename ForwardIter>
 /// \param sLast The range of elements to search for.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+/// \group search
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
@@ -493,6 +525,8 @@ template <typename ForwardIter1, typename ForwardIter2,
 /// \param last The range of elements to examine.
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
+/// \group search
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto search(ForwardIter1 first, ForwardIter1 last,
                                     ForwardIter2 sFirst, ForwardIter2 sLast)
@@ -509,6 +543,8 @@ template <typename ForwardIter1, typename ForwardIter2>
 /// \param last The range of elements to examine.
 /// \param searcher The searcher encapsulating the search algorithm and the
 /// pattern to look for.
+/// \group search
+/// \module algorithm
 template <typename ForwardIter, typename Searcher>
 [[nodiscard]] constexpr auto search(ForwardIter first, ForwardIter last,
                                     Searcher const& searcher) -> ForwardIter
@@ -518,6 +554,8 @@ template <typename ForwardIter, typename Searcher>
 
 /// \brief Searches the range [first, last) for the first sequence of count
 /// identical elements, each equal to the given value.
+/// \group search_n
+/// \module algorithm
 template <typename ForwardIter, typename Size, typename ValueT,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto search_n(ForwardIter first, ForwardIter last,
@@ -549,6 +587,8 @@ template <typename ForwardIter, typename Size, typename ValueT,
 
 /// \brief Searches the range [first, last) for the first sequence of count
 /// identical elements, each equal to the given value.
+/// \group search_n
+/// \module algorithm
 template <typename ForwardIter, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIter first, ForwardIter last,
                                       Size count, ValueT const& value)
@@ -569,6 +609,8 @@ template <typename ForwardIter, typename Size, typename ValueT>
 /// \return Iterator to the beginning of last occurrence of the sequence
 /// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
+/// \group find_end
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2,
           typename BinaryPredicate>
 [[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
@@ -598,6 +640,8 @@ template <typename ForwardIter1, typename ForwardIter2,
 /// \return Iterator to the beginning of last occurrence of the sequence
 /// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
+/// \group find_end
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto find_end(ForwardIter1 first, ForwardIter1 last,
                                       ForwardIter2 sFirst, ForwardIter2 sLast)
@@ -609,6 +653,8 @@ template <typename ForwardIter1, typename ForwardIter2>
 /// \brief Removes all elements satisfying specific criteria from the range
 /// [first, last) and returns a past-the-end iterator for the new end of the
 /// range.
+/// \group remove
+/// \module algorithm
 template <typename ForwardIter, typename UnaryPredicate>
 [[nodiscard]] constexpr auto remove_if(ForwardIter first, ForwardIter last,
                                        UnaryPredicate pred) -> ForwardIter
@@ -629,6 +675,8 @@ template <typename ForwardIter, typename UnaryPredicate>
 /// \brief Removes all elements satisfying specific criteria from the range
 /// [first, last) and returns a past-the-end iterator for the new end of the
 /// range.
+/// \group remove
+/// \module algorithm
 template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto remove(ForwardIter first, ForwardIter last,
                                     T const& value) -> ForwardIter
@@ -643,6 +691,8 @@ template <typename ForwardIter, typename T>
 /// for which predicate p returns true.
 ///
 /// \return Iterator to the element past the last element copied.
+/// \group remove_copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter, typename UnaryPredicate>
 constexpr auto remove_copy_if(InputIter first, InputIter last,
                               OutputIter destination, UnaryPredicate p)
@@ -662,6 +712,8 @@ constexpr auto remove_copy_if(InputIter first, InputIter last,
 /// that are equal to value.
 ///
 /// \return Iterator to the element past the last element copied.
+/// \group remove_copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter, typename T>
 constexpr auto remove_copy(InputIter first, InputIter last,
                            OutputIter destination, T const& value) -> OutputIter
@@ -673,6 +725,8 @@ constexpr auto remove_copy(InputIter first, InputIter last,
 /// \brief Replaces all elements satisfying specific criteria with new_value in
 /// the range [ first , last ). Replaces all elements for which predicate p
 /// returns true.
+/// \group replace
+/// \module algorithm
 template <typename ForwardIt, typename UnaryPredicate, typename T>
 constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
                           T const& newValue) -> void
@@ -686,6 +740,8 @@ constexpr auto replace_if(ForwardIt first, ForwardIt last, UnaryPredicate p,
 /// \brief Replaces all elements satisfying specific criteria with new_value in
 /// the range [ first , last ). Replaces all elements that are equal to
 /// old_value.
+/// \group replace
+/// \module algorithm
 template <typename ForwardIt, typename T>
 constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue,
                        T const& newValue) -> void
@@ -695,6 +751,8 @@ constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue,
 }
 
 /// \brief Returns the greater of a and b.
+/// \group max
+/// \module algorithm
 template <typename Type>
 [[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept
   -> Type const&
@@ -703,6 +761,8 @@ template <typename Type>
 }
 
 /// \brief Returns the greater of a and b, using a compare function.
+/// \group max
+/// \module algorithm
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto max(Type const& a, Type const& b,
                                  Compare comp) noexcept -> Type const&
@@ -712,6 +772,8 @@ template <typename Type, typename Compare>
 
 /// \brief Finds the greatest element in the range [first, last). Elements are
 /// compared using operator<.
+/// \group max_element
+/// \module algorithm
 template <typename ForwardIterator>
 [[nodiscard]] constexpr auto max_element(ForwardIterator first,
                                          ForwardIterator last) noexcept
@@ -730,6 +792,8 @@ template <typename ForwardIterator>
 
 /// \brief Finds the greatest element in the range [first, last). Elements are
 /// compared using the given binary comparison function comp.
+/// \group max_element
+/// \module algorithm
 template <typename ForwardIterator, typename Compare>
 [[nodiscard]] constexpr auto max_element(ForwardIterator first,
                                          ForwardIterator last, Compare comp)
@@ -747,6 +811,8 @@ template <typename ForwardIterator, typename Compare>
 }
 
 /// \brief Returns the smaller of a and b.
+/// \group min
+/// \module algorithm
 template <typename Type>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept
   -> Type const&
@@ -755,6 +821,8 @@ template <typename Type>
 }
 
 /// \brief Returns the smaller of a and b, using a compare function.
+/// \group min
+/// \module algorithm
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b,
                                  Compare comp) noexcept -> Type const&
@@ -764,6 +832,8 @@ template <typename Type, typename Compare>
 
 /// \brief Finds the smallest element in the range [first, last). Elements are
 /// compared using operator<.
+/// \group min_element
+/// \module algorithm
 template <typename ForwardIterator>
 [[nodiscard]] constexpr auto min_element(ForwardIterator first,
                                          ForwardIterator last) noexcept
@@ -782,6 +852,8 @@ template <typename ForwardIterator>
 
 /// \brief Finds the smallest element in the range [first, last). Elements are
 /// compared using the given binary comparison function comp.
+/// \group min_element
+/// \module algorithm
 template <typename ForwardIterator, typename Compare>
 [[nodiscard]] constexpr auto min_element(ForwardIterator first,
                                          ForwardIterator last, Compare comp)
@@ -799,6 +871,8 @@ template <typename ForwardIterator, typename Compare>
 }
 
 /// \brief Returns the lowest and the greatest of the given values.
+/// \group minmax
+/// \module algorithm
 template <typename T, typename Compare>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b, Compare comp)
   -> pair<T const&, T const&>
@@ -808,6 +882,8 @@ template <typename T, typename Compare>
 }
 
 /// \brief Returns the lowest and the greatest of the given values.
+/// \group minmax
+/// \module algorithm
 template <typename T>
 [[nodiscard]] constexpr auto minmax(T const& a, T const& b)
   -> pair<T const&, T const&>
@@ -816,6 +892,8 @@ template <typename T>
 }
 
 /// \brief Finds the smallest and greatest element in the range [first, last).
+/// \group minmax_element
+/// \module algorithm
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last,
                                             Compare comp)
@@ -861,6 +939,8 @@ template <typename ForwardIter, typename Compare>
 }
 
 /// \brief Finds the smallest and greatest element in the range [first, last).
+/// \group minmax_element
+/// \module algorithm
 template <typename ForwardIter>
 [[nodiscard]] constexpr auto minmax_element(ForwardIter first, ForwardIter last)
   -> pair<ForwardIter, ForwardIter>
@@ -872,12 +952,17 @@ template <typename ForwardIter>
 /// \brief If v compares less than lo, returns lo; otherwise if hi compares less
 /// than v, returns hi; otherwise returns v. Uses operator< to compare the
 /// values.
+
+/// \group clamp
+/// \module algorithm
 template <typename Type>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
                                    Type const& hi) noexcept -> Type const&
 {
   return clamp(v, lo, hi, less<Type>());
 }
+/// \group clamp
+/// \module algorithm
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
                                    Type const& hi, Compare comp) -> Type const&
@@ -967,6 +1052,8 @@ constexpr auto rotate(ForwardIter first, ForwardIter nFirst, ForwardIter last)
 /// \brief Eliminates all except the first element from every consecutive group
 /// of equivalent elements from the range [first, last) and returns a
 /// past-the-end iterator for the new logical end of the range.
+/// \group unique
+/// \module algorithm
 template <typename ForwardIter, typename BinaryPredicate>
 constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
   -> ForwardIter
@@ -984,6 +1071,8 @@ constexpr auto unique(ForwardIter first, ForwardIter last, BinaryPredicate pred)
 /// \brief Eliminates all except the first element from every consecutive group
 /// of equivalent elements from the range [first, last) and returns a
 /// past-the-end iterator for the new logical end of the range.
+/// \group unique
+/// \module algorithm
 template <typename ForwardIter>
 constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 {
@@ -996,6 +1085,8 @@ constexpr auto unique(ForwardIter first, ForwardIter last) -> ForwardIter
 ///
 /// \details Elements are compared using the given binary predicate pred. The
 /// behavior is undefined if it is not an equivalence relation.
+/// \group unique_copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter, typename BinaryPredicate>
 constexpr auto unique_copy(InputIter first, InputIter last,
                            OutputIter destination, BinaryPredicate pred)
@@ -1022,6 +1113,8 @@ constexpr auto unique_copy(InputIter first, InputIter last,
 ///
 /// \details Elements are compared using operator==. The behavior is undefined
 /// if it is not an equivalence relation.
+/// \group unique_copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter>
 constexpr auto unique_copy(InputIter first, InputIter last,
                            OutputIter destination) -> OutputIter
@@ -1146,6 +1239,8 @@ constexpr auto stable_partition(BidirIter f, BidirIter l, UnaryPredicate p)
 ///
 /// \return Output iterator to the element in the destination range, one past
 /// the last element copied.
+/// \group copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter>
 constexpr auto copy(InputIter first, InputIter last, OutputIter destination)
   -> OutputIter
@@ -1163,6 +1258,8 @@ constexpr auto copy(InputIter first, InputIter last, OutputIter destination)
 ///
 /// \return Output iterator to the element in the destination range, one past
 /// the last element copied.
+/// \group copy
+/// \module algorithm
 template <typename InputIter, typename OutputIter, typename UnaryPredicate>
 constexpr auto copy_if(InputIter first, InputIter last, OutputIter dFirst,
                        UnaryPredicate pred) -> OutputIter
@@ -1252,6 +1349,8 @@ constexpr auto fill_n(OutputIter first, Size count, T const& value)
 /// \brief Returns true if the range [first1, last1) is equal to the range
 /// [first2, first2
 /// + (last1 - first1)), and false otherwise.
+/// \group equal
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1,
                                    InputIter2 first2, BinaryPredicate p) -> bool
@@ -1266,6 +1365,8 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 /// \brief Returns true if the range [first1, last1) is equal to the range
 /// [first2, first2
 /// + (last1 - first1)), and false otherwise.
+/// \group equal
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1,
                                    InputIter2 first2) -> bool
@@ -1275,6 +1376,8 @@ template <typename InputIter1, typename InputIter2>
 
 /// \brief Returns true if the range [first1, last1) is equal to the range
 /// [first2, last2), and false otherwise.
+/// \group equal
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 [[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1,
                                    InputIter2 first2, InputIter2 last2,
@@ -1286,6 +1389,8 @@ template <typename InputIter1, typename InputIter2, typename BinaryPredicate>
 
 /// \brief Returns true if the range [first1, last1) is equal to the range
 /// [first2, last2), and false otherwise.
+/// \group equal
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto equal(InputIter1 first1, InputIter1 last1,
                                    InputIter2 first2, InputIter2 last2) -> bool
@@ -1298,6 +1403,8 @@ template <typename InputIter1, typename InputIter2>
 /// the given binary comparison function comp.
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+/// \group lexicographical_compare
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename Compare>
 [[nodiscard]] constexpr auto
 lexicographical_compare(InputIter1 first1, InputIter1 last1, InputIter2 first2,
@@ -1316,6 +1423,8 @@ lexicographical_compare(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 /// operator<.
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+/// \group lexicographical_compare
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto
 lexicographical_compare(InputIter1 first1, InputIter1 last1, InputIter2 first2,
@@ -1336,6 +1445,8 @@ lexicographical_compare(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 /// *(it + n) < *it) evaluates to false. Bubble sort implementation.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/sort
+/// \group sort
+/// \module algorithm
 template <typename RandomIter, typename Compare>
 constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
 {
@@ -1360,6 +1471,8 @@ constexpr auto sort(RandomIter first, RandomIter last, Compare comp) -> void
 /// *(it + n) < *it) evaluates to false. Bubble sort implementation.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/sort
+/// \group sort
+/// \module algorithm
 template <typename RandomIter>
 constexpr auto sort(RandomIter first, RandomIter last) -> void
 {
@@ -1371,6 +1484,8 @@ constexpr auto sort(RandomIter first, RandomIter last) -> void
 /// Elements are compared using the given comparison function comp.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/stable_sort
+/// \group stable_sort
+/// \module algorithm
 template <typename RandomIter, typename Compare>
 constexpr auto stable_sort(RandomIter first, RandomIter last, Compare cmp)
   -> void
@@ -1399,6 +1514,8 @@ constexpr auto stable_sort(RandomIter first, RandomIter last, Compare cmp)
 /// Elements are compared using operator<.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/stable_sort
+/// \group stable_sort
+/// \module algorithm
 template <typename RandomIter>
 constexpr auto stable_sort(RandomIter first, RandomIter last) -> void
 {
@@ -1414,6 +1531,8 @@ constexpr auto stable_sort(RandomIter first, RandomIter last) -> void
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sort
 ///
 /// \todo Improve. Currently forwards to regular sort.
+/// \group partial_sort
+/// \module algorithm
 template <typename RandomIter, typename Compare>
 constexpr auto partial_sort(RandomIter first, RandomIter middle,
                             RandomIter last, Compare comp) -> void
@@ -1431,6 +1550,8 @@ constexpr auto partial_sort(RandomIter first, RandomIter middle,
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sort
 ///
 /// \todo Improve. Currently forwards to regular sort.
+/// \group partial_sort
+/// \module algorithm
 template <typename RandomIter>
 constexpr auto partial_sort(RandomIter first, RandomIter middle,
                             RandomIter last) -> void
@@ -1453,6 +1574,8 @@ constexpr auto partial_sort(RandomIter first, RandomIter middle,
 /// https://en.cppreference.com/w/cpp/algorithm/nth_element
 ///
 /// \todo Improve. Currently forwards to regular sort.
+/// \group nth_element
+/// \module algorithm
 template <typename RandomIter, typename Compare>
 constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last,
                            Compare comp) -> void
@@ -1475,6 +1598,8 @@ constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last,
 /// https://en.cppreference.com/w/cpp/algorithm/nth_element
 ///
 /// \todo Improve. Currently forwards to regular sort.
+/// \group nth_element
+/// \module algorithm
 template <typename RandomIter>
 constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last)
   -> void
@@ -1486,6 +1611,8 @@ constexpr auto nth_element(RandomIter first, RandomIter nth, RandomIter last)
 /// \brief Examines the range [first, last) and finds the largest range
 /// beginning at first in which the elements are sorted in non-descending order.
 /// Elements are compared using operator<.
+/// \group is_sorted_until
+/// \module algorithm
 template <typename ForwardIter>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIter first,
                                              ForwardIter last) -> ForwardIter
@@ -1496,6 +1623,8 @@ template <typename ForwardIter>
 /// \brief Examines the range [first, last) and finds the largest range
 /// beginning at first in which the elements are sorted in non-descending order.
 /// Elements are compared using the given binary comparison function comp.
+/// \group is_sorted_until
+/// \module algorithm
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIter first,
                                              ForwardIter last, Compare comp)
@@ -1515,6 +1644,8 @@ template <typename ForwardIter, typename Compare>
 
 /// \brief Checks if the elements in range [first, last) are sorted in
 /// non-descending order. Elements are compared using operator<.
+/// \group is_sorted
+/// \module algorithm
 template <typename ForwardIter>
 [[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last)
   -> bool
@@ -1525,6 +1656,8 @@ template <typename ForwardIter>
 /// \brief Checks if the elements in range [ first , last ) are sorted in
 /// non-descending order. Elements are compared using the given binary
 /// comparison function comp.
+/// \group is_sorted
+/// \module algorithm
 template <typename ForwardIter, typename Compare>
 [[nodiscard]] constexpr auto is_sorted(ForwardIter first, ForwardIter last,
                                        Compare comp) -> bool
@@ -1537,6 +1670,8 @@ template <typename ForwardIter, typename Compare>
 /// last if no such element is found.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/lower_bound
+/// \group lower_bound
+/// \module algorithm
 template <typename ForwardIter, typename T, typename Compare>
 [[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
                                          T const& value, Compare comp) noexcept
@@ -1572,6 +1707,8 @@ template <typename ForwardIter, typename T, typename Compare>
 /// last if no such element is found.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/lower_bound
+/// \group lower_bound
+/// \module algorithm
 template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIter first, ForwardIter last,
                                          T const& value) noexcept -> ForwardIter
@@ -1587,6 +1724,8 @@ template <typename ForwardIter, typename T>
 /// expression !(value < element) or !comp(value, element), i.e., all elements
 /// for which the expression is true must precede all elements for which the
 /// expression is false. A fully-sorted range meets this criterion.
+/// \group upper_bound
+/// \module algorithm
 template <typename ForwardIter, typename T, typename Compare>
 [[nodiscard]] constexpr auto upper_bound(ForwardIter first, ForwardIter last,
                                          T const& value, Compare comp)
@@ -1626,6 +1765,8 @@ template <typename ForwardIter, typename T, typename Compare>
 /// expression !(value < element) or !comp(value, element), i.e., all elements
 /// for which the expression is true must precede all elements for which the
 /// expression is false. A fully-sorted range meets this criterion.
+/// \group upper_bound
+/// \module algorithm
 template <typename ForwardIter, typename T>
 [[nodiscard]] constexpr auto upper_bound(ForwardIter first, ForwardIter last,
                                          T const& value) -> ForwardIter
@@ -1637,6 +1778,8 @@ template <typename ForwardIter, typename T>
 /// range [first, last).
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/equal_range
+/// \group equal_range
+/// \module algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
                                          T const& value, Compare comp)
@@ -1650,6 +1793,8 @@ template <typename ForwardIt, typename T, typename Compare>
 /// range [first, last).
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/equal_range
+/// \group equal_range
+/// \module algorithm
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
                                          T const& value)
@@ -1665,6 +1810,8 @@ template <typename ForwardIt, typename T>
 /// be at least partially ordered with respect to value
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/binary_search
+/// \group binary_search
+/// \module algorithm
 template <typename ForwardIter, typename T, typename Compare>
 [[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
                                            T const& value, Compare comp) -> bool
@@ -1680,6 +1827,8 @@ template <typename ForwardIter, typename T, typename Compare>
 /// be at least partially ordered with respect to value
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/binary_search
+/// \group binary_search
+/// \module algorithm
 template <typename ForwardIter, class T>
 [[nodiscard]] constexpr auto binary_search(ForwardIter first, ForwardIter last,
                                            T const& value) -> bool
@@ -1690,6 +1839,8 @@ template <typename ForwardIter, class T>
 /// \brief Merges two sorted ranges [first1, last1) and [first2, last2) into one
 /// sorted range beginning at d_first. Elements are compared using the given
 /// binary comparison function comp.
+/// \group merge
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
           typename Compare>
 constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -1716,6 +1867,8 @@ constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 /// \brief Merges two sorted ranges [first1, last1) and [first2, last2) into one
 /// sorted range beginning at destination. Elements are compared using
 /// operator<.
+/// \group merge
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                      InputIt2 last2, OutputIt destination) -> OutputIt
@@ -1725,6 +1878,8 @@ constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 
 /// \brief Returns true if the sorted range [first2, last2) is a subsequence of
 /// the sorted range [first1, last1). Both ranges must be sorted with operator<.
+/// \group includes
+/// \module algorithm
 template <typename InputIter1, typename InputIter2>
 [[nodiscard]] constexpr auto includes(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2)
@@ -1741,6 +1896,8 @@ template <typename InputIter1, typename InputIter2>
 /// \brief Returns true if the sorted range [first2, last2) is a subsequence of
 /// the sorted range [first1, last1). Both ranges must be sorted with the given
 /// comparison function comp.
+/// \group includes
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename Compare>
 [[nodiscard]] constexpr auto includes(InputIter1 first1, InputIter1 last1,
                                       InputIter2 first2, InputIter2 last2,
@@ -1758,6 +1915,8 @@ template <typename InputIter1, typename InputIter2, typename Compare>
 /// not found in the sorted range [first2, last2) to the range beginning at
 /// destination. Elements are compared using the given binary comparison
 /// function comp and the ranges must be sorted with respect to the same.
+/// \group set_difference
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
           typename Compare>
 constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -1782,6 +1941,8 @@ constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 /// not found in the sorted range [first2, last2) to the range beginning at
 /// destination. Elements are compared using operator< and the ranges must be
 /// sorted with respect to the same.
+/// \group set_difference
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                               InputIt2 last2, OutputIt destination) -> OutputIt
@@ -1798,6 +1959,8 @@ constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 ///
 /// Elements are compared using the given binary comparison function comp and
 /// the ranges must be sorted with respect to the same.
+/// \group set_intersection
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
           typename Compare>
 constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
@@ -1825,6 +1988,8 @@ constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
 ///
 /// Elements are compared using operator< and the ranges must be sorted with
 /// respect to the same.
+/// \group set_intersection
+/// \module algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
                                 InputIt2 first2, InputIt2 last2, OutputIt dest)
@@ -1838,6 +2003,8 @@ constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
 /// range beginning at destination. The resulting range is also sorted. Elements
 /// are compared using the given binary comparison function comp and the ranges
 /// must be sorted with respect to the same.
+/// \group set_symmetric_difference
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename OutputIter,
           typename Compare>
 constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
@@ -1868,6 +2035,8 @@ constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
 /// range beginning at destination. The resulting range is also sorted. Elements
 /// are compared using operator< and the ranges must be sorted with respect to
 /// the same.
+/// \group set_symmetric_difference
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename OutputIter>
 constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
                                         InputIter2 first2, InputIter2 last2,
@@ -1881,6 +2050,8 @@ constexpr auto set_symmetric_difference(InputIter1 first1, InputIter1 last1,
 /// [first2, last2). The resulting range cannot overlap with either of the input
 /// ranges. Elements are compared using the given binary comparison function
 /// comp and the ranges must be sorted with respect to the same.
+/// \group set_union
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename OutputIter,
           typename Compare>
 constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
@@ -1908,6 +2079,8 @@ constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 /// [first2, last2). The resulting range cannot overlap with either of the input
 /// ranges. Elements are compared using operator< and the ranges must be sorted
 /// with respect to the same.
+/// \group set_union
+/// \module algorithm
 template <typename InputIter1, typename InputIter2, typename OutputIter>
 constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
                          InputIter2 last2, OutputIter destination) -> OutputIter
@@ -1922,6 +2095,8 @@ constexpr auto set_union(InputIter1 first1, InputIter1 last1, InputIter2 first2,
 ///
 /// \details Elements are compared using operator==. The behavior is undefined
 /// if it is not an equivalence relation.
+/// \group is_permuatation
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto is_permutation(ForwardIter1 first,
                                             ForwardIter1 last,
@@ -1955,6 +2130,8 @@ template <typename ForwardIter1, typename ForwardIter2>
 ///
 /// \details Elements are compared using operator==. The behavior is undefined
 /// if it is not an equivalence relation.
+/// \group is_permuatation
+/// \module algorithm
 template <typename ForwardIter1, typename ForwardIter2>
 [[nodiscard]] constexpr auto
 is_permutation(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2 first2,
