@@ -47,7 +47,7 @@ auto declval() noexcept -> add_rvalue_reference_t<T>;  // NOLINT
 /// argument t. It is exactly equivalent to a static_cast to an rvalue reference
 /// type.
 ///
-/// \return static_cast<remove_reference_t<T>&&>(t)
+/// \returns static_cast<remove_reference_t<T>&&>(t)
 template <typename T>
 constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 {
@@ -84,7 +84,7 @@ constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 
 /// \brief Replaces the value of obj with new_value and returns the old value of
 /// obj.
-/// \return The old value of obj.
+/// \returns The old value of obj.
 template <typename T, typename U = T>
 [[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
 {

@@ -34,7 +34,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isalnum
 ///
-/// \return Non-zero value if the character is an alphanumeric character, 0
+/// \returns Non-zero value if the character is an alphanumeric character, 0
 /// otherwise.
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
@@ -53,7 +53,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isalpha
 ///
-/// \return Non-zero value if the character is an alphabetic character, 0
+/// \returns Non-zero value if the character is an alphabetic character, 0
 /// otherwise.
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
@@ -71,7 +71,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/islower
 ///
-/// \return Non-zero value if the character is a lowercase letter, zero
+/// \returns Non-zero value if the character is a lowercase letter, zero
 /// otherwise.
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
@@ -85,7 +85,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isupper
 ///
-/// \return Non-zero value if the character is a uppercase letter, zero
+/// \returns Non-zero value if the character is a uppercase letter, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
@@ -99,7 +99,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isdigit
 ///
-/// \return Non-zero value if the character is a numeric character, zero
+/// \returns Non-zero value if the character is a numeric character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
@@ -113,7 +113,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isxdigit
 ///
-/// \return Non-zero value if the character is a hexadecimal numeric character,
+/// \returns Non-zero value if the character is a hexadecimal numeric character,
 /// zero otherwise.
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
@@ -132,7 +132,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isspace
 ///
-/// \return Non-zero value if the character is a whitespace character, zero
+/// \returns Non-zero value if the character is a whitespace character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
@@ -157,7 +157,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isblank
 ///
-/// \return Non-zero value if the character is a blank character, zero
+/// \returns Non-zero value if the character is a blank character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
@@ -178,7 +178,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/ispunct
 ///
-/// \return Non-zero value if the character is a punctuation character, zero
+/// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
@@ -198,7 +198,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isgraph
 ///
-/// \return Non-zero value if the character is a punctuation character, zero
+/// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
@@ -218,7 +218,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isprint
 ///
-/// \return Non-zero value if the character is a punctuation character, zero
+/// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
@@ -234,7 +234,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/iscntrl
 ///
-/// \return Non-zero value if the character is a control character, zero
+/// \returns Non-zero value if the character is a control character, zero
 /// otherwise.
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
@@ -253,7 +253,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/tolower
 ///
-/// \return Lowercase version of ch or unmodified ch if no lowercase version is
+/// \returns Lowercase version of ch or unmodified ch if no lowercase version is
 /// listed in the current C locale.
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
@@ -273,7 +273,7 @@ namespace etl
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/toupper
 ///
-/// \return Converted character or ch if no uppercase version is defined by the
+/// \returns Converted character or ch if no uppercase version is defined by the
 /// current C locale.
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {

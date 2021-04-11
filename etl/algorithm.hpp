@@ -606,7 +606,7 @@ template <typename ForwardIter, typename Size, typename ValueT>
 /// \param sFirst The range of elements to search for
 /// \param sLast The range of elements to search for
 /// \param p Binary predicate
-/// \return Iterator to the beginning of last occurrence of the sequence
+/// \returns Iterator to the beginning of last occurrence of the sequence
 /// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
 /// \group find_end
@@ -637,7 +637,7 @@ template <typename ForwardIter1, typename ForwardIter2,
 /// \param last The range of elements to examine
 /// \param sFirst The range of elements to search for
 /// \param sLast The range of elements to search for
-/// \return Iterator to the beginning of last occurrence of the sequence
+/// \returns Iterator to the beginning of last occurrence of the sequence
 /// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
 /// \group find_end
@@ -690,7 +690,7 @@ template <typename ForwardIter, typename T>
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// for which predicate p returns true.
 ///
-/// \return Iterator to the element past the last element copied.
+/// \returns Iterator to the element past the last element copied.
 /// \group remove_copy
 /// \module algorithm
 template <typename InputIter, typename OutputIter, typename UnaryPredicate>
@@ -711,7 +711,7 @@ constexpr auto remove_copy_if(InputIter first, InputIter last,
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// that are equal to value.
 ///
-/// \return Iterator to the element past the last element copied.
+/// \returns Iterator to the element past the last element copied.
 /// \group remove_copy
 /// \module algorithm
 template <typename InputIter, typename OutputIter, typename T>
@@ -1237,7 +1237,7 @@ constexpr auto stable_partition(BidirIter f, BidirIter l, UnaryPredicate p)
 /// within the range [first, last). In this case, copy_backward may be used
 /// instead.
 ///
-/// \return Output iterator to the element in the destination range, one past
+/// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
 /// \group copy
 /// \module algorithm
@@ -1256,7 +1256,7 @@ constexpr auto copy(InputIter first, InputIter last, OutputIter destination)
 /// The relative order of the elements that are copied is preserved. The
 /// behavior is undefined if the source and the destination ranges overlap.
 ///
-/// \return Output iterator to the element in the destination range, one past
+/// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
 /// \group copy
 /// \module algorithm
@@ -1279,7 +1279,7 @@ constexpr auto copy_if(InputIter first, InputIter last, OutputIter dFirst,
 /// *(first + i). Overlap of ranges is formally permitted, but leads to
 /// unpredictable ordering of the results.
 ///
-/// \return Iterator in the destination range, pointing past the last element
+/// \returns Iterator in the destination range, pointing past the last element
 /// copied if count>0 or result otherwise.
 template <typename InputIter, typename Size, typename OutputIter>
 constexpr auto copy_n(InputIter first, Size count, OutputIter result)
@@ -1300,7 +1300,7 @@ constexpr auto copy_n(InputIter first, Size count, OutputIter result)
 /// \details The behavior is undefined if d_last is within (first, last].
 /// copy must be used instead of copy_backward in that case.
 ///
-/// \return Iterator to the last element copied.
+/// \returns Iterator to the last element copied.
 template <typename BidirIter1, typename BidirIter2>
 constexpr auto copy_backward(BidirIter1 first, BidirIter1 last,
                              BidirIter2 dLast) -> BidirIter2
@@ -1331,7 +1331,7 @@ constexpr auto fill(ForwardIter first, ForwardIter last, T const& value) -> void
 /// \brief Assigns the given value to the first count elements in the range
 /// beginning at first if count > 0. Does nothing otherwise.
 ///
-/// \return Iterator one past the last element assigned if count > 0, first
+/// \returns Iterator one past the last element assigned if count > 0, first
 /// otherwise.
 template <typename OutputIter, typename Size, typename T>
 constexpr auto fill_n(OutputIter first, Size count, T const& value)

@@ -139,7 +139,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \return true if x is an integral power of two; otherwise false.
+/// \returns true if x is an integral power of two; otherwise false.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
@@ -153,7 +153,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \return The number of consecutive 0 bits in the value of x, starting from
+/// \returns The number of consecutive 0 bits in the value of x, starting from
 /// the most significant bit.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
@@ -178,7 +178,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \return The number of consecutive 1 bits in the value of x, starting from
+/// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
@@ -217,7 +217,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \return The smallest integral power of two that is not smaller than x.
+/// \returns The smallest integral power of two that is not smaller than x.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
@@ -243,8 +243,8 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
-/// \return Zero if x is zero; otherwise, the largest integral power of two that
-/// is not greater than x.
+/// \returns Zero if x is zero; otherwise, the largest integral power of two
+/// that is not greater than x.
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
 {

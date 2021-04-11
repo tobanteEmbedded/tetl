@@ -53,7 +53,7 @@ using double_t = double;
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
 ///
-/// \return true if arg is infinite, false otherwise
+/// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 [[nodiscard]] constexpr auto isinf(float arg) -> bool
@@ -64,7 +64,7 @@ using double_t = double;
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
 ///
-/// \return true if arg is infinite, false otherwise
+/// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 [[nodiscard]] constexpr auto isinf(double arg) -> bool
@@ -75,7 +75,7 @@ using double_t = double;
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
 ///
-/// \return true if arg is infinite, false otherwise
+/// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool
@@ -86,7 +86,7 @@ using double_t = double;
 /// \brief A set of overloads or a function template accepting the arg argument
 /// of any integral type. Equivalent to cast to double.
 ///
-/// \return true if arg is infinite, false otherwise
+/// \returns true if arg is infinite, false otherwise
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
 template <typename IntegralType,

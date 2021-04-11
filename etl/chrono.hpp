@@ -73,11 +73,13 @@ struct duration_values
 ///
 /// \note etl::chrono::treat_as_floating_point may be specialized for
 /// program-defined types.
+/// \group treat_as_floating_point
 template <typename Rep>
 struct treat_as_floating_point : etl::is_floating_point<Rep>
 {
 };
 
+/// \group treat_as_floating_point
 template <typename Rep>
 inline constexpr bool treat_as_floating_point_v
   = treat_as_floating_point<Rep>::value;
@@ -525,33 +527,43 @@ operator>=(time_point<Clock, Dur1> const& lhs,
 }
 
 /// \brief Signed integer type of at least 64 bits.
+/// \group duration_typedefs
 using nanoseconds = duration<long long, nano>;
 
 /// \brief Signed integer type of at least 55 bits.
+/// \group duration_typedefs
 using microseconds = duration<long long, micro>;
 
 /// \brief Signed integer type of at least 45 bits.
+/// \group duration_typedefs
 using milliseconds = duration<long long, milli>;
 
 /// \brief Signed integer type of at least 35 bits.
+/// \group duration_typedefs
 using seconds = duration<long long>;
 
 /// \brief Signed integer type of at least 29 bits.
+/// \group duration_typedefs
 using minutes = duration<int, ratio<60>>;
 
 /// \brief Signed integer type of at least 23 bits.
+/// \group duration_typedefs
 using hours = duration<int, ratio<3600>>;
 
 /// \brief Signed integer type of at least 25 bits.
+/// \group duration_typedefs
 using days = duration<int, ratio<86400>>;
 
 /// \brief Signed integer type of at least 22 bits.
+/// \group duration_typedefs
 using weeks = duration<int, ratio<604800>>;
 
 /// \brief Signed integer type of at least 17 bits.
+/// \group duration_typedefs
 using years = duration<int, ratio<2629746>>;
 
 /// \brief Signed integer type of at least 20 bits.
+/// \group duration_typedefs
 using months = duration<int, ratio<31556952>>;
 
 namespace detail

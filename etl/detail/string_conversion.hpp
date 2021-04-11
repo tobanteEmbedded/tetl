@@ -86,7 +86,7 @@ constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 /// \tparam FloatT The floating point type to convert to.
 /// \param str Pointer to the null-terminated byte string to be interpreted.
 /// \param last Pointer to a pointer to character.
-/// \return Floating point value corresponding to the contents of str on
+/// \returns Floating point value corresponding to the contents of str on
 /// success.
 template <typename FloatT>
 [[nodiscard]] constexpr auto

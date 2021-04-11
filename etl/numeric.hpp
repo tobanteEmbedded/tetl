@@ -176,7 +176,7 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sum
 ///
-/// \return Iterator to the element past the last element written.
+/// \returns Iterator to the element past the last element written.
 /// \group partial_sum
 /// \module algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
@@ -221,7 +221,7 @@ constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 
 /// \brief Computes the greatest common divisor of the integers m and n.
 ///
-/// \return If both m and n are zero, returns zero. Otherwise, returns the
+/// \returns If both m and n are zero, returns zero. Otherwise, returns the
 /// greatest common divisor of |m| and |n|.
 template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
@@ -232,8 +232,8 @@ template <typename M, typename N>
 
 /// \brief Computes the least common multiple of the integers m and n.
 ///
-/// \return If either m or n is zero, returns zero. Otherwise, returns the least
-/// common multiple of |m| and |n|.
+/// \returns If either m or n is zero, returns zero. Otherwise, returns the
+/// least common multiple of |m| and |n|.
 template <
   typename M, typename N,
   TAETL_REQUIRES_(

@@ -283,7 +283,7 @@ struct static_set
   ///
   /// https://en.cppreference.com/w/cpp/container/set/erase
   ///
-  /// \return Iterator following the last removed element.
+  /// \returns Iterator following the last removed element.
   constexpr auto erase(iterator pos) noexcept -> iterator
   {
     return memory_.erase(pos);
@@ -294,7 +294,7 @@ struct static_set
   ///
   /// https://en.cppreference.com/w/cpp/container/set/erase
   ///
-  /// \return Iterator following the last removed element.
+  /// \returns Iterator following the last removed element.
   constexpr auto erase(iterator first, iterator last) -> iterator
   {
     auto res = first;
@@ -306,7 +306,7 @@ struct static_set
   ///
   /// https://en.cppreference.com/w/cpp/container/set/erase
   ///
-  /// \return Number of elements removed.
+  /// \returns Number of elements removed.
   constexpr auto erase(key_type const& key) noexcept -> size_type
   {
     if (auto* pos = ::etl::lower_bound(begin(), end(), key); pos != end())
@@ -348,7 +348,7 @@ struct static_set
 
   /// \brief Finds an element with key equivalent to key.
   ///
-  /// \return Iterator to an element with key equivalent to key. If no such
+  /// \returns Iterator to an element with key equivalent to key. If no such
   /// element is found, past-the-end (see end()) iterator is returned.
   [[nodiscard]] constexpr auto find(key_type const& key) noexcept -> iterator
   {
@@ -357,7 +357,7 @@ struct static_set
 
   /// \brief Finds an element with key equivalent to key.
   ///
-  /// \return Iterator to an element with key equivalent to key. If no such
+  /// \returns Iterator to an element with key equivalent to key. If no such
   /// element is found, past-the-end (see end()) iterator is returned.
   [[nodiscard]] constexpr auto find(key_type const& key) const noexcept
     -> const_iterator
@@ -514,7 +514,7 @@ struct static_set
   /// of this container's constructor argument comp. It is the same as
   /// value_comp.
   ///
-  /// \return The key comparison function object.
+  /// \returns The key comparison function object.
   [[nodiscard]] auto key_comp() const noexcept -> key_compare
   {
     return key_compare();
@@ -523,7 +523,7 @@ struct static_set
   /// \brief Returns the function object that compares the values. It is the
   /// same as key_comp.
   ///
-  /// \return The value comparison function object.
+  /// \returns The value comparison function object.
   [[nodiscard]] auto value_comp() const noexcept -> value_compare
   {
     return value_compare();

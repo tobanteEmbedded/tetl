@@ -954,7 +954,7 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
 /// \brief Erases all elements that satisfy the predicate pred from the
 /// container.
 /// \details https://en.cppreference.com/w/cpp/container/vector/erase2
-/// \return The number of erased elements.
+/// \returns The number of erased elements.
 template <typename T, size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   typename static_vector<T, Capacity>::size_type
@@ -967,7 +967,7 @@ constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
 
 /// \brief Erases all elements that compare equal to value from the container.
 /// \details https://en.cppreference.com/w/cpp/container/vector/erase2
-/// \return The number of erased elements.
+/// \returns The number of erased elements.
 template <typename T, size_t Capacity, typename U>
 constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
   typename static_vector<T, Capacity>::size_type

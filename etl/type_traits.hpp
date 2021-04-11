@@ -61,67 +61,82 @@ struct type_identity
 
 /// \brief Provides member typedef type, which is defined as T if B is true at
 /// compile time, or as F if B is false.
+/// \group conditional
 template <bool B, typename T, typename F>
 struct conditional
 {
   using type = T;
 };
 
+/// \exclude
 template <typename T, typename F>
 struct conditional<false, T, F>
 {
   using type = F;
 };
 
+/// \group conditional
 template <bool B, typename T, typename F>
 using conditional_t = typename conditional<B, T, F>::type;
 
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
+/// \group conjunction
 template <typename...>
 struct conjunction : true_type
 {
 };
 
+/// \exclude
 template <typename B1>
 struct conjunction<B1> : B1
 {
 };
 
+/// \exclude
 template <typename B1, typename... Bn>
 struct conjunction<B1, Bn...>
     : conditional_t<bool(B1::value), conjunction<Bn...>, B1>
 {
 };
 
+/// \group conjunction
 template <typename... B>
 inline constexpr bool conjunction_v = conjunction<B...>::value;
 
 /// \brief Forms the logical disjunction of the type traits B..., effectively
 /// performing a logical OR on the sequence of traits.
+/// \group disjunction
 template <typename...>
 struct disjunction : false_type
 {
 };
+
+/// \exclude
 template <typename B1>
 struct disjunction<B1> : B1
 {
 };
+
+/// \exclude
 template <typename B1, typename... Bn>
 struct disjunction<B1, Bn...>
     : conditional_t<bool(B1::value), B1, disjunction<Bn...>>
 {
 };
 
+/// \group disjunction
 template <typename... B>
 inline constexpr bool disjunction_v = disjunction<B...>::value;
 
 /// \brief Forms the logical negation of the type trait B.
+/// \group negation
 template <typename B>
 struct negation : bool_constant<!bool(B::value)>
 {
 };
 
+/// \group negation
 template <typename B>
 inline constexpr bool negation_v = negation<B>::value;
 
@@ -234,124 +249,146 @@ auto try_add_rvalue_reference(...) -> ::etl::type_identity<T>;
 
 }  // namespace detail
 
+/// \brief Creates a lvalue reference type of T.
+/// \group add_lvalue_reference
 template <typename T>
 struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0))
 {
 };
 
+/// \group add_lvalue_reference
+template <typename T>
+using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
+
+/// \brief Creates a rvalue reference type of T.
+/// \group add_rvalue_reference
 template <typename T>
 struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0))
 {
 };
 
-template <typename T>
-using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
-
+/// \group add_rvalue_reference
 template <typename T>
 using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
 
+/// \group declval
 template <typename T>
-auto declval() noexcept -> typename add_rvalue_reference<T>::type;
+auto declval() noexcept -> add_rvalue_reference_t<T>;
 
+/// \brief If T is an array type, provides the member constant value equal to
+/// the number of elements along the Nth dimension of the array, if N is in [0,
+/// rank_v<T>). For any other type, or if T is an array of unknown bound along
+/// its first dimension and N is 0, value is 0.
+/// \group extent
 template <typename T, unsigned N = 0>
 struct extent : integral_constant<size_t, 0>
 {
 };
 
+/// \exclude
 template <typename T>
 struct extent<T[], 0> : integral_constant<size_t, 0>
 {
 };
 
+/// \exclude
 template <typename T, unsigned N>
 struct extent<T[], N> : extent<T, N - 1>
 {
 };
 
+/// \exclude
 template <typename T, size_t I>
 struct extent<T[I], 0> : integral_constant<size_t, I>
 {
 };
 
+/// \exclude
 template <typename T, size_t I, unsigned N>
 struct extent<T[I], N> : extent<T, N - 1>
 {
 };
 
+/// \group extent
+template <typename T>
+using extent_v = typename extent<T>::value;
+
 /// \brief If T is an array of some type X, provides the member typedef type
 /// equal to X, otherwise type is T. Note that if T is a multidimensional array,
 /// only the first dimension is removed. The behavior of a program that adds
 /// specializations for remove_extent is undefined.
+/// \group remove_extent
 template <typename T>
 struct remove_extent
 {
   using type = T;
 };
 
+/// \exclude
 template <typename T>
 struct remove_extent<T[]>
 {
   using type = T;
 };
 
+/// \exclude
 template <typename T, size_t N>
 struct remove_extent<T[N]>
 {
   using type = T;
 };
 
+/// \group remove_extent
 template <typename T>
 using remove_extent_t = typename remove_extent<T>::type;
 
 /// \brief If T is a multidimensional array of some type X, provides the member
 /// typedef type equal to X, otherwise type is T. The behavior of a program that
 /// adds specializations for remove_all_extents is undefined.
+/// \group remove_all_extents
 template <typename T>
 struct remove_all_extents
 {
   using type = T;
 };
 
-/// \brief If T is a multidimensional array of some type X, provides the member
-/// typedef type equal to X, otherwise type is T. The behavior of a program that
-/// adds specializations for remove_all_extents is undefined.
+/// \exclude
 template <typename T>
 struct remove_all_extents<T[]>
 {
   using type = typename remove_all_extents<T>::type;
 };
 
-/// \brief If T is a multidimensional array of some type X, provides the member
-/// typedef type equal to X, otherwise type is T. The behavior of a program that
-/// adds specializations for remove_all_extents is undefined.
+/// \exclude
 template <typename T, size_t N>
 struct remove_all_extents<T[N]>
 {
   using type = typename remove_all_extents<T>::type;
 };
 
-/// \brief If T is a multidimensional array of some type X, provides the member
-/// typedef type equal to X, otherwise type is T. The behavior of a program that
-/// adds specializations for remove_all_extents is undefined.
+/// \group remove_all_extents
 template <typename T>
 using remove_all_extents_t = typename remove_all_extents<T>::type;
 
+/// \brief Provides the member typedef type which is the same as T, except that
+/// its topmost cv-qualifiers are removed. Removes the topmost const.
+/// \details The behavior of a program that adds specializations for any of the
+/// templates described on this page is undefined.
+/// \group remove_const
 template <typename Type>
 struct remove_const
 {
   using type = Type;
 };
 
+/// \exclude
 template <typename Type>
 struct remove_const<Type const>
 {
   using type = Type;
 };
 
-/// \brief Provides the member typedef type which is the same as T, except that
-/// its topmost cv-qualifiers are removed. Removes the topmost const.
-/// \details The behavior of a program that adds specializations for any of the
-/// templates described on this page is undefined.
+/// \group remove_const
 template <typename T>
 using remove_const_t = typename remove_const<T>::type;
 
@@ -359,19 +396,21 @@ using remove_const_t = typename remove_const<T>::type;
 /// its topmost cv-qualifiers are removed. Removes the topmost volatile.
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
-
+/// \group remove_volatile
 template <typename Type>
 struct remove_volatile
 {
   using type = Type;
 };
 
+/// \exclude
 template <typename Type>
 struct remove_volatile<Type volatile>
 {
   using type = Type;
 };
 
+/// \group remove_volatile
 template <typename T>
 using remove_volatile_t = typename remove_volatile<T>::type;
 
@@ -380,33 +419,39 @@ using remove_volatile_t = typename remove_volatile<T>::type;
 /// topmost volatile, or both, if present.
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
+/// \group remove_cv
 template <typename Type>
 struct remove_cv
 {
   using type = remove_const_t<remove_volatile_t<Type>>;
 };
 
+/// \group remove_cv
 template <typename T>
 using remove_cv_t = typename remove_cv<T>::type;
 
+/// \group remove_reference
 template <typename T>
 struct remove_reference
 {
   using type = T;
 };
 
+/// \exclude
 template <typename T>
 struct remove_reference<T&>
 {
   using type = T;
 };
 
+/// \exclude
 template <typename T>
 struct remove_reference<T&&>
 {
   using type = T;
 };
 
+/// \group remove_reference
 template <typename T>
 using remove_reference_t = typename remove_reference<T>::type;
 
@@ -416,44 +461,56 @@ using remove_reference_t = typename remove_reference<T>::type;
 ///
 /// \details The behavior of a program that adds specializations for
 /// remove_cvref is undefined.
+/// \group remove_cvref
 template <typename T>
 struct remove_cvref
 {
   using type = remove_cv_t<remove_reference_t<T>>;
 };
 
+/// \group remove_cvref
 template <typename T>
 using remove_cvref_t = typename remove_cvref<T>::type;
 
 /// \brief Provides the member typedef type which is the type pointed to by T,
 /// or, if T is not a pointer, then type is the same as T. The behavior of a
 /// program that adds specializations for remove_pointer is undefined.
+/// \group remove_pointer
 template <typename T>
 struct remove_pointer
 {
   using type = T;
 };
+
+/// \exclude
 template <typename T>
 struct remove_pointer<T*>
 {
   using type = T;
 };
+
+/// \exclude
 template <typename T>
 struct remove_pointer<T* const>
 {
   using type = T;
 };
+
+/// \exclude
 template <typename T>
 struct remove_pointer<T* volatile>
 {
   using type = T;
 };
+
+/// \exclude
 template <typename T>
 struct remove_pointer<T* const volatile>
 {
   using type = T;
 };
 
+/// \group remove_pointer
 template <typename T>
 using remove_pointer_t = typename remove_pointer<T>::type;
 
@@ -474,72 +531,85 @@ auto try_add_pointer(...) -> ::etl::type_identity<T>;
 /// (if T is a cv- or ref-qualified function type), provides the member typedef
 /// type which is the type T. The behavior of a program that adds
 /// specializations for add_pointer is undefined.
+/// \group add_pointer
 template <typename T>
 struct add_pointer : decltype(detail::try_add_pointer<T>(0))
 {
 };
 
+/// \group add_pointer
 template <typename T>
 using add_pointer_t = typename add_pointer<T>::type;
 
 /// \brief Provides the member typedef type which is the same as T, except it
 /// has a cv-qualifier added (unless T is a function, a reference, or already
 /// has this cv-qualifier). Adds both const and volatile.
+/// \group add_cv
 template <typename T>
 struct add_cv
 {
   using type = T const volatile;
 };
 
+/// \group add_cv
 template <typename T>
 using add_cv_t = typename add_cv<T>::type;
 
 /// \brief Provides the member typedef type which is the same as T, except it
 /// has a cv-qualifier added (unless T is a function, a reference, or already
 /// has this cv-qualifier). Adds const.
+/// \group add_const
 template <typename T>
 struct add_const
 {
   using type = T const;
 };
 
+/// \group add_const
 template <typename T>
 using add_const_t = typename add_const<T>::type;
 
 /// \brief Provides the member typedef type which is the same as T, except it
 /// has a cv-qualifier added (unless T is a function, a reference, or already
 /// has this cv-qualifier). Adds volatile.
+/// \group add_volatile
 template <typename T>
 struct add_volatile
 {
   using type = T volatile;
 };
 
+/// \group add_volatile
 template <typename T>
 using add_volatile_t = typename add_volatile<T>::type;
 
 /// \brief If T and U name the same type (taking into account const/volatile
 /// qualifications), provides the member constant value equal to true. Otherwise
 /// value is false.
+/// \group is_same
 template <typename T, typename U>
 struct is_same : false_type
 {
 };
 
+/// \exclude
 template <typename T>
 struct is_same<T, T> : true_type
 {
 };
 
+/// \group is_same
 template <typename T, typename U>
 inline constexpr bool is_same_v = is_same<T, U>::value;
 
 /// \brief Define a member typedef only if a boolean constant is true.
+/// \group is_void
 template <typename T>
 struct is_void : is_same<void, typename remove_cv<T>::type>
 {
 };
 
+/// \group is_void
 template <typename T>
 inline constexpr bool is_void_v = is_void<T>::value;
 
@@ -621,12 +691,13 @@ struct is_integral_helper<unsigned long long> : ::etl::true_type
 };
 }  // namespace detail
 
-// is_integral
+/// \group is_integral
 template <typename Type>
 struct is_integral : detail::is_integral_helper<remove_cv_t<Type>>::type
 {
 };
 
+/// \group is_integral
 template <typename T>
 inline constexpr bool is_integral_v = is_integral<T>::value;
 
@@ -703,11 +774,13 @@ struct make_signed_helper<unsigned long long>
 /// long, long long; the unsigned type from this list corresponding to T is
 /// provided. The behavior of a program that adds specializations for
 /// make_signed is undefined.
+/// \group make_signed
 template <typename Type>
 struct make_signed : detail::make_signed_helper<Type>
 {
 };
 
+/// \group make_signed
 template <typename T>
 using make_signed_t = typename make_signed<T>::type;
 
@@ -784,14 +857,17 @@ struct make_unsigned_helper<unsigned long long>
 /// long, long long; the unsigned type from this list corresponding to T is
 /// provided. The behavior of a program that adds specializations for
 /// make_unsigned is undefined.
+/// \group make_unsigned
 template <typename Type>
 struct make_unsigned : detail::make_unsigned_helper<Type>
 {
 };
 
+/// \group make_unsigned
 template <typename T>
 using make_unsigned_t = typename make_unsigned<T>::type;
 
+/// \group integer_sequence
 template <typename T, T... Ints>
 struct integer_sequence
 {
@@ -805,15 +881,19 @@ struct integer_sequence
   }
 };
 
+/// \group integer_sequence
 template <typename T, T Size>
 using make_integer_sequence = TAETL_MAKE_INTEGER_SEQ(T, Size);
 
+/// \group integer_sequence
 template <size_t... Ints>
 using index_sequence = integer_sequence<size_t, Ints...>;
 
+/// \group integer_sequence
 template <size_t Size>
 using make_index_sequence = make_integer_sequence<size_t, Size>;
 
+/// \group integer_sequence
 template <typename... T>
 using index_sequence_for = make_index_sequence<sizeof...(T)>;
 
@@ -824,6 +904,7 @@ using index_sequence_for = make_index_sequence<sizeof...(T)>;
 ///
 /// \details The behavior of a program that adds specializations for
 /// is_floating_point or is_floating_point_v is undefined.
+/// \group is_floating_point
 template <typename T>
 struct is_floating_point
     : bool_constant<
@@ -834,34 +915,42 @@ struct is_floating_point
 {
 };
 
+/// \group is_floating_point
 template <typename T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 
 /// \brief If T is a const-qualified type (that is, const, or const volatile),
 /// provides the member constant value equal to true. For any other type, value
 /// is false.
+/// \group is_const
 template <typename T>
 struct is_const : false_type
 {
 };
 
+/// \exclude
 template <typename T>
 struct is_const<const T> : true_type
 {
 };
 
+/// \group is_const
 template <typename T>
 inline constexpr bool is_const_v = is_const<T>::value;
 
+/// \group is_volatile
 template <typename T>
 struct is_volatile : false_type
 {
 };
+
+/// \exclude
 template <typename T>
 struct is_volatile<volatile T> : true_type
 {
 };
 
+/// \group is_volatile
 template <typename T>
 inline constexpr bool is_volatile_v = is_volatile<T>::value;
 
@@ -894,20 +983,23 @@ struct is_empty_helper<T, false> : ::etl::false_type
 /// non-static data members other than bit-fields of size 0, no virtual
 /// functions, no virtual base classes, and no non-empty base classes), provides
 /// the member constant value equal to true. For any other type, value is false.
+/// \group is_empty
 template <typename T>
 struct is_empty : detail::is_empty_helper<T>
 {
 };
 
+/// \group is_empty
 template <typename T>
 inline constexpr bool is_empty_v = is_empty<T>::value;
 
-/// \brief is_polymorphic
+/// \group is_polymorphic
 template <typename T>
 struct is_polymorphic : bool_constant<TAETL_IS_POLYMORPHIC(T)>
 {
 };
 
+/// \group is_polymorphic
 template <typename T>
 inline constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
 
@@ -915,29 +1007,33 @@ inline constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
 /// specifier), provides the member constant value equal true. For any other
 /// type, value is false. If T is a class type, T shall be a complete type;
 /// otherwise, the behavior is undefined.
+/// \group is_final
 template <typename T>
 struct is_final : bool_constant<TAETL_IS_FINAL(T)>
 {
 };
 
+/// \group is_final
 template <typename T>
 inline constexpr bool is_final_v = is_final<T>::value;
 
-/// \brief is_abstract
+/// \group is_abstract
 template <typename T>
 struct is_abstract : bool_constant<TAETL_IS_ABSTRACT(T)>
 {
 };
 
+/// \group is_abstract
 template <typename T>
 inline constexpr bool is_abstract_v = is_abstract<T>::value;
 
-/// \brief is_aggregate
+/// \group is_aggregate
 template <typename T>
 struct is_aggregate : bool_constant<TAETL_IS_AGGREGATE(remove_cv_t<T>)>
 {
 };
 
+/// \group is_aggregate
 template <typename T>
 inline constexpr bool is_aggregate_v = is_aggregate<T>::value;
 
@@ -945,26 +1041,34 @@ inline constexpr bool is_aggregate_v = is_aggregate<T>::value;
 /// provides the member constant value equal true. For any other type, value is
 /// false. The behavior of a program that adds specializations for is_reference
 /// or is_reference_v is undefined.
+/// \group is_reference
 template <typename T>
 struct is_reference : false_type
 {
 };
+
+/// \exclude
 template <typename T>
 struct is_reference<T&> : true_type
 {
 };
+
+/// \exclude
 template <typename T>
 struct is_reference<T&&> : true_type
 {
 };
+/// \group is_reference
 template <typename T>
 inline constexpr bool is_reference_v = is_reference<T>::value;
 
+/// \group is_null_pointer
 template <typename T>
 struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>>
 {
 };
 
+/// \group is_null_pointer
 template <typename T>
 inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 
@@ -973,21 +1077,25 @@ inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
 /// false.
 /// \details The behavior of a program that adds specializations for is_array or
 /// is_array_v is undefined.
+/// \group is_array
 template <typename T>
 struct is_array : false_type
 {
 };
 
+/// \exclude
 template <typename T>
 struct is_array<T[]> : true_type
 {
 };
 
+/// \exclude
 template <typename T, size_t N>
 struct is_array<T[N]> : true_type
 {
 };
 
+/// \group is_array
 template <typename T>
 inline constexpr bool is_array_v = is_array<T>::value;
 
@@ -998,11 +1106,13 @@ inline constexpr bool is_array_v = is_array<T>::value;
 ///
 /// \details The behavior of a program that adds specializations for is_function
 /// or is_function_v is undefined.
+/// \group is_function
 template <typename T>
 struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>>
 {
 };
 
+/// \group is_function
 template <typename T>
 inline constexpr bool is_function_v = is_function<T>::value;
 
@@ -1025,65 +1135,81 @@ struct is_pointer_helper<T*> : ::etl::true_type
 ///
 /// \details The behavior of a program that adds specializations for is_pointer
 /// or is_pointer_v is undefined.
+/// \group is_pointer
 template <typename T>
 struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type>
 {
 };
 
+/// \group is_pointer
 template <typename T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;
 
 /// \brief Checks whether T is a lvalue reference type. Provides the member
 /// constant value which is equal to true, if T is a lvalue reference type.
 /// Otherwise, value is equal to false.
+/// \group is_lvalue_reference
 template <typename T>
 struct is_lvalue_reference : false_type
 {
 };
+
+/// \exclude
 template <typename T>
 struct is_lvalue_reference<T&> : true_type
 {
 };
 
+/// \group is_lvalue_reference
 template <typename T>
 inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
 
 /// \brief Checks whether T is a rvalue reference type. Provides the member
 /// constant value which is equal to true, if T is a rvalue reference type.
 /// Otherwise, value is equal to false.
+/// \group is_rvalue_reference
 template <typename T>
 struct is_rvalue_reference : false_type
 {
 };
+
+/// \exclude
 template <typename T>
 struct is_rvalue_reference<T&&> : true_type
 {
 };
 
+/// \group is_rvalue_reference
 template <typename T>
 inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
 
+/// \group is_class
 template <typename T>
 struct is_class : bool_constant<TAETL_IS_CLASS(T)>
 {
 };
 
+/// \group is_class
 template <typename T>
 inline constexpr bool is_class_v = is_class<T>::value;
 
+/// \group is_enum
 template <typename T>
 struct is_enum : bool_constant<TAETL_IS_ENUM(T)>
 {
 };
 
+/// \group is_enum
 template <typename T>
 inline constexpr bool is_enum_v = is_enum<T>::value;
 
+/// \group is_union
 template <typename T>
 struct is_union : bool_constant<TAETL_IS_UNION(T)>
 {
 };
 
+/// \group is_union
 template <typename T>
 inline constexpr bool is_union_v = is_union<T>::value;
 

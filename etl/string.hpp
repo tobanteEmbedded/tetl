@@ -20,9 +20,6 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-/// \example string.cpp
-
 #ifndef TAETL_STRING_HPP
 #define TAETL_STRING_HPP
 
@@ -33,16 +30,18 @@
 #include "etl/detail/string_char_traits.hpp"
 #include "etl/detail/string_conversion.hpp"
 
+/// \example string.cpp
+
 namespace etl
 {
-/// basic_static_string class with fixed size capacity.
-///
+/// \brief basic_static_string class with fixed size capacity.
 /// \tparam CharT Build in type for character size (mostly 'char')
 /// \tparam Capacity Capacity for basic_static_string
 template <typename CharT, etl::size_t Capacity,
           typename Traits = etl::char_traits<CharT>>
-class basic_static_string
+struct basic_static_string
 {
+  private:
   // clang-format off
     template <typename T>
     constexpr static bool string_view_and_not_char_pointer =
@@ -470,7 +469,7 @@ class basic_static_string
 
   /// \brief Removes min(count, size() - index) characters starting at index.
   ///
-  /// \return *this
+  /// \returns *this
   constexpr auto erase(size_type index = 0, size_type count = npos) noexcept
     -> basic_static_string&
   {
@@ -481,7 +480,7 @@ class basic_static_string
 
   /// \brief Removes the character at position.
   ///
-  /// \return iterator pointing to the character immediately following the
+  /// \returns iterator pointing to the character immediately following the
   /// character erased, or end() if no such character exists.
   constexpr auto erase(const_iterator position) noexcept -> iterator
   {
@@ -490,7 +489,7 @@ class basic_static_string
 
   /// \brief Removes the characters in the range [first, last).
   ///
-  /// \return iterator pointing to the character last pointed to before the
+  /// \returns iterator pointing to the character last pointed to before the
   /// erase, or end() if no such character exists.
   constexpr auto erase(const_iterator first, const_iterator last) noexcept
     -> iterator
@@ -907,7 +906,7 @@ class basic_static_string
   ///
   /// If pos is greater then size(), nothing will be copied.
   ///
-  /// \return Number of characters copied.
+  /// \returns Number of characters copied.
   constexpr auto copy(pointer destination, size_type count,
                       size_type pos = 0) const -> size_type
   {
@@ -955,7 +954,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
   [[nodiscard]] constexpr auto find(basic_static_string const& str,
                                     size_type pos = 0) const noexcept
@@ -970,7 +969,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
   [[nodiscard]] constexpr auto find(const_pointer s, size_type pos,
                                     size_type count) const noexcept -> size_type
@@ -993,7 +992,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
   [[nodiscard]] constexpr auto find(const_pointer s,
                                     size_type pos = 0) const noexcept
@@ -1008,7 +1007,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/find
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found.
   [[nodiscard]] constexpr auto find(value_type ch,
                                     size_type pos = 0) const noexcept
@@ -1024,7 +1023,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found. Note that this is an offset from the start of
   /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(basic_static_string const& str,
@@ -1041,7 +1040,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found. Note that this is an offset from the start of
   /// the string, not the end.
   ///
@@ -1067,7 +1066,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found. Note that this is an offset from the start of
   /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(const_pointer s,
@@ -1084,7 +1083,7 @@ class basic_static_string
   ///
   /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
   ///
-  /// \return Position of the first character of the found substring or npos if
+  /// \returns Position of the first character of the found substring or npos if
   /// no such substring is found. Note that this is an offset from the start of
   /// the string, not the end.
   [[nodiscard]] constexpr auto rfind(value_type ch,
@@ -1405,7 +1404,7 @@ constexpr auto erase_if(basic_static_string<CharT, Capacity, Traits>& c,
 /// \brief Interprets a signed integer value in the string str.
 /// \param str The string to convert.
 /// \param pos Address of an integer to store the number of characters
-/// processed. \param base The number base. \return Integer value corresponding
+/// processed. \param base The number base. \returns Integer value corresponding
 /// to the content of str.
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoi(static_string<Capacity> const& str,
@@ -1418,7 +1417,7 @@ template <size_t Capacity>
 /// \brief Interprets a signed integer value in the string str.
 /// \param str The string to convert.
 /// \param pos Address of an integer to store the number of characters
-/// processed. \param base The number base. \return Integer value corresponding
+/// processed. \param base The number base. \returns Integer value corresponding
 /// to the content of str.
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stol(static_string<Capacity> const& str,
@@ -1431,7 +1430,7 @@ template <size_t Capacity>
 /// \brief Interprets a signed integer value in the string str.
 /// \param str The string to convert.
 /// \param pos Address of an integer to store the number of characters
-/// processed. \param base The number base. \return Integer value corresponding
+/// processed. \param base The number base. \returns Integer value corresponding
 /// to the content of str.
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoll(static_string<Capacity> const& str,
@@ -1445,7 +1444,7 @@ template <size_t Capacity>
 /// \brief Interprets a unsigned integer value in the string str.
 /// \param str The string to convert.
 /// \param pos Address of an integer to store the number of characters
-/// processed. \param base The number base. \return Integer value corresponding
+/// processed. \param base The number base. \returns Integer value corresponding
 /// to the content of str.
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoul(static_string<Capacity> const& str,
@@ -1459,7 +1458,7 @@ template <size_t Capacity>
 /// \brief Interprets a unsigned integer value in the string str.
 /// \param str The string to convert.
 /// \param pos Address of an integer to store the number of characters
-/// processed. \param base The number base. \return Integer value corresponding
+/// processed. \param base The number base. \returns Integer value corresponding
 /// to the content of str.
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoull(static_string<Capacity> const& str,

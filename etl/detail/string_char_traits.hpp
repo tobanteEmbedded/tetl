@@ -101,7 +101,7 @@ struct char_traits<char>
   /// \brief Searches for character ch within the first count characters of the
   /// sequence pointed to by p.
   ///
-  /// \return A pointer to the first character in the range specified by [p, p
+  /// \returns A pointer to the first character in the range specified by [p, p
   /// + count) that compares equal to ch, or a null pointer if not found.
   static constexpr auto find(char_type const* str, size_t count,
                              char_type const& token) -> char_type const*

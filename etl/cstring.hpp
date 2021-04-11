@@ -39,7 +39,7 @@ namespace etl
 /// \details The behavior is undefined if the dest array is not large enough.
 /// The behavior is undefined if the strings overlap.
 ///
-/// \return dest
+/// \returns dest
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
   assert(dest != nullptr && src != nullptr);
@@ -58,7 +58,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 /// characters are written to dest until the total of count characters have
 /// been written. If the strings overlap, the behavior is undefined.
 ///
-/// \return dest
+/// \returns dest
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
   -> char*
 {
