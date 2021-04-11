@@ -47,6 +47,7 @@ namespace etl
 /// {1,2,3};.
 ///
 /// \include array.cpp
+/// \module Containers
 template <typename Type, size_t Size>
 struct array
 {

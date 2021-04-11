@@ -45,6 +45,7 @@ inline constexpr auto dynamic_extent = size_t(-1);
 /// If a span has dynamic extent a typical implementation holds
 /// two members: a pointer to T and a size. A span with static extent may have
 /// only one member: a pointer to T.
+/// \module Containers
 template <typename ElementType, size_t Extent = etl::dynamic_extent>
 class span
 {

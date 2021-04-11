@@ -38,6 +38,7 @@ namespace etl
 {
 /// \brief Interface base class for etl::map. Use this class for function
 /// parameters. To create an instance, use etl::map.
+/// \module Containers
 template <typename KeyType, typename ValueType,
           typename Compare = etl::less<KeyType>>
 class map_view
@@ -280,6 +281,7 @@ class map_view
 /// neither compares less than the other: !comp(a, b) && !comp(b, a).
 ///
 /// \include map.cpp
+/// \module Containers
 template <typename KeyT, typename ValueT, size_t Size,
           typename Compare = etl::less<KeyT>>
 class map : public map_view<KeyT, ValueT, Compare>
@@ -347,6 +349,7 @@ class map : public map_view<KeyT, ValueT, Compare>
   storage_t memory_[Size] {};
 };
 
+/// \module Containers
 template <typename KeyT, typename ValueT, size_t Capacity,
           typename Compare = etl::less<KeyT>>
 struct static_map

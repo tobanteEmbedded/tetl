@@ -39,7 +39,7 @@ namespace etl
 /// range [first, last). (1) Uses operator+ to sum up the elements. (2) Uses the
 /// BinaryOperation to sum up the elements.
 /// \group accumulate
-/// \module algorithm
+/// \module Algorithm
 template <typename InputIt, typename Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
                                         Type init) noexcept -> Type
@@ -61,7 +61,7 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/reduce
 /// \group reduce
-/// \module algorithm
+/// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init,
                                     BinaryOp op) -> T
@@ -91,7 +91,7 @@ template <typename InputIter>
 /// range beginning at destination + 1. An unmodified copy of *first is written
 /// to *destination.
 /// \group adjacent_difference
-/// \module algorithm
+/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto adjacent_difference(InputIt first, InputIt last,
                                    OutputIt destination, BinaryOperation op)
@@ -140,7 +140,7 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 /// map/reduce operation on the range [first1, last1) and the range beginning at
 /// first2.
 /// \group inner_product
-/// \module algorithm
+/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename T>
 [[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
                                            InputIt2 first2, T init) -> T
@@ -178,7 +178,7 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
 ///
 /// \returns Iterator to the element past the last element written.
 /// \group partial_sum
-/// \module algorithm
+/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
                            BinaryOperation op) -> OutputIt
@@ -208,7 +208,7 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
 /// \brief Fills the range [first, last) with sequentially increasing values,
 /// starting with value and repetitively evaluating ++value.
 /// \group iota
-/// \module algorithm
+/// \module Algorithm
 template <typename ForwardIt, typename T>
 constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 {

@@ -39,6 +39,7 @@ namespace etl
 /// etl::endian::native equals etl::endian::big
 ///
 /// https://en.cppreference.com/w/cpp/types/endian
+/// \module Numeric
 enum class endian
 {
 #ifdef _WIN32
@@ -64,6 +65,7 @@ enum class endian
 /// To and From are TriviallyCopyable types.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/bit_cast
+/// \module Numeric
 template <typename To, typename From,
           TAETL_REQUIRES_(
             (sizeof(To) == sizeof(From))
@@ -95,6 +97,7 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
@@ -106,6 +109,7 @@ constexpr auto rotl(T t, int s) noexcept -> T
 
 /// \brief Computes the result of bitwise right-rotating the value of x by s
 /// positions. This operation is also known as a right circular shift.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
@@ -121,6 +125,7 @@ constexpr auto rotr(T t, int s) noexcept -> T
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
@@ -140,6 +145,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns true if x is an integral power of two; otherwise false.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
@@ -155,6 +161,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 ///
 /// \returns The number of consecutive 0 bits in the value of x, starting from
 /// the most significant bit.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
@@ -180,6 +187,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 ///
 /// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
@@ -202,6 +210,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// \details This overload only participates in overload resolution if T is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
@@ -218,6 +227,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
@@ -245,6 +255,7 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 ///
 /// \returns Zero if x is zero; otherwise, the largest integral power of two
 /// that is not greater than x.
+/// \module Numeric
 template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
 {

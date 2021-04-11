@@ -42,6 +42,7 @@ namespace etl
 /// function Compare.
 ///
 /// \include set.cpp
+/// \module Containers
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set
 {

@@ -37,6 +37,7 @@ namespace etl
 /// only a specific set of functions is provided. The stack pushes and pops the
 /// element from the back of the underlying container, known as the top of the
 /// stack.
+/// \module Containers
 template <typename T, typename Container>
 class stack
 {
@@ -120,6 +121,7 @@ class stack
   }
 
   /// \brief Removes the top element from the stack.
+  /// \complexity Equal to the complexity of Container::pop_back.
   constexpr auto pop() noexcept(noexcept(declval<container_type>().pop_back()))
     -> void
   {

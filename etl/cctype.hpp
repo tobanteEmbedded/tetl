@@ -36,6 +36,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is an alphanumeric character, 0
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -55,6 +56,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is an alphabetic character, 0
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -73,6 +75,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a lowercase letter, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -87,6 +90,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a uppercase letter, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -101,6 +105,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a numeric character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -115,6 +120,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a hexadecimal numeric character,
 /// zero otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -134,6 +140,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a whitespace character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -159,6 +166,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a blank character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -180,6 +188,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -200,6 +209,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -220,6 +230,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -236,6 +247,7 @@ namespace etl
 ///
 /// \returns Non-zero value if the character is a control character, zero
 /// otherwise.
+/// \module Strings
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -255,6 +267,7 @@ namespace etl
 ///
 /// \returns Lowercase version of ch or unmodified ch if no lowercase version is
 /// listed in the current C locale.
+/// \module Strings
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
@@ -275,6 +288,7 @@ namespace etl
 ///
 /// \returns Converted character or ch if no uppercase version is defined by the
 /// current C locale.
+/// \module Strings
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char

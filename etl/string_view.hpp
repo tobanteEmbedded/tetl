@@ -40,6 +40,7 @@ namespace etl
 /// refer to a constant contiguous sequence of char-like objects with the first
 /// element of the sequence at position zero. A typical implementation holds
 /// only two members: a pointer to constant CharType and a size.
+/// \module Strings
 template <typename CharType, typename Traits = etl::char_traits<CharType>>
 class basic_string_view
 {
