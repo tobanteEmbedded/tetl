@@ -39,7 +39,8 @@ namespace etl
 /// \brief Interface base class for etl::map. Use this class for function
 /// parameters. To create an instance, use etl::map.
 /// \module Containers
-template <typename KeyType, typename ValueType, typename Compare = etl::less<KeyType>>
+template <typename KeyType, typename ValueType,
+          typename Compare = etl::less<KeyType>>
 class map_view
 {
   public:
@@ -71,7 +72,8 @@ class map_view
 
   /// \brief Returns a reference to the mapped value of the element with key
   /// equivalent to key. If no such element exists, you are in UB land.
-  [[nodiscard]] constexpr auto at(key_type const& key) const -> mapped_type const&
+  [[nodiscard]] constexpr auto at(key_type const& key) const
+    -> mapped_type const&
   {
     assert(find(key) != nullptr);
     return find(key)->second;
@@ -95,31 +97,56 @@ class map_view
   [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data_; }
 
   /// \brief Returns an const iterator to the beginning.
-  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return data_; }
+  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+  {
+    return data_;
+  }
 
   /// \brief Returns an const iterator to the beginning.
-  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return data_; }
+  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+  {
+    return data_;
+  }
 
   /// \brief Returns an iterator to the end.
-  [[nodiscard]] constexpr auto end() noexcept -> iterator { return data_ + size(); }
+  [[nodiscard]] constexpr auto end() noexcept -> iterator
+  {
+    return data_ + size();
+  }
 
   /// \brief Returns an const iterator to the end.
-  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return data_ + size(); }
+  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+  {
+    return data_ + size();
+  }
 
   /// \brief Returns an const iterator to the end.
-  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return data_ + size(); }
+  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+  {
+    return data_ + size();
+  }
 
   /// \brief Returns the current element count.
-  [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return size_;
+  }
 
   /// \brief Returns the capacity.
-  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return capacity_; }
+  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+  {
+    return capacity_;
+  }
 
   /// \brief Returns true if the size == 0.
-  [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool
+  {
+    return size_ == 0;
+  }
 
   /// \brief Returns 1 if the key is present, otherwise 0.
-  [[nodiscard]] constexpr auto count(key_type const& key) const noexcept -> size_type
+  [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
+    -> size_type
   {
     return find(key) != nullptr ? 1 : 0;
   }
@@ -144,7 +171,8 @@ class map_view
   /// \details Returns a pair consisting of an iterator to the inserted element
   /// (or to the element that prevented the insertion) and a bool denoting
   /// whether the insertion took place.
-  constexpr auto insert(value_type const& value) noexcept -> etl::pair<iterator, bool>
+  constexpr auto insert(value_type const& value) noexcept
+    -> etl::pair<iterator, bool>
   {
     if (size_ == capacity_) { return {end(), false}; }
 
@@ -197,7 +225,7 @@ class map_view
     auto* obj        = ::new (addr) value_type {etl::forward<Args>(args)...};
 
     // Check if the key from the newly created object has already existed.
-    auto predicate   = [&](auto const& item) { return item.first == obj->first; };
+    auto predicate = [&](auto const& item) { return item.first == obj->first; };
     auto* keyExisted = find_if(begin(), end(), predicate);
 
     // If so, return its iterator and false for insertion.
@@ -223,7 +251,8 @@ class map_view
 
   /// \brief Returns an element with key equivalent to key. Nullptr if not
   /// found.
-  [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept -> const_iterator
+  [[nodiscard]] constexpr auto find(KeyType const& key) const noexcept
+    -> const_iterator
   {
     auto keysMatch = [&key](auto const& item) { return item.first == key; };
     auto iter      = etl::find_if(begin(), end(), keysMatch);
@@ -253,19 +282,24 @@ class map_view
 ///
 /// \include map.cpp
 /// \module Containers
-template <typename KeyT, typename ValueT, size_t Size, typename Compare = etl::less<KeyT>>
+template <typename KeyT, typename ValueT, size_t Size,
+          typename Compare = etl::less<KeyT>>
 class map : public map_view<KeyT, ValueT, Compare>
 {
   public:
   /// \brief Default constructor.
-  constexpr explicit map() noexcept : base_t {reinterpret_cast<pair_t*>(&memory_[0]), Size} { }
+  constexpr explicit map() noexcept
+      : base_t {reinterpret_cast<pair_t*>(&memory_[0]), Size}
+  {
+  }
 
   /// \brief Copy constructor. Constructs the container with the copy of the
   /// contents of other.
   constexpr map(map const& other) : map {}
   {
     etl::for_each(other.begin(), other.end(),
-                  [this](auto element) { this->base_t::insert(etl::move(element)); });
+                  [this](auto element)
+                  { this->base_t::insert(etl::move(element)); });
   }
 
   /// \brief Move constructor. Constructs the container with the contents of
@@ -275,7 +309,8 @@ class map : public map_view<KeyT, ValueT, Compare>
   constexpr map(map&& other) noexcept : map {}
   {
     etl::for_each(other.begin(), other.end(),
-                  [this](auto& element) { this->base_t::insert(etl::move(element)); });
+                  [this](auto& element)
+                  { this->base_t::insert(etl::move(element)); });
     other.clear();
   }
 
@@ -286,7 +321,8 @@ class map : public map_view<KeyT, ValueT, Compare>
     if (this == &other) { return *this; }
 
     etl::for_each(other.begin(), other.end(),
-                  [this](auto element) { this->base_t::insert(etl::move(element)); });
+                  [this](auto element)
+                  { this->base_t::insert(etl::move(element)); });
     return *this;
   }
 
@@ -297,7 +333,8 @@ class map : public map_view<KeyT, ValueT, Compare>
   constexpr auto operator=(map&& other) noexcept -> map&
   {
     etl::for_each(other.begin(), other.end(),
-                  [this](auto& element) { this->base_t::insert(etl::move(element)); });
+                  [this](auto& element)
+                  { this->base_t::insert(etl::move(element)); });
     other.clear();
     return *this;
   }
@@ -313,14 +350,16 @@ class map : public map_view<KeyT, ValueT, Compare>
 };
 
 /// \module Containers
-template <typename KeyT, typename ValueT, size_t Capacity, typename Compare = etl::less<KeyT>>
+template <typename KeyT, typename ValueT, size_t Capacity,
+          typename Compare = etl::less<KeyT>>
 struct static_map
 {
   private:
   struct compare_type
   {
     [[nodiscard]] constexpr auto operator()(pair<KeyT, ValueT> const& lhs,
-                                            pair<KeyT, ValueT> const& rhs) const -> bool
+                                            pair<KeyT, ValueT> const& rhs) const
+      -> bool
     {
       return lhs.first < rhs.first;
     }
@@ -348,7 +387,8 @@ struct static_map
   struct value_compare
   {
 public:
-    [[nodiscard]] constexpr auto operator()(value_type const& x, value_type const& y) const -> bool
+    [[nodiscard]] constexpr auto operator()(value_type const& x,
+                                            value_type const& y) const -> bool
     {
       return comp(x.first, y.first);
     }
@@ -362,27 +402,48 @@ private:
   };
 
   /// \brief Returns an iterator to the beginning.
-  [[nodiscard]] constexpr auto begin() noexcept -> iterator { return memory_.begin(); }
+  [[nodiscard]] constexpr auto begin() noexcept -> iterator
+  {
+    return memory_.begin();
+  }
 
   /// \brief Returns an const iterator to the beginning.
-  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return memory_.begin(); }
+  [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
+  {
+    return memory_.begin();
+  }
 
   /// \brief Returns an const iterator to the beginning.
-  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return memory_.begin(); }
+  [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
+  {
+    return memory_.begin();
+  }
 
   /// \brief Returns an iterator to the end.
-  [[nodiscard]] constexpr auto end() noexcept -> iterator { return memory_.end(); }
+  [[nodiscard]] constexpr auto end() noexcept -> iterator
+  {
+    return memory_.end();
+  }
 
   /// \brief Returns an const iterator to the end.
-  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return memory_.end(); }
+  [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+  {
+    return memory_.end();
+  }
 
   /// \brief Returns an const iterator to the end.
-  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return memory_.end(); }
+  [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
+  {
+    return memory_.end();
+  }
 
   /// \brief Returns a reverse iterator to the first element of the reversed
   /// map. It corresponds to the last element of the non-reversed map. If the
   /// map is empty, the returned iterator is equal to rend().
-  [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return memory_.rbegin(); }
+  [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
+  {
+    return memory_.rbegin();
+  }
 
   /// \brief Returns a reverse iterator to the first element of the reversed
   /// map. It corresponds to the last element of the non-reversed map. If the
@@ -395,7 +456,8 @@ private:
   /// \brief Returns a reverse iterator to the first element of the reversed
   /// map. It corresponds to the last element of the non-reversed map. If the
   /// map is empty, the returned iterator is equal to rend().
-  [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
+  [[nodiscard]] constexpr auto crbegin() const noexcept
+    -> const_reverse_iterator
   {
     return memory_.crbegin();
   }
@@ -404,7 +466,10 @@ private:
   /// element of the reversed map. It corresponds to the element preceding the
   /// first element of the non-reversed map. This element acts as a placeholder,
   /// attempting to access it results in undefined behavior.
-  [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return memory_.rend(); }
+  [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
+  {
+    return memory_.rend();
+  }
 
   /// \brief Returns a reverse iterator to the element following the last
   /// element of the reversed map. It corresponds to the element preceding the
@@ -425,17 +490,29 @@ private:
   }
 
   /// \brief Checks if the container has no elements.
-  [[nodiscard]] constexpr auto empty() const noexcept -> bool { return memory_.empty(); }
+  [[nodiscard]] constexpr auto empty() const noexcept -> bool
+  {
+    return memory_.empty();
+  }
 
   /// \brief Returns the number of elements in the container.
-  [[nodiscard]] constexpr auto size() const noexcept -> size_type { return memory_.size(); }
+  [[nodiscard]] constexpr auto size() const noexcept -> size_type
+  {
+    return memory_.size();
+  }
 
   /// \brief Checks if the container full, i.e. whether size() == Capacity.
-  [[nodiscard]] constexpr auto full() const noexcept -> bool { return memory_.full(); }
+  [[nodiscard]] constexpr auto full() const noexcept -> bool
+  {
+    return memory_.full();
+  }
 
   /// \brief Returns the maximum number of elements the container is able to
   /// hold, i.e. max_size() == Capacity.
-  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return memory_.max_size(); }
+  [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
+  {
+    return memory_.max_size();
+  }
 
   /// \brief Erases all elements from the container. After this call, size()
   /// returns zero. Invalidates any references, pointers, or iterators referring
@@ -475,7 +552,8 @@ private:
 
   /// \brief Inserts element(s) into the container, if the container doesn't
   /// already contain an element with an equivalent key.
-  constexpr auto insert(const_iterator hint, value_type const& value) -> iterator
+  constexpr auto insert(const_iterator hint, value_type const& value)
+    -> iterator
   {
     ignore_unused(hint);
     return insert(value).first;
@@ -504,7 +582,10 @@ private:
     for_each(first, last, [&](auto const& value) { insert(value); });
   }
 
-  [[nodiscard]] constexpr auto key_comp() const -> key_compare { return key_compare {}; }
+  [[nodiscard]] constexpr auto key_comp() const -> key_compare
+  {
+    return key_compare {};
+  }
 
   [[nodiscard]] constexpr auto value_comp() const -> value_compare
   {

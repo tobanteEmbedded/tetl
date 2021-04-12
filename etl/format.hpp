@@ -32,7 +32,8 @@
 namespace etl
 {
 template <typename It>
-using diff_t = typename ::etl::iterator_traits<::etl::remove_cvref_t<It>>::difference_type;
+using diff_t =
+  typename ::etl::iterator_traits<::etl::remove_cvref_t<It>>::difference_type;
 
 /// \brief Format args according to the format string fmt, and write the result
 /// to the output iterator out.
@@ -40,7 +41,8 @@ using diff_t = typename ::etl::iterator_traits<::etl::remove_cvref_t<It>>::diffe
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/format_to](https://en.cppreference.com/w/cpp/utility/format/format_to)
 template <typename OutputIt, typename... Args>
-auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
+auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
+  -> OutputIt
 {
   // TODO: Make more generic. What about other string types.
   auto ctx = format_context<::etl::static_string<32>> {out};
@@ -70,7 +72,8 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
     ...);
 
   // Anything left over after the last argument.
-  if (auto const trailing = detail::split_at_next_argument(rest); !trailing.first.empty())
+  if (auto const trailing = detail::split_at_next_argument(rest);
+      !trailing.first.empty())
   {
     detail::format_escaped_sequences(trailing.first, ctx);
     assert(trailing.second.empty());
@@ -97,8 +100,8 @@ struct format_to_n_result
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/format_to_n](https://en.cppreference.com/w/cpp/utility/format/format_to_n)
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt, Args const&... args)
-  -> format_to_n_result<OutputIter>
+auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
+                 Args const&... args) -> format_to_n_result<OutputIter>
 {
   ::etl::ignore_unused(n);
 

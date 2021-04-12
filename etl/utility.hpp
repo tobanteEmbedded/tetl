@@ -55,11 +55,13 @@ constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 }
 
 /// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
-/// When t is a forwarding reference (a function argument that is declared as an rvalue reference to a
-/// cv-unqualified function template parameter), this overload forwards the argument to another
-/// function with the value category it had when passed to the calling function.
+/// When t is a forwarding reference (a function argument that is declared as an
+/// rvalue reference to a cv-unqualified function template parameter), this
+/// overload forwards the argument to another function with the value category
+/// it had when passed to the calling function.
 ///
-/// \notes [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
+/// \notes
+/// [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
 /// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
@@ -116,7 +118,8 @@ struct is_integer_and_not_char
 // clang-format on
 
 template <typename T>
-inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::value;
+inline constexpr auto is_integer_and_not_char_v
+  = is_integer_and_not_char<T>::value;
 
 }  // namespace detail
 
@@ -127,10 +130,11 @@ inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::va
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
   using UT = etl::make_unsigned_t<T>;
@@ -154,10 +158,11 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
   return !cmp_equal(t, u);
@@ -170,10 +175,11 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
   using UT = etl::make_unsigned_t<T>;
@@ -196,10 +202,11 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
   return cmp_less(u, t);
@@ -212,10 +219,11 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
   return !cmp_greater(t, u);
@@ -228,10 +236,11 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
-template <
-  typename T, typename U,
-  TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
+/// \notes
+/// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
+template <typename T, typename U,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+                            detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
   return !cmp_less(t, u);
@@ -247,7 +256,8 @@ template <
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/in_range](https://en.cppreference.com/w/cpp/utility/in_range)
-template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
+template <typename R, typename T,
+          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
   return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
@@ -330,7 +340,8 @@ inline constexpr auto in_place_index = in_place_index_t<I> {};
 /// cv-qualified class type with non-trivial destructor, or array thereof, the
 /// destructor of pair is trivial.
 ///
-/// \notes [cppreference.com/w/cpp/utility/pair](https://en.cppreference.com/w/cpp/utility/pair)
+/// \notes
+/// [cppreference.com/w/cpp/utility/pair](https://en.cppreference.com/w/cpp/utility/pair)
 ///
 /// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
@@ -341,7 +352,8 @@ struct pair
 
   /// \brief Default constructor. Value-initializes both elements of the pair,
   /// first and second.
-  TAETL_REQUIRES(is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
+  TAETL_REQUIRES(
+    is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
   constexpr pair() : first {}, second {} { }
 
   /// \brief Initializes first with x and second with y.
@@ -350,17 +362,18 @@ struct pair
 
   /// \brief Initializes first with etl::forward<U1>(x) and second with
   /// etl::forward<U2>(y).
-  template <
-    typename U1, typename U2,
-    TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&& is_constructible_v<U2&&, second_type>)>
-  constexpr pair(U1&& x, U2&& y) : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
+                              is_constructible_v<U2&&, second_type>)>
+  constexpr pair(U1&& x, U2&& y)
+      : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
   {
   }
 
   /// \brief Initializes first with p.first and second with p.second.
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(
-              is_constructible_v<first_type, U1 const&>&& is_constructible_v<second_type, U2 const&>)>
+            TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
+                              is_constructible_v<second_type, U2 const&>)>
   constexpr pair(pair<U1, U2> const& p)
       : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
   {
@@ -368,9 +381,9 @@ struct pair
 
   /// \brief Initializes first with etl::forward<U1>(p.first) and second with
   /// etl::forward<U2>(p.second).
-  template <
-    typename U1, typename U2,
-    TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&& is_constructible_v<second_type, U2&&>)>
+  template <typename U1, typename U2,
+            TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
+                              is_constructible_v<second_type, U2&&>)>
   constexpr pair(pair<U1, U2>&& p)
       : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
   {
@@ -396,8 +409,8 @@ struct pair
   }
 
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(
-              is_assignable_v<first_type&, U1 const&>&& is_assignable_v<second_type&, U2 const&>)>
+            TAETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
+                              is_assignable_v<second_type&, U2 const&>)>
   constexpr auto operator=(pair<U1, U2> const& p) -> pair&
   {
     first  = p.first;
@@ -405,7 +418,8 @@ struct pair
     return *this;
   }
 
-  TAETL_REQUIRES(is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
+  TAETL_REQUIRES(
+    is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
   constexpr auto operator=(pair&& p) noexcept -> pair&
   {
     first  = etl::move(p.first);
@@ -414,7 +428,8 @@ struct pair
   }
 
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_assignable_v<first_type&, U1>&& is_assignable_v<second_type&, U2>)>
+            TAETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
+                              is_assignable_v<second_type&, U2>)>
   constexpr auto operator=(pair<U1, U2>&& p) -> pair&
   {
     first  = etl::move(p.first);
@@ -422,8 +437,8 @@ struct pair
     return *this;
   }
 
-  constexpr void swap(pair& other) noexcept(
-    (is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+  constexpr void swap(pair& other) noexcept((
+    is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
   {
     using ::etl::swap;
     swap(first, other.first);
@@ -446,7 +461,8 @@ pair(T1, T2) -> pair<T1, T2>;
 
 /// \brief Swaps the contents of x and y. Equivalent to x.swap(y).
 template <typename T1, typename T2>
-constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(pair<T1, T2>& lhs,
+                    pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
   lhs.swap(rhs);
 }
@@ -461,7 +477,8 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.
 /// \notes
 /// [cppreference.com/w/cpp/utility/pair/make_pair](https://en.cppreference.com/w/cpp/utility/pair/make_pair)
 template <typename T1, typename T2>
-[[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u) -> pair<decay_t<T1>, decay_t<T2>>
+[[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
+  -> pair<decay_t<T1>, decay_t<T2>>
 {
   return {forward<T1>(t), forward<T2>(u)};
 }
@@ -469,7 +486,8 @@ template <typename T1, typename T2>
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares
 /// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
-constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
@@ -477,7 +495,8 @@ constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> b
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares
 /// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
-constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(lhs == rhs);
 }
@@ -486,7 +505,8 @@ constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> b
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   if (lhs.first < rhs.first) { return true; }
   if (rhs.first < lhs.first) { return false; }
@@ -498,7 +518,8 @@ constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bo
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(rhs < lhs);
 }
@@ -507,7 +528,8 @@ constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> b
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return rhs < lhs;
 }
@@ -516,7 +538,8 @@ constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bo
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
+constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
+  -> bool
 {
   return !(lhs < rhs);
 }
@@ -545,7 +568,8 @@ struct tuple_element<I, pair<T1, T2>>
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-constexpr auto get(pair<T1, T2>& p) noexcept -> tuple_element_t<I, pair<T1, T2>>&
+constexpr auto get(pair<T1, T2>& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>>&
 {
   if constexpr (I == 0) { return p.first; }
   else
@@ -576,7 +600,8 @@ template <size_t I, typename T1, typename T2>
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-[[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept -> tuple_element_t<I, pair<T1, T2>>&&
+[[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept
+  -> tuple_element_t<I, pair<T1, T2>>&&
 {
   if constexpr (I == 0) { return move(p.first); }
   else

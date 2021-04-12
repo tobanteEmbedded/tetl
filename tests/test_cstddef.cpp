@@ -26,17 +26,20 @@
 #include "etl/cstddef.hpp"
 #include "etl/cstdint.hpp"
 
-TEST_CASE("cstddef: size_t", "[cstddef]") { REQUIRE(sizeof(etl::size_t) == sizeof(size_t)); }
+TEST_CASE("cstddef: size_t", "[cstddef]")
+{
+  REQUIRE(sizeof(etl::size_t) == sizeof(size_t));
+}
 
-TEMPLATE_TEST_CASE("cstddef/byte: to_integer", "[cstdef][byte]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("cstddef/byte: to_integer", "[cstdef][byte]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
   auto const b = etl::byte {42};
   REQUIRE(etl::to_integer<TestType>(b) == TestType {42});
 }
 
-TEMPLATE_TEST_CASE("cstddef/byte: operator <<=", "[cstdef][byte]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("cstddef/byte: operator <<=", "[cstdef][byte]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
   {
     auto b = etl::byte {1};
@@ -55,8 +58,8 @@ TEMPLATE_TEST_CASE("cstddef/byte: operator <<=", "[cstdef][byte]", etl::uint8_t,
   }
 }
 
-TEMPLATE_TEST_CASE("cstddef/byte: operator >>=", "[cstdef][byte]", etl::uint8_t, etl::uint16_t,
-                   etl::uint32_t, etl::uint64_t)
+TEMPLATE_TEST_CASE("cstddef/byte: operator >>=", "[cstdef][byte]", etl::uint8_t,
+                   etl::uint16_t, etl::uint32_t, etl::uint64_t)
 {
   auto b = etl::byte {2};
   b >>= 1;

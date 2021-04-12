@@ -62,7 +62,10 @@ struct get_impl
 template <typename First, typename... Rest>
 struct get_impl<0, First, Rest...>
 {
-  static constexpr auto value(tuple<First, Rest...> const* t) -> First { return t->first; }
+  static constexpr auto value(tuple<First, Rest...> const* t) -> First
+  {
+    return t->first;
+  }
 };
 
 }  // namespace detail

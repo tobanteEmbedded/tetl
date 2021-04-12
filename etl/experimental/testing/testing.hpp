@@ -64,34 +64,34 @@ template <typename T>
 #endif  // STR
 
 #if not defined(MAKE_TEST_CASE)
-#define MAKE_TEST_CASE(exp)                                                                          \
+#define MAKE_TEST_CASE(exp)                                                    \
   binary_test_case { __LINE__, __FILE__, TAETL_FUNC_SIG, exp, }
 #endif  // MAKE_TEST_CASE
 
 #if not defined(EQUAL)
-#define EQUAL(a, b)                                                                                  \
-  do {                                                                                               \
-    if (!((a) == (b)))                                                                               \
-    {                                                                                                \
-      using namespace etl::experimental::testing::detail;                                            \
-      fail_binary_test(MAKE_TEST_CASE(STR((a) == (b))));                                             \
-    }                                                                                                \
+#define EQUAL(a, b)                                                            \
+  do {                                                                         \
+    if (!((a) == (b)))                                                         \
+    {                                                                          \
+      using namespace etl::experimental::testing::detail;                      \
+      fail_binary_test(MAKE_TEST_CASE(STR((a) == (b))));                       \
+    }                                                                          \
   } while (false);
 #endif  // EQUAL
 
 #if not defined(NOTEQUAL)
-#define NOTEQUAL(a, b)                                                                               \
-  do {                                                                                               \
-    if (!((a) != (b)))                                                                               \
-    {                                                                                                \
-      using namespace etl::experimental::testing::detail;                                            \
-      auto l  = format_argument((a));                                                                \
-      auto r  = format_argument((b));                                                                \
-      auto tc = MAKE_TEST_CASE(STR((a) != (b)));                                                     \
-      tc.lhs  = l.c_str();                                                                           \
-      tc.rhs  = r.c_str();                                                                           \
-      fail_binary_test(tc);                                                                          \
-    }                                                                                                \
+#define NOTEQUAL(a, b)                                                         \
+  do {                                                                         \
+    if (!((a) != (b)))                                                         \
+    {                                                                          \
+      using namespace etl::experimental::testing::detail;                      \
+      auto l  = format_argument((a));                                          \
+      auto r  = format_argument((b));                                          \
+      auto tc = MAKE_TEST_CASE(STR((a) != (b)));                               \
+      tc.lhs  = l.c_str();                                                     \
+      tc.rhs  = r.c_str();                                                     \
+      fail_binary_test(tc);                                                    \
+    }                                                                          \
   } while (false);
 #endif  // NOTEQUAL
 

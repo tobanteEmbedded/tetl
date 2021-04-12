@@ -56,18 +56,29 @@ struct char_traits<char>
   // using comparison_category = strong_ordering;
 
   /// \brief Assigns character a to character r.
-  static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void { a = b; }
+  static constexpr auto assign(char_type& a, char_type const& b) noexcept
+    -> void
+  {
+    a = b;
+  }
 
   /// \brief Returns true if a and b are equal, false otherwise.
-  static constexpr auto eq(char_type a, char_type b) noexcept -> bool { return a == b; }
+  static constexpr auto eq(char_type a, char_type b) noexcept -> bool
+  {
+    return a == b;
+  }
 
   /// \brief Returns true if a is less than b, false otherwise.
-  static constexpr auto lt(char_type a, char_type b) noexcept -> bool { return a < b; }
+  static constexpr auto lt(char_type a, char_type b) noexcept -> bool
+  {
+    return a < b;
+  }
 
   /// \brief Compares the first count characters of the character strings s1
   /// and s2. The comparison is done lexicographically. If count is zero,
   /// strings are considered equal.
-  static constexpr auto compare(char_type const* lhs, char_type const* rhs, size_t count) -> int
+  static constexpr auto compare(char_type const* lhs, char_type const* rhs,
+                                size_t count) -> int
   {
     if (count == 0) { return 0; }
 
@@ -82,15 +93,18 @@ struct char_traits<char>
 
   /// \brief Returns the length of the character sequence pointed to by s, that
   /// is, the position of the terminating null character (CharT()).
-  static constexpr auto length(char_type const* str) -> size_t { return etl::strlen(str); }
+  static constexpr auto length(char_type const* str) -> size_t
+  {
+    return etl::strlen(str);
+  }
 
   /// \brief Searches for character ch within the first count characters of the
   /// sequence pointed to by p.
   ///
   /// \returns A pointer to the first character in the range specified by [p, p
   /// + count) that compares equal to ch, or a null pointer if not found.
-  static constexpr auto find(char_type const* str, size_t count, char_type const& token)
-    -> char_type const*
+  static constexpr auto find(char_type const* str, size_t count,
+                             char_type const& token) -> char_type const*
   {
     for (size_t i = 0; i < count; ++i)
     {
@@ -104,7 +118,8 @@ struct char_traits<char>
   /// src to the character string pointed to by dest. Performs correctly even
   /// if the copied character ranges overlap, i.e. src is in [dest, dest +
   /// count).
-  static constexpr auto move(char_type* dest, char_type const* source, size_t count) -> char_type*
+  static constexpr auto move(char_type* dest, char_type const* source,
+                             size_t count) -> char_type*
   {
     for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
     return dest;
@@ -114,7 +129,8 @@ struct char_traits<char>
   /// src to the character string pointed to by dest. Formally, for each i in
   /// [0, count), performs assign(src[i], dest[i]). The behavior is undefined
   /// if copied character ranges overlap, i.e. src is in [dest, dest + count).
-  static constexpr auto copy(char_type* dest, char_type const* source, size_t count) -> char_type*
+  static constexpr auto copy(char_type* dest, char_type const* source,
+                             size_t count) -> char_type*
   {
     for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
     return dest;
@@ -122,7 +138,8 @@ struct char_traits<char>
 
   /// \brief Assigns character a to each character in count characters in the
   /// character sequence pointed to by p.
-  static constexpr auto assign(char_type* str, size_t count, char_type token) -> char_type*
+  static constexpr auto assign(char_type* str, size_t count, char_type token)
+    -> char_type*
   {
     for (size_t i = 0; i < count; ++i) { assign(str[i], token); }
     return str;

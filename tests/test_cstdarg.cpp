@@ -42,8 +42,8 @@ template <typename T>
 }
 }  // namespace
 
-TEMPLATE_TEST_CASE("cstdarg: va_list", "[cstdarg]", int, long, long long, unsigned, unsigned long,
-                   unsigned long long)
+TEMPLATE_TEST_CASE("cstdarg: va_list", "[cstdarg]", int, long, long long,
+                   unsigned, unsigned long, unsigned long long)
 {
   CHECK(test_va_list<TestType>(3, 25, 25, 50) == 100);
   CHECK(test_va_list<TestType>(4, 25, 25, 50, 50) == 150);

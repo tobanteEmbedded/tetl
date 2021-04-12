@@ -160,8 +160,8 @@ namespace etl
   auto const horizontalTab  = ch == '\t';
   auto const verticalTab    = ch == '\v';
 
-  return static_cast<int>(space || formFeed || lineFeed || carriageReturn || horizontalTab
-                          || verticalTab);
+  return static_cast<int>(space || formFeed || lineFeed || carriageReturn
+                          || horizontalTab || verticalTab);
 }
 
 /// \brief Checks if the given character is a blank character as classified by
@@ -272,7 +272,8 @@ namespace etl
 /// conversion rules defined by the default C locale.
 ///
 /// In the default "C" locale, the following uppercase letters
-/// **ABCDEFGHIJKLMNOPQRSTUVWXYZ** are replaced with respective lowercase letters
+/// **ABCDEFGHIJKLMNOPQRSTUVWXYZ** are replaced with respective lowercase
+/// letters
 /// **abcdefghijklmnopqrstuvwxyz**.
 ///
 /// \notes
@@ -294,7 +295,8 @@ namespace etl
 /// conversion rules defined by the default C locale.
 ///
 /// In the default "C" locale, the following lowercase letters
-/// **abcdefghijklmnopqrstuvwxyz** are replaced with respective uppercase letters
+/// **abcdefghijklmnopqrstuvwxyz** are replaced with respective uppercase
+/// letters
 /// **ABCDEFGHIJKLMNOPQRSTUVWXYZ**.
 ///
 /// \notes

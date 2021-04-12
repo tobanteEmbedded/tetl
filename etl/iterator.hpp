@@ -124,7 +124,10 @@ constexpr auto advance(It& it, Distance n) -> void
   static_assert(is_base_of_v<input_iterator_tag, category>);
 
   auto dist = typename iterator_traits<It>::difference_type(n);
-  if constexpr (is_base_of_v<random_access_iterator_tag, category>) { it += dist; }
+  if constexpr (is_base_of_v<random_access_iterator_tag, category>)
+  {
+    it += dist;
+  }
   else
   {
     while (dist > 0)
@@ -149,12 +152,16 @@ constexpr auto advance(It& it, Distance n) -> void
 /// [cppreference.com/w/cpp/iterator/distance](https://en.cppreference.com/w/cpp/iterator/distance)
 /// \module Iterator
 template <typename It>
-constexpr auto distance(It first, It last) -> typename iterator_traits<It>::difference_type
+constexpr auto distance(It first, It last) ->
+  typename iterator_traits<It>::difference_type
 {
   using category = typename iterator_traits<It>::iterator_category;
   static_assert(is_base_of_v<input_iterator_tag, category>);
 
-  if constexpr (is_base_of_v<random_access_iterator_tag, category>) { return last - first; }
+  if constexpr (is_base_of_v<random_access_iterator_tag, category>)
+  {
+    return last - first;
+  }
   else
   {
     typename iterator_traits<It>::difference_type result = 0;
@@ -170,8 +177,9 @@ constexpr auto distance(It first, It last) -> typename iterator_traits<It>::diff
 /// \brief Return the nth successor of iterator it.
 /// \module Iterator
 template <typename InputIt>
-[[nodiscard]] constexpr auto next(InputIt it,
-                                  typename iterator_traits<InputIt>::difference_type n = 1) -> InputIt
+[[nodiscard]] constexpr auto
+next(InputIt it, typename iterator_traits<InputIt>::difference_type n = 1)
+  -> InputIt
 {
   advance(it, n);
   return it;
@@ -180,8 +188,9 @@ template <typename InputIt>
 /// \brief Return the nth predecessor of iterator it.
 /// \module Iterator
 template <typename BidirIt>
-[[nodiscard]] constexpr auto prev(BidirIt it,
-                                  typename iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
+[[nodiscard]] constexpr auto
+prev(BidirIt it, typename iterator_traits<BidirIt>::difference_type n = 1)
+  -> BidirIt
 {
   advance(it, -n);
   return it;
@@ -192,10 +201,9 @@ template <typename BidirIt>
 /// implementation. Returns exactly c.begin(), which is typically an iterator to
 /// the beginning of the sequence represented by c. If C is a standard
 /// Container, this returns `C::iterator` when c is not const-qualified, and
-/// `C::const_iterator` otherwise. Custom overloads of begin may be provided for classes that do not
-/// expose a suitable begin() member function, yet can be iterated.
-/// \group begin
-/// \module Iterator
+/// `C::const_iterator` otherwise. Custom overloads of begin may be provided for
+/// classes that do not expose a suitable begin() member function, yet can be
+/// iterated. \group begin \module Iterator
 template <typename C>
 constexpr auto begin(C& c) -> decltype(c.begin())
 {
@@ -218,16 +226,15 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
 
 /// \group begin
 template <typename C>
-constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c))) -> decltype(begin(c))
+constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c)))
+  -> decltype(begin(c))
 {
   return begin(c);
 }
 
-/// \brief Returns an iterator to the end (i.e. the element after the last element)
-/// of the given container c or array array. These templates rely on `C::end()`
-/// having a reasonable implementation.
-/// \group end
-/// \module Iterator
+/// \brief Returns an iterator to the end (i.e. the element after the last
+/// element) of the given container c or array array. These templates rely on
+/// `C::end()` having a reasonable implementation. \group end \module Iterator
 template <typename C>
 constexpr auto end(C& c) -> decltype(c.end())
 {
@@ -321,7 +328,8 @@ constexpr auto crend(Container const& c) -> decltype(rend(c))
 /// \group size
 /// \module Iterator
 template <typename C>
-constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
+constexpr auto size(C const& c) noexcept(noexcept(c.size()))
+  -> decltype(c.size())
 {
   return c.size();
 }
@@ -338,7 +346,8 @@ constexpr auto size(T const (&array)[N]) noexcept -> size_t
 /// \group empty
 /// \module Iterator
 template <typename C>
-constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
+constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
+  -> decltype(c.empty())
 {
   return c.empty();
 }
@@ -363,7 +372,8 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 
 /// \group data
 template <typename C>
-constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
+constexpr auto data(C const& c) noexcept(noexcept(c.data()))
+  -> decltype(c.data())
 {
   return c.data();
 }
@@ -375,12 +385,12 @@ constexpr auto data(T (&array)[N]) noexcept -> T*
   return &array[0];
 }
 
-/// \brief reverse_iterator is an iterator adaptor that reverses the direction of a given iterator. In
-/// other words, when provided with a bidirectional iterator, `reverse_iterator` produces a new
-/// iterator that moves from the end to the beginning of the sequence defined by the underlying
-/// bidirectional iterator. This is the iterator returned by member functions `rbegin()` and `rend()`
-/// of the standard library containers.
-/// \notes
+/// \brief reverse_iterator is an iterator adaptor that reverses the direction
+/// of a given iterator. In other words, when provided with a bidirectional
+/// iterator, `reverse_iterator` produces a new iterator that moves from the end
+/// to the beginning of the sequence defined by the underlying bidirectional
+/// iterator. This is the iterator returned by member functions `rbegin()` and
+/// `rend()` of the standard library containers. \notes
 /// [cppreference.com/w/cpp/iterator/reverse_iterator](https://en.cppreference.com/w/cpp/iterator/reverse_iterator)
 /// \module Iterator
 template <typename Iter>
@@ -414,14 +424,16 @@ struct reverse_iterator
   ///
   /// \details The underlying iterator is initialized with that of other.
   template <typename Other>
-  constexpr reverse_iterator(reverse_iterator<Other> const& other) : current_(other.base())
+  constexpr reverse_iterator(reverse_iterator<Other> const& other)
+      : current_(other.base())
   {
   }
 
   /// \brief The underlying iterator is assigned the value of the underlying
   /// iterator of other, i.e. other.base().
   template <typename Other>
-  constexpr auto operator=(reverse_iterator<Other> const& other) -> reverse_iterator&
+  constexpr auto operator=(reverse_iterator<Other> const& other)
+    -> reverse_iterator&
   {
     current_ = other.base();
     return *this;
@@ -438,7 +450,10 @@ struct reverse_iterator
   }
 
   /// \brief Returns a pointer to the element previous to current.
-  constexpr auto operator->() const -> pointer { return etl::addressof(operator*()); }
+  constexpr auto operator->() const -> pointer
+  {
+    return etl::addressof(operator*());
+  }
 
   /// \brief Pre-increments by one respectively.
   constexpr auto operator++() -> reverse_iterator&
@@ -497,7 +512,10 @@ struct reverse_iterator
   }
 
   /// \brief Returns a reference to the element at specified relative location.
-  constexpr auto operator[](difference_type n) const -> reference { return *(*this + n); }
+  constexpr auto operator[](difference_type n) const -> reference
+  {
+    return *(*this + n);
+  }
 
   private:
   Iter current_;
@@ -507,7 +525,8 @@ struct reverse_iterator
 /// for the given iterator i (which must be a LegacyBidirectionalIterator) with
 /// the type deduced from the type of the argument.
 template <typename Iter>
-[[nodiscard]] constexpr auto make_reverse_iterator(Iter i) noexcept -> etl::reverse_iterator<Iter>
+[[nodiscard]] constexpr auto make_reverse_iterator(Iter i) noexcept
+  -> etl::reverse_iterator<Iter>
 {
   return etl::reverse_iterator<Iter>(i);
 }
@@ -516,7 +535,8 @@ template <typename Iter>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator==(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() == rhs.base();
 }
@@ -525,7 +545,8 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator!=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() != rhs.base();
 }
@@ -534,7 +555,8 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<(etl::reverse_iterator<Iter1> const& lhs,
-                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                       etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() < rhs.base();
 }
@@ -543,7 +565,8 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() <= rhs.base();
 }
@@ -552,7 +575,8 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>(etl::reverse_iterator<Iter1> const& lhs,
-                                       etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                       etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() > rhs.base();
 }
@@ -561,7 +585,8 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>=(etl::reverse_iterator<Iter1> const& lhs,
-                                        etl::reverse_iterator<Iter2> const& rhs) -> bool
+                                        etl::reverse_iterator<Iter2> const& rhs)
+  -> bool
 {
   return lhs.base() >= rhs.base();
 }
@@ -593,14 +618,16 @@ class back_insert_iterator
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type const& value) -> back_insert_iterator&
+  constexpr auto operator=(typename Container::value_type const& value)
+    -> back_insert_iterator&
   {
     container_->push_back(value);
     return *this;
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type&& value) -> back_insert_iterator&
+  constexpr auto operator=(typename Container::value_type&& value)
+    -> back_insert_iterator&
   {
     container_->push_back(etl::move(value));
     return *this;
@@ -633,7 +660,8 @@ class back_insert_iterator
 /// type of the argument.
 /// \module Iterator
 template <typename Container>
-[[nodiscard]] constexpr auto back_inserter(Container& container) -> back_insert_iterator<Container>
+[[nodiscard]] constexpr auto back_inserter(Container& container)
+  -> back_insert_iterator<Container>
 {
   return back_insert_iterator<Container>(container);
 }
@@ -665,19 +693,22 @@ class front_insert_iterator
 
   /// \brief Initializes the underlying pointer to the container to
   /// addressof(c).
-  constexpr explicit front_insert_iterator(Container& container) : container_ {addressof(container)}
+  constexpr explicit front_insert_iterator(Container& container)
+      : container_ {addressof(container)}
   {
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type const& value) -> front_insert_iterator&
+  constexpr auto operator=(typename Container::value_type const& value)
+    -> front_insert_iterator&
   {
     container_->push_front(value);
     return *this;
   }
 
   /// \brief Inserts the given value value to the container.
-  constexpr auto operator=(typename Container::value_type&& value) -> front_insert_iterator&
+  constexpr auto operator=(typename Container::value_type&& value)
+    -> front_insert_iterator&
   {
     container_->push_front(move(value));
     return *this;
@@ -707,7 +738,8 @@ class front_insert_iterator
 /// the type of the argument.
 /// \module Iterator
 template <typename Container>
-[[nodiscard]] constexpr auto front_inserter(Container& c) -> front_insert_iterator<Container>
+[[nodiscard]] constexpr auto front_inserter(Container& c)
+  -> front_insert_iterator<Container>
 {
   return front_insert_iterator<Container>(c);
 }

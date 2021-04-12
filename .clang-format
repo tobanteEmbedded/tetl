@@ -8,7 +8,7 @@ AlwaysBreakTemplateDeclarations: "true"
 AllowShortIfStatementsOnASingleLine: "true"
 AllowShortLoopsOnASingleLine: "true"
 BreakBeforeBraces: Allman
-ColumnLimit: "102"
+ColumnLimit: "80"
 ConstructorInitializerAllOnOneLineOrOnePerLine: "true"
 Cpp11BracedListStyle: "true"
 FixNamespaceComments: "true"

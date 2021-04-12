@@ -48,14 +48,16 @@ concept same_as = detail::same_helper<T, U> && detail::same_helper<U, T>;
 /// is_base_of when Base is a private or protected base of Derived.
 template <typename Derived, typename Base>
 concept derived_from
-  = is_base_of_v<Base, Derived> && is_convertible_v<const volatile Derived*, const volatile Base*>;
+  = is_base_of_v<Base, Derived> && is_convertible_v<const volatile Derived*,
+                                                    const volatile Base*>;
 
 /// \brief The concept convertible_to<From, To> specifies that an expression of
 /// the same type and value category as those of declval<From>() can be
 /// implicitly and explicitly converted to the type To, and the two forms of
 /// conversion are equivalent.
 template <typename From, typename To>
-concept convertible_to = is_convertible_v<From, To> && requires(add_rvalue_reference_t<From> (&f)())
+concept convertible_to
+  = is_convertible_v<From, To> && requires(add_rvalue_reference_t<From> (&f)())
 {
   static_cast<To>(f());
 };

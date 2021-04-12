@@ -41,7 +41,8 @@ constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 /// does not participate in overload resolution unless
 /// etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
 ///
-/// \notes [cppreference.com/w/cpp/algorithm/swap](https://en.cppreference.com/w/cpp/algorithm/swap)
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/swap](https://en.cppreference.com/w/cpp/algorithm/swap)
 ///
 /// \todo Fix noexcept specifier.
 template <typename T>

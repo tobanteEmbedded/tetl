@@ -120,7 +120,8 @@ TEMPLATE_TEST_CASE("span: ctor(first,count)", "[span]", char, int, float)
     REQUIRE(sp.data() == vec.data());
     REQUIRE(sp.size() == vec.size());
     REQUIRE(sp.extent == etl::dynamic_extent);
-    REQUIRE(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == TestType {42}; }));
+    REQUIRE(etl::all_of(etl::begin(sp), etl::end(sp),
+                        [](auto& x) { return x == TestType {42}; }));
   }
 }
 
@@ -158,7 +159,8 @@ TEMPLATE_TEST_CASE("span: begin/end", "[span]", char, int, float)
     REQUIRE_FALSE(etl::begin(sp) == etl::end(sp));
 
     auto counter = 0;
-    etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });
+    etl::for_each(etl::begin(sp), etl::end(sp),
+                  [&counter](auto /*unused*/) { counter++; });
     REQUIRE(counter == 4);
   }
 }
@@ -186,7 +188,8 @@ TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
   REQUIRE(csp[3] == TestType {124});
 }
 
-TEMPLATE_TEST_CASE("span: size_bytes", "[span]", char, int, float, double, etl::uint64_t)
+TEMPLATE_TEST_CASE("span: size_bytes", "[span]", char, int, float, double,
+                   etl::uint64_t)
 {
   auto vec = etl::static_vector<TestType, 6> {};
   etl::generate_n(etl::back_inserter(vec), 4, []() { return TestType {42}; });

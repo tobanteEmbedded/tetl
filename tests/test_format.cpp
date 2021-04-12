@@ -26,8 +26,8 @@
 
 #include "etl/format.hpp"
 
-TEMPLATE_TEST_CASE("format: formatter<char>", "[format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -45,8 +45,8 @@ TEMPLATE_TEST_CASE("format: formatter<char>", "[format]", etl::static_string<12>
   CHECK(str[2] == '1');
 }
 
-TEMPLATE_TEST_CASE("format: formatter<char[N]>", "[format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char[N]>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -63,8 +63,8 @@ TEMPLATE_TEST_CASE("format: formatter<char[N]>", "[format]", etl::static_string<
   CHECK(etl::string_view(str.data()) == etl::string_view("foobar"));
 }
 
-TEMPLATE_TEST_CASE("format: formatter<char const*>", "[format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<char const*>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -82,8 +82,8 @@ TEMPLATE_TEST_CASE("format: formatter<char const*>", "[format]", etl::static_str
   CHECK(etl::string_view(str.data()) == etl::string_view(cStr2));
 }
 
-TEMPLATE_TEST_CASE("format: formatter<string_view>", "[format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<string_view>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -101,8 +101,8 @@ TEMPLATE_TEST_CASE("format: formatter<string_view>", "[format]", etl::static_str
   CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
-TEMPLATE_TEST_CASE("format: formatter<static_string<Capacity>>", "[format]", etl::static_string<12>,
-                   etl::static_string<32>)
+TEMPLATE_TEST_CASE("format: formatter<static_string<Capacity>>", "[format]",
+                   etl::static_string<12>, etl::static_string<32>)
 {
   using string_t = TestType;
 
@@ -120,27 +120,29 @@ TEMPLATE_TEST_CASE("format: formatter<static_string<Capacity>>", "[format]", etl
   CHECK(etl::string_view(str.data()) == etl::string_view(str2));
 }
 
-TEMPLATE_TEST_CASE("format: formatter<Integer>", "[format]", short, int, long, long long,
-                   unsigned short, unsigned int, unsigned long, unsigned long long)
+TEMPLATE_TEST_CASE("format: formatter<Integer>", "[format]", short, int, long,
+                   long long, unsigned short, unsigned int, unsigned long,
+                   unsigned long long)
 {
-  auto [test_input, expected] = GENERATE(Catch::Generators::table<TestType, char const*>({
-    {0, "0"},
-    {1, "1"},
-    {2, "2"},
-    {3, "3"},
-    {4, "4"},
-    {5, "5"},
-    {6, "6"},
-    {7, "7"},
-    {8, "8"},
-    {9, "9"},
-    {10, "10"},
-    {11, "11"},
-    {99, "99"},
-    {111, "111"},
-    {1234, "1234"},
-    {9999, "9999"},
-  }));
+  auto [test_input, expected]
+    = GENERATE(Catch::Generators::table<TestType, char const*>({
+      {0, "0"},
+      {1, "1"},
+      {2, "2"},
+      {3, "3"},
+      {4, "4"},
+      {5, "5"},
+      {6, "6"},
+      {7, "7"},
+      {8, "8"},
+      {9, "9"},
+      {10, "10"},
+      {11, "11"},
+      {99, "99"},
+      {111, "111"},
+      {1234, "1234"},
+      {9999, "9999"},
+    }));
 
   using string_t = etl::static_string<32>;
 
@@ -252,7 +254,8 @@ TEST_CASE("format: format_to_n", "[format]")
   {
     auto buffer = etl::static_string<32> {};
     auto target = etl::string_view("{abc}");
-    auto res    = etl::format_to_n(buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
+    auto res
+      = etl::format_to_n(buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
     CHECK(res.out == buffer.begin() + target.size());
     CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
     CHECK(etl::string_view(buffer.begin()) == target);
@@ -262,7 +265,8 @@ TEST_CASE("format: format_to_n", "[format]")
   {
     auto buffer = etl::static_string<32> {};
     auto target = etl::string_view("test");
-    auto res    = etl::format_to_n(data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
+    auto res
+      = etl::format_to_n(data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
     CHECK(res.out == buffer.begin() + target.size());
     CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
     CHECK(etl::string_view(buffer.begin()) == target);

@@ -25,17 +25,19 @@
 
 #include "catch2/catch_template_test_macros.hpp"
 
-TEMPLATE_TEST_CASE("experimental/dsp: identity", "[dsp][experimental]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: identity", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   auto id = etl::experimental::dsp::identity {};
   REQUIRE(id(TestType {0}) == TestType {0});
 }
 
-TEMPLATE_TEST_CASE("experimental/dsp: constant", "[dsp][experimental]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: constant", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   REQUIRE(etl::experimental::dsp::constant {TestType {0}}() == TestType {0});
   REQUIRE(etl::experimental::dsp::constant {TestType {42}}() == TestType {42});
@@ -48,9 +50,10 @@ TEST_CASE("experimental/dsp: constant literal", "[dsp][experimental]")
   REQUIRE(42_K() == 42);
 }
 
-TEMPLATE_TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   using T  = TestType;
   auto in  = etl::experimental::dsp::identity {};
@@ -63,9 +66,10 @@ TEMPLATE_TEST_CASE("experimental/dsp: pipe", "[dsp][experimental]", etl::uint8_t
   REQUIRE(f(T(3)) == T(18));
 }
 
-TEMPLATE_TEST_CASE("experimental/dsp: delay", "[dsp][experimental]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: delay", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   WHEN("by zero (no delay)")
   {
@@ -97,9 +101,10 @@ TEMPLATE_TEST_CASE("experimental/dsp: delay", "[dsp][experimental]", etl::uint8_
   }
 }
 
-TEMPLATE_TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]", etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   WHEN("No feedback is applied")
   {
@@ -118,9 +123,10 @@ TEMPLATE_TEST_CASE("experimental/dsp: feedback_drain", "[dsp][experimental]", et
   }
 }
 
-TEMPLATE_TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]", etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-                   etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("experimental/dsp: feedback_tap", "[dsp][experimental]",
+                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+                   float, double, long double)
 {
   WHEN("Pass Through")
   {

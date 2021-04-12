@@ -26,7 +26,8 @@
 
 #include "etl/numbers.hpp"
 
-TEMPLATE_TEST_CASE("numbers: constants", "[numbers]", float, double, long double)
+TEMPLATE_TEST_CASE("numbers: constants", "[numbers]", float, double,
+                   long double)
 {
   REQUIRE(etl::numbers::e_v<TestType> == Catch::Approx(2.7182818));
   REQUIRE(etl::numbers::log2e_v<TestType> == Catch::Approx(1.44269504));

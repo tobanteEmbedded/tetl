@@ -65,7 +65,8 @@ struct ratio
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
-using ratio_add = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
+using ratio_add
+  = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
 
 /// \brief The alias template ratio_subtract denotes the result of
 /// subtracting two exact rational fractions represented by the ratio
@@ -78,7 +79,8 @@ using ratio_add = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
-using ratio_subtract = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
+using ratio_subtract
+  = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
 
 /// \brief The alias template ratio_multiply denotes the result of
 /// multiplying two exact rational fractions represented by the ratio
@@ -143,7 +145,8 @@ inline constexpr bool ratio_less_v = ratio_less<R1, R2>::value;
 /// R1 is less than or equal to the ratio R2, provides the member constant value
 /// equal true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_less_equal : bool_constant<(R1::num * R2::den <= R2::num * R1::den)>
+struct ratio_less_equal
+    : bool_constant<(R1::num * R2::den <= R2::num * R1::den)>
 {
 };
 
@@ -165,12 +168,14 @@ inline constexpr bool ratio_greater_v = ratio_greater<R1, R2>::value;
 /// R1 is greater than or equal to the ratio R2, provides the member constant
 /// value equal true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_greater_equal : bool_constant<(R1::num * R2::den >= R2::num * R1::den)>
+struct ratio_greater_equal
+    : bool_constant<(R1::num * R2::den >= R2::num * R1::den)>
 {
 };
 
 template <typename R1, typename R2>
-inline constexpr bool ratio_greater_equal_v = ratio_greater_equal<R1, R2>::value;
+inline constexpr bool ratio_greater_equal_v
+  = ratio_greater_equal<R1, R2>::value;
 
 using atto  = ratio<1, 1'000'000'000'000'000'000>;
 using femto = ratio<1, 1'000'000'000'000'000>;

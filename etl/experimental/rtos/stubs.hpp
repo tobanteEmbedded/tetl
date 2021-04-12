@@ -53,21 +53,29 @@ using TaskHandle_t   = tskTaskControlBlock*;
 using TaskFunction_t = void (*)(void*);
 
 inline auto xTaskCreate(TaskFunction_t pvTaskCode, char const* const pcName,
-                        configSTACK_DEPTH_TYPE usStackDepth, void* const pvParameters,
-                        UBaseType_t uxPriority, TaskHandle_t* const pxCreatedTask) -> BaseType_t
+                        configSTACK_DEPTH_TYPE usStackDepth,
+                        void* const pvParameters, UBaseType_t uxPriority,
+                        TaskHandle_t* const pxCreatedTask) -> BaseType_t
 {
-  etl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask);
+  etl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority,
+                     pxCreatedTask);
   return pdFALSE;
 }
 
-inline auto vTaskDelete(TaskHandle_t xTask) -> void { etl::ignore_unused(xTask); }
+inline auto vTaskDelete(TaskHandle_t xTask) -> void
+{
+  etl::ignore_unused(xTask);
+}
 
 inline auto vTaskStartScheduler() -> void { }
 
-inline auto vTaskDelay(TickType_t const xTicksToDelay) -> void { etl::ignore_unused(xTicksToDelay); }
+inline auto vTaskDelay(TickType_t const xTicksToDelay) -> void
+{
+  etl::ignore_unused(xTicksToDelay);
+}
 
-inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime, const TickType_t xTimeIncrement)
-  -> void
+inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime,
+                            const TickType_t xTimeIncrement) -> void
 {
   etl::ignore_unused(pxPreviousWakeTime, xTimeIncrement);
 }
@@ -75,22 +83,27 @@ inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime, const TickType
 struct QueueDefinition;
 using QueueHandle_t = QueueDefinition*;
 
-inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize) -> QueueHandle_t
+inline auto xQueueCreate(UBaseType_t uxQueueLength, UBaseType_t uxItemSize)
+  -> QueueHandle_t
 {
   etl::ignore_unused(uxQueueLength, uxItemSize);
   return nullptr;
 }
 
-inline auto vQueueDelete(QueueHandle_t xQueue) -> void { etl::ignore_unused(xQueue); }
+inline auto vQueueDelete(QueueHandle_t xQueue) -> void
+{
+  etl::ignore_unused(xQueue);
+}
 
-inline auto xQueueSend(QueueHandle_t xQueue, void const* pvItemToQueue, TickType_t xTicksToWait)
-  -> BaseType_t
+inline auto xQueueSend(QueueHandle_t xQueue, void const* pvItemToQueue,
+                       TickType_t xTicksToWait) -> BaseType_t
 {
   etl::ignore_unused(xQueue, pvItemToQueue, xTicksToWait);
   return pdFALSE;
 }
 
-inline auto xQueueReceive(QueueHandle_t xQueue, void* pvBuffer, TickType_t xTicksToWait) -> BaseType_t
+inline auto xQueueReceive(QueueHandle_t xQueue, void* pvBuffer,
+                          TickType_t xTicksToWait) -> BaseType_t
 {
   etl::ignore_unused(xQueue, pvBuffer, xTicksToWait);
   return pdFALSE;

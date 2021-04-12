@@ -58,7 +58,8 @@ TEST_CASE("cstring: strcat", "[cstring]")
 
   // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
   etl::strcat(str, " Goodbye World!");
-  CHECK(etl::string_view {str} == etl::string_view {"Hello World! Goodbye World!"});
+  CHECK(etl::string_view {str}
+        == etl::string_view {"Hello World! Goodbye World!"});
 }
 
 TEST_CASE("cstring: strncat", "[cstring]")

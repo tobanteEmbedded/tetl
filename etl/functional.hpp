@@ -42,8 +42,9 @@ struct is_transparent : ::etl::false_type
 
 template <typename T, typename U>
 struct is_transparent<
-  T, U, ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>, void, bool>>
-    : ::etl::true_type
+  T, U,
+  ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>, void,
+                       bool>> : ::etl::true_type
 {
 };
 
@@ -61,7 +62,10 @@ template <typename T = void>
 struct plus
 {
   /// \brief Returns the sum of lhs and rhs.
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs + rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs + rhs;
+  }
 };
 
 /// \brief Function object for performing addition. Effectively calls operator+
@@ -99,7 +103,10 @@ template <typename T = void>
 struct minus
 {
   /// \brief Returns the difference between lhs and rhs.
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs - rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs - rhs;
+  }
 };
 
 /// \brief Function object for performing subtraction. Effectively calls
@@ -137,7 +144,10 @@ template <typename T = void>
 struct multiplies
 {
   /// \brief Returns the product between lhs and rhs.
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs * rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs * rhs;
+  }
 };
 
 /// \brief Function object for performing multiplication. Effectively calls
@@ -174,7 +184,10 @@ struct multiplies<void>
 template <typename T = void>
 struct divides
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs / rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs / rhs;
+  }
 };
 
 /// \brief Function object for performing division. Effectively calls operator/
@@ -210,7 +223,10 @@ struct divides<void>
 template <typename T = void>
 struct modulus
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs % rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs % rhs;
+  }
 };
 
 /// \brief Function object for computing remainders of divisions. Implements
@@ -246,7 +262,10 @@ struct modulus<void>
 template <typename T = void>
 struct negate
 {
-  [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return -arg; }
+  [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
+  {
+    return -arg;
+  }
 };
 
 /// \brief Function object for performing negation. Effectively calls operator-
@@ -267,7 +286,8 @@ struct negate<void>
   using is_transparent = void;
 
   template <typename T>
-  [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(-etl::forward<T>(arg))
+  [[nodiscard]] constexpr auto operator()(T&& arg) const
+    -> decltype(-etl::forward<T>(arg))
   {
     return -arg;
   }
@@ -359,7 +379,10 @@ struct not_equal_to<void>
 template <typename T = void>
 struct greater
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs > rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs > rhs;
+  }
 };
 
 /// \brief Function object for performing comparisons. Unless specialised,
@@ -434,7 +457,8 @@ struct greater_equal<void>
 template <typename T = void>
 struct less
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
+    -> bool
   {
     return lhs < rhs;
   }
@@ -473,7 +497,8 @@ struct less<void>
 template <typename T = void>
 struct less_equal
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
+    -> bool
   {
     return lhs <= rhs;
   }
@@ -512,7 +537,8 @@ struct less_equal<void>
 template <typename T = void>
 struct logical_and
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
+    -> bool
   {
     return lhs && rhs;
   }
@@ -551,7 +577,8 @@ struct logical_and<void>
 template <typename T = void>
 struct logical_or
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
+    -> bool
   {
     return lhs || rhs;
   }
@@ -590,7 +617,10 @@ struct logical_or<void>
 template <typename T = void>
 struct logical_not
 {
-  [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
+  [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool
+  {
+    return !arg;
+  }
 };
 
 /// \brief Function object for performing logical NOT (logical negation).
@@ -611,7 +641,8 @@ struct logical_not<void>
   using is_transparent = void;
 
   template <typename T>
-  [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(!etl::forward<T>(arg))
+  [[nodiscard]] constexpr auto operator()(T&& arg) const
+    -> decltype(!etl::forward<T>(arg))
   {
     return !arg;
   }
@@ -625,7 +656,10 @@ struct logical_not<void>
 template <typename T = void>
 struct bit_and
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs & rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs & rhs;
+  }
 };
 
 /// \brief Function object for performing bitwise AND. Effectively
@@ -661,7 +695,10 @@ struct bit_and<void>
 template <typename T = void>
 struct bit_or
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs | rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs | rhs;
+  }
 };
 
 /// \brief Function object for performing bitwise OR. Effectively calls
@@ -697,7 +734,10 @@ struct bit_or<void>
 template <typename T = void>
 struct bit_xor
 {
-  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs ^ rhs; }
+  [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T
+  {
+    return lhs ^ rhs;
+  }
 };
 
 /// \brief Function object for performing bitwise XOR. Effectively calls
@@ -733,7 +773,10 @@ struct bit_xor<void>
 template <typename T = void>
 struct bit_not
 {
-  [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }
+  [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
+  {
+    return ~arg;
+  }
 };
 
 /// \brief Function object for performing bitwise NOT. Effectively calls
@@ -754,7 +797,8 @@ struct bit_not<void>
   using is_transparent = void;
 
   template <typename T>
-  [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(~etl::forward<T>(arg))
+  [[nodiscard]] constexpr auto operator()(T&& arg) const
+    -> decltype(~etl::forward<T>(arg))
   {
     return ~arg;
   }
@@ -799,10 +843,13 @@ struct reference_wrapper
   ///
   /// \notes
   /// [cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper](https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper)
-  template <typename U,
-            typename = decltype(detail::FUN<T>(declval<U>()),
-                                enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
-  constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(forward<U>(u))))
+  template <
+    typename U,
+    typename
+    = decltype(detail::FUN<T>(declval<U>()),
+               enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
+  constexpr reference_wrapper(U&& u) noexcept(
+    noexcept(detail::FUN<T>(forward<U>(u))))
       : ptr_(addressof(detail::FUN<T>(forward<U>(u))))
   {
   }
@@ -813,7 +860,8 @@ struct reference_wrapper
 
   /// \brief Copy assignment operator. Drops the current reference and stores a
   /// reference to other.get().
-  constexpr auto operator=(reference_wrapper const& x) noexcept -> reference_wrapper& = default;
+  constexpr auto operator =(reference_wrapper const& x) noexcept
+    -> reference_wrapper& = default;
 
   /// \brief Returns the stored reference.
   [[nodiscard]] constexpr operator type&() const noexcept { return *ptr_; }
@@ -828,7 +876,8 @@ struct reference_wrapper
   /// \returns The return value of the called function.
   template <typename... Args>
   constexpr auto operator()(Args&&... args) const
-    noexcept(noexcept(invoke(get(), forward<Args>(args)...))) -> invoke_result_t<T&, Args...>
+    noexcept(noexcept(invoke(get(), forward<Args>(args)...)))
+      -> invoke_result_t<T&, Args...>
   {
     return invoke(get(), forward<Args>(args)...);
   }
@@ -858,7 +907,8 @@ template <typename T>
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
 template <typename T>
-[[nodiscard]] constexpr auto ref(reference_wrapper<T> t) noexcept -> reference_wrapper<T>
+[[nodiscard]] constexpr auto ref(reference_wrapper<T> t) noexcept
+  -> reference_wrapper<T>
 {
   return ref(t.get());
 }
@@ -867,7 +917,8 @@ template <typename T>
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
 template <typename T>
-[[nodiscard]] constexpr auto cref(T const& t) noexcept -> reference_wrapper<T const>
+[[nodiscard]] constexpr auto cref(T const& t) noexcept
+  -> reference_wrapper<T const>
 {
   return reference_wrapper<T const>(t);
 }
@@ -876,7 +927,8 @@ template <typename T>
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
 template <typename T>
-[[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept -> reference_wrapper<T const>
+[[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept
+  -> reference_wrapper<T const>
 {
   return cref(t.get());
 }
@@ -977,7 +1029,8 @@ template <size_t, typename>
 class function;
 
 template <size_t Capacity, typename Result, typename... Arguments>
-class function<Capacity, Result(Arguments...)> : public function_view<Result(Arguments...)>
+class function<Capacity, Result(Arguments...)>
+    : public function_view<Result(Arguments...)>
 {
   public:
   template <typename Functor>
@@ -1007,9 +1060,11 @@ class default_searcher
   }
 
   template <typename ForwardIter2>
-  auto operator()(ForwardIter2 f, ForwardIter2 l) const -> etl::pair<ForwardIter2, ForwardIter2>
+  auto operator()(ForwardIter2 f, ForwardIter2 l) const
+    -> etl::pair<ForwardIter2, ForwardIter2>
   {
-    if (auto i = ::etl::detail::search_impl(f, l, first_, last_, predicate_); i != l)
+    if (auto i = ::etl::detail::search_impl(f, l, first_, last_, predicate_);
+        i != l)
     {
       auto j = ::etl::next(i, etl::distance(first_, last_));
       return etl::pair<ForwardIter2, ForwardIter2> {i, j};
@@ -1030,7 +1085,8 @@ struct hash;
 template <>
 struct hash<bool>
 {
-  [[nodiscard]] constexpr auto operator()(bool val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(bool val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1038,7 +1094,8 @@ struct hash<bool>
 template <>
 struct hash<char>
 {
-  [[nodiscard]] constexpr auto operator()(char val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(char val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1046,7 +1103,8 @@ struct hash<char>
 template <>
 struct hash<signed char>
 {
-  [[nodiscard]] constexpr auto operator()(signed char val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(signed char val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1054,7 +1112,8 @@ struct hash<signed char>
 template <>
 struct hash<unsigned char>
 {
-  [[nodiscard]] constexpr auto operator()(unsigned char val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(unsigned char val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1062,7 +1121,8 @@ struct hash<unsigned char>
 template <>
 struct hash<char16_t>
 {
-  [[nodiscard]] constexpr auto operator()(char16_t val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(char16_t val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1070,7 +1130,8 @@ struct hash<char16_t>
 template <>
 struct hash<char32_t>
 {
-  [[nodiscard]] constexpr auto operator()(char32_t val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(char32_t val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1078,7 +1139,8 @@ struct hash<char32_t>
 template <>
 struct hash<wchar_t>
 {
-  [[nodiscard]] constexpr auto operator()(wchar_t val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(wchar_t val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1086,7 +1148,8 @@ struct hash<wchar_t>
 template <>
 struct hash<short>
 {
-  [[nodiscard]] constexpr auto operator()(short val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(short val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1094,7 +1157,8 @@ struct hash<short>
 template <>
 struct hash<unsigned short>
 {
-  [[nodiscard]] constexpr auto operator()(unsigned short val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(unsigned short val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1110,7 +1174,8 @@ struct hash<int>
 template <>
 struct hash<unsigned int>
 {
-  [[nodiscard]] constexpr auto operator()(unsigned int val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(unsigned int val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1118,7 +1183,8 @@ struct hash<unsigned int>
 template <>
 struct hash<long>
 {
-  [[nodiscard]] constexpr auto operator()(long val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(long val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1126,7 +1192,8 @@ struct hash<long>
 template <>
 struct hash<long long>
 {
-  [[nodiscard]] constexpr auto operator()(long long val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(long long val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1134,7 +1201,8 @@ struct hash<long long>
 template <>
 struct hash<unsigned long>
 {
-  [[nodiscard]] constexpr auto operator()(unsigned long val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(unsigned long val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1142,7 +1210,8 @@ struct hash<unsigned long>
 template <>
 struct hash<unsigned long long>
 {
-  [[nodiscard]] constexpr auto operator()(unsigned long long val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(unsigned long long val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1150,7 +1219,8 @@ struct hash<unsigned long long>
 template <>
 struct hash<float>
 {
-  [[nodiscard]] constexpr auto operator()(float val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(float val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1158,7 +1228,8 @@ struct hash<float>
 template <>
 struct hash<double>
 {
-  [[nodiscard]] constexpr auto operator()(double val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(double val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1166,7 +1237,8 @@ struct hash<double>
 template <>
 struct hash<long double>
 {
-  [[nodiscard]] constexpr auto operator()(long double val) const noexcept -> etl::size_t
+  [[nodiscard]] constexpr auto operator()(long double val) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(val);
   }
@@ -1175,7 +1247,8 @@ struct hash<long double>
 template <>
 struct hash<etl::nullptr_t>
 {
-  [[nodiscard]] auto operator()(nullptr_t /*unused*/) const noexcept -> etl::size_t
+  [[nodiscard]] auto operator()(nullptr_t /*unused*/) const noexcept
+    -> etl::size_t
   {
     return static_cast<etl::size_t>(0);
   }

@@ -50,10 +50,16 @@ struct duration_values
   [[nodiscard]] static constexpr auto zero() -> Rep { return Rep {}; }
 
   /// \brief Returns the smallest possible representation.
-  [[nodiscard]] static constexpr auto min() -> Rep { return etl::numeric_limits<Rep>::lowest(); }
+  [[nodiscard]] static constexpr auto min() -> Rep
+  {
+    return etl::numeric_limits<Rep>::lowest();
+  }
 
   /// \brief Returns the special duration value max.
-  [[nodiscard]] static constexpr auto max() -> Rep { return etl::numeric_limits<Rep>::max(); }
+  [[nodiscard]] static constexpr auto max() -> Rep
+  {
+    return etl::numeric_limits<Rep>::max();
+  }
 };
 
 /// \brief The etl::chrono::treat_as_floating_point trait helps determine if a
@@ -72,7 +78,8 @@ struct treat_as_floating_point : etl::is_floating_point<Rep>
 
 /// \group treat_as_floating_point
 template <typename Rep>
-inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;
+inline constexpr bool treat_as_floating_point_v
+  = treat_as_floating_point<Rep>::value;
 
 /// \brief Class template etl::chrono::duration represents a time interval.
 /// \details It consists of a count of ticks of type Rep and a tick period,
@@ -113,8 +120,10 @@ class duration
   /// That is, a duration with an integer tick count cannot be constructed from
   /// a floating-point value, but a duration with a floating-point tick count
   /// can be constructed from an integer value
-  template <typename Rep2, TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
-                             treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
+  template <
+    typename Rep2,
+    TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
+      treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
   constexpr explicit duration(Rep2 const& r) noexcept : rep_(r)
   {
   }
@@ -141,7 +150,8 @@ class duration
                             || (ratio_divide<Period2, period>::den == 1
                                 && !treat_as_floating_point_v<Rep2>))>
   constexpr duration(duration<Rep2, Period2> const& other) noexcept
-      : rep_(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
+      : rep_(
+        static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
   {
   }
 
@@ -261,7 +271,8 @@ class duration
 /// implemented as if it stores a value of type Duration indicating the time
 /// interval from the start of the Clock's epoch.
 /// \tparam Clock Must meet the requirements for Clock
-/// \notes [cppreference.com/w/cpp/named_req/Clock](https://en.cppreference.com/w/cpp/named_req/Clock)
+/// \notes
+/// [cppreference.com/w/cpp/named_req/Clock](https://en.cppreference.com/w/cpp/named_req/Clock)
 template <typename Clock, typename Duration = typename Clock::duration>
 class time_point
 {
@@ -293,13 +304,17 @@ class time_point
   /// constructor only participates in overload resolution if Duration2 is
   /// implicitly convertible to duration.
   template <typename Dur2, TAETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
-  constexpr time_point(time_point<clock, Dur2> const& t) : d_ {t.time_since_epch()}
+  constexpr time_point(time_point<clock, Dur2> const& t)
+      : d_ {t.time_since_epch()}
   {
   }
 
   /// \brief Returns a duration representing the amount of time between *this
   /// and the clock's epoch.
-  [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return d_; }
+  [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration
+  {
+    return d_;
+  }
 
   /// \brief Modifies the time point by the given duration. Applies the offset d
   /// to pt. Effectively, d is added to the internally stored duration d_ as d_
@@ -329,7 +344,10 @@ class time_point
 
   /// \brief Modifies the point in time *this represents by one tick of the
   /// duration.
-  constexpr auto operator++(int) noexcept -> time_point { return time_point(d_++); }
+  constexpr auto operator++(int) noexcept -> time_point
+  {
+    return time_point(d_++);
+  }
 
   /// \brief Modifies the point in time *this represents by one tick of the
   /// duration.
@@ -341,7 +359,10 @@ class time_point
 
   /// \brief Modifies the point in time *this represents by one tick of the
   /// duration.
-  constexpr auto operator--(int) noexcept -> time_point { return time_point(d_--); }
+  constexpr auto operator--(int) noexcept -> time_point
+  {
+    return time_point(d_--);
+  }
 
   /// \brief Returns a time_point with the smallest possible duration,
   [[nodiscard]] static constexpr auto min() noexcept -> time_point
@@ -381,9 +402,11 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// number of ticks for the type common to both durations are equal.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator==(duration<Rep1, Period1> const& lhs,
-                                        duration<Rep2, Period2> const& rhs) -> bool
+                                        duration<Rep2, Period2> const& rhs)
+  -> bool
 {
-  using common_t = typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
+  using common_t = typename etl::common_type<duration<Rep1, Period1>,
+                                             duration<Rep2, Period2>>::type;
 
   return common_t(lhs).count() == common_t(rhs).count();
 }
@@ -392,7 +415,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// number of ticks for the type common to both durations are equal.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator!=(duration<Rep1, Period1> const& lhs,
-                                        duration<Rep2, Period2> const& rhs) -> bool
+                                        duration<Rep2, Period2> const& rhs)
+  -> bool
 {
   return !(lhs == rhs);
 }
@@ -401,9 +425,11 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// of ticks for the type common to both durations.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator<(duration<Rep1, Period1> const& lhs,
-                                       duration<Rep2, Period2> const& rhs) -> bool
+                                       duration<Rep2, Period2> const& rhs)
+  -> bool
 {
-  using common_t = typename etl::common_type<duration<Rep1, Period1>, duration<Rep2, Period2>>::type;
+  using common_t = typename etl::common_type<duration<Rep1, Period1>,
+                                             duration<Rep2, Period2>>::type;
   return common_t(lhs).count() < common_t(rhs).count();
 }
 
@@ -411,7 +437,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// of ticks for the type common to both durations.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator<=(duration<Rep1, Period1> const& lhs,
-                                        duration<Rep2, Period2> const& rhs) -> bool
+                                        duration<Rep2, Period2> const& rhs)
+  -> bool
 {
   return !(rhs < lhs);
 }
@@ -420,7 +447,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// of ticks for the type common to both durations.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator>(duration<Rep1, Period1> const& lhs,
-                                       duration<Rep2, Period2> const& rhs) -> bool
+                                       duration<Rep2, Period2> const& rhs)
+  -> bool
 {
   return rhs < lhs;
 }
@@ -429,7 +457,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// of ticks for the type common to both durations.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator>=(duration<Rep1, Period1> const& lhs,
-                                        duration<Rep2, Period2> const& rhs) -> bool
+                                        duration<Rep2, Period2> const& rhs)
+  -> bool
 {
   return !(lhs < rhs);
 }
@@ -437,8 +466,9 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator==(time_point<Clock, Dur1> const& lhs,
-                                        time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return lhs.time_since_epoch() == rhs.time_since_epoch();
 }
@@ -446,8 +476,9 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator!=(time_point<Clock, Dur1> const& lhs,
-                                        time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return !(lhs == rhs);
 }
@@ -455,8 +486,9 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<(time_point<Clock, Dur1> const& lhs,
-                                       time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(time_point<Clock, Dur1> const& lhs,
+          time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return lhs.time_since_epoch() < rhs.time_since_epoch();
 }
@@ -464,8 +496,9 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<=(time_point<Clock, Dur1> const& lhs,
-                                        time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return lhs.time_since_epoch() <= rhs.time_since_epoch();
 }
@@ -473,8 +506,9 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>(time_point<Clock, Dur1> const& lhs,
-                                       time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(time_point<Clock, Dur1> const& lhs,
+          time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return lhs.time_since_epoch() > rhs.time_since_epoch();
 }
@@ -482,8 +516,9 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>=(time_point<Clock, Dur1> const& lhs,
-                                        time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(time_point<Clock, Dur1> const& lhs,
+           time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
   return lhs.time_since_epoch() >= rhs.time_since_epoch();
 }
@@ -540,15 +575,19 @@ struct is_duration<::etl::chrono::duration<Rep, Period>> : ::etl::true_type
 {
 };
 
-template <typename ToDuration, typename CF, typename CR, bool NumIsOne = false, bool DenIsOne = false>
+template <typename ToDuration, typename CF, typename CR, bool NumIsOne = false,
+          bool DenIsOne = false>
 struct duration_cast_impl
 {
   template <typename Rep, typename Period>
-  [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
   {
     using to_rep = typename ToDuration::rep;
-    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count()) * static_cast<CR>(CF::num)
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          * static_cast<CR>(CF::num)
                                           / static_cast<CR>(CF::den)));
   }
 };
@@ -557,12 +596,14 @@ template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, true, false>
 {
   template <typename Rep, typename Period>
-  [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
   {
     using to_rep = typename ToDuration::rep;
-    return ToDuration(
-      static_cast<to_rep>(static_cast<CR>(duration.count()) / static_cast<CR>(CF::den)));
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          / static_cast<CR>(CF::den)));
   }
 };
 
@@ -570,12 +611,14 @@ template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, false, true>
 {
   template <typename Rep, typename Period>
-  [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
   {
     using to_rep = typename ToDuration::rep;
-    return ToDuration(
-      static_cast<to_rep>(static_cast<CR>(duration.count()) * static_cast<CR>(CF::num)));
+    return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count())
+                                          * static_cast<CR>(CF::num)));
   }
 };
 
@@ -583,8 +626,10 @@ template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, true, true>
 {
   template <typename Rep, typename Period>
-  [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+  [[nodiscard]] static constexpr auto
+  cast(duration<Rep, Period> const& duration) noexcept(
+    is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDuration::rep>)
+    -> ToDuration
   {
     using to_rep = typename ToDuration::rep;
     return ToDuration(static_cast<to_rep>(duration.count()));
@@ -596,7 +641,8 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true>
 /// \brief Converts a duration to a duration of different type ToDur.
 template <typename ToDur, typename Rep, typename Period,
           TAETL_REQUIRES_(detail::is_duration<ToDur>::value)>
-[[nodiscard]] constexpr auto duration_cast(duration<Rep, Period> const& duration) noexcept(
+[[nodiscard]] constexpr auto
+duration_cast(duration<Rep, Period> const& duration) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDur::rep>) -> ToDur
 {
   using detail::duration_cast_impl;
@@ -609,7 +655,8 @@ template <typename ToDur, typename Rep, typename Period,
 /// \brief Returns the greatest duration t representable in ToDuration that is
 /// less or equal to d. The function does not participate in the overload
 /// resolution unless ToDuration is an instance of etl::chrono::duration.
-template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -618,7 +665,8 @@ template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is
   return t;
 }
 
-template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto ceil(duration<Rep, Period> const& d) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -627,7 +675,8 @@ template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is
   return t;
 }
 
-template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Rep, typename Period,
+          TAETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -644,15 +693,19 @@ template <typename To, typename Rep, typename Period, TAETL_REQUIRES_(detail::is
 /// d.zero(), return d, otherwise return -d. The function does not participate
 /// in the overload resolution unless etl::numeric_limits<Rep>::is_signed is
 /// true.
-template <typename Rep, typename Period, TAETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
-constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>) -> duration<Rep, Period>
+template <typename Rep, typename Period,
+          TAETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
+constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
+  -> duration<Rep, Period>
 {
-  return d < duration<Rep, Period>::zero() ? duration<Rep, Period>::zero() - d : d;
+  return d < duration<Rep, Period>::zero() ? duration<Rep, Period>::zero() - d
+                                           : d;
 }
 
 template <typename ToDuration, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
-[[nodiscard]] constexpr auto time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
+[[nodiscard]] constexpr auto
+time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
 {
   using time_point_t = time_point<Clock, ToDuration>;
   return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
@@ -660,21 +713,24 @@ template <typename ToDuration, typename Clock, typename Duration,
 
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
-[[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
+[[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
 {
   return time_point<Clock, To> {floor<To>(tp.time_since_epoch())};
 }
 
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
-[[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
+[[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
 {
   return time_point<Clock, To> {ceil<To>(tp.time_since_epoch())};
 }
 
 template <typename To, typename Clock, typename Duration,
           TAETL_REQUIRES_(detail::is_duration<To>::value)>
-[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
+[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)
+  -> time_point<Clock, To>
 {
   return time_point<Clock, To> {round<To>(tp.time_since_epoch())};
 }
@@ -690,7 +746,8 @@ namespace etl
 /// ratio of the greatest common divisor of Period1::num and Period2::num and
 /// the least common multiple of Period1::den and Period2::den.
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-struct common_type<chrono::duration<Rep1, Period1>, chrono::duration<Rep2, Period2>>
+struct common_type<chrono::duration<Rep1, Period1>,
+                   chrono::duration<Rep2, Period2>>
 {
   private:
   static constexpr auto num = gcd(Period1::num, Period2::num);
@@ -703,7 +760,8 @@ struct common_type<chrono::duration<Rep1, Period1>, chrono::duration<Rep2, Perio
 /// \brief Exposes the type named type, which is the common type of two
 /// chrono::time_points.
 template <typename Clock, typename Duration1, typename Duration2>
-struct common_type<chrono::time_point<Clock, Duration1>, chrono::time_point<Clock, Duration2>>
+struct common_type<chrono::time_point<Clock, Duration1>,
+                   chrono::time_point<Clock, Duration2>>
 {
   using type = chrono::time_point<Clock, common_type_t<Duration1, Duration2>>;
 };
@@ -722,7 +780,8 @@ constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
 /// \brief Forms a etl::chrono::duration literal representing hours.
 /// Floating-point literal, returns a floating-point duration equivalent to
 /// etl::chrono::hours.
-constexpr auto operator""_h(long double h) -> etl::chrono::duration<long double, ratio<3600, 1>>
+constexpr auto operator""_h(long double h)
+  -> etl::chrono::duration<long double, ratio<3600, 1>>
 {
   return etl::chrono::duration<long double, etl::ratio<3600, 1>>(h);
 }
@@ -737,7 +796,8 @@ constexpr auto operator""_min(unsigned long long m) -> etl::chrono::minutes
 /// \brief Forms a etl::chrono::duration literal representing minutes.
 /// Floating-point literal, returns a floating-point duration equivalent to
 /// etl::chrono::minutes.
-constexpr auto operator""_min(long double m) -> etl::chrono::duration<long double, etl::ratio<60, 1>>
+constexpr auto operator""_min(long double m)
+  -> etl::chrono::duration<long double, etl::ratio<60, 1>>
 {
   return etl::chrono::duration<long double, ratio<60, 1>>(m);
 }
@@ -761,13 +821,15 @@ constexpr auto operator""_s(long double m) -> etl::chrono::duration<long double>
 /// Integer literal, returns exactly etl::chrono::milliseconds(mins).
 constexpr auto operator""_ms(unsigned long long m) -> etl::chrono::milliseconds
 {
-  return etl::chrono::milliseconds(static_cast<etl::chrono::milliseconds::rep>(m));
+  return etl::chrono::milliseconds(
+    static_cast<etl::chrono::milliseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing milliseconds.
 /// Floating-point literal, returns a floating-point duration equivalent to
 /// etl::chrono::milliseconds.
-constexpr auto operator""_ms(long double m) -> etl::chrono::duration<long double, etl::milli>
+constexpr auto operator""_ms(long double m)
+  -> etl::chrono::duration<long double, etl::milli>
 {
   return etl::chrono::duration<long double, etl::milli>(m);
 }
@@ -776,13 +838,15 @@ constexpr auto operator""_ms(long double m) -> etl::chrono::duration<long double
 /// Integer literal, returns exactly etl::chrono::microseconds(mins).
 constexpr auto operator""_us(unsigned long long m) -> etl::chrono::microseconds
 {
-  return etl::chrono::microseconds(static_cast<etl::chrono::microseconds::rep>(m));
+  return etl::chrono::microseconds(
+    static_cast<etl::chrono::microseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing microseconds.
 /// Floating-point literal, returns a floating-point duration equivalent to
 /// etl::chrono::microseconds.
-constexpr auto operator""_us(long double m) -> etl::chrono::duration<long double, etl::micro>
+constexpr auto operator""_us(long double m)
+  -> etl::chrono::duration<long double, etl::micro>
 {
   return etl::chrono::duration<long double, etl::micro>(m);
 }
@@ -791,13 +855,15 @@ constexpr auto operator""_us(long double m) -> etl::chrono::duration<long double
 /// Integer literal, returns exactly etl::chrono::nanoseconds(mins).
 constexpr auto operator""_ns(unsigned long long m) -> etl::chrono::nanoseconds
 {
-  return etl::chrono::nanoseconds(static_cast<etl::chrono::nanoseconds::rep>(m));
+  return etl::chrono::nanoseconds(
+    static_cast<etl::chrono::nanoseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing nanoseconds.
 /// Floating-point literal, returns a floating-point duration equivalent to
 /// etl::chrono::nanoseconds.
-constexpr auto operator""_ns(long double m) -> etl::chrono::duration<long double, etl::nano>
+constexpr auto operator""_ns(long double m)
+  -> etl::chrono::duration<long double, etl::nano>
 {
   return etl::chrono::duration<long double, etl::nano>(m);
 }

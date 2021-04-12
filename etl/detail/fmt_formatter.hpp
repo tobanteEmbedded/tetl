@@ -21,7 +21,7 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
+#if not defined(TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP)
 #define TAETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
 
 #include "etl/detail/fmt_context.hpp"
@@ -37,12 +37,12 @@ namespace etl
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/formatter](https://en.cppreference.com/w/cpp/utility/format/formatter)
-/// group formatter
+/// \group formatter
 template <typename T, typename CharT = char>
 struct formatter;
 
 /// \brief Standard specializations for basic type char.
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<char, char>
 {
@@ -55,52 +55,55 @@ struct formatter<char, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<char const*, char>
 {
   template <typename FormatContext>
-  constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(char const* val, FormatContext& fc)
+    -> decltype(fc.out())
   {
     return etl::copy(val, val + etl::strlen(val), fc.out());
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <::etl::size_t N>
 struct formatter<char[N], char>
 {
   template <typename FormatContext>
-  constexpr auto format(char const* val, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(char const* val, FormatContext& fc)
+    -> decltype(fc.out())
   {
     return etl::copy(val, val + N, fc.out());
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<etl::string_view, char>
 {
   template <typename FormatContext>
-  constexpr auto format(etl::string_view str, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(etl::string_view str, FormatContext& fc)
+    -> decltype(fc.out())
   {
     return etl::copy(begin(str), end(str), fc.out());
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <etl::size_t Capacity>
 struct formatter<etl::static_string<Capacity>, char>
 {
   template <typename FormatContext>
-  constexpr auto format(etl::static_string<Capacity> const& str, FormatContext& fc)
-    -> decltype(fc.out())
+  constexpr auto format(etl::static_string<Capacity> const& str,
+                        FormatContext& fc) -> decltype(fc.out())
   {
     return formatter<::etl::string_view>().format(str, fc);
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<short, char>
 {
@@ -113,7 +116,7 @@ struct formatter<short, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<int, char>
 {
@@ -126,7 +129,7 @@ struct formatter<int, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<long, char>
 {
@@ -139,7 +142,7 @@ struct formatter<long, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<long long, char>
 {
@@ -152,12 +155,13 @@ struct formatter<long long, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<unsigned short, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned short val, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(unsigned short val, FormatContext& fc)
+    -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);
@@ -165,7 +169,7 @@ struct formatter<unsigned short, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<unsigned, char>
 {
@@ -178,12 +182,13 @@ struct formatter<unsigned, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<unsigned long, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned long val, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(unsigned long val, FormatContext& fc)
+    -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);
@@ -191,12 +196,13 @@ struct formatter<unsigned long, char>
   }
 };
 
-/// group formatter_specialization
+/// \group formatter_specialization
 template <>
 struct formatter<unsigned long long, char>
 {
   template <typename FormatContext>
-  constexpr auto format(unsigned long long val, FormatContext& fc) -> decltype(fc.out())
+  constexpr auto format(unsigned long long val, FormatContext& fc)
+    -> decltype(fc.out())
   {
     char buf[32] {};
     ::etl::detail::integer_to_ascii(val, &buf[0], 10);

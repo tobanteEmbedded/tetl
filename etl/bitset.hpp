@@ -98,7 +98,8 @@ public:
     }
 
 private:
-    constexpr explicit reference(uint8_t* data, uint8_t position) : data_ {data}, position_ {position}
+    constexpr explicit reference(uint8_t* data, uint8_t position)
+        : data_ {data}, position_ {position}
     {
     }
 
@@ -165,10 +166,12 @@ private:
   /// \param one alternate character for unset bits in str
   template <typename CharT>
   explicit bitset(CharT const* str,
-                  typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos,
+                  typename basic_string_view<CharT>::size_type n
+                  = basic_string_view<CharT>::npos,
                   CharT zero = CharT('0'), CharT one = CharT('1'))
-      : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str)
-                                                   : basic_string_view<CharT>(str, n),
+      : bitset(n == basic_string_view<CharT>::npos
+                 ? basic_string_view<CharT>(str)
+                 : basic_string_view<CharT>(str, n),
                0, n, zero, one)
   {
   }
@@ -252,7 +255,10 @@ private:
   /// checking.
   ///
   /// \param pos Index of the bit.
-  [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool { return test(pos); }
+  [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
+  {
+    return test(pos);
+  }
 
   /// \brief Returns the value of the bit at the position pos. Perfoms no bounds
   /// checking.
@@ -266,13 +272,22 @@ private:
   }
 
   /// \brief Checks if all bits are set to true.
-  [[nodiscard]] constexpr auto all() const noexcept -> bool { return count() == size(); }
+  [[nodiscard]] constexpr auto all() const noexcept -> bool
+  {
+    return count() == size();
+  }
 
   /// \brief Checks if any bits are set to true.
-  [[nodiscard]] constexpr auto any() const noexcept -> bool { return count() > 0; }
+  [[nodiscard]] constexpr auto any() const noexcept -> bool
+  {
+    return count() > 0;
+  }
 
   /// \brief Checks if none bits are set to true.
-  [[nodiscard]] constexpr auto none() const noexcept -> bool { return count() == 0; }
+  [[nodiscard]] constexpr auto none() const noexcept -> bool
+  {
+    return count() == 0;
+  }
 
   /// \brief Returns the number of bits that are set to true.
   [[nodiscard]] constexpr auto count() const noexcept -> size_t
@@ -286,7 +301,8 @@ private:
   [[nodiscard]] constexpr auto size() const noexcept -> size_t { return N; }
 
   /// \brief Returns true if all of the bits in *this and rhs are equal.
-  [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept -> bool
+  [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept
+    -> bool
   {
     for (size_t i = 0; i < size(); ++i)
     {
@@ -297,7 +313,8 @@ private:
   }
 
   /// \brief Returns true if all of the bits in *this and rhs are not equal.
-  [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept -> bool
+  [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept
+    -> bool
   {
     return !(*this == rhs);
   }
@@ -328,10 +345,14 @@ private:
 
   /// \brief Returns a temporary copy of *this with all bits flipped (binary
   /// NOT).
-  constexpr auto operator~() const noexcept -> bitset<N> { return bitset<N>(*this).flip(); }
+  constexpr auto operator~() const noexcept -> bitset<N>
+  {
+    return bitset<N>(*this).flip();
+  }
 
   private:
-  [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
+  [[nodiscard]] constexpr auto byte_for_position(size_t pos) const
+    -> uint8_t const&
   {
     assert(pos < size());
     return bits_[pos >> 3];
@@ -343,7 +364,8 @@ private:
     return bits_[pos >> 3];
   }
 
-  [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t
+  [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept
+    -> uint8_t
   {
     return pos & 0x7;
   }

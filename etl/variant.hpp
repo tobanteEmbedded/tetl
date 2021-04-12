@@ -44,37 +44,43 @@ struct monostate
 };
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator==(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(monostate /*lhs*/,
+                                        monostate /*rhs*/) noexcept -> bool
 {
   return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator!=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(monostate /*lhs*/,
+                                        monostate /*rhs*/) noexcept -> bool
 {
   return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(monostate /*lhs*/,
+                                       monostate /*rhs*/) noexcept -> bool
 {
   return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(monostate /*lhs*/,
+                                       monostate /*rhs*/) noexcept -> bool
 {
   return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(monostate /*lhs*/,
+                                        monostate /*rhs*/) noexcept -> bool
 {
   return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(monostate /*lhs*/,
+                                        monostate /*rhs*/) noexcept -> bool
 {
   return true;
 }
@@ -89,7 +95,8 @@ struct variant_storage;
 template <typename Head>
 struct variant_storage<Head>
 {
-  using storage_t = typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+  using storage_t =
+    typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
   storage_t data;
 
   // alignas(Head) unsigned char data[sizeof(Head)];
@@ -97,7 +104,8 @@ struct variant_storage<Head>
   template <typename T>
   void construct(T&& headInit, union_index_type& unionIndex)
   {
-    static_assert(etl::is_same_v<T, Head>, "Tried to access non-existent type in union");
+    static_assert(etl::is_same_v<T, Head>,
+                  "Tried to access non-existent type in union");
     new (&data) Head(etl::forward<T>(headInit));
     unionIndex = 0;
   }
@@ -111,7 +119,8 @@ struct variant_storage<Head>
 template <typename Head, typename... Tail>
 struct variant_storage<Head, Tail...>
 {
-  using storage_t = typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+  using storage_t =
+    typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
 
   union
   {
@@ -180,12 +189,14 @@ struct variant_storage_type_get<Target, variant_storage<Head, Tail...>>
 {
   static auto get(variant_storage<Head, Tail...>& vu) -> Target&
   {
-    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(vu.tail);
+    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
+      vu.tail);
   }
 
   static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
   {
-    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(vu.tail);
+    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
+      vu.tail);
   }
 
   static constexpr const union_index_type index
@@ -290,7 +301,10 @@ class variant
 
   /// \brief Returns false if and only if the variant holds a value. Currently
   /// always returns false, since there is no default constructor.
-  [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool { return false; }
+  [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool
+  {
+    return false;
+  }
 
   /// \todo Remove & replace with friendship for etl::get_if.
   [[nodiscard]] auto data() const noexcept { return &data_; }
@@ -304,7 +318,8 @@ class variant
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...
 template <typename T, typename... Types>
-constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept -> bool
+constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
+  -> bool
 {
   using storage_t = detail::variant_storage<Types...>;
   return detail::variant_storage_type_get<T, storage_t>::index == v.index();
@@ -334,7 +349,8 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 /// \todo Implement
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-  -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>> const>
+  -> etl::add_pointer_t<
+    etl::variant_alternative_t<I, etl::variant<Types...>> const>
 {
   etl::ignore_unused(pv);
   return nullptr;
@@ -343,7 +359,8 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept
+  -> etl::add_pointer_t<T>
 {
   if (holds_alternative<T>(*pv))
   {
@@ -357,7 +374,8 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...> const* pv) noexcept -> etl::add_pointer_t<const T>
+constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
+  -> etl::add_pointer_t<const T>
 {
   if (holds_alternative<T>(*pv))
   {

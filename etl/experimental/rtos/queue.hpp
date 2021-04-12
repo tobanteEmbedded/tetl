@@ -47,7 +47,8 @@ class queue
   using size_type = etl::uint32_t;
 
   /// Creates a new queue
-  queue() : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
+  queue()
+      : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
 
   queue(queue&&)      = delete;
   queue(queue const&) = delete;
@@ -63,7 +64,8 @@ class queue
   [[nodiscard]] auto capacity() const -> size_type { return Size; }
 
   /// Push an element on to the queue.
-  [[nodiscard]] auto send(ValueType const& data, TickType_t ticksToWait = 0) const -> bool
+  [[nodiscard]] auto send(ValueType const& data,
+                          TickType_t ticksToWait = 0) const -> bool
   {
     const auto* const rawData = static_cast<const void*>(&data);
     auto const success        = xQueueSend(handle_, rawData, ticksToWait);
@@ -79,7 +81,8 @@ class queue
   }
 
   /// Pop an element of the queue.
-  [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const -> pair<bool, ValueType>
+  [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
+    -> pair<bool, ValueType>
   {
     auto value          = ValueType {};
     auto* const rawData = static_cast<void*>(&value);

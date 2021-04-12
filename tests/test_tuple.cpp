@@ -27,18 +27,19 @@
 #include "etl/tuple.hpp"    // for get, tuple
 #include "etl/warning.hpp"  // for ignore_unused
 
-TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
-                   double, long double)
+TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t,
+                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+                   long double)
 
 {
   etl::tuple<TestType, float> t1 {TestType {1}, 2.0F};
   etl::ignore_unused(t1);
 }
 
-TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t, etl::uint16_t,
-                   etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t, float,
-                   double, long double)
+TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t,
+                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+                   etl::uint64_t, etl::int64_t, float, double, long double)
 {
   auto t1 = etl::tuple<TestType, float> {TestType {1}, 2.0F};
   CHECK(etl::get<0>(t1) == TestType {1});

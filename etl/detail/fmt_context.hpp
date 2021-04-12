@@ -25,7 +25,8 @@ class basic_format_context
   using iterator  = OutputIt;
   using char_type = CharT;
 
-  explicit constexpr basic_format_context(OutputIt pos) noexcept : pos_ {pos} { }
+  explicit constexpr basic_format_context(OutputIt pos) noexcept
+      : pos_ {pos} { }
 
   template <typename T>
   using formatter_type = formatter<T, CharT>;
@@ -55,7 +56,8 @@ class basic_format_context
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/basic_format_context](https://en.cppreference.com/w/cpp/utility/format/basic_format_context)
 template <typename ContainerT>
-using format_context = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
+using format_context
+  = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
 
 }  // namespace etl
 

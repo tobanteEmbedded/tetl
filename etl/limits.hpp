@@ -689,14 +689,20 @@ class numeric_limits<unsigned long long>
 
   static constexpr auto lowest() noexcept -> unsigned long long { return 0; }
   static constexpr auto min() noexcept -> unsigned long long { return 0; }
-  static constexpr auto max() noexcept -> unsigned long long { return ULLONG_MAX; }
+  static constexpr auto max() noexcept -> unsigned long long
+  {
+    return ULLONG_MAX;
+  }
 
   static constexpr bool is_signed  = false;
   static constexpr bool is_integer = true;
   static constexpr bool is_exact   = true;
   static constexpr int radix       = 2;
   static constexpr auto epsilon() noexcept -> unsigned long long { return {}; }
-  static constexpr auto round_error() noexcept -> unsigned long long { return {}; }
+  static constexpr auto round_error() noexcept -> unsigned long long
+  {
+    return {};
+  }
 
   static constexpr int digits = CHAR_BIT * sizeof(unsigned long long);
   // static constexpr int digits10     = digits * etl::log10(2);
@@ -721,8 +727,14 @@ class numeric_limits<unsigned long long>
   // NOLINTNEXTLINE(readability-identifier-naming)
   static constexpr auto quiet_NaN() noexcept -> unsigned long long { return 0; }
   // NOLINTNEXTLINE(readability-identifier-naming)
-  static constexpr auto signaling_NaN() noexcept -> unsigned long long { return 0; }
-  static constexpr auto denorm_min() noexcept -> unsigned long long { return 0; }
+  static constexpr auto signaling_NaN() noexcept -> unsigned long long
+  {
+    return 0;
+  }
+  static constexpr auto denorm_min() noexcept -> unsigned long long
+  {
+    return 0;
+  }
 
   static constexpr bool is_iec559  = false;
   static constexpr bool is_bounded = true;
