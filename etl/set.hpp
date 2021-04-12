@@ -240,7 +240,8 @@ struct static_set
 
   /// \brief Removes the element at pos.
   ///
-  /// https://en.cppreference.com/w/cpp/container/set/erase
+  /// \notes
+  /// [cppreference.com/w/cpp/container/set/erase](https://en.cppreference.com/w/cpp/container/set/erase)
   ///
   /// \returns Iterator following the last removed element.
   constexpr auto erase(iterator pos) noexcept -> iterator { return memory_.erase(pos); }
@@ -248,7 +249,8 @@ struct static_set
   /// \brief Removes the elements in the range [first; last), which must be a
   /// valid range in *this.
   ///
-  /// https://en.cppreference.com/w/cpp/container/set/erase
+  /// \notes
+  /// [cppreference.com/w/cpp/container/set/erase](https://en.cppreference.com/w/cpp/container/set/erase)
   ///
   /// \returns Iterator following the last removed element.
   constexpr auto erase(iterator first, iterator last) -> iterator
@@ -260,7 +262,8 @@ struct static_set
 
   /// \brief Removes the element (if one exists) with the key equivalent to key.
   ///
-  /// https://en.cppreference.com/w/cpp/container/set/erase
+  /// \notes
+  /// [cppreference.com/w/cpp/container/set/erase](https://en.cppreference.com/w/cpp/container/set/erase)
   ///
   /// \returns Number of elements removed.
   constexpr auto erase(key_type const& key) noexcept -> size_type
@@ -561,7 +564,8 @@ constexpr auto swap(static_set<Key, Capacity, Compare>& lhs,
 // /// \brief Erases all elements that satisfy the predicate pred from the
 // container.
 // ///
-// /// https://en.cppreference.com/w/cpp/container/set/erase_if
+// /// \notes
+// [cppreference.com/w/cpp/container/set/erase_if](https://en.cppreference.com/w/cpp/container/set/erase_if)
 // template <typename Key, size_t Capacity, typename Compare, typename
 // Predicate> constexpr auto erase_if(static_set<Key, Capacity, Compare>&
 // c, Predicate pred) ->

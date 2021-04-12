@@ -32,9 +32,13 @@
 
 namespace etl
 {
+template <typename Iter>
+struct reverse_iterator;
+
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
+/// \module Iterator
 struct input_iterator_tag
 {
 };
@@ -42,6 +46,7 @@ struct input_iterator_tag
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
+/// \module Iterator
 struct output_iterator_tag
 {
 };
@@ -49,32 +54,36 @@ struct output_iterator_tag
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
-struct forward_iterator_tag : public input_iterator_tag
+/// \module Iterator
+struct forward_iterator_tag : input_iterator_tag
 {
 };
 
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
-struct bidirectional_iterator_tag : public forward_iterator_tag
+/// \module Iterator
+struct bidirectional_iterator_tag : forward_iterator_tag
 {
 };
 
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
-struct random_access_iterator_tag : public bidirectional_iterator_tag
+/// \module Iterator
+struct random_access_iterator_tag : bidirectional_iterator_tag
 {
 };
 
 /// \brief Defines the category of an iterator. Each tag is an empty type and
 /// corresponds to one of the five (until C++20) six (since C++20) iterator
 /// categories.
-struct contiguous_iterator_tag : public random_access_iterator_tag
+/// \module Iterator
+struct contiguous_iterator_tag : random_access_iterator_tag
 {
 };
 
-/// \brief etl::iterator_traits is the type trait class that provides uniform
+/// \brief iterator_traits is the type trait class that provides uniform
 /// interface to the properties of LegacyIterator types. This makes it possible
 /// to implement algorithms only in terms of iterators.
 ///
@@ -82,19 +91,14 @@ struct contiguous_iterator_tag : public random_access_iterator_tag
 /// the information about the iterator can be retrieved even if the type does
 /// not provide the usual typedefs.
 ///
-/// https://en.cppreference.com/w/cpp/iterator/iterator_traits
+/// \notes
+/// [cppreference.com/w/cpp/iterator/iterator_traits](https://en.cppreference.com/w/cpp/iterator/iterator_traits)
+/// \group iterator_traits
+/// \module Iterator
 template <typename Iter>
 struct iterator_traits;
 
-/// \brief etl::iterator_traits is the type trait class that provides uniform
-/// interface to the properties of LegacyIterator types. This makes it possible
-/// to implement algorithms only in terms of iterators.
-///
-/// \details The template can be specialized for user-defined iterators so that
-/// the information about the iterator can be retrieved even if the type does
-/// not provide the usual typedefs.
-///
-/// https://en.cppreference.com/w/cpp/iterator/iterator_traits
+/// \group iterator_traits
 template <typename T>
 struct iterator_traits<T*>
 {
@@ -110,15 +114,17 @@ struct iterator_traits<T*>
 /// iterator is decremented. In this case, InputIt must meet the requirements of
 /// LegacyBidirectionalIterator, otherwise the behavior is undefined.
 ///
-/// https://en.cppreference.com/w/cpp/iterator/advance
+/// \notes
+/// [cppreference.com/w/cpp/iterator/advance](https://en.cppreference.com/w/cpp/iterator/advance)
+/// \module Iterator
 template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void
 {
-  using category = typename etl::iterator_traits<It>::iterator_category;
-  static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
+  using category = typename iterator_traits<It>::iterator_category;
+  static_assert(is_base_of_v<input_iterator_tag, category>);
 
-  auto dist = typename etl::iterator_traits<It>::difference_type(n);
-  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>) { it += dist; }
+  auto dist = typename iterator_traits<It>::difference_type(n);
+  if constexpr (is_base_of_v<random_access_iterator_tag, category>) { it += dist; }
   else
   {
     while (dist > 0)
@@ -126,7 +132,7 @@ constexpr auto advance(It& it, Distance n) -> void
       --dist;
       ++it;
     }
-    if constexpr (etl::is_base_of_v<etl::bidirectional_iterator_tag, category>)
+    if constexpr (is_base_of_v<bidirectional_iterator_tag, category>)
     {
       while (dist < 0)
       {
@@ -139,17 +145,19 @@ constexpr auto advance(It& it, Distance n) -> void
 
 /// \brief Returns the number of hops from first to last.
 ///
-/// https://en.cppreference.com/w/cpp/iterator/distance
+/// \notes
+/// [cppreference.com/w/cpp/iterator/distance](https://en.cppreference.com/w/cpp/iterator/distance)
+/// \module Iterator
 template <typename It>
-constexpr auto distance(It first, It last) -> typename etl::iterator_traits<It>::difference_type
+constexpr auto distance(It first, It last) -> typename iterator_traits<It>::difference_type
 {
-  using category = typename etl::iterator_traits<It>::iterator_category;
-  static_assert(etl::is_base_of_v<etl::input_iterator_tag, category>);
+  using category = typename iterator_traits<It>::iterator_category;
+  static_assert(is_base_of_v<input_iterator_tag, category>);
 
-  if constexpr (etl::is_base_of_v<etl::random_access_iterator_tag, category>) { return last - first; }
+  if constexpr (is_base_of_v<random_access_iterator_tag, category>) { return last - first; }
   else
   {
-    typename etl::iterator_traits<It>::difference_type result = 0;
+    typename iterator_traits<It>::difference_type result = 0;
     while (first != last)
     {
       ++first;
@@ -160,42 +168,234 @@ constexpr auto distance(It first, It last) -> typename etl::iterator_traits<It>:
 }
 
 /// \brief Return the nth successor of iterator it.
+/// \module Iterator
 template <typename InputIt>
 [[nodiscard]] constexpr auto next(InputIt it,
-                                  typename etl::iterator_traits<InputIt>::difference_type n = 1)
-  -> InputIt
+                                  typename iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {
-  etl::advance(it, n);
+  advance(it, n);
   return it;
 }
 
 /// \brief Return the nth predecessor of iterator it.
+/// \module Iterator
 template <typename BidirIt>
 [[nodiscard]] constexpr auto prev(BidirIt it,
-                                  typename etl::iterator_traits<BidirIt>::difference_type n = 1)
-  -> BidirIt
+                                  typename iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
 {
-  etl::advance(it, -n);
+  advance(it, -n);
   return it;
 }
 
-/// \brief etl::reverse_iterator is an iterator adaptor that reverses the
-/// direction of a given iterator. In other words, when provided with a
-/// bidirectional iterator, etl::reverse_iterator produces a new iterator that
-/// moves from the end to the beginning of the sequence defined by the
-/// underlying bidirectional iterator.
-///
-/// \details This is the iterator returned by member functions rbegin() and
-/// rend() of the standard library containers.
-template <class Iter>
-class reverse_iterator
+/// \brief Returns an iterator to the beginning of the given container c or
+/// array array. These templates rely on `C::begin()` having a reasonable
+/// implementation. Returns exactly c.begin(), which is typically an iterator to
+/// the beginning of the sequence represented by c. If C is a standard
+/// Container, this returns `C::iterator` when c is not const-qualified, and
+/// `C::const_iterator` otherwise. Custom overloads of begin may be provided for classes that do not
+/// expose a suitable begin() member function, yet can be iterated.
+/// \group begin
+/// \module Iterator
+template <typename C>
+constexpr auto begin(C& c) -> decltype(c.begin())
 {
-  public:
-  using iterator_type   = Iter;
-  using value_type      = typename etl::iterator_traits<Iter>::value_type;
+  return c.begin();
+}
+
+/// \group begin
+template <typename C>
+constexpr auto begin(C const& c) -> decltype(c.begin())
+{
+  return c.begin();
+}
+
+/// \group begin
+template <typename T, size_t N>
+constexpr auto begin(T (&array)[N]) noexcept -> T*
+{
+  return &array[0];
+}
+
+/// \group begin
+template <typename C>
+constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c))) -> decltype(begin(c))
+{
+  return begin(c);
+}
+
+/// \brief Returns an iterator to the end (i.e. the element after the last element)
+/// of the given container c or array array. These templates rely on `C::end()`
+/// having a reasonable implementation.
+/// \group end
+/// \module Iterator
+template <typename C>
+constexpr auto end(C& c) -> decltype(c.end())
+{
+  return c.end();
+}
+
+/// \group end
+template <typename C>
+constexpr auto end(C const& c) -> decltype(c.end())
+{
+  return c.end();
+}
+
+/// \group end
+template <typename T, size_t N>
+constexpr auto end(T (&array)[N]) noexcept -> T*
+{
+  return &array[N];
+}
+
+/// \group end
+template <typename C>
+constexpr auto cend(C const& c) noexcept(noexcept(end(c))) -> decltype(end(c))
+{
+  return end(c);
+}
+
+/// \brief Returns an iterator to the reverse-beginning of the given container.
+/// \group rbegin
+/// \module Iterator
+template <typename Container>
+constexpr auto rbegin(Container& c) -> decltype(c.rbegin())
+{
+  return c.rbegin();
+}
+
+/// \group rbegin
+template <typename Container>
+constexpr auto rbegin(Container const& c) -> decltype(c.rbegin())
+{
+  return c.rbegin();
+}
+
+/// \group rbegin
+template <typename T, size_t N>
+constexpr auto rbegin(T (&array)[N]) -> reverse_iterator<T*>
+{
+  return reverse_iterator<T*>(end(array));
+}
+
+/// \group rbegin
+template <typename Container>
+constexpr auto crbegin(Container const& c) -> decltype(rbegin(c))
+{
+  return rbegin(c);
+}
+
+/// \brief Returns an iterator to the reverse-end of the given container.
+/// \group rend
+/// \module Iterator
+template <typename Container>
+constexpr auto rend(Container& c) -> decltype(c.rend())
+{
+  return c.rend();
+}
+
+/// \group rend
+template <typename Container>
+constexpr auto rend(Container const& c) -> decltype(c.rend())
+{
+  return c.rend();
+}
+
+/// \group rend
+template <typename T, size_t N>
+constexpr auto rend(T (&array)[N]) -> reverse_iterator<T*>
+{
+  return reverse_iterator<T*>(begin(array));
+}
+
+/// \brief Returns an iterator to the reverse-end of the given container.
+/// \group rend
+template <typename Container>
+constexpr auto crend(Container const& c) -> decltype(rend(c))
+{
+  return rend(c);
+}
+
+/// \brief Returns the size of the given container c or array array. Returns
+/// c.size(), converted to the return type if necessary.
+/// \group size
+/// \module Iterator
+template <typename C>
+constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
+{
+  return c.size();
+}
+
+/// \group size
+template <typename T, size_t N>
+constexpr auto size(T const (&array)[N]) noexcept -> size_t
+{
+  ignore_unused(&array[0]);
+  return N;
+}
+
+/// \brief Returns whether the given container is empty.
+/// \group empty
+/// \module Iterator
+template <typename C>
+constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
+{
+  return c.empty();
+}
+
+/// \group empty
+template <typename T, size_t N>
+constexpr auto empty(T (&array)[N]) noexcept -> bool
+{
+  ignore_unused(&array);
+  return false;
+}
+
+/// \brief Returns a pointer to the block of memory containing the elements of
+/// the container.
+/// \group data
+/// \module Iterator
+template <typename C>
+constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
+{
+  return c.data();
+}
+
+/// \group data
+template <typename C>
+constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
+{
+  return c.data();
+}
+
+/// \group data
+template <typename T, size_t N>
+constexpr auto data(T (&array)[N]) noexcept -> T*
+{
+  return &array[0];
+}
+
+/// \brief reverse_iterator is an iterator adaptor that reverses the direction of a given iterator. In
+/// other words, when provided with a bidirectional iterator, `reverse_iterator` produces a new
+/// iterator that moves from the end to the beginning of the sequence defined by the underlying
+/// bidirectional iterator. This is the iterator returned by member functions `rbegin()` and `rend()`
+/// of the standard library containers.
+/// \notes
+/// [cppreference.com/w/cpp/iterator/reverse_iterator](https://en.cppreference.com/w/cpp/iterator/reverse_iterator)
+/// \module Iterator
+template <typename Iter>
+struct reverse_iterator
+{
+  /// The underlying iterator type
+  using iterator_type = Iter;
+  /// The underlying value type
+  using value_type = typename iterator_traits<Iter>::value_type;
+  /// The type of subtracting to iterators
   using difference_type = typename etl::iterator_traits<Iter>::difference_type;
-  using reference       = typename etl::iterator_traits<Iter>::reference;
-  using pointer         = typename etl::iterator_traits<Iter>::pointer;
+  /// The underlying reference type
+  using reference = typename etl::iterator_traits<Iter>::reference;
+  /// The underlying pointer type
+  using pointer = typename etl::iterator_traits<Iter>::pointer;
 
   /// \brief Constructs a new iterator adaptor.
   ///
@@ -213,14 +413,14 @@ class reverse_iterator
   /// \brief Constructs a new iterator adaptor.
   ///
   /// \details The underlying iterator is initialized with that of other.
-  template <class Other>
+  template <typename Other>
   constexpr reverse_iterator(reverse_iterator<Other> const& other) : current_(other.base())
   {
   }
 
   /// \brief The underlying iterator is assigned the value of the underlying
   /// iterator of other, i.e. other.base().
-  template <class Other>
+  template <typename Other>
   constexpr auto operator=(reverse_iterator<Other> const& other) -> reverse_iterator&
   {
     current_ = other.base();
@@ -370,6 +570,7 @@ template <typename Iter1, typename Iter2>
 /// container for which it was constructed. The container's push_back() member
 /// function is called whenever the iterator (whether dereferenced or not) is
 /// assigned to. Incrementing the etl::back_insert_iterator is a no-op.
+/// \module Iterator
 template <typename Container>
 class back_insert_iterator
 {
@@ -428,21 +629,23 @@ class back_insert_iterator
 };
 
 /// back_inserter is a convenience function template that constructs a
-/// etl::back_insert_iterator for the container c with the type deduced from the
+/// back_insert_iterator for the container c with the type deduced from the
 /// type of the argument.
+/// \module Iterator
 template <typename Container>
 [[nodiscard]] constexpr auto back_inserter(Container& container) -> back_insert_iterator<Container>
 {
-  return etl::back_insert_iterator<Container>(container);
+  return back_insert_iterator<Container>(container);
 }
 
-/// \brief etl::front_insert_iterator is an LegacyOutputIterator that prepends
+/// \brief front_insert_iterator is an LegacyOutputIterator that prepends
 /// elements to a container for which it was constructed. The container's
 /// push_front() member function is called whenever the iterator (whether
 /// dereferenced or not) is assigned to. Incrementing the
-/// etl::front_insert_iterator is a no-op.
+/// front_insert_iterator is a no-op.
 ///
 /// \todo Add tests when a container with push_front has been implemented.
+/// \module Iterator
 template <typename Container>
 class front_insert_iterator
 {
@@ -461,9 +664,8 @@ class front_insert_iterator
   constexpr front_insert_iterator() noexcept = default;
 
   /// \brief Initializes the underlying pointer to the container to
-  /// etl::addressof(c).
-  constexpr explicit front_insert_iterator(Container& container)
-      : container_ {etl::addressof(container)}
+  /// addressof(c).
+  constexpr explicit front_insert_iterator(Container& container) : container_ {addressof(container)}
   {
   }
 
@@ -477,7 +679,7 @@ class front_insert_iterator
   /// \brief Inserts the given value value to the container.
   constexpr auto operator=(typename Container::value_type&& value) -> front_insert_iterator&
   {
-    container_->push_front(etl::move(value));
+    container_->push_front(move(value));
     return *this;
   }
 
@@ -501,215 +703,13 @@ class front_insert_iterator
 };
 
 /// \brief front_inserter is a convenience function template that constructs a
-/// etl::front_insert_iterator for the container c with the type deduced from
+/// front_insert_iterator for the container c with the type deduced from
 /// the type of the argument.
+/// \module Iterator
 template <typename Container>
-[[nodiscard]] constexpr auto front_inserter(Container& c) -> etl::front_insert_iterator<Container>
+[[nodiscard]] constexpr auto front_inserter(Container& c) -> front_insert_iterator<Container>
 {
-  return etl::front_insert_iterator<Container>(c);
-}
-
-/// \brief Returns an iterator to the beginning of the given container c or
-/// array array. These templates rely on C::begin() having a reasonable
-/// implementation. Returns exactly c.begin(), which is typically an iterator to
-/// the beginning of the sequence represented by c. If C is a standard
-/// Container, this returns C::iterator when c is not const-qualified, and
-/// C::const_iterator otherwise.
-///
-/// \details Custom overloads of begin may be provided for classes that do not
-/// expose a suitable begin() member function, yet can be iterated.
-template <typename C>
-constexpr auto begin(C& c) -> decltype(c.begin())
-{
-  return c.begin();
-}
-
-/// \brief Returns an iterator to the beginning of the given container c or
-/// array array. These templates rely on C::begin() having a reasonable
-/// implementation. Returns exactly c.begin(), which is typically an iterator to
-/// the beginning of the sequence represented by c. If C is a standard
-/// Container, this returns C::iterator when c is not const-qualified, and
-/// C::const_iterator otherwise.
-///
-/// \details Custom overloads of begin may be provided for classes that do not
-/// expose a suitable begin() member function, yet can be iterated.
-template <typename C>
-constexpr auto begin(C const& c) -> decltype(c.begin())
-{
-  return c.begin();
-}
-
-/// \brief Returns an iterator to the beginning of the given container c or
-/// array array. These templates rely on C::begin() having a reasonable
-/// implementation. Returns a pointer to the beginning of the array.
-///
-/// \details Custom overloads of begin may be provided for classes that do not
-/// expose a suitable begin() member function, yet can be iterated.
-template <typename T, etl::size_t N>
-constexpr auto begin(T (&array)[N]) noexcept -> T*
-{
-  return &array[0];
-}
-
-/// \brief Returns an iterator to the beginning of the given container c or
-/// array array. These templates rely on C::begin() having a reasonable
-/// implementation. Returns exactly etl::begin(c), with c always treated as
-/// const-qualified. If C is a standard Container, this always returns
-/// C::const_iterator.
-///
-/// \details Custom overloads of begin may be provided for classes that do
-/// not expose a suitable begin() member function, yet can be iterated.
-template <typename C>
-constexpr auto cbegin(C const& c) noexcept(noexcept(etl::begin(c))) -> decltype(etl::begin(c))
-{
-  return etl::begin(c);
-}
-
-/// \brief Returns an iterator to the end (i.e. the element after the last
-/// element) of the given container c or array array. These templates rely on
-/// C::end() having a reasonable implementation.
-template <typename C>
-constexpr auto end(C& c) -> decltype(c.end())
-{
-  return c.end();
-}
-
-/// \brief Returns an iterator to the end (i.e. the element after the last
-/// element) of the given container c or array array. These templates rely on
-/// C::end() having a reasonable implementation.
-template <typename C>
-constexpr auto end(C const& c) -> decltype(c.end())
-{
-  return c.end();
-}
-
-/// \brief Returns an iterator to the end (i.e. the element after the last
-/// element) of the given container c or array array. These templates rely on
-/// C::end() having a reasonable implementation.
-template <typename T, etl::size_t N>
-constexpr auto end(T (&array)[N]) noexcept -> T*
-{
-  return &array[N];
-}
-
-/// \brief Returns an iterator to the end (i.e. the element after the last
-/// element) of the given container c or array array. These templates rely on
-/// C::end() having a reasonable implementation.
-template <typename C>
-constexpr auto cend(C const& c) noexcept(noexcept(etl::end(c))) -> decltype(etl::end(c))
-{
-  return etl::end(c);
-}
-
-/// \brief Returns an iterator to the reverse-beginning of the given container.
-template <typename Container>
-constexpr auto rbegin(Container& c) -> decltype(c.rbegin())
-{
-  return c.rbegin();
-}
-
-/// \brief Returns an iterator to the reverse-beginning of the given container.
-template <typename Container>
-constexpr auto rbegin(Container const& c) -> decltype(c.rbegin())
-{
-  return c.rbegin();
-}
-
-/// \brief Returns an iterator to the reverse-beginning of the given array.
-template <typename T, etl::size_t N>
-constexpr auto rbegin(T (&array)[N]) -> reverse_iterator<T*>
-{
-  return reverse_iterator<T*>(end(array));
-}
-
-/// \brief Returns an iterator to the reverse-beginning of the given container.
-template <typename Container>
-constexpr auto crbegin(Container const& c) -> decltype(etl::rbegin(c))
-{
-  return etl::rbegin(c);
-}
-
-/// \brief Returns an iterator to the reverse-end of the given container.
-template <typename Container>
-constexpr auto rend(Container& c) -> decltype(c.rend())
-{
-  return c.rend();
-}
-
-/// \brief Returns an iterator to the reverse-end of the given container.
-template <typename Container>
-constexpr auto rend(Container const& c) -> decltype(c.rend())
-{
-  return c.rend();
-}
-
-/// \brief Returns an iterator to the reverse-end of the given array.
-template <typename T, etl::size_t N>
-constexpr auto rend(T (&array)[N]) -> reverse_iterator<T*>
-{
-  return reverse_iterator<T*>(begin(array));
-}
-
-/// \brief Returns an iterator to the reverse-end of the given container.
-template <typename Container>
-constexpr auto crend(Container const& c) -> decltype(etl::rend(c))
-{
-  return etl::rend(c);
-}
-
-/// \brief Returns the size of the given container c or array array. Returns
-/// c.size(), converted to the return type if necessary.
-template <typename C>
-constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
-{
-  return c.size();
-}
-
-/// \brief Returns the size of the given container c or array array. Returns N.
-template <typename T, etl::size_t N>
-constexpr auto size(T const (&array)[N]) noexcept -> etl::size_t
-{
-  etl::ignore_unused(&array[0]);
-  return N;
-}
-
-/// \brief Returns whether the given container is empty.
-template <typename C>
-constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
-{
-  return c.empty();
-}
-
-/// \brief Returns whether the given container is empty.
-template <typename T, etl::size_t N>
-constexpr auto empty(T (&array)[N]) noexcept -> bool
-{
-  etl::ignore_unused(&array);
-  return false;
-}
-
-/// \brief Returns a pointer to the block of memory containing the elements of
-/// the container. Returns c.data().
-template <typename C>
-constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
-{
-  return c.data();
-}
-
-/// \brief Returns a pointer to the block of memory containing the elements of
-/// the container. Returns c.data().
-template <typename C>
-constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
-{
-  return c.data();
-}
-
-/// \brief Returns a pointer to the block of memory containing the elements of
-/// the container. Returns &array[0].
-template <typename T, etl::size_t N>
-constexpr auto data(T (&array)[N]) noexcept -> T*
-{
-  return &array[0];
+  return front_insert_iterator<Container>(c);
 }
 
 }  // namespace etl

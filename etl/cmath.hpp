@@ -55,7 +55,8 @@ using double_t = double;
 ///
 /// \returns true if arg is infinite, false otherwise
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
 [[nodiscard]] constexpr auto isinf(float arg) -> bool { return arg == INFINITY; }
 
 /// \brief Determines if the given floating point number arg is a positive or
@@ -63,7 +64,8 @@ using double_t = double;
 ///
 /// \returns true if arg is infinite, false otherwise
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
 [[nodiscard]] constexpr auto isinf(double arg) -> bool { return arg == INFINITY; }
 
 /// \brief Determines if the given floating point number arg is a positive or
@@ -71,7 +73,8 @@ using double_t = double;
 ///
 /// \returns true if arg is infinite, false otherwise
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool { return arg == INFINITY; }
 
 /// \brief A set of overloads or a function template accepting the arg argument
@@ -79,7 +82,8 @@ using double_t = double;
 ///
 /// \returns true if arg is infinite, false otherwise
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isinf
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
 template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
 [[nodiscard]] constexpr auto isinf(IntegralType arg) -> bool
 {
@@ -89,25 +93,29 @@ template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
 [[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
 [[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg != arg; }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool { return arg != arg; }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isnan
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
 template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType>)>
 [[nodiscard]] constexpr auto isnan(IntegralType arg) -> bool
 {
@@ -117,7 +125,8 @@ template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType
 /// \brief Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isfinite](https://en.cppreference.com/w/cpp/numeric/math/isfinite)
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool
 {
   return !etl::isnan(arg) && !etl::isinf(arg);
@@ -126,7 +135,8 @@ template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType
 /// \brief Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isfinite](https://en.cppreference.com/w/cpp/numeric/math/isfinite)
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool
 {
   return !etl::isnan(arg) && !etl::isinf(arg);
@@ -135,7 +145,8 @@ template <typename IntegralType, TAETL_REQUIRES_(etl::is_integral_v<IntegralType
 /// \brief Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 ///
-/// \details https://en.cppreference.com/w/cpp/numeric/math/isfinite
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isfinite](https://en.cppreference.com/w/cpp/numeric/math/isfinite)
 [[nodiscard]] constexpr auto isfinite(long double arg) -> bool
 {
   return !etl::isnan(arg) && !etl::isinf(arg);
@@ -160,7 +171,7 @@ template <typename Float>
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
-/// https://en.cppreference.com/w/cpp/numeric/lerp
+/// [cppreference.com/w/cpp/numeric/lerp](https://en.cppreference.com/w/cpp/numeric/lerp)
 [[nodiscard]] constexpr auto lerp(float a, float b, float t) noexcept -> float
 {
   return detail::lerp_impl<float>(a, b, t);
@@ -169,7 +180,7 @@ template <typename Float>
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
-/// https://en.cppreference.com/w/cpp/numeric/lerp
+/// [cppreference.com/w/cpp/numeric/lerp](https://en.cppreference.com/w/cpp/numeric/lerp)
 [[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept -> double
 {
   return detail::lerp_impl<double>(a, b, t);
@@ -178,7 +189,7 @@ template <typename Float>
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
-/// https://en.cppreference.com/w/cpp/numeric/lerp
+/// [cppreference.com/w/cpp/numeric/lerp](https://en.cppreference.com/w/cpp/numeric/lerp)
 [[nodiscard]] constexpr auto lerp(long double a, long double b, long double t) noexcept -> long double
 {
   return detail::lerp_impl<long double>(a, b, t);

@@ -54,53 +54,53 @@ struct ratio
   using type = ratio<num, den>;
 };
 
-/// \brief The alias template etl::ratio_add denotes the result of adding two
-/// exact rational fractions represented by the etl::ratio specializations R1
+/// \brief The alias template ratio_add denotes the result of adding two
+/// exact rational fractions represented by the ratio specializations R1
 /// and R2.
 ///
-/// \details The result is a etl::ratio specialization etl::ratio<U, V>, such
-/// that given Num == R1::num * R2::den + R2::num * R1::den and
-/// Denom == R1::den * R2::den (computed without arithmetic overflow), U is
-/// etl::ratio<Num, Denom>::num and V is etl::ratio<Num, Denom>::den.
+/// \details The result is a ratio specialization `ratio<U, V>`, such
+/// that given `Num == R1::num * R2::den + R2::num * R1::den` and
+/// `Denom == R1::den * R2::den` (computed without arithmetic overflow), U is
+/// ratio<Num, Denom>::num and V is ratio<Num, Denom>::den.
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
 using ratio_add = ratio<R1::num * R2::den + R2::num * R1::den, R1::den * R2::den>;
 
-/// \brief The alias template etl::ratio_subtract denotes the result of
-/// subtracting two exact rational fractions represented by the etl::ratio
+/// \brief The alias template ratio_subtract denotes the result of
+/// subtracting two exact rational fractions represented by the ratio
 /// specializations R1 and R2.
 ///
-/// \details The result is a etl::ratio specialization etl::ratio<U, V>, such
+/// \details The result is a ratio specialization `ratio<U, V>`, such
 /// that given Num == R1::num * R2::den - R2::num * R1::den
 /// and Denom == R1::den * R2::den (computed without arithmetic overflow), U is
-/// etl::ratio<Num, Denom>::num and V is etl::ratio<Num, Denom>::den.
+/// ratio<Num, Denom>::num and V is ratio<Num, Denom>::den.
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
 using ratio_subtract = ratio<R1::num * R2::den - R2::num * R1::den, R1::den * R2::den>;
 
-/// \brief The alias template etl::ratio_multiply denotes the result of
-/// multiplying two exact rational fractions represented by the etl::ratio
+/// \brief The alias template ratio_multiply denotes the result of
+/// multiplying two exact rational fractions represented by the ratio
 /// specializations R1 and R2.
 ///
-/// \details The result is a etl::ratio specialization etl::ratio<U, V>, such
+/// \details The result is a ratio specialization `ratio<U, V>`, such
 /// that given Num == R1::num * R2::num and Denom == R1::den * R2::den (computed
-/// without arithmetic overflow), U is etl::ratio<Num, Denom>::num and V is
-/// etl::ratio<Num, Denom>::den.
+/// without arithmetic overflow), U is ratio<Num, Denom>::num and V is
+/// ratio<Num, Denom>::den.
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
 using ratio_multiply = ratio<R1::num * R2::num, R1::den * R2::den>;
 
-/// \brief The alias template etl::ratio_divide denotes the result of dividing
-/// two exact rational fractions represented by the etl::ratio specializations
+/// \brief The alias template ratio_divide denotes the result of dividing
+/// two exact rational fractions represented by the ratio specializations
 /// R1 and R2.
 ///
-/// \details The result is a etl::ratio specialization etl::ratio<U, V>, such
+/// \details The result is a ratio specialization `ratio<U, V>`, such
 /// that given Num == R1::num * R2::den and Denom == R1::den * R2::num (computed
-/// without arithmetic overflow), U is etl::ratio<Num, Denom>::num and V is
-/// etl::ratio<Num, Denom>::den.
+/// without arithmetic overflow), U is ratio<Num, Denom>::num and V is
+/// ratio<Num, Denom>::den.
 ///
 /// \todo Check overflow.
 template <typename R1, typename R2>
@@ -110,7 +110,7 @@ using ratio_divide = ratio<R1::num * R2::den, R1::den * R2::num>;
 /// ratios R1 and R2 are equal, provides the member constant value equal true.
 /// Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_equal : public etl::integral_constant<bool, R1::num == R2::num && R1::den == R2::den>
+struct ratio_equal : bool_constant<R1::num == R2::num && R1::den == R2::den>
 {
 };
 
@@ -121,7 +121,7 @@ inline constexpr bool ratio_equal_v = ratio_equal<R1, R2>::value;
 /// ratios R1 and R2 are not equal, provides the member constant value equal
 /// true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_not_equal : etl::integral_constant<bool, !etl::ratio_equal_v<R1, R2>>
+struct ratio_not_equal : bool_constant<!ratio_equal_v<R1, R2>>
 {
 };
 
@@ -132,7 +132,7 @@ inline constexpr bool ratio_not_equal_v = ratio_not_equal<R1, R2>::value;
 /// R1 is less than the ratio R2, provides the member constant value equal true.
 /// Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_less : public etl::integral_constant<bool, (R1::num * R2::den < R2::num * R1::den)>
+struct ratio_less : bool_constant<(R1::num * R2::den < R2::num * R1::den)>
 {
 };
 
@@ -143,8 +143,7 @@ inline constexpr bool ratio_less_v = ratio_less<R1, R2>::value;
 /// R1 is less than or equal to the ratio R2, provides the member constant value
 /// equal true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_less_equal
-    : public etl::integral_constant<bool, (R1::num * R2::den <= R2::num * R1::den)>
+struct ratio_less_equal : bool_constant<(R1::num * R2::den <= R2::num * R1::den)>
 {
 };
 
@@ -155,7 +154,7 @@ inline constexpr bool ratio_less_equal_v = ratio_less_equal<R1, R2>::value;
 /// R1 is greater than the ratio R2, provides the member constant value equal
 /// true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_greater : public etl::integral_constant<bool, (R1::num * R2::den > R2::num * R1::den)>
+struct ratio_greater : bool_constant<(R1::num * R2::den > R2::num * R1::den)>
 {
 };
 
@@ -166,8 +165,7 @@ inline constexpr bool ratio_greater_v = ratio_greater<R1, R2>::value;
 /// R1 is greater than or equal to the ratio R2, provides the member constant
 /// value equal true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_greater_equal
-    : public etl::integral_constant<bool, (R1::num * R2::den >= R2::num * R1::den)>
+struct ratio_greater_equal : bool_constant<(R1::num * R2::den >= R2::num * R1::den)>
 {
 };
 

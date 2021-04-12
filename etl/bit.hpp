@@ -38,7 +38,7 @@ namespace etl
 /// etl::endian::little. If all scalar types are big-endian,
 /// etl::endian::native equals etl::endian::big
 ///
-/// https://en.cppreference.com/w/cpp/types/endian
+/// \notes [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
 /// \module Numeric
 enum class endian
 {
@@ -64,7 +64,8 @@ enum class endian
 /// participates in overload resolution if sizeof(To) == sizeof(From) and both
 /// To and From are TriviallyCopyable types.
 ///
-/// https://en.cppreference.com/w/cpp/numeric/bit_cast
+/// \notes
+/// [cppreference.com/w/cpp/numeric/bit_cast](https://en.cppreference.com/w/cpp/numeric/bit_cast)
 /// \module Numeric
 template <typename To, typename From,
           TAETL_REQUIRES_((sizeof(To) == sizeof(From))

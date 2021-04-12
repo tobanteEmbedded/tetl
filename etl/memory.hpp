@@ -37,29 +37,29 @@ namespace etl
 {
 /// \brief Obtains the actual address of the object or function arg, even in
 /// presence of overloaded operator&.
-template <typename T, TAETL_REQUIRES_(etl::is_object_v<T>)>
-auto addressof(T& arg) noexcept -> T*
+/// \group addressof
+template <typename T>
+auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
 {
   return reinterpret_cast<T*>(&const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
 }
 
-/// \brief Obtains the actual address of the object or function arg, even in
-/// presence of overloaded operator&.
-template <typename T, TAETL_REQUIRES_(!etl::is_object_v<T>)>
-auto addressof(T& arg) noexcept -> T*
+/// \group addressof
+template <typename T>
+auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
 {
   return &arg;
 }
 
-/// \brief Rvalue overload is deleted to prevent taking the address of const
-/// rvalues.
+/// \group addressof
 template <typename T>
 auto addressof(T const&&) = delete;
 
 /// \brief If T is not an array type, calls the destructor of the object pointed
 /// to by p, as if by p->~T(). If T is an array type, recursively destroys
-/// elements of *p in order, as if by calling etl::destroy(etl::begin(*p),
-/// etl::end(*p)).
+/// elements of *p in order, as if by calling destroy(begin(*p),
+/// end(*p)).
+/// \group destroy
 template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
@@ -74,6 +74,7 @@ constexpr auto destroy_at(T* p) -> void
 }
 
 /// \brief Destroys the objects in the range [first, last).
+/// \group destroy
 template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {
@@ -81,6 +82,7 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 }
 
 /// \brief Destroys the n objects in the range starting at first.
+/// \group destroy
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
@@ -91,44 +93,53 @@ constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 /// \brief The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
 ///
-/// \details https://en.cppreference.com/w/cpp/memory/pointer_traits
+/// \notes
+/// [cppreference.com/w/cpp/memory/pointer_traits](https://en.cppreference.com/w/cpp/memory/pointer_traits)
+/// \group pointer_traits
 template <typename Ptr>
 struct pointer_traits
 {
-  using pointer         = Ptr;
-  using element_type    = typename Ptr::element_type;
+  /// The type ...
+  using pointer = Ptr;
+  /// The type ...
+  using element_type = typename Ptr::element_type;
+  /// The type ...
   using difference_type = typename Ptr::difference_type;
 
   /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
   /// pointer") to its argument.
-  ///
-  /// \details
-  /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to \param
-  /// r  Reference to an object of type element_type&. \returns A pointer to r,
-  /// of the type pointer_traits::pointer.
+  /// \param r  Reference to an object of type element_type&.
+  /// \returns A pointer to r, of the type pointer_traits::pointer.
+  /// \notes [cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+  /// ](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to )
   [[nodiscard]] static auto pointer_to(element_type& r) -> pointer { return Ptr::pointer_to(r); }
 };
 
 /// \brief The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
-///
-/// \details https://en.cppreference.com/w/cpp/memory/pointer_traits
+/// \tparam T A raw pointer
+/// \notes
+/// [cppreference.com/w/cpp/memory/pointer_traits](https://en.cppreference.com/w/cpp/memory/pointer_traits)
+/// \group pointer_traits
 template <typename T>
 struct pointer_traits<T*>
 {
-  using pointer         = T*;
-  using element_type    = T;
+  /// The type ...
+  using pointer = T*;
+  /// The type ...
+  using element_type = T;
+  /// The type ...
   using difference_type = ::etl::ptrdiff_t;
+  /// The type ...
   template <typename U>
   using rebind = U*;
 
-  /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
-  /// pointer") to its argument.
-  ///
-  /// \details
-  /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to \param
-  /// r  Reference to an object of type element_type&. \returns A pointer to r,
-  /// of the type pointer_traits::pointer.
+  /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy pointer") to its
+  /// argument.
+  /// \param r  Reference to an object of type element_type&.
+  /// \returns A pointer to r, of the type pointer_traits::pointer.
+  /// \notes
+  /// [cppreference.com/w/cpp/memory/pointer_traits/pointer_to](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to)
   [[nodiscard]] static auto pointer_to(element_type& r) -> pointer { return addressof(r); }
 };
 

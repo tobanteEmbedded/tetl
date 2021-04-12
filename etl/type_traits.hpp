@@ -767,6 +767,11 @@ struct make_signed_helper<unsigned long long>
 /// long, long long; the unsigned type from this list corresponding to T is
 /// provided. The behavior of a program that adds specializations for
 /// make_signed is undefined.
+///
+/// ```
+/// // Convert an unsigned int to signed int
+/// static_assert(is_same_v<make_signed_t<unsigned>, int>);
+/// ```
 /// \group make_signed
 template <typename Type>
 struct make_signed : detail::make_signed_helper<Type>
@@ -1640,7 +1645,13 @@ struct is_destructible_safe<T, false, true> : ::etl::true_type
 
 }  // namespace detail
 
-/// \brief https://en.cppreference.com/w/cpp/types/is_destructible
+/// \brief Because the C++ program terminates if a destructor throws an exception during stack
+/// unwinding (which usually cannot be predicted), all practical destructors are non-throwing even if
+/// they are not declared noexcept. All destructors found in the C++ standard library are
+/// non-throwing.
+/// \notes
+/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
+/// \group is_destructible
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T>
 {
@@ -1648,22 +1659,26 @@ struct is_destructible : detail::is_destructible_safe<T>
   static_assert(detail::is_complete_or_unbounded(type_identity<T> {}));
 };
 
-/// \brief https://en.cppreference.com/w/cpp/types/is_destructible
+/// \exclude
 template <typename Type>
 struct is_destructible<Type[]> : false_type
 {
 };
 
-/// \brief https://en.cppreference.com/w/cpp/types/is_destructible
+/// \exclude
 template <>
 struct is_destructible<void> : false_type
 {
 };
 
+/// \group is_destructible
 template <typename T>
 inline constexpr auto is_destructible_v = is_destructible<T>::value;
 
-/// \brief https://en.cppreference.com/w/cpp/types/is_destructible
+/// \brief Storage occupied by trivially destructible objects may be reused without calling the
+/// destructor.
+/// \notes
+/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
 template <typename T>
 struct is_trivially_destructible : bool_constant<TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
 {
@@ -1689,37 +1704,47 @@ struct is_nothrow_destructible_helper<true, Type>
 };
 }  // namespace detail
 
-/// \brief https://en.cppreference.com/w/cpp/types/is_destructible
+/// \notes
+/// [https://en.cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
+/// \group is_nothrow_destructible
 template <typename Type>
 struct is_nothrow_destructible : detail::is_nothrow_destructible_helper<is_destructible_v<Type>, Type>
 {
 };
 
+/// \exclude
 template <typename Type, size_t N>
 struct is_nothrow_destructible<Type[N]> : is_nothrow_destructible<Type>
 {
 };
 
+/// \exclude
 template <typename Type>
 struct is_nothrow_destructible<Type&> : true_type
 {
 };
 
+/// \exclude
 template <typename Type>
 struct is_nothrow_destructible<Type&&> : true_type
 {
 };
 
+/// \group is_nothrow_destructible
 template <typename T>
 inline constexpr bool is_nothrow_destructible_v = is_nothrow_destructible<T>::value;
 
-/// \brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+/// \notes
+/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
+/// \group has_virtual_destructor
 template <typename T>
 struct has_virtual_destructor : bool_constant<TAETL_HAS_VIRTUAL_DESTRUCTOR(T)>
 {
 };
 
-/// \brief https://en.cppreference.com/w/cpp/types/has_virtual_destructor
+/// \notes
+/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
+/// \group has_virtual_destructor
 template <typename T>
 inline constexpr auto has_virtual_destructor_v = has_virtual_destructor<T>::value;
 
@@ -1983,11 +2008,13 @@ template <typename T, typename U>
 inline constexpr bool is_swappable_with_v = is_swappable_with<T, U>::value;
 
 /// \brief alignment_of
+/// \group alignment_of
 template <typename T>
 struct alignment_of : integral_constant<size_t, alignof(T)>
 {
 };
 
+/// \group alignment_of
 template <typename T>
 inline constexpr size_t alignment_of_v = alignment_of<T>::value;
 
@@ -1995,9 +2022,11 @@ inline constexpr size_t alignment_of_v = alignment_of<T>::value;
 /// equal to true. For any other type, value is false. The only trivially
 /// copyable types are scalar types, trivially copyable classes, and arrays of
 /// such types/classes (possibly cv-qualified).
+/// group is_trivial_copyable
 template <typename T>
-class is_trivially_copyable
+struct is_trivially_copyable
 {
+  private:
   // copy constructors
   static constexpr bool has_trivial_copy_ctor = is_copy_constructible_v<T>;
   static constexpr bool has_deleted_copy_ctor = !is_copy_constructible_v<T>;
@@ -2025,6 +2054,7 @@ class is_trivially_copyable
                                 && (has_deleted_copy_ctor || has_trivial_copy_ctor);
 };
 
+/// group is_trivial_copyable
 template <typename T>
 struct is_trivially_copyable<T*> : true_type
 {
@@ -2038,13 +2068,16 @@ inline constexpr bool is_trivially_copyable_v = is_trivially_copyable<T>::value;
 /// possibly cv-qualified), provides the member constant value equal to true.
 /// For any other type, value is false.
 ///
-/// \details https://en.cppreference.com/w/cpp/types/is_trivial
+/// \notes
+/// [cppreference.com/w/cpp/types/is_trivial](https://en.cppreference.com/w/cpp/types/is_trivial)
+/// \group is_trivial
 template <typename T>
 struct is_trivial
     : bool_constant<is_trivially_copyable_v<T> and is_trivially_default_constructible_v<T>>
 {
 };
 
+/// \group is_trivial
 template <typename T>
 inline constexpr bool is_trivial_v = is_trivial<T>::value;
 
@@ -2160,7 +2193,8 @@ auto test_pre_is_base_of(int) -> decltype(test_pre_ptr_convertible<B>(static_cas
 /// not the same type (ignoring cv-qualification), Derived shall be a complete
 /// type; otherwise the behavior is undefined.
 ///
-/// \details https://en.cppreference.com/w/cpp/types/is_base_of
+/// \notes
+/// [cppreference.com/w/cpp/types/is_base_of](https://en.cppreference.com/w/cpp/types/is_base_of)
 template <typename Base, typename Derived>
 struct is_base_of
     : bool_constant<
@@ -2211,18 +2245,16 @@ struct decay
 template <typename T>
 using decay_t = typename decay<T>::type;
 
-/// \brief Determines the common type among all types T..., that is the type all
-/// T... can be implicitly converted to. If such a type exists (as determined
-/// according to the rules below), the member type names that type. Otherwise,
-/// there is no member type.
-/// \details https://en.cppreference.com/w/cpp/types/common_type
-// primary template (used for zero types)
-template <typename...>
-struct common_type
-{
-};
+/// \brief Determines the common type among all types `T...`, that is the type all `T...` can be
+/// implicitly converted to. If such a type exists, the member type names that type. Otherwise, there
+/// is no member type.
+/// \notes
+/// [cppreference.com/w/cpp/types/common_type](https://en.cppreference.com/w/cpp/types/common_type)
+/// \group common_type
+template <typename... T>
+struct common_type;
 
-//////// one type
+/// \exclude
 template <typename T>
 struct common_type<T> : common_type<T, T>
 {
@@ -2256,19 +2288,19 @@ struct common_type_multi_impl<void_t<typename common_type<T1, T2>::type>, T1, T2
 };
 }  // namespace detail
 
-//////// two types
-
+/// \exclude
 template <typename T1, typename T2>
 struct common_type<T1, T2> : detail::common_type_2_impl<decay_t<T1>, decay_t<T2>>
 {
 };
 
-//////// 3+ types
+/// \exclude
 template <typename T1, typename T2, typename... R>
 struct common_type<T1, T2, R...> : detail::common_type_multi_impl<void, T1, T2, R...>
 {
 };
 
+/// \group common_type
 template <typename... T>
 using common_type_t = typename common_type<T...>::type;
 
@@ -2290,16 +2322,15 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
 
 }  // namespace detail
 
-/// \brief If the imaginary function definition To test() { return
-/// etl::declval<From>(); } is well-formed, (that is, either
-/// etl::declval<From>() can be converted to To using implicit conversions, or
-/// both From and To are possibly cv-qualified void), provides the member
-/// constant value equal to true. Otherwise value is false. For the purposes of
-/// this check, the use of etl::declval in the return statement is not
-/// considered an odr-use. Access checks are performed as if from a context
-/// unrelated to either type. Only the validity of the immediate context of the
+/// \brief If the imaginary function definition `To test() { return etl::declval<From>(); }` is
+/// well-formed, (that is, either `etl::declval<From>()` can be converted to To using implicit
+/// conversions, or both From and To are possibly cv-qualified void), provides the member constant
+/// value equal to true. Otherwise value is false. For the purposes of this check, the use of
+/// `etl::declval` in the return statement is not considered an odr-use. Access checks are performed
+/// as if from a context unrelated to either type. Only the validity of the immediate context of the
 /// expression in the return statement (including conversions to the return
 /// type) is considered.
+/// \group is_convertible
 template <typename From, typename To>
 struct is_convertible
     : bool_constant<(decltype(detail::test_returnable<To>(
@@ -2308,7 +2339,7 @@ struct is_convertible
 {
 };
 
-/// Alias for is_convertible<From, To>::value
+/// \group is_convertible
 template <typename From, typename To>
 inline constexpr bool is_convertible_v = is_convertible<From, To>::value;
 
@@ -2380,29 +2411,29 @@ struct invoke_result<decltype(void(detail::INVOKE(::etl::declval<F>(), ::etl::de
 }  // namespace detail
 
 /// \brief Deduces the return type of an INVOKE expression at compile time.
+/// F and all types in ArgTypes can be any complete type, array of unknown bound, or (possibly
+/// cv-qualified) void. The behavior of a program that adds specializations for any of the templates
+/// described on this page is undefined. This implementation is copied from **cppreference.com**.
 ///
-/// \details F and all types in ArgTypes can be any complete type, array of
-/// unknown bound, or (possibly cv-qualified) void. The behavior of a program
-/// that adds specializations for any of the templates described on this page is
-/// undefined. This implementation is copied from cppreference.com:
-///
-/// https://en.cppreference.com/w/cpp/types/result_of
+/// \notes [cppreference.com/w/cpp/types/result_of](https://en.cppreference.com/w/cpp/types/result_of)
+/// \group invoke_result
 template <typename F, typename... ArgTypes>
 struct invoke_result : detail::invoke_result<void, F, ArgTypes...>
 {
 };
 
+/// \group invoke_result
 template <typename F, typename... ArgTypes>
 using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
 
 /// \brief Provides the nested type type, which is a trivial standard-layout
 /// type suitable for use as uninitialized storage for any object whose size is
 /// at most Len and whose alignment requirement is a divisor of Align.
-///
-/// \details The default value of Align is the most stringent (the largest)
+/// The default value of Align is the most stringent (the largest)
 /// alignment requirement for any object whose size is at most Len. If the
 /// default value is not used, Align must be the value of alignof(T) for some
 /// type T, or the behavior is undefined.
+/// \group aligned_storage
 template <size_t Len, size_t Align = alignof(max_align_t)>
 struct aligned_storage
 {
@@ -2412,6 +2443,7 @@ struct aligned_storage
   };
 };
 
+/// \group aligned_storage
 template <size_t Len, size_t Align = alignof(max_align_t)>
 using aligned_storage_t = typename aligned_storage<Len, Align>::type;
 
@@ -2493,7 +2525,8 @@ struct is_scoped_enum<T, true> : bool_constant<!is_convertible_v<T, underlying_t
 /// Otherwise, value is equal to false. The behavior of a program that adds
 /// specializations for is_scoped_enum or is_scoped_enum_v is undefined.
 ///
-/// https://en.cppreference.com/w/cpp/types/is_scoped_enum
+/// \notes
+/// [cppreference.com/w/cpp/types/is_scoped_enum](https://en.cppreference.com/w/cpp/types/is_scoped_enum)
 template <typename T>
 inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 
@@ -2502,7 +2535,8 @@ inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 /// evaluation of an expression or conversion that is manifestly
 /// constant-evaluated; otherwise returns false.
 ///
-/// https://en.cppreference.com/w/cpp/types/is_constant_evaluated
+/// \notes
+/// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
 #if defined(TAETL_CPP_STANDARD_20)

@@ -47,7 +47,7 @@ auto declval() noexcept -> add_rvalue_reference_t<T>;  // NOLINT
 /// argument t. It is exactly equivalent to a static_cast to an rvalue reference
 /// type.
 ///
-/// \returns static_cast<remove_reference_t<T>&&>(t)
+/// \returns `static_cast<remove_reference_t<T>&&>(t)`
 template <typename T>
 constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 {
@@ -55,27 +55,19 @@ constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 }
 
 /// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
+/// When t is a forwarding reference (a function argument that is declared as an rvalue reference to a
+/// cv-unqualified function template parameter), this overload forwards the argument to another
+/// function with the value category it had when passed to the calling function.
 ///
-/// \details When t is a forwarding reference (a function argument that is
-/// declared as an rvalue reference to a cv-unqualified function template
-/// parameter), this overload forwards the argument to another function with the
-/// value category it had when passed to the calling function.
-///
-/// https://en.cppreference.com/w/cpp/utility/forward
+/// \notes [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
+/// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
 {
   return static_cast<T&&>(param);
 }
 
-/// \brief Forwards rvalues as rvalues and prohibits forwarding of rvalues as
-/// lvalues.
-///
-/// \details This overload makes it possible to forward a result of an
-/// expression (such as function call), which may be rvalue or lvalue, as the
-/// original value category of a forwarding reference argument.
-///
-/// https://en.cppreference.com/w/cpp/utility/forward
+/// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 {
@@ -94,14 +86,14 @@ template <typename T, typename U = T>
 }
 
 /// \brief Forms lvalue reference to const type of t.
+/// \group as_const
 template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> add_const_t<T>&
 {
   return t;
 }
 
-/// \brief Const rvalue reference overload is deleted to disallow rvalue
-/// arguments.
+/// \group as_const
 template <typename T>
 constexpr auto as_const(T const&&) -> void
   = delete;
@@ -135,7 +127,7 @@ inline constexpr auto is_integer_and_not_char_v = is_integer_and_not_char<T>::va
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -162,7 +154,7 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -178,7 +170,7 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -204,7 +196,7 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -220,7 +212,7 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -236,7 +228,7 @@ template <
 /// \details It is a compile-time error if either T or U is not a signed or
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
-/// https://en.cppreference.com/w/cpp/utility/intcmp
+/// \notes [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <
   typename T, typename U,
   TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&& detail::is_integer_and_not_char_v<U>)>
@@ -253,7 +245,8 @@ template <
 /// type). This function cannot be used with etl::byte, char, char8_t, char16_t,
 /// char32_t, wchar_t and bool.
 ///
-/// https://en.cppreference.com/w/cpp/utility/in_range
+/// \notes
+/// [cppreference.com/w/cpp/utility/in_range](https://en.cppreference.com/w/cpp/utility/in_range)
 template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
@@ -270,7 +263,8 @@ template <typename R, typename T, TAETL_REQUIRES_(detail::is_integer_and_not_cha
 /// construct, piecewise, a new object of specified type, which will become the
 /// element of the pair.
 ///
-/// https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
+/// \notes
+/// [cppreference.com/w/cpp/utility/piecewise_construct_t](https://en.cppreference.com/w/cpp/utility/piecewise_construct_t)
 struct piecewise_construct_t
 {
   explicit piecewise_construct_t() = default;
@@ -336,7 +330,7 @@ inline constexpr auto in_place_index = in_place_index_t<I> {};
 /// cv-qualified class type with non-trivial destructor, or array thereof, the
 /// destructor of pair is trivial.
 ///
-/// https://en.cppreference.com/w/cpp/utility/pair
+/// \notes [cppreference.com/w/cpp/utility/pair](https://en.cppreference.com/w/cpp/utility/pair)
 ///
 /// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
@@ -445,7 +439,8 @@ struct pair
 /// cases missed by the implicit deduction guides. In particular, non-copyable
 /// arguments and array to pointer conversion.
 ///
-/// https://en.cppreference.com/w/cpp/utility/pair/deduction_guides
+/// \notes
+/// [cppreference.com/w/cpp/utility/pair/deduction_guides](https://en.cppreference.com/w/cpp/utility/pair/deduction_guides)
 template <typename T1, typename T2>
 pair(T1, T2) -> pair<T1, T2>;
 
@@ -463,7 +458,8 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.
 /// etl::decay<T2>::type (the usual type transformations applied to arguments of
 /// functions passed by value).
 ///
-/// https://en.cppreference.com/w/cpp/utility/pair/make_pair
+/// \notes
+/// [cppreference.com/w/cpp/utility/pair/make_pair](https://en.cppreference.com/w/cpp/utility/pair/make_pair)
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u) -> pair<decay_t<T1>, decay_t<T2>>
 {

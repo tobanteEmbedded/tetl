@@ -32,7 +32,8 @@ namespace etl
 /// \brief Checks if the given character is an alphanumeric character as
 /// classified by the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isalnum
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isalnum](https://en.cppreference.com/w/cpp/string/byte/isalnum)
 ///
 /// \returns Non-zero value if the character is an alphanumeric character, 0
 /// otherwise.
@@ -52,7 +53,8 @@ namespace etl
 /// \brief Checks if the given character is an alphabetic character as
 /// classified by the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isalpha
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isalpha](https://en.cppreference.com/w/cpp/string/byte/isalpha)
 ///
 /// \returns Non-zero value if the character is an alphabetic character, 0
 /// otherwise.
@@ -71,7 +73,8 @@ namespace etl
 /// \brief Checks if the given character is classified as a lowercase character
 /// according to the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/islower
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/islower](https://en.cppreference.com/w/cpp/string/byte/islower)
 ///
 /// \returns Non-zero value if the character is a lowercase letter, zero
 /// otherwise.
@@ -86,7 +89,8 @@ namespace etl
 /// \brief Checks if the given character is classified as a uppercase character
 /// according to the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isupper
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isupper](https://en.cppreference.com/w/cpp/string/byte/isupper)
 ///
 /// \returns Non-zero value if the character is a uppercase letter, zero
 /// otherwise.
@@ -101,7 +105,8 @@ namespace etl
 /// \brief Checks if the given character is one of the 10 decimal digits:
 /// 0123456789.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isdigit
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isdigit](https://en.cppreference.com/w/cpp/string/byte/isdigit)
 ///
 /// \returns Non-zero value if the character is a numeric character, zero
 /// otherwise.
@@ -116,7 +121,8 @@ namespace etl
 /// \brief Checks if the given character is a hexadecimal numeric character
 /// (0123456789abcdefABCDEF).
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isxdigit
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isxdigit](https://en.cppreference.com/w/cpp/string/byte/isxdigit)
 ///
 /// \returns Non-zero value if the character is a hexadecimal numeric character,
 /// zero otherwise.
@@ -136,7 +142,8 @@ namespace etl
 /// \brief Checks if the given character is whitespace character as classified
 /// by the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isspace
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isspace](https://en.cppreference.com/w/cpp/string/byte/isspace)
 ///
 /// \returns Non-zero value if the character is a whitespace character, zero
 /// otherwise.
@@ -162,7 +169,8 @@ namespace etl
 /// used to separate words within a sentence. In the default C locale, only
 /// space (0x20) and horizontal tab (0x09) are classified as blank characters.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isblank
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isblank](https://en.cppreference.com/w/cpp/string/byte/isblank)
 ///
 /// \returns Non-zero value if the character is a blank character, zero
 /// otherwise.
@@ -184,7 +192,8 @@ namespace etl
 /// The default C locale classifies the characters
 /// !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ as punctuation.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/ispunct
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/ispunct](https://en.cppreference.com/w/cpp/string/byte/ispunct)
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
@@ -205,7 +214,8 @@ namespace etl
 /// \brief Checks if the given character is graphic (has a graphical
 /// representation) as classified by the default C locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isgraph
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isgraph](https://en.cppreference.com/w/cpp/string/byte/isgraph)
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
@@ -226,7 +236,8 @@ namespace etl
 /// \brief Checks if ch is a printable character as classified by the default C
 /// locale.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/isprint
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isprint](https://en.cppreference.com/w/cpp/string/byte/isprint)
 ///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
@@ -243,7 +254,8 @@ namespace etl
 /// the currently installed C locale. In the default, "C" locale, the control
 /// characters are the characters with the codes 0x00-0x1F and 0x7F.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/iscntrl
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/iscntrl](https://en.cppreference.com/w/cpp/string/byte/iscntrl)
 ///
 /// \returns Non-zero value if the character is a control character, zero
 /// otherwise.
@@ -260,10 +272,11 @@ namespace etl
 /// conversion rules defined by the default C locale.
 ///
 /// In the default "C" locale, the following uppercase letters
-/// ABCDEFGHIJKLMNOPQRSTUVWXYZ are replaced with respective lowercase letters
-/// abcdefghijklmnopqrstuvwxyz.
+/// **ABCDEFGHIJKLMNOPQRSTUVWXYZ** are replaced with respective lowercase letters
+/// **abcdefghijklmnopqrstuvwxyz**.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/tolower
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/tolower](https://en.cppreference.com/w/cpp/string/byte/tolower)
 ///
 /// \returns Lowercase version of ch or unmodified ch if no lowercase version is
 /// listed in the current C locale.
@@ -281,10 +294,11 @@ namespace etl
 /// conversion rules defined by the default C locale.
 ///
 /// In the default "C" locale, the following lowercase letters
-/// abcdefghijklmnopqrstuvwxyz are replaced with respective uppercase letters
-/// ABCDEFGHIJKLMNOPQRSTUVWXYZ.
+/// **abcdefghijklmnopqrstuvwxyz** are replaced with respective uppercase letters
+/// **ABCDEFGHIJKLMNOPQRSTUVWXYZ**.
 ///
-/// https://en.cppreference.com/w/cpp/string/byte/toupper
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/toupper](https://en.cppreference.com/w/cpp/string/byte/toupper)
 ///
 /// \returns Converted character or ch if no uppercase version is defined by the
 /// current C locale.

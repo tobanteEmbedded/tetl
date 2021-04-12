@@ -33,15 +33,13 @@
 namespace etl
 {
 /// \brief va_list is a complete object type suitable for holding the
-/// information needed by the macros va_start, va_copy, va_arg, and va_end.
+/// information needed by the macros va_start, va_copy, va_arg, and va_end. If a va_list instance is
+/// created, passed to another function, and used via va_arg in that function, then any subsequent use
+/// in the calling function should be preceded by a call to va_end. It is legal to pass a pointer to a
+/// va_list object to another function and then use that object after the function returns.
 ///
-/// \details If a va_list instance is created, passed to another function, and
-/// used via va_arg in that function, then any subsequent use in the calling
-/// function should be preceded by a call to va_end. It is legal to pass a
-/// pointer to a va_list object to another function and then use that object
-/// after the function returns.
-///
-/// https://en.cppreference.com/w/cpp/utility/variadic/va_list
+/// \notes
+/// [cppreference.com/w/cpp/utility/variadic/va_list](https://en.cppreference.com/w/cpp/utility/variadic/va_list)
 #if not defined(TAETL_MSVC)
 using va_list = TAETL_BUILTIN_VA_LIST;
 #else
@@ -54,13 +52,13 @@ using va_list = ::std::va_list;
 /// \brief The va_start macro enables access to the variable arguments following
 /// the named argument parm_n. va_start should be invoked with an instance to a
 /// valid va_list object ap before any calls to va_arg.
-///
-/// \details If the parm_n is a pack expansion or an entity resulting from a
+/// If the parm_n is a pack expansion or an entity resulting from a
 /// lambda capture, the program is ill-formed, no diagnostic required. If parm_n
 /// is declared with reference type or with a type not compatible with the type
 /// that results from default argument promotions, the behavior is undefined.
 ///
-/// https://en.cppreference.com/w/cpp/utility/variadic/va_start
+/// \notes
+/// [cppreference.com/w/cpp/utility/variadic/va_start](https://en.cppreference.com/w/cpp/utility/variadic/va_start)
 #define va_start(ap, param) __builtin_va_start(ap, param)
 #endif
 
@@ -74,7 +72,8 @@ using va_list = ::std::va_list;
 /// va_end is not called before a function that calls va_start or va_copy
 /// returns, the behavior is undefined.
 ///
-/// https://en.cppreference.com/w/cpp/utility/variadic/va_end
+/// \notes
+/// [cppreference.com/w/cpp/utility/variadic/va_end](https://en.cppreference.com/w/cpp/utility/variadic/va_end)
 #define va_end(ap) __builtin_va_end(ap)
 #endif
 
@@ -86,7 +85,8 @@ using va_list = ::std::va_list;
 /// call to va_end. Each invocation of the va_arg macro modifies ap to point to
 /// the next variable argument.
 ///
-/// https://en.cppreference.com/w/cpp/utility/variadic/va_arg
+/// \notes
+/// [cppreference.com/w/cpp/utility/variadic/va_arg](https://en.cppreference.com/w/cpp/utility/variadic/va_arg)
 #define va_arg(ap, type) __builtin_va_arg(ap, type)
 #endif
 
@@ -97,7 +97,8 @@ using va_list = ::std::va_list;
 /// \details va_end should be called on dest before the function returns or any
 /// subsequent re-initialization of dest (via calls to va_start or va_copy).
 ///
-/// https://en.cppreference.com/w/cpp/utility/variadic/va_copy
+/// \notes
+/// [cppreference.com/w/cpp/utility/variadic/va_copy](https://en.cppreference.com/w/cpp/utility/variadic/va_copy)
 #define va_copy(dest, src) __builtin_va_copy(dest, src)
 #endif
 

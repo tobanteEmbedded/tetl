@@ -38,7 +38,6 @@
 namespace etl::chrono
 {
 /// \brief The etl::chrono::duration_values type defines three common durations.
-///
 /// \details The zero, min, and max methods in etl::chrono::duration forward
 /// their work to these methods. This type can be specialized if the
 /// representation Rep requires a specific implementation to return these
@@ -59,12 +58,10 @@ struct duration_values
 
 /// \brief The etl::chrono::treat_as_floating_point trait helps determine if a
 /// duration can be converted to another duration with a different tick period.
-///
 /// \details Implicit conversions between two durations normally depends on the
 /// tick period of the durations. However, implicit conversions can happen
 /// regardless of tick period if
 /// etl::chrono::treat_as_floating_point<Rep>::value == true.
-///
 /// \note etl::chrono::treat_as_floating_point may be specialized for
 /// program-defined types.
 /// \group treat_as_floating_point
@@ -78,7 +75,6 @@ template <typename Rep>
 inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;
 
 /// \brief Class template etl::chrono::duration represents a time interval.
-///
 /// \details It consists of a count of ticks of type Rep and a tick period,
 /// where the tick period is a compile-time rational constant representing the
 /// number of seconds from one tick to the next. The only data stored in a
@@ -265,7 +261,7 @@ class duration
 /// implemented as if it stores a value of type Duration indicating the time
 /// interval from the start of the Clock's epoch.
 /// \tparam Clock Must meet the requirements for Clock
-/// https://en.cppreference.com/w/cpp/named_req/Clock
+/// \notes [cppreference.com/w/cpp/named_req/Clock](https://en.cppreference.com/w/cpp/named_req/Clock)
 template <typename Clock, typename Duration = typename Clock::duration>
 class time_point
 {
@@ -690,7 +686,6 @@ namespace etl
 /// \brief Exposes the type named type, which is the common type of two
 /// etl::chrono::durations, whose period is the greatest common divisor of
 /// Period1 and Period2.
-///
 /// \details The period of the resulting duration can be computed by forming a
 /// ratio of the greatest common divisor of Period1::num and Period2::num and
 /// the least common multiple of Period1::den and Period2::den.

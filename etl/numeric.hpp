@@ -35,9 +35,11 @@
 
 namespace etl
 {
-/// \brief Computes the sum of the given value init and the elements in the
-/// range [first, last). (1) Uses operator+ to sum up the elements. (2) Uses the
-/// BinaryOperation to sum up the elements.
+/// \brief Computes the sum of the given value init and the elements in the range `[first, last)`.
+/// 1. Uses `operator+` to sum up the elements.
+/// 2. Uses the BinaryOperation to sum up the elements.
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/accumulate](https://en.cppreference.com/w/cpp/algorithm/accumulate)
 /// \group accumulate
 /// \module Algorithm
 template <typename InputIt, typename Type>
@@ -57,8 +59,8 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 }
 
 /// \brief Similar to etl::accumulate.
-///
-/// https://en.cppreference.com/w/cpp/algorithm/reduce
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/reduce](https://en.cppreference.com/w/cpp/algorithm/reduce)
 /// \group reduce
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
@@ -162,7 +164,8 @@ template <typename InputIt1, typename InputIt2, typename T, typename BinaryOpera
 /// \details BinaryFunction must not invalidate any iterators, including the end
 /// iterators, or modify any elements of the range involved.
 ///
-/// https://en.cppreference.com/w/cpp/algorithm/partial_sum
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/partial_sum](https://en.cppreference.com/w/cpp/algorithm/partial_sum)
 ///
 /// \returns Iterator to the element past the last element written.
 /// \group partial_sum
@@ -252,9 +255,10 @@ template <typename Type>
 ///
 /// \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
 ///
-/// https://www.youtube.com/watch?v=sBtAGxBh-XI
+/// \notes [.youtube.com/watch?v=sBtAGxBh-XI](https://www.youtube.com/watch?v=sBtAGxBh-XI)
 ///
-/// https://en.cppreference.com/w/cpp/numeric/midpoint
+/// \notes
+/// [cppreference.com/w/cpp/numeric/midpoint](https://en.cppreference.com/w/cpp/numeric/midpoint)
 /// \group midpoint
 template <typename Int, TAETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int

@@ -14,6 +14,8 @@ CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-12
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
 CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
 
+STANDARDESE_BIN ?= ~/.builds/standardese/cmake-build-release/tool/standardese
+
 .PHONY: all
 all: config build test
 
@@ -52,6 +54,13 @@ report:
 .PHONY: docs
 docs:
 	doxygen Doxyfile.in
+
+.PHONY: standardese
+standardese:
+	rm -rf cmake-build-docs
+	mkdir cmake-build-docs
+	cd cmake-build-docs && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTAETL_RTOS_USE_STUBS=1 $(shell realpath ./etl)
+	./scripts/run-standardese.py
 
 .PHONY: tidy-check
 tidy-check:

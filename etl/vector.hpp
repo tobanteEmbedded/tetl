@@ -347,16 +347,27 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   using base_type::unsafe_set_size;
 
   public:
-  using value_type             = typename base_type::value_type;
-  using difference_type        = ptrdiff_t;
-  using reference              = value_type&;
-  using const_reference        = value_type const&;
-  using pointer                = typename base_type::pointer;
-  using const_pointer          = typename base_type::const_pointer;
-  using iterator               = typename base_type::pointer;
-  using const_iterator         = typename base_type::const_pointer;
-  using size_type              = size_t;
-  using reverse_iterator       = ::etl::reverse_iterator<iterator>;
+  /// The type being used
+  using value_type = typename base_type::value_type;
+  /// The type being used
+  using difference_type = ptrdiff_t;
+  /// The type being used
+  using reference = value_type&;
+  /// The type being used
+  using const_reference = value_type const&;
+  /// The type being used
+  using pointer = typename base_type::pointer;
+  /// The type being used
+  using const_pointer = typename base_type::const_pointer;
+  /// The type being used
+  using iterator = typename base_type::pointer;
+  /// The type being used
+  using const_iterator = typename base_type::const_pointer;
+  /// The type being used
+  using size_type = size_t;
+  /// The type being used
+  using reverse_iterator = ::etl::reverse_iterator<iterator>;
+  /// The type being used
   using const_reverse_iterator = ::etl::reverse_iterator<const_iterator>;
 
   private:
@@ -758,6 +769,7 @@ constexpr auto swap(static_vector<T, Capacity>& lhs, static_vector<T, Capacity>&
 /// \details Checks if the contents of lhs and rhs are equal, that is, they have
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
+/// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -770,11 +782,7 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
   return false;
 }
 
-/// \brief Compares the contents of two vectors.
-///
-/// \details Checks if the contents of lhs and rhs are equal, that is, they have
-/// the same number of elements and each element in lhs compares equal with the
-/// element in rhs at the same position.
+/// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -787,6 +795,7 @@ constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
 /// \details Compares the contents of lhs and rhs lexicographically. The
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
+/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -794,11 +803,7 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs,
   return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
-/// \brief Compares the contents of two vectors.
-///
-/// \details Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to
-/// lexicographical_compare.
+/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -806,11 +811,7 @@ constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
   return !(rhs < lhs);
 }
 
-/// \brief Compares the contents of two vectors.
-///
-/// \details Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to
-/// lexicographical_compare.
+/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs,
                          static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -818,11 +819,7 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs,
   return rhs < lhs;
 }
 
-/// \brief Compares the contents of two vectors.
-///
-/// \details Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to
-/// lexicographical_compare.
+/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
                           static_vector<T, Capacity> const& rhs) noexcept -> bool
@@ -832,8 +829,10 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
 
 /// \brief Erases all elements that satisfy the predicate pred from the
 /// container.
-/// \details https://en.cppreference.com/w/cpp/container/vector/erase2
 /// \returns The number of erased elements.
+/// \notes
+/// [cppreference.com/w/cpp/container/vector/erase2](https://en.cppreference.com/w/cpp/container/vector/erase2)
+/// \group static_vector_erase
 template <typename T, size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   typename static_vector<T, Capacity>::size_type
@@ -844,9 +843,7 @@ constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->
   return static_cast<typename static_vector<T, Capacity>::size_type>(r);
 }
 
-/// \brief Erases all elements that compare equal to value from the container.
-/// \details https://en.cppreference.com/w/cpp/container/vector/erase2
-/// \returns The number of erased elements.
+/// \group static_vector_erase
 template <typename T, size_t Capacity, typename U>
 constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
   typename static_vector<T, Capacity>::size_type
