@@ -26,18 +26,21 @@
 
 #include "etl/detail/intrinsics.hpp"
 
-#define TAETL_REVISION_MAJOR 0
-#define TAETL_REVISION_MINOR 3
-#define TAETL_REVISION_PATCH 0
-#define TAETL_REVISION_STRING "0.4.0"
+/// The major release version
+#define TAETL_VERSION_MAJOR 0
+/// The minor release version
+#define TAETL_VERSION_MINOR 4
+/// The patch release version
+#define TAETL_VERSION_PATCH 0
+/// The library version as a string literal
+#define TAETL_VERSION_STRING "0.4.0"
 
 namespace etl
 {
-/// \brief Enumeration for the currently selected C++ standard version.
-///
-/// \details Unlike the official macro __cplusplus, these values only include
-/// the published year. This is to make the actual values smaller and therfore
-/// fit on smaller word sized chips.
+/// \brief Enumeration for the currently selected C++ standard version. Unlike
+/// the official macro `__cplusplus`, these values only include the published
+/// year. This is to make the actual values smaller and therfore fit on smaller
+/// word sized chips.
 enum class language_standard
 {
   cpp_98 = 1998,
@@ -45,19 +48,18 @@ enum class language_standard
   cpp_14 = 2014,
   cpp_17 = 2017,
   cpp_20 = 2020,
+  cpp_23 = 2023,
 };
-
-// #if __cplusplus < 201703L
-// #error "C++17 or newer is required"
-// #endif
 
 #if __cplusplus == 201703L
 #define TAETL_CPP_STANDARD_17
+/// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_17;
 #endif
 
 #if __cplusplus > 201703L
 #define TAETL_CPP_STANDARD_20
+/// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_20;
 #endif
 
