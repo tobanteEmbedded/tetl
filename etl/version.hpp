@@ -41,14 +41,11 @@ namespace etl
 /// the official macro `__cplusplus`, these values only include the published
 /// year. This is to make the actual values smaller and therfore fit on smaller
 /// word sized chips.
-enum class language_standard
+enum class language_standard : unsigned char
 {
-  cpp_98 = 1998,
-  cpp_11 = 2011,
-  cpp_14 = 2014,
-  cpp_17 = 2017,
-  cpp_20 = 2020,
-  cpp_23 = 2023,
+  cpp_17 = 17,
+  cpp_20 = 20,
+  cpp_23 = 23,
 };
 
 #if __cplusplus == 201703L
@@ -63,18 +60,50 @@ constexpr auto current_standard = language_standard::cpp_17;
 constexpr auto current_standard = language_standard::cpp_20;
 #endif
 
-/// \brief Returns true, if the given standard and the currently configurated in
-/// the compiler match.
-[[nodiscard]] constexpr auto is_language_standard(language_standard ls) -> bool
+/// \brief Compares language_standards
+/// \group language_standard_compare
+/// \module Utility
+[[nodiscard]] constexpr auto operator==(language_standard lhs,
+                                        language_standard rhs) noexcept -> bool
 {
-  return ls == current_standard;
+  return static_cast<unsigned char>(lhs) == static_cast<unsigned char>(rhs);
 }
 
-[[nodiscard]] constexpr auto is_greater_language_standard(language_standard ls)
-  -> bool
+/// \group language_standard_compare
+[[nodiscard]] constexpr auto operator!=(language_standard lhs,
+                                        language_standard rhs) noexcept -> bool
 {
-  return static_cast<long>(ls) > static_cast<long>(current_standard);
+  return !(lhs == rhs);
 }
+
+/// \group language_standard_compare
+[[nodiscard]] constexpr auto operator<(language_standard lhs,
+                                       language_standard rhs) noexcept -> bool
+{
+  return static_cast<unsigned char>(lhs) < static_cast<unsigned char>(rhs);
+}
+
+/// \group language_standard_compare
+[[nodiscard]] constexpr auto operator<=(language_standard lhs,
+                                        language_standard rhs) noexcept -> bool
+{
+  return static_cast<unsigned char>(lhs) <= static_cast<unsigned char>(rhs);
+}
+
+/// \group language_standard_compare
+[[nodiscard]] constexpr auto operator>(language_standard lhs,
+                                       language_standard rhs) noexcept -> bool
+{
+  return static_cast<unsigned char>(lhs) > static_cast<unsigned char>(rhs);
+}
+
+/// \group language_standard_compare
+[[nodiscard]] constexpr auto operator>=(language_standard lhs,
+                                        language_standard rhs) noexcept -> bool
+{
+  return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
+}
+
 }  // namespace etl
 
 #endif  // TETL_VERSION_HPP

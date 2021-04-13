@@ -29,44 +29,15 @@ TEST_CASE("version: language_standard", "[vector]")
 {
   using etl::language_standard;
 
-  auto less = [](auto lhs, auto rhs)
-  { return static_cast<long>(lhs) < static_cast<long>(rhs); };
+  REQUIRE(language_standard::cpp_17 == language_standard::cpp_17);
+  REQUIRE(language_standard::cpp_20 == language_standard::cpp_20);
+  REQUIRE(language_standard::cpp_23 == language_standard::cpp_23);
 
-  auto greater = [](auto lhs, auto rhs)
-  { return static_cast<long>(lhs) > static_cast<long>(rhs); };
+  REQUIRE(language_standard::cpp_17 < language_standard::cpp_20);
+  REQUIRE(language_standard::cpp_17 < language_standard::cpp_23);
 
-  WHEN("C++11")
-  {
-    REQUIRE(greater(language_standard::cpp_11, language_standard::cpp_98));
-
-    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_14));
-    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_17));
-    REQUIRE(less(language_standard::cpp_11, language_standard::cpp_20));
-  }
-
-  WHEN("C++14")
-  {
-    REQUIRE(greater(language_standard::cpp_14, language_standard::cpp_11));
-
-    REQUIRE(less(language_standard::cpp_14, language_standard::cpp_17));
-    REQUIRE(less(language_standard::cpp_14, language_standard::cpp_20));
-  }
-
-  WHEN("C++17")
-  {
-    REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_11));
-    REQUIRE(greater(language_standard::cpp_17, language_standard::cpp_14));
-
-    REQUIRE(less(language_standard::cpp_17, language_standard::cpp_20));
-  }
-
-  WHEN("C++20")
-  {
-    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_98));
-    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_11));
-    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_14));
-    REQUIRE(greater(language_standard::cpp_20, language_standard::cpp_17));
-  }
+  REQUIRE(language_standard::cpp_20 > language_standard::cpp_17);
+  REQUIRE(language_standard::cpp_23 > language_standard::cpp_17);
 }
 
 TEST_CASE("version: current_standard", "[vector]")
