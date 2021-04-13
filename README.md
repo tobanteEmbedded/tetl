@@ -15,19 +15,30 @@
 
 ## Quick Start
 
-```sh
-g++ -std=c++17 -Itaetl/ ...
+```cpp
+// main.cpp
+#include "etl/array.hpp"
+#include "etl/algorithm.hpp"
+
+auto main() -> int
+{
+  auto const numbers = etl::array{1, 2, 3, 4, 5};
+  auto const greater_two = [] (auto const v) { return v > 2; };
+  return etl::count_if(begin(numbers), end(numbers), greater_two);
+}
 ```
 
-- [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
+```sh
+g++ -Wall -Wextra -Wpedantic -std=c++17 -I path/to/tetl main.cpp
+```
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
 
 ## Status
 
-| **License**                                                                                                                 | **Issues**                                                                                                                         | **Lines of Code**                                 |
-| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteEmbedded/tetl.svg)](https://GitHub.com/tobanteEmbedded/tetl/issues/) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) |
+| **License**                                                                                                                 | **Lines of Code**                                 | **Progress**                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) |
 
 ### Hosted
 
