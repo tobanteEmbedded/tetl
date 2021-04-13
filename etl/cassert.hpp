@@ -98,7 +98,7 @@ inline auto tetl_call_exception_handler(assert_msg const& msg) -> void
       if (TETL_IS_CONSTANT_EVALUATED())                                        \
       {                                                                        \
         /*During compilation we forward to assert, to force an error*/         \
-        assert((exp));                                                         \
+        assert((exp)); /* NOLINT */                                            \
       }                                                                        \
       else                                                                     \
       {                                                                        \
