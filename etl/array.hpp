@@ -79,7 +79,7 @@ struct array
   /// \brief Accesses the specified item with range checking.
   [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
   {
-    assert(pos < Size);
+    TETL_ASSERT(pos < Size);
     return _internal_data[pos];
   }
 
@@ -87,7 +87,7 @@ struct array
   [[nodiscard]] constexpr auto at(size_type const pos) const noexcept
     -> const_reference
   {
-    assert(pos < Size);
+    TETL_ASSERT(pos < Size);
     return _internal_data[pos];
   }
 
@@ -95,7 +95,7 @@ struct array
   [[nodiscard]] constexpr auto operator[](size_type const pos) noexcept
     -> reference
   {
-    assert(pos < Size);
+    TETL_ASSERT(pos < Size);
     return _internal_data[pos];
   }
 
@@ -103,7 +103,7 @@ struct array
   [[nodiscard]] constexpr auto operator[](size_type const pos) const noexcept
     -> const_reference
   {
-    assert(pos < Size);
+    TETL_ASSERT(pos < Size);
     return _internal_data[pos];
   }
 

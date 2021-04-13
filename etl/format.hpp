@@ -77,7 +77,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
       !trailing.first.empty())
   {
     detail::format_escaped_sequences(trailing.first, ctx);
-    assert(trailing.second.empty());
+    TETL_ASSERT(trailing.second.empty());
   }
 
   return ctx.out();
@@ -156,7 +156,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
     [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val)
     {
       ::etl::ignore_unused(n);
-      // assert((long)pos < n);
+      // TETL_ASSERT((long)pos < n);
       output[pos] = val;
     };
 

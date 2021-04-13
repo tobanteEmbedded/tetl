@@ -83,8 +83,8 @@ class basic_static_string
   /// \details Fails silently if input len is greater then capacity.
   constexpr basic_static_string(const_pointer str, size_type const len) noexcept
   {
-    assert(len + 1 <= Capacity
-           && "size + null-terminator greater than capacity");
+    TETL_ASSERT(len + 1 <= Capacity
+                && "size + null-terminator greater than capacity");
 
     if (str != nullptr && len + 1 < Capacity)
     {
@@ -107,8 +107,8 @@ class basic_static_string
   /// \details Fails silently if input length is greater then capacity.
   constexpr basic_static_string(size_type count, value_type ch) noexcept
   {
-    assert(count + 1 <= Capacity
-           && "size + null-terminator greater than capacity");
+    TETL_ASSERT(count + 1 <= Capacity
+                && "size + null-terminator greater than capacity");
     if (count + 1 <= Capacity)
     {
       clear_storage();
@@ -509,7 +509,7 @@ class basic_static_string
   {
     auto const start = static_cast<size_type>(etl::distance(cbegin(), first));
     auto const distance = static_cast<size_type>(etl::distance(first, last));
-    assert(size() > distance);
+    TETL_ASSERT(size() > distance);
     etl::rotate(begin() + start, begin() + start + distance, end());
     unsafe_set_size(size() - distance);
     return begin() + start;
@@ -519,7 +519,7 @@ class basic_static_string
   /// nothing if the string is full.
   constexpr auto push_back(value_type ch) noexcept -> void
   {
-    assert(size() < capacity());
+    TETL_ASSERT(size() < capacity());
     if (size() < capacity()) { append(1, ch); }
   }
 
@@ -565,8 +565,8 @@ class basic_static_string
   constexpr auto append(InputIter first, InputIter last) noexcept
     -> basic_static_string&
   {
-    assert(capacity() - size()
-           > static_cast<size_type>(etl::distance(first, last)));
+    TETL_ASSERT(capacity() - size()
+                > static_cast<size_type>(etl::distance(first, last)));
     for (; first != last; ++first) { push_back(*first); }
     return *this;
   }
@@ -1173,7 +1173,7 @@ class basic_static_string
   private:
   constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
   {
-    assert(newSize <= Capacity - 1);
+    TETL_ASSERT(newSize <= Capacity - 1);
     size_        = newSize;
     data_[size_] = '\0';
   }
@@ -1181,14 +1181,14 @@ class basic_static_string
   [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept
     -> reference
   {
-    assert(index < size_);
+    TETL_ASSERT(index < size_);
     return data_[index];
   }
 
   [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept
     -> const_reference
   {
-    assert(index < size_);
+    TETL_ASSERT(index < size_);
     return data_[index];
   }
 
@@ -1556,7 +1556,7 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(float value) noexcept
   -> static_string<Capacity>
 {
-  assert(false);
+  TETL_ASSERT(false);
   ignore_unused(value);
   return {};
 }
@@ -1566,7 +1566,7 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(double value) noexcept
   -> static_string<Capacity>
 {
-  assert(false);
+  TETL_ASSERT(false);
   ignore_unused(value);
   return {};
 }
@@ -1576,7 +1576,7 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto to_string(long double value) noexcept
   -> static_string<Capacity>
 {
-  assert(false);
+  TETL_ASSERT(false);
   ignore_unused(value);
   return {};
 }

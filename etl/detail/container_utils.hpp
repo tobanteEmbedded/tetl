@@ -99,7 +99,7 @@ using smallest_size_t =
 template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
-  assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
+  TETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
   return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
 }  // namespace etl::detail

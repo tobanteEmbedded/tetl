@@ -22,9 +22,9 @@
 // DAMAGE.
 
 #undef NDEBUG
-#include <assert.h>  // for assert
 
 #include "etl/optional.hpp"  // for optional
+#include "etl/cassert.hpp"   // for TETL_ASSERT
 
 auto main() -> int
 {
@@ -33,28 +33,28 @@ auto main() -> int
 
   // construct default (implicit empty)
   auto opt0 = optional<short>();
-  assert(opt0.has_value() == false);
-  assert(static_cast<bool>(opt0) == false);
+  TETL_ASSERT(opt0.has_value() == false);
+  TETL_ASSERT(static_cast<bool>(opt0) == false);
 
   // construct explicit empty
   auto opt1 = optional<int>(nullopt);
-  assert(opt1.has_value() == false);
-  assert(static_cast<bool>(opt1) == false);
+  TETL_ASSERT(opt1.has_value() == false);
+  TETL_ASSERT(static_cast<bool>(opt1) == false);
 
   // construct explicit with value
   auto opt2 = optional<float>(42.0F);
-  assert(opt2.has_value());
-  assert(static_cast<bool>(opt2));
+  TETL_ASSERT(opt2.has_value());
+  TETL_ASSERT(static_cast<bool>(opt2));
 
   // assign copy
   auto const opt3 = opt2;
-  assert(opt3.has_value());
-  assert(static_cast<bool>(opt3));
+  TETL_ASSERT(opt3.has_value());
+  TETL_ASSERT(static_cast<bool>(opt3));
 
   // assign move
   auto const opt4 = move(opt2);
-  assert(opt4.has_value());
-  assert(static_cast<bool>(opt4));
+  TETL_ASSERT(opt4.has_value());
+  TETL_ASSERT(static_cast<bool>(opt4));
 
   // value & value_or
   static_assert(optional<int>().value() == nullptr);
@@ -63,9 +63,9 @@ auto main() -> int
 
   // reset
   auto opt5 = optional<float>(1.0F);
-  assert(opt5.has_value());
+  TETL_ASSERT(opt5.has_value());
   opt5.reset();
-  assert(opt5.has_value() == false);
+  TETL_ASSERT(opt5.has_value() == false);
 
   return 0;
 }

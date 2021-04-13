@@ -725,7 +725,7 @@ class basic_string_view
   private:
   [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference
   {
-    assert(pos < size());
+    TETL_ASSERT(pos < size());
     return begin_[pos];
   }
 

@@ -36,7 +36,7 @@ template <typename T>
 template <typename T>
 constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 {
-  assert(base == 10);
+  TETL_ASSERT(base == 10);
   ignore_unused(base);
 
   auto digits10 = [](T x)

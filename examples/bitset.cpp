@@ -23,44 +23,44 @@
 
 #undef NDEBUG
 
-#include <assert.h>  // for assert
 #include <stdlib.h>  // for EXIT_SUCCESS
 
-#include "etl/bitset.hpp"  // for bitset, bitset<>::reference
+#include "etl/bitset.hpp"   // for bitset, bitset<>::reference
+#include "etl/cassert.hpp"  // for TETL_ASSERT
 
 auto main() -> int
 {
   auto bits = etl::bitset<8>();
-  assert(bits.none() == true);
-  assert(bits.any() == false);
-  assert(bits.all() == false);
-  assert(bits.test(0) == false);
+  TETL_ASSERT(bits.none() == true);
+  TETL_ASSERT(bits.any() == false);
+  TETL_ASSERT(bits.all() == false);
+  TETL_ASSERT(bits.test(0) == false);
 
   bits.set(0);
-  assert(bits.test(0) == true);
-  assert(bits.count() == 1);
+  TETL_ASSERT(bits.test(0) == true);
+  TETL_ASSERT(bits.count() == 1);
 
   bits.set(1);
-  assert(bits.test(1) == true);
-  assert(bits.count() == 2);
+  TETL_ASSERT(bits.test(1) == true);
+  TETL_ASSERT(bits.count() == 2);
 
   bits.reset(1);
-  assert(bits.test(1) == false);
+  TETL_ASSERT(bits.test(1) == false);
 
   bits.reset();
-  assert(bits.test(0) == false);
+  TETL_ASSERT(bits.test(0) == false);
 
   etl::bitset<8>::reference ref = bits[0];
-  assert(ref == false);
-  assert(~ref == true);
+  TETL_ASSERT(ref == false);
+  TETL_ASSERT(~ref == true);
 
   ref = true;
-  assert(ref == true);
-  assert(~ref == false);
+  TETL_ASSERT(ref == true);
+  TETL_ASSERT(~ref == false);
 
   ref.flip();
-  assert(ref == false);
-  assert(~ref == true);
+  TETL_ASSERT(ref == false);
+  TETL_ASSERT(~ref == true);
 
   return EXIT_SUCCESS;
 }

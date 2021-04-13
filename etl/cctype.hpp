@@ -39,7 +39,7 @@ namespace etl
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto isDigit = ch >= '0' && ch <= '9';
   auto isLower = ch >= 'a' && ch <= 'z';
@@ -58,7 +58,7 @@ namespace etl
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto isLower = ch >= 'a' && ch <= 'z';
   auto isUpper = ch >= 'A' && ch <= 'Z';
@@ -76,7 +76,7 @@ namespace etl
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
   return static_cast<int>(ch >= 'a' && ch <= 'z');
 }
 
@@ -90,7 +90,7 @@ namespace etl
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
   return static_cast<int>(ch >= 'A' && ch <= 'Z');
 }
 
@@ -104,7 +104,7 @@ namespace etl
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
   return static_cast<int>(ch >= '0' && ch <= '9');
 }
 
@@ -118,7 +118,7 @@ namespace etl
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto const isDigit    = ch >= '0' && ch <= '9';
   auto const isHexLower = ch >= 'a' && ch <= 'f';
@@ -137,7 +137,7 @@ namespace etl
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto const space          = ch == ' ';
   auto const formFeed       = ch == '\f';
@@ -162,7 +162,7 @@ namespace etl
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto const space         = ch == ' ';
   auto const horizontalTab = ch == '\t';
@@ -183,7 +183,7 @@ namespace etl
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto const sec1 = ch >= '!' && ch <= '/';
   auto const sec2 = ch >= ':' && ch <= '@';
@@ -203,7 +203,7 @@ namespace etl
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   auto const isDigit = isdigit(ch) != 0;
   auto const isUpper = isupper(ch) != 0;
@@ -223,7 +223,7 @@ namespace etl
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
 }
@@ -239,7 +239,7 @@ namespace etl
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
 }
@@ -259,7 +259,7 @@ namespace etl
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
   return static_cast<int>(ch);
@@ -280,7 +280,7 @@ namespace etl
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
   // ch must de representable as a unsigned char
-  assert(static_cast<unsigned char>(ch) == ch);
+  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
   if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
   return static_cast<int>(ch);

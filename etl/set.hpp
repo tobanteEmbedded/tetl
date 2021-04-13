@@ -87,8 +87,8 @@ struct static_set
   {
     if constexpr (detail::RandomAccessIterator<InputIt>)
     {
-      assert(last - first >= 0);
-      assert(static_cast<size_type>(last - first) <= max_size());
+      TETL_ASSERT(last - first >= 0);
+      TETL_ASSERT(static_cast<size_type>(last - first) <= max_size());
     }
 
     insert(first, last);

@@ -23,11 +23,9 @@
 
 #undef NDEBUG
 
-#include <assert.h>  // for assert
-
-#include "etl/detail/algo_swap.hpp"  // for swap
-#include "etl/type_traits.hpp"       // for is_const_v, remove_reference_t
-#include "etl/utility.hpp"           // for in_range, pair, cmp_equal, as_const
+#include "etl/utility.hpp"      // for in_range, pair, cmp_equal, as_const
+#include "etl/cassert.hpp"      // for assert
+#include "etl/type_traits.hpp"  // for is_const_v, remove_reference_t
 
 auto main() -> int
 {
@@ -45,12 +43,12 @@ auto main() -> int
   auto v1 = 42;
   auto v2 = 100;
   swap(v1, v2);
-  assert(v1 == 100);
-  assert(v2 == 42);
+  TETL_ASSERT(v1 == 100);
+  TETL_ASSERT(v2 == 42);
 
   // EXCHANGE
   auto val = 1;
-  assert(exchange(val, 2) == 1);
+  TETL_ASSERT(exchange(val, 2) == 1);
 
   // AS CONST
   auto c = 1;
@@ -64,24 +62,24 @@ auto main() -> int
 
   // PAIR construct
   auto p1 = pair<int, float> {1, 42.0F};
-  assert(p1.first == 1);
+  TETL_ASSERT(p1.first == 1);
 
   auto p2 = make_pair(2, 1.43F);
-  assert(p2.first == 2);
+  TETL_ASSERT(p2.first == 2);
 
   auto p3 = p1;
-  assert(p3.first == 1);
+  TETL_ASSERT(p3.first == 1);
 
   // PAIR compare
-  assert(p1 == p3);
-  assert(p1 != p2);
-  assert(p2 > p3);
-  assert(p3 < p2);
+  TETL_ASSERT(p1 == p3);
+  TETL_ASSERT(p1 != p2);
+  TETL_ASSERT(p2 > p3);
+  TETL_ASSERT(p3 < p2);
 
   // PAIR swap
   swap(p2, p3);
-  assert(p2.first == 1);
-  assert(p3.first == 2);
+  TETL_ASSERT(p2.first == 1);
+  TETL_ASSERT(p3.first == 2);
 
   return 0;
 }

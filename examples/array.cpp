@@ -23,12 +23,12 @@
 
 #undef NDEBUG
 
-#include <assert.h>  // for assert
 #include <stdio.h>   // for printf
 #include <stdlib.h>  // for EXIT_SUCCESS
 
 #include "etl/algorithm.hpp"  // for all_of, copy
 #include "etl/array.hpp"      // for array
+#include "etl/cassert.hpp"    // for TETL_ASSERT
 #include "etl/iterator.hpp"   // for begin, end
 
 auto main() -> int
@@ -41,13 +41,13 @@ auto main() -> int
   for (auto& item : src) { printf("%d\n", item); }
 
   src.fill(42);
-  assert(all_of(begin(src), end(src), [](auto val) { return val == 42; }));
+  TETL_ASSERT(all_of(begin(src), end(src), [](auto v) { return v == 42; }));
 
   decltype(src) dest = {};
-  assert(all_of(begin(dest), end(dest), [](auto val) { return val == 0; }));
+  TETL_ASSERT(all_of(begin(dest), end(dest), [](auto v) { return v == 0; }));
 
   copy(begin(src), end(src), begin(dest));
-  assert(all_of(begin(dest), end(dest), [](auto val) { return val == 42; }));
+  TETL_ASSERT(all_of(begin(dest), end(dest), [](auto v) { return v == 42; }));
 
   return EXIT_SUCCESS;
 }

@@ -969,7 +969,7 @@ template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
                                    Type const& hi, Compare comp) -> Type const&
 {
-  assert(!comp(hi, lo));
+  TETL_ASSERT(!comp(hi, lo));
   return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
 

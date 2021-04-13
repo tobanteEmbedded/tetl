@@ -66,7 +66,7 @@ class map_view
   /// equivalent to key. If no such element exists, you are in UB land.
   [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&
   {
-    assert(find(key) != nullptr);
+    TETL_ASSERT(find(key) != nullptr);
     return find(key)->second;
   }
 
@@ -75,7 +75,7 @@ class map_view
   [[nodiscard]] constexpr auto at(key_type const& key) const
     -> mapped_type const&
   {
-    assert(find(key) != nullptr);
+    TETL_ASSERT(find(key) != nullptr);
     return find(key)->second;
   }
 

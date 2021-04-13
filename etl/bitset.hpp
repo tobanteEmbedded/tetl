@@ -148,8 +148,8 @@ private:
       : bitset(0ULL)
   {
     auto const len = min<decltype(pos)>(n, str.size() - pos);
-    assert(len >= 0);
-    assert(len <= size());
+    TETL_ASSERT(len >= 0);
+    TETL_ASSERT(len <= size());
 
     for (decltype(pos) i = 0; i < len; ++i)
     {
@@ -354,13 +354,13 @@ private:
   [[nodiscard]] constexpr auto byte_for_position(size_t pos) const
     -> uint8_t const&
   {
-    assert(pos < size());
+    TETL_ASSERT(pos < size());
     return bits_[pos >> 3];
   }
 
   [[nodiscard]] constexpr auto byte_for_position(size_t pos) -> uint8_t&
   {
-    assert(pos < size());
+    TETL_ASSERT(pos < size());
     return bits_[pos >> 3];
   }
 

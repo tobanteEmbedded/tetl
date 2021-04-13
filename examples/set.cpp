@@ -23,13 +23,13 @@
 
 #undef NDEBUG
 
-#include <assert.h>  // for assert
-#include <stdio.h>   // for printf
-
+#include "etl/set.hpp"        // for static_set
 #include "etl/algorithm.hpp"  // for for_each
 #include "etl/array.hpp"      // for array
+#include "etl/cassert.hpp"    // for TETL_ASSERT
 #include "etl/iterator.hpp"   // for begin, end
-#include "etl/set.hpp"        // for static_set
+
+#include <stdio.h>  // for printf
 
 auto main() -> int
 {
@@ -47,16 +47,16 @@ auto main() -> int
 
   for_each(begin(set1), end(set1), [](auto key) { printf("%d\n", key); });
 
-  assert(set1.contains(2));
-  assert(set1.contains(5) == false);
+  TETL_ASSERT(set1.contains(2));
+  TETL_ASSERT(set1.contains(5) == false);
 
   // Construct from range
   auto data = array {1.0F, 2.0F, 3.0F};
   auto set2 = static_set<float, 3> {begin(data), end(data)};
 
-  assert(set2.full());
-  assert(set2.size() == 3);
-  assert(set2.count(1.0F) == 1);
+  TETL_ASSERT(set2.full());
+  TETL_ASSERT(set2.size() == 3);
+  TETL_ASSERT(set2.count(1.0F) == 1);
 
   return 0;
 }

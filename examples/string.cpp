@@ -25,9 +25,9 @@
 
 #include "etl/string.hpp"  // for static_string
 
-#include "etl/cctype.hpp"  // for toupper
+#include "etl/cassert.hpp"  // for TETL_ASSERT
+#include "etl/cctype.hpp"   // for toupper
 
-#include <assert.h>  // for assert
 #include <stdio.h>   // for printf
 #include <stdlib.h>  // for EXIT_SUCCESS
 
@@ -36,54 +36,54 @@ auto main() -> int
   // Unlike a std::string you will have to decide which maximum capacity you
   // need. Apart from that it behaves almost the same as the standard version.
   etl::static_string<32> str {};
-  assert(str.empty());
+  TETL_ASSERT(str.empty());
   static_assert(str.capacity() == 32);
 
   // You can append/push_back characters, c-strings, string_view and other
   // strings of same or different capacity.
   str.append("Hello", 2);
-  assert(str.size() == 2);
-  assert(str == "He");
+  TETL_ASSERT(str.size() == 2);
+  TETL_ASSERT(str == "He");
 
   str.append(2, 'l');
-  assert(str.size() == 4);
-  assert(str == "Hell");
+  TETL_ASSERT(str.size() == 4);
+  TETL_ASSERT(str == "Hell");
 
   str.push_back('o');
-  assert(!str.empty());
-  assert(str.size() == 5);
-  assert(str == "Hello");
+  TETL_ASSERT(!str.empty());
+  TETL_ASSERT(str.size() == 5);
+  TETL_ASSERT(str == "Hello");
 
   auto other = etl::string_view {" World"};
   str.append(other, 0);
-  assert(!str.empty());
-  assert(str.size() == 11);
-  assert(str == "Hello World");
+  TETL_ASSERT(!str.empty());
+  TETL_ASSERT(str.size() == 11);
+  TETL_ASSERT(str == "Hello World");
 
   // You can make copies.
   auto const copy = str;
 
   // You can compare strings
-  assert(copy == str);
+  TETL_ASSERT(copy == str);
 
   // You can apply algorithms.
   etl::transform(begin(str), end(str), begin(str), etl::toupper);
-  assert(str == "HELLO WORLD");
-  assert(copy != str);
+  TETL_ASSERT(str == "HELLO WORLD");
+  TETL_ASSERT(copy != str);
 
   // You can insert at any position
   str.insert(0, 2, ' ');
-  assert(str == "  HELLO WORLD");
+  TETL_ASSERT(str == "  HELLO WORLD");
   str.insert(7, " foo");
-  assert(str == "  HELLO foo WORLD");
+  TETL_ASSERT(str == "  HELLO foo WORLD");
 
   // You can check if a static_string starts or ends with a substring
-  assert(str.starts_with("  "));
-  assert(str.ends_with("WORLD"));
+  TETL_ASSERT(str.starts_with("  "));
+  TETL_ASSERT(str.ends_with("WORLD"));
 
   // You can convert a static_string into a string_view
   etl::string_view view = str;
-  assert(view.size() == str.size());
+  TETL_ASSERT(view.size() == str.size());
 
   // TODO: find & friends
 

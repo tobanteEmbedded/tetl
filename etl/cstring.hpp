@@ -40,7 +40,7 @@ namespace etl
 /// \module Strings
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
-  assert(dest != nullptr && src != nullptr);
+  TETL_ASSERT(dest != nullptr && src != nullptr);
   auto* temp = dest;
   while ((*dest++ = *src++) != '\0') { ; }
   return temp;
@@ -61,7 +61,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
   -> char*
 {
-  assert(dest != nullptr && src != nullptr);
+  TETL_ASSERT(dest != nullptr && src != nullptr);
   auto* temp = dest;
   for (etl::size_t counter = 0; *src != '\0' && counter != count;)
   {
