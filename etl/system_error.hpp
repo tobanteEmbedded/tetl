@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_SYSTEM_ERROR_HPP
-#define TAETL_SYSTEM_ERROR_HPP
+#ifndef TETL_SYSTEM_ERROR_HPP
+#define TETL_SYSTEM_ERROR_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/type_traits.hpp"
@@ -129,4 +129,4 @@ struct is_error_condition_enum<errc> : true_type
 };
 }  // namespace etl
 
-#endif  // TAETL_SYSTEM_ERROR_HPP
+#endif  // TETL_SYSTEM_ERROR_HPP

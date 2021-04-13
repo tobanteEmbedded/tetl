@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_VARIANT_HPP
-#define TAETL_VARIANT_HPP
+#ifndef TETL_VARIANT_HPP
+#define TETL_VARIANT_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/new.hpp"
@@ -388,4 +388,4 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 
 }  // namespace etl
 
-#endif  // TAETL_VARIANT_HPP
+#endif  // TETL_VARIANT_HPP

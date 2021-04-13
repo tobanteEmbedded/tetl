@@ -373,7 +373,7 @@ TEMPLATE_TEST_CASE("type_traits: is_pointer", "[type_traits]", etl::uint8_t,
 }
 
 // TODO: Fix MSVC compilation.
-#if not defined(TAETL_MSVC)
+#if not defined(TETL_MSVC)
 
 struct AAA
 {
@@ -439,7 +439,7 @@ TEMPLATE_TEST_CASE("type_traits: is_rvalue_reference", "[type_traits]",
 }
 
 // TODO: Fix on MSVC. Compiles but emits warnings
-#if not defined(TAETL_MSVC)
+#if not defined(TETL_MSVC)
 
 TEMPLATE_TEST_CASE("type_traits: is_member_function_pointer", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,

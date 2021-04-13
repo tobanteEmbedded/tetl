@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_EXPECTED_HPP
-#define TAETL_EXPECTED_HPP
+#ifndef TETL_EXPECTED_HPP
+#define TETL_EXPECTED_HPP
 
 #include "etl/type_traits.hpp"
 
@@ -36,4 +36,4 @@ struct unexpect_t
 inline constexpr unexpect_t unexpect {};
 
 }  // namespace etl
-#endif  // TAETL_EXPECTED_HPP
+#endif  // TETL_EXPECTED_HPP

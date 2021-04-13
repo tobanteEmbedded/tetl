@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_RATIO_HPP
-#define TAETL_RATIO_HPP
+#ifndef TETL_RATIO_HPP
+#define TETL_RATIO_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/numeric.hpp"
@@ -196,4 +196,4 @@ using exa   = ratio<1'000'000'000'000'000'000, 1>;
 
 }  // namespace etl
 
-#endif  // TAETL_RATIO_HPP
+#endif  // TETL_RATIO_HPP

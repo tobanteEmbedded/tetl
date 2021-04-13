@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CHRONO_HPP
-#define TAETL_CHRONO_HPP
+#ifndef TETL_CHRONO_HPP
+#define TETL_CHRONO_HPP
 
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
@@ -122,7 +122,7 @@ class duration
   /// can be constructed from an integer value
   template <
     typename Rep2,
-    TAETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
+    TETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
       treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
   constexpr explicit duration(Rep2 const& r) noexcept : rep_(r)
   {
@@ -146,7 +146,7 @@ class duration
   /// That is, either the duration uses floating-point ticks, or Period2 is
   /// exactly divisible by period
   template <typename Rep2, typename Period2,
-            TAETL_REQUIRES_((treat_as_floating_point_v<rep>)
+            TETL_REQUIRES_((treat_as_floating_point_v<rep>)
                             || (ratio_divide<Period2, period>::den == 1
                                 && !treat_as_floating_point_v<Rep2>))>
   constexpr duration(duration<Rep2, Period2> const& other) noexcept
@@ -303,7 +303,7 @@ class time_point
   /// sources. Constructs a time_point by converting t to duration. This
   /// constructor only participates in overload resolution if Duration2 is
   /// implicitly convertible to duration.
-  template <typename Dur2, TAETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
+  template <typename Dur2, TETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
   constexpr time_point(time_point<clock, Dur2> const& t)
       : d_ {t.time_since_epch()}
   {
@@ -640,7 +640,7 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true>
 
 /// \brief Converts a duration to a duration of different type ToDur.
 template <typename ToDur, typename Rep, typename Period,
-          TAETL_REQUIRES_(detail::is_duration<ToDur>::value)>
+          TETL_REQUIRES_(detail::is_duration<ToDur>::value)>
 [[nodiscard]] constexpr auto
 duration_cast(duration<Rep, Period> const& duration) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDur::rep>) -> ToDur
@@ -656,7 +656,7 @@ duration_cast(duration<Rep, Period> const& duration) noexcept(
 /// less or equal to d. The function does not participate in the overload
 /// resolution unless ToDuration is an instance of etl::chrono::duration.
 template <typename To, typename Rep, typename Period,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -666,7 +666,7 @@ template <typename To, typename Rep, typename Period,
 }
 
 template <typename To, typename Rep, typename Period,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto ceil(duration<Rep, Period> const& d) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -676,7 +676,7 @@ template <typename To, typename Rep, typename Period,
 }
 
 template <typename To, typename Rep, typename Period,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
   is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -694,7 +694,7 @@ template <typename To, typename Rep, typename Period,
 /// in the overload resolution unless etl::numeric_limits<Rep>::is_signed is
 /// true.
 template <typename Rep, typename Period,
-          TAETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
+          TETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
 constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
   -> duration<Rep, Period>
 {
@@ -703,7 +703,7 @@ constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
 }
 
 template <typename ToDuration, typename Clock, typename Duration,
-          TAETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
+          TETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
 [[nodiscard]] constexpr auto
 time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
 {
@@ -712,7 +712,7 @@ time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
 }
 
 template <typename To, typename Clock, typename Duration,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto floor(time_point<Clock, Duration> const& tp)
   -> time_point<Clock, To>
 {
@@ -720,7 +720,7 @@ template <typename To, typename Clock, typename Duration,
 }
 
 template <typename To, typename Clock, typename Duration,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto ceil(time_point<Clock, Duration> const& tp)
   -> time_point<Clock, To>
 {
@@ -728,7 +728,7 @@ template <typename To, typename Clock, typename Duration,
 }
 
 template <typename To, typename Clock, typename Duration,
-          TAETL_REQUIRES_(detail::is_duration<To>::value)>
+          TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)
   -> time_point<Clock, To>
 {
@@ -875,4 +875,4 @@ namespace chrono
 using namespace ::etl::literals::chrono_literals;
 }
 }  // namespace etl
-#endif  // TAETL_CHRONO_HPP
+#endif  // TETL_CHRONO_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_NET_BUFFER_MUTABLE_HPP
-#define TAETL_NET_BUFFER_MUTABLE_HPP
+#ifndef TETL_NET_BUFFER_MUTABLE_HPP
+#define TETL_NET_BUFFER_MUTABLE_HPP
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
@@ -81,4 +81,4 @@ inline auto operator+(etl::size_t const n, mutable_buffer const& b) noexcept
 
 }  // namespace etl::experimental::net
 
-#endif  // TAETL_NET_BUFFER_MUTABLE_HPP
+#endif  // TETL_NET_BUFFER_MUTABLE_HPP

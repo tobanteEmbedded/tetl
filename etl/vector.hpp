@@ -23,8 +23,8 @@
 
 /// \example vector.cpp
 
-#ifndef TAETL_VECTOR_HPP
-#define TAETL_VECTOR_HPP
+#ifndef TETL_VECTOR_HPP
+#define TETL_VECTOR_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
@@ -330,7 +330,7 @@ class static_vector_non_trivial_storage
   }
 
   /// \brief Constructs an element in-place at the end of the embedded storage.
-  template <typename... Args, TAETL_REQUIRES_(is_copy_constructible_v<T>)>
+  template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<T>)>
   auto emplace_back(Args&&... args) noexcept(
     noexcept(new (end()) T(forward<Args>(args)...))) -> void
   {
@@ -663,7 +663,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   }
 
   /// \brief Initializes vector with n default-constructed elements.
-  TAETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
+  TETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
   explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
   {
     assert(n <= capacity() && "size exceeds capacity");
@@ -671,7 +671,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   }
 
   /// \brief Initializes vector with n with value.
-  TAETL_REQUIRES(is_copy_constructible_v<T>)
+  TETL_REQUIRES(is_copy_constructible_v<T>)
   constexpr static_vector(size_type n,
                           T const& value) noexcept(noexcept(insert(begin(), n,
                                                                    value)))
@@ -682,7 +682,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
 
   /// \brief Initialize vector from range [first, last).
   template <typename InputIter,
-            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+            TETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr static_vector(InputIter first, InputIter last)
   {
     if constexpr (detail::RandomAccessIterator<InputIter>)
@@ -997,4 +997,4 @@ constexpr auto erase(static_vector<T, Capacity>& c, U const& value) ->
 
 }  // namespace etl
 
-#endif  // TAETL_VECTOR_HPP
+#endif  // TETL_VECTOR_HPP

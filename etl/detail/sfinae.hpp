@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_SFINAE_HPP
-#define TAETL_SFINAE_HPP
+#ifndef TETL_SFINAE_HPP
+#define TETL_SFINAE_HPP
 
 namespace etl
 {
@@ -44,27 +44,27 @@ using enable_if_t = typename enable_if<B, T>::type;
 
 }  // namespace etl
 
-#define TAETL_CONCEPT_PP_CAT_(X, Y) X##Y
-#define TAETL_CONCEPT_PP_CAT(X, Y) TAETL_CONCEPT_PP_CAT_(X, Y)
+#define TETL_CONCEPT_PP_CAT_(X, Y) X##Y
+#define TETL_CONCEPT_PP_CAT(X, Y) TETL_CONCEPT_PP_CAT_(X, Y)
 
 /// \brief Requires-clause emulation with SFINAE (for templates).
 ///
 /// Copied from https://github.com/gnzlbg/static_vector
-#define TAETL_REQUIRES_(...)                                                   \
-  int TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                       \
+#define TETL_REQUIRES_(...)                                                   \
+  int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                       \
     = 42,                                                                      \
     ::etl::enable_if_t                                                         \
-        < (TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)           \
+        < (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)           \
       || (__VA_ARGS__),                                                        \
     int > = 0
 
 /// \brief Requires-clause emulation with SFINAE (for "non-templates").
 ///
 /// Copied from https://github.com/gnzlbg/static_vector
-#define TAETL_REQUIRES(...)                                                    \
-  template <int TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,       \
+#define TETL_REQUIRES(...)                                                    \
+  template <int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,       \
             ::etl::enable_if_t<                                                \
-              (TAETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)       \
+              (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)       \
                 || (__VA_ARGS__),                                              \
               int> = 0>
 
@@ -135,4 +135,4 @@ struct sfinae_assign_base<false, true>
 };
 }  // namespace etl::detail
 
-#endif  // TAETL_SFINAE_HPP
+#endif  // TETL_SFINAE_HPP

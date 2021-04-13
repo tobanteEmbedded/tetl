@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_DSP_DSP_HPP
-#define TAETL_DSP_DSP_HPP
+#ifndef TETL_DSP_DSP_HPP
+#define TETL_DSP_DSP_HPP
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
@@ -201,4 +201,4 @@ auto fork(T&&... val)
 
 }  // namespace etl::experimental::dsp
 
-#endif  // TAETL_DSP_DSP_HPP
+#endif  // TETL_DSP_DSP_HPP

@@ -23,8 +23,8 @@
 
 /// \example utility.cpp
 
-#ifndef TAETL_UTILITY_HPP
-#define TAETL_UTILITY_HPP
+#ifndef TETL_UTILITY_HPP
+#define TETL_UTILITY_HPP
 
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
@@ -133,7 +133,7 @@ inline constexpr auto is_integer_and_not_char_v
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
@@ -161,7 +161,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
@@ -178,7 +178,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
@@ -205,7 +205,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
@@ -222,7 +222,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
@@ -239,7 +239,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
                             detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
@@ -257,7 +257,7 @@ template <typename T, typename U,
 /// \notes
 /// [cppreference.com/w/cpp/utility/in_range](https://en.cppreference.com/w/cpp/utility/in_range)
 template <typename R, typename T,
-          TAETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
+          TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>)>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
   return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
@@ -352,18 +352,18 @@ struct pair
 
   /// \brief Default constructor. Value-initializes both elements of the pair,
   /// first and second.
-  TAETL_REQUIRES(
+  TETL_REQUIRES(
     is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
   constexpr pair() : first {}, second {} { }
 
   /// \brief Initializes first with x and second with y.
-  TAETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
+  TETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
   constexpr pair(T1 const& t1, T2 const& t2) : first {t1}, second {t2} { }
 
   /// \brief Initializes first with etl::forward<U1>(x) and second with
   /// etl::forward<U2>(y).
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
+            TETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
                               is_constructible_v<U2&&, second_type>)>
   constexpr pair(U1&& x, U2&& y)
       : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
@@ -372,7 +372,7 @@ struct pair
 
   /// \brief Initializes first with p.first and second with p.second.
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
+            TETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
                               is_constructible_v<second_type, U2 const&>)>
   constexpr pair(pair<U1, U2> const& p)
       : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
@@ -382,7 +382,7 @@ struct pair
   /// \brief Initializes first with etl::forward<U1>(p.first) and second with
   /// etl::forward<U2>(p.second).
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
+            TETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
                               is_constructible_v<second_type, U2&&>)>
   constexpr pair(pair<U1, U2>&& p)
       : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
@@ -409,7 +409,7 @@ struct pair
   }
 
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
+            TETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
                               is_assignable_v<second_type&, U2 const&>)>
   constexpr auto operator=(pair<U1, U2> const& p) -> pair&
   {
@@ -418,7 +418,7 @@ struct pair
     return *this;
   }
 
-  TAETL_REQUIRES(
+  TETL_REQUIRES(
     is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
   constexpr auto operator=(pair&& p) noexcept -> pair&
   {
@@ -428,7 +428,7 @@ struct pair
   }
 
   template <typename U1, typename U2,
-            TAETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
+            TETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
                               is_assignable_v<second_type&, U2>)>
   constexpr auto operator=(pair<U1, U2>&& p) -> pair&
   {
@@ -628,4 +628,4 @@ template <size_t I, typename T1, typename T2>
 
 }  // namespace etl
 
-#endif  // TAETL_UTILITY_HPP
+#endif  // TETL_UTILITY_HPP

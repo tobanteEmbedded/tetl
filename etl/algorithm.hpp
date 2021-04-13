@@ -24,8 +24,8 @@
 /// \file algorithm.hpp
 /// \example algorithm.cpp
 
-#ifndef TAETL_ALGORITHM_HPP
-#define TAETL_ALGORITHM_HPP
+#ifndef TETL_ALGORITHM_HPP
+#define TETL_ALGORITHM_HPP
 
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
@@ -1983,4 +1983,4 @@ is_permutation(ForwardIter1 first1, ForwardIter1 last1, ForwardIter2 first2,
 
 }  // namespace etl
 
-#endif  // TAETL_ALGORITHM_HPP
+#endif  // TETL_ALGORITHM_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_BITSET_HPP
-#define TAETL_BITSET_HPP
+#ifndef TETL_BITSET_HPP
+#define TETL_BITSET_HPP
 
 /// \file bitset.hpp
 /// \example bitset.cpp
@@ -376,4 +376,4 @@ private:
 
 }  // namespace etl
 
-#endif  // TAETL_BITSET_HPP
+#endif  // TETL_BITSET_HPP

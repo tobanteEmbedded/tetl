@@ -23,11 +23,11 @@
 
 /// \example type_traits.cpp
 
-#ifndef TAETL_TYPETRAITS_HPP
-#define TAETL_TYPETRAITS_HPP
+#ifndef TETL_TYPETRAITS_HPP
+#define TETL_TYPETRAITS_HPP
 
 #include "etl/detail/cstddef_internal.hpp"  // for size_t, max_align_t, nullptr_t
-#include "etl/detail/intrinsics.hpp"        // for TAETL_IS_CLASS, TAETL_IS_ENUM
+#include "etl/detail/intrinsics.hpp"        // for TETL_IS_CLASS, TETL_IS_ENUM
 #include "etl/detail/sfinae.hpp"            // for enable_if
 #include "etl/detail/type_traits_decl.hpp"  // for is_fundamental
 
@@ -888,7 +888,7 @@ struct integer_sequence
 
 /// \group integer_sequence
 template <typename T, T Size>
-using make_integer_sequence = TAETL_MAKE_INTEGER_SEQ(T, Size);
+using make_integer_sequence = TETL_MAKE_INTEGER_SEQ(T, Size);
 
 /// \group integer_sequence
 template <size_t... Ints>
@@ -1000,7 +1000,7 @@ inline constexpr bool is_empty_v = is_empty<T>::value;
 
 /// \group is_polymorphic
 template <typename T>
-struct is_polymorphic : bool_constant<TAETL_IS_POLYMORPHIC(T)>
+struct is_polymorphic : bool_constant<TETL_IS_POLYMORPHIC(T)>
 {
 };
 
@@ -1014,7 +1014,7 @@ inline constexpr bool is_polymorphic_v = is_polymorphic<T>::value;
 /// otherwise, the behavior is undefined.
 /// \group is_final
 template <typename T>
-struct is_final : bool_constant<TAETL_IS_FINAL(T)>
+struct is_final : bool_constant<TETL_IS_FINAL(T)>
 {
 };
 
@@ -1024,7 +1024,7 @@ inline constexpr bool is_final_v = is_final<T>::value;
 
 /// \group is_abstract
 template <typename T>
-struct is_abstract : bool_constant<TAETL_IS_ABSTRACT(T)>
+struct is_abstract : bool_constant<TETL_IS_ABSTRACT(T)>
 {
 };
 
@@ -1034,7 +1034,7 @@ inline constexpr bool is_abstract_v = is_abstract<T>::value;
 
 /// \group is_aggregate
 template <typename T>
-struct is_aggregate : bool_constant<TAETL_IS_AGGREGATE(remove_cv_t<T>)>
+struct is_aggregate : bool_constant<TETL_IS_AGGREGATE(remove_cv_t<T>)>
 {
 };
 
@@ -1190,7 +1190,7 @@ inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
 
 /// \group is_class
 template <typename T>
-struct is_class : bool_constant<TAETL_IS_CLASS(T)>
+struct is_class : bool_constant<TETL_IS_CLASS(T)>
 {
 };
 
@@ -1200,7 +1200,7 @@ inline constexpr bool is_class_v = is_class<T>::value;
 
 /// \group is_enum
 template <typename T>
-struct is_enum : bool_constant<TAETL_IS_ENUM(T)>
+struct is_enum : bool_constant<TETL_IS_ENUM(T)>
 {
 };
 
@@ -1210,7 +1210,7 @@ inline constexpr bool is_enum_v = is_enum<T>::value;
 
 /// \group is_union
 template <typename T>
-struct is_union : bool_constant<TAETL_IS_UNION(T)>
+struct is_union : bool_constant<TETL_IS_UNION(T)>
 {
 };
 
@@ -1406,7 +1406,7 @@ inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
 /// considered trivial.
 template <typename T, typename... Args>
 struct is_trivially_constructible
-    : bool_constant<TAETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
+    : bool_constant<TETL_IS_TRIVIAL_CONSTRUCTIBLE(T)>
 {
 };
 
@@ -1460,7 +1460,7 @@ struct nothrow_constructible_impl<true, T[Size], Args...>
 
 template <typename T, typename... Args>
 using is_nothrow_constructible_helper
-  = nothrow_constructible_impl<TAETL_IS_CONSTRUCTIBLE(T, Args...), T, Args...>;
+  = nothrow_constructible_impl<TETL_IS_CONSTRUCTIBLE(T, Args...), T, Args...>;
 }  // namespace detail
 
 /// \brief The variable definition does not call any operation that is not
@@ -1716,7 +1716,7 @@ inline constexpr auto is_destructible_v = is_destructible<T>::value;
 /// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
 template <typename T>
 struct is_trivially_destructible
-    : bool_constant<TAETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
+    : bool_constant<TETL_IS_TRIVIAL_DESTRUCTIBLE(T)>
 {
 };
 
@@ -1777,7 +1777,7 @@ inline constexpr bool is_nothrow_destructible_v
 /// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
 /// \group has_virtual_destructor
 template <typename T>
-struct has_virtual_destructor : bool_constant<TAETL_HAS_VIRTUAL_DESTRUCTOR(T)>
+struct has_virtual_destructor : bool_constant<TETL_HAS_VIRTUAL_DESTRUCTOR(T)>
 {
 };
 
@@ -1793,7 +1793,7 @@ inline constexpr auto has_virtual_destructor_v
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
 template <typename T, typename U>
-struct is_assignable : bool_constant<TAETL_IS_ASSIGNABLE(T, U)>
+struct is_assignable : bool_constant<TETL_IS_ASSIGNABLE(T, U)>
 {
 };
 
@@ -1806,7 +1806,7 @@ inline constexpr bool is_assignable_v = is_assignable<T, U>::value;
 /// context unrelated to either type.
 template <typename T, typename U>
 struct is_trivially_assignable
-    : bool_constant<TAETL_IS_TRIVIALLY_ASSIGNABLE(T, U)>
+    : bool_constant<TETL_IS_TRIVIALLY_ASSIGNABLE(T, U)>
 {
 };
 
@@ -2145,7 +2145,7 @@ inline constexpr bool is_trivial_v = is_trivial<T>::value;
 /// cv-qualified), provides the member constant value equal to true. For any
 /// other type, value is false.
 template <typename T>
-struct is_standard_layout : bool_constant<TAETL_IS_STANDARD_LAYOUT(T)>
+struct is_standard_layout : bool_constant<TETL_IS_STANDARD_LAYOUT(T)>
 {
 };
 
@@ -2169,7 +2169,7 @@ inline constexpr bool is_standard_layout_v = is_standard_layout<T>::value;
 /// has_unique_object_representations_v is undefined.
 template <typename T>
 struct has_unique_object_representations
-    : bool_constant<TAETL_HAS_UNIQUE_OBJECT_REPRESENTATION(
+    : bool_constant<TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(
         remove_cv_t<remove_all_extents_t<T>>)>
 {
   //  template argument must be a complete class or an unbounded array
@@ -2566,7 +2566,7 @@ namespace detail
 template <typename T, bool = is_enum_v<T>>
 struct underlying_type_impl
 {
-  using type = TAETL_IS_UNDERLYING_TYPE(T);
+  using type = TETL_IS_UNDERLYING_TYPE(T);
 };
 
 template <typename T>
@@ -2615,8 +2615,8 @@ inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 /// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
-#if defined(TAETL_CPP_STANDARD_20)
-  return TAETL_IS_CONSTANT_EVALUATED();
+#if defined(TETL_CPP_STANDARD_20)
+  return TETL_IS_CONSTANT_EVALUATED();
 #else
   return false;
 #endif
@@ -2624,4 +2624,4 @@ inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 
 }  // namespace etl
 
-#endif  // TAETL_TYPETRAITS_HPP
+#endif  // TETL_TYPETRAITS_HPP

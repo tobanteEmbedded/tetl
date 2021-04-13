@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CTIME_HPP
-#define TAETL_CTIME_HPP
+#ifndef TETL_CTIME_HPP
+#define TETL_CTIME_HPP
 
 #if __has_include(<time.h>)
 #include <time.h>
@@ -36,4 +36,4 @@
 
 #endif  // has_include <time.h>
 
-#endif  // TAETL_CTIME_HPP
+#endif  // TETL_CTIME_HPP

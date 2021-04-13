@@ -24,8 +24,8 @@
 /// \file numeric.hpp
 /// \example numeric.cpp
 
-#ifndef TAETL_NUMERIC_HPP
-#define TAETL_NUMERIC_HPP
+#ifndef TETL_NUMERIC_HPP
+#define TETL_NUMERIC_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
@@ -240,7 +240,7 @@ template <typename M, typename N>
 /// least common multiple of |m| and |n|.
 template <
   typename M, typename N,
-  TAETL_REQUIRES_(
+  TETL_REQUIRES_(
     (is_integral_v<
        M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
 [[nodiscard]] constexpr auto lcm(M m, N n) ->
@@ -278,7 +278,7 @@ template <typename Type>
 /// [cppreference.com/w/cpp/numeric/midpoint](https://en.cppreference.com/w/cpp/numeric/midpoint)
 /// \group midpoint
 template <typename Int,
-          TAETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+          TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
   using U = make_unsigned_t<Int>;
@@ -299,7 +299,7 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
 }
 
 /// \group midpoint
-template <typename Float, TAETL_REQUIRES_(is_floating_point_v<Float>)>
+template <typename Float, TETL_REQUIRES_(is_floating_point_v<Float>)>
 constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
   auto const lo = numeric_limits<Float>::min() * 2;
@@ -325,4 +325,4 @@ constexpr auto midpoint(Pointer a, Pointer b) noexcept
 
 }  // namespace etl
 
-#endif  // TAETL_NUMERIC_HPP
+#endif  // TETL_NUMERIC_HPP

@@ -1,4 +1,4 @@
-# TAETL - Embedded Template **Library**
+# TETL - Embedded Template **Library**
 
 - [Quick Start](#quick-start)
 - [Status](#status)
@@ -20,37 +20,36 @@ g++ -std=c++17 -Itaetl/ ...
 ```
 
 - [Implementation Progress (Spreadsheet)](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
-- [API Reference](https://tobanteaudio.github.io/taetl/index.html)
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
 
 ## Status
 
-| **License**                                                                                                                 | **Issues**                                                                                                                     | **Lines of Code**                               |
-| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteAudio/taetl.svg)](https://GitHub.com/tobanteAudio/taetl/issues/) | ![](https://sloc.xyz/github/tobanteAudio/taetl) |
+| **License**                                                                                                                 | **Issues**                                                                                                                         | **Lines of Code**                                 |
+| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | [![GitHub issues](https://img.shields.io/github/issues/tobanteEmbedded/tetl.svg)](https://GitHub.com/tobanteEmbedded/tetl/issues/) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) |
 
 ### Hosted
 
-| **Compiler** |                                                                                       **C++17**                                                                                       |                                                                                       **C++20**                                                                                       |
-| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|   **GCC**    |       [![GCC C++17](https://github.com/tobanteAudio/taetl/workflows/GCC%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22GCC+C%2B%2B17%22)       |       [![GCC C++20](https://github.com/tobanteAudio/taetl/workflows/GCC%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22GCC+C%2B%2B20%22)       |
-|  **Clang**   |    [![Clang C++17](https://github.com/tobanteAudio/taetl/workflows/Clang%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22Clang+C%2B%2B17%22)    |    [![Clang C++20](https://github.com/tobanteAudio/taetl/workflows/Clang%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22Clang+C%2B%2B20%22)    |
-|  **macOS**   |    [![macOS C++17](https://github.com/tobanteAudio/taetl/workflows/macOS%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22macOS+C%2B%2B17%22)    |    [![macOS C++20](https://github.com/tobanteAudio/taetl/workflows/macOS%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22macOS+C%2B%2B20%22)    |
-| **Windows**  | [![Windows C++17](https://github.com/tobanteAudio/taetl/workflows/Windows%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22Windows+C%2B%2B17%22) | [![Windows C++20](https://github.com/tobanteAudio/taetl/workflows/Windows%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22Windows+C%2B%2B20%22) |
+| **Compiler** |                                                                                         **C++17**                                                                                         |                                                                                         **C++20**                                                                                         |
+| :----------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|   **GCC**    |       [![GCC C++17](https://github.com/tobanteEmbedded/tetl/workflows/GCC%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22GCC+C%2B%2B17%22)       |       [![GCC C++20](https://github.com/tobanteEmbedded/tetl/workflows/GCC%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22GCC+C%2B%2B20%22)       |
+|  **Clang**   |    [![Clang C++17](https://github.com/tobanteEmbedded/tetl/workflows/Clang%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Clang+C%2B%2B17%22)    |    [![Clang C++20](https://github.com/tobanteEmbedded/tetl/workflows/Clang%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Clang+C%2B%2B20%22)    |
+|  **macOS**   |    [![macOS C++17](https://github.com/tobanteEmbedded/tetl/workflows/macOS%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22macOS+C%2B%2B17%22)    |    [![macOS C++20](https://github.com/tobanteEmbedded/tetl/workflows/macOS%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22macOS+C%2B%2B20%22)    |
+| **Windows**  | [![Windows C++17](https://github.com/tobanteEmbedded/tetl/workflows/Windows%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Windows+C%2B%2B17%22) | [![Windows C++20](https://github.com/tobanteEmbedded/tetl/workflows/Windows%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Windows+C%2B%2B20%22) |
 
 ### Freestanding
 
-| **Compiler** |                                                                                 **C++17**                                                                                 |                                                                                 **C++20**                                                                                 |
-| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **AVR GCC**  | [![AVR C++17](https://github.com/tobanteAudio/taetl/workflows/AVR%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22AVR+C%2B%2B17%22) | [![AVR C++20](https://github.com/tobanteAudio/taetl/workflows/AVR%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22AVR+C%2B%2B20%22) |
-| **ARM GCC**  | [![ARM C++17](https://github.com/tobanteAudio/taetl/workflows/ARM%20C++17/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22ARM+C%2B%2B17%22) | [![ARM C++20](https://github.com/tobanteAudio/taetl/workflows/ARM%20C++20/badge.svg)](https://github.com/tobanteAudio/taetl/actions?query=workflow%3A%22ARM+C%2B%2B20%22) |
+| **Compiler** |                                                                                   **C++17**                                                                                   |                                                                                   **C++20**                                                                                   |
+| :----------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **AVR GCC**  | [![AVR C++17](https://github.com/tobanteEmbedded/tetl/workflows/AVR%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22AVR+C%2B%2B17%22) | [![AVR C++20](https://github.com/tobanteEmbedded/tetl/workflows/AVR%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22AVR+C%2B%2B20%22) |
+| **ARM GCC**  | [![ARM C++17](https://github.com/tobanteEmbedded/tetl/workflows/ARM%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22ARM+C%2B%2B17%22) | [![ARM C++20](https://github.com/tobanteEmbedded/tetl/workflows/ARM%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22ARM+C%2B%2B20%22) |
 
 ### Analysis
 
-| **Clang-Tidy**                                                                                                                                                            | **ASAN**                                                                                                                                                | **UBSAN**                                                                                                                                                  | **Coverage**                                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [![Clang-Tidy](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteAudio/taetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteAudio/taetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteAudio/taetl) |
+| **Clang-Tidy**                                                                                                                                                                | **ASAN**                                                                                                                                                    | **UBSAN**                                                                                                                                                      | **Coverage**                                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteEmbedded/tetl) |
 
 ## Design Goals
 
@@ -89,7 +88,7 @@ The following steps explain how to add `etl` to your project. Embedded or deskto
 ```sh
 cd path/to/your/project
 mkdir 3rd_party
-git submodule add https://github.com/tobanteAudio/taetl.git 3rd_party/taetl
+git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/taetl
 ```
 
 ### Command Line / Makefile
@@ -104,7 +103,7 @@ Add `taetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```cmake
 add_subdirectory(3rd_party/taetl EXCLUDE_FROM_ALL)
-target_link_libraries(${YOUR_TARGET} tobanteAudio::etl)
+target_link_libraries(${YOUR_TARGET} tobanteEmbedded::etl)
 ```
 
 ### PlatformIO
@@ -702,7 +701,7 @@ Get access to all intrinsic macros & library version macro and constants.
 
 auto main() -> int
 {
-#if defined(TAETL_MSVC)
+#if defined(TETL_MSVC)
   puts("msvc");
 #else
   puts("other compiler");

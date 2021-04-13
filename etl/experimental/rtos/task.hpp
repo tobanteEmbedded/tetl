@@ -21,13 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_RTOS_TASK_HPP
-#define TAETL_RTOS_TASK_HPP
+#ifndef TETL_RTOS_TASK_HPP
+#define TETL_RTOS_TASK_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/warning.hpp"
 
-#if defined(TAETL_RTOS_USE_STUBS)
+#if defined(TETL_RTOS_USE_STUBS)
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
@@ -89,4 +89,4 @@ inline auto start_scheduler() -> void { vTaskStartScheduler(); }
 
 }  // namespace etl::experimental::rtos
 
-#endif  // TAETL_RTOS_TASK_HPP
+#endif  // TETL_RTOS_TASK_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_STRING_VIEW_HPP
-#define TAETL_STRING_VIEW_HPP
+#ifndef TETL_STRING_VIEW_HPP
+#define TETL_STRING_VIEW_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
@@ -105,7 +105,7 @@ class basic_string_view
   /// behavior is undefined if [first, last) is not a valid range.
   ///
   /// \todo Improve SFINAE protection. See C++20 standard.
-  template <typename Iter, TAETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
+  template <typename Iter, TETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
   constexpr basic_string_view(Iter first, Iter last)
       : basic_string_view {first, static_cast<size_type>(last - first)}
   {
@@ -939,4 +939,4 @@ constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept
 }  // namespace literals
 }  // namespace etl
 
-#endif  // TAETL_STRING_VIEW_HPP
+#endif  // TETL_STRING_VIEW_HPP

@@ -21,7 +21,7 @@ all: config build test
 
 .PHONY: config
 config:
-	cmake -S. -B$(BUILD_DIR) -D CMAKE_BUILD_TYPE:STRING=$(CONFIG) -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON
+	cmake -S. -B$(BUILD_DIR) -D CMAKE_BUILD_TYPE:STRING=$(CONFIG) -D TETL_BUILD_CPP20=ON
 
 .PHONY: build
 build:
@@ -35,7 +35,7 @@ test:
 .PHONY: coverage
 coverage:
 	mkdir -p $(COVERAGE_DIR)
-	cmake -S . -G Ninja -B$(COVERAGE_DIR) -D TOBANTEAUDIO_ETL_BUILD_COVERAGE=ON -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON
+	cmake -S . -G Ninja -B$(COVERAGE_DIR) -D TETL_BUILD_COVERAGE=ON -D TETL_BUILD_CPP20=ON
 	cmake --build $(COVERAGE_DIR) -- -j6
 	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
 	cd $(COVERAGE_DIR) && ctest -j12
@@ -59,7 +59,7 @@ docs:
 standardese:
 	rm -rf cmake-build-docs
 	mkdir cmake-build-docs
-	cd cmake-build-docs && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTAETL_RTOS_USE_STUBS=1 $(shell realpath ./etl)
+	cd cmake-build-docs && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_RTOS_USE_STUBS=1 $(shell realpath ./etl)
 	./scripts/run-standardese.py
 
 .PHONY: tidy-check

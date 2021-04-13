@@ -23,8 +23,8 @@
 
 /// \example tuple.cpp
 
-#ifndef TAETL_TUPLE_HPP
-#define TAETL_TUPLE_HPP
+#ifndef TETL_TUPLE_HPP
+#define TETL_TUPLE_HPP
 
 // #include "etl/detail/tuple_size.hpp"
 
@@ -111,4 +111,4 @@ constexpr auto get(tuple<First, Rest...> const& t)
 
 }  // namespace etl
 
-#endif  // TAETL_TUPLE_HPP
+#endif  // TETL_TUPLE_HPP

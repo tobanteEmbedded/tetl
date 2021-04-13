@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CHARCONV_HPP
-#define TAETL_CHARCONV_HPP
+#ifndef TETL_CHARCONV_HPP
+#define TETL_CHARCONV_HPP
 
 #include "etl/cstdint.hpp"
 #include "etl/system_error.hpp"
@@ -70,4 +70,4 @@ struct from_chars_result
 
 }  // namespace etl
 
-#endif  // TAETL_CHARCONV_HPP
+#endif  // TETL_CHARCONV_HPP

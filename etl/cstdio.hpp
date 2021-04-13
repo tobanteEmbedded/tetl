@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CSTDIO_HPP
-#define TAETL_CSTDIO_HPP
+#ifndef TETL_CSTDIO_HPP
+#define TETL_CSTDIO_HPP
 
 #if __has_include(<stdio.h>)
 #include <stdio.h>
@@ -36,4 +36,4 @@
 
 #endif  // has_include <stdio.h>
 
-#endif  // TAETL_CSTDIO_HPP
+#endif  // TETL_CSTDIO_HPP

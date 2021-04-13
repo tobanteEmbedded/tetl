@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_HARDWARE_STM32_INTERRUPT_HPP
-#define TAETL_HARDWARE_STM32_INTERRUPT_HPP
+#ifndef TETL_HARDWARE_STM32_INTERRUPT_HPP
+#define TETL_HARDWARE_STM32_INTERRUPT_HPP
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
@@ -74,4 +74,4 @@ struct isr
 };
 }  // namespace etl::experimental::hardware::stm32
 
-#endif  // TAETL_HARDWARE_STM32_INTERRUPT_HPP
+#endif  // TETL_HARDWARE_STM32_INTERRUPT_HPP

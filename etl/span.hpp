@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_SPAN_HPP
-#define TAETL_SPAN_HPP
+#ifndef TETL_SPAN_HPP
+#define TETL_SPAN_HPP
 
 #include "etl/array.hpp"
 #include "etl/limits.hpp"
@@ -222,4 +222,4 @@ template <typename Container,
 span(Container const&) -> span<Element>;
 }  // namespace etl
 
-#endif  // TAETL_SPAN_HPP
+#endif  // TETL_SPAN_HPP

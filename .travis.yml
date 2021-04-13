@@ -18,7 +18,7 @@ script-anchors:
     - cd $TRAVIS_BUILD_DIR
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTOBANTEAUDIO_ETL_BUILD_ASAN=ON -DTOBANTEAUDIO_ETL_BUILD_UBSAN=ON -DTOBANTEAUDIO_ETL_BUILD_CPP20=ON
+    - cmake .. -DCMAKE_BUILD_TYPE:STRING=Release -DTETL_BUILD_ASAN=ON -DTETL_BUILD_UBSAN=ON -DTETL_BUILD_CPP20=ON
     - cmake --build . -- -j
     - ctest -j
 
@@ -65,14 +65,14 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc && CXX=g++"
       script: *script-docs
-      deploy:
-        provider: pages
-        skip_cleanup: true
-        local_dir: build-doc/html
-        github_token: $GITHUB_TOKEN
-        keep_history: true
-        on:
-          branch: main
+      # deploy:
+      #   provider: pages
+      #   skip_cleanup: true
+      #   local_dir: build-doc/html
+      #   github_token: $GITHUB_TOKEN
+      #   keep_history: true
+      #   on:
+      #     branch: main
 
 before_install:
   - eval "${MATRIX_EVAL}"

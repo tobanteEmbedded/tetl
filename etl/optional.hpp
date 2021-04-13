@@ -24,10 +24,10 @@
 /// \file optional.hpp
 /// \example optional.cpp
 
-#ifndef TAETL_OPTIONAL_HPP
-#define TAETL_OPTIONAL_HPP
+#ifndef TETL_OPTIONAL_HPP
+#define TETL_OPTIONAL_HPP
 
-#include "etl/detail/sfinae.hpp"  // for enable_if_t, TAETL_REQUIRES_, sfina...
+#include "etl/detail/sfinae.hpp"  // for enable_if_t, TETL_REQUIRES_, sfina...
 #include "etl/memory.hpp"         // for addressof
 #include "etl/new.hpp"            // for operator new
 #include "etl/type_traits.hpp"    // for remove_cvref_t, is_same (ptr only)
@@ -365,7 +365,7 @@ class optional : private detail::optional_move_assign_base<ValueType>,
   /// \brief Constructs an optional object that contains a value, initialized as
   /// if direct-initializing.
   template <typename... Args,
-            TAETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
+            TETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
   constexpr explicit optional(etl::in_place_t /*unused*/, Args&&... arguments)
       : base_type(in_place, etl::forward<Args>(arguments)...)
   {
@@ -907,4 +907,4 @@ template <typename T>
 optional(T) -> optional<T>;
 
 }  // namespace etl
-#endif  // TAETL_OPTIONAL_HPP
+#endif  // TETL_OPTIONAL_HPP

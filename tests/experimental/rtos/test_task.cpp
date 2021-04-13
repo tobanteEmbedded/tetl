@@ -23,7 +23,7 @@
 
 #include "catch2/catch_template_test_macros.hpp"
 
-#define TAETL_RTOS_USE_STUBS
+#define TETL_RTOS_USE_STUBS
 #include "etl/experimental/rtos/task.hpp"
 
 namespace rtos = etl::experimental::rtos;

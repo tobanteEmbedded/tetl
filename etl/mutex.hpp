@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_MUTEX_HPP
-#define TAETL_MUTEX_HPP
+#ifndef TETL_MUTEX_HPP
+#define TETL_MUTEX_HPP
 
 #include "etl/chrono.hpp"
 
@@ -310,4 +310,4 @@ void swap(unique_lock<Mutex>& lhs,
 
 }  // namespace etl
 
-#endif  // TAETL_MUTEX_HPP
+#endif  // TETL_MUTEX_HPP

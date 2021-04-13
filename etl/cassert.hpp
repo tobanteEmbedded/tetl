@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CASSERT_HPP
-#define TAETL_CASSERT_HPP
+#ifndef TETL_CASSERT_HPP
+#define TETL_CASSERT_HPP
 
 #if __has_include(<assert.h>)
 #include <assert.h>
@@ -32,4 +32,4 @@
 #endif
 #endif
 
-#endif  // TAETL_CASSERT_HPP
+#endif  // TETL_CASSERT_HPP

@@ -63,10 +63,10 @@ target_sources(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        tobanteAudio::etl
-        tobanteAudio::CompilerOptions
-        tobanteAudio::CompilerWarnings
-        tobanteAudio::CodeCoverage
+        tobanteEmbedded::etl
+        tobanteEmbedded::CompilerOptions
+        tobanteEmbedded::CompilerWarnings
+        tobanteEmbedded::CodeCoverage
         Catch2WithMain
 )
 
@@ -75,8 +75,8 @@ add_executable(${PROJECT_NAME}_testing experimental/testing/test_testing.cpp)
 add_test(NAME ${PROJECT_NAME}_testing COMMAND ${PROJECT_NAME}_testing)
 target_link_libraries(${PROJECT_NAME}_testing
     PRIVATE
-        tobanteAudio::etl
-        tobanteAudio::CompilerOptions
-        tobanteAudio::CompilerWarnings
-        tobanteAudio::CodeCoverage
+        tobanteEmbedded::etl
+        tobanteEmbedded::CompilerOptions
+        tobanteEmbedded::CompilerWarnings
+        tobanteEmbedded::CodeCoverage
 )

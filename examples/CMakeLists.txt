@@ -19,10 +19,10 @@ foreach(_target
   add_executable(${_target} "${_target}.cpp")
   target_link_libraries(${_target}
     PRIVATE
-      tobanteAudio::etl
-      tobanteAudio::CompilerOptions
-      tobanteAudio::CompilerWarnings
-      tobanteAudio::CodeCoverage
+      tobanteEmbedded::etl
+      tobanteEmbedded::CompilerOptions
+      tobanteEmbedded::CompilerWarnings
+      tobanteEmbedded::CodeCoverage
   )
   add_test("example_${_target}" ${_target})
 endforeach()

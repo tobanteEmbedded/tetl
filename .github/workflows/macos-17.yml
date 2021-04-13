@@ -2,9 +2,9 @@ name: macOS C++17
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         run: git submodule update --recursive --init
 
       - name: CMake configure -- Debug
-        run: cmake -S . -B cmake-build-debug -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-debug -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug --config Debug
@@ -27,11 +27,10 @@ jobs:
         run: cd cmake-build-debug; ctest; cd -
 
       - name: CMake configure -- Release
-        run: cmake -S . -B cmake-build-release -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-release -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build cmake-build-release --config Release
 
       - name: Run tests -- Release
         run: cd cmake-build-release; ctest; cd -
-

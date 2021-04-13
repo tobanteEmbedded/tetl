@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CSTDDEF_HPP
-#define TAETL_CSTDDEF_HPP
+#ifndef TETL_CSTDDEF_HPP
+#define TETL_CSTDDEF_HPP
 
 #include "etl/detail/cstddef_internal.hpp"
 #include "etl/detail/intrinsics.hpp"
@@ -141,4 +141,4 @@ constexpr auto operator^=(etl::byte& l, etl::byte r) noexcept -> etl::byte&
 
 }  // namespace etl
 
-#endif  // TAETL_CSTDDEF_HPP
+#endif  // TETL_CSTDDEF_HPP

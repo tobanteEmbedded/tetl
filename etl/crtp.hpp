@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CRTP_HPP
-#define TAETL_CRTP_HPP
+#ifndef TETL_CRTP_HPP
+#define TETL_CRTP_HPP
 
 #include "etl/cstddef.hpp"
 
@@ -44,4 +44,4 @@ struct crtp
 
 }  // namespace etl
 
-#endif  // TAETL_CRTP_HPP
+#endif  // TETL_CRTP_HPP

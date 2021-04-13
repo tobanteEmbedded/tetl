@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_DETAIL_ALGO_SEARCH_HPP
-#define TAETL_DETAIL_ALGO_SEARCH_HPP
+#ifndef TETL_DETAIL_ALGO_SEARCH_HPP
+#define TETL_DETAIL_ALGO_SEARCH_HPP
 
 namespace etl::detail
 {
@@ -46,4 +46,4 @@ search_impl(ForwardIter1 first, ForwardIter1 last, ForwardIter2 sFirst,
 }
 }  // namespace etl::detail
 
-#endif  // TAETL_DETAIL_ALGO_SEARCH_HPP
+#endif  // TETL_DETAIL_ALGO_SEARCH_HPP

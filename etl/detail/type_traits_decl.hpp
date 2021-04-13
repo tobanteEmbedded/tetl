@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_TYPETRAITS_DECL_HPP
-#define TAETL_TYPETRAITS_DECL_HPP
+#ifndef TETL_TYPETRAITS_DECL_HPP
+#define TETL_TYPETRAITS_DECL_HPP
 
 #include "etl/detail/intrinsics.hpp"
 
@@ -79,4 +79,4 @@ constexpr auto swap(T& a, T& b) noexcept -> void;
 
 }  // namespace etl
 
-#endif  // TAETL_TYPETRAITS_DECL_HPP
+#endif  // TETL_TYPETRAITS_DECL_HPP

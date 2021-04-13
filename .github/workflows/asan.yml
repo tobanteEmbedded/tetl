@@ -2,9 +2,9 @@ name: ASAN
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
         run: git submodule update --recursive --init
 
       - name: cmake configure
-        run: cmake -S . -B cmake-build-asan -D TOBANTEAUDIO_ETL_BUILD_ASAN=ON
+        run: cmake -S . -B cmake-build-asan -D TETL_BUILD_ASAN=ON
 
       - name: dump config
         run: cat cmake-build-asan/compile_commands.json

@@ -1,15 +1,15 @@
 add_library(compiler_warnings INTERFACE)
-add_library(tobanteAudio::CompilerWarnings ALIAS compiler_warnings)
+add_library(tobanteEmbedded::CompilerWarnings ALIAS compiler_warnings)
 
 if (MSVC)
-  if (TOBANTEAUDIO_ETL_BUILD_WERROR)
+  if (TETL_BUILD_WERROR)
     target_compile_options(compiler_warnings INTERFACE /WX)
-  endif (TOBANTEAUDIO_ETL_BUILD_WERROR)
+  endif (TETL_BUILD_WERROR)
   target_compile_options(compiler_warnings INTERFACE /W3)
 else ()
-  if (TOBANTEAUDIO_ETL_BUILD_WERROR)
+  if (TETL_BUILD_WERROR)
     target_compile_options(compiler_warnings INTERFACE -Werror)
-  endif (TOBANTEAUDIO_ETL_BUILD_WERROR)
+  endif (TETL_BUILD_WERROR)
     target_compile_options(compiler_warnings
       INTERFACE
         -Wall

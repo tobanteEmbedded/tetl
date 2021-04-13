@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CONTAINER_UTILS_HPP
-#define TAETL_CONTAINER_UTILS_HPP
+#ifndef TETL_CONTAINER_UTILS_HPP
+#define TETL_CONTAINER_UTILS_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
@@ -96,11 +96,11 @@ using smallest_size_t =
 // clang-format on
 
 /// \brief Index a range doing bound checks in debug builds
-template <typename Rng, typename Index, TAETL_REQUIRES_(RandomAccessRange<Rng>)>
+template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
   assert(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
   return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
 }  // namespace etl::detail
-#endif  // TAETL_CONTAINER_UTILS_HPP
+#endif  // TETL_CONTAINER_UTILS_HPP

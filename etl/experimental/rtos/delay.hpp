@@ -21,13 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_RTOS_DELAY_HPP
-#define TAETL_RTOS_DELAY_HPP
+#ifndef TETL_RTOS_DELAY_HPP
+#define TETL_RTOS_DELAY_HPP
 
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
-#if defined(TAETL_RTOS_USE_STUBS)
+#if defined(TETL_RTOS_USE_STUBS)
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
@@ -42,4 +42,4 @@ inline auto delay_until(etl::uint32_t previous, etl::uint32_t increment) -> void
 
 }  // namespace etl::experimental::rtos
 
-#endif  // TAETL_RTOS_DELAY_HPP
+#endif  // TETL_RTOS_DELAY_HPP

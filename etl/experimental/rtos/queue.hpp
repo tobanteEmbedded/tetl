@@ -21,14 +21,14 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_RTOS_QUEUE_HPP
-#define TAETL_RTOS_QUEUE_HPP
+#ifndef TETL_RTOS_QUEUE_HPP
+#define TETL_RTOS_QUEUE_HPP
 
 #include "etl/cstdint.hpp"
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
-#if defined(TAETL_RTOS_USE_STUBS)
+#if defined(TETL_RTOS_USE_STUBS)
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
@@ -108,4 +108,4 @@ class queue
 
 }  // namespace etl::experimental::rtos
 
-#endif  // TAETL_RTOS_QUEUE_HPP
+#endif  // TETL_RTOS_QUEUE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_NUMBERS_HPP
-#define TAETL_NUMBERS_HPP
+#ifndef TETL_NUMBERS_HPP
+#define TETL_NUMBERS_HPP
 
 #include "etl/type_traits.hpp"
 
@@ -115,4 +115,4 @@ inline constexpr long double phil        = phi_v<long double>;
 
 }  // namespace etl::numbers
 
-#endif  // TAETL_NUMBERS_HPP
+#endif  // TETL_NUMBERS_HPP

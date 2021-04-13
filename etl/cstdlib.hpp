@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TAETL_CSTDLIB_HPP)
-#define TAETL_CSTDLIB_HPP
+#if not defined(TETL_CSTDLIB_HPP)
+#define TETL_CSTDLIB_HPP
 
 #include "etl/cassert.hpp"
 #include "etl/cmath.hpp"
@@ -222,4 +222,4 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 }
 }  // namespace etl
 
-#endif  // TAETL_CSTDLIB_HPP
+#endif  // TETL_CSTDLIB_HPP

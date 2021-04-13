@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_STRONG_TYPES_STRONG_TYPES_HPP
-#define TAETL_STRONG_TYPES_STRONG_TYPES_HPP
+#ifndef TETL_STRONG_TYPES_STRONG_TYPES_HPP
+#define TETL_STRONG_TYPES_STRONG_TYPES_HPP
 
 #include "etl/crtp.hpp"
 #include "etl/utility.hpp"
@@ -147,4 +147,4 @@ struct strong_type : Skills<strong_type<ValueType, Tag, Skills...>>...
 };
 }  // namespace etl::experimental
 
-#endif  // TAETL_STRONG_TYPES_STRONG_TYPES_HPP
+#endif  // TETL_STRONG_TYPES_STRONG_TYPES_HPP

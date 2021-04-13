@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_HARDWARE_STM32_GPIO_HPP
-#define TAETL_HARDWARE_STM32_GPIO_HPP
+#ifndef TETL_HARDWARE_STM32_GPIO_HPP
+#define TETL_HARDWARE_STM32_GPIO_HPP
 
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
@@ -111,4 +111,4 @@ struct port
 };
 }  // namespace etl::experimental::hardware::stm32
 
-#endif  // TAETL_HARDWARE_STM32_GPIO_HPP
+#endif  // TETL_HARDWARE_STM32_GPIO_HPP

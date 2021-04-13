@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CFLOAT_HPP
-#define TAETL_CFLOAT_HPP
+#ifndef TETL_CFLOAT_HPP
+#define TETL_CFLOAT_HPP
 
 #if __has_include(<float.h>)
 #include <float.h>
@@ -85,4 +85,4 @@
 
 #endif  // has_include <float.h>
 
-#endif  // TAETL_CFLOAT_HPP
+#endif  // TETL_CFLOAT_HPP

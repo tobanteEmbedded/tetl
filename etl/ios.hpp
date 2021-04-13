@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_IOS_HPP
-#define TAETL_IOS_HPP
+#ifndef TETL_IOS_HPP
+#define TETL_IOS_HPP
 
 namespace etl
 {
@@ -31,4 +31,4 @@ using streamoff = int;
 template <typename State>
 class fpos;
 }  // namespace etl
-#endif  // TAETL_IOS_HPP
+#endif  // TETL_IOS_HPP

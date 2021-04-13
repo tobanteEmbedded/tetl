@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_MEMORY_HPP
-#define TAETL_MEMORY_HPP
+#ifndef TETL_MEMORY_HPP
+#define TETL_MEMORY_HPP
 
 #include "etl/bit.hpp"
 #include "etl/cassert.hpp"
@@ -605,7 +605,7 @@ class default_delete
   public:
   constexpr default_delete() noexcept = default;
 
-  template <typename U, TAETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
+  template <typename U, TETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
   default_delete(default_delete<U> const& /*unused*/) noexcept
   {
   }
@@ -625,13 +625,13 @@ class default_delete<T[]>
   constexpr default_delete() noexcept = default;
 
   template <typename U,
-            TAETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
+            TETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
   default_delete(default_delete<U[]> const& /*unused*/) noexcept
   {
   }
 
   template <typename U,
-            TAETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
+            TETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
   auto operator()(U* arrayPtr) const noexcept -> void
   {
     delete[] arrayPtr;
@@ -665,4 +665,4 @@ class default_delete<T[]>
 }
 
 }  // namespace etl
-#endif  // TAETL_MEMORY_HPP
+#endif  // TETL_MEMORY_HPP

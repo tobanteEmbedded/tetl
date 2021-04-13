@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_NET_BYTE_ORDER_HPP
-#define TAETL_NET_BYTE_ORDER_HPP
+#ifndef TETL_NET_BYTE_ORDER_HPP
+#define TETL_NET_BYTE_ORDER_HPP
 
 #include "etl/cstdint.hpp"
 
@@ -55,4 +55,4 @@ constexpr auto hton(uint32_t v) noexcept -> uint32_t { return ntoh(v); }
 
 }  // namespace etl::experimental::net
 
-#endif  // TAETL_NET_BYTE_ORDER_HPP
+#endif  // TETL_NET_BYTE_ORDER_HPP

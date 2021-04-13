@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_STRING_HPP
-#define TAETL_STRING_HPP
+#ifndef TETL_STRING_HPP
+#define TETL_STRING_HPP
 
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
@@ -120,7 +120,7 @@ class basic_static_string
   /// Constructs the string with the contents of the range [ first,
   /// last). Fails silently if input length is greater then capacity.
   template <typename InputIter,
-            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+            TETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr basic_static_string(InputIter first, InputIter last) noexcept
       : basic_static_string(first,
                             static_cast<size_type>(distance(first, last)))
@@ -142,7 +142,7 @@ class basic_static_string
 
   /// Implicitly converts t to a string view sv, then initializes the
   /// string with the contents of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   explicit constexpr basic_static_string(T const& t) noexcept
 
   {
@@ -152,7 +152,7 @@ class basic_static_string
 
   /// Implicitly converts t to a string view sv, then initializes the
   /// string with the subrange [ pos, pos + n ) of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
       : basic_static_string {
         basic_string_view<value_type, traits_type> {t}.substr(pos, n)}
@@ -192,7 +192,7 @@ class basic_static_string
 
   /// Implicitly converts t to a string view sv, then replaces the
   /// contents with those of the sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto operator=(T const& t) noexcept -> basic_static_string&
   {
     assign(t);
@@ -251,7 +251,7 @@ class basic_static_string
 
   /// \brief Replaces the contents with copies of the characters in the
   /// range [ first , last ).
-  template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
+  template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
   constexpr auto assign(InputIt first, InputIt last) noexcept
     -> basic_static_string&
   {
@@ -261,7 +261,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then replaces the
   /// contents with the characters from sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto assign(T const& t) noexcept -> basic_static_string&
   {
     auto tmp = basic_static_string {basic_static_string {t}};
@@ -271,7 +271,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then replaces the
   /// contents with the characters from the subview [ pos, pos + count ) of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto assign(T const& t, size_type pos,
                         size_type count = npos) noexcept -> basic_static_string&
   {
@@ -561,7 +561,7 @@ class basic_static_string
 
   /// \brief Appends characters in the range [ first , last ).
   template <typename InputIter,
-            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+            TETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr auto append(InputIter first, InputIter last) noexcept
     -> basic_static_string&
   {
@@ -587,7 +587,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string_view sv, then appends all
   /// characters from sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto append(T const& t) -> basic_static_string&
   {
     etl::basic_string_view<value_type, traits_type> sv = t;
@@ -596,7 +596,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string_view sv then appends the
   /// characters from the subview [ pos, pos + count ) of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto append(T const& t, size_type pos, size_type count = npos)
     -> basic_static_string&
   {
@@ -625,7 +625,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then appends characters
   /// in the string view sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto operator+=(T const& t) noexcept -> basic_static_string&
   {
     return append(t);
@@ -702,7 +702,7 @@ class basic_static_string
   //  * \brief Inserts characters from the range [first, last) before the
   //  element (if any)
   //  * pointed by pos.
-  // template <typename InputIter, TAETL_REQUIRES_(detail::InputIterator<T>)>
+  // template <typename InputIter, TETL_REQUIRES_(detail::InputIterator<T>)>
   // constexpr auto insert(const_iterator pos, InputIter first, InputIter last)
   // noexcept
   //     -> iterator
@@ -711,7 +711,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then inserts the
   /// elements from sv before the element (if any) pointed by pos.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto insert(size_type const pos, T const& t) noexcept
     -> basic_static_string&
   {
@@ -723,7 +723,7 @@ class basic_static_string
   /// \brief Implicitly converts t to a string view sv, then inserts, before
   /// the element (if any) pointed by pos, the characters from the subview
   /// [index_str, index_str+count) of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   constexpr auto insert(size_type const index, T const& t,
                         size_type const indexStr,
                         size_type const count = npos) noexcept
@@ -818,7 +818,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then compares the
   /// content of this string to sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
   {
     using view_type    = etl::basic_string_view<value_type, traits_type>;
@@ -828,7 +828,7 @@ class basic_static_string
 
   /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
   /// pos1+count1) substring of this string to sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
                                        T const& t) const noexcept -> int
   {
@@ -840,7 +840,7 @@ class basic_static_string
   /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
   /// pos1+count1) substring of this string to a substring [pos2, pos2+count2)
   /// of sv.
-  template <typename T, TAETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+  template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
   [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
                                        T const& t, size_type pos2,
                                        size_type count2 = npos) const noexcept
@@ -1583,4 +1583,4 @@ template <size_t Capacity>
 
 }  // namespace etl
 
-#endif  // TAETL_STRING_HPP
+#endif  // TETL_STRING_HPP

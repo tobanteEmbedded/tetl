@@ -21,12 +21,12 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CSTDARG_HPP
-#define TAETL_CSTDARG_HPP
+#ifndef TETL_CSTDARG_HPP
+#define TETL_CSTDARG_HPP
 
 #include "etl/version.hpp"
 
-#if defined(TAETL_MSVC)
+#if defined(TETL_MSVC)
 #include <cstdarg>
 #endif
 
@@ -42,8 +42,8 @@ namespace etl
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/variadic/va_list](https://en.cppreference.com/w/cpp/utility/variadic/va_list)
-#if not defined(TAETL_MSVC)
-using va_list = TAETL_BUILTIN_VA_LIST;
+#if not defined(TETL_MSVC)
+using va_list = TETL_BUILTIN_VA_LIST;
 #else
 using va_list = ::std::va_list;
 #endif
@@ -104,4 +104,4 @@ using va_list = ::std::va_list;
 #define va_copy(dest, src) __builtin_va_copy(dest, src)
 #endif
 
-#endif  // TAETL_CSTDARG_HPP
+#endif  // TETL_CSTDARG_HPP

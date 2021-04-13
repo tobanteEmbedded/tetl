@@ -65,7 +65,7 @@ template <typename T>
 
 #if not defined(MAKE_TEST_CASE)
 #define MAKE_TEST_CASE(exp)                                                    \
-  binary_test_case { __LINE__, __FILE__, TAETL_FUNC_SIG, exp, }
+  binary_test_case { __LINE__, __FILE__, TETL_FUNC_SIG, exp, }
 #endif  // MAKE_TEST_CASE
 
 #if not defined(EQUAL)

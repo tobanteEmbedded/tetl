@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CMATH_HPP
-#define TAETL_CMATH_HPP
+#ifndef TETL_CMATH_HPP
+#define TETL_CMATH_HPP
 
 #include "etl/type_traits.hpp"
 
@@ -33,11 +33,11 @@
 #else
 
 #ifndef NAN
-#define NAN TAETL_BUILTIN_NAN
+#define NAN TETL_BUILTIN_NAN
 #endif
 
 #ifndef INFINITY
-#define INFINITY TAETL_BUILTIN_INFINITY
+#define INFINITY TETL_BUILTIN_INFINITY
 #endif
 
 #endif  // has_include<math.h>
@@ -215,4 +215,4 @@ template <typename T>
 
 }  // namespace etl
 
-#endif  // TAETL_CMATH_HPP
+#endif  // TETL_CMATH_HPP

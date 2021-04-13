@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CLIMITS_HPP
-#define TAETL_CLIMITS_HPP
+#ifndef TETL_CLIMITS_HPP
+#define TETL_CLIMITS_HPP
 
 #if __has_include(<limits.h>)
 #include <limits.h>
@@ -68,4 +68,4 @@
 
 #endif  // has_include <limits.h>
 
-#endif  // TAETL_CLIMITS_HPP
+#endif  // TETL_CLIMITS_HPP

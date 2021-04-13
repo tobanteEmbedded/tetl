@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_LIMITS_HPP
-#define TAETL_LIMITS_HPP
+#ifndef TETL_LIMITS_HPP
+#define TETL_LIMITS_HPP
 
 #ifdef _MSC_VER
 #include <float.h>
@@ -852,4 +852,4 @@ class numeric_limits<double>
 
 }  // namespace etl
 
-#endif  // TAETL_LIMITS_HPP
+#endif  // TETL_LIMITS_HPP

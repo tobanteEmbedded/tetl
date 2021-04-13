@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
-#define TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
+#ifndef TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
+#define TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
 
 #include "etl/detail/fmt_formatter.hpp"
 
@@ -107,4 +107,4 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
 
 }  // namespace etl::detail
 
-#endif  // TAETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
+#endif  // TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP

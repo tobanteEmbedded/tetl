@@ -24,8 +24,8 @@
 /// \file array.hpp
 /// \example array.cpp
 
-#ifndef TAETL_ARRAY_HPP
-#define TAETL_ARRAY_HPP
+#ifndef TETL_ARRAY_HPP
+#define TETL_ARRAY_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
@@ -452,4 +452,4 @@ template <typename T, size_t N>
 
 }  // namespace etl
 
-#endif  // TAETL_ARRAY_HPP
+#endif  // TETL_ARRAY_HPP

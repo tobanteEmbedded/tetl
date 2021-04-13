@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_STRING_CHAR_TRAITS_HPP
-#define TAETL_STRING_CHAR_TRAITS_HPP
+#ifndef TETL_STRING_CHAR_TRAITS_HPP
+#define TETL_STRING_CHAR_TRAITS_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
@@ -191,4 +191,4 @@ struct char_traits<char>
 
 }  // namespace etl
 
-#endif  // TAETL_STRING_CHAR_TRAITS_HPP
+#endif  // TETL_STRING_CHAR_TRAITS_HPP

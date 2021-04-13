@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_NET_BUFFER_HPP
-#define TAETL_NET_BUFFER_HPP
+#ifndef TETL_NET_BUFFER_HPP
+#define TETL_NET_BUFFER_HPP
 
 #include "etl/experimental/net/buffer_const.hpp"
 #include "etl/experimental/net/buffer_mutable.hpp"
@@ -40,4 +40,4 @@ inline auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
 }
 }  // namespace etl::experimental::net
 
-#endif  // TAETL_NET_BUFFER_HPP
+#endif  // TETL_NET_BUFFER_HPP

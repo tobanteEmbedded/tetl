@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CSTRING_HPP
-#define TAETL_CSTRING_HPP
+#ifndef TETL_CSTRING_HPP
+#define TETL_CSTRING_HPP
 
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
@@ -213,4 +213,4 @@ constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 }
 
 }  // namespace etl
-#endif  // TAETL_CSTRING_HPP
+#endif  // TETL_CSTRING_HPP

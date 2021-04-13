@@ -23,8 +23,8 @@
 
 /// \file map.hpp
 /// \example map.cpp
-#ifndef TAETL_MAP_HPP
-#define TAETL_MAP_HPP
+#ifndef TETL_MAP_HPP
+#define TETL_MAP_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
@@ -186,7 +186,7 @@ class map_view
   /// \details Returns a pair consisting of an iterator to the inserted element
   /// (or to the element that prevented the insertion) and a bool denoting
   /// whether the insertion took place.
-  template <typename P, TAETL_REQUIRES_(is_constructible_v<value_type, P&&>)>
+  template <typename P, TETL_REQUIRES_(is_constructible_v<value_type, P&&>)>
   constexpr auto insert(P&& value) -> etl::pair<iterator, bool>
   {
     return emplace(etl::forward<P>(value));
@@ -537,7 +537,7 @@ private:
 
   /// \brief Inserts element(s) into the container, if the container doesn't
   /// already contain an element with an equivalent key.
-  template <typename P, TAETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
+  template <typename P, TETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
   constexpr auto insert(P&& value) -> pair<iterator, bool>
   {
     return emplace(forward<P>(value));
@@ -559,7 +559,7 @@ private:
     return insert(value).first;
   }
 
-  template <typename P, TAETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
+  template <typename P, TETL_REQUIRES_(is_convertible_v<value_type, P&&>)>
   constexpr auto insert(const_iterator hint, P&& value) -> iterator
   {
     ignore_unused(hint);
@@ -593,4 +593,4 @@ private:
   }
 };
 }  // namespace etl
-#endif  // TAETL_MAP_HPP
+#endif  // TETL_MAP_HPP

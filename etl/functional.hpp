@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_FUNCTIONAL_HPP
-#define TAETL_FUNCTIONAL_HPP
+#ifndef TETL_FUNCTIONAL_HPP
+#define TETL_FUNCTIONAL_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
@@ -1127,4 +1127,4 @@ struct hash<T*>
 
 }  // namespace etl
 
-#endif  // TAETL_FUNCTIONAL_HPP
+#endif  // TETL_FUNCTIONAL_HPP

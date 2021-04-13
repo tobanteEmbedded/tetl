@@ -26,7 +26,7 @@
 #include "catch2/catch_template_test_macros.hpp"
 
 // TODO: Fix on MSVC
-#if not defined(TAETL_MSVC)
+#if not defined(TETL_MSVC)
 
 namespace
 {

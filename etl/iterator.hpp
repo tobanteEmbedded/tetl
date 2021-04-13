@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_ITERATOR_HPP
-#define TAETL_ITERATOR_HPP
+#ifndef TETL_ITERATOR_HPP
+#define TETL_ITERATOR_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/memory.hpp"
@@ -746,4 +746,4 @@ template <typename Container>
 
 }  // namespace etl
 
-#endif  // TAETL_ITERATOR_HPP
+#endif  // TETL_ITERATOR_HPP

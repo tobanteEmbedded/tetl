@@ -24,8 +24,8 @@
 /// \file set.hpp
 /// \example set.cpp
 
-#ifndef TAETL_SET_HPP
-#define TAETL_SET_HPP
+#ifndef TETL_SET_HPP
+#define TETL_SET_HPP
 
 #include "etl/algorithm.hpp"   // for lower_bound, rotate
 #include "etl/functional.hpp"  // for less
@@ -82,7 +82,7 @@ struct static_set
   /// the first will be discarded.
   ///
   /// \todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
-  template <typename InputIt, TAETL_REQUIRES_(detail::InputIterator<InputIt>)>
+  template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
   static_set(InputIt first, InputIt last)
   {
     if constexpr (detail::RandomAccessIterator<InputIt>)
@@ -261,7 +261,7 @@ struct static_set
   /// the range have keys that compare equivalent, it is unspecified which
   /// element is inserted (pending LWG2844).
   template <typename InputIter,
-            TAETL_REQUIRES_(detail::InputIterator<InputIter>)>
+            TETL_REQUIRES_(detail::InputIterator<InputIter>)>
   constexpr auto
   insert(InputIter first,
          InputIter last) noexcept(noexcept(insert(declval<key_type>()))) -> void
@@ -272,7 +272,7 @@ struct static_set
   /// \brief Inserts a new element into the container constructed in-place with
   /// the given args if there is no element with the key in the container.
   template <typename... Args,
-            TAETL_REQUIRES_(is_copy_constructible_v<key_type>)>
+            TETL_REQUIRES_(is_copy_constructible_v<key_type>)>
   constexpr auto
   emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
     -> pair<iterator, bool>
@@ -344,7 +344,7 @@ struct static_set
 
   /// \brief Returns the number of elements with key that compares equivalent to
   /// the value x.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto count(K const& x) const -> size_type
   {
     return contains(x) ? 1 : 0;
@@ -370,7 +370,7 @@ struct static_set
   }
 
   /// \brief Finds an element with key that compares equivalent to the value x.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) -> iterator
   {
     return find_if(begin(), end(),
@@ -382,7 +382,7 @@ struct static_set
   }
 
   /// \brief Finds an element with key that compares equivalent to the value x.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) const -> const_iterator
   {
     return find_if(cbegin(), cend(),
@@ -403,7 +403,7 @@ struct static_set
 
   /// \brief Checks if there is an element with key that compares equivalent to
   /// the value x.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto contains(K const& x) const -> bool
   {
     return find(x) != end();
@@ -426,7 +426,7 @@ struct static_set
 
   /// \brief Returns an iterator pointing to the first element that is not less
   /// than (i.e. greater or equal to) key.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
   {
     return ::etl::lower_bound(begin(), end(), key, key_compare {});
@@ -434,7 +434,7 @@ struct static_set
 
   /// \brief Returns an iterator pointing to the first element that is not less
   /// than (i.e. greater or equal to) key.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
   {
     return ::etl::lower_bound(begin(), end(), key, key_compare {});
@@ -457,7 +457,7 @@ struct static_set
 
   /// \brief Returns an iterator pointing to the first element that is greater
   /// than key.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator
   {
     return ::etl::upper_bound(begin(), end(), key, key_compare {});
@@ -465,7 +465,7 @@ struct static_set
 
   /// \brief Returns an iterator pointing to the first element that is greater
   /// than key.
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator
   {
     return ::etl::upper_bound(begin(), end(), key, key_compare {});
@@ -497,7 +497,7 @@ struct static_set
   /// first element that is not less than key and another pointing to the first
   /// element greater than key. Alternatively, the first iterator may be
   /// obtained with lower_bound(), and the second with upper_bound().
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto equal_range(K const& key) -> iterator
   {
     return ::etl::equal_range(begin(), end(), key, key_compare {});
@@ -508,7 +508,7 @@ struct static_set
   /// first element that is not less than key and another pointing to the first
   /// element greater than key. Alternatively, the first iterator may be
   /// obtained with lower_bound(), and the second with upper_bound().
-  template <typename K, TAETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+  template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   [[nodiscard]] constexpr auto equal_range(K const& key) const -> const_iterator
   {
     return ::etl::equal_range(begin(), end(), key, key_compare {});
@@ -652,4 +652,4 @@ swap(static_set<Key, Capacity, Compare>& lhs,
 
 }  // namespace etl
 
-#endif  // TAETL_SET_HPP
+#endif  // TETL_SET_HPP

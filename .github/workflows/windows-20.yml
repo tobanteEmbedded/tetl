@@ -1,9 +1,9 @@
 name: Windows C++20
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         run: git submodule update --recursive --init
 
       - name: CMake configure -- Debug
-        run: cmake -S . -B cmake-build-debug -G "Visual Studio 16 2019" -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-debug -G "Visual Studio 16 2019" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug --config "Debug"
@@ -26,11 +26,10 @@ jobs:
         run: cd cmake-build-debug; ctest -C Debug; cd -
 
       - name: CMake configure -- Release
-        run: cmake -S . -B cmake-build-release -G "Visual Studio 16 2019" -D TOBANTEAUDIO_ETL_BUILD_CPP20=ON -D TOBANTEAUDIO_ETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-release -G "Visual Studio 16 2019" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build cmake-build-release --config "Release"
 
       - name: Run tests -- Release
         run: cd cmake-build-release; ctest -C Release; cd -
-

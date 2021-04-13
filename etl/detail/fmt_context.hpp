@@ -1,5 +1,5 @@
-#ifndef TAETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP
-#define TAETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP
+#ifndef TETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP
+#define TETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/iterator.hpp"
@@ -61,4 +61,4 @@ using format_context
 
 }  // namespace etl
 
-#endif  // TAETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP
+#endif  // TETL_EXPERIMENTAL_FORMAT_CONTEXT_HPP

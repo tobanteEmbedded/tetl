@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_WARNING_HPP
-#define TAETL_WARNING_HPP
+#ifndef TETL_WARNING_HPP
+#define TETL_WARNING_HPP
 namespace etl
 {
 /// Explicitly ignore arguments or variables.
@@ -32,4 +32,4 @@ auto ignore_unused(Types&&... /*unused*/) -> void
 }
 }  // namespace etl
 
-#endif  // TAETL_WARNING_HPP
+#endif  // TETL_WARNING_HPP

@@ -21,19 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_VERSION_HPP
-#define TAETL_VERSION_HPP
+#ifndef TETL_VERSION_HPP
+#define TETL_VERSION_HPP
 
 #include "etl/detail/intrinsics.hpp"
 
 /// The major release version
-#define TAETL_VERSION_MAJOR 0
+#define TETL_VERSION_MAJOR 0
 /// The minor release version
-#define TAETL_VERSION_MINOR 4
+#define TETL_VERSION_MINOR 4
 /// The patch release version
-#define TAETL_VERSION_PATCH 0
+#define TETL_VERSION_PATCH 0
 /// The library version as a string literal
-#define TAETL_VERSION_STRING "0.4.0"
+#define TETL_VERSION_STRING "0.4.0"
 
 namespace etl
 {
@@ -52,13 +52,13 @@ enum class language_standard
 };
 
 #if __cplusplus == 201703L
-#define TAETL_CPP_STANDARD_17
+#define TETL_CPP_STANDARD_17
 /// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_17;
 #endif
 
 #if __cplusplus > 201703L
-#define TAETL_CPP_STANDARD_20
+#define TETL_CPP_STANDARD_20
 /// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_20;
 #endif
@@ -77,4 +77,4 @@ constexpr auto current_standard = language_standard::cpp_20;
 }
 }  // namespace etl
 
-#endif  // TAETL_VERSION_HPP
+#endif  // TETL_VERSION_HPP

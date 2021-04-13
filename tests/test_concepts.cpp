@@ -27,7 +27,7 @@
 
 #include "catch2/catch_template_test_macros.hpp"
 
-#if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
+#if defined(TETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace
 {
 auto floating_point_test(etl::floating_point auto /*unused*/) { return true; }

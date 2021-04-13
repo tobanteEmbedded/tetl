@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_STACK_HPP
-#define TAETL_STACK_HPP
+#ifndef TETL_STACK_HPP
+#define TETL_STACK_HPP
 
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
@@ -210,7 +210,7 @@ stack(Container) -> stack<typename Container::value_type, Container>;
 /// and rhs. This overload only participates in overload resolution if
 /// is_swappable<Container>::value is true.
 template <typename T, typename Container,
-          TAETL_REQUIRES_(is_swappable_v<Container>)>
+          TETL_REQUIRES_(is_swappable_v<Container>)>
 constexpr auto swap(stack<T, Container>& lhs,
                     stack<T, Container>& rhs) noexcept(noexcept(lhs.swap(rhs)))
   -> void
@@ -220,4 +220,4 @@ constexpr auto swap(stack<T, Container>& lhs,
 
 }  // namespace etl
 
-#endif  // TAETL_STACK_HPP
+#endif  // TETL_STACK_HPP

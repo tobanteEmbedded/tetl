@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CCTYPE_HPP
-#define TAETL_CCTYPE_HPP
+#ifndef TETL_CCTYPE_HPP
+#define TETL_CCTYPE_HPP
 
 #include "etl/cassert.hpp"
 #include "etl/limits.hpp"
@@ -286,4 +286,4 @@ namespace etl
   return static_cast<int>(ch);
 }
 }  // namespace etl
-#endif  // TAETL_CCTYPE_HPP
+#endif  // TETL_CCTYPE_HPP

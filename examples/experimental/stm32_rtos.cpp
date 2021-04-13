@@ -23,7 +23,7 @@
 
 #include "etl/new.hpp"
 
-#define TAETL_RTOS_USE_STUBS
+#define TETL_RTOS_USE_STUBS
 #include "etl/experimental/hardware/stm32/gpio.hpp"  // for port, pin_number
 #include "etl/experimental/rtos/delay.hpp"           // for delay, delay_until
 #include "etl/experimental/rtos/task.hpp"            // for once, create_task

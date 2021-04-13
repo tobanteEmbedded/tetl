@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_BIT_HPP
-#define TAETL_BIT_HPP
+#ifndef TETL_BIT_HPP
+#define TETL_BIT_HPP
 
 #include "etl/cstring.hpp"
 #include "etl/limits.hpp"
@@ -273,4 +273,4 @@ template <typename T>
 }
 }  // namespace etl
 
-#endif  // TAETL_BIT_HPP
+#endif  // TETL_BIT_HPP

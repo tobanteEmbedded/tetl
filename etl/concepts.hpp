@@ -21,14 +21,14 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_CONCEPTS_HPP
-#define TAETL_CONCEPTS_HPP
+#ifndef TETL_CONCEPTS_HPP
+#define TETL_CONCEPTS_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/version.hpp"
 
-#if defined(TAETL_CPP_STANDARD_20) && defined(__cpp_concepts)
+#if defined(TETL_CPP_STANDARD_20) && defined(__cpp_concepts)
 namespace etl
 {
 namespace detail
@@ -134,4 +134,4 @@ concept copy_constructible =
 
 #endif
 
-#endif  // TAETL_CONCEPTS_HPP
+#endif  // TETL_CONCEPTS_HPP

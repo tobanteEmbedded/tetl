@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TAETL_EXPERIMENTAL_FORMAT_HPP
-#define TAETL_EXPERIMENTAL_FORMAT_HPP
+#ifndef TETL_EXPERIMENTAL_FORMAT_HPP
+#define TETL_EXPERIMENTAL_FORMAT_HPP
 
 #include "etl/detail/fmt_argument.hpp"
 #include "etl/detail/fmt_context.hpp"
@@ -168,4 +168,4 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
 }
 }  // namespace etl
 
-#endif  // TAETL_EXPERIMENTAL_FORMAT_HPP
+#endif  // TETL_EXPERIMENTAL_FORMAT_HPP
