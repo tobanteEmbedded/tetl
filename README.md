@@ -1,4 +1,4 @@
-# TETL - Embedded Template **Library**
+# TETL - Embedded Template Library
 
 - [Quick Start](#quick-start)
 - [Status](#status)
