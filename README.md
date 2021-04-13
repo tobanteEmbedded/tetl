@@ -1,5 +1,7 @@
 # TETL - Embedded Template Library
 
+Tobante's embedded template library. A STL-like C++ template library designed for embedded devices with limited resources. Supports freestanding and hosted environments.
+
 - [Quick Start](#quick-start)
 - [Status](#status)
   - [Hosted](#hosted)
@@ -17,8 +19,8 @@
 
 ```cpp
 // main.cpp
-#include "etl/array.hpp"
-#include "etl/algorithm.hpp"
+#include "etl/algorithm.hpp"  // for count_if
+#include "etl/array.hpp"      // for array
 
 auto main() -> int
 {
