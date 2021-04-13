@@ -134,7 +134,7 @@ inline constexpr auto is_integer_and_not_char_v
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
   using UT = etl::make_unsigned_t<T>;
@@ -162,7 +162,7 @@ template <typename T, typename U,
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
   return !cmp_equal(t, u);
@@ -179,7 +179,7 @@ template <typename T, typename U,
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
   using UT = etl::make_unsigned_t<T>;
@@ -206,7 +206,7 @@ template <typename T, typename U,
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
   return cmp_less(u, t);
@@ -223,7 +223,7 @@ template <typename T, typename U,
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
   return !cmp_greater(t, u);
@@ -240,7 +240,7 @@ template <typename T, typename U,
 /// [cppreference.com/w/cpp/utility/intcmp](https://en.cppreference.com/w/cpp/utility/intcmp)
 template <typename T, typename U,
           TETL_REQUIRES_(detail::is_integer_and_not_char_v<T>&&
-                            detail::is_integer_and_not_char_v<U>)>
+                           detail::is_integer_and_not_char_v<U>)>
 [[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
   return !cmp_less(t, u);
@@ -352,8 +352,7 @@ struct pair
 
   /// \brief Default constructor. Value-initializes both elements of the pair,
   /// first and second.
-  TETL_REQUIRES(
-    is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
+  TETL_REQUIRES(is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
   constexpr pair() : first {}, second {} { }
 
   /// \brief Initializes first with x and second with y.
@@ -364,7 +363,7 @@ struct pair
   /// etl::forward<U2>(y).
   template <typename U1, typename U2,
             TETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
-                              is_constructible_v<U2&&, second_type>)>
+                             is_constructible_v<U2&&, second_type>)>
   constexpr pair(U1&& x, U2&& y)
       : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
   {
@@ -373,7 +372,7 @@ struct pair
   /// \brief Initializes first with p.first and second with p.second.
   template <typename U1, typename U2,
             TETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
-                              is_constructible_v<second_type, U2 const&>)>
+                             is_constructible_v<second_type, U2 const&>)>
   constexpr pair(pair<U1, U2> const& p)
       : first {static_cast<T1>(p.first)}, second {static_cast<T2>(p.second)}
   {
@@ -383,7 +382,7 @@ struct pair
   /// etl::forward<U2>(p.second).
   template <typename U1, typename U2,
             TETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
-                              is_constructible_v<second_type, U2&&>)>
+                             is_constructible_v<second_type, U2&&>)>
   constexpr pair(pair<U1, U2>&& p)
       : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
   {
@@ -410,7 +409,7 @@ struct pair
 
   template <typename U1, typename U2,
             TETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
-                              is_assignable_v<second_type&, U2 const&>)>
+                             is_assignable_v<second_type&, U2 const&>)>
   constexpr auto operator=(pair<U1, U2> const& p) -> pair&
   {
     first  = p.first;
@@ -429,7 +428,7 @@ struct pair
 
   template <typename U1, typename U2,
             TETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
-                              is_assignable_v<second_type&, U2>)>
+                             is_assignable_v<second_type&, U2>)>
   constexpr auto operator=(pair<U1, U2>&& p) -> pair&
   {
     first  = etl::move(p.first);

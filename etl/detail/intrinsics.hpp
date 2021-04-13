@@ -61,7 +61,7 @@
 #endif  // TETL_HAS_VIRTUAL_DESTRUCTOR
 
 #if not defined(TETL_HAS_UNIQUE_OBJECT_REPRESENTATION)
-#define TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                           \
+#define TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                            \
   __has_unique_object_representations(Type)
 #endif  // TETL_HAS_UNIQUE_OBJECT_REPRESENTATION
 

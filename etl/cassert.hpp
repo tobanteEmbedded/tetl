@@ -24,6 +24,8 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
+#include "etl/version.hpp"
+
 #if __has_include(<assert.h>)
 #include <assert.h>
 #else
@@ -31,5 +33,86 @@
 #define assert(x)
 #endif
 #endif
+
+#if __has_include(<stdlib.h>)
+#include <stdlib.h>
+#else
+auto exit() -> void { }
+#endif
+
+#include "etl/warning.hpp"
+namespace etl
+{
+/// \brief Payload for an assertion.
+struct assert_msg
+{
+  int line {};
+  char const* file {nullptr};
+  char const* func {nullptr};
+  char const* expression {nullptr};
+};
+
+}  // namespace etl
+
+namespace etl
+{
+#if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+auto tetl_exception_handler(assert_msg const& msg) -> void;
+#else
+#endif
+
+/// \brief The default exception handler. This will be called, if an assertion
+/// is triggered at runtime.
+inline auto tetl_default_exception_handler(assert_msg const& msg) -> void
+{
+  ::etl::ignore_unused(msg);
+  ::exit(1);
+}
+
+namespace detail
+{
+inline auto tetl_call_exception_handler(assert_msg const& msg) -> void
+{
+#if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+  ::etl::tetl_exception_handler(msg);
+#else
+  ::etl::tetl_default_exception_handler(msg);
+#endif
+}
+
+}  // namespace detail
+
+}  // namespace etl
+
+#if not defined(TETL_TO_STR)
+#define TETL_TO_STR_IMPL(s) #s
+#define TETL_TO_STR(s) TETL_TO_STR_IMPL(s)
+#endif  // TETL_TO_STR
+
+#if not defined(TETL_ASSERT)
+/// \brief Assertion macro with customizable runtime behavior
+#define TETL_ASSERT(exp)                                                       \
+  do {                                                                         \
+    if (!(exp))                                                                \
+    {                                                                          \
+      if (TETL_IS_CONSTANT_EVALUATED())                                        \
+      {                                                                        \
+        /*During compilation we forward to assert, to force an error*/         \
+        assert((exp));                                                         \
+      }                                                                        \
+      else                                                                     \
+      {                                                                        \
+        /*During runtime we call the global exception handler */               \
+        auto const msg = ::etl::assert_msg {                                   \
+          __LINE__,                                                            \
+          __FILE__,                                                            \
+          TETL_FUNC_SIG,                                                       \
+          TETL_TO_STR(exp),                                                    \
+        };                                                                     \
+        ::etl::detail::tetl_call_exception_handler(msg);                       \
+      }                                                                        \
+    }                                                                          \
+  } while (false)
+#endif  // TETL_ASSERT
 
 #endif  // TETL_CASSERT_HPP

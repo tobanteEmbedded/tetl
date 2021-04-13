@@ -147,8 +147,8 @@ class duration
   /// exactly divisible by period
   template <typename Rep2, typename Period2,
             TETL_REQUIRES_((treat_as_floating_point_v<rep>)
-                            || (ratio_divide<Period2, period>::den == 1
-                                && !treat_as_floating_point_v<Rep2>))>
+                           || (ratio_divide<Period2, period>::den == 1
+                               && !treat_as_floating_point_v<Rep2>))>
   constexpr duration(duration<Rep2, Period2> const& other) noexcept
       : rep_(
         static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))

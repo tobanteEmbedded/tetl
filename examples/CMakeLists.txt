@@ -4,6 +4,7 @@ foreach(_target
   "algorithm"
   "array"
   "bitset"
+  "cassert"
   "chrono"
   "map"
   "memory"

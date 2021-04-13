@@ -50,21 +50,21 @@ using enable_if_t = typename enable_if<B, T>::type;
 /// \brief Requires-clause emulation with SFINAE (for templates).
 ///
 /// Copied from https://github.com/gnzlbg/static_vector
-#define TETL_REQUIRES_(...)                                                   \
-  int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                       \
+#define TETL_REQUIRES_(...)                                                    \
+  int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                        \
     = 42,                                                                      \
     ::etl::enable_if_t                                                         \
-        < (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)           \
+        < (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)            \
       || (__VA_ARGS__),                                                        \
     int > = 0
 
 /// \brief Requires-clause emulation with SFINAE (for "non-templates").
 ///
 /// Copied from https://github.com/gnzlbg/static_vector
-#define TETL_REQUIRES(...)                                                    \
-  template <int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,       \
+#define TETL_REQUIRES(...)                                                     \
+  template <int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,        \
             ::etl::enable_if_t<                                                \
-              (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)       \
+              (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)        \
                 || (__VA_ARGS__),                                              \
               int> = 0>
 
