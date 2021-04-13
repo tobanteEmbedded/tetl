@@ -32,11 +32,9 @@
 
 namespace etl
 {
-/// \brief Indicates the endianness of all scalar types.
-///
-/// \details If all scalar types are little-endian, etl::endian::native equals
-/// etl::endian::little. If all scalar types are big-endian,
-/// etl::endian::native equals etl::endian::big
+/// \brief Indicates the endianness of all scalar types. If all scalar types are
+/// little-endian, `endian::native` equals `endian::little`. If all scalar types
+/// are big-endian, `endian::native` equals `endian::big`.
 ///
 /// \notes
 /// [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
@@ -68,11 +66,11 @@ enum class endian
 /// \notes
 /// [cppreference.com/w/cpp/numeric/bit_cast](https://en.cppreference.com/w/cpp/numeric/bit_cast)
 /// \module Numeric
-template <typename To, typename From,
-          TAETL_REQUIRES_(
-            (sizeof(To) == sizeof(From))
-            && is_trivially_copyable_v<From> && is_trivially_copyable_v<To>)>
-constexpr auto bit_cast(From const& src) noexcept -> To
+template <typename To, typename From>
+constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
+  (sizeof(To) == sizeof(From))
+    and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>,
+  To>
 {
   static_assert(
     is_trivially_constructible_v<To>,
@@ -100,8 +98,9 @@ inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-constexpr auto rotl(T t, int s) noexcept -> T
+template <typename T>
+constexpr auto rotl(T t, int s) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
   auto const cnt    = static_cast<unsigned>(s);
   auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
@@ -112,8 +111,9 @@ constexpr auto rotl(T t, int s) noexcept -> T
 /// \brief Computes the result of bitwise right-rotating the value of x by s
 /// positions. This operation is also known as a right circular shift.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-constexpr auto rotr(T t, int s) noexcept -> T
+template <typename T>
+constexpr auto rotr(T t, int s) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
   auto const cnt    = static_cast<unsigned>(s);
   auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
@@ -128,8 +128,9 @@ constexpr auto rotr(T t, int s) noexcept -> T
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
+template <typename T>
+[[nodiscard]] constexpr auto popcount(T input) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
   auto count = T {0};
   while (input)
@@ -148,8 +149,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 ///
 /// \returns true if x is an integral power of two; otherwise false.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
+template <typename T>
+[[nodiscard]] constexpr auto has_single_bit(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, bool>
 {
   return popcount(x) == 1;
 }
@@ -164,8 +166,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// \returns The number of consecutive 0 bits in the value of x, starting from
 /// the most significant bit.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
+template <typename T>
+[[nodiscard]] constexpr auto countl_zero(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
   auto const totalBits = etl::numeric_limits<T>::digits;
   if (x == T {0}) { return etl::numeric_limits<T>::digits; }
@@ -190,8 +193,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
+template <typename T>
+[[nodiscard]] constexpr auto countl_one(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
   auto const totalBits = etl::numeric_limits<T>::digits;
   if (x == etl::numeric_limits<T>::max()) { return totalBits; }
@@ -213,8 +217,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
+template <typename T>
+[[nodiscard]] constexpr auto bit_width(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
   return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
@@ -230,8 +235,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
+template <typename T>
+[[nodiscard]] constexpr auto bit_ceil(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
   if (x <= 1U) { return T(1); }
 
@@ -258,8 +264,9 @@ template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
 /// \returns Zero if x is zero; otherwise, the largest integral power of two
 /// that is not greater than x.
 /// \module Numeric
-template <typename T, TAETL_REQUIRES_(detail::bit_unsigned_int_v<T>)>
-[[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
+template <typename T>
+[[nodiscard]] constexpr auto bit_floor(T x) noexcept
+  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
   if (x != 0) { return T {1} << (bit_width(x) - 1); }
   return 0;

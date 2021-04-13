@@ -40,6 +40,7 @@ using diff_t =
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/format_to](https://en.cppreference.com/w/cpp/utility/format/format_to)
+/// \module Strings
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
   -> OutputIt
@@ -87,6 +88,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/format_to_n](https://en.cppreference.com/w/cpp/utility/format/format_to_n)
+/// \module Strings
 template <typename Out>
 struct format_to_n_result
 {
@@ -99,6 +101,7 @@ struct format_to_n_result
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/format_to_n](https://en.cppreference.com/w/cpp/utility/format/format_to_n)
+/// \module Strings
 template <typename OutputIter, typename... Args>
 auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
                  Args const&... args) -> format_to_n_result<OutputIter>

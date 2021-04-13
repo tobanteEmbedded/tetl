@@ -40,6 +40,9 @@ struct is_transparent : ::etl::false_type
 {
 };
 
+/// \brief is_transparent
+/// \group is_transparent
+/// \module Utility
 template <typename T, typename U>
 struct is_transparent<
   T, U,
@@ -48,6 +51,7 @@ struct is_transparent<
 {
 };
 
+/// \group is_transparent
 template <typename T, typename U>
 inline constexpr auto transparent_v = is_transparent<T, U>::value;
 
@@ -55,9 +59,10 @@ inline constexpr auto transparent_v = is_transparent<T, U>::value;
 
 /// \brief Function object for performing addition. Effectively calls operator+
 /// on two instances of type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/plus](https://en.cppreference.com/w/cpp/utility/functional/plus)
+/// \group plus
+/// \module Utility
 template <typename T = void>
 struct plus
 {
@@ -68,27 +73,16 @@ struct plus
   }
 };
 
-/// \brief Function object for performing addition. Effectively calls operator+
-/// on two instances of type T. The standard library provides a specialization
-/// of etl::plus when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/plus_void](https://en.cppreference.com/w/cpp/utility/functional/plus_void)
+/// \group plus
 template <>
 struct plus<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   /// \brief Returns the sum of lhs and rhs.
   template <typename T, typename U>
   [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-    -> decltype(etl::forward<T>(lhs) + etl::forward<U>(rhs))
+    -> decltype(forward<T>(lhs) + forward<U>(rhs))
   {
     return lhs + rhs;
   }
@@ -96,9 +90,10 @@ struct plus<void>
 
 /// \brief Function object for performing subtraction. Effectively calls
 /// operator- on two instances of type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/minus](https://en.cppreference.com/w/cpp/utility/functional/minus)
+/// \group minus
+/// \module Utility
 template <typename T = void>
 struct minus
 {
@@ -109,21 +104,10 @@ struct minus
   }
 };
 
-/// \brief Function object for performing subtraction. Effectively calls
-/// operator- on two instances of type T. The standard library provides a
-/// specialization of etl::minus when T is not specified, which leaves the
-/// parameter types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/minus_void](https://en.cppreference.com/w/cpp/utility/functional/minus_void)
+/// \group minus
 template <>
 struct minus<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   /// \brief Returns the difference between lhs and rhs.
@@ -137,9 +121,10 @@ struct minus<void>
 
 /// \brief Function object for performing multiplication. Effectively calls
 /// operator* on two instances of type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/multiplies](https://en.cppreference.com/w/cpp/utility/functional/multiplies)
+/// \group multiplies
+/// \module Utility
 template <typename T = void>
 struct multiplies
 {
@@ -150,21 +135,10 @@ struct multiplies
   }
 };
 
-/// \brief Function object for performing multiplication. Effectively calls
-/// operator* on two instances of type T. The standard library provides a
-/// specialization of etl::multiplies when T is not specified, which leaves the
-/// parameter types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/multiplies_void](https://en.cppreference.com/w/cpp/utility/functional/multiplies_void)
+/// \group multiplies
 template <>
 struct multiplies<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   /// \brief Returns the product between lhs and rhs.
@@ -178,9 +152,10 @@ struct multiplies<void>
 
 /// \brief Function object for performing division. Effectively calls operator/
 /// on two instances of type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/divides](https://en.cppreference.com/w/cpp/utility/functional/divides)
+/// \group divides
+/// \module Utility
 template <typename T = void>
 struct divides
 {
@@ -190,21 +165,10 @@ struct divides
   }
 };
 
-/// \brief Function object for performing division. Effectively calls operator/
-/// on two instances of type T. The standard library provides a specialization
-/// of etl::divides when T is not specified, which leaves the parameter types
-/// and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/divides_void](https://en.cppreference.com/w/cpp/utility/functional/divides_void)
+/// \group divides
 template <>
 struct divides<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -217,9 +181,10 @@ struct divides<void>
 
 /// \brief Function object for computing remainders of divisions. Implements
 /// operator% for type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/modulus](https://en.cppreference.com/w/cpp/utility/functional/modulus)
+/// \group modulus
+/// \module Utility
 template <typename T = void>
 struct modulus
 {
@@ -229,21 +194,10 @@ struct modulus
   }
 };
 
-/// \brief Function object for computing remainders of divisions. Implements
-/// operator% for type T. The standard library provides a specialization of
-/// etl::modulus when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/modulus_void](https://en.cppreference.com/w/cpp/utility/functional/modulus_void)
+/// \group modulus
 template <>
 struct modulus<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -256,9 +210,10 @@ struct modulus<void>
 
 /// \brief Function object for performing negation. Effectively calls operator-
 /// on an instance of type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/negate](https://en.cppreference.com/w/cpp/utility/functional/negate)
+/// \group negate
+/// \module Utility
 template <typename T = void>
 struct negate
 {
@@ -268,21 +223,10 @@ struct negate
   }
 };
 
-/// \brief Function object for performing negation. Effectively calls operator-
-/// on an instance of type T. The standard library provides a specialization of
-/// etl::negate when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/negate_void](https://en.cppreference.com/w/cpp/utility/functional/negate_void)
+/// \group negate
 template <>
 struct negate<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T>
@@ -295,9 +239,10 @@ struct negate<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator== on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/equal_to](https://en.cppreference.com/w/cpp/utility/functional/equal_to)
+/// \group equal_to
+/// \module Utility
 template <typename T = void>
 struct equal_to
 {
@@ -307,21 +252,10 @@ struct equal_to
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator== on type T. The standard library provides a specialization
-/// of etl::equal_to when T is not specified, which leaves the parameter types
-/// and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/equal_to_void](https://en.cppreference.com/w/cpp/utility/functional/equal_to_void)
+/// \group equal_to
 template <>
 struct equal_to<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -334,9 +268,10 @@ struct equal_to<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator!= on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/not_equal_to](https://en.cppreference.com/w/cpp/utility/functional/not_equal_to)
+/// \group not_equal_to
+/// \module Utility
 template <typename T = void>
 struct not_equal_to
 {
@@ -346,21 +281,10 @@ struct not_equal_to
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator!= on type T. The standard library provides a specialization
-/// of etl::not_equal_to when T is not specified, which leaves the parameter
-/// types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/not_equal_to_void](https://en.cppreference.com/w/cpp/utility/functional/not_equal_to_void)
+/// \group not_equal_to
 template <>
 struct not_equal_to<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -373,9 +297,10 @@ struct not_equal_to<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator> on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/greater](https://en.cppreference.com/w/cpp/utility/functional/greater)
+/// \group greater
+/// \module Utility
 template <typename T = void>
 struct greater
 {
@@ -385,21 +310,10 @@ struct greater
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator> on type T. The standard library provides a specialization
-/// of etl::greater when T is not specified, which leaves the parameter types
-/// and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/greater_void](https://en.cppreference.com/w/cpp/utility/functional/greater_void)
+/// \group greater
 template <>
 struct greater<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -412,9 +326,10 @@ struct greater<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator>= on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/greater_equal](https://en.cppreference.com/w/cpp/utility/functional/greater_equal)
+/// \group greater_equal
+/// \module Utility
 template <typename T = void>
 struct greater_equal
 {
@@ -424,21 +339,10 @@ struct greater_equal
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator> on type T. The standard library provides a specialization
-/// of etl::greater_equal when T is not specified, which leaves the parameter
-/// types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/greater_equal_void](https://en.cppreference.com/w/cpp/utility/functional/greater_equal_void)
+/// \group greater_equal
 template <>
 struct greater_equal<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -451,9 +355,10 @@ struct greater_equal<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator< on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/less](https://en.cppreference.com/w/cpp/utility/functional/less)
+/// \group less
+/// \module Utility
 template <typename T = void>
 struct less
 {
@@ -464,21 +369,10 @@ struct less
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator< on type T. The standard library provides a specialization
-/// of etl::less when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/less_void](https://en.cppreference.com/w/cpp/utility/functional/less_void)
+/// \group less
 template <>
 struct less<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -491,9 +385,10 @@ struct less<void>
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator<= on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/less_equal](https://en.cppreference.com/w/cpp/utility/functional/less_equal)
+/// \group less_equal
+/// \module Utility
 template <typename T = void>
 struct less_equal
 {
@@ -504,21 +399,10 @@ struct less_equal
   }
 };
 
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator< on type T. The standard library provides a specialization
-/// of etl::less_equal when T is not specified, which leaves the parameter types
-/// and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/less_equal_void](https://en.cppreference.com/w/cpp/utility/functional/less_equal_void)
+/// \group less_equal
 template <>
 struct less_equal<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -531,9 +415,10 @@ struct less_equal<void>
 
 /// \brief Function object for performing logical AND (logical conjunction).
 /// Effectively calls operator&& on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/logical_and](https://en.cppreference.com/w/cpp/utility/functional/logical_and)
+/// \group logical_and
+/// \module Utility
 template <typename T = void>
 struct logical_and
 {
@@ -544,21 +429,10 @@ struct logical_and
   }
 };
 
-/// \brief Function object for performing logical AND (logical conjunction).
-/// Effectively calls operator&& on type T. The standard library provides a
-/// specialization of etl::logical_and when T is not specified, which leaves the
-/// parameter types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_and_void](https://en.cppreference.com/w/cpp/utility/functional/logical_and_void)
+/// \group logical_and
 template <>
 struct logical_and<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -571,9 +445,10 @@ struct logical_and<void>
 
 /// \brief Function object for performing logical OR (logical disjunction).
 /// Effectively calls operator|| on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/logical_or](https://en.cppreference.com/w/cpp/utility/functional/logical_or)
+/// \group logical_or
+/// \module Utility
 template <typename T = void>
 struct logical_or
 {
@@ -584,21 +459,10 @@ struct logical_or
   }
 };
 
-/// \brief Function object for performing logical OR (logical disjunction).
-/// Effectively calls operator|| on type T. The standard library provides a
-/// specialization of etl::logical_or when T is not specified, which leaves the
-/// parameter types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_or_void](https://en.cppreference.com/w/cpp/utility/functional/logical_or_void)
+/// \group logical_or
 template <>
 struct logical_or<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -611,9 +475,10 @@ struct logical_or<void>
 
 /// \brief Function object for performing logical NOT (logical negation).
 /// Effectively calls operator! for type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/logical_not](https://en.cppreference.com/w/cpp/utility/functional/logical_not)
+/// \group logical_not
+/// \module Utility
 template <typename T = void>
 struct logical_not
 {
@@ -623,21 +488,10 @@ struct logical_not
   }
 };
 
-/// \brief Function object for performing logical NOT (logical negation).
-/// Effectively calls operator! for type T. The standard library provides a
-/// specialization of etl::logical_not when T is not specified, which leaves the
-/// parameter types and return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_not_void](https://en.cppreference.com/w/cpp/utility/functional/logical_not_void)
+/// \group logical_not
 template <>
 struct logical_not<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T>
@@ -650,9 +504,10 @@ struct logical_not<void>
 
 /// \brief Function object for performing bitwise AND. Effectively
 /// calls operator& on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/bit_and](https://en.cppreference.com/w/cpp/utility/functional/bit_and)
+/// \group bit_and
+/// \module Utility
 template <typename T = void>
 struct bit_and
 {
@@ -662,21 +517,10 @@ struct bit_and
   }
 };
 
-/// \brief Function object for performing bitwise AND. Effectively
-/// calls operator& on type T. The standard library provides a specialization of
-/// etl::bit_and when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_and_void](https://en.cppreference.com/w/cpp/utility/functional/bit_and_void)
+/// \group bit_and
 template <>
 struct bit_and<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -689,9 +533,10 @@ struct bit_and<void>
 
 /// \brief Function object for performing bitwise OR. Effectively calls
 /// operator| on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/bit_or](https://en.cppreference.com/w/cpp/utility/functional/bit_or)
+/// \group bit_or
+/// \module Utility
 template <typename T = void>
 struct bit_or
 {
@@ -701,21 +546,10 @@ struct bit_or
   }
 };
 
-/// \brief Function object for performing bitwise OR. Effectively calls
-/// operator| on type T. The standard library provides a specialization of
-/// etl::bit_or when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_or_void](https://en.cppreference.com/w/cpp/utility/functional/bit_or_void)
+/// \group bit_or
 template <>
 struct bit_or<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -728,9 +562,10 @@ struct bit_or<void>
 
 /// \brief Function object for performing bitwise XOR. Effectively calls
 /// operator^ on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/bit_xor](https://en.cppreference.com/w/cpp/utility/functional/bit_xor)
+/// \group bit_xor
+/// \module Utility
 template <typename T = void>
 struct bit_xor
 {
@@ -740,21 +575,10 @@ struct bit_xor
   }
 };
 
-/// \brief Function object for performing bitwise XOR. Effectively calls
-/// operator^ on type T. The standard library provides a specialization of
-/// etl::bit_xor when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_xor_void](https://en.cppreference.com/w/cpp/utility/functional/bit_xor_void)
+/// \group bit_xor
 template <>
 struct bit_xor<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T, typename U>
@@ -767,9 +591,10 @@ struct bit_xor<void>
 
 /// \brief Function object for performing bitwise NOT.
 /// Effectively calls operator~ on type T.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/bit_not](https://en.cppreference.com/w/cpp/utility/functional/bit_not)
+/// \group bit_not
+/// \module Utility
 template <typename T = void>
 struct bit_not
 {
@@ -779,21 +604,10 @@ struct bit_not
   }
 };
 
-/// \brief Function object for performing bitwise NOT. Effectively calls
-/// operator~ on type T. The standard library provides a specialization of
-/// etl::bit_not when T is not specified, which leaves the parameter types and
-/// return type to be deduced.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_not_void](https://en.cppreference.com/w/cpp/utility/functional/bit_not_void)
+/// \group bit_not
 template <>
 struct bit_not<void>
 {
-  /// \brief The member type is_transparent indicates to the caller that this
-  /// function object is a transparent function object: it accepts arguments of
-  /// arbitrary types and uses perfect forwarding, which avoids unnecessary
-  /// copying and conversion when the function object is used in heterogeneous
-  /// context, or with rvalue arguments.
   using is_transparent = void;
 
   template <typename T>
@@ -888,7 +702,6 @@ struct reference_wrapper
 
 /// \brief One deduction guide is provided for std::reference_wrapper to support
 /// deduction of the sole class template parameter.
-///
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/reference_wrapper/deduction_guides](https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/deduction_guides)
 template <typename T>
@@ -916,6 +729,8 @@ template <typename T>
 /// \brief Function templates ref and cref are helper functions that generate an
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
+/// \group cref
+/// module Utility
 template <typename T>
 [[nodiscard]] constexpr auto cref(T const& t) noexcept
   -> reference_wrapper<T const>
@@ -923,9 +738,7 @@ template <typename T>
   return reference_wrapper<T const>(t);
 }
 
-/// \brief Function templates ref and cref are helper functions that generate an
-/// object of type reference_wrapper, using template argument deduction to
-/// determine the template argument of the result.
+/// \group cref
 template <typename T>
 [[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept
   -> reference_wrapper<T const>
@@ -933,20 +746,22 @@ template <typename T>
   return cref(t.get());
 }
 
-/// \brief Function templates ref and cref are helper functions that generate an
-/// object of type reference_wrapper, using template argument deduction to
-/// determine the template argument of the result.
+/// \group cref
 template <typename T>
 void cref(T const&&) = delete;
 
+/// \brief function_view
+/// \group function_view
+/// \module Utility
 template <typename>
-class function_view;
+struct function_view;
 
-template <typename Result, typename... Arguments>
-class function_view<Result(Arguments...)>
+/// \group function_view
+template <typename Res, typename... Args>
+struct function_view<Res(Args...)>
 {
   public:
-  using result_type = Result;
+  using result_type = Res;
 
   function_view(function_view const& other)
   {
@@ -978,10 +793,10 @@ class function_view<Result(Arguments...)>
 
   ~function_view() noexcept { destroyPtr_(storage_); }
 
-  [[nodiscard]] auto operator()(Arguments&&... args) const -> result_type
+  [[nodiscard]] auto operator()(Args&&... args) const -> result_type
   {
     return invokePtr_(const_cast<etl::byte*>(storage_),
-                      etl::forward<Arguments>(args)...);  // NOLINT
+                      etl::forward<Args>(args)...);  // NOLINT
   }
 
   protected:
@@ -997,9 +812,9 @@ class function_view<Result(Arguments...)>
 
   private:
   template <typename Functor>
-  static auto invoke(Functor* f, Arguments&&... args) -> Result
+  static auto invoke(Functor* f, Args&&... args) -> Res
   {
-    return (*f)(etl::forward<Arguments>(args)...);
+    return (*f)(etl::forward<Args>(args)...);
   }
 
   template <typename Functor>
@@ -1014,7 +829,7 @@ class function_view<Result(Arguments...)>
     f->~Functor();
   }
 
-  using invoke_pointer_t  = Result (*)(void*, Arguments&&...);
+  using invoke_pointer_t  = Res (*)(void*, Args&&...);
   using create_pointer_t  = void (*)(void*, void*);
   using destroy_pointer_t = void (*)(void*);
 
@@ -1025,17 +840,20 @@ class function_view<Result(Arguments...)>
   etl::byte* storage_ = nullptr;
 };
 
+/// \brief function
+/// \group function
+/// \module Utility
 template <size_t, typename>
-class function;
+struct function;
 
-template <size_t Capacity, typename Result, typename... Arguments>
-class function<Capacity, Result(Arguments...)>
-    : public function_view<Result(Arguments...)>
+/// \group function
+template <size_t Capacity, typename Res, typename... Args>
+struct function<Capacity, Res(Args...)> : function_view<Res(Args...)>
 {
   public:
   template <typename Functor>
   function(Functor f)
-      : function_view<Result(Arguments...)> {
+      : function_view<Res(Args...)> {
         etl::forward<Functor>(f),
         storage_,
       }
@@ -1050,6 +868,7 @@ class function<Capacity, Result(Arguments...)>
 /// \brief Default searcher. A class suitable for use with Searcher overload of
 /// etl::search that delegates the search operation to the pre-C++17 standard
 /// library's etl::search.
+/// \module Utility
 template <typename ForwardIter, typename Predicate = equal_to<>>
 class default_searcher
 {
@@ -1079,9 +898,14 @@ class default_searcher
   Predicate predicate_;
 };
 
+/// \brief hash
+/// \group hash
+/// \module Utility
 template <typename T>
 struct hash;
 
+/// \group hash
+/// \module Utility
 template <>
 struct hash<bool>
 {
@@ -1091,6 +915,8 @@ struct hash<bool>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<char>
 {
@@ -1100,6 +926,8 @@ struct hash<char>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<signed char>
 {
@@ -1109,6 +937,8 @@ struct hash<signed char>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<unsigned char>
 {
@@ -1118,6 +948,8 @@ struct hash<unsigned char>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<char16_t>
 {
@@ -1127,6 +959,8 @@ struct hash<char16_t>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<char32_t>
 {
@@ -1136,6 +970,8 @@ struct hash<char32_t>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<wchar_t>
 {
@@ -1145,6 +981,8 @@ struct hash<wchar_t>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<short>
 {
@@ -1154,6 +992,8 @@ struct hash<short>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<unsigned short>
 {
@@ -1163,6 +1003,8 @@ struct hash<unsigned short>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<int>
 {
@@ -1171,6 +1013,8 @@ struct hash<int>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<unsigned int>
 {
@@ -1180,6 +1024,8 @@ struct hash<unsigned int>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<long>
 {
@@ -1189,6 +1035,8 @@ struct hash<long>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<long long>
 {
@@ -1198,6 +1046,8 @@ struct hash<long long>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<unsigned long>
 {
@@ -1207,6 +1057,8 @@ struct hash<unsigned long>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<unsigned long long>
 {
@@ -1216,6 +1068,8 @@ struct hash<unsigned long long>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<float>
 {
@@ -1225,6 +1079,8 @@ struct hash<float>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<double>
 {
@@ -1234,6 +1090,8 @@ struct hash<double>
     return static_cast<etl::size_t>(val);
   }
 };
+/// \group hash
+/// \module Utility
 template <>
 struct hash<long double>
 {
@@ -1244,6 +1102,8 @@ struct hash<long double>
   }
 };
 
+/// \group hash
+/// \module Utility
 template <>
 struct hash<etl::nullptr_t>
 {
@@ -1254,6 +1114,8 @@ struct hash<etl::nullptr_t>
   }
 };
 
+/// \group hash
+/// \module Utility
 template <typename T>
 struct hash<T*>
 {

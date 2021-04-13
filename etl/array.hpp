@@ -43,26 +43,37 @@ namespace etl
 /// struct holding a C-style array Type[N] as its only non-static data member.
 /// Unlike a C-style array, it doesn't decay to Type* automatically. As an
 /// aggregate type, it can be initialized with aggregate-initialization given at
-/// most N initializers that are convertible to Type: array<int, 3> a =
-/// {1,2,3};.
+/// most N initializers that are convertible to
+/// Type: `array<int, 3> a = {1,2,3};`
 ///
-/// \include array.cpp
 /// \notes Since I assume that, you maight have exceptions disabled, all
 /// possibly throwing methods like "at" are not implemented.
 /// \module Containers
+/// \include array.cpp
 template <typename Type, size_t Size>
 struct array
 {
-  using value_type             = Type;
-  using size_type              = size_t;
-  using difference_type        = ptrdiff_t;
-  using pointer                = Type*;
-  using const_pointer          = const Type*;
-  using reference              = Type&;
-  using const_reference        = const Type&;
-  using iterator               = Type*;
-  using const_iterator         = const Type*;
-  using reverse_iterator       = typename etl::reverse_iterator<iterator>;
+  /// The ...
+  using value_type = Type;
+  /// The ...
+  using size_type = size_t;
+  /// The ...
+  using difference_type = ptrdiff_t;
+  /// The ...
+  using pointer = Type*;
+  /// The ...
+  using const_pointer = const Type*;
+  /// The ...
+  using reference = Type&;
+  /// The ...
+  using const_reference = const Type&;
+  /// The ...
+  using iterator = Type*;
+  /// The ...
+  using const_iterator = const Type*;
+  /// The ...
+  using reverse_iterator = typename etl::reverse_iterator<iterator>;
+  /// The ...
   using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
 
   /// \brief Accesses the specified item with range checking.
@@ -282,6 +293,7 @@ array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 /// \brief Specializes the swap algorithm for array. Swaps the contents
 /// of lhs and rhs.
+/// \group swap
 template <typename T, size_t N>
 constexpr auto swap(array<T, N>& lhs,
                     array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
@@ -291,6 +303,7 @@ constexpr auto swap(array<T, N>& lhs,
 
 /// \brief Provides access to the number of elements in an array as a
 /// compile-time constant expression.
+/// \group tuple_size
 template <typename T, size_t N>
 struct tuple_size<array<T, N>> : integral_constant<size_t, N>
 {
@@ -298,11 +311,11 @@ struct tuple_size<array<T, N>> : integral_constant<size_t, N>
 
 /// \brief Provides compile-time indexed access to the type of the elements of
 /// the array using tuple-like interface.
+/// \group tuple_element
 template <size_t I, typename T>
 struct tuple_element;
 
-/// \brief Provides compile-time indexed access to the type of the elements of
-/// the array using tuple-like interface.
+/// \group tuple_element
 template <size_t I, typename T, size_t N>
 struct tuple_element<I, array<T, N>>
 {
@@ -312,6 +325,7 @@ struct tuple_element<I, array<T, N>>
 /// \brief Checks if the contents of lhs and rhs are equal, that is, they have
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
+/// \group array_eqaulity
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator==(array<T, N> const& lhs,
                                         array<T, N> const& rhs) -> bool
@@ -319,8 +333,7 @@ template <typename T, size_t N>
   return equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
-/// \brief Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to lexicographical_compare.
+/// \group array_eqaulity
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator!=(array<T, N> const& lhs,
                                         array<T, N> const& rhs) -> bool
@@ -330,6 +343,7 @@ template <typename T, size_t N>
 
 /// \brief Compares the contents of lhs and rhs lexicographically. The
 /// comparison is performed by a function equivalent to lexicographical_compare.
+/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator<(array<T, N> const& lhs,
                                        array<T, N> const& rhs) -> bool
@@ -338,8 +352,7 @@ template <typename T, size_t N>
                                  rhs.end());
 }
 
-/// \brief Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to lexicographical_compare.
+/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator<=(array<T, N> const& lhs,
                                         array<T, N> const& rhs) -> bool
@@ -347,8 +360,7 @@ template <typename T, size_t N>
   return !(rhs < lhs);
 }
 
-/// \brief Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to lexicographical_compare.
+/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator>(array<T, N> const& lhs,
                                        array<T, N> const& rhs) -> bool
@@ -356,8 +368,7 @@ template <typename T, size_t N>
   return rhs < lhs;
 }
 
-/// \brief Compares the contents of lhs and rhs lexicographically. The
-/// comparison is performed by a function equivalent to lexicographical_compare.
+/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator>=(array<T, N> const& lhs,
                                         array<T, N> const& rhs) -> bool
@@ -368,40 +379,35 @@ template <typename T, size_t N>
 /// \brief Extracts the Ith element element from the array. I must be an integer
 /// value in range [0, N). This is enforced at compile time as opposed to at()
 /// or operator[].
-template <size_t Index, typename Type, size_t Size>
-[[nodiscard]] constexpr auto get(array<Type, Size>& array) noexcept -> Type&
+/// \group get
+template <size_t Index, typename T, size_t Size>
+[[nodiscard]] constexpr auto get(array<T, Size>& array) noexcept -> T&
 {
   static_assert(Index < Size, "array index out of range");
   return array[Index];
 }
 
-/// \brief Extracts the Ith element element from the array. I must be an integer
-/// value in range [0, N). This is enforced at compile time as opposed to at()
-/// or operator[].
-template <size_t Index, typename Type, size_t Size>
-[[nodiscard]] constexpr auto get(array<Type, Size> const& array) noexcept
-  -> const Type&
+/// \group get
+template <size_t Index, typename T, size_t Size>
+[[nodiscard]] constexpr auto get(array<T, Size> const& array) noexcept
+  -> const T&
 {
   static_assert(Index < Size, "array index out of range");
   return array[Index];
 }
 
-/// \brief Extracts the Ith element element from the array. I must be an integer
-/// value in range [0, N). This is enforced at compile time as opposed to at()
-/// or operator[].
-template <size_t Index, typename Type, size_t Size>
-[[nodiscard]] constexpr auto get(array<Type, Size>&& array) noexcept -> Type&&
+/// \group get
+template <size_t Index, typename T, size_t Size>
+[[nodiscard]] constexpr auto get(array<T, Size>&& array) noexcept -> T&&
 {
   static_assert(Index < Size, "array index out of range");
   return move(array[Index]);
 }
 
-/// \brief Extracts the Ith element element from the array. I must be an integer
-/// value in range [0, N). This is enforced at compile time as opposed to at()
-/// or operator[].
-template <size_t Index, typename Type, size_t Size>
-[[nodiscard]] constexpr auto get(array<Type, Size> const&& array) noexcept
-  -> const Type&&
+/// \group get
+template <size_t Index, typename T, size_t Size>
+[[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept
+  -> const T&&
 {
   static_assert(Index < Size, "array index out of range");
   return move(array[Index]);
@@ -430,15 +436,14 @@ template <typename T, size_t N, size_t... I>
 /// \brief Creates a array from the one dimensional built-in array a. The
 /// elements of the array are copy-initialized from the corresponding element of
 /// a. Copying or moving multidimensional built-in array is not supported.
+/// \group to_array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&a)[N]) -> array<remove_cv_t<T>, N>
 {
   return detail::to_array_impl(a, make_index_sequence<N> {});
 }
 
-/// \brief Creates a array from the one dimensional built-in array a. The
-/// elements of the array are copy-initialized from the corresponding element of
-/// a. Copying or moving multidimensional built-in array is not supported.
+/// \group to_array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T(&&a)[N])
 {

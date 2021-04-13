@@ -29,8 +29,9 @@
 
 namespace etl
 {
-/// A BitmaskType used to specify floating-point formatting for to_chars and
-/// from_chars.
+/// \brief A BitmaskType used to specify floating-point formatting for to_chars
+/// and from_chars.
+/// \module Strings
 enum class chars_format : etl::uint8_t
 {
   scientific = 0x1,
@@ -39,7 +40,8 @@ enum class chars_format : etl::uint8_t
   general    = fixed | scientific
 };
 
-/// Primitive numerical output conversion.
+/// \brief Primitive numerical output conversion.
+/// \module Strings
 struct to_chars_result
 {
   char* ptr;
@@ -52,7 +54,8 @@ struct to_chars_result
   }
 };
 
-/// Primitive numerical input conversion
+/// \brief Primitive numerical input conversion
+/// \module Strings
 struct from_chars_result
 {
   char* ptr;

@@ -29,9 +29,6 @@
 
 namespace etl
 {
-/// \brief The macro NULL is an implementation-defined null pointer constant.
-#define TAETL_NULL nullptr
-
 /// \brief Copies the character string pointed to by src, including the null
 /// terminator, to the character array whose first element is pointed to by
 /// dest.
@@ -40,6 +37,7 @@ namespace etl
 /// The behavior is undefined if the strings overlap.
 ///
 /// \returns dest
+/// \module Strings
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
   assert(dest != nullptr && src != nullptr);
@@ -59,6 +57,7 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 /// been written. If the strings overlap, the behavior is undefined.
 ///
 /// \returns dest
+/// \module Strings
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
   -> char*
 {
@@ -76,6 +75,7 @@ constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
 }
 
 /// \brief Returns the length of the C string str.
+/// \module Strings
 constexpr auto strlen(char const* str) -> etl::size_t
 {
   char const* s = nullptr;
@@ -91,6 +91,7 @@ constexpr auto strlen(char const* str) -> etl::size_t
 /// \details The behavior is undefined if the destination array is not large
 /// enough for the contents of both src and dest and the terminating null
 /// character. The behavior is undefined if the strings overlap.
+/// \module Strings
 constexpr auto strcat(char* dest, char const* src) -> char*
 {
   auto* ptr = dest + etl::strlen(dest);
@@ -107,6 +108,7 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 /// of both dest and src plus the terminating null character, except that the
 /// size of src is limited to count. The behavior is undefined if the strings
 /// overlap.
+/// \module Strings
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
   -> char*
 {
@@ -127,6 +129,7 @@ constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
 /// \details This function starts comparing the first character of each string.
 /// If they are equal to each other, it continues with the following pairs until
 /// the characters differ or until a terminating null-character is reached.
+/// \module Strings
 constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 {
   for (; *lhs != '\0'; ++lhs, ++rhs)
@@ -144,6 +147,7 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 /// \details The behavior is undefined when access occurs past the end of either
 /// array lhs or rhs. The behavior is undefined when either lhs or rhs is the
 /// null pointer.
+/// \module Strings
 constexpr auto strncmp(char const* lhs, char const* rhs,
                        etl::size_t const count) -> int
 {
@@ -165,6 +169,7 @@ constexpr auto strncmp(char const* lhs, char const* rhs,
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may not overlap. If source and destination
 /// might overlap, memmove() must be used instead.
+/// \module Strings
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
   auto* dp       = static_cast<unsigned char*>(dest);
@@ -175,6 +180,7 @@ constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 
 /// \brief Copies the value of c (converted to an unsigned char) into each of
 /// the ﬁrst n characters of the object pointed to by s.
+/// \module Strings
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
   auto* p = static_cast<unsigned char*>(s);
@@ -185,8 +191,10 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may overlap.
 ///
-/// \todo Check original implementation. They use __np_anyptrlt which is not
-/// portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
+/// \notes Check original implementation. They use `__np_anyptrlt` which is not
+/// portable.
+/// [clc-wiki.net](https://clc-wiki.net/wiki/C_standard_library:string.h:memmove)
+/// \module Strings
 constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 {
   auto const* ps = static_cast<unsigned char const*>(src);
