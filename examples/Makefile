@@ -18,8 +18,10 @@ endif
 EXAMPLES 	+= algorithm
 EXAMPLES 	+= array
 EXAMPLES 	+= bitset
+EXAMPLES 	+= cassert
 EXAMPLES 	+= chrono
 EXAMPLES 	+= map
+EXAMPLES 	+= memory
 EXAMPLES 	+= numeric
 EXAMPLES 	+= optional
 EXAMPLES 	+= set
@@ -28,6 +30,8 @@ EXAMPLES 	+= tuple
 EXAMPLES 	+= type_traits
 EXAMPLES 	+= utility
 EXAMPLES 	+= vector
+
+EXAMPLES 	+= experimental/stm32_rtos
 
 ifdef AVR
 EXE := ${addsuffix .elf, ${EXAMPLES}}
