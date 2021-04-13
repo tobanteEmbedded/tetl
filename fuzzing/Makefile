@@ -6,8 +6,8 @@ INCLUDES = -I../
 .PHONY: build
 build:
 	mkdir -p build
-	$(CXX) -c $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o build/fuzzer.o fuzzer.cpp
-	$(CXX) $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o build/fuzzer build/fuzzer.o
+	$(CXX) -c $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o fuzzer.o fuzzer.cpp
+	$(CXX) $(CXXFLAGS) $(CXXWARNINGS) $(INCLUDES) -o fuzzer fuzzer.o
 
 ifneq (,$(findstring clang,$(CXX)))
     LCOV = lcov --gcov-tool llvm-gcov.sh
@@ -16,21 +16,21 @@ else
 endif
 .PHONY: fuzz
 fuzz: build
-	cd build && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
-	cd build && ./fuzzer -max_total_time=30
-	cd build && $(LCOV) -c -d . --base-directory . -o fuzz_cov.info
-	cd build && $(LCOV) -a base_cov.info -a fuzz_cov.info -o cov.info
-	cd build && $(LCOV) --remove cov.info "*3rd_party/*" -o cov.info
-	cd build && $(LCOV) --remove cov.info "*c++*" -o cov.info
-	cd build && $(LCOV) --remove cov.info "*v1*" -o cov.info
-	cd build && $(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
-	cd build && $(LCOV) --remove cov.info "*test_*" -o cov.info
-	cd build && $(LCOV) --remove cov.info "*clang*" -o cov.info
+	$(LCOV) -c -i -d . --base-directory . -o base_cov.info
+	./fuzzer -max_total_time=60
+	$(LCOV) -c -d . --base-directory . -o fuzz_cov.info
+	$(LCOV) -a base_cov.info -a fuzz_cov.info -o cov.info
+	$(LCOV) --remove cov.info "*3rd_party/*" -o cov.info
+	$(LCOV) --remove cov.info "*c++*" -o cov.info
+	$(LCOV) --remove cov.info "*v1*" -o cov.info
+	$(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
+	$(LCOV) --remove cov.info "*test_*" -o cov.info
+	$(LCOV) --remove cov.info "*clang*" -o cov.info
 
 .PHONY: report
 report:
-	cd build && genhtml cov.info --output-directory lcov
+	genhtml cov.info --output-directory lcov
 
 .PHONY: clean
 clean:
-	rm -rf build
+	rm -rf build lcov *.o *.info *.profraw *.gcda *.gcno fuzzer
