@@ -8,6 +8,7 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
   - [Freestanding](#freestanding)
   - [Analysis](#analysis)
 - [Design Goals](#design-goals)
+  - [Error Handling](#error-handling)
 - [Project Integration](#project-integration)
   - [Command Line / Makefile](#command-line---makefile)
   - [CMake](#cmake)
@@ -72,12 +73,13 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 - Similar API to the STL
 - No dynamic memory
 - `constexpr` all the things
+- Minimize undefined behavoir. See [Error Handling](#error-handling)
 - Easy desktop development (cmake)
 
 It all started when I wanted to have a vector without dynamic memory. At that time I didn't know that proposals like [github.com/gnzlbg/static_vector](https://github.com/gnzlbg/static_vector) where in the making. My actual goal has turned into a mammoth project. A standard library for microcontrollers and other embedded environments. The API is, as far as it is technically feasible, identical to the STL. All algorithms work identically, pair and friend are available and containers like set, map and vector are also implemented, but with different names.
 
 All containers work only with memory on the stack. This means that their size must be known at compile time. Furthermore I assume an environment in which exceptions and
-RTTI migth be disabled. This results in the problem that not all members of a container can be implemented. Any function that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment. If exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. Unsafe methods like `etl::static_vector::operator[]` are still available (with asserts in debug builds), while throwing methods like `etl::static_vector::at` are not implemented.
+RTTI migth be disabled. This results in the problem that not all members of a container can be implemented the same way as they are in the STL. Any function that returns a reference to a sequence element has the ability to throw exceptions in a normal hosted environment if the index is out of bounds. If exceptions are disabled, this is not possible. For now, my solution to this problem is to delegate to the user. Unsafe methods like `etl::static_vector::operator[]` are still available (with asserts in debug builds), while throwing methods like `etl::static_vector::at` are not implemented. This is currently subject to change. See [Error Handling](#error-handling) for more details.
 
 Unlike LLVMs `SmallVector`, `etl::static_vector` & friends do not have a base class which they can slice to. My plan is to add mutable view-like non-owning types for each container. A `etl::static_vector` we would have a `vector_ref` which would work mostly like a `span`, but would also provide the vector interface. I don't want to name the types `*_view`, since the word `view` implies non-mutable in standard containers like `string_view`. None of the container_ref types have been implemented yet.
 
@@ -93,6 +95,14 @@ The [etl/experimental](./etl/experimental) subdirectory includes libraries that 
 - DSP DSL
 - FreeRTOS Abstraction
   - Stubs for unittests run on desktop machines
+
+### Error Handling
+
+Error handling has turned out to be a lot more challenging as I thought it would be. Sine I assume that you might have exceptions disabled I need a different way of reporting exceptional cases to you which occured deap inside the library. The naive solution would be to a global exception handler function, which would get called if an "exception" occures. For example an out of bounds access or `push_back` on a full vector. The user could provide an implementation of the global handler which customizes its behavior accordingly. So far this seams like a reasonable solution. Unfortunately this would make it impossible to add `constexpr` to most containers & functions, since the global handler is probably not `constexpr`. It most likly contains print statements or inline assembly to reboot the chip.
+
+The solution comes in form of a **C++20** library feature. `etl::is_constant_evaluted` allows us to dedect if the current function or method is invoked in a constexpr-context. We get to keep all of the nice properties from the "naive" solution plus a almost fully `constexpr` ready library. Since `etl::is_constant_evaluted` is implemeted with compiler intrinsics, this feature also works in **C++17**.
+
+For more details about the global exception handler `etl::tetl_exception_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
 
 ## Project Integration
 
