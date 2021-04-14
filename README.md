@@ -9,6 +9,8 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
   - [Analysis](#analysis)
 - [Design Goals](#design-goals)
   - [Error Handling](#error-handling)
+  - [Near Future](#near-future)
+  - [Far Future](#far-future)
 - [Project Integration](#project-integration)
   - [Command Line / Makefile](#command-line---makefile)
   - [CMake](#cmake)
@@ -65,6 +67,8 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml) | [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg)](https://codecov.io/gh/tobanteEmbedded/tetl) |
 
+> **_NOTE:_** All test are compiled in debug and release mode with `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
+
 ## Design Goals
 
 - 100% portable (no STL headers required, minimum of C headers)
@@ -104,6 +108,21 @@ The solution comes in form of a **C++20** library feature. `etl::is_constant_eva
 
 For more details about the global exception handler `etl::tetl_exception_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
 
+### Near Future
+
+- Switch from `doxygen` to `standardese` as the documentation generator
+- Fix `map`, `tuple`, `variant` & `format`
+- Improve number <-> string conversions
+- Add fuzzing tests to CI
+  - Check that `etl` and `std` implementations produce the same output
+
+### Far Future
+
+- Replace Catch2 with custom unit testing library
+  - This depends on a working implementation of `format` for reporting errors.
+- Run unit test & examples on hardware or QEMU emulations.
+  - Depends on the custom unit test library, since Catch2 is to big to fit onto most MCUs
+
 ## Project Integration
 
 The following steps explain how to add `etl` to your project. Embedded or desktop.
@@ -125,6 +144,10 @@ CXXFLAGS += -std=c++17 -I3rd_party/tetl
 Add `tetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```cmake
+# tobanteEmbedded::etl is an interface target, so you can use it even if you
+# have a custom toolchain in your CMake configuration. The target only sets the
+# include path. No static library is created.
+
 add_subdirectory(3rd_party/tetl EXCLUDE_FROM_ALL)
 target_link_libraries(${YOUR_TARGET} tobanteEmbedded::etl)
 ```
@@ -134,6 +157,7 @@ target_link_libraries(${YOUR_TARGET} tobanteEmbedded::etl)
 Add `tetl` as a git submodule, then add these lines to your `platformio.ini`:
 
 ```ini
+; Most Arduino code does not compile unless you have GNU extensions enabled.
 [env:yourenv]
 build_unflags = -std=gnu++11
 build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
@@ -141,7 +165,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 
 ## Header Overview
 
-|          **Header**           |       **Library**        |     **Status**     |                                               **Progress (Spreadsheet)**                                               |
+|          **Header**           |       **Library**        |     **Status**     |                                       **Implementation Progress (Spreadsheet)**                                        |
 | :---------------------------: | :----------------------: | :----------------: | :--------------------------------------------------------------------------------------------------------------------: |
 |    [algorithm](#algorithm)    |        Algorithms        | :heavy_check_mark: |  [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)  |
 |              any              |         Utility          |        :x:         |                                                                                                                        |
@@ -253,7 +277,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/algorithm.hpp`](./etl/algorithm.hpp)
 - **Tests:** [test_algorithm.cpp](./tests/test_algorithm.cpp)
 - **Example:** [algorithm.cpp](./examples/algorithm.cpp)
-- **Progress:** [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)
+- **Implementation Progress:** [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)
 - **Changes:**
   - Implementations are optimize for code size. See [etl::search vs. libstdc++ (godbolt.org)](https://godbolt.org/z/dY9zPf8cs) as an example.
   - All overloads using an execution policy are not implemented.
@@ -264,7 +288,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/array.hpp`](./etl/array.hpp)
 - **Tests:** [test_array.cpp](./tests/test_array.cpp)
 - **Example:** [array.cpp](./examples/array.cpp)
-- **Progress:** [array](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1320059600)
+- **Implementation Progress:** [array](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1320059600)
 - **Changes:**
   - None
 
@@ -274,7 +298,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/bit.hpp`](./etl/bit.hpp)
 - **Tests:** [test_bit.cpp](./tests/test_bit.cpp)
 - **Example:** [bit.cpp](./examples/bit.cpp)
-- **Progress:** [bit](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1927645890)
+- **Implementation Progress:** [bit](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1927645890)
 - **Changes:**
   - None
 
@@ -284,7 +308,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/bitset.hpp`](./etl/bitset.hpp)
 - **Tests:** [test_bitset.cpp](./tests/test_bitset.cpp)
 - **Example:** [bitset.cpp](./examples/bitset.cpp)
-- **Progress:** [bitset](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=692946382)
+- **Implementation Progress:** [bitset](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=692946382)
 - **Changes:**
   - TODO
 
@@ -294,7 +318,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cassert.hpp`](./etl/cassert.hpp)
 - **Tests:** [test_cassert.cpp](./tests/test_cassert.cpp)
 - **Example:** [cassert.cpp](./examples/cassert.cpp)
-- **Progress:** [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)
+- **Implementation Progress:** [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)
 - **Changes:**
   - Added custom assertion macro `TETL_ASSERT`. The behavoir can be customized. The macro get's called every time an exceptional case has occurred inside the library. See the example file for more details.
 
@@ -304,7 +328,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cctype.hpp`](./etl/cctype.hpp)
 - **Tests:** [test_cctype.cpp](./tests/test_cctype.cpp)
 - **Example:** TODO
-- **Progress:** [cctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=522168028)
+- **Implementation Progress:** [cctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=522168028)
 - **Changes:**
   - Locale independent
 
@@ -314,7 +338,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cfloat.hpp`](./etl/cfloat.hpp)
 - **Tests:** [test_cfloat.cpp](./tests/test_cfloat.cpp)
 - **Example:** TODO
-- **Progress:** [cfloat](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1012838019)
+- **Implementation Progress:** [cfloat](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1012838019)
 - **Changes:**
   - None
 
@@ -324,7 +348,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/charconv.hpp`](./etl/charconv.hpp)
 - **Tests:** [test_charconv.cpp](./tests/test_charconv.cpp)
 - **Example:** TODO
-- **Progress:** [charconv](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=345887816)
+- **Implementation Progress:** [charconv](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=345887816)
 - **Changes:**
   - None
 
@@ -334,7 +358,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/chrono.hpp`](./etl/chrono.hpp)
 - **Tests:** [test_chrono.cpp](./tests/test_chrono.cpp)
 - **Example:** [chrono.cpp](./examples/chrono.cpp)
-- **Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)
+- **Implementation Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)
 - **Changes:**
   - No clocks are implemented. You have to provide your own, which must at least meet the requirements of [Clock](https://en.cppreference.com/w/cpp/named_req/Clock).
 
@@ -344,7 +368,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/climits.hpp`](./etl/climits.hpp)
 - **Tests:** [test_climits.cpp](./tests/test_climits.cpp)
 - **Example:** TODO
-- **Progress:** [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)
+- **Implementation Progress:** [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)
 - **Changes:**
   - None
 
@@ -354,7 +378,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cmath.hpp`](./etl/cmath.hpp)
 - **Tests:** [test_cmath.cpp](./tests/test_cmath.cpp)
 - **Example:** TODO
-- **Progress:** [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)
+- **Implementation Progress:** [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)
 - **Changes:**
   - None
 
@@ -364,7 +388,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/concepts.hpp`](./etl/concepts.hpp)
 - **Tests:** [test_concepts.cpp](./tests/test_concepts.cpp)
 - **Example:** TODO
-- **Progress:** [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)
+- **Implementation Progress:** [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)
 - **Changes:**
   - None
 
@@ -374,7 +398,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstdarg.hpp`](./etl/cstdarg.hpp)
 - **Tests:** [test_cstdarg.cpp](./tests/test_cstdarg.cpp)
 - **Example:** TODO
-- **Progress:** [cstdarg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1280782172)
+- **Implementation Progress:** [cstdarg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1280782172)
 - **Changes:**
   - None
 
@@ -384,7 +408,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstddef.hpp`](./etl/cstddef.hpp)
 - **Tests:** [test_cstddef.cpp](./tests/test_cstddef.cpp)
 - **Example:** TODO
-- **Progress:** [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)
+- **Implementation Progress:** [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)
 - **Changes:**
   - None
 
@@ -394,7 +418,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstdint.hpp`](./etl/cstdint.hpp)
 - **Tests:** [test_cstdint.cpp](./tests/test_cstdint.cpp)
 - **Example:** TODO
-- **Progress:** [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)
+- **Implementation Progress:** [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)
 - **Changes:**
   - None
 
@@ -404,7 +428,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstdio.hpp`](./etl/cstdio.hpp)
 - **Tests:** [test_cstdio.cpp](./tests/test_cstdio.cpp)
 - **Example:** TODO
-- **Progress:** [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)
+- **Implementation Progress:** [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)
 - **Changes:**
   - TODO
 
@@ -414,7 +438,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstdlib.hpp`](./etl/cstdlib.hpp)
 - **Tests:** [test_cstdlib.cpp](./tests/test_cstdlib.cpp)
 - **Example:** TODO
-- **Progress:** [cstdlib](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1705155517)
+- **Implementation Progress:** [cstdlib](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1705155517)
 - **Changes:**
   - None
 
@@ -424,7 +448,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/cstring.hpp`](./etl/cstring.hpp)
 - **Tests:** [test_cstring.cpp](./tests/test_cstring.cpp)
 - **Example:** TODO
-- **Progress:** [cstring](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1824871501)
+- **Implementation Progress:** [cstring](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1824871501)
 - **Changes:**
   - TODO
 
@@ -434,7 +458,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/ctime.hpp`](./etl/ctime.hpp)
 - **Tests:** [test_ctime.cpp](./tests/test_ctime.cpp)
 - **Example:** TODO
-- **Progress:** [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)
+- **Implementation Progress:** [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)
 - **Changes:**
   - TODO
 
@@ -444,7 +468,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/expected.hpp`](./etl/expected.hpp)
 - **Tests:** [test_expected.cpp](./tests/test_expected.cpp)
 - **Example:** TODO
-- **Progress:** [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)
+- **Implementation Progress:** [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)
 - **Changes:**
   - TODO
 
@@ -454,7 +478,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/format.hpp`](./etl/format.hpp)
 - **Tests:** [test_format.cpp](./tests/test_format.cpp)
 - **Example:** TODO
-- **Progress:** [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)
+- **Implementation Progress:** [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)
 - **Changes:**
   - WIP. Don't use.
 
@@ -464,7 +488,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/functional.hpp`](./etl/functional.hpp)
 - **Tests:** [test_functional.cpp](./tests/test_functional.cpp)
 - **Example:** TODO
-- **Progress:** [functional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291953395)
+- **Implementation Progress:** [functional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291953395)
 - **Changes:**
   - TODO
 
@@ -474,7 +498,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/ios.hpp`](./etl/ios.hpp)
 - **Tests:** [test_ios.cpp](./tests/test_ios.cpp)
 - **Example:** TODO
-- **Progress:** [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
+- **Implementation Progress:** [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
   - TODO
 
@@ -484,7 +508,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/iterator.hpp`](./etl/iterator.hpp)
 - **Tests:** [test_iterator.cpp](./tests/test_iterator.cpp)
 - **Example:** TODO
-- **Progress:** [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1722716093)
+- **Implementation Progress:** [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1722716093)
 - **Changes:**
   - TODO
 
@@ -494,7 +518,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/limits.hpp`](./etl/limits.hpp)
 - **Tests:** [test_limits.cpp](./tests/test_limits.cpp)
 - **Example:** TODO
-- **Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1966217100)
+- **Implementation Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1966217100)
 - **Changes:**
   - None
 
@@ -504,7 +528,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/map.hpp`](./etl/map.hpp)
 - **Tests:** [test_map.cpp](./tests/test_map.cpp)
 - **Example:** [map.cpp](./examples/map.cpp)
-- **Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1845210258)
+- **Implementation Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1845210258)
 - **Changes:**
   - Renamed `map` to `static_map`. Fixed compile-time capacity.
 
@@ -514,7 +538,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/memory.hpp`](./etl/memory.hpp)
 - **Tests:** [test_memory.cpp](./tests/test_memory.cpp)
 - **Example:** [memory.cpp](./examples/memory.cpp)
-- **Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1321444012)
+- **Implementation Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1321444012)
 - **Changes:**
   - Non-standard class templates `small_ptr` (compressed pointer) & `pointer_int_pair` (pointer + integer) are provided.
 
@@ -524,7 +548,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/mutex.hpp`](./etl/mutex.hpp)
 - **Tests:** [test_mutex.cpp](./tests/test_mutex.cpp)
 - **Example:** [mutex.cpp](./examples/mutex.cpp)
-- **Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=965791558)
+- **Implementation Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=965791558)
 - **Changes:**
   - Only RAII lock types are implemented. You have to provide a mutex type that at least meets the [BasicLockable](https://en.cppreference.com/w/cpp/named_req/BasicLockable) requirements.
 
@@ -534,7 +558,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/new.hpp`](./etl/new.hpp)
 - **Tests:** [test_new.cpp](./tests/test_new.cpp)
 - **Example:** TODO
-- **Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1146466573)
+- **Implementation Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1146466573)
 - **Changes:**
   - None
   - If the standard `<new>` is availble it is used to define the global placement new functions to avoid ODR violations when mixing `std` & `etl` headers.
@@ -545,7 +569,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/numbers.hpp`](./etl/numbers.hpp)
 - **Tests:** [test_numbers.cpp](./tests/test_numbers.cpp)
 - **Example:** TODO
-- **Progress:** [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)
+- **Implementation Progress:** [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)
 - **Changes:**
   - None
 
@@ -555,7 +579,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/numeric.hpp`](./etl/numeric.hpp)
 - **Tests:** [test_numeric.cpp](./tests/test_numeric.cpp)
 - **Example:** [numeric.cpp](./examples/numeric.cpp)
-- **Progress:** [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)
+- **Implementation Progress:** [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)
 - **Changes:**
   - Implementations are optimize for code size. See [etl::search vs. libstdc++ (godbolt.org)](https://godbolt.org/z/dY9zPf8cs) as an example.
   - All overloads using an execution policy are not implemented.
@@ -566,7 +590,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/optional.hpp`](./etl/optional.hpp)
 - **Tests:** [test_optional.cpp](./tests/test_optional.cpp)
 - **Example:** [optional.cpp](./examples/optional.cpp)
-- **Progress:** [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)
+- **Implementation Progress:** [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)
 - **Changes:**
   - TODO
 
@@ -576,7 +600,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/ratio.hpp`](./etl/ratio.hpp)
 - **Tests:** [test_ratio.cpp](./tests/test_ratio.cpp)
 - **Example:** [ratio.cpp](./examples/ratio.cpp)
-- **Progress:** [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)
+- **Implementation Progress:** [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)
 - **Changes:**
   - None
 
@@ -586,7 +610,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/scope.hpp`](./etl/scope.hpp)
 - **Tests:** [test_scope.cpp](./tests/test_scope.cpp)
 - **Example:** TODO
-- **Progress:** TODO
+- **Implementation Progress:** TODO
 - **Reference:** [en.cppreference.com/w/cpp/experimental/scope_exit](https://en.cppreference.com/w/cpp/experimental/scope_exit)
 - **Changes:**
   - Based on [p0052r8](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0052r8.pdf)
@@ -598,7 +622,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/set.hpp`](./etl/set.hpp)
 - **Tests:** [test_set.cpp](./tests/test_set.cpp)
 - **Example:** [set.cpp](./examples/set.cpp)
-- **Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
+- **Implementation Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
 - **Changes:**
   - Renamed `set` to `static_set`. Fixed compile-time capacity.
   - If `is_trivial_v<T>`, then `is_trivially_copyable_v<static_set<T, Capacity>>`
@@ -610,7 +634,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/span.hpp`](./etl/span.hpp)
 - **Tests:** [test_span.cpp](./tests/test_span.cpp)
 - **Example:** TODO
-- **Progress:** [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)
+- **Implementation Progress:** [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)
 - **Changes:**
   - None. Available in C++17.
 
@@ -620,7 +644,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/stack.hpp`](./etl/stack.hpp)
 - **Tests:** [test_stack.cpp](./tests/test_stack.cpp)
 - **Example:** TODO
-- **Progress:** [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)
+- **Implementation Progress:** [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)
 - **Changes:**
   - None. Works with `static_vector`.
 
@@ -630,7 +654,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/string.hpp`](./etl/string.hpp)
 - **Tests:** [test_string.cpp](./tests/test_string.cpp)
 - **Example:** [string.cpp](./examples/string.cpp)
-- **Progress:** [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)
+- **Implementation Progress:** [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)
 - **Changes:**
   - Only implemeted for type `char` at the moment.
   - Renamed `basic_string` to `basic_static_string`. Fixed compile-time capacity.
@@ -641,7 +665,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/string_view.hpp`](./etl/string_view.hpp)
 - **Tests:** [test_string_view.cpp](./tests/test_string_view.cpp)
 - **Example:** [string_view.cpp](./examples/string_view.cpp)
-- **Progress:** [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736)
+- **Implementation Progress:** [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736)
 - **Changes:**
   - None
   - Only implemeted for type `char` at the moment.
@@ -652,7 +676,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/system_error.hpp`](./etl/system_error.hpp)
 - **Tests:** [test_system_error.cpp](./tests/test_system_error.cpp)
 - **Example:** TODO
-- **Progress:** [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347)
+- **Implementation Progress:** [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347)
 - **Changes:**
   - Only provides `errc` enum and helper traits.
 
@@ -662,7 +686,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/tuple.hpp`](./etl/tuple.hpp)
 - **Tests:** [test_tuple.cpp](./tests/test_tuple.cpp)
 - **Example:** [tuple.cpp](./examples/tuple.cpp)
-- **Progress:** [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)
+- **Implementation Progress:** [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)
 - **Changes:**
   - Broken at the moment.
 
@@ -672,7 +696,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/type_traits.hpp`](./etl/type_traits.hpp)
 - **Tests:** [test_type_traits.cpp](./tests/test_type_traits.cpp)
 - **Example:** [type_traits.cpp](./examples/type_traits.cpp)
-- **Progress:** [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448)
+- **Implementation Progress:** [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448)
 - **Changes:**
   - None
 
@@ -682,7 +706,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/utility.hpp`](./etl/utility.hpp)
 - **Tests:** [test_utility.cpp](./tests/test_utility.cpp)
 - **Example:** [utility.cpp](./examples/utility.cpp)
-- **Progress:** [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)
+- **Implementation Progress:** [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)
 - **Changes:**
   - None
 
@@ -692,7 +716,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/variant.hpp`](./etl/variant.hpp)
 - **Tests:** [test_variant.cpp](./tests/test_variant.cpp)
 - **Example:** TODO
-- **Progress:** [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)
+- **Implementation Progress:** [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)
 - **Changes:**
   - Broken at the moment.
 
@@ -702,7 +726,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/vector.hpp`](./etl/vector.hpp)
 - **Tests:** [test_vector.cpp](./tests/test_vector.cpp)
 - **Example:** [vector.cpp](./examples/vector.cpp)
-- **Progress:** [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)
+- **Implementation Progress:** [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)
 - **Changes:**
   - Renamed `vector` to `static_vector`. Fixed compile-time capacity.
   - Based on `P0843r3` and the reference implementation from [github.com/gnzlbg/static_vector](https://github.com/gnzlbg/static_vector).
