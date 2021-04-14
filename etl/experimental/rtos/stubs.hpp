@@ -24,6 +24,8 @@
 #ifndef TETL_RTOS_STUBS_HPP
 #define TETL_RTOS_STUBS_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 

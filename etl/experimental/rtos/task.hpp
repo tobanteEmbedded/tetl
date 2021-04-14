@@ -24,6 +24,8 @@
 #ifndef TETL_RTOS_TASK_HPP
 #define TETL_RTOS_TASK_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/warning.hpp"
 

@@ -24,6 +24,8 @@
 #ifndef TETL_NET_BUFFER_HPP
 #define TETL_NET_BUFFER_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/experimental/net/buffer_const.hpp"
 #include "etl/experimental/net/buffer_mutable.hpp"
 

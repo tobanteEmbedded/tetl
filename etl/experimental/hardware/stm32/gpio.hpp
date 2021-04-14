@@ -24,6 +24,8 @@
 #ifndef TETL_HARDWARE_STM32_GPIO_HPP
 #define TETL_HARDWARE_STM32_GPIO_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 

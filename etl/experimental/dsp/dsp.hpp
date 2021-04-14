@@ -24,6 +24,8 @@
 #ifndef TETL_DSP_DSP_HPP
 #define TETL_DSP_DSP_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"

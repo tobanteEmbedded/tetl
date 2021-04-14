@@ -24,6 +24,8 @@
 #ifndef TETL_STRONG_TYPES_STRONG_TYPES_HPP
 #define TETL_STRONG_TYPES_STRONG_TYPES_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/crtp.hpp"
 #include "etl/utility.hpp"
 

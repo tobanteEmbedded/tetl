@@ -57,8 +57,14 @@ struct assert_msg
 namespace etl
 {
 #if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+
+/// \brief This functions needs to be implemented if you enabled the
+/// `TETL_CUSTOM_EXCEPTION_HANDLER` macro. Rebooting the chip is probably the
+/// best idea, because you can not recover from any of the exceptional cases in
+/// the library.
 auto tetl_exception_handler(assert_msg const& msg) -> void;
 #else
+
 #endif
 
 /// \brief The default exception handler. This will be called, if an assertion

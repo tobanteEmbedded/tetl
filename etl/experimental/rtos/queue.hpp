@@ -24,6 +24,8 @@
 #ifndef TETL_RTOS_QUEUE_HPP
 #define TETL_RTOS_QUEUE_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstdint.hpp"
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"

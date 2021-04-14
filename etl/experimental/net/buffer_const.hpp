@@ -24,6 +24,8 @@
 #ifndef TETL_NET_BUFFER_CONST_HPP
 #define TETL_NET_BUFFER_CONST_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 

@@ -24,6 +24,8 @@
 #ifndef ETL_EXPERIMENTAL_TESTING_TESTING_HPP
 #define ETL_EXPERIMENTAL_TESTING_TESTING_HPP
 
+#include "etl/version.hpp"
+
 #include <stdio.h>
 #include <stdlib.h>
 

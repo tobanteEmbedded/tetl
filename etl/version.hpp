@@ -35,6 +35,12 @@
 /// The library version as a string literal
 #define TETL_VERSION_STRING "0.4.0"
 
+#if defined(__STDC_HOSTED__)
+#define TETL_HOSTED 1
+#else
+#define TETL_FREESTANDING 1
+#endif
+
 namespace etl
 {
 /// \brief Enumeration for the currently selected C++ standard version. Unlike

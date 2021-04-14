@@ -24,6 +24,8 @@
 #ifndef TETL_RTOS_DELAY_HPP
 #define TETL_RTOS_DELAY_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
