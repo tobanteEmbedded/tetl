@@ -286,7 +286,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Example:** [cassert.cpp](./examples/cassert.cpp)
 - **Progress:** [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)
 - **Changes:**
-  - TODO
+  - Added custom assertion macro `TETL_ASSERT`. The behavoir can be customized. The macro get's called every time an exceptional case has occurred inside the library. See the example file for more details.
 
 ### cctype
 
@@ -705,7 +705,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
 - **Include:** [`etl/version.hpp`](./etl/version.hpp)
 - **Tests:** [test_version.cpp](./tests/test_version.cpp)
 
-Get access to all intrinsic macros & library version macro and constants.
+Get access to all intrinsic macros & library version macro and constants. This header also include `<version>` from C++20 if it is available.
 
 ```cpp
 #include "etl/version.hpp"
@@ -714,11 +714,24 @@ Get access to all intrinsic macros & library version macro and constants.
 
 auto main() -> int
 {
+  puts(TETL_VERSION_STRING);  // Print current library version
+
+  // Detect compiler
 #if defined(TETL_MSVC)
   puts("msvc");
+#if defined(TETL_GCC)
+  puts("gcc");
+#if defined(TETL_CLANG)
+  puts("clang");
 #else
   puts("other compiler");
 #endif
+
+  // Detect C++ standard
+  if (etl::current_standard == language_standard::cpp_17) { puts("using C++17"); }
+  if (etl::current_standard == language_standard::cpp_20) { puts("using C++20"); }
+  if (etl::current_standard == language_standard::cpp_23) { puts("using C++23"); }
+
   return 0;
 }
 ```
