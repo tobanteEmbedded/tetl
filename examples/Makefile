@@ -21,7 +21,6 @@ EXAMPLES 	+= bitset
 EXAMPLES 	+= cassert
 EXAMPLES 	+= chrono
 EXAMPLES 	+= map
-EXAMPLES 	+= memory
 EXAMPLES 	+= numeric
 EXAMPLES 	+= optional
 EXAMPLES 	+= set
@@ -32,6 +31,10 @@ EXAMPLES 	+= utility
 EXAMPLES 	+= vector
 
 EXAMPLES 	+= experimental/stm32_rtos
+
+ifndef AVR
+EXAMPLES 	+= memory
+endif
 
 ifdef AVR
 EXE := ${addsuffix .elf, ${EXAMPLES}}
