@@ -20,14 +20,13 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#include "catch2/catch_template_test_macros.hpp"
-
-#include "catch2/generators/catch_generators.hpp"
+#include "etl/memory.hpp"
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
-#include "etl/memory.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
+#include "catch2/generators/catch_generators.hpp"
 
 TEMPLATE_TEST_CASE("memory/small_ptr: sizeof", "[memory]", uint8_t, uint16_t,
                    uint32_t, uint64_t)

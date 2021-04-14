@@ -20,13 +20,12 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#include "catch2/catch_template_test_macros.hpp"
-
 #include "etl/type_traits.hpp"
 
 #include "etl/map.hpp"
 #include "etl/vector.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("type_traits: integral_constant", "[type_traits]",
                    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,

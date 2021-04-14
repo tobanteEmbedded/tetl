@@ -20,10 +20,9 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#include "etl/charconv.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
-
-#include "etl/charconv.hpp"
 
 TEST_CASE("charconv: chars_format", "[charconv]")
 {

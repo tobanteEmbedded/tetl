@@ -21,7 +21,7 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#include "etl/string.hpp"  // for static_string
+#include "etl/string.hpp"
 
 #include "etl/algorithm.hpp"    // for for_each
 #include "etl/cstddef.hpp"      // for size_t

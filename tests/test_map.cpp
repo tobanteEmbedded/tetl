@@ -20,11 +20,11 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#include "etl/map.hpp"
+
+#include "etl/warning.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
-
-#include "etl/map.hpp"
-#include "etl/warning.hpp"
 
 TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t,
                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,

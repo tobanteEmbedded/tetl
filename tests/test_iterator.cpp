@@ -20,15 +20,15 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#include "catch2/catch_template_test_macros.hpp"
+#include "etl/iterator.hpp"
 
 #include "etl/array.hpp"
-#include "etl/iterator.hpp"
 #include "etl/string_view.hpp"
 #include "etl/vector.hpp"
 
 #include <list>
+
+#include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("iterator: make_reverse_iterator", "[iterator]", char, int,
                    float)

@@ -20,11 +20,11 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#include "catch2/catch_template_test_macros.hpp"
+#include "etl/functional.hpp"
 
 #include "etl/array.hpp"
-#include "etl/functional.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
 {

@@ -20,10 +20,9 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#include "etl/bitset.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
-
-#include "etl/bitset.hpp"
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct()", "[bitset]", ((size_t N), N), 8,
                        16, 32, 64)

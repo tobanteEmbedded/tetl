@@ -20,15 +20,15 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#include "catch2/catch_template_test_macros.hpp"
+#include "etl/numeric.hpp"
 
 #include "etl/array.hpp"     // for array
 #include "etl/cstdint.hpp"   // for int16_t, int32_t, int64_t, int8_t
 #include "etl/iterator.hpp"  // for next, prev
 #include "etl/limits.hpp"    // for numeric_limits
-#include "etl/numeric.hpp"   // for midpoint, accumulate, gcd
 #include "etl/vector.hpp"    // for static_vector
+
+#include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
                    etl::int16_t, etl::int32_t, etl::int64_t)
