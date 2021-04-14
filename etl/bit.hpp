@@ -24,6 +24,8 @@
 #ifndef TETL_BIT_HPP
 #define TETL_BIT_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstring.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"

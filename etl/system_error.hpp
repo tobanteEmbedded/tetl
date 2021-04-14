@@ -24,6 +24,8 @@
 #ifndef TETL_SYSTEM_ERROR_HPP
 #define TETL_SYSTEM_ERROR_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/type_traits.hpp"
 

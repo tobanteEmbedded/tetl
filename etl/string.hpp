@@ -24,6 +24,8 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
 

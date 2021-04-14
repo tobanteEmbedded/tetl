@@ -24,6 +24,8 @@
 #ifndef TETL_NUMBERS_HPP
 #define TETL_NUMBERS_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/type_traits.hpp"
 
 namespace etl::numbers

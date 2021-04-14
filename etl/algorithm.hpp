@@ -27,6 +27,8 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"

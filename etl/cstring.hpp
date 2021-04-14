@@ -24,6 +24,8 @@
 #ifndef TETL_CSTRING_HPP
 #define TETL_CSTRING_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 

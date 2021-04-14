@@ -26,6 +26,8 @@
 #ifndef TETL_TUPLE_HPP
 #define TETL_TUPLE_HPP
 
+#include "etl/version.hpp"
+
 // #include "etl/detail/tuple_size.hpp"
 
 namespace etl

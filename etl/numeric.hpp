@@ -27,6 +27,8 @@
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
 #include "etl/limits.hpp"

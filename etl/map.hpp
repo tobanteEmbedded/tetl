@@ -23,8 +23,11 @@
 
 /// \file map.hpp
 /// \example map.cpp
+
 #ifndef TETL_MAP_HPP
 #define TETL_MAP_HPP
+
+#include "etl/version.hpp"
 
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"

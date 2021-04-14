@@ -24,10 +24,12 @@
 #ifndef TETL_EXPERIMENTAL_FORMAT_HPP
 #define TETL_EXPERIMENTAL_FORMAT_HPP
 
-#include "etl/detail/fmt_argument.hpp"
-#include "etl/detail/fmt_context.hpp"
+#include "etl/version.hpp"
 
 #include "etl/vector.hpp"
+
+#include "etl/detail/fmt_argument.hpp"
+#include "etl/detail/fmt_context.hpp"
 
 namespace etl
 {

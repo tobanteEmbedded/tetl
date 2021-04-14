@@ -27,6 +27,8 @@
 #ifndef TETL_ARRAY_HPP
 #define TETL_ARRAY_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"

@@ -24,6 +24,8 @@
 #ifndef TETL_CHRONO_HPP
 #define TETL_CHRONO_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
 

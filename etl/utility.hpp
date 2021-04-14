@@ -26,6 +26,8 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 

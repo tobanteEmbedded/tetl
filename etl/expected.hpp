@@ -24,6 +24,8 @@
 #ifndef TETL_EXPECTED_HPP
 #define TETL_EXPECTED_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/type_traits.hpp"
 
 namespace etl

@@ -24,6 +24,8 @@
 #ifndef TETL_CCTYPE_HPP
 #define TETL_CCTYPE_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cassert.hpp"
 #include "etl/limits.hpp"
 

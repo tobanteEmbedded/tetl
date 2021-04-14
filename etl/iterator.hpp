@@ -24,6 +24,8 @@
 #ifndef TETL_ITERATOR_HPP
 #define TETL_ITERATOR_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/memory.hpp"
 #include "etl/type_traits.hpp"

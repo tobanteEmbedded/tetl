@@ -26,6 +26,8 @@
 #ifndef TETL_VECTOR_HPP
 #define TETL_VECTOR_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/cassert.hpp"

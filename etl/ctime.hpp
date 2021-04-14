@@ -24,6 +24,8 @@
 #ifndef TETL_CTIME_HPP
 #define TETL_CTIME_HPP
 
+#include "etl/version.hpp"
+
 #if __has_include(<time.h>)
 #include <time.h>
 #else

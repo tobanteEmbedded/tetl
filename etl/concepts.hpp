@@ -24,6 +24,8 @@
 #ifndef TETL_CONCEPTS_HPP
 #define TETL_CONCEPTS_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/version.hpp"

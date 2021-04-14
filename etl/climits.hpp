@@ -24,6 +24,8 @@
 #ifndef TETL_CLIMITS_HPP
 #define TETL_CLIMITS_HPP
 
+#include "etl/version.hpp"
+
 #if __has_include(<limits.h>)
 #include <limits.h>
 #else

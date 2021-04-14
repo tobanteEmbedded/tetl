@@ -27,7 +27,7 @@ namespace etl
 {
 /// Explicitly ignore arguments or variables.
 template <typename... Types>
-auto ignore_unused(Types&&... /*unused*/) -> void
+constexpr auto ignore_unused(Types&&... /*unused*/) -> void
 {
 }
 }  // namespace etl

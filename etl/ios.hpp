@@ -24,6 +24,8 @@
 #ifndef TETL_IOS_HPP
 #define TETL_IOS_HPP
 
+#include "etl/version.hpp"
+
 namespace etl
 {
 using streamoff = int;

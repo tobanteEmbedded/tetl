@@ -24,6 +24,8 @@
 #ifndef TETL_MUTEX_HPP
 #define TETL_MUTEX_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/chrono.hpp"
 
 namespace etl

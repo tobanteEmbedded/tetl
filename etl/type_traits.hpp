@@ -26,6 +26,8 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/detail/cstddef_internal.hpp"  // for size_t, max_align_t, nullptr_t
 #include "etl/detail/intrinsics.hpp"        // for TETL_IS_CLASS, TETL_IS_ENUM
 #include "etl/detail/sfinae.hpp"            // for enable_if

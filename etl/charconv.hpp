@@ -24,6 +24,8 @@
 #ifndef TETL_CHARCONV_HPP
 #define TETL_CHARCONV_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstdint.hpp"
 #include "etl/system_error.hpp"
 

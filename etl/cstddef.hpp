@@ -24,11 +24,13 @@
 #ifndef TETL_CSTDDEF_HPP
 #define TETL_CSTDDEF_HPP
 
+#include "etl/version.hpp"
+
+#include "etl/type_traits.hpp"
+
 #include "etl/detail/cstddef_internal.hpp"
 #include "etl/detail/intrinsics.hpp"
 #include "etl/detail/sfinae.hpp"
-
-#include "etl/type_traits.hpp"
 
 namespace etl
 {

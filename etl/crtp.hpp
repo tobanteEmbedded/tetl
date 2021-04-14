@@ -24,6 +24,8 @@
 #ifndef TETL_CRTP_HPP
 #define TETL_CRTP_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 
 namespace etl

@@ -24,6 +24,8 @@
 #ifndef TETL_STACK_HPP
 #define TETL_STACK_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 

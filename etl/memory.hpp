@@ -24,6 +24,8 @@
 #ifndef TETL_MEMORY_HPP
 #define TETL_MEMORY_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/bit.hpp"
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"

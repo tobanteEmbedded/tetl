@@ -24,6 +24,8 @@
 #ifndef TETL_LIMITS_HPP
 #define TETL_LIMITS_HPP
 
+#include "etl/version.hpp"
+
 #ifdef _MSC_VER
 #include <float.h>
 #include <limits.h>

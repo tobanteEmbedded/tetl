@@ -24,6 +24,8 @@
 #ifndef TETL_CFLOAT_HPP
 #define TETL_CFLOAT_HPP
 
+#include "etl/version.hpp"
+
 #if __has_include(<float.h>)
 #include <float.h>
 #else

@@ -27,6 +27,8 @@
 /// \file bitset.hpp
 /// \example bitset.cpp
 
+#include "etl/version.hpp"
+
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"

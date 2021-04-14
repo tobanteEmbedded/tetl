@@ -24,6 +24,8 @@
 #ifndef TETL_SPAN_HPP
 #define TETL_SPAN_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/array.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"

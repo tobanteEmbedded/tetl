@@ -27,11 +27,14 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
+#include "etl/version.hpp"
+
+#include "etl/memory.hpp"       // for addressof
+#include "etl/new.hpp"          // for operator new
+#include "etl/type_traits.hpp"  // for remove_cvref_t, is_same (ptr only)
+#include "etl/utility.hpp"      // for forward, in_place, in_place_t, move
+
 #include "etl/detail/sfinae.hpp"  // for enable_if_t, TETL_REQUIRES_, sfina...
-#include "etl/memory.hpp"         // for addressof
-#include "etl/new.hpp"            // for operator new
-#include "etl/type_traits.hpp"    // for remove_cvref_t, is_same (ptr only)
-#include "etl/utility.hpp"        // for forward, in_place, in_place_t, move
 
 namespace etl
 {

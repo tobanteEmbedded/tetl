@@ -24,6 +24,8 @@
 #ifndef TETL_CMATH_HPP
 #define TETL_CMATH_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/sfinae.hpp"

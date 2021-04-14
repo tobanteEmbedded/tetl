@@ -24,6 +24,8 @@
 #ifndef TETL_STRING_VIEW_HPP
 #define TETL_STRING_VIEW_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/algorithm.hpp"
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"

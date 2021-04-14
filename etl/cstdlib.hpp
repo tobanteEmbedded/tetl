@@ -24,6 +24,8 @@
 #if not defined(TETL_CSTDLIB_HPP)
 #define TETL_CSTDLIB_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cassert.hpp"
 #include "etl/cmath.hpp"
 #include "etl/cstddef.hpp"

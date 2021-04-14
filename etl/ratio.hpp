@@ -24,6 +24,8 @@
 #ifndef TETL_RATIO_HPP
 #define TETL_RATIO_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/numeric.hpp"
 #include "etl/type_traits.hpp"

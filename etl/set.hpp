@@ -27,6 +27,8 @@
 #ifndef TETL_SET_HPP
 #define TETL_SET_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/algorithm.hpp"   // for lower_bound, rotate
 #include "etl/functional.hpp"  // for less
 #include "etl/iterator.hpp"    // for reverse_iterator
