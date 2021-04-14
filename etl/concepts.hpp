@@ -30,7 +30,7 @@
 #include "etl/type_traits.hpp"
 #include "etl/version.hpp"
 
-#if defined(TETL_CPP_STANDARD_20) && defined(__cpp_concepts)
+#if defined(__cpp_concepts) && TETL_CPP_STANDARD >= 20
 namespace etl
 {
 namespace detail

@@ -55,15 +55,22 @@ enum class language_standard : unsigned char
 };
 
 #if __cplusplus == 201703L
+#define TETL_CPP_STANDARD 17
 #define TETL_CPP_STANDARD_17
 /// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_17;
-#endif
-
-#if __cplusplus > 201703L
+#elif __cplusplus == 202002L
+#define TETL_CPP_STANDARD 20
 #define TETL_CPP_STANDARD_20
 /// The currently configured C++ standard.
 constexpr auto current_standard = language_standard::cpp_20;
+#elif __cplusplus > 202002L
+#define TETL_CPP_STANDARD 23
+#define TETL_CPP_STANDARD_23
+/// The currently configured C++ standard.
+constexpr auto current_standard = language_standard::cpp_23;
+#else
+#error "Unsupported C++ language standard. TETL requires at least C++17"
 #endif
 
 /// \brief Compares language_standards
@@ -111,5 +118,9 @@ constexpr auto current_standard = language_standard::cpp_20;
 }
 
 }  // namespace etl
+
+#if (__has_include(<version>)) && (TETL_CPP_STANDARD >= 20)
+#include <version>
+#endif
 
 #endif  // TETL_VERSION_HPP

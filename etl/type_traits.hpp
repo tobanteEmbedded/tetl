@@ -2617,11 +2617,7 @@ inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 /// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
-#if defined(TETL_CPP_STANDARD_20)
   return TETL_IS_CONSTANT_EVALUATED();
-#else
-  return false;
-#endif
 }
 
 }  // namespace etl
