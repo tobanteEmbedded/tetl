@@ -21,7 +21,7 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#undef NDEBUG
+// #undef NDEBUG
 
 #include "etl/vector.hpp"  // for static_vector
 

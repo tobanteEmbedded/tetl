@@ -83,8 +83,7 @@ class basic_static_string
   /// \details Fails silently if input len is greater then capacity.
   constexpr basic_static_string(const_pointer str, size_type const len) noexcept
   {
-    TETL_ASSERT(len + 1 <= Capacity
-                && "size + null-terminator greater than capacity");
+    TETL_ASSERT(len + 1 <= Capacity);
 
     if (str != nullptr && len + 1 < Capacity)
     {
@@ -107,8 +106,7 @@ class basic_static_string
   /// \details Fails silently if input length is greater then capacity.
   constexpr basic_static_string(size_type count, value_type ch) noexcept
   {
-    TETL_ASSERT(count + 1 <= Capacity
-                && "size + null-terminator greater than capacity");
+    TETL_ASSERT(count + 1 <= Capacity);
     if (count + 1 <= Capacity)
     {
       clear_storage();

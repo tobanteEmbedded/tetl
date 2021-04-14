@@ -20,7 +20,7 @@ INCLUDES += -I../
 ifdef DEBUG
 DEBUGFLAGS = -Og -g
 else
-DEBUGFLAGS = -Os -flto
+DEBUGFLAGS = -Os -DNDEBUG=1
 endif
 
 ARCH += -mcpu=cortex-m3

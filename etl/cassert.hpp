@@ -98,16 +98,15 @@ inline auto tetl_call_exception_handler(assert_msg const& msg) -> void
       if (TETL_IS_CONSTANT_EVALUATED())                                        \
       {                                                                        \
         /*During compilation we forward to assert, to force an error*/         \
-        assert((exp)); /* NOLINT */                                            \
+        assert(false); /* NOLINT */                                            \
       }                                                                        \
       else                                                                     \
       {                                                                        \
         /*During runtime we call the global exception handler */               \
         auto const msg = ::etl::assert_msg {                                   \
-          __LINE__,                                                            \
-          __FILE__,                                                            \
-          TETL_FUNC_SIG,                                                       \
-          TETL_TO_STR(exp),                                                    \
+          __LINE__, __FILE__,                                                  \
+          nullptr, /*The function name causes code bloat.  */                  \
+          nullptr, /*The stringified expression causes code bloat.  */         \
         };                                                                     \
         ::etl::detail::tetl_call_exception_handler(msg);                       \
       }                                                                        \

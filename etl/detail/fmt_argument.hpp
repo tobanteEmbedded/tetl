@@ -92,7 +92,8 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
       }
       else
       {
-        TETL_ASSERT(false && "No closing }} found");
+        // No closing "}}" found
+        TETL_ASSERT(false);
         return;
       }
     }

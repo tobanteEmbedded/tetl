@@ -40,8 +40,7 @@ namespace etl
 // exception handler macro.
 auto tetl_exception_handler(etl::assert_msg const& msg) -> void
 {
-  ::printf("EXCEPTION: %s:%d in %s with: %s\n", msg.file, msg.line, msg.func,
-           msg.expression);
+  ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
 }
 
 }  // namespace etl

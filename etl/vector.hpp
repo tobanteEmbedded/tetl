@@ -97,15 +97,12 @@ class static_vector_zero_storage
   static constexpr auto emplace_back(Args&&... /*unused*/) noexcept
     -> enable_if_t<is_constructible_v<T, Args...>, void>
   {
-    TETL_ASSERT(false && "tried to emplace_back on empty storage");
+    TETL_ASSERT(false);
   }
 
   /// \brief Removes the last element of the storage. Always fails for empty
   /// storage.
-  static constexpr void pop_back() noexcept
-  {
-    TETL_ASSERT(false && "tried to pop_back on empty storage");
-  }
+  static constexpr void pop_back() noexcept { TETL_ASSERT(false); }
 
   protected:
   /// \brief Changes the size of the storage without adding or removing elements
@@ -113,9 +110,7 @@ class static_vector_zero_storage
   static constexpr void
   unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
   {
-    TETL_ASSERT(newSize == 0
-                && "tried to change size of empty storage to "
-                   "non-zero value");
+    TETL_ASSERT(newSize == 0);
   }
 
   /// \brief Destroys all elements of the storage in range [begin, end) without
@@ -136,12 +131,8 @@ class static_vector_zero_storage
 template <typename T, size_t Capacity>
 class static_vector_trivial_storage
 {
-  static_assert(::etl::is_trivial_v<T>,
-                "storage::trivial<T, C> requires etl::is_trivial_v<T>");
-  static_assert(Capacity != size_t {0},
-                "Capacity must be greater "
-                "than zero (use "
-                "storage::static_vector_zero_storage instead)");
+  static_assert(::etl::is_trivial_v<T>);
+  static_assert(Capacity != size_t {0});
 
   public:
   using size_type       = smallest_size_t<Capacity>;
@@ -205,7 +196,7 @@ class static_vector_trivial_storage
   constexpr auto emplace_back(Args&&... args) noexcept -> enable_if_t<
     is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>, void>
   {
-    TETL_ASSERT(!full() && "tried to emplace_back on full storage!");
+    TETL_ASSERT(!full());
     index(data_, size()) = T(forward<Args>(args)...);
     unsafe_set_size(static_cast<size_type>(size() + 1));
   }
@@ -213,7 +204,7 @@ class static_vector_trivial_storage
   /// \brief Remove the last element from the container.
   constexpr auto pop_back() noexcept -> void
   {
-    TETL_ASSERT(!empty() && "tried to pop_back from empty storage!");
+    TETL_ASSERT(!empty());
     unsafe_set_size(static_cast<size_type>(size() - 1));
   }
 
@@ -223,7 +214,7 @@ class static_vector_trivial_storage
   /// \warning No elements are constructed or destroyed.
   constexpr auto unsafe_set_size(size_t newSize) noexcept -> void
   {
-    TETL_ASSERT(newSize <= Capacity && "new_size out-of-bounds [0, Capacity]");
+    TETL_ASSERT(newSize <= Capacity);
     size_ = size_type(newSize);
   }
 
@@ -255,9 +246,8 @@ class static_vector_trivial_storage
 template <typename T, size_t Capacity>
 class static_vector_non_trivial_storage
 {
-  static_assert(!is_trivial_v<T>,
-                "use storage::trivial for is_trivial_v<T> elements");
-  static_assert(Capacity != size_t {0}, "Capacity must be greater than zero!");
+  static_assert(!is_trivial_v<T>);
+  static_assert(Capacity != size_t {0});
 
   public:
   using size_type       = smallest_size_t<Capacity>;
@@ -334,7 +324,7 @@ class static_vector_non_trivial_storage
   auto emplace_back(Args&&... args) noexcept(
     noexcept(new (end()) T(forward<Args>(args)...))) -> void
   {
-    TETL_ASSERT(!full() && "tried to emplace_back on full storage");
+    TETL_ASSERT(!full());
     new (end()) T(forward<Args>(args)...);
     unsafe_set_size(static_cast<size_type>(size() + 1));
   }
@@ -342,7 +332,7 @@ class static_vector_non_trivial_storage
   /// \brief Remove the last element from the container.
   auto pop_back() noexcept(is_nothrow_destructible_v<T>) -> void
   {
-    TETL_ASSERT(!empty() && "tried to pop_back from empty storage!");
+    TETL_ASSERT(!empty());
     auto* ptr = end() - 1;
     ptr->~T();
     unsafe_set_size(static_cast<size_type>(size() - 1));
@@ -354,7 +344,7 @@ class static_vector_non_trivial_storage
   /// \warning No elements are constructed or destroyed.
   constexpr void unsafe_set_size(size_t newSize) noexcept
   {
-    TETL_ASSERT(newSize <= Capacity && "new_size out-of-bounds [0, Capacity)");
+    TETL_ASSERT(newSize <= Capacity);
     size_ = size_type(newSize);
   }
 
@@ -365,8 +355,8 @@ class static_vector_non_trivial_storage
   void unsafe_destroy(InputIt first,
                       InputIt last) noexcept(is_nothrow_destructible_v<T>)
   {
-    TETL_ASSERT(first >= data() && first <= end() && "first is out-of-bounds");
-    TETL_ASSERT(last >= data() && last <= end() && "last is out-of-bounds");
+    TETL_ASSERT(first >= data() && first <= end());
+    TETL_ASSERT(last >= data() && last <= end());
     for (; first != last; ++first) { first->~T(); }
   }
 
@@ -402,7 +392,7 @@ template <typename T, size_t Capacity>
 struct static_vector : detail::static_vector_storage_type<T, Capacity>
 {
   private:
-  static_assert(is_nothrow_destructible_v<T>, "T must be nothrow destructible");
+  static_assert(is_nothrow_destructible_v<T>);
   using base_type = detail::static_vector_storage_type<T, Capacity>;
   using self      = static_vector<T, Capacity>;
 
@@ -441,7 +431,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     -> enable_if_t<is_move_constructible_v<T> or is_copy_constructible_v<T>,
                    void>
   {
-    TETL_ASSERT(n <= capacity() && "resized to a size greater than capacity");
+    TETL_ASSERT(n <= capacity());
     while (n != size()) { emplace_back(T {}); }
   }
 
@@ -507,7 +497,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     -> enable_if_t<is_constructible_v<T, U> && is_assignable_v<reference, U&&>,
                    void>
   {
-    TETL_ASSERT(!full() && "vector is full!");
+    TETL_ASSERT(!full());
     emplace_back(forward<U>(value));
   }
 
@@ -521,8 +511,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     assert_valid_iterator_pair(first, last);
     if constexpr (detail::RandomAccessIterator<InputIt>)
     {
-      TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity()
-                  && "trying to insert beyond capacity!");
+      TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
     }
     iterator b = end();
 
@@ -539,7 +528,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
                          declval<value_type*>())))
     -> enable_if_t<is_constructible_v<T, Args...>, iterator>
   {
-    TETL_ASSERT(!full() && "tried emplace on full static_vector!");
+    TETL_ASSERT(!full());
     assert_iterator_in_range(position);
     value_type a(forward<Args>(args)...);
     return move_insert(position, &a, &a + 1);
@@ -553,7 +542,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
          value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
     -> enable_if_t<is_move_constructible_v<T>, iterator>
   {
-    TETL_ASSERT(!full() && "tried insert on full static_vector!");
+    TETL_ASSERT(!full());
     assert_iterator_in_range(position);
     return move_insert(position, &x, &x + 1);
   }
@@ -563,8 +552,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     -> enable_if_t<is_copy_constructible_v<T>, iterator>
   {
     assert_iterator_in_range(position);
-    TETL_ASSERT(size() + n <= capacity()
-                && "trying to insert beyond capacity!");
+    TETL_ASSERT(size() + n <= capacity());
     auto* b = end();
     while (n != 0)
     {
@@ -581,7 +569,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     noexcept(insert(position, size_type(1), x)))
     -> enable_if_t<is_copy_constructible_v<T>, iterator>
   {
-    TETL_ASSERT(!full() && "tried insert on full static_vector!");
+    TETL_ASSERT(!full());
     assert_iterator_in_range(position);
     return insert(position, size_type(1), x);
   }
@@ -598,8 +586,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     assert_valid_iterator_pair(first, last);
     if constexpr (detail::RandomAccessIterator<InputIt>)
     {
-      TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity()
-                  && "trying to insert beyond capacity!");
+      TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
     }
     auto* b = end();
 
@@ -667,7 +654,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   TETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
   explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
   {
-    TETL_ASSERT(n <= capacity() && "size exceeds capacity");
+    TETL_ASSERT(n <= capacity());
     emplace_n(n);
   }
 
@@ -677,7 +664,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
                           T const& value) noexcept(noexcept(insert(begin(), n,
                                                                    value)))
   {
-    TETL_ASSERT(n <= capacity() && "size exceeds capacity");
+    TETL_ASSERT(n <= capacity());
     insert(begin(), n, value);
   }
 
@@ -689,8 +676,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     if constexpr (detail::RandomAccessIterator<InputIter>)
     {
       TETL_ASSERT(last - first >= 0);
-      TETL_ASSERT(static_cast<size_type>(last - first) <= capacity()
-                  && "range size exceeds capacity");
+      TETL_ASSERT(static_cast<size_type>(last - first) <= capacity());
     }
     insert(begin(), first, last);
   }
@@ -732,8 +718,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     if constexpr (detail::RandomAccessIterator<InputIter>)
     {
       TETL_ASSERT(last - first >= 0);
-      TETL_ASSERT(static_cast<size_type>(last - first) <= capacity()
-                  && "range size exceeds capacity");
+      TETL_ASSERT(static_cast<size_type>(last - first) <= capacity());
     }
     clear();
     insert(begin(), first, last);
@@ -743,7 +728,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   constexpr auto assign(size_type n, T const& u)
     -> enable_if_t<is_copy_constructible_v<T>, void>
   {
-    TETL_ASSERT(n <= capacity() && "size exceeds capacity");
+    TETL_ASSERT(n <= capacity());
     clear();
     insert(begin(), n, u);
   }
@@ -780,14 +765,14 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   /// \group back
   [[nodiscard]] constexpr auto back() noexcept -> reference
   {
-    TETL_ASSERT(!empty() && "calling back on an empty vector");
+    TETL_ASSERT(!empty());
     return detail::index(*this, static_cast<size_type>(size() - 1));
   }
 
   /// \group back
   [[nodiscard]] constexpr auto back() const noexcept -> const_reference
   {
-    TETL_ASSERT(!empty() && "calling back on an empty vector");
+    TETL_ASSERT(!empty());
     return detail::index(*this, static_cast<size_type>(size() - 1));
   }
 
@@ -856,9 +841,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
     if (sz == size()) { return; }
     if (sz > size())
     {
-      TETL_ASSERT(sz <= capacity()
-                  && "static_vector cannot be resized to "
-                     "a size greater than capacity");
+      TETL_ASSERT(sz <= capacity());
       insert(end(), sz - size(), value);
     }
     else
@@ -872,8 +855,8 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   constexpr void assert_iterator_in_range([[maybe_unused]] It it) noexcept
   {
     static_assert(is_pointer_v<It>);
-    TETL_ASSERT(begin() <= it && "iterator not in range");
-    TETL_ASSERT(it <= end() && "iterator not in range");
+    TETL_ASSERT(begin() <= it);
+    TETL_ASSERT(it <= end());
   }
 
   template <typename It0, typename It1>
@@ -882,7 +865,7 @@ struct static_vector : detail::static_vector_storage_type<T, Capacity>
   {
     static_assert(is_pointer_v<It0>);
     static_assert(is_pointer_v<It1>);
-    TETL_ASSERT(first <= last && "invalid iterator pair");
+    TETL_ASSERT(first <= last);
   }
 
   template <typename It0, typename It1>
