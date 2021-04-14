@@ -26,6 +26,10 @@
 
 #include "etl/detail/intrinsics.hpp"
 
+#if (__has_include(<version>))
+#include <version>
+#endif
+
 /// The major release version
 #define TETL_VERSION_MAJOR 0
 /// The minor release version
@@ -53,25 +57,6 @@ enum class language_standard : unsigned char
   cpp_20 = 20,
   cpp_23 = 23,
 };
-
-#if __cplusplus == 201703L
-#define TETL_CPP_STANDARD 17
-#define TETL_CPP_STANDARD_17
-/// The currently configured C++ standard.
-constexpr auto current_standard = language_standard::cpp_17;
-#elif __cplusplus == 202002L
-#define TETL_CPP_STANDARD 20
-#define TETL_CPP_STANDARD_20
-/// The currently configured C++ standard.
-constexpr auto current_standard = language_standard::cpp_20;
-#elif __cplusplus > 202002L
-#define TETL_CPP_STANDARD 23
-#define TETL_CPP_STANDARD_23
-/// The currently configured C++ standard.
-constexpr auto current_standard = language_standard::cpp_23;
-#else
-#error "Unsupported C++ language standard. TETL requires at least C++17"
-#endif
 
 /// \brief Compares language_standards
 /// \group language_standard_compare
@@ -117,10 +102,22 @@ constexpr auto current_standard = language_standard::cpp_23;
   return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
 }
 
-}  // namespace etl
-
-#if (__has_include(<version>)) && (TETL_CPP_STANDARD >= 20)
-#include <version>
+#if __cplusplus > 202002L
+#define TETL_CPP_STANDARD 23
+/// The currently configured C++ standard.
+inline constexpr auto current_standard = language_standard::cpp_23;
+#elif __cplusplus > 201703L
+#define TETL_CPP_STANDARD 20
+/// The currently configured C++ standard.
+inline constexpr auto current_standard = language_standard::cpp_20;
+#elif __cplusplus == 201703L
+#define TETL_CPP_STANDARD 17
+/// The currently configured C++ standard.
+inline constexpr auto current_standard = language_standard::cpp_17;
+#else
+#error "Unsupported C++ language standard. TETL requires at least C++17"
 #endif
+
+}  // namespace etl
 
 #endif  // TETL_VERSION_HPP
