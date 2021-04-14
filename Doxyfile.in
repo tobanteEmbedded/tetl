@@ -1,4 +1,4 @@
-PROJECT_NAME           = taetl
+PROJECT_NAME           = tetl
 PROJECT_NUMBER         = 0.4.0
 
 USE_MDFILE_AS_MAINPAGE = README.md

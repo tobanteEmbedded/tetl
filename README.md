@@ -101,32 +101,32 @@ The following steps explain how to add `etl` to your project. Embedded or deskto
 ```sh
 cd path/to/your/project
 mkdir 3rd_party
-git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/taetl
+git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/tetl
 ```
 
 ### Command Line / Makefile
 
 ```make
-CXXFLAGS += -std=c++17 -I3rd_party/taetl
+CXXFLAGS += -std=c++17 -I3rd_party/tetl
 ```
 
 ### CMake
 
-Add `taetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
+Add `tetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```cmake
-add_subdirectory(3rd_party/taetl EXCLUDE_FROM_ALL)
+add_subdirectory(3rd_party/tetl EXCLUDE_FROM_ALL)
 target_link_libraries(${YOUR_TARGET} tobanteEmbedded::etl)
 ```
 
 ### PlatformIO
 
-Add `taetl` as a git submodule, then add these lines to your `platformio.ini`:
+Add `tetl` as a git submodule, then add these lines to your `platformio.ini`:
 
 ```ini
 [env:yourenv]
 build_unflags = -std=gnu++11
-build_flags = -std=gnu++17 -Wno-register -I 3rd_party/taetl
+build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ```
 
 ## Header Overview
