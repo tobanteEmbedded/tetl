@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file array.hpp
-/// \example array.cpp
-
 #ifndef TETL_ARRAY_HPP
 #define TETL_ARRAY_HPP
 
@@ -51,7 +48,6 @@ namespace etl
 /// \notes Since I assume that, you maight have exceptions disabled, all
 /// possibly throwing methods like "at" are not implemented.
 /// \module Containers
-/// \include array.cpp
 template <typename Type, size_t Size>
 struct array
 {

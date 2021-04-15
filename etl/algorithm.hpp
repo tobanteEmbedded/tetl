@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file algorithm.hpp
-/// \example algorithm.cpp
-
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 

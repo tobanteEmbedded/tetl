@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file set.hpp
-/// \example set.cpp
-
 #ifndef TETL_SET_HPP
 #define TETL_SET_HPP
 
@@ -42,8 +39,6 @@ namespace etl
 /// \brief static_set is an associative container that contains a sorted set
 /// of unique objects of type Key. Sorting is done using the key comparison
 /// function Compare.
-///
-/// \include set.cpp
 /// \module Containers
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set

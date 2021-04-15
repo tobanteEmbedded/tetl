@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file optional.hpp
-/// \example optional.cpp
-
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
@@ -42,8 +39,6 @@ namespace etl
 /// with uninitialized state. In particular, etl::optional has a constructor
 /// with nullopt_t as a single argument, which creates an optional that does not
 /// contain a value.
-///
-/// \include optional.cpp
 struct nullopt_t
 {
   explicit constexpr nullopt_t(int /*unused*/) { }

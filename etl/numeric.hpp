@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file numeric.hpp
-/// \example numeric.cpp
-
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 

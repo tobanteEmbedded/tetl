@@ -21,9 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \file map.hpp
-/// \example map.cpp
-
 #ifndef TETL_MAP_HPP
 #define TETL_MAP_HPP
 
@@ -282,8 +279,6 @@ class map_view
 /// uniqueness is determined by using the equivalence relation. In imprecise
 /// terms, two objects a and b are considered equivalent (not unique) if
 /// neither compares less than the other: !comp(a, b) && !comp(b, a).
-///
-/// \include map.cpp
 /// \module Containers
 template <typename KeyT, typename ValueT, size_t Size,
           typename Compare = etl::less<KeyT>>
