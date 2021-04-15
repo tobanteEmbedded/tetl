@@ -37,13 +37,13 @@ auto main() -> int
 g++ -Wall -Wextra -Wpedantic -std=c++17 -I path/to/tetl main.cpp
 ```
 
-For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests).
+For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests). The [API reference](https://tobanteembedded.github.io/tetl-docs/) is currently work in progress. I'm switching from doxygen to standardese, which still has some bugs, so some parts of the docs may still be missing.
 
 ## Status
 
-| **License**                                                                                                                 | **Lines of Code**                                 | **Progress**                                                                                                        |
-| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) |
+| **License**                                                                                                                 | **Lines of Code**                                 | **Progress**                                                                                                        | **Documentation**                                             |
+| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) | [API Reference](https://tobanteembedded.github.io/tetl-docs/) |
 
 ### Hosted
 
