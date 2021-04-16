@@ -102,11 +102,14 @@ The [etl/experimental](./etl/experimental) subdirectory includes libraries that 
 
 ### Error Handling
 
-Error handling has turned out to be a lot more challenging as I thought it would be. Sine I assume that you might have exceptions disabled I need a different way of reporting exceptional cases to you which occured deap inside the library. The naive solution would be to a global exception handler function, which would get called if an "exception" occures. For example an out of bounds access or `push_back` on a full vector. The user could provide an implementation of the global handler which customizes its behavior accordingly. So far this seams like a reasonable solution. Unfortunately this would make it impossible to add `constexpr` to most containers & functions, since the global handler is probably not `constexpr`. It most likly contains print statements or inline assembly to reboot the chip.
+Since I assume that you might have exceptions disabled, I need a different way of reporting exceptional cases to you which occured deep inside the library. To keep the behavior of my library and actual STL implementations as close as possible, I've chosen to add a global assert/exception handler functions, which can be overriden by enabling the `TETL_CUSTOM_ASSERT_HANDLER` macro.
 
-The solution comes in form of a **C++20** library feature. `etl::is_constant_evaluted` allows us to dedect if the current function or method is invoked in a constexpr-context. We get to keep all of the nice properties from the "naive" solution plus a almost fully `constexpr` ready library. Since `etl::is_constant_evaluted` is implemeted with compiler intrinsics, this feature also works in **C++17**.
+**TODO**
 
-For more details about the global exception handler `etl::tetl_exception_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
+- ASSERT macro for debug checks
+- EXCEPTION macro for debug & release checks
+
+For more details about the global assertion handler `etl::tetl_assert_handler` & the assertion macro `TETL_ASSERT` see the [examples/cassert.cpp](./examples/cassert.cpp) file.
 
 ### Near Future
 

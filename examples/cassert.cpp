@@ -28,7 +28,7 @@
 // If you enabled the custom handler in your projects, please define the macro
 // below in your build system and not in your source code to avoid mixing
 // configurations.
-#define TETL_CUSTOM_EXCEPTION_HANDLER 1
+#define TETL_CUSTOM_ASSERT_HANDLER 1
 
 #include "etl/cassert.hpp"  // for TETL_ASSERT
 
@@ -37,8 +37,8 @@
 namespace etl
 {
 // This function only needs to be implemented if you defined the custom
-// exception handler macro.
-auto tetl_exception_handler(etl::assert_msg const& msg) -> void
+// assert handler macro.
+auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
   ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
 }
@@ -48,6 +48,6 @@ auto tetl_exception_handler(etl::assert_msg const& msg) -> void
 auto main() -> int
 {
   TETL_ASSERT(2 == 2);  // success, nothing is printed
-  TETL_ASSERT(2 == 3);  // failure, the exception handler is invoked
+  TETL_ASSERT(2 == 3);  // failure, the assert handler is invoked
   return EXIT_SUCCESS;
 }

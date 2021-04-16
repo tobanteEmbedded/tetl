@@ -45,8 +45,6 @@ namespace etl
 /// most N initializers that are convertible to
 /// Type: `array<int, 3> a = {1,2,3};`
 ///
-/// \notes Since I assume that, you maight have exceptions disabled, all
-/// possibly throwing methods like "at" are not implemented.
 /// \module Containers
 template <typename Type, size_t Size>
 struct array

@@ -56,20 +56,20 @@ struct assert_msg
 
 namespace etl
 {
-#if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+#if defined(TETL_CUSTOM_ASSERT_HANDLER)
 
 /// \brief This functions needs to be implemented if you enabled the
-/// `TETL_CUSTOM_EXCEPTION_HANDLER` macro. Rebooting the chip is probably the
+/// `TETL_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably the
 /// best idea, because you can not recover from any of the exceptional cases in
 /// the library.
-auto tetl_exception_handler(assert_msg const& msg) -> void;
+auto tetl_assert_handler(assert_msg const& msg) -> void;
 #else
 
 #endif
 
-/// \brief The default exception handler. This will be called, if an assertion
+/// \brief The default assert handler. This will be called, if an assertion
 /// is triggered at runtime.
-inline auto tetl_default_exception_handler(assert_msg const& msg) -> void
+inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
 {
   ::etl::ignore_unused(msg);
   ::exit(1);
@@ -77,12 +77,12 @@ inline auto tetl_default_exception_handler(assert_msg const& msg) -> void
 
 namespace detail
 {
-inline auto tetl_call_exception_handler(assert_msg const& msg) -> void
+inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 {
-#if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
-  ::etl::tetl_exception_handler(msg);
+#if defined(TETL_CUSTOM_ASSERT_HANDLER)
+  ::etl::tetl_assert_handler(msg);
 #else
-  ::etl::tetl_default_exception_handler(msg);
+  ::etl::tetl_default_assert_handler(msg);
 #endif
 }
 
@@ -101,21 +101,12 @@ inline auto tetl_call_exception_handler(assert_msg const& msg) -> void
   do {                                                                         \
     if (!(exp))                                                                \
     {                                                                          \
-      if (TETL_IS_CONSTANT_EVALUATED())                                        \
-      {                                                                        \
-        /*During compilation we forward to assert, to force an error*/         \
-        assert(false); /* NOLINT */                                            \
-      }                                                                        \
-      else                                                                     \
-      {                                                                        \
-        /*During runtime we call the global exception handler */               \
-        auto const msg = ::etl::assert_msg {                                   \
-          __LINE__, __FILE__,                                                  \
-          nullptr, /*The function name causes code bloat.  */                  \
-          nullptr, /*The stringified expression causes code bloat.  */         \
-        };                                                                     \
-        ::etl::detail::tetl_call_exception_handler(msg);                       \
-      }                                                                        \
+      auto const msg = ::etl::assert_msg {                                     \
+        __LINE__, __FILE__,                                                    \
+        nullptr, /*The function name causes code bloat.  */                    \
+        nullptr, /*The stringified expression causes code bloat.  */           \
+      };                                                                       \
+      ::etl::detail::tetl_call_assert_handler(msg);                            \
     }                                                                          \
   } while (false)
 #endif  // TETL_ASSERT
