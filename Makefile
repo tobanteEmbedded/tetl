@@ -60,7 +60,7 @@ standardese:
 	rm -rf cmake-build-docs
 	mkdir cmake-build-docs
 	cd cmake-build-docs && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_RTOS_USE_STUBS=1 $(shell realpath ./etl)
-	./scripts/run-standardese.py
+	./scripts/standardese-md.py
 
 .PHONY: tidy-check
 tidy-check:
