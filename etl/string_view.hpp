@@ -415,8 +415,7 @@ class basic_string_view
     {
       if (unsafe_at(outerIdx) == v.front())
       {
-        auto found = [&]
-        {
+        auto found = [&] {
           for (size_type innerIdx = 0; innerIdx < v.size(); ++innerIdx)
           {
             auto offset = outerIdx + innerIdx;
@@ -482,8 +481,7 @@ class basic_string_view
     do {
       if (unsafe_at(outer) == v.front())
       {
-        auto found = [&]
-        {
+        auto found = [&] {
           for (size_type inner = 0; inner < v.size(); ++inner)
           {
             if (unsafe_at(outer + inner) != v[inner]) { return false; }

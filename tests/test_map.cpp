@@ -32,8 +32,7 @@ TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t,
 {
   etl::map<TestType, TestType, 4> test {};
 
-  auto func = [](etl::map_view<TestType, TestType> const& m)
-  {
+  auto func = [](etl::map_view<TestType, TestType> const& m) {
     REQUIRE(m.empty() == true);
     REQUIRE(m.size() == 0);
     REQUIRE(m.max_size() == 4);
@@ -288,8 +287,7 @@ TEMPLATE_TEST_CASE("map: insert(value_type const&)", "[map]", etl::uint8_t,
 {
   auto map  = etl::map<int, TestType, 4> {};
   auto pair = etl::pair<int, TestType> {1, TestType {100}};
-  auto func = [&](auto const& p)
-  {
+  auto func = [&](auto const& p) {
     map.insert(p);
     REQUIRE(map.size() == 1);
     REQUIRE(map.count(1) == 1);
@@ -329,8 +327,7 @@ TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t,
   auto map = etl::map<int, TestType, 4> {};
   REQUIRE(map.size() == 0);
 
-  auto func = [&](auto& view)
-  {
+  auto func = [&](auto& view) {
     auto res1 = view.emplace(1, TestType {100});
     REQUIRE(res1.second == true);
     REQUIRE(view.size() == 1);

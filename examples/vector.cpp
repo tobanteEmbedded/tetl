@@ -67,8 +67,7 @@ auto main() -> int
   TETL_ASSERT(copy == people);
 
   // You can apply algorithms.
-  auto levelUp = [](auto p)
-  {
+  auto levelUp = [](auto p) {
     p.experience += 1;
     return p;
   };

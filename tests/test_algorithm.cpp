@@ -328,14 +328,14 @@ TEMPLATE_TEST_CASE("algorithm: find_if", "[algorithm]", etl::uint8_t,
   vec.push_back(TestType(4));
 
   // find_if
-  auto* result3
-    = etl::find_if(vec.begin(), vec.end(),
-                   [](auto& x) -> bool { return static_cast<bool>(x % 2); });
+  auto* result3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+    return static_cast<bool>(x % 2);
+  });
   REQUIRE_FALSE(result3 == vec.end());
 
-  auto* result4
-    = etl::find_if(vec.begin(), vec.end(),
-                   [](auto& x) -> bool { return static_cast<bool>(x == 100); });
+  auto* result4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+    return static_cast<bool>(x == 100);
+  });
   REQUIRE(result4 == vec.end());
 }
 
@@ -349,19 +349,19 @@ TEMPLATE_TEST_CASE("algorithm: find_if_not", "[algorithm]", etl::uint8_t,
   vec.push_back(TestType(3));
   vec.push_back(TestType(4));
   // find_if_not
-  auto* result5 = etl::find_if_not(vec.begin(), vec.end(),
-                                   [](auto& x) -> bool
-                                   { return static_cast<bool>(x % 2); });
+  auto* result5 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+    return static_cast<bool>(x % 2);
+  });
   REQUIRE_FALSE(result5 == vec.end());
 
-  auto* result6 = etl::find_if_not(vec.begin(), vec.end(),
-                                   [](auto& x) -> bool
-                                   { return static_cast<bool>(x == 100); });
+  auto* result6 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+    return static_cast<bool>(x == 100);
+  });
   REQUIRE_FALSE(result6 == vec.end());
 
-  auto* result7 = etl::find_if_not(vec.begin(), vec.end(),
-                                   [](auto& x) -> bool
-                                   { return static_cast<bool>(x != 100); });
+  auto* result7 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+    return static_cast<bool>(x != 100);
+  });
   REQUIRE(result7 == vec.end());
 }
 

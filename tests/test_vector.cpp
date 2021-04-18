@@ -322,12 +322,10 @@ TEMPLATE_TEST_CASE("vector/static_vector: erase", "[vector]", etl::uint8_t,
                    long double)
 {
   auto vec = etl::static_vector<TestType, 4> {4};
-  etl::generate(etl::begin(vec), etl::end(vec),
-                []
-                {
-                  static auto val = TestType {};
-                  return val += TestType(1);
-                });
+  etl::generate(etl::begin(vec), etl::end(vec), [] {
+    static auto val = TestType {};
+    return val += TestType(1);
+  });
 
   CHECK(vec.front() == TestType(1));
   vec.erase(vec.begin());
@@ -342,8 +340,7 @@ TEMPLATE_TEST_CASE("vector/static_vector: swap", "[vector]", etl::uint8_t,
   SECTION("method")
   {
     auto lhs       = etl::static_vector<TestType, 4> {4};
-    auto generator = []
-    {
+    auto generator = [] {
       static auto val = TestType {};
       return val += TestType(1);
     };
@@ -360,8 +357,7 @@ TEMPLATE_TEST_CASE("vector/static_vector: swap", "[vector]", etl::uint8_t,
   SECTION("free function")
   {
     auto lhs       = etl::static_vector<TestType, 4> {4};
-    auto generator = []
-    {
+    auto generator = [] {
       static auto val = TestType {};
       return val += TestType(1);
     };

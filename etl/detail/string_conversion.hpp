@@ -39,8 +39,7 @@ constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
   TETL_ASSERT(base == 10);
   ignore_unused(base);
 
-  auto digits10 = [](T x)
-  {
+  auto digits10 = [](T x) {
     T result = 1;
     while (true)
     {

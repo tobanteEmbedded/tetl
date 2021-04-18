@@ -295,9 +295,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   /// contents of other.
   constexpr map(map const& other) : map {}
   {
-    etl::for_each(other.begin(), other.end(),
-                  [this](auto element)
-                  { this->base_t::insert(etl::move(element)); });
+    etl::for_each(other.begin(), other.end(), [this](auto element) {
+      this->base_t::insert(etl::move(element));
+    });
   }
 
   /// \brief Move constructor. Constructs the container with the contents of
@@ -306,9 +306,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   /// guaranteed to be empty().
   constexpr map(map&& other) noexcept : map {}
   {
-    etl::for_each(other.begin(), other.end(),
-                  [this](auto& element)
-                  { this->base_t::insert(etl::move(element)); });
+    etl::for_each(other.begin(), other.end(), [this](auto& element) {
+      this->base_t::insert(etl::move(element));
+    });
     other.clear();
   }
 
@@ -318,9 +318,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   {
     if (this == &other) { return *this; }
 
-    etl::for_each(other.begin(), other.end(),
-                  [this](auto element)
-                  { this->base_t::insert(etl::move(element)); });
+    etl::for_each(other.begin(), other.end(), [this](auto element) {
+      this->base_t::insert(etl::move(element));
+    });
     return *this;
   }
 
@@ -330,9 +330,9 @@ class map : public map_view<KeyT, ValueT, Compare>
   /// valid but unspecified state afterwards.
   constexpr auto operator=(map&& other) noexcept -> map&
   {
-    etl::for_each(other.begin(), other.end(),
-                  [this](auto& element)
-                  { this->base_t::insert(etl::move(element)); });
+    etl::for_each(other.begin(), other.end(), [this](auto& element) {
+      this->base_t::insert(etl::move(element));
+    });
     other.clear();
     return *this;
   }

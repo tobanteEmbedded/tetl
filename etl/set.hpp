@@ -369,24 +369,20 @@ struct static_set
   template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) -> iterator
   {
-    return find_if(begin(), end(),
-                   [&x](auto const& val)
-                   {
-                     auto comp = key_compare();
-                     return comp(val, x);
-                   });
+    return find_if(begin(), end(), [&x](auto const& val) {
+      auto comp = key_compare();
+      return comp(val, x);
+    });
   }
 
   /// \brief Finds an element with key that compares equivalent to the value x.
   template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
   constexpr auto find(K const& x) const -> const_iterator
   {
-    return find_if(cbegin(), cend(),
-                   [&x](auto const& val)
-                   {
-                     auto comp = key_compare();
-                     return comp(val, x);
-                   });
+    return find_if(cbegin(), cend(), [&x](auto const& val) {
+      auto comp = key_compare();
+      return comp(val, x);
+    });
   }
 
   /// \brief Checks if there is an element with key equivalent to key in the
