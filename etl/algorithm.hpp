@@ -38,8 +38,13 @@
 namespace etl
 {
 /// \brief Swaps the values of the elements the given iterators are pointing to.
+///
+/// \param a Iterators to the elements to swap.
+/// \param b Iterators to the elements to swap.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/iter_swap)
+/// [cppreference.com/w/cpp/algorithm/iter_swap](https://en.cppreference.com/w/cpp/algorithm/iter_swap)
+///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
@@ -48,13 +53,19 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
   swap(*a, *b);
 }
 
-/// \brief Exchanges elements between range [first1 ,last1) and another range
-/// starting at first2.
+/// \brief Exchanges elements between range `[first1 ,last1)` and another range
+/// starting at `first2`.
+///
+/// \param first1 The first range of elements to swap.
+/// \param last1 The first range of elements to swap.
+/// \param first2 Beginning of the second range of elements to swap.
+///
+/// \returns Iterator to the element past the last element exchanged in the
+/// range beginning with `first2`.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/swap_ranges)
-/// \param first1 the first range of elements to swap
-/// \param last1 the first range of elements to swap
-/// \param first2 beginning of the second range of elements to swap
+/// [cppreference.com/w/cpp/algorithm/swap_ranges](https://en.cppreference.com/w/cpp/algorithm/swap_ranges)
+///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 constexpr auto swap_ranges(ForwardIt1 first1, ForwardIt1 last1,
@@ -70,16 +81,21 @@ constexpr auto swap_ranges(ForwardIt1 first1, ForwardIt1 last1,
   return first2;
 }
 
-/// \brief Moves the elements in the range [first, last), to another range
-/// beginning at destination, starting from first and proceeding to last - 1.
+/// \brief Moves the elements in the range `[first, last)`, to another range
+/// beginning at destination, starting from first and proceeding to `last - 1`.
 /// After this operation the elements in the moved-from range will still contain
 /// valid values of the appropriate type, but not necessarily the same values as
 /// before the move.
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/move)
+///
 /// \param first The range of elements to move.
 /// \param last The range of elements to move.
 /// \param destination The beginning of the destination range.
+///
 /// \returns Output iterator to the element past the last element moved.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/move](https://en.cppreference.com/w/cpp/algorithm/move)
+///
 /// \module Algorithm
 template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination)
@@ -89,16 +105,20 @@ constexpr auto move(InputIt first, InputIt last, OutputIt destination)
   return destination;
 }
 
-/// \brief Moves the elements from the range [first, last), to another range
+/// \brief Moves the elements from the range `[first, last)`, to another range
 /// ending at destination. The elements are moved in reverse order (the last
 /// element is moved first), but their relative order is preserved.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/move_backward)
+///
 /// \param first The range of elements to move.
 /// \param last The range of elements to move.
 /// \param destination End of the destination range.
+///
 /// \returns Iterator in the destination range, pointing at the last element
 /// moved.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/move_backward](https://en.cppreference.com/w/cpp/algorithm/move_backward)
+///
 /// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto move_backward(BidirIt1 first, BidirIt1 last,
@@ -109,15 +129,19 @@ constexpr auto move_backward(BidirIt1 first, BidirIt1 last,
 }
 
 /// \brief Applies the given function object f to the result of dereferencing
-/// every iterator in the range [first, last) in order.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/for_each)
+/// every iterator in the range `[first, last)` in order.
+///
 /// \param first The range to apply the function to.
 /// \param last The range to apply the function to.
 /// \param f Function object, to be applied to the result of dereferencing every
 /// iterator in the range.
+///
+/// \complexity Exactly `last - first` applications of f.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/for_each](https://en.cppreference.com/w/cpp/algorithm/for_each)
+///
 /// \module Algorithm
-/// \complexity Exactly last - first applications of f.
 template <typename InputIt, typename UnaryFunc>
 constexpr auto for_each(InputIt first, InputIt last, UnaryFunc f) noexcept
   -> UnaryFunc
@@ -127,15 +151,19 @@ constexpr auto for_each(InputIt first, InputIt last, UnaryFunc f) noexcept
 }
 
 /// \brief Applies the given function object f to the result of dereferencing
-/// every iterator in the range [first, first + n] in order.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/for_each_n)
+/// every iterator in the range `[first, first + n]` in order.
+///
 /// \param first The beginning of the range to apply the function to.
 /// \param n The number of elements to apply the function to.
 /// \param f Function object, to be applied to the result of dereferencing every
 /// iterator in the range.
-/// \module Algorithm
+///
 /// \complexity Exactly n applications of f.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/for_each_n](https://en.cppreference.com/w/cpp/algorithm/for_each_n)
+///
+/// \module Algorithm
 template <typename InputIt, typename Size, typename UnaryFunc>
 constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept
   -> InputIt
@@ -146,13 +174,16 @@ constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept
 
 /// \brief Applies the given function to a range and stores the result in
 /// another range, beginning at dest. The unary operation op is applied to
-/// the range defined by [first, last).
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/transform)
+/// the range defined by `[first, last)`.
+///
 /// \param first The first range of elements to transform.
 /// \param last The first range of elements to transform.
 /// \param dest The beginning of the destination range, may be equal to first.
 /// \param op Unary operation function object that will be applied.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/transform](https://en.cppreference.com/w/cpp/algorithm/transform)
+///
 /// \group transform
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename UnaryOp>
@@ -163,19 +194,7 @@ constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op)
   return dest;
 }
 
-/// \brief Applies the given function to a range and stores the result in
-/// another range, beginning at destination. The binary operation op is applied
-/// to pairs of elements from two ranges: one defined by [first1, last1) and the
-/// other beginning at first2.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/transform)
-/// \param first1 The first range of elements to transform.
-/// \param last1 The first range of elements to transform.
-/// \param first2 The beginning of the second range of elements to transform.
-/// \param dest The beginning of the destination range, may be equal to first.
-/// \param op Unary operation function object that will be applied.
 /// \group transform
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
           typename BinaryOp>
 constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
@@ -188,27 +207,35 @@ constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
   return dest;
 }
 
-/// \brief Assigns each element in range [first, last) a value generated by the
-/// given function object g.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/generate)
+/// \brief Assigns each element in range `[first, last)` a value generated by
+/// the given function object g.
+///
 /// \param first The range of elements to generate.
 /// \param last The range of elements to generate.
 /// \param g Generator function object that will be called.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/generate](https://en.cppreference.com/w/cpp/algorithm/generate)
+///
+/// \module Algorithm
 template <typename ForwardIt, typename Generator>
 constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 {
   for (; first != last; ++first) { *first = g(); }
 }
 
-/// \brief Assigns values, generated by given function object g, to the first
-/// count elements in the range beginning at first, if count > 0. Does nothing
-/// otherwise.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/generate_n)
+/// \brief Assigns values, generated by given function object `g`, to the first
+/// count elements in the range beginning at `first`, if `count > 0`. Does
+/// nothing otherwise.
+///
 /// \param first The range of elements to generate.
 /// \param count Number of the elements to generate.
 /// \param g Generator function object that will be called.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/generate_n](https://en.cppreference.com/w/cpp/algorithm/generate_n)
+///
+/// \module Algorithm
 template <typename OutputIt, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 {
@@ -216,16 +243,21 @@ constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
   return first;
 }
 
-/// \brief Returns the number of elements in the range [first, last) satisfying
-/// specific criteria. Counts the elements that are equal to value.
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/count)
+/// \brief Returns the number of elements in the range `[first, last)`
+/// satisfying specific criteria. Counts the elements that are equal to value.
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param value The value to search for.
+///
+/// \complexity Exactly `last - first` comparisons / applications of the
+/// predicate.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/count](https://en.cppreference.com/w/cpp/algorithm/count)
+///
 /// \group count
 /// \module Algorithm
-/// \complexity Exactly last - first comparisons / applications of the
-/// predicate.
 template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto count(InputIt first, InputIt last, T const& value)
   -> typename iterator_traits<InputIt>::difference_type
@@ -238,16 +270,22 @@ template <typename InputIt, typename T>
   return result;
 }
 
-/// \brief Returns the number of elements in the range [first, last) satisfying
-/// specific criteria. Counts elements for which predicate p returns true.
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/count)
+/// \brief Returns the number of elements in the range `[first, last)`
+/// satisfying specific criteria. Counts elements for which predicate p returns
+/// true.
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param p Unary predicate which returns ​true for the required elements.
+///
+/// \complexity Exactly `last - first` comparisons / applications of the
+/// predicate.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/count](https://en.cppreference.com/w/cpp/algorithm/count)
+///
 /// \group count
 /// \module Algorithm
-/// \complexity Exactly last - first comparisons / applications of the
-/// predicate.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto count_if(InputIt first, InputIt last, Predicate p)
   -> typename iterator_traits<InputIt>::difference_type
@@ -261,16 +299,19 @@ template <typename InputIt, typename Predicate>
 }
 
 /// \brief Returns the first mismatching pair of elements from two ranges: one
-/// defined by [first1, last1) and another defined by [first2,last2). If last2
+/// defined by `[first1, last1)` and another defined by [first2,last2). If last2
 /// is not provided (overloads (1-4)), it denotes first2 + (last1 - first1).
 /// Elements are compared using the given binary predicate pred.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/mismatch)
+///
 /// \param first1 The first range of the elements.
 /// \param last1 The first range of the elements.
 /// \param first2 The second range of the elements.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/mismatch](https://en.cppreference.com/w/cpp/algorithm/mismatch)
+///
 /// \group mismatch
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
@@ -286,17 +327,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
   return pair<InputIt1, InputIt2>(first1, first2);
 }
 
-/// \brief Returns the first mismatching pair of elements from two ranges: one
-/// defined by [first1, last1) and another defined by [first2,last2). If last2
-/// is not provided (overloads (1-4)), it denotes first2 + (last1 - first1).
-/// Elements are compared using operator==.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/mismatch)
-/// \param first1 The first range of the elements.
-/// \param last1 The first range of the elements.
-/// \param first2 The second range of the elements.
 /// \group mismatch
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
                                       InputIt2 first2)
@@ -305,19 +336,7 @@ template <typename InputIt1, typename InputIt2>
   return mismatch(first1, last1, first2, equal_to<> {});
 }
 
-/// \brief Returns the first mismatching pair of elements from two ranges: one
-/// defined by [first1, last1) and another defined by [first2, last2). Elements
-/// are compared using the given binary predicate pred.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/mismatch)
-/// \param first1 The first range of the elements.
-/// \param last1 The first range of the elements.
-/// \param first2 The second range of the elements.
-/// \param last2 The second range of the elements.
-/// \param pred Binary predicate which returns ​true if the elements should be
-/// treated as equal.
 /// \group mismatch
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
                                       InputIt2 first2, InputIt2 last2,
@@ -332,17 +351,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
   return pair<InputIt1, InputIt2>(first1, first2);
 }
 
-/// \brief Returns the first mismatching pair of elements from two ranges: one
-/// defined by [first1, last1) and another defined by [first2,last2). Elements
-/// are compared using operator==.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/mismatch)
-/// \param first1 The first range of the elements.
-/// \param last1 The first range of the elements.
-/// \param first2 The second range of the elements.
-/// \param last2 The second range of the elements.
 /// \group mismatch
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
                                       InputIt2 first2, InputIt2 last2)
@@ -351,14 +360,17 @@ template <typename InputIt1, typename InputIt2>
   return mismatch(first1, last1, first2, last2, equal_to<> {});
 }
 
-/// \brief Searches the range [first, last) for two consecutive equal elements.
-/// Elements are compared using the given binary predicate p.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
+/// \brief Searches the range `[first, last)` for two consecutive equal
+/// elements. Elements are compared using the given binary predicate p.
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
+///
 /// \group adjacent_find
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
@@ -378,14 +390,7 @@ template <typename ForwardIt, typename Predicate>
   return last;
 }
 
-/// \brief Searches the range [first, last) for two consecutive equal elements.
-/// Elements are compared using operator==.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
-/// \param first The range of elements to examine.
-/// \param last The range of elements to examine.
 /// \group adjacent_find
-/// \module Algorithm
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last)
   -> ForwardIt
@@ -394,10 +399,14 @@ template <typename ForwardIt>
 }
 
 /// \brief Searches for an element equal to value.
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/find)
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param value Value to compare the elements to.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/find](https://en.cppreference.com/w/cpp/algorithm/find)
+///
 /// \group find
 /// \module Algorithm
 template <typename InputIt, typename T>
@@ -412,11 +421,15 @@ template <typename InputIt, typename T>
 }
 
 /// \brief Searches for an element for which predicate p returns true
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/find)
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param pred Unary predicate which returns ​true for the required element.
-/// \group find
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/find](https://en.cppreference.com/w/cpp/algorithm/find)
+///
+/// \group find_if
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto find_if(InputIt first, InputIt last,
@@ -430,11 +443,15 @@ template <typename InputIt, typename Predicate>
 }
 
 /// \brief Searches for an element for which predicate q returns false
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/find)
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param pred Unary predicate which returns ​true for the required element.
-/// \group find
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/find](https://en.cppreference.com/w/cpp/algorithm/find)
+///
+/// \group find_if_not
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last,
@@ -447,17 +464,20 @@ template <typename InputIt, typename Predicate>
   return last;
 }
 
-/// \brief Searches the range [first, last) for any of the elements in the range
-/// [sFirst, sLast). Elements are compared using the given binary predicate
-/// pred.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+/// \brief Searches the range `[first, last)` for any of the elements in the
+/// range [sFirst, sLast). Elements are compared using the given binary
+/// predicate pred.
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
-/// \param pred Binary predicate which returns ​true if the elements should be
+/// \param pred Predicate which returns ​true if the elements should be
 /// treated as equal.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+///
 /// \group find_first_of
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt, typename Predicate>
@@ -476,14 +496,17 @@ template <typename InputIt, typename ForwardIt, typename Predicate>
   return last;
 }
 
-/// \brief Searches the range [first, last) for any of the elements in the range
-/// [sFirst, sLast). Elements are compared using operator==.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+/// \brief Searches the range `[first, last)` for any of the elements in the
+/// range [sFirst, sLast).
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+///
 /// \group find_first_of
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt>
@@ -495,16 +518,18 @@ template <typename InputIt, typename ForwardIt>
 }
 
 /// \brief Searches for the first occurrence of the sequence of elements
-/// [sFirst, sLast) in the range [first, last). Elements are compared using the
-/// given binary predicate pred.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/search)
+/// [sFirst, sLast) in the range `[first, last)`.
+///
 /// \param first The range of elements to examine.
 /// \param last The range of elements to examine.
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/search](https://en.cppreference.com/w/cpp/algorithm/search)
+///
 /// \group search
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
@@ -515,17 +540,7 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
   return detail::search_impl(first, last, sFirst, sLast, pred);
 }
 
-/// \brief Searches for the first occurrence of the sequence of elements
-/// [sFirst, sLast) in the range [first, last). Elements are compared using
-/// operator==.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/search)
-/// \param first The range of elements to examine.
-/// \param last The range of elements to examine.
-/// \param sFirst The range of elements to search for.
-/// \param sLast The range of elements to search for.
 /// \group search
-/// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
                                     ForwardIt2 sFirst, ForwardIt2 sLast)
@@ -534,16 +549,7 @@ template <typename ForwardIt1, typename ForwardIt2>
   return search(first, last, sFirst, sLast, equal_to<> {});
 }
 
-/// \brief Searches the sequence [first, last) for the pattern specified in the
-/// constructor of searcher.
-/// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/search)
-/// \param first The range of elements to examine.
-/// \param last The range of elements to examine.
-/// \param searcher The searcher encapsulating the search algorithm and the
-/// pattern to look for.
 /// \group search
-/// \module Algorithm
 template <typename ForwardIt, typename Searcher>
 [[nodiscard]] constexpr auto search(ForwardIt first, ForwardIt last,
                                     Searcher const& searcher) -> ForwardIt
@@ -551,7 +557,7 @@ template <typename ForwardIt, typename Searcher>
   return searcher(first, last).first;
 }
 
-/// \brief Searches the range [first, last) for the first sequence of count
+/// \brief Searches the range `[first, last)` for the first sequence of count
 /// identical elements, each equal to the given value.
 /// \group search_n
 /// \module Algorithm
@@ -584,10 +590,7 @@ template <typename ForwardIt, typename Size, typename ValueT,
   return last;
 }
 
-/// \brief Searches the range [first, last) for the first sequence of count
-/// identical elements, each equal to the given value.
 /// \group search_n
-/// \module Algorithm
 template <typename ForwardIt, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last,
                                       Size count, ValueT const& value)
@@ -597,7 +600,7 @@ template <typename ForwardIt, typename Size, typename ValueT>
 }
 
 /// \brief Searches for the last occurrence of the sequence [sFirst, sLast) in
-/// the range [first, last). Elements are compared using the given binary
+/// the range `[first, last)`. Elements are compared using the given binary
 /// predicate p.
 /// \param first The range of elements to examine
 /// \param last The range of elements to examine
@@ -605,7 +608,7 @@ template <typename ForwardIt, typename Size, typename ValueT>
 /// \param sLast The range of elements to search for
 /// \param p Binary predicate
 /// \returns Iterator to the beginning of last occurrence of the sequence
-/// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
+/// [sFirst, sLast) in range `[first, last)`. If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
 /// \group find_end
 /// \module Algorithm
@@ -627,17 +630,7 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
   return result;
 }
 
-/// \brief Searches for the last occurrence of the sequence [sFirst, sLast) in
-/// the range [first, last). Elements are compared using operator==.
-/// \param first The range of elements to examine
-/// \param last The range of elements to examine
-/// \param sFirst The range of elements to search for
-/// \param sLast The range of elements to search for
-/// \returns Iterator to the beginning of last occurrence of the sequence
-/// [sFirst, sLast) in range [first, last). If [sFirst, sLast) is empty or if
-/// no such sequence is found, last is returned.
 /// \group find_end
-/// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last,
                                       ForwardIt2 sFirst, ForwardIt2 sLast)
@@ -647,9 +640,9 @@ template <typename ForwardIt1, typename ForwardIt2>
 }
 
 /// \brief Removes all elements satisfying specific criteria from the range
-/// [first, last) and returns a past-the-end iterator for the new end of the
+/// `[first, last)` and returns a past-the-end iterator for the new end of the
 /// range.
-/// \group remove
+/// \group remove_if
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto remove_if(ForwardIt first, ForwardIt last,
@@ -669,7 +662,7 @@ template <typename ForwardIt, typename Predicate>
 }
 
 /// \brief Removes all elements satisfying specific criteria from the range
-/// [first, last) and returns a past-the-end iterator for the new end of the
+/// `[first, last)` and returns a past-the-end iterator for the new end of the
 /// range.
 /// \group remove
 /// \module Algorithm
@@ -681,7 +674,7 @@ template <typename ForwardIt, typename T>
                    [&value](auto const& item) { return item == value; });
 }
 
-/// \brief Copies elements from the range [ first , last ), to another range
+/// \brief Copies elements from the range [first, last), to another range
 /// beginning at destination, omitting the elements which satisfy specific
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// for which predicate p returns true.
@@ -700,7 +693,7 @@ constexpr auto remove_copy_if(InputIt first, InputIt last, OutputIt destination,
   return destination;
 }
 
-/// \brief Copies elements from the range [ first , last ), to another range
+/// \brief Copies elements from the range [first, last), to another range
 /// beginning at destination, omitting the elements which satisfy specific
 /// criteria. Source and destination ranges cannot overlap. Ignores all elements
 /// that are equal to value.
@@ -716,7 +709,7 @@ constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination,
 }
 
 /// \brief Replaces all elements satisfying specific criteria with new_value in
-/// the range [ first , last ). Replaces all elements for which predicate p
+/// the range [first, last). Replaces all elements for which predicate p
 /// returns true.
 /// \group replace
 /// \module Algorithm
@@ -731,7 +724,7 @@ constexpr auto replace_if(ForwardIt first, ForwardIt last, Predicate p,
 }
 
 /// \brief Replaces all elements satisfying specific criteria with new_value in
-/// the range [ first , last ). Replaces all elements that are equal to
+/// the range [first, last). Replaces all elements that are equal to
 /// old_value.
 /// \group replace
 /// \module Algorithm
@@ -763,7 +756,7 @@ template <typename Type, typename Compare>
   return (comp(a, b)) ? b : a;
 }
 
-/// \brief Finds the greatest element in the range [first, last). Elements are
+/// \brief Finds the greatest element in the range `[first, last)`. Elements are
 /// compared using operator<.
 /// \group max_element
 /// \module Algorithm
@@ -782,7 +775,7 @@ template <typename ForwardIt>
   return largest;
 }
 
-/// \brief Finds the greatest element in the range [first, last). Elements are
+/// \brief Finds the greatest element in the range `[first, last)`. Elements are
 /// compared using the given binary comparison function comp.
 /// \group max_element
 /// \module Algorithm
@@ -821,7 +814,7 @@ template <typename Type, typename Compare>
   return (comp(b, a)) ? b : a;
 }
 
-/// \brief Finds the smallest element in the range [first, last). Elements are
+/// \brief Finds the smallest element in the range `[first, last)`. Elements are
 /// compared using operator<.
 /// \group min_element
 /// \module Algorithm
@@ -840,7 +833,7 @@ template <typename ForwardIt>
   return smallest;
 }
 
-/// \brief Finds the smallest element in the range [first, last). Elements are
+/// \brief Finds the smallest element in the range `[first, last)`. Elements are
 /// compared using the given binary comparison function comp.
 /// \group min_element
 /// \module Algorithm
@@ -880,7 +873,7 @@ template <typename T>
   return minmax(a, b, less<> {});
 }
 
-/// \brief Finds the smallest and greatest element in the range [first, last).
+/// \brief Finds the smallest and greatest element in the range `[first, last)`.
 /// \group minmax_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
@@ -927,7 +920,7 @@ template <typename ForwardIt, typename Compare>
   return {min, max};
 }
 
-/// \brief Finds the smallest and greatest element in the range [first, last).
+/// \brief Finds the smallest and greatest element in the range `[first, last)`.
 /// \group minmax_element
 /// \module Algorithm
 template <typename ForwardIt>
@@ -961,8 +954,8 @@ template <typename Type, typename Compare>
 }
 
 /// \brief Checks if unary predicate p returns true for all elements in the
-/// range [first, last).
-/// \complexity At most last - first applications of the predicate.
+/// range `[first, last)`.
+/// \complexity At most `last - first` applications of the predicate.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -971,8 +964,8 @@ template <typename InputIt, typename Predicate>
 }
 
 /// \brief Checks if unary predicate p returns true for at least one element in
-/// the range [first, last).
-/// \complexity At most last - first applications of the predicate.
+/// the range `[first, last)`.
+/// \complexity At most `last - first` applications of the predicate.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -981,8 +974,8 @@ template <typename InputIt, typename Predicate>
 }
 
 /// \brief Checks if unary predicate p returns true for no elements in the range
-/// [first, last).
-/// \complexity At most last - first applications of the predicate.
+/// `[first, last)`.
+/// \complexity At most `last - first` applications of the predicate.
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -990,7 +983,7 @@ template <typename InputIt, typename Predicate>
   return find_if(first, last, p) == last;
 }
 
-/// \brief Reverses the order of the elements in the range [first, last).
+/// \brief Reverses the order of the elements in the range `[first, last)`.
 /// Behaves as if applying iter_swap to every pair of iterators first+i,
 /// (last-i) - 1 for each non-negative i < (last-first)/2.
 template <typename BidirIt>
@@ -999,10 +992,10 @@ constexpr auto reverse(BidirIt first, BidirIt last) -> void
   while ((first != last) && (first != --last)) { iter_swap(first++, last); }
 }
 
-/// \brief Copies the elements from the range [ first, last ) to another range
+/// \brief Copies the elements from the range `[first, last)` to another range
 /// beginning at d_first in such a way that the elements in the new range are in
 /// reverse order.
-/// \details If the source and destination ranges (that is, [first, last) and
+/// \details If the source and destination ranges (that is, `[first, last)` and
 /// [d_first, d_first+(last-first)) respectively) overlap, the behavior is
 /// undefined.
 template <typename BidirIt, typename OutputIt>
@@ -1040,7 +1033,7 @@ constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last)
 }
 
 /// \brief Eliminates all except the first element from every consecutive group
-/// of equivalent elements from the range [first, last) and returns a
+/// of equivalent elements from the range `[first, last)` and returns a
 /// past-the-end iterator for the new logical end of the range.
 /// \group unique
 /// \module Algorithm
@@ -1059,7 +1052,7 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred)
 }
 
 /// \brief Eliminates all except the first element from every consecutive group
-/// of equivalent elements from the range [first, last) and returns a
+/// of equivalent elements from the range `[first, last)` and returns a
 /// past-the-end iterator for the new logical end of the range.
 /// \group unique
 /// \module Algorithm
@@ -1069,7 +1062,7 @@ constexpr auto unique(ForwardIt first, ForwardIt last) -> ForwardIt
   return unique(first, last, equal_to<> {});
 }
 
-/// \brief Copies the elements from the range [first, last), to another range
+/// \brief Copies the elements from the range `[first, last)`, to another range
 /// beginning at d_first in such a way that there are no consecutive equal
 /// elements. Only the first element of each group of equal elements is copied.
 /// \details Elements are compared using the given binary predicate pred. The
@@ -1095,7 +1088,7 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination,
   return destination;
 }
 
-/// \brief Copies the elements from the range [first, last), to another range
+/// \brief Copies the elements from the range `[first, last)`, to another range
 /// beginning at d_first in such a way that there are no consecutive equal
 /// elements. Only the first element of each group of equal elements is copied.
 /// \details Elements are compared using operator==. The behavior is undefined
@@ -1109,7 +1102,7 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination)
   return unique_copy(first, last, destination, equal_to<> {});
 }
 
-/// \brief Reorders the elements in the range [first, last) in such a way that
+/// \brief Reorders the elements in the range `[first, last)` in such a way that
 /// all elements for which the predicate p returns true precede the elements for
 /// which predicate p returns false. Relative order of the elements is not
 /// preserved.
@@ -1131,7 +1124,7 @@ constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p)
   return first;
 }
 
-/// \brief Copies the elements from the range [ first , last ) to two different
+/// \brief Copies the elements from the range `[first, last)` to two different
 /// ranges depending on the value returned by the predicate p. The elements that
 /// satisfy the predicate p are copied to the range beginning at
 /// destination_true. The rest of the elements are copied to the range beginning
@@ -1162,11 +1155,11 @@ constexpr auto partition_copy(InputIt first, InputIt last,
   return make_pair(destinationTrue, destinationFalse);
 }
 
-/// \brief Returns true if all elements in the range [ first , last ) that
+/// \brief Returns true if all elements in the range `[first, last)` that
 /// satisfy the predicate p appear before all elements that don't. Also returns
 /// true if the range is empty.
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/is_partitioned)
+/// [cppreference.com/w/cpp/algorithm/is_partitioned](https://en.cppreference.com/w/cpp/algorithm/is_partitioned)
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last,
                                             Predicate p) -> bool
@@ -1184,8 +1177,8 @@ template <typename InputIt, typename Predicate>
   return true;
 }
 
-/// \brief Examines the partitioned (as if by partition) range [ first ,
-/// last ) and locates the end of the first partition, that is, the first
+/// \brief Examines the partitioned (as if by partition) range [first,
+/// last) and locates the end of the first partition, that is, the first
 /// element that does not satisfy p or last if all elements satisfy p.
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last,
@@ -1199,7 +1192,7 @@ template <typename ForwardIt, typename Predicate>
   return first;
 }
 
-/// \brief  Reorders the elements in the range [first, last) in such a way
+/// \brief  Reorders the elements in the range `[first, last)` in such a way
 /// that all elements for which the predicate p returns true precede the
 /// elements for which predicate p returns false. Relative order of the
 /// elements is preserved.
@@ -1213,11 +1206,11 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
   return rotate(stable_partition(f, m, p), m, stable_partition(m, l, p));
 }
 
-/// \brief Copies the elements in the range, defined by [first, last), to
+/// \brief Copies the elements in the range, defined by `[first, last)`, to
 /// another range beginning at destination.
-/// \details Copies all elements in the range [first, last) starting from first
-/// and proceeding to last - 1. The behavior is undefined if destination is
-/// within the range [first, last). In this case, copy_backward may be used
+/// \details Copies all elements in the range `[first, last)` starting from
+/// first and proceeding to `last - 1`. The behavior is undefined if destination
+/// is within the range `[first, last)`. In this case, copy_backward may be used
 /// instead.
 /// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
@@ -1231,7 +1224,7 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination)
   return destination;
 }
 
-/// \brief Copies the elements in the range, defined by [first, last), to
+/// \brief Copies the elements in the range, defined by `[first, last)`, to
 /// another range beginning at destination.
 /// \details Only copies the elements for which the predicate pred returns true.
 /// The relative order of the elements that are copied is preserved. The
@@ -1271,7 +1264,7 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
   return result;
 }
 
-/// \brief Copies the elements from the range, defined by [first, last), to
+/// \brief Copies the elements from the range, defined by `[first, last)`, to
 /// another range ending at d_last. The elements are copied in reverse order
 /// (the last element is copied first), but their relative order is preserved.
 /// \details The behavior is undefined if d_last is within (first, last].
@@ -1285,7 +1278,7 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast)
   return dLast;
 }
 
-/// \brief Copies the elements from the range [ first , last ), to another range
+/// \brief Copies the elements from the range [first, last), to another range
 /// beginning at destination in such a way, that the element n_first becomes the
 /// first element of the new range and n_first - 1 becomes the last element.
 template <typename ForwardIt, typename OutputIt>
@@ -1296,7 +1289,7 @@ constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last,
   return copy(first, nFirst, destination);
 }
 
-/// \brief Assigns the given value to the elements in the range [first, last).
+/// \brief Assigns the given value to the elements in the range `[first, last)`.
 template <typename ForwardIt, typename T>
 constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
@@ -1319,7 +1312,7 @@ constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
   return first;
 }
 
-/// \brief Returns true if the range [first1, last1) is equal to the range
+/// \brief Returns true if the range `[first1, last1)` is equal to the range
 /// [first2, first2 + (last1 - first1)), and false otherwise.
 /// \group equal
 /// \module Algorithm
@@ -1360,11 +1353,12 @@ template <typename InputIt1, typename InputIt2>
   return equal(first1, last1, first2, last2, equal_to<> {});
 }
 
-/// \brief Checks if the first range [first1, last1) is lexicographically
-/// less than the second range [first2, last2). Elements are compared using
-/// the given binary comparison function comp.
+/// \brief Checks if the first range `[first1, last1)` is lexicographically
+/// less than the second range `[first2, last2)`.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare)
+/// [cppreference.com/w/cpp/algorithm/lexicographical_compare](https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare)
+///
 /// \group lexicographical_compare
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Compare>
@@ -1390,15 +1384,12 @@ lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
                                  less<decltype(*first1)> {});
 }
 
-/// \brief Sorts the elements in the range [first, last) in non-descending
+/// \brief Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equal elements is not guaranteed to be preserved.
-/// \details A sequence is sorted with respect to a comparator comp if for any
-/// iterator it pointing to the sequence and any non-negative integer n such
-/// that it + n is a valid iterator pointing to an element of the sequence,
-/// comp(*(it
-/// + n), *it) (or
-/// *(it + n) < *it) evaluates to false. Bubble sort implementation.
-/// \notes [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/sort)
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/sort](https://en.cppreference.com/w/cpp/algorithm/sort)
+///
 /// \group sort
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
@@ -1420,11 +1411,13 @@ constexpr auto sort(RandomIt first, RandomIt last) -> void
   sort(first, last, less<> {});
 }
 
-/// \brief Sorts the elements in the range [first, last) in non-descending
+/// \brief Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equivalent elements is guaranteed to be preserved.
 /// Elements are compared using the given comparison function comp.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
+/// [cppreference.com/w/cpp/algorithm/stable_sort](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
+///
 /// \group stable_sort
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
@@ -1456,20 +1449,21 @@ constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
   stable_sort(first, last, less<> {});
 }
 
-/// \brief Rearranges elements such that the range [first, middle) contains the
-/// sorted middle - first smallest elements in the range [first, last). The
-/// order of equal elements is not guaranteed to be preserved. The order of the
-/// remaining elements in the range [middle, last) is unspecified. Elements are
-/// compared using the given binary comparison function comp.
+/// \brief Rearranges elements such that the range `[first, middle)` contains
+/// the sorted `middle - first` smallest elements in the range `[first, last)`.
+/// The order of equal elements is not guaranteed to be preserved. The order of
+/// the remaining elements in the range `[middle, last)` is unspecified.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/partial_sort)
-/// \todo Improve. Currently forwards to regular sort.
+/// [cppreference.com/w/cpp/algorithm/partial_sort](https://en.cppreference.com/w/cpp/algorithm/partial_sort)
+///
 /// \group partial_sort
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last,
                             Compare comp) -> void
 {
+  // TODO: Improve. Currently forwards to regular sort.
   etl::ignore_unused(middle);
   etl::sort(first, last, comp);
 }
@@ -1484,20 +1478,22 @@ constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last)
 }
 
 /// \brief nth_element is a partial sorting algorithm that rearranges elements
-/// in [first, last) such that:
-/// The element pointed at by nth is changed to whatever element would occur in
-/// that position if [first, last) were sorted.
-/// All of the elements before this new nth element are less than or equal to
+/// in `[first, last)` such that:
+/// - The element pointed at by nth is changed to whatever element would occur
+/// in that position if `[first, last)` were sorted.
+/// - All of the elements before this new nth element are less than or equal to
 /// the elements after the new nth element.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/nth_element)
-/// \todo Improve. Currently forwards to regular sort.
+/// [cppreference.com/w/cpp/algorithm/nth_element](https://en.cppreference.com/w/cpp/algorithm/nth_element)
+///
 /// \group nth_element
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last,
                            Compare comp) -> void
 {
+  // TODO: Improve. Currently forwards to regular sort.
   etl::ignore_unused(nth);
   etl::sort(first, last, comp);
 }
@@ -1510,8 +1506,10 @@ constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last) -> void
   etl::sort(first, last);
 }
 
-/// \brief Examines the range [first, last) and finds the largest range
-/// beginning at first in which the elements are sorted in non-descending order.
+/// \brief Examines the range `[first, last)` and finds the largest range
+/// beginning at `first` in which the elements are sorted in non-descending
+/// order.
+///
 /// \group is_sorted_until
 /// \module Algorithm
 template <typename ForwardIt>
@@ -1538,8 +1536,9 @@ template <typename ForwardIt, typename Compare>
   return last;
 }
 
-/// \brief Checks if the elements in range [first, last) are sorted in
+/// \brief Checks if the elements in range `[first, last)` are sorted in
 /// non-descending order.
+///
 /// \group is_sorted
 /// \module Algorithm
 template <typename ForwardIt>
@@ -1557,10 +1556,12 @@ template <typename ForwardIt, typename Compare>
 }
 
 /// \brief Returns an iterator pointing to the first element in the range
-/// [first, last) that is not less than (i.e. greater or equal to) value, or
+/// `[first, last)` that is not less than (i.e. greater or equal to) value, or
 /// last if no such element is found.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
+/// [cppreference.com/w/cpp/algorithm/lower_bound](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
+///
 /// \group lower_bound
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
@@ -1602,12 +1603,14 @@ template <typename ForwardIt, typename T>
 }
 
 /// \brief Returns an iterator pointing to the first element in the range
-/// [ first , last ) that is greater than value, or last if no such element is
+/// `[first, last)` that is greater than `value`, or last if no such element is
 /// found.
-/// \details The range [ first , last ) must be partitioned with respect to the
-/// expression !(value < element) or !comp(value, element), i.e., all elements
-/// for which the expression is true must precede all elements for which the
-/// expression is false. A fully-sorted range meets this criterion.
+///
+/// \details The range `[first, last)` must be partitioned with respect to the
+/// expression `!(value < element)` or `!comp(value, element)`, i.e., all
+/// elements for which the expression is true must precede all elements for
+/// which the expression is false. A fully-sorted range meets this criterion.
+///
 /// \group upper_bound
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
@@ -1650,9 +1653,11 @@ template <typename ForwardIt, typename T>
 }
 
 /// \brief Returns a range containing all elements equivalent to value in the
-/// range [first, last).
+/// range `[first, last)`.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/equal_range)
+/// [cppreference.com/w/cpp/algorithm/equal_range](https://en.cppreference.com/w/cpp/algorithm/equal_range)
+///
 /// \group equal_range
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
@@ -1673,12 +1678,13 @@ template <typename ForwardIt, typename T>
   return equal_range(first, last, value, less<> {});
 }
 
-/// \brief Checks if an element equivalent to value appears within the range [
-/// first , last ).
-/// \details For binary_search to succeed, the range [ first , last ) must
-/// be at least partially ordered with respect to value
+/// \brief Checks if an element equivalent to value appears within the range
+/// `[first, last)`. For binary_search to succeed, the range `[first, last)`
+/// must be at least partially ordered with respect to `value`.
+///
 /// \notes
-/// [cppreference.com](https://en.cppreference.com/w/cpp/algorithm/binary_search)
+/// [cppreference.com/w/cpp/algorithm/binary_search](https://en.cppreference.com/w/cpp/algorithm/binary_search)
+///
 /// \group binary_search
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
@@ -1697,9 +1703,9 @@ template <typename ForwardIt, class T>
   return binary_search(first, last, value, less<> {});
 }
 
-/// \brief Merges two sorted ranges [first1, last1) and [first2, last2) into one
-/// sorted range beginning at d_first. Elements are compared using the given
-/// binary comparison function comp.
+/// \brief Merges two sorted ranges `[first1, last1)` and `[first2, last2)` into
+/// one sorted range beginning at `destination`.
+///
 /// \group merge
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
@@ -1733,8 +1739,9 @@ constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
   return merge(first1, last1, first2, last2, destination, less<> {});
 }
 
-/// \brief Returns true if the sorted range [first2, last2) is a subsequence of
-/// the sorted range [first1, last1). Both ranges must be sorted with operator<.
+/// \brief Returns true if the sorted range `[first2, last2)` is a subsequence
+/// of the sorted range `[first1, last1)`. Both ranges must be sorted.
+///
 /// \group includes
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2>
@@ -1763,10 +1770,11 @@ template <typename InputIt1, typename InputIt2, typename Compare>
   return true;
 }
 
-/// \brief Copies the elements from the sorted range [first1, last1) which are
-/// not found in the sorted range [first2, last2) to the range beginning at
+/// \brief Copies the elements from the sorted range `[first1, last1)` which are
+/// not found in the sorted range `[first2, last2)` to the range beginning at
 /// destination. Elements are compared using the given binary comparison
-/// function comp and the ranges must be sorted with respect to the same.
+/// function `comp` and the ranges must be sorted with respect to the same.
+///
 /// \group set_difference
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
@@ -1797,12 +1805,14 @@ constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
   return set_difference(first1, last1, first2, last2, destination, less<> {});
 }
 
-/// \brief Constructs a sorted range beginning at d_first consisting of elements
-/// that are found in both sorted ranges [first1, last1) and [first2, last2). If
-/// some element is found m times in [first1, last1) and n times in [first2,
-/// last2), the first min(m, n) elements will be copied from the first range to
-/// the destination range. The order of equivalent elements is preserved. The
-/// resulting range cannot overlap with either of the input ranges.
+/// \brief Constructs a sorted range beginning at `dest` consisting of elements
+/// that are found in both sorted ranges `[first1, last1)` and `[first2,
+/// last2)`. If some element is found `m` times in `[first1, last1)` and n times
+/// in `[first2, last2)`, the first `min(m, n)` elements will be copied from the
+/// first range to the destination range. The order of equivalent elements is
+/// preserved. The resulting range cannot overlap with either of the input
+/// ranges.
+///
 /// \group set_intersection
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
@@ -1834,9 +1844,8 @@ constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
 
 /// \brief Computes symmetric difference of two sorted ranges: the elements that
 /// are found in either of the ranges, but not in both of them are copied to the
-/// range beginning at destination. The resulting range is also sorted. Elements
-/// are compared using the given binary comparison function comp and the ranges
-/// must be sorted with respect to the same.
+/// range beginning at destination. The resulting range is also sorted.
+///
 /// \group set_symmetric_difference
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
@@ -1874,12 +1883,10 @@ constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1,
 }
 
 /// \brief Constructs a sorted union beginning at destination consisting of the
-/// set of elements present in one or both sorted ranges [first1, last1) and
-/// [first2, last2). The resulting range cannot overlap with either of the input
-/// ranges. (1) Elements are compared using the given binary comparison function
-/// comp and the ranges must be sorted with respect to the same. (2) Elements
-/// are compared using operator< and the ranges must be sorted with respect to
-/// the same.
+/// set of elements present in one or both sorted ranges `[first1, last1)` and
+/// `[first2, last2)`. The resulting range cannot overlap with either of the
+/// input ranges.
+///
 /// \group set_union
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt,
@@ -1913,11 +1920,10 @@ constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 }
 
 /// \brief Returns true if there exists a permutation of the elements in the
-/// range [first1, last1) that makes that range equal to the range
-/// [first2,last2), where last2 denotes first2 + (last1 - first1) if it was not
+/// range `[first1, last1)` that makes that range equal to the range `[first2,
+/// last2)`, where `last2` denotes `first2 + (last1 - first1)` if it was not
 /// given.
-/// \details Elements are compared using operator==. The behavior is undefined
-/// if it is not an equivalence relation.
+///
 /// \group is_permuatation
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
@@ -1928,7 +1934,7 @@ template <typename ForwardIt1, typename ForwardIt2>
   auto const [fDiff1, fDiff2] = mismatch(first, last, first2);
 
   // iterate over the rest, counting how many times each element
-  // from [first, last) appears in [first2, last2)
+  // from `[first, last)` appears in [first2, last2)
   if (fDiff1 != last)
   {
     auto last2 = next(fDiff2, distance(fDiff1, last));
