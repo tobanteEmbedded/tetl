@@ -21,14 +21,14 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \example tuple.cpp
-
 #ifndef TETL_TUPLE_HPP
 #define TETL_TUPLE_HPP
 
 #include "etl/version.hpp"
 
 // #include "etl/detail/tuple_size.hpp"
+
+/// \file This header is part of the general utility library.
 
 namespace etl
 {

@@ -32,6 +32,9 @@
 #include "etl/detail/intrinsics.hpp"
 #include "etl/detail/sfinae.hpp"
 
+/// \file This header was originally in the C standard library as <stddef.h>.
+/// This header is part of the utility library.
+
 namespace etl
 {
 /// \brief etl::byte is a distinct type that implements the concept of byte as

@@ -203,8 +203,8 @@ class stack
   Container c;
 };
 
-/// \brief These deduction guides are provided for stack to allow deduction from
-/// underlying container type.
+// These deduction guides are provided for stack to allow deduction from
+// underlying container type.
 template <typename Container>
 stack(Container) -> stack<typename Container::value_type, Container>;
 

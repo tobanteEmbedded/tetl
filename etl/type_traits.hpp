@@ -21,8 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \example type_traits.cpp
-
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
@@ -32,6 +30,8 @@
 #include "etl/detail/intrinsics.hpp"        // for TETL_IS_CLASS, TETL_IS_ENUM
 #include "etl/detail/sfinae.hpp"            // for enable_if
 #include "etl/detail/type_traits_decl.hpp"  // for is_fundamental
+
+/// \file This header is part of the type support library.
 
 namespace etl
 {

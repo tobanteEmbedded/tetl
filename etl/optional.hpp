@@ -898,9 +898,9 @@ constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
   return etl::optional<ValueType>(etl::in_place, etl::forward<Args>(args)...);
 }
 
-/// \brief One deduction guide is provided for etl::optional to account for the
-/// edge cases missed by the implicit deduction guides, in particular,
-/// non-copyable arguments and array to pointer conversion.
+// One deduction guide is provided for etl::optional to account for the
+// edge cases missed by the implicit deduction guides, in particular,
+// non-copyable arguments and array to pointer conversion.
 template <typename T>
 optional(T) -> optional<T>;
 

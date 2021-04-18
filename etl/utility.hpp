@@ -21,8 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \example utility.cpp
-
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
@@ -34,6 +32,8 @@
 #include "etl/detail/algo_swap.hpp"
 #include "etl/detail/sfinae.hpp"
 #include "etl/detail/tuple_size.hpp"
+
+/// \file This header is part of the general utility library.
 
 namespace etl
 {
@@ -287,14 +287,13 @@ struct piecewise_construct_t
 inline constexpr piecewise_construct_t piecewise_construct {};
 
 /// \brief Disambiguation tags that can be passed to the constructors of
-/// etl::optional, etl::variant, and etl::any to indicate that the contained
+/// `optional`, `variant`, and `any` to indicate that the contained
 /// object should be constructed in-place, and (for the latter two) the type of
 /// the object to be constructed.
 ///
-/// \details The corresponding type/type templates etl::in_place_t,
-/// etl::in_place_type_t and etl::in_place_index_t can be used in the
-/// constructor's parameter list to match the intended tag.
-
+/// The corresponding type/type templates `in_place_t`, `in_place_type_t`
+/// and `in_place_index_t` can be used in the constructor's parameter list to
+/// match the intended tag.
 struct in_place_t
 {
   explicit in_place_t() = default;
@@ -451,12 +450,9 @@ struct pair
 
 };  // namespace etl
 
-/// \brief One deduction guide is provided for pair to account for the edge
-/// cases missed by the implicit deduction guides. In particular, non-copyable
-/// arguments and array to pointer conversion.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/pair/deduction_guides](https://en.cppreference.com/w/cpp/utility/pair/deduction_guides)
+// One deduction guide is provided for pair to account for the edge
+// cases missed by the implicit deduction guides. In particular, non-copyable
+// arguments and array to pointer conversion.
 template <typename T1, typename T2>
 pair(T1, T2) -> pair<T1, T2>;
 

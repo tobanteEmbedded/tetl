@@ -934,7 +934,7 @@ template <typename ForwardIt>
 /// \brief If v compares less than lo, returns lo; otherwise if hi compares less
 /// than v, returns hi; otherwise returns v. Uses operator< to compare the
 /// values.
-
+///
 /// \group clamp
 /// \module Algorithm
 template <typename Type>
@@ -956,6 +956,8 @@ template <typename Type, typename Compare>
 /// \brief Checks if unary predicate p returns true for all elements in the
 /// range `[first, last)`.
 /// \complexity At most `last - first` applications of the predicate.
+///
+/// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -966,6 +968,8 @@ template <typename InputIt, typename Predicate>
 /// \brief Checks if unary predicate p returns true for at least one element in
 /// the range `[first, last)`.
 /// \complexity At most `last - first` applications of the predicate.
+///
+/// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -976,6 +980,8 @@ template <typename InputIt, typename Predicate>
 /// \brief Checks if unary predicate p returns true for no elements in the range
 /// `[first, last)`.
 /// \complexity At most `last - first` applications of the predicate.
+///
+/// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, Predicate p)
   -> bool
@@ -984,8 +990,10 @@ template <typename InputIt, typename Predicate>
 }
 
 /// \brief Reverses the order of the elements in the range `[first, last)`.
-/// Behaves as if applying iter_swap to every pair of iterators first+i,
-/// (last-i) - 1 for each non-negative i < (last-first)/2.
+/// Behaves as if applying iter_swap to every pair of iterators `first + i`,
+/// `(last-i) - 1` for each non-negative `i < (last - first) / 2`.
+///
+/// \module Algorithm
 template <typename BidirIt>
 constexpr auto reverse(BidirIt first, BidirIt last) -> void
 {
@@ -998,6 +1006,8 @@ constexpr auto reverse(BidirIt first, BidirIt last) -> void
 /// \details If the source and destination ranges (that is, `[first, last)` and
 /// [d_first, d_first+(last-first)) respectively) overlap, the behavior is
 /// undefined.
+///
+/// \module Algorithm
 template <typename BidirIt, typename OutputIt>
 constexpr auto reverse_copy(BidirIt first, BidirIt last, OutputIt destination)
   -> OutputIt
@@ -1011,6 +1021,8 @@ constexpr auto reverse_copy(BidirIt first, BidirIt last, OutputIt destination)
 /// last) in such a way that the element n_first becomes the first element of
 /// the new range and n_first - 1 becomes the last element. A precondition of
 /// this function is that [first, n_first) and [n_first, last) are valid ranges.
+///
+/// \module Algorithm
 template <typename ForwardIt>
 constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last)
   -> ForwardIt
@@ -1106,6 +1118,8 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination)
 /// all elements for which the predicate p returns true precede the elements for
 /// which predicate p returns false. Relative order of the elements is not
 /// preserved.
+///
+/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p)
   -> ForwardIt
@@ -1131,6 +1145,8 @@ constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p)
 /// at destination_false.
 /// \details The behavior is undefined if the input range overlaps either of the
 /// output ranges.
+///
+/// \module Algorithm
 template <typename InputIt, typename OutputIt1, typename OutputIt2,
           typename Predicate>
 constexpr auto partition_copy(InputIt first, InputIt last,
@@ -1160,6 +1176,8 @@ constexpr auto partition_copy(InputIt first, InputIt last,
 /// true if the range is empty.
 /// \notes
 /// [cppreference.com/w/cpp/algorithm/is_partitioned](https://en.cppreference.com/w/cpp/algorithm/is_partitioned)
+///
+/// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last,
                                             Predicate p) -> bool
@@ -1180,6 +1198,8 @@ template <typename InputIt, typename Predicate>
 /// \brief Examines the partitioned (as if by partition) range [first,
 /// last) and locates the end of the first partition, that is, the first
 /// element that does not satisfy p or last if all elements satisfy p.
+///
+/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last,
                                              Predicate p) -> ForwardIt
@@ -1196,6 +1216,8 @@ template <typename ForwardIt, typename Predicate>
 /// that all elements for which the predicate p returns true precede the
 /// elements for which predicate p returns false. Relative order of the
 /// elements is preserved.
+///
+/// \module Algorithm
 template <typename BidirIt, typename Predicate>
 constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
 {
@@ -1246,13 +1268,14 @@ constexpr auto copy_if(InputIt first, InputIt last, OutputIt dFirst,
 }
 
 /// \brief Copies exactly count values from the range beginning at first to the
-/// range beginning at result. Formally, for each integer 0 ≤ i < count,
-/// performs
-/// *(result + i) =
-/// *(first + i). Overlap of ranges is formally permitted, but leads to
-/// unpredictable ordering of the results.
+/// range beginning at result. Formally, for each integer `0 <= i < count`,
+/// performs `*(result + i) = *(first + i)`. Overlap of ranges is formally
+/// permitted, but leads to unpredictable ordering of the results.
+///
 /// \returns Iterator in the destination range, pointing past the last element
 /// copied if count>0 or result otherwise.
+///
+/// \module Algorithm
 template <typename InputIt, typename Size, typename OutputIt>
 constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 {
@@ -1265,11 +1288,15 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 }
 
 /// \brief Copies the elements from the range, defined by `[first, last)`, to
-/// another range ending at d_last. The elements are copied in reverse order
+/// another range ending at `dLast`. The elements are copied in reverse order
 /// (the last element is copied first), but their relative order is preserved.
-/// \details The behavior is undefined if d_last is within (first, last].
+///
+/// \details The behavior is undefined if `dLast` is within `(first, last]`.
 /// copy must be used instead of copy_backward in that case.
+///
 /// \returns Iterator to the last element copied.
+///
+/// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast)
   -> BidirIt2
@@ -1278,9 +1305,12 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast)
   return dLast;
 }
 
-/// \brief Copies the elements from the range [first, last), to another range
-/// beginning at destination in such a way, that the element n_first becomes the
-/// first element of the new range and n_first - 1 becomes the last element.
+/// \brief Copies the elements from the range `[first, last)`, to another range
+/// beginning at destination in such a way, that the element `nFirst` becomes
+/// the first element of the new range and `nFirst - 1` becomes the last
+/// element.
+///
+/// \module Algorithm
 template <typename ForwardIt, typename OutputIt>
 constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last,
                            OutputIt destination) -> OutputIt
@@ -1290,6 +1320,8 @@ constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last,
 }
 
 /// \brief Assigns the given value to the elements in the range `[first, last)`.
+///
+/// \module Algorithm
 template <typename ForwardIt, typename T>
 constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
@@ -1297,9 +1329,12 @@ constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 }
 
 /// \brief Assigns the given value to the first count elements in the range
-/// beginning at first if count > 0. Does nothing otherwise.
-/// \returns Iterator one past the last element assigned if count > 0, first
+/// beginning at `first` if `count > 0`. Does nothing otherwise.
+///
+/// \returns Iterator one past the last element assigned if `count > 0`, `first`
 /// otherwise.
+///
+/// \module Algorithm
 template <typename OutputIt, typename Size, typename T>
 constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 {
@@ -1313,7 +1348,8 @@ constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 }
 
 /// \brief Returns true if the range `[first1, last1)` is equal to the range
-/// [first2, first2 + (last1 - first1)), and false otherwise.
+/// `[first2, first2 + (last1 - first1))`, and false otherwise.
+///
 /// \group equal
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>

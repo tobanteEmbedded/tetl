@@ -21,8 +21,6 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-/// \example vector.cpp
-
 #ifndef TETL_VECTOR_HPP
 #define TETL_VECTOR_HPP
 
@@ -34,6 +32,8 @@
 #include "etl/functional.hpp"
 
 #include "etl/detail/container_utils.hpp"
+
+/// \file This header is part of the containers library.
 
 namespace etl
 {

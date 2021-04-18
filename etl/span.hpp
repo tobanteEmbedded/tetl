@@ -199,25 +199,25 @@ class span
   size_type size_ = 0;
 };
 
-/// \brief Deduction Guides. From raw array.
+// Deduction Guides. From raw array.
 template <typename Type, etl::size_t Extent>
 span(Type (&)[Extent]) -> span<Type, Extent>;
 
-/// \brief Deduction Guides. From etl::array<Type, Size>.
+// Deduction Guides. From etl::array<Type, Size>.
 template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size>&) -> span<Type, Size>;
 
-/// \brief Deduction Guides. From etl::array<Type const, Size>.
+// Deduction Guides. From etl::array<Type const, Size>.
 template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
-/// \brief Deduction Guides. From Container.
+// Deduction Guides. From Container.
 template <typename Container,
           typename Element
           = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
-/// \brief Deduction Guides. From Container const.
+// Deduction Guides. From Container const.
 template <typename Container,
           typename Element = etl::remove_pointer_t<
             decltype(etl::declval<Container const&>().data())>>

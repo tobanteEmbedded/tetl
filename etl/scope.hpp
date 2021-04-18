@@ -95,7 +95,7 @@ struct scope_exit : detail::scope_guard<FuncT, detail::scope_exit_impl>
   using detail::scope_guard<FuncT, detail::scope_exit_impl>::scope_guard;
 };
 
-/// \brief Deduction guide
+// Deduction guide
 template <typename FuncT>
 scope_exit(FuncT) -> scope_exit<decay_t<FuncT>>;
 }  // namespace etl

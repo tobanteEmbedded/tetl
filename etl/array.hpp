@@ -34,6 +34,8 @@
 
 #include "etl/detail/tuple_size.hpp"
 
+/// \file This header is part of the containers library.
+
 namespace etl
 {
 /// \brief array is a container that encapsulates fixed size arrays.
@@ -280,10 +282,10 @@ struct array
   Type _internal_data[Size];
 };
 
-/// \brief One deduction guide is provided for array to provide an equivalent of
-/// experimental::make_array for construction of array from a variadic parameter
-/// pack. The program is ill-formed if (is_same_v<T, U> && ...) is not true.
-/// Note that it is true when sizeof...(U) is zero.
+// One deduction guide is provided for array to provide an equivalent of
+// experimental::make_array for construction of array from a variadic parameter
+// pack. The program is ill-formed if (is_same_v<T, U> && ...) is not true.
+// Note that it is true when sizeof...(U) is zero.
 template <typename T, typename... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;
 

@@ -32,6 +32,8 @@
 
 namespace etl
 {
+#if not defined(TETL_MSVC)
+
 /// \brief va_list is a complete object type suitable for holding the
 /// information needed by the macros va_start, va_copy, va_arg, and va_end. If a
 /// va_list instance is created, passed to another function, and used via va_arg
@@ -42,7 +44,6 @@ namespace etl
 ///
 /// \notes
 /// [cppreference.com/w/cpp/utility/variadic/va_list](https://en.cppreference.com/w/cpp/utility/variadic/va_list)
-#if not defined(TETL_MSVC)
 using va_list = TETL_BUILTIN_VA_LIST;
 #else
 using va_list = ::std::va_list;

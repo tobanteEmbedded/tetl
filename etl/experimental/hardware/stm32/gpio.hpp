@@ -27,6 +27,7 @@
 #include "etl/version.hpp"
 
 #include "etl/cstdint.hpp"
+#include "etl/new.hpp"
 #include "etl/warning.hpp"
 
 namespace etl::experimental::hardware::stm32

@@ -29,14 +29,21 @@
 #include "etl/cassert.hpp"
 #include "etl/limits.hpp"
 
+/// \file This header was originally in the C standard library as <ctype.h>.
+/// This header is part of the null-terminated byte strings library.
 namespace etl
 {
 /// \brief Checks if the given character is an alphanumeric character as
 /// classified by the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is an alphanumeric character, 0
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isalnum](https://en.cppreference.com/w/cpp/string/byte/isalnum)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
@@ -52,10 +59,15 @@ namespace etl
 
 /// \brief Checks if the given character is an alphabetic character as
 /// classified by the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is an alphabetic character, 0
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isalpha](https://en.cppreference.com/w/cpp/string/byte/isalpha)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
@@ -70,10 +82,15 @@ namespace etl
 
 /// \brief Checks if the given character is classified as a lowercase character
 /// according to the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a lowercase letter, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/islower](https://en.cppreference.com/w/cpp/string/byte/islower)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
@@ -84,10 +101,15 @@ namespace etl
 
 /// \brief Checks if the given character is classified as a uppercase character
 /// according to the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a uppercase letter, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isupper](https://en.cppreference.com/w/cpp/string/byte/isupper)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
@@ -98,10 +120,15 @@ namespace etl
 
 /// \brief Checks if the given character is one of the 10 decimal digits:
 /// 0123456789.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a numeric character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isdigit](https://en.cppreference.com/w/cpp/string/byte/isdigit)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
@@ -112,10 +139,15 @@ namespace etl
 
 /// \brief Checks if the given character is a hexadecimal numeric character
 /// (0123456789abcdefABCDEF).
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a hexadecimal numeric character,
 /// zero otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isxdigit](https://en.cppreference.com/w/cpp/string/byte/isxdigit)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
@@ -131,10 +163,15 @@ namespace etl
 
 /// \brief Checks if the given character is whitespace character as classified
 /// by the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a whitespace character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isspace](https://en.cppreference.com/w/cpp/string/byte/isspace)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
@@ -156,10 +193,15 @@ namespace etl
 /// the currently installed C locale. Blank characters are whitespace characters
 /// used to separate words within a sentence. In the default C locale, only
 /// space (0x20) and horizontal tab (0x09) are classified as blank characters.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a blank character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isblank](https://en.cppreference.com/w/cpp/string/byte/isblank)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
@@ -177,10 +219,15 @@ namespace etl
 ///
 /// The default C locale classifies the characters
 /// !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~ as punctuation.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/ispunct](https://en.cppreference.com/w/cpp/string/byte/ispunct)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
@@ -197,10 +244,15 @@ namespace etl
 
 /// \brief Checks if the given character is graphic (has a graphical
 /// representation) as classified by the default C locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isgraph](https://en.cppreference.com/w/cpp/string/byte/isgraph)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
@@ -217,10 +269,15 @@ namespace etl
 
 /// \brief Checks if ch is a printable character as classified by the default C
 /// locale.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/isprint](https://en.cppreference.com/w/cpp/string/byte/isprint)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
@@ -233,10 +290,15 @@ namespace etl
 /// \brief Checks if the given character is a control character as classified by
 /// the currently installed C locale. In the default, "C" locale, the control
 /// characters are the characters with the codes 0x00-0x1F and 0x7F.
+///
+/// \param ch Character to classify.
+///
 /// \returns Non-zero value if the character is a control character, zero
 /// otherwise.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/iscntrl](https://en.cppreference.com/w/cpp/string/byte/iscntrl)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
@@ -253,10 +315,15 @@ namespace etl
 /// **ABCDEFGHIJKLMNOPQRSTUVWXYZ** are replaced with respective lowercase
 /// letters
 /// **abcdefghijklmnopqrstuvwxyz**.
+///
+/// \param ch Character to classify.
+///
 /// \returns Lowercase version of ch or unmodified ch if no lowercase version is
 /// listed in the current C locale.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/tolower](https://en.cppreference.com/w/cpp/string/byte/tolower)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
@@ -274,10 +341,15 @@ namespace etl
 /// **abcdefghijklmnopqrstuvwxyz** are replaced with respective uppercase
 /// letters
 /// **ABCDEFGHIJKLMNOPQRSTUVWXYZ**.
+///
+/// \param ch Character to classify.
+///
 /// \returns Converted character or ch if no uppercase version is defined by the
 /// current C locale.
+///
 /// \notes
 /// [cppreference.com/w/cpp/string/byte/toupper](https://en.cppreference.com/w/cpp/string/byte/toupper)
+///
 /// \module Strings
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {

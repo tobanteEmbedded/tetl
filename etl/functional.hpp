@@ -702,10 +702,8 @@ struct reference_wrapper
   type* ptr_;
 };
 
-/// \brief One deduction guide is provided for std::reference_wrapper to support
-/// deduction of the sole class template parameter.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/reference_wrapper/deduction_guides](https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/deduction_guides)
+// One deduction guide is provided for reference_wrapper to support
+// deduction of the sole class template parameter.
 template <typename T>
 reference_wrapper(T&) -> reference_wrapper<T>;
 

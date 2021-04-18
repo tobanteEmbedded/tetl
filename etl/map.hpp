@@ -57,11 +57,6 @@ class map_view
   using iterator        = value_type*;
   using const_iterator  = value_type const*;
 
-  /// \todo Reverse iterators & node type. reverse_iterator
-  /// etl::reverse_iterator<iterator> const_reverse_iterator
-  /// etl::reverse_iterator<const_iterator> node_type a specialization of node
-  /// handle representing a container node insert_return_type
-
   /// \brief Returns a reference to the mapped value of the element with key
   /// equivalent to key. If no such element exists, you are in UB land.
   [[nodiscard]] constexpr auto at(key_type const& key) -> mapped_type&

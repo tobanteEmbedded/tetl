@@ -28,6 +28,10 @@
 
 #include "etl/detail/intrinsics.hpp"
 
+/// \file This header was originally in the C standard library as <stdint.h>.
+/// This header is part of the type support library, providing fixed width
+/// integer types and part of C numeric limits interface.
+
 namespace etl
 {
 /// \brief Signed integer type with width of exactly 8 bits.
