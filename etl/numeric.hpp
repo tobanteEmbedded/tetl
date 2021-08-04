@@ -32,8 +32,7 @@
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
-namespace etl
-{
+namespace etl {
 /// \brief Computes the sum of the given value init and the elements in the
 /// range `[first, last)`.
 /// 1. Uses `operator+` to sum up the elements.
@@ -44,19 +43,19 @@ namespace etl
 /// \module Algorithm
 template <typename InputIt, typename Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
-                                        Type init) noexcept -> Type
+    Type init) noexcept -> Type
 {
-  for (; first != last; ++first) { init = move(init) + *first; }
-  return init;
+    for (; first != last; ++first) { init = move(init) + *first; }
+    return init;
 }
 
 /// \group accumulate
 template <typename InputIt, typename Type, typename BinaryOperation>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init,
-                                        BinaryOperation op) noexcept -> Type
+    BinaryOperation op) noexcept -> Type
 {
-  for (; first != last; ++first) { init = op(move(init), *first); }
-  return init;
+    for (; first != last; ++first) { init = op(move(init), *first); }
+    return init;
 }
 
 /// \brief Similar to etl::accumulate.
@@ -66,26 +65,26 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init,
-                                    BinaryOp op) -> T
+    BinaryOp op) -> T
 {
-  return accumulate(first, last, init, op);
+    return accumulate(first, last, init, op);
 }
 
 /// \group reduce
 template <typename InputIter, typename T>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init)
-  -> T
+    -> T
 {
-  return reduce(first, last, init, etl::plus<>());
+    return reduce(first, last, init, etl::plus<>());
 }
 
 /// \group reduce
 template <typename InputIter>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last) ->
-  typename etl::iterator_traits<InputIter>::value_type
+    typename etl::iterator_traits<InputIter>::value_type
 {
-  auto init = typename etl::iterator_traits<InputIter>::value_type {};
-  return reduce(first, last, init);
+    auto init = typename etl::iterator_traits<InputIter>::value_type {};
+    return reduce(first, last, init);
 }
 
 /// \brief Computes the differences between the second and the first of each
@@ -96,46 +95,44 @@ template <typename InputIter>
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto adjacent_difference(InputIt first, InputIt last,
-                                   OutputIt destination, BinaryOperation op)
-  -> OutputIt
+    OutputIt destination, BinaryOperation op)
+    -> OutputIt
 {
-  using value_t = typename etl::iterator_traits<InputIt>::value_type;
+    using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
-  if (first == last) { return destination; }
+    if (first == last) { return destination; }
 
-  value_t acc  = *first;
-  *destination = acc;
+    value_t acc  = *first;
+    *destination = acc;
 
-  while (++first != last)
-  {
-    value_t val    = *first;
-    *++destination = op(val, move(acc));
-    acc            = move(val);
-  }
+    while (++first != last) {
+        value_t val    = *first;
+        *++destination = op(val, move(acc));
+        acc            = move(val);
+    }
 
-  return ++destination;
+    return ++destination;
 }
 
 /// \group adjacent_difference
 template <typename InputIt, typename OutputIt>
 constexpr auto adjacent_difference(InputIt first, InputIt last,
-                                   OutputIt destination) -> OutputIt
+    OutputIt destination) -> OutputIt
 {
-  using value_t = typename etl::iterator_traits<InputIt>::value_type;
+    using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
-  if (first == last) { return destination; }
+    if (first == last) { return destination; }
 
-  value_t acc  = *first;
-  *destination = acc;
+    value_t acc  = *first;
+    *destination = acc;
 
-  while (++first != last)
-  {
-    value_t val    = *first;
-    *++destination = val - move(acc);
-    acc            = move(val);
-  }
+    while (++first != last) {
+        value_t val    = *first;
+        *++destination = val - move(acc);
+        acc            = move(val);
+    }
 
-  return ++destination;
+    return ++destination;
 }
 
 /// \brief Computes inner product (i.e. sum of products) or performs ordered
@@ -145,27 +142,25 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename T>
 [[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
-                                           InputIt2 first2, T init) -> T
+    InputIt2 first2, T init) -> T
 {
-  for (; first1 != last1; ++first1, ++first2)
-  {
-    init = etl::move(init) + *first1 * *first2;
-  }
-  return init;
+    for (; first1 != last1; ++first1, ++first2) {
+        init = etl::move(init) + *first1 * *first2;
+    }
+    return init;
 }
 
 /// \group inner_product
 template <typename InputIt1, typename InputIt2, typename T,
-          typename BinaryOperation1, typename BinaryOperation2>
+    typename BinaryOperation1, typename BinaryOperation2>
 [[nodiscard]] constexpr auto
 inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
-              BinaryOperation1 op1, BinaryOperation2 op2) -> T
+    BinaryOperation1 op1, BinaryOperation2 op2) -> T
 {
-  for (; first1 != last1; ++first1, ++first2)
-  {
-    init = op1(etl::move(init), op2(*first1, *first2));
-  }
-  return init;
+    for (; first1 != last1; ++first1, ++first2) {
+        init = op1(etl::move(init), op2(*first1, *first2));
+    }
+    return init;
 }
 
 /// \brief Computes the partial sums of the elements in the subranges of the
@@ -184,28 +179,27 @@ inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
-                           BinaryOperation op) -> OutputIt
+    BinaryOperation op) -> OutputIt
 {
-  if (first == last) { return destination; }
+    if (first == last) { return destination; }
 
-  auto sum     = *first;
-  *destination = sum;
+    auto sum     = *first;
+    *destination = sum;
 
-  while (++first != last)
-  {
-    sum            = op(etl::move(sum), *first);
-    *++destination = sum;
-  }
+    while (++first != last) {
+        sum            = op(etl::move(sum), *first);
+        *++destination = sum;
+    }
 
-  return ++destination;
+    return ++destination;
 }
 
 /// \group partial_sum
 template <typename InputIt, typename OutputIt>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
-  -> OutputIt
+    -> OutputIt
 {
-  return etl::partial_sum(first, last, destination, etl::plus<>());
+    return etl::partial_sum(first, last, destination, etl::plus<>());
 }
 
 /// \brief Fills the range [first, last) with sequentially increasing values,
@@ -215,11 +209,10 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
 template <typename ForwardIt, typename T>
 constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 {
-  while (first != last)
-  {
-    *first++ = value;
-    ++value;
-  }
+    while (first != last) {
+        *first++ = value;
+        ++value;
+    }
 }
 
 /// \brief Computes the greatest common divisor of the integers m and n.
@@ -229,8 +222,8 @@ constexpr auto iota(ForwardIt first, ForwardIt last, T value) -> void
 template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {
-  if (n == 0) { return m; }
-  return gcd(n, m % n);
+    if (n == 0) { return m; }
+    return gcd(n, m % n);
 }
 
 /// \brief Computes the least common multiple of the integers m and n.
@@ -238,31 +231,28 @@ template <typename M, typename N>
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
 template <
-  typename M, typename N,
-  TETL_REQUIRES_(
-    (is_integral_v<
-       M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
+    typename M, typename N,
+    TETL_REQUIRES_(
+        (is_integral_v<
+             M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
 [[nodiscard]] constexpr auto lcm(M m, N n) ->
 
-  etl::common_type_t<M, N>
+    etl::common_type_t<M, N>
 {
-  return (m * n) / gcd(m, n);
+    return (m * n) / gcd(m, n);
 }
 
 /// \brief Returns the absolute value.
 template <typename Type>
 [[nodiscard]] constexpr auto abs(Type input) noexcept -> Type
 {
-  using limits = numeric_limits<Type>;
-  if constexpr (limits::is_signed || !limits::is_specialized)
-  {
-    if (input < 0) { return static_cast<Type>(-input); }
-    return input;
-  }
-  else
-  {
-    return input;
-  }
+    using limits = numeric_limits<Type>;
+    if constexpr (limits::is_signed || !limits::is_specialized) {
+        if (input < 0) { return static_cast<Type>(-input); }
+        return input;
+    } else {
+        return input;
+    }
 }
 
 /// \brief Returns half the sum of a + b. If the sum is odd, the result is
@@ -277,51 +267,50 @@ template <typename Type>
 /// [cppreference.com/w/cpp/numeric/midpoint](https://en.cppreference.com/w/cpp/numeric/midpoint)
 /// \group midpoint
 template <typename Int,
-          TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+    TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
-  using U = make_unsigned_t<Int>;
+    using U = make_unsigned_t<Int>;
 
-  auto sign = 1;
-  auto m    = static_cast<U>(a);
-  auto n    = static_cast<U>(b);
+    auto sign = 1;
+    auto m    = static_cast<U>(a);
+    auto n    = static_cast<U>(b);
 
-  if (a > b)
-  {
-    sign = -1;
-    m    = static_cast<U>(b);
-    n    = static_cast<U>(a);
-  }
+    if (a > b) {
+        sign = -1;
+        m    = static_cast<U>(b);
+        n    = static_cast<U>(a);
+    }
 
-  return static_cast<Int>(
-    a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
+    return static_cast<Int>(
+        a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
 /// \group midpoint
 template <typename Float, TETL_REQUIRES_(is_floating_point_v<Float>)>
 constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
-  auto const lo = numeric_limits<Float>::min() * 2;
-  auto const hi = numeric_limits<Float>::max() / 2;
+    auto const lo = numeric_limits<Float>::min() * 2;
+    auto const hi = numeric_limits<Float>::max() / 2;
 
-  if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
+    if (etl::abs(a) <= hi && etl::abs(b) <= hi) { return (a + b) / 2; }
 
-  if (etl::abs(a) < lo) { return a + b / 2; }
+    if (etl::abs(a) < lo) { return a + b / 2; }
 
-  if (etl::abs(b) < lo) { return a / 2 + b; }
+    if (etl::abs(b) < lo) { return a / 2 + b; }
 
-  return a / 2 + b / 2;
+    return a / 2 + b / 2;
 }
 
 /// \group midpoint
 /// \synopsis_return Pointer
 template <typename Pointer>
 constexpr auto midpoint(Pointer a, Pointer b) noexcept
-  -> enable_if_t<is_pointer_v<Pointer>, Pointer>
+    -> enable_if_t<is_pointer_v<Pointer>, Pointer>
 {
-  return a + midpoint(ptrdiff_t {0}, b - a);
+    return a + midpoint(ptrdiff_t { 0 }, b - a);
 }
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_NUMERIC_HPP
+#endif // TETL_NUMERIC_HPP

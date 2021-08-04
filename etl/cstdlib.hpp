@@ -34,8 +34,7 @@
 #include "etl/detail/cstddef_internal.hpp"
 #include "etl/detail/string_conversion.hpp"
 
-namespace etl
-{
+namespace etl {
 #if not defined(EXIT_SUCCESS)
 
 /// \brief Successful execution of a program.
@@ -56,31 +55,27 @@ namespace etl
 #endif
 
 /// \brief Return type for div, ldiv, lldiv & imaxdiv.
-struct div_t
-{
-  int quot;
-  int rem;
+struct div_t {
+    int quot;
+    int rem;
 };
 
 /// \brief Return type for div, ldiv, lldiv & imaxdiv.
-struct ldiv_t
-{
-  long quot;
-  long rem;
+struct ldiv_t {
+    long quot;
+    long rem;
 };
 
 /// \brief Return type for div, ldiv, lldiv & imaxdiv.
-struct lldiv_t
-{
-  long long quot;
-  long long rem;
+struct lldiv_t {
+    long long quot;
+    long long rem;
 };
 
 /// \brief Return type for div, ldiv, lldiv & imaxdiv.
-struct imaxdiv_t
-{
-  intmax_t quot;
-  intmax_t rem;
+struct imaxdiv_t {
+    intmax_t quot;
+    intmax_t rem;
 };
 
 /// \brief Computes both the quotient and the remainder of the division of the
@@ -88,7 +83,7 @@ struct imaxdiv_t
 /// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(int x, int y) noexcept -> div_t
 {
-  return {x / y, x % y};
+    return { x / y, x % y };
 }
 
 /// \brief Computes both the quotient and the remainder of the division of the
@@ -96,7 +91,7 @@ struct imaxdiv_t
 /// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(long x, long y) noexcept -> ldiv_t
 {
-  return {x / y, x % y};
+    return { x / y, x % y };
 }
 
 /// \brief Computes both the quotient and the remainder of the division of the
@@ -104,7 +99,7 @@ struct imaxdiv_t
 /// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto div(long long x, long long y) noexcept -> lldiv_t
 {
-  return {x / y, x % y};
+    return { x / y, x % y };
 }
 
 /// \brief Computes both the quotient and the remainder of the division of the
@@ -112,7 +107,7 @@ struct imaxdiv_t
 /// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto ldiv(long x, long y) noexcept -> ldiv_t
 {
-  return {x / y, x % y};
+    return { x / y, x % y };
 }
 
 /// \brief Computes both the quotient and the remainder of the division of the
@@ -120,7 +115,7 @@ struct imaxdiv_t
 /// expression x/y. The remainder is the result of the expression x%y.
 [[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept -> lldiv_t
 {
-  return {x / y, x % y};
+    return { x / y, x % y };
 }
 
 /// \brief Converts an integer value to a null-terminated string using the
@@ -133,7 +128,7 @@ struct imaxdiv_t
 /// \todo Only base 10 is currently supported.
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
-  return detail::integer_to_ascii<int>(val, buffer, base);
+    return detail::integer_to_ascii<int>(val, buffer, base);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -142,7 +137,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
-  return detail::ascii_to_integer<int>(string);
+    return detail::ascii_to_integer<int>(string);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -151,7 +146,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
 {
-  return detail::ascii_to_integer<long>(string);
+    return detail::ascii_to_integer<long>(string);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -160,7 +155,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
-  return detail::ascii_to_integer<long long>(string);
+    return detail::ascii_to_integer<long long>(string);
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
@@ -171,10 +166,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtof(const char* str,
-                                    char const** last = nullptr) noexcept
-  -> float
+    char const** last = nullptr) noexcept
+    -> float
 {
-  return detail::ascii_to_floating_point<float>(str, last);
+    return detail::ascii_to_floating_point<float>(str, last);
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
@@ -185,10 +180,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtod(const char* str,
-                                    char const** last = nullptr) noexcept
-  -> double
+    char const** last = nullptr) noexcept
+    -> double
 {
-  return detail::ascii_to_floating_point<float>(str, last);
+    return detail::ascii_to_floating_point<float>(str, last);
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
@@ -199,10 +194,10 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtold(const char* str,
-                                     char const** last = nullptr) noexcept
-  -> long double
+    char const** last = nullptr) noexcept
+    -> long double
 {
-  return detail::ascii_to_floating_point<float>(str, last);
+    return detail::ascii_to_floating_point<float>(str, last);
 }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
@@ -211,7 +206,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// by integral promotion, the program is ill-formed.
 [[nodiscard]] constexpr auto labs(long n) noexcept -> long
 {
-  return detail::abs_impl<long>(n);
+    return detail::abs_impl<long>(n);
 }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
@@ -220,8 +215,8 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// by integral promotion, the program is ill-formed.
 [[nodiscard]] constexpr auto llabs(long long n) noexcept -> long long
 {
-  return detail::abs_impl<long long>(n);
+    return detail::abs_impl<long long>(n);
 }
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_CSTDLIB_HPP
+#endif // TETL_CSTDLIB_HPP

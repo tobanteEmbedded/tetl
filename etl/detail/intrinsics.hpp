@@ -46,84 +46,84 @@
 
 #if not defined(TETL_BUILTIN_NAN)
 #define TETL_BUILTIN_NAN (__builtin_nanf(""))
-#endif  // TETL_BUILTIN_NAN
+#endif // TETL_BUILTIN_NAN
 
 #if not defined(TETL_BUILTIN_INFINITY)
 #define TETL_BUILTIN_INFINITY (__builtin_inff())
-#endif  // TETL_BUILTIN_INFINITY
+#endif // TETL_BUILTIN_INFINITY
 
 #if not defined(TETL_BUILTIN_VA_LIST)
 #define TETL_BUILTIN_VA_LIST __builtin_va_list
-#endif  // TETL_BUILTIN_VA_LIST
+#endif // TETL_BUILTIN_VA_LIST
 
 #if not defined(TETL_HAS_VIRTUAL_DESTRUCTOR)
 #define TETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
-#endif  // TETL_HAS_VIRTUAL_DESTRUCTOR
+#endif // TETL_HAS_VIRTUAL_DESTRUCTOR
 
 #if not defined(TETL_HAS_UNIQUE_OBJECT_REPRESENTATION)
-#define TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                            \
-  __has_unique_object_representations(Type)
-#endif  // TETL_HAS_UNIQUE_OBJECT_REPRESENTATION
+#define TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(Type) \
+    __has_unique_object_representations(Type)
+#endif // TETL_HAS_UNIQUE_OBJECT_REPRESENTATION
 
 #if not defined(TETL_IS_ABSTRACT)
 #define TETL_IS_ABSTRACT(Type) __is_abstract(Type)
-#endif  // TETL_IS_ABSTRACT
+#endif // TETL_IS_ABSTRACT
 
 #if not defined(TETL_IS_AGGREGATE)
 #define TETL_IS_AGGREGATE(Type) __is_aggregate(Type)
-#endif  // TETL_IS_AGGREGATE
+#endif // TETL_IS_AGGREGATE
 
 #if not defined(TETL_IS_ASSIGNABLE)
 #define TETL_IS_ASSIGNABLE(Type, Arg) __is_assignable(Type, Arg)
-#endif  // TETL_IS_ASSIGNABLE
+#endif // TETL_IS_ASSIGNABLE
 
 #if not defined(TETL_IS_CONSTANT_EVALUATED)
 #define TETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
-#endif  // TETL_IS_CONSTANT_EVALUATED
+#endif // TETL_IS_CONSTANT_EVALUATED
 
 #if not defined(TETL_IS_CONSTRUCTIBLE)
 #define TETL_IS_CONSTRUCTIBLE(Type, Args) __is_constructible(Type, Args)
-#endif  // TETL_IS_CONSTRUCTIBLE
+#endif // TETL_IS_CONSTRUCTIBLE
 
 #if not defined(TETL_IS_CLASS)
 #define TETL_IS_CLASS(Type) __is_class(Type)
-#endif  // TETL_IS_CLASS
+#endif // TETL_IS_CLASS
 
 #if not defined(TETL_IS_ENUM)
 #define TETL_IS_ENUM(Type) __is_enum(Type)
-#endif  // TETL_IS_ENUM
+#endif // TETL_IS_ENUM
 
 #if not defined(TETL_IS_FINAL)
 #define TETL_IS_FINAL(Type) __is_final(Type)
-#endif  // TETL_IS_FINAL
+#endif // TETL_IS_FINAL
 
 #if not defined(TETL_IS_POLYMORPHIC)
 #define TETL_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
-#endif  // TETL_IS_POLYMORPHIC
+#endif // TETL_IS_POLYMORPHIC
 
 #if not defined(TETL_IS_STANDARD_LAYOUT)
 #define TETL_IS_STANDARD_LAYOUT(Type) __is_standard_layout(Type)
-#endif  // TETL_IS_STANDARD_LAYOUT
+#endif // TETL_IS_STANDARD_LAYOUT
 
 #if not defined(TETL_IS_TRIVIALLY_ASSIGNABLE)
 #define TETL_IS_TRIVIALLY_ASSIGNABLE(T, Arg) __is_trivially_assignable(T, Arg)
-#endif  // TETL_IS_TRIVIALLY_ASSIGNABLE
+#endif // TETL_IS_TRIVIALLY_ASSIGNABLE
 
 #if not defined(TETL_IS_TRIVIAL_CONSTRUCTIBLE)
 #define TETL_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)
-#endif  // TETL_IS_TRIVIAL_CONSTRUCTIBLE
+#endif // TETL_IS_TRIVIAL_CONSTRUCTIBLE
 
 #if not defined(TETL_IS_TRIVIAL_DESTRUCTIBLE)
 #define TETL_IS_TRIVIAL_DESTRUCTIBLE(Type) __has_trivial_destructor(Type)
-#endif  // TETL_IS_TRIVIAL_DESTRUCTIBLE
+#endif // TETL_IS_TRIVIAL_DESTRUCTIBLE
 
 #if not defined(TETL_IS_UNION)
 #define TETL_IS_UNION(Type) __is_union(Type)
-#endif  // TETL_IS_UNION
+#endif // TETL_IS_UNION
 
 #if not defined(TETL_IS_UNDERLYING_TYPE)
 #define TETL_IS_UNDERLYING_TYPE(Type) __underlying_type(Type)
-#endif  // TETL_IS_UNDERLYING_TYPE
+#endif // TETL_IS_UNDERLYING_TYPE
 
 #if not defined(TETL_MAKE_INTEGER_SEQ)
 #if defined(TETL_CLANG) or defined(TETL_MSVC)
@@ -131,7 +131,7 @@
 #else
 #define TETL_MAKE_INTEGER_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
-#endif  // TETL_MAKE_INTEGER_SEQ
+#endif // TETL_MAKE_INTEGER_SEQ
 
 #ifdef _MSC_VER
 #define TETL_BUILTIN_INT8 __int8
@@ -167,4 +167,4 @@
 #define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
 #endif
 
-#endif  // TETL_INTRINSICS_HPP
+#endif // TETL_INTRINSICS_HPP

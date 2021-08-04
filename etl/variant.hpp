@@ -32,8 +32,7 @@
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
-namespace etl
-{
+namespace etl {
 template <typename... Types>
 class variant;
 
@@ -41,171 +40,163 @@ class variant;
 /// etl::variant. In particular, a variant of non-default-constructible types
 /// may list etl::monostate as its first alternative: this makes the variant
 /// itself default-constructible
-struct monostate
-{
+struct monostate {
 };
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator==(monostate /*lhs*/,
-                                        monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return true;
+    return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator!=(monostate /*lhs*/,
-                                        monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return false;
+    return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator<(monostate /*lhs*/,
-                                       monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return false;
+    return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator>(monostate /*lhs*/,
-                                       monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return false;
+    return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator<=(monostate /*lhs*/,
-                                        monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return true;
+    return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator>=(monostate /*lhs*/,
-                                        monostate /*rhs*/) noexcept -> bool
+    monostate /*rhs*/) noexcept -> bool
 {
-  return true;
+    return true;
 }
 
-namespace detail
-{
-using union_index_type = size_t;
+namespace detail {
+    using union_index_type = size_t;
 
-template <typename...>
-struct variant_storage;
+    template <typename...>
+    struct variant_storage;
 
-template <typename Head>
-struct variant_storage<Head>
-{
-  using storage_t =
-    typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
-  storage_t data;
+    template <typename Head>
+    struct variant_storage<Head> {
+        using storage_t =
+            typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+        storage_t data;
 
-  // alignas(Head) unsigned char data[sizeof(Head)];
+        // alignas(Head) unsigned char data[sizeof(Head)];
 
-  template <typename T>
-  void construct(T&& headInit, union_index_type& unionIndex)
-  {
-    static_assert(etl::is_same_v<T, Head>,
-                  "Tried to access non-existent type in union");
-    new (&data) Head(etl::forward<T>(headInit));
-    unionIndex = 0;
-  }
+        template <typename T>
+        void construct(T&& headInit, union_index_type& unionIndex)
+        {
+            static_assert(etl::is_same_v<T, Head>,
+                "Tried to access non-existent type in union");
+            new (&data) Head(etl::forward<T>(headInit));
+            unionIndex = 0;
+        }
 
-  void destruct(union_index_type /*unused*/)
-  {
-    static_cast<Head*>(static_cast<void*>(&data))->~Head();
-  }
-};
+        void destruct(union_index_type /*unused*/)
+        {
+            static_cast<Head*>(static_cast<void*>(&data))->~Head();
+        }
+    };
 
-template <typename Head, typename... Tail>
-struct variant_storage<Head, Tail...>
-{
-  using storage_t =
-    typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+    template <typename Head, typename... Tail>
+    struct variant_storage<Head, Tail...> {
+        using storage_t =
+            typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
 
-  union
-  {
-    storage_t data;
-    variant_storage<Tail...> tail;
-  };
+        union {
+            storage_t data;
+            variant_storage<Tail...> tail;
+        };
 
-  void construct(Head const& headInit, union_index_type& unionIndex)
-  {
-    new (&data) Head(headInit);
-    unionIndex = 0;
-  }
+        void construct(Head const& headInit, union_index_type& unionIndex)
+        {
+            new (&data) Head(headInit);
+            unionIndex = 0;
+        }
 
-  void construct(Head& headInit, union_index_type& unionIndex)
-  {
-    const auto& headCref = headInit;
-    construct(headCref, unionIndex);
-  }
+        void construct(Head& headInit, union_index_type& unionIndex)
+        {
+            const auto& headCref = headInit;
+            construct(headCref, unionIndex);
+        }
 
-  void construct(Head&& headInit, union_index_type& unionIndex)
-  {
-    using etl::move;
-    new (&data) Head(move(headInit));
-    unionIndex = 0;
-  }
+        void construct(Head&& headInit, union_index_type& unionIndex)
+        {
+            using etl::move;
+            new (&data) Head(move(headInit));
+            unionIndex = 0;
+        }
 
-  template <typename T>
-  void construct(T&& t, union_index_type& unionIndex)
-  {
-    tail.construct(etl::forward<T>(t), unionIndex);
-    ++unionIndex;
-  }
+        template <typename T>
+        void construct(T&& t, union_index_type& unionIndex)
+        {
+            tail.construct(etl::forward<T>(t), unionIndex);
+            ++unionIndex;
+        }
 
-  void destruct(union_index_type unionIndex)
-  {
-    if (unionIndex == 0)
-    {
-      static_cast<Head*>(static_cast<void*>(&data))->~Head();
-      return;
-    }
+        void destruct(union_index_type unionIndex)
+        {
+            if (unionIndex == 0) {
+                static_cast<Head*>(static_cast<void*>(&data))->~Head();
+                return;
+            }
 
-    tail.destruct(unionIndex - 1);
-  }
-};
-template <typename...>
-struct variant_storage_type_get;
+            tail.destruct(unionIndex - 1);
+        }
+    };
+    template <typename...>
+    struct variant_storage_type_get;
 
-template <typename Head, typename... Tail>
-struct variant_storage_type_get<Head, variant_storage<Head, Tail...>>
-{
-  static auto get(variant_storage<Head, Tail...>& vu) -> Head&
-  {
-    return *static_cast<Head*>(static_cast<void*>(&vu.data));
-  }
+    template <typename Head, typename... Tail>
+    struct variant_storage_type_get<Head, variant_storage<Head, Tail...>> {
+        static auto get(variant_storage<Head, Tail...>& vu) -> Head&
+        {
+            return *static_cast<Head*>(static_cast<void*>(&vu.data));
+        }
 
-  static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
-  {
-    return *static_cast<Head const*>(static_cast<void const*>(&vu.data));
-  }
+        static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
+        {
+            return *static_cast<Head const*>(static_cast<void const*>(&vu.data));
+        }
 
-  static constexpr const union_index_type index = 0;
-};
+        static constexpr const union_index_type index = 0;
+    };
 
-template <typename Target, typename Head, typename... Tail>
-struct variant_storage_type_get<Target, variant_storage<Head, Tail...>>
-{
-  static auto get(variant_storage<Head, Tail...>& vu) -> Target&
-  {
-    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-      vu.tail);
-  }
+    template <typename Target, typename Head, typename... Tail>
+    struct variant_storage_type_get<Target, variant_storage<Head, Tail...>> {
+        static auto get(variant_storage<Head, Tail...>& vu) -> Target&
+        {
+            return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
+                vu.tail);
+        }
 
-  static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
-  {
-    return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-      vu.tail);
-  }
+        static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
+        {
+            return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
+                vu.tail);
+        }
 
-  static constexpr const union_index_type index
-    = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
-};
+        static constexpr const union_index_type index
+            = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
+    };
 
-}  // namespace detail
+} // namespace detail
 
 /// \brief Provides compile-time indexed access to the types of the alternatives
 /// of the possibly cv-qualified variant, combining cv-qualifications of the
@@ -221,9 +212,8 @@ struct variant_alternative;
 ///
 /// \todo Implement
 template <etl::size_t I, typename... Types>
-struct variant_alternative<I, variant<Types...>>
-{
-  using type = void;
+struct variant_alternative<I, variant<Types...>> {
+    using type = void;
 };
 
 /// \brief Provides compile-time indexed access to the types of the alternatives
@@ -232,9 +222,8 @@ struct variant_alternative<I, variant<Types...>>
 ///
 /// \todo Implement
 template <etl::size_t I, typename T>
-struct variant_alternative<I, T const>
-{
-  using type = void;
+struct variant_alternative<I, T const> {
+    using type = void;
 };
 
 template <size_t I, typename T>
@@ -249,82 +238,80 @@ inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
 /// instance of etl::variant at any given time either holds a value of one of
 /// its alternative types.
 template <typename... Types>
-class variant
-{
-  public:
-  /// \brief Converting constructor.
-  ///
-  /// \details Constructs a variant holding the alternative type T.
-  template <typename T>
-  explicit variant(T&& t)
-  {
-    data_.construct(etl::forward<T>(t), unionIndex_);
-  }
-
-  /// \brief If valueless_by_exception is true, does nothing. Otherwise,
-  /// destroys the currently contained value.
-  ///
-  /// \todo This destructor is trivial if etl::is_trivially_destructible_v<T_i>
-  /// is true for all T_i in Types...
-  ~variant()
-  {
-    if (!valueless_by_exception()) { data_.destruct(unionIndex_); }
-  }
-
-  /// \brief Copy-assignment
-  ///
-  /// \details  If both *this and rhs are valueless by exception, does nothing.
-  /// Otherwise, if rhs holds the same alternative as *this, assigns the value
-  /// contained in rhs to the value contained in *this. If an exception is
-  /// thrown, *this does not become valueless: the value depends on the
-  /// exception safety guarantee of the alternative's copy assignment.
-  constexpr auto operator=(variant const& rhs) -> variant&
-  {
-    // Self assignment
-    if (this == &rhs) { return *this; }
-
-    // Same type
-    if (index() && rhs.index())
+class variant {
+public:
+    /// \brief Converting constructor.
+    ///
+    /// \details Constructs a variant holding the alternative type T.
+    template <typename T>
+    explicit variant(T&& t)
     {
-      data_ = rhs.data_;
-      return *this;
+        data_.construct(etl::forward<T>(t), unionIndex_);
     }
 
-    return *this;
-  }
+    /// \brief If valueless_by_exception is true, does nothing. Otherwise,
+    /// destroys the currently contained value.
+    ///
+    /// \todo This destructor is trivial if etl::is_trivially_destructible_v<T_i>
+    /// is true for all T_i in Types...
+    ~variant()
+    {
+        if (!valueless_by_exception()) { data_.destruct(unionIndex_); }
+    }
 
-  /// \brief Returns the zero-based index of the alternative that is currently
-  /// held by the variant. If the variant is valueless_by_exception, returns
-  /// variant_npos.
-  [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t
-  {
-    return valueless_by_exception() ? variant_npos : unionIndex_;
-  }
+    /// \brief Copy-assignment
+    ///
+    /// \details  If both *this and rhs are valueless by exception, does nothing.
+    /// Otherwise, if rhs holds the same alternative as *this, assigns the value
+    /// contained in rhs to the value contained in *this. If an exception is
+    /// thrown, *this does not become valueless: the value depends on the
+    /// exception safety guarantee of the alternative's copy assignment.
+    constexpr auto operator=(variant const& rhs) -> variant&
+    {
+        // Self assignment
+        if (this == &rhs) { return *this; }
 
-  /// \brief Returns false if and only if the variant holds a value. Currently
-  /// always returns false, since there is no default constructor.
-  [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool
-  {
-    return false;
-  }
+        // Same type
+        if (index() && rhs.index()) {
+            data_ = rhs.data_;
+            return *this;
+        }
 
-  /// \todo Remove & replace with friendship for etl::get_if.
-  [[nodiscard]] auto data() const noexcept { return &data_; }
-  auto data() noexcept { return &data_; }
+        return *this;
+    }
 
-  private:
-  detail::variant_storage<Types...> data_;
-  detail::union_index_type unionIndex_;
+    /// \brief Returns the zero-based index of the alternative that is currently
+    /// held by the variant. If the variant is valueless_by_exception, returns
+    /// variant_npos.
+    [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t
+    {
+        return valueless_by_exception() ? variant_npos : unionIndex_;
+    }
+
+    /// \brief Returns false if and only if the variant holds a value. Currently
+    /// always returns false, since there is no default constructor.
+    [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool
+    {
+        return false;
+    }
+
+    /// \todo Remove & replace with friendship for etl::get_if.
+    [[nodiscard]] auto data() const noexcept { return &data_; }
+    auto data() noexcept { return &data_; }
+
+private:
+    detail::variant_storage<Types...> data_;
+    detail::union_index_type unionIndex_;
 };
 
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...
 template <typename T, typename... Types>
 constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
-  -> bool
+    -> bool
 {
-  using storage_t = detail::variant_storage<Types...>;
-  return detail::variant_storage_type_get<T, storage_t>::index == v.index();
+    using storage_t = detail::variant_storage<Types...>;
+    return detail::variant_storage_type_get<T, storage_t>::index == v.index();
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -336,10 +323,10 @@ constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
 /// \todo Implement
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
-  -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
+    -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
 {
-  etl::ignore_unused(pv);
-  return nullptr;
+    etl::ignore_unused(pv);
+    return nullptr;
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -351,43 +338,41 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 /// \todo Implement
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-  -> etl::add_pointer_t<
-    etl::variant_alternative_t<I, etl::variant<Types...>> const>
+    -> etl::add_pointer_t<
+        etl::variant_alternative_t<I, etl::variant<Types...>> const>
 {
-  etl::ignore_unused(pv);
-  return nullptr;
+    etl::ignore_unused(pv);
+    return nullptr;
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
-  -> etl::add_pointer_t<T>
+    -> etl::add_pointer_t<T>
 {
-  if (holds_alternative<T>(*pv))
-  {
-    using storage_t = detail::variant_storage<Types...>;
-    return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
-  }
+    if (holds_alternative<T>(*pv)) {
+        using storage_t = detail::variant_storage<Types...>;
+        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+    }
 
-  return nullptr;
+    return nullptr;
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-  -> etl::add_pointer_t<const T>
+    -> etl::add_pointer_t<const T>
 {
-  if (holds_alternative<T>(*pv))
-  {
-    using storage_t = detail::variant_storage<Types...>;
-    return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
-  }
+    if (holds_alternative<T>(*pv)) {
+        using storage_t = detail::variant_storage<Types...>;
+        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+    }
 
-  return nullptr;
+    return nullptr;
 }
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_VARIANT_HPP
+#endif // TETL_VARIANT_HPP

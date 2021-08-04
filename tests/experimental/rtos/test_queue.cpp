@@ -29,64 +29,64 @@
 namespace rtos = etl::experimental::rtos;
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 {
-  rtos::queue<TestType, 100> q1 {};
+    rtos::queue<TestType, 100> q1 {};
 }
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 {
-  rtos::queue<TestType, 1> q1 {};
-  REQUIRE(q1.capacity() == 1);
-  rtos::queue<TestType, 32> q2 {};
-  REQUIRE(q2.capacity() == 32);
-  rtos::queue<TestType, 128> q3 {};
-  REQUIRE(q3.capacity() == 128);
+    rtos::queue<TestType, 1> q1 {};
+    REQUIRE(q1.capacity() == 1);
+    rtos::queue<TestType, 32> q2 {};
+    REQUIRE(q2.capacity() == 32);
+    rtos::queue<TestType, 128> q3 {};
+    REQUIRE(q3.capacity() == 128);
 }
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: send", "[experimental][rtos]",
-                   etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-                   etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-                   float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
+    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 {
-  rtos::queue<TestType, 1> q1 {};
-  // stub always returns false
-  REQUIRE(q1.send(1, 0) == false);
+    rtos::queue<TestType, 1> q1 {};
+    // stub always returns false
+    REQUIRE(q1.send(1, 0) == false);
 }
 
 TEST_CASE("experimental/rtos/queue: receive io/out argument",
-          "[experimental][rtos]")
+    "[experimental][rtos]")
 {
-  rtos::queue<int, 1> q1 {};
-  // stub always returns false
-  auto i = int {0};
-  REQUIRE(q1.receive(i, 0) == false);
+    rtos::queue<int, 1> q1 {};
+    // stub always returns false
+    auto i = int { 0 };
+    REQUIRE(q1.receive(i, 0) == false);
 }
 
 TEST_CASE("experimental/rtos/queue: receive pair<bool,T>",
-          "[experimental][rtos]")
+    "[experimental][rtos]")
 {
-  rtos::queue<int, 1> q1 {};
-  // stub always returns false
-  auto [success, value] = q1.receive(0);
-  REQUIRE(success == false);
-  REQUIRE(value == 0);
+    rtos::queue<int, 1> q1 {};
+    // stub always returns false
+    auto [success, value] = q1.receive(0);
+    REQUIRE(success == false);
+    REQUIRE(value == 0);
 }
 
 TEST_CASE("experimental/rtos/queue: reset", "[experimental][rtos]")
 {
-  rtos::queue<int, 1> q1 {};
-  REQUIRE(q1.reset() == true);
+    rtos::queue<int, 1> q1 {};
+    REQUIRE(q1.reset() == true);
 }
 
 TEST_CASE("experimental/rtos/queue: messages_waiting", "[experimental][rtos]")
 {
-  rtos::queue<int, 1> q1 {};
-  // stub always returns 0
-  REQUIRE(q1.messages_waiting() == 0);
+    rtos::queue<int, 1> q1 {};
+    // stub always returns 0
+    REQUIRE(q1.messages_waiting() == 0);
 }

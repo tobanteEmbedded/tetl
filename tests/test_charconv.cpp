@@ -26,55 +26,55 @@
 
 TEST_CASE("charconv: chars_format", "[charconv]")
 {
-  CHECK(etl::chars_format::scientific != etl::chars_format::hex);
-  CHECK(etl::chars_format::scientific != etl::chars_format::fixed);
-  CHECK(etl::chars_format::scientific != etl::chars_format::general);
+    CHECK(etl::chars_format::scientific != etl::chars_format::hex);
+    CHECK(etl::chars_format::scientific != etl::chars_format::fixed);
+    CHECK(etl::chars_format::scientific != etl::chars_format::general);
 
-  CHECK(etl::chars_format::hex != etl::chars_format::scientific);
-  CHECK(etl::chars_format::hex != etl::chars_format::fixed);
-  CHECK(etl::chars_format::hex != etl::chars_format::general);
+    CHECK(etl::chars_format::hex != etl::chars_format::scientific);
+    CHECK(etl::chars_format::hex != etl::chars_format::fixed);
+    CHECK(etl::chars_format::hex != etl::chars_format::general);
 
-  CHECK(etl::chars_format::fixed != etl::chars_format::scientific);
-  CHECK(etl::chars_format::fixed != etl::chars_format::hex);
-  CHECK(etl::chars_format::fixed != etl::chars_format::general);
+    CHECK(etl::chars_format::fixed != etl::chars_format::scientific);
+    CHECK(etl::chars_format::fixed != etl::chars_format::hex);
+    CHECK(etl::chars_format::fixed != etl::chars_format::general);
 
-  CHECK(etl::chars_format::general != etl::chars_format::scientific);
-  CHECK(etl::chars_format::general != etl::chars_format::hex);
-  CHECK(etl::chars_format::general != etl::chars_format::fixed);
+    CHECK(etl::chars_format::general != etl::chars_format::scientific);
+    CHECK(etl::chars_format::general != etl::chars_format::hex);
+    CHECK(etl::chars_format::general != etl::chars_format::fixed);
 }
 
 TEST_CASE("charconv: to_chars_result", "[charconv]")
 {
-  SECTION("default")
-  {
-    auto lhs = etl::to_chars_result {nullptr, etl::errc {}};
-    auto rhs = etl::to_chars_result {nullptr, etl::errc {}};
-    CHECK(lhs == rhs);
-  }
+    SECTION("default")
+    {
+        auto lhs = etl::to_chars_result { nullptr, etl::errc {} };
+        auto rhs = etl::to_chars_result { nullptr, etl::errc {} };
+        CHECK(lhs == rhs);
+    }
 
-  SECTION("char buffer")
-  {
-    char buffer[16] = {};
-    auto lhs        = etl::to_chars_result {buffer, etl::errc {}};
-    auto rhs        = etl::to_chars_result {buffer, etl::errc {}};
-    CHECK(lhs == rhs);
-  }
+    SECTION("char buffer")
+    {
+        char buffer[16] = {};
+        auto lhs        = etl::to_chars_result { buffer, etl::errc {} };
+        auto rhs        = etl::to_chars_result { buffer, etl::errc {} };
+        CHECK(lhs == rhs);
+    }
 }
 
 TEST_CASE("charconv: from_chars_result", "[charconv]")
 {
-  SECTION("default")
-  {
-    auto lhs = etl::from_chars_result {nullptr, etl::errc {}};
-    auto rhs = etl::from_chars_result {nullptr, etl::errc {}};
-    CHECK(lhs == rhs);
-  }
+    SECTION("default")
+    {
+        auto lhs = etl::from_chars_result { nullptr, etl::errc {} };
+        auto rhs = etl::from_chars_result { nullptr, etl::errc {} };
+        CHECK(lhs == rhs);
+    }
 
-  SECTION("char buffer")
-  {
-    char buffer[16] = {};
-    auto lhs        = etl::from_chars_result {buffer, etl::errc {}};
-    auto rhs        = etl::from_chars_result {buffer, etl::errc {}};
-    CHECK(lhs == rhs);
-  }
+    SECTION("char buffer")
+    {
+        char buffer[16] = {};
+        auto lhs        = etl::from_chars_result { buffer, etl::errc {} };
+        auto rhs        = etl::from_chars_result { buffer, etl::errc {} };
+        CHECK(lhs == rhs);
+    }
 }

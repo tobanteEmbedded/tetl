@@ -32,12 +32,11 @@
 
 #include "etl/detail/sfinae.hpp"
 
-namespace etl::detail
-{
+namespace etl::detail {
 template <typename T>
 inline constexpr bool is_movable_v
-  = etl::is_object_v<T>&& etl::is_assignable_v<T&, T>&&
-    etl::is_move_constructible_v<T>&& etl::is_swappable_v<T&>;
+    = etl::is_object_v<T>&& etl::is_assignable_v<T&, T>&&
+        etl::is_move_constructible_v<T>&& etl::is_swappable_v<T&>;
 
 template <typename Rng>
 using range_iterator_t = decltype(etl::begin(etl::declval<Rng>()));
@@ -49,14 +48,12 @@ template <typename T>
 using iterator_category_t = typename etl::iterator_traits<T>::iterator_category;
 
 template <typename T, typename Cat, typename = void>
-struct Iterator_ : etl::false_type
-{
+struct Iterator_ : etl::false_type {
 };
 
 template <typename T, typename Cat>
 struct Iterator_<T, Cat, etl::void_t<iterator_category_t<T>>>
-    : etl::bool_constant<etl::is_convertible_v<iterator_category_t<T>, Cat>>
-{
+    : etl::bool_constant<etl::is_convertible_v<iterator_category_t<T>, Cat>> {
 };
 
 // Concepts (poor-man emulation using type traits)
@@ -65,23 +62,23 @@ static constexpr bool InputIterator = Iterator_<T, etl::input_iterator_tag> {};
 
 template <typename T>
 static constexpr bool ForwardIterator
-  = Iterator_<T, etl::forward_iterator_tag> {};
+    = Iterator_<T, etl::forward_iterator_tag> {};
 
 template <typename T>
 static constexpr bool OutputIterator
-  = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
+    = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
 
 template <typename T>
 static constexpr bool BidirectionalIterator
-  = Iterator_<T, etl::bidirectional_iterator_tag> {};
+    = Iterator_<T, etl::bidirectional_iterator_tag> {};
 
 template <typename T>
 static constexpr bool RandomAccessIterator
-  = Iterator_<T, etl::random_access_iterator_tag> {};
+    = Iterator_<T, etl::random_access_iterator_tag> {};
 
 template <typename T>
 static constexpr bool RandomAccessRange
-  = RandomAccessIterator<range_iterator_t<T>>;
+    = RandomAccessIterator<range_iterator_t<T>>;
 
 /// \brief Smallest fixed-width unsigned integer type that can represent values
 /// in the range [0, N].
@@ -99,8 +96,8 @@ using smallest_size_t =
 template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
-  TETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
-  return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
+    TETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
+    return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
-}  // namespace etl::detail
-#endif  // TETL_CONTAINER_UTILS_HPP
+} // namespace etl::detail
+#endif // TETL_CONTAINER_UTILS_HPP

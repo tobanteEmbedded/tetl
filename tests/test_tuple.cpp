@@ -22,28 +22,28 @@
 // DAMAGE.
 #include "etl/tuple.hpp"
 
-#include "etl/cstdint.hpp"  // for int16_t, int32_t, int64_t, int8_t
-#include "etl/warning.hpp"  // for ignore_unused
+#include "etl/cstdint.hpp" // for int16_t, int32_t, int64_t, int8_t
+#include "etl/warning.hpp" // for ignore_unused
 
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("tuple: constructor", "[tuple]", bool, etl::uint8_t,
-                   etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-                   etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-                   long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
+    long double)
 
 {
-  etl::tuple<TestType, float> t1 {TestType {1}, 2.0F};
-  etl::ignore_unused(t1);
+    etl::tuple<TestType, float> t1 { TestType { 1 }, 2.0F };
+    etl::ignore_unused(t1);
 }
 
 TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t,
-                   etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-                   etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 {
-  auto t1 = etl::tuple<TestType, float> {TestType {1}, 2.0F};
-  CHECK(etl::get<0>(t1) == TestType {1});
-  CHECK(etl::get<1>(t1) == 2.0F);
+    auto t1 = etl::tuple<TestType, float> { TestType { 1 }, 2.0F };
+    CHECK(etl::get<0>(t1) == TestType { 1 });
+    CHECK(etl::get<1>(t1) == 2.0F);
 }
 
 // TEMPLATE_TEST_CASE("tuple: tie", "[tuple]", bool, etl::uint8_t, etl::int8_t,

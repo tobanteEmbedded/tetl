@@ -26,11 +26,10 @@
 
 #include "etl/version.hpp"
 
-namespace etl
-{
+namespace etl {
 using streamoff = int;
 
 template <typename State>
 class fpos;
-}  // namespace etl
-#endif  // TETL_IOS_HPP
+} // namespace etl
+#endif // TETL_IOS_HPP

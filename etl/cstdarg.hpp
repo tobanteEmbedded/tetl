@@ -30,8 +30,7 @@
 #include <cstdarg>
 #endif
 
-namespace etl
-{
+namespace etl {
 #if not defined(TETL_MSVC)
 
 /// \brief va_list is a complete object type suitable for holding the
@@ -48,7 +47,7 @@ using va_list = TETL_BUILTIN_VA_LIST;
 #else
 using va_list = ::std::va_list;
 #endif
-}  // namespace etl
+} // namespace etl
 
 #if not defined(va_start)
 
@@ -105,4 +104,4 @@ using va_list = ::std::va_list;
 #define va_copy(dest, src) __builtin_va_copy(dest, src)
 #endif
 
-#endif  // TETL_CSTDARG_HPP
+#endif // TETL_CSTDARG_HPP

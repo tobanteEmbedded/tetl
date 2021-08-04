@@ -42,10 +42,9 @@
 #define INFINITY TETL_BUILTIN_INFINITY
 #endif
 
-#endif  // has_include<math.h>
+#endif // has_include<math.h>
 
-namespace etl
-{
+namespace etl {
 /// \brief Most efficient floating-point type at least as wide as float.
 using float_t = float;
 
@@ -61,27 +60,27 @@ using double_t = double;
 /// \module Numeric
 [[nodiscard]] constexpr auto isinf(float arg) -> bool
 {
-  return arg == INFINITY;
+    return arg == INFINITY;
 }
 
 /// \group isinf
 [[nodiscard]] constexpr auto isinf(double arg) -> bool
 {
-  return arg == INFINITY;
+    return arg == INFINITY;
 }
 
 /// \group isinf
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool
 {
-  return arg == INFINITY;
+    return arg == INFINITY;
 }
 
 /// \group isinf
 template <typename IntegralType>
 [[nodiscard]] constexpr auto isinf(IntegralType arg)
-  -> enable_if_t<is_integral_v<IntegralType>, bool>
+    -> enable_if_t<is_integral_v<IntegralType>, bool>
 {
-  return isinf(static_cast<double>(arg));
+    return isinf(static_cast<double>(arg));
 }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
@@ -98,7 +97,7 @@ template <typename IntegralType>
 /// \group isnan
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool
 {
-  return arg != arg;
+    return arg != arg;
 }
 
 /// \brief Determines if the given floating point number arg is a not-a-number
@@ -107,9 +106,9 @@ template <typename IntegralType>
 /// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
 template <typename IntegralType>
 [[nodiscard]] constexpr auto isnan(IntegralType arg)
-  -> enable_if_t<is_integral_v<IntegralType>, bool>
+    -> enable_if_t<is_integral_v<IntegralType>, bool>
 {
-  return isnan(static_cast<double>(arg));
+    return isnan(static_cast<double>(arg));
 }
 
 /// \brief Determines if the given floating point number arg has finite value
@@ -120,36 +119,35 @@ template <typename IntegralType>
 /// \module Numeric
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool
 {
-  return !etl::isnan(arg) && !etl::isinf(arg);
+    return !etl::isnan(arg) && !etl::isinf(arg);
 }
 
 /// \group isfinite
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool
 {
-  return !etl::isnan(arg) && !etl::isinf(arg);
+    return !etl::isnan(arg) && !etl::isinf(arg);
 }
 
 /// \group isfinite
 [[nodiscard]] constexpr auto isfinite(long double arg) -> bool
 {
-  return !etl::isnan(arg) && !etl::isinf(arg);
+    return !etl::isnan(arg) && !etl::isinf(arg);
 }
 
-namespace detail
-{
-template <typename Float>
-[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
-  -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
-{
-  if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
+namespace detail {
+    template <typename Float>
+    [[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
+        -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
+    {
+        if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
 
-  if (t == 1) { return b; }
+        if (t == 1) { return b; }
 
-  auto const x = a + t * (b - a);
-  if ((t > 1) == (b > a)) { return b < x ? x : b; }
-  return x < b ? x : b;
-}
-}  // namespace detail
+        auto const x = a + t * (b - a);
+        if ((t > 1) == (b > a)) { return b < x ? x : b; }
+        return x < b ? x : b;
+    }
+} // namespace detail
 
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
@@ -159,38 +157,37 @@ template <typename Float>
 /// \module Numeric
 [[nodiscard]] constexpr auto lerp(float a, float b, float t) noexcept -> float
 {
-  return detail::lerp_impl<float>(a, b, t);
+    return detail::lerp_impl<float>(a, b, t);
 }
 
 /// \group lerp
 [[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept
-  -> double
+    -> double
 {
-  return detail::lerp_impl<double>(a, b, t);
+    return detail::lerp_impl<double>(a, b, t);
 }
 
 /// \group lerp
 [[nodiscard]] constexpr auto lerp(long double a, long double b,
-                                  long double t) noexcept -> long double
+    long double t) noexcept -> long double
 {
-  return detail::lerp_impl<long double>(a, b, t);
+    return detail::lerp_impl<long double>(a, b, t);
 }
 
-namespace detail
-{
-template <typename T>
-[[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
-{
-  constexpr auto isInt      = is_same_v<T, int>;
-  constexpr auto isLong     = is_same_v<T, long>;
-  constexpr auto isLongLong = is_same_v<T, long long>;
-  static_assert(isInt || isLong || isLongLong);
+namespace detail {
+    template <typename T>
+    [[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
+    {
+        constexpr auto isInt      = is_same_v<T, int>;
+        constexpr auto isLong     = is_same_v<T, long>;
+        constexpr auto isLongLong = is_same_v<T, long long>;
+        static_assert(isInt || isLong || isLongLong);
 
-  if (n >= T(0)) { return n; }
-  return n * T(-1);
-}
+        if (n >= T(0)) { return n; }
+        return n * T(-1);
+    }
 
-}  // namespace detail
+} // namespace detail
 
 /// \brief Computes the absolute value of an integer number. The behavior is
 /// undefined if the result cannot be represented by the return type. If abs
@@ -200,21 +197,21 @@ template <typename T>
 /// \module Numeric
 [[nodiscard]] constexpr auto abs(int n) noexcept -> int
 {
-  return detail::abs_impl<int>(n);
+    return detail::abs_impl<int>(n);
 }
 
 /// \group abs
 [[nodiscard]] constexpr auto abs(long n) noexcept -> long
 {
-  return detail::abs_impl<long>(n);
+    return detail::abs_impl<long>(n);
 }
 
 /// \group abs
 [[nodiscard]] constexpr auto abs(long long n) noexcept -> long long
 {
-  return detail::abs_impl<long long>(n);
+    return detail::abs_impl<long long>(n);
 }
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_CMATH_HPP
+#endif // TETL_CMATH_HPP

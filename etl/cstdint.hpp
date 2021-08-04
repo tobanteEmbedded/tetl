@@ -32,8 +32,7 @@
 /// This header is part of the type support library, providing fixed width
 /// integer types and part of C numeric limits interface.
 
-namespace etl
-{
+namespace etl {
 /// \brief Signed integer type with width of exactly 8 bits.
 /// \exclude target
 using int8_t = TETL_BUILTIN_INT8;
@@ -170,6 +169,6 @@ using intmax_t = TETL_BUILTIN_INTMAX;
 /// \exclude target
 using uintmax_t = TETL_BUILTIN_UINTMAX;
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_CSTDINT_HPP
+#endif // TETL_CSTDINT_HPP

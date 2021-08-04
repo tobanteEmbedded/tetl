@@ -30,24 +30,23 @@
 // configurations.
 #define TETL_CUSTOM_ASSERT_HANDLER 1
 
-#include "etl/cassert.hpp"  // for TETL_ASSERT
+#include "etl/cassert.hpp" // for TETL_ASSERT
 
-#include <stdio.h>  // for printf
+#include <stdio.h> // for printf
 
-namespace etl
-{
+namespace etl {
 // This function only needs to be implemented if you defined the custom
 // assert handler macro.
 auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
-  ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
+    ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
 }
 
-}  // namespace etl
+} // namespace etl
 
 auto main() -> int
 {
-  TETL_ASSERT(2 == 2);  // success, nothing is printed
-  TETL_ASSERT(2 == 3);  // failure, the assert handler is invoked
-  return EXIT_SUCCESS;
+    TETL_ASSERT(2 == 2); // success, nothing is printed
+    TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
+    return EXIT_SUCCESS;
 }

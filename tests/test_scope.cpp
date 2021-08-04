@@ -26,47 +26,47 @@
 
 TEST_CASE("scope: scope_exit", "[scope]")
 {
-  SECTION("single")
-  {
-    auto counter = 0;
+    SECTION("single")
     {
-      etl::scope_exit e {[&] { counter++; }};
+        auto counter = 0;
+        {
+            etl::scope_exit e { [&] { counter++; } };
+        }
+        REQUIRE(counter == 1);
     }
-    REQUIRE(counter == 1);
-  }
 
-  SECTION("multiple")
-  {
-    auto counter = 0;
+    SECTION("multiple")
     {
-      etl::scope_exit e1 {[&] { counter++; }};
-      etl::scope_exit e2 {[&] { counter++; }};
-      etl::scope_exit e3 {[&] { counter++; }};
+        auto counter = 0;
+        {
+            etl::scope_exit e1 { [&] { counter++; } };
+            etl::scope_exit e2 { [&] { counter++; } };
+            etl::scope_exit e3 { [&] { counter++; } };
+        }
+        REQUIRE(counter == 3);
     }
-    REQUIRE(counter == 3);
-  }
 
-  SECTION("move")
-  {
-    auto counter = 0;
+    SECTION("move")
     {
-      auto e1 = etl::scope_exit {[&] { counter++; }};
-      {
-        auto e2 {etl::move(e1)};
+        auto counter = 0;
+        {
+            auto e1 = etl::scope_exit { [&] { counter++; } };
+            {
+                auto e2 { etl::move(e1) };
+                REQUIRE(counter == 0);
+            }
+            REQUIRE(counter == 1);
+        }
+        REQUIRE(counter == 1);
+    }
+
+    SECTION("release")
+    {
+        auto counter = 0;
+        {
+            etl::scope_exit e { [&] { counter++; } };
+            e.release();
+        }
         REQUIRE(counter == 0);
-      }
-      REQUIRE(counter == 1);
     }
-    REQUIRE(counter == 1);
-  }
-
-  SECTION("release")
-  {
-    auto counter = 0;
-    {
-      etl::scope_exit e {[&] { counter++; }};
-      e.release();
-    }
-    REQUIRE(counter == 0);
-  }
 }

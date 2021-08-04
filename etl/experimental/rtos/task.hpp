@@ -33,26 +33,22 @@
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos
-{
+namespace etl::experimental::rtos {
 /// \brief Runs the task loop 0 times.
-struct never
-{
-  [[nodiscard]] auto operator()() const -> bool { return false; }
+struct never {
+    [[nodiscard]] auto operator()() const -> bool { return false; }
 };
 
 /// \brief Runs the task loop forever.
-struct forever
-{
-  [[nodiscard]] auto operator()() const -> bool { return true; }
+struct forever {
+    [[nodiscard]] auto operator()() const -> bool { return true; }
 };
 
 /// \brief Runs the task loop Count times.
 template <etl::size_t Count>
-struct times
-{
-  etl::size_t run_count = Count;
-  [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
+struct times {
+    etl::size_t run_count = Count;
+    [[nodiscard]] auto operator()() -> bool { return (run_count-- != 0); }
 };
 
 /// \brief Runs the task loop once.
@@ -65,17 +61,17 @@ using twice = times<2>;
 template <typename TaskType>
 inline auto rtos_task(void* task) -> void
 {
-  static_cast<TaskType*>(task)->run();
+    static_cast<TaskType*>(task)->run();
 }
 
 /// \brief Create a rtos task. TaskType needs a `void run()` public method.
 template <typename TaskType>
 inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
-                        UBaseType_t prio           = 0,
-                        TaskHandle_t* const handle = nullptr) -> void
+    UBaseType_t prio           = 0,
+    TaskHandle_t* const handle = nullptr) -> void
 {
-  xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio,
-              handle);
+    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio,
+        handle);
 }
 
 /// \brief Yield is used to request a context switch to another task.
@@ -89,6 +85,6 @@ inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
 /// tasks.
 inline auto start_scheduler() -> void { vTaskStartScheduler(); }
 
-}  // namespace etl::experimental::rtos
+} // namespace etl::experimental::rtos
 
-#endif  // TETL_RTOS_TASK_HPP
+#endif // TETL_RTOS_TASK_HPP

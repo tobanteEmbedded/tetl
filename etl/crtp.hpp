@@ -28,22 +28,20 @@
 
 #include "etl/cstddef.hpp"
 
-namespace etl
-{
+namespace etl {
 template <typename Type, template <typename> typename CrtpTag>
-struct crtp
-{
-  [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
-  {
-    return static_cast<Type const&>(*this);
-  }
+struct crtp {
+    [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
+    {
+        return static_cast<Type const&>(*this);
+    }
 
-  [[nodiscard]] constexpr auto underlying() noexcept -> Type&
-  {
-    return static_cast<Type&>(*this);
-  }
+    [[nodiscard]] constexpr auto underlying() noexcept -> Type&
+    {
+        return static_cast<Type&>(*this);
+    }
 };
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_CRTP_HPP
+#endif // TETL_CRTP_HPP

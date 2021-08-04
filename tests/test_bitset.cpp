@@ -25,249 +25,248 @@
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct()", "[bitset]", ((size_t N), N), 8,
-                       16, 32, 64)
+    16, 32, 64)
 {
-  auto bits = etl::bitset<N> {};
-  CHECK(bits.none());
-  CHECK_FALSE(bits.test(0));
+    auto bits = etl::bitset<N> {};
+    CHECK(bits.none());
+    CHECK_FALSE(bits.test(0));
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct(unsigned long long)", "[bitset]",
-                       ((size_t N), N), 8, 16, 32, 64)
+    ((size_t N), N), 8, 16, 32, 64)
 {
-  CHECK(etl::bitset<N>(0b0000'0000).none());
+    CHECK(etl::bitset<N>(0b0000'0000).none());
 
-  CHECK(etl::bitset<N>(0b0000'0001).count() == 1);
-  CHECK(etl::bitset<N>(0b0000'0011).count() == 2);
-  CHECK(etl::bitset<N>(0b0000'0111).count() == 3);
-  CHECK(etl::bitset<N>(0b0000'1111).count() == 4);
+    CHECK(etl::bitset<N>(0b0000'0001).count() == 1);
+    CHECK(etl::bitset<N>(0b0000'0011).count() == 2);
+    CHECK(etl::bitset<N>(0b0000'0111).count() == 3);
+    CHECK(etl::bitset<N>(0b0000'1111).count() == 4);
 
-  CHECK(etl::bitset<N>(0b1000'1111).count() == 5);
-  CHECK(etl::bitset<N>(0b1100'1111).count() == 6);
-  CHECK(etl::bitset<N>(0b1110'1111).count() == 7);
-  CHECK(etl::bitset<N>(0b1111'1111).count() == 8);
+    CHECK(etl::bitset<N>(0b1000'1111).count() == 5);
+    CHECK(etl::bitset<N>(0b1100'1111).count() == 6);
+    CHECK(etl::bitset<N>(0b1110'1111).count() == 7);
+    CHECK(etl::bitset<N>(0b1111'1111).count() == 8);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct(basic_static_string)", "[bitset]",
-                       ((size_t N), N), 8, 16, 32, 64)
+    ((size_t N), N), 8, 16, 32, 64)
 {
-  using sv = etl::string_view;
-  CHECK(etl::bitset<N>(sv("00000000")).none());
+    using sv = etl::string_view;
+    CHECK(etl::bitset<N>(sv("00000000")).none());
 
-  CHECK(etl::bitset<N>(sv("00000001")).count() == 1);
-  CHECK(etl::bitset<N>(sv("00000011")).count() == 2);
-  CHECK(etl::bitset<N>(sv("00000111")).count() == 3);
-  CHECK(etl::bitset<N>(sv("00001111")).count() == 4);
+    CHECK(etl::bitset<N>(sv("00000001")).count() == 1);
+    CHECK(etl::bitset<N>(sv("00000011")).count() == 2);
+    CHECK(etl::bitset<N>(sv("00000111")).count() == 3);
+    CHECK(etl::bitset<N>(sv("00001111")).count() == 4);
 
-  CHECK(etl::bitset<N>(sv("10001111")).count() == 5);
-  CHECK(etl::bitset<N>(sv("11001111")).count() == 6);
-  CHECK(etl::bitset<N>(sv("11101111")).count() == 7);
-  CHECK(etl::bitset<N>(sv("11111111")).count() == 8);
+    CHECK(etl::bitset<N>(sv("10001111")).count() == 5);
+    CHECK(etl::bitset<N>(sv("11001111")).count() == 6);
+    CHECK(etl::bitset<N>(sv("11101111")).count() == 7);
+    CHECK(etl::bitset<N>(sv("11111111")).count() == 8);
 
-  CHECK(etl::bitset<N>(sv("AAAAAAAA"), 0, sv::npos, 'A', 'B').none());
+    CHECK(etl::bitset<N>(sv("AAAAAAAA"), 0, sv::npos, 'A', 'B').none());
 
-  CHECK(etl::bitset<N>(sv("AAAAAAAB"), 0, sv::npos, 'A', 'B').count() == 1);
-  CHECK(etl::bitset<N>(sv("AAAAAABB"), 0, sv::npos, 'A', 'B').count() == 2);
-  CHECK(etl::bitset<N>(sv("AAAAABBB"), 0, sv::npos, 'A', 'B').count() == 3);
-  CHECK(etl::bitset<N>(sv("AAAABBBB"), 0, sv::npos, 'A', 'B').count() == 4);
+    CHECK(etl::bitset<N>(sv("AAAAAAAB"), 0, sv::npos, 'A', 'B').count() == 1);
+    CHECK(etl::bitset<N>(sv("AAAAAABB"), 0, sv::npos, 'A', 'B').count() == 2);
+    CHECK(etl::bitset<N>(sv("AAAAABBB"), 0, sv::npos, 'A', 'B').count() == 3);
+    CHECK(etl::bitset<N>(sv("AAAABBBB"), 0, sv::npos, 'A', 'B').count() == 4);
 
-  CHECK(etl::bitset<N>(sv("BAAABBBB"), 0, sv::npos, 'A', 'B').count() == 5);
-  CHECK(etl::bitset<N>(sv("BBAABBBB"), 0, sv::npos, 'A', 'B').count() == 6);
-  CHECK(etl::bitset<N>(sv("BBBABBBB"), 0, sv::npos, 'A', 'B').count() == 7);
-  CHECK(etl::bitset<N>(sv("BBBBBBBB"), 0, sv::npos, 'A', 'B').count() == 8);
+    CHECK(etl::bitset<N>(sv("BAAABBBB"), 0, sv::npos, 'A', 'B').count() == 5);
+    CHECK(etl::bitset<N>(sv("BBAABBBB"), 0, sv::npos, 'A', 'B').count() == 6);
+    CHECK(etl::bitset<N>(sv("BBBABBBB"), 0, sv::npos, 'A', 'B').count() == 7);
+    CHECK(etl::bitset<N>(sv("BBBBBBBB"), 0, sv::npos, 'A', 'B').count() == 8);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: construct(char const*)", "[bitset]",
-                       ((size_t N), N), 8, 16, 32, 64)
+    ((size_t N), N), 8, 16, 32, 64)
 {
-  CHECK(etl::bitset<N>("00000000").none());
+    CHECK(etl::bitset<N>("00000000").none());
 
-  CHECK(etl::bitset<N>("00000001").count() == 1);
-  CHECK(etl::bitset<N>("00000011").count() == 2);
-  CHECK(etl::bitset<N>("00000111").count() == 3);
-  CHECK(etl::bitset<N>("00001111").count() == 4);
+    CHECK(etl::bitset<N>("00000001").count() == 1);
+    CHECK(etl::bitset<N>("00000011").count() == 2);
+    CHECK(etl::bitset<N>("00000111").count() == 3);
+    CHECK(etl::bitset<N>("00001111").count() == 4);
 
-  CHECK(etl::bitset<N>("10001111").count() == 5);
-  CHECK(etl::bitset<N>("11001111").count() == 6);
-  CHECK(etl::bitset<N>("11101111").count() == 7);
-  CHECK(etl::bitset<N>("11111111").count() == 8);
+    CHECK(etl::bitset<N>("10001111").count() == 5);
+    CHECK(etl::bitset<N>("11001111").count() == 6);
+    CHECK(etl::bitset<N>("11101111").count() == 7);
+    CHECK(etl::bitset<N>("11111111").count() == 8);
 
-  CHECK(etl::bitset<N>("AAAAAAAA", 8, 'A', 'B').none());
+    CHECK(etl::bitset<N>("AAAAAAAA", 8, 'A', 'B').none());
 
-  CHECK(etl::bitset<N>("AAAAAAAB", 8, 'A', 'B').count() == 1);
-  CHECK(etl::bitset<N>("AAAAAABB", 8, 'A', 'B').count() == 2);
-  CHECK(etl::bitset<N>("AAAAABBB", 8, 'A', 'B').count() == 3);
-  CHECK(etl::bitset<N>("AAAABBBB", 8, 'A', 'B').count() == 4);
+    CHECK(etl::bitset<N>("AAAAAAAB", 8, 'A', 'B').count() == 1);
+    CHECK(etl::bitset<N>("AAAAAABB", 8, 'A', 'B').count() == 2);
+    CHECK(etl::bitset<N>("AAAAABBB", 8, 'A', 'B').count() == 3);
+    CHECK(etl::bitset<N>("AAAABBBB", 8, 'A', 'B').count() == 4);
 
-  CHECK(etl::bitset<N>("BAAABBBB", 8, 'A', 'B').count() == 5);
-  CHECK(etl::bitset<N>("BBAABBBB", 8, 'A', 'B').count() == 6);
-  CHECK(etl::bitset<N>("BBBABBBB", 8, 'A', 'B').count() == 7);
-  CHECK(etl::bitset<N>("BBBBBBBB", 8, 'A', 'B').count() == 8);
+    CHECK(etl::bitset<N>("BAAABBBB", 8, 'A', 'B').count() == 5);
+    CHECK(etl::bitset<N>("BBAABBBB", 8, 'A', 'B').count() == 6);
+    CHECK(etl::bitset<N>("BBBABBBB", 8, 'A', 'B').count() == 7);
+    CHECK(etl::bitset<N>("BBBBBBBB", 8, 'A', 'B').count() == 8);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: set()", "[bitset]", ((size_t N), N), 8, 16, 32,
-                       64)
+    64)
 {
-  auto bits = etl::bitset<N> {};
+    auto bits = etl::bitset<N> {};
 
-  bits.set();
-  CHECK(bits.all());
-  CHECK(bits.any());
-  CHECK(bits.test(1));
-  CHECK(bits[2]);
+    bits.set();
+    CHECK(bits.all());
+    CHECK(bits.any());
+    CHECK(bits.test(1));
+    CHECK(bits[2]);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: set(pos)", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto bits = etl::bitset<N> {};
-  for (size_t i = 0; i < bits.size(); ++i)
-  {
-    bits.set(i);
-    CHECK(bits.test(i));
+    auto bits = etl::bitset<N> {};
+    for (size_t i = 0; i < bits.size(); ++i) {
+        bits.set(i);
+        CHECK(bits.test(i));
 
-    bits.flip(i);
-    CHECK_FALSE(bits.test(i));
-    CHECK_FALSE(etl::as_const(bits)[i]);
-  }
+        bits.flip(i);
+        CHECK_FALSE(bits.test(i));
+        CHECK_FALSE(etl::as_const(bits)[i]);
+    }
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: reset()", "[bitset]", ((size_t N), N), 32, 64,
-                       128)
+    128)
 {
-  auto bits = etl::bitset<N> {};
-  CHECK(bits.none());
+    auto bits = etl::bitset<N> {};
+    CHECK(bits.none());
 
-  bits.set(0);
-  bits.set(1);
-  CHECK(bits.test(0));
-  CHECK(bits.test(1));
-  CHECK(bits.any());
+    bits.set(0);
+    bits.set(1);
+    CHECK(bits.test(0));
+    CHECK(bits.test(1));
+    CHECK(bits.any());
 
-  bits.reset(1);
-  CHECK_FALSE(bits.test(1));
-  CHECK(bits.any());
+    bits.reset(1);
+    CHECK_FALSE(bits.test(1));
+    CHECK(bits.any());
 
-  bits.reset();
-  CHECK(bits.none());
+    bits.reset();
+    CHECK(bits.none());
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: flip()", "[bitset]", ((size_t N), N), 8, 16, 32,
-                       64)
+    64)
 {
-  auto bits = etl::bitset<N> {};
-  CHECK(bits.none());
-  bits.flip();
-  CHECK(bits.all());
-  bits.flip();
-  CHECK(bits.none());
+    auto bits = etl::bitset<N> {};
+    CHECK(bits.none());
+    bits.flip();
+    CHECK(bits.all());
+    bits.flip();
+    CHECK(bits.none());
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: compare", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto lhs = etl::bitset<N> {};
-  auto rhs = etl::bitset<N> {};
-  CHECK(rhs == lhs);
-  CHECK(lhs == rhs);
-  CHECK_FALSE(rhs != lhs);
-  CHECK_FALSE(lhs != rhs);
+    auto lhs = etl::bitset<N> {};
+    auto rhs = etl::bitset<N> {};
+    CHECK(rhs == lhs);
+    CHECK(lhs == rhs);
+    CHECK_FALSE(rhs != lhs);
+    CHECK_FALSE(lhs != rhs);
 
-  rhs.flip();
-  CHECK_FALSE(rhs == lhs);
-  CHECK_FALSE(lhs == rhs);
-  CHECK(rhs != lhs);
-  CHECK(lhs != rhs);
+    rhs.flip();
+    CHECK_FALSE(rhs == lhs);
+    CHECK_FALSE(lhs == rhs);
+    CHECK(rhs != lhs);
+    CHECK(lhs != rhs);
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: reference", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  using ref_type = typename etl::bitset<N>::reference;
-  auto bits      = etl::bitset<N> {};
+    using ref_type = typename etl::bitset<N>::reference;
+    auto bits      = etl::bitset<N> {};
 
-  ref_type r1 = bits[0];
-  CHECK_FALSE(static_cast<bool>(r1));
+    ref_type r1 = bits[0];
+    CHECK_FALSE(static_cast<bool>(r1));
 
-  r1 = true;
-  CHECK(static_cast<bool>(r1));
+    r1 = true;
+    CHECK(static_cast<bool>(r1));
 
-  r1 = false;
-  CHECK(~r1);
-  CHECK_FALSE(static_cast<bool>(r1));
+    r1 = false;
+    CHECK(~r1);
+    CHECK_FALSE(static_cast<bool>(r1));
 
-  bits.set(1);
-  ref_type r2 = bits[1];
-  CHECK(static_cast<bool>(r2));
-  r2.flip();
-  CHECK_FALSE(static_cast<bool>(r2));
-  r2.flip();
-  CHECK(static_cast<bool>(r2));
+    bits.set(1);
+    ref_type r2 = bits[1];
+    CHECK(static_cast<bool>(r2));
+    r2.flip();
+    CHECK_FALSE(static_cast<bool>(r2));
+    r2.flip();
+    CHECK(static_cast<bool>(r2));
 
-  r2 = r1;
-  CHECK_FALSE(static_cast<bool>(r2));
+    r2 = r1;
+    CHECK_FALSE(static_cast<bool>(r2));
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: operator&=", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto rhs = etl::bitset<N> {};
-  auto lhs = etl::bitset<N> {};
-  CHECK(rhs.none());
+    auto rhs = etl::bitset<N> {};
+    auto lhs = etl::bitset<N> {};
+    CHECK(rhs.none());
 
-  rhs &= lhs;
-  CHECK(rhs.none());
+    rhs &= lhs;
+    CHECK(rhs.none());
 
-  lhs.flip();
-  rhs &= lhs;
-  CHECK(rhs.none());
+    lhs.flip();
+    rhs &= lhs;
+    CHECK(rhs.none());
 
-  rhs.flip();
-  rhs &= lhs;
-  CHECK(rhs.all());
+    rhs.flip();
+    rhs &= lhs;
+    CHECK(rhs.all());
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: operator|=", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto rhs = etl::bitset<N> {};
-  auto lhs = etl::bitset<N> {};
-  CHECK(rhs.none());
+    auto rhs = etl::bitset<N> {};
+    auto lhs = etl::bitset<N> {};
+    CHECK(rhs.none());
 
-  rhs |= lhs;
-  CHECK(rhs.none());
+    rhs |= lhs;
+    CHECK(rhs.none());
 
-  lhs.flip();
-  rhs |= lhs;
-  CHECK(rhs.all());
+    lhs.flip();
+    rhs |= lhs;
+    CHECK(rhs.all());
 
-  rhs |= lhs;
-  CHECK(rhs.all());
+    rhs |= lhs;
+    CHECK(rhs.all());
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: operator^=", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto rhs = etl::bitset<N> {};
-  auto lhs = etl::bitset<N> {};
-  CHECK(rhs.none());
+    auto rhs = etl::bitset<N> {};
+    auto lhs = etl::bitset<N> {};
+    CHECK(rhs.none());
 
-  rhs ^= lhs;
-  CHECK(rhs.none());
+    rhs ^= lhs;
+    CHECK(rhs.none());
 
-  lhs.flip();
-  rhs ^= lhs;
-  CHECK(rhs.all());
+    lhs.flip();
+    rhs ^= lhs;
+    CHECK(rhs.all());
 
-  rhs ^= lhs;
-  CHECK(rhs.none());
+    rhs ^= lhs;
+    CHECK(rhs.none());
 }
 
 TEMPLATE_TEST_CASE_SIG("bitset: operator~", "[bitset]", ((size_t N), N), 8, 16,
-                       32, 64)
+    32, 64)
 {
-  auto bits = etl::bitset<N> {};
-  CHECK(bits.none());
-  bits = ~bits;
-  CHECK(bits.all());
+    auto bits = etl::bitset<N> {};
+    CHECK(bits.none());
+    bits = ~bits;
+    CHECK(bits.all());
 }

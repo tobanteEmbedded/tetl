@@ -24,26 +24,23 @@
 #ifndef TETL_DETAIL_ALGO_SEARCH_HPP
 #define TETL_DETAIL_ALGO_SEARCH_HPP
 
-namespace etl::detail
-{
+namespace etl::detail {
 /// Needed by algorithm.hpp & function.hpp (default_searcher)
 template <typename ForwardIter1, typename ForwardIter2,
-          typename BinaryPredicate>
+    typename BinaryPredicate>
 [[nodiscard]] constexpr auto
 search_impl(ForwardIter1 first, ForwardIter1 last, ForwardIter2 sFirst,
-            ForwardIter2 sLast, BinaryPredicate pred) -> ForwardIter1
+    ForwardIter2 sLast, BinaryPredicate pred) -> ForwardIter1
 {
-  for (;; ++first)
-  {
-    auto it = first;
-    for (auto sIt = sFirst;; ++it, ++sIt)
-    {
-      if (sIt == sLast) { return first; }
-      if (it == last) { return last; }
-      if (!pred(*it, *sIt)) { break; }
+    for (;; ++first) {
+        auto it = first;
+        for (auto sIt = sFirst;; ++it, ++sIt) {
+            if (sIt == sLast) { return first; }
+            if (it == last) { return last; }
+            if (!pred(*it, *sIt)) { break; }
+        }
     }
-  }
 }
-}  // namespace etl::detail
+} // namespace etl::detail
 
-#endif  // TETL_DETAIL_ALGO_SEARCH_HPP
+#endif // TETL_DETAIL_ALGO_SEARCH_HPP

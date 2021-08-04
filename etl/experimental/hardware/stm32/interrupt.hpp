@@ -29,8 +29,7 @@
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 
-namespace etl::experimental::hardware::stm32
-{
+namespace etl::experimental::hardware::stm32 {
 // EXAMPLE
 // extern isr::vector_t callbacks;
 
@@ -47,33 +46,30 @@ namespace etl::experimental::hardware::stm32
 // void HardFault_Handler() { isr::call(callbacks, isr_ids::hard_fault); }
 // void SysTick_Handler() { isr::call_checked(callbacks, isr_ids::sys_tick); }
 
-enum class isr_ids : size_t
-{
-  nmi,
-  hard_fault,
-  sys_tick,
-  max_id,
+enum class isr_ids : size_t {
+    nmi,
+    hard_fault,
+    sys_tick,
+    max_id,
 };
 
-struct isr
-{
-  using callback_t = void (*)();
-  using vector_t = etl::array<callback_t, static_cast<size_t>(isr_ids::max_id)>;
+struct isr {
+    using callback_t = void (*)();
+    using vector_t   = etl::array<callback_t, static_cast<size_t>(isr_ids::max_id)>;
 
-  static auto call(vector_t const& callbacks, isr_ids id) noexcept -> void
-  {
-    callbacks[static_cast<size_t>(id)]();
-  }
-
-  static auto call_checked(vector_t const& callbacks, isr_ids id) noexcept
-    -> void
-  {
-    if (callbacks[static_cast<size_t>(id)] != nullptr)
+    static auto call(vector_t const& callbacks, isr_ids id) noexcept -> void
     {
-      callbacks[static_cast<size_t>(id)]();
+        callbacks[static_cast<size_t>(id)]();
     }
-  }
-};
-}  // namespace etl::experimental::hardware::stm32
 
-#endif  // TETL_HARDWARE_STM32_INTERRUPT_HPP
+    static auto call_checked(vector_t const& callbacks, isr_ids id) noexcept
+        -> void
+    {
+        if (callbacks[static_cast<size_t>(id)] != nullptr) {
+            callbacks[static_cast<size_t>(id)]();
+        }
+    }
+};
+} // namespace etl::experimental::hardware::stm32
+
+#endif // TETL_HARDWARE_STM32_INTERRUPT_HPP

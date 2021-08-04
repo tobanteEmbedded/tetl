@@ -26,8 +26,7 @@
 
 #include "etl/type_traits.hpp"
 
-namespace etl
-{
+namespace etl {
 // class template tuple
 template <typename First, typename... Rest>
 struct tuple;
@@ -37,26 +36,22 @@ struct tuple_size; /*undefined*/
 
 template <typename... Types>
 struct tuple_size<etl::tuple<Types...>>
-    : etl::integral_constant<etl::size_t, sizeof...(Types)>
-{
+    : etl::integral_constant<etl::size_t, sizeof...(Types)> {
 };
 
 template <typename T>
 struct tuple_size<const T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value>
-{
+    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
 struct tuple_size<volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value>
-{
+    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
 struct tuple_size<const volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value>
-{
+    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
@@ -68,6 +63,6 @@ struct tuple_element;
 template <size_t I, typename T>
 using tuple_element_t = typename tuple_element<I, T>::type;
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_TUPLE_SIZE_HPP
+#endif // TETL_TUPLE_SIZE_HPP

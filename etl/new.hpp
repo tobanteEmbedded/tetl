@@ -41,8 +41,8 @@
 /// placement new expression and ptr is a null pointer.
 [[nodiscard]] auto operator new(etl::size_t count, void* ptr) noexcept -> void*
 {
-  etl::ignore_unused(count);
-  return ptr;
+    etl::ignore_unused(count);
+    return ptr;
 }
 
 /// \brief Called by the standard array form placement new expression. The
@@ -50,21 +50,19 @@
 /// unmodified. The behavior is undefined if this function is called through a
 /// placement new expression and ptr is a null pointer.
 [[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept
-  -> void*
+    -> void*
 {
-  etl::ignore_unused(count);
-  return ptr;
+    etl::ignore_unused(count);
+    return ptr;
 }
 
 #endif
 
-namespace etl
-{
+namespace etl {
 /// \brief etl::nothrow_t is an empty class type used to disambiguate the
 /// overloads of throwing and non-throwing allocation functions.
-struct nothrow_t
-{
-  explicit nothrow_t() = default;
+struct nothrow_t {
+    explicit nothrow_t() = default;
 };
 
 /// \brief etl::nothrow is a constant of type etl::nothrow_t used to
@@ -121,20 +119,18 @@ constexpr auto hardware_destructive_interference_size = TETL_CACHELINE_SIZE;
 /// whose alignment requirement is greater than the default, pass that alignment
 /// requirement as an argument of type align_val_t to the selected
 /// allocation/deallocation function.
-enum struct align_val_t : size_t
-{
+enum struct align_val_t : size_t {
 };
 
 /// \brief Tag type used to identify the destroying delete form of operator
 /// delete.
-struct destroying_delete_t
-{
-  explicit destroying_delete_t() = default;
+struct destroying_delete_t {
+    explicit destroying_delete_t() = default;
 };
 
 /// \brief Tag type used to identify the destroying delete form of operator
 /// delete.
 inline constexpr auto destroying_delete = destroying_delete_t {};
 
-}  // namespace etl
-#endif  // TETL_NEW_HPP
+} // namespace etl
+#endif // TETL_NEW_HPP

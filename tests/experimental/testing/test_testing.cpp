@@ -25,8 +25,8 @@
 
 auto main() -> int
 {
-  auto xc = 2;
-  EQUAL(xc, 2);
-  NOTEQUAL(xc, 3);
-  return 0;
+    auto xc = 2;
+    EQUAL(xc, 2);
+    NOTEQUAL(xc, 3);
+    return 0;
 }

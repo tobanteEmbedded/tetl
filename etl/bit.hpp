@@ -32,8 +32,7 @@
 
 #include "etl/detail/sfinae.hpp"
 
-namespace etl
-{
+namespace etl {
 /// \brief Indicates the endianness of all scalar types. If all scalar types are
 /// little-endian, `endian::native` equals `endian::little`. If all scalar types
 /// are big-endian, `endian::native` equals `endian::big`.
@@ -41,16 +40,15 @@ namespace etl
 /// \notes
 /// [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
 /// \module Numeric
-enum class endian
-{
+enum class endian {
 #ifdef _WIN32
-  little = 0,
-  big    = 1,
-  native = little
+    little = 0,
+    big    = 1,
+    native = little
 #else
-  little = __ORDER_LITTLE_ENDIAN__,
-  big    = __ORDER_BIG_ENDIAN__,
-  native = __BYTE_ORDER__
+    little = __ORDER_LITTLE_ENDIAN__,
+    big    = __ORDER_BIG_ENDIAN__,
+    native = __BYTE_ORDER__
 #endif
 };
 
@@ -70,44 +68,43 @@ enum class endian
 /// \module Numeric
 template <typename To, typename From>
 constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
-  (sizeof(To) == sizeof(From))
-    and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>,
-  To>
+    (sizeof(To) == sizeof(From))
+        and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>,
+    To>
 {
-  static_assert(
-    is_trivially_constructible_v<To>,
-    "This implementation additionally requires destination type to be "
-    "trivially constructible");
+    static_assert(
+        is_trivially_constructible_v<To>,
+        "This implementation additionally requires destination type to be "
+        "trivially constructible");
 
-  To dst;
-  etl::memcpy(&dst, &src, sizeof(To));
-  return dst;
+    To dst;
+    etl::memcpy(&dst, &src, sizeof(To));
+    return dst;
 }
 
-namespace detail
-{
-template <typename T>
-using bit_unsigned_int = etl::bool_constant<etl::disjunction_v<
-  etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
-  etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
-  etl::is_same<T, unsigned long long>>>;
+namespace detail {
+    template <typename T>
+    using bit_unsigned_int = etl::bool_constant<etl::disjunction_v<
+        etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
+        etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
+        etl::is_same<T, unsigned long long>>>;
 
-template <typename T>
-inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
+    template <typename T>
+    inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 
-}  // namespace detail
+} // namespace detail
 
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
 /// \module Numeric
 template <typename T>
 constexpr auto rotl(T t, int s) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-  auto const cnt    = static_cast<unsigned>(s);
-  auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-  if ((cnt % digits) == 0) { return t; }
-  return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
+    auto const cnt    = static_cast<unsigned>(s);
+    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+    if ((cnt % digits) == 0) { return t; }
+    return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
 }
 
 /// \brief Computes the result of bitwise right-rotating the value of x by s
@@ -115,12 +112,12 @@ constexpr auto rotl(T t, int s) noexcept
 /// \module Numeric
 template <typename T>
 constexpr auto rotr(T t, int s) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-  auto const cnt    = static_cast<unsigned>(s);
-  auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-  if ((cnt % digits) == 0) { return t; }
-  return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
+    auto const cnt    = static_cast<unsigned>(s);
+    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+    if ((cnt % digits) == 0) { return t; }
+    return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
 }
 
 /// \brief Returns the number of 1 bits in the value of x.
@@ -132,15 +129,14 @@ constexpr auto rotr(T t, int s) noexcept
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto popcount(T input) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
-  auto count = T {0};
-  while (input)
-  {
-    count = count + (input & T(1));
-    input = input >> T(1);
-  }
-  return static_cast<int>(count);
+    auto count = T { 0 };
+    while (input) {
+        count = count + (input & T(1));
+        input = input >> T(1);
+    }
+    return static_cast<int>(count);
 }
 
 /// \brief Checks if x is an integral power of two.
@@ -153,9 +149,9 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, bool>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, bool>
 {
-  return popcount(x) == 1;
+    return popcount(x) == 1;
 }
 
 /// \brief Returns the number of consecutive 0 bits in the value of x, starting
@@ -170,19 +166,18 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
-  auto const totalBits = etl::numeric_limits<T>::digits;
-  if (x == T {0}) { return etl::numeric_limits<T>::digits; }
+    auto const totalBits = etl::numeric_limits<T>::digits;
+    if (x == T { 0 }) { return etl::numeric_limits<T>::digits; }
 
-  int res = 0;
-  while (!(x & (T {1} << (totalBits - 1))))
-  {
-    x = (x << T {1});
-    res++;
-  }
+    int res = 0;
+    while (!(x & (T { 1 } << (totalBits - 1)))) {
+        x = (x << T { 1 });
+        res++;
+    }
 
-  return res;
+    return res;
 }
 
 /// \brief Returns the number of consecutive 1 ("one") bits in the value of x,
@@ -197,19 +192,18 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
-  auto const totalBits = etl::numeric_limits<T>::digits;
-  if (x == etl::numeric_limits<T>::max()) { return totalBits; }
+    auto const totalBits = etl::numeric_limits<T>::digits;
+    if (x == etl::numeric_limits<T>::max()) { return totalBits; }
 
-  int res = 0;
-  while (x & (T {1} << (totalBits - 1)))
-  {
-    x = (x << T {1});
-    res++;
-  }
+    int res = 0;
+    while (x & (T { 1 } << (totalBits - 1))) {
+        x = (x << T { 1 });
+        res++;
+    }
 
-  return res;
+    return res;
 }
 
 /// \brief If x is not zero, calculates the number of bits needed to store the
@@ -221,9 +215,9 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
-  return etl::numeric_limits<T>::digits - etl::countl_zero(x);
+    return etl::numeric_limits<T>::digits - etl::countl_zero(x);
 }
 
 /// \brief Calculates the smallest integral power of two that is not smaller
@@ -239,21 +233,18 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-  if (x <= 1U) { return T(1); }
+    if (x <= 1U) { return T(1); }
 
-  if constexpr (is_same_v<T, decltype(+x)>)
-  {
-    //
-    return T(1) << bit_width(T(x - 1));
-  }
-  else
-  {
-    // for types subject to integral promotion
-    auto offset = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
-    return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
-  }
+    if constexpr (is_same_v<T, decltype(+x)>) {
+        //
+        return T(1) << bit_width(T(x - 1));
+    } else {
+        // for types subject to integral promotion
+        auto offset = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
+        return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
+    }
 }
 
 /// \brief If x is not zero, calculates the largest integral power of two that
@@ -268,11 +259,11 @@ template <typename T>
 /// \module Numeric
 template <typename T>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept
-  -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-  if (x != 0) { return T {1} << (bit_width(x) - 1); }
-  return 0;
+    if (x != 0) { return T { 1 } << (bit_width(x) - 1); }
+    return 0;
 }
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_BIT_HPP
+#endif // TETL_BIT_HPP

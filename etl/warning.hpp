@@ -23,13 +23,12 @@
 
 #ifndef TETL_WARNING_HPP
 #define TETL_WARNING_HPP
-namespace etl
-{
+namespace etl {
 /// Explicitly ignore arguments or variables.
 template <typename... Types>
 constexpr auto ignore_unused(Types&&... /*unused*/) -> void
 {
 }
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_WARNING_HPP
+#endif // TETL_WARNING_HPP

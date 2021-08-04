@@ -34,80 +34,78 @@
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos
-{
+namespace etl::experimental::rtos {
 /// Wrapper around a FreeRTOS queue.
 /// \tparam ValueType The type that's being stored inside the queue.
 /// \tparam Size The maximum capacity of the queue.
 template <typename ValueType, etl::uint32_t Size>
-class queue
-{
-  public:
-  /// The type that's being stored inside the queue
-  using value_type = ValueType;
-  /// The integer type used for the size
-  using size_type = etl::uint32_t;
+class queue {
+public:
+    /// The type that's being stored inside the queue
+    using value_type = ValueType;
+    /// The integer type used for the size
+    using size_type = etl::uint32_t;
 
-  /// Creates a new queue
-  queue()
-      : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
+    /// Creates a new queue
+    queue()
+        : handle_([]() { return xQueueCreate(Size, sizeof(ValueType)); }()) { }
 
-  queue(queue&&)      = delete;
-  queue(queue const&) = delete;
-  auto operator=(queue&&) -> queue& = delete;
-  auto operator=(queue const&) -> queue& = delete;
+    queue(queue&&)      = delete;
+    queue(queue const&) = delete;
+    auto operator=(queue &&) -> queue& = delete;
+    auto operator=(queue const&) -> queue& = delete;
 
-  ~queue()
-  {
-    if (handle_ != nullptr) { vQueueDelete(handle_); }
-  }
+    ~queue()
+    {
+        if (handle_ != nullptr) { vQueueDelete(handle_); }
+    }
 
-  /// Returns the capacity of the internal buffer
-  [[nodiscard]] auto capacity() const -> size_type { return Size; }
+    /// Returns the capacity of the internal buffer
+    [[nodiscard]] auto capacity() const -> size_type { return Size; }
 
-  /// Push an element on to the queue.
-  [[nodiscard]] auto send(ValueType const& data,
-                          TickType_t ticksToWait = 0) const -> bool
-  {
-    const auto* const rawData = static_cast<const void*>(&data);
-    auto const success        = xQueueSend(handle_, rawData, ticksToWait);
-    return static_cast<bool>(success);
-  }
+    /// Push an element on to the queue.
+    [[nodiscard]] auto send(ValueType const& data,
+        TickType_t ticksToWait = 0) const -> bool
+    {
+        const auto* const rawData = static_cast<const void*>(&data);
+        auto const success        = xQueueSend(handle_, rawData, ticksToWait);
+        return static_cast<bool>(success);
+    }
 
-  /// Pop an element of the queue.
-  auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
-  {
-    auto* const rawData = static_cast<void*>(&data);
-    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
-    return static_cast<bool>(success);
-  }
+    /// Pop an element of the queue.
+    auto receive(ValueType& data, TickType_t ticksToWait = 0) const -> bool
+    {
+        auto* const rawData = static_cast<void*>(&data);
+        auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+        return static_cast<bool>(success);
+    }
 
-  /// Pop an element of the queue.
-  [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
-    -> pair<bool, ValueType>
-  {
-    auto value          = ValueType {};
-    auto* const rawData = static_cast<void*>(&value);
-    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
-    return {static_cast<bool>(success), value};
-  }
+    /// Pop an element of the queue.
+    [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
+        -> pair<bool, ValueType>
+    {
+        auto value          = ValueType {};
+        auto* const rawData = static_cast<void*>(&value);
+        auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+        return { static_cast<bool>(success), value };
+    }
 
-  [[nodiscard]] auto reset() const -> bool
-  {
-    auto const result = xQueueReset(handle_);
-    return static_cast<bool>(result);
-  }
+    [[nodiscard]] auto reset() const -> bool
+    {
+        auto const result = xQueueReset(handle_);
+        return static_cast<bool>(result);
+    }
 
-  [[nodiscard]] auto messages_waiting() const -> etl::uint32_t
-  {
-    auto const result = uxQueueMessagesWaiting(handle_);
-    return static_cast<etl::uint32_t>(result);
-  }
+    [[nodiscard]] auto messages_waiting() const -> etl::uint32_t
+    {
+        auto const result = uxQueueMessagesWaiting(handle_);
+        return static_cast<etl::uint32_t>(result);
+    }
 
-  private:
-  QueueHandle_t handle_ = nullptr;
+private:
+    QueueHandle_t handle_ = nullptr;
 };
 
-}  // namespace etl::experimental::rtos
+} // namespace etl::experimental::rtos
 
-#endif  // TETL_RTOS_QUEUE_HPP
+#endif // TETL_RTOS_QUEUE_HPP

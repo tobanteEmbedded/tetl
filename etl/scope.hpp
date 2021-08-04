@@ -30,53 +30,50 @@
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
-namespace etl
-{
-namespace detail
-{
-template <typename FuncT, typename PolicyT>
-struct scope_guard
-{
-  public:
-  template <typename Functor>
-  explicit scope_guard(Functor f) : func_ {etl::forward<Functor>(f)}, policy_ {}
-  {
-  }
+namespace etl {
+namespace detail {
+    template <typename FuncT, typename PolicyT>
+    struct scope_guard {
+    public:
+        template <typename Functor>
+        explicit scope_guard(Functor f)
+            : func_ { etl::forward<Functor>(f) }, policy_ {}
+        {
+        }
 
-  scope_guard(scope_guard&& rhs) noexcept
-      : func_ {etl::move(rhs.func_)}, policy_ {etl::move(rhs.policy_)}
-  {
-  }
+        scope_guard(scope_guard&& rhs) noexcept
+            : func_ { etl::move(rhs.func_) }, policy_ { etl::move(rhs.policy_) }
+        {
+        }
 
-  ~scope_guard()
-  {
-    if (policy_) { func_(); }
-  }
+        ~scope_guard()
+        {
+            if (policy_) { func_(); }
+        }
 
-  void release() noexcept { policy_.release(); }
+        void release() noexcept { policy_.release(); }
 
-  scope_guard(scope_guard const&) = delete;
-  auto operator=(scope_guard const&) -> scope_guard& = delete;
-  auto operator=(scope_guard&&) -> scope_guard& = delete;
+        scope_guard(scope_guard const&) = delete;
+        auto operator=(scope_guard const&) -> scope_guard& = delete;
+        auto operator=(scope_guard &&) -> scope_guard& = delete;
 
-  private:
-  FuncT func_;
-  PolicyT policy_;
-};
+    private:
+        FuncT func_;
+        PolicyT policy_;
+    };
 
-struct scope_exit_impl
-{
-  scope_exit_impl() = default;
-  scope_exit_impl(scope_exit_impl&& rhs) noexcept
-      : should_execute {rhs.should_execute}
-  {
-    rhs.release();
-  }
-  void release() noexcept { should_execute = false; }
-  explicit operator bool() const noexcept { return should_execute; }
-  bool should_execute = true;
-};
-}  // namespace detail
+    struct scope_exit_impl {
+        scope_exit_impl() = default;
+        scope_exit_impl(scope_exit_impl&& rhs) noexcept
+            : should_execute { rhs.should_execute }
+        {
+            rhs.release();
+        }
+        void release() noexcept { should_execute = false; }
+        explicit operator bool() const noexcept { return should_execute; }
+        bool should_execute = true;
+    };
+} // namespace detail
 
 /// \brief The class template `scope_exit` is a general-purpose scope guard
 /// intended to call its exit function when a scope is exited. \details A
@@ -88,16 +85,15 @@ struct scope_exit_impl
 /// initializing with another inactive `scope_exit`. Once a `scope_exit` is
 /// inactive, it cannot become active again.
 template <typename FuncT>
-struct scope_exit : detail::scope_guard<FuncT, detail::scope_exit_impl>
-{
-  /// Creates a scope_exit from a function, a function object or another
-  /// scope_exit.
-  using detail::scope_guard<FuncT, detail::scope_exit_impl>::scope_guard;
+struct scope_exit : detail::scope_guard<FuncT, detail::scope_exit_impl> {
+    /// Creates a scope_exit from a function, a function object or another
+    /// scope_exit.
+    using detail::scope_guard<FuncT, detail::scope_exit_impl>::scope_guard;
 };
 
 // Deduction guide
 template <typename FuncT>
 scope_exit(FuncT) -> scope_exit<decay_t<FuncT>>;
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_SCOPE_HPP
+#endif // TETL_SCOPE_HPP

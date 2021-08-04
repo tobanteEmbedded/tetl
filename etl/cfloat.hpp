@@ -85,6 +85,6 @@
 #define DBL_HAS_SUBNORM __DBL_HAS_DENORM__
 #define LDBL_HAS_SUBNORM __LDBL_HAS_DENORM__
 
-#endif  // has_include <float.h>
+#endif // has_include <float.h>
 
-#endif  // TETL_CFLOAT_HPP
+#endif // TETL_CFLOAT_HPP

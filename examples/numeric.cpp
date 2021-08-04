@@ -29,15 +29,15 @@
 
 auto main() -> int
 {
-  etl::static_vector<double, 16> vec;
-  vec.push_back(etl::numbers::pi);
-  vec.push_back(2.0);
-  vec.push_back(3.0);
-  vec.push_back(4.0);
+    etl::static_vector<double, 16> vec;
+    vec.push_back(etl::numbers::pi);
+    vec.push_back(2.0);
+    vec.push_back(3.0);
+    vec.push_back(4.0);
 
-  auto sum = etl::accumulate(vec.begin(), vec.end(), 0.0);
+    auto sum = etl::accumulate(vec.begin(), vec.end(), 0.0);
 
-  printf("%f\n", sum);
+    printf("%f\n", sum);
 
-  return 0;
+    return 0;
 }

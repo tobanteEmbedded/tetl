@@ -24,44 +24,42 @@
 #include "etl/new.hpp"
 
 #define TETL_RTOS_USE_STUBS
-#include "etl/experimental/hardware/stm32/gpio.hpp"  // for port, pin_number
-#include "etl/experimental/rtos/delay.hpp"           // for delay, delay_until
-#include "etl/experimental/rtos/task.hpp"            // for once, create_task
+#include "etl/experimental/hardware/stm32/gpio.hpp" // for port, pin_number
+#include "etl/experimental/rtos/delay.hpp"          // for delay, delay_until
+#include "etl/experimental/rtos/task.hpp"           // for once, create_task
 
 namespace rtos  = etl::experimental::rtos;
 namespace stm32 = etl::experimental::hardware::stm32;
 
 template <typename LoopType = rtos::forever>
-struct example_task
-{
-  auto run() -> void
-  {
-    auto loopControl = LoopType {};
-    while (loopControl())
+struct example_task {
+    auto run() -> void
     {
-      stm32::gpio_memory_layout memory {};
-      auto& gpioPort = stm32::port::place_at(&memory);
-      gpioPort.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
-      gpioPort.toggle_pin(stm32::pin_number::pin_13);
+        auto loopControl = LoopType {};
+        while (loopControl()) {
+            stm32::gpio_memory_layout memory {};
+            auto& gpioPort = stm32::port::place_at(&memory);
+            gpioPort.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
+            gpioPort.toggle_pin(stm32::pin_number::pin_13);
 
-      rtos::yield_task();
-      rtos::delay(1);
-      rtos::delay_until(1, 1);
+            rtos::yield_task();
+            rtos::delay(1);
+            rtos::delay_until(1, 1);
+        }
+
+        rtos::delete_task(nullptr);
     }
-
-    rtos::delete_task(nullptr);
-  }
 };
 
 static example_task<rtos::once> task {};
 
 auto main() -> int
 {
-  rtos::create_task(task, "test", 255);
-  rtos::start_scheduler();
+    rtos::create_task(task, "test", 255);
+    rtos::start_scheduler();
 
-  // Run would normally be called by rtos::start_scheduler(). Only used for
-  // stubs.
-  task.run();
-  return 0;
+    // Run would normally be called by rtos::start_scheduler(). Only used for
+    // stubs.
+    task.run();
+    return 0;
 }

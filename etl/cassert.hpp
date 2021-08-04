@@ -41,21 +41,18 @@ auto exit() -> void { }
 #endif
 
 #include "etl/warning.hpp"
-namespace etl
-{
+namespace etl {
 /// \brief Payload for an assertion.
-struct assert_msg
-{
-  int line {};
-  char const* file {nullptr};
-  char const* func {nullptr};
-  char const* expression {nullptr};
+struct assert_msg {
+    int line {};
+    char const* file { nullptr };
+    char const* func { nullptr };
+    char const* expression { nullptr };
 };
 
-}  // namespace etl
+} // namespace etl
 
-namespace etl
-{
+namespace etl {
 #if defined(TETL_CUSTOM_ASSERT_HANDLER)
 
 /// \brief This functions needs to be implemented if you enabled the
@@ -71,44 +68,42 @@ auto tetl_assert_handler(assert_msg const& msg) -> void;
 /// is triggered at runtime.
 inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
 {
-  ::etl::ignore_unused(msg);
-  ::exit(1);
+    ::etl::ignore_unused(msg);
+    ::exit(1);
 }
 
-namespace detail
-{
-inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
-{
+namespace detail {
+    inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
+    {
 #if defined(TETL_CUSTOM_ASSERT_HANDLER)
-  ::etl::tetl_assert_handler(msg);
+        ::etl::tetl_assert_handler(msg);
 #else
-  ::etl::tetl_default_assert_handler(msg);
+        ::etl::tetl_default_assert_handler(msg);
 #endif
-}
+    }
 
-}  // namespace detail
+} // namespace detail
 
-}  // namespace etl
+} // namespace etl
 
 #if not defined(TETL_TO_STR)
 #define TETL_TO_STR_IMPL(s) #s
 #define TETL_TO_STR(s) TETL_TO_STR_IMPL(s)
-#endif  // TETL_TO_STR
+#endif // TETL_TO_STR
 
 #if not defined(TETL_ASSERT)
 /// \brief Assertion macro with customizable runtime behavior
-#define TETL_ASSERT(exp)                                                       \
-  do {                                                                         \
-    if (!(exp))                                                                \
-    {                                                                          \
-      auto const msg = ::etl::assert_msg {                                     \
-        __LINE__, __FILE__,                                                    \
-        nullptr, /*The function name causes code bloat.  */                    \
-        nullptr, /*The stringified expression causes code bloat.  */           \
-      };                                                                       \
-      ::etl::detail::tetl_call_assert_handler(msg);                            \
-    }                                                                          \
-  } while (false)
-#endif  // TETL_ASSERT
+#define TETL_ASSERT(exp)                                                     \
+    do {                                                                     \
+        if (!(exp)) {                                                        \
+            auto const msg = ::etl::assert_msg {                             \
+                __LINE__, __FILE__,                                          \
+                nullptr, /*The function name causes code bloat.  */          \
+                nullptr, /*The stringified expression causes code bloat.  */ \
+            };                                                               \
+            ::etl::detail::tetl_call_assert_handler(msg);                    \
+        }                                                                    \
+    } while (false)
+#endif // TETL_ASSERT
 
-#endif  // TETL_CASSERT_HPP
+#endif // TETL_CASSERT_HPP

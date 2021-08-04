@@ -23,49 +23,49 @@
 
 #undef NDEBUG
 
-#include "etl/optional.hpp"  // for optional
-#include "etl/cassert.hpp"   // for TETL_ASSERT
+#include "etl/optional.hpp" // for optional
+#include "etl/cassert.hpp"  // for TETL_ASSERT
 
 auto main() -> int
 {
-  using etl::nullopt;
-  using etl::optional;
+    using etl::nullopt;
+    using etl::optional;
 
-  // construct default (implicit empty)
-  auto opt0 = optional<short>();
-  TETL_ASSERT(opt0.has_value() == false);
-  TETL_ASSERT(static_cast<bool>(opt0) == false);
+    // construct default (implicit empty)
+    auto opt0 = optional<short>();
+    TETL_ASSERT(opt0.has_value() == false);
+    TETL_ASSERT(static_cast<bool>(opt0) == false);
 
-  // construct explicit empty
-  auto opt1 = optional<int>(nullopt);
-  TETL_ASSERT(opt1.has_value() == false);
-  TETL_ASSERT(static_cast<bool>(opt1) == false);
+    // construct explicit empty
+    auto opt1 = optional<int>(nullopt);
+    TETL_ASSERT(opt1.has_value() == false);
+    TETL_ASSERT(static_cast<bool>(opt1) == false);
 
-  // construct explicit with value
-  auto opt2 = optional<float>(42.0F);
-  TETL_ASSERT(opt2.has_value());
-  TETL_ASSERT(static_cast<bool>(opt2));
+    // construct explicit with value
+    auto opt2 = optional<float>(42.0F);
+    TETL_ASSERT(opt2.has_value());
+    TETL_ASSERT(static_cast<bool>(opt2));
 
-  // assign copy
-  auto const opt3 = opt2;
-  TETL_ASSERT(opt3.has_value());
-  TETL_ASSERT(static_cast<bool>(opt3));
+    // assign copy
+    auto const opt3 = opt2;
+    TETL_ASSERT(opt3.has_value());
+    TETL_ASSERT(static_cast<bool>(opt3));
 
-  // assign move
-  auto const opt4 = move(opt2);
-  TETL_ASSERT(opt4.has_value());
-  TETL_ASSERT(static_cast<bool>(opt4));
+    // assign move
+    auto const opt4 = move(opt2);
+    TETL_ASSERT(opt4.has_value());
+    TETL_ASSERT(static_cast<bool>(opt4));
 
-  // value & value_or
-  static_assert(optional<int>().value() == nullptr);
-  static_assert(optional<int>().value_or(1) == 1);
-  static_assert(*optional<int>(1).value() == 1);
+    // value & value_or
+    static_assert(optional<int>().value() == nullptr);
+    static_assert(optional<int>().value_or(1) == 1);
+    static_assert(*optional<int>(1).value() == 1);
 
-  // reset
-  auto opt5 = optional<float>(1.0F);
-  TETL_ASSERT(opt5.has_value());
-  opt5.reset();
-  TETL_ASSERT(opt5.has_value() == false);
+    // reset
+    auto opt5 = optional<float>(1.0F);
+    TETL_ASSERT(opt5.has_value());
+    opt5.reset();
+    TETL_ASSERT(opt5.has_value() == false);
 
-  return 0;
+    return 0;
 }

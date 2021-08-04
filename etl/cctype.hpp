@@ -31,8 +31,7 @@
 
 /// \file This header was originally in the C standard library as <ctype.h>.
 /// This header is part of the null-terminated byte strings library.
-namespace etl
-{
+namespace etl {
 /// \brief Checks if the given character is an alphanumeric character as
 /// classified by the default C locale.
 ///
@@ -47,14 +46,14 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto isDigit = ch >= '0' && ch <= '9';
-  auto isLower = ch >= 'a' && ch <= 'z';
-  auto isUpper = ch >= 'A' && ch <= 'Z';
+    auto isDigit = ch >= '0' && ch <= '9';
+    auto isLower = ch >= 'a' && ch <= 'z';
+    auto isUpper = ch >= 'A' && ch <= 'Z';
 
-  return static_cast<int>(isDigit || isLower || isUpper);
+    return static_cast<int>(isDigit || isLower || isUpper);
 }
 
 /// \brief Checks if the given character is an alphabetic character as
@@ -71,13 +70,13 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto isLower = ch >= 'a' && ch <= 'z';
-  auto isUpper = ch >= 'A' && ch <= 'Z';
+    auto isLower = ch >= 'a' && ch <= 'z';
+    auto isUpper = ch >= 'A' && ch <= 'Z';
 
-  return static_cast<int>(isLower || isUpper);
+    return static_cast<int>(isLower || isUpper);
 }
 
 /// \brief Checks if the given character is classified as a lowercase character
@@ -94,9 +93,9 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-  return static_cast<int>(ch >= 'a' && ch <= 'z');
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= 'a' && ch <= 'z');
 }
 
 /// \brief Checks if the given character is classified as a uppercase character
@@ -113,9 +112,9 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-  return static_cast<int>(ch >= 'A' && ch <= 'Z');
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= 'A' && ch <= 'Z');
 }
 
 /// \brief Checks if the given character is one of the 10 decimal digits:
@@ -132,9 +131,9 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-  return static_cast<int>(ch >= '0' && ch <= '9');
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch >= '0' && ch <= '9');
 }
 
 /// \brief Checks if the given character is a hexadecimal numeric character
@@ -151,14 +150,14 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto const isDigit    = ch >= '0' && ch <= '9';
-  auto const isHexLower = ch >= 'a' && ch <= 'f';
-  auto const isHexUpper = ch >= 'A' && ch <= 'F';
+    auto const isDigit    = ch >= '0' && ch <= '9';
+    auto const isHexLower = ch >= 'a' && ch <= 'f';
+    auto const isHexUpper = ch >= 'A' && ch <= 'F';
 
-  return static_cast<int>(isDigit || isHexLower || isHexUpper);
+    return static_cast<int>(isDigit || isHexLower || isHexUpper);
 }
 
 /// \brief Checks if the given character is whitespace character as classified
@@ -175,18 +174,18 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto const space          = ch == ' ';
-  auto const formFeed       = ch == '\f';
-  auto const lineFeed       = ch == '\n';
-  auto const carriageReturn = ch == '\r';
-  auto const horizontalTab  = ch == '\t';
-  auto const verticalTab    = ch == '\v';
+    auto const space          = ch == ' ';
+    auto const formFeed       = ch == '\f';
+    auto const lineFeed       = ch == '\n';
+    auto const carriageReturn = ch == '\r';
+    auto const horizontalTab  = ch == '\t';
+    auto const verticalTab    = ch == '\v';
 
-  return static_cast<int>(space || formFeed || lineFeed || carriageReturn
-                          || horizontalTab || verticalTab);
+    return static_cast<int>(space || formFeed || lineFeed || carriageReturn
+                            || horizontalTab || verticalTab);
 }
 
 /// \brief Checks if the given character is a blank character as classified by
@@ -205,13 +204,13 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto const space         = ch == ' ';
-  auto const horizontalTab = ch == '\t';
+    auto const space         = ch == ' ';
+    auto const horizontalTab = ch == '\t';
 
-  return static_cast<int>(space || horizontalTab);
+    return static_cast<int>(space || horizontalTab);
 }
 
 /// \brief Checks if the given character is a punctuation character as
@@ -231,15 +230,15 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto const sec1 = ch >= '!' && ch <= '/';
-  auto const sec2 = ch >= ':' && ch <= '@';
-  auto const sec3 = ch >= '[' && ch <= '`';
-  auto const sec4 = ch >= '{' && ch <= '~';
+    auto const sec1 = ch >= '!' && ch <= '/';
+    auto const sec2 = ch >= ':' && ch <= '@';
+    auto const sec3 = ch >= '[' && ch <= '`';
+    auto const sec4 = ch >= '{' && ch <= '~';
 
-  return static_cast<int>(sec1 || sec2 || sec3 || sec4);
+    return static_cast<int>(sec1 || sec2 || sec3 || sec4);
 }
 
 /// \brief Checks if the given character is graphic (has a graphical
@@ -256,15 +255,15 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  auto const isDigit = isdigit(ch) != 0;
-  auto const isUpper = isupper(ch) != 0;
-  auto const isLower = islower(ch) != 0;
-  auto const isPunct = ispunct(ch) != 0;
+    auto const isDigit = isdigit(ch) != 0;
+    auto const isUpper = isupper(ch) != 0;
+    auto const isLower = islower(ch) != 0;
+    auto const isPunct = ispunct(ch) != 0;
 
-  return static_cast<int>(isDigit || isLower || isUpper || isPunct);
+    return static_cast<int>(isDigit || isLower || isUpper || isPunct);
 }
 
 /// \brief Checks if ch is a printable character as classified by the default C
@@ -281,10 +280,10 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
+    return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
 }
 
 /// \brief Checks if the given character is a control character as classified by
@@ -302,10 +301,10 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
+    return static_cast<int>((ch >= 0x00 && ch <= 0x1f) || ch == 0x7F);
 }
 
 /// \brief Converts the given character to lowercase according to the character
@@ -327,11 +326,11 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
-  return static_cast<int>(ch);
+    if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
+    return static_cast<int>(ch);
 }
 
 /// \brief Converts the given character to uppercase according to the character
@@ -353,11 +352,11 @@ namespace etl
 /// \module Strings
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
-  // ch must de representable as a unsigned char
-  TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-  if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
-  return static_cast<int>(ch);
+    if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
+    return static_cast<int>(ch);
 }
-}  // namespace etl
-#endif  // TETL_CCTYPE_HPP
+} // namespace etl
+#endif // TETL_CCTYPE_HPP

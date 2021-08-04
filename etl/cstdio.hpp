@@ -36,6 +36,6 @@
 #define NULL nullptr
 #endif
 
-#endif  // has_include <stdio.h>
+#endif // has_include <stdio.h>
 
-#endif  // TETL_CSTDIO_HPP
+#endif // TETL_CSTDIO_HPP

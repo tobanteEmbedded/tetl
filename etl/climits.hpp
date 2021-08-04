@@ -68,6 +68,6 @@
 #define ULLONG_MAX (__LONG_LONG_MAX__ * 2ULL + 1ULL)
 #endif
 
-#endif  // has_include <limits.h>
+#endif // has_include <limits.h>
 
-#endif  // TETL_CLIMITS_HPP
+#endif // TETL_CLIMITS_HPP

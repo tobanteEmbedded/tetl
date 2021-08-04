@@ -33,15 +33,14 @@
 #include "etl/experimental/rtos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos
-{
+namespace etl::experimental::rtos {
 inline auto delay(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
 
 inline auto delay_until(etl::uint32_t previous, etl::uint32_t increment) -> void
 {
-  vTaskDelayUntil(&previous, increment);
+    vTaskDelayUntil(&previous, increment);
 }
 
-}  // namespace etl::experimental::rtos
+} // namespace etl::experimental::rtos
 
-#endif  // TETL_RTOS_DELAY_HPP
+#endif // TETL_RTOS_DELAY_HPP

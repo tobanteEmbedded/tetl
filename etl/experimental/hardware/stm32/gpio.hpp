@@ -30,88 +30,82 @@
 #include "etl/new.hpp"
 #include "etl/warning.hpp"
 
-namespace etl::experimental::hardware::stm32
-{
-enum class pin_number : etl::uint16_t
-{
-  pin_0 = 0,
-  pin_1,
-  pin_2,
-  pin_3,
-  pin_4,
-  pin_5,
-  pin_6,
-  pin_7,
-  pin_8,
-  pin_9,
-  pin_10,
-  pin_11,
-  pin_12,
-  pin_13,
-  pin_14,
-  pin_15,
+namespace etl::experimental::hardware::stm32 {
+enum class pin_number : etl::uint16_t {
+    pin_0 = 0,
+    pin_1,
+    pin_2,
+    pin_3,
+    pin_4,
+    pin_5,
+    pin_6,
+    pin_7,
+    pin_8,
+    pin_9,
+    pin_10,
+    pin_11,
+    pin_12,
+    pin_13,
+    pin_14,
+    pin_15,
 };
 
-enum class pin_state : uint8_t
-{
-  reset = 0,
-  set,
+enum class pin_state : uint8_t {
+    reset = 0,
+    set,
 };
 
 inline auto val(pin_number pin) -> etl::uint16_t
 {
-  return static_cast<etl::uint16_t>(pin);
+    return static_cast<etl::uint16_t>(pin);
 }
 
-struct gpio_memory_layout
-{
-  volatile etl::uint32_t control_low;
-  volatile etl::uint32_t control_high;
-  volatile etl::uint32_t input_data;
-  volatile etl::uint32_t output_data;
-  volatile etl::uint32_t bit_set_reset;
-  volatile etl::uint32_t bit_set;
-  volatile etl::uint32_t lock;
+struct gpio_memory_layout {
+    volatile etl::uint32_t control_low;
+    volatile etl::uint32_t control_high;
+    volatile etl::uint32_t input_data;
+    volatile etl::uint32_t output_data;
+    volatile etl::uint32_t bit_set_reset;
+    volatile etl::uint32_t bit_set;
+    volatile etl::uint32_t lock;
 };
 
-struct port
-{
-  explicit port()   = default;
-  ~port()           = default;
-  port(port&&)      = delete;
-  port(port const&) = delete;
-  auto operator=(port&&) -> port& = delete;
-  auto operator=(port const&) -> port& = delete;
+struct port {
+    explicit port()   = default;
+    ~port()           = default;
+    port(port&&)      = delete;
+    port(port const&) = delete;
+    auto operator=(port &&) -> port& = delete;
+    auto operator=(port const&) -> port& = delete;
 
-  [[nodiscard]] static auto read(pin_number const pin) -> pin_state
-  {
-    ignore_unused(val(pin));
-    return {};
-  }
-
-  void write(pin_number const pin, pin_state const state)
-  {
-    if (state == pin_state::reset)
+    [[nodiscard]] static auto read(pin_number const pin) -> pin_state
     {
-      memory_.bit_set_reset = (1U << val(pin));
-      return;
+        ignore_unused(val(pin));
+        return {};
     }
-    memory_.bit_set_reset = (1U << (val(pin) + 16U));
-  }
 
-  void toggle_pin(pin_number const pin)
-  {
-    memory_.output_data = memory_.output_data ^ (1U << val(pin));
-  }
+    void write(pin_number const pin, pin_state const state)
+    {
+        if (state == pin_state::reset) {
+            memory_.bit_set_reset = (1U << val(pin));
+            return;
+        }
+        memory_.bit_set_reset = (1U << (val(pin) + 16U));
+    }
 
-  [[nodiscard]] static auto place_at(void* addr) -> port&
-  {
-    return *new (addr) port;
-  }
+    void toggle_pin(pin_number const pin)
+    {
+        memory_.output_data = memory_.output_data ^ (1U << val(pin));
+    }
 
-  private:
-  gpio_memory_layout memory_;
+    [[nodiscard]] static auto place_at(void* addr) -> port&
+    {
+        return *new (addr) port;
+    }
+
+private:
+    gpio_memory_layout memory_;
 };
-}  // namespace etl::experimental::hardware::stm32
+} // namespace etl::experimental::hardware::stm32
 
-#endif  // TETL_HARDWARE_STM32_GPIO_HPP
+#endif // TETL_HARDWARE_STM32_GPIO_HPP

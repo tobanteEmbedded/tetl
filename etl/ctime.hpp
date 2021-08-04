@@ -36,6 +36,6 @@
 #define NULL nullptr
 #endif
 
-#endif  // has_include <time.h>
+#endif // has_include <time.h>
 
-#endif  // TETL_CTIME_HPP
+#endif // TETL_CTIME_HPP

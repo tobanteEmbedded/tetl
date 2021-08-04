@@ -29,47 +29,43 @@
 #include "etl/cstdint.hpp"
 #include "etl/system_error.hpp"
 
-namespace etl
-{
+namespace etl {
 /// \brief A BitmaskType used to specify floating-point formatting for to_chars
 /// and from_chars.
 /// \module Strings
-enum class chars_format : etl::uint8_t
-{
-  scientific = 0x1,
-  fixed      = 0x2,
-  hex        = 0x4,
-  general    = fixed | scientific
+enum class chars_format : etl::uint8_t {
+    scientific = 0x1,
+    fixed      = 0x2,
+    hex        = 0x4,
+    general    = fixed | scientific
 };
 
 /// \brief Primitive numerical output conversion.
 /// \module Strings
-struct to_chars_result
-{
-  char* ptr;
-  etl::errc ec;
+struct to_chars_result {
+    char* ptr;
+    etl::errc ec;
 
-  friend auto operator==(to_chars_result const& lhs,
-                         to_chars_result const& rhs) noexcept -> bool
-  {
-    return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
-  }
+    friend auto operator==(to_chars_result const& lhs,
+        to_chars_result const& rhs) noexcept -> bool
+    {
+        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+    }
 };
 
 /// \brief Primitive numerical input conversion
 /// \module Strings
-struct from_chars_result
-{
-  char* ptr;
-  etl::errc ec;
+struct from_chars_result {
+    char* ptr;
+    etl::errc ec;
 
-  friend auto operator==(from_chars_result const& lhs,
-                         from_chars_result const& rhs) noexcept -> bool
-  {
-    return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
-  }
+    friend auto operator==(from_chars_result const& lhs,
+        from_chars_result const& rhs) noexcept -> bool
+    {
+        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+    }
 };
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_CHARCONV_HPP
+#endif // TETL_CHARCONV_HPP

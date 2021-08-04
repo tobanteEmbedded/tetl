@@ -26,8 +26,7 @@
 
 #include "etl/detail/intrinsics.hpp"
 
-namespace etl
-{
+namespace etl {
 // primary type categories:
 template <class T>
 struct is_void;
@@ -77,6 +76,6 @@ struct is_member_pointer;
 template <class T>
 constexpr auto swap(T& a, T& b) noexcept -> void;
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_TYPETRAITS_DECL_HPP
+#endif // TETL_TYPETRAITS_DECL_HPP

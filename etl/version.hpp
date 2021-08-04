@@ -45,61 +45,59 @@
 #define TETL_FREESTANDING 1
 #endif
 
-namespace etl
-{
+namespace etl {
 /// \brief Enumeration for the currently selected C++ standard version. Unlike
 /// the official macro `__cplusplus`, these values only include the published
 /// year. This is to make the actual values smaller and therfore fit on smaller
 /// word sized chips.
-enum class language_standard : unsigned char
-{
-  cpp_17 = 17,
-  cpp_20 = 20,
-  cpp_23 = 23,
+enum class language_standard : unsigned char {
+    cpp_17 = 17,
+    cpp_20 = 20,
+    cpp_23 = 23,
 };
 
 /// \brief Compares language_standards
 /// \group language_standard_compare
 /// \module Utility
 [[nodiscard]] constexpr auto operator==(language_standard lhs,
-                                        language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return static_cast<unsigned char>(lhs) == static_cast<unsigned char>(rhs);
+    return static_cast<unsigned char>(lhs) == static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
 [[nodiscard]] constexpr auto operator!=(language_standard lhs,
-                                        language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return !(lhs == rhs);
+    return !(lhs == rhs);
 }
 
 /// \group language_standard_compare
 [[nodiscard]] constexpr auto operator<(language_standard lhs,
-                                       language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return static_cast<unsigned char>(lhs) < static_cast<unsigned char>(rhs);
+    return static_cast<unsigned char>(lhs) < static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
 [[nodiscard]] constexpr auto operator<=(language_standard lhs,
-                                        language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return static_cast<unsigned char>(lhs) <= static_cast<unsigned char>(rhs);
+    return static_cast<unsigned char>(lhs) <= static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
 [[nodiscard]] constexpr auto operator>(language_standard lhs,
-                                       language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return static_cast<unsigned char>(lhs) > static_cast<unsigned char>(rhs);
+    return static_cast<unsigned char>(lhs) > static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
 [[nodiscard]] constexpr auto operator>=(language_standard lhs,
-                                        language_standard rhs) noexcept -> bool
+    language_standard rhs) noexcept -> bool
 {
-  return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
+    return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
 }
 
 #if __cplusplus > 202002L
@@ -118,6 +116,6 @@ inline constexpr auto current_standard = language_standard::cpp_17;
 #error "Unsupported C++ language standard. TETL requires at least C++17"
 #endif
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_VERSION_HPP
+#endif // TETL_VERSION_HPP

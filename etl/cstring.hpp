@@ -29,8 +29,7 @@
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 
-namespace etl
-{
+namespace etl {
 /// \brief Copies the character string pointed to by src, including the null
 /// terminator, to the character array whose first element is pointed to by
 /// dest.
@@ -42,10 +41,10 @@ namespace etl
 /// \module Strings
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
-  TETL_ASSERT(dest != nullptr && src != nullptr);
-  auto* temp = dest;
-  while ((*dest++ = *src++) != '\0') { ; }
-  return temp;
+    TETL_ASSERT(dest != nullptr && src != nullptr);
+    auto* temp = dest;
+    while ((*dest++ = *src++) != '\0') { ; }
+    return temp;
 }
 
 /// \brief Copies at most count characters of the byte string pointed to by src
@@ -61,28 +60,27 @@ constexpr auto strcpy(char* dest, char const* src) -> char*
 /// \returns dest
 /// \module Strings
 constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
-  -> char*
+    -> char*
 {
-  TETL_ASSERT(dest != nullptr && src != nullptr);
-  auto* temp = dest;
-  for (etl::size_t counter = 0; *src != '\0' && counter != count;)
-  {
-    *dest = *src;
-    ++src;
-    ++dest;
-    ++counter;
-  }
+    TETL_ASSERT(dest != nullptr && src != nullptr);
+    auto* temp = dest;
+    for (etl::size_t counter = 0; *src != '\0' && counter != count;) {
+        *dest = *src;
+        ++src;
+        ++dest;
+        ++counter;
+    }
 
-  return temp;
+    return temp;
 }
 
 /// \brief Returns the length of the C string str.
 /// \module Strings
 constexpr auto strlen(char const* str) -> etl::size_t
 {
-  char const* s = nullptr;
-  for (s = str; *s != 0; ++s) { ; }
-  return static_cast<etl::size_t>(s - str);
+    char const* s = nullptr;
+    for (s = str; *s != 0; ++s) { ; }
+    return static_cast<etl::size_t>(s - str);
 }
 
 /// \brief Appends a copy of the character string pointed to by src to the end
@@ -96,10 +94,10 @@ constexpr auto strlen(char const* str) -> etl::size_t
 /// \module Strings
 constexpr auto strcat(char* dest, char const* src) -> char*
 {
-  auto* ptr = dest + etl::strlen(dest);
-  while (*src != '\0') { *ptr++ = *src++; }
-  *ptr = '\0';
-  return dest;
+    auto* ptr = dest + etl::strlen(dest);
+    while (*src != '\0') { *ptr++ = *src++; }
+    *ptr = '\0';
+    return dest;
 }
 
 /// \brief Appends a byte string pointed to by src to a byte string pointed to
@@ -112,18 +110,17 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 /// overlap.
 /// \module Strings
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
-  -> char*
+    -> char*
 {
-  auto* ptr                = dest + etl::strlen(dest);
-  etl::size_t localCounter = 0;
-  while (*src != '\0' && localCounter != count)
-  {
-    *ptr++ = *src++;
-    ++localCounter;
-  }
+    auto* ptr                = dest + etl::strlen(dest);
+    etl::size_t localCounter = 0;
+    while (*src != '\0' && localCounter != count) {
+        *ptr++ = *src++;
+        ++localCounter;
+    }
 
-  *ptr = '\0';
-  return dest;
+    *ptr = '\0';
+    return dest;
 }
 
 /// \brief Compares the C string lhs to the C string rhs.
@@ -134,12 +131,11 @@ constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
 /// \module Strings
 constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 {
-  for (; *lhs != '\0'; ++lhs, ++rhs)
-  {
-    if (*lhs != *rhs) { break; }
-  }
+    for (; *lhs != '\0'; ++lhs, ++rhs) {
+        if (*lhs != *rhs) { break; }
+    }
 
-  return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
+    return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
 }
 
 /// \brief Compares at most count characters of two possibly null-terminated
@@ -151,21 +147,20 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 /// null pointer.
 /// \module Strings
 constexpr auto strncmp(char const* lhs, char const* rhs,
-                       etl::size_t const count) -> int
+    etl::size_t const count) -> int
 {
-  unsigned char u1 {};
-  unsigned char u2 {};
+    unsigned char u1 {};
+    unsigned char u2 {};
 
-  auto localCount = count;
-  while (localCount-- > 0)
-  {
-    u1 = static_cast<unsigned char>(*lhs++);
-    u2 = static_cast<unsigned char>(*rhs++);
-    if (u1 != u2) { return u1 - u2; }
-    if (u1 == '\0') { return 0; }
-  }
+    auto localCount = count;
+    while (localCount-- > 0) {
+        u1 = static_cast<unsigned char>(*lhs++);
+        u2 = static_cast<unsigned char>(*rhs++);
+        if (u1 != u2) { return u1 - u2; }
+        if (u1 == '\0') { return 0; }
+    }
 
-  return 0;
+    return 0;
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
@@ -174,10 +169,10 @@ constexpr auto strncmp(char const* lhs, char const* rhs,
 /// \module Strings
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
-  auto* dp       = static_cast<unsigned char*>(dest);
-  auto const* sp = static_cast<unsigned char const*>(src);
-  while (n-- != 0) { *dp++ = *sp++; }
-  return dest;
+    auto* dp       = static_cast<unsigned char*>(dest);
+    auto const* sp = static_cast<unsigned char const*>(src);
+    while (n-- != 0) { *dp++ = *sp++; }
+    return dest;
 }
 
 /// \brief Copies the value of c (converted to an unsigned char) into each of
@@ -185,9 +180,9 @@ constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 /// \module Strings
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
-  auto* p = static_cast<unsigned char*>(s);
-  while (n-- != 0) { *p++ = static_cast<unsigned char>(c); }
-  return s;
+    auto* p = static_cast<unsigned char*>(s);
+    while (n-- != 0) { *p++ = static_cast<unsigned char>(c); }
+    return s;
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
@@ -199,20 +194,17 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 /// \module Strings
 constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 {
-  auto const* ps = static_cast<unsigned char const*>(src);
-  auto* pd       = static_cast<unsigned char*>(dest);
+    auto const* ps = static_cast<unsigned char const*>(src);
+    auto* pd       = static_cast<unsigned char*>(dest);
 
-  if (ps < pd)
-  {
-    for (pd += n, ps += n; n-- != 0;) { *--pd = *--ps; }
-  }
-  else
-  {
-    while (n-- != 0) { *pd++ = *ps++; }
-  }
+    if (ps < pd) {
+        for (pd += n, ps += n; n-- != 0;) { *--pd = *--ps; }
+    } else {
+        while (n-- != 0) { *pd++ = *ps++; }
+    }
 
-  return dest;
+    return dest;
 }
 
-}  // namespace etl
-#endif  // TETL_CSTRING_HPP
+} // namespace etl
+#endif // TETL_CSTRING_HPP

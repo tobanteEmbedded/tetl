@@ -26,8 +26,7 @@
 
 #include "etl/detail/intrinsics.hpp"
 
-namespace etl
-{
+namespace etl {
 /// \brief etl::size_t is the unsigned integer type of the result of the sizeof
 /// operator.
 ///
@@ -55,10 +54,9 @@ using nullptr_t = decltype(nullptr);
 ///
 /// \notes
 /// [cppreference.com/w/cpp/types/max_align_t](https://en.cppreference.com/w/cpp/types/max_align_t)
-struct alignas(long double) max_align_t
-{
+struct alignas(long double) max_align_t {
 };
 
-}  // namespace etl
+} // namespace etl
 
-#endif  // TETL_DETAIL_CSTDDEF_INTERNAL_HPP
+#endif // TETL_DETAIL_CSTDDEF_INTERNAL_HPP

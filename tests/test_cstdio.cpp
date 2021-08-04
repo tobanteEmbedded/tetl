@@ -28,6 +28,6 @@
 
 TEST_CASE("cstdio: NULL", "[cstdio]")
 {
-  // NOLINTNEXTLINE(modernize-use-nullptr)
-  CHECK(static_cast<etl::nullptr_t>(NULL) == nullptr);
+    // NOLINTNEXTLINE(modernize-use-nullptr)
+    CHECK(static_cast<etl::nullptr_t>(NULL) == nullptr);
 }

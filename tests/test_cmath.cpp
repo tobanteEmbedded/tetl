@@ -26,70 +26,70 @@
 
 TEMPLATE_TEST_CASE("cmath: isinf", "[cmath]", float, double, long double)
 {
-  REQUIRE(etl::isinf(TestType {INFINITY}));
-  REQUIRE_FALSE(etl::isinf(TestType {NAN}));
-  REQUIRE_FALSE(etl::isinf(TestType {0}));
-  REQUIRE_FALSE(etl::isinf(TestType {1}));
+    REQUIRE(etl::isinf(TestType { INFINITY }));
+    REQUIRE_FALSE(etl::isinf(TestType { NAN }));
+    REQUIRE_FALSE(etl::isinf(TestType { 0 }));
+    REQUIRE_FALSE(etl::isinf(TestType { 1 }));
 }
 
 TEMPLATE_TEST_CASE("cmath: isnan", "[cmath]", float, double, long double)
 {
-  auto val = TestType {0.0};
-  REQUIRE_FALSE(etl::isnan(val));
+    auto val = TestType { 0.0 };
+    REQUIRE_FALSE(etl::isnan(val));
 
-  val = 1.0;
-  REQUIRE_FALSE(etl::isnan(val));
+    val = 1.0;
+    REQUIRE_FALSE(etl::isnan(val));
 
-  val = INFINITY;
-  REQUIRE_FALSE(etl::isnan(val));
+    val = INFINITY;
+    REQUIRE_FALSE(etl::isnan(val));
 
-  val = NAN;
-  REQUIRE(etl::isnan(val));
+    val = NAN;
+    REQUIRE(etl::isnan(val));
 }
 
 TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double, long double)
 {
-  REQUIRE(etl::isfinite(TestType {0}));
-  REQUIRE(etl::isfinite(TestType {1}));
+    REQUIRE(etl::isfinite(TestType { 0 }));
+    REQUIRE(etl::isfinite(TestType { 1 }));
 
-  REQUIRE_FALSE(etl::isfinite(TestType {INFINITY}));
-  REQUIRE_FALSE(etl::isfinite(TestType {NAN}));
+    REQUIRE_FALSE(etl::isfinite(TestType { INFINITY }));
+    REQUIRE_FALSE(etl::isfinite(TestType { NAN }));
 }
 
 TEMPLATE_TEST_CASE("cmath: lerp", "[cmath]", float, double, long double)
 {
-  using T = TestType;
-  CHECK(etl::lerp(T(0), T(1), T(0)) == T(0));
-  CHECK(etl::lerp(T(0), T(1), T(0.5)) == T(0.5));
+    using T = TestType;
+    CHECK(etl::lerp(T(0), T(1), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(1), T(0.5)) == T(0.5));
 
-  CHECK(etl::lerp(T(0), T(20), T(0)) == T(0));
-  CHECK(etl::lerp(T(0), T(20), T(0.5)) == T(10));
-  CHECK(etl::lerp(T(0), T(20), T(2)) == T(40));
+    CHECK(etl::lerp(T(0), T(20), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(20), T(0.5)) == T(10));
+    CHECK(etl::lerp(T(0), T(20), T(2)) == T(40));
 
-  CHECK(etl::lerp(T(20), T(0), T(0)) == T(20));
-  CHECK(etl::lerp(T(20), T(0), T(0.5)) == T(10));
-  CHECK(etl::lerp(T(20), T(0), T(2)) == T(-20));
+    CHECK(etl::lerp(T(20), T(0), T(0)) == T(20));
+    CHECK(etl::lerp(T(20), T(0), T(0.5)) == T(10));
+    CHECK(etl::lerp(T(20), T(0), T(2)) == T(-20));
 
-  CHECK(etl::lerp(T(0), T(-20), T(0)) == T(0));
-  CHECK(etl::lerp(T(0), T(-20), T(0.5)) == T(-10));
-  CHECK(etl::lerp(T(0), T(-20), T(2)) == T(-40));
+    CHECK(etl::lerp(T(0), T(-20), T(0)) == T(0));
+    CHECK(etl::lerp(T(0), T(-20), T(0.5)) == T(-10));
+    CHECK(etl::lerp(T(0), T(-20), T(2)) == T(-40));
 
-  CHECK(etl::lerp(T(-10), T(-20), T(0)) == T(-10));
-  CHECK(etl::lerp(T(-10), T(-20), T(0.5)) == T(-15));
-  CHECK(etl::lerp(T(-10), T(-20), T(2)) == T(-30));
+    CHECK(etl::lerp(T(-10), T(-20), T(0)) == T(-10));
+    CHECK(etl::lerp(T(-10), T(-20), T(0.5)) == T(-15));
+    CHECK(etl::lerp(T(-10), T(-20), T(2)) == T(-30));
 }
 
 TEMPLATE_TEST_CASE("cmath: abs", "[cmath]", int, long, long long)
 {
-  using T = TestType;
+    using T = TestType;
 
-  CHECK(etl::abs(T(0)) == T(0));
+    CHECK(etl::abs(T(0)) == T(0));
 
-  CHECK(etl::abs(T(1)) == T(1));
-  CHECK(etl::abs(T(2)) == T(2));
-  CHECK(etl::abs(T(3)) == T(3));
+    CHECK(etl::abs(T(1)) == T(1));
+    CHECK(etl::abs(T(2)) == T(2));
+    CHECK(etl::abs(T(3)) == T(3));
 
-  CHECK(etl::abs(T(-1)) == T(1));
-  CHECK(etl::abs(T(-2)) == T(2));
-  CHECK(etl::abs(T(-3)) == T(3));
+    CHECK(etl::abs(T(-1)) == T(1));
+    CHECK(etl::abs(T(-2)) == T(2));
+    CHECK(etl::abs(T(-3)) == T(3));
 }

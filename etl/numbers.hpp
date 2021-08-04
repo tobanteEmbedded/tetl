@@ -28,8 +28,7 @@
 
 #include "etl/type_traits.hpp"
 
-namespace etl::numbers
-{
+namespace etl::numbers {
 // clang-format off
 
 template <typename T>
@@ -115,6 +114,6 @@ inline constexpr long double phil        = phi_v<long double>;
 
 // clang-format on
 
-}  // namespace etl::numbers
+} // namespace etl::numbers
 
-#endif  // TETL_NUMBERS_HPP
+#endif // TETL_NUMBERS_HPP
