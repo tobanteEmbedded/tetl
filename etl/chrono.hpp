@@ -221,7 +221,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator+=(duration const& d) noexcept -> duration&
   {
-    return rep_ += d.count();
+    rep_ += d.count();
     return *this;
   }
 
@@ -229,7 +229,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator-=(duration const& d) noexcept -> duration&
   {
-    return rep_ -= d.count();
+    rep_ -= d.count();
     return *this;
   }
 
@@ -237,7 +237,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator*=(rep const& rhs) noexcept -> duration&
   {
-    return rep_ *= rhs;
+    rep_ *= rhs;
     return *this;
   }
 
@@ -245,7 +245,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator/=(rep const& rhs) noexcept -> duration&
   {
-    return rep_ /= rhs;
+    rep_ /= rhs;
     return *this;
   }
 
@@ -253,7 +253,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator%=(rep const& rhs) noexcept -> duration&
   {
-    return rep_ %= rhs;
+    rep_ %= rhs;
     return *this;
   }
 
@@ -261,7 +261,7 @@ class duration
   /// period or between a duration and a tick count value.
   constexpr auto operator%=(duration const& rhs) noexcept -> duration&
   {
-    return rep_ %= rhs.count();
+    rep_ %= rhs.count();
     return *this;
   }
 

@@ -5,23 +5,11 @@
 .idea
 
 # PROJECT
-build/
-build-*/
-build_*/
-*.elf
-
-# CMAKE
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-cmake-build-*
+/build/
+/build-*/
+/build_*/
+/cmake-build-*
+/out
 
 # C++
 # Prerequisites
@@ -56,6 +44,7 @@ cmake-build-*
 *.exe
 *.out
 *.app
+*.elf
 
 # Python
 venv
