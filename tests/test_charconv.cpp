@@ -87,41 +87,41 @@ TEMPLATE_TEST_CASE("charconv: from_chars<Integer>", "[charconv]", char,
 {
     using string_t = etl::static_string<16>;
 
-    auto test = [](auto tc, auto expected) -> void {
+    auto test = [](string_t tc, TestType expected) -> void {
         auto val          = TestType {};
         auto const result = etl::from_chars(tc.begin(), tc.end(), val);
         CHECK(result.ptr == tc.end());
         CHECK(val == expected);
     };
 
-    test(string_t { "1" }, TestType { 1 });
-    test(string_t { " 1" }, TestType { 1 });
-    test(string_t { "  1" }, TestType { 1 });
-    test(string_t { "   1" }, TestType { 1 });
-    test(string_t { "    1" }, TestType { 1 });
+    test("1", 1);
+    test(" 1", 1);
+    test("  1", 1);
+    test("   1", 1);
+    test("    1", 1);
 
-    test(string_t { "2" }, TestType { 2 });
-    test(string_t { "10" }, TestType { 10 });
-    test(string_t { "42" }, TestType { 42 });
-    test(string_t { "99" }, TestType { 99 });
-    test(string_t { "126" }, TestType { 126 });
+    test("2", 2);
+    test("10", 10);
+    test("42", 42);
+    test("99", 99);
+    test("126", 126);
 
     if constexpr (sizeof(TestType) > 1) {
-        test(string_t { "1000" }, TestType { 1000 });
-        test(string_t { "9999" }, TestType { 9999 });
+        test("1000", 1000);
+        test("9999", 9999);
     }
 
     if constexpr (etl::is_signed_v<TestType>) {
-        test(string_t { "-1" }, TestType { -1 });
-        test(string_t { "-2" }, TestType { -2 });
-        test(string_t { "-10" }, TestType { -10 });
-        test(string_t { "-42" }, TestType { -42 });
-        test(string_t { "-99" }, TestType { -99 });
-        test(string_t { "-126" }, TestType { -126 });
+        test("-1", -1);
+        test("-2", -2);
+        test("-10", -10);
+        test("-42", -42);
+        test("-99", -99);
+        test("-126", -126);
 
         if constexpr (sizeof(TestType) > 1) {
-            test(string_t { "-1000" }, TestType { -1000 });
-            test(string_t { "-9999" }, TestType { -9999 });
+            test("-1000", -1000);
+            test("-9999", -9999);
         }
     }
 }

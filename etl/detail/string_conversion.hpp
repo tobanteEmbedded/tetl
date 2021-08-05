@@ -7,7 +7,7 @@
 
 namespace etl::detail {
 
-enum struct ascii_to_int_error {
+enum struct ascii_to_int_error : ::etl::uint8_t {
     none,
     invalid_input,
     overflow,
@@ -16,8 +16,8 @@ enum struct ascii_to_int_error {
 template <typename T>
 struct ascii_to_int_result {
     T value;
-    char const* end { nullptr };
     ascii_to_int_error error { ascii_to_int_error::none };
+    char const* end { nullptr };
 };
 
 template <typename T>
@@ -28,8 +28,8 @@ template <typename T>
     if (*str == '\0') {
         return ascii_to_int_result<T> {
             T {},
-            str,
             ascii_to_int_error::invalid_input,
+            str,
         };
     }
 
@@ -42,7 +42,7 @@ template <typename T>
     }
 
     // optional minus for signed types
-    T sign = 1;
+    [[maybe_unused]] T sign = 1;
     if constexpr (is_signed_v<T>) {
         if (str[0] == '-') {
             sign = -1;
@@ -60,7 +60,7 @@ template <typename T>
     }
 
     // one past the last element used for conversion
-    auto result = ascii_to_int_result<T> { value, &str[i] };
+    auto result = ascii_to_int_result<T> { value, {}, &str[i] };
     if constexpr (is_signed_v<T>) { result.value *= sign; }
     return result;
 }
