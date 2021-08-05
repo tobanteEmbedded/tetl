@@ -146,8 +146,8 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 /// array lhs or rhs. The behavior is undefined when either lhs or rhs is the
 /// null pointer.
 /// \module Strings
-constexpr auto strncmp(char const* lhs, char const* rhs,
-    etl::size_t const count) -> int
+constexpr auto strncmp(
+    char const* lhs, char const* rhs, etl::size_t const count) -> int
 {
     unsigned char u1 {};
     unsigned char u2 {};

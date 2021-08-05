@@ -139,7 +139,9 @@ namespace detail {
     [[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
         -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
     {
-        if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
+        if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+            return t * b + (1 - t) * a;
+        }
 
         if (t == 1) { return b; }
 
@@ -168,8 +170,8 @@ namespace detail {
 }
 
 /// \group lerp
-[[nodiscard]] constexpr auto lerp(long double a, long double b,
-    long double t) noexcept -> long double
+[[nodiscard]] constexpr auto lerp(
+    long double a, long double b, long double t) noexcept -> long double
 {
     return detail::lerp_impl<long double>(a, b, t);
 }

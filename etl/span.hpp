@@ -88,8 +88,7 @@ public:
     ///
     /// \todo Add explicit(extent != etl::dynamic_extent).
     template <typename It>
-    constexpr span(It first, size_type count)
-        : data_ { first }, size_ { count }
+    constexpr span(It first, size_type count) : data_ { first }, size_ { count }
     {
     }
 
@@ -123,8 +122,7 @@ public:
     ///
     /// \todo Add explicit(extent != etl::dynamic_extent)
     template <typename R>
-    constexpr span(R&& r)
-        : data_ { r.data() }, size_ { r.size() }
+    constexpr span(R&& r) : data_ { r.data() }, size_ { r.size() }
     {
     }
 
@@ -156,16 +154,16 @@ public:
     /// front on an empty span results in undefined behavior.
     [[nodiscard]] constexpr auto front() const -> reference { return *begin(); }
 
-    /// \brief Returns a reference to the last element in the span. Calling front
-    /// on an empty span results in undefined behavior.
+    /// \brief Returns a reference to the last element in the span. Calling
+    /// front on an empty span results in undefined behavior.
     [[nodiscard]] constexpr auto back() const -> reference
     {
         return *(end() - 1);
     }
 
     /// \brief Returns a reference to the idx-th element of the sequence. The
-    /// behavior is undefined if idx is out of range (i.e., if it is greater than
-    /// or equal to size()).
+    /// behavior is undefined if idx is out of range (i.e., if it is greater
+    /// than or equal to size()).
     [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference
     {
         return data()[idx];
@@ -213,15 +211,13 @@ template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 // Deduction Guides. From Container.
-template <typename Container,
-    typename Element
-    = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
+template <typename Container, typename Element = etl::remove_pointer_t<decltype(
+                                  etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
-template <typename Container,
-    typename Element = etl::remove_pointer_t<
-        decltype(etl::declval<Container const&>().data())>>
+template <typename Container, typename Element = etl::remove_pointer_t<decltype(
+                                  etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 } // namespace etl
 

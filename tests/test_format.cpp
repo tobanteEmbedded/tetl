@@ -120,8 +120,7 @@ TEMPLATE_TEST_CASE("format: formatter<static_string<Capacity>>", "[format]",
 }
 
 TEMPLATE_TEST_CASE("format: formatter<Integer>", "[format]", short, int, long,
-    long long, unsigned short, unsigned int, unsigned long,
-    unsigned long long)
+    long long, unsigned short, unsigned int, unsigned long, unsigned long long)
 {
     auto [test_input, expected]
         = GENERATE(Catch::Generators::table<TestType, char const*>({
@@ -190,7 +189,8 @@ TEST_CASE("format: format_to<char>", "[format]")
 
         // auto str_2 = etl::static_string<32> {};
         // etl::format_to(etl::back_inserter(str_2), "{{test}} {}", 'b');
-        // CHECK(etl::string_view(str_2.data()) == etl::string_view("{test} b"));
+        // CHECK(etl::string_view(str_2.data()) == etl::string_view("{test}
+        // b"));
     }
 
     SECTION("replace multiple args")
@@ -202,7 +202,8 @@ TEST_CASE("format: format_to<char>", "[format]")
         auto str2 = etl::static_string<32> {};
         auto fmt2 = etl::string_view("some {} text {} mixed {}");
         etl::format_to(etl::back_inserter(str2), fmt2, 'a', 'b', 'c');
-        CHECK(etl::string_view(str2) == etl::string_view("some a text b mixed c"));
+        CHECK(etl::string_view(str2)
+              == etl::string_view("some a text b mixed c"));
     }
 }
 
@@ -220,7 +221,8 @@ TEST_CASE("format: format_to<char[N]>", "[format]")
     {
         // auto str_1 = etl::static_string<32> {};
         // etl::format_to(etl::back_inserter(str_1), "{} {{test}}", "abc");
-        // CHECK(etl::string_view(str_1.begin()) == etl::string_view("abc {test}"));
+        // CHECK(etl::string_view(str_1.begin()) == etl::string_view("abc
+        // {test}"));
 
         //     auto str_2 = etl::static_string<32> {};
         //     etl::format_to(etl::back_inserter(str_2), "{{test}} {}", "abc");
@@ -241,8 +243,8 @@ TEST_CASE("format: format_to<char[N]>", "[format]")
     //         //     auto fmt_2 = etl::string_view("some {} text {} mixed {}");
     //         //     etl::format_to(etl::back_inserter(str_2), fmt_2, "abc",
     //         "def", "ghi");
-    //         //     CHECK(etl::string_view(str_2) == etl::string_view("some abc
-    //         text def mixed
+    //         //     CHECK(etl::string_view(str_2) == etl::string_view("some
+    //         abc text def mixed
     //         //     ghi"));
     //     }
 }
@@ -253,8 +255,8 @@ TEST_CASE("format: format_to_n", "[format]")
     {
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("{abc}");
-        auto res
-            = etl::format_to_n(buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
+        auto res    = etl::format_to_n(
+            buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);
@@ -264,8 +266,8 @@ TEST_CASE("format: format_to_n", "[format]")
     {
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("test");
-        auto res
-            = etl::format_to_n(data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
+        auto res    = etl::format_to_n(
+            data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);

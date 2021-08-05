@@ -42,8 +42,8 @@ namespace etl {
 /// \group accumulate
 /// \module Algorithm
 template <typename InputIt, typename Type>
-[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last,
-    Type init) noexcept -> Type
+[[nodiscard]] constexpr auto accumulate(
+    InputIt first, InputIt last, Type init) noexcept -> Type
 {
     for (; first != last; ++first) { init = move(init) + *first; }
     return init;
@@ -51,8 +51,8 @@ template <typename InputIt, typename Type>
 
 /// \group accumulate
 template <typename InputIt, typename Type, typename BinaryOperation>
-[[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init,
-    BinaryOperation op) noexcept -> Type
+[[nodiscard]] constexpr auto accumulate(
+    InputIt first, InputIt last, Type init, BinaryOperation op) noexcept -> Type
 {
     for (; first != last; ++first) { init = op(move(init), *first); }
     return init;
@@ -64,8 +64,8 @@ template <typename InputIt, typename Type, typename BinaryOperation>
 /// \group reduce
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
-[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init,
-    BinaryOp op) -> T
+[[nodiscard]] constexpr auto reduce(
+    InputIter first, InputIter last, T init, BinaryOp op) -> T
 {
     return accumulate(first, last, init, op);
 }
@@ -95,8 +95,7 @@ template <typename InputIter>
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto adjacent_difference(InputIt first, InputIt last,
-    OutputIt destination, BinaryOperation op)
-    -> OutputIt
+    OutputIt destination, BinaryOperation op) -> OutputIt
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
@@ -116,8 +115,8 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 
 /// \group adjacent_difference
 template <typename InputIt, typename OutputIt>
-constexpr auto adjacent_difference(InputIt first, InputIt last,
-    OutputIt destination) -> OutputIt
+constexpr auto adjacent_difference(
+    InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
@@ -141,8 +140,8 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 /// \group inner_product
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename T>
-[[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, T init) -> T
+[[nodiscard]] constexpr auto inner_product(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, T init) -> T
 {
     for (; first1 != last1; ++first1, ++first2) {
         init = etl::move(init) + *first1 * *first2;
@@ -153,9 +152,8 @@ template <typename InputIt1, typename InputIt2, typename T>
 /// \group inner_product
 template <typename InputIt1, typename InputIt2, typename T,
     typename BinaryOperation1, typename BinaryOperation2>
-[[nodiscard]] constexpr auto
-inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
-    BinaryOperation1 op1, BinaryOperation2 op2) -> T
+[[nodiscard]] constexpr auto inner_product(InputIt1 first1, InputIt1 last1,
+    InputIt2 first2, T init, BinaryOperation1 op1, BinaryOperation2 op2) -> T
 {
     for (; first1 != last1; ++first1, ++first2) {
         init = op1(etl::move(init), op2(*first1, *first2));
@@ -230,11 +228,10 @@ template <typename M, typename N>
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
-template <
-    typename M, typename N,
-    TETL_REQUIRES_(
-        (is_integral_v<
-             M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
+template <typename M, typename N,
+    TETL_REQUIRES_((
+        is_integral_v<
+            M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
 [[nodiscard]] constexpr auto lcm(M m, N n) ->
 
     etl::common_type_t<M, N>

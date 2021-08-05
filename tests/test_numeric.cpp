@@ -40,8 +40,8 @@ TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
     REQUIRE(etl::abs<TestType>(-10) == TestType { 10 });
 }
 
-TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double,
-    long double)
+TEMPLATE_TEST_CASE(
+    "numeric: abs(floating)", "[numeric]", float, double, long double)
 {
     REQUIRE(etl::abs<TestType>(0.0) == TestType { 0.0 });
     REQUIRE(etl::abs<TestType>(1.0) == TestType { 1.0 });
@@ -51,8 +51,8 @@ TEMPLATE_TEST_CASE("numeric: abs(floating)", "[numeric]", float, double,
 }
 
 TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,
-    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
-    float, double, long double)
+    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
+    long double)
 {
     SECTION("from 0")
     {
@@ -76,8 +76,8 @@ TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,
 }
 
 TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
-    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-    etl::uint64_t, float, double, long double)
+    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+    float, double, long double)
 {
     using etl::adjacent_difference;
     using etl::array;
@@ -108,8 +108,8 @@ TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
 }
 
 TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
-    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-    etl::uint64_t, float, double, long double)
+    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+    float, double, long double)
 {
     // 0 1 2 3 4
     etl::static_vector<TestType, 6> a {};
@@ -131,9 +131,8 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
         = etl::inner_product(a.begin(), a.end(), b.begin(), TestType { 0 });
     REQUIRE(product == TestType { 21 });
 
-    auto pairwiseMatches
-        = etl::inner_product(a.begin(), a.end(), b.begin(), TestType { 0 },
-            etl::plus<> {}, etl::equal_to<> {});
+    auto pairwiseMatches = etl::inner_product(a.begin(), a.end(), b.begin(),
+        TestType { 0 }, etl::plus<> {}, etl::equal_to<> {});
     REQUIRE(pairwiseMatches == TestType { 2 });
 }
 
@@ -163,8 +162,8 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
 // }
 
 TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
-    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t,
-    etl::uint64_t, float, double, long double)
+    etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
+    float, double, long double)
 {
     using T  = TestType;
     auto vec = etl::array { T(1), T(2), T(3), T(4) };
@@ -176,8 +175,8 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
 }
 
 TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
-    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
-    float, double, long double)
+    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
+    long double)
 {
     using T  = TestType;
     auto vec = etl::array { T(1), T(2), T(3), T(4) };
@@ -189,8 +188,8 @@ TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
 }
 
 TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
 {
     REQUIRE(etl::gcd(5, 10) == 5);
     REQUIRE(etl::gcd(10, 5) == 5);
@@ -202,10 +201,11 @@ TEMPLATE_TEST_CASE("numeric: gcd", "[numeric]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("numeric: lcm", "[numeric]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
 {
-    STATIC_REQUIRE(etl::lcm(TestType { 10 }, TestType { 5 }) == TestType { 10 });
+    STATIC_REQUIRE(
+        etl::lcm(TestType { 10 }, TestType { 5 }) == TestType { 10 });
 
     REQUIRE(etl::lcm(TestType { 4 }, TestType { 6 }) == TestType { 12 });
     REQUIRE(etl::lcm(TestType { 6 }, TestType { 4 }) == TestType { 12 });

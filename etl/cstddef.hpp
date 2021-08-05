@@ -43,8 +43,7 @@ namespace etl {
 /// type and is not an arithmetic type. A byte is only a collection of bits, and
 /// the only operators defined for it are the bitwise ones. \notes
 /// [cppreference.com/w/cpp/types/byte](https://en.cppreference.com/w/cpp/types/byte)
-enum struct byte : unsigned char {
-};
+enum struct byte : unsigned char {};
 
 /// \brief Equivalent to: `return Int(b);`
 /// \requires etl::is_integral_v<Int>
@@ -99,7 +98,8 @@ constexpr auto operator>>=(etl::byte& b, Int shift) noexcept
 [[nodiscard]] constexpr auto operator|(etl::byte l, etl::byte r) noexcept
     -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
+    return etl::byte(
+        static_cast<unsigned int>(l) | static_cast<unsigned int>(r));
 }
 
 /// \brief Equivalent to: `return byte(static_cast<unsigned int>(l) &
@@ -107,7 +107,8 @@ constexpr auto operator>>=(etl::byte& b, Int shift) noexcept
 [[nodiscard]] constexpr auto operator&(etl::byte l, etl::byte r) noexcept
     -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
+    return etl::byte(
+        static_cast<unsigned int>(l) & static_cast<unsigned int>(r));
 }
 
 /// \brief Equivalent to: `return byte(static_cast<unsigned int>(l) ^
@@ -115,7 +116,8 @@ constexpr auto operator>>=(etl::byte& b, Int shift) noexcept
 [[nodiscard]] constexpr auto operator^(etl::byte l, etl::byte r) noexcept
     -> etl::byte
 {
-    return etl::byte(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
+    return etl::byte(
+        static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
 }
 
 /// \brief Equivalent to: `return byte(~static_cast<unsigned int>(b));`

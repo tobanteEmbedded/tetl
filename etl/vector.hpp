@@ -55,7 +55,7 @@ namespace detail {
             = default;
 
         /// \brief Defaulted copy assignment .
-        constexpr auto operator            =(static_vector_zero_storage const&) noexcept
+        constexpr auto operator=(static_vector_zero_storage const&) noexcept
             -> static_vector_zero_storage& = default;
 
         /// \brief Defaulted move constructor.
@@ -63,7 +63,7 @@ namespace detail {
             static_vector_zero_storage&&) noexcept = default;
 
         /// \brief Defaulted move assignment.
-        constexpr auto operator            =(static_vector_zero_storage&&) noexcept
+        constexpr auto operator=(static_vector_zero_storage&&) noexcept
             -> static_vector_zero_storage& = default;
 
         /// \brief Defaulted destructor.
@@ -76,7 +76,10 @@ namespace detail {
         }
 
         /// \brief Number of elements currently stored.
-        [[nodiscard]] static constexpr auto size() noexcept -> size_type { return 0; }
+        [[nodiscard]] static constexpr auto size() noexcept -> size_type
+        {
+            return 0;
+        }
 
         /// \brief Capacity of the storage.
         [[nodiscard]] static constexpr auto capacity() noexcept -> size_type
@@ -85,13 +88,20 @@ namespace detail {
         }
 
         /// \brief Is the storage empty?
-        [[nodiscard]] static constexpr auto empty() noexcept -> bool { return true; }
+        [[nodiscard]] static constexpr auto empty() noexcept -> bool
+        {
+            return true;
+        }
 
         /// \brief Is the storage full?
-        [[nodiscard]] static constexpr auto full() noexcept -> bool { return true; }
+        [[nodiscard]] static constexpr auto full() noexcept -> bool
+        {
+            return true;
+        }
 
         /// \brief Constructs a new element at the end of the storagein-place.
-        /// Increases size of the storage by one. Always fails for empty storage.
+        /// Increases size of the storage by one. Always fails for empty
+        /// storage.
         template <typename... Args>
         static constexpr auto emplace_back(Args&&... /*unused*/) noexcept
             -> enable_if_t<is_constructible_v<T, Args...>, void>
@@ -99,30 +109,31 @@ namespace detail {
             TETL_ASSERT(false);
         }
 
-        /// \brief Removes the last element of the storage. Always fails for empty
-        /// storage.
+        /// \brief Removes the last element of the storage. Always fails for
+        /// empty storage.
         static constexpr void pop_back() noexcept { TETL_ASSERT(false); }
 
     protected:
-        /// \brief Changes the size of the storage without adding or removing elements
-        /// (unsafe). The size of an empty storage can only be changed to 0.
-        static constexpr void
-        unsafe_set_size([[maybe_unused]] size_t newSize) noexcept
+        /// \brief Changes the size of the storage without adding or removing
+        /// elements (unsafe). The size of an empty storage can only be changed
+        /// to 0.
+        static constexpr void unsafe_set_size(
+            [[maybe_unused]] size_t newSize) noexcept
         {
             TETL_ASSERT(newSize == 0);
         }
 
-        /// \brief Destroys all elements of the storage in range [begin, end) without
-        /// changings its size (unsafe). Nothing to destroy since the storage is
-        /// empty.
+        /// \brief Destroys all elements of the storage in range [begin, end)
+        /// without changings its size (unsafe). Nothing to destroy since the
+        /// storage is empty.
         template <typename InputIt>
-        static constexpr auto unsafe_destroy(InputIt /* begin */,
-            InputIt /* end */) noexcept -> void
+        static constexpr auto unsafe_destroy(
+            InputIt /* begin */, InputIt /* end */) noexcept -> void
         {
         }
 
-        /// \brief Destroys all elements of the storage without changing its size
-        /// (unsafe). Nothing to destroy since the storage is empty.
+        /// \brief Destroys all elements of the storage without changing its
+        /// size (unsafe). Nothing to destroy since the storage is empty.
         static constexpr void unsafe_destroy_all() noexcept { }
     };
 
@@ -143,13 +154,13 @@ namespace detail {
 
         constexpr static_vector_trivial_storage(
             static_vector_trivial_storage const&) noexcept = default;
-        constexpr auto operator                            =(static_vector_trivial_storage const&) noexcept
-            -> static_vector_trivial_storage&              = default;
+        constexpr auto operator=(static_vector_trivial_storage const&) noexcept
+            -> static_vector_trivial_storage& = default;
 
         constexpr static_vector_trivial_storage(
             static_vector_trivial_storage&&) noexcept = default;
-        constexpr auto operator                       =(static_vector_trivial_storage&&) noexcept
-            -> static_vector_trivial_storage&         = default;
+        constexpr auto operator=(static_vector_trivial_storage&&) noexcept
+            -> static_vector_trivial_storage& = default;
 
         ~static_vector_trivial_storage() = default;
 
@@ -171,7 +182,8 @@ namespace detail {
             return size_;
         }
 
-        /// \brief Maximum number of elements that can be allocated in the storage.
+        /// \brief Maximum number of elements that can be allocated in the
+        /// storage.
         [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
         {
             return Capacity;
@@ -192,7 +204,8 @@ namespace detail {
         /// \brief Constructs an element in-place at the end of the storage.
         template <typename... Args>
         constexpr auto emplace_back(Args&&... args) noexcept -> enable_if_t<
-            is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>, void>
+            is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>,
+            void>
         {
             TETL_ASSERT(!full());
             index(data_, size()) = T(forward<Args>(args)...);
@@ -220,8 +233,8 @@ namespace detail {
         ///
         /// \warning The size of the storage is not changed.
         template <typename InputIt>
-        constexpr auto unsafe_destroy(InputIt /*unused*/, InputIt /*unused*/) noexcept
-            -> void
+        constexpr auto unsafe_destroy(
+            InputIt /*unused*/, InputIt /*unused*/) noexcept -> void
         {
         }
 
@@ -258,15 +271,16 @@ namespace detail {
         constexpr static_vector_non_trivial_storage(
             static_vector_non_trivial_storage const&)
             = default;
-        constexpr auto operator                   =(static_vector_non_trivial_storage const&)
+        constexpr auto operator=(static_vector_non_trivial_storage const&)
             -> static_vector_non_trivial_storage& = default;
 
         constexpr static_vector_non_trivial_storage(
             static_vector_non_trivial_storage&&) noexcept = default;
-        constexpr auto operator                           =(static_vector_non_trivial_storage&&) noexcept
-            -> static_vector_non_trivial_storage&         = default;
+        constexpr auto operator=(static_vector_non_trivial_storage&&) noexcept
+            -> static_vector_non_trivial_storage& = default;
 
-        ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>)
+        ~static_vector_non_trivial_storage() noexcept(
+            is_nothrow_destructible_v<T>)
         {
             unsafe_destroy_all();
         }
@@ -298,7 +312,8 @@ namespace detail {
             return size_;
         }
 
-        /// \brief Maximum number of elements that can be allocated in the storage.
+        /// \brief Maximum number of elements that can be allocated in the
+        /// storage.
         [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
         {
             return Capacity;
@@ -316,7 +331,8 @@ namespace detail {
             return size() == Capacity;
         }
 
-        /// \brief Constructs an element in-place at the end of the embedded storage.
+        /// \brief Constructs an element in-place at the end of the embedded
+        /// storage.
         template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<T>)>
         auto emplace_back(Args&&... args) noexcept(
             noexcept(new (end()) T(forward<Args>(args)...))) -> void
@@ -349,8 +365,8 @@ namespace detail {
         ///
         /// \warning The size of the storage is not changed.
         template <typename InputIt>
-        void unsafe_destroy(InputIt first,
-            InputIt last) noexcept(is_nothrow_destructible_v<T>)
+        void unsafe_destroy(InputIt first, InputIt last) noexcept(
+            is_nothrow_destructible_v<T>)
         {
             TETL_ASSERT(first >= data() && first <= end());
             TETL_ASSERT(last >= data() && last <= end());
@@ -366,9 +382,10 @@ namespace detail {
         }
 
     private:
-        using raw_type     = remove_const_t<T>;
-        using aligned      = aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
-        using storage_type = conditional_t<!is_const_v<T>, aligned, const aligned>;
+        using raw_type = remove_const_t<T>;
+        using aligned  = aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
+        using storage_type
+            = conditional_t<!is_const_v<T>, aligned, const aligned>;
 
         alignas(alignof(T)) storage_type data_[Capacity];
         size_type size_ = 0;
@@ -376,10 +393,11 @@ namespace detail {
 
     /// \brief Selects the vector storage.
     template <typename T, size_t Capacity>
-    using static_vector_storage_type = conditional_t<
-        Capacity == 0, static_vector_zero_storage<T>,
-        conditional_t<is_trivial_v<T>, static_vector_trivial_storage<T, Capacity>,
-            static_vector_non_trivial_storage<T, Capacity>>>;
+    using static_vector_storage_type
+        = conditional_t<Capacity == 0, static_vector_zero_storage<T>,
+            conditional_t<is_trivial_v<T>,
+                static_vector_trivial_storage<T, Capacity>,
+                static_vector_non_trivial_storage<T, Capacity>>>;
 
 } // namespace detail
 
@@ -489,24 +507,23 @@ public:
     /// \todo Add noexcept(noexcept(emplace_back(forward<U>(value)))) breaks
     /// AVR build GCC8.2 currently.
     template <typename U>
-    constexpr auto push_back(U&& value) noexcept(false)
-        -> enable_if_t<is_constructible_v<T, U> && is_assignable_v<reference, U&&>,
-            void>
+    constexpr auto push_back(U&& value) noexcept(false) -> enable_if_t<
+        is_constructible_v<T, U> && is_assignable_v<reference, U&&>, void>
     {
         TETL_ASSERT(!full());
         emplace_back(forward<U>(value));
     }
 
     template <typename InputIt>
-    constexpr auto
-    move_insert(const_iterator position, InputIt first,
+    constexpr auto move_insert(const_iterator position, InputIt first,
         InputIt last) noexcept(noexcept(emplace_back(move(*first))))
         -> enable_if_t<detail::InputIterator<InputIt>, iterator>
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InputIt>) {
-            TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
+            TETL_ASSERT(
+                size() + static_cast<size_type>(last - first) <= capacity());
         }
         iterator b = end();
 
@@ -519,8 +536,8 @@ public:
 
     template <typename... Args>
     constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
-        noexcept(move_insert(position, declval<value_type*>(),
-            declval<value_type*>())))
+        noexcept(move_insert(
+            position, declval<value_type*>(), declval<value_type*>())))
         -> enable_if_t<is_constructible_v<T, Args...>, iterator>
     {
         TETL_ASSERT(!full());
@@ -532,9 +549,8 @@ public:
     /// \brief Data access
     using base_type::data;
 
-    constexpr auto
-    insert(const_iterator position,
-        value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
+    constexpr auto insert(const_iterator position, value_type&& x) noexcept(
+        noexcept(move_insert(position, &x, &x + 1)))
         -> enable_if_t<is_move_constructible_v<T>, iterator>
     {
         TETL_ASSERT(!full());
@@ -579,7 +595,8 @@ public:
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
         if constexpr (detail::RandomAccessIterator<InputIt>) {
-            TETL_ASSERT(size() + static_cast<size_type>(last - first) <= capacity());
+            TETL_ASSERT(
+                size() + static_cast<size_type>(last - first) <= capacity());
         }
         auto* b = end();
 
@@ -620,9 +637,10 @@ public:
     }
 
     /// \brief Copy assignment.
-    constexpr auto operator=(static_vector const& other) noexcept(
-        noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
-        -> enable_if_t<is_assignable_v<reference, const_reference>, static_vector&>
+    constexpr auto operator=(static_vector const& other) noexcept(noexcept(
+        clear()) && noexcept(insert(begin(), other.begin(), other.end())))
+        -> enable_if_t<is_assignable_v<reference, const_reference>,
+            static_vector&>
     {
         // Nothing to assert: size of other cannot exceed capacity because both
         // vectors have the same type
@@ -645,7 +663,8 @@ public:
 
     /// \brief Initializes vector with n default-constructed elements.
     TETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
-    explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
+    explicit constexpr static_vector(size_type n) noexcept(
+        noexcept(emplace_n(n)))
     {
         TETL_ASSERT(n <= capacity());
         emplace_n(n);
@@ -653,9 +672,8 @@ public:
 
     /// \brief Initializes vector with n with value.
     TETL_REQUIRES(is_copy_constructible_v<T>)
-    constexpr static_vector(size_type n,
-        T const& value) noexcept(noexcept(insert(begin(), n,
-        value)))
+    constexpr static_vector(size_type n, T const& value) noexcept(
+        noexcept(insert(begin(), n, value)))
     {
         TETL_ASSERT(n <= capacity());
         insert(begin(), n, value);
@@ -724,15 +742,15 @@ public:
         insert(begin(), n, u);
     }
 
-    /// \brief Unchecked access to element at index pos (UB if index not in range)
-    /// \group operator[]
+    /// \brief Unchecked access to element at index pos (UB if index not in
+    /// range) \group operator[]
     [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference
     {
         return detail::index(*this, pos);
     }
 
-    /// \brief Unchecked access to element at index pos (UB if index not in range)
-    /// \group operator[]
+    /// \brief Unchecked access to element at index pos (UB if index not in
+    /// range) \group operator[]
     [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept
         -> const_reference
     {
@@ -792,7 +810,8 @@ public:
 
     /// \brief Exchanges the contents of the container with those of other.
     /// \group swap
-    constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>)
+    constexpr auto swap(static_vector& other) noexcept(
+        is_nothrow_swappable_v<T>)
         -> enable_if_t<is_assignable_v<T&, T&&>, void>
     {
         using etl::move;
@@ -803,9 +822,8 @@ public:
     }
 
     /// \brief Resizes the container to contain sz elements. If elements need to
-    /// be appended, these are move-constructed from `T{}` (or copy-constructed if
-    /// `T` is not `is_move_constructible_v`).
-    /// \group resize
+    /// be appended, these are move-constructed from `T{}` (or copy-constructed
+    /// if `T` is not `is_move_constructible_v`). \group resize
     constexpr auto resize(size_type sz) noexcept(
         (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
         || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
@@ -822,9 +840,8 @@ public:
     }
 
     /// \group resize
-    constexpr auto
-    resize(size_type sz,
-        T const& value) noexcept(is_nothrow_copy_constructible_v<T>)
+    constexpr auto resize(size_type sz, T const& value) noexcept(
+        is_nothrow_copy_constructible_v<T>)
         -> enable_if_t<is_copy_constructible_v<T>, void>
     {
         if (sz == size()) { return; }
@@ -846,8 +863,8 @@ private:
     }
 
     template <typename It0, typename It1>
-    constexpr void assert_valid_iterator_pair([[maybe_unused]] It0 first,
-        [[maybe_unused]] It1 last) noexcept
+    constexpr void assert_valid_iterator_pair(
+        [[maybe_unused]] It0 first, [[maybe_unused]] It1 last) noexcept
     {
         static_assert(is_pointer_v<It0>);
         static_assert(is_pointer_v<It1>);
@@ -855,9 +872,8 @@ private:
     }
 
     template <typename It0, typename It1>
-    constexpr void
-    assert_iterator_pair_in_range([[maybe_unused]] It0 first,
-        [[maybe_unused]] It1 last) noexcept
+    constexpr void assert_iterator_pair_in_range(
+        [[maybe_unused]] It0 first, [[maybe_unused]] It1 last) noexcept
     {
         assert_iterator_in_range(first);
         assert_iterator_in_range(last);
@@ -882,8 +898,7 @@ constexpr auto swap(static_vector<T, Capacity>& lhs,
 /// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs,
-    static_vector<T, Capacity> const& rhs) noexcept
-    -> bool
+    static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     if (size(lhs) == size(rhs)) {
         return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), equal_to<> {});
@@ -895,8 +910,7 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs,
 /// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs,
-    static_vector<T, Capacity> const& rhs) noexcept
-    -> bool
+    static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
@@ -917,8 +931,7 @@ constexpr auto operator<(static_vector<T, Capacity> const& lhs,
 /// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs,
-    static_vector<T, Capacity> const& rhs) noexcept
-    -> bool
+    static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return !(rhs < lhs);
 }
@@ -934,8 +947,7 @@ constexpr auto operator>(static_vector<T, Capacity> const& lhs,
 /// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
-    static_vector<T, Capacity> const& rhs) noexcept
-    -> bool
+    static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return !(lhs < rhs);
 }

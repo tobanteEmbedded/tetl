@@ -7,7 +7,9 @@
 
 namespace etl::detail {
 template <typename T>
-[[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str) noexcept -> T
+[[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str,
+    char const** end = nullptr,
+    int length       = numeric_limits<int>::max()) noexcept -> T
 {
     if (*str == '\0') { return 0; }
 
@@ -17,14 +19,18 @@ template <typename T>
         if (str[0] == '-') {
             sign = -1;
             i++;
+            length--;
         }
     }
 
     T res = 0;
-    for (; str[i] != '\0'; ++i) {
+    for (; str[i] != '\0' || length == 0; ++i) {
         if (!isdigit(str[i])) { return 0; }
         res = res * 10 + str[i] - '0';
+        length--;
     }
+
+    if (end != nullptr) { *end = &str[i]; }
 
     if constexpr (is_signed_v<T>) {
         return sign * res;
@@ -72,7 +78,8 @@ constexpr auto integer_to_ascii_base10(T val, char* const buffer) -> char*
 /// \returns Floating point value corresponding to the contents of str on
 /// success.
 template <typename FloatT>
-[[nodiscard]] constexpr auto ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept -> FloatT
+[[nodiscard]] constexpr auto ascii_to_floating_point(
+    const char* str, char const** last = nullptr) noexcept -> FloatT
 {
     auto res               = FloatT { 0 };
     auto div               = FloatT { 1 };

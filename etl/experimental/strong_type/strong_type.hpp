@@ -33,82 +33,82 @@ namespace etl::experimental {
 struct skill {
     template <typename StrongType>
     struct addable : crtp<StrongType, addable> {
-        [[nodiscard]] constexpr auto
-        operator+(StrongType const& other) const noexcept -> StrongType
+        [[nodiscard]] constexpr auto operator+(
+            StrongType const& other) const noexcept -> StrongType
         {
-            auto const tmp
-                = StrongType(this->underlying().raw_value() + other.raw_value());
+            auto const tmp = StrongType(
+                this->underlying().raw_value() + other.raw_value());
             return tmp;
         }
     };
 
     template <typename StrongType>
     struct subtractable : crtp<StrongType, subtractable> {
-        [[nodiscard]] constexpr auto
-        operator-(StrongType const& other) const noexcept -> StrongType
+        [[nodiscard]] constexpr auto operator-(
+            StrongType const& other) const noexcept -> StrongType
         {
-            auto const tmp
-                = StrongType(this->underlying().raw_value() - other.raw_value());
+            auto const tmp = StrongType(
+                this->underlying().raw_value() - other.raw_value());
             return tmp;
         }
     };
 
     template <typename StrongType>
     struct multipliable : crtp<StrongType, multipliable> {
-        [[nodiscard]] constexpr auto
-        operator*(StrongType const& other) const noexcept -> StrongType
+        [[nodiscard]] constexpr auto operator*(
+            StrongType const& other) const noexcept -> StrongType
         {
-            auto const tmp
-                = StrongType(this->underlying().raw_value() * other.raw_value());
+            auto const tmp = StrongType(
+                this->underlying().raw_value() * other.raw_value());
             return tmp;
         }
     };
 
     template <typename StrongType>
     struct divisible : crtp<StrongType, divisible> {
-        [[nodiscard]] constexpr auto
-        operator/(StrongType const& other) const noexcept -> StrongType
+        [[nodiscard]] constexpr auto operator/(
+            StrongType const& other) const noexcept -> StrongType
         {
-            auto const tmp
-                = StrongType(this->underlying().raw_value() / other.raw_value());
+            auto const tmp = StrongType(
+                this->underlying().raw_value() / other.raw_value());
             return tmp;
         }
     };
 
     template <typename StrongType>
     struct comparable : crtp<StrongType, comparable> {
-        [[nodiscard]] constexpr friend auto
-        operator<(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator<(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() < rhs.raw_value();
         }
 
-        [[nodiscard]] constexpr friend auto
-        operator<=(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator<=(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() <= rhs.raw_value();
         }
 
-        [[nodiscard]] constexpr friend auto
-        operator>(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator>(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() > rhs.raw_value();
         }
 
-        [[nodiscard]] constexpr friend auto
-        operator>=(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator>=(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() >= rhs.raw_value();
         }
 
-        [[nodiscard]] constexpr friend auto
-        operator==(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator==(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() == rhs.raw_value();
         }
 
-        [[nodiscard]] constexpr friend auto
-        operator!=(StrongType const& lhs, StrongType const& rhs) noexcept -> bool
+        [[nodiscard]] constexpr friend auto operator!=(
+            StrongType const& lhs, StrongType const& rhs) noexcept -> bool
         {
             return lhs.raw_value() != rhs.raw_value();
         }

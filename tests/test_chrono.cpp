@@ -242,7 +242,8 @@ TEST_CASE("chrono/duration: duration_cast", "[chrono]")
 
     REQUIRE(duration_cast<microseconds>(milliseconds { 1 }).count() == 1'000);
     REQUIRE(duration_cast<seconds>(milliseconds { 1'000 }).count() == 1);
-    REQUIRE(duration_cast<microseconds>(milliseconds { 143 }).count() == 143'000);
+    REQUIRE(
+        duration_cast<microseconds>(milliseconds { 143 }).count() == 143'000);
 }
 
 // TEST_CASE("chrono/duration: floor", "[chrono]")

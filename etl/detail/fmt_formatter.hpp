@@ -105,7 +105,8 @@ struct formatter<short, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -117,7 +118,8 @@ struct formatter<int, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -129,7 +131,8 @@ struct formatter<long, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -137,11 +140,13 @@ struct formatter<long, char> {
 template <>
 struct formatter<long long, char> {
     template <typename FormatContext>
-    constexpr auto format(long long val, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(long long val, FormatContext& fc)
+        -> decltype(fc.out())
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -154,7 +159,8 @@ struct formatter<unsigned short, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -166,7 +172,8 @@ struct formatter<unsigned, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -179,7 +186,8 @@ struct formatter<unsigned long, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 
@@ -192,7 +200,8 @@ struct formatter<unsigned long long, char> {
     {
         char buf[32] {};
         ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(etl::string_view { buf }, fc);
+        return formatter<::etl::string_view>().format(
+            etl::string_view { buf }, fc);
     }
 };
 

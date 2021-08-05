@@ -161,9 +161,8 @@ constexpr auto distance(It first, It last) ->
 /// \brief Return the nth successor of iterator it.
 /// \module Iterator
 template <typename InputIt>
-[[nodiscard]] constexpr auto
-next(InputIt it, typename iterator_traits<InputIt>::difference_type n = 1)
-    -> InputIt
+[[nodiscard]] constexpr auto next(InputIt it,
+    typename iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {
     advance(it, n);
     return it;
@@ -172,9 +171,8 @@ next(InputIt it, typename iterator_traits<InputIt>::difference_type n = 1)
 /// \brief Return the nth predecessor of iterator it.
 /// \module Iterator
 template <typename BidirIt>
-[[nodiscard]] constexpr auto
-prev(BidirIt it, typename iterator_traits<BidirIt>::difference_type n = 1)
-    -> BidirIt
+[[nodiscard]] constexpr auto prev(BidirIt it,
+    typename iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
 {
     advance(it, -n);
     return it;
@@ -384,7 +382,8 @@ struct reverse_iterator {
     /// The underlying value type
     using value_type = typename iterator_traits<Iter>::value_type;
     /// The type of subtracting to iterators
-    using difference_type = typename etl::iterator_traits<Iter>::difference_type;
+    using difference_type =
+        typename etl::iterator_traits<Iter>::difference_type;
     /// The underlying reference type
     using reference = typename etl::iterator_traits<Iter>::reference;
     /// The underlying pointer type
@@ -396,14 +395,12 @@ struct reverse_iterator {
     /// value-initialized. Operations on the resulting iterator have defined
     /// behavior if and only if the corresponding operations on a
     /// value-initialized Iterator also have defined behavior.
-    constexpr reverse_iterator()
-        : current_() { }
+    constexpr reverse_iterator() : current_() { }
 
     /// \brief Constructs a new iterator adaptor.
     ///
     /// \details The underlying iterator is initialized with x.
-    constexpr explicit reverse_iterator(Iter x)
-        : current_(x) { }
+    constexpr explicit reverse_iterator(Iter x) : current_(x) { }
 
     /// \brief Constructs a new iterator adaptor.
     ///
@@ -496,7 +493,8 @@ struct reverse_iterator {
         return *this;
     }
 
-    /// \brief Returns a reference to the element at specified relative location.
+    /// \brief Returns a reference to the element at specified relative
+    /// location.
     constexpr auto operator[](difference_type n) const -> reference
     {
         return *(*this + n);
@@ -520,8 +518,7 @@ template <typename Iter>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator==(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() == rhs.base();
 }
@@ -530,8 +527,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator!=(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() != rhs.base();
 }
@@ -540,8 +536,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() < rhs.base();
 }
@@ -550,8 +545,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator<=(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() <= rhs.base();
 }
@@ -560,8 +554,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() > rhs.base();
 }
@@ -570,8 +563,7 @@ template <typename Iter1, typename Iter2>
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
 [[nodiscard]] constexpr auto operator>=(etl::reverse_iterator<Iter1> const& lhs,
-    etl::reverse_iterator<Iter2> const& rhs)
-    -> bool
+    etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() >= rhs.base();
 }
@@ -623,16 +615,16 @@ public:
     /// (insert) the value into the underlying container.
     constexpr auto operator*() -> back_insert_iterator& { return *this; }
 
-    /// \brief Does nothing. These operator overloads are provided to satisfy the
-    /// requirements of LegacyOutputIterator. They make it possible for the
-    /// expressions *iter++=value and *++iter=value to be used to output (insert)
-    /// a value into the underlying container.
+    /// \brief Does nothing. These operator overloads are provided to satisfy
+    /// the requirements of LegacyOutputIterator. They make it possible for the
+    /// expressions *iter++=value and *++iter=value to be used to output
+    /// (insert) a value into the underlying container.
     constexpr auto operator++() -> back_insert_iterator& { return *this; }
 
-    /// \brief Does nothing. These operator overloads are provided to satisfy the
-    /// requirements of LegacyOutputIterator. They make it possible for the
-    /// expressions *iter++=value and *++iter=value to be used to output (insert)
-    /// a value into the underlying container.
+    /// \brief Does nothing. These operator overloads are provided to satisfy
+    /// the requirements of LegacyOutputIterator. They make it possible for the
+    /// expressions *iter++=value and *++iter=value to be used to output
+    /// (insert) a value into the underlying container.
     constexpr auto operator++(int) -> back_insert_iterator { return *this; }
 
 private:
@@ -703,16 +695,16 @@ public:
     /// (insert) the value into the underlying container.
     constexpr auto operator*() -> front_insert_iterator& { return *this; }
 
-    /// \brief Does nothing. These operator overloads are provided to satisfy the
-    /// requirements of LegacyOutputIterator. They make it possible for the
-    /// expressions *iter++=value and *++iter=value to be used to output (insert)
-    /// a value into the underlying container.
+    /// \brief Does nothing. These operator overloads are provided to satisfy
+    /// the requirements of LegacyOutputIterator. They make it possible for the
+    /// expressions *iter++=value and *++iter=value to be used to output
+    /// (insert) a value into the underlying container.
     constexpr auto operator++() -> front_insert_iterator& { return *this; }
 
-    /// \brief Does nothing. These operator overloads are provided to satisfy the
-    /// requirements of LegacyOutputIterator. They make it possible for the
-    /// expressions *iter++=value and *++iter=value to be used to output (insert)
-    /// a value into the underlying container.
+    /// \brief Does nothing. These operator overloads are provided to satisfy
+    /// the requirements of LegacyOutputIterator. They make it possible for the
+    /// expressions *iter++=value and *++iter=value to be used to output
+    /// (insert) a value into the underlying container.
     constexpr auto operator++(int) -> front_insert_iterator { return *this; }
 };
 

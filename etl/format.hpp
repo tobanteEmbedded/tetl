@@ -53,8 +53,8 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
     auto const slices = detail::split_at_next_argument(fmt);
     detail::format_escaped_sequences(slices.first, ctx);
 
-    // Save rest of format string. Supress warning if format_to was called without
-    // arguments.
+    // Save rest of format string. Supress warning if format_to was called
+    // without arguments.
     auto rest = slices.second;
     ::etl::ignore_unused(rest);
 
@@ -144,11 +144,12 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
     }
 
     if (indices.size() > 0) {
-        [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val) {
-            ::etl::ignore_unused(n);
-            // TETL_ASSERT((long)pos < n);
-            output[pos] = val;
-        };
+        [[maybe_unused]] auto replaceCharAt
+            = [n](auto output, auto pos, char val) {
+                  ::etl::ignore_unused(n);
+                  // TETL_ASSERT((long)pos < n);
+                  output[pos] = val;
+              };
 
         [[maybe_unused]] typename decltype(indices)::size_type i {};
         (replaceCharAt(out, indices[i++], args), ...);

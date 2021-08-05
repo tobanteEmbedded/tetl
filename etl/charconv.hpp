@@ -29,6 +29,8 @@
 #include "etl/cstdint.hpp"
 #include "etl/system_error.hpp"
 
+#include "etl/detail/string_conversion.hpp"
+
 namespace etl {
 /// \brief A BitmaskType used to specify floating-point formatting for to_chars
 /// and from_chars.
@@ -43,28 +45,41 @@ enum class chars_format : etl::uint8_t {
 /// \brief Primitive numerical output conversion.
 /// \module Strings
 struct to_chars_result {
-    char* ptr;
+    char const* ptr;
     etl::errc ec;
 
-    friend auto operator==(to_chars_result const& lhs,
-        to_chars_result const& rhs) noexcept -> bool
+    [[nodiscard]] friend constexpr auto operator==(
+        to_chars_result const& l, to_chars_result const& r) noexcept -> bool
     {
-        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+        return l.ptr == r.ptr && l.ec == r.ec;
     }
 };
 
 /// \brief Primitive numerical input conversion
 /// \module Strings
 struct from_chars_result {
-    char* ptr;
+    char const* ptr;
     etl::errc ec;
 
-    friend auto operator==(from_chars_result const& lhs,
-        from_chars_result const& rhs) noexcept -> bool
+    [[nodiscard]] friend constexpr auto operator==(
+        from_chars_result const& l, from_chars_result const& r) noexcept -> bool
     {
-        return lhs.ptr == rhs.ptr && lhs.ec == rhs.ec;
+        return l.ptr == r.ptr && l.ec == r.ec;
     }
 };
+
+/// \brief Analyzes the character sequence [first,last) for a pattern described
+/// below. If no characters match the pattern or if the value obtained by
+/// parsing the matched characters is not representable in the type of value,
+/// value is unmodified, otherwise the characters matching the pattern are
+/// interpreted as a text representation of an arithmetic value, which is stored
+/// in value.
+[[nodiscard]] constexpr auto from_chars(char const* first, char const* last,
+    char& value, int base = 10) -> from_chars_result
+{
+    value = ::etl::detail::ascii_to_integer_base10<char>(first);
+    return from_chars_result {};
+}
 
 } // namespace etl
 

@@ -42,8 +42,8 @@ namespace etl {
 template <size_t N>
 struct bitset {
 public:
-    /// \brief The primary use of etl::bitset::reference is to provide an l-value
-    /// that can be returned from operator[].
+    /// \brief The primary use of etl::bitset::reference is to provide an
+    /// l-value that can be returned from operator[].
     ///
     /// \details This class is used as a proxy object to allow users to interact
     /// with individual bits of a bitset, since standard C++ types (like
@@ -106,14 +106,16 @@ public:
     constexpr bitset() noexcept = default;
 
     /// \brief Constructs a bitset, initializing the first (rightmost, least
-    /// significant) M bit positions to the corresponding bit values of val, where
-    /// M is the smaller of the number of bits in an unsigned long long and the
-    /// number of bits N in the bitset being constructed. If M is less than N (the
-    /// bitset is longer than 64 bits, for typical implementations of unsigned
-    /// long long), the remaining bit positions are initialized to zeroes.
+    /// significant) M bit positions to the corresponding bit values of val,
+    /// where M is the smaller of the number of bits in an unsigned long long
+    /// and the number of bits N in the bitset being constructed. If M is less
+    /// than N (the bitset is longer than 64 bits, for typical implementations
+    /// of unsigned long long), the remaining bit positions are initialized to
+    /// zeroes.
     constexpr bitset(unsigned long long val) noexcept
     {
-        auto const n = min<size_t>(numeric_limits<decltype(val)>::digits, size());
+        auto const n
+            = min<size_t>(numeric_limits<decltype(val)>::digits, size());
         for (size_t i = 0; i < n; ++i) {
             if (((val >> i) & 1U) == 1U) { set(i); }
         }
@@ -242,8 +244,8 @@ public:
         return reference(&byte, offset);
     }
 
-    /// \brief Returns the value of the bit at the position pos. Perfoms no bounds
-    /// checking.
+    /// \brief Returns the value of the bit at the position pos. Perfoms no
+    /// bounds checking.
     ///
     /// \param pos Index of the bit.
     [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
@@ -251,8 +253,8 @@ public:
         return test(pos);
     }
 
-    /// \brief Returns the value of the bit at the position pos. Perfoms no bounds
-    /// checking.
+    /// \brief Returns the value of the bit at the position pos. Perfoms no
+    /// bounds checking.
     ///
     /// \param pos Index of the bit.
     [[nodiscard]] constexpr auto test(size_t const pos) const -> bool
@@ -284,7 +286,9 @@ public:
     [[nodiscard]] constexpr auto count() const noexcept -> size_t
     {
         size_t count = 0;
-        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t { 1 } : 0; }
+        for (size_t i = 0; i < size(); ++i) {
+            count += test(i) ? size_t { 1 } : 0;
+        }
         return count;
     }
 
@@ -309,27 +313,33 @@ public:
         return !(*this == rhs);
     }
 
-    /// \brief Sets the bits to the result of binary AND on corresponding pairs of
-    /// bits of *this and other.
+    /// \brief Sets the bits to the result of binary AND on corresponding pairs
+    /// of bits of *this and other.
     constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] &= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            bits_[i] &= other.bits_[i];
+        }
         return *this;
     }
 
-    /// \brief Sets the bits to the result of binary OR on corresponding pairs of
-    /// bits of *this and other.
+    /// \brief Sets the bits to the result of binary OR on corresponding pairs
+    /// of bits of *this and other.
     constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] |= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            bits_[i] |= other.bits_[i];
+        }
         return *this;
     }
 
-    /// \brief Sets the bits to the result of binary XOR on corresponding pairs of
-    /// bits of *this and other.
+    /// \brief Sets the bits to the result of binary XOR on corresponding pairs
+    /// of bits of *this and other.
     constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] ^= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            bits_[i] ^= other.bits_[i];
+        }
         return *this;
     }
 

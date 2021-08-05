@@ -32,8 +32,7 @@
 #include <stdlib.h> // for EXIT_SUCCESS
 
 struct Person {
-    constexpr Person(int a, int e) noexcept
-        : age { a }, experience { e } { }
+    constexpr Person(int a, int e) noexcept : age { a }, experience { e } { }
     int age {};
     int experience {};
 };

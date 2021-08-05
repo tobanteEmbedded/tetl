@@ -27,8 +27,8 @@
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     etl::map<TestType, TestType, 4> test {};
 
@@ -50,8 +50,8 @@ TEMPLATE_TEST_CASE("map: construct", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: copy construct", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto original = etl::map<TestType, TestType, 4> {};
     original.emplace(TestType { 1 }, TestType { 42 });
@@ -63,8 +63,8 @@ TEMPLATE_TEST_CASE("map: copy construct", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: move construct", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto original = etl::map<TestType, TestType, 4> {};
     original.emplace(TestType { 1 }, TestType { 42 });
@@ -78,8 +78,8 @@ TEMPLATE_TEST_CASE("map: move construct", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: operator=", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     SECTION("Copy")
     {
@@ -109,12 +109,11 @@ TEMPLATE_TEST_CASE("map: operator=", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     struct Value {
-        Value(int& ctor, int& d)
-            : dtor { &d } { ctor++; }
+        Value(int& ctor, int& d) : dtor { &d } { ctor++; }
         ~Value() { (*dtor)++; }
 
         int* dtor;
@@ -143,10 +142,14 @@ TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t,
         auto numDtors = 0;
 
         auto map = etl::map<TestType, Value, 4> {};
-        map.emplace(etl::make_pair(TestType { 1 }, Value { numCtors, numDtors }));
-        map.emplace(etl::make_pair(TestType { 2 }, Value { numCtors, numDtors }));
-        map.emplace(etl::make_pair(TestType { 3 }, Value { numCtors, numDtors }));
-        map.emplace(etl::make_pair(TestType { 4 }, Value { numCtors, numDtors }));
+        map.emplace(
+            etl::make_pair(TestType { 1 }, Value { numCtors, numDtors }));
+        map.emplace(
+            etl::make_pair(TestType { 2 }, Value { numCtors, numDtors }));
+        map.emplace(
+            etl::make_pair(TestType { 3 }, Value { numCtors, numDtors }));
+        map.emplace(
+            etl::make_pair(TestType { 4 }, Value { numCtors, numDtors }));
         REQUIRE(map.size() == 4);
 
         REQUIRE(numCtors == 4);
@@ -156,8 +159,8 @@ TEMPLATE_TEST_CASE("map: destruct", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t, float, double, long double)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 {
     auto map = etl::map<TestType, TestType, 4> {};
     map.insert({ TestType { 1 }, TestType { 125 } });
@@ -171,8 +174,8 @@ TEMPLATE_TEST_CASE("map: at", "[map]", etl::uint8_t, etl::int8_t, etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("map: operator[]", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     map.insert({ 1, TestType { 125 } });
@@ -187,8 +190,8 @@ TEMPLATE_TEST_CASE("map: operator[]", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: begin/cbegin", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto m = etl::map<TestType, TestType, 4> {};
     m.insert({ TestType { 1 }, TestType { 125 } });
@@ -197,8 +200,8 @@ TEMPLATE_TEST_CASE("map: begin/cbegin", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: end/cend", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto m = etl::map<TestType, TestType, 4> {};
     m.insert({ TestType { 1 }, TestType { 125 } });
@@ -222,8 +225,8 @@ TEST_CASE("map: ranged-based-for", "[map]")
 }
 
 TEMPLATE_TEST_CASE("map: empty", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     REQUIRE(map.empty() == true);
@@ -232,8 +235,8 @@ TEMPLATE_TEST_CASE("map: empty", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: size", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     REQUIRE(map.size() == 0);
@@ -246,8 +249,8 @@ TEMPLATE_TEST_CASE("map: size", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: count/contains", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     map.insert({ 1, TestType { 125 } });
@@ -262,8 +265,8 @@ TEMPLATE_TEST_CASE("map: count/contains", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: clear", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     map.insert({ 1, TestType { 100 } });
@@ -280,9 +283,8 @@ TEMPLATE_TEST_CASE("map: clear", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: insert(value_type const&)", "[map]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto map  = etl::map<int, TestType, 4> {};
     auto pair = etl::pair<int, TestType> { 1, TestType { 100 } };
@@ -297,9 +299,8 @@ TEMPLATE_TEST_CASE("map: insert(value_type const&)", "[map]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("map: insert(value_type &&)", "[map]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
 
@@ -320,8 +321,8 @@ TEMPLATE_TEST_CASE("map: insert(value_type &&)", "[map]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     auto map = etl::map<int, TestType, 4> {};
     REQUIRE(map.size() == 0);
@@ -345,9 +346,8 @@ TEMPLATE_TEST_CASE("map: emplace()", "[map]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("map: static_map<int, TestType>", "[map]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 {
     etl::static_map<int, TestType, 16> map {};
     REQUIRE(map.empty());

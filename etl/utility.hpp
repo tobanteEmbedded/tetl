@@ -342,14 +342,13 @@ struct pair {
 
     /// \brief Default constructor. Value-initializes both elements of the pair,
     /// first and second.
-    TETL_REQUIRES(is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
-    constexpr pair()
-        : first {}, second {} { }
+    TETL_REQUIRES(
+        is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
+    constexpr pair() : first {}, second {} { }
 
     /// \brief Initializes first with x and second with y.
     TETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
-    constexpr pair(T1 const& t1, T2 const& t2)
-        : first { t1 }, second { t2 } { }
+    constexpr pair(T1 const& t1, T2 const& t2) : first { t1 }, second { t2 } { }
 
     /// \brief Initializes first with etl::forward<U1>(x) and second with
     /// etl::forward<U2>(y).
@@ -366,7 +365,8 @@ struct pair {
         TETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
                 is_constructible_v<second_type, U2 const&>)>
     constexpr pair(pair<U1, U2> const& p)
-        : first { static_cast<T1>(p.first) }, second { static_cast<T2>(p.second) }
+        : first { static_cast<T1>(p.first) }
+        , second { static_cast<T2>(p.second) }
     {
     }
 
@@ -380,8 +380,8 @@ struct pair {
     {
     }
 
-    /// \brief Copy constructor is defaulted, and is constexpr if copying of both
-    /// elements satisfies the requirements on constexpr functions.
+    /// \brief Copy constructor is defaulted, and is constexpr if copying of
+    /// both elements satisfies the requirements on constexpr functions.
     constexpr pair(pair const& p) = default;
 
     /// \brief Move constructor is defaulted, and is constexpr if moving of both
@@ -428,8 +428,9 @@ struct pair {
         return *this;
     }
 
-    constexpr void swap(pair& other) noexcept((
-        is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+    constexpr void swap(pair& other) noexcept(
+        (is_nothrow_swappable_v<
+             first_type> and is_nothrow_swappable_v<second_type>))
     {
         using ::etl::swap;
         swap(first, other.first);
@@ -449,8 +450,8 @@ pair(T1, T2) -> pair<T1, T2>;
 
 /// \brief Swaps the contents of x and y. Equivalent to x.swap(y).
 template <typename T1, typename T2>
-constexpr auto swap(pair<T1, T2>& lhs,
-    pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(
+    noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

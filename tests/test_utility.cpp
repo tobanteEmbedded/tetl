@@ -27,8 +27,8 @@
 using etl::is_same_v;
 
 TEMPLATE_TEST_CASE("utility: exchange", "[utility]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 
 {
     auto original = TestType { 42 };
@@ -42,8 +42,8 @@ TEMPLATE_TEST_CASE("utility: exchange", "[utility]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("utility: as_const", "[utility]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 
 {
     auto original = TestType { 42 };
@@ -57,8 +57,7 @@ TEMPLATE_TEST_CASE("utility: as_const", "[utility]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE(etl::cmp_equal(0, TestType { 0 }));
@@ -74,8 +73,7 @@ TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE(etl::cmp_not_equal(-1, TestType { 0 }));
@@ -91,8 +89,7 @@ TEMPLATE_TEST_CASE("utility: cmp_not_equal", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE(etl::cmp_less(-1, TestType { 0 }));
@@ -108,8 +105,7 @@ TEMPLATE_TEST_CASE("utility: cmp_less", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE_FALSE(etl::cmp_greater(-1, TestType { 0 }));
@@ -125,8 +121,7 @@ TEMPLATE_TEST_CASE("utility: cmp_greater", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE(etl::cmp_less_equal(-1, TestType { 0 }));
@@ -143,8 +138,7 @@ TEMPLATE_TEST_CASE("utility: cmp_less_equal", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE_FALSE(etl::cmp_greater_equal(-1, TestType { 0 }));
@@ -162,8 +156,7 @@ TEMPLATE_TEST_CASE("utility: cmp_greater_equal", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility: in_range", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
 {
     REQUIRE(etl::in_range<TestType>(0));
@@ -179,8 +172,8 @@ TEMPLATE_TEST_CASE("utility: in_range unsigned", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: default", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t, float, double, long double)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 
 {
     SECTION("mutable")
@@ -221,8 +214,8 @@ TEMPLATE_TEST_CASE("utility/pair: default", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint16_t,
-    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
-    etl::int64_t, float, double, long double)
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
 
 {
     auto p1 = etl::pair { TestType { 0 }, 143.0F };
@@ -245,9 +238,8 @@ TEMPLATE_TEST_CASE("utility/pair: ctad", "[utility]", etl::uint16_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     SECTION("same types")
@@ -268,7 +260,8 @@ TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t,
         auto other = etl::pair<TestType, double> { p };
 
         STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
-        STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
+        STATIC_REQUIRE_FALSE(
+            is_same_v<decltype(other.second), decltype(p.second)>);
 
         REQUIRE(other.first == p.first);
         REQUIRE(other.second == p.second);
@@ -276,9 +269,8 @@ TEMPLATE_TEST_CASE("utility/pair: copy construct", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: move construct", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     SECTION("same types")
@@ -299,7 +291,8 @@ TEMPLATE_TEST_CASE("utility/pair: move construct", "[utility]", etl::uint8_t,
         auto other = etl::pair<TestType, double> { etl::move(p) };
 
         STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
-        STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
+        STATIC_REQUIRE_FALSE(
+            is_same_v<decltype(other.second), decltype(p.second)>);
 
         REQUIRE(other.first == p.first);
         REQUIRE(other.second == p.second);
@@ -307,9 +300,8 @@ TEMPLATE_TEST_CASE("utility/pair: move construct", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: copy assign", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto p = etl::make_pair(TestType { 0 }, 143.0F);
@@ -326,7 +318,8 @@ TEMPLATE_TEST_CASE("utility/pair: copy assign", "[utility]", etl::uint8_t,
         other      = p;
 
         STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
-        STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
+        STATIC_REQUIRE_FALSE(
+            is_same_v<decltype(other.second), decltype(p.second)>);
 
         REQUIRE(other.first == p.first);
         REQUIRE(other.second == (float)p.second);
@@ -334,9 +327,8 @@ TEMPLATE_TEST_CASE("utility/pair: copy assign", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto p = etl::make_pair(TestType { 0 }, 143.0F);
@@ -353,7 +345,8 @@ TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t,
         other      = etl::move(p);
 
         STATIC_REQUIRE(is_same_v<decltype(other.first), decltype(p.first)>);
-        STATIC_REQUIRE_FALSE(is_same_v<decltype(other.second), decltype(p.second)>);
+        STATIC_REQUIRE_FALSE(
+            is_same_v<decltype(other.second), decltype(p.second)>);
 
         REQUIRE(other.first == p.first);
         REQUIRE(other.second == (float)p.second);
@@ -361,9 +354,8 @@ TEMPLATE_TEST_CASE("utility/pair: move assign", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: deduction guide", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     TestType a[2];
@@ -375,9 +367,8 @@ TEMPLATE_TEST_CASE("utility/pair: deduction guide", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto p = etl::make_pair(TestType { 0 }, 143.0F);
@@ -389,8 +380,8 @@ TEMPLATE_TEST_CASE("utility/pair: make_pair", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: swap", "[utility]", etl::uint8_t, etl::int8_t,
-    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 
 {
     using pair_type = etl::pair<TestType, int>;
@@ -425,9 +416,8 @@ TEMPLATE_TEST_CASE("utility/pair: swap", "[utility]", etl::uint8_t, etl::int8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator==", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -442,9 +432,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator==", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator!=", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -459,9 +448,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator!=", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator<", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -476,9 +464,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator<", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator<=", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -493,9 +480,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator<=", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator>", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -510,9 +496,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator>", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: operator>=", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     auto const p1 = etl::make_pair(TestType { 42 }, 143.0F);
@@ -527,9 +512,8 @@ TEMPLATE_TEST_CASE("utility/pair: operator>=", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: tuple_size", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     STATIC_REQUIRE(etl::tuple_size<etl::pair<TestType, TestType>>::value == 2);
@@ -543,9 +527,8 @@ TEMPLATE_TEST_CASE("utility/pair: tuple_size", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: tuple_element", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     using etl::tuple_element_t;
@@ -555,9 +538,8 @@ TEMPLATE_TEST_CASE("utility/pair: tuple_element", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility/pair: get<Index>", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double,
-    long double)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
 
 {
     using etl::pair;
@@ -599,8 +581,8 @@ TEMPLATE_TEST_CASE("utility/pair: get<Index>", "[utility]", etl::uint8_t,
 }
 
 TEMPLATE_TEST_CASE("utility: integer_sequence", "[utility]", etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t)
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t)
 
 {
     using etl::is_same_v;

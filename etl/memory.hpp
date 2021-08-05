@@ -85,7 +85,9 @@ constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
-    for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
+    for (; n > 0; (void)++first, --n) {
+        etl::destroy_at(etl::addressof(*first));
+    }
     return first;
 }
 
@@ -104,11 +106,11 @@ struct pointer_traits {
     /// The type ...
     using difference_type = typename Ptr::difference_type;
 
-    /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
-    /// pointer") to its argument.
-    /// \param r  Reference to an object of type element_type&.
-    /// \returns A pointer to r, of the type pointer_traits::pointer.
-    /// \notes [cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+    /// \brief Constructs a dereferenceable pointer or pointer-like object
+    /// ("fancy pointer") to its argument. \param r  Reference to an object of
+    /// type element_type&. \returns A pointer to r, of the type
+    /// pointer_traits::pointer. \notes
+    /// [cppreference.com/w/cpp/memory/pointer_traits/pointer_to
     /// ](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to )
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
     {
@@ -134,9 +136,9 @@ struct pointer_traits<T*> {
     template <typename U>
     using rebind = U*;
 
-    /// \brief Constructs a dereferenceable pointer or pointer-like object ("fancy
-    /// pointer") to its argument. \param r  Reference to an object of type
-    /// element_type&. \returns A pointer to r, of the type
+    /// \brief Constructs a dereferenceable pointer or pointer-like object
+    /// ("fancy pointer") to its argument. \param r  Reference to an object of
+    /// type element_type&. \returns A pointer to r, of the type
     /// pointer_traits::pointer. \notes
     /// [cppreference.com/w/cpp/memory/pointer_traits/pointer_to](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to)
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
@@ -162,7 +164,8 @@ namespace detail {
     };
 
     template <typename Type, typename Alloc>
-    struct uses_allocator_impl<Type, Alloc, void_t<typename Type::allocator_type>>
+    struct uses_allocator_impl<Type, Alloc,
+        void_t<typename Type::allocator_type>>
         : is_convertible<Alloc, typename Type::allocator_type>::type {
     };
 } // namespace detail
@@ -192,12 +195,10 @@ public:
     small_ptr() = default;
 
     /// \brief Construct from nullptr.
-    small_ptr(nullptr_t null)
-        : value_ { 0 } { ignore_unused(null); }
+    small_ptr(nullptr_t null) : value_ { 0 } { ignore_unused(null); }
 
     /// \brief Construct from raw pointer.
-    small_ptr(Type* ptr)
-        : value_ { compress(ptr) } { }
+    small_ptr(Type* ptr) : value_ { compress(ptr) } { }
 
     /// \brief Returns a raw pointer to Type.
     [[nodiscard]] auto get() noexcept -> Type*
@@ -380,7 +381,8 @@ public:
     static constexpr auto free_bits = pointer_traits::free_bits;
 
     /// \brief The bits that come from the pointer.
-    static constexpr auto ptr_mask = ~(uintptr_t)(((intptr_t)1 << free_bits) - 1);
+    static constexpr auto ptr_mask
+        = ~(uintptr_t)(((intptr_t)1 << free_bits) - 1);
 
     /// \brief The number of low bits that we reserve for other uses; and keep
     /// zero.
@@ -404,8 +406,8 @@ public:
         return (value >> int_shift) & int_mask;
     }
 
-    [[nodiscard]] static auto update_ptr(intptr_t originalValue, pointer_type ptr)
-        -> intptr_t
+    [[nodiscard]] static auto update_ptr(
+        intptr_t originalValue, pointer_type ptr) -> intptr_t
     {
         // Preserve all low bits, just update the pointer.
         auto* voidPtr    = pointer_traits::get_as_void_pointer(ptr);
@@ -413,8 +415,8 @@ public:
         return pointerWord | (originalValue & ~ptr_mask);
     }
 
-    [[nodiscard]] static auto update_int(intptr_t originalValue, intptr_t integer)
-        -> intptr_t
+    [[nodiscard]] static auto update_int(
+        intptr_t originalValue, intptr_t integer) -> intptr_t
     {
         // Preserve all bits other than the ones we are updating.
         auto const integerWord = static_cast<intptr_t>(integer);
@@ -464,7 +466,8 @@ public:
 
     void set_int(int_type intValue)
     {
-        value_ = pointer_info::update_int(value_, static_cast<intptr_t>(intValue));
+        value_
+            = pointer_info::update_int(value_, static_cast<intptr_t>(intValue));
     }
 
     [[nodiscard]] auto get_pointer() const -> pointer_type
@@ -479,7 +482,8 @@ public:
 
     void set_ptr_and_int(pointer_type pointerValue, int_type intValue)
     {
-        value_ = pointer_info::update_int(pointer_info::update_ptr(0, pointerValue),
+        value_ = pointer_info::update_int(
+            pointer_info::update_ptr(0, pointerValue),
             static_cast<intptr_t>(intValue));
     }
 
@@ -507,46 +511,46 @@ public:
         return p;
     }
 
-    /// \brief Allow pointer_int_pairs to be created from const void * if and only
-    /// if the pointer type could be created from a const void *.
+    /// \brief Allow pointer_int_pairs to be created from const void * if and
+    /// only if the pointer type could be created from a const void *.
     static auto get_from_opaque_value(const void* v) -> pointer_int_pair
     {
         (void)pointer_traits::get_from_void_pointer(v);
         return get_from_opaque_value(const_cast<void*>(v));
     }
 
-    [[nodiscard]] friend auto operator==(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator==(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ == rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator!=(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator!=(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ != rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator<(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator<(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ < rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator>(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator>(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ > rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator<=(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator<=(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ <= rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator>=(pointer_int_pair const& lhs,
-        pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator>=(
+        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ >= rhs.value_;
     }
@@ -562,8 +566,8 @@ private:
 
 template <typename PtrT, unsigned IntBits, typename IntT, typename PtrTraits>
 struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>> {
-    static auto
-    get_as_void_pointer(const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
+    static auto get_as_void_pointer(
+        const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
     {
         return p.get_opaque_value();
     }
@@ -612,7 +616,8 @@ public:
     {
     }
 
-    template <typename U, TETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
+    template <typename U,
+        TETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
     auto operator()(U* arrayPtr) const noexcept -> void
     {
         delete[] arrayPtr;
@@ -633,8 +638,8 @@ private:
 /// the buffer is too small, the function does nothing and returns nullptr.
 ///
 /// The behavior is undefined if alignment is not a power of two.
-[[nodiscard]] inline auto align(size_t alignment, size_t size, void*& ptr,
-    size_t& space) noexcept -> void*
+[[nodiscard]] inline auto align(
+    size_t alignment, size_t size, void*& ptr, size_t& space) noexcept -> void*
 {
     auto off = static_cast<size_t>(bit_cast<uintptr_t>(ptr) & (alignment - 1));
     if (off != 0) { off = alignment - off; }

@@ -75,8 +75,8 @@ struct char_traits<char> {
     /// \brief Compares the first count characters of the character strings s1
     /// and s2. The comparison is done lexicographically. If count is zero,
     /// strings are considered equal.
-    static constexpr auto compare(char_type const* lhs, char_type const* rhs,
-        size_t count) -> int
+    static constexpr auto compare(
+        char_type const* lhs, char_type const* rhs, size_t count) -> int
     {
         if (count == 0) { return 0; }
 
@@ -88,17 +88,18 @@ struct char_traits<char> {
         return 0;
     }
 
-    /// \brief Returns the length of the character sequence pointed to by s, that
-    /// is, the position of the terminating null character (CharT()).
+    /// \brief Returns the length of the character sequence pointed to by s,
+    /// that is, the position of the terminating null character (CharT()).
     static constexpr auto length(char_type const* str) -> size_t
     {
         return etl::strlen(str);
     }
 
-    /// \brief Searches for character ch within the first count characters of the
-    /// sequence pointed to by p.
+    /// \brief Searches for character ch within the first count characters of
+    /// the sequence pointed to by p.
     ///
-    /// \returns A pointer to the first character in the range specified by [p, p
+    /// \returns A pointer to the first character in the range specified by [p,
+    /// p
     /// + count) that compares equal to ch, or a null pointer if not found.
     static constexpr auto find(char_type const* str, size_t count,
         char_type const& token) -> char_type const*
@@ -114,8 +115,8 @@ struct char_traits<char> {
     /// src to the character string pointed to by dest. Performs correctly even
     /// if the copied character ranges overlap, i.e. src is in [dest, dest +
     /// count).
-    static constexpr auto move(char_type* dest, char_type const* source,
-        size_t count) -> char_type*
+    static constexpr auto move(
+        char_type* dest, char_type const* source, size_t count) -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
         return dest;
@@ -125,8 +126,8 @@ struct char_traits<char> {
     /// src to the character string pointed to by dest. Formally, for each i in
     /// [0, count), performs assign(src[i], dest[i]). The behavior is undefined
     /// if copied character ranges overlap, i.e. src is in [dest, dest + count).
-    static constexpr auto copy(char_type* dest, char_type const* source,
-        size_t count) -> char_type*
+    static constexpr auto copy(
+        char_type* dest, char_type const* source, size_t count) -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
         return dest;
@@ -144,8 +145,8 @@ struct char_traits<char> {
     /// \brief Converts a value of int_type to char_type. If there are no
     /// equivalent value (such as when c is a copy of the eof() value), the
     /// result is unspecified. Formally, returns the value x such that
-    /// char_type<char>::eq_int_type(c, char_type<char>::to_int_type(x)) is true,
-    /// and an unspecified value if no such x exists.
+    /// char_type<char>::eq_int_type(c, char_type<char>::to_int_type(x)) is
+    /// true, and an unspecified value if no such x exists.
     static constexpr auto to_char_type(int_type c) noexcept -> char_type;
 
     /// \brief Converts a value of char_type to int_type.
@@ -158,7 +159,8 @@ struct char_traits<char> {
     ///
     /// \notes
     /// [cppreference.com/w/cpp/string/char_traits/eq_int_type](https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type)
-    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
+    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept
+        -> bool
     {
         if (lhs == rhs) { return true; }
         if ((lhs == eof()) && (rhs == eof())) { return true; }
@@ -168,8 +170,8 @@ struct char_traits<char> {
 
     /// \brief Returns a value not equivalent to any valid value of type
     /// char_type. Formally, returns a value e such that
-    /// char_type<char>::eq_int_type(e, char_type<char>::to_int_type(c)) is false
-    /// for all values c
+    /// char_type<char>::eq_int_type(e, char_type<char>::to_int_type(c)) is
+    /// false for all values c
     static constexpr auto eof() noexcept -> int_type { return -1; }
 
     /// \brief Checks whether e is not equivalent to eof value.

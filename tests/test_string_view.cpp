@@ -67,7 +67,8 @@ TEST_CASE("string_view: string_view", "[string_view]")
     REQUIRE(etl::string_view { input, etl::strlen(input) }.size() == expected);
 
     REQUIRE(etl::string_view { input }.length() == expected);
-    REQUIRE(etl::string_view { input, etl::strlen(input) }.length() == expected);
+    REQUIRE(
+        etl::string_view { input, etl::strlen(input) }.length() == expected);
 
     auto const sv   = etl::string_view { input };
     auto const copy = etl::string_view(begin(sv), end(sv));
@@ -668,11 +669,15 @@ TEST_CASE("string_view: operator==", "[string_view]")
     REQUIRE((etl::string_view { lhs } == etl::string_view { rhs }) == equal);
     REQUIRE((etl::string_view { rhs } == etl::string_view { lhs }) == equal);
 
-    REQUIRE((etl::string_view { lhs } == etl::static_string<16> { rhs }) == equal);
-    REQUIRE((etl::string_view { rhs } == etl::static_string<16> { lhs }) == equal);
+    REQUIRE(
+        (etl::string_view { lhs } == etl::static_string<16> { rhs }) == equal);
+    REQUIRE(
+        (etl::string_view { rhs } == etl::static_string<16> { lhs }) == equal);
 
-    REQUIRE((etl::static_string<16> { lhs } == etl::string_view { rhs }) == equal);
-    REQUIRE((etl::static_string<16> { rhs } == etl::string_view { lhs }) == equal);
+    REQUIRE(
+        (etl::static_string<16> { lhs } == etl::string_view { rhs }) == equal);
+    REQUIRE(
+        (etl::static_string<16> { rhs } == etl::string_view { lhs }) == equal);
 
     REQUIRE_FALSE(etl::string_view { lhs } == "test"_sv);
     REQUIRE_FALSE("test"_sv == etl::string_view { lhs });
@@ -695,11 +700,15 @@ TEST_CASE("string_view: operator!=", "[string_view]")
     REQUIRE((etl::string_view { lhs } != etl::string_view { rhs }) == equal);
     REQUIRE((etl::string_view { rhs } != etl::string_view { lhs }) == equal);
 
-    REQUIRE((etl::string_view { lhs } != etl::static_string<16> { rhs }) == equal);
-    REQUIRE((etl::string_view { rhs } != etl::static_string<16> { lhs }) == equal);
+    REQUIRE(
+        (etl::string_view { lhs } != etl::static_string<16> { rhs }) == equal);
+    REQUIRE(
+        (etl::string_view { rhs } != etl::static_string<16> { lhs }) == equal);
 
-    REQUIRE((etl::static_string<16> { lhs } != etl::string_view { rhs }) == equal);
-    REQUIRE((etl::static_string<16> { rhs } != etl::string_view { lhs }) == equal);
+    REQUIRE(
+        (etl::static_string<16> { lhs } != etl::string_view { rhs }) == equal);
+    REQUIRE(
+        (etl::static_string<16> { rhs } != etl::string_view { lhs }) == equal);
 
     REQUIRE(etl::string_view { lhs } != "test"_sv);
     REQUIRE("test"_sv != etl::string_view { lhs });

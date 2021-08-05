@@ -67,8 +67,8 @@ constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
 ///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-constexpr auto swap_ranges(ForwardIt1 first1, ForwardIt1 last1,
-    ForwardIt2 first2) -> ForwardIt2
+constexpr auto swap_ranges(
+    ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) -> ForwardIt2
 {
     while (first1 != last1) {
         iter_swap(first1, first2);
@@ -99,7 +99,9 @@ template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination)
     -> OutputIt
 {
-    for (; first != last; ++first, ++destination) { *destination = move(*first); }
+    for (; first != last; ++first, ++destination) {
+        *destination = move(*first);
+    }
     return destination;
 }
 
@@ -119,8 +121,8 @@ constexpr auto move(InputIt first, InputIt last, OutputIt destination)
 ///
 /// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
-constexpr auto move_backward(BidirIt1 first, BidirIt1 last,
-    BidirIt2 destination) -> BidirIt2
+constexpr auto move_backward(
+    BidirIt1 first, BidirIt1 last, BidirIt2 destination) -> BidirIt2
 {
     for (; first != last;) { *(--destination) = move(*--last); }
     return destination;
@@ -311,8 +313,7 @@ template <typename InputIt, typename Predicate>
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, Predicate pred)
-    -> pair<InputIt1, InputIt2>
+    InputIt2 first2, Predicate pred) -> pair<InputIt1, InputIt2>
 {
     for (; first1 != last1; ++first1, ++first2) {
         if (!pred(*first1, *first2)) { break; }
@@ -324,8 +325,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 /// \group mismatch
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2)
-    -> pair<InputIt1, InputIt2>
+    InputIt2 first2) -> pair<InputIt1, InputIt2>
 {
     return mismatch(first1, last1, first2, equal_to<> {});
 }
@@ -333,9 +333,7 @@ template <typename InputIt1, typename InputIt2>
 /// \group mismatch
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2,
-    Predicate pred)
-    -> pair<InputIt1, InputIt2>
+    InputIt2 first2, InputIt2 last2, Predicate pred) -> pair<InputIt1, InputIt2>
 {
     for (; first1 != last1 && first2 != last2; ++first1, ++first2) {
         if (!pred(*first1, *first2)) { break; }
@@ -347,8 +345,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 /// \group mismatch
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2)
-    -> pair<InputIt1, InputIt2>
+    InputIt2 first2, InputIt2 last2) -> pair<InputIt1, InputIt2>
 {
     return mismatch(first1, last1, first2, last2, equal_to<> {});
 }
@@ -367,8 +364,8 @@ template <typename InputIt1, typename InputIt2>
 /// \group adjacent_find
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last,
-    Predicate pred) -> ForwardIt
+[[nodiscard]] constexpr auto adjacent_find(
+    ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -402,8 +399,8 @@ template <typename ForwardIt>
 /// \group find
 /// \module Algorithm
 template <typename InputIt, typename T>
-[[nodiscard]] constexpr auto find(InputIt first, InputIt last,
-    T const& value) noexcept -> InputIt
+[[nodiscard]] constexpr auto find(
+    InputIt first, InputIt last, T const& value) noexcept -> InputIt
 {
     for (; first != last; ++first) {
         if (*first == value) { return first; }
@@ -423,8 +420,8 @@ template <typename InputIt, typename T>
 /// \group find_if
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto find_if(InputIt first, InputIt last,
-    Predicate pred) noexcept -> InputIt
+[[nodiscard]] constexpr auto find_if(
+    InputIt first, InputIt last, Predicate pred) noexcept -> InputIt
 {
     for (; first != last; ++first) {
         if (pred(*first)) { return first; }
@@ -444,8 +441,8 @@ template <typename InputIt, typename Predicate>
 /// \group find_if_not
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last,
-    Predicate pred) noexcept -> InputIt
+[[nodiscard]] constexpr auto find_if_not(
+    InputIt first, InputIt last, Predicate pred) noexcept -> InputIt
 {
     for (; first != last; ++first) {
         if (!pred(*first)) { return first; }
@@ -471,8 +468,7 @@ template <typename InputIt, typename Predicate>
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last,
-    ForwardIt sFirst, ForwardIt sLast,
-    Predicate pred) -> InputIt
+    ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
 {
     for (; first != last; ++first) {
         for (auto it = sFirst; it != sLast; ++it) {
@@ -497,9 +493,8 @@ template <typename InputIt, typename ForwardIt, typename Predicate>
 /// \group find_first_of
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt>
-[[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last,
-    ForwardIt sFirst, ForwardIt sLast)
-    -> InputIt
+[[nodiscard]] constexpr auto find_first_of(
+    InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {
     return find_first_of(first, last, sFirst, sLast, equal_to<> {});
 }
@@ -521,8 +516,7 @@ template <typename InputIt, typename ForwardIt>
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 [[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast,
-    Predicate pred) -> ForwardIt1
+    ForwardIt2 sFirst, ForwardIt2 sLast, Predicate pred) -> ForwardIt1
 {
     return detail::search_impl(first, last, sFirst, sLast, pred);
 }
@@ -530,16 +524,15 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 /// \group search
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast)
-    -> ForwardIt1
+    ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
 {
     return search(first, last, sFirst, sLast, equal_to<> {});
 }
 
 /// \group search
 template <typename ForwardIt, typename Searcher>
-[[nodiscard]] constexpr auto search(ForwardIt first, ForwardIt last,
-    Searcher const& searcher) -> ForwardIt
+[[nodiscard]] constexpr auto search(
+    ForwardIt first, ForwardIt last, Searcher const& searcher) -> ForwardIt
 {
     return searcher(first, last).first;
 }
@@ -551,8 +544,7 @@ template <typename ForwardIt, typename Searcher>
 template <typename ForwardIt, typename Size, typename ValueT,
     typename Predicate>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last,
-    Size count, ValueT const& value,
-    Predicate pred) -> ForwardIt
+    Size count, ValueT const& value, Predicate pred) -> ForwardIt
 {
     if (count <= Size {}) { return first; }
 
@@ -576,8 +568,7 @@ template <typename ForwardIt, typename Size, typename ValueT,
 /// \group search_n
 template <typename ForwardIt, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last,
-    Size count, ValueT const& value)
-    -> ForwardIt
+    Size count, ValueT const& value) -> ForwardIt
 {
     return search_n(first, last, count, value, equal_to<> {});
 }
@@ -597,8 +588,7 @@ template <typename ForwardIt, typename Size, typename ValueT>
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 [[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast,
-    Predicate p) -> ForwardIt1
+    ForwardIt2 sFirst, ForwardIt2 sLast, Predicate p) -> ForwardIt1
 {
     if (sFirst == sLast) { return last; }
     auto result = last;
@@ -615,8 +605,7 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 /// \group find_end
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast)
-    -> ForwardIt1
+    ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
 {
     return find_end(first, last, sFirst, sLast, equal_to<> {});
 }
@@ -627,8 +616,8 @@ template <typename ForwardIt1, typename ForwardIt2>
 /// \group remove_if
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto remove_if(ForwardIt first, ForwardIt last,
-    Predicate pred) -> ForwardIt
+[[nodiscard]] constexpr auto remove_if(
+    ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
     first = find_if(first, last, pred);
 
@@ -647,11 +636,11 @@ template <typename ForwardIt, typename Predicate>
 /// \group remove
 /// \module Algorithm
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto remove(ForwardIt first, ForwardIt last,
-    T const& value) -> ForwardIt
+[[nodiscard]] constexpr auto remove(
+    ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
-    return remove_if(first, last,
-        [&value](auto const& item) { return item == value; });
+    return remove_if(
+        first, last, [&value](auto const& item) { return item == value; });
 }
 
 /// \brief Copies elements from the range [first, last), to another range
@@ -662,8 +651,8 @@ template <typename ForwardIt, typename T>
 /// \group remove_copy
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename Predicate>
-constexpr auto remove_copy_if(InputIt first, InputIt last, OutputIt destination,
-    Predicate p) -> OutputIt
+constexpr auto remove_copy_if(
+    InputIt first, InputIt last, OutputIt destination, Predicate p) -> OutputIt
 {
     for (; first != last; ++first, ++destination) {
         if (!p(*first)) { *destination = *first; }
@@ -693,8 +682,8 @@ constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination,
 /// \group replace
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate, typename T>
-constexpr auto replace_if(ForwardIt first, ForwardIt last, Predicate p,
-    T const& newValue) -> void
+constexpr auto replace_if(
+    ForwardIt first, ForwardIt last, Predicate p, T const& newValue) -> void
 {
     for (; first != last; ++first) {
         if (p(*first)) { *first = newValue; }
@@ -728,8 +717,8 @@ template <typename Type>
 /// \group max
 /// \module Algorithm
 template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto max(Type const& a, Type const& b,
-    Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto max(
+    Type const& a, Type const& b, Compare comp) noexcept -> Type const&
 {
     return (comp(a, b)) ? b : a;
 }
@@ -739,8 +728,8 @@ template <typename Type, typename Compare>
 /// \group max_element
 /// \module Algorithm
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto max_element(ForwardIt first,
-    ForwardIt last) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto max_element(
+    ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -757,8 +746,8 @@ template <typename ForwardIt>
 /// \group max_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last,
-    Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto max_element(
+    ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -784,8 +773,8 @@ template <typename Type>
 /// \group min
 /// \module Algorithm
 template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto min(Type const& a, Type const& b,
-    Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto min(
+    Type const& a, Type const& b, Compare comp) noexcept -> Type const&
 {
     return (comp(b, a)) ? b : a;
 }
@@ -795,8 +784,8 @@ template <typename Type, typename Compare>
 /// \group min_element
 /// \module Algorithm
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto min_element(ForwardIt first,
-    ForwardIt last) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto min_element(
+    ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -813,8 +802,8 @@ template <typename ForwardIt>
 /// \group min_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last,
-    Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto min_element(
+    ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -851,9 +840,8 @@ template <typename T>
 /// \group minmax_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last,
-    Compare comp)
-    -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto minmax_element(
+    ForwardIt first, ForwardIt last, Compare comp) -> pair<ForwardIt, ForwardIt>
 {
     auto min = first;
     auto max = first;
@@ -907,16 +895,16 @@ template <typename ForwardIt>
 /// \group clamp
 /// \module Algorithm
 template <typename Type>
-[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
-    Type const& hi) noexcept -> Type const&
+[[nodiscard]] constexpr auto clamp(
+    Type const& v, Type const& lo, Type const& hi) noexcept -> Type const&
 {
     return clamp(v, lo, hi, less<Type>());
 }
 /// \group clamp
 /// \module Algorithm
 template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo,
-    Type const& hi, Compare comp) -> Type const&
+[[nodiscard]] constexpr auto clamp(
+    Type const& v, Type const& lo, Type const& hi, Compare comp) -> Type const&
 {
     TETL_ASSERT(!comp(hi, lo));
     return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
@@ -1025,7 +1013,9 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred)
 
     auto result = first;
     while (++first != last) {
-        if (!pred(*result, *first) && ++result != first) { *result = move(*first); }
+        if (!pred(*result, *first) && ++result != first) {
+            *result = move(*first);
+        }
     }
     return ++result;
 }
@@ -1113,8 +1103,7 @@ constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p)
 template <typename InputIt, typename OutputIt1, typename OutputIt2,
     typename Predicate>
 constexpr auto partition_copy(InputIt first, InputIt last,
-    OutputIt1 destinationTrue,
-    OutputIt2 destinationFalse, Predicate p)
+    OutputIt1 destinationTrue, OutputIt2 destinationFalse, Predicate p)
     -> pair<OutputIt1, OutputIt2>
 {
     for (; first != last; ++first) {
@@ -1138,8 +1127,8 @@ constexpr auto partition_copy(InputIt first, InputIt last,
 ///
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last,
-    Predicate p) -> bool
+[[nodiscard]] constexpr auto is_partitioned(
+    InputIt first, InputIt last, Predicate p) -> bool
 {
     for (; first != last; ++first) {
         if (!p(*first)) { break; }
@@ -1158,8 +1147,8 @@ template <typename InputIt, typename Predicate>
 ///
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last,
-    Predicate p) -> ForwardIt
+[[nodiscard]] constexpr auto partition_point(
+    ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {
     for (; first != last; ++first) {
         if (!p(*first)) { break; }
@@ -1212,8 +1201,8 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination)
 /// \group copy
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename Predicate>
-constexpr auto copy_if(InputIt first, InputIt last, OutputIt dFirst,
-    Predicate pred) -> OutputIt
+constexpr auto copy_if(
+    InputIt first, InputIt last, OutputIt dFirst, Predicate pred) -> OutputIt
 {
     while (first != last) {
         if (pred(*first)) { *dFirst++ = *first; }
@@ -1306,8 +1295,8 @@ constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 /// \group equal
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, Predicate p) -> bool
+[[nodiscard]] constexpr auto equal(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate p) -> bool
 {
     for (; first1 != last1; ++first1, ++first2) {
         if (!p(*first1, *first2)) { return false; }
@@ -1317,8 +1306,8 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 
 /// \group equal
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2) -> bool
+[[nodiscard]] constexpr auto equal(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2) -> bool
 {
     return equal(first1, last1, first2, equal_to<> {});
 }
@@ -1326,8 +1315,7 @@ template <typename InputIt1, typename InputIt2>
 /// \group equal
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2, Predicate p)
-    -> bool
+    InputIt2 first2, InputIt2 last2, Predicate p) -> bool
 {
     if (distance(first1, last1) != distance(first2, last2)) { return false; }
     return equal(first1, last1, first2, p);
@@ -1335,8 +1323,8 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 
 /// \group equal
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2) -> bool
+[[nodiscard]] constexpr auto equal(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {
     return equal(first1, last1, first2, last2, equal_to<> {});
 }
@@ -1350,9 +1338,8 @@ template <typename InputIt1, typename InputIt2>
 /// \group lexicographical_compare
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Compare>
-[[nodiscard]] constexpr auto
-lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, Compare comp) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 first1,
+    InputIt1 last1, InputIt2 first2, InputIt2 last2, Compare comp) -> bool
 {
     for (; (first1 != last1) && (first2 != last2); ++first1, (void)++first2) {
         if (comp(*first1, *first2)) { return true; }
@@ -1363,12 +1350,11 @@ lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 
 /// \group lexicographical_compare
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto
-lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {
-    return lexicographical_compare(first1, last1, first2, last2,
-        less<decltype(*first1)> {});
+    return lexicographical_compare(
+        first1, last1, first2, last2, less<decltype(*first1)> {});
 }
 
 /// \brief Sorts the elements in the range `[first, last)` in non-descending
@@ -1442,8 +1428,8 @@ constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
 /// \group partial_sort
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
-constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last,
-    Compare comp) -> void
+constexpr auto partial_sort(
+    RandomIt first, RandomIt middle, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
     etl::ignore_unused(middle);
@@ -1472,8 +1458,8 @@ constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last)
 /// \group nth_element
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
-constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last,
-    Compare comp) -> void
+constexpr auto nth_element(
+    RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
     etl::ignore_unused(nth);
@@ -1503,8 +1489,8 @@ template <typename ForwardIt>
 
 /// \group is_sorted_until
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last,
-    Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto is_sorted_until(
+    ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
     if (first != last) {
         ForwardIt next = first;
@@ -1529,8 +1515,8 @@ template <typename ForwardIt>
 
 /// \group is_sorted
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto is_sorted(ForwardIt first, ForwardIt last,
-    Compare comp) -> bool
+[[nodiscard]] constexpr auto is_sorted(
+    ForwardIt first, ForwardIt last, Compare comp) -> bool
 {
     return is_sorted_until(first, last, comp) == last;
 }
@@ -1546,8 +1532,7 @@ template <typename ForwardIt, typename Compare>
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp) noexcept
-    -> ForwardIt
+    T const& value, Compare comp) noexcept -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
     ForwardIt it;
@@ -1572,8 +1557,8 @@ template <typename ForwardIt, typename T, typename Compare>
 
 /// \group lower_bound
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last,
-    T const& value) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto lower_bound(
+    ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {
     return lower_bound(first, last, value, less<> {});
 }
@@ -1590,9 +1575,8 @@ template <typename ForwardIt, typename T>
 /// \group upper_bound
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp)
-    -> ForwardIt
+[[nodiscard]] constexpr auto upper_bound(
+    ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
 
@@ -1618,8 +1602,8 @@ template <typename ForwardIt, typename T, typename Compare>
 
 /// \group upper_bound
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last,
-    T const& value) -> ForwardIt
+[[nodiscard]] constexpr auto upper_bound(
+    ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
     return upper_bound(first, last, value, less<> {});
 }
@@ -1634,8 +1618,7 @@ template <typename ForwardIt, typename T>
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp)
-    -> pair<ForwardIt, ForwardIt>
+    T const& value, Compare comp) -> pair<ForwardIt, ForwardIt>
 {
     return make_pair(lower_bound(first, last, value, comp),
         upper_bound(first, last, value, comp));
@@ -1644,8 +1627,7 @@ template <typename ForwardIt, typename T, typename Compare>
 /// \group equal_range
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
-    T const& value)
-    -> pair<ForwardIt, ForwardIt>
+    T const& value) -> pair<ForwardIt, ForwardIt>
 {
     return equal_range(first, last, value, less<> {});
 }
@@ -1660,8 +1642,8 @@ template <typename ForwardIt, typename T>
 /// \group binary_search
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto binary_search(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp) -> bool
+[[nodiscard]] constexpr auto binary_search(
+    ForwardIt first, ForwardIt last, T const& value, Compare comp) -> bool
 {
     first = lower_bound(first, last, value, comp);
     return (!(first == last) && !(comp(value, *first)));
@@ -1669,8 +1651,8 @@ template <typename ForwardIt, typename T, typename Compare>
 
 /// \group binary_search
 template <typename ForwardIt, class T>
-[[nodiscard]] constexpr auto binary_search(ForwardIt first, ForwardIt last,
-    T const& value) -> bool
+[[nodiscard]] constexpr auto binary_search(
+    ForwardIt first, ForwardIt last, T const& value) -> bool
 {
     return binary_search(first, last, value, less<> {});
 }
@@ -1683,8 +1665,7 @@ template <typename ForwardIt, class T>
 template <typename InputIt1, typename InputIt2, typename OutputIt,
     typename Compare>
 constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, OutputIt destination, Compare comp)
-    -> OutputIt
+    InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
 {
     for (; first1 != last1; ++destination) {
         if (first2 == last2) { return copy(first1, last1, destination); }
@@ -1713,8 +1694,8 @@ constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 /// \group includes
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2) -> bool
+[[nodiscard]] constexpr auto includes(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {
     for (; first2 != last2; ++first1) {
         if (first1 == last1 || *first2 < *first1) { return false; }
@@ -1726,8 +1707,7 @@ template <typename InputIt1, typename InputIt2>
 /// \group includes
 template <typename InputIt1, typename InputIt2, typename Compare>
 [[nodiscard]] constexpr auto includes(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2,
-    Compare comp) -> bool
+    InputIt2 first2, InputIt2 last2, Compare comp) -> bool
 {
     for (; first2 != last2; ++first1) {
         if (first1 == last1 || comp(*first2, *first1)) { return false; }
@@ -1746,8 +1726,7 @@ template <typename InputIt1, typename InputIt2, typename Compare>
 template <typename InputIt1, typename InputIt2, typename OutputIt,
     typename Compare>
 constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, OutputIt destination,
-    Compare comp) -> OutputIt
+    InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
 {
     while (first1 != last1) {
         if (first2 == last2) { return copy(first1, last1, destination); }
@@ -1783,8 +1762,7 @@ constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 template <typename InputIt1, typename InputIt2, typename OutputIt,
     typename Compare>
 constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2, OutputIt dest,
-    Compare comp) -> OutputIt
+    InputIt2 first2, InputIt2 last2, OutputIt dest, Compare comp) -> OutputIt
 {
     while (first1 != last1 && first2 != last2) {
         if (comp(*first1, *first2)) {
@@ -1800,8 +1778,7 @@ constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
 /// \group set_intersection
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2, OutputIt dest)
-    -> OutputIt
+    InputIt2 first2, InputIt2 last2, OutputIt dest) -> OutputIt
 {
     return set_intersection(first1, last1, first2, last2, dest, less<>());
 }
@@ -1815,8 +1792,7 @@ constexpr auto set_intersection(InputIt1 first1, InputIt1 last1,
 template <typename InputIt1, typename InputIt2, typename OutputIt,
     typename Compare>
 constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2,
-    OutputIt destination, Compare comp)
+    InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp)
     -> OutputIt
 {
     while (first1 != last1) {
@@ -1839,10 +1815,10 @@ constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1,
 /// \group set_symmetric_difference
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1,
-    InputIt2 first2, InputIt2 last2,
-    OutputIt dest) -> OutputIt
+    InputIt2 first2, InputIt2 last2, OutputIt dest) -> OutputIt
 {
-    return set_symmetric_difference(first1, last1, first2, last2, dest, less<>());
+    return set_symmetric_difference(
+        first1, last1, first2, last2, dest, less<>());
 }
 
 /// \brief Constructs a sorted union beginning at destination consisting of the
@@ -1855,8 +1831,7 @@ constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1,
 template <typename InputIt1, typename InputIt2, typename OutputIt,
     typename Compare>
 constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, OutputIt destination, Compare comp)
-    -> OutputIt
+    InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
 {
     for (; first1 != last1; ++destination) {
         if (first2 == last2) { return copy(first1, last1, destination); }
@@ -1888,8 +1863,8 @@ constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 /// \group is_permuatation
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto is_permutation(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 first2) -> bool
+[[nodiscard]] constexpr auto is_permutation(
+    ForwardIt1 first, ForwardIt1 last, ForwardIt2 first2) -> bool
 {
     // skip common prefix
     auto const [fDiff1, fDiff2] = mismatch(first, last, first2);
@@ -1913,8 +1888,7 @@ template <typename ForwardIt1, typename ForwardIt2>
 /// \group is_permuatation
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto is_permutation(ForwardIt1 first1, ForwardIt1 last1,
-    ForwardIt2 first2, ForwardIt2 last2)
-    -> bool
+    ForwardIt2 first2, ForwardIt2 last2) -> bool
 {
     if (distance(first1, last1) != distance(first2, last2)) { return false; }
     return is_permutation(first1, last1, first2);

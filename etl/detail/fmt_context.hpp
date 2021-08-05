@@ -24,7 +24,9 @@ public:
     using char_type = CharT;
 
     explicit constexpr basic_format_context(OutputIt pos) noexcept
-        : pos_ { pos } { }
+        : pos_ { pos }
+    {
+    }
 
     template <typename T>
     using formatter_type = formatter<T, CharT>;

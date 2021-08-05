@@ -29,17 +29,15 @@
 namespace rtos = etl::experimental::rtos;
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: construct", "[experimental][rtos]",
-    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-    float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     rtos::queue<TestType, 100> q1 {};
 }
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]",
-    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-    float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     rtos::queue<TestType, 1> q1 {};
     REQUIRE(q1.capacity() == 1);
@@ -50,17 +48,16 @@ TEMPLATE_TEST_CASE("experimental/rtos/queue: capacity", "[experimental][rtos]",
 }
 
 TEMPLATE_TEST_CASE("experimental/rtos/queue: send", "[experimental][rtos]",
-    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t,
-    etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
-    float, double, long double)
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     rtos::queue<TestType, 1> q1 {};
     // stub always returns false
     REQUIRE(q1.send(1, 0) == false);
 }
 
-TEST_CASE("experimental/rtos/queue: receive io/out argument",
-    "[experimental][rtos]")
+TEST_CASE(
+    "experimental/rtos/queue: receive io/out argument", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false
@@ -68,8 +65,8 @@ TEST_CASE("experimental/rtos/queue: receive io/out argument",
     REQUIRE(q1.receive(i, 0) == false);
 }
 
-TEST_CASE("experimental/rtos/queue: receive pair<bool,T>",
-    "[experimental][rtos]")
+TEST_CASE(
+    "experimental/rtos/queue: receive pair<bool,T>", "[experimental][rtos]")
 {
     rtos::queue<int, 1> q1 {};
     // stub always returns false

@@ -42,12 +42,12 @@ namespace etl {
 template <typename Key, size_t Capacity, typename Compare = less<Key>>
 struct static_set {
 private:
-    // TODO: Currently static_set only supports default constructible comparators.
-    // This is because storing the Compare object would take up at least 1 extra
-    // byte. Probably even more because of alignment. The fix is to create a
-    // conditional storage struct depending on if the Compare template argument
-    // can be default constructed. If so: construct it on demand. If not: store it
-    // as a member.
+    // TODO: Currently static_set only supports default constructible
+    // comparators. This is because storing the Compare object would take up at
+    // least 1 extra byte. Probably even more because of alignment. The fix is
+    // to create a conditional storage struct depending on if the Compare
+    // template argument can be default constructed. If so: construct it on
+    // demand. If not: store it as a member.
     static_assert(is_default_constructible_v<Compare>);
 
     using storage_type = static_vector<Key, Capacity>;
@@ -73,8 +73,8 @@ public:
     static_set() = default;
 
     /// \brief Constructs with the contents of the range [first, last). If
-    /// multiple elements in the range have keys that compare equivalent, all but
-    /// the first will be discarded.
+    /// multiple elements in the range have keys that compare equivalent, all
+    /// but the first will be discarded.
     ///
     /// \todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
     template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
@@ -100,7 +100,7 @@ public:
     constexpr auto operator=(static_set const& other) -> static_set& = default;
 
     /// \brief
-    constexpr auto operator                                     =(static_set&& other) noexcept(
+    constexpr auto operator=(static_set&& other) noexcept(
         noexcept(move(declval<storage_type>()))) -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
@@ -151,7 +151,8 @@ public:
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() const noexcept
+        -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
@@ -183,7 +184,8 @@ public:
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
     /// first element of the non-reversed set.
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto crend() const noexcept
+        -> const_reverse_iterator
     {
         return rend();
     }
@@ -222,11 +224,13 @@ public:
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
     constexpr auto insert(value_type&& value)
-        -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
+        -> enable_if_t<is_move_constructible_v<value_type>,
+            pair<iterator, bool>>
     {
         if (!full()) {
             auto cmp = key_compare {};
-            auto* p  = ::etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
+            auto* p  = ::etl::lower_bound(
+                memory_.begin(), memory_.end(), value, cmp);
             if (p == memory_.end() || *(p) != value) {
                 memory_.push_back(move(value));
                 auto* pos = rotate(p, memory_.end() - 1, memory_.end());
@@ -243,30 +247,31 @@ public:
     /// \todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
     /// breaks GCC 9.3 Ubuntu Focal build
     constexpr auto insert(value_type const& value)
-        -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
+        -> enable_if_t<is_copy_constructible_v<value_type>,
+            pair<iterator, bool>>
     {
         value_type tmp = value;
         return insert(move(tmp));
     }
 
-    /// \brief Inserts elements from range [first, last). If multiple elements in
-    /// the range have keys that compare equivalent, it is unspecified which
+    /// \brief Inserts elements from range [first, last). If multiple elements
+    /// in the range have keys that compare equivalent, it is unspecified which
     /// element is inserted (pending LWG2844).
     template <typename InputIter,
         TETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    constexpr auto
-    insert(InputIter first,
-        InputIter last) noexcept(noexcept(insert(declval<key_type>()))) -> void
+    constexpr auto insert(InputIter first, InputIter last) noexcept(
+        noexcept(insert(declval<key_type>()))) -> void
     {
         for (; first != last; ++first) { insert(*first); }
     }
 
-    /// \brief Inserts a new element into the container constructed in-place with
-    /// the given args if there is no element with the key in the container.
-    template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<key_type>)>
-    constexpr auto
-    emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>())))
-        -> pair<iterator, bool>
+    /// \brief Inserts a new element into the container constructed in-place
+    /// with the given args if there is no element with the key in the
+    /// container.
+    template <typename... Args,
+        TETL_REQUIRES_(is_copy_constructible_v<key_type>)>
+    constexpr auto emplace(Args&&... args) noexcept(
+        noexcept(insert(declval<key_type>()))) -> pair<iterator, bool>
     {
         return insert(value_type(forward<Args>(args)...));
     }
@@ -296,7 +301,8 @@ public:
         return res;
     }
 
-    /// \brief Removes the element (if one exists) with the key equivalent to key.
+    /// \brief Removes the element (if one exists) with the key equivalent to
+    /// key.
     ///
     /// \notes
     /// [cppreference.com/w/cpp/container/set/erase](https://en.cppreference.com/w/cpp/container/set/erase)
@@ -312,8 +318,8 @@ public:
     }
 
     /// \brief Exchanges the contents of the container with those of other.
-    constexpr auto
-    swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
+    constexpr auto swap(static_set& other) noexcept(
+        is_nothrow_swappable_v<key_type>)
         -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
     {
         using ::etl::move;
@@ -323,17 +329,17 @@ public:
         (*this)        = move(tmp);
     }
 
-    /// \brief Returns the number of elements with key that compares equivalent to
-    /// the specified argument, which is either 1 or 0 since this container does
-    /// not allow duplicates.
+    /// \brief Returns the number of elements with key that compares equivalent
+    /// to the specified argument, which is either 1 or 0 since this container
+    /// does not allow duplicates.
     [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
         -> size_type
     {
         return contains(key) ? 1 : 0;
     }
 
-    /// \brief Returns the number of elements with key that compares equivalent to
-    /// the value x.
+    /// \brief Returns the number of elements with key that compares equivalent
+    /// to the value x.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto count(K const& x) const -> size_type
     {
@@ -359,7 +365,8 @@ public:
         return ::etl::find(begin(), end(), key);
     }
 
-    /// \brief Finds an element with key that compares equivalent to the value x.
+    /// \brief Finds an element with key that compares equivalent to the value
+    /// x.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     constexpr auto find(K const& x) -> iterator
     {
@@ -369,7 +376,8 @@ public:
         });
     }
 
-    /// \brief Finds an element with key that compares equivalent to the value x.
+    /// \brief Finds an element with key that compares equivalent to the value
+    /// x.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     constexpr auto find(K const& x) const -> const_iterator
     {
@@ -387,41 +395,42 @@ public:
         return find(key) != end();
     }
 
-    /// \brief Checks if there is an element with key that compares equivalent to
-    /// the value x.
+    /// \brief Checks if there is an element with key that compares equivalent
+    /// to the value x.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto contains(K const& x) const -> bool
     {
         return find(x) != end();
     }
 
-    /// \brief Returns an iterator pointing to the first element that is not less
-    /// than (i.e. greater or equal to) key.
+    /// \brief Returns an iterator pointing to the first element that is not
+    /// less than (i.e. greater or equal to) key.
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
     {
         return ::etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
-    /// \brief Returns an iterator pointing to the first element that is not less
-    /// than (i.e. greater or equal to) key.
+    /// \brief Returns an iterator pointing to the first element that is not
+    /// less than (i.e. greater or equal to) key.
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
         -> const_iterator
     {
         return ::etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
-    /// \brief Returns an iterator pointing to the first element that is not less
-    /// than (i.e. greater or equal to) key.
+    /// \brief Returns an iterator pointing to the first element that is not
+    /// less than (i.e. greater or equal to) key.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
     {
         return ::etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
-    /// \brief Returns an iterator pointing to the first element that is not less
-    /// than (i.e. greater or equal to) key.
+    /// \brief Returns an iterator pointing to the first element that is not
+    /// less than (i.e. greater or equal to) key.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
-    [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
+    [[nodiscard]] constexpr auto lower_bound(K const& key) const
+        -> const_iterator
     {
         return ::etl::lower_bound(begin(), end(), key, key_compare {});
     }
@@ -452,15 +461,16 @@ public:
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
-    [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator
+    [[nodiscard]] constexpr auto upper_bound(K const& key) const
+        -> const_iterator
     {
         return ::etl::upper_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns a range containing all elements with the given key in the
     /// container. The range is defined by two iterators, one pointing to the
-    /// first element that is not less than key and another pointing to the first
-    /// element greater than key. Alternatively, the first iterator may be
+    /// first element that is not less than key and another pointing to the
+    /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
     [[nodiscard]] constexpr auto equal_range(key_type const& key) -> iterator
     {
@@ -469,8 +479,8 @@ public:
 
     /// \brief Returns a range containing all elements with the given key in the
     /// container. The range is defined by two iterators, one pointing to the
-    /// first element that is not less than key and another pointing to the first
-    /// element greater than key. Alternatively, the first iterator may be
+    /// first element that is not less than key and another pointing to the
+    /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
     [[nodiscard]] constexpr auto equal_range(key_type const& key) const
         -> const_iterator
@@ -480,8 +490,8 @@ public:
 
     /// \brief Returns a range containing all elements with the given key in the
     /// container. The range is defined by two iterators, one pointing to the
-    /// first element that is not less than key and another pointing to the first
-    /// element greater than key. Alternatively, the first iterator may be
+    /// first element that is not less than key and another pointing to the
+    /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto equal_range(K const& key) -> iterator
@@ -491,17 +501,18 @@ public:
 
     /// \brief Returns a range containing all elements with the given key in the
     /// container. The range is defined by two iterators, one pointing to the
-    /// first element that is not less than key and another pointing to the first
-    /// element greater than key. Alternatively, the first iterator may be
+    /// first element that is not less than key and another pointing to the
+    /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
-    [[nodiscard]] constexpr auto equal_range(K const& key) const -> const_iterator
+    [[nodiscard]] constexpr auto equal_range(K const& key) const
+        -> const_iterator
     {
         return ::etl::equal_range(begin(), end(), key, key_compare {});
     }
 
-    /// \brief Returns the function object that compares the keys, which is a copy
-    /// of this container's constructor argument comp. It is the same as
+    /// \brief Returns the function object that compares the keys, which is a
+    /// copy of this container's constructor argument comp. It is the same as
     /// value_comp.
     ///
     /// \returns The key comparison function object.
@@ -526,8 +537,8 @@ public:
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator==(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator==(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return lhs.size() == rhs.size() && equal(begin(lhs), end(lhs), begin(rhs));
@@ -539,8 +550,8 @@ operator==(static_set<Key, Capacity, Comp> const& lhs,
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator!=(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator!=(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(lhs == rhs);
@@ -553,8 +564,8 @@ operator!=(static_set<Key, Capacity, Comp> const& lhs,
 /// lexicographical_compare. This comparison ignores the set's ordering
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator<(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator<(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
@@ -567,8 +578,8 @@ operator<(static_set<Key, Capacity, Comp> const& lhs,
 /// lexicographical_compare. This comparison ignores the set's ordering
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator<=(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator<=(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(rhs < lhs);
@@ -581,8 +592,8 @@ operator<=(static_set<Key, Capacity, Comp> const& lhs,
 /// lexicographical_compare. This comparison ignores the set's ordering
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator>(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator>(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return rhs < lhs;
@@ -595,8 +606,8 @@ operator>(static_set<Key, Capacity, Comp> const& lhs,
 /// lexicographical_compare. This comparison ignores the set's ordering
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
-[[nodiscard]] constexpr auto
-operator>=(static_set<Key, Capacity, Comp> const& lhs,
+[[nodiscard]] constexpr auto operator>=(
+    static_set<Key, Capacity, Comp> const& lhs,
     static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(lhs < rhs);
@@ -605,8 +616,7 @@ operator>=(static_set<Key, Capacity, Comp> const& lhs,
 /// \brief Specializes the swap algorithm for set. Swaps the contents
 /// of lhs and rhs. Calls lhs.swap(rhs).
 template <typename Key, size_t Capacity, typename Compare>
-constexpr auto
-swap(static_set<Key, Capacity, Compare>& lhs,
+constexpr auto swap(static_set<Key, Capacity, Compare>& lhs,
     static_set<Key, Capacity, Compare>& rhs) noexcept(noexcept(lhs.swap(rhs)))
     -> void
 {

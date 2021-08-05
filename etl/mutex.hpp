@@ -73,10 +73,8 @@ struct lock_guard {
 public:
     using mutex_type = MutexT;
 
-    explicit lock_guard(mutex_type& m)
-        : mutex_ { m } { mutex_.lock(); }
-    lock_guard(mutex_type& m, adopt_lock_t /*tag*/)
-        : mutex_ { m } { }
+    explicit lock_guard(mutex_type& m) : mutex_ { m } { mutex_.lock(); }
+    lock_guard(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ { m } { }
     ~lock_guard() { mutex_.unlock(); }
 
     lock_guard(lock_guard const&) = delete;
@@ -110,11 +108,10 @@ public:
     unique_lock() noexcept = default;
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
-    /// Additionally: Locks the associated mutex by calling m.lock(). The behavior
-    /// is undefined if the current thread already owns the mutex except when the
-    /// mutex is recursive.
-    explicit unique_lock(mutex_type& m)
-        : mutex_ { &m } { lock(); }
+    /// Additionally: Locks the associated mutex by calling m.lock(). The
+    /// behavior is undefined if the current thread already owns the mutex
+    /// except when the mutex is recursive.
+    explicit unique_lock(mutex_type& m) : mutex_ { &m } { lock(); }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Does not lock the associated mutex.
@@ -125,8 +122,7 @@ public:
     /// Additionally: Tries to lock the associated mutex without blocking by
     /// calling m.try_lock(). The behavior is undefined if the current thread
     /// already owns the mutex except when the mutex is recursive.
-    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept
-        : mutex_ { &m }
+    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : mutex_ { &m }
     {
         try_lock();
     }
@@ -141,8 +137,8 @@ public:
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex by calling
     /// m.try_lock_until(timeout_time). Blocks until specified timeout_time has
-    /// been reached or the lock is acquired, whichever comes first. May block for
-    /// longer than until timeout_time has been reached.
+    /// been reached or the lock is acquired, whichever comes first. May block
+    /// for longer than until timeout_time has been reached.
     template <typename Clock, typename Duration>
     unique_lock(mutex_type& m,
         chrono::time_point<Clock, Duration> const& abs_time) noexcept
@@ -153,12 +149,12 @@ public:
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex by calling
-    /// m.try_lock_for(timeout_duration). Blocks until specified timeout_duration
-    /// has elapsed or the lock is acquired, whichever comes first. May block for
-    /// longer than timeout_duration.
+    /// m.try_lock_for(timeout_duration). Blocks until specified
+    /// timeout_duration has elapsed or the lock is acquired, whichever comes
+    /// first. May block for longer than timeout_duration.
     template <typename Rep, typename Period>
-    unique_lock(mutex_type& m,
-        chrono::duration<Rep, Period> const& rel_time) noexcept
+    unique_lock(
+        mutex_type& m, chrono::duration<Rep, Period> const& rel_time) noexcept
         : mutex_ { &m }
     {
         try_lock_for(rel_time);
@@ -170,17 +166,17 @@ public:
     /// \brief Deleted copy assignment. unique_lock is move only.
     auto operator=(unique_lock const&) -> unique_lock& = delete;
 
-    /// \brief Move constructor. Initializes the unique_lock with the contents of
-    /// other. Leaves other with no associated mutex.
+    /// \brief Move constructor. Initializes the unique_lock with the contents
+    /// of other. Leaves other with no associated mutex.
     unique_lock(unique_lock&& u) noexcept
     {
         mutex_ = exchange(u.mutex_, nullptr);
         owns_  = exchange(u.owns_, false);
     }
 
-    /// \brief Move assignment operator. Replaces the contents with those of other
-    /// using move semantics. If prior to the call *this has an associated mutex
-    /// and has acquired ownership of it, the mutex is unlocked.
+    /// \brief Move assignment operator. Replaces the contents with those of
+    /// other using move semantics. If prior to the call *this has an associated
+    /// mutex and has acquired ownership of it, the mutex is unlocked.
     auto operator=(unique_lock&& u) noexcept -> unique_lock&
     {
         if (mutex_ != nullptr && owns_) { unlock(); }
@@ -252,8 +248,8 @@ public:
     }
 
     /// \brief Unlocks (i.e., releases ownership of) the associated mutex and
-    /// releases ownership. Silently does nothing, if there is no associated mutex
-    /// or if the mutex is not locked.
+    /// releases ownership. Silently does nothing, if there is no associated
+    /// mutex or if the mutex is not locked.
     auto unlock() -> void
     {
         if ((mutex_ != nullptr) and owns_) {
@@ -270,12 +266,13 @@ public:
         swap(owns_, other.owns_);
     }
 
-    /// \brief Breaks the association of the associated mutex, if any, and *this.
-    /// No locks are unlocked. If the *this held ownership of the associated mutex
-    /// prior to the call, the caller is now responsible to unlock the mutex.
+    /// \brief Breaks the association of the associated mutex, if any, and
+    /// *this. No locks are unlocked. If the *this held ownership of the
+    /// associated mutex prior to the call, the caller is now responsible to
+    /// unlock the mutex.
     ///
-    /// \returns Pointer to the associated mutex or a null pointer if there was no
-    /// associated mutex.
+    /// \returns Pointer to the associated mutex or a null pointer if there was
+    /// no associated mutex.
     [[nodiscard]] auto release() noexcept -> mutex_type*
     {
         owns_ = false;
@@ -286,7 +283,10 @@ public:
     [[nodiscard]] auto owns_lock() const noexcept -> bool { return owns_; }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] explicit operator bool() const noexcept { return owns_lock(); }
+    [[nodiscard]] explicit operator bool() const noexcept
+    {
+        return owns_lock();
+    }
 
     /// \brief Returns a pointer to the associated mutex, or a null pointer if
     /// there is no associated mutex.
@@ -296,8 +296,8 @@ public:
 /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
 /// of lhs with that of rhs.
 template <typename Mutex>
-void swap(unique_lock<Mutex>& lhs,
-    unique_lock<Mutex>& rhs) noexcept(noexcept(lhs.swap(rhs)))
+void swap(unique_lock<Mutex>& lhs, unique_lock<Mutex>& rhs) noexcept(
+    noexcept(lhs.swap(rhs)))
 {
     lhs.swap(rhs);
 }

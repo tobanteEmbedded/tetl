@@ -72,8 +72,7 @@ constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
         and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>,
     To>
 {
-    static_assert(
-        is_trivially_constructible_v<To>,
+    static_assert(is_trivially_constructible_v<To>,
         "This implementation additionally requires destination type to be "
         "trivially constructible");
 
@@ -84,10 +83,11 @@ constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
 
 namespace detail {
     template <typename T>
-    using bit_unsigned_int = etl::bool_constant<etl::disjunction_v<
-        etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
-        etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>,
-        etl::is_same<T, unsigned long long>>>;
+    using bit_unsigned_int
+        = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>,
+            etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
+            etl::is_same<T, unsigned long>,
+            etl::is_same<T, unsigned long long>>>;
 
     template <typename T>
     inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
@@ -242,7 +242,8 @@ template <typename T>
         return T(1) << bit_width(T(x - 1));
     } else {
         // for types subject to integral promotion
-        auto offset = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
+        auto offset
+            = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
         return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
     }
 }

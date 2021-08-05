@@ -49,17 +49,14 @@ public:
     using container_type  = Container;
 
     /// \brief Default constructor. Value-initializes the container.
-    constexpr stack()
-        : stack(Container()) { }
+    constexpr stack() : stack(Container()) { }
 
     /// \brief Copy-constructs the underlying container c with the contents of
     /// cont.
-    constexpr explicit stack(Container const& cont)
-        : c { cont } { }
+    constexpr explicit stack(Container const& cont) : c { cont } { }
 
     /// \brief Move-constructs the underlying container c with cont .
-    constexpr explicit stack(Container&& cont)
-        : c { move(cont) } { }
+    constexpr explicit stack(Container&& cont) : c { move(cont) } { }
 
     /// \brief Copy constructor.
     constexpr stack(stack const& other) = default;
@@ -81,16 +78,18 @@ public:
         return c.size();
     }
 
-    /// \brief Returns reference to the top element in the stack. This is the most
-    /// recently pushed element. This element will be removed on a call to pop().
-    [[nodiscard]] constexpr auto
-    top() noexcept(noexcept(declval<container_type>().back())) -> reference
+    /// \brief Returns reference to the top element in the stack. This is the
+    /// most recently pushed element. This element will be removed on a call to
+    /// pop().
+    [[nodiscard]] constexpr auto top() noexcept(
+        noexcept(declval<container_type>().back())) -> reference
     {
         return c.back();
     }
 
-    /// \brief Returns reference to the top element in the stack. This is the most
-    /// recently pushed element. This element will be removed on a call to pop().
+    /// \brief Returns reference to the top element in the stack. This is the
+    /// most recently pushed element. This element will be removed on a call to
+    /// pop().
     [[nodiscard]] constexpr auto top() const
         noexcept(noexcept(declval<container_type>().back())) -> const_reference
     {
@@ -116,8 +115,8 @@ public:
     /// constructor of the element is called with exactly the same arguments as
     /// supplied to the function.
     template <typename... Args>
-    constexpr auto emplace(Args&&... args) noexcept(
-        noexcept(declval<container_type>().emplace_back(forward<Args>(args)...)))
+    constexpr auto emplace(Args&&... args) noexcept(noexcept(
+        declval<container_type>().emplace_back(forward<Args>(args)...)))
         -> decltype(auto)
     {
         return c.emplace_back(forward<Args>(args)...);
@@ -125,8 +124,8 @@ public:
 
     /// \brief Removes the top element from the stack.
     /// \complexity Equal to the complexity of Container::pop_back.
-    constexpr auto pop() noexcept(noexcept(declval<container_type>().pop_back()))
-        -> void
+    constexpr auto pop() noexcept(
+        noexcept(declval<container_type>().pop_back())) -> void
     {
         c.pop_back();
     }
@@ -140,61 +139,55 @@ public:
         swap(c, s.c);
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator==(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator==(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c == rhs.c)) -> bool
     {
         return lhs.c == rhs.c;
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator!=(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator!=(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c != rhs.c)) -> bool
     {
         return lhs.c != rhs.c;
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator<(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator<(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c < rhs.c)) -> bool
     {
         return lhs.c < rhs.c;
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator<=(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator<=(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c <= rhs.c)) -> bool
     {
         return lhs.c <= rhs.c;
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator>(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator>(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c > rhs.c)) -> bool
     {
         return lhs.c > rhs.c;
     }
 
-    /// \brief Compares the contents of the underlying containers of two container
-    /// adaptors. The comparison is done by applying the corresponding operator to
-    /// the underlying containers.
-    [[nodiscard]] friend constexpr auto
-    operator>=(stack const& lhs,
+    /// \brief Compares the contents of the underlying containers of two
+    /// container adaptors. The comparison is done by applying the corresponding
+    /// operator to the underlying containers.
+    [[nodiscard]] friend constexpr auto operator>=(stack const& lhs,
         stack const& rhs) noexcept(noexcept(lhs.c >= rhs.c)) -> bool
     {
         return lhs.c >= rhs.c;
@@ -215,8 +208,7 @@ stack(Container) -> stack<typename Container::value_type, Container>;
 template <typename T, typename Container,
     TETL_REQUIRES_(is_swappable_v<Container>)>
 constexpr auto swap(stack<T, Container>& lhs,
-    stack<T, Container>& rhs) noexcept(noexcept(lhs.swap(rhs)))
-    -> void
+    stack<T, Container>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

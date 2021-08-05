@@ -296,7 +296,10 @@ public:
     // NOLINTNEXTLINE(readability-identifier-naming)
     static constexpr auto quiet_NaN() noexcept -> unsigned char { return 0; }
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned char { return 0; }
+    static constexpr auto signaling_NaN() noexcept -> unsigned char
+    {
+        return 0;
+    }
     static constexpr auto denorm_min() noexcept -> unsigned char { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -373,7 +376,10 @@ public:
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
     static constexpr auto epsilon() noexcept -> unsigned short { return {}; }
-    static constexpr auto round_error() noexcept -> unsigned short { return {}; }
+    static constexpr auto round_error() noexcept -> unsigned short
+    {
+        return {};
+    }
 
     static constexpr int digits = CHAR_BIT * sizeof(short);
     // static constexpr int digits10     = digits * etl::log10(2);
@@ -398,7 +404,10 @@ public:
     // NOLINTNEXTLINE(readability-identifier-naming)
     static constexpr auto quiet_NaN() noexcept -> unsigned short { return 0; }
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned short { return 0; }
+    static constexpr auto signaling_NaN() noexcept -> unsigned short
+    {
+        return 0;
+    }
     static constexpr auto denorm_min() noexcept -> unsigned short { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -602,7 +611,10 @@ public:
     // NOLINTNEXTLINE(readability-identifier-naming)
     static constexpr auto quiet_NaN() noexcept -> unsigned long { return 0; }
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned long { return 0; }
+    static constexpr auto signaling_NaN() noexcept -> unsigned long
+    {
+        return 0;
+    }
     static constexpr auto denorm_min() noexcept -> unsigned long { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -684,7 +696,10 @@ public:
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept -> unsigned long long { return {}; }
+    static constexpr auto epsilon() noexcept -> unsigned long long
+    {
+        return {};
+    }
     static constexpr auto round_error() noexcept -> unsigned long long
     {
         return {};
@@ -708,10 +723,16 @@ public:
     static constexpr bool has_signaling_NaN        = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned long long { return 0; }
+    static constexpr auto infinity() noexcept -> unsigned long long
+    {
+        return 0;
+    }
 
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned long long { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned long long
+    {
+        return 0;
+    }
     // NOLINTNEXTLINE(readability-identifier-naming)
     static constexpr auto signaling_NaN() noexcept -> unsigned long long
     {

@@ -185,11 +185,12 @@ TEMPLATE_TEST_CASE("span: operator[]", "[span]", char, int, float)
     REQUIRE(csp[3] == TestType { 124 });
 }
 
-TEMPLATE_TEST_CASE("span: size_bytes", "[span]", char, int, float, double,
-    etl::uint64_t)
+TEMPLATE_TEST_CASE(
+    "span: size_bytes", "[span]", char, int, float, double, etl::uint64_t)
 {
     auto vec = etl::static_vector<TestType, 6> {};
-    etl::generate_n(etl::back_inserter(vec), 4, []() { return TestType { 42 }; });
+    etl::generate_n(
+        etl::back_inserter(vec), 4, []() { return TestType { 42 }; });
     auto sp = etl::span<TestType> { etl::begin(vec), etl::size(vec) };
 
     REQUIRE(sp.size_bytes() == 4 * sizeof(TestType));

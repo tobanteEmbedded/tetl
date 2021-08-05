@@ -82,7 +82,8 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
 
             // Copy everything between {{ ... }}, but only one curly each.
             if (escapeClose) {
-                detail::format_argument(etl::string_view(openSec, closeFirst + 1), ctx);
+                detail::format_argument(
+                    etl::string_view(openSec, closeFirst + 1), ctx);
                 first = closeFirst + 2;
             } else {
                 // No closing "}}" found

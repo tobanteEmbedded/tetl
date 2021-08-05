@@ -47,9 +47,8 @@ concept same_as = detail::same_helper<T, U>&& detail::same_helper<U, T>;
 /// of Derived, ignoring cv-qualifiers. Note that this behaviour is different to
 /// is_base_of when Base is a private or protected base of Derived.
 template <typename Derived, typename Base>
-concept derived_from
-    = is_base_of_v<Base, Derived>&& is_convertible_v<const volatile Derived*,
-        const volatile Base*>;
+concept derived_from = is_base_of_v<Base, Derived>&&
+    is_convertible_v<const volatile Derived*, const volatile Base*>;
 
 /// \brief The concept convertible_to<From, To> specifies that an expression of
 /// the same type and value category as those of declval<From>() can be

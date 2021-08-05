@@ -44,8 +44,7 @@ struct identity {
 
 template <typename T = float>
 struct constant {
-    constexpr constant(T val)
-        : val_ { val } { }
+    constexpr constant(T val) : val_ { val } { }
 
     template <typename... Args>
     constexpr auto operator()(Args... /*unused*/) const
@@ -71,8 +70,7 @@ namespace literals {
 
 template <typename L, typename R>
 struct pipe {
-    constexpr pipe(L lhs, R rhs)
-        : lhs_ { lhs }, rhs_ { rhs } { }
+    constexpr pipe(L lhs, R rhs) : lhs_ { lhs }, rhs_ { rhs } { }
 
     template <typename... T>
     constexpr auto operator()(T... val)
@@ -115,7 +113,7 @@ struct delay {
     };
 
 private:
-    using z_buffer_t                     = etl::array<T, static_cast<size_t>(Z) + 1>;
+    using z_buffer_t = etl::array<T, static_cast<size_t>(Z) + 1>;
     typename z_buffer_t::size_type head_ = 0;
     typename z_buffer_t::size_type tail_ = 0;
     z_buffer_t zBuffer_                  = {};
@@ -145,8 +143,7 @@ private:
 
 template <typename T = float>
 struct feedback_tap {
-    constexpr feedback_tap(feedback_drain<T>& d)
-        : drain_ { d } { }
+    constexpr feedback_tap(feedback_drain<T>& d) : drain_ { d } { }
     constexpr auto operator()(T const& in) const
     {
         drain_.push(in);
@@ -175,8 +172,7 @@ namespace detail {
 
     template <typename... T>
     struct fork_impl {
-        fork_impl(T&&... val)
-            : nodes_ { etl::forward<T>(val)... } { }
+        fork_impl(T&&... val) : nodes_ { etl::forward<T>(val)... } { }
 
         template <typename... Tn>
         void operator()(Tn... val) const

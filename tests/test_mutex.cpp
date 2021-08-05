@@ -176,13 +176,15 @@ TEST_CASE("mutex/unique_lock: RAII", "[mutex]")
             REQUIRE(mtx.is_locked());
 
             etl::unique_lock l2 { etl::move(l1) };
-            REQUIRE_FALSE(l1.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
+            REQUIRE_FALSE(
+                l1.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
             REQUIRE(l2.owns_lock());
             REQUIRE(mtx.is_locked());
 
             etl::unique_lock<test_mutex> l3 {};
             l3 = etl::move(l2);
-            REQUIRE_FALSE(l2.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
+            REQUIRE_FALSE(
+                l2.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
             REQUIRE(l3.owns_lock());
             REQUIRE(mtx.is_locked());
         }

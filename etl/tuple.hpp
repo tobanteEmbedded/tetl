@@ -34,16 +34,14 @@ namespace etl {
 /// \todo Implement index_sequence & tuple_size
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...> {
-    tuple(First f, Rest... rest)
-        : tuple<Rest...>(rest...), first(f) { }
+    tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
 
     First first;
 };
 
 template <typename First>
 struct tuple<First> {
-    tuple(First f)
-        : first(f) { }
+    tuple(First f) : first(f) { }
 
     First first;
 };

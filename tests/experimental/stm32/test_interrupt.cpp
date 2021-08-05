@@ -32,7 +32,7 @@ static void dummy_handler() { dummyHandler01_WasCalled = true; }
 
 TEST_CASE("experimental/stm32: interrupt", "[stm32][hardware][experimental]")
 {
-    auto callbacks                                      = stm32::isr::vector_t {};
+    auto callbacks = stm32::isr::vector_t {};
     callbacks[static_cast<size_t>(stm32::isr_ids::nmi)] = dummy_handler;
 
     REQUIRE_FALSE(dummyHandler01_WasCalled);

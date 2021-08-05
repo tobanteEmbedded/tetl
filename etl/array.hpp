@@ -70,7 +70,8 @@ struct array {
     /// The ...
     using reverse_iterator = typename etl::reverse_iterator<iterator>;
     /// The ...
-    using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
+    using const_reverse_iterator =
+        typename etl::reverse_iterator<const_iterator>;
 
     /// \brief Accesses the specified item with range checking.
     [[nodiscard]] constexpr auto at(size_type const pos) noexcept -> reference
@@ -192,7 +193,8 @@ struct array {
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// array. It corresponds to the last element of the non-reversed array. If
     /// the array is empty, the returned iterator is equal to rend().
-    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() const noexcept
+        -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
@@ -207,8 +209,8 @@ struct array {
     }
 
     /// \brief Returns a reverse iterator to the element following the last
-    /// element of the reversed array. It corresponds to the element preceding the
-    /// first element of the non-reversed array. This element acts as a
+    /// element of the reversed array. It corresponds to the element preceding
+    /// the first element of the non-reversed array. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
     [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
     {
@@ -216,8 +218,8 @@ struct array {
     }
 
     /// \brief Returns a reverse iterator to the element following the last
-    /// element of the reversed array. It corresponds to the element preceding the
-    /// first element of the non-reversed array. This element acts as a
+    /// element of the reversed array. It corresponds to the element preceding
+    /// the first element of the non-reversed array. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
@@ -225,10 +227,11 @@ struct array {
     }
 
     /// \brief Returns a reverse iterator to the element following the last
-    /// element of the reversed array. It corresponds to the element preceding the
-    /// first element of the non-reversed array. This element acts as a
+    /// element of the reversed array. It corresponds to the element preceding
+    /// the first element of the non-reversed array. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto crend() const noexcept
+        -> const_reverse_iterator
     {
         return rend();
     }
@@ -265,7 +268,8 @@ struct array {
     }
 
     /// \brief Exchanges the contents of the container with those of other. Does
-    /// not cause iterators and references to associate with the other container.
+    /// not cause iterators and references to associate with the other
+    /// container.
     constexpr auto swap(array& other) noexcept(is_nothrow_swappable_v<Type>)
         -> void
     {
@@ -290,8 +294,8 @@ array(T, U...) -> array<T, 1 + sizeof...(U)>;
 /// of lhs and rhs.
 /// \group swap
 template <typename T, size_t N>
-constexpr auto swap(array<T, N>& lhs,
-    array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(
+    noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }
@@ -320,16 +324,16 @@ struct tuple_element<I, array<T, N>> {
 /// element in rhs at the same position.
 /// \group array_eqaulity
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator==(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator==(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 /// \group array_eqaulity
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator!=(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator!=(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return !(lhs == rhs);
 }
@@ -338,33 +342,33 @@ template <typename T, size_t N>
 /// comparison is performed by a function equivalent to lexicographical_compare.
 /// \group array_compare
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator<(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator<(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
-    return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(),
-        rhs.end());
+    return lexicographical_compare(
+        lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 /// \group array_compare
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator<=(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator<=(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return !(rhs < lhs);
 }
 
 /// \group array_compare
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator>(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator>(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return rhs < lhs;
 }
 
 /// \group array_compare
 template <typename T, size_t N>
-[[nodiscard]] constexpr auto operator>=(array<T, N> const& lhs,
-    array<T, N> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator>=(
+    array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return !(lhs < rhs);
 }
@@ -408,17 +412,15 @@ template <size_t Index, typename T, size_t Size>
 
 namespace detail {
     template <typename T, size_t N, size_t... I>
-    [[nodiscard]] constexpr auto to_array_impl(T (&a)[N],
-        index_sequence<I...> /*unused*/)
-        -> array<remove_cv_t<T>, N>
+    [[nodiscard]] constexpr auto to_array_impl(
+        T (&a)[N], index_sequence<I...> /*unused*/) -> array<remove_cv_t<T>, N>
     {
         return { { a[I]... } };
     }
 
     template <typename T, size_t N, size_t... I>
-    [[nodiscard]] constexpr auto to_array_impl(T(&&a)[N],
-        index_sequence<I...> /*unused*/)
-        -> array<remove_cv_t<T>, N>
+    [[nodiscard]] constexpr auto to_array_impl(
+        T(&&a)[N], index_sequence<I...> /*unused*/) -> array<remove_cv_t<T>, N>
     {
         return { { move(a[I])... } };
     }

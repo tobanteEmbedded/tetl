@@ -37,7 +37,9 @@ public:
 
     /// \brief Construct a buffer to represent a given memory range.
     mutable_buffer(void* data, etl::size_t size)
-        : data_ { data }, size_ { size } { }
+        : data_ { data }, size_ { size }
+    {
+    }
 
     /// \brief Get a pointer to the beginning of the memory range.
     [[nodiscard]] auto data() const noexcept -> void* { return data_; }

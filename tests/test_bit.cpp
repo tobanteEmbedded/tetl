@@ -26,8 +26,8 @@
 
 #include "catch2/catch_template_test_macros.hpp"
 
-TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t,
-    float)
+TEMPLATE_TEST_CASE(
+    "bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t, float)
 {
     SECTION("round trip")
     {
@@ -37,8 +37,8 @@ TEMPLATE_TEST_CASE("bit: bit_cast 32bit", "[bit]", etl::uint32_t, etl::int32_t,
     }
 }
 
-TEMPLATE_TEST_CASE("bit: bit_cast 64bit", "[bit]", etl::uint64_t, etl::int64_t,
-    double)
+TEMPLATE_TEST_CASE(
+    "bit: bit_cast 64bit", "[bit]", etl::uint64_t, etl::int64_t, double)
 {
     SECTION("round trip")
     {

@@ -44,43 +44,43 @@ struct monostate {
 };
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator==(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator!=(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return false;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<=(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return true;
 }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>=(monostate /*lhs*/,
-    monostate /*rhs*/) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(
+    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
 {
     return true;
 }
@@ -172,7 +172,8 @@ namespace detail {
 
         static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
         {
-            return *static_cast<Head const*>(static_cast<void const*>(&vu.data));
+            return *static_cast<Head const*>(
+                static_cast<void const*>(&vu.data));
         }
 
         static constexpr const union_index_type index = 0;
@@ -182,18 +183,20 @@ namespace detail {
     struct variant_storage_type_get<Target, variant_storage<Head, Tail...>> {
         static auto get(variant_storage<Head, Tail...>& vu) -> Target&
         {
-            return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-                vu.tail);
+            return variant_storage_type_get<Target,
+                variant_storage<Tail...>>::get(vu.tail);
         }
 
-        static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
+        static auto get(variant_storage<Head, Tail...> const& vu)
+            -> Target const&
         {
-            return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-                vu.tail);
+            return variant_storage_type_get<Target,
+                variant_storage<Tail...>>::get(vu.tail);
         }
 
         static constexpr const union_index_type index
-            = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
+            = variant_storage_type_get<Target, variant_storage<Tail...>>::index
+              + 1;
     };
 
 } // namespace detail
@@ -252,8 +255,8 @@ public:
     /// \brief If valueless_by_exception is true, does nothing. Otherwise,
     /// destroys the currently contained value.
     ///
-    /// \todo This destructor is trivial if etl::is_trivially_destructible_v<T_i>
-    /// is true for all T_i in Types...
+    /// \todo This destructor is trivial if
+    /// etl::is_trivially_destructible_v<T_i> is true for all T_i in Types...
     ~variant()
     {
         if (!valueless_by_exception()) { data_.destruct(unionIndex_); }
@@ -261,11 +264,11 @@ public:
 
     /// \brief Copy-assignment
     ///
-    /// \details  If both *this and rhs are valueless by exception, does nothing.
-    /// Otherwise, if rhs holds the same alternative as *this, assigns the value
-    /// contained in rhs to the value contained in *this. If an exception is
-    /// thrown, *this does not become valueless: the value depends on the
-    /// exception safety guarantee of the alternative's copy assignment.
+    /// \details  If both *this and rhs are valueless by exception, does
+    /// nothing. Otherwise, if rhs holds the same alternative as *this, assigns
+    /// the value contained in rhs to the value contained in *this. If an
+    /// exception is thrown, *this does not become valueless: the value depends
+    /// on the exception safety guarantee of the alternative's copy assignment.
     constexpr auto operator=(variant const& rhs) -> variant&
     {
         // Self assignment
@@ -353,7 +356,8 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 {
     if (holds_alternative<T>(*pv)) {
         using storage_t = detail::variant_storage<Types...>;
-        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+        return &detail::variant_storage_type_get<T, storage_t>::get(
+            *pv->data());
     }
 
     return nullptr;
@@ -367,7 +371,8 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 {
     if (holds_alternative<T>(*pv)) {
         using storage_t = detail::variant_storage<Types...>;
-        return &detail::variant_storage_type_get<T, storage_t>::get(*pv->data());
+        return &detail::variant_storage_type_get<T, storage_t>::get(
+            *pv->data());
     }
 
     return nullptr;

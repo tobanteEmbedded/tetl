@@ -55,7 +55,8 @@ enum class isr_ids : size_t {
 
 struct isr {
     using callback_t = void (*)();
-    using vector_t   = etl::array<callback_t, static_cast<size_t>(isr_ids::max_id)>;
+    using vector_t
+        = etl::array<callback_t, static_cast<size_t>(isr_ids::max_id)>;
 
     static auto call(vector_t const& callbacks, isr_ids id) noexcept -> void
     {

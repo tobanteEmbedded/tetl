@@ -37,8 +37,7 @@ auto basic_usage() -> void
 
 // Custom key type.
 struct Key {
-    constexpr explicit Key(size_t val)
-        : val_ { val } { }
+    constexpr explicit Key(size_t val) : val_ { val } { }
 
     [[nodiscard]] constexpr auto key() const -> size_t { return val_; }
 
@@ -52,8 +51,8 @@ auto custom_compare() -> void
     constexpr auto compare
         = [](Key& lhs, Key& rhs) { return lhs.key() < rhs.key(); };
 
-    // Create map of with <Key,int> pair with the comparator compare, no elements
-    // and a capacity of 16.
+    // Create map of with <Key,int> pair with the comparator compare, no
+    // elements and a capacity of 16.
     auto data = etl::map<Key, int, 16, decltype(compare)> {};
     etl::ignore_unused(data);
 }

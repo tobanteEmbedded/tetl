@@ -93,16 +93,16 @@ namespace detail {
 
 #if not defined(TETL_ASSERT)
 /// \brief Assertion macro with customizable runtime behavior
-#define TETL_ASSERT(exp)                                                     \
-    do {                                                                     \
-        if (!(exp)) {                                                        \
-            auto const msg = ::etl::assert_msg {                             \
-                __LINE__, __FILE__,                                          \
-                nullptr, /*The function name causes code bloat.  */          \
-                nullptr, /*The stringified expression causes code bloat.  */ \
-            };                                                               \
-            ::etl::detail::tetl_call_assert_handler(msg);                    \
-        }                                                                    \
+#define TETL_ASSERT(exp)                                                       \
+    do {                                                                       \
+        if (!(exp)) {                                                          \
+            auto const msg = ::etl::assert_msg {                               \
+                __LINE__, __FILE__,                                            \
+                nullptr, /*The function name causes code bloat.  */            \
+                nullptr, /*The stringified expression causes code bloat.  */   \
+            };                                                                 \
+            ::etl::detail::tetl_call_assert_handler(msg);                      \
+        }                                                                      \
     } while (false)
 #endif // TETL_ASSERT
 
