@@ -177,15 +177,13 @@ namespace etl {
     // ch must de representable as a unsigned char
     TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
-    auto const space          = ch == ' ';
-    auto const formFeed       = ch == '\f';
-    auto const lineFeed       = ch == '\n';
-    auto const carriageReturn = ch == '\r';
-    auto const horizontalTab  = ch == '\t';
-    auto const verticalTab    = ch == '\v';
-
-    return static_cast<int>(space || formFeed || lineFeed || carriageReturn
-                            || horizontalTab || verticalTab);
+    auto const sp       = ch == ' ';
+    auto const form     = ch == '\f';
+    auto const line     = ch == '\n';
+    auto const carriage = ch == '\r';
+    auto const hTab     = ch == '\t';
+    auto const vTab     = ch == '\v';
+    return static_cast<int>(sp || form || line || carriage || hTab || vTab);
 }
 
 /// \brief Checks if the given character is a blank character as classified by
