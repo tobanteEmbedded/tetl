@@ -69,7 +69,7 @@ auto tetl_assert_handler(assert_msg const& msg) -> void;
 inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
 {
     ::etl::ignore_unused(msg);
-    ::exit(1);
+    ::exit(1); // NOLINT
 }
 
 namespace detail {
