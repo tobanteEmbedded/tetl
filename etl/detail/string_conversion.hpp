@@ -8,7 +8,7 @@
 namespace etl::detail {
 /// \brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
 template <typename T>
-[[nodiscard]] constexpr auto ascii_to_integer(char const* str) noexcept -> T
+[[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str) noexcept -> T
 {
     // Iterate through all characters of input string
     // and update result take ASCII character of
@@ -30,39 +30,20 @@ template <typename T>
 /// preceded with a minus sign (-). With any other base, value is always
 /// considered unsigned.
 ///
-/// \todo Only base 10 is currently supported. Negative not implemented as well.
+/// \todo Negative not implemented.
 template <typename T>
-constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
+constexpr auto integer_to_ascii_base10(T val, char* const buffer) -> char*
 {
-    TETL_ASSERT(base == 10);
-    ignore_unused(base);
-
-    auto digits10 = [](T x) {
-        T result = 1;
-        while (true) {
-            if (x < 10) { break; }
-            if (x < 100) {
-                result += 1;
-                break;
-            }
-            if (x < 1'000) {
-                result += 2;
-                break;
-            }
-            if (x < 10'000) {
-                result += 3;
-                break;
-            }
-
-            x /= 10'000;
-            result += 4;
+    auto numberOfDigits = [](T x) -> T {
+        T count = 0;
+        while (x != 0) {
+            x /= 10;
+            ++count;
         }
-
-        return result;
+        return count;
     };
 
-    T const result = digits10(val);
-    T pos          = result - 1;
+    T pos = numberOfDigits(val) - 1;
     while (val >= T { 10 }) {
         auto const q  = val / T { 10 };
         auto const r  = static_cast<char>(val % T { 10 });
@@ -81,9 +62,7 @@ constexpr auto integer_to_ascii(T val, char* const buffer, int base) -> char*
 /// \returns Floating point value corresponding to the contents of str on
 /// success.
 template <typename FloatT>
-[[nodiscard]] constexpr auto
-ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept
-    -> FloatT
+[[nodiscard]] constexpr auto ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept -> FloatT
 {
     auto res               = FloatT { 0 };
     auto div               = FloatT { 1 };

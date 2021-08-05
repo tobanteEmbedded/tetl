@@ -128,7 +128,8 @@ struct imaxdiv_t {
 /// \todo Only base 10 is currently supported.
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
-    return detail::integer_to_ascii<int>(val, buffer, base);
+    TETL_ASSERT(base == 10);
+    return detail::integer_to_ascii_base10<int>(val, buffer);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -137,7 +138,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
-    return detail::ascii_to_integer<int>(string);
+    return detail::ascii_to_integer_base10<int>(string);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -146,7 +147,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
 {
-    return detail::ascii_to_integer<long>(string);
+    return detail::ascii_to_integer_base10<long>(string);
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -155,7 +156,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
-    return detail::ascii_to_integer<long long>(string);
+    return detail::ascii_to_integer_base10<long long>(string);
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.

@@ -1426,7 +1426,7 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> int
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer<int>(str.c_str());
+    return detail::ascii_to_integer_base10<int>(str.c_str());
 }
 
 /// \brief Interprets a signed integer value in the string str.
@@ -1439,7 +1439,7 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer<long>(str.c_str());
+    return detail::ascii_to_integer_base10<long>(str.c_str());
 }
 
 /// \brief Interprets a signed integer value in the string str.
@@ -1453,7 +1453,7 @@ template <size_t Capacity>
     -> long long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer<long long>(str.c_str());
+    return detail::ascii_to_integer_base10<long long>(str.c_str());
 }
 
 /// \brief Interprets a unsigned integer value in the string str.
@@ -1467,7 +1467,7 @@ template <size_t Capacity>
     -> unsigned long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer<unsigned long>(str.c_str());
+    return detail::ascii_to_integer_base10<unsigned long>(str.c_str());
 }
 
 /// \brief Interprets a unsigned integer value in the string str.
@@ -1481,7 +1481,7 @@ template <size_t Capacity>
     -> unsigned long long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer<unsigned long long>(str.c_str());
+    return detail::ascii_to_integer_base10<unsigned long long>(str.c_str());
 }
 
 /// \brief Converts a numeric value to etl::static_string.
@@ -1490,7 +1490,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<int>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<int>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
@@ -1500,7 +1500,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<long>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<long>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
@@ -1510,7 +1510,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<long long>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<long long>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
@@ -1520,7 +1520,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<unsigned>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<unsigned>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
@@ -1530,7 +1530,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<unsigned long>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<unsigned long>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
@@ -1540,7 +1540,7 @@ template <size_t Capacity>
     -> static_string<Capacity>
 {
     char buffer[Capacity] {};
-    detail::integer_to_ascii<unsigned long long>(value, &buffer[0], 10);
+    detail::integer_to_ascii_base10<unsigned long long>(value, &buffer[0]);
     return static_string<Capacity> { &buffer[0] };
 }
 
