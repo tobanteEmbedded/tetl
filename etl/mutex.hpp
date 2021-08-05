@@ -141,10 +141,10 @@ public:
     /// for longer than until timeout_time has been reached.
     template <typename Clock, typename Duration>
     unique_lock(mutex_type& m,
-        chrono::time_point<Clock, Duration> const& abs_time) noexcept
+        chrono::time_point<Clock, Duration> const& absTime) noexcept
         : mutex_ { &m }
     {
-        try_lock_until(abs_time);
+        try_lock_until(absTime);
     }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
@@ -154,10 +154,10 @@ public:
     /// first. May block for longer than timeout_duration.
     template <typename Rep, typename Period>
     unique_lock(
-        mutex_type& m, chrono::duration<Rep, Period> const& rel_time) noexcept
+        mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept
         : mutex_ { &m }
     {
-        try_lock_for(rel_time);
+        try_lock_for(relTime);
     }
 
     /// \brief Deleted copy constructor. unique_lock is move only.
