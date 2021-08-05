@@ -27,7 +27,9 @@
 #include "etl/version.hpp"
 
 #include "etl/cstdint.hpp"
+#include "etl/iterator.hpp"
 #include "etl/system_error.hpp"
+#include "etl/type_traits.hpp"
 
 #include "etl/detail/string_conversion.hpp"
 
@@ -45,8 +47,8 @@ enum class chars_format : etl::uint8_t {
 /// \brief Primitive numerical output conversion.
 /// \module Strings
 struct to_chars_result {
-    char const* ptr;
-    etl::errc ec;
+    char const* ptr { nullptr };
+    etl::errc ec {};
 
     [[nodiscard]] friend constexpr auto operator==(
         to_chars_result const& l, to_chars_result const& r) noexcept -> bool
@@ -58,8 +60,8 @@ struct to_chars_result {
 /// \brief Primitive numerical input conversion
 /// \module Strings
 struct from_chars_result {
-    char const* ptr;
-    etl::errc ec;
+    char const* ptr { nullptr };
+    etl::errc ec {};
 
     [[nodiscard]] friend constexpr auto operator==(
         from_chars_result const& l, from_chars_result const& r) noexcept -> bool
@@ -74,11 +76,16 @@ struct from_chars_result {
 /// value is unmodified, otherwise the characters matching the pattern are
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
-[[nodiscard]] constexpr auto from_chars(char const* first, char const* last,
-    char& value, int base = 10) -> from_chars_result
+template <typename Int>
+[[nodiscard]] constexpr auto from_chars(
+    char const* first, char const* last, Int& value, int base = 10)
+    -> enable_if_t<is_integral_v<Int> && !is_same_v<Int, bool>,
+        from_chars_result>
 {
-    value = ::etl::detail::ascii_to_integer_base10<char>(first);
-    return from_chars_result {};
+    auto result    = from_chars_result {};
+    auto const len = static_cast<int>(::etl::distance(first, last));
+    value = detail::ascii_to_integer_base10<Int>(first, &result.ptr, len);
+    return result;
 }
 
 } // namespace etl

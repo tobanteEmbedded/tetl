@@ -24,7 +24,7 @@ template <typename T>
     }
 
     T res = 0;
-    for (; str[i] != '\0' || length == 0; ++i) {
+    for (; str[i] != '\0' && length != 0; ++i) {
         if (!isdigit(str[i])) { return 0; }
         res = res * 10 + str[i] - '0';
         length--;

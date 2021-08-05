@@ -21,8 +21,12 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 #include "etl/charconv.hpp"
+#include "etl/iterator.hpp"
+#include "etl/string_view.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
+
+using namespace etl::string_view_literals;
 
 TEST_CASE("charconv: chars_format", "[charconv]")
 {
@@ -77,4 +81,20 @@ TEST_CASE("charconv: from_chars_result", "[charconv]")
         auto rhs        = etl::from_chars_result { buffer, etl::errc {} };
         CHECK(lhs == rhs);
     }
+}
+
+TEMPLATE_TEST_CASE("charconv: from_chars<Integer>", "[charconv]", char,
+    unsigned char, signed char, unsigned short, short, unsigned int, int,
+    unsigned long, long, unsigned long long, long long)
+{
+    auto val       = TestType {};
+    auto const one = "1"_sv;
+    CHECK(etl::from_chars(one.begin(), one.end(), val).ptr != nullptr);
+    CHECK(val == 1);
+    auto const two = "2"_sv;
+    CHECK(etl::from_chars(two.begin(), two.end(), val).ptr != nullptr);
+    CHECK(val == 2);
+    auto const nein = "99"_sv;
+    CHECK(etl::from_chars(nein.begin(), nein.end(), val).ptr != nullptr);
+    CHECK(val == 99);
 }
