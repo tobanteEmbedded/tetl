@@ -6,21 +6,31 @@
 #include "etl/warning.hpp"
 
 namespace etl::detail {
-/// \brief Credit: https://www.geeksforgeeks.org/write-your-own-atoi
 template <typename T>
 [[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str) noexcept -> T
 {
-    // Iterate through all characters of input string
-    // and update result take ASCII character of
-    // corresponding digit and subtract the code from
-    // '0' to get numerical value and multiply res
-    // by 10 to shuffle digits left to update running total.
-    auto res = T { 0 };
-    for (size_t i { 0 }; str[i] != '\0'; ++i) {
-        auto const digit = str[i] - '0';
-        res              = res * 10 + digit;
+    if (*str == '\0') { return 0; }
+
+    T sign          = 1;
+    ::etl::size_t i = 0;
+    if constexpr (is_signed_v<T>) {
+        if (str[0] == '-') {
+            sign = -1;
+            i++;
+        }
     }
-    return res;
+
+    T res = 0;
+    for (; str[i] != '\0'; ++i) {
+        if (!isdigit(str[i])) { return 0; }
+        res = res * 10 + str[i] - '0';
+    }
+
+    if constexpr (is_signed_v<T>) {
+        return sign * res;
+    } else {
+        return res;
+    }
 }
 
 /// \brief Converts an integer value to a null-terminated string using the
