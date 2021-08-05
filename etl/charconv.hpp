@@ -81,6 +81,9 @@ template <typename T>
     char const* first, char const* last, T& value, int base = 10)
     -> enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, from_chars_result>
 {
+    TETL_ASSERT(base == 10);
+    ignore_unused(base);
+
     auto len = static_cast<::etl::size_t>(::etl::distance(first, last));
     auto res = detail::ascii_to_int_base10<T>(first, len);
     if (res.error == detail::ascii_to_int_error::none) {
