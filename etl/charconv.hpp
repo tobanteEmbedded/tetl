@@ -116,7 +116,7 @@ template <typename T>
     if (res.error = detail::int_to_ascii_error::none) {
         return to_chars_result { res.end, {} };
     }
-    return to_chars_result { l, ::et::errc::value_to_large };
+    return to_chars_result { l, errc::value_too_large };
 }
 
 [[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10)

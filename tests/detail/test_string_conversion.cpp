@@ -63,3 +63,17 @@ TEST_CASE("detail/string_conversion: int_to_ascii<int>",
     REQUIRE(etl::string_view { buf } == expected);
     // REQUIRE(result == etl::begin(buf));
 }
+
+TEMPLATE_TEST_CASE("detail/string_conversion: ascii_to_floating_point",
+    "[detail][string_conversion]", float, double, long double)
+{
+    using T = TestType;
+
+    REQUIRE(ascii_to_floating_point<T>("0") == Catch::Approx(0.0F));
+    REQUIRE(ascii_to_floating_point<T>("10") == Catch::Approx(10.0F));
+    REQUIRE(ascii_to_floating_point<T>("100.0") == Catch::Approx(100.0F));
+    REQUIRE(ascii_to_floating_point<T>("1000.000") == Catch::Approx(1000.0F));
+    REQUIRE(ascii_to_floating_point<T>("10000") == Catch::Approx(10000.0F));
+    REQUIRE(ascii_to_floating_point<T>("999999.0") == Catch::Approx(999999.0F));
+    REQUIRE(ascii_to_floating_point<T>("9999999") == Catch::Approx(9999999.0F));
+}

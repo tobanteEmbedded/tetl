@@ -187,7 +187,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 [[nodiscard]] constexpr auto strtod(
     const char* str, char const** last = nullptr) noexcept -> double
 {
-    return detail::ascii_to_floating_point<float>(str, last);
+    return detail::ascii_to_floating_point<double>(str, last);
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
@@ -200,7 +200,7 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 [[nodiscard]] constexpr auto strtold(
     const char* str, char const** last = nullptr) noexcept -> long double
 {
-    return detail::ascii_to_floating_point<float>(str, last);
+    return detail::ascii_to_floating_point<long double>(str, last);
 }
 
 /// \brief Computes the absolute value of an integer number. The behavior is
