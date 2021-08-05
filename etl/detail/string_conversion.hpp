@@ -7,18 +7,31 @@
 
 namespace etl::detail {
 
-enum struct ascii_to_integer_result {
-    success,
+enum struct ascii_to_int_error {
+    none,
     invalid_input,
     overflow,
 };
 
 template <typename T>
-[[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str,
-    char const** end = nullptr,
-    int length       = numeric_limits<int>::max()) noexcept -> T
+struct ascii_to_int_result {
+    T value;
+    char const* end { nullptr };
+    ascii_to_int_error error { ascii_to_int_error::none };
+};
+
+template <typename T>
+[[nodiscard]] constexpr auto ascii_to_int_base10(
+    char const* str, size_t length = numeric_limits<size_t>::max()) noexcept
+    -> ascii_to_int_result<T>
 {
-    if (*str == '\0') { return 0; }
+    if (*str == '\0') {
+        return ascii_to_int_result<T> {
+            T {},
+            str,
+            ascii_to_int_error::invalid_input,
+        };
+    }
 
     ::etl::size_t i = 0;
 
@@ -39,21 +52,17 @@ template <typename T>
     }
 
     // loop over digits
-    T res = 0;
+    T value = 0;
     for (; str[i] != '\0' && length != 0; ++i) {
         if (!isdigit(str[i])) { break; }
-        res = res * 10 + str[i] - '0';
+        value = value * 10 + str[i] - '0';
         length--;
     }
 
     // one past the last element used for conversion
-    if (end != nullptr) { *end = &str[i]; }
-
-    if constexpr (is_signed_v<T>) {
-        return sign * res;
-    } else {
-        return res;
-    }
+    auto result = ascii_to_int_result<T> { value, &str[i] };
+    if constexpr (is_signed_v<T>) { result.value *= sign; }
+    return result;
 }
 
 /// \brief Converts an integer value to a null-terminated string using the

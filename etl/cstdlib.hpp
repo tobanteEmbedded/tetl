@@ -138,7 +138,8 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
-    return detail::ascii_to_integer_base10<int>(string);
+    auto const result = detail::ascii_to_int_base10<int>(string);
+    return result.value;
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -147,7 +148,8 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atol(char const* string) noexcept -> long
 {
-    return detail::ascii_to_integer_base10<long>(string);
+    auto const result = detail::ascii_to_int_base10<long>(string);
+    return result.value;
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.
@@ -156,7 +158,8 @@ constexpr auto itoa(int val, char* const buffer, int base) -> char*
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
-    return detail::ascii_to_integer_base10<long long>(string);
+    auto const result = detail::ascii_to_int_base10<long long>(string);
+    return result.value;
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.

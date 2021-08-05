@@ -76,16 +76,23 @@ struct from_chars_result {
 /// value is unmodified, otherwise the characters matching the pattern are
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
-template <typename Int>
+template <typename T>
 [[nodiscard]] constexpr auto from_chars(
-    char const* first, char const* last, Int& value, int base = 10)
-    -> enable_if_t<is_integral_v<Int> && !is_same_v<Int, bool>,
-        from_chars_result>
+    char const* first, char const* last, T& value, int base = 10)
+    -> enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, from_chars_result>
 {
-    auto result    = from_chars_result {};
-    auto const len = static_cast<int>(::etl::distance(first, last));
-    value = detail::ascii_to_integer_base10<Int>(first, &result.ptr, len);
-    return result;
+    auto len = static_cast<::etl::size_t>(::etl::distance(first, last));
+    auto res = detail::ascii_to_int_base10<T>(first, len);
+    if (res.error == detail::ascii_to_int_error::none) {
+        value = res.value;
+        return from_chars_result { res.end };
+    }
+    if (res.error == detail::ascii_to_int_error::invalid_input) {
+        return from_chars_result { first, errc::invalid_argument };
+    }
+
+    TETL_ASSERT(res.error == detail::ascii_to_int_error::overflow);
+    return from_chars_result { first, errc::result_out_of_range };
 }
 
 } // namespace etl

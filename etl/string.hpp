@@ -1422,7 +1422,8 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> int
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer_base10<int>(str.c_str());
+    auto const res = detail::ascii_to_int_base10<int>(str.c_str());
+    return res.value;
 }
 
 /// \brief Interprets a signed integer value in the string str.
@@ -1435,7 +1436,8 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer_base10<long>(str.c_str());
+    auto const res = detail::ascii_to_int_base10<long>(str.c_str());
+    return res.value;
 }
 
 /// \brief Interprets a signed integer value in the string str.
@@ -1448,7 +1450,8 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> long long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer_base10<long long>(str.c_str());
+    auto const res = detail::ascii_to_int_base10<long long>(str.c_str());
+    return res.value;
 }
 
 /// \brief Interprets a unsigned integer value in the string str.
@@ -1461,7 +1464,8 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> unsigned long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer_base10<unsigned long>(str.c_str());
+    auto const res = detail::ascii_to_int_base10<unsigned long>(str.c_str());
+    return res.value;
 }
 
 /// \brief Interprets a unsigned integer value in the string str.
@@ -1474,7 +1478,9 @@ template <size_t Capacity>
     size_t* pos = nullptr, int base = 10) -> unsigned long long
 {
     ignore_unused(pos, base);
-    return detail::ascii_to_integer_base10<unsigned long long>(str.c_str());
+    auto const res
+        = detail::ascii_to_int_base10<unsigned long long>(str.c_str());
+    return res.value;
 }
 
 /// \brief Converts a numeric value to etl::static_string.
