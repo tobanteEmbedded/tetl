@@ -22,11 +22,9 @@
 // DAMAGE.
 #include "etl/charconv.hpp"
 #include "etl/iterator.hpp"
-#include "etl/string_view.hpp"
+#include "etl/string.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
-
-using namespace etl::string_view_literals;
 
 TEST_CASE("charconv: chars_format", "[charconv]")
 {
@@ -87,14 +85,40 @@ TEMPLATE_TEST_CASE("charconv: from_chars<Integer>", "[charconv]", char,
     unsigned char, signed char, unsigned short, short, unsigned int, int,
     unsigned long, long, unsigned long long, long long)
 {
-    auto val       = TestType {};
-    auto const one = "1"_sv;
-    CHECK(etl::from_chars(one.begin(), one.end(), val).ptr != nullptr);
-    CHECK(val == 1);
-    auto const two = "2"_sv;
-    CHECK(etl::from_chars(two.begin(), two.end(), val).ptr != nullptr);
-    CHECK(val == 2);
-    auto const nein = "99"_sv;
-    CHECK(etl::from_chars(nein.begin(), nein.end(), val).ptr != nullptr);
-    CHECK(val == 99);
+    using string_t = etl::static_string<16>;
+
+    auto test = [](auto tc, auto expected) -> void {
+        auto val          = TestType {};
+        auto const result = etl::from_chars(tc.begin(), tc.end(), val);
+        CHECK(result.ptr == tc.end());
+        CHECK(val == expected);
+    };
+
+    test(string_t { "1" }, 1);
+    test(string_t { " 1" }, 1);
+
+    test(string_t { "2" }, 2);
+    test(string_t { "10" }, 10);
+    test(string_t { "42" }, 42);
+    test(string_t { "99" }, 99);
+    test(string_t { "126" }, 126);
+
+    if constexpr (sizeof(TestType) > 1) {
+        test(string_t { "1000" }, 1000);
+        test(string_t { "9999" }, 9999);
+    }
+
+    if constexpr (etl::is_signed_v<TestType>) {
+        test(string_t { "-1" }, -1);
+        test(string_t { "-2" }, -2);
+        test(string_t { "-10" }, -10);
+        test(string_t { "-42" }, -42);
+        test(string_t { "-99" }, -99);
+        test(string_t { "-126" }, -126);
+
+        if constexpr (sizeof(TestType) > 1) {
+            test(string_t { "-1000" }, -1000);
+            test(string_t { "-9999" }, -9999);
+        }
+    }
 }

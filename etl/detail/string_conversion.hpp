@@ -6,6 +6,13 @@
 #include "etl/warning.hpp"
 
 namespace etl::detail {
+
+enum struct ascii_to_integer_result {
+    success,
+    invalid_input,
+    overflow,
+};
+
 template <typename T>
 [[nodiscard]] constexpr auto ascii_to_integer_base10(char const* str,
     char const** end = nullptr,
@@ -13,8 +20,16 @@ template <typename T>
 {
     if (*str == '\0') { return 0; }
 
-    T sign          = 1;
     ::etl::size_t i = 0;
+
+    // skip leading whitespace
+    while (::etl::isspace(str[i]) && length != 0 && str[i] != '\0') {
+        i++;
+        length--;
+    }
+
+    // optional minus for signed types
+    T sign = 1;
     if constexpr (is_signed_v<T>) {
         if (str[0] == '-') {
             sign = -1;
@@ -23,13 +38,15 @@ template <typename T>
         }
     }
 
+    // loop over digits
     T res = 0;
     for (; str[i] != '\0' && length != 0; ++i) {
-        if (!isdigit(str[i])) { return 0; }
+        if (!isdigit(str[i])) { break; }
         res = res * 10 + str[i] - '0';
         length--;
     }
 
+    // one past the last element used for conversion
     if (end != nullptr) { *end = &str[i]; }
 
     if constexpr (is_signed_v<T>) {
