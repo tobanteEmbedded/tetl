@@ -98,6 +98,30 @@ template <typename T>
     return from_chars_result { first, errc::result_out_of_range };
 }
 
+/// Converts value into a character string by successively filling the range
+/// [first, last), where [first, last) is required to be a valid range.
+///
+/// Integer formatters: value is converted to a string of digits in the given
+/// base (with no redundant leading zeroes). Digits in the range 10..35
+/// (inclusive) are represented as lowercase characters a..z. If value is less
+/// than zero, the representation starts with a minus sign. The library provides
+/// overloads for all signed and unsigned integer types and for the type char as
+/// the type of the parameter value.
+template <typename T>
+[[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10)
+    -> enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, to_chars_result>
+{
+    auto const len = static_cast<::etl::size_t>(::etl::distance(f, l));
+    auto const res = detail::int_to_ascii<int>(val, f, base, len);
+    if (res.error = detail::int_to_ascii_error::none) {
+        return to_chars_result { res.end, {} };
+    }
+    return to_chars_result { l, ::et::errc::value_to_large };
+}
+
+[[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10)
+    -> to_chars_result = delete;
+
 } // namespace etl
 
 #endif // TETL_CHARCONV_HPP

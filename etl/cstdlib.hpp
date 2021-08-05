@@ -128,8 +128,10 @@ struct imaxdiv_t {
 /// \todo Only base 10 is currently supported.
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
-    TETL_ASSERT(base == 10);
-    return detail::integer_to_ascii_base10<int>(val, buffer);
+    auto res = detail::int_to_ascii<int>(val, buffer, base);
+    TETL_ASSERT(res.error == detail::int_to_ascii_error::none);
+    ignore_unused(res);
+    return buffer;
 }
 
 /// \brief Interprets an integer value in a byte string pointed to by str.

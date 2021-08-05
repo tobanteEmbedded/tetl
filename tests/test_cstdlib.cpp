@@ -24,113 +24,82 @@
 #include "etl/cstdlib.hpp"
 
 #include "etl/cstring.hpp"
+#include "etl/string_view.hpp"
 
 #include "catch2/catch_approx.hpp"
 #include "catch2/catch_template_test_macros.hpp"
+#include "catch2/generators/catch_generators.hpp"
+
+using namespace etl::string_view_literals;
+using namespace Catch::Generators;
 
 TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
 {
-    SECTION("0")
-    {
-        int val         = 0;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 1);
-        REQUIRE(etl::strcmp(result, "0") == 0);
-    }
+    auto [input, expected] = GENERATE(table<int, etl::string_view>({
+        { 0, "0"_sv },
+        { 10, "10"_sv },
+        { 99, "99"_sv },
+        { 143, "143"_sv },
+        { 999, "999"_sv },
+        { 1111, "1111"_sv },
+        { 123456789, "123456789"_sv },
+    }));
 
-    SECTION("10")
-    {
-        int val         = 10;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 2);
-        REQUIRE(etl::strcmp(result, "10") == 0);
-    }
-
-    SECTION("999")
-    {
-        int val         = 999;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 3);
-        REQUIRE(etl::strcmp(result, "999") == 0);
-    }
-
-    SECTION("1002")
-    {
-        int val         = 1002;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 4);
-        REQUIRE(etl::strcmp(result, "1002") == 0);
-    }
-
-    SECTION("44444")
-    {
-        int val         = 44444;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 5);
-        REQUIRE(etl::strcmp(result, "44444") == 0);
-    }
-
-    SECTION("123456789")
-    {
-        int val         = 123456789;
-        char buffer[12] = {};
-        auto* result    = etl::itoa(val, buffer, 10);
-        REQUIRE(&buffer[0] == result);
-        REQUIRE(etl::strlen(result) == 9);
-        REQUIRE(etl::strcmp(result, "123456789") == 0);
-    }
+    char buffer[12] = {};
+    auto* result    = etl::itoa(input, buffer, 10);
+    REQUIRE(&buffer[0] == result);
+    REQUIRE(etl::string_view { buffer } == expected);
 }
 
 TEST_CASE("cstdlib: atoi", "[cstdlib]")
 {
-    SECTION("positive")
-    {
-        REQUIRE(etl::atoi("0") == 0);
-        REQUIRE(etl::atoi("10") == 10);
-        REQUIRE(etl::atoi("100") == 100);
-        REQUIRE(etl::atoi("1000") == 1000);
-        REQUIRE(etl::atoi("10000") == 10000);
-        REQUIRE(etl::atoi("999999") == 999999);
-        REQUIRE(etl::atoi("9999999") == 9999999);
-    }
+    auto [input, expected] = GENERATE(table<char const*, int>({
+        { "0", 0 },
+        { "10", 10 },
+        { "99", 99 },
+        { "143", 143 },
+        { "999", 999 },
+        { "1111", 1111 },
+        { "99999", 99999 },
+        { "999999", 999999 },
+        { "123456789", 123456789 },
+    }));
+
+    REQUIRE(etl::atoi(input) == expected);
 }
 
 TEST_CASE("cstdlib: atol", "[cstdlib]")
 {
-    SECTION("positive")
-    {
-        REQUIRE(etl::atol("0") == 0L);
-        REQUIRE(etl::atol("10") == 10L);
-        REQUIRE(etl::atol("100") == 100L);
-        REQUIRE(etl::atol("1000") == 1000L);
-        REQUIRE(etl::atol("10000") == 10000L);
-        REQUIRE(etl::atol("999999") == 999999L);
-        REQUIRE(etl::atol("9999999") == 9999999L);
-    }
+    auto [input, expected] = GENERATE(table<char const*, long>({
+        { "0", 0 },
+        { "10", 10 },
+        { "99", 99 },
+        { "143", 143 },
+        { "999", 999 },
+        { "1111", 1111 },
+        { "99999", 99999 },
+        { "999999", 999999 },
+        { "123456789", 123456789 },
+    }));
+
+    REQUIRE(etl::atol(input) == expected);
 }
 
 TEST_CASE("cstdlib: atoll", "[cstdlib]")
 {
-    SECTION("positive")
-    {
-        REQUIRE(etl::atoll("0") == 0LL);
-        REQUIRE(etl::atoll("10") == 10LL);
-        REQUIRE(etl::atoll("100") == 100LL);
-        REQUIRE(etl::atoll("1000") == 1000LL);
-        REQUIRE(etl::atoll("10000") == 10000LL);
-        REQUIRE(etl::atoll("999999") == 999999LL);
-        REQUIRE(etl::atoll("9999999") == 9999999LL);
-    }
+    auto [input, expected] = GENERATE(table<char const*, long long>({
+        { "0", 0 },
+        { "10", 10 },
+        { "99", 99 },
+        { "143", 143 },
+        { "999", 999 },
+        { "1111", 1111 },
+        { "99999", 99999 },
+        { "999999", 999999 },
+        { "123456789", 123456789 },
+    }));
+
+    REQUIRE(etl::atoll(input) == expected);
 }
 
 TEST_CASE("cstdlib: strtof", "[cstdlib]")

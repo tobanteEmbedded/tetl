@@ -45,6 +45,8 @@ target_sources(${PROJECT_NAME}
         test_vector.cpp
         test_version.cpp
 
+        detail/test_string_conversion.cpp
+
         experimental/dsp/test_dsp.cpp
 
         experimental/net/test_buffer.cpp

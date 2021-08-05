@@ -65,36 +65,67 @@ template <typename T>
     return result;
 }
 
-/// \brief Converts an integer value to a null-terminated string using the
-/// specified base and stores the result in the array given by str parameter.
-///
-/// \details If base is 10 and value is negative, the resulting string is
-/// preceded with a minus sign (-). With any other base, value is always
-/// considered unsigned.
-///
-/// \todo Negative not implemented.
-template <typename T>
-constexpr auto integer_to_ascii_base10(T val, char* const buffer) -> char*
+enum struct int_to_ascii_error : ::etl::uint8_t {
+    none,
+    buffer_overflow,
+};
+
+struct int_to_ascii_result {
+    char* end { nullptr };
+    int_to_ascii_error error { int_to_ascii_error::none };
+};
+
+template <typename Int, bool TerminateWithNull = true>
+[[nodiscard]] constexpr auto int_to_ascii(Int num, char* str, int base = 10,
+    size_t length = etl::numeric_limits<size_t>::max()) -> int_to_ascii_result
 {
-    auto numberOfDigits = [](T x) -> T {
-        T count = 0;
-        while (x != 0) {
-            x /= 10;
-            ++count;
+    auto reverse_string = [](char* string, etl::size_t len) {
+        etl::size_t start = 0;
+        etl::size_t end   = len - 1;
+        while (start < end) {
+            ::etl::swap(*(string + start), *(string + end));
+            start++;
+            end--;
         }
-        return count;
     };
 
-    T pos = numberOfDigits(val) - 1;
-    while (val >= T { 10 }) {
-        auto const q  = val / T { 10 };
-        auto const r  = static_cast<char>(val % T { 10 });
-        buffer[pos--] = static_cast<char>('0' + r);
-        val           = q;
+    // Handle 0 explicitely, otherwise empty string is printed for 0
+    ::etl::size_t i = 0;
+    if (num == 0) {
+        if (length < (1 + static_cast<size_t>(TerminateWithNull))) {
+            return { str + length, int_to_ascii_error::buffer_overflow };
+        }
+        str[i++] = '0';
+        if constexpr (TerminateWithNull) { str[i] = '\0'; }
+        return { &str[i] };
     }
 
-    *buffer = static_cast<char>(val + '0');
-    return buffer;
+    bool isNegative = false;
+    if constexpr (::etl::is_signed_v<Int>) {
+        if (num < 0 && base == 10) {
+            isNegative = true;
+            num        = -num;
+        }
+    }
+
+    while (num != 0) {
+        int rem  = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        num      = num / base;
+
+        if (length <= i) {
+            return { str + length, int_to_ascii_error::buffer_overflow };
+        }
+    }
+
+    if constexpr (::etl::is_signed_v<Int>) {
+        if (isNegative) { str[i++] = '-'; }
+    }
+
+    if constexpr (TerminateWithNull) { str[i] = '\0'; }
+
+    reverse_string(str, i);
+    return { &str[i] };
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.

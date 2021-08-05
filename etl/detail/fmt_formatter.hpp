@@ -97,16 +97,27 @@ struct formatter<etl::static_string<Capacity>, char> {
     }
 };
 
+namespace detail {
+    template <typename Integer, typename FormatContext>
+    constexpr auto integer_format(Integer v, FormatContext& fc)
+        -> decltype(fc.out())
+    {
+        char buf[32] {};
+        auto res = detail::int_to_ascii(v, begin(buf), 10, sizeof(buf));
+        if (res.error == detail::int_to_ascii_error::none) {
+            auto str = string_view { begin(buf) };
+            return formatter<string_view>().format(str, fc);
+        }
+        return formatter<string_view>().format("", fc);
+    }
+}
 /// \group formatter_specialization
 template <>
 struct formatter<short, char> {
     template <typename FormatContext>
-    constexpr auto format(short val, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(short v, FormatContext& fc) -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -114,12 +125,9 @@ struct formatter<short, char> {
 template <>
 struct formatter<int, char> {
     template <typename FormatContext>
-    constexpr auto format(int val, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(int v, FormatContext& fc) -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -127,12 +135,9 @@ struct formatter<int, char> {
 template <>
 struct formatter<long, char> {
     template <typename FormatContext>
-    constexpr auto format(long val, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(long v, FormatContext& fc) -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -140,13 +145,9 @@ struct formatter<long, char> {
 template <>
 struct formatter<long long, char> {
     template <typename FormatContext>
-    constexpr auto format(long long val, FormatContext& fc)
-        -> decltype(fc.out())
+    constexpr auto format(long long v, FormatContext& fc) -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -154,13 +155,10 @@ struct formatter<long long, char> {
 template <>
 struct formatter<unsigned short, char> {
     template <typename FormatContext>
-    constexpr auto format(unsigned short val, FormatContext& fc)
+    constexpr auto format(unsigned short v, FormatContext& fc)
         -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -168,12 +166,9 @@ struct formatter<unsigned short, char> {
 template <>
 struct formatter<unsigned, char> {
     template <typename FormatContext>
-    constexpr auto format(int val, FormatContext& fc) -> decltype(fc.out())
+    constexpr auto format(int v, FormatContext& fc) -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -181,13 +176,10 @@ struct formatter<unsigned, char> {
 template <>
 struct formatter<unsigned long, char> {
     template <typename FormatContext>
-    constexpr auto format(unsigned long val, FormatContext& fc)
+    constexpr auto format(unsigned long v, FormatContext& fc)
         -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
@@ -195,13 +187,10 @@ struct formatter<unsigned long, char> {
 template <>
 struct formatter<unsigned long long, char> {
     template <typename FormatContext>
-    constexpr auto format(unsigned long long val, FormatContext& fc)
+    constexpr auto format(unsigned long long v, FormatContext& fc)
         -> decltype(fc.out())
     {
-        char buf[32] {};
-        ::etl::detail::integer_to_ascii_base10(val, &buf[0]);
-        return formatter<::etl::string_view>().format(
-            etl::string_view { buf }, fc);
+        return detail::integer_format(v, fc);
     }
 };
 
