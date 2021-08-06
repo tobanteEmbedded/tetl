@@ -30,7 +30,7 @@ EXAMPLES 	+= type_traits
 EXAMPLES 	+= utility
 EXAMPLES 	+= vector
 
-EXAMPLES 	+= experimental/stm32_rtos
+EXAMPLES 	+= experimental/stm32_freertos
 
 ifndef AVR
 EXAMPLES 	+= memory

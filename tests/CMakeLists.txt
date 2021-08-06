@@ -52,9 +52,9 @@ target_sources(${PROJECT_NAME}
         experimental/net/test_buffer.cpp
         experimental/net/test_byte_order.cpp
 
-        experimental/rtos/test_task.cpp
-        experimental/rtos/test_stream_buffer.cpp
-        experimental/rtos/test_queue.cpp
+        experimental/freertos/test_task.cpp
+        experimental/freertos/test_stream_buffer.cpp
+        experimental/freertos/test_queue.cpp
 
         experimental/stm32/test_gpio.cpp
         experimental/stm32/test_interrupt.cpp

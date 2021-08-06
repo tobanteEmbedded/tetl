@@ -21,19 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_RTOS_TASK_HPP
-#define TETL_RTOS_TASK_HPP
+#ifndef TETL_FREERTOS_TASK_HPP
+#define TETL_FREERTOS_TASK_HPP
 
 #include "etl/version.hpp"
 
 #include "etl/cstddef.hpp"
 #include "etl/warning.hpp"
 
-#if defined(TETL_RTOS_USE_STUBS)
-#include "etl/experimental/rtos/stubs.hpp"
+#if defined(TETL_FREERTOS_USE_STUBS)
+#include "etl/experimental/freertos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos {
+namespace etl::experimental::freertos {
 /// \brief Runs the task loop 0 times.
 struct never {
     [[nodiscard]] auto operator()() const -> bool { return false; }
@@ -84,6 +84,6 @@ inline auto delete_task(TaskHandle_t task) -> void { vTaskDelete(task); }
 /// tasks.
 inline auto start_scheduler() -> void { vTaskStartScheduler(); }
 
-} // namespace etl::experimental::rtos
+} // namespace etl::experimental::freertos
 
-#endif // TETL_RTOS_TASK_HPP
+#endif // TETL_FREERTOS_TASK_HPP

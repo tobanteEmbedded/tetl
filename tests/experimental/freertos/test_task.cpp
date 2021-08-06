@@ -21,45 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#include "etl/new.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
-#define TETL_RTOS_USE_STUBS
-#include "etl/experimental/hardware/stm32/gpio.hpp" // for port, pin_number
-#include "etl/experimental/rtos/delay.hpp"          // for delay, delay_until
-#include "etl/experimental/rtos/task.hpp"           // for once, create_task
+#define TETL_FREERTOS_USE_STUBS
+#include "etl/experimental/freertos/task.hpp"
 
-namespace rtos  = etl::experimental::rtos;
-namespace stm32 = etl::experimental::hardware::stm32;
+namespace rtos = etl::experimental::freertos;
 
-template <typename LoopType = rtos::forever>
+template <typename LoopType = rtos::once>
 struct example_task {
     auto run() -> void
     {
         auto loopControl = LoopType {};
-        while (loopControl()) {
-            stm32::gpio_memory_layout memory {};
-            auto& gpioPort = stm32::port::place_at(&memory);
-            gpioPort.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
-            gpioPort.toggle_pin(stm32::pin_number::pin_13);
-
-            rtos::yield_task();
-            rtos::delay(1);
-            rtos::delay_until(1, 1);
-        }
+        while (loopControl()) { rtos::yield_task(); }
 
         rtos::delete_task(nullptr);
     }
 };
 
-static example_task<rtos::once> task {};
-
-auto main() -> int
+TEST_CASE("experimental/freertos/task: create", "[experimental][rtos]")
 {
+    auto task = example_task<rtos::once> {};
+
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
 
     // Run would normally be called by rtos::start_scheduler(). Only used for
     // stubs.
     task.run();
-    return 0;
 }

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_RTOS_STUBS_HPP
-#define TETL_RTOS_STUBS_HPP
+#ifndef TETL_FREERTOS_STUBS_HPP
+#define TETL_FREERTOS_STUBS_HPP
 
 #include "etl/version.hpp"
 
@@ -220,4 +220,4 @@ using MessageBufferHandle_t = void*;
     return {};
 }
 
-#endif // TETL_RTOS_STUBS_HPP
+#endif // TETL_FREERTOS_STUBS_HPP

@@ -1,6 +1,6 @@
 project(examples-experimental)
 
-foreach(_target "stm32_rtos")
+foreach(_target "stm32_freertos")
   add_executable(${_target} "${_target}.cpp")
   target_link_libraries(${_target}
     PRIVATE

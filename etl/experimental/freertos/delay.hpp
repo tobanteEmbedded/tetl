@@ -21,27 +21,26 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#define TETL_RTOS_USE_STUBS
-#include "etl/experimental/rtos/stream_buffer.hpp"
+#ifndef TETL_FREERTOS_DELAY_HPP
+#define TETL_FREERTOS_DELAY_HPP
 
-#include "catch2/catch_template_test_macros.hpp"
+#include "etl/version.hpp"
 
-namespace rtos = etl::experimental::rtos;
-namespace net  = etl::experimental::net;
+#include "etl/cstdint.hpp"
+#include "etl/warning.hpp"
 
-TEST_CASE("experimental/rtos/stream_buffer: ", "[experimental][rtos]")
+#if defined(TETL_FREERTOS_USE_STUBS)
+#include "etl/experimental/freertos/stubs.hpp"
+#endif
+
+namespace etl::experimental::freertos {
+inline auto delay(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
+
+inline auto delay_until(etl::uint32_t previous, etl::uint32_t increment) -> void
 {
-    auto sb = rtos::stream_buffer { 128, 1 };
-    REQUIRE(sb.empty() == false);
-    REQUIRE(sb.full() == false);
-    REQUIRE(sb.bytes_available() == 0);
-    REQUIRE(sb.space_available() == 0);
-
-    auto read = etl::array<unsigned char, 16> {};
-    REQUIRE(sb.read(net::make_buffer(read), 0) == 0);
-    REQUIRE(sb.read_from_isr(net::make_buffer(read), 0) == 0);
-
-    auto const write = etl::array<unsigned char, 16> {};
-    REQUIRE(sb.write(net::make_buffer(write), 0) == 0);
-    REQUIRE(sb.write_from_isr(net::make_buffer(write), 0) == 0);
+    vTaskDelayUntil(&previous, increment);
 }
+
+} // namespace etl::experimental::freertos
+
+#endif // TETL_FREERTOS_DELAY_HPP

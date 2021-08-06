@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_RTOS_STREAM_BUFFER_HPP
-#define TETL_RTOS_STREAM_BUFFER_HPP
+#ifndef TETL_FREERTOS_STREAM_BUFFER_HPP
+#define TETL_FREERTOS_STREAM_BUFFER_HPP
 
 #include "etl/version.hpp"
 
@@ -31,11 +31,11 @@
 
 #include "etl/experimental/net/buffer.hpp"
 
-#if defined(TETL_RTOS_USE_STUBS)
-#include "etl/experimental/rtos/stubs.hpp"
+#if defined(TETL_FREERTOS_USE_STUBS)
+#include "etl/experimental/freertos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos {
+namespace etl::experimental::freertos {
 
 /// \brief Stream buffers are an RTOS task to RTOS task, and interrupt to task
 /// communication primitives. Unlike most other FreeRTOS communications
@@ -222,6 +222,6 @@ inline auto stream_buffer::native_handle() const noexcept
     return handle_;
 }
 
-} // namespace etl::experimental::rtos
+} // namespace etl::experimental::freertos
 
-#endif // TETL_RTOS_STREAM_BUFFER_HPP
+#endif // TETL_FREERTOS_STREAM_BUFFER_HPP

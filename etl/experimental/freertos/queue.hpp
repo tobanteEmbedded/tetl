@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_RTOS_QUEUE_HPP
-#define TETL_RTOS_QUEUE_HPP
+#ifndef TETL_FREERTOS_QUEUE_HPP
+#define TETL_FREERTOS_QUEUE_HPP
 
 #include "etl/version.hpp"
 
@@ -30,11 +30,11 @@
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
-#if defined(TETL_RTOS_USE_STUBS)
-#include "etl/experimental/rtos/stubs.hpp"
+#if defined(TETL_FREERTOS_USE_STUBS)
+#include "etl/experimental/freertos/stubs.hpp"
 #endif
 
-namespace etl::experimental::rtos {
+namespace etl::experimental::freertos {
 
 /// \brief Wrapper around a FreeRTOS queue.
 ///
@@ -145,6 +145,6 @@ inline auto queue<T, Size>::messages_waiting() const -> etl::uint32_t
     auto const result = uxQueueMessagesWaiting(handle_);
     return static_cast<etl::uint32_t>(result);
 }
-} // namespace etl::experimental::rtos
+} // namespace etl::experimental::freertos
 
-#endif // TETL_RTOS_QUEUE_HPP
+#endif // TETL_FREERTOS_QUEUE_HPP
