@@ -98,8 +98,18 @@ template <typename T>
 
 /// \group as_const
 template <typename T>
-constexpr auto as_const(T const &&) -> void
+constexpr auto as_const(T const&&) -> void
     = delete;
+
+/// \brief Converts an enumeration to its underlying type.
+///
+/// https://en.cppreference.com/w/cpp/utility/to_underlying
+template <typename Enum>
+[[nodiscard]] constexpr auto to_underlying(Enum e) noexcept
+    -> underlying_type_t<Enum>
+{
+    return static_cast<underlying_type_t<Enum>>(e);
+}
 
 namespace detail {
     // clang-format off

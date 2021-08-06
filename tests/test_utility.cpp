@@ -56,6 +56,39 @@ TEMPLATE_TEST_CASE("utility: as_const", "[utility]", etl::uint8_t, etl::int8_t,
     REQUIRE(original == ref);
 }
 
+TEMPLATE_TEST_CASE("utility: to_underlying", "[utility]", etl::uint8_t,
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t)
+
+{
+    using T = TestType;
+    using etl::is_same_v;
+    using etl::to_underlying;
+
+    enum c_enum : T {
+        foo = 0,
+        bar = 1,
+        baz = 42,
+    };
+
+    enum struct s_enum : T {
+        foo = 0,
+        bar = 1,
+        baz = 42,
+    };
+
+    STATIC_REQUIRE(is_same_v<decltype(to_underlying(c_enum::foo)), T>);
+    STATIC_REQUIRE(is_same_v<decltype(to_underlying(s_enum::foo)), T>);
+
+    REQUIRE(to_underlying(c_enum::foo) == T { 0 });
+    REQUIRE(to_underlying(c_enum::bar) == T { 1 });
+    REQUIRE(to_underlying(c_enum::baz) == T { 42 });
+
+    REQUIRE(to_underlying(s_enum::foo) == T { 0 });
+    REQUIRE(to_underlying(s_enum::bar) == T { 1 });
+    REQUIRE(to_underlying(s_enum::baz) == T { 42 });
+}
+
 TEMPLATE_TEST_CASE("utility: cmp_equal", "[utility]", etl::uint16_t,
     etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t)
 
