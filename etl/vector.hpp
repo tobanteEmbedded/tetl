@@ -209,7 +209,7 @@ namespace detail {
         {
             TETL_ASSERT(!full());
             index(data_, size()) = T(forward<Args>(args)...);
-            unsafe_set_size(static_cast<size_type>(size() + 1));
+            unsafe_set_size(static_cast<size_type>(size()) + 1);
         }
 
         /// \brief Remove the last element from the container.

@@ -117,7 +117,7 @@ template <typename Int, bool TerminateWithNull = true>
     while (num != 0) {
         auto const rem = static_cast<char>(num % base);
         str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-        num            = num / base;
+        num            = num / static_cast<Int>(base);
 
         if (length <= i) {
             return { str + length, int_to_ascii_error::buffer_overflow };

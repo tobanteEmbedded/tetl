@@ -79,6 +79,8 @@ TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
     etl::int32_t, etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t,
     float, double, long double)
 {
+    using T = TestType;
+
     using etl::adjacent_difference;
     using etl::array;
     using etl::begin;
@@ -89,7 +91,7 @@ TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
 
     SECTION("cppreference.com example")
     {
-        array a { TestType(2), TestType(4), TestType(6) };
+        array a { T(2), T(4), T(6) };
         adjacent_difference(a.begin(), a.end(), a.begin());
         REQUIRE(a[0] == 2);
         REQUIRE(a[1] == 2);
@@ -98,8 +100,8 @@ TEMPLATE_TEST_CASE("numeric: adjacent_difference", "[numeric]", etl::int16_t,
 
     SECTION("cppreference.com example fibonacci")
     {
-        array<TestType, 4> a { TestType(1) };
-        adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<> {});
+        array<T, 4> a { T(1) };
+        adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<T> {});
         REQUIRE(a[0] == 1);
         REQUIRE(a[1] == 1);
         REQUIRE(a[2] == 2);
@@ -132,7 +134,7 @@ TEMPLATE_TEST_CASE("numeric: inner_product", "[numeric]", etl::int16_t,
     REQUIRE(product == TestType { 21 });
 
     auto pairwiseMatches = etl::inner_product(a.begin(), a.end(), b.begin(),
-        TestType { 0 }, etl::plus<> {}, etl::equal_to<> {});
+        TestType { 0 }, etl::plus<TestType> {}, etl::equal_to<TestType> {});
     REQUIRE(pairwiseMatches == TestType { 2 });
 }
 
@@ -170,20 +172,19 @@ TEMPLATE_TEST_CASE("numeric: accumulate", "[numeric]", etl::int16_t,
 
     REQUIRE(etl::accumulate(vec.begin(), vec.end(), T { 0 }) == T(10));
 
-    auto func = [](T a, T b) { return a + (b * 2); };
+    auto func = [](T a, T b) { return static_cast<T>(a + (b * T { 2 })); };
     REQUIRE(etl::accumulate(vec.begin(), vec.end(), T { 0 }, func) == T(20));
 }
 
-TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int16_t, etl::int32_t,
-    etl::int64_t, etl::uint16_t, etl::uint32_t, etl::uint64_t, float, double,
-    long double)
+TEMPLATE_TEST_CASE("numeric: reduce", "[numeric]", etl::int32_t, etl::int64_t,
+    etl::uint32_t, etl::uint64_t, float, double, long double)
 {
     using T  = TestType;
     auto vec = etl::array { T(1), T(2), T(3), T(4) };
     REQUIRE(etl::reduce(vec.begin(), vec.end()) == T(10));
     REQUIRE(etl::reduce(vec.begin(), vec.end(), T { 0 }) == T(10));
 
-    auto func = [](T a, T b) { return a + (b * 2); };
+    auto func = [](T a, T b) { return static_cast<T>(a + (b * T { 2 })); };
     REQUIRE(etl::reduce(vec.begin(), vec.end(), T { 0 }, func) == T(20));
 }
 

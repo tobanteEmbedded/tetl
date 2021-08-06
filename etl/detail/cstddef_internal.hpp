@@ -49,6 +49,10 @@ using ptrdiff_t = TETL_BUILTIN_PTRDIFF;
 /// [cppreference.com/w/cpp/types/nullptr_t](https://en.cppreference.com/w/cpp/types/nullptr_t)
 using nullptr_t = decltype(nullptr);
 
+#if defined(TETL_MSVC)
+#pragma warning(disable : 4324) // Padding was added at the end of a structure
+#endif
+
 /// \brief etl::max_align_t is a trivial standard-layout type whose alignment
 /// requirement is at least as strict (as large) as that of every scalar type.
 ///
@@ -56,6 +60,10 @@ using nullptr_t = decltype(nullptr);
 /// [cppreference.com/w/cpp/types/max_align_t](https://en.cppreference.com/w/cpp/types/max_align_t)
 struct alignas(long double) max_align_t {
 };
+
+#if defined(TETL_MSVC)
+#pragma warning(default : 4324) // Padding was added at the end of a structure
+#endif
 
 } // namespace etl
 

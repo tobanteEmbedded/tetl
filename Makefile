@@ -25,11 +25,11 @@ config:
 
 .PHONY: build
 build:
-	cmake --build $(BUILD_DIR) --config $(CONFIG) -- -j6
+	cmake --build $(BUILD_DIR) --config $(CONFIG) --parallel 6
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -C $(CONFIG) -j8
+	cd $(BUILD_DIR) && ctest -C $(CONFIG) 
 
 
 .PHONY: coverage

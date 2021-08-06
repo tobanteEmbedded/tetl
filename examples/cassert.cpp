@@ -34,6 +34,10 @@
 
 #include <stdio.h> // for printf
 
+#if defined(TETL_MSVC)
+#pragma warning(disable : 4127) // Conditional expression is constant
+#endif
+
 namespace etl {
 // This function only needs to be implemented if you defined the custom
 // assert handler macro.
@@ -50,3 +54,7 @@ auto main() -> int
     TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
     return EXIT_SUCCESS;
 }
+
+#if defined(TETL_MSVC)
+#pragma warning(default : 4127) // Conditional expression is constant
+#endif

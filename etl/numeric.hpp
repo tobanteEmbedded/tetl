@@ -221,7 +221,7 @@ template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {
     if (n == 0) { return m; }
-    return gcd(n, m % n);
+    return gcd<M, N>(n, m % n);
 }
 
 /// \brief Computes the least common multiple of the integers m and n.

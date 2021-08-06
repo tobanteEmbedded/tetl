@@ -87,8 +87,8 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t,
 {
     etl::array<TestType, 4> a {};
     a.fill(2);
-    etl::transform(
-        begin(a), end(a), begin(a), [](auto const& val) { return val * 2; });
+    etl::transform(begin(a), end(a), begin(a),
+        [](auto const& val) { return static_cast<TestType>(val * 2); });
     REQUIRE(etl::all_of(
         begin(a), end(a), [](auto const& val) { return val == 4; }));
 
@@ -103,8 +103,8 @@ TEMPLATE_TEST_CASE("algorithm: transform", "[algorithm]", etl::uint8_t,
     REQUIRE(vec[3] == static_cast<TestType>('l'));
     REQUIRE(vec[4] == static_cast<TestType>('o'));
 
-    etl::transform(
-        cbegin(vec), cend(vec), cbegin(vec), begin(vec), etl::plus<> {});
+    etl::transform(cbegin(vec), cend(vec), cbegin(vec), begin(vec),
+        etl::plus<TestType> {});
 
     REQUIRE(vec[0] == static_cast<TestType>('h') * 2);
     REQUIRE(vec[1] == static_cast<TestType>('e') * 2);

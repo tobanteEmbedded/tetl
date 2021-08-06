@@ -67,7 +67,8 @@ auto main() -> int
     TETL_ASSERT(copy == str);
 
     // You can apply algorithms.
-    etl::transform(begin(str), end(str), begin(str), etl::toupper);
+    auto toUpper = [](auto ch) { return static_cast<char>(etl::toupper(ch)); };
+    etl::transform(begin(str), end(str), begin(str), toUpper);
     TETL_ASSERT(str == "HELLO WORLD");
     TETL_ASSERT(copy != str);
 

@@ -85,7 +85,7 @@ TEMPLATE_TEST_CASE("chrono/duration: operator++ & operator--", "[chrono]",
     etl::int8_t, etl::int16_t, etl::int32_t, etl::int64_t)
 {
     using duration_t = etl::chrono::duration<TestType>;
-    auto dur         = duration_t { 0 };
+    auto dur         = duration_t { TestType { 0 } };
     REQUIRE(dur++.count() == 0);
     REQUIRE(dur.count() == 1);
     REQUIRE(dur--.count() == 1);
