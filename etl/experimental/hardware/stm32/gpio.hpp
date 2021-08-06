@@ -93,7 +93,7 @@ private:
 
 inline auto port::read(pin_number const pin) noexcept -> pin_state
 {
-    ignore_unused(val(pin));
+    ::etl::ignore_unused(this, pin);
     return {};
 }
 
