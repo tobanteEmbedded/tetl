@@ -39,9 +39,9 @@ TEST_CASE("experimental/freertos/stream_buffer: ", "[experimental][rtos]")
 
     auto read = etl::array<unsigned char, 16> {};
     REQUIRE(sb.read(net::make_buffer(read), 0) == 0);
-    REQUIRE(sb.read_from_isr(net::make_buffer(read), 0) == 0);
+    REQUIRE(sb.read_from_isr(net::make_buffer(read), nullptr) == 0);
 
     auto const write = etl::array<unsigned char, 16> {};
     REQUIRE(sb.write(net::make_buffer(write), 0) == 0);
-    REQUIRE(sb.write_from_isr(net::make_buffer(write), 0) == 0);
+    REQUIRE(sb.write_from_isr(net::make_buffer(write), nullptr) == 0);
 }
