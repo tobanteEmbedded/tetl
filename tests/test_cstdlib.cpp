@@ -45,7 +45,7 @@ TEST_CASE("cstdlib: itoa(signed,base10)", "[cstdlib]")
         { 123456789, "123456789"_sv },
     }));
 
-    char buffer[12] = {};
+    char buffer[16] = {};
     auto* result    = etl::itoa(input, buffer, 10);
     REQUIRE(&buffer[0] == result);
     REQUIRE(etl::string_view { buffer } == expected);

@@ -80,18 +80,14 @@ template <typename Int, bool TerminateWithNull = true>
     size_t length = etl::numeric_limits<size_t>::max()) -> int_to_ascii_result
 {
     auto reverseString = [](char* string, etl::size_t len) {
-        auto swap = [](char& a, char& b) -> void {
-            auto temp = a;
-            a         = b;
-            b         = temp;
-        };
-
-        etl::size_t start = 0;
-        etl::size_t end   = len - 1;
-        while (start < end) {
-            swap(*(string + start), *(string + end));
-            start++;
-            end--;
+        etl::size_t f = 0;
+        etl::size_t l = len - 1;
+        while (f < l) {
+            auto const tmp = string[f];
+            string[f]      = string[l];
+            string[l]      = tmp;
+            f++;
+            l--;
         }
     };
 

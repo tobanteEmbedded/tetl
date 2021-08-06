@@ -1,4 +1,4 @@
-CONFIG ?= release
+CONFIG ?= debug
 BUILD_DIR_BASE = cmake-build
 BUILD_DIR ?= $(BUILD_DIR_BASE)-$(CONFIG)
 
