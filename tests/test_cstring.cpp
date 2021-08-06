@@ -128,8 +128,15 @@ TEST_CASE("cstring: strspn", "[cstring]")
 {
     auto const* lowAlpha = "qwertyuiopasdfghjklzxcvbnm";
     auto const str       = etl::static_string<16> { "abcde312$#@" };
-    auto const spnsz     = etl::strspn(str.c_str(), lowAlpha);
-    REQUIRE(str.substr(spnsz) == "312$#@");
+    auto const span      = etl::strspn(str.c_str(), lowAlpha);
+    REQUIRE(str.substr(span) == "312$#@");
+}
+
+TEST_CASE("cstring: strcspn", "[cstring]")
+{
+    auto const* invalid = "*$#";
+    auto const str      = etl::static_string<16> { "abcde312$#@" };
+    REQUIRE(etl::strcspn(str.c_str(), invalid) == 8);
 }
 
 TEST_CASE("cstring: memcpy", "[cstring]")

@@ -249,6 +249,29 @@ namespace detail {
     return detail::strrchr_impl<char>(str, ch);
 }
 
+namespace detail {
+    template <bool InclusiveSearch>
+    [[nodiscard]] constexpr auto str_span_impl(
+        char const* dest, char const* src) noexcept -> ::etl::size_t
+    {
+        auto const isLegalChar = [src, length = etl::strlen(src)](auto ch) {
+            for (etl::size_t i = 0; i < length; ++i) {
+                if (src[i] == ch) { return InclusiveSearch; }
+            }
+            return !InclusiveSearch;
+        };
+
+        auto result       = etl::size_t { 0 };
+        auto const length = etl::strlen(dest);
+        for (etl::size_t i = 0; i < length; ++i) {
+            if (!isLegalChar(dest[i])) { break; }
+            ++result;
+        }
+
+        return result;
+    }
+}
+
 /// \brief Returns the length of the maximum initial segment (span) of the byte
 /// string pointed to by dest, that consists of only the characters found in
 /// byte string pointed to by src.
@@ -258,21 +281,21 @@ namespace detail {
 [[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
     -> etl::size_t
 {
-    auto const isLegalChar = [src, length = etl::strlen(src)](auto ch) {
-        for (etl::size_t i = 0; i < length; ++i) {
-            if (src[i] == ch) { return true; }
-        }
-        return false;
-    };
+    return detail::str_span_impl<true>(dest, src);
+}
 
-    auto result       = etl::size_t { 0 };
-    auto const length = etl::strlen(dest);
-    for (etl::size_t i = 0; i < length; ++i) {
-        if (!isLegalChar(dest[i])) { break; }
-        ++result;
-    }
-
-    return result;
+/// \brief Returns the length of the maximum initial segment of the byte string
+/// pointed to by dest, that consists of only the characters not found in byte
+/// string pointed to by src.
+///
+/// \details The function name stands for "complementary span"
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strcspn
+///
+[[nodiscard]] constexpr auto strcspn(char const* dest, char const* src) noexcept
+    -> etl::size_t
+{
+    return detail::str_span_impl<false>(dest, src);
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
