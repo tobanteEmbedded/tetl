@@ -79,11 +79,17 @@ template <typename Int, bool TerminateWithNull = true>
 [[nodiscard]] constexpr auto int_to_ascii(Int num, char* str, int base = 10,
     size_t length = etl::numeric_limits<size_t>::max()) -> int_to_ascii_result
 {
-    auto reverse_string = [](char* string, etl::size_t len) {
+    auto reverseString = [](char* string, etl::size_t len) {
+        auto swap = [](char& a, char& b) -> void {
+            auto temp = a;
+            a         = b;
+            b         = temp;
+        };
+
         etl::size_t start = 0;
         etl::size_t end   = len - 1;
         while (start < end) {
-            ::etl::swap(*(string + start), *(string + end));
+            swap(*(string + start), *(string + end));
             start++;
             end--;
         }
@@ -109,9 +115,9 @@ template <typename Int, bool TerminateWithNull = true>
     }
 
     while (num != 0) {
-        int rem  = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-        num      = num / base;
+        auto const rem = static_cast<char>(num % base);
+        str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        num            = num / base;
 
         if (length <= i) {
             return { str + length, int_to_ascii_error::buffer_overflow };
@@ -124,7 +130,7 @@ template <typename Int, bool TerminateWithNull = true>
 
     if constexpr (TerminateWithNull) { str[i] = '\0'; }
 
-    reverse_string(str, i);
+    reverseString(str, i);
     return { &str[i] };
 }
 
