@@ -50,7 +50,7 @@ enum class pin_number : etl::uint16_t {
     pin_15,
 };
 
-enum class pin_state : uint8_t {
+enum class pin_state : etl::uint8_t {
     reset = 0,
     set,
 };
@@ -61,51 +61,59 @@ inline auto val(pin_number pin) -> etl::uint16_t
 }
 
 struct gpio_memory_layout {
-    volatile etl::uint32_t control_low;
-    volatile etl::uint32_t control_high;
-    volatile etl::uint32_t input_data;
-    volatile etl::uint32_t output_data;
-    volatile etl::uint32_t bit_set_reset;
-    volatile etl::uint32_t bit_set;
-    volatile etl::uint32_t lock;
+    etl::uint32_t volatile control_low;
+    etl::uint32_t volatile control_high;
+    etl::uint32_t volatile input_data;
+    etl::uint32_t volatile output_data;
+    etl::uint32_t volatile bit_set_reset;
+    etl::uint32_t volatile bit_set;
+    etl::uint32_t volatile lock;
 };
 
 struct port {
-    explicit port()   = default;
-    ~port()           = default;
-    port(port&&)      = delete;
+    ~port() = default;
+
     port(port const&) = delete;
-    auto operator=(port &&) -> port& = delete;
     auto operator=(port const&) -> port& = delete;
 
-    [[nodiscard]] static auto read(pin_number const pin) -> pin_state
-    {
-        ignore_unused(val(pin));
-        return {};
-    }
+    port(port&&) = delete;
+    auto operator=(port&&) -> port& = delete;
 
-    void write(pin_number const pin, pin_state const state)
-    {
-        if (state == pin_state::reset) {
-            memory_.bit_set_reset = (1U << val(pin));
-            return;
-        }
-        memory_.bit_set_reset = (1U << (val(pin) + 16U));
-    }
+    auto toggle_pin(pin_number pin) noexcept -> void;
+    auto write(pin_number pin, pin_state state) noexcept -> void;
+    [[nodiscard]] auto read(pin_number pin) noexcept -> pin_state;
 
-    void toggle_pin(pin_number const pin)
-    {
-        memory_.output_data = memory_.output_data ^ (1U << val(pin));
-    }
-
-    [[nodiscard]] static auto place_at(void* addr) -> port&
-    {
-        return *new (addr) port;
-    }
+    [[nodiscard]] static auto place_at(void* addr) -> port&;
 
 private:
+    explicit port() = default;
+
     gpio_memory_layout memory_;
 };
+
+inline auto port::read(pin_number const pin) noexcept -> pin_state
+{
+    ignore_unused(val(pin));
+    return {};
+}
+
+inline auto port::write(pin_number const pin, pin_state const state) noexcept
+    -> void
+{
+    if (state == pin_state::reset) {
+        memory_.bit_set_reset = (1U << val(pin));
+        return;
+    }
+    memory_.bit_set_reset = (1U << (val(pin) + 16U));
+}
+
+inline auto port::toggle_pin(pin_number const pin) noexcept -> void
+{
+    memory_.output_data = memory_.output_data ^ (1U << val(pin));
+}
+
+inline auto port::place_at(void* addr) -> port& { return *new (addr) port; }
+
 } // namespace etl::experimental::hardware::stm32
 
 #endif // TETL_HARDWARE_STM32_GPIO_HPP
