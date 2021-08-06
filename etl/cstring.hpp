@@ -177,6 +177,20 @@ namespace detail {
         if (static_cast<char>(ch) == '\0') { return str; }
         return nullptr;
     }
+
+    template <typename CharT>
+    [[nodiscard]] constexpr auto strrchr_impl(CharT* str, int ch) -> CharT*
+    {
+        if (str == nullptr) { return nullptr; }
+        auto len = static_cast<etl::size_t>(etl::strlen(str));
+        if (static_cast<char>(ch) == '\0') { return str + len; }
+
+        while (len-- != 0) {
+            if (str[len] == static_cast<char>(ch)) { return str + len; }
+        }
+
+        return nullptr;
+    }
 }
 
 /// \brief Finds the first occurrence of the character static_cast<char>(ch) in
@@ -205,6 +219,60 @@ namespace detail {
 [[nodiscard]] constexpr auto strchr(char* str, int ch) -> char*
 {
     return detail::strchr_impl<char>(str, ch);
+}
+
+/// \brief Finds the last occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
+{
+    return detail::strrchr_impl<char const>(str, ch);
+}
+
+/// \brief Finds the last occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char*
+{
+    return detail::strrchr_impl<char>(str, ch);
+}
+
+/// \brief Returns the length of the maximum initial segment (span) of the byte
+/// string pointed to by dest, that consists of only the characters found in
+/// byte string pointed to by src.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strspn
+///
+[[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
+    -> etl::size_t
+{
+    auto const isLegalChar = [src, length = etl::strlen(src)](auto ch) {
+        for (etl::size_t i = 0; i < length; ++i) {
+            if (src[i] == ch) { return true; }
+        }
+        return false;
+    };
+
+    auto result       = etl::size_t { 0 };
+    auto const length = etl::strlen(dest);
+    for (etl::size_t i = 0; i < length; ++i) {
+        if (!isLegalChar(dest[i])) { break; }
+        ++result;
+    }
+
+    return result;
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by

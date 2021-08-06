@@ -103,6 +103,35 @@ TEST_CASE("cstring: strchr", "[cstring]")
     CHECK(etl::strchr(str.data(), '\0') == etl::next(str.data(), 5));
 }
 
+TEST_CASE("cstring: strrchr", "[cstring]")
+{
+    auto const* txt = "Hello";
+    CHECK(etl::strrchr(txt, '0') == nullptr);
+    CHECK(etl::strrchr(txt, 'H') == txt);
+    CHECK(etl::strrchr(txt, 'e') == etl::next(txt, 1));
+    CHECK(etl::strrchr(txt, 'l') == etl::next(txt, 3));
+    CHECK(etl::strrchr(txt, 'l') == etl::next(txt, 3));
+    CHECK(etl::strrchr(txt, 'o') == etl::next(txt, 4));
+    CHECK(etl::strrchr(txt, '\0') == etl::next(txt, 5));
+
+    auto str = etl::static_string<16> { "Hello" };
+    CHECK(etl::strrchr(str.data(), '0') == nullptr);
+    CHECK(etl::strrchr(str.data(), 'H') == str.data());
+    CHECK(etl::strrchr(str.data(), 'e') == etl::next(str.data(), 1));
+    CHECK(etl::strrchr(str.data(), 'l') == etl::next(str.data(), 3));
+    CHECK(etl::strrchr(str.data(), 'l') == etl::next(str.data(), 3));
+    CHECK(etl::strrchr(str.data(), 'o') == etl::next(str.data(), 4));
+    CHECK(etl::strrchr(str.data(), '\0') == etl::next(str.data(), 5));
+}
+
+TEST_CASE("cstring: strspn", "[cstring]")
+{
+    auto const* lowAlpha = "qwertyuiopasdfghjklzxcvbnm";
+    auto const str       = etl::static_string<16> { "abcde312$#@" };
+    auto const spnsz     = etl::strspn(str.c_str(), lowAlpha);
+    REQUIRE(str.substr(spnsz) == "312$#@");
+}
+
 TEST_CASE("cstring: memcpy", "[cstring]")
 {
     auto source = etl::array<etl::uint8_t, 2> {};
