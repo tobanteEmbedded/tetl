@@ -21,54 +21,27 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NET_BUFFER_HPP
-#define TETL_NET_BUFFER_HPP
+#define TETL_RTOS_USE_STUBS
+#include "etl/experimental/rtos/stream_buffer.hpp"
 
-#include "etl/version.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
-#include "etl/array.hpp"
-#include "etl/vector.hpp"
+namespace rtos = etl::experimental::rtos;
+namespace net  = etl::experimental::net;
 
-#include "etl/experimental/net/buffer_const.hpp"
-#include "etl/experimental/net/buffer_mutable.hpp"
-
-namespace etl::experimental::net {
-inline auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer
+TEST_CASE("experimental/rtos/stream_buffer: ", "[experimental][rtos]")
 {
-    return mutable_buffer { data, size };
+    auto sb = rtos::stream_buffer { 128, 1 };
+    REQUIRE(sb.empty() == false);
+    REQUIRE(sb.full() == false);
+    REQUIRE(sb.bytes_available() == 0);
+    REQUIRE(sb.space_available() == 0);
+
+    auto read = etl::array<unsigned char, 16> {};
+    REQUIRE(sb.read(net::make_buffer(read), 0) == 0);
+    REQUIRE(sb.read_from_isr(net::make_buffer(read), 0) == 0);
+
+    auto const write = etl::array<unsigned char, 16> {};
+    REQUIRE(sb.write(net::make_buffer(write), 0) == 0);
+    REQUIRE(sb.write_from_isr(net::make_buffer(write), 0) == 0);
 }
-
-inline auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
-{
-    return const_buffer { data, size };
-}
-
-template <typename T, ::etl::size_t Size>
-inline auto make_buffer(etl::array<T, Size>& array) noexcept -> mutable_buffer
-{
-    return mutable_buffer { array.data(), array.size() };
-}
-
-template <typename T, ::etl::size_t Size>
-inline auto make_buffer(etl::array<T, Size> const& array) noexcept -> const_buffer
-{
-    return const_buffer { array.data(), array.size() };
-}
-
-template <typename T, ::etl::size_t Size>
-inline auto make_buffer(etl::static_vector<T, Size>& vec) noexcept
-    -> mutable_buffer
-{
-    return mutable_buffer { vec.data(), vec.size() };
-}
-
-template <typename T, ::etl::size_t Size>
-inline auto make_buffer(etl::static_vector<T, Size> const& vec) noexcept
-    -> const_buffer
-{
-    return const_buffer { vec.data(), vec.size() };
-}
-
-} // namespace etl::experimental::net
-
-#endif // TETL_NET_BUFFER_HPP

@@ -122,4 +122,101 @@ inline auto uxQueueMessagesWaiting(QueueHandle_t xQueue) -> UBaseType_t
     return 0;
 }
 
+// STREAM_BUFFER
+struct StreamBufferDef_t;
+using StreamBufferHandle_t = StreamBufferDef_t*;
+
+[[nodiscard]] inline auto xStreamBufferCreate(
+    size_t bufferSizeBytes, size_t triggerLevelBytes) -> StreamBufferHandle_t
+{
+    ::etl::ignore_unused(bufferSizeBytes, triggerLevelBytes);
+    return {};
+}
+
+[[nodiscard]] inline auto xStreamBufferSend(StreamBufferHandle_t handle,
+    const void* data, size_t size, TickType_t ticksToWait) -> size_t
+{
+    ::etl::ignore_unused(handle, data, size, ticksToWait);
+    return 0;
+}
+
+[[nodiscard]] inline auto xStreamBufferSendFromISR(StreamBufferHandle_t handle,
+    const void* data, size_t size, BaseType_t* prio) -> size_t
+{
+    ::etl::ignore_unused(handle, data, size, prio);
+    return 0;
+}
+
+[[nodiscard]] inline auto xStreamBufferReceive(StreamBufferHandle_t handle,
+    void* data, size_t size, TickType_t ticks) -> size_t
+{
+    ::etl::ignore_unused(handle, data, size, ticks);
+    return 0;
+}
+
+[[nodiscard]] inline auto xStreamBufferReceiveFromISR(
+    StreamBufferHandle_t handle, void* data, size_t size, BaseType_t* prio)
+    -> size_t
+{
+    ::etl::ignore_unused(handle, data, size, prio);
+    return 0;
+}
+
+[[nodiscard]] inline auto vStreamBufferDelete(StreamBufferHandle_t handle)
+    -> void
+{
+    ::etl::ignore_unused(handle);
+}
+
+[[nodiscard]] inline auto xStreamBufferBytesAvailable(
+    StreamBufferHandle_t handle) -> size_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+[[nodiscard]] inline auto xStreamBufferSpacesAvailable(
+    StreamBufferHandle_t handle) -> size_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+inline auto xStreamBufferSetTriggerLevel(
+    StreamBufferHandle_t handle, size_t triggerLevel) -> BaseType_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+inline auto xStreamBufferReset(StreamBufferHandle_t handle) -> BaseType_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+[[nodiscard]] inline auto xStreamBufferIsEmpty(StreamBufferHandle_t handle)
+    -> BaseType_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+[[nodiscard]] inline auto xStreamBufferIsFull(StreamBufferHandle_t handle)
+    -> BaseType_t
+{
+    ::etl::ignore_unused(handle);
+    return {};
+}
+
+// MESSAGE_BUFFER
+using MessageBufferHandle_t = void*;
+
+[[nodiscard]] inline auto xMessageBufferCreate(size_t bufferSizeBytes)
+    -> MessageBufferHandle_t
+{
+    ::etl::ignore_unused(bufferSizeBytes);
+    return {};
+}
+
 #endif // TETL_RTOS_STUBS_HPP

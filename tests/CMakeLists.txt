@@ -53,6 +53,7 @@ target_sources(${PROJECT_NAME}
         experimental/net/test_byte_order.cpp
 
         experimental/rtos/test_task.cpp
+        experimental/rtos/test_stream_buffer.cpp
         experimental/rtos/test_queue.cpp
 
         experimental/stm32/test_gpio.cpp
