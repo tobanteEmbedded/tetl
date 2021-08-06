@@ -378,6 +378,14 @@ private:
     duration d_ {};
 };
 
+/// \brief Performs basic arithmetic operations between two durations or between
+/// a duration and a tick count.
+///
+/// \details Converts the two durations to their common type and creates a
+/// duration whose tick count is the sum of the tick counts after conversion.
+///
+/// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
+///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator+(
     duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
@@ -387,6 +395,15 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
     return CD(CD(lhs).count() + CD(rhs).count());
 }
 
+/// \brief Performs basic arithmetic operations between two durations or between
+/// a duration and a tick count.
+///
+/// \details Converts the two durations to their common type and creates a
+/// duration whose tick count is the rhs number of ticks subtracted from the lhs
+/// number of ticks after conversion.
+///
+/// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
+///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator-(
     duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
@@ -394,6 +411,41 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(CD(lhs).count() - CD(rhs).count());
+}
+
+/// \brief Performs basic arithmetic operations between two durations or between
+/// a duration and a tick count.
+///
+/// \details Converts the two durations to their common type and creates a
+/// duration whose tick count is the rhs number of ticks subtracted from the lhs
+/// number of ticks after conversion.
+///
+/// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
+///
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+[[nodiscard]] constexpr auto operator/(duration<Rep1, Period1> const& lhs,
+    duration<Rep2, Period2> const& rhs) -> common_type_t<Rep1, Rep2>
+{
+    using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
+    return CD(lhs).count() / CD(rhs).count();
+}
+
+/// \brief Performs basic arithmetic operations between two durations or between
+/// a duration and a tick count.
+///
+/// \details Converts the two durations to their common type and creates a
+/// duration whose tick count is the remainder of the tick counts after
+/// conversion.
+///
+/// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
+///
+template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+[[nodiscard]] constexpr auto operator%(
+    duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
+    -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+{
+    using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
+    return CD(CD(lhs).count() % CD(rhs).count());
 }
 
 /// \brief Compares two durations. Checks if lhs and rhs are equal, i.e. the

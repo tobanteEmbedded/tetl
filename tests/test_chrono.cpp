@@ -129,6 +129,65 @@ TEST_CASE("chrono/duration: common_type<duration>", "[chrono]")
     }
 }
 
+TEMPLATE_TEST_CASE("chrono/duration: operator+", "[chrono]", short, int, long,
+    long long, double)
+{
+    using T            = TestType;
+    using milliseconds = etl::chrono::duration<T, etl::milli>;
+    using seconds      = etl::chrono::duration<T, etl::ratio<1>>;
+
+    REQUIRE(seconds { 1 } + seconds { 0 } == seconds { 1 });
+    REQUIRE(seconds { 1 } + milliseconds { 0 } == seconds { 1 });
+    REQUIRE(milliseconds { 1 } + seconds { 0 } == milliseconds { 1 });
+    REQUIRE(milliseconds { 1 } + milliseconds { 0 } == milliseconds { 1 });
+
+    REQUIRE(seconds { 1 } + milliseconds { 500 } == milliseconds { 1'500 });
+    REQUIRE(milliseconds { 500 } + seconds { 1 } == milliseconds { 1'500 });
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: operator-", "[chrono]", short, int, long,
+    long long, double)
+{
+    using T            = TestType;
+    using milliseconds = etl::chrono::duration<T, etl::milli>;
+    using seconds      = etl::chrono::duration<T, etl::ratio<1>>;
+
+    REQUIRE(seconds { 1 } - seconds { 0 } == seconds { 1 });
+    REQUIRE(seconds { 1 } - milliseconds { 0 } == seconds { 1 });
+    REQUIRE(milliseconds { 1 } - seconds { 0 } == milliseconds { 1 });
+    REQUIRE(milliseconds { 1 } - milliseconds { 0 } == milliseconds { 1 });
+
+    REQUIRE(seconds { 1 } - milliseconds { 500 } == milliseconds { 500 });
+    REQUIRE(milliseconds { 500 } - seconds { 1 } == milliseconds { -500 });
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: duration / duration", "[chrono]",
+    signed char, short, int, long, long long, float, double, long double)
+{
+    using T       = TestType;
+    using seconds = etl::chrono::duration<T, etl::ratio<1>>;
+
+    REQUIRE(seconds { T { 1 } } / seconds { T { 1 } } == T { 1 });
+    REQUIRE(seconds { T { 2 } } / seconds { T { 1 } } == T { 2 });
+    REQUIRE(seconds { T { 4 } } / seconds { T { 1 } } == T { 4 });
+    REQUIRE(seconds { T { 4 } } / seconds { T { 2 } } == T { 2 });
+}
+
+TEMPLATE_TEST_CASE("chrono/duration: duration % duration", "[chrono]",
+    signed char, short, int, long, long long)
+{
+    using T       = TestType;
+    using seconds = etl::chrono::duration<T, etl::ratio<1>>;
+
+    REQUIRE(seconds { T { 1 } } % seconds { T { 1 } } == seconds { T { 0 } });
+    REQUIRE(seconds { T { 2 } } % seconds { T { 1 } } == seconds { T { 0 } });
+    REQUIRE(seconds { T { 4 } } % seconds { T { 1 } } == seconds { T { 0 } });
+    REQUIRE(seconds { T { 4 } } % seconds { T { 2 } } == seconds { T { 0 } });
+
+    REQUIRE(seconds { T { 5 } } % seconds { T { 2 } } == seconds { T { 1 } });
+    REQUIRE(seconds { T { 4 } } % seconds { T { 3 } } == seconds { T { 1 } });
+}
+
 TEST_CASE("chrono/duration: operator==", "[chrono]")
 {
     using etl::chrono::microseconds;
