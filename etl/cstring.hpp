@@ -163,6 +163,50 @@ constexpr auto strncmp(
     return 0;
 }
 
+namespace detail {
+    template <typename CharT>
+    [[nodiscard]] constexpr auto strchr_impl(CharT* str, int ch) -> CharT*
+    {
+        if (str == nullptr) { return nullptr; }
+
+        while (*str != '\0') {
+            if (*str == static_cast<char>(ch)) { return str; }
+            ++str;
+        }
+
+        if (static_cast<char>(ch) == '\0') { return str; }
+        return nullptr;
+    }
+}
+
+/// \brief Finds the first occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strchr(char const* str, int ch) -> char const*
+{
+    return detail::strchr_impl<char const>(str, ch);
+}
+
+/// \brief Finds the first occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strchr(char* str, int ch) -> char*
+{
+    return detail::strchr_impl<char>(str, ch);
+}
+
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may not overlap. If source and destination
 /// might overlap, memmove() must be used instead.

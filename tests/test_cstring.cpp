@@ -23,6 +23,7 @@
 #include "etl/cstring.hpp"
 
 #include "etl/array.hpp"
+#include "etl/string.hpp"
 #include "etl/string_view.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
@@ -79,6 +80,27 @@ TEST_CASE("cstring: strncmp", "[cstring]")
     CHECK(etl::strncmp("Hello, world!", "Hello, everybody!", 13) > 0);
     CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 13) < 0);
     CHECK(etl::strncmp("Hello, everybody!", "Hello, world!", 7) == 0);
+}
+
+TEST_CASE("cstring: strchr", "[cstring]")
+{
+    auto const* txt = "Hello";
+    CHECK(etl::strchr(txt, '0') == nullptr);
+    CHECK(etl::strchr(txt, 'H') == txt);
+    CHECK(etl::strchr(txt, 'e') == etl::next(txt, 1));
+    CHECK(etl::strchr(txt, 'l') == etl::next(txt, 2));
+    CHECK(etl::strchr(txt, 'l') == etl::next(txt, 2));
+    CHECK(etl::strchr(txt, 'o') == etl::next(txt, 4));
+    CHECK(etl::strchr(txt, '\0') == etl::next(txt, 5));
+
+    auto str = etl::static_string<16> { "Hello" };
+    CHECK(etl::strchr(str.data(), '0') == nullptr);
+    CHECK(etl::strchr(str.data(), 'H') == str.data());
+    CHECK(etl::strchr(str.data(), 'e') == etl::next(str.data(), 1));
+    CHECK(etl::strchr(str.data(), 'l') == etl::next(str.data(), 2));
+    CHECK(etl::strchr(str.data(), 'l') == etl::next(str.data(), 2));
+    CHECK(etl::strchr(str.data(), 'o') == etl::next(str.data(), 4));
+    CHECK(etl::strchr(str.data(), '\0') == etl::next(str.data(), 5));
 }
 
 TEST_CASE("cstring: memcpy", "[cstring]")
