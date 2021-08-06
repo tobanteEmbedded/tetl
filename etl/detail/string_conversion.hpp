@@ -116,7 +116,7 @@ template <typename Int, bool TerminateWithNull = true>
         num            = num / static_cast<Int>(base);
 
         if (length <= i) {
-            return { str + length, int_to_ascii_error::buffer_overflow };
+            return { nullptr, int_to_ascii_error::buffer_overflow };
         }
     }
 
