@@ -45,6 +45,10 @@
 #define TETL_FREESTANDING 1
 #endif
 
+#if defined(DOXYGEN)
+#define TETL_DOC_GEN 1
+#endif
+
 namespace etl {
 /// \brief Enumeration for the currently selected C++ standard version. Unlike
 /// the official macro `__cplusplus`, these values only include the published
