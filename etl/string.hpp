@@ -40,8 +40,7 @@ namespace etl {
 /// \module Strings
 template <typename CharT, etl::size_t Capacity,
     typename Traits = etl::char_traits<CharT>>
-class basic_static_string {
-private:
+struct basic_static_string {
     // clang-format off
     template <typename T>
     constexpr static bool string_view_and_not_char_pointer =

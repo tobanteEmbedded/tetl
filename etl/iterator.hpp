@@ -574,8 +574,7 @@ template <typename Iter1, typename Iter2>
 /// assigned to. Incrementing the etl::back_insert_iterator is a no-op.
 /// \module Iterator
 template <typename Container>
-class back_insert_iterator {
-public:
+struct back_insert_iterator {
     using iterator_category = output_iterator_tag;
     using value_type        = void;
     using difference_type   = ptrdiff_t;
@@ -651,7 +650,7 @@ template <typename Container>
 /// \todo Add tests when a container with push_front has been implemented.
 /// \module Iterator
 template <typename Container>
-class front_insert_iterator {
+struct front_insert_iterator {
 protected:
     Container* container_ = nullptr;
 

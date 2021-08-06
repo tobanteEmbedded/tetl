@@ -30,6 +30,6 @@ namespace etl {
 using streamoff = int;
 
 template <typename State>
-class fpos;
+struct fpos;
 } // namespace etl
 #endif // TETL_IOS_HPP

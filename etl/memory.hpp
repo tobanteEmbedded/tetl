@@ -189,8 +189,7 @@ inline constexpr auto uses_allocator_v = uses_allocator<Type, Alloc>::value;
 /// the start of RAM. See your linker script.
 template <typename Type, intptr_t BaseAddress = 0,
     typename StorageType = uint16_t>
-class small_ptr {
-public:
+struct small_ptr {
     /// \brief Default construct empty small_ptr. May contain garbage.
     small_ptr() = default;
 
@@ -368,13 +367,12 @@ struct pointer_like_traits<uintptr_t> {
 };
 
 template <typename PointerT, unsigned IntBits, typename PtrTraits>
-class pointer_int_pair_info {
+struct pointer_int_pair_info {
     // clang-format off
-  static_assert(PtrTraits::free_bits < numeric_limits<uintptr_t>::digits, "cannot use a pointer type that has all bits free");
-  static_assert(IntBits <= PtrTraits::free_bits, "pointer_int_pair with integer size too large for pointer");
+    static_assert(PtrTraits::free_bits < numeric_limits<uintptr_t>::digits, "cannot use a pointer type that has all bits free");
+    static_assert(IntBits <= PtrTraits::free_bits, "pointer_int_pair with integer size too large for pointer");
     // clang-format on
 
-public:
     using pointer_type              = PointerT;
     using pointer_traits            = PtrTraits;
     static constexpr auto int_bits  = IntBits;
@@ -424,7 +422,7 @@ public:
     }
 };
 
-/// \brief This class implements a pair of a pointer and small integer.  It is
+/// \brief This struct implements a pair of a pointer and small integer.  It is
 /// designed to represent this in the space required by one pointer by
 /// bitmangling the integer into the low part of the pointer.  This can only be
 /// done for small integers: typically up to 3 bits, but it depends on the
@@ -439,8 +437,7 @@ public:
 template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
     typename PtrTraits = pointer_like_traits<PointerT>,
     typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
-class pointer_int_pair {
-public:
+struct pointer_int_pair {
     using pointer_type             = PointerT;
     using pointer_traits           = PtrTraits;
     using pointer_info             = Info;
@@ -588,8 +585,7 @@ struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>> {
 };
 
 template <typename T>
-class default_delete {
-public:
+struct default_delete {
     constexpr default_delete() noexcept = default;
 
     template <typename U, TETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
@@ -606,8 +602,7 @@ private:
 };
 
 template <typename T>
-class default_delete<T[]> {
-public:
+struct default_delete<T[]> {
     constexpr default_delete() noexcept = default;
 
     template <typename U,

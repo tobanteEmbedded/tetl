@@ -39,8 +39,7 @@ namespace etl {
 namespace detail {
     /// \brief Storage for zero elements.
     template <typename T>
-    class static_vector_zero_storage {
-    public:
+    struct static_vector_zero_storage {
         using size_type       = uint8_t;
         using value_type      = T;
         using difference_type = ptrdiff_t;
@@ -139,11 +138,10 @@ namespace detail {
 
     /// \brief Storage for trivial types.
     template <typename T, size_t Capacity>
-    class static_vector_trivial_storage {
+    struct static_vector_trivial_storage {
         static_assert(::etl::is_trivial_v<T>);
         static_assert(Capacity != size_t { 0 });
 
-    public:
         using size_type       = smallest_size_t<Capacity>;
         using value_type      = T;
         using difference_type = ptrdiff_t;
@@ -255,11 +253,10 @@ namespace detail {
 
     /// \brief Storage for non-trivial elements.
     template <typename T, size_t Capacity>
-    class static_vector_non_trivial_storage {
+    struct static_vector_non_trivial_storage {
         static_assert(!is_trivial_v<T>);
         static_assert(Capacity != size_t { 0 });
 
-    public:
         using size_type       = smallest_size_t<Capacity>;
         using value_type      = T;
         using difference_type = ptrdiff_t;

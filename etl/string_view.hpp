@@ -43,8 +43,7 @@ namespace etl {
 /// only two members: a pointer to constant CharType and a size.
 /// \module Strings
 template <typename CharType, typename Traits = etl::char_traits<CharType>>
-class basic_string_view {
-public:
+struct basic_string_view {
     /// The character traits type used
     using traits_type = Traits;
     /// The character type used

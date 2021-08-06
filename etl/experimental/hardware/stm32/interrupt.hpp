@@ -46,7 +46,7 @@ namespace etl::experimental::hardware::stm32 {
 // void HardFault_Handler() { isr::call(callbacks, isr_ids::hard_fault); }
 // void SysTick_Handler() { isr::call_checked(callbacks, isr_ids::sys_tick); }
 
-enum class isr_ids : size_t {
+enum struct isr_ids : size_t {
     nmi,
     hard_fault,
     sys_tick,

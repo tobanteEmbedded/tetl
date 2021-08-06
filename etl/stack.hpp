@@ -40,8 +40,7 @@ namespace etl {
 /// stack.
 /// \module Containers
 template <typename T, typename Container>
-class stack {
-public:
+struct stack {
     using value_type      = typename Container::value_type;
     using reference       = typename Container::reference;
     using const_reference = typename Container::const_reference;

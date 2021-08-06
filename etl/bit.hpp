@@ -40,7 +40,7 @@ namespace etl {
 /// \notes
 /// [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
 /// \module Numeric
-enum class endian {
+enum struct endian {
 #ifdef _WIN32
     little = 0,
     big    = 1,

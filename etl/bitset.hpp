@@ -41,7 +41,6 @@ namespace etl {
 /// \todo What if position index is out of bounds? Return nullptr?
 template <size_t N>
 struct bitset {
-public:
     /// \brief The primary use of etl::bitset::reference is to provide an
     /// l-value that can be returned from operator[].
     ///
@@ -49,8 +48,7 @@ public:
     /// with individual bits of a bitset, since standard C++ types (like
     /// references and pointers) are not built with enough precision to specify
     /// individual bits.
-    class reference {
-    public:
+    struct reference {
         /// \brief Assigns a value to the referenced bit.
         constexpr auto operator=(bool value) noexcept -> reference&
         {

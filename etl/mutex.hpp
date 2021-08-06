@@ -29,7 +29,7 @@
 #include "etl/chrono.hpp"
 
 namespace etl {
-/// \brief Empty class tag types used to specify locking strategy for
+/// \brief Empty struct tag types used to specify locking strategy for
 /// etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
 ///
 /// \details Do not acquire ownership of the mutex.
@@ -37,7 +37,7 @@ struct defer_lock_t {
     explicit defer_lock_t() = default;
 };
 
-/// \brief Empty class tag types used to specify locking strategy for
+/// \brief Empty struct tag types used to specify locking strategy for
 /// etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
 ///
 /// \details Try to acquire ownership of the mutex without blocking.
@@ -45,7 +45,7 @@ struct try_to_lock_t {
     explicit try_to_lock_t() = default;
 };
 
-/// \brief Empty class tag types used to specify locking strategy for
+/// \brief Empty struct tag types used to specify locking strategy for
 /// etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.
 ///
 /// \details Assume the calling thread already has ownership of the mutex.
@@ -62,15 +62,14 @@ inline constexpr try_to_lock_t try_to_lock {};
 /// \brief Instances of empty struct tag types. See adopt_lock_t.
 inline constexpr adopt_lock_t adopt_lock {};
 
-/// \brief The class lock_guard is a mutex wrapper that provides a convenient
+/// \brief The struct lock_guard is a mutex wrapper that provides a convenient
 /// RAII-style mechanism for owning a mutex for the duration of a scoped block.
 /// When a lock_guard object is created, it attempts to take ownership of the
 /// mutex it is given. When control leaves the scope in which the lock_guard
 /// object was created, the lock_guard is destructed and the mutex is released.
-/// The lock_guard class is non-copyable.
+/// The lock_guard struct is non-copyable.
 template <typename MutexT>
 struct lock_guard {
-public:
     using mutex_type = MutexT;
 
     explicit lock_guard(mutex_type& m) : mutex_ { m } { mutex_.lock(); }
@@ -84,13 +83,13 @@ private:
     mutex_type& mutex_;
 };
 
-/// \brief The class unique_lock is a general-purpose mutex ownership wrapper
+/// \brief The struct unique_lock is a general-purpose mutex ownership wrapper
 /// allowing deferred locking, time-constrained attempts at locking, recursive
 /// locking, transfer of lock ownership, and use with condition variables.
 ///
-/// \details The class unique_lock is movable, but not copyable -- it meets the
+/// \details The struct unique_lock is movable, but not copyable -- it meets the
 /// requirements of MoveConstructible and MoveAssignable but not of
-/// CopyConstructible or CopyAssignable. The class unique_lock meets the
+/// CopyConstructible or CopyAssignable. The struct unique_lock meets the
 /// BasicLockable requirements. If Mutex meets the Lockable requirements,
 /// unique_lock also meets the Lockable requirements (ex.: can be used in lock);
 /// if Mutex meets the TimedLockable requirements, unique_lock also meets the

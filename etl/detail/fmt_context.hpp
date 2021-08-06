@@ -18,8 +18,7 @@ struct formatter;
 /// \notes
 /// [cppreference.com/w/cpp/utility/format/basic_format_context](https://en.cppreference.com/w/cpp/utility/format/basic_format_context)
 template <typename OutputIt, typename CharT>
-class basic_format_context {
-public:
+struct basic_format_context {
     using iterator  = OutputIt;
     using char_type = CharT;
 

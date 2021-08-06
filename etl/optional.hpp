@@ -316,9 +316,10 @@ namespace detail {
 } // namespace detail
 
 template <typename ValueType>
-class optional : private detail::optional_move_assign_base<ValueType>,
-                 private detail::optional_sfinae_ctor_base_t<ValueType>,
-                 private detail::optional_sfinae_assign_base_t<ValueType> {
+struct optional : private detail::optional_move_assign_base<ValueType>,
+                  private detail::optional_sfinae_ctor_base_t<ValueType>,
+                  private detail::optional_sfinae_assign_base_t<ValueType> {
+private:
     using base_type = detail::optional_move_assign_base<ValueType>;
 
     static_assert(!is_same_v<remove_cvref_t<ValueType>, in_place_t>,

@@ -48,8 +48,7 @@ inline constexpr auto dynamic_extent = size_t(-1);
 /// only one member: a pointer to T.
 /// \module Containers
 template <typename ElementType, size_t Extent = etl::dynamic_extent>
-class span {
-public:
+struct span {
     using element_type    = ElementType;
     using value_type      = etl::remove_cv_t<ElementType>;
     using size_type       = etl::size_t;
@@ -211,13 +210,15 @@ template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 // Deduction Guides. From Container.
-template <typename Container, typename Element = etl::remove_pointer_t<decltype(
-                                  etl::declval<Container&>().data())>>
+template <typename Container,
+    typename Element
+    = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
-template <typename Container, typename Element = etl::remove_pointer_t<decltype(
-                                  etl::declval<Container const&>().data())>>
+template <typename Container,
+    typename Element
+    = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 } // namespace etl
 

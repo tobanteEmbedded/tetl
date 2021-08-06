@@ -54,8 +54,7 @@ enum float_denorm_style {
 };
 
 template <typename T>
-class numeric_limits {
-public:
+struct numeric_limits {
     static constexpr bool is_specialized = false;
 
     static constexpr auto min() noexcept { return T(); }
@@ -105,8 +104,7 @@ public:
 };
 
 template <>
-class numeric_limits<bool> {
-public:
+struct numeric_limits<bool> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto min() noexcept -> bool { return false; }
@@ -156,8 +154,7 @@ public:
 };
 
 template <>
-class numeric_limits<char> {
-public:
+struct numeric_limits<char> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto min() noexcept -> char { return CHAR_MIN; }
@@ -207,8 +204,7 @@ public:
 };
 
 template <>
-class numeric_limits<signed char> {
-public:
+struct numeric_limits<signed char> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto min() noexcept -> signed char { return SCHAR_MIN; }
@@ -258,8 +254,7 @@ public:
 };
 
 template <>
-class numeric_limits<unsigned char> {
-public:
+struct numeric_limits<unsigned char> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned char { return 0; }
@@ -312,8 +307,7 @@ public:
 };
 
 template <>
-class numeric_limits<short> {
-public:
+struct numeric_limits<short> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> short { return SHRT_MIN; }
@@ -363,8 +357,7 @@ public:
 };
 
 template <>
-class numeric_limits<unsigned short> {
-public:
+struct numeric_limits<unsigned short> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned short { return 0; }
@@ -420,8 +413,7 @@ public:
 };
 
 template <>
-class numeric_limits<int> {
-public:
+struct numeric_limits<int> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> int { return INT_MIN; }
@@ -471,8 +463,7 @@ public:
 };
 
 template <>
-class numeric_limits<unsigned int> {
-public:
+struct numeric_limits<unsigned int> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned int { return 0; }
@@ -522,8 +513,7 @@ public:
 };
 
 template <>
-class numeric_limits<long> {
-public:
+struct numeric_limits<long> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> long { return LONG_MIN; }
@@ -573,8 +563,7 @@ public:
 };
 
 template <>
-class numeric_limits<unsigned long> {
-public:
+struct numeric_limits<unsigned long> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned long { return 0; }
@@ -628,8 +617,7 @@ public:
 
 #if defined(LLONG_MIN) && defined(LLONG_MAX)
 template <>
-class numeric_limits<long long> {
-public:
+struct numeric_limits<long long> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> long long { return LLONG_MIN; }
@@ -681,8 +669,7 @@ public:
 
 #if defined(ULLONG_MAX)
 template <>
-class numeric_limits<unsigned long long> {
-public:
+struct numeric_limits<unsigned long long> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto lowest() noexcept -> unsigned long long { return 0; }
@@ -754,8 +741,7 @@ public:
 #endif
 
 template <>
-class numeric_limits<float> {
-public:
+struct numeric_limits<float> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto min() noexcept { return FLT_MIN; }
@@ -805,8 +791,7 @@ public:
 };
 
 template <>
-class numeric_limits<double> {
-public:
+struct numeric_limits<double> {
     static constexpr bool is_specialized = true;
 
     static constexpr auto min() noexcept { return DBL_MIN; }

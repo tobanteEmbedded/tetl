@@ -590,13 +590,13 @@ struct bit_not<void> {
 };
 
 namespace detail {
-    template <class T>
+    template <typename T>
     constexpr auto FUN(T& t) noexcept -> T&
     {
         return t;
     }
 
-    template <class T>
+    template <typename T>
     void FUN(T&&) = delete;
 
 } // namespace detail
@@ -811,7 +811,6 @@ struct function;
 /// \group function
 template <size_t Capacity, typename Res, typename... Args>
 struct function<Capacity, Res(Args...)> : function_view<Res(Args...)> {
-public:
     template <typename Functor>
     function(Functor f)
         : function_view<Res(Args...)> {
@@ -831,8 +830,7 @@ private:
 /// library's etl::search.
 /// \module Utility
 template <typename ForwardIter, typename Predicate = equal_to<>>
-class default_searcher {
-public:
+struct default_searcher {
     default_searcher(ForwardIter f, ForwardIter l, Predicate p = Predicate())
         : first_(f), last_(l), predicate_(p)
     {

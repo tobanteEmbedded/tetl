@@ -30,8 +30,7 @@
 #include "etl/cstddef.hpp"
 
 namespace etl::experimental::net {
-class mutable_buffer {
-public:
+struct mutable_buffer {
     /// \brief Construct an empty buffer.
     mutable_buffer() noexcept = default;
 

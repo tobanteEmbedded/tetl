@@ -28,52 +28,52 @@
 
 namespace etl {
 // primary type categories:
-template <class T>
+template <typename T>
 struct is_void;
-template <class T>
+template <typename T>
 struct is_null_pointer;
-template <class T>
+template <typename T>
 struct is_integral;
-template <class T>
+template <typename T>
 struct is_floating_point;
-template <class T>
+template <typename T>
 struct is_array;
-template <class T>
+template <typename T>
 struct is_pointer;
-template <class T>
+template <typename T>
 struct is_lvalue_reference;
-template <class T>
+template <typename T>
 struct is_rvalue_reference;
-template <class T>
+template <typename T>
 struct is_member_object_pointer;
-template <class T>
+template <typename T>
 struct is_member_function_pointer;
-template <class T>
+template <typename T>
 struct is_enum;
-template <class T>
+template <typename T>
 struct is_union;
-template <class T>
-struct is_class;
-template <class T>
+template <typename T>
+struct is_typename;
+template <typename T>
 struct is_function;
 
 // composite type categories:
-template <class T>
+template <typename T>
 struct is_reference;
-template <class T>
+template <typename T>
 struct is_arithmetic;
-template <class T>
+template <typename T>
 struct is_fundamental;
-template <class T>
+template <typename T>
 struct is_object;
-template <class T>
+template <typename T>
 struct is_scalar;
-template <class T>
+template <typename T>
 struct is_compound;
-template <class T>
+template <typename T>
 struct is_member_pointer;
 
-template <class T>
+template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void;
 
 } // namespace etl

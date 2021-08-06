@@ -35,12 +35,12 @@
 #include "etl/utility.hpp"
 
 namespace etl {
-/// \brief Interface base class for etl::map. Use this class for function
+/// \brief Interface base struct for etl::map. Use this struct for function
 /// parameters. To create an instance, use etl::map.
 /// \module Containers
 template <typename KeyType, typename ValueType,
     typename Compare = etl::less<KeyType>>
-class map_view {
+struct map_view {
 public:
     using key_type        = KeyType;
     using mapped_type     = ValueType;
@@ -275,8 +275,7 @@ private:
 /// \module Containers
 template <typename KeyT, typename ValueT, size_t Size,
     typename Compare = etl::less<KeyT>>
-class map : public map_view<KeyT, ValueT, Compare> {
-public:
+struct map : public map_view<KeyT, ValueT, Compare> {
     /// \brief Default constructor.
     constexpr explicit map() noexcept
         : base_t { reinterpret_cast<pair_t*>(&memory_[0]), Size }

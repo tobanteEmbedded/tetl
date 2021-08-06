@@ -31,7 +31,7 @@
 #include "etl/warning.hpp"
 
 namespace etl::experimental::hardware::stm32 {
-enum class pin_number : etl::uint16_t {
+enum struct pin_number : etl::uint16_t {
     pin_0 = 0,
     pin_1,
     pin_2,
@@ -50,7 +50,7 @@ enum class pin_number : etl::uint16_t {
     pin_15,
 };
 
-enum class pin_state : etl::uint8_t {
+enum struct pin_state : etl::uint8_t {
     reset = 0,
     set,
 };

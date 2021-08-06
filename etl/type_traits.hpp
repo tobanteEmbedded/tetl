@@ -854,40 +854,6 @@ struct is_volatile<volatile T> : true_type {
 template <typename T>
 inline constexpr bool is_volatile_v = is_volatile<T>::value;
 
-namespace detail {
-    template <typename T>
-    struct is_empty_test_struct_1 : T {
-        char dummy_data;
-    };
-
-    struct is_empty_test_struct_2 {
-        char dummy_data;
-    };
-
-    template <typename T, bool = ::etl::is_class<T>::value>
-    struct is_empty_helper
-        : ::etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
-                               == sizeof(is_empty_test_struct_2)> {
-    };
-
-    template <typename T>
-    struct is_empty_helper<T, false> : ::etl::false_type {
-    };
-} // namespace detail
-
-/// \brief f T is an empty type (that is, a non-union class type with no
-/// non-static data members other than bit-fields of size 0, no virtual
-/// functions, no virtual base classes, and no non-empty base classes), provides
-/// the member constant value equal to true. For any other type, value is false.
-/// \group is_empty
-template <typename T>
-struct is_empty : detail::is_empty_helper<T> {
-};
-
-/// \group is_empty
-template <typename T>
-inline constexpr bool is_empty_v = is_empty<T>::value;
-
 /// \group is_polymorphic
 template <typename T>
 struct is_polymorphic : bool_constant<TETL_IS_POLYMORPHIC(T)> {
@@ -1084,6 +1050,40 @@ struct is_union : bool_constant<TETL_IS_UNION(T)> {
 /// \group is_union
 template <typename T>
 inline constexpr bool is_union_v = is_union<T>::value;
+
+namespace detail {
+    template <typename T>
+    struct is_empty_test_struct_1 : T {
+        char dummy_data;
+    };
+
+    struct is_empty_test_struct_2 {
+        char dummy_data;
+    };
+
+    template <typename T, bool = ::etl::is_class<T>::value>
+    struct is_empty_helper
+        : ::etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
+                               == sizeof(is_empty_test_struct_2)> {
+    };
+
+    template <typename T>
+    struct is_empty_helper<T, false> : ::etl::false_type {
+    };
+} // namespace detail
+
+/// \brief f T is an empty type (that is, a non-union class type with no
+/// non-static data members other than bit-fields of size 0, no virtual
+/// functions, no virtual base classes, and no non-empty base classes), provides
+/// the member constant value equal to true. For any other type, value is false.
+/// \group is_empty
+template <typename T>
+struct is_empty : detail::is_empty_helper<T> {
+};
+
+/// \group is_empty
+template <typename T>
+inline constexpr bool is_empty_v = is_empty<T>::value;
 
 namespace detail {
     template <typename T>
@@ -2177,20 +2177,20 @@ namespace detail {
         return static_cast<T&&>(param);
     }
 
-    template <class T>
+    template <typename T>
     struct is_reference_wrapper : ::etl::false_type {
     };
 
     // TODO: Enable once reference_wrapper is implemented.
-    // template <class U>
+    // template <typename U>
     // struct is_reference_wrapper<::etl::reference_wrapper<U>> :
     // ::etl::true_type
     // {
     // };
 
-    template <class T>
+    template <typename T>
     struct invoke_impl {
-        template <class F, class... Args>
+        template <typename F, typename... Args>
         static auto call(F&& f, Args&&... args)
             -> decltype(xforward<F>(f)(xforward<Args>(args)...));
     };

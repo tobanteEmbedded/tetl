@@ -31,13 +31,13 @@
 
 namespace etl::experimental::hardware::mcp23017 {
 // ports
-enum class port : etl::uint16_t {
+enum struct port : etl::uint16_t {
     a = 0x00,
     b = 0x01,
 };
 
 // Address (A0-A2)
-enum class address : etl::uint16_t {
+enum struct address : etl::uint16_t {
     a20 = 0x20,
     a21 = 0x21,
     a22 = 0x22,
@@ -49,7 +49,7 @@ enum class address : etl::uint16_t {
 };
 
 // registers
-enum class registers : etl::uint16_t {
+enum struct registers : etl::uint16_t {
     io_direction_a = 0x00, // datasheet: IODIRA
     io_direction_b = 0x01, // datasheet: IODIRB
     IPOLA          = 0x02,
@@ -76,7 +76,7 @@ enum class registers : etl::uint16_t {
 
 // I/O Direction
 // Default state: io_direction::all_output
-enum class io_direction : etl::uint8_t {
+enum struct io_direction : etl::uint8_t {
     all_output = 0x00,
     all_input  = 0xFF,
     input_O0   = 0x01,
@@ -91,7 +91,7 @@ enum class io_direction : etl::uint8_t {
 
 // Input Polarity
 // Default state: MCP23017_IPOL_ALL_NORMAL
-enum class io_polarity : etl::uint8_t {
+enum struct io_polarity : etl::uint8_t {
     all_normal   = 0x00,
     all_inverted = 0xFF,
     inverted_O0  = 0x01,
@@ -106,7 +106,7 @@ enum class io_polarity : etl::uint8_t {
 
 // Pull-Up Resistor
 // Default state: MCP23017_GPPU_ALL_DISABLED
-enum class pull_up_resistor : etl::uint8_t {
+enum struct pull_up_resistor : etl::uint8_t {
     all_disabled = 0x00,
     all_enabled  = 0xFF,
     enabled_O0   = 0x01,
@@ -120,13 +120,13 @@ enum class pull_up_resistor : etl::uint8_t {
 };
 
 template <typename Driver>
-class device {
+struct device {
 public:
     explicit device()     = default;
     ~device()             = default;
     device(device&&)      = delete;
     device(device const&) = delete;
-    auto operator=(device &&) -> device& = delete;
+    auto operator=(device&&) -> device& = delete;
     auto operator=(device const&) -> device& = delete;
 
     auto init() -> bool { return true; }

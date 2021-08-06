@@ -34,7 +34,7 @@
 
 namespace etl {
 template <typename... Types>
-class variant;
+struct variant;
 
 /// \brief Unit type intended for use as a well-behaved empty alternative in
 /// etl::variant. In particular, a variant of non-default-constructible types
@@ -241,8 +241,7 @@ inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
 /// instance of etl::variant at any given time either holds a value of one of
 /// its alternative types.
 template <typename... Types>
-class variant {
-public:
+struct variant {
     /// \brief Converting constructor.
     ///
     /// \details Constructs a variant holding the alternative type T.

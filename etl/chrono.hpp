@@ -89,8 +89,7 @@ inline constexpr bool treat_as_floating_point_v
 /// duration's type, and is only used when converting between different
 /// durations.
 template <typename Rep, typename Period = etl::ratio<1>>
-class duration {
-public:
+struct duration {
     /// \brief Rep, an arithmetic type representing the number of ticks.
     using rep = Rep;
 
@@ -273,8 +272,7 @@ private:
 /// \notes
 /// [cppreference.com/w/cpp/named_req/Clock](https://en.cppreference.com/w/cpp/named_req/Clock)
 template <typename Clock, typename Duration = typename Clock::duration>
-class time_point {
-public:
+struct time_point {
     /// \brief Clock, the clock on which this time point is measured.
     using clock = Clock;
 

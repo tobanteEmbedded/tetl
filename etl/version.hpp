@@ -54,7 +54,7 @@ namespace etl {
 /// the official macro `__cplusplus`, these values only include the published
 /// year. This is to make the actual values smaller and therfore fit on smaller
 /// word sized chips.
-enum class language_standard : unsigned char {
+enum struct language_standard : unsigned char {
     cpp_17 = 17,
     cpp_20 = 20,
     cpp_23 = 23,

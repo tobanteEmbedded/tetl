@@ -30,8 +30,7 @@
 #include "etl/cstddef.hpp"
 
 namespace etl::experimental::net {
-class const_buffer {
-public:
+struct const_buffer {
     /// \brief Construct an empty buffer.
     const_buffer() noexcept = default;
 
