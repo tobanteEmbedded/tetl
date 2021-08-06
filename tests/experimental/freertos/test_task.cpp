@@ -33,7 +33,7 @@ struct example_task {
     auto run() -> void
     {
         auto loopControl = LoopType {};
-        while (loopControl()) { rtos::yield_task(); }
+        while (loopControl()) { rtos::this_task::yield(); }
 
         rtos::delete_task(nullptr);
     }

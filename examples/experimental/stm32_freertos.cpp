@@ -24,7 +24,6 @@
 #include "etl/new.hpp"
 
 #define TETL_FREERTOS_USE_STUBS
-#include "etl/experimental/freertos/delay.hpp"      // for delay, delay_until
 #include "etl/experimental/freertos/task.hpp"       // for once, create_task
 #include "etl/experimental/hardware/stm32/gpio.hpp" // for port, pin_number
 
@@ -42,9 +41,12 @@ struct example_task {
             gpioPort.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
             gpioPort.toggle_pin(stm32::pin_number::pin_13);
 
-            rtos::yield_task();
-            rtos::delay(1);
-            rtos::delay_until(1, 1);
+            rtos::this_task::yield();
+
+            rtos::this_task::sleep_for(1);
+
+            auto lastWake = etl::uint32_t { 0 };
+            rtos::this_task::sleep_until(lastWake, 1);
         }
 
         rtos::delete_task(nullptr);

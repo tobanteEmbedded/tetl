@@ -29,7 +29,7 @@
 namespace rtos = etl::experimental::freertos;
 namespace net  = etl::experimental::net;
 
-TEST_CASE("experimental/freertos/stream_buffer: ", "[experimental][rtos]")
+TEST_CASE("experimental/freertos/stream_buffer: stubs", "[experimental][rtos]")
 {
     auto sb = rtos::stream_buffer { 128, 1 };
     REQUIRE(sb.empty() == false);
