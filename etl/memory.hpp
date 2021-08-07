@@ -31,6 +31,7 @@
 #include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
+#include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
 #include "etl/detail/sfinae.hpp"
@@ -56,6 +57,16 @@ auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
 /// \group addressof
 template <typename T>
 auto addressof(T const&&) = delete;
+
+/// \brief Creates a T object initialized with arguments args... at given
+/// address p.
+template <typename T, typename... Args,
+    typename = decltype(::new (declval<void*>()) T(declval<Args>()...))>
+[[nodiscard]] constexpr auto construct_at(T* p, Args&&... args) -> T*
+{
+    TETL_ASSERT(p != nullptr);
+    return ::new (static_cast<void*>(p)) T(::etl::forward<Args>(args)...);
+}
 
 /// \brief If T is not an array type, calls the destructor of the object pointed
 /// to by p, as if by p->~T(). If T is an array type, recursively destroys
