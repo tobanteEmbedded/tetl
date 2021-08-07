@@ -664,11 +664,11 @@ template <::etl::size_t N, typename T>
     static_assert(detail::is_power2(N));
     static_assert(alignof(T) <= N);
 
-    if (::etl::is_constant_evaluated()) {
-        return ptr;
-    } else {
-        return static_cast<T*>(TETL_BUILTIN_ASSUME_ALIGNED(ptr, N));
-    }
+#if defined(TETL_IS_CONSTANT_EVALUATED)
+    if (::etl::is_constant_evaluated()) { return ptr; }
+#endif
+
+    return static_cast<T*>(TETL_BUILTIN_ASSUME_ALIGNED(ptr, N));
 }
 
 // template <typename InputIt, typename NoThrowForwardIt>
