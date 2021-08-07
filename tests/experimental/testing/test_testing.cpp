@@ -23,10 +23,18 @@
 
 #include "etl/experimental/testing/testing.hpp"
 
-auto main() -> int
+TEST_SESSION("demo session", 32U);
+
+TEST_CASE("test a", "")
 {
-    auto xc = 2;
-    EQUAL(xc, 2);
-    NOTEQUAL(xc, 3);
-    return 0;
+    CHECK_EQUAL(1, 1);
+    // CHECK_EQUAL(1, 2);
 }
+
+TEST_CASE("test b", "")
+{
+    REQUIRE(143 == 143);
+    REQUIRE_FALSE(42 == 41);
+}
+
+auto main() -> int { return TEST_SESSION_RUN(0, nullptr); }

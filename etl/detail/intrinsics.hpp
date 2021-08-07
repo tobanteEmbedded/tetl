@@ -224,4 +224,13 @@
 #endif
 #endif // TETL_MAKE_INTEGER_SEQ
 
+#define TETL_CONCAT_IMPL(s1, s2) s1##s2
+#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
+
+#ifdef __COUNTER__
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
+#else
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
+#endif
+
 #endif // TETL_INTRINSICS_HPP

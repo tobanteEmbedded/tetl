@@ -26,71 +26,162 @@
 
 #include "etl/version.hpp"
 
+#include "etl/array.hpp"
+#include "etl/cstddef.hpp"
+
 #include <stdio.h>
-#include <stdlib.h>
 
-#include "etl/format.hpp"
+namespace etl::test {
 
-namespace etl::experimental::testing::detail {
-struct binary_test_case {
-    int line         = 0;
-    char const* file = nullptr;
-    char const* func = nullptr;
-    char const* exp  = nullptr;
-    char const* lhs  = nullptr;
-    char const* rhs  = nullptr;
+struct context;
+
+using tc_function_t = void (*)(context&);
+
+struct tc_spec {
+    char const* name { nullptr };
+    char const* tags { nullptr };
 };
 
-inline auto fail_binary_test(binary_test_case const& tc) -> void
-{
-    auto const* fmt = "%s:%d - %s\twith lhs: %s and rhs: %s\n";
-    printf(fmt, tc.file, tc.line, tc.exp, tc.lhs, tc.rhs);
-    exit(EXIT_FAILURE); // NOLINT
+struct test_case : tc_spec {
+    tc_function_t func;
+};
+
+template <::etl::size_t Capacity>
+using session_buffer = ::etl::array<test_case, Capacity>;
+
+struct session {
+    template <::etl::size_t Capacity>
+    explicit session(session_buffer<Capacity>& buffer, char const* name);
+
+    [[nodiscard]] auto name() const noexcept -> char const*;
+
+    [[nodiscard]] auto begin() -> test_case*;
+    [[nodiscard]] auto end() -> test_case*;
+
+    auto add_test(tc_spec const& spec, tc_function_t func) -> void;
+    [[nodiscard]] auto run_all() -> int;
+
+private:
+    char const* name_ = nullptr;
+
+    test_case* first_    = nullptr;
+    test_case* last_     = nullptr;
+    ::etl::size_t count_ = 0;
+};
+
+struct context {
+    explicit context(session& s) : session_ { s } { }
+
+    auto current_test(tc_spec* tc) -> void { current_ = tc; }
+
+    auto pass_assertion() -> void;
+    auto fail_assertion(bool terminate) -> void;
+
+    auto terminate() -> bool;
+
+private:
+    session& session_;
+    tc_spec* current_ { nullptr };
+    bool shouldTerminate_ { false };
+};
+
 }
 
-template <typename T>
-[[nodiscard]] auto format_argument(T const& t) -> ::etl::static_string<32>
+namespace etl::test {
+template <::etl::size_t Capacity>
+inline session::session(session_buffer<Capacity>& buffer, char const* name)
+    : name_ { name }, first_ { buffer.begin() }, last_ { buffer.end() }
 {
-    auto str = etl::static_string<32> {};
-    ::etl::format_to(etl::back_inserter(str), "{}", t);
-    return str;
 }
 
-} // namespace etl::experimental::testing::detail
+inline auto session::name() const noexcept -> char const* { return name_; }
 
-#if not defined(STR)
-#define STR_IMPL(s) #s
-#define STR(s) STR_IMPL(s)
-#endif // STR
+inline auto session::begin() -> test_case* { return first_; }
 
-#if not defined(MAKE_TEST_CASE)
-#define MAKE_TEST_CASE(exp)                                                    \
-    binary_test_case { __LINE__, __FILE__, TETL_FUNC_SIG, exp, }
-#endif // MAKE_TEST_CASE
+inline auto session::end() -> test_case* { return ::etl::next(first_, count_); }
 
-#if not defined(EQUAL)
-#define EQUAL(a, b)                                                            \
-    do {                                                                       \
-        if (!((a) == (b))) {                                                   \
-            using namespace etl::experimental::testing::detail;                \
-            fail_binary_test(MAKE_TEST_CASE(STR((a) == (b))));                 \
+inline auto session::add_test(tc_spec const& spec, tc_function_t func) -> void
+{
+    if (first_ + count_ != last_) {
+        first_[count_].name   = spec.name;
+        first_[count_].tags   = spec.tags;
+        first_[count_++].func = func;
+    }
+}
+
+inline auto session::run_all() -> int
+{
+    auto ctx = context { *this };
+    for (auto& tc : (*this)) {
+        ctx.current_test(&tc);
+        ::printf("Running test: %s\n", tc.name);
+        tc.func(ctx);
+        if (ctx.terminate()) { return 1; }
+        ::printf("Running test: %s - done!\n", tc.name);
+    }
+
+    return 0;
+}
+
+inline auto context::pass_assertion() -> void { ::puts("pass_assertion"); }
+inline auto context::fail_assertion(bool terminate) -> void
+{
+    ::puts("fail_assertion");
+    shouldTerminate_ = terminate;
+}
+inline auto context::terminate() -> bool { return shouldTerminate_; }
+
+} // namespace etl::test
+
+#define TEST_SESSION(name, size)                                               \
+    static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
+    static auto g_session = ::etl::test::session { g_session_buffer, name }
+
+#define TEST_SESSION_RUN(argc, argv) g_session.run_all()
+
+#define TEST_CASE_IMPL(n, t, test_case_type)                                   \
+    struct test_case_type {                                                    \
+        test_case_type(                                                        \
+            ::etl::test::session& s, ::etl::test::tc_spec const& sp)           \
+        {                                                                      \
+            s.add_test(sp, [](::etl::test::context& ctx) { run(ctx); });       \
         }                                                                      \
-    } while (false);
-#endif // EQUAL
+        static auto run(::etl::test::context&) -> void;                        \
+    };                                                                         \
+                                                                               \
+    static auto TETL_ANONYMOUS_VAR(tc) = test_case_type {                      \
+        g_session,                                                             \
+        ::etl::test::tc_spec {                                                 \
+            /*.name = */ n,                                                    \
+            /* .tags = */ t,                                                   \
+        },                                                                     \
+    };                                                                         \
+                                                                               \
+    auto test_case_type::run(::etl::test::context& session_context)->void
 
-#if not defined(NOTEQUAL)
-#define NOTEQUAL(a, b)                                                         \
-    do {                                                                       \
-        if (!((a) != (b))) {                                                   \
-            using namespace etl::experimental::testing::detail;                \
-            auto l  = format_argument((a));                                    \
-            auto r  = format_argument((b));                                    \
-            auto tc = MAKE_TEST_CASE(STR((a) != (b)));                         \
-            tc.lhs  = l.c_str();                                               \
-            tc.rhs  = r.c_str();                                               \
-            fail_binary_test(tc);                                              \
-        }                                                                      \
-    } while (false);
-#endif // NOTEQUAL
+#define TEST_CASE(name, tags) TEST_CASE_IMPL(name, tags, TETL_ANONYMOUS_VAR(tc))
+
+#define CHECK_IMPL(expr, terminate)                                            \
+    if (!!(expr)) {                                                            \
+        session_context.pass_assertion();                                      \
+    } else {                                                                   \
+        session_context.fail_assertion(terminate);                             \
+    }
+
+#define CHECK_EQUAL_IMPL(a, b, terminate)                                      \
+    if ((a) == (b)) {                                                          \
+        session_context.pass_assertion();                                      \
+    } else {                                                                   \
+        session_context.fail_assertion(terminate);                             \
+    }
+
+#define CHECK(expr) CHECK_IMPL(expr, false);
+#define REQUIRE(expr) CHECK_IMPL(expr, true);
+
+#define CHECK_FALSE(expr) CHECK_IMPL(!(expr), false);
+#define REQUIRE_FALSE(expr) CHECK_IMPL(!(expr), true);
+
+#define CHECK_EQUAL(a, b) CHECK_EQUAL_IMPL(a, b, false)
+#define REQUIRE_EQUAL(a, b) CHECK_EQUAL_IMPL(a, b, true)
 
 #endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
