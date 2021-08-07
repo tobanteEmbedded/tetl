@@ -1,0 +1,49 @@
+name: aarch64 C++17
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - uses: uraimo/run-on-arch-action@v2.0.5
+        name: Run commands
+        id: runcmd
+        with:
+          arch: aarch64
+          distro: ubuntu20.04
+          githubToken: ${{ github.token }}
+          run: |
+            uname -a
+            echo ::set-output name=uname::$(uname -a)
+
+      - name: Install ninja-build
+        run: sudo apt install -y ninja-build
+
+      - name: CMake configure -- Debug
+        run: cmake -S . -G Ninja -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug -D TETL_BUILD_WERROR=ON
+
+      - name: CMake build -- Debug
+        run: cmake --build cmake-build-debug
+
+      - name: Run tests -- Debug
+        run: cd cmake-build-debug; ctest; cd -
+
+      - name: CMake configure -- Release
+        run: cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -D TETL_BUILD_WERROR=ON
+
+      - name: CMake build -- Release
+        run: cmake --build cmake-build-release
+
+      - name: Run tests -- Release
+        run: cd cmake-build-release; ctest; cd -
