@@ -251,20 +251,26 @@ namespace detail {
 
 namespace detail {
     template <bool InclusiveSearch>
+    [[nodiscard]] constexpr auto is_legal_char(
+        char const* options, ::etl::size_t len, char ch) noexcept -> bool
+    {
+        for (etl::size_t i = 0; i < len; ++i) {
+            if (options[i] == ch) { return InclusiveSearch; }
+        }
+        return !InclusiveSearch;
+    }
+
+    template <bool InclusiveSearch>
     [[nodiscard]] constexpr auto str_span_impl(
         char const* dest, char const* src) noexcept -> ::etl::size_t
     {
-        auto const isLegalChar = [src, length = etl::strlen(src)](auto ch) {
-            for (etl::size_t i = 0; i < length; ++i) {
-                if (src[i] == ch) { return InclusiveSearch; }
-            }
-            return !InclusiveSearch;
-        };
-
         auto result       = etl::size_t { 0 };
         auto const length = etl::strlen(dest);
+        auto const srcLen = etl::strlen(src);
         for (etl::size_t i = 0; i < length; ++i) {
-            if (!isLegalChar(dest[i])) { break; }
+            if (!is_legal_char<InclusiveSearch>(src, srcLen, dest[i])) {
+                break;
+            }
             ++result;
         }
 
@@ -278,6 +284,7 @@ namespace detail {
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strspn
 ///
+/// \module Strings
 [[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
     -> etl::size_t
 {
@@ -292,10 +299,49 @@ namespace detail {
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strcspn
 ///
+/// \module Strings
 [[nodiscard]] constexpr auto strcspn(char const* dest, char const* src) noexcept
     -> etl::size_t
 {
     return detail::str_span_impl<false>(dest, src);
+}
+
+namespace detail {
+    template <typename CharT>
+    [[nodiscard]] constexpr auto strpbrk_impl(CharT* s, CharT* del) noexcept
+        -> CharT*
+    {
+        auto const i = str_span_impl<false>(s, del);
+        if (i != 0) { return s + i; }
+        if (is_legal_char<true>(del, etl::strlen(del), s[0])) { return s; }
+        return nullptr;
+    }
+}
+
+/// \brief Scans the null-terminated byte string pointed to by dest for any
+/// character from the null-terminated byte string pointed to by breakset, and
+/// returns a pointer to that character.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strpbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strpbrk(
+    char const* dest, char const* breakset) noexcept -> char const*
+{
+    return detail::strpbrk_impl<char const>(dest, breakset);
+}
+
+/// \brief Scans the null-terminated byte string pointed to by dest for any
+/// character from the null-terminated byte string pointed to by breakset, and
+/// returns a pointer to that character.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strpbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strpbrk(char* dest, char* breakset) noexcept
+    -> char*
+{
+    return detail::strpbrk_impl<char>(dest, breakset);
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
