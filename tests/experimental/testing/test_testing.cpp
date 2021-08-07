@@ -43,7 +43,7 @@ TEST_CASE("test c", "")
     REQUIRE_FALSE(42 == 41);
 }
 
-auto main(int argc, char const* argv) -> int
+auto main(int argc, char const** argv) -> int
 {
     return TEST_SESSION_RUN(argc, argv);
 }

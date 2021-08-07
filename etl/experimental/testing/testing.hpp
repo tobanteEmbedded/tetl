@@ -87,7 +87,10 @@ private:
 };
 
 struct context {
-    explicit context(session& s) : session_ { s } { }
+    explicit context(session& s) : session_ { s }
+    {
+        ::etl::ignore_unused(session_);
+    }
 
     auto current_test(tc_spec* tc) -> void;
     auto pass_assertion(assertion_payload const& payload) -> void;
@@ -171,6 +174,7 @@ inline auto context::current_test(tc_spec* tc) -> void
 
 inline auto context::pass_assertion(assertion_payload const& data) -> void
 {
+    ::etl::ignore_unused(this, data);
     ++stats_.num_assertions;
 }
 inline auto context::fail_assertion(
