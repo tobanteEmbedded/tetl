@@ -1,0 +1,52 @@
+name: GCC C++23
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Download git submodules
+        run: git submodule update --recursive --init
+
+      - name: Install ninja-build
+        run: sudo apt install -y ninja-build
+
+      - name: Install CMake
+        run: |
+          sudo apt remove --purge cmake
+          hash -r
+          sudo snap install cmake --classic
+          cmake --version
+
+      - name: Set up GCC
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: 11
+          platform: x64
+
+      - name: CMake configure -- Debug
+        run: cmake -S . -G Ninja -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug -DTETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
+
+      - name: CMake build -- Debug
+        run: cmake --build cmake-build-debug
+
+      - name: Run tests -- Debug
+        run: cd cmake-build-debug; ctest; cd -
+
+      - name: CMake configure -- Release
+        run: cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DTETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
+
+      - name: CMake build -- Release
+        run: cmake --build cmake-build-release
+
+      - name: Run tests -- Release
+        run: cd cmake-build-release; ctest; cd -
