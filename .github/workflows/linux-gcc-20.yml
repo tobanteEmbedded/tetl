@@ -13,9 +13,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Download git submodules
-        run: git submodule update --recursive --init
+        with:
+          submodules: true
 
       - name: Install ninja-build
         run: sudo apt install -y ninja-build

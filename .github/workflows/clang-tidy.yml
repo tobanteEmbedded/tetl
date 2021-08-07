@@ -13,9 +13,8 @@ jobs:
     steps:
       - name: check out code
         uses: actions/checkout@v2
-
-      - name: download git submodules
-        run: git submodule update --recursive --init
+        with:
+          submodules: true
 
       - name: add LLVM Key
         run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -

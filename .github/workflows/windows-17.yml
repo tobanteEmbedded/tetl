@@ -12,9 +12,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Download git submodules
-        run: git submodule update --recursive --init
+        with:
+          submodules: true
 
       - name: CMake configure -- Debug
         run: cmake -S . -B cmake-build-debug -G "Visual Studio 16 2019" -D TETL_BUILD_WERROR=ON
