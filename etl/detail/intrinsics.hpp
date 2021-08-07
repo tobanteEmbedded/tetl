@@ -54,10 +54,74 @@
 #error "unknown compiler"
 #endif
 
+#ifdef _MSC_VER
+#define TETL_BUILTIN_INT8 __int8
+#define TETL_BUILTIN_INT16 __int16
+#define TETL_BUILTIN_INT32 __int32
+#define TETL_BUILTIN_INT64 __int64
+#define TETL_BUILTIN_UINT8 unsigned __int8
+#define TETL_BUILTIN_UINT16 unsigned __int16
+#define TETL_BUILTIN_UINT32 unsigned __int32
+#define TETL_BUILTIN_UINT64 unsigned __int64
+
+#define TETL_BUILTIN_INTPTR TETL_BUILTIN_INT64
+#define TETL_BUILTIN_UINTPTR TETL_BUILTIN_UINT64
+#define TETL_BUILTIN_INTMAX TETL_BUILTIN_INT64
+#define TETL_BUILTIN_UINTMAX TETL_BUILTIN_UINT64
+#define TETL_BUILTIN_SIZET decltype(sizeof(nullptr))
+#define TETL_BUILTIN_PTRDIFF TETL_BUILTIN_INT64
+#else
+#define TETL_BUILTIN_INT8 __INT8_TYPE__
+#define TETL_BUILTIN_INT16 __INT16_TYPE__
+#define TETL_BUILTIN_INT32 __INT32_TYPE__
+#define TETL_BUILTIN_INT64 __INT64_TYPE__
+#define TETL_BUILTIN_UINT8 __UINT8_TYPE__
+#define TETL_BUILTIN_UINT16 __UINT16_TYPE__
+#define TETL_BUILTIN_UINT32 __UINT32_TYPE__
+#define TETL_BUILTIN_UINT64 __UINT64_TYPE__
+
+#define TETL_BUILTIN_INTPTR __INTPTR_TYPE__
+#define TETL_BUILTIN_UINTPTR __UINTPTR_TYPE__
+#define TETL_BUILTIN_INTMAX __INTMAX_TYPE__
+#define TETL_BUILTIN_UINTMAX __UINTMAX_TYPE__
+#define TETL_BUILTIN_SIZET __SIZE_TYPE__
+#define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
+#endif
+
 #if defined(__GNUC__)
 #define TETL_FUNC_SIG __PRETTY_FUNCTION__
 #else
 #define TETL_FUNC_SIG __func__
+#endif
+
+#if __has_builtin(__builtin_expect)
+#define TETL_LIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), true)
+#define TETL_UNLIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), false)
+#else
+#define TETL_LIKELY(EXPR) (EXPR)
+#define TETL_UNLIKELY(EXPR) (EXPR)
+#endif
+
+#if __has_attribute(always_inline)
+#define TETL_ALWAYS_INLINE __attribute__((always_inline))
+#elif defined(_MSC_VER)
+#define TETL_ALWAYS_INLINE __forceinline
+#else
+#define TETL_ALWAYS_INLINE
+#endif
+
+#ifdef __GNUC__
+#define TETL_NORETURN __attribute__((noreturn))
+#elif defined(_MSC_VER)
+#define TETL_NORETURN __declspec(noreturn)
+#else
+#define TETL_NORETURN
+#endif
+
+#if __has_builtin(__builtin_unreachable)
+#define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_UNREACHABLE __assume(false)
 #endif
 
 #if not defined(TETL_BUILTIN_NAN)
@@ -72,13 +136,16 @@
 #define TETL_BUILTIN_VA_LIST __builtin_va_list
 #endif // TETL_BUILTIN_VA_LIST
 
-#if not defined(TETL_BUILTIN_ASSUME_ALIGNED)
 #if __has_builtin(__builtin_assume_aligned)
-#define TETL_BUILTIN_ASSUME_ALIGNED(ptr, N) __builtin_assume_aligned(ptr, N)
+#define TETL_BUILTIN_ASSUME_ALIGNED(p, a) __builtin_assume_aligned(p, a)
+#elif defined(TETL_BUILTIN_UNREACHABLE)
+#define TETL_BUILTIN_ASSUME_ALIGNED(p, a)                                      \
+    (((reinterpret_cast<TETL_BUILTIN_UINTPTR>(p) % (a)) == 0)                  \
+            ? (p)                                                              \
+            : (TETL_BUILTIN_UNREACHABLE, (p)))
 #else
-#define TETL_BUILTIN_ASSUME_ALIGNED(ptr, N) ptr
+#define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
 #endif
-#endif // TETL_BUILTIN_ASSUME_ALIGNED
 
 #if not defined(TETL_HAS_VIRTUAL_DESTRUCTOR)
 #define TETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
@@ -156,39 +223,5 @@
 #define TETL_MAKE_INTEGER_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
 #endif // TETL_MAKE_INTEGER_SEQ
-
-#ifdef _MSC_VER
-#define TETL_BUILTIN_INT8 __int8
-#define TETL_BUILTIN_INT16 __int16
-#define TETL_BUILTIN_INT32 __int32
-#define TETL_BUILTIN_INT64 __int64
-#define TETL_BUILTIN_UINT8 unsigned __int8
-#define TETL_BUILTIN_UINT16 unsigned __int16
-#define TETL_BUILTIN_UINT32 unsigned __int32
-#define TETL_BUILTIN_UINT64 unsigned __int64
-
-#define TETL_BUILTIN_INTPTR TETL_BUILTIN_INT64
-#define TETL_BUILTIN_UINTPTR TETL_BUILTIN_UINT64
-#define TETL_BUILTIN_INTMAX TETL_BUILTIN_INT64
-#define TETL_BUILTIN_UINTMAX TETL_BUILTIN_UINT64
-#define TETL_BUILTIN_SIZET decltype(sizeof(nullptr))
-#define TETL_BUILTIN_PTRDIFF TETL_BUILTIN_INT64
-#else
-#define TETL_BUILTIN_INT8 __INT8_TYPE__
-#define TETL_BUILTIN_INT16 __INT16_TYPE__
-#define TETL_BUILTIN_INT32 __INT32_TYPE__
-#define TETL_BUILTIN_INT64 __INT64_TYPE__
-#define TETL_BUILTIN_UINT8 __UINT8_TYPE__
-#define TETL_BUILTIN_UINT16 __UINT16_TYPE__
-#define TETL_BUILTIN_UINT32 __UINT32_TYPE__
-#define TETL_BUILTIN_UINT64 __UINT64_TYPE__
-
-#define TETL_BUILTIN_INTPTR __INTPTR_TYPE__
-#define TETL_BUILTIN_UINTPTR __UINTPTR_TYPE__
-#define TETL_BUILTIN_INTMAX __INTMAX_TYPE__
-#define TETL_BUILTIN_UINTMAX __UINTMAX_TYPE__
-#define TETL_BUILTIN_SIZET __SIZE_TYPE__
-#define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
-#endif
 
 #endif // TETL_INTRINSICS_HPP
