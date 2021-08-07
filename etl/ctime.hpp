@@ -34,8 +34,31 @@
 
 #if not defined(NULL)
 #define NULL nullptr
-#endif
+#endif // NULL
 
+#if not defined(CLOCKS_PER_SEC)
+#define CLOCKS_PER_SEC 1'000'000UL
+#endif // CLOCKS_PER_SEC
+
+using clock_t = ::etl::size_t;
+using time_t  = ::etl::size_t;
+
+struct timespec {
+    etl::time_t tv_sec;
+    long tv_nsec;
+};
+
+struct tm {
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
+};
 #endif // has_include <time.h>
 
 #endif // TETL_CTIME_HPP
