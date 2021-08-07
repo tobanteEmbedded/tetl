@@ -16,6 +16,12 @@ jobs:
 
       - name: download git submodules
         run: git submodule update --recursive --init
+      
+      - name: Set up Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: latest
+          platform: x64
 
       - name: cmake configure
         run: cmake -S . -B cmake-build-ubsan -D TETL_BUILD_UBSAN=ON
