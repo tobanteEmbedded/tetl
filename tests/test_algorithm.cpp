@@ -1842,3 +1842,19 @@ TEMPLATE_TEST_CASE("algorithm: is_permutation", "[algorithm]", etl::uint8_t,
         CHECK_FALSE(etl::is_permutation(begin(a), end(a), begin(c), end(c)));
     }
 }
+
+TEMPLATE_TEST_CASE("algorithm: shift_left", "[algorithm]", etl::uint8_t,
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    using T = TestType;
+    using etl::array;
+
+    auto data = array { T { 1 }, T { 2 }, T { 3 }, T { 4 }, T { 5 }, T { 6 } };
+    etl::shift_left(begin(data), end(data), 2);
+    REQUIRE(data[0] == T { 3 });
+    REQUIRE(data[1] == T { 4 });
+    REQUIRE(data[2] == T { 5 });
+    REQUIRE(data[3] == T { 6 });
+    REQUIRE(data[4] == T { 0 });
+}
