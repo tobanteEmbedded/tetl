@@ -95,7 +95,7 @@ namespace detail {
 /// \brief Assertion macro with customizable runtime behavior
 #define TETL_ASSERT(exp)                                                       \
     do {                                                                       \
-        if (!(exp)) {                                                          \
+        if (TETL_LIKELY((exp)) == false) {                                     \
             auto const msg = ::etl::assert_msg {                               \
                 __LINE__, __FILE__,                                            \
                 nullptr, /*The function name causes code bloat.  */            \
