@@ -23,18 +23,27 @@
 
 #include "etl/experimental/testing/testing.hpp"
 
-TEST_SESSION("demo session", 32U);
+TEST_SESSION("test_testing.cpp", 16U);
 
 TEST_CASE("test a", "")
 {
     CHECK_EQUAL(1, 1);
-    // CHECK_EQUAL(1, 2);
+    CHECK_EQUAL(2, 2);
 }
 
 TEST_CASE("test b", "")
+{
+    CHECK(143 == 143);
+    CHECK_FALSE(42 == 41);
+}
+
+TEST_CASE("test c", "")
 {
     REQUIRE(143 == 143);
     REQUIRE_FALSE(42 == 41);
 }
 
-auto main() -> int { return TEST_SESSION_RUN(0, nullptr); }
+auto main(int argc, char const* argv) -> int
+{
+    return TEST_SESSION_RUN(argc, argv);
+}

@@ -46,20 +46,37 @@ struct test_case : tc_spec {
     tc_function_t func;
 };
 
+struct assertion_payload {
+    char const* expression { nullptr };
+    char const* file { nullptr };
+    char const* function { nullptr };
+    ::etl::uint32_t line { 0 };
+};
+
+struct session_stats {
+    ::etl::uint16_t num_test_cases { 0 };
+    ::etl::uint16_t num_test_cases_failed { 0 };
+
+    ::etl::uint16_t num_assertions { 0 };
+    ::etl::uint16_t num_assertions_failed { 0 };
+};
+
 template <::etl::size_t Capacity>
 using session_buffer = ::etl::array<test_case, Capacity>;
 
 struct session {
     template <::etl::size_t Capacity>
-    explicit session(session_buffer<Capacity>& buffer, char const* name);
+    explicit constexpr session(
+        session_buffer<Capacity>& buffer, char const* name);
 
-    [[nodiscard]] auto name() const noexcept -> char const*;
+    [[nodiscard]] constexpr auto name() const noexcept -> char const*;
 
-    [[nodiscard]] auto begin() -> test_case*;
-    [[nodiscard]] auto end() -> test_case*;
+    [[nodiscard]] constexpr auto begin() -> test_case*;
+    [[nodiscard]] constexpr auto end() -> test_case*;
 
-    auto add_test(tc_spec const& spec, tc_function_t func) -> void;
     [[nodiscard]] auto run_all() -> int;
+
+    constexpr auto add_test(tc_spec const& spec, tc_function_t func) -> void;
 
 private:
     char const* name_ = nullptr;
@@ -72,35 +89,46 @@ private:
 struct context {
     explicit context(session& s) : session_ { s } { }
 
-    auto current_test(tc_spec* tc) -> void { current_ = tc; }
-
-    auto pass_assertion() -> void;
-    auto fail_assertion(bool terminate) -> void;
+    auto current_test(tc_spec* tc) -> void;
+    auto pass_assertion(assertion_payload const& payload) -> void;
+    auto fail_assertion(assertion_payload const& payload, bool terminate)
+        -> void;
 
     auto terminate() -> bool;
+
+    auto stats() const -> session_stats const& { return stats_; }
 
 private:
     session& session_;
     tc_spec* current_ { nullptr };
     bool shouldTerminate_ { false };
+    session_stats stats_ {};
 };
 
 }
 
 namespace etl::test {
 template <::etl::size_t Capacity>
-inline session::session(session_buffer<Capacity>& buffer, char const* name)
+inline constexpr session::session(
+    session_buffer<Capacity>& buffer, char const* name)
     : name_ { name }, first_ { buffer.begin() }, last_ { buffer.end() }
 {
 }
 
-inline auto session::name() const noexcept -> char const* { return name_; }
+inline constexpr auto session::name() const noexcept -> char const*
+{
+    return name_;
+}
 
-inline auto session::begin() -> test_case* { return first_; }
+inline constexpr auto session::begin() -> test_case* { return first_; }
 
-inline auto session::end() -> test_case* { return ::etl::next(first_, count_); }
+inline constexpr auto session::end() -> test_case*
+{
+    return ::etl::next(first_, count_);
+}
 
-inline auto session::add_test(tc_spec const& spec, tc_function_t func) -> void
+inline constexpr auto session::add_test(tc_spec const& spec, tc_function_t func)
+    -> void
 {
     if (first_ + count_ != last_) {
         first_[count_].name   = spec.name;
@@ -112,36 +140,66 @@ inline auto session::add_test(tc_spec const& spec, tc_function_t func) -> void
 inline auto session::run_all() -> int
 {
     auto ctx = context { *this };
+    ::printf("%-10s %-10s\n", "Running:", name_);
+
     for (auto& tc : (*this)) {
         ctx.current_test(&tc);
-        ::printf("Running test: %s\n", tc.name);
+        ::printf("%-10s %-10s\n", "Running:", tc.name);
         tc.func(ctx);
-        if (ctx.terminate()) { return 1; }
-        ::printf("Running test: %s - done!\n", tc.name);
+        if (ctx.terminate()) {
+            ::printf("%-10s %-10s - TERMINATE\n", "Failed:", tc.name);
+            return 1;
+        }
+        ::printf("%-10s %-10s\n", "Finished:", tc.name);
     }
 
+    auto const& stats = ctx.stats();
+    auto const* txt   = "%-10s %-10s - tests: %d/%d assertion: %d/%d\n";
+    ::printf(txt, "Finished:", name_,
+        stats.num_test_cases - stats.num_test_cases_failed,
+        stats.num_test_cases,
+        stats.num_assertions - stats.num_assertions_failed,
+        stats.num_assertions);
     return 0;
 }
 
-inline auto context::pass_assertion() -> void { ::puts("pass_assertion"); }
-inline auto context::fail_assertion(bool terminate) -> void
+inline auto context::current_test(tc_spec* tc) -> void
 {
-    ::puts("fail_assertion");
+    ++stats_.num_test_cases;
+    current_ = tc;
+}
+
+inline auto context::pass_assertion(assertion_payload const& data) -> void
+{
+    ++stats_.num_assertions;
+}
+inline auto context::fail_assertion(
+    assertion_payload const& data, bool terminate) -> void
+{
+    ::printf("Assertion: %s:%d - %s\n", data.file, data.line, data.expression);
+    ++stats_.num_assertions_failed;
     shouldTerminate_ = terminate;
 }
 inline auto context::terminate() -> bool { return shouldTerminate_; }
 
 } // namespace etl::test
 
+#define TETL_STRINGIFY(str) #str
+
+#define TEST_DETAIL_PAYLOAD(exp)                                               \
+    ::etl::test::assertion_payload { exp, __FILE__, TETL_FUNC_SIG, __LINE__ }
+
 #define TEST_SESSION(name, size)                                               \
     static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
     static auto g_session = ::etl::test::session { g_session_buffer, name }
+
+#define TEST_FILE(size) TEST_SESSION(__FILE__, size);
 
 #define TEST_SESSION_RUN(argc, argv) g_session.run_all()
 
 #define TEST_CASE_IMPL(n, t, test_case_type)                                   \
     struct test_case_type {                                                    \
-        test_case_type(                                                        \
+        explicit test_case_type(                                               \
             ::etl::test::session& s, ::etl::test::tc_spec const& sp)           \
         {                                                                      \
             s.add_test(sp, [](::etl::test::context& ctx) { run(ctx); });       \
@@ -149,7 +207,7 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
         static auto run(::etl::test::context&) -> void;                        \
     };                                                                         \
                                                                                \
-    static auto TETL_ANONYMOUS_VAR(tc) = test_case_type {                      \
+    static auto const TETL_ANONYMOUS_VAR(tc) = test_case_type {                \
         g_session,                                                             \
         ::etl::test::tc_spec {                                                 \
             /*.name = */ n,                                                    \
@@ -163,16 +221,20 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
 
 #define CHECK_IMPL(expr, terminate)                                            \
     if (!!(expr)) {                                                            \
-        session_context.pass_assertion();                                      \
+        session_context.pass_assertion(                                        \
+            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)));                        \
     } else {                                                                   \
-        session_context.fail_assertion(terminate);                             \
+        session_context.fail_assertion(                                        \
+            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)), terminate);             \
     }
 
 #define CHECK_EQUAL_IMPL(a, b, terminate)                                      \
     if ((a) == (b)) {                                                          \
-        session_context.pass_assertion();                                      \
+        session_context.pass_assertion(                                        \
+            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)));                      \
     } else {                                                                   \
-        session_context.fail_assertion(terminate);                             \
+        session_context.fail_assertion(                                        \
+            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)), terminate);           \
     }
 
 #define CHECK(expr) CHECK_IMPL(expr, false);
