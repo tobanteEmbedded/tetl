@@ -35,7 +35,7 @@ jobs:
         run: CC=clang-13 CXX=clang++-13 cmake --build cmake-build-debug
 
       - name: Run tests -- Debug
-        run: cd cmake-build-debug; ctest; cd -
+        run: cd cmake-build-debug; ctest -VV; cd -
 
       - name: CMake configure -- Release
         run: CC=clang-13 CXX=clang++-13 cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DTETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
@@ -44,4 +44,4 @@ jobs:
         run: CC=clang-13 CXX=clang++-13 cmake --build cmake-build-release
 
       - name: Run tests -- Release
-        run: cd cmake-build-release; ctest; cd -
+        run: cd cmake-build-release; ctest -VV; cd -

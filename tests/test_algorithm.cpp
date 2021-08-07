@@ -1856,5 +1856,4 @@ TEMPLATE_TEST_CASE("algorithm: shift_left", "[algorithm]", etl::uint8_t,
     REQUIRE(data[1] == T { 4 });
     REQUIRE(data[2] == T { 5 });
     REQUIRE(data[3] == T { 6 });
-    REQUIRE(data[4] == T { 0 });
 }

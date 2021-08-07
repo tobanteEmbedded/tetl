@@ -31,8 +31,11 @@ jobs:
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug
 
-      - name: Run tests -- Debug
-        run: cd cmake-build-debug; ctest; cd -
+      - name: Run main tests -- Debug
+        run: ./cmake-build-debug/tests/etl-tests
+      
+      - name: Run all tests -- Debug
+        run: cd cmake-build-debug; ctest -VV; cd -
 
       - name: CMake configure -- Release
         run: cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -D TETL_BUILD_WERROR=ON
@@ -40,5 +43,8 @@ jobs:
       - name: CMake build -- Release
         run: cmake --build cmake-build-release
 
+      - name: Run main tests -- Release
+        run: ./cmake-build-release/tests/etl-tests
+
       - name: Run tests -- Release
-        run: cd cmake-build-release; ctest; cd -
+        run: cd cmake-build-release; ctest -VV; cd -
