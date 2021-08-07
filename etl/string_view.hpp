@@ -34,6 +34,7 @@
 
 #include "etl/detail/container_utils.hpp"
 #include "etl/detail/sfinae.hpp"
+#include "etl/detail/string_algorithm.hpp"
 #include "etl/detail/string_char_traits.hpp"
 
 namespace etl {
@@ -575,6 +576,78 @@ struct basic_string_view {
         -> size_type
     {
         return find_first_of(basic_string_view(s), pos);
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        basic_string_view v, size_type pos = 0) const noexcept -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = v.begin();
+        auto const* sl = v.end();
+        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
+               + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        CharType c, size_type pos = 0) const noexcept -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = &c;
+        auto const* sl = &c + 1;
+        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
+               + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        CharType const* s, size_type pos, size_type count) const -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = s;
+        auto const* sl = next(s, count);
+        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
+               + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        CharType const* s, size_type pos = 0) const -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = s;
+        auto const* sl = next(s, strlen(s));
+        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
+               + pos;
     }
 
     /// \brief Finds the last character equal to one of characters in the given

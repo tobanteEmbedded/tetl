@@ -498,6 +498,14 @@ TEST_CASE("string_view: find_first_of", "[string_view]")
     }
 }
 
+TEST_CASE("string_view: find_first_not_of", "[string_view]")
+{
+    REQUIRE("BCDEF"_sv.find_first_not_of("ABC") == 2);
+    REQUIRE("BCDEF"_sv.find_first_not_of("ABC", 4) == 4);
+    REQUIRE("BCDEF"_sv.find_first_not_of('B') == 1);
+    REQUIRE("BCDEF"_sv.find_first_not_of('D', 2) == 3);
+}
+
 TEST_CASE("string_view: find_last_of", "[string_view]")
 {
     WHEN("rhs == string_view")

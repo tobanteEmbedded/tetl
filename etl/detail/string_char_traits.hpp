@@ -24,6 +24,8 @@
 #ifndef TETL_STRING_CHAR_TRAITS_HPP
 #define TETL_STRING_CHAR_TRAITS_HPP
 
+#include "etl/version.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
 #include "etl/ios.hpp"
