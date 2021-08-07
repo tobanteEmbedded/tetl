@@ -329,3 +329,9 @@ TEST_CASE("memory: destroy_n", "[memory]")
 
     REQUIRE(counter == 4);
 }
+
+TEST_CASE("memory: assume_aligned", "[memory]")
+{
+    auto foo = 1;
+    REQUIRE(etl::assume_aligned<alignof(int), int>(&foo) == &foo);
+}

@@ -24,6 +24,22 @@
 #ifndef TETL_INTRINSICS_HPP
 #define TETL_INTRINSICS_HPP
 
+#ifndef __has_feature
+#define __has_feature(x) 0
+#endif
+
+#ifndef __has_extension
+#define __has_extension(x) 0
+#endif
+
+#ifndef __has_attribute
+#define __has_attribute(x) 0
+#endif
+
+#ifndef __has_builtin
+#define __has_builtin(x) 0
+#endif
+
 #if defined(__clang__)
 #define TETL_CLANG 1
 #elif defined(__GNUC__)
@@ -55,6 +71,14 @@
 #if not defined(TETL_BUILTIN_VA_LIST)
 #define TETL_BUILTIN_VA_LIST __builtin_va_list
 #endif // TETL_BUILTIN_VA_LIST
+
+#if not defined(TETL_BUILTIN_ASSUME_ALIGNED)
+#if __has_builtin(__builtin_assume_aligned)
+#define TETL_BUILTIN_ASSUME_ALIGNED(ptr, N) __builtin_assume_aligned(ptr, N)
+#else
+#define TETL_BUILTIN_ASSUME_ALIGNED(ptr, N) ptr
+#endif
+#endif // TETL_BUILTIN_ASSUME_ALIGNED
 
 #if not defined(TETL_HAS_VIRTUAL_DESTRUCTOR)
 #define TETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)

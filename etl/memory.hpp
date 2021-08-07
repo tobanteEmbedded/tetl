@@ -633,10 +633,11 @@ private:
 /// the buffer is too small, the function does nothing and returns nullptr.
 ///
 /// The behavior is undefined if alignment is not a power of two.
-[[nodiscard]] inline auto align(
-    size_t alignment, size_t size, void*& ptr, size_t& space) noexcept -> void*
+[[nodiscard]] inline auto align(::etl::size_t alignment, ::etl::size_t size,
+    void*& ptr, ::etl::size_t& space) noexcept -> void*
 {
-    auto off = static_cast<size_t>(bit_cast<uintptr_t>(ptr) & (alignment - 1));
+    auto off = static_cast<::etl::size_t>(
+        bit_cast<::etl::uintptr_t>(ptr) & (alignment - 1));
     if (off != 0) { off = alignment - off; }
     if (space < off || space - off < size) { return nullptr; }
 
@@ -645,5 +646,67 @@ private:
     return ptr;
 }
 
+/// \brief Informs the implementation that the object ptr points to is aligned
+/// to at least N. The implementation may use this information to generate more
+/// efficient code, but it might only make this assumption if the object is
+/// accessed via the return value of assume_aligned.
+///
+/// \details The program is ill-formed if N is not a power of 2. The behavior is
+/// undefined if ptr does not point to an object of type T (ignoring
+/// cv-qualification at every level), or if the object's alignment is not at
+/// least N.
+///
+/// https://en.cppreference.com/w/cpp/memory/assume_aligned
+///
+template <::etl::size_t N, typename T>
+[[nodiscard]] constexpr auto assume_aligned(T* ptr) -> T*
+{
+    static_assert(detail::is_power2(N));
+    static_assert(alignof(T) <= N);
+
+    if (::etl::is_constant_evaluated()) {
+        return ptr;
+    } else {
+        return static_cast<T*>(TETL_BUILTIN_ASSUME_ALIGNED(ptr, N));
+    }
+}
+
+// template <typename InputIt, typename NoThrowForwardIt>
+// auto uninitialized_copy(InputIt first, InputIt last, NoThrowForwardIt
+// d_first)
+//    -> NoThrowForwardIt
+//{
+//    using T = typename ::etl::iterator_traits<NoThrowForwardIt>::value_type;
+//    NoThrowForwardIt current = d_first;
+//    // try {
+//    for (; first != last; ++first, (void)++current) {
+//        ::new (const_cast<void*>(static_cast<const volatile void*>(
+//            ::etl::addressof(*current)))) T(*first);
+//    }
+//    return current;
+//    //} catch (...) {
+//    //    for (; d_first != current; ++d_first) { d_first->~T(); }
+//    //    throw;
+//    //}
+//}
+//
+// template <typename InputIt, typename Size, typename NoThrowForwardIt>
+// auto uninitialized_copy_n(InputIt first, Size count, NoThrowForwardIt
+// d_first)
+//    -> NoThrowForwardIt
+//{
+//    using T = typename ::etl::iterator_traits<NoThrowForwardIt>::value_type;
+//    NoThrowForwardIt current = d_first;
+//    // try {
+//    for (; count > 0; ++first, (void)++current, --count) {
+//        ::new (const_cast<void*>(static_cast<const volatile void*>(
+//            ::etl::addressof(*current)))) T(*first);
+//    }
+//    //} catch (...) {
+//    //    for (; d_first != current; ++d_first) { d_first->~T(); }
+//    //    throw;
+//    //}
+//    return current;
+//}
 } // namespace etl
 #endif // TETL_MEMORY_HPP
