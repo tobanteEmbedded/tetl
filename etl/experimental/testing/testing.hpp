@@ -28,6 +28,7 @@
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
+#include "etl/string_view.hpp"
 
 #include <stdio.h>
 
@@ -35,15 +36,21 @@ namespace etl::test {
 
 struct context;
 
-using tc_function_t = void (*)(context&);
+using test_case_function_t = void (*)(context&);
 
-struct tc_spec {
-    char const* name { nullptr };
-    char const* tags { nullptr };
+struct name_and_tags {
+    name_and_tags(::etl::string_view const& n = ::etl::string_view(),
+        ::etl::string_view const& t           = ::etl::string_view()) noexcept
+        : name(n), tags(t)
+    {
+    }
+    ::etl::string_view name;
+    ::etl::string_view tags;
 };
 
-struct test_case : tc_spec {
-    tc_function_t func;
+struct test_case {
+    name_and_tags info;
+    test_case_function_t func;
 };
 
 struct assertion {
@@ -76,7 +83,8 @@ struct session {
 
     [[nodiscard]] auto run_all() -> int;
 
-    constexpr auto add_test(tc_spec const& spec, tc_function_t func) -> void;
+    constexpr auto add_test(
+        name_and_tags const& spec, test_case_function_t func) -> void;
 
 private:
     char const* name_ = nullptr;
@@ -92,7 +100,7 @@ struct context {
         ::etl::ignore_unused(session_);
     }
 
-    auto current_test(tc_spec* tc) -> void;
+    auto current_test(test_case* tc) -> void;
 
     auto pass_assertion(assertion const& payload) -> void;
     auto fail_assertion(assertion const& payload, bool terminate) -> void;
@@ -103,7 +111,7 @@ struct context {
 
 private:
     session& session_;
-    tc_spec* current_ { nullptr };
+    test_case* current_ { nullptr };
     bool shouldTerminate_ { false };
     session_stats stats_ {};
 };
@@ -130,13 +138,13 @@ inline constexpr auto session::end() -> test_case*
     return ::etl::next(first_, count_);
 }
 
-inline constexpr auto session::add_test(tc_spec const& spec, tc_function_t func)
-    -> void
+inline constexpr auto session::add_test(
+    name_and_tags const& spec, test_case_function_t func) -> void
 {
     if (first_ + count_ != last_) {
-        first_[count_].name   = spec.name;
-        first_[count_].tags   = spec.tags;
-        first_[count_++].func = func;
+        first_[count_].info.name = spec.name;
+        first_[count_].info.tags = spec.tags;
+        first_[count_++].func    = func;
     }
 }
 
@@ -147,20 +155,20 @@ inline auto session::run_all() -> int
 
     for (auto& tc : (*this)) {
         if (ctx.terminate()) {
-            ::printf("%-10s %-10s\n", "Skip:", tc.name);
+            ::printf("%-10s %-10s\n", "Skip:", tc.info.name.data());
             continue;
         }
 
         ctx.current_test(&tc);
-        ::printf("%-10s %-10s\n", "Run:", tc.name);
+        ::printf("%-10s %-10s\n", "Run:", tc.info.name.data());
         tc.func(ctx);
 
         if (ctx.terminate()) {
-            ::printf("%-10s %-10s\n", "Fail:", tc.name);
+            ::printf("%-10s %-10s\n", "Fail:", tc.info.name.data());
             continue;
         }
 
-        ::printf("%-10s %-10s\n", "Pass:", tc.name);
+        ::printf("%-10s %-10s\n", "Pass:", tc.info.name.data());
     }
 
     auto const& stats = ctx.stats();
@@ -173,7 +181,7 @@ inline auto session::run_all() -> int
     return 0;
 }
 
-inline auto context::current_test(tc_spec* tc) -> void
+inline auto context::current_test(test_case* tc) -> void
 {
     ++stats_.num_test_cases;
     current_ = tc;
@@ -214,10 +222,10 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
         return g_session.run_all();                                            \
     }()
 
-#define TEST_CASE_IMPL(n, t, test_case_type)                                   \
+#define INTERNAL_TEST_CASE2(test_case_type, ...)                               \
     struct test_case_type {                                                    \
         explicit test_case_type(                                               \
-            ::etl::test::session& s, ::etl::test::tc_spec const& sp)           \
+            ::etl::test::session& s, ::etl::test::name_and_tags const& sp)     \
         {                                                                      \
             s.add_test(sp, [](::etl::test::context& ctx) { run(ctx); });       \
         }                                                                      \
@@ -226,15 +234,15 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
                                                                                \
     static auto const TETL_ANONYMOUS_VAR(tc) = test_case_type {                \
         g_session,                                                             \
-        ::etl::test::tc_spec {                                                 \
-            /*.name = */ n,                                                    \
-            /* .tags = */ t,                                                   \
-        },                                                                     \
+        ::etl::test::name_and_tags { __VA_ARGS__ },                            \
     };                                                                         \
                                                                                \
     auto test_case_type::run(::etl::test::context& session_context)->void
 
-#define TEST_CASE(name, tags) TEST_CASE_IMPL(name, tags, TETL_ANONYMOUS_VAR(tc))
+#define INTERNAL_TEST_CASE(...)                                                \
+    INTERNAL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
+
+#define TEST_CASE(...) INTERNAL_TEST_CASE(__VA_ARGS__)
 
 #define CHECK_IMPL(expr, terminate)                                            \
     if (!!(expr)) {                                                            \
