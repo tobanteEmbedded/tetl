@@ -957,9 +957,11 @@ public:
     /// iterators and references may be invalidated.
     constexpr auto swap(basic_static_string& other) noexcept -> void
     {
-        auto temp(etl::move(other));
-        other = etl::move(*this);
-        *this = etl::move(temp);
+        using etl::move;
+
+        auto temp(move(other));
+        other = move(*this);
+        *this = move(temp);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -1149,6 +1151,17 @@ public:
         value_type ch, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(etl::addressof(ch), pos, 1);
+    }
+
+    /// \brief Finds the first character equal to one of the characters in the
+    /// given character sequence. The search considers only the interval [pos,
+    /// size()). If the character is not present in the interval, npos will be
+    /// returned.
+    [[nodiscard]] constexpr auto find_first_of(
+        basic_string_view<value_type, traits_type> str,
+        size_type pos = 0) const noexcept -> size_type
+    {
+        return find_first_of(str.data(), pos, str.size());
     }
 
     /// \brief This is a special value equal to the maximum value representable

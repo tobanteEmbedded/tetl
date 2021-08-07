@@ -1681,6 +1681,35 @@ TEMPLATE_TEST_CASE("string: static_string::find_first_of(char const*)",
         CHECK(str.find_first_of("cd") == 2);
     }
 }
+TEMPLATE_TEST_CASE("string: static_string::find_first_of(string_view)",
+    "[string]", etl::static_string<12>, etl::static_string<32>)
+{
+    using namespace etl::string_view_literals;
+
+    SECTION("empty string")
+    {
+        auto str = TestType();
+        CHECK(str.find_first_of(""_sv, 0) == TestType::npos);
+        CHECK(str.find_first_of(""_sv, 1) == TestType::npos);
+        CHECK(str.find_first_of(""_sv) == TestType::npos);
+    }
+
+    SECTION("not found")
+    {
+        auto str = TestType { "def" };
+        CHECK(str.find_first_of("abc"_sv, 0) == TestType::npos);
+        CHECK(str.find_first_of("abc"_sv, 1) == TestType::npos);
+        CHECK(str.find_first_of("abc"_sv) == TestType::npos);
+    }
+
+    SECTION("found")
+    {
+        auto str = TestType("abcd");
+        CHECK(str.find_first_of("abc"_sv, 0) == 0);
+        CHECK(str.find_first_of("bc"_sv, 1) == 1);
+        CHECK(str.find_first_of("cd"_sv) == 2);
+    }
+}
 
 TEMPLATE_TEST_CASE("string: static_string::find_first_of(char)", "[string]",
     etl::static_string<12>, etl::static_string<32>)
