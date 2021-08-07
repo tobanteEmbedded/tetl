@@ -54,6 +54,17 @@ template <typename CharT, typename SizeT>
     return static_cast<SizeT>(-1);
 }
 
+template <typename CharT>
+auto replace_impl(CharT* f, CharT* l, CharT ch) -> void
+{
+    for (; f != l; ++f) { *f = ch; }
+}
+
+template <typename CharT>
+auto replace_impl(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
+{
+    for (; (f != l) && (sf != sl); ++f, ++sf) { *f = *sf; }
+}
 } // namespace etl
 
 #endif // TETL_DETAIL_STRING_ALGORITHM_HPP

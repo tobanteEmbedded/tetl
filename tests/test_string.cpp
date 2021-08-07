@@ -1315,6 +1315,18 @@ TEMPLATE_TEST_CASE("string: static_string::ends_with", "[string]",
     }
 }
 
+TEMPLATE_TEST_CASE("string: static_string::replace", "[string]",
+    etl::static_string<12>, etl::static_string<32>)
+{
+    using namespace etl::literals;
+    using string_t = TestType;
+
+    auto s = string_t("0123456");
+    CHECK(s.replace(0, 2, string_t("xx")) == "xx23456"_sv);
+    CHECK(s.replace(2, 1, string_t("xx")) == "xxx3456"_sv);
+    CHECK(s.replace(begin(s) + 3, begin(s) + 4, string_t("x")) == "xxxx456"_sv);
+}
+
 TEMPLATE_TEST_CASE("string: static_string::substr", "[string]",
     etl::static_string<12>, etl::static_string<32>)
 {

@@ -902,6 +902,112 @@ public:
             .ends_with(str);
     }
 
+    /// \brief Replaces the part of the string indicated [pos, pos + count) with
+    /// a new string.
+    constexpr auto replace(size_type pos, size_type count,
+        const basic_static_string& str) -> basic_static_string&
+    {
+        TETL_ASSERT(pos < size());
+        TETL_ASSERT(pos + count < size());
+
+        auto* f = data() + pos;
+        auto* l = data() + pos + count;
+        detail::replace_impl(f, l, str.begin(), str.end());
+        return *this;
+    }
+
+    /// \brief Replaces the part of the string indicated [first, last) with a
+    /// new string.
+    constexpr auto replace(const_iterator first, const_iterator last,
+        basic_static_string const& str) -> basic_static_string&
+    {
+        auto* f = const_cast<iterator>(first);
+        auto* l = const_cast<iterator>(last);
+        detail::replace_impl(f, l, str.begin(), str.end());
+        return *this;
+    }
+
+    constexpr auto replace(size_type pos, size_type count,
+        basic_static_string const& str, size_type pos2, size_type count2 = npos)
+        -> basic_static_string&
+    {
+        TETL_ASSERT(pos < size());
+        TETL_ASSERT(pos + count < size());
+
+        TETL_ASSERT(pos2 < str.size());
+        TETL_ASSERT(pos2 + count2 < str.size());
+
+        auto* f        = data() + min(pos, size());
+        auto* l        = data() + min(pos + count, size());
+        auto const* sf = next(begin(str), min(pos2, str.size()));
+        auto const* sl = next(begin(str), min(pos2 + count2, str.size()));
+        detail::replace_impl(f, l, sf, sl);
+        return *this;
+    }
+
+    constexpr auto replace(size_type pos, size_type count, CharT const* str,
+        size_type count2) -> basic_static_string&
+    {
+        TETL_ASSERT(pos < size());
+        TETL_ASSERT(pos + count < size());
+
+        auto* f = next(data(), min(pos, size()));
+        auto* l = next(data(), min(pos + count, size()));
+        detail::replace_impl(f, l, str, next(str, count2));
+        return *this;
+    }
+
+    constexpr auto replace(const_iterator first, const_iterator last,
+        CharT const* str, size_type count2) -> basic_static_string&
+    {
+        auto* f = const_cast<iterator>(first);
+        auto* l = const_cast<iterator>(last);
+        detail::replace_impl(f, l, str, next(str, count2));
+        return *this;
+    }
+
+    constexpr auto replace(size_type pos, size_type count, CharT const* str)
+        -> basic_static_string&
+    {
+        TETL_ASSERT(pos < size());
+        TETL_ASSERT(pos + count < size());
+
+        auto* f = next(data(), min(pos, size()));
+        auto* l = next(data(), min(pos + count, size()));
+        detail::replace_impl(f, l, str, next(str, strlen(str)));
+        return *this;
+    }
+
+    constexpr auto replace(const_iterator first, const_iterator last,
+        CharT const* str) -> basic_static_string&
+    {
+        auto* f = const_cast<iterator>(first);
+        auto* l = const_cast<iterator>(last);
+        detail::replace_impl(f, l, str, next(str, strlen(str)));
+        return *this;
+    }
+
+    // constexpr auto replace(size_type pos, size_type count, size_type count2,
+    //    CharT ch) -> basic_static_string&
+    //{
+    //    TETL_ASSERT(pos < size());
+    //    TETL_ASSERT(pos + count < size());
+    //
+    //    auto* f = next(data(), min(pos, size()));
+    //    auto* l = next(data(), min(pos + count, size()));
+    //    detail::replace_impl(f, l, ch);
+    //    return *this;
+    //}
+
+    constexpr auto replace(const_iterator first, const_iterator last,
+        size_type count2, CharT ch) -> basic_static_string&
+    {
+        auto* f = const_cast<iterator>(first);
+        auto* l = min(const_cast<iterator>(last), f + count2);
+        detail::replace_impl(f, l, ch);
+        return *this;
+    }
+
     /// \brief Returns a substring [pos, pos+count). If the requested substring
     /// extends past the end of the string, or if count == npos, the returned
     /// substring is [pos, size()).
