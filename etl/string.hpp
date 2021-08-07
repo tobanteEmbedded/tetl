@@ -30,6 +30,7 @@
 #include "etl/warning.hpp"
 
 #include "etl/detail/container_utils.hpp"
+#include "etl/detail/string_algorithm.hpp"
 #include "etl/detail/string_char_traits.hpp"
 #include "etl/detail/string_conversion.hpp"
 
@@ -1162,6 +1163,83 @@ public:
         size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(str.data(), pos, str.size());
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        using detail::find_first_not_of;
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = str.begin();
+        auto const* sl = str.end();
+        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        value_type c, size_type pos = 0) const noexcept -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        using detail::find_first_not_of;
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = &c;
+        auto const* sl = &c + 1;
+        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        value_type const* s, size_type pos, size_type count) const -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        using detail::find_first_not_of;
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = s;
+        auto const* sl = next(s, count);
+        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+    }
+
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        value_type const* s, size_type pos = 0) const -> size_type
+    {
+        TETL_ASSERT(pos < size());
+
+        using detail::find_first_not_of;
+
+        auto const* f  = next(begin(), pos);
+        auto const* l  = end();
+        auto const* sf = s;
+        auto const* sl = next(s, strlen(s));
+        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
     }
 
     /// \brief This is a special value equal to the maximum value representable

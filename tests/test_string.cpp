@@ -1739,6 +1739,17 @@ TEMPLATE_TEST_CASE("string: static_string::find_first_of(char)", "[string]",
     }
 }
 
+TEMPLATE_TEST_CASE("string: static_string::find_first_not_of", "[string]",
+    etl::static_string<12>, etl::static_string<32>)
+{
+    auto str = TestType { "BCDEF" };
+
+    REQUIRE(str.find_first_not_of("ABC") == 2);
+    REQUIRE(str.find_first_not_of("ABC", 4) == 4);
+    REQUIRE(str.find_first_not_of('B') == 1);
+    REQUIRE(str.find_first_not_of('D', 2) == 3);
+}
+
 TEMPLATE_TEST_CASE("string: static_string::operator==/!=", "[string]",
     etl::static_string<12>, etl::static_string<32>)
 {
