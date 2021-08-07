@@ -46,7 +46,7 @@ struct test_case : tc_spec {
     tc_function_t func;
 };
 
-struct assertion_payload {
+struct assertion {
     char const* expression { nullptr };
     char const* file { nullptr };
     char const* function { nullptr };
@@ -93,9 +93,9 @@ struct context {
     }
 
     auto current_test(tc_spec* tc) -> void;
-    auto pass_assertion(assertion_payload const& payload) -> void;
-    auto fail_assertion(assertion_payload const& payload, bool terminate)
-        -> void;
+
+    auto pass_assertion(assertion const& payload) -> void;
+    auto fail_assertion(assertion const& payload, bool terminate) -> void;
 
     auto terminate() -> bool;
 
@@ -143,22 +143,29 @@ inline constexpr auto session::add_test(tc_spec const& spec, tc_function_t func)
 inline auto session::run_all() -> int
 {
     auto ctx = context { *this };
-    ::printf("%-10s %-10s\n", "Running:", name_);
+    ::printf("%-10s %-10s\n", "Run:", name_);
 
     for (auto& tc : (*this)) {
-        ctx.current_test(&tc);
-        ::printf("%-10s %-10s\n", "Running:", tc.name);
-        tc.func(ctx);
         if (ctx.terminate()) {
-            ::printf("%-10s %-10s - TERMINATE\n", "Failed:", tc.name);
-            return 1;
+            ::printf("%-10s %-10s\n", "Skip:", tc.name);
+            continue;
         }
-        ::printf("%-10s %-10s\n", "Finished:", tc.name);
+
+        ctx.current_test(&tc);
+        ::printf("%-10s %-10s\n", "Run:", tc.name);
+        tc.func(ctx);
+
+        if (ctx.terminate()) {
+            ::printf("%-10s %-10s\n", "Fail:", tc.name);
+            continue;
+        }
+
+        ::printf("%-10s %-10s\n", "Pass:", tc.name);
     }
 
     auto const& stats = ctx.stats();
     auto const* txt   = "%-10s %-10s - tests: %d/%d assertion: %d/%d\n";
-    ::printf(txt, "Finished:", name_,
+    ::printf(txt, "Pass:", name_,
         stats.num_test_cases - stats.num_test_cases_failed,
         stats.num_test_cases,
         stats.num_assertions - stats.num_assertions_failed,
@@ -172,18 +179,20 @@ inline auto context::current_test(tc_spec* tc) -> void
     current_ = tc;
 }
 
-inline auto context::pass_assertion(assertion_payload const& data) -> void
+inline auto context::pass_assertion(assertion const& data) -> void
 {
     ::etl::ignore_unused(this, data);
     ++stats_.num_assertions;
 }
-inline auto context::fail_assertion(
-    assertion_payload const& data, bool terminate) -> void
+inline auto context::fail_assertion(assertion const& data, bool terminate)
+    -> void
 {
-    ::printf("Assertion: %s:%d - %s\n", data.file, data.line, data.expression);
+    constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
+    ::printf(fmt, "Fail:", data.file, data.line, data.expression);
     ++stats_.num_assertions_failed;
     shouldTerminate_ = terminate;
 }
+
 inline auto context::terminate() -> bool { return shouldTerminate_; }
 
 } // namespace etl::test
@@ -191,7 +200,7 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
 #define TETL_STRINGIFY(str) #str
 
 #define TEST_DETAIL_PAYLOAD(exp)                                               \
-    ::etl::test::assertion_payload { exp, __FILE__, TETL_FUNC_SIG, __LINE__ }
+    ::etl::test::assertion { exp, __FILE__, TETL_FUNC_SIG, __LINE__ }
 
 #define TEST_SESSION(name, size)                                               \
     static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
@@ -199,7 +208,11 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
 
 #define TEST_FILE(size) TEST_SESSION(__FILE__, size);
 
-#define TEST_SESSION_RUN(argc, argv) g_session.run_all()
+#define TEST_SESSION_RUN(argc, argv)                                           \
+    [argc, argv] {                                                             \
+        ::etl::ignore_unused(argc, argv);                                      \
+        return g_session.run_all();                                            \
+    }()
 
 #define TEST_CASE_IMPL(n, t, test_case_type)                                   \
     struct test_case_type {                                                    \
