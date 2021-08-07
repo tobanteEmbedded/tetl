@@ -30,9 +30,6 @@
 #include "etl/type_traits.hpp"
 
 namespace etl {
-template <typename T>
-struct is_error_code_enum : public false_type {
-};
 
 template <typename T>
 struct is_error_condition_enum : public false_type {
