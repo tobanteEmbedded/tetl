@@ -26,14 +26,14 @@
 
 #include "etl/version.hpp"
 
+#include "etl/cstddef.hpp"
+#include "etl/warning.hpp"
+
 // Some parts of the new header are declared in the global namespace. To avoid
 // ODR violations, we include the header <new> if it is available.
 #if __has_include(<new>)
 #include <new>
 #else
-
-#include "etl/cstddef.hpp"
-#include "etl/warning.hpp"
 
 /// \brief Called by the standard single-object placement new expression. The
 /// standard library implementation performs no action and returns ptr
@@ -119,7 +119,7 @@ constexpr auto hardware_destructive_interference_size = TETL_CACHELINE_SIZE;
 /// whose alignment requirement is greater than the default, pass that alignment
 /// requirement as an argument of type align_val_t to the selected
 /// allocation/deallocation function.
-enum struct align_val_t : size_t {};
+enum struct align_val_t : etl::size_t {};
 
 /// \brief Tag type used to identify the destroying delete form of operator
 /// delete.
