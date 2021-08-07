@@ -112,7 +112,7 @@ template <typename T>
     -> enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, to_chars_result>
 {
     auto const len = static_cast<::etl::size_t>(::etl::distance(f, l));
-    auto const res = detail::int_to_ascii<int>(val, f, base, len);
+    auto const res = detail::int_to_ascii<T>(val, f, base, len);
     if (res.error == detail::int_to_ascii_error::none) {
         return to_chars_result { res.end, {} };
     }

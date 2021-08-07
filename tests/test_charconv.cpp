@@ -21,8 +21,11 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 #include "etl/charconv.hpp"
+
+#include "etl/array.hpp"
 #include "etl/iterator.hpp"
 #include "etl/string.hpp"
+#include "etl/string_view.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
 
@@ -122,6 +125,46 @@ TEMPLATE_TEST_CASE("charconv: from_chars<Integer>", "[charconv]", char,
         if constexpr (sizeof(TestType) > 1) {
             test("-1000", -1000);
             test("-9999", -9999);
+        }
+    }
+}
+
+TEMPLATE_TEST_CASE("charconv: to_chars<Integer>", "[charconv]", char,
+    unsigned char, signed char, unsigned short, short, unsigned int, int,
+    unsigned long, long, unsigned long long, long long)
+{
+    using string_t = etl::static_string<16>;
+
+    auto test = [](TestType tc, string_t expected) -> void {
+        auto buf          = etl::array<char, 16> {};
+        auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
+        CHECK(result.ptr != nullptr);
+        CHECK(etl::string_view { buf.data() } == expected);
+    };
+
+    test(1, "1");
+    test(2, "2");
+    test(10, "10");
+    test(42, "42");
+    test(99, "99");
+    test(126, "126");
+
+    if constexpr (sizeof(TestType) > 1) {
+        test(1000, "1000");
+        test(9999, "9999");
+    }
+
+    if constexpr (etl::is_signed_v<TestType>) {
+        test(-1, "-1");
+        test(-2, "-2");
+        test(-10, "-10");
+        test(-42, "-42");
+        test(-99, "-99");
+        test(-126, "-126");
+
+        if constexpr (sizeof(TestType) > 1) {
+            test(-1000, "-1000");
+            test(-9999, "-9999");
         }
     }
 }
