@@ -362,7 +362,7 @@ struct pair {
 
     /// \brief Initializes first with etl::forward<U1>(x) and second with
     /// etl::forward<U2>(y).
-    template <typename U1, typename U2,
+    template <typename U1 = T1, typename U2 = T2,
         TETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
                 is_constructible_v<U2&&, second_type>)>
     constexpr pair(U1&& x, U2&& y)
