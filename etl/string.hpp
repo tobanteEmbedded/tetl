@@ -1223,23 +1223,115 @@ public:
         return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
     }
 
-    /// \brief Finds the first character not equal to any of the characters in
-    /// the given character sequence.
-    ///
-    /// \return Position of the first character not equal to any of the
-    /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(
+    /// \brief Finds the last character equal to one of characters in the given
+    /// character sequence. The exact search algorithm is not specified. The
+    /// search considers only the interval [0, pos]. If the character is not
+    /// present in the interval, npos will be returned.
+    [[nodiscard]] constexpr auto find_last_of(basic_static_string const& str,
+        size_type pos = 0) const noexcept -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_of(str, pos);
+    }
+
+    /// \brief Finds the last character equal to one of characters in the given
+    /// character sequence. The exact search algorithm is not specified. The
+    /// search considers only the interval [0, pos]. If the character is not
+    /// present in the interval, npos will be returned.
+    [[nodiscard]] constexpr auto find_last_of(
+        value_type c, size_type pos = 0) const noexcept -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_of(c, pos);
+    }
+
+    /// \brief Finds the last character equal to one of characters in the given
+    /// character sequence. The exact search algorithm is not specified. The
+    /// search considers only the interval [0, pos]. If the character is not
+    /// present in the interval, npos will be returned.
+    [[nodiscard]] constexpr auto find_last_of(
+        value_type const* s, size_type pos, size_type count) const -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_of(s, pos, count);
+    }
+
+    /// \brief Finds the last character equal to one of characters in the given
+    /// character sequence. The exact search algorithm is not specified. The
+    /// search considers only the interval [0, pos]. If the character is not
+    /// present in the interval, npos will be returned.
+    [[nodiscard]] constexpr auto find_last_of(
         value_type const* s, size_type pos = 0) const -> size_type
     {
-        TETL_ASSERT(pos < size());
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_of(s, pos);
+    }
 
-        using detail::find_first_not_of;
+    /// \brief Finds the last character equal to none of the characters in the
+    /// given character sequence. The search considers only the interval [0,
+    /// pos]. If the character is not present in the interval, npos will be
+    /// returned.
+    [[nodiscard]] constexpr auto find_last_not_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept
+        -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(str, pos);
+    }
 
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = s;
-        auto const* sl = next(s, strlen(s));
-        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+    /// \brief Finds the last character equal to none of the characters in the
+    /// given character sequence. The search considers only the interval [0,
+    /// pos]. If the character is not present in the interval, npos will be
+    /// returned.
+    [[nodiscard]] constexpr auto find_last_not_of(
+        value_type c, size_type pos = 0) const noexcept -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(c, pos);
+    }
+
+    /// \brief Finds the last character equal to none of the characters in the
+    /// given character sequence. The search considers only the interval [0,
+    /// pos]. If the character is not present in the interval, npos will be
+    /// returned.
+    [[nodiscard]] constexpr auto find_last_not_of(
+        value_type const* s, size_type pos, size_type count) const -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(s, pos, count);
+    }
+
+    /// \brief Finds the last character equal to none of the characters in the
+    /// given character sequence. The search considers only the interval [0,
+    /// pos]. If the character is not present in the interval, npos will be
+    /// returned.
+    [[nodiscard]] constexpr auto find_last_not_of(
+        value_type const* s, size_type pos = 0) const -> size_type
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(s, pos);
+    }
+
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(
+        etl::basic_string_view<CharT, Traits> sv) const noexcept -> bool
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(sv);
+    }
+
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(CharT c) const noexcept -> bool
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(c);
+    }
+
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(CharT const* s) const -> bool
+    {
+        auto view = basic_string_view<value_type> { *this };
+        return view.find_last_not_of(s);
     }
 
     /// \brief This is a special value equal to the maximum value representable

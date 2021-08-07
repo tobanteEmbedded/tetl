@@ -767,6 +767,25 @@ struct basic_string_view {
         return find_last_not_of(basic_string_view(s), pos);
     }
 
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(basic_string_view sv) const noexcept
+        -> bool
+    {
+        return find(sv) != npos;
+    }
+
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(CharType c) const noexcept -> bool
+    {
+        return find(c) != npos;
+    }
+
+    /// \brief Checks if the string contains the given substring.
+    [[nodiscard]] constexpr auto contains(CharType const* s) const -> bool
+    {
+        return find(s) != npos;
+    }
+
     /// \brief This is a special value equal to the maximum value
     /// representable by the type size_type.
     ///

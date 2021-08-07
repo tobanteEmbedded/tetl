@@ -53,6 +53,7 @@ template <typename CharT, typename SizeT>
 
     return static_cast<SizeT>(-1);
 }
+
 } // namespace etl
 
 #endif // TETL_DETAIL_STRING_ALGORITHM_HPP

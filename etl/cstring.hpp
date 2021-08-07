@@ -344,6 +344,38 @@ namespace detail {
     return detail::strpbrk_impl<char>(dest, breakset);
 }
 
+namespace detail {
+    template <typename CharT>
+    [[nodiscard]] constexpr auto strstr_impl(
+        CharT* haystack, CharT* needle) noexcept -> CharT*
+    {
+        while (*haystack != '\0') {
+            if ((*haystack == *needle) && (strcmp(haystack, needle) == 0)) {
+                return haystack;
+            }
+            haystack++;
+        }
+        return nullptr;
+    }
+}
+/// \brief Finds the first occurrence of the byte string needle in the byte
+/// string pointed to by haystack. The terminating null characters are not
+/// compared.
+[[nodiscard]] constexpr auto strstr(char* haystack, char* needle) noexcept
+    -> char*
+{
+    return detail::strstr_impl<char>(haystack, needle);
+}
+
+/// \brief Finds the first occurrence of the byte string needle in the byte
+/// string pointed to by haystack. The terminating null characters are not
+/// compared.
+[[nodiscard]] constexpr auto strstr(
+    char const* haystack, char const* needle) noexcept -> char const*
+{
+    return detail::strstr_impl<char const>(haystack, needle);
+}
+
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may not overlap. If source and destination
 /// might overlap, memmove() must be used instead.
