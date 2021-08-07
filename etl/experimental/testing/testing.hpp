@@ -32,11 +32,17 @@
 
 #include <stdio.h>
 
+// The goal of this macro is to avoid evaluation of the arguments, but
+// still have the compiler warn on problems inside...
+#if !defined(TEST_DETAIL_IGNORE_BUT_WARN)
+#define TEST_DETAIL_IGNORE_BUT_WARN(...)
+#endif
+
 namespace etl::test {
 
 struct context;
 
-using test_case_function_t = void (*)(context&);
+using test_func_t = void (*)(context&);
 
 struct name_and_tags {
     name_and_tags(::etl::string_view const& n = ::etl::string_view(),
@@ -50,7 +56,7 @@ struct name_and_tags {
 
 struct test_case {
     name_and_tags info;
-    test_case_function_t func;
+    test_func_t func;
 };
 
 struct assertion {
@@ -58,6 +64,16 @@ struct assertion {
     char const* file { nullptr };
     char const* function { nullptr };
     ::etl::uint32_t line { 0 };
+};
+
+struct result_disposition {
+    enum flags {
+        normal = 0x01,
+
+        continue_on_failure = 0x02, // Failures test, but execution continues
+        false_test          = 0x04, // Prefix expression with !
+        suppress_fail = 0x08 // Failures are reported but do not fail the test
+    };
 };
 
 struct session_stats {
@@ -83,8 +99,8 @@ struct session {
 
     [[nodiscard]] auto run_all() -> int;
 
-    constexpr auto add_test(
-        name_and_tags const& spec, test_case_function_t func) -> void;
+    constexpr auto add_test(name_and_tags const& spec, test_func_t func)
+        -> void;
 
 private:
     char const* name_ = nullptr;
@@ -92,6 +108,13 @@ private:
     test_case* first_    = nullptr;
     test_case* last_     = nullptr;
     ::etl::size_t count_ = 0;
+};
+
+struct auto_reg {
+    explicit auto_reg(session& s, name_and_tags const& sp, test_func_t func)
+    {
+        s.add_test(sp, func);
+    }
 };
 
 struct context {
@@ -139,7 +162,7 @@ inline constexpr auto session::end() -> test_case*
 }
 
 inline constexpr auto session::add_test(
-    name_and_tags const& spec, test_case_function_t func) -> void
+    name_and_tags const& spec, test_func_t func) -> void
 {
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
@@ -222,29 +245,23 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
         return g_session.run_all();                                            \
     }()
 
-#define INTERNAL_TEST_CASE2(test_case_type, ...)                               \
-    struct test_case_type {                                                    \
-        explicit test_case_type(                                               \
-            ::etl::test::session& s, ::etl::test::name_and_tags const& sp)     \
-        {                                                                      \
-            s.add_test(sp, [](::etl::test::context& ctx) { run(ctx); });       \
-        }                                                                      \
-        static auto run(::etl::test::context&) -> void;                        \
-    };                                                                         \
-                                                                               \
-    static auto const TETL_ANONYMOUS_VAR(tc) = test_case_type {                \
-        g_session,                                                             \
-        ::etl::test::name_and_tags { __VA_ARGS__ },                            \
-    };                                                                         \
-                                                                               \
-    auto test_case_type::run(::etl::test::context& session_context)->void
+#define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
+    static auto tc(::etl::test::context& session_context)->void;               \
+    namespace {                                                                \
+        auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                  \
+            g_session,                                                         \
+            ::etl::test::name_and_tags { __VA_ARGS__ },                        \
+            tc,                                                                \
+        };                                                                     \
+    }                                                                          \
+    static auto tc(::etl::test::context& session_context)->void
 
-#define INTERNAL_TEST_CASE(...)                                                \
-    INTERNAL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
+#define TEST_DETAIL_TEST_CASE(...)                                             \
+    TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
 
-#define TEST_CASE(...) INTERNAL_TEST_CASE(__VA_ARGS__)
+#define TEST_CASE(...) TEST_DETAIL_TEST_CASE(__VA_ARGS__)
 
-#define CHECK_IMPL(expr, terminate)                                            \
+#define TEST_DETAIL_CHECK_IMPL(expr, terminate)                                \
     if (!!(expr)) {                                                            \
         session_context.pass_assertion(                                        \
             TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)));                        \
@@ -253,7 +270,7 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
             TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)), terminate);             \
     }
 
-#define CHECK_EQUAL_IMPL(a, b, terminate)                                      \
+#define TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, terminate)                          \
     if ((a) == (b)) {                                                          \
         session_context.pass_assertion(                                        \
             TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)));                      \
@@ -262,13 +279,33 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
             TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)), terminate);           \
     }
 
-#define CHECK(expr) CHECK_IMPL(expr, false);
-#define REQUIRE(expr) CHECK_IMPL(expr, true);
+// #define CHECK(expr) TEST_DETAIL_CHECK_IMPL(expr, false);
+// #define REQUIRE(expr) TEST_DETAIL_CHECK_IMPL(expr, true);
 
-#define CHECK_FALSE(expr) CHECK_IMPL(!(expr), false);
-#define REQUIRE_FALSE(expr) CHECK_IMPL(!(expr), true);
+#define CHECK_FALSE(expr) TEST_DETAIL_CHECK_IMPL(!(expr), false);
+#define REQUIRE_FALSE(expr) TEST_DETAIL_CHECK_IMPL(!(expr), true);
 
-#define CHECK_EQUAL(a, b) CHECK_EQUAL_IMPL(a, b, false)
-#define REQUIRE_EQUAL(a, b) CHECK_EQUAL_IMPL(a, b, true)
+#define CHECK_EQUAL(a, b) TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, false)
+#define REQUIRE_EQUAL(a, b) TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, true)
+
+#define TEST_DETAIL_ASSERT(resultDisposition, ...)                             \
+    do {                                                                       \
+        TEST_DETAIL_IGNORE_BUT_WARN(__VA_ARGS__);                              \
+        if (!static_cast<bool>(!!(__VA_ARGS__))) {                             \
+            session_context.fail_assertion(                                    \
+                TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(__VA_ARGS__)),              \
+                resultDisposition == ::etl::test::result_disposition::normal); \
+        } else {                                                               \
+            session_context.pass_assertion(                                    \
+                TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(__VA_ARGS__)));             \
+        }                                                                      \
+    } while (false)
+
+#define CHECK(...)                                                             \
+    TEST_DETAIL_ASSERT(                                                        \
+        ::etl::test::result_disposition::continue_on_failure, __VA_ARGS__)
+
+#define REQUIRE(...)                                                           \
+    TEST_DETAIL_ASSERT(::etl::test::result_disposition::normal, __VA_ARGS__)
 
 #endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
