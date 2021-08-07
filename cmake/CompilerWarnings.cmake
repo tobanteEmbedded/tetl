@@ -22,7 +22,7 @@ else ()
         -Wnarrowing
         -Wreorder
         -Wint-conversion
-        -Wsign-conversion
+        # -Wsign-conversion # Catch2 trigger warnings
         -Wsign-compare 
         -Wswitch-enum
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>: -Wshadow-all -Wshorten-64-to-32 -Wshift-sign-overflow -Wdocumentation >
