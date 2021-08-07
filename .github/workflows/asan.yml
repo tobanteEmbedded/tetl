@@ -33,4 +33,4 @@ jobs:
         run: cmake --build cmake-build-asan -- -j
 
       - name: run tests
-        run: cd cmake-build-asan; ctest; cd -
+        run: export CTEST_OUTPUT_ON_FAILURE=1; cd cmake-build-asan; ctest -VV; cd -

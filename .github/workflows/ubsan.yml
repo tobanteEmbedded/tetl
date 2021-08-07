@@ -33,4 +33,4 @@ jobs:
         run: cmake --build cmake-build-ubsan -- -j
 
       - name: run tests
-        run: cd cmake-build-ubsan; ctest; cd -
+        run: export CTEST_OUTPUT_ON_FAILURE=1; cd cmake-build-ubsan; ctest -VV; cd -
