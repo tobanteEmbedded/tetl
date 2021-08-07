@@ -226,50 +226,6 @@ TEST_CASE("functional: bit_not", "[functional]")
     REQUIRE(etl::bit_not<etl::uint8_t> {}(0b0000'0101) == 0b1111'1010);
 }
 
-TEMPLATE_TEST_CASE(
-    "functional: function - ctor", "[functional]", int, float, double)
-{
-    using function_t = etl::function<16, TestType(void)>;
-    auto func        = function_t { []() { return TestType { 1 }; } };
-    REQUIRE(func() == TestType { 1 });
-    REQUIRE(func() == TestType { 1 });
-}
-
-TEMPLATE_TEST_CASE(
-    "functional: function - ctor copy", "[functional]", int, float, double)
-{
-    using function_t = etl::function<16, TestType(void)>;
-    auto func        = function_t { []() { return TestType { 1 }; } };
-    auto func2       = func;
-    func             = func2;
-    REQUIRE(func() == TestType { 1 });
-    REQUIRE(func() == TestType { 1 });
-}
-
-TEMPLATE_TEST_CASE(
-    "functional: function - assigment copy", "[functional]", int, float, double)
-{
-    using function_t  = etl::function<16, TestType(void)>;
-    auto func         = function_t { []() { return TestType { 1 }; } };
-    auto const& func2 = func;
-    REQUIRE(func() == TestType { 1 });
-    REQUIRE(func2() == TestType { 1 });
-    REQUIRE(func2() == TestType { 1 });
-}
-
-TEMPLATE_TEST_CASE(
-    "functional: function_view - ctor", "[functional]", int, float, double)
-{
-    using function_t = etl::function<16, TestType(TestType)>;
-    auto func    = function_t { [](TestType val) { return TestType { val }; } };
-    auto handler = [](etl::function_view<TestType(TestType)> f) {
-        REQUIRE(f(1) == TestType { 1 });
-        REQUIRE(f(2) == TestType { 2 });
-    };
-
-    handler(func);
-}
-
 TEST_CASE("functional: hash", "[functional]")
 {
     CHECK(etl::hash<bool> {}(true) != 0);
