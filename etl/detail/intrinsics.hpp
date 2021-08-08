@@ -165,7 +165,16 @@
 #elif defined(_MSC_VER)
 #define TETL_BUILTIN_UNREACHABLE __assume(false)
 #else
-#error "No builtin for unreachable"
+// https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
+// Answer from user iammilind.
+#define __builtin_unreachable()                                                \
+    {                                                                          \
+        struct etl_builtin_unreachable_t {                                     \
+            etl_builtin_unreachable_t& operator=(                              \
+                etl_builtin_unreachable_t const&);                             \
+        } x;                                                                   \
+        x = x;
+}
 #endif
 
 #if not defined(TETL_BUILTIN_NANF)
