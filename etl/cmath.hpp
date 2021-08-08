@@ -39,7 +39,7 @@
 #endif
 
 #ifndef INFINITY
-#define INFINITY TETL_BUILTIN_INFINITY
+#define INFINITY TETL_BUILTIN_HUGE_VAL
 #endif
 
 #endif // has_include<math.h>

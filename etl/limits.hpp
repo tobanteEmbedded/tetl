@@ -39,6 +39,7 @@
 #include "etl/cstdint.hpp"
 
 namespace etl {
+
 enum float_round_style {
     round_indeterminate       = -1,
     round_toward_zero         = 0,
@@ -50,8 +51,10 @@ enum float_round_style {
 enum float_denorm_style {
     denorm_indeterminate = -1,
     denorm_absent        = 0,
-    denorm_present       = 1
+    denorm_present       = 1,
 };
+
+// clang-format off
 
 template <typename T>
 struct numeric_limits {
@@ -77,21 +80,15 @@ struct numeric_limits {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return T(); }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept { return T(); }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return T(); }
+    static constexpr auto infinity() noexcept { return T(); }
+    static constexpr auto quiet_NaN() noexcept { return T(); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept { return T(); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept { return T(); }
 
     static constexpr bool is_iec559  = false;
@@ -127,21 +124,15 @@ struct numeric_limits<bool> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> bool { return false; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> bool { return false; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> bool { return false; }
+    static constexpr auto infinity() noexcept -> bool { return false; }
+    static constexpr auto quiet_NaN() noexcept -> bool { return false; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> bool { return false; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> bool { return false; }
 
     static constexpr bool is_iec559  = false;
@@ -177,21 +168,15 @@ struct numeric_limits<char> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return char {}; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept { return char {}; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return char {}; }
+    static constexpr auto infinity() noexcept { return char {}; }
+    static constexpr auto quiet_NaN() noexcept { return char {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept { return char {}; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept { return char {}; }
 
     static constexpr bool is_iec559  = false;
@@ -227,21 +212,15 @@ struct numeric_limits<signed char> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> signed char { return {}; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> signed char { return {}; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> signed char { return {}; }
+    static constexpr auto infinity() noexcept -> signed char { return {}; }
+    static constexpr auto quiet_NaN() noexcept -> signed char { return {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> signed char { return {}; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> signed char { return {}; }
 
     static constexpr bool is_iec559  = false;
@@ -277,24 +256,15 @@ struct numeric_limits<unsigned char> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned char { return 0; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned char { return 0; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned char
-    {
-        return 0;
-    }
+    static constexpr auto infinity() noexcept -> unsigned char { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned char { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> unsigned char { return 0; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> unsigned char { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -330,21 +300,15 @@ struct numeric_limits<short> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return short {}; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept { return short {}; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return short {}; }
+    static constexpr auto infinity() noexcept { return short {}; }
+    static constexpr auto quiet_NaN() noexcept { return short {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept { return short {}; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept { return short {}; }
 
     static constexpr bool is_iec559  = false;
@@ -369,10 +333,7 @@ struct numeric_limits<unsigned short> {
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
     static constexpr auto epsilon() noexcept -> unsigned short { return {}; }
-    static constexpr auto round_error() noexcept -> unsigned short
-    {
-        return {};
-    }
+    static constexpr auto round_error() noexcept -> unsigned short { return {}; }
 
     static constexpr int digits = CHAR_BIT * sizeof(short);
     // static constexpr int digits10     = digits * etl::log10(2);
@@ -383,24 +344,15 @@ struct numeric_limits<unsigned short> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned short { return 0; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned short { return 0; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned short
-    {
-        return 0;
-    }
+    static constexpr auto infinity() noexcept -> unsigned short { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned short { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> unsigned short { return 0; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> unsigned short { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -436,21 +388,15 @@ struct numeric_limits<int> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return int {}; }
+    static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept { return int {}; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return int {}; }
+    static constexpr auto infinity() noexcept { return int {}; }
+    static constexpr auto quiet_NaN() noexcept { return int {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept { return int {}; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept { return int {}; }
 
     static constexpr bool is_iec559  = false;
@@ -486,21 +432,15 @@ struct numeric_limits<unsigned int> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned int { return 0; }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned int { return 0; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned int { return 0; }
+    static constexpr auto infinity() noexcept -> unsigned int { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned int { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> unsigned int { return 0; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> unsigned int { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -536,21 +476,15 @@ struct numeric_limits<long> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept { return long {}; }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept { return long {}; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return long {}; }
+    static constexpr auto infinity() noexcept { return long {}; }
+    static constexpr auto quiet_NaN() noexcept { return long {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept { return long {}; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept { return long {}; }
 
     static constexpr bool is_iec559  = false;
@@ -586,24 +520,15 @@ struct numeric_limits<unsigned long> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned long { return 0; }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned long { return 0; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned long
-    {
-        return 0;
-    }
+    static constexpr auto infinity() noexcept -> unsigned long { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned long { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> unsigned long { return 0; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> unsigned long { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -640,21 +565,15 @@ struct numeric_limits<long long> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> long long { return 0; }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> long long { return 0; }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> long long { return 0; }
+    static constexpr auto infinity() noexcept -> long long { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> long long { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> long long { return 0; } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> long long { return 0; }
 
     static constexpr bool is_iec559  = false;
@@ -674,23 +593,14 @@ struct numeric_limits<unsigned long long> {
 
     static constexpr auto lowest() noexcept -> unsigned long long { return 0; }
     static constexpr auto min() noexcept -> unsigned long long { return 0; }
-    static constexpr auto max() noexcept -> unsigned long long
-    {
-        return ULLONG_MAX;
-    }
+    static constexpr auto max() noexcept -> unsigned long long { return ULLONG_MAX; }
 
     static constexpr bool is_signed  = false;
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept -> unsigned long long
-    {
-        return {};
-    }
-    static constexpr auto round_error() noexcept -> unsigned long long
-    {
-        return {};
-    }
+    static constexpr auto epsilon() noexcept -> unsigned long long { return {}; }
+    static constexpr auto round_error() noexcept -> unsigned long long { return {}; }
 
     static constexpr int digits = CHAR_BIT * sizeof(unsigned long long);
     // static constexpr int digits10     = digits * etl::log10(2);
@@ -701,34 +611,16 @@ struct numeric_limits<unsigned long long> {
     static constexpr int max_exponent   = 0;
     static constexpr int max_exponent10 = 0;
 
-    static constexpr bool has_infinity = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = false;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
-    static constexpr auto infinity() noexcept -> unsigned long long
-    {
-        return 0;
-    }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> unsigned long long
-    {
-        return 0;
-    }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> unsigned long long
-    {
-        return 0;
-    }
-    static constexpr auto denorm_min() noexcept -> unsigned long long
-    {
-        return 0;
-    }
+    static constexpr auto infinity() noexcept -> unsigned long long { return 0; }
+    static constexpr auto quiet_NaN() noexcept -> unsigned long long { return 0; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> unsigned long long { return 0; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> unsigned long long { return 0; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;
@@ -764,28 +656,15 @@ struct numeric_limits<float> {
     static constexpr int max_exponent   = FLT_MAX_EXP;
     static constexpr int max_exponent10 = FLT_MAX_10_EXP;
 
-    static constexpr bool has_infinity = true;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = true;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = true;
+    static constexpr bool has_infinity             = true;
+    static constexpr bool has_quiet_NaN            = true; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = true; // NOLINT(readability-identifier-naming)
     static constexpr float_denorm_style has_denorm = denorm_present;
     static constexpr bool has_denorm_loss          = false;
-    // static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> double
-    {
-        return TETL_BUILTIN_NANF("0");
-    }
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> double
-    {
-        return TETL_BUILTIN_NANF("1");
-    }
-
+    static constexpr auto infinity() noexcept -> float { return TETL_BUILTIN_HUGE_VALF; }
+    static constexpr auto quiet_NaN() noexcept -> double { return TETL_BUILTIN_NANF("0"); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> double { return TETL_BUILTIN_NANF("1"); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
     static constexpr bool is_iec559  = true;
@@ -821,29 +700,15 @@ struct numeric_limits<double> {
     static constexpr int max_exponent   = DBL_MAX_EXP;
     static constexpr int max_exponent10 = DBL_MAX_10_EXP;
 
-    static constexpr bool has_infinity = true;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_quiet_NaN = true;
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr bool has_signaling_NaN        = true;
-    static constexpr float_denorm_style has_denorm = denorm_present;
+    static constexpr bool has_infinity             = true;
+    static constexpr bool has_quiet_NaN            = true; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = true; // NOLINT(readability-identifier-naming)
     static constexpr bool has_denorm_loss          = false;
-    // static constexpr auto infinity() noexcept -> double { return HUGE_VAL; }
+    static constexpr float_denorm_style has_denorm = denorm_present;
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> double
-    {
-        return TETL_BUILTIN_NAN("0");
-    }
-
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> double
-    {
-        return TETL_BUILTIN_NAN("1");
-    }
-
+    static constexpr auto infinity() noexcept -> double { return TETL_BUILTIN_HUGE_VAL; }
+    static constexpr auto quiet_NaN() noexcept -> double { return TETL_BUILTIN_NAN("0"); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> double { return TETL_BUILTIN_NAN("1"); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 
     static constexpr bool is_iec559  = true;
@@ -856,5 +721,7 @@ struct numeric_limits<double> {
 };
 
 } // namespace etl
+
+// clang-format on
 
 #endif // TETL_LIMITS_HPP
