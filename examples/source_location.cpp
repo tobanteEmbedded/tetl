@@ -26,21 +26,27 @@
 
 #include <stdio.h>
 
-void log(etl::string_view const message,
+auto log(etl::string_view const message,
     etl::source_location const location = etl::source_location::current())
+    -> void
 {
-    ::printf("file: %s(%d:%d) `%s`: %s\n", location.file_name(),
-        location.line(), location.column(), location.function_name(),
-        message.data());
+    ::printf(                                     //
+        "file: %s(%u:%u) `%s`: %s\n",             //
+        location.file_name(),                     //
+        static_cast<unsigned>(location.line()),   //
+        static_cast<unsigned>(location.column()), //
+        location.function_name(),                 //
+        message.data()                            //
+    );
 }
 
 template <typename T>
-void fun(T x)
+auto fun(T x) -> void
 {
     log(x);
 }
 
-int main(int, char*[])
+auto main(int /*argc*/, char const** /*argv*/) -> int
 {
     log("Hello world!");
     fun("Hello C++20!");
