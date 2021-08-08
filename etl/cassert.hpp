@@ -37,7 +37,7 @@
 #if __has_include(<stdlib.h>)
 #include <stdlib.h>
 #else
-auto exit() -> void { }
+auto exit(int) -> void { }
 #endif
 
 #include "etl/warning.hpp"

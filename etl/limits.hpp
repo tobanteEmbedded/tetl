@@ -766,8 +766,16 @@ struct numeric_limits<double> {
     static constexpr float_round_style round_style = round_toward_zero;
 };
 
-} // namespace etl
+
+template <typename T>
+struct numeric_limits<T const> : numeric_limits<T> { };
+template <typename T>
+struct numeric_limits<T volatile> : numeric_limits<T> { };
+template <typename T>
+struct numeric_limits<T const volatile> : numeric_limits<T> { };
 
 // clang-format on
+
+} // namespace etl
 
 #endif // TETL_LIMITS_HPP

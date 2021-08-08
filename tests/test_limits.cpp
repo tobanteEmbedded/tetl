@@ -54,22 +54,23 @@ TEST_CASE("limits: numeric_limits<T>", "[limits]")
     REQUIRE(etl::numeric_limits<S>::denorm_min().i == 42);
 }
 
-TEST_CASE("limits: numeric_limits<bool>", "[limits]")
+TEMPLATE_TEST_CASE("limits: numeric_limits<bool>", "[limits]", bool, bool const,
+    bool volatile, bool const volatile)
 {
-    STATIC_REQUIRE(etl::numeric_limits<bool>::is_specialized == true);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::is_signed == false);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::is_integer == true);
-    STATIC_REQUIRE(etl::numeric_limits<bool>::is_bounded == true);
+    STATIC_REQUIRE(etl::numeric_limits<TestType>::is_specialized == true);
+    STATIC_REQUIRE(etl::numeric_limits<TestType>::is_signed == false);
+    STATIC_REQUIRE(etl::numeric_limits<TestType>::is_integer == true);
+    STATIC_REQUIRE(etl::numeric_limits<TestType>::is_bounded == true);
 
-    REQUIRE(etl::numeric_limits<bool>::min() == false);
-    REQUIRE(etl::numeric_limits<bool>::max() == true);
-    REQUIRE(etl::numeric_limits<bool>::lowest() == false);
-    REQUIRE(etl::numeric_limits<bool>::epsilon() == false);
-    REQUIRE(etl::numeric_limits<bool>::round_error() == false);
-    REQUIRE(etl::numeric_limits<bool>::infinity() == false);
-    REQUIRE(etl::numeric_limits<bool>::quiet_NaN() == false);
-    REQUIRE(etl::numeric_limits<bool>::signaling_NaN() == false);
-    REQUIRE(etl::numeric_limits<bool>::denorm_min() == false);
+    REQUIRE(etl::numeric_limits<TestType>::min() == false);
+    REQUIRE(etl::numeric_limits<TestType>::max() == true);
+    REQUIRE(etl::numeric_limits<TestType>::lowest() == false);
+    REQUIRE(etl::numeric_limits<TestType>::epsilon() == false);
+    REQUIRE(etl::numeric_limits<TestType>::round_error() == false);
+    REQUIRE(etl::numeric_limits<TestType>::infinity() == false);
+    REQUIRE(etl::numeric_limits<TestType>::quiet_NaN() == false);
+    REQUIRE(etl::numeric_limits<TestType>::signaling_NaN() == false);
+    REQUIRE(etl::numeric_limits<TestType>::denorm_min() == false);
 }
 
 TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
@@ -77,12 +78,10 @@ TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
     signed long long)
 {
     using l = etl::numeric_limits<TestType>;
-
     STATIC_REQUIRE(l::is_specialized == true);
     STATIC_REQUIRE(l::is_signed == true);
     STATIC_REQUIRE(l::is_integer == true);
     STATIC_REQUIRE(l::is_bounded == true);
-
     REQUIRE(l::lowest() == l::min());
     REQUIRE(l::max() > l::min());
     REQUIRE(l::epsilon() == TestType {});
@@ -91,6 +90,48 @@ TEMPLATE_TEST_CASE("limits: numeric_limits<signed T>", "[limits]", char, short,
     REQUIRE(l::quiet_NaN() == TestType {});
     REQUIRE(l::signaling_NaN() == TestType {});
     REQUIRE(l::denorm_min() == TestType {});
+
+    using lc = etl::numeric_limits<TestType const>;
+    STATIC_REQUIRE(lc::is_specialized == true);
+    STATIC_REQUIRE(lc::is_signed == true);
+    STATIC_REQUIRE(lc::is_integer == true);
+    STATIC_REQUIRE(lc::is_bounded == true);
+    REQUIRE(lc::lowest() == lc::min());
+    REQUIRE(lc::max() > lc::min());
+    REQUIRE(lc::epsilon() == TestType {});
+    REQUIRE(lc::round_error() == TestType {});
+    REQUIRE(lc::infinity() == TestType {});
+    REQUIRE(lc::quiet_NaN() == TestType {});
+    REQUIRE(lc::signaling_NaN() == TestType {});
+    REQUIRE(lc::denorm_min() == TestType {});
+
+    using lv = etl::numeric_limits<TestType volatile>;
+    STATIC_REQUIRE(lv::is_specialized == true);
+    STATIC_REQUIRE(lv::is_signed == true);
+    STATIC_REQUIRE(lv::is_integer == true);
+    STATIC_REQUIRE(lv::is_bounded == true);
+    REQUIRE(lv::lowest() == lv::min());
+    REQUIRE(lv::max() > lv::min());
+    REQUIRE(lv::epsilon() == TestType {});
+    REQUIRE(lv::round_error() == TestType {});
+    REQUIRE(lv::infinity() == TestType {});
+    REQUIRE(lv::quiet_NaN() == TestType {});
+    REQUIRE(lv::signaling_NaN() == TestType {});
+    REQUIRE(lv::denorm_min() == TestType {});
+
+    using lcv = etl::numeric_limits<TestType const volatile>;
+    STATIC_REQUIRE(lcv::is_specialized == true);
+    STATIC_REQUIRE(lcv::is_signed == true);
+    STATIC_REQUIRE(lcv::is_integer == true);
+    STATIC_REQUIRE(lcv::is_bounded == true);
+    REQUIRE(lcv::lowest() == lcv::min());
+    REQUIRE(lcv::max() > lcv::min());
+    REQUIRE(lcv::epsilon() == TestType {});
+    REQUIRE(lcv::round_error() == TestType {});
+    REQUIRE(lcv::infinity() == TestType {});
+    REQUIRE(lcv::quiet_NaN() == TestType {});
+    REQUIRE(lcv::signaling_NaN() == TestType {});
+    REQUIRE(lcv::denorm_min() == TestType {});
 }
 
 TEMPLATE_TEST_CASE("limits: numeric_limits<unsigned T>", "[limits]",
