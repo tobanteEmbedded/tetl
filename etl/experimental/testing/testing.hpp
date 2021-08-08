@@ -42,8 +42,6 @@ namespace etl::test {
 
 struct context;
 
-using test_func_t = void (*)(context&);
-
 struct name_and_tags {
     name_and_tags(::etl::string_view const& n = ::etl::string_view(),
         ::etl::string_view const& t           = ::etl::string_view()) noexcept
@@ -54,25 +52,35 @@ struct name_and_tags {
     ::etl::string_view tags;
 };
 
+struct source_line_info {
+    source_line_info() = delete;
+
+    constexpr source_line_info(char const* f, ::etl::size_t l) noexcept
+        : file(f), line(l)
+    {
+    }
+
+    char const* file;
+    ::etl::size_t line;
+};
+
+#define TEST_DETAIL_SOURCE_LINE_INFO                                           \
+    ::etl::test::source_line_info(                                             \
+        __FILE__, static_cast<::etl::size_t>(__LINE__))
+
+using test_func_t = void (*)(context&);
+
 struct test_case {
     name_and_tags info;
     test_func_t func;
 };
 
-struct assertion {
-    char const* expression { nullptr };
-    char const* file { nullptr };
-    char const* function { nullptr };
-    ::etl::uint32_t line { 0 };
-};
-
 struct result_disposition {
-    enum flags {
-        normal = 0x01,
-
+    enum flags : unsigned char {
+        normal              = 0x01,
         continue_on_failure = 0x02, // Failures test, but execution continues
         false_test          = 0x04, // Prefix expression with !
-        suppress_fail = 0x08 // Failures are reported but do not fail the test
+        suppress_fail       = 0x08  // Failures do not fail the test
     };
 };
 
@@ -125,8 +133,8 @@ struct context {
 
     auto current_test(test_case* tc) -> void;
 
-    auto pass_assertion(assertion const& payload) -> void;
-    auto fail_assertion(assertion const& payload, bool terminate) -> void;
+    auto pass_assertion() -> void;
+    auto fail_assertion(bool terminate) -> void;
 
     auto terminate() -> bool;
 
@@ -137,6 +145,37 @@ private:
     test_case* current_ { nullptr };
     bool shouldTerminate_ { false };
     session_stats stats_ {};
+};
+
+struct assertion_handler {
+    assertion_handler(context& ctx, source_line_info src,
+        result_disposition::flags flags, char const* expr, bool result)
+        : ctx_ { ctx }
+        , src_ { src }
+        , flags_ { flags }
+        , expr_ { expr }
+        , res_ { has_flag(result_disposition::false_test) ? !result : result }
+    {
+        if (res_) { ctx_.pass_assertion(); }
+        if (!res_ && has_flag(result_disposition::normal)) {
+            ctx_.fail_assertion(true);
+        }
+        if (!res_ && has_flag(result_disposition::continue_on_failure)) {
+            ctx_.fail_assertion(false);
+        }
+    }
+
+private:
+    auto has_flag(result_disposition::flags flag) -> bool
+    {
+        return (flags_ & flag) != 0;
+    }
+
+    context& ctx_;
+    source_line_info src_;
+    result_disposition::flags flags_;
+    char const* expr_;
+    bool res_;
 };
 
 }
@@ -210,16 +249,16 @@ inline auto context::current_test(test_case* tc) -> void
     current_ = tc;
 }
 
-inline auto context::pass_assertion(assertion const& data) -> void
+inline auto context::pass_assertion() -> void
 {
-    ::etl::ignore_unused(this, data);
+    ::etl::ignore_unused(this);
     ++stats_.num_assertions;
 }
-inline auto context::fail_assertion(assertion const& data, bool terminate)
-    -> void
+
+inline auto context::fail_assertion(bool terminate) -> void
 {
-    constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
-    ::printf(fmt, "Fail:", data.file, data.line, data.expression);
+    // constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
+    // ::printf(fmt, "Fail:", data.file, data.line, data.expression);
     ++stats_.num_assertions_failed;
     shouldTerminate_ = terminate;
 }
@@ -228,18 +267,11 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
 
 } // namespace etl::test
 
-#define TETL_STRINGIFY(str) #str
-
-#define TEST_DETAIL_PAYLOAD(exp)                                               \
-    ::etl::test::assertion { exp, __FILE__, TETL_FUNC_SIG, __LINE__ }
-
-#define TEST_SESSION(name, size)                                               \
+#define TEST_DETAIL_SESSION(name, size)                                        \
     static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
     static auto g_session = ::etl::test::session { g_session_buffer, name }
 
-#define TEST_FILE(size) TEST_SESSION(__FILE__, size);
-
-#define TEST_SESSION_RUN(argc, argv)                                           \
+#define TEST_DETAIL_SESSION_RUN(argc, argv)                                    \
     [argc, argv] {                                                             \
         ::etl::ignore_unused(argc, argv);                                      \
         return g_session.run_all();                                            \
@@ -259,53 +291,35 @@ inline auto context::terminate() -> bool { return shouldTerminate_; }
 #define TEST_DETAIL_TEST_CASE(...)                                             \
     TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
 
-#define TEST_CASE(...) TEST_DETAIL_TEST_CASE(__VA_ARGS__)
-
-#define TEST_DETAIL_CHECK_IMPL(expr, terminate)                                \
-    if (!!(expr)) {                                                            \
-        session_context.pass_assertion(                                        \
-            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)));                        \
-    } else {                                                                   \
-        session_context.fail_assertion(                                        \
-            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(expr)), terminate);             \
-    }
-
-#define TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, terminate)                          \
-    if ((a) == (b)) {                                                          \
-        session_context.pass_assertion(                                        \
-            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)));                      \
-    } else {                                                                   \
-        session_context.fail_assertion(                                        \
-            TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(a == b)), terminate);           \
-    }
-
-// #define CHECK(expr) TEST_DETAIL_CHECK_IMPL(expr, false);
-// #define REQUIRE(expr) TEST_DETAIL_CHECK_IMPL(expr, true);
-
-#define CHECK_FALSE(expr) TEST_DETAIL_CHECK_IMPL(!(expr), false);
-#define REQUIRE_FALSE(expr) TEST_DETAIL_CHECK_IMPL(!(expr), true);
-
-#define CHECK_EQUAL(a, b) TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, false)
-#define REQUIRE_EQUAL(a, b) TEST_DETAIL_CHECK_EQUAL_IMPL(a, b, true)
-
-#define TEST_DETAIL_ASSERT(resultDisposition, ...)                             \
+#define TEST_DETAIL_CHECK(disposition, ...)                                    \
     do {                                                                       \
         TEST_DETAIL_IGNORE_BUT_WARN(__VA_ARGS__);                              \
-        if (!static_cast<bool>(!!(__VA_ARGS__))) {                             \
-            session_context.fail_assertion(                                    \
-                TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(__VA_ARGS__)),              \
-                resultDisposition == ::etl::test::result_disposition::normal); \
-        } else {                                                               \
-            session_context.pass_assertion(                                    \
-                TEST_DETAIL_PAYLOAD(TETL_STRINGIFY(__VA_ARGS__)));             \
-        }                                                                      \
+        ::etl::test::assertion_handler handler {                               \
+            session_context,                                                   \
+            TEST_DETAIL_SOURCE_LINE_INFO,                                      \
+            disposition,                                                       \
+            TETL_STRINGIFY(__VA_ARGS__),                                       \
+            static_cast<bool>(!!(__VA_ARGS__)),                                \
+        };                                                                     \
     } while (false)
 
-#define CHECK(...)                                                             \
-    TEST_DETAIL_ASSERT(                                                        \
-        ::etl::test::result_disposition::continue_on_failure, __VA_ARGS__)
+// clang-format off
+#define TEST_SESSION(name, size)        TEST_DETAIL_SESSION(name, size)
+#define TEST_SESSION_RUN(argc, argv)    TEST_DETAIL_SESSION_RUN(argc, argv)
 
-#define REQUIRE(...)                                                           \
-    TEST_DETAIL_ASSERT(::etl::test::result_disposition::normal, __VA_ARGS__)
+#define TEST_CASE(...)  TEST_DETAIL_TEST_CASE(__VA_ARGS__)
+
+#define CHECK(...)      TEST_DETAIL_CHECK(::etl::test::result_disposition::continue_on_failure, __VA_ARGS__)
+#define REQUIRE(...)    TEST_DETAIL_CHECK(::etl::test::result_disposition::normal, __VA_ARGS__)
+
+#define CHECK_FALSE(...)    TEST_DETAIL_CHECK((::etl::test::result_disposition::flags{::etl::test::result_disposition::continue_on_failure | ::etl::test::result_disposition::false_test }), __VA_ARGS__)
+#define REQUIRE_FALSE(...)  TEST_DETAIL_CHECK((::etl::test::result_disposition::flags{::etl::test::result_disposition::normal | ::etl::test::result_disposition::false_test }), __VA_ARGS__)
+
+#define CHECK_EQUAL(lhs, rhs)       CHECK((lhs) == (rhs))
+#define REQUIRE_EQUAL(lhs, rhs)     REQUIRE((lhs) == (rhs))
+
+#define CHECK_NOT_EQUAL(lhs, rhs)   CHECK_FALSE((lhs) == (rhs))
+#define REQUIRE_NOT_EQUAL(lhs, rhs) REQUIRE_FALSE((lhs) == (rhs))
+// clang-format on
 
 #endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP

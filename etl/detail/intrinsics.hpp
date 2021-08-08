@@ -224,6 +224,9 @@
 #endif
 #endif // TETL_MAKE_INTEGER_SEQ
 
+#define TETL_STRINGIFY_IMPL(str) #str
+#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
+
 #define TETL_CONCAT_IMPL(s1, s2) s1##s2
 #define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
 

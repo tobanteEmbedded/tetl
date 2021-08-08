@@ -29,6 +29,9 @@ TEST_CASE("test a", "")
 {
     CHECK_EQUAL(1, 1);
     CHECK_EQUAL(2, 2);
+
+    CHECK_NOT_EQUAL(42, 1);
+    CHECK_NOT_EQUAL(42, 2);
 }
 
 TEST_CASE("test b", "")
