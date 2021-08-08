@@ -159,7 +159,7 @@ struct numeric_limits<char> {
     static constexpr auto epsilon() noexcept -> char { return char {}; }
     static constexpr auto round_error() noexcept -> char { return char {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(char) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(char) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -203,7 +203,7 @@ struct numeric_limits<signed char> {
     static constexpr auto epsilon() noexcept -> signed char { return {}; }
     static constexpr auto round_error() noexcept -> signed char { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(signed char) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(signed char) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -247,7 +247,7 @@ struct numeric_limits<unsigned char> {
     static constexpr auto epsilon() noexcept -> unsigned char { return {}; }
     static constexpr auto round_error() noexcept -> unsigned char { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned char) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned char) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -337,7 +337,7 @@ struct numeric_limits<short> {
     static constexpr auto epsilon() noexcept -> short { return short {}; }
     static constexpr auto round_error() noexcept -> short { return short {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(short) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(short) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -381,7 +381,7 @@ struct numeric_limits<unsigned short> {
     static constexpr auto epsilon() noexcept -> unsigned short { return {}; }
     static constexpr auto round_error() noexcept -> unsigned short { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned short) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned short) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -425,7 +425,7 @@ struct numeric_limits<int> {
     static constexpr auto epsilon() noexcept -> int { return int {}; }
     static constexpr auto round_error() noexcept -> int { return int {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(int) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(int) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -469,7 +469,7 @@ struct numeric_limits<unsigned int> {
     static constexpr auto epsilon() noexcept -> unsigned int { return {}; }
     static constexpr auto round_error() noexcept -> unsigned int { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned int) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned int) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -513,7 +513,7 @@ struct numeric_limits<long> {
     static constexpr auto epsilon() noexcept -> long { return long {}; }
     static constexpr auto round_error() noexcept -> long { return long {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -557,7 +557,7 @@ struct numeric_limits<unsigned long> {
     static constexpr auto epsilon() noexcept -> unsigned long { return {}; }
     static constexpr auto round_error() noexcept -> unsigned long { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -602,7 +602,7 @@ struct numeric_limits<long long> {
     static constexpr auto epsilon() noexcept -> long long { return 0; }
     static constexpr auto round_error() noexcept -> long long { return 0; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long long) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long long) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
@@ -648,7 +648,7 @@ struct numeric_limits<unsigned long long> {
     static constexpr auto epsilon() noexcept -> unsigned long long { return {}; }
     static constexpr auto round_error() noexcept -> unsigned long long { return {}; }
 
-    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long long) - is_signed);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long long) - static_cast<unsigned>(is_signed));
     static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
