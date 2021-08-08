@@ -776,9 +776,16 @@ struct numeric_limits<float> {
     // static constexpr auto infinity() noexcept -> float { return HUGE_VALF; }
 
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> float { return NAN; }
+    static constexpr auto quiet_NaN() noexcept -> double
+    {
+        return TETL_BUILTIN_NANF("0");
+    }
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> float { return NAN; }
+    static constexpr auto signaling_NaN() noexcept -> double
+    {
+        return TETL_BUILTIN_NANF("1");
+    }
+
     static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
     static constexpr bool is_iec559  = true;
@@ -826,9 +833,17 @@ struct numeric_limits<double> {
     // static constexpr auto infinity() noexcept -> double { return HUGE_VAL; }
 
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto quiet_NaN() noexcept -> double { return NAN; }
+    static constexpr auto quiet_NaN() noexcept -> double
+    {
+        return TETL_BUILTIN_NAN("0");
+    }
+
     // NOLINTNEXTLINE(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> double { return NAN; }
+    static constexpr auto signaling_NaN() noexcept -> double
+    {
+        return TETL_BUILTIN_NAN("1");
+    }
+
     static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 
     static constexpr bool is_iec559  = true;

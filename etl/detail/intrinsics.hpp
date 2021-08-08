@@ -166,13 +166,37 @@
 #define TETL_BUILTIN_UNREACHABLE __assume(false)
 #endif
 
-#if not defined(TETL_BUILTIN_NAN)
-#define TETL_BUILTIN_NAN (__builtin_nanf(""))
-#endif // TETL_BUILTIN_NAN
+#if __has_builtin(__builtin_nanf) || defined(_MSC_VER)
+#define TETL_BUILTIN_NANF(x) __builtin_nanf((x))
+#else
+#error "No builtin for NANs"
+#endif
 
-#if not defined(TETL_BUILTIN_INFINITY)
+#if __has_builtin(__builtin_nansf) || defined(_MSC_VER)
+#define TETL_BUILTIN_SIGNAL_NANF(x) __builtin_nansf((x))
+#else
+#error "No builtin for signal NANs"
+#endif
+
+#if __has_builtin(__builtin_nan) || defined(_MSC_VER)
+#define TETL_BUILTIN_NAN(x) __builtin_nan((x))
+#else
+#error "No builtin for NANs"
+#endif
+
+#if __has_builtin(__builtin_nans) || defined(_MSC_VER)
+#define TETL_BUILTIN_SIGNAL_NAN(x) __builtin_nans((x))
+#else
+#error "No builtin for signal NANs"
+#endif
+
+#if __has_builtin(__builtin_inff)
 #define TETL_BUILTIN_INFINITY (__builtin_inff())
-#endif // TETL_BUILTIN_INFINITY
+#elif __has_builtin(__builtin_huge_valf) || defined(_MSC_VER)
+#define TETL_BUILTIN_INFINITY (__builtin_huge_valf(()))
+#else
+#error "No builtin for infinity"
+#endif
 
 #if not defined(TETL_BUILTIN_VA_LIST)
 #define TETL_BUILTIN_VA_LIST __builtin_va_list

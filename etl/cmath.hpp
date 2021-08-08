@@ -35,7 +35,7 @@
 #else
 
 #ifndef NAN
-#define NAN TETL_BUILTIN_NAN
+#define NAN TETL_BUILTIN_NAN("")
 #endif
 
 #ifndef INFINITY
