@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME}
         test_cstring.cpp
         test_concepts.cpp
         test_ctime.cpp
+        test_cwchar.cpp
         test_expected.cpp
         test_format.cpp
         test_functional.cpp
