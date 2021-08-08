@@ -88,10 +88,52 @@
 #define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
 #endif
 
+#define TETL_STRINGIFY_IMPL(str) #str
+#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
+
+#define TETL_CONCAT_IMPL(s1, s2) s1##s2
+#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
+
+#ifdef __COUNTER__
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
+#else
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
+#endif
+
 #if defined(__GNUC__)
 #define TETL_FUNC_SIG __PRETTY_FUNCTION__
 #else
 #define TETL_FUNC_SIG __func__
+#endif
+
+#if __has_builtin(__builtin_COLUMN)
+#define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
+#else
+#define TETL_BUILTIN_COLUMN() 0
+#endif
+
+#if __has_builtin(__builtin_LINE)
+#define TETL_BUILTIN_LINE() __builtin_LINE()
+#else
+#define TETL_BUILTIN_LINE() 0
+#endif
+
+#if __has_builtin(__builtin_FILE)
+#define TETL_BUILTIN_FILE() __builtin_FILE()
+#else
+#define TETL_BUILTIN_FILE() __FILE__
+#endif
+
+#if __has_builtin(__builtin_FUNCTION)
+#define TETL_BUILTIN_FUNCTION() __builtin_FUNCTION()
+#else
+#define TETL_BUILTIN_FUNCTION() ""
+#endif
+
+#if defined(__cpp_consteval)
+#define TETL_CONSTEVAL consteval
+#else
+#define TETL_CONSTEVAL constexpr
 #endif
 
 #if __has_builtin(__builtin_expect)
@@ -147,6 +189,12 @@
 #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
 #endif
 
+#if __has_builtin(__builtin_is_constant_evaluated)
+#define TETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
+#else
+#define TETL_IS_CONSTANT_EVALUATED() false
+#endif
+
 #if not defined(TETL_HAS_VIRTUAL_DESTRUCTOR)
 #define TETL_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
 #endif // TETL_HAS_VIRTUAL_DESTRUCTOR
@@ -167,10 +215,6 @@
 #if not defined(TETL_IS_ASSIGNABLE)
 #define TETL_IS_ASSIGNABLE(Type, Arg) __is_assignable(Type, Arg)
 #endif // TETL_IS_ASSIGNABLE
-
-#if not defined(TETL_IS_CONSTANT_EVALUATED)
-#define TETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
-#endif // TETL_IS_CONSTANT_EVALUATED
 
 #if not defined(TETL_IS_CONSTRUCTIBLE)
 #define TETL_IS_CONSTRUCTIBLE(Type, Args) __is_constructible(Type, Args)
@@ -223,17 +267,5 @@
 #define TETL_MAKE_INTEGER_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
 #endif // TETL_MAKE_INTEGER_SEQ
-
-#define TETL_STRINGIFY_IMPL(str) #str
-#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
-
-#define TETL_CONCAT_IMPL(s1, s2) s1##s2
-#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
-
-#ifdef __COUNTER__
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
-#else
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
-#endif
 
 #endif // TETL_INTRINSICS_HPP

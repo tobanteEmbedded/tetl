@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(etl LANGUAGES CXX)
 
-option(TETL_BUILD_CPP20     "Build with C++20. Default is C++17" OFF)
+option(TETL_BUILD_CPP20     "Build with C++20. Default is C++17" ON)
 option(TETL_BUILD_CPP23     "Build with C++23. Default is C++17" OFF)
 option(TETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TETL_BUILD_TESTS     "Build unit tests" ON)

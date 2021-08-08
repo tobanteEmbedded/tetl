@@ -11,6 +11,7 @@ foreach(_target
   "numeric"
   "optional"
   "set"
+  "source_location"
   "string"
   "tuple"
   "type_traits"

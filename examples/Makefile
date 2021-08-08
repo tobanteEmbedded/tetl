@@ -24,6 +24,7 @@ EXAMPLES 	+= map
 EXAMPLES 	+= numeric
 EXAMPLES 	+= optional
 EXAMPLES 	+= set
+EXAMPLES 	+= source_location
 EXAMPLES 	+= string
 EXAMPLES 	+= tuple
 EXAMPLES 	+= type_traits
