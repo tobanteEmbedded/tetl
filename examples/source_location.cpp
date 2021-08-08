@@ -50,4 +50,5 @@ auto main(int /*argc*/, char const** /*argv*/) -> int
 {
     log("Hello world!");
     fun("Hello C++20!");
+    return 0;
 }
