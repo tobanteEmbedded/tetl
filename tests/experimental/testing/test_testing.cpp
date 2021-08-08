@@ -25,7 +25,7 @@
 
 TEST_SESSION("test_testing.cpp", 16U);
 
-TEST_CASE("test a", "")
+TEST_CASE("A", "")
 {
     CHECK_EQUAL(1, 1);
     CHECK_EQUAL(2, 2);
@@ -34,13 +34,13 @@ TEST_CASE("test a", "")
     CHECK_NOT_EQUAL(42, 2);
 }
 
-TEST_CASE("test b", "")
+TEST_CASE("B", "")
 {
     CHECK(143 == 143);
     CHECK_FALSE(42 == 41);
 }
 
-TEST_CASE("test c", "")
+TEST_CASE("C", "")
 {
     REQUIRE(143 == 143);
     REQUIRE_FALSE(42 == 41);

@@ -133,8 +133,9 @@ struct context {
 
     auto current_test(test_case* tc) -> void;
 
-    auto pass_assertion() -> void;
-    auto fail_assertion(bool terminate) -> void;
+    auto pass_assertion(source_line_info const& src, char const* expr) -> void;
+    auto fail_assertion(
+        source_line_info const& src, char const* expr, bool terminate) -> void;
 
     auto terminate() -> bool;
 
@@ -148,7 +149,7 @@ private:
 };
 
 struct assertion_handler {
-    assertion_handler(context& ctx, source_line_info src,
+    assertion_handler(context& ctx, source_line_info const& src,
         result_disposition::flags flags, char const* expr, bool result)
         : ctx_ { ctx }
         , src_ { src }
@@ -156,12 +157,14 @@ struct assertion_handler {
         , expr_ { expr }
         , res_ { has_flag(result_disposition::false_test) ? !result : result }
     {
-        if (res_) { ctx_.pass_assertion(); }
+        if (res_ || has_flag(result_disposition::suppress_fail)) {
+            ctx_.pass_assertion(src_, expr_);
+        }
         if (!res_ && has_flag(result_disposition::normal)) {
-            ctx_.fail_assertion(true);
+            ctx_.fail_assertion(src_, expr_, true);
         }
         if (!res_ && has_flag(result_disposition::continue_on_failure)) {
-            ctx_.fail_assertion(false);
+            ctx_.fail_assertion(src_, expr_, false);
         }
     }
 
@@ -249,16 +252,18 @@ inline auto context::current_test(test_case* tc) -> void
     current_ = tc;
 }
 
-inline auto context::pass_assertion() -> void
+inline auto context::pass_assertion(
+    source_line_info const& src, char const* expr) -> void
 {
-    ::etl::ignore_unused(this);
+    ::etl::ignore_unused(this, src, expr);
     ++stats_.num_assertions;
 }
 
-inline auto context::fail_assertion(bool terminate) -> void
+inline auto context::fail_assertion(
+    source_line_info const& src, char const* expr, bool terminate) -> void
 {
-    // constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
-    // ::printf(fmt, "Fail:", data.file, data.line, data.expression);
+    constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
+    ::printf(fmt, "Fail:", src.file, static_cast<int>(src.line), expr);
     ++stats_.num_assertions_failed;
     shouldTerminate_ = terminate;
 }
