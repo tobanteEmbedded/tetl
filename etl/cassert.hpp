@@ -86,11 +86,6 @@ namespace detail {
 
 } // namespace etl
 
-#if not defined(TETL_TO_STR)
-#define TETL_TO_STR_IMPL(s) #s
-#define TETL_TO_STR(s) TETL_TO_STR_IMPL(s)
-#endif // TETL_TO_STR
-
 #if not defined(TETL_ASSERT)
 /// \brief Assertion macro with customizable runtime behavior
 #define TETL_ASSERT(exp)                                                       \
@@ -99,8 +94,8 @@ namespace detail {
             auto const msg = ::etl::assert_msg {                               \
                 __LINE__, /*line of assertion*/                                \
                 __FILE__, /*source file*/                                      \
-                nullptr,  /*The function name causes code bloat.*/             \
-                nullptr,  /*The stringified expression causes code bloat.*/    \
+                ::etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,        \
+                ::etl::is_hosted() ? TETL_STRINGIFY(exp) : nullptr,            \
             };                                                                 \
             ::etl::detail::tetl_call_assert_handler(msg);                      \
         }                                                                      \

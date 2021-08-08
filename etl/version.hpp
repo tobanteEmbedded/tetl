@@ -24,6 +24,10 @@
 #ifndef TETL_VERSION_HPP
 #define TETL_VERSION_HPP
 
+#if defined(DOXYGEN)
+#define TETL_DOC_GEN 1
+#endif
+
 #include "etl/detail/intrinsics.hpp"
 
 #if (__has_include(<version>))
@@ -45,11 +49,29 @@
 #define TETL_FREESTANDING 1
 #endif
 
-#if defined(DOXYGEN)
-#define TETL_DOC_GEN 1
+namespace etl {
+
+enum struct implementation {
+    freestanding = 0,
+    hosted       = 1,
+};
+
+#if defined(__STDC_HOSTED__)
+inline constexpr auto current_implementation = implementation::hosted;
+#else
+inline constexpr auto current_implementation = implementation::freestanding;
 #endif
 
-namespace etl {
+[[nodiscard]] auto constexpr is_hosted() noexcept -> bool
+{
+    return current_implementation == implementation::hosted;
+}
+
+[[nodiscard]] auto constexpr is_freestanding() noexcept -> bool
+{
+    return current_implementation == implementation::freestanding;
+}
+
 /// \brief Enumeration for the currently selected C++ standard version. Unlike
 /// the official macro `__cplusplus`, these values only include the published
 /// year. This is to make the actual values smaller and therfore fit on smaller
