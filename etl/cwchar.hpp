@@ -52,8 +52,13 @@
 
 namespace etl {
 
-using wint_t = unsigned short;
-using tm     = ::etl::detail::tm;
+#if !defined(wint_t)
+using wint_t = unsigned int;
+#else
+using wint_t = wint_t;
+#endif
+
+using tm = ::etl::detail::tm;
 
 } // namespace etl
 
