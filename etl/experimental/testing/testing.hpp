@@ -137,9 +137,9 @@ struct context {
     auto fail_assertion(
         source_line_info const& src, char const* expr, bool terminate) -> void;
 
-    auto terminate() -> bool;
+    auto terminate() const -> bool;
 
-    auto stats() const -> session_stats const& { return stats_; }
+    [[nodiscard]] auto stats() const -> session_stats const& { return stats_; }
 
 private:
     session& session_;
@@ -200,7 +200,7 @@ inline constexpr auto session::begin() -> test_case* { return first_; }
 
 inline constexpr auto session::end() -> test_case*
 {
-    return ::etl::next(first_, count_);
+    return ::etl::next(first_, static_cast<::etl::ptrdiff_t>(count_));
 }
 
 inline constexpr auto session::add_test(
@@ -268,7 +268,7 @@ inline auto context::fail_assertion(
     shouldTerminate_ = terminate;
 }
 
-inline auto context::terminate() -> bool { return shouldTerminate_; }
+inline auto context::terminate() const -> bool { return shouldTerminate_; }
 
 } // namespace etl::test
 
