@@ -45,7 +45,7 @@ enum float_round_style {
     round_toward_zero         = 0,
     round_to_nearest          = 1,
     round_toward_infinity     = 2,
-    round_toward_neg_infinity = 3
+    round_toward_neg_infinity = 3,
 };
 
 enum float_denorm_style {
@@ -72,8 +72,8 @@ struct numeric_limits {
     static constexpr bool is_integer = false;
     static constexpr bool is_exact   = false;
     static constexpr int radix       = 0;
-    static constexpr auto epsilon() noexcept { return T(); }
-    static constexpr auto round_error() noexcept { return T(); }
+    static constexpr auto epsilon() noexcept -> T { return T(); }
+    static constexpr auto round_error() noexcept -> T { return T(); }
 
     static constexpr int min_exponent   = 0;
     static constexpr int min_exponent10 = 0;
@@ -86,10 +86,10 @@ struct numeric_limits {
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    static constexpr auto infinity() noexcept { return T(); }
-    static constexpr auto quiet_NaN() noexcept { return T(); }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return T(); } // NOLINT(readability-identifier-naming)
-    static constexpr auto denorm_min() noexcept { return T(); }
+    static constexpr auto infinity() noexcept -> T { return T(); }
+    static constexpr auto quiet_NaN() noexcept -> T { return T(); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> T { return T(); } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> T { return T(); }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = false;
@@ -156,11 +156,11 @@ struct numeric_limits<char> {
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept { return char {}; }
-    static constexpr auto round_error() noexcept { return char {}; }
+    static constexpr auto epsilon() noexcept -> char { return char {}; }
+    static constexpr auto round_error() noexcept -> char { return char {}; }
 
-    static constexpr int digits = CHAR_BIT - (int)is_signed;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(char) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -174,10 +174,10 @@ struct numeric_limits<char> {
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    static constexpr auto infinity() noexcept { return char {}; }
-    static constexpr auto quiet_NaN() noexcept { return char {}; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return char {}; } // NOLINT(readability-identifier-naming)
-    static constexpr auto denorm_min() noexcept { return char {}; }
+    static constexpr auto infinity() noexcept -> char { return char {}; }
+    static constexpr auto quiet_NaN() noexcept -> char { return char {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> char { return char {}; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> char { return char {}; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;
@@ -203,8 +203,8 @@ struct numeric_limits<signed char> {
     static constexpr auto epsilon() noexcept -> signed char { return {}; }
     static constexpr auto round_error() noexcept -> signed char { return {}; }
 
-    static constexpr int digits = CHAR_BIT - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(signed char) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -247,8 +247,8 @@ struct numeric_limits<unsigned char> {
     static constexpr auto epsilon() noexcept -> unsigned char { return {}; }
     static constexpr auto round_error() noexcept -> unsigned char { return {}; }
 
-    static constexpr int digits = CHAR_BIT;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned char) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -276,23 +276,24 @@ struct numeric_limits<unsigned char> {
     static constexpr float_round_style round_style = round_toward_zero;
 };
 
+#ifdef __cpp_char8_t
 template <>
-struct numeric_limits<short> {
+struct numeric_limits<char8_t> {
     static constexpr bool is_specialized = true;
 
-    static constexpr auto lowest() noexcept -> short { return SHRT_MIN; }
-    static constexpr auto min() noexcept -> short { return SHRT_MIN; }
-    static constexpr auto max() noexcept -> short { return SHRT_MAX; }
+    static constexpr auto min() noexcept -> char8_t { return 0; }
+    static constexpr auto max() noexcept -> char8_t { return UCHAR_MAX; }
+    static constexpr auto lowest() noexcept -> char8_t { return min(); }
 
-    static constexpr bool is_signed  = true;
+    static constexpr bool is_signed  = CHAR_MIN < 0;
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept { return short {}; }
-    static constexpr auto round_error() noexcept { return short {}; }
+    static constexpr auto epsilon() noexcept -> char8_t { return char8_t {}; }
+    static constexpr auto round_error() noexcept -> char8_t { return char8_t {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(short) - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = 8;
+    static constexpr int digits10     = 2;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -306,10 +307,55 @@ struct numeric_limits<short> {
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    static constexpr auto infinity() noexcept { return short {}; }
-    static constexpr auto quiet_NaN() noexcept { return short {}; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return short {}; } // NOLINT(readability-identifier-naming)
-    static constexpr auto denorm_min() noexcept { return short {}; }
+    static constexpr auto infinity() noexcept -> char8_t { return char8_t {}; }
+    static constexpr auto quiet_NaN() noexcept -> char8_t { return char8_t {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> char8_t { return char8_t {}; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> char8_t { return char8_t {}; }
+
+    static constexpr bool is_iec559  = false;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = true;
+
+    static constexpr bool traps                    = true;
+    static constexpr bool tinyness_before          = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+};
+#endif // __cpp_char8_t
+
+template <>
+struct numeric_limits<short> {
+    static constexpr bool is_specialized = true;
+
+    static constexpr auto lowest() noexcept -> short { return SHRT_MIN; }
+    static constexpr auto min() noexcept -> short { return SHRT_MIN; }
+    static constexpr auto max() noexcept -> short { return SHRT_MAX; }
+
+    static constexpr bool is_signed  = true;
+    static constexpr bool is_integer = true;
+    static constexpr bool is_exact   = true;
+    static constexpr int radix       = 2;
+    static constexpr auto epsilon() noexcept -> short { return short {}; }
+    static constexpr auto round_error() noexcept -> short { return short {}; }
+
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(short) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
+    static constexpr int max_digits10 = 0;
+
+    static constexpr int min_exponent   = 0;
+    static constexpr int min_exponent10 = 0;
+    static constexpr int max_exponent   = 0;
+    static constexpr int max_exponent10 = 0;
+
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_signaling_NaN        = false; // NOLINT(readability-identifier-naming)
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+
+    static constexpr auto infinity() noexcept -> short { return short {}; }
+    static constexpr auto quiet_NaN() noexcept -> short { return short {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> short { return short {}; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> short { return short {}; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;
@@ -335,8 +381,8 @@ struct numeric_limits<unsigned short> {
     static constexpr auto epsilon() noexcept -> unsigned short { return {}; }
     static constexpr auto round_error() noexcept -> unsigned short { return {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(short);
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned short) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -376,11 +422,11 @@ struct numeric_limits<int> {
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept { return int {}; }
-    static constexpr auto round_error() noexcept { return int {}; }
+    static constexpr auto epsilon() noexcept -> int { return int {}; }
+    static constexpr auto round_error() noexcept -> int { return int {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(int) - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(int) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -394,10 +440,10 @@ struct numeric_limits<int> {
     static constexpr bool has_denorm_loss          = false;
     static constexpr float_denorm_style has_denorm = denorm_absent;
 
-    static constexpr auto infinity() noexcept { return int {}; }
-    static constexpr auto quiet_NaN() noexcept { return int {}; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return int {}; } // NOLINT(readability-identifier-naming)
-    static constexpr auto denorm_min() noexcept { return int {}; }
+    static constexpr auto infinity() noexcept -> int { return int {}; }
+    static constexpr auto quiet_NaN() noexcept -> int { return int {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> int { return int {}; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> int { return int {}; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;
@@ -423,8 +469,8 @@ struct numeric_limits<unsigned int> {
     static constexpr auto epsilon() noexcept -> unsigned int { return {}; }
     static constexpr auto round_error() noexcept -> unsigned int { return {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(int);
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned int) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -464,11 +510,11 @@ struct numeric_limits<long> {
     static constexpr bool is_integer = true;
     static constexpr bool is_exact   = true;
     static constexpr int radix       = 2;
-    static constexpr auto epsilon() noexcept { return long {}; }
-    static constexpr auto round_error() noexcept { return long {}; }
+    static constexpr auto epsilon() noexcept -> long { return long {}; }
+    static constexpr auto round_error() noexcept -> long { return long {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(long) - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -482,10 +528,10 @@ struct numeric_limits<long> {
     static constexpr float_denorm_style has_denorm = denorm_absent;
     static constexpr bool has_denorm_loss          = false;
 
-    static constexpr auto infinity() noexcept { return long {}; }
-    static constexpr auto quiet_NaN() noexcept { return long {}; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept { return long {}; } // NOLINT(readability-identifier-naming)
-    static constexpr auto denorm_min() noexcept { return long {}; }
+    static constexpr auto infinity() noexcept -> long { return long {}; }
+    static constexpr auto quiet_NaN() noexcept -> long { return long {}; }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> long { return long {}; } // NOLINT(readability-identifier-naming)
+    static constexpr auto denorm_min() noexcept -> long { return long {}; }
 
     static constexpr bool is_iec559  = false;
     static constexpr bool is_bounded = true;
@@ -511,8 +557,8 @@ struct numeric_limits<unsigned long> {
     static constexpr auto epsilon() noexcept -> unsigned long { return {}; }
     static constexpr auto round_error() noexcept -> unsigned long { return {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(unsigned long);
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -556,8 +602,8 @@ struct numeric_limits<long long> {
     static constexpr auto epsilon() noexcept -> long long { return 0; }
     static constexpr auto round_error() noexcept -> long long { return 0; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(long long) - 1;
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(long long) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -602,8 +648,8 @@ struct numeric_limits<unsigned long long> {
     static constexpr auto epsilon() noexcept -> unsigned long long { return {}; }
     static constexpr auto round_error() noexcept -> unsigned long long { return {}; }
 
-    static constexpr int digits = CHAR_BIT * sizeof(unsigned long long);
-    // static constexpr int digits10     = digits * etl::log10(2);
+    static constexpr int digits       = static_cast<int>(CHAR_BIT * sizeof(unsigned long long) - is_signed);
+    static constexpr int digits10     = digits * 3 / 10;
     static constexpr int max_digits10 = 0;
 
     static constexpr int min_exponent   = 0;
@@ -663,8 +709,8 @@ struct numeric_limits<float> {
     static constexpr bool has_denorm_loss          = false;
 
     static constexpr auto infinity() noexcept -> float { return TETL_BUILTIN_HUGE_VALF; }
-    static constexpr auto quiet_NaN() noexcept -> double { return TETL_BUILTIN_NANF("0"); }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> double { return TETL_BUILTIN_NANF("1"); } // NOLINT(readability-identifier-naming)
+    static constexpr auto quiet_NaN() noexcept -> float { return TETL_BUILTIN_NANF("0"); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> float { return TETL_BUILTIN_NANF("1"); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
     static constexpr bool is_iec559  = true;

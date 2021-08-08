@@ -167,14 +167,14 @@
 #else
 // https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
 // Answer from user iammilind.
-#define __builtin_unreachable()                                                \
+#define TETL_BUILTIN_UNREACHABLE                                               \
     {                                                                          \
         struct etl_builtin_unreachable_t {                                     \
             etl_builtin_unreachable_t& operator=(                              \
                 etl_builtin_unreachable_t const&);                             \
         } x;                                                                   \
-        x = x;
-}
+        x = x;                                                                 \
+    }
 #endif
 
 #if not defined(TETL_BUILTIN_NANF)
