@@ -101,6 +101,8 @@ struct basic_string_view {
     {
     }
 
+    constexpr basic_string_view(nullptr_t /*null*/) = delete;
+
     /// \brief Constructs a basic_string_view over the range [first, last). The
     /// behavior is undefined if [first, last) is not a valid range.
     ///

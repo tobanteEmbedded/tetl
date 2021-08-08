@@ -101,6 +101,8 @@ public:
     {
     }
 
+    constexpr basic_static_string(nullptr_t /*null*/) = delete;
+
     /// Constructs the string with count copies of character ch.
     ///
     /// \details Fails silently if input length is greater then capacity.
@@ -182,6 +184,8 @@ public:
         assign(s, traits_type::length(s));
         return *this;
     }
+
+    constexpr auto operator=(nullptr_t /*0*/) -> basic_static_string& = delete;
 
     /// Replaces the contents with character ch.
     constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
