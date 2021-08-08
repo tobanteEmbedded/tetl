@@ -211,11 +211,6 @@
 
 #if __has_builtin(__builtin_assume_aligned)
 #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) __builtin_assume_aligned(p, a)
-#elif defined(TETL_BUILTIN_UNREACHABLE)
-#define TETL_BUILTIN_ASSUME_ALIGNED(p, a)                                      \
-    (((reinterpret_cast<TETL_BUILTIN_UINTPTR>(p) % (a)) == 0)                  \
-            ? (p)                                                              \
-            : (TETL_BUILTIN_UNREACHABLE, (p)))
 #else
 #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
 #endif
