@@ -138,7 +138,7 @@ struct context {
     auto fail_assertion(
         source_line_info const& src, char const* expr, bool terminate) -> void;
 
-    auto terminate() const -> bool;
+    [[nodiscard]] auto terminate() const -> bool;
 
     [[nodiscard]] auto stats() const -> session_stats const& { return stats_; }
 
@@ -170,7 +170,7 @@ struct assertion_handler {
     }
 
 private:
-    auto has_flag(result_disposition::flags flag) -> bool
+    [[nodiscard]] auto has_flag(result_disposition::flags flag) -> bool
     {
         return (flags_ & flag) != 0;
     }
