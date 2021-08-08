@@ -26,19 +26,13 @@
 
 #include "etl/version.hpp"
 
-#if __has_include(<time.h>)
-#include <time.h>
-#else
-
 #include "etl/detail/cstddef_internal.hpp"
 
 #if not defined(NULL)
 #define NULL nullptr
 #endif // NULL
 
-#if not defined(CLOCKS_PER_SEC)
-#define CLOCKS_PER_SEC 1'000'000UL
-#endif // CLOCKS_PER_SEC
+namespace etl {
 
 using clock_t = ::etl::size_t;
 using time_t  = ::etl::size_t;
@@ -59,6 +53,7 @@ struct tm {
     int tm_yday;
     int tm_isdst;
 };
-#endif // has_include <time.h>
+
+}
 
 #endif // TETL_CTIME_HPP
