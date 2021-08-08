@@ -65,6 +65,20 @@ struct alignas(long double) max_align_t {
 #pragma warning(default : 4324) // Padding was added at the end of a structure
 #endif
 
+namespace detail {
+    struct tm {
+        int tm_sec;
+        int tm_min;
+        int tm_hour;
+        int tm_mday;
+        int tm_mon;
+        int tm_year;
+        int tm_wday;
+        int tm_yday;
+        int tm_isdst;
+    };
+}
+
 } // namespace etl
 
 #endif // TETL_DETAIL_CSTDDEF_INTERNAL_HPP

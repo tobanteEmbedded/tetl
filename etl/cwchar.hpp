@@ -26,6 +26,8 @@
 
 #include "etl/version.hpp"
 
+#include "etl/detail/cstddef_internal.hpp"
+
 #if defined(TETL_MSVC)
 #include <wchar.h>
 #else
@@ -34,35 +36,24 @@
 #define NULL nullptr
 #endif // NULL
 
-using wint_t = unsigned short;
-
 #if !defined(WEOF)
 #define WEOF ((wint_t)-1)
 #endif
 
 #if !defined(WCHAR_MIN)
-#if defined(__WCHAR_MIN__)
-#define WCHAR_MIN __WCHAR_MIN__
-#elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define WCHAR_MIN (0 + L'\0')
-#else
-#define WCHAR_MIN (-0x7fffffff - 1 + L'\0')
+#define WCHAR_MIN TETL_DETAIL_WCHAR_MIN
 #endif
-#endif // WCHAR_MIN
 
 #if !defined(WCHAR_MAX)
-#if defined(__WCHAR_MAX__)
-#define WCHAR_MAX __WCHAR_MAX__
-#elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define WCHAR_MAX (0xffffffffu + L'\0')
-#else
-#define WCHAR_MAX (0x7fffffff + L'\0')
+#define WCHAR_MAX TETL_DETAIL_WCHAR_MAX
 #endif
-#endif // WCHAR_MAX
 
 #endif
 
 namespace etl {
+
+using wint_t = unsigned short;
+using tm     = ::etl::detail::tm;
 
 } // namespace etl
 
