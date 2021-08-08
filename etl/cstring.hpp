@@ -29,6 +29,8 @@
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 
+#include "etl/detail/cstring_algorithm.hpp"
+
 namespace etl {
 /// \brief Copies the character string pointed to by src, including the null
 /// terminator, to the character array whose first element is pointed to by
@@ -42,9 +44,7 @@ namespace etl {
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
     TETL_ASSERT(dest != nullptr && src != nullptr);
-    auto* temp = dest;
-    while ((*dest++ = *src++) != '\0') { ; }
-    return temp;
+    return detail::strcpy_impl(dest, src);
 }
 
 /// \brief Copies at most count characters of the byte string pointed to by src
@@ -63,24 +63,14 @@ constexpr auto strncpy(char* dest, char const* src, etl::size_t const count)
     -> char*
 {
     TETL_ASSERT(dest != nullptr && src != nullptr);
-    auto* temp = dest;
-    for (etl::size_t counter = 0; *src != '\0' && counter != count;) {
-        *dest = *src;
-        ++src;
-        ++dest;
-        ++counter;
-    }
-
-    return temp;
+    return detail::strncpy_impl(dest, src, count);
 }
 
 /// \brief Returns the length of the C string str.
 /// \module Strings
 constexpr auto strlen(char const* str) -> etl::size_t
 {
-    char const* s = nullptr;
-    for (s = str; *s != 0; ++s) { ; }
-    return static_cast<etl::size_t>(s - str);
+    return detail::strlen_impl<char, etl::size_t>(str);
 }
 
 /// \brief Appends a copy of the character string pointed to by src to the end
@@ -94,10 +84,7 @@ constexpr auto strlen(char const* str) -> etl::size_t
 /// \module Strings
 constexpr auto strcat(char* dest, char const* src) -> char*
 {
-    auto* ptr = dest + etl::strlen(dest);
-    while (*src != '\0') { *ptr++ = *src++; }
-    *ptr = '\0';
-    return dest;
+    return detail::strcat_impl<char, etl::size_t>(dest, src);
 }
 
 /// \brief Appends a byte string pointed to by src to a byte string pointed to
@@ -112,15 +99,7 @@ constexpr auto strcat(char* dest, char const* src) -> char*
 constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
     -> char*
 {
-    auto* ptr                = dest + etl::strlen(dest);
-    etl::size_t localCounter = 0;
-    while (*src != '\0' && localCounter != count) {
-        *ptr++ = *src++;
-        ++localCounter;
-    }
-
-    *ptr = '\0';
-    return dest;
+    return detail::strncat_impl<char, etl::size_t>(dest, src, count);
 }
 
 /// \brief Compares the C string lhs to the C string rhs.
@@ -131,11 +110,7 @@ constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
 /// \module Strings
 constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 {
-    for (; *lhs != '\0'; ++lhs, ++rhs) {
-        if (*lhs != *rhs) { break; }
-    }
-
-    return static_cast<unsigned char>(*lhs) - static_cast<unsigned char>(*rhs);
+    return detail::strcmp_impl<char>(lhs, rhs);
 }
 
 /// \brief Compares at most count characters of two possibly null-terminated
@@ -149,48 +124,7 @@ constexpr auto strcmp(char const* lhs, char const* rhs) -> int
 constexpr auto strncmp(
     char const* lhs, char const* rhs, etl::size_t const count) -> int
 {
-    unsigned char u1 {};
-    unsigned char u2 {};
-
-    auto localCount = count;
-    while (localCount-- > 0) {
-        u1 = static_cast<unsigned char>(*lhs++);
-        u2 = static_cast<unsigned char>(*rhs++);
-        if (u1 != u2) { return u1 - u2; }
-        if (u1 == '\0') { return 0; }
-    }
-
-    return 0;
-}
-
-namespace detail {
-    template <typename CharT>
-    [[nodiscard]] constexpr auto strchr_impl(CharT* str, int ch) -> CharT*
-    {
-        if (str == nullptr) { return nullptr; }
-
-        while (*str != '\0') {
-            if (*str == static_cast<char>(ch)) { return str; }
-            ++str;
-        }
-
-        if (static_cast<char>(ch) == '\0') { return str; }
-        return nullptr;
-    }
-
-    template <typename CharT>
-    [[nodiscard]] constexpr auto strrchr_impl(CharT* str, int ch) -> CharT*
-    {
-        if (str == nullptr) { return nullptr; }
-        auto len = static_cast<etl::size_t>(etl::strlen(str));
-        if (static_cast<char>(ch) == '\0') { return str + len; }
-
-        while (len-- != 0) {
-            if (str[len] == static_cast<char>(ch)) { return str + len; }
-        }
-
-        return nullptr;
-    }
+    return detail::strncmp_impl<char, etl::size_t>(lhs, rhs, count);
 }
 
 /// \brief Finds the first occurrence of the character static_cast<char>(ch) in
@@ -232,7 +166,7 @@ namespace detail {
 /// \module Strings
 [[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
 {
-    return detail::strrchr_impl<char const>(str, ch);
+    return detail::strrchr_impl<char const, etl::size_t>(str, ch);
 }
 
 /// \brief Finds the last occurrence of the character static_cast<char>(ch) in
@@ -246,36 +180,7 @@ namespace detail {
 /// \module Strings
 [[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char*
 {
-    return detail::strrchr_impl<char>(str, ch);
-}
-
-namespace detail {
-    template <bool InclusiveSearch>
-    [[nodiscard]] constexpr auto is_legal_char(
-        char const* options, ::etl::size_t len, char ch) noexcept -> bool
-    {
-        for (etl::size_t i = 0; i < len; ++i) {
-            if (options[i] == ch) { return InclusiveSearch; }
-        }
-        return !InclusiveSearch;
-    }
-
-    template <bool InclusiveSearch>
-    [[nodiscard]] constexpr auto str_span_impl(
-        char const* dest, char const* src) noexcept -> ::etl::size_t
-    {
-        auto result       = etl::size_t { 0 };
-        auto const length = etl::strlen(dest);
-        auto const srcLen = etl::strlen(src);
-        for (etl::size_t i = 0; i < length; ++i) {
-            if (!is_legal_char<InclusiveSearch>(src, srcLen, dest[i])) {
-                break;
-            }
-            ++result;
-        }
-
-        return result;
-    }
+    return detail::strrchr_impl<char, etl::size_t>(str, ch);
 }
 
 /// \brief Returns the length of the maximum initial segment (span) of the byte
@@ -288,7 +193,7 @@ namespace detail {
 [[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
     -> etl::size_t
 {
-    return detail::str_span_impl<true>(dest, src);
+    return detail::str_span_impl<char, etl::size_t, true>(dest, src);
 }
 
 /// \brief Returns the length of the maximum initial segment of the byte string
@@ -303,19 +208,7 @@ namespace detail {
 [[nodiscard]] constexpr auto strcspn(char const* dest, char const* src) noexcept
     -> etl::size_t
 {
-    return detail::str_span_impl<false>(dest, src);
-}
-
-namespace detail {
-    template <typename CharT>
-    [[nodiscard]] constexpr auto strpbrk_impl(CharT* s, CharT* del) noexcept
-        -> CharT*
-    {
-        auto const i = str_span_impl<false>(s, del);
-        if (i != 0) { return s + i; }
-        if (is_legal_char<true>(del, etl::strlen(del), s[0])) { return s; }
-        return nullptr;
-    }
+    return detail::str_span_impl<char, etl::size_t, false>(dest, src);
 }
 
 /// \brief Scans the null-terminated byte string pointed to by dest for any
@@ -328,7 +221,7 @@ namespace detail {
 [[nodiscard]] constexpr auto strpbrk(
     char const* dest, char const* breakset) noexcept -> char const*
 {
-    return detail::strpbrk_impl<char const>(dest, breakset);
+    return detail::strpbrk_impl<char const, etl::size_t>(dest, breakset);
 }
 
 /// \brief Scans the null-terminated byte string pointed to by dest for any
@@ -341,23 +234,9 @@ namespace detail {
 [[nodiscard]] constexpr auto strpbrk(char* dest, char* breakset) noexcept
     -> char*
 {
-    return detail::strpbrk_impl<char>(dest, breakset);
+    return detail::strpbrk_impl<char, etl::size_t>(dest, breakset);
 }
 
-namespace detail {
-    template <typename CharT>
-    [[nodiscard]] constexpr auto strstr_impl(
-        CharT* haystack, CharT* needle) noexcept -> CharT*
-    {
-        while (*haystack != '\0') {
-            if ((*haystack == *needle) && (strcmp(haystack, needle) == 0)) {
-                return haystack;
-            }
-            haystack++;
-        }
-        return nullptr;
-    }
-}
 /// \brief Finds the first occurrence of the byte string needle in the byte
 /// string pointed to by haystack. The terminating null characters are not
 /// compared.
