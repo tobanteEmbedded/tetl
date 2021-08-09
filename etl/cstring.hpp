@@ -261,10 +261,7 @@ constexpr auto strncmp(
 /// \module Strings
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
-    auto* dp       = static_cast<unsigned char*>(dest);
-    auto const* sp = static_cast<unsigned char const*>(src);
-    while (n-- != 0) { *dp++ = *sp++; }
-    return dest;
+    return detail::memcpy_impl<unsigned char, etl::size_t>(dest, src, n);
 }
 
 /// \brief Copies the value of c (converted to an unsigned char) into each of
@@ -272,30 +269,16 @@ constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 /// \module Strings
 constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 {
-    auto* p = static_cast<unsigned char*>(s);
-    while (n-- != 0) { *p++ = static_cast<unsigned char>(c); }
-    return s;
+    return detail::memset_impl(static_cast<unsigned char*>(s), c, n);
 }
 
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may overlap.
 ///
-/// \notes Check original implementation. They use `__np_anyptrlt` which is not
-/// portable.
-/// [clc-wiki.net](https://clc-wiki.net/wiki/C_standard_library:string.h:memmove)
 /// \module Strings
 constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
 {
-    auto const* ps = static_cast<unsigned char const*>(src);
-    auto* pd       = static_cast<unsigned char*>(dest);
-
-    if (ps < pd) {
-        for (pd += n, ps += n; n-- != 0;) { *--pd = *--ps; }
-    } else {
-        while (n-- != 0) { *pd++ = *ps++; }
-    }
-
-    return dest;
+    return detail::memmove_impl<unsigned char>(dest, src, n);
 }
 
 } // namespace etl

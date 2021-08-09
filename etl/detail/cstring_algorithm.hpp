@@ -195,6 +195,40 @@ template <typename CharT>
     return nullptr;
 }
 
+template <typename CharT, typename SizeT>
+constexpr auto memcpy_impl(void* dest, void const* src, SizeT n) -> void*
+{
+    auto* dp       = static_cast<CharT*>(dest);
+    auto const* sp = static_cast<CharT const*>(src);
+    while (n-- != CharT(0)) { *dp++ = *sp++; }
+    return dest;
+}
+
+template <typename CharT, typename ValT, typename SizeT>
+constexpr auto memset_impl(CharT* const s, ValT const c, SizeT n) -> void*
+{
+    auto* p = s;
+    while (n-- != CharT(0)) { *p++ = static_cast<CharT>(c); }
+    return s;
+}
+
+// Check original implementation. They use `__np_anyptrlt` which is not
+// portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
+template <typename CharT, typename SizeT>
+constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> void*
+{
+    auto const* ps = static_cast<CharT const*>(src);
+    auto* pd       = static_cast<CharT*>(dest);
+
+    if (ps < pd) {
+        for (pd += n, ps += n; n-- != CharT(0);) { *--pd = *--ps; }
+    } else {
+        while (n-- != CharT(0)) { *pd++ = *ps++; }
+    }
+
+    return dest;
+}
+
 } // namespace etl::detail
 
 #endif // TETL_DETAIL_CSTRING_ALGORITHM_HPP
