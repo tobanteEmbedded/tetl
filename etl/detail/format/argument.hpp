@@ -21,10 +21,10 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
-#define TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
+#ifndef TETL_DETAIL_FORMAT_ARGUMENT_HPP
+#define TETL_DETAIL_FORMAT_ARGUMENT_HPP
 
-#include "etl/detail/fmt_formatter.hpp"
+#include "etl/detail/format/formatter.hpp"
 
 namespace etl::detail {
 // Escape tokens
@@ -100,4 +100,4 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
 
 } // namespace etl::detail
 
-#endif // TETL_EXPERIMENTAL_FORMAT_ARGUMENT_HPP
+#endif // TETL_DETAIL_FORMAT_ARGUMENT_HPP

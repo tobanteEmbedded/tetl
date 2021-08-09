@@ -31,7 +31,7 @@
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
 
-#include "etl/detail/type_traits_decl.hpp" // for is_fundamental
+#include "etl/detail/type_traits/decl.hpp"
 
 /// \file This header is part of the type support library.
 

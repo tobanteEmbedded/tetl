@@ -21,10 +21,10 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP)
-#define TETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
+#if not defined(TETL_DETAIL_FORMAT_FORMATTER_HPP)
+#define TETL_DETAIL_FORMAT_FORMATTER_HPP
 
-#include "etl/detail/fmt_context.hpp"
+#include "etl/detail/format/context.hpp"
 
 #include "etl/cstdlib.hpp"
 #include "etl/numeric.hpp"
@@ -196,4 +196,4 @@ struct formatter<unsigned long long, char> {
 
 } // namespace etl
 
-#endif // TETL_EXPERIMENTAL_FORMAT_FORMATTER_HPP
+#endif // TETL_DETAIL_FORMAT_FORMATTER_HPP
