@@ -82,15 +82,14 @@ constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
 }
 
 namespace detail {
-    template <typename T>
-    using bit_unsigned_int
-        = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>,
-            etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
-            etl::is_same<T, unsigned long>,
-            etl::is_same<T, unsigned long long>>>;
+template <typename T>
+using bit_unsigned_int
+    = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>,
+        etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
+        etl::is_same<T, unsigned long>, etl::is_same<T, unsigned long long>>>;
 
-    template <typename T>
-    inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
+template <typename T>
+inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
 
 } // namespace detail
 

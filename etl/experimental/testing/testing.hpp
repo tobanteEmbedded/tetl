@@ -182,7 +182,7 @@ private:
     bool res_;
 };
 
-}
+} // namespace etl::test
 
 namespace etl::test {
 template <::etl::size_t Capacity>
@@ -286,11 +286,11 @@ inline auto context::terminate() const -> bool { return shouldTerminate_; }
 #define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
     static auto tc(::etl::test::context& session_context)->void;               \
     namespace {                                                                \
-        auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                  \
-            g_session,                                                         \
-            ::etl::test::name_and_tags { __VA_ARGS__ },                        \
-            tc,                                                                \
-        };                                                                     \
+    auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                      \
+        g_session,                                                             \
+        ::etl::test::name_and_tags { __VA_ARGS__ },                            \
+        tc,                                                                    \
+    };                                                                         \
     }                                                                          \
     static auto tc(::etl::test::context& session_context)->void
 

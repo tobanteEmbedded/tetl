@@ -135,20 +135,20 @@ template <typename IntegralType>
 }
 
 namespace detail {
-    template <typename Float>
-    [[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
-        -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
-    {
-        if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
-            return t * b + (1 - t) * a;
-        }
-
-        if (t == 1) { return b; }
-
-        auto const x = a + t * (b - a);
-        if ((t > 1) == (b > a)) { return b < x ? x : b; }
-        return x < b ? x : b;
+template <typename Float>
+[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
+    -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
+{
+    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+        return t * b + (1 - t) * a;
     }
+
+    if (t == 1) { return b; }
+
+    auto const x = a + t * (b - a);
+    if ((t > 1) == (b > a)) { return b < x ? x : b; }
+    return x < b ? x : b;
+}
 } // namespace detail
 
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
@@ -177,17 +177,17 @@ namespace detail {
 }
 
 namespace detail {
-    template <typename T>
-    [[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
-    {
-        constexpr auto isInt      = is_same_v<T, int>;
-        constexpr auto isLong     = is_same_v<T, long>;
-        constexpr auto isLongLong = is_same_v<T, long long>;
-        static_assert(isInt || isLong || isLongLong);
+template <typename T>
+[[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
+{
+    constexpr auto isInt      = is_same_v<T, int>;
+    constexpr auto isLong     = is_same_v<T, long>;
+    constexpr auto isLongLong = is_same_v<T, long long>;
+    static_assert(isInt || isLong || isLongLong);
 
-        if (n >= T(0)) { return n; }
-        return n * T(-1);
-    }
+    if (n >= T(0)) { return n; }
+    return n * T(-1);
+}
 
 } // namespace detail
 

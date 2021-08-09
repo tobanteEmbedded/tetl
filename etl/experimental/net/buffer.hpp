@@ -50,7 +50,8 @@ inline auto make_buffer(etl::array<T, Size>& array) noexcept -> mutable_buffer
 }
 
 template <typename T, ::etl::size_t Size>
-inline auto make_buffer(etl::array<T, Size> const& array) noexcept -> const_buffer
+inline auto make_buffer(etl::array<T, Size> const& array) noexcept
+    -> const_buffer
 {
     return const_buffer { array.data(), array.size() };
 }

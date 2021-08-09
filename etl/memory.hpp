@@ -170,15 +170,14 @@ struct allocator_arg_t {
 inline constexpr allocator_arg_t allocator_arg {};
 
 namespace detail {
-    template <typename Type, typename Alloc, typename = void>
-    struct uses_allocator_impl : false_type {
-    };
+template <typename Type, typename Alloc, typename = void>
+struct uses_allocator_impl : false_type {
+};
 
-    template <typename Type, typename Alloc>
-    struct uses_allocator_impl<Type, Alloc,
-        void_t<typename Type::allocator_type>>
-        : is_convertible<Alloc, typename Type::allocator_type>::type {
-    };
+template <typename Type, typename Alloc>
+struct uses_allocator_impl<Type, Alloc, void_t<typename Type::allocator_type>>
+    : is_convertible<Alloc, typename Type::allocator_type>::type {
+};
 } // namespace detail
 
 /// \brief If T has a member typedef allocator_type which is convertible from
@@ -298,11 +297,11 @@ private:
 };
 
 namespace detail {
-    // Compile time version of log2 that handles 0.
-    [[nodiscard]] static constexpr auto log2(size_t value) -> size_t
-    {
-        return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
-    }
+// Compile time version of log2 that handles 0.
+[[nodiscard]] static constexpr auto log2(size_t value) -> size_t
+{
+    return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
+}
 
 } // namespace detail
 

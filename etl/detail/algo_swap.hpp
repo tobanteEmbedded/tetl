@@ -28,11 +28,11 @@
 
 namespace etl {
 namespace detail {
-    template <typename T>
-    constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
-    {
-        return static_cast<etl::remove_reference_t<T>&&>(t);
-    }
+template <typename T>
+constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
+{
+    return static_cast<etl::remove_reference_t<T>&&>(t);
+}
 } // namespace detail
 
 /// \brief Exchanges the given values. Swaps the values a and b. This overload

@@ -47,22 +47,22 @@ struct tuple<First> {
 };
 
 namespace detail {
-    template <int Index, typename First, typename... Rest>
-    struct get_impl {
-        static constexpr auto value(tuple<First, Rest...> const* t)
-            -> decltype(get_impl<Index - 1, Rest...>::value(t))
-        {
-            return get_impl<Index - 1, Rest...>::value(t);
-        }
-    };
+template <int Index, typename First, typename... Rest>
+struct get_impl {
+    static constexpr auto value(tuple<First, Rest...> const* t)
+        -> decltype(get_impl<Index - 1, Rest...>::value(t))
+    {
+        return get_impl<Index - 1, Rest...>::value(t);
+    }
+};
 
-    template <typename First, typename... Rest>
-    struct get_impl<0, First, Rest...> {
-        static constexpr auto value(tuple<First, Rest...> const* t) -> First
-        {
-            return t->first;
-        }
-    };
+template <typename First, typename... Rest>
+struct get_impl<0, First, Rest...> {
+    static constexpr auto value(tuple<First, Rest...> const* t) -> First
+    {
+        return t->first;
+    }
+};
 
 } // namespace detail
 

@@ -98,19 +98,19 @@ struct formatter<etl::static_string<Capacity>, char> {
 };
 
 namespace detail {
-    template <typename Integer, typename FormatContext>
-    constexpr auto integer_format(Integer v, FormatContext& fc)
-        -> decltype(fc.out())
-    {
-        char buf[32] {};
-        auto res = detail::int_to_ascii(v, begin(buf), 10, sizeof(buf));
-        if (res.error == detail::int_to_ascii_error::none) {
-            auto str = string_view { begin(buf) };
-            return formatter<string_view>().format(str, fc);
-        }
-        return formatter<string_view>().format("", fc);
+template <typename Integer, typename FormatContext>
+constexpr auto integer_format(Integer v, FormatContext& fc)
+    -> decltype(fc.out())
+{
+    char buf[32] {};
+    auto res = detail::int_to_ascii(v, begin(buf), 10, sizeof(buf));
+    if (res.error == detail::int_to_ascii_error::none) {
+        auto str = string_view { begin(buf) };
+        return formatter<string_view>().format(str, fc);
     }
+    return formatter<string_view>().format("", fc);
 }
+} // namespace detail
 /// \group formatter_specialization
 template <>
 struct formatter<short, char> {

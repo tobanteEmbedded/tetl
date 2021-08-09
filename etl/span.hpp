@@ -210,15 +210,13 @@ template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 // Deduction Guides. From Container.
-template <typename Container,
-    typename Element
-    = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
+template <typename Container, typename Element = etl::remove_pointer_t<decltype(
+                                  etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
-template <typename Container,
-    typename Element
-    = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
+template <typename Container, typename Element = etl::remove_pointer_t<decltype(
+                                  etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 } // namespace etl
 

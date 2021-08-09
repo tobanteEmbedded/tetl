@@ -47,271 +47,261 @@ struct nullopt_t {
 inline constexpr auto nullopt = etl::nullopt_t { {} };
 
 namespace detail {
-    template <typename ValueType,
-        bool = etl::is_trivially_destructible_v<ValueType>>
-    struct optional_destruct_base;
+template <typename ValueType,
+    bool = etl::is_trivially_destructible_v<ValueType>>
+struct optional_destruct_base;
 
-    template <typename ValueType>
-    struct optional_destruct_base<ValueType, false> {
-        using value_type = ValueType;
-        static_assert(etl::is_object_v<value_type>, "undefined behavior");
+template <typename ValueType>
+struct optional_destruct_base<ValueType, false> {
+    using value_type = ValueType;
+    static_assert(etl::is_object_v<value_type>, "undefined behavior");
 
-        ~optional_destruct_base()
-        {
-            if (internal_has_value) { internal_value.~value_type(); }
+    ~optional_destruct_base()
+    {
+        if (internal_has_value) { internal_value.~value_type(); }
+    }
+
+    constexpr optional_destruct_base() noexcept { }
+
+    template <typename... Args>
+    constexpr explicit optional_destruct_base(
+        etl::in_place_t /*tag*/, Args&&... args)
+        : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
+    {
+    }
+
+    void reset() noexcept
+    {
+        if (internal_has_value) {
+            internal_value.~value_type();
+            internal_has_value = false;
         }
+    }
 
-        constexpr optional_destruct_base() noexcept { }
+    union {
+        char internal_null_state {};
+        value_type internal_value;
+    };
 
-        template <typename... Args>
-        constexpr explicit optional_destruct_base(
-            etl::in_place_t /*tag*/, Args&&... args)
-            : internal_value(etl::forward<Args>(args)...)
-            , internal_has_value(true)
-        {
-        }
+    bool internal_has_value = false;
+};
 
-        void reset() noexcept
-        {
-            if (internal_has_value) {
-                internal_value.~value_type();
-                internal_has_value = false;
+template <typename ValueType>
+struct optional_destruct_base<ValueType, true> {
+    using value_type = ValueType;
+    static_assert(etl::is_object_v<value_type>, "undefined behavior");
+
+    constexpr optional_destruct_base() noexcept { }
+
+    template <typename... Args>
+    constexpr explicit optional_destruct_base(
+        etl::in_place_t /*unused*/, Args&&... args)
+        : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
+    {
+    }
+
+    void reset() noexcept
+    {
+        if (internal_has_value) { internal_has_value = false; }
+    }
+
+    union {
+        char internal_null_state {};
+        value_type internal_value;
+    };
+
+    bool internal_has_value { false };
+};
+
+template <typename ValueType, bool = etl::is_reference_v<ValueType>>
+struct optional_storage_base : optional_destruct_base<ValueType> {
+    using base_t     = optional_destruct_base<ValueType>;
+    using value_type = ValueType;
+    using base_t::base_t;
+
+    [[nodiscard]] constexpr auto has_value() const noexcept -> bool
+    {
+        return this->internal_has_value;
+    }
+
+    [[nodiscard]] constexpr auto get() & noexcept -> value_type&
+    {
+        return this->internal_value;
+    }
+
+    [[nodiscard]] constexpr auto get() const& noexcept -> const value_type&
+    {
+        return this->internal_value;
+    }
+
+    [[nodiscard]] constexpr auto get() && noexcept -> value_type&&
+    {
+        return etl::move(this->internal_value);
+    }
+
+    [[nodiscard]] constexpr auto get() const&& noexcept -> const value_type&&
+    {
+        return etl::move(this->internal_value);
+    }
+
+    template <typename... Args>
+
+    void construct(Args&&... args)
+    {
+        ::new ((void*)etl::addressof(this->internal_value))
+            value_type(etl::forward<Args>(args)...);
+        this->internal_has_value = true;
+    }
+
+    template <typename T>
+    void construct_from(T&& opt)
+    {
+        if (opt.has_value()) { construct(etl::forward<T>(opt).get()); }
+    }
+
+    template <typename T>
+    void assign_from(T&& opt)
+    {
+        if (this->internal_has_value == opt.has_value()) {
+            if (this->internal_has_value) {
+                this->internal_value = etl::forward<T>(opt).get();
             }
-        }
-
-        union {
-            char internal_null_state {};
-            value_type internal_value;
-        };
-
-        bool internal_has_value = false;
-    };
-
-    template <typename ValueType>
-    struct optional_destruct_base<ValueType, true> {
-        using value_type = ValueType;
-        static_assert(etl::is_object_v<value_type>, "undefined behavior");
-
-        constexpr optional_destruct_base() noexcept { }
-
-        template <typename... Args>
-        constexpr explicit optional_destruct_base(
-            etl::in_place_t /*unused*/, Args&&... args)
-            : internal_value(etl::forward<Args>(args)...)
-            , internal_has_value(true)
-        {
-        }
-
-        void reset() noexcept
-        {
-            if (internal_has_value) { internal_has_value = false; }
-        }
-
-        union {
-            char internal_null_state {};
-            value_type internal_value;
-        };
-
-        bool internal_has_value { false };
-    };
-
-    template <typename ValueType, bool = etl::is_reference_v<ValueType>>
-    struct optional_storage_base : optional_destruct_base<ValueType> {
-        using base_t     = optional_destruct_base<ValueType>;
-        using value_type = ValueType;
-        using base_t::base_t;
-
-        [[nodiscard]] constexpr auto has_value() const noexcept -> bool
-        {
-            return this->internal_has_value;
-        }
-
-        [[nodiscard]] constexpr auto get() & noexcept -> value_type&
-        {
-            return this->internal_value;
-        }
-
-        [[nodiscard]] constexpr auto get() const& noexcept -> const value_type&
-        {
-            return this->internal_value;
-        }
-
-        [[nodiscard]] constexpr auto get() && noexcept -> value_type&&
-        {
-            return etl::move(this->internal_value);
-        }
-
-        [[nodiscard]] constexpr auto get() const&& noexcept
-            -> const value_type&&
-        {
-            return etl::move(this->internal_value);
-        }
-
-        template <typename... Args>
-
-        void construct(Args&&... args)
-        {
-            ::new ((void*)etl::addressof(this->internal_value))
-                value_type(etl::forward<Args>(args)...);
-            this->internal_has_value = true;
-        }
-
-        template <typename T>
-        void construct_from(T&& opt)
-        {
-            if (opt.has_value()) { construct(etl::forward<T>(opt).get()); }
-        }
-
-        template <typename T>
-        void assign_from(T&& opt)
-        {
-            if (this->internal_has_value == opt.has_value()) {
-                if (this->internal_has_value) {
-                    this->internal_value = etl::forward<T>(opt).get();
-                }
+        } else {
+            if (this->internal_has_value) {
+                this->reset();
             } else {
-                if (this->internal_has_value) {
-                    this->reset();
-                } else {
-                    construct(etl::forward<T>(opt).get());
-                }
+                construct(etl::forward<T>(opt).get());
             }
         }
-    };
+    }
+};
 
-    template <typename ValueType,
-        bool = etl::is_trivially_copy_constructible_v<ValueType>>
-    struct optional_copy_base : optional_storage_base<ValueType> {
-        using optional_storage_base<ValueType>::optional_storage_base;
-    };
+template <typename ValueType,
+    bool = etl::is_trivially_copy_constructible_v<ValueType>>
+struct optional_copy_base : optional_storage_base<ValueType> {
+    using optional_storage_base<ValueType>::optional_storage_base;
+};
 
-    template <typename ValueType>
-    struct optional_copy_base<ValueType, false>
-        : optional_storage_base<ValueType> {
-        using optional_storage_base<ValueType>::optional_storage_base;
+template <typename ValueType>
+struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType> {
+    using optional_storage_base<ValueType>::optional_storage_base;
 
-        optional_copy_base() = default;
+    optional_copy_base() = default;
 
-        optional_copy_base(optional_copy_base const& opt)
-            : optional_storage_base<ValueType>::optional_storage_base {}
-        {
-            this->construct_from(opt);
-        }
+    optional_copy_base(optional_copy_base const& opt)
+        : optional_storage_base<ValueType>::optional_storage_base {}
+    {
+        this->construct_from(opt);
+    }
 
-        optional_copy_base(optional_copy_base&&) noexcept = default;
+    optional_copy_base(optional_copy_base&&) noexcept = default;
 
-        auto operator              =(optional_copy_base const&)
-            -> optional_copy_base& = default;
-        auto operator              =(optional_copy_base&&) noexcept
-            -> optional_copy_base& = default;
-    };
+    auto operator=(optional_copy_base const&) -> optional_copy_base& = default;
+    auto operator              =(optional_copy_base&&) noexcept
+        -> optional_copy_base& = default;
+};
 
-    template <typename ValueType,
-        bool = etl::is_trivially_move_constructible_v<ValueType>>
-    struct optional_move_base : optional_copy_base<ValueType> {
-        using optional_copy_base<ValueType>::optional_copy_base;
-    };
+template <typename ValueType,
+    bool = etl::is_trivially_move_constructible_v<ValueType>>
+struct optional_move_base : optional_copy_base<ValueType> {
+    using optional_copy_base<ValueType>::optional_copy_base;
+};
 
-    template <typename ValueType>
-    struct optional_move_base<ValueType, false>
-        : optional_copy_base<ValueType> {
-        using value_type = ValueType;
-        using optional_copy_base<ValueType>::optional_copy_base;
+template <typename ValueType>
+struct optional_move_base<ValueType, false> : optional_copy_base<ValueType> {
+    using value_type = ValueType;
+    using optional_copy_base<ValueType>::optional_copy_base;
 
-        optional_move_base() = default;
+    optional_move_base() = default;
 
-        optional_move_base(optional_move_base const&) = default;
+    optional_move_base(optional_move_base const&) = default;
 
-        optional_move_base(optional_move_base&& opt) noexcept(
+    optional_move_base(optional_move_base&& opt) noexcept(
+        etl::is_nothrow_move_constructible_v<value_type>)
+    {
+        this->construct_from(etl::move(opt));
+    }
+
+    auto operator=(optional_move_base const&) -> optional_move_base& = default;
+
+    auto operator              =(optional_move_base&&) noexcept
+        -> optional_move_base& = default;
+};
+
+template <typename ValueType,
+    bool = etl::is_trivially_destructible_v<ValueType>&&
+        etl::is_trivially_copy_constructible_v<ValueType>&&
+            etl::is_trivially_copy_assignable_v<ValueType>>
+struct optional_copy_assign_base : optional_move_base<ValueType> {
+    using optional_move_base<ValueType>::optional_move_base;
+};
+
+template <typename ValueType>
+struct optional_copy_assign_base<ValueType, false>
+    : optional_move_base<ValueType> {
+    using optional_move_base<ValueType>::optional_move_base;
+
+    optional_copy_assign_base() = default;
+
+    optional_copy_assign_base(optional_copy_assign_base const&) = default;
+
+    optional_copy_assign_base(optional_copy_assign_base&&) noexcept = default;
+
+    [[nodiscard]] auto operator=(optional_copy_assign_base const& opt)
+        -> optional_copy_assign_base&
+    {
+        this->assign_from(opt);
+        return *this;
+    }
+
+    auto operator                     =(optional_copy_assign_base&&) noexcept
+        -> optional_copy_assign_base& = default;
+};
+
+template <typename ValueType,
+    bool = etl::is_trivially_destructible_v<ValueType>&&
+        etl::is_trivially_move_constructible_v<ValueType>&&
+            etl::is_trivially_move_assignable_v<ValueType>>
+struct optional_move_assign_base : optional_copy_assign_base<ValueType> {
+    using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
+};
+
+template <typename ValueType>
+struct optional_move_assign_base<ValueType, false>
+    : optional_copy_assign_base<ValueType> {
+    using value_type = ValueType;
+    using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
+
+    optional_move_assign_base() = default;
+
+    optional_move_assign_base(optional_move_assign_base const& opt) = default;
+
+    optional_move_assign_base(optional_move_assign_base&&) noexcept = default;
+
+    auto operator                     =(optional_move_assign_base const&)
+        -> optional_move_assign_base& = default;
+
+    auto operator=(optional_move_assign_base&& opt) noexcept(
+        etl::is_nothrow_move_assignable_v<value_type>&&
             etl::is_nothrow_move_constructible_v<value_type>)
-        {
-            this->construct_from(etl::move(opt));
-        }
+        -> optional_move_assign_base&
+    {
+        this->assign_from(etl::move(opt));
+        return *this;
+    }
+};
 
-        auto operator              =(optional_move_base const&)
-            -> optional_move_base& = default;
+template <typename ValueType>
+using optional_sfinae_ctor_base_t
+    = sfinae_ctor_base<etl::is_copy_constructible_v<ValueType>,
+        etl::is_move_constructible_v<ValueType>>;
 
-        auto operator              =(optional_move_base&&) noexcept
-            -> optional_move_base& = default;
-    };
-
-    template <typename ValueType,
-        bool = etl::is_trivially_destructible_v<ValueType>&&
-            etl::is_trivially_copy_constructible_v<ValueType>&&
-                etl::is_trivially_copy_assignable_v<ValueType>>
-    struct optional_copy_assign_base : optional_move_base<ValueType> {
-        using optional_move_base<ValueType>::optional_move_base;
-    };
-
-    template <typename ValueType>
-    struct optional_copy_assign_base<ValueType, false>
-        : optional_move_base<ValueType> {
-        using optional_move_base<ValueType>::optional_move_base;
-
-        optional_copy_assign_base() = default;
-
-        optional_copy_assign_base(optional_copy_assign_base const&) = default;
-
-        optional_copy_assign_base(
-            optional_copy_assign_base&&) noexcept = default;
-
-        [[nodiscard]] auto operator=(optional_copy_assign_base const& opt)
-            -> optional_copy_assign_base&
-        {
-            this->assign_from(opt);
-            return *this;
-        }
-
-        auto operator=(optional_copy_assign_base&&) noexcept
-            -> optional_copy_assign_base& = default;
-    };
-
-    template <typename ValueType,
-        bool = etl::is_trivially_destructible_v<ValueType>&&
-            etl::is_trivially_move_constructible_v<ValueType>&&
-                etl::is_trivially_move_assignable_v<ValueType>>
-    struct optional_move_assign_base : optional_copy_assign_base<ValueType> {
-        using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
-    };
-
-    template <typename ValueType>
-    struct optional_move_assign_base<ValueType, false>
-        : optional_copy_assign_base<ValueType> {
-        using value_type = ValueType;
-        using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
-
-        optional_move_assign_base() = default;
-
-        optional_move_assign_base(optional_move_assign_base const& opt)
-            = default;
-
-        optional_move_assign_base(
-            optional_move_assign_base&&) noexcept = default;
-
-        auto operator                     =(optional_move_assign_base const&)
-            -> optional_move_assign_base& = default;
-
-        auto operator=(optional_move_assign_base&& opt) noexcept(
-            etl::is_nothrow_move_assignable_v<value_type>&&
-                etl::is_nothrow_move_constructible_v<value_type>)
-            -> optional_move_assign_base&
-        {
-            this->assign_from(etl::move(opt));
-            return *this;
-        }
-    };
-
-    template <typename ValueType>
-    using optional_sfinae_ctor_base_t
-        = sfinae_ctor_base<etl::is_copy_constructible_v<ValueType>,
-            etl::is_move_constructible_v<ValueType>>;
-
-    template <typename ValueType>
-    using optional_sfinae_assign_base_t = sfinae_assign_base<
-        (etl::is_copy_constructible_v<
-             ValueType> && etl::is_copy_assignable_v<ValueType>),
-        (etl::is_move_constructible_v<
-             ValueType> && etl::is_move_assignable_v<ValueType>)>;
+template <typename ValueType>
+using optional_sfinae_assign_base_t = sfinae_assign_base<
+    (etl::is_copy_constructible_v<
+         ValueType> && etl::is_copy_assignable_v<ValueType>),
+    (etl::is_move_constructible_v<
+         ValueType> && etl::is_move_assignable_v<ValueType>)>;
 
 } // namespace detail
 

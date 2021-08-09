@@ -57,15 +57,15 @@ private:
 };
 
 namespace literals {
-    constexpr auto operator""_K(long double val) -> constant<long double>
-    {
-        return constant { val };
-    }
-    constexpr auto operator""_K(unsigned long long val)
-        -> constant<unsigned long long>
-    {
-        return constant { val };
-    }
+constexpr auto operator""_K(long double val) -> constant<long double>
+{
+    return constant { val };
+}
+constexpr auto operator""_K(unsigned long long val)
+    -> constant<unsigned long long>
+{
+    return constant { val };
+}
 } // namespace literals
 
 template <typename L, typename R>
@@ -155,34 +155,34 @@ private:
 };
 
 namespace detail {
-    // template <typename Tuple, etl::size_t... Indices, typename... Tn>
-    // void for_each_fork_impl(Tuple&& tuple, etl::index_sequence<Indices...>,
-    //                         Tn... val)
-    // {
-    //     (etl::get<Indices>(etl::forward<Tuple>(tuple))(val...), ...);
-    // }
-    template <typename Tuple, typename... Tn>
-    void for_each_fork(Tuple&& /*tuple*/, Tn... /*val*/)
+// template <typename Tuple, etl::size_t... Indices, typename... Tn>
+// void for_each_fork_impl(Tuple&& tuple, etl::index_sequence<Indices...>,
+//                         Tn... val)
+// {
+//     (etl::get<Indices>(etl::forward<Tuple>(tuple))(val...), ...);
+// }
+template <typename Tuple, typename... Tn>
+void for_each_fork(Tuple&& /*tuple*/, Tn... /*val*/)
+{
+    // constexpr etl::size_t N
+    //     = etl::tuple_size<etl::remove_reference_t<Tuple>>::value;
+    // for_each_fork_impl(etl::forward<Tuple>(tuple),
+    //                    etl::make_index_sequence<N> {}, val...);
+}
+
+template <typename... T>
+struct fork_impl {
+    fork_impl(T&&... val) : nodes_ { etl::forward<T>(val)... } { }
+
+    template <typename... Tn>
+    void operator()(Tn... val) const
     {
-        // constexpr etl::size_t N
-        //     = etl::tuple_size<etl::remove_reference_t<Tuple>>::value;
-        // for_each_fork_impl(etl::forward<Tuple>(tuple),
-        //                    etl::make_index_sequence<N> {}, val...);
+        for_each_fork(nodes_, val...);
     }
 
-    template <typename... T>
-    struct fork_impl {
-        fork_impl(T&&... val) : nodes_ { etl::forward<T>(val)... } { }
-
-        template <typename... Tn>
-        void operator()(Tn... val) const
-        {
-            for_each_fork(nodes_, val...);
-        }
-
-    private:
-        etl::tuple<T...> nodes_;
-    };
+private:
+    etl::tuple<T...> nodes_;
+};
 } // namespace detail
 
 template <typename... T>

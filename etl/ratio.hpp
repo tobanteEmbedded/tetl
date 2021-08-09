@@ -32,12 +32,12 @@
 
 namespace etl {
 namespace detail {
-    template <typename T>
-    [[nodiscard]] constexpr auto sign(T val)
-    {
-        if (val < 0) { return T(-1); }
-        return T(1);
-    }
+template <typename T>
+[[nodiscard]] constexpr auto sign(T val)
+{
+    if (val < 0) { return T(-1); }
+    return T(1);
+}
 } // namespace detail
 
 /// \brief The typename template provides compile-time rational

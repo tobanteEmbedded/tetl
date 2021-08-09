@@ -73,14 +73,14 @@ inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
 }
 
 namespace detail {
-    inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
-    {
+inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
+{
 #if defined(TETL_CUSTOM_ASSERT_HANDLER)
-        ::etl::tetl_assert_handler(msg);
+    ::etl::tetl_assert_handler(msg);
 #else
-        ::etl::tetl_default_assert_handler(msg);
+    ::etl::tetl_default_assert_handler(msg);
 #endif
-    }
+}
 
 } // namespace detail
 

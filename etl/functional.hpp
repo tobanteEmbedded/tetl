@@ -35,22 +35,22 @@
 
 namespace etl {
 namespace detail {
-    template <typename T, typename, typename = void>
-    struct is_transparent : ::etl::false_type {
-    };
+template <typename T, typename, typename = void>
+struct is_transparent : ::etl::false_type {
+};
 
-    /// \brief is_transparent
-    /// \group is_transparent
-    /// \module Utility
-    template <typename T, typename U>
-    struct is_transparent<T, U,
-        ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>,
-            void, bool>> : ::etl::true_type {
-    };
+/// \brief is_transparent
+/// \group is_transparent
+/// \module Utility
+template <typename T, typename U>
+struct is_transparent<T, U,
+    ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>,
+        void, bool>> : ::etl::true_type {
+};
 
-    /// \group is_transparent
-    template <typename T, typename U>
-    inline constexpr auto transparent_v = is_transparent<T, U>::value;
+/// \group is_transparent
+template <typename T, typename U>
+inline constexpr auto transparent_v = is_transparent<T, U>::value;
 
 } // namespace detail
 
@@ -590,14 +590,14 @@ struct bit_not<void> {
 };
 
 namespace detail {
-    template <typename T>
-    constexpr auto FUN(T& t) noexcept -> T&
-    {
-        return t;
-    }
+template <typename T>
+constexpr auto FUN(T& t) noexcept -> T&
+{
+    return t;
+}
 
-    template <typename T>
-    void FUN(T&&) = delete;
+template <typename T>
+void FUN(T&&) = delete;
 
 } // namespace detail
 

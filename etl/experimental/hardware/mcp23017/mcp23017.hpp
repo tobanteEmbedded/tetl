@@ -126,7 +126,7 @@ public:
     ~device()             = default;
     device(device&&)      = delete;
     device(device const&) = delete;
-    auto operator=(device&&) -> device& = delete;
+    auto operator=(device &&) -> device& = delete;
     auto operator=(device const&) -> device& = delete;
 
     auto init() -> bool { return true; }

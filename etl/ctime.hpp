@@ -44,6 +44,6 @@ struct timespec {
 
 using tm = detail::tm;
 
-}
+} // namespace etl
 
 #endif // TETL_CTIME_HPP

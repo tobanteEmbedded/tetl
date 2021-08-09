@@ -98,7 +98,7 @@ template <typename T>
 
 /// \group as_const
 template <typename T>
-constexpr auto as_const(T const&&) -> void
+constexpr auto as_const(T const &&) -> void
     = delete;
 
 /// \brief Converts an enumeration to its underlying type.
@@ -112,7 +112,7 @@ template <typename Enum>
 }
 
 namespace detail {
-    // clang-format off
+// clang-format off
 template <typename T>
 struct is_integer_and_not_char
     : bool_constant<
@@ -125,11 +125,11 @@ struct is_integer_and_not_char
 {
 };
 
-    // clang-format on
+// clang-format on
 
-    template <typename T>
-    inline constexpr auto is_integer_and_not_char_v
-        = is_integer_and_not_char<T>::value;
+template <typename T>
+inline constexpr auto is_integer_and_not_char_v
+    = is_integer_and_not_char<T>::value;
 
 } // namespace detail
 
