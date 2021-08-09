@@ -83,6 +83,41 @@
 #include "etl/detail/type_traits/type_identity.hpp"
 #include "etl/detail/type_traits/void_t.hpp"
 
+#include "etl/detail/type_traits/has_virtual_destructor.hpp"
+#include "etl/detail/type_traits/is_arithmetic.hpp"
+#include "etl/detail/type_traits/is_assignable.hpp"
+#include "etl/detail/type_traits/is_bounded_array.hpp"
+#include "etl/detail/type_traits/is_compound.hpp"
+#include "etl/detail/type_traits/is_constructible.hpp"
+#include "etl/detail/type_traits/is_copy_assignable.hpp"
+#include "etl/detail/type_traits/is_copy_constructible.hpp"
+#include "etl/detail/type_traits/is_default_constructible.hpp"
+#include "etl/detail/type_traits/is_destructible.hpp"
+#include "etl/detail/type_traits/is_fundamental.hpp"
+#include "etl/detail/type_traits/is_member_function_pointer.hpp"
+#include "etl/detail/type_traits/is_member_object_pointer.hpp"
+#include "etl/detail/type_traits/is_move_assignable.hpp"
+#include "etl/detail/type_traits/is_move_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_assignable.hpp"
+#include "etl/detail/type_traits/is_nothrow_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_copy_assignable.hpp"
+#include "etl/detail/type_traits/is_nothrow_copy_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_default_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_destructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_move_assignable.hpp"
+#include "etl/detail/type_traits/is_nothrow_move_constructible.hpp"
+#include "etl/detail/type_traits/is_object.hpp"
+#include "etl/detail/type_traits/is_scalar.hpp"
+#include "etl/detail/type_traits/is_trivially_assignable.hpp"
+#include "etl/detail/type_traits/is_trivially_constructible.hpp"
+#include "etl/detail/type_traits/is_trivially_copy_assignable.hpp"
+#include "etl/detail/type_traits/is_trivially_copy_constructible.hpp"
+#include "etl/detail/type_traits/is_trivially_default_constructible.hpp"
+#include "etl/detail/type_traits/is_trivially_destructible.hpp"
+#include "etl/detail/type_traits/is_trivially_move_assignable.hpp"
+#include "etl/detail/type_traits/is_trivially_move_constructible.hpp"
+#include "etl/detail/type_traits/is_unbounded_array.hpp"
+
 #include "etl/detail/type_traits/decl.hpp"
 
 /// \file This header is part of the type support library.
@@ -120,431 +155,6 @@ constexpr auto is_complete_or_unbounded(TypeIdentity /*id*/) ->
 }
 
 } // namespace detail
-
-namespace detail {
-template <typename T>
-struct is_member_function_pointer_helper : ::etl::false_type {
-};
-
-template <typename T, typename U>
-struct is_member_function_pointer_helper<T U::*> : ::etl::is_function<T> {
-};
-
-} // namespace detail
-
-/// \brief Checks whether T is a non-static member function pointer. Provides
-/// the member constant value which is equal to true, if T is a non-static
-/// member function pointer type. Otherwise, value is equal to false.
-template <typename T>
-struct is_member_function_pointer
-    : detail::is_member_function_pointer_helper<remove_cv_t<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_member_function_pointer_v
-    = is_member_function_pointer<T>::value;
-
-/// \brief Checks whether T is a non-static member object pointer. Provides the
-/// member constant value which is equal to true, if T is a non-static member
-/// object pointer type. Otherwise, value is equal to false.
-template <typename T>
-struct is_member_object_pointer
-    : bool_constant<
-          is_member_pointer_v<T> && !is_member_function_pointer_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_member_object_pointer_v
-    = is_member_object_pointer<T>::value;
-
-/// \brief If T is an arithmetic type (that is, an integral type or a
-/// floating-point type) or a cv-qualified version thereof, provides the member
-/// constant value equal true. For any other type, value is false. The behavior
-/// of a program that adds specializations for is_arithmetic or is_arithmetic_v
-/// (since C++17) is undefined.
-template <typename T>
-struct is_arithmetic
-    : bool_constant<is_integral_v<T> || is_floating_point_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
-
-/// \brief If T is a fundamental type (that is, arithmetic type, void, or
-/// nullptr_t), provides the member constant value equal true. For any other
-/// type, value is false.
-template <typename T>
-struct is_fundamental
-    : bool_constant<
-          is_arithmetic_v<T> || is_void_v<T> || is_null_pointer_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_fundamental_v = is_fundamental<T>::value;
-
-/// \brief If T is a scalar type (that is a possibly cv-qualified arithmetic,
-/// pointer, pointer to member, enumeration, or etl::nullptr_t type), provides
-/// the member constant value equal true. For any other type, value is false.
-template <typename T>
-struct is_scalar
-    : bool_constant<
-          is_arithmetic_v<
-              T> || is_enum_v<T> || is_pointer_v<T> || is_member_pointer_v<T> || is_null_pointer_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_scalar_v = is_scalar<T>::value;
-
-/// \brief If T is an object type (that is any possibly cv-qualified type other
-/// than function, reference, or void types), provides the member constant value
-/// equal true. For any other type, value is false.
-template <typename T>
-struct is_object
-    : bool_constant<
-          is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_object_v = is_object<T>::value;
-
-/// \brief If T is a compound type (that is, array, function, object pointer,
-/// function pointer, member object pointer, member function pointer, reference,
-/// class, union, or enumeration, including any cv-qualified variants), provides
-/// the member constant value equal true. For any other type, value is false.
-template <typename T>
-struct is_compound : bool_constant<!is_fundamental_v<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_compound_v = is_compound<T>::value;
-
-/// \brief Checks whether T is an array type of known bound. Provides the member
-/// constant value which is equal to true, if T is an array type of known bound.
-/// Otherwise, value is equal to false.
-template <typename T>
-struct is_bounded_array : false_type {
-};
-
-template <typename T, size_t N>
-struct is_bounded_array<T[N]> : true_type {
-};
-
-template <typename T>
-inline constexpr bool is_bounded_array_v = is_bounded_array<T>::value;
-
-/// \brief Checks whether T is an array type of unknown bound. Provides the
-/// member constant value which is equal to true, if T is an array type of
-/// unknown bound. Otherwise, value is equal to false.
-template <typename T>
-struct is_unbounded_array : false_type {
-};
-
-template <typename T>
-struct is_unbounded_array<T[]> : true_type {
-};
-
-template <typename T>
-inline constexpr bool is_unbounded_array_v = is_unbounded_array<T>::value;
-
-namespace detail {
-template <typename, typename T, typename... Args>
-struct is_constructible_helper : ::etl::false_type {
-};
-
-template <typename T, typename... Args>
-struct is_constructible_helper<
-    ::etl::void_t<decltype(T(::etl::declval<Args>()...))>, T, Args...>
-    : ::etl::true_type {
-};
-} // namespace detail
-
-template <typename T, typename... Args>
-using is_constructible = detail::is_constructible_helper<void_t<>, T, Args...>;
-
-template <typename T, typename... Args>
-inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
-
-/// \brief The variable definition does not call any operation that is not
-/// trivial. For the purposes of this check, the call to etl::declval is
-/// considered trivial.
-template <typename T, typename... Args>
-struct is_trivially_constructible
-    : bool_constant<TETL_IS_TRIVIAL_CONSTRUCTIBLE(T)> {
-};
-
-template <typename T, typename... Args>
-inline constexpr bool is_trivially_constructible_v
-    = is_trivially_constructible<T, Args...>::value;
-
-namespace detail {
-template <bool, typename T, typename... Args>
-struct nothrow_constructible_impl : false_type {
-};
-
-template <typename T, typename... Args>
-struct nothrow_constructible_impl<true, T, Args...>
-    : bool_constant<noexcept(T(declval<Args>()...))> {
-};
-
-template <typename T, typename Arg>
-struct nothrow_constructible_impl<true, T, Arg>
-    : bool_constant<noexcept(static_cast<T>(declval<Arg>()))> {
-};
-
-template <typename T>
-struct nothrow_constructible_impl<true, T> : bool_constant<noexcept(T())> {
-};
-
-template <typename T, size_t Size>
-struct nothrow_constructible_impl<true, T[Size]>
-    : bool_constant<noexcept(remove_all_extents_t<T>())> {
-};
-
-#if defined(__cpp_aggregate_paren_init)
-template <typename T, size_t Size, typename Arg>
-struct nothrow_constructible_impl<true, T[Size], Arg>
-    : nothrow_constructible_impl<true, T, Arg> {
-};
-
-template <typename T, size_t Size, typename... Args>
-struct nothrow_constructible_impl<true, T[Size], Args...>
-    : meta_and<nothrow_constructible_impl<true, T, Args>...> {
-};
-#endif
-
-template <typename T, typename... Args>
-using is_nothrow_constructible_helper
-    = nothrow_constructible_impl<TETL_IS_CONSTRUCTIBLE(T, Args...), T, Args...>;
-} // namespace detail
-
-/// \brief The variable definition does not call any operation that is not
-/// trivial. For the purposes of this check, the call to etl::declval is
-/// considered trivial.
-template <typename T, typename... Args>
-struct is_nothrow_constructible
-    : detail::is_nothrow_constructible_helper<T, Args...>::type {
-};
-
-template <typename T, typename... Args>
-inline constexpr bool is_nothrow_constructible_v
-    = is_nothrow_constructible<T, Args...>::value;
-
-/// \brief If etl::is_constructible<T>::value is true, provides the member
-/// constant value equal to true, otherwise value is false.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_default_constructible : is_constructible<T> {
-};
-
-template <typename T>
-inline constexpr bool is_default_constructible_v
-    = is_default_constructible<T>::value;
-
-/// \brief  If etl::is_trivially_constructible<T>::value is true, provides the
-/// member constant value equal to true, otherwise value is false.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_trivially_default_constructible : is_trivially_constructible<T> {
-};
-
-template <typename T>
-inline constexpr bool is_trivially_default_constructible_v
-    = is_trivially_default_constructible<T>::value;
-
-/// \brief If etl::is_nothrow_constructible<T>::value is true, provides the
-/// member constant value equal to true, otherwise value is false.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_nothrow_default_constructible : is_nothrow_constructible<T> {
-};
-
-template <typename T>
-inline constexpr bool is_nothrow_default_constructible_v
-    = is_nothrow_default_constructible<T>::value;
-
-/// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
-/// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
-/// member constant value equal to false. Otherwise, provides a member constant
-/// value equal to etl::is_constructible<T, T const&>::value.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_copy_constructible
-    : is_constructible<T, add_lvalue_reference_t<add_const_t<T>>> {
-};
-
-template <typename T>
-inline constexpr bool is_copy_constructible_v = is_copy_constructible<T>::value;
-
-/// \brief Same as copy, but uses etl::is_trivially_constructible<T, T const&>.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_trivially_copy_constructible
-    : is_trivially_constructible<T, add_lvalue_reference_t<add_const_t<T>>> {
-};
-
-template <typename T>
-inline constexpr bool is_trivially_copy_constructible_v
-    = is_trivially_copy_constructible<T>::value;
-
-/// \brief Same as copy, but uses etl::is_nothrow_constructible<T, T const&>.
-///
-/// \details T shall be a complete type, (possibly cv-qualified) void, or an
-/// array of unknown bound. Otherwise, the behavior is undefined. If an
-/// instantiation of a template above depends, directly or indirectly, on an
-/// incomplete type, and that instantiation could yield a different result if
-/// that type were hypothetically completed, the behavior is undefined.
-///
-/// The behavior of a program that adds specializations for any of the templates
-/// described on this page is undefined.
-template <typename T>
-struct is_nothrow_copy_constructible
-    : is_nothrow_constructible<T, add_lvalue_reference_t<add_const_t<T>>> {
-};
-
-template <typename T>
-inline constexpr bool is_nothrow_copy_constructible_v
-    = is_nothrow_copy_constructible<T>::value;
-
-/// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
-/// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
-/// member constant value equal to false. Otherwise, provides a member constant
-/// value equal to etl::is_constructible<T, T&&>::value.
-template <typename T>
-struct is_move_constructible : is_constructible<T, add_rvalue_reference_t<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_move_constructible_v = is_move_constructible<T>::value;
-
-/// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
-/// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
-/// member constant value equal to false. Otherwise, provides a member constant
-/// value equal to etl::is_trivially_constructible<T, T&&>::value.
-template <typename T>
-struct is_trivially_move_constructible
-    : is_trivially_constructible<T, add_rvalue_reference_t<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_trivially_move_constructible_v
-    = is_trivially_move_constructible<T>::value;
-
-/// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
-/// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
-/// member constant value equal to false. Otherwise, provides a member constant
-/// value equal to etl::is_nothrow_constructible<T, T&&>::value.
-template <typename T>
-struct is_nothrow_move_constructible
-    : is_nothrow_constructible<T, add_rvalue_reference_t<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_nothrow_move_constructible_v
-    = is_nothrow_move_constructible<T>::value;
-
-namespace detail {
-struct try_is_destructible_impl {
-    template <typename T, typename = decltype(::etl::declval<T&>().~T())>
-    static auto test(int) -> ::etl::true_type;
-
-    template <typename>
-    static auto test(...) -> ::etl::false_type;
-};
-
-template <typename T>
-struct is_destructible_impl : try_is_destructible_impl {
-    using type = decltype(test<T>(0));
-};
-
-template <typename T,
-    bool = ::etl::disjunction<::etl::is_void<T>, ::etl::is_function<T>,
-        ::etl::is_unbounded_array<T>>::value,
-    bool
-    = ::etl::disjunction<::etl::is_reference<T>, ::etl::is_scalar<T>>::value>
-struct is_destructible_safe;
-
-template <typename T>
-struct is_destructible_safe<T, false, false>
-    : is_destructible_impl<typename ::etl::remove_all_extents_t<T>>::type {
-};
-
-template <typename T>
-struct is_destructible_safe<T, true, false> : ::etl::false_type {
-};
-
-template <typename T>
-struct is_destructible_safe<T, false, true> : ::etl::true_type {
-};
-
-} // namespace detail
-
-/// \brief Because the C++ program terminates if a destructor throws an
-/// exception during stack unwinding (which usually cannot be predicted), all
-/// practical destructors are non-throwing even if they are not declared
-/// noexcept. All destructors found in the C++ standard library are
-/// non-throwing.
-/// \notes
-/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
-/// \group is_destructible
-template <typename T>
-struct is_destructible : detail::is_destructible_safe<T> {
-    //  template argument must be a complete class or an unbounded array
-    static_assert(detail::is_complete_or_unbounded(type_identity<T> {}));
-};
-
-/// \exclude
-template <typename Type>
-struct is_destructible<Type[]> : false_type {
-};
-
-/// \exclude
-template <>
-struct is_destructible<void> : false_type {
-};
-
-/// \group is_destructible
-template <typename T>
-inline constexpr auto is_destructible_v = is_destructible<T>::value;
 
 /// \brief Storage occupied by trivially destructible objects may be reused
 /// without calling the destructor. \notes
