@@ -32,11 +32,11 @@ struct complex {
     using value_type = T;
 
     constexpr complex(T const& re = T(), T const& im = T());
-    constexpr complex(complex const&);
+    constexpr complex(complex const& other);
     template <typename X>
     constexpr complex(complex<X> const& other);
 
-    constexpr auto operator=(T const& other) -> complex<T>&;
+    constexpr auto operator=(T const& val) -> complex<T>&;
     constexpr auto operator=(complex const& other) -> complex&;
     template <typename X>
     constexpr auto operator=(complex<X> const& other) -> complex<T>&;

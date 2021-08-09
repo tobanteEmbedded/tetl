@@ -75,8 +75,8 @@ TEST_CASE("complex: literals", "[complex]")
     using namespace etl::complex_literals;
 
     auto f = 2_if;
-    REQUIRE(f.real() == 0.0f);
-    REQUIRE(f.imag() == 2.0f);
+    REQUIRE(f.real() == 0.0F);
+    REQUIRE(f.imag() == 2.0F);
 
     auto d = 2_i;
     REQUIRE(d.real() == 0.0);
