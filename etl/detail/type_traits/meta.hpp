@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_META_AND_HPP
-#define TETL_DETAIL_TYPE_TRAITS_META_AND_HPP
+#ifndef TETL_DETAIL_TYPE_TRAITS_META_HPP
+#define TETL_DETAIL_TYPE_TRAITS_META_HPP
 
 #include "etl/detail/type_traits/bool_constant.hpp"
 #include "etl/detail/type_traits/conditional.hpp"
@@ -81,4 +81,4 @@ struct meta_not : bool_constant<!bool(P::value)> {
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_TYPE_TRAITS_META_AND_HPP
+#endif // TETL_DETAIL_TYPE_TRAITS_META_HPP
