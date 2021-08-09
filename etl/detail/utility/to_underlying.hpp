@@ -21,22 +21,23 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_UTILITY_HPP
-#define TETL_UTILITY_HPP
+#ifndef TETL_DETAIL_UTILITY_TO_UNDERLYING_HPP
+#define TETL_DETAIL_UTILITY_TO_UNDERLYING_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/type_traits/underlying_type.hpp"
 
-#include "etl/detail/utility/as_const.hpp"
-#include "etl/detail/utility/cmp.hpp"
-#include "etl/detail/utility/exchange.hpp"
-#include "etl/detail/utility/forward.hpp"
-#include "etl/detail/utility/in_place.hpp"
-#include "etl/detail/utility/in_place_index.hpp"
-#include "etl/detail/utility/in_place_type.hpp"
-#include "etl/detail/utility/in_range.hpp"
-#include "etl/detail/utility/move.hpp"
-#include "etl/detail/utility/pair.hpp"
-#include "etl/detail/utility/piecewise_construct.hpp"
-#include "etl/detail/utility/to_underlying.hpp"
+namespace etl {
 
-#endif // TETL_UTILITY_HPP
+/// \brief Converts an enumeration to its underlying type.
+///
+/// https://en.cppreference.com/w/cpp/utility/to_underlying
+template <typename Enum>
+[[nodiscard]] constexpr auto to_underlying(Enum e) noexcept
+    -> underlying_type_t<Enum>
+{
+    return static_cast<underlying_type_t<Enum>>(e);
+}
+
+} // namespace etl
+
+#endif // TETL_DETAIL_UTILITY_TO_UNDERLYING_HPP

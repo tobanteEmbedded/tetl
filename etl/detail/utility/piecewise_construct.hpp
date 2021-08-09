@@ -21,22 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_UTILITY_HPP
-#define TETL_UTILITY_HPP
+#ifndef TETL_DETAIL_UTILITY_PIECEWISE_CONSTRUCT_HPP
+#define TETL_DETAIL_UTILITY_PIECEWISE_CONSTRUCT_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
 
-#include "etl/detail/utility/as_const.hpp"
-#include "etl/detail/utility/cmp.hpp"
-#include "etl/detail/utility/exchange.hpp"
-#include "etl/detail/utility/forward.hpp"
-#include "etl/detail/utility/in_place.hpp"
-#include "etl/detail/utility/in_place_index.hpp"
-#include "etl/detail/utility/in_place_type.hpp"
-#include "etl/detail/utility/in_range.hpp"
-#include "etl/detail/utility/move.hpp"
-#include "etl/detail/utility/pair.hpp"
-#include "etl/detail/utility/piecewise_construct.hpp"
-#include "etl/detail/utility/to_underlying.hpp"
+namespace etl {
 
-#endif // TETL_UTILITY_HPP
+/// \brief etl::piecewise_construct_t is an empty class tag type used to
+/// disambiguate between different functions that take two tuple arguments.
+///
+/// \details The overloads that do not use etl::piecewise_construct_t assume
+/// that each tuple argument becomes the element of a pair. The overloads that
+/// use etl::piecewise_construct_t assume that each tuple argument is used to
+/// construct, piecewise, a new object of specified type, which will become the
+/// element of the pair.
+///
+/// \notes
+/// [cppreference.com/w/cpp/utility/piecewise_construct_t](https://en.cppreference.com/w/cpp/utility/piecewise_construct_t)
+struct piecewise_construct_t {
+    explicit piecewise_construct_t() = default;
+};
+
+/// \brief The constant etl::piecewise_construct is an instance of an empty
+/// struct tag type etl::piecewise_construct_t.
+inline constexpr auto piecewise_construct = piecewise_construct_t {};
+
+} // namespace etl
+
+#endif // TETL_DETAIL_UTILITY_PIECEWISE_CONSTRUCT_HPP

@@ -21,22 +21,25 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_UTILITY_HPP
-#define TETL_UTILITY_HPP
+#ifndef TETL_DETAIL_UTILITY_EXCHANGE_HPP
+#define TETL_DETAIL_UTILITY_EXCHANGE_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/detail/utility/as_const.hpp"
-#include "etl/detail/utility/cmp.hpp"
-#include "etl/detail/utility/exchange.hpp"
 #include "etl/detail/utility/forward.hpp"
-#include "etl/detail/utility/in_place.hpp"
-#include "etl/detail/utility/in_place_index.hpp"
-#include "etl/detail/utility/in_place_type.hpp"
-#include "etl/detail/utility/in_range.hpp"
 #include "etl/detail/utility/move.hpp"
-#include "etl/detail/utility/pair.hpp"
-#include "etl/detail/utility/piecewise_construct.hpp"
-#include "etl/detail/utility/to_underlying.hpp"
 
-#endif // TETL_UTILITY_HPP
+namespace etl {
+
+/// \brief Replaces the value of obj with new_value and returns the old value of
+/// obj.
+/// \returns The old value of obj.
+template <typename T, typename U = T>
+[[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
+{
+    T oldValue = move(obj);
+    obj        = forward<U>(newValue);
+    return oldValue;
+}
+
+} // namespace etl
+
+#endif // TETL_DETAIL_UTILITY_EXCHANGE_HPP

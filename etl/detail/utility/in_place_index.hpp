@@ -21,22 +21,29 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_UTILITY_HPP
-#define TETL_UTILITY_HPP
+#ifndef TETL_DETAIL_UTILITY_IN_PLACE_INDEX_HPP
+#define TETL_DETAIL_UTILITY_IN_PLACE_INDEX_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
 
-#include "etl/detail/utility/as_const.hpp"
-#include "etl/detail/utility/cmp.hpp"
-#include "etl/detail/utility/exchange.hpp"
-#include "etl/detail/utility/forward.hpp"
-#include "etl/detail/utility/in_place.hpp"
-#include "etl/detail/utility/in_place_index.hpp"
-#include "etl/detail/utility/in_place_type.hpp"
-#include "etl/detail/utility/in_range.hpp"
-#include "etl/detail/utility/move.hpp"
-#include "etl/detail/utility/pair.hpp"
-#include "etl/detail/utility/piecewise_construct.hpp"
-#include "etl/detail/utility/to_underlying.hpp"
+namespace etl {
 
-#endif // TETL_UTILITY_HPP
+/// \brief Disambiguation tags that can be passed to the constructors of
+/// etl::optional, etl::variant, and etl::any to indicate that the contained
+/// object should be constructed in-place, and (for the latter two) the type of
+/// the object to be constructed.
+///
+/// \details The corresponding type/type templates etl::in_place_t,
+/// etl::in_place_type_t and etl::in_place_index_t can be used in the
+/// constructor's parameter list to match the intended tag.
+template <size_t I>
+struct in_place_index_t {
+    explicit in_place_index_t() = default;
+};
+
+template <size_t I>
+inline constexpr auto in_place_index = in_place_index_t<I> {};
+
+} // namespace etl
+
+#endif // TETL_DETAIL_UTILITY_IN_PLACE_INDEX_HPP

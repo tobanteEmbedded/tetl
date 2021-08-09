@@ -22,6 +22,8 @@
 // DAMAGE.
 #include "etl/utility.hpp"
 
+#include "etl/type_traits.hpp"
+
 #include "catch2/catch_template_test_macros.hpp"
 
 using etl::is_same_v;
