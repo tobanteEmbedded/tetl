@@ -140,6 +140,161 @@ constexpr auto wcslen(wchar_t const* str) -> etl::size_t
     return detail::strlen_impl<wchar_t, etl::size_t>(str);
 }
 
+/// \brief Compares two null-terminated wide strings lexicographically.
+///
+/// \details The sign of the result is the sign of the difference between the
+/// values of the first pair of wide characters that differ in the strings being
+/// compared.
+///
+/// The behavior is undefined if lhs or rhs are not pointers to null-terminated
+/// wide strings.
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs)
+    -> int
+{
+    return detail::strcmp_impl<wchar_t>(lhs, rhs);
+}
+
+/// \brief Compares at most count wide characters of two null-terminated wide
+/// strings. The comparison is done lexicographically.
+///
+/// \details The sign of the result is the sign of the difference between the
+/// values of the first pair of wide characters that differ in the strings being
+/// compared.
+///
+/// The behavior is undefined if lhs or rhs are not pointers to null-terminated
+/// strings.
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcsncmp(
+    wchar_t const* lhs, wchar_t const* rhs, etl::size_t count) -> int
+{
+    return detail::strncmp_impl<wchar_t, etl::size_t>(lhs, rhs, count);
+}
+
+/// \brief Finds the first occurrence of the wide character ch in the wide
+/// string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcschr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcschr(wchar_t* str, int ch) -> wchar_t*
+{
+    return detail::strchr_impl<wchar_t>(str, ch);
+}
+
+/// \brief Finds the first occurrence of the wide character ch in the wide
+/// string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcschr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcschr(wchar_t const* str, int ch)
+    -> wchar_t const*
+{
+    return detail::strchr_impl<wchar_t const>(str, ch);
+}
+
+/// \brief Finds the last occurrence of the wide character ch in the wide string
+/// pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcsrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcsrchr(wchar_t* str, int ch) -> wchar_t*
+{
+    return detail::strrchr_impl<wchar_t, etl::size_t>(str, ch);
+}
+
+/// \brief Finds the last occurrence of the wide character ch in the wide string
+/// pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcsrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcsrchr(wchar_t const* str, int ch)
+    -> wchar_t const*
+{
+    return detail::strrchr_impl<wchar_t const, etl::size_t>(str, ch);
+}
+
+/// \brief Returns the length of the maximum initial segment of the wide string
+/// pointed to by dest, that consists of only the characters found in wide
+/// string pointed to by src.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcsspn
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcsspn(
+    wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
+{
+    return detail::str_span_impl<wchar_t, etl::size_t, true>(dest, src);
+}
+
+/// \brief Returns the length of the maximum initial segment of the wide string
+/// pointed to by dest, that consists of only the characters not found in wide
+/// string pointed to by src.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcscspn
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcscspn(
+    wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
+{
+    return detail::str_span_impl<wchar_t, etl::size_t, false>(dest, src);
+}
+
+/// \brief Finds the first character in wide string pointed to by dest, that is
+/// also in wide string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcspbrk(wchar_t* dest, wchar_t* breakset) noexcept
+    -> wchar_t*
+{
+    return detail::strpbrk_impl<wchar_t, etl::size_t>(dest, breakset);
+}
+
+/// \brief Finds the first character in wide string pointed to by dest, that is
+/// also in wide string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcspbrk(
+    wchar_t const* dest, wchar_t const* breakset) noexcept -> wchar_t const*
+{
+    return detail::strpbrk_impl<wchar_t const, etl::size_t>(dest, breakset);
+}
+
+/// \brief Finds the first occurrence of the wide string needle in the wide
+/// string pointed to by haystack. The terminating null characters are not
+/// compared.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strstr(wchar_t* haystack, wchar_t* needle) noexcept
+    -> wchar_t*
+{
+    return detail::strstr_impl<wchar_t>(haystack, needle);
+}
+
+/// \brief Finds the first occurrence of the wide string needle in the wide
+/// string pointed to by haystack. The terminating null characters are not
+/// compared.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strstr(
+    wchar_t const* haystack, wchar_t const* needle) noexcept -> wchar_t const*
+{
+    return detail::strstr_impl<wchar_t const>(haystack, needle);
+}
+
 } // namespace etl
 
 #endif // TETL_CTIME_HPP
