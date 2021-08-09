@@ -32,7 +32,7 @@
 #include "etl/cstring.hpp"
 
 #include "etl/detail/cstddef_internal.hpp"
-#include "etl/detail/string_conversion.hpp"
+#include "etl/detail/strings/conversion.hpp"
 
 namespace etl {
 #if not defined(EXIT_SUCCESS)

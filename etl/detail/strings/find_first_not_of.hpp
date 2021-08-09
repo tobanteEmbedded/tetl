@@ -24,9 +24,7 @@
 #ifndef TETL_DETAIL_STRING_ALGORITHM_HPP
 #define TETL_DETAIL_STRING_ALGORITHM_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/detail/string_char_traits.hpp"
+#include "etl/detail/strings/char_traits.hpp"
 
 namespace etl::detail {
 

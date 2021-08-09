@@ -29,7 +29,7 @@
 #include "etl/cassert.hpp"
 
 #include "etl/detail/cstddef_internal.hpp"
-#include "etl/detail/cstring_algorithm.hpp"
+#include "etl/detail/strings/cstr_algorithm.hpp"
 
 #if defined(TETL_MSVC)
 #include <wchar.h>

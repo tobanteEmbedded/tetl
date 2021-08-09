@@ -28,7 +28,7 @@
 #include "etl/system_error.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/string_conversion.hpp"
+#include "etl/detail/strings/conversion.hpp"
 
 #include "etl/string_view.hpp"
 
