@@ -33,6 +33,8 @@
 
 #include "etl/detail/type_traits/bool_constant.hpp"
 #include "etl/detail/type_traits/conditional.hpp"
+#include "etl/detail/type_traits/conjunction.hpp"
+#include "etl/detail/type_traits/disjunction.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/integral_constant.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
@@ -43,50 +45,6 @@
 
 /// \file This header is part of the type support library.
 namespace etl {
-
-/// \brief Forms the logical conjunction of the type traits B..., effectively
-/// performing a logical AND on the sequence of traits.
-/// \group conjunction
-template <typename...>
-struct conjunction : true_type {
-};
-
-/// \exclude
-template <typename B1>
-struct conjunction<B1> : B1 {
-};
-
-/// \exclude
-template <typename B1, typename... Bn>
-struct conjunction<B1, Bn...>
-    : conditional_t<bool(B1::value), conjunction<Bn...>, B1> {
-};
-
-/// \group conjunction
-template <typename... B>
-inline constexpr bool conjunction_v = conjunction<B...>::value;
-
-/// \brief Forms the logical disjunction of the type traits B..., effectively
-/// performing a logical OR on the sequence of traits.
-/// \group disjunction
-template <typename...>
-struct disjunction : false_type {
-};
-
-/// \exclude
-template <typename B1>
-struct disjunction<B1> : B1 {
-};
-
-/// \exclude
-template <typename B1, typename... Bn>
-struct disjunction<B1, Bn...>
-    : conditional_t<bool(B1::value), B1, disjunction<Bn...>> {
-};
-
-/// \group disjunction
-template <typename... B>
-inline constexpr bool disjunction_v = disjunction<B...>::value;
 
 /// \brief Forms the logical negation of the type trait B.
 /// \group negation
