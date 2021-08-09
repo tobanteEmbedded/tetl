@@ -24,8 +24,9 @@
 #ifndef TETL_DETAIL_ALGORITHM_SEARCH_HPP
 #define TETL_DETAIL_ALGORITHM_SEARCH_HPP
 
-namespace etl::detail {
-/// Needed by algorithm.hpp & function.hpp (default_searcher)
+namespace etl {
+namespace detail {
+
 template <typename ForwardIter1, typename ForwardIter2,
     typename BinaryPredicate>
 [[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
@@ -41,6 +42,47 @@ template <typename ForwardIter1, typename ForwardIter2,
         }
     }
 }
-} // namespace etl::detail
+} // namespace detail
+
+/// \brief Searches for the first occurrence of the sequence of elements
+/// [sFirst, sLast) in the range `[first, last)`.
+///
+/// \param first The range of elements to examine.
+/// \param last The range of elements to examine.
+/// \param sFirst The range of elements to search for.
+/// \param sLast The range of elements to search for.
+/// \param pred Binary predicate which returns ​true if the elements should be
+/// treated as equal.
+///
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/search](https://en.cppreference.com/w/cpp/algorithm/search)
+///
+/// \group search
+/// \module Algorithm
+template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
+[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
+    ForwardIt2 sFirst, ForwardIt2 sLast, Predicate pred) -> ForwardIt1
+{
+    return detail::search_impl(first, last, sFirst, sLast, pred);
+}
+
+/// \group search
+template <typename ForwardIt1, typename ForwardIt2>
+[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
+    ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
+{
+    auto const eq = [](auto const& l, auto const& r) { return l == r; };
+    return search(first, last, sFirst, sLast, eq);
+}
+
+/// \group search
+template <typename ForwardIt, typename Searcher>
+[[nodiscard]] constexpr auto search(
+    ForwardIt first, ForwardIt last, Searcher const& searcher) -> ForwardIt
+{
+    return searcher(first, last).first;
+}
+
+} // namespace etl
 
 #endif // TETL_DETAIL_ALGORITHM_SEARCH_HPP
