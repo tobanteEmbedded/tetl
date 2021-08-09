@@ -10,9 +10,11 @@ AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-Language: Cpp
-ReflowComments: true
 ColumnLimit: 80
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+FixNamespaceComments: true
+Language: Cpp
+NamespaceIndentation: None
+ReflowComments: true
 Standard: Auto
 UseTab: Never

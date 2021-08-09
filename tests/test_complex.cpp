@@ -69,3 +69,17 @@ TEMPLATE_TEST_CASE("complex: complex<T>", "[complex]", unsigned char,
         REQUIRE(tc.imag() == T { -2 });
     }
 }
+
+TEST_CASE("complex: literals", "[complex]")
+{
+    using namespace etl::complex_literals;
+
+    REQUIRE(2_if.real() == 0.0f);
+    REQUIRE(2_if.imag() == 2.0f);
+
+    REQUIRE(2_i.real() == 0.0);
+    REQUIRE(2_i.imag() == 2.0);
+
+    REQUIRE(2_il.real() == 0.0L);
+    REQUIRE(2_il.imag() == 2.0L);
+}

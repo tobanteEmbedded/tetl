@@ -75,7 +75,22 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator-(complex<T> const& val) -> complex<T>;
 
-}
+inline namespace literals {
+inline namespace complex_literals {
+
+[[nodiscard]] constexpr auto operator""_il(long double) -> complex<long double>;
+[[nodiscard]] constexpr auto operator""_il(unsigned long long)
+    -> complex<long double>;
+[[nodiscard]] constexpr auto operator""_i(long double) -> complex<double>;
+[[nodiscard]] constexpr auto operator""_i(unsigned long long)
+    -> complex<double>;
+[[nodiscard]] constexpr auto operator""_if(long double) -> complex<float>;
+[[nodiscard]] constexpr auto operator""_if(unsigned long long)
+    -> complex<float>;
+
+} // namespace complex_literals
+} // namespace literals
+} // namespace etl
 
 namespace etl {
 
@@ -169,6 +184,42 @@ constexpr auto operator-(complex<T> const& val) -> complex<T>
 {
     return { -val.real(), -val.imag() };
 }
+
+inline namespace literals {
+inline namespace complex_literals {
+
+constexpr auto operator""_il(long double d) -> complex<long double>
+{
+    return { 0.0L, static_cast<long double>(d) };
+}
+
+constexpr auto operator""_il(unsigned long long d) -> complex<long double>
+{
+    return { 0.0L, static_cast<long double>(d) };
+}
+
+constexpr auto operator""_i(long double d) -> complex<double>
+{
+    return { 0.0, static_cast<double>(d) };
+}
+
+constexpr auto operator""_i(unsigned long long d) -> complex<double>
+{
+    return { 0.0, static_cast<double>(d) };
+}
+
+constexpr auto operator""_if(long double d) -> complex<float>
+{
+    return { 0.0F, static_cast<float>(d) };
+}
+
+constexpr auto operator""_if(unsigned long long d) -> complex<float>
+{
+    return { 0.0F, static_cast<float>(d) };
+}
+
+} // namespace complex_literals
+} // namespace literals
 
 } // namespace etl
 
