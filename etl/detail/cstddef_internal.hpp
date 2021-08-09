@@ -24,7 +24,8 @@
 #ifndef TETL_DETAIL_CSTDDEF_INTERNAL_HPP
 #define TETL_DETAIL_CSTDDEF_INTERNAL_HPP
 
-#include "etl/detail/intrinsics.hpp"
+#include "etl/detail/config/builtin_types.hpp"
+#include "etl/detail/config/compiler.hpp"
 
 namespace etl {
 /// \brief etl::size_t is the unsigned integer type of the result of the sizeof

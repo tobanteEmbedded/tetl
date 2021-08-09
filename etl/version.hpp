@@ -24,11 +24,14 @@
 #ifndef TETL_VERSION_HPP
 #define TETL_VERSION_HPP
 
-#if defined(DOXYGEN)
-#define TETL_DOC_GEN 1
-#endif
-
-#include "etl/detail/intrinsics.hpp"
+// clang-format off
+#include "etl/detail/config/compiler.hpp"
+#include "etl/detail/config/preprocessor.hpp"
+#include "etl/detail/config/keywords.hpp"
+#include "etl/detail/config/builtin_types.hpp"
+#include "etl/detail/config/builtin_functions.hpp"
+#include "etl/detail/config/attributes.hpp"
+// clang-format on
 
 #if (__has_include(<version>))
 #include <version>

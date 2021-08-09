@@ -21,59 +21,21 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPETRAITS_DECL_HPP
-#define TETL_TYPETRAITS_DECL_HPP
+#ifndef TETL_DETAIL_CONFIG_COMPILER_HPP
+#define TETL_DETAIL_CONFIG_COMPILER_HPP
 
-namespace etl {
-// primary type categories:
-template <typename T>
-struct is_void;
-template <typename T>
-struct is_null_pointer;
-template <typename T>
-struct is_integral;
-template <typename T>
-struct is_floating_point;
-template <typename T>
-struct is_array;
-template <typename T>
-struct is_pointer;
-template <typename T>
-struct is_lvalue_reference;
-template <typename T>
-struct is_rvalue_reference;
-template <typename T>
-struct is_member_object_pointer;
-template <typename T>
-struct is_member_function_pointer;
-template <typename T>
-struct is_enum;
-template <typename T>
-struct is_union;
-template <typename T>
-struct is_typename;
-template <typename T>
-struct is_function;
+#if defined(__clang__)
+#define TETL_CLANG 1
+#elif defined(__GNUC__)
+#define TETL_GCC 1
+#elif defined(_MSC_VER)
+#define TETL_MSVC 1
+#elif defined(__INTEL_COMPILER)
+#define TETL_INTEL 1
+#elif defined(__EMSCRIPTEN__)
+#define TETL_EMSCRIPTEN 1
+#else
+#error "unknown compiler"
+#endif
 
-// composite type categories:
-template <typename T>
-struct is_reference;
-template <typename T>
-struct is_arithmetic;
-template <typename T>
-struct is_fundamental;
-template <typename T>
-struct is_object;
-template <typename T>
-struct is_scalar;
-template <typename T>
-struct is_compound;
-template <typename T>
-struct is_member_pointer;
-
-template <typename T>
-constexpr auto swap(T& a, T& b) noexcept -> void;
-
-} // namespace etl
-
-#endif // TETL_TYPETRAITS_DECL_HPP
+#endif // TETL_DETAIL_CONFIG_COMPILER_HPP

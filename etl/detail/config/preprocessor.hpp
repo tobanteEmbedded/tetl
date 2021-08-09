@@ -21,59 +21,41 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPETRAITS_DECL_HPP
-#define TETL_TYPETRAITS_DECL_HPP
+#ifndef TETL_DETAIL_CONFIG_PREPROCESSOR_HPP
+#define TETL_DETAIL_CONFIG_PREPROCESSOR_HPP
 
-namespace etl {
-// primary type categories:
-template <typename T>
-struct is_void;
-template <typename T>
-struct is_null_pointer;
-template <typename T>
-struct is_integral;
-template <typename T>
-struct is_floating_point;
-template <typename T>
-struct is_array;
-template <typename T>
-struct is_pointer;
-template <typename T>
-struct is_lvalue_reference;
-template <typename T>
-struct is_rvalue_reference;
-template <typename T>
-struct is_member_object_pointer;
-template <typename T>
-struct is_member_function_pointer;
-template <typename T>
-struct is_enum;
-template <typename T>
-struct is_union;
-template <typename T>
-struct is_typename;
-template <typename T>
-struct is_function;
+#ifndef __has_feature
+#define __has_feature(x) 0
+#endif
 
-// composite type categories:
-template <typename T>
-struct is_reference;
-template <typename T>
-struct is_arithmetic;
-template <typename T>
-struct is_fundamental;
-template <typename T>
-struct is_object;
-template <typename T>
-struct is_scalar;
-template <typename T>
-struct is_compound;
-template <typename T>
-struct is_member_pointer;
+#ifndef __has_extension
+#define __has_extension(x) 0
+#endif
 
-template <typename T>
-constexpr auto swap(T& a, T& b) noexcept -> void;
+#ifndef __has_attribute
+#define __has_attribute(x) 0
+#endif
 
-} // namespace etl
+#ifndef __has_builtin
+#define __has_builtin(x) 0
+#endif
 
-#endif // TETL_TYPETRAITS_DECL_HPP
+#define TETL_STRINGIFY_IMPL(str) #str
+#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
+
+#define TETL_CONCAT_IMPL(s1, s2) s1##s2
+#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
+
+#ifdef __COUNTER__
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
+#else
+#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
+#endif
+
+#if defined(__GNUC__)
+#define TETL_FUNC_SIG __PRETTY_FUNCTION__
+#else
+#define TETL_FUNC_SIG __func__
+#endif
+
+#endif // TETL_DETAIL_CONFIG_PREPROCESSOR_HPP

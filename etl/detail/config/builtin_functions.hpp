@@ -21,110 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_INTRINSICS_HPP
-#define TETL_INTRINSICS_HPP
-
-#ifndef __has_feature
-#define __has_feature(x) 0
-#endif
-
-#ifndef __has_extension
-#define __has_extension(x) 0
-#endif
-
-#ifndef __has_attribute
-#define __has_attribute(x) 0
-#endif
-
-#ifndef __has_builtin
-#define __has_builtin(x) 0
-#endif
-
-#if defined(__clang__)
-#define TETL_CLANG 1
-#elif defined(__GNUC__)
-#define TETL_GCC 1
-#elif defined(_MSC_VER)
-#define TETL_MSVC 1
-#elif defined(__INTEL_COMPILER)
-#define TETL_INTEL 1
-#elif defined(__EMSCRIPTEN__)
-#define TETL_EMSCRIPTEN 1
-#else
-#error "unknown compiler"
-#endif
-
-#ifdef _MSC_VER
-#define TETL_BUILTIN_INT8 __int8
-#define TETL_BUILTIN_INT16 __int16
-#define TETL_BUILTIN_INT32 __int32
-#define TETL_BUILTIN_INT64 __int64
-#define TETL_BUILTIN_UINT8 unsigned __int8
-#define TETL_BUILTIN_UINT16 unsigned __int16
-#define TETL_BUILTIN_UINT32 unsigned __int32
-#define TETL_BUILTIN_UINT64 unsigned __int64
-
-#define TETL_BUILTIN_INTPTR TETL_BUILTIN_INT64
-#define TETL_BUILTIN_UINTPTR TETL_BUILTIN_UINT64
-#define TETL_BUILTIN_INTMAX TETL_BUILTIN_INT64
-#define TETL_BUILTIN_UINTMAX TETL_BUILTIN_UINT64
-#define TETL_BUILTIN_SIZET decltype(sizeof(nullptr))
-#define TETL_BUILTIN_PTRDIFF TETL_BUILTIN_INT64
-#else
-#define TETL_BUILTIN_INT8 __INT8_TYPE__
-#define TETL_BUILTIN_INT16 __INT16_TYPE__
-#define TETL_BUILTIN_INT32 __INT32_TYPE__
-#define TETL_BUILTIN_INT64 __INT64_TYPE__
-#define TETL_BUILTIN_UINT8 __UINT8_TYPE__
-#define TETL_BUILTIN_UINT16 __UINT16_TYPE__
-#define TETL_BUILTIN_UINT32 __UINT32_TYPE__
-#define TETL_BUILTIN_UINT64 __UINT64_TYPE__
-
-#define TETL_BUILTIN_INTPTR __INTPTR_TYPE__
-#define TETL_BUILTIN_UINTPTR __UINTPTR_TYPE__
-#define TETL_BUILTIN_INTMAX __INTMAX_TYPE__
-#define TETL_BUILTIN_UINTMAX __UINTMAX_TYPE__
-#define TETL_BUILTIN_SIZET __SIZE_TYPE__
-#define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
-#endif
-
-#if !defined(TETL_DETAIL_WCHAR_MIN)
-#if defined(__WCHAR_MIN__)
-#define TETL_DETAIL_WCHAR_MIN __WCHAR_MIN__
-#elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define TETL_DETAIL_WCHAR_MIN (0 + L'\0')
-#else
-#define TETL_DETAIL_WCHAR_MIN (-0x7fffffff - 1 + L'\0')
-#endif
-#endif // TETL_DETAIL_WCHAR_MIN
-
-#if !defined(TETL_DETAIL_WCHAR_MAX)
-#if defined(__WCHAR_MAX__)
-#define TETL_DETAIL_WCHAR_MAX __WCHAR_MAX__
-#elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define TETL_DETAIL_WCHAR_MAX (0xffffffffu + L'\0')
-#else
-#define TETL_DETAIL_WCHAR_MAX (0x7fffffff + L'\0')
-#endif
-#endif // TETL_DETAIL_WCHAR_MAX
-
-#define TETL_STRINGIFY_IMPL(str) #str
-#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
-
-#define TETL_CONCAT_IMPL(s1, s2) s1##s2
-#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
-
-#ifdef __COUNTER__
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
-#else
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
-#endif
-
-#if defined(__GNUC__)
-#define TETL_FUNC_SIG __PRETTY_FUNCTION__
-#else
-#define TETL_FUNC_SIG __func__
-#endif
+#ifndef TETL_DETAIL_CONFIG_BUILTIN_FUNCTIONS_HPP
+#define TETL_DETAIL_CONFIG_BUILTIN_FUNCTIONS_HPP
 
 #if __has_builtin(__builtin_COLUMN)
 #define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
@@ -150,36 +48,6 @@
 #define TETL_BUILTIN_FUNCTION() ""
 #endif
 
-#if defined(__cpp_consteval)
-#define TETL_CONSTEVAL consteval
-#else
-#define TETL_CONSTEVAL constexpr
-#endif
-
-#if __has_builtin(__builtin_expect)
-#define TETL_LIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), true)
-#define TETL_UNLIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), false)
-#else
-#define TETL_LIKELY(EXPR) (EXPR)
-#define TETL_UNLIKELY(EXPR) (EXPR)
-#endif
-
-#if __has_attribute(always_inline)
-#define TETL_ALWAYS_INLINE __attribute__((always_inline))
-#elif defined(_MSC_VER)
-#define TETL_ALWAYS_INLINE __forceinline
-#else
-#define TETL_ALWAYS_INLINE
-#endif
-
-#ifdef __GNUC__
-#define TETL_NORETURN __attribute__((noreturn))
-#elif defined(_MSC_VER)
-#define TETL_NORETURN __declspec(noreturn)
-#else
-#define TETL_NORETURN
-#endif
-
 #if __has_builtin(__builtin_unreachable)
 #define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
@@ -195,6 +63,14 @@
         } x;                                                                   \
         x = x;                                                                 \
     }
+#endif
+
+#if __has_builtin(__builtin_expect)
+#define TETL_LIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), true)
+#define TETL_UNLIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), false)
+#else
+#define TETL_LIKELY(EXPR) (EXPR)
+#define TETL_UNLIKELY(EXPR) (EXPR)
 #endif
 
 #if not defined(TETL_BUILTIN_NANF)
@@ -238,13 +114,14 @@
 #if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
 #define TETL_BUILTIN_SIGNBIT(x) __builtin_signbit(x)
 #else
-#define TETL_BUILTIN_SIGNBIT(x) ::etl::detail::signbit_fallback(x)
+#define TETL_BUILTIN_SIGNBIT(x) ::etl::detail::builtin_signbit_fallback(x)
 #endif
 
 #if __has_builtin(__builtin_copysign)
 #define TETL_BUILTIN_COPYSIGN(x, y) __builtin_copysign(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGN(x, y) ::etl::detail::copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGN(x, y)                                            \
+    ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_is_constant_evaluated)
@@ -328,17 +205,17 @@
 
 namespace etl::detail {
 template <typename T>
-constexpr auto copysign_fallback(T x, T y) noexcept -> T
+constexpr auto builtin_copysign_fallback(T x, T y) noexcept -> T
 {
     if ((x < 0 && y > 0) || (x > 0 && y < 0)) { return -x; }
     return x;
 }
 
 template <typename T>
-constexpr auto signbit_fallback(T arg) noexcept -> bool
+constexpr auto builtin_signbit_fallback(T arg) noexcept -> bool
 {
     return arg == T(-0.0) || arg < T(0);
 }
 } // namespace etl::detail
 
-#endif // TETL_INTRINSICS_HPP
+#endif // TETL_DETAIL_CONFIG_BUILTIN_FUNCTIONS_HPP

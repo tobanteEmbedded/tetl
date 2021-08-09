@@ -21,59 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPETRAITS_DECL_HPP
-#define TETL_TYPETRAITS_DECL_HPP
+#ifndef TETL_DETAIL_CONFIG_KEYWORDS_HPP
+#define TETL_DETAIL_CONFIG_KEYWORDS_HPP
 
-namespace etl {
-// primary type categories:
-template <typename T>
-struct is_void;
-template <typename T>
-struct is_null_pointer;
-template <typename T>
-struct is_integral;
-template <typename T>
-struct is_floating_point;
-template <typename T>
-struct is_array;
-template <typename T>
-struct is_pointer;
-template <typename T>
-struct is_lvalue_reference;
-template <typename T>
-struct is_rvalue_reference;
-template <typename T>
-struct is_member_object_pointer;
-template <typename T>
-struct is_member_function_pointer;
-template <typename T>
-struct is_enum;
-template <typename T>
-struct is_union;
-template <typename T>
-struct is_typename;
-template <typename T>
-struct is_function;
+#if defined(__cpp_consteval)
+#define TETL_CONSTEVAL consteval
+#else
+#define TETL_CONSTEVAL constexpr
+#endif
 
-// composite type categories:
-template <typename T>
-struct is_reference;
-template <typename T>
-struct is_arithmetic;
-template <typename T>
-struct is_fundamental;
-template <typename T>
-struct is_object;
-template <typename T>
-struct is_scalar;
-template <typename T>
-struct is_compound;
-template <typename T>
-struct is_member_pointer;
-
-template <typename T>
-constexpr auto swap(T& a, T& b) noexcept -> void;
-
-} // namespace etl
-
-#endif // TETL_TYPETRAITS_DECL_HPP
+#endif // TETL_DETAIL_CONFIG_KEYWORDS_HPP
