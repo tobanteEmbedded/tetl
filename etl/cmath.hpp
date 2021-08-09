@@ -30,7 +30,6 @@
 
 #include "etl/detail/math/abs.hpp"
 #include "etl/detail/math/lerp.hpp"
-
 #include "etl/detail/type_traits/enable_if.hpp"
 
 #if __has_include(<math.h>)
@@ -160,29 +159,6 @@ template <typename Int>
     long double a, long double b, long double t) noexcept -> long double
 {
     return detail::lerp_impl<long double>(a, b, t);
-}
-
-/// \brief Computes the absolute value of an integer number. The behavior is
-/// undefined if the result cannot be represented by the return type. If abs
-/// is called with an unsigned integral argument that cannot be converted to int
-/// by integral promotion, the program is ill-formed.
-/// \group abs
-/// \module Numeric
-[[nodiscard]] constexpr auto abs(int n) noexcept -> int
-{
-    return detail::abs_impl<int>(n);
-}
-
-/// \group abs
-[[nodiscard]] constexpr auto abs(long n) noexcept -> long
-{
-    return detail::abs_impl<long>(n);
-}
-
-/// \group abs
-[[nodiscard]] constexpr auto abs(long long n) noexcept -> long long
-{
-    return detail::abs_impl<long long>(n);
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the

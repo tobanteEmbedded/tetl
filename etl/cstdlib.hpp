@@ -27,11 +27,11 @@
 #include "etl/version.hpp"
 
 #include "etl/cassert.hpp"
-#include "etl/cmath.hpp"
 #include "etl/cstring.hpp"
 
 #include "etl/detail/cstddef/nullptr_t.hpp"
 #include "etl/detail/cstddef/size_t.hpp"
+#include "etl/detail/math/abs.hpp"
 #include "etl/detail/strings/conversion.hpp"
 
 namespace etl {
