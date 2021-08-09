@@ -21,50 +21,41 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_ADJACENT_FIND_HPP
-#define TETL_DETAIL_ALGORITHM_ADJACENT_FIND_HPP
+#ifndef TETL_DETAIL_FUNCTIONAL_LESS_HPP
+#define TETL_DETAIL_FUNCTIONAL_LESS_HPP
 
-#include "etl/_functional/equal_to.hpp"
+#include "etl/_utility/forward.hpp"
 
 namespace etl {
 
-/// \brief Searches the range `[first, last)` for two consecutive equal
-/// elements. Elements are compared using the given binary predicate p.
-///
-/// \param first The range of elements to examine.
-/// \param last The range of elements to examine.
-/// \param pred Binary predicate which returns ​true if the elements should be
-/// treated as equal.
-///
+/// \brief Function object for performing comparisons. Unless specialised,
+/// invokes operator< on type T.
 /// \notes
-/// [cppreference.com/w/cpp/algorithm/adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
-///
-/// \group adjacent_find
-/// \module Algorithm
-template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto adjacent_find(
-    ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
-{
-    if (first == last) { return last; }
-
-    auto next = first;
-    ++next;
-
-    for (; next != last; ++next, ++first) {
-        if (pred(*first, *next)) { return first; }
+/// [cppreference.com/w/cpp/utility/functional/less](https://en.cppreference.com/w/cpp/utility/functional/less)
+/// \group less
+/// \module Utility
+template <typename T = void>
+struct less {
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
+        -> bool
+    {
+        return lhs < rhs;
     }
+};
 
-    return last;
-}
+/// \group less
+template <>
+struct less<void> {
+    using is_transparent = void;
 
-/// \group adjacent_find
-template <typename ForwardIt>
-[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last)
-    -> ForwardIt
-{
-    return adjacent_find(first, last, equal_to<> {});
-}
+    template <typename T, typename U>
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
+        -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
+    {
+        return lhs < rhs;
+    }
+};
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_ADJACENT_FIND_HPP
+#endif // TETL_DETAIL_FUNCTIONAL_LESS_HPP

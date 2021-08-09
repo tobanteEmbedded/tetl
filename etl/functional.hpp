@@ -32,6 +32,8 @@
 #include "etl/utility.hpp"
 
 #include "etl/_algorithm/search.hpp"
+#include "etl/_functional/equal_to.hpp"
+#include "etl/_functional/less.hpp"
 
 namespace etl {
 namespace detail {
@@ -228,34 +230,6 @@ struct negate<void> {
 };
 
 /// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator== on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/equal_to](https://en.cppreference.com/w/cpp/utility/functional/equal_to)
-/// \group equal_to
-/// \module Utility
-template <typename T = void>
-struct equal_to {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> T
-    {
-        return lhs == rhs;
-    }
-};
-
-/// \group equal_to
-template <>
-struct equal_to<void> {
-    using is_transparent = void;
-
-    template <typename T, typename U>
-    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        -> decltype(etl::forward<T>(lhs) == etl::forward<U>(rhs))
-    {
-        return lhs == rhs;
-    }
-};
-
-/// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator!= on type T.
 /// \notes
 /// [cppreference.com/w/cpp/utility/functional/not_equal_to](https://en.cppreference.com/w/cpp/utility/functional/not_equal_to)
@@ -336,34 +310,6 @@ struct greater_equal<void> {
         -> decltype(etl::forward<T>(lhs) >= etl::forward<U>(rhs))
     {
         return lhs >= rhs;
-    }
-};
-
-/// \brief Function object for performing comparisons. Unless specialised,
-/// invokes operator< on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/less](https://en.cppreference.com/w/cpp/utility/functional/less)
-/// \group less
-/// \module Utility
-template <typename T = void>
-struct less {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> bool
-    {
-        return lhs < rhs;
-    }
-};
-
-/// \group less
-template <>
-struct less<void> {
-    using is_transparent = void;
-
-    template <typename T, typename U>
-    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        -> decltype(etl::forward<T>(lhs) < etl::forward<U>(rhs))
-    {
-        return lhs < rhs;
     }
 };
 

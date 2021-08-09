@@ -26,11 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/functional.hpp"
-#include "etl/iterator.hpp"
-#include "etl/type_traits.hpp"
-
 #include "etl/_assert/macro.hpp"
 
 #include "etl/_algorithm/adjacent_find.hpp"
@@ -60,8 +55,13 @@
 #include "etl/_algorithm/swap.hpp"
 #include "etl/_algorithm/swap_ranges.hpp"
 #include "etl/_algorithm/transform.hpp"
-
 #include "etl/_concepts/emulation.hpp"
+#include "etl/_functional/equal_to.hpp"
+#include "etl/_functional/less.hpp"
+#include "etl/_utility/pair.hpp"
+
+// #include "etl/functional.hpp"
+#include "etl/iterator.hpp"
 
 namespace etl {
 
