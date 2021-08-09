@@ -36,11 +36,11 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto find_first_not_of(CharT const* f, CharT const* l,
     CharT const* const sf, CharT const* const sl) -> SizeT
 {
-    auto const legalChar = [sf, sl](char ch) -> bool {
+    auto const legalChar = [sf, sl](CharT ch) -> bool {
         auto const* ssf = sf;
         auto const* ssl = sl;
         for (; ssf != ssl; ++ssf) {
-            if (::etl::char_traits<char>::eq(*ssf, ch)) { return true; }
+            if (::etl::char_traits<CharT>::eq(*ssf, ch)) { return true; }
         }
         return false;
     };
@@ -65,6 +65,6 @@ auto replace_impl(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
 {
     for (; (f != l) && (sf != sl); ++f, ++sf) { *f = *sf; }
 }
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_DETAIL_STRING_ALGORITHM_HPP
