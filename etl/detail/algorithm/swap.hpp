@@ -21,19 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGO_SWAP_HPP
-#define TETL_DETAIL_ALGO_SWAP_HPP
+#ifndef TETL_DETAIL_ALGORITHM_SWAP_HPP
+#define TETL_DETAIL_ALGORITHM_SWAP_HPP
 
-#include "etl/type_traits.hpp"
+#include "etl/detail/type_traits/remove_reference.hpp"
+#include "etl/detail/utility/move.hpp"
 
 namespace etl {
-namespace detail {
-template <typename T>
-constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
-{
-    return static_cast<etl::remove_reference_t<T>&&>(t);
-}
-} // namespace detail
 
 /// \brief Exchanges the given values. Swaps the values a and b. This overload
 /// does not participate in overload resolution unless
@@ -46,11 +40,11 @@ constexpr auto internal_move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 template <typename T>
 constexpr auto swap(T& a, T& b) noexcept -> void
 {
-    T temp(etl::detail::internal_move(a));
-    a = etl::detail::internal_move(b);
-    b = etl::detail::internal_move(temp);
+    T temp(move(a));
+    a = move(b);
+    b = move(temp);
 }
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGO_SWAP_HPP
+#endif // TETL_DETAIL_ALGORITHM_SWAP_HPP

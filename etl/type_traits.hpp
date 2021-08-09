@@ -27,8 +27,11 @@
 #include "etl/version.hpp"
 
 #include "etl/detail/cstddef_internal.hpp" // for size_t, max_align_t, nullptr_t
-#include "etl/detail/type_traits/enable_if.hpp" // for enable_if
-#include "etl/detail/type_traits_decl.hpp"      // for is_fundamental
+
+#include "etl/detail/type_traits/enable_if.hpp"
+#include "etl/detail/type_traits/remove_reference.hpp"
+
+#include "etl/detail/type_traits_decl.hpp" // for is_fundamental
 
 /// \file This header is part of the type support library.
 
@@ -386,28 +389,6 @@ struct remove_cv {
 /// \group remove_cv
 template <typename T>
 using remove_cv_t = typename remove_cv<T>::type;
-
-/// \group remove_reference
-template <typename T>
-struct remove_reference {
-    using type = T;
-};
-
-/// \exclude
-template <typename T>
-struct remove_reference<T&> {
-    using type = T;
-};
-
-/// \exclude
-template <typename T>
-struct remove_reference<T&&> {
-    using type = T;
-};
-
-/// \group remove_reference
-template <typename T>
-using remove_reference_t = typename remove_reference<T>::type;
 
 /// \brief If the type T is a reference type, provides the member typedef type
 /// which is the type referred to by T with its topmost cv-qualifiers removed.

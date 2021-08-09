@@ -21,26 +21,26 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_SEARCH_HPP
-#define TETL_DETAIL_ALGORITHM_SEARCH_HPP
+#ifndef TETL_DETAIL_UTILITY_MOVE_HPP
+#define TETL_DETAIL_UTILITY_MOVE_HPP
 
-namespace etl::detail {
-/// Needed by algorithm.hpp & function.hpp (default_searcher)
-template <typename ForwardIter1, typename ForwardIter2,
-    typename BinaryPredicate>
-[[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
-    ForwardIter2 sFirst, ForwardIter2 sLast, BinaryPredicate pred)
-    -> ForwardIter1
+#include "etl/detail/type_traits/remove_reference.hpp"
+
+namespace etl {
+
+/// \brief move is used to indicate that an object t may be "moved from",
+/// i.e. allowing the efficient transfer of resources from t to another object.
+/// In particular, move produces an xvalue expression that identifies its
+/// argument t. It is exactly equivalent to a static_cast to an rvalue reference
+/// type.
+///
+/// \returns `static_cast<remove_reference_t<T>&&>(t)`
+template <typename T>
+constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 {
-    for (;; ++first) {
-        auto it = first;
-        for (auto sIt = sFirst;; ++it, ++sIt) {
-            if (sIt == sLast) { return first; }
-            if (it == last) { return last; }
-            if (!pred(*it, *sIt)) { break; }
-        }
-    }
+    return static_cast<remove_reference_t<T>&&>(t);
 }
-} // namespace etl::detail
 
-#endif // TETL_DETAIL_ALGORITHM_SEARCH_HPP
+} // namespace etl
+
+#endif // TETL_DETAIL_UTILITY_MOVE_HPP

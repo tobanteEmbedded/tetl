@@ -21,26 +21,33 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_SEARCH_HPP
-#define TETL_DETAIL_ALGORITHM_SEARCH_HPP
+#ifndef TETL_DETAIL_TYPE_TRAITS_REMOVE_REFERENCE_HPP
+#define TETL_DETAIL_TYPE_TRAITS_REMOVE_REFERENCE_HPP
 
-namespace etl::detail {
-/// Needed by algorithm.hpp & function.hpp (default_searcher)
-template <typename ForwardIter1, typename ForwardIter2,
-    typename BinaryPredicate>
-[[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
-    ForwardIter2 sFirst, ForwardIter2 sLast, BinaryPredicate pred)
-    -> ForwardIter1
-{
-    for (;; ++first) {
-        auto it = first;
-        for (auto sIt = sFirst;; ++it, ++sIt) {
-            if (sIt == sLast) { return first; }
-            if (it == last) { return last; }
-            if (!pred(*it, *sIt)) { break; }
-        }
-    }
-}
-} // namespace etl::detail
+namespace etl {
 
-#endif // TETL_DETAIL_ALGORITHM_SEARCH_HPP
+/// \group remove_reference
+template <typename T>
+struct remove_reference {
+    using type = T;
+};
+
+/// \exclude
+template <typename T>
+struct remove_reference<T&> {
+    using type = T;
+};
+
+/// \exclude
+template <typename T>
+struct remove_reference<T&&> {
+    using type = T;
+};
+
+/// \group remove_reference
+template <typename T>
+using remove_reference_t = typename remove_reference<T>::type;
+
+} // namespace etl
+
+#endif // TETL_DETAIL_TYPE_TRAITS_REMOVE_REFERENCE_HPP

@@ -32,6 +32,7 @@
 #include "etl/detail/algorithm/swap.hpp"
 #include "etl/detail/tuple_size.hpp"
 #include "etl/detail/type_traits/require_macro.hpp"
+#include "etl/detail/utility/move.hpp"
 
 /// \file This header is part of the general utility library.
 
@@ -41,19 +42,6 @@ namespace etl {
 /// constructors.
 template <typename T>
 auto declval() noexcept -> add_rvalue_reference_t<T>; // NOLINT
-
-/// \brief move is used to indicate that an object t may be "moved from",
-/// i.e. allowing the efficient transfer of resources from t to another object.
-/// In particular, move produces an xvalue expression that identifies its
-/// argument t. It is exactly equivalent to a static_cast to an rvalue reference
-/// type.
-///
-/// \returns `static_cast<remove_reference_t<T>&&>(t)`
-template <typename T>
-constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
-{
-    return static_cast<remove_reference_t<T>&&>(t);
-}
 
 /// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
 /// When t is a forwarding reference (a function argument that is declared as an
