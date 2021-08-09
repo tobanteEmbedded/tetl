@@ -21,19 +21,36 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
+#ifndef TETL_DETAIL_TYPE_TRAITS_CONJUNCTION_HPP
+#define TETL_DETAIL_TYPE_TRAITS_CONJUNCTION_HPP
 
-#include "etl/detail/type_traits/integral_constant.hpp"
+#include "etl/detail/type_traits/bool_constant.hpp"
+#include "etl/detail/type_traits/conditional.hpp"
 
 namespace etl {
 
-template <bool B>
-using bool_constant = integral_constant<bool, B>;
+/// \brief Forms the logical conjunction of the type traits B..., effectively
+/// performing a logical AND on the sequence of traits.
+/// \group conjunction
+template <typename...>
+struct conjunction : true_type {
+};
 
-using true_type  = bool_constant<true>;
-using false_type = bool_constant<false>;
+/// \exclude
+template <typename B1>
+struct conjunction<B1> : B1 {
+};
+
+/// \exclude
+template <typename B1, typename... Bn>
+struct conjunction<B1, Bn...>
+    : conditional_t<bool(B1::value), conjunction<Bn...>, B1> {
+};
+
+/// \group conjunction
+template <typename... B>
+inline constexpr bool conjunction_v = conjunction<B...>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
+#endif // TETL_DETAIL_TYPE_TRAITS_CONJUNCTION_HPP
