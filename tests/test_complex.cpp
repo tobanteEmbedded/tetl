@@ -74,12 +74,15 @@ TEST_CASE("complex: literals", "[complex]")
 {
     using namespace etl::complex_literals;
 
-    REQUIRE(2_if.real() == 0.0f);
-    REQUIRE(2_if.imag() == 2.0f);
+    auto f = 2_if;
+    REQUIRE(f.real() == 0.0f);
+    REQUIRE(f.imag() == 2.0f);
 
-    REQUIRE(2_i.real() == 0.0);
-    REQUIRE(2_i.imag() == 2.0);
+    auto d = 2_i;
+    REQUIRE(d.real() == 0.0);
+    REQUIRE(d.imag() == 2.0);
 
-    REQUIRE(2_il.real() == 0.0L);
-    REQUIRE(2_il.imag() == 2.0L);
+    auto ld = 2_il;
+    REQUIRE(ld.real() == 0.0L);
+    REQUIRE(ld.imag() == 2.0L);
 }
