@@ -30,7 +30,7 @@
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/type_traits/enable_if.hpp"
 
 namespace etl {
 /// \brief Indicates the endianness of all scalar types. If all scalar types are

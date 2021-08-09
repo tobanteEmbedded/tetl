@@ -33,9 +33,9 @@
 #include "etl/memory.hpp"
 
 #include "etl/detail/container_utils.hpp"
-#include "etl/detail/sfinae.hpp"
 #include "etl/detail/string_algorithm.hpp"
 #include "etl/detail/string_char_traits.hpp"
+#include "etl/detail/type_traits/require_macro.hpp"
 
 namespace etl {
 /// \brief The class template basic_string_view describes an object that can

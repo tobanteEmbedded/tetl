@@ -31,7 +31,8 @@
 #include "etl/type_traits.hpp" // for remove_cvref_t, is_same (ptr only)
 #include "etl/utility.hpp"     // for forward, in_place, in_place_t, move
 
-#include "etl/detail/sfinae.hpp" // for enable_if_t, TETL_REQUIRES_, sfina...
+#include "etl/detail/optional/sfinae_base.hpp"
+#include "etl/detail/type_traits/require_macro.hpp"
 
 namespace etl {
 /// \brief etl::nullopt_t is an empty class type used to indicate optional type

@@ -27,9 +27,8 @@
 #include "etl/version.hpp"
 
 #include "etl/detail/cstddef_internal.hpp" // for size_t, max_align_t, nullptr_t
-#include "etl/detail/intrinsics.hpp"       // for TETL_IS_CLASS, TETL_IS_ENUM
-#include "etl/detail/sfinae.hpp"           // for enable_if
-#include "etl/detail/type_traits_decl.hpp" // for is_fundamental
+#include "etl/detail/type_traits/enable_if.hpp" // for enable_if
+#include "etl/detail/type_traits_decl.hpp"      // for is_fundamental
 
 /// \file This header is part of the type support library.
 
@@ -2137,8 +2136,9 @@ template <typename>
 auto test_returnable(...) -> ::etl::false_type;
 
 template <typename From, typename To>
-auto test_nonvoid_convertible(int) -> true_type_for<decltype(
-    ::etl::declval<void (&)(To)>()(::etl::declval<From>()))>;
+auto test_nonvoid_convertible(int)
+    -> true_type_for<decltype(::etl::declval<void (&)(To)>()(
+        ::etl::declval<From>()))>;
 template <typename, typename>
 auto test_nonvoid_convertible(...) -> ::etl::false_type;
 
@@ -2157,8 +2157,9 @@ auto test_nonvoid_convertible(...) -> ::etl::false_type;
 /// \group is_convertible
 template <typename From, typename To>
 struct is_convertible
-    : bool_constant<(decltype(detail::test_returnable<To>(0))::value&& decltype(
-                        detail::test_nonvoid_convertible<From, To>(0))::value)
+    : bool_constant<(decltype(detail::test_returnable<To>(
+                        0))::value&& decltype(detail::
+                            test_nonvoid_convertible<From, To>(0))::value)
                     || (is_void_v<From> && is_void_v<To>)> {
 };
 
@@ -2208,8 +2209,8 @@ struct invoke_impl<MT B::*> {
 
     template <typename T, typename... Args, typename MT1,
         typename = ::etl::enable_if_t<::etl::is_function_v<MT1>>>
-    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype(
-        (invoke_impl::get(xforward<T>(t)).*pmf)(xforward<Args>(args)...));
+    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((
+        invoke_impl::get(xforward<T>(t)).*pmf)(xforward<Args>(args)...));
 
     template <typename T>
     static auto call(MT B::*pmd, T&& t)
@@ -2227,8 +2228,8 @@ template <typename F, typename... Args>
 struct invoke_result<decltype(void(detail::INVOKE(
                          ::etl::declval<F>(), ::etl::declval<Args>()...))),
     F, Args...> {
-    using type = decltype(
-        detail::INVOKE(::etl::declval<F>(), ::etl::declval<Args>()...));
+    using type = decltype(detail::INVOKE(
+        ::etl::declval<F>(), ::etl::declval<Args>()...));
 };
 } // namespace detail
 

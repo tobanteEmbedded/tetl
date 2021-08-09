@@ -21,24 +21,23 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#include "etl/type_traits.hpp"
+#ifndef TETL_DETAIL_MATH_POW_HPP
+#define TETL_DETAIL_MATH_POW_HPP
 
-#include "etl/cstdint.hpp"     // for uint16_t
-#include "etl/type_traits.hpp" // for enable_if
+namespace etl::detail {
 
-template <typename T>
-auto func(T val) ->
-    typename etl::enable_if<etl::is_integral<T>::value, int>::type
+template <typename Int>
+[[nodiscard]] constexpr auto is_power2_or_zero(Int value) noexcept -> bool
 {
-    return val;
+    return (value & (value - 1U)) == 0;
 }
 
-auto func(float val) -> float { return val; }
-
-auto main() -> int
+template <typename Int>
+[[nodiscard]] constexpr auto is_power2(Int value) noexcept -> bool
 {
-    func(42);                  // Calls template
-    func(etl::uint16_t { 1 }); // Calls template
-    func(3.0F);                // Does not call template
-    return 0;
+    return value && is_power2_or_zero(value);
 }
+
+} // namespace etl::detail
+
+#endif // TETL_DETAIL_MATH_POW_HPP

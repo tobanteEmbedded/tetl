@@ -31,7 +31,7 @@
 #include "etl/detail/math/abs.hpp"
 #include "etl/detail/math/lerp.hpp"
 
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/type_traits/enable_if.hpp"
 
 #if __has_include(<math.h>)
 #include <math.h>

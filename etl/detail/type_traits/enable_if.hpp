@@ -24,8 +24,21 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP
 #define TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP
 
-namespace etl::detail {
+namespace etl {
+/// \brief Define a member typedef only if a boolean constant is true.
+template <bool, typename Type = void>
+struct enable_if {
+};
 
-} // namespace etl::detail
+// Partial specialization for true.
+template <typename Type>
+struct enable_if<true, Type> {
+    using type = Type;
+};
+
+template <bool B, typename T = void>
+using enable_if_t = typename enable_if<B, T>::type;
+
+} // namespace etl
 
 #endif // TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP

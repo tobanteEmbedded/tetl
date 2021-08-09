@@ -30,7 +30,7 @@
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/type_traits/require_macro.hpp"
 
 namespace etl::detail {
 template <typename T>

@@ -29,8 +29,7 @@
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/cstddef_internal.hpp"
-#include "etl/detail/intrinsics.hpp"
-#include "etl/detail/sfinae.hpp"
+#include "etl/detail/type_traits/enable_if.hpp"
 
 /// \file This header was originally in the C standard library as <stddef.h>.
 /// This header is part of the utility library.

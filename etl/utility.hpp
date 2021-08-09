@@ -30,8 +30,8 @@
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/algo_swap.hpp"
-#include "etl/detail/sfinae.hpp"
 #include "etl/detail/tuple_size.hpp"
+#include "etl/detail/type_traits/require_macro.hpp"
 
 /// \file This header is part of the general utility library.
 
@@ -98,7 +98,7 @@ template <typename T>
 
 /// \group as_const
 template <typename T>
-constexpr auto as_const(T const &&) -> void
+constexpr auto as_const(T const&&) -> void
     = delete;
 
 /// \brief Converts an enumeration to its underlying type.

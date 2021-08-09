@@ -21,49 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_SFINAE_HPP
-#define TETL_SFINAE_HPP
-
-namespace etl {
-/// \brief Define a member typedef only if a boolean constant is true.
-template <bool, typename Type = void>
-struct enable_if {
-};
-
-// Partial specialization for true.
-template <typename Type>
-struct enable_if<true, Type> {
-    using type = Type;
-};
-
-template <bool B, typename T = void>
-using enable_if_t = typename enable_if<B, T>::type;
-
-} // namespace etl
-
-#define TETL_CONCEPT_PP_CAT_(X, Y) X##Y
-#define TETL_CONCEPT_PP_CAT(X, Y) TETL_CONCEPT_PP_CAT_(X, Y)
-
-/// \brief Requires-clause emulation with SFINAE (for templates).
-///
-/// Copied from https://github.com/gnzlbg/static_vector
-#define TETL_REQUIRES_(...)                                                    \
-    int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)                      \
-        = 42,                                                                  \
-        ::etl::enable_if_t                                                     \
-                < (TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) == 43)    \
-            || (__VA_ARGS__),                                                  \
-        int > = 0
-
-/// \brief Requires-clause emulation with SFINAE (for "non-templates").
-///
-/// Copied from https://github.com/gnzlbg/static_vector
-#define TETL_REQUIRES(...)                                                     \
-    template <int TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__) = 42,      \
-        ::etl::enable_if_t<(TETL_CONCEPT_PP_CAT(_concept_requires_, __LINE__)  \
-                               == 43)                                          \
-                               || (__VA_ARGS__),                               \
-            int>                                                    = 0>
+#ifndef TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
+#define TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
 
 namespace etl::detail {
 template <bool CanCopy, bool CanMove>
@@ -75,7 +34,7 @@ struct sfinae_ctor_base<false, false> {
     sfinae_ctor_base(sfinae_ctor_base const&) = delete;
     sfinae_ctor_base(sfinae_ctor_base&&)      = delete;
     auto operator=(sfinae_ctor_base const&) -> sfinae_ctor_base& = default;
-    auto operator=(sfinae_ctor_base &&) -> sfinae_ctor_base& = default;
+    auto operator=(sfinae_ctor_base&&) -> sfinae_ctor_base& = default;
 };
 template <>
 struct sfinae_ctor_base<true, false> {
@@ -83,7 +42,7 @@ struct sfinae_ctor_base<true, false> {
     sfinae_ctor_base(sfinae_ctor_base const&) = default;
     sfinae_ctor_base(sfinae_ctor_base&&)      = delete;
     auto operator=(sfinae_ctor_base const&) -> sfinae_ctor_base& = default;
-    auto operator=(sfinae_ctor_base &&) -> sfinae_ctor_base& = default;
+    auto operator=(sfinae_ctor_base&&) -> sfinae_ctor_base& = default;
 };
 template <>
 struct sfinae_ctor_base<false, true> {
@@ -91,7 +50,7 @@ struct sfinae_ctor_base<false, true> {
     sfinae_ctor_base(sfinae_ctor_base const&) = delete;
     sfinae_ctor_base(sfinae_ctor_base&&)      = default;
     auto operator=(sfinae_ctor_base const&) -> sfinae_ctor_base& = default;
-    auto operator=(sfinae_ctor_base &&) -> sfinae_ctor_base& = default;
+    auto operator=(sfinae_ctor_base&&) -> sfinae_ctor_base& = default;
 };
 
 template <bool CanCopy, bool CanMove>
@@ -103,7 +62,7 @@ struct sfinae_assign_base<false, false> {
     sfinae_assign_base(sfinae_assign_base const&) = default;
     sfinae_assign_base(sfinae_assign_base&&)      = default;
     auto operator=(sfinae_assign_base const&) -> sfinae_assign_base& = delete;
-    auto operator=(sfinae_assign_base &&) -> sfinae_assign_base& = delete;
+    auto operator=(sfinae_assign_base&&) -> sfinae_assign_base& = delete;
 };
 template <>
 struct sfinae_assign_base<true, false> {
@@ -111,7 +70,7 @@ struct sfinae_assign_base<true, false> {
     sfinae_assign_base(sfinae_assign_base const&) = default;
     sfinae_assign_base(sfinae_assign_base&&)      = default;
     auto operator=(sfinae_assign_base const&) -> sfinae_assign_base& = default;
-    auto operator=(sfinae_assign_base &&) -> sfinae_assign_base& = delete;
+    auto operator=(sfinae_assign_base&&) -> sfinae_assign_base& = delete;
 };
 template <>
 struct sfinae_assign_base<false, true> {
@@ -119,20 +78,9 @@ struct sfinae_assign_base<false, true> {
     sfinae_assign_base(sfinae_assign_base const&) = default;
     sfinae_assign_base(sfinae_assign_base&&)      = default;
     auto operator=(sfinae_assign_base const&) -> sfinae_assign_base& = delete;
-    auto operator=(sfinae_assign_base &&) -> sfinae_assign_base& = default;
+    auto operator=(sfinae_assign_base&&) -> sfinae_assign_base& = default;
 };
 
-template <typename Int>
-[[nodiscard]] constexpr auto is_power2_or_zero(Int value) noexcept -> bool
-{
-    return (value & (value - 1U)) == 0;
-}
-
-template <typename Int>
-[[nodiscard]] constexpr auto is_power2(Int value) noexcept -> bool
-{
-    return value && is_power2_or_zero(value);
-}
 } // namespace etl::detail
 
-#endif // TETL_SFINAE_HPP
+#endif // TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
