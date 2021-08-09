@@ -24,9 +24,24 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
 #define TETL_DETAIL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
 
+#include "etl/detail/config/builtin_functions.hpp"
 #include "etl/detail/type_traits/bool_constant.hpp"
 
 namespace etl {
+
+/// \notes
+/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
+/// \group has_virtual_destructor
+template <typename T>
+struct has_virtual_destructor : bool_constant<TETL_HAS_VIRTUAL_DESTRUCTOR(T)> {
+};
+
+/// \notes
+/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
+/// \group has_virtual_destructor
+template <typename T>
+inline constexpr auto has_virtual_destructor_v
+    = has_virtual_destructor<T>::value;
 
 } // namespace etl
 

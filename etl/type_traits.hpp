@@ -123,18 +123,6 @@
 /// \file This header is part of the type support library.
 namespace etl {
 
-/// \brief Storage occupied by trivially destructible objects may be reused
-/// without calling the destructor. \notes
-/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
-template <typename T>
-struct is_trivially_destructible
-    : bool_constant<TETL_IS_TRIVIAL_DESTRUCTIBLE(T)> {
-};
-
-template <typename T>
-inline constexpr auto is_trivially_destructible_v
-    = is_trivially_destructible<T>::value;
-
 namespace detail {
 template <bool, typename Type>
 struct is_nothrow_destructible_helper;
@@ -176,20 +164,6 @@ struct is_nothrow_destructible<Type&&> : true_type {
 template <typename T>
 inline constexpr bool is_nothrow_destructible_v
     = is_nothrow_destructible<T>::value;
-
-/// \notes
-/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
-/// \group has_virtual_destructor
-template <typename T>
-struct has_virtual_destructor : bool_constant<TETL_HAS_VIRTUAL_DESTRUCTOR(T)> {
-};
-
-/// \notes
-/// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
-/// \group has_virtual_destructor
-template <typename T>
-inline constexpr auto has_virtual_destructor_v
-    = has_virtual_destructor<T>::value;
 
 /// \brief If the expression etl::declval<T>() = etl::declval<U>() is
 /// well-formed in unevaluated context, provides the member constant value equal

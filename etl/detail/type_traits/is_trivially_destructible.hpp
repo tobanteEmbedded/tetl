@@ -24,9 +24,22 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
 #define TETL_DETAIL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
 
+#include "etl/detail/config/builtin_functions.hpp"
 #include "etl/detail/type_traits/bool_constant.hpp"
 
 namespace etl {
+
+/// \brief Storage occupied by trivially destructible objects may be reused
+/// without calling the destructor. \notes
+/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
+template <typename T>
+struct is_trivially_destructible
+    : bool_constant<TETL_IS_TRIVIAL_DESTRUCTIBLE(T)> {
+};
+
+template <typename T>
+inline constexpr auto is_trivially_destructible_v
+    = is_trivially_destructible<T>::value;
 
 } // namespace etl
 
