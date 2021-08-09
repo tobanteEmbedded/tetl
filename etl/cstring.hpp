@@ -276,9 +276,9 @@ constexpr auto memset(void* s, int c, etl::size_t n) -> void*
 /// dest. Source and destination may overlap.
 ///
 /// \module Strings
-constexpr auto memmove(void* dest, void const* src, etl::size_t n) -> void*
+constexpr auto memmove(void* dest, void const* src, etl::size_t count) -> void*
 {
-    return detail::memmove_impl<unsigned char>(dest, src, n);
+    return detail::memmove_impl<unsigned char>(dest, src, count);
 }
 
 } // namespace etl

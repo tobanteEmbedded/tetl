@@ -205,7 +205,7 @@ constexpr auto memcpy_impl(void* dest, void const* src, SizeT n) -> void*
 }
 
 template <typename CharT, typename ValT, typename SizeT>
-constexpr auto memset_impl(CharT* const s, ValT const c, SizeT n) -> void*
+constexpr auto memset_impl(CharT* const s, ValT const c, SizeT n) -> CharT*
 {
     auto* p = s;
     while (n-- != CharT(0)) { *p++ = static_cast<CharT>(c); }
@@ -215,7 +215,7 @@ constexpr auto memset_impl(CharT* const s, ValT const c, SizeT n) -> void*
 // Check original implementation. They use `__np_anyptrlt` which is not
 // portable. https://clc-wiki.net/wiki/C_standard_library:string.h:memmove
 template <typename CharT, typename SizeT>
-constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> void*
+constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> CharT*
 {
     auto const* ps = static_cast<CharT const*>(src);
     auto* pd       = static_cast<CharT*>(dest);
@@ -226,7 +226,16 @@ constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> void*
         while (n-- != CharT(0)) { *pd++ = *ps++; }
     }
 
-    return dest;
+    return static_cast<CharT*>(dest);
+}
+
+template <typename CharT, typename SizeT>
+constexpr auto memchr_impl(CharT* ptr, CharT ch, SizeT n) -> CharT*
+{
+    for (SizeT i { 0 }; i != n; ++i) {
+        if (ptr[i] == ch) { return ptr + i; }
+    }
+    return nullptr;
 }
 
 } // namespace etl::detail

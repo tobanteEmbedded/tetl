@@ -276,7 +276,7 @@ constexpr auto wcslen(wchar_t const* str) -> etl::size_t
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto strstr(wchar_t* haystack, wchar_t* needle) noexcept
+[[nodiscard]] constexpr auto wcsstr(wchar_t* haystack, wchar_t* needle) noexcept
     -> wchar_t*
 {
     return detail::strstr_impl<wchar_t>(haystack, needle);
@@ -289,12 +289,104 @@ constexpr auto wcslen(wchar_t const* str) -> etl::size_t
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto strstr(
+[[nodiscard]] constexpr auto wcsstr(
     wchar_t const* haystack, wchar_t const* needle) noexcept -> wchar_t const*
 {
     return detail::strstr_impl<wchar_t const>(haystack, needle);
 }
 
+/// \brief Copies exactly count successive wide characters from the wide
+/// character array pointed to by src to the wide character array pointed to by
+/// dest. If the objects overlap, the behavior is undefined. If count is zero,
+/// the function does nothing.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemcpy
+///
+/// \module Strings
+constexpr auto wmemcpy(
+    wchar_t* dest, const wchar_t* src, etl::size_t count) noexcept -> wchar_t*
+{
+    return detail::strncpy_impl(dest, src, count);
+}
+
+/// \brief Copies exactly count successive wide characters from the wide
+/// character array pointed to by src to the wide character array pointed to by
+/// dest.
+///
+/// \details If count is zero, the function does nothing. The arrays may
+/// overlap: copying takes place as if the wide characters were copied to a
+/// temporary wide character array and then copied from the temporary array to
+/// dest. This function is not locale-sensitive and pays no attention to the
+/// values of the wchar_t objects it copies: nulls as well as invalid characters
+/// are copied too.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemmove
+///
+/// \module Strings
+constexpr auto wmemmove(
+    wchar_t* dest, const wchar_t* src, etl::size_t count) noexcept -> wchar_t*
+{
+    return detail::memmove_impl<wchar_t, etl::size_t>(dest, src, count);
+}
+
+/// \brief Compares the first count wide characters of the wide character arrays
+/// pointed to by lhs and rhs. The comparison is done lexicographically.
+///
+/// \details The sign of the result is the sign of the difference between the
+/// values of the first pair of wide characters that differ in the arrays being
+/// compared. If count is zero, the function does nothing.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemcmp
+///
+/// \module Strings
+constexpr auto wmemcmp(
+    wchar_t const* lhs, const wchar_t* rhs, etl::size_t count) noexcept -> int
+{
+    return detail::strncmp_impl<wchar_t, etl::size_t>(lhs, rhs, count);
+}
+
+/// \brief Locates the first occurrence of wide character ch in the initial
+/// count wide characters of the wide character array pointed to by ptr.
+///
+/// \details If count is zero, the function returns a null pointer.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wmemchr(
+    wchar_t* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
+{
+    return detail::memchr_impl<wchar_t>(ptr, ch, count);
+}
+
+/// \brief Locates the first occurrence of wide character ch in the initial
+/// count wide characters of the wide character array pointed to by ptr.
+///
+/// \details If count is zero, the function returns a null pointer.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wmemchr(wchar_t const* ptr, wchar_t ch,
+    etl::size_t count) noexcept -> wchar_t const*
+{
+    return detail::memchr_impl<wchar_t const>(ptr, ch, count);
+}
+
+/// \brief Copies the wide character ch into each of the first count wide
+/// characters of the wide character array pointed to by dest.
+///
+/// \details If overflow occurs, the behavior is undefined. If count is zero,
+/// the function does nothing.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemset
+///
+/// \module Strings
+constexpr auto wmemset(wchar_t* dest, wchar_t ch, etl::size_t count) noexcept
+    -> wchar_t*
+{
+    return detail::memset_impl(dest, ch, count);
+}
 } // namespace etl
 
 #endif // TETL_CTIME_HPP
