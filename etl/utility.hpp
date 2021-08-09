@@ -29,7 +29,7 @@
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/algo_swap.hpp"
+#include "etl/detail/algorithm/swap.hpp"
 #include "etl/detail/tuple_size.hpp"
 #include "etl/detail/type_traits/require_macro.hpp"
 

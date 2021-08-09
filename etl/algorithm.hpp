@@ -32,8 +32,9 @@
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/algo_search.hpp"
-#include "etl/detail/algo_swap.hpp"
+#include "etl/detail/algorithm/search.hpp"
+#include "etl/detail/algorithm/swap.hpp"
+
 #include "etl/detail/container_utils.hpp"
 
 namespace etl {
