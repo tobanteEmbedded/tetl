@@ -24,8 +24,6 @@
 #ifndef TETL_TUPLE_TUPLE_SIZE_HPP
 #define TETL_TUPLE_TUPLE_SIZE_HPP
 
-#include "etl/type_traits.hpp"
-
 #include "etl/detail/cstddef/size_t.hpp"
 #include "etl/detail/type_traits/integral_constant.hpp"
 

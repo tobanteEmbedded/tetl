@@ -26,8 +26,14 @@
 
 #include "etl/version.hpp"
 
-#include "etl/iterator.hpp"
-#include "etl/type_traits.hpp"
+#include "etl/detail/concepts/requires.hpp"
+#include "etl/detail/iterator/begin.hpp"
+#include "etl/detail/iterator/end.hpp"
+#include "etl/detail/type_traits/declval.hpp"
+#include "etl/detail/type_traits/is_nothrow_swappable.hpp"
+#include "etl/detail/type_traits/is_swappable.hpp"
+#include "etl/detail/utility/forward.hpp"
+#include "etl/detail/utility/move.hpp"
 
 namespace etl {
 /// \brief The stack class is a container adapter that gives the programmer
@@ -48,7 +54,7 @@ struct stack {
     using container_type  = Container;
 
     /// \brief Default constructor. Value-initializes the container.
-    constexpr stack() : stack(Container()) { }
+    constexpr stack() : stack { Container {} } { }
 
     /// \brief Copy-constructs the underlying container c with the contents of
     /// cont.
@@ -65,14 +71,14 @@ struct stack {
 
     /// \brief Checks if the underlying container has no elements.
     [[nodiscard]] constexpr auto empty() const
-        noexcept(noexcept(declval<container_type>().empty())) -> bool
+        noexcept(noexcept(declval<Container>().empty())) -> bool
     {
         return c.empty();
     }
 
     /// \brief Returns the number of elements in the underlying container.
     [[nodiscard]] constexpr auto size() const
-        noexcept(noexcept(declval<container_type>().size())) -> size_type
+        noexcept(noexcept(declval<Container>().size())) -> size_type
     {
         return c.size();
     }
@@ -81,7 +87,7 @@ struct stack {
     /// most recently pushed element. This element will be removed on a call to
     /// pop().
     [[nodiscard]] constexpr auto top() noexcept(
-        noexcept(declval<container_type>().back())) -> reference
+        noexcept(declval<Container>().back())) -> reference
     {
         return c.back();
     }
@@ -90,21 +96,21 @@ struct stack {
     /// most recently pushed element. This element will be removed on a call to
     /// pop().
     [[nodiscard]] constexpr auto top() const
-        noexcept(noexcept(declval<container_type>().back())) -> const_reference
+        noexcept(noexcept(declval<Container>().back())) -> const_reference
     {
         return c.back();
     }
 
     /// \brief Pushes the given element value to the top of the stack.
     constexpr auto push(value_type const& x) noexcept(
-        noexcept(declval<container_type>().push_back(x))) -> void
+        noexcept(declval<Container>().push_back(x))) -> void
     {
         c.push_back(x);
     }
 
     /// \brief Pushes the given element value to the top of the stack.
     constexpr auto push(value_type&& x) noexcept(
-        noexcept(declval<container_type>().push_back(move(x)))) -> void
+        noexcept(declval<Container>().push_back(move(x)))) -> void
     {
         c.push_back(move(x));
     }
@@ -114,8 +120,8 @@ struct stack {
     /// constructor of the element is called with exactly the same arguments as
     /// supplied to the function.
     template <typename... Args>
-    constexpr auto emplace(Args&&... args) noexcept(noexcept(
-        declval<container_type>().emplace_back(forward<Args>(args)...)))
+    constexpr auto emplace(Args&&... args) noexcept(
+        noexcept(declval<Container>().emplace_back(forward<Args>(args)...)))
         -> decltype(auto)
     {
         return c.emplace_back(forward<Args>(args)...);
@@ -123,8 +129,8 @@ struct stack {
 
     /// \brief Removes the top element from the stack.
     /// \complexity Equal to the complexity of Container::pop_back.
-    constexpr auto pop() noexcept(
-        noexcept(declval<container_type>().pop_back())) -> void
+    constexpr auto pop() noexcept(noexcept(declval<Container>().pop_back()))
+        -> void
     {
         c.pop_back();
     }
@@ -203,11 +209,10 @@ stack(Container) -> stack<typename Container::value_type, Container>;
 
 /// \brief Specializes the swap algorithm for stack. Swaps the contents of lhs
 /// and rhs. This overload only participates in overload resolution if
-/// is_swappable<Container>::value is true.
-template <typename T, typename Container,
-    TETL_REQUIRES_(is_swappable_v<Container>)>
-constexpr auto swap(stack<T, Container>& lhs,
-    stack<T, Container>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+/// is_swappable<C>::value is true.
+template <typename T, typename C, TETL_REQUIRES_(is_swappable_v<C>)>
+constexpr auto swap(stack<T, C>& lhs, stack<T, C>& rhs) noexcept(
+    noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

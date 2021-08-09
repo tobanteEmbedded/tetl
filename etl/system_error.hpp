@@ -26,13 +26,12 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/type_traits.hpp"
+#include "etl/detail/type_traits/bool_constant.hpp"
 
 namespace etl {
 
 template <typename T>
-struct is_error_condition_enum : public false_type {
+struct is_error_condition_enum : false_type {
 };
 
 /// \brief The scoped enumeration etl::errc defines the values of portable error
