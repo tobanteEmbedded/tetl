@@ -27,6 +27,7 @@
 #include "etl/detail/type_traits/bool_constant.hpp"
 #include "etl/detail/type_traits/declval.hpp"
 #include "etl/detail/type_traits/disjunction.hpp"
+#include "etl/detail/type_traits/extent.hpp"
 #include "etl/detail/type_traits/is_function.hpp"
 #include "etl/detail/type_traits/is_reference.hpp"
 #include "etl/detail/type_traits/is_scalar.hpp"
@@ -38,6 +39,7 @@
 namespace etl {
 
 namespace detail {
+
 struct try_is_destructible_impl {
     template <typename T, typename = decltype(::etl::declval<T&>().~T())>
     static auto test(int) -> ::etl::true_type;
@@ -83,8 +85,6 @@ struct is_destructible_safe<T, false, true> : ::etl::true_type {
 /// \group is_destructible
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T> {
-    //  template argument must be a complete class or an unbounded array
-    static_assert(detail::is_complete_or_unbounded(type_identity<T> {}));
 };
 
 /// \exclude

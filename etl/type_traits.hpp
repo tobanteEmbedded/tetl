@@ -123,39 +123,6 @@
 /// \file This header is part of the type support library.
 namespace etl {
 
-namespace detail {
-
-template <typename, unsigned = 0>
-struct extent;
-
-template <typename T>
-struct is_array_known_bounds : bool_constant<(extent<T>::value > 0)> {
-};
-
-template <typename T>
-struct is_array_unknown_bounds : meta_and<is_array<T>, meta_not<extent<T>>> {
-};
-
-// Helper functions that return false_type for incomplete classes,
-// incomplete unions and arrays of known bound from those.
-
-template <typename T, size_t = sizeof(T)>
-constexpr auto is_complete_or_unbounded(type_identity<T> /*id*/) -> true_type
-{
-    return {};
-}
-
-template <typename TypeIdentity,
-    typename NestedType = typename TypeIdentity::type>
-constexpr auto is_complete_or_unbounded(TypeIdentity /*id*/) ->
-    typename meta_or<is_reference<NestedType>, is_function<NestedType>,
-        is_void<NestedType>, is_array_unknown_bounds<NestedType>>::type
-{
-    return {};
-}
-
-} // namespace detail
-
 /// \brief Storage occupied by trivially destructible objects may be reused
 /// without calling the destructor. \notes
 /// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
@@ -581,8 +548,6 @@ template <typename T>
 struct has_unique_object_representations
     : bool_constant<TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(
           remove_cv_t<remove_all_extents_t<T>>)> {
-    //  template argument must be a complete class or an unbounded array
-    static_assert(detail::is_complete_or_unbounded(type_identity<T> {}));
 };
 
 template <typename T>
