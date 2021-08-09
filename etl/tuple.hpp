@@ -26,7 +26,7 @@
 
 #include "etl/version.hpp"
 
-// #include "etl/detail/tuple_size.hpp"
+#include "etl/detail/tuple/tuple_size.hpp"
 
 /// \file This header is part of the general utility library.
 

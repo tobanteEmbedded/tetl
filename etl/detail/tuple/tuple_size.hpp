@@ -21,10 +21,12 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_SIZE_HPP
-#define TETL_TUPLE_SIZE_HPP
+#ifndef TETL_TUPLE_TUPLE_SIZE_HPP
+#define TETL_TUPLE_TUPLE_SIZE_HPP
 
 #include "etl/type_traits.hpp"
+
+#include "etl/detail/cstddef/size_t.hpp"
 
 namespace etl {
 // class template tuple
@@ -65,4 +67,4 @@ using tuple_element_t = typename tuple_element<I, T>::type;
 
 } // namespace etl
 
-#endif // TETL_TUPLE_SIZE_HPP
+#endif // TETL_TUPLE_TUPLE_SIZE_HPP
