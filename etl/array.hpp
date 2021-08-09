@@ -49,27 +49,16 @@ namespace etl {
 /// \module Containers
 template <typename Type, size_t Size>
 struct array {
-    /// The ...
-    using value_type = Type;
-    /// The ...
-    using size_type = size_t;
-    /// The ...
-    using difference_type = ptrdiff_t;
-    /// The ...
-    using pointer = Type*;
-    /// The ...
-    using const_pointer = const Type*;
-    /// The ...
-    using reference = Type&;
-    /// The ...
-    using const_reference = const Type&;
-    /// The ...
-    using iterator = Type*;
-    /// The ...
-    using const_iterator = const Type*;
-    /// The ...
+    using value_type       = Type;
+    using size_type        = size_t;
+    using difference_type  = ptrdiff_t;
+    using pointer          = Type*;
+    using const_pointer    = const Type*;
+    using reference        = Type&;
+    using const_reference  = const Type&;
+    using iterator         = Type*;
+    using const_iterator   = const Type*;
     using reverse_iterator = typename etl::reverse_iterator<iterator>;
-    /// The ...
     using const_reverse_iterator =
         typename etl::reverse_iterator<const_iterator>;
 
