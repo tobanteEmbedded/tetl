@@ -24,7 +24,29 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_ALIGNED_STORAGE_HPP
 #define TETL_DETAIL_TYPE_TRAITS_ALIGNED_STORAGE_HPP
 
+#include "etl/detail/cstddef/max_align_t.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
+
 namespace etl {
+
+/// \brief Provides the nested type type, which is a trivial standard-layout
+/// type suitable for use as uninitialized storage for any object whose size is
+/// at most Len and whose alignment requirement is a divisor of Align.
+/// The default value of Align is the most stringent (the largest)
+/// alignment requirement for any object whose size is at most Len. If the
+/// default value is not used, Align must be the value of alignof(T) for some
+/// type T, or the behavior is undefined.
+/// \group aligned_storage
+template <size_t Len, size_t Align = alignof(max_align_t)>
+struct aligned_storage {
+    struct type {
+        alignas(Align) unsigned char data[Len];
+    };
+};
+
+/// \group aligned_storage
+template <size_t Len, size_t Align = alignof(max_align_t)>
+using aligned_storage_t = typename aligned_storage<Len, Align>::type;
 
 } // namespace etl
 

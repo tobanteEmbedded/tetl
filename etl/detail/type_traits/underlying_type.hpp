@@ -24,7 +24,30 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
 #define TETL_DETAIL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
 
+#include "etl/detail/config/builtin_functions.hpp"
+#include "etl/detail/type_traits/is_enum.hpp"
+
 namespace etl {
+
+namespace detail {
+template <typename T, bool = is_enum_v<T>>
+struct underlying_type_impl {
+    using type = TETL_IS_UNDERLYING_TYPE(T);
+};
+
+template <typename T>
+struct underlying_type_impl<T, false> {
+};
+
+} // namespace detail
+
+/// \brief The underlying type of an enum.
+template <typename T>
+struct underlying_type : detail::underlying_type_impl<T> {
+};
+
+template <typename T>
+using underlying_type_t = typename underlying_type<T>::type;
 
 } // namespace etl
 

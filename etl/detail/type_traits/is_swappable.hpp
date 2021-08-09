@@ -24,7 +24,45 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_IS_SWAPPABLE_HPP
 #define TETL_DETAIL_TYPE_TRAITS_IS_SWAPPABLE_HPP
 
+#include "etl/detail/type_traits/bool_constant.hpp"
+#include "etl/detail/type_traits/declval.hpp"
+#include "etl/detail/type_traits/is_same.hpp"
+
 namespace etl {
+
+template <typename T>
+constexpr auto swap(T& a, T& b) noexcept -> void;
+
+namespace detail {
+struct nat {
+    nat()           = delete;
+    nat(nat const&) = delete;
+    auto operator=(nat const&) -> nat& = delete;
+    ~nat()                             = delete;
+};
+
+using ::etl::swap;
+template <typename T>
+void swap(nat a, nat b) noexcept;
+
+template <typename T>
+struct is_swappable_helper {
+    using type = decltype(swap(::etl::declval<T&>(), ::etl::declval<T&>()));
+    static const bool value = !::etl::is_same_v<type, nat>;
+};
+
+} // namespace detail
+
+/// \brief If T is not a referenceable type (i.e., possibly cv-qualified void or
+/// a function type with a cv-qualifier-seq or a ref-qualifier), provides a
+/// member constant value equal to false. Otherwise, provides a member constant
+/// value equal to etl::is_swappable_with<T&, T&>::value
+template <typename T>
+struct is_swappable : bool_constant<detail::is_swappable_helper<T>::value> {
+};
+
+template <typename T>
+inline constexpr bool is_swappable_v = is_swappable<T>::value;
 
 } // namespace etl
 

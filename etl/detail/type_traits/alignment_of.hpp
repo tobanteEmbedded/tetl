@@ -24,7 +24,20 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_ALIGNMENT_OF_HPP
 #define TETL_DETAIL_TYPE_TRAITS_ALIGNMENT_OF_HPP
 
+#include "etl/detail/cstddef/size_t.hpp"
+#include "etl/detail/type_traits/integral_constant.hpp"
+
 namespace etl {
+
+/// \brief alignment_of
+/// \group alignment_of
+template <typename T>
+struct alignment_of : integral_constant<size_t, alignof(T)> {
+};
+
+/// \group alignment_of
+template <typename T>
+inline constexpr size_t alignment_of_v = alignment_of<T>::value;
 
 } // namespace etl
 

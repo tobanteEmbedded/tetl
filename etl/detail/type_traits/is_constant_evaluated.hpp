@@ -24,7 +24,21 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_IS_CONSTANT_EVALUATED_HPP
 #define TETL_DETAIL_TYPE_TRAITS_IS_CONSTANT_EVALUATED_HPP
 
+#include "etl/detail/config/builtin_functions.hpp"
+
 namespace etl {
+
+/// \brief Detects whether the function call occurs within a constant-evaluated
+/// context. Returns true if the evaluation of the call occurs within the
+/// evaluation of an expression or conversion that is manifestly
+/// constant-evaluated; otherwise returns false.
+///
+/// \notes
+/// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
+[[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
+{
+    return TETL_IS_CONSTANT_EVALUATED();
+}
 
 } // namespace etl
 
