@@ -21,29 +21,35 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CCTYPE_HPP
-#define TETL_CCTYPE_HPP
+#ifndef TETL_DETAIL_CCTYPE_ISXDIGIT_HPP
+#define TETL_DETAIL_CCTYPE_ISXDIGIT_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/assert/macro.hpp"
 
-#include "etl/detail/cctype/isalnum.hpp"
-#include "etl/detail/cctype/isalpha.hpp"
-#include "etl/detail/cctype/isblank.hpp"
-#include "etl/detail/cctype/iscntrl.hpp"
-#include "etl/detail/cctype/isdigit.hpp"
-#include "etl/detail/cctype/isgraph.hpp"
-#include "etl/detail/cctype/islower.hpp"
-#include "etl/detail/cctype/isprint.hpp"
-#include "etl/detail/cctype/ispunct.hpp"
-#include "etl/detail/cctype/isspace.hpp"
-#include "etl/detail/cctype/isupper.hpp"
-#include "etl/detail/cctype/isxdigit.hpp"
-#include "etl/detail/cctype/tolower.hpp"
-#include "etl/detail/cctype/toupper.hpp"
-
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
 namespace etl {
+/// \brief Checks if the given character is a hexadecimal numeric character
+/// (0123456789abcdefABCDEF).
+///
+/// \param ch Character to classify.
+///
+/// \returns Non-zero value if the character is a hexadecimal numeric character,
+/// zero otherwise.
+///
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isxdigit](https://en.cppreference.com/w/cpp/string/byte/isxdigit)
+///
+/// \module Strings
+[[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
+    auto const isDigit    = ch >= '0' && ch <= '9';
+    auto const isHexLower = ch >= 'a' && ch <= 'f';
+    auto const isHexUpper = ch >= 'A' && ch <= 'F';
+
+    return static_cast<int>(isDigit || isHexLower || isHexUpper);
+}
 } // namespace etl
-#endif // TETL_CCTYPE_HPP
+
+#endif // TETL_DETAIL_CCTYPE_ISXDIGIT_HPP

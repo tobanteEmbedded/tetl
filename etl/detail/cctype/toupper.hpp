@@ -21,29 +21,39 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CCTYPE_HPP
-#define TETL_CCTYPE_HPP
+#ifndef TETL_DETAIL_CCTYPE_TOUPPER_HPP
+#define TETL_DETAIL_CCTYPE_TOUPPER_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/detail/cctype/isalnum.hpp"
-#include "etl/detail/cctype/isalpha.hpp"
-#include "etl/detail/cctype/isblank.hpp"
-#include "etl/detail/cctype/iscntrl.hpp"
-#include "etl/detail/cctype/isdigit.hpp"
-#include "etl/detail/cctype/isgraph.hpp"
+#include "etl/detail/assert/macro.hpp"
 #include "etl/detail/cctype/islower.hpp"
-#include "etl/detail/cctype/isprint.hpp"
-#include "etl/detail/cctype/ispunct.hpp"
-#include "etl/detail/cctype/isspace.hpp"
-#include "etl/detail/cctype/isupper.hpp"
-#include "etl/detail/cctype/isxdigit.hpp"
-#include "etl/detail/cctype/tolower.hpp"
-#include "etl/detail/cctype/toupper.hpp"
 
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
 namespace etl {
 
+/// \brief Converts the given character to uppercase according to the character
+/// conversion rules defined by the default C locale.
+///
+/// In the default "C" locale, the following lowercase letters
+/// **abcdefghijklmnopqrstuvwxyz** are replaced with respective uppercase
+/// letters
+/// **ABCDEFGHIJKLMNOPQRSTUVWXYZ**.
+///
+/// \param ch Character to classify.
+///
+/// \returns Converted character or ch if no uppercase version is defined by the
+/// current C locale.
+///
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/toupper](https://en.cppreference.com/w/cpp/string/byte/toupper)
+///
+/// \module Strings
+[[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+
+    if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
+    return static_cast<int>(ch);
+}
 } // namespace etl
-#endif // TETL_CCTYPE_HPP
+
+#endif // TETL_DETAIL_CCTYPE_TOUPPER_HPP

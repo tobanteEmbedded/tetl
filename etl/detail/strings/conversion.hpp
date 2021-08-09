@@ -1,9 +1,10 @@
 #ifndef ETL_DETAIL_STRING_CONVERSION_HPP
 #define ETL_DETAIL_STRING_CONVERSION_HPP
 
-#include "etl/cctype.hpp"
 #include "etl/limits.hpp"
 
+#include "etl/detail/cctype/isdigit.hpp"
+#include "etl/detail/cctype/isspace.hpp"
 #include "etl/detail/config/warning.hpp"
 
 namespace etl::detail {
@@ -55,7 +56,7 @@ template <typename T>
     // loop over digits
     T value = 0;
     for (; str[i] != '\0' && length != 0; ++i) {
-        if (!isdigit(str[i])) { break; }
+        if (!::etl::isdigit(str[i])) { break; }
         value = value * 10 + str[i] - '0';
         length--;
     }
@@ -148,10 +149,10 @@ template <typename FloatT>
 
     auto const* ptr = str;
     for (; *ptr != '\0'; ++ptr) {
-        if (isspace(*ptr) && leadingSpaces) { continue; }
+        if (::etl::isspace(*ptr) && leadingSpaces) { continue; }
         leadingSpaces = false;
 
-        if (isdigit(*ptr)) {
+        if (::etl::isdigit(*ptr)) {
             if (!afterDecimalPoint) {
                 res *= 10;         // Shift the previous digits to the left
                 res += *ptr - '0'; // Add the new one

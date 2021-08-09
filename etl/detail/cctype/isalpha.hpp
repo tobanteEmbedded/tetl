@@ -21,29 +21,34 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CCTYPE_HPP
-#define TETL_CCTYPE_HPP
+#ifndef TETL_DETAIL_CCTYPE_ISALPHA_HPP
+#define TETL_DETAIL_CCTYPE_ISALPHA_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/assert/macro.hpp"
 
-#include "etl/detail/cctype/isalnum.hpp"
-#include "etl/detail/cctype/isalpha.hpp"
-#include "etl/detail/cctype/isblank.hpp"
-#include "etl/detail/cctype/iscntrl.hpp"
-#include "etl/detail/cctype/isdigit.hpp"
-#include "etl/detail/cctype/isgraph.hpp"
-#include "etl/detail/cctype/islower.hpp"
-#include "etl/detail/cctype/isprint.hpp"
-#include "etl/detail/cctype/ispunct.hpp"
-#include "etl/detail/cctype/isspace.hpp"
-#include "etl/detail/cctype/isupper.hpp"
-#include "etl/detail/cctype/isxdigit.hpp"
-#include "etl/detail/cctype/tolower.hpp"
-#include "etl/detail/cctype/toupper.hpp"
-
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
 namespace etl {
+/// \brief Checks if the given character is an alphabetic character as
+/// classified by the default C locale.
+///
+/// \param ch Character to classify.
+///
+/// \returns Non-zero value if the character is an alphabetic character, 0
+/// otherwise.
+///
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isalpha](https://en.cppreference.com/w/cpp/string/byte/isalpha)
+///
+/// \module Strings
+[[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
 
+    auto isLower = ch >= 'a' && ch <= 'z';
+    auto isUpper = ch >= 'A' && ch <= 'Z';
+
+    return static_cast<int>(isLower || isUpper);
+}
 } // namespace etl
-#endif // TETL_CCTYPE_HPP
+
+#endif // TETL_DETAIL_CCTYPE_ISALPHA_HPP

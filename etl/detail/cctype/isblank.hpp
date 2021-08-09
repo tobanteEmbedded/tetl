@@ -21,29 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CCTYPE_HPP
-#define TETL_CCTYPE_HPP
+#ifndef TETL_DETAIL_CCTYPE_ISBLANK_HPP
+#define TETL_DETAIL_CCTYPE_ISBLANK_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/assert/macro.hpp"
 
-#include "etl/detail/cctype/isalnum.hpp"
-#include "etl/detail/cctype/isalpha.hpp"
-#include "etl/detail/cctype/isblank.hpp"
-#include "etl/detail/cctype/iscntrl.hpp"
-#include "etl/detail/cctype/isdigit.hpp"
-#include "etl/detail/cctype/isgraph.hpp"
-#include "etl/detail/cctype/islower.hpp"
-#include "etl/detail/cctype/isprint.hpp"
-#include "etl/detail/cctype/ispunct.hpp"
-#include "etl/detail/cctype/isspace.hpp"
-#include "etl/detail/cctype/isupper.hpp"
-#include "etl/detail/cctype/isxdigit.hpp"
-#include "etl/detail/cctype/tolower.hpp"
-#include "etl/detail/cctype/toupper.hpp"
-
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
 namespace etl {
-
+/// \brief Checks if the given character is a blank character as classified by
+/// the currently installed C locale. Blank characters are whitespace characters
+/// used to separate words within a sentence. In the default C locale, only
+/// space (0x20) and horizontal tab (0x09) are classified as blank characters.
+///
+/// \param ch Character to classify.
+///
+/// \returns Non-zero value if the character is a blank character, zero
+/// otherwise.
+///
+/// \notes
+/// [cppreference.com/w/cpp/string/byte/isblank](https://en.cppreference.com/w/cpp/string/byte/isblank)
+///
+/// \module Strings
+[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
+{
+    // ch must de representable as a unsigned char
+    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
+    return static_cast<int>(ch == ' ' || ch == '\t');
+}
 } // namespace etl
-#endif // TETL_CCTYPE_HPP
+
+#endif // TETL_DETAIL_CCTYPE_ISBLANK_HPP
