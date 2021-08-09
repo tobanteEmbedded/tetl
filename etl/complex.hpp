@@ -36,30 +36,30 @@ struct complex {
     template <typename X>
     constexpr complex(complex<X> const& other);
 
-    constexpr auto operator=(T const&) -> complex<T>&;
-    constexpr auto operator=(complex const&) -> complex&;
+    constexpr auto operator=(T const& other) -> complex<T>&;
+    constexpr auto operator=(complex const& other) -> complex&;
     template <typename X>
-    constexpr auto operator=(complex<X> const&) -> complex<T>&;
+    constexpr auto operator=(complex<X> const& other) -> complex<T>&;
 
     [[nodiscard]] constexpr auto real() const -> T;
-    constexpr auto real(T) -> void;
+    constexpr auto real(T val) -> void;
 
     [[nodiscard]] constexpr auto imag() const -> T;
-    constexpr auto imag(T) -> void;
+    constexpr auto imag(T val) -> void;
 
-    constexpr auto operator+=(T const&) -> complex<T>&;
-    constexpr auto operator-=(T const&) -> complex<T>&;
-    constexpr auto operator*=(T const&) -> complex<T>&;
-    constexpr auto operator/=(T const&) -> complex<T>&;
+    constexpr auto operator+=(T const& val) -> complex<T>&;
+    constexpr auto operator-=(T const& val) -> complex<T>&;
+    constexpr auto operator*=(T const& val) -> complex<T>&;
+    constexpr auto operator/=(T const& val) -> complex<T>&;
 
     template <typename X>
-    constexpr auto operator+=(complex<X> const&) -> complex<T>&;
+    constexpr auto operator+=(complex<X> const& val) -> complex<T>&;
     template <typename X>
-    constexpr auto operator-=(complex<X> const&) -> complex<T>&;
+    constexpr auto operator-=(complex<X> const& val) -> complex<T>&;
     template <typename X>
-    constexpr auto operator*=(complex<X> const&) -> complex<T>&;
+    constexpr auto operator*=(complex<X> const& val) -> complex<T>&;
     template <typename X>
-    constexpr auto operator/=(complex<X> const&) -> complex<T>&;
+    constexpr auto operator/=(complex<X> const& val) -> complex<T>&;
 
 private:
     value_type real_;
@@ -74,14 +74,15 @@ template <typename T>
 inline namespace literals {
 inline namespace complex_literals {
 
-[[nodiscard]] constexpr auto operator""_il(long double) -> complex<long double>;
-[[nodiscard]] constexpr auto operator""_il(unsigned long long)
+[[nodiscard]] constexpr auto operator""_il(long double d)
     -> complex<long double>;
-[[nodiscard]] constexpr auto operator""_i(long double) -> complex<double>;
-[[nodiscard]] constexpr auto operator""_i(unsigned long long)
+[[nodiscard]] constexpr auto operator""_il(unsigned long long d)
+    -> complex<long double>;
+[[nodiscard]] constexpr auto operator""_i(long double d) -> complex<double>;
+[[nodiscard]] constexpr auto operator""_i(unsigned long long d)
     -> complex<double>;
-[[nodiscard]] constexpr auto operator""_if(long double) -> complex<float>;
-[[nodiscard]] constexpr auto operator""_if(unsigned long long)
+[[nodiscard]] constexpr auto operator""_if(long double d) -> complex<float>;
+[[nodiscard]] constexpr auto operator""_if(unsigned long long d)
     -> complex<float>;
 
 } // namespace complex_literals
