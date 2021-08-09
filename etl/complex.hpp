@@ -33,14 +33,13 @@ struct complex {
 
     constexpr complex(T const& re = T(), T const& im = T());
     constexpr complex(complex const&);
-
     template <typename X>
-    constexpr complex(complex<X> const& other)
-        : real_ { other.real() }, imag_ { other.imag() }
-    {
-    }
+    constexpr complex(complex<X> const& other);
 
+    constexpr auto operator=(T const&) -> complex<T>&;
     constexpr auto operator=(complex const&) -> complex&;
+    template <typename X>
+    constexpr auto operator=(complex<X> const&) -> complex<T>&;
 
     [[nodiscard]] constexpr auto real() const -> T;
     constexpr auto real(T) -> void;
@@ -48,14 +47,11 @@ struct complex {
     [[nodiscard]] constexpr auto imag() const -> T;
     constexpr auto imag(T) -> void;
 
-    constexpr auto operator=(T const&) -> complex<T>&;
     constexpr auto operator+=(T const&) -> complex<T>&;
     constexpr auto operator-=(T const&) -> complex<T>&;
     constexpr auto operator*=(T const&) -> complex<T>&;
     constexpr auto operator/=(T const&) -> complex<T>&;
 
-    template <typename X>
-    constexpr auto operator=(complex<X> const&) -> complex<T>&;
     template <typename X>
     constexpr auto operator+=(complex<X> const&) -> complex<T>&;
     template <typename X>
@@ -102,6 +98,13 @@ constexpr complex<T>::complex(T const& re, T const& im)
 
 template <typename T>
 constexpr complex<T>::complex(complex const& other)
+    : real_ { other.real() }, imag_ { other.imag() }
+{
+}
+
+template <typename T>
+template <typename X>
+constexpr complex<T>::complex(complex<X> const& other)
     : real_ { other.real() }, imag_ { other.imag() }
 {
 }
