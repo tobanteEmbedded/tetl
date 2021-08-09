@@ -30,79 +30,16 @@
 #include "etl/memory.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
-#include "etl/warning.hpp"
+
+#include "etl/detail/config/warning.hpp"
+#include "etl/detail/iterator/begin.hpp"
+#include "etl/detail/iterator/end.hpp"
+#include "etl/detail/iterator/iterator_traits.hpp"
+#include "etl/detail/iterator/tags.hpp"
 
 namespace etl {
 template <typename Iter>
 struct reverse_iterator;
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct input_iterator_tag {
-};
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct output_iterator_tag {
-};
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct forward_iterator_tag : input_iterator_tag {
-};
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct bidirectional_iterator_tag : forward_iterator_tag {
-};
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct random_access_iterator_tag : bidirectional_iterator_tag {
-};
-
-/// \brief Defines the category of an iterator. Each tag is an empty type and
-/// corresponds to one of the five (until C++20) six (since C++20) iterator
-/// categories.
-/// \module Iterator
-struct contiguous_iterator_tag : random_access_iterator_tag {
-};
-
-/// \brief iterator_traits is the type trait class that provides uniform
-/// interface to the properties of LegacyIterator types. This makes it possible
-/// to implement algorithms only in terms of iterators.
-///
-/// \details The template can be specialized for user-defined iterators so that
-/// the information about the iterator can be retrieved even if the type does
-/// not provide the usual typedefs.
-///
-/// \notes
-/// [cppreference.com/w/cpp/iterator/iterator_traits](https://en.cppreference.com/w/cpp/iterator/iterator_traits)
-/// \group iterator_traits
-/// \module Iterator
-template <typename Iter>
-struct iterator_traits;
-
-/// \group iterator_traits
-template <typename T>
-struct iterator_traits<T*> {
-    using iterator_concept  = contiguous_iterator_tag;
-    using iterator_category = random_access_iterator_tag;
-    using value_type        = remove_cv_t<T>;
-    using difference_type   = ptrdiff_t;
-    using pointer           = T*;
-    using reference         = T&;
-};
 
 /// \brief Increments given iterator it by n elements. If n is negative, the
 /// iterator is decremented. In this case, InputIt must meet the requirements of
@@ -176,72 +113,6 @@ template <typename BidirIt>
 {
     advance(it, -n);
     return it;
-}
-
-/// \brief Returns an iterator to the beginning of the given container c or
-/// array array. These templates rely on `C::begin()` having a reasonable
-/// implementation. Returns exactly c.begin(), which is typically an iterator to
-/// the beginning of the sequence represented by c. If C is a standard
-/// Container, this returns `C::iterator` when c is not const-qualified, and
-/// `C::const_iterator` otherwise. Custom overloads of begin may be provided for
-/// classes that do not expose a suitable begin() member function, yet can be
-/// iterated. \group begin \module Iterator
-template <typename C>
-constexpr auto begin(C& c) -> decltype(c.begin())
-{
-    return c.begin();
-}
-
-/// \group begin
-template <typename C>
-constexpr auto begin(C const& c) -> decltype(c.begin())
-{
-    return c.begin();
-}
-
-/// \group begin
-template <typename T, size_t N>
-constexpr auto begin(T (&array)[N]) noexcept -> T*
-{
-    return &array[0];
-}
-
-/// \group begin
-template <typename C>
-constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c)))
-    -> decltype(begin(c))
-{
-    return begin(c);
-}
-
-/// \brief Returns an iterator to the end (i.e. the element after the last
-/// element) of the given container c or array array. These templates rely on
-/// `C::end()` having a reasonable implementation. \group end \module Iterator
-template <typename C>
-constexpr auto end(C& c) -> decltype(c.end())
-{
-    return c.end();
-}
-
-/// \group end
-template <typename C>
-constexpr auto end(C const& c) -> decltype(c.end())
-{
-    return c.end();
-}
-
-/// \group end
-template <typename T, size_t N>
-constexpr auto end(T (&array)[N]) noexcept -> T*
-{
-    return &array[N];
-}
-
-/// \group end
-template <typename C>
-constexpr auto cend(C const& c) noexcept(noexcept(end(c))) -> decltype(end(c))
-{
-    return end(c);
 }
 
 /// \brief Returns an iterator to the reverse-beginning of the given container.

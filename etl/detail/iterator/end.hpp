@@ -21,19 +21,41 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
-
-#include "etl/detail/type_traits/integral_constant.hpp"
+#ifndef TETL_DETAIL_ITERATOR_END_HPP
+#define TETL_DETAIL_ITERATOR_END_HPP
 
 namespace etl {
 
-template <bool B>
-using bool_constant = etl::integral_constant<bool, B>;
+/// \brief Returns an iterator to the end (i.e. the element after the last
+/// element) of the given container c or array array. These templates rely on
+/// `C::end()` having a reasonable implementation. \group end \module Iterator
+template <typename C>
+constexpr auto end(C& c) -> decltype(c.end())
+{
+    return c.end();
+}
 
-using true_type  = etl::bool_constant<true>;
-using false_type = etl::bool_constant<false>;
+/// \group end
+template <typename C>
+constexpr auto end(C const& c) -> decltype(c.end())
+{
+    return c.end();
+}
+
+/// \group end
+template <typename T, size_t N>
+constexpr auto end(T (&array)[N]) noexcept -> T*
+{
+    return &array[N];
+}
+
+/// \group end
+template <typename C>
+constexpr auto cend(C const& c) noexcept(noexcept(end(c))) -> decltype(end(c))
+{
+    return end(c);
+}
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_BOOL_CONSTANT_HPP
+#endif // TETL_DETAIL_ITERATOR_END_HPP

@@ -27,7 +27,6 @@
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
 
 namespace etl::detail {
 template <typename T>
