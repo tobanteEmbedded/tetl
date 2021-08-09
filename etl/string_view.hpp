@@ -32,10 +32,10 @@
 #include "etl/iterator.hpp"
 #include "etl/memory.hpp"
 
-// #include "etl/detail/container_utils.hpp"
-#include "etl/detail/concepts/requires.hpp"
-#include "etl/detail/strings/char_traits.hpp"
-#include "etl/detail/strings/find_first_not_of.hpp"
+// #include "etl/_container_utils.hpp"
+#include "etl/_concepts/requires.hpp"
+#include "etl/_strings/char_traits.hpp"
+#include "etl/_strings/find_first_not_of.hpp"
 
 namespace etl {
 /// \brief The class template basic_string_view describes an object that can

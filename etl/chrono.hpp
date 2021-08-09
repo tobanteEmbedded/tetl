@@ -29,7 +29,7 @@
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/concepts/requires.hpp"
+#include "etl/_concepts/requires.hpp"
 
 // Somehow the abs macro gets included in avr-gcc builds. Not sure where it's
 // coming from.

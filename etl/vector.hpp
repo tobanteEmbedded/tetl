@@ -31,8 +31,8 @@
 #include "etl/cassert.hpp"
 #include "etl/functional.hpp"
 
-#include "etl/detail/container/index.hpp"
-#include "etl/detail/container/smallest_size_t.hpp"
+#include "etl/_container/index.hpp"
+#include "etl/_container/smallest_size_t.hpp"
 
 /// \file This header is part of the containers library.
 

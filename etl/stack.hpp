@@ -26,14 +26,14 @@
 
 #include "etl/version.hpp"
 
-#include "etl/detail/concepts/requires.hpp"
-#include "etl/detail/iterator/begin.hpp"
-#include "etl/detail/iterator/end.hpp"
-#include "etl/detail/type_traits/declval.hpp"
-#include "etl/detail/type_traits/is_nothrow_swappable.hpp"
-#include "etl/detail/type_traits/is_swappable.hpp"
-#include "etl/detail/utility/forward.hpp"
-#include "etl/detail/utility/move.hpp"
+#include "etl/_concepts/requires.hpp"
+#include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/end.hpp"
+#include "etl/_type_traits/declval.hpp"
+#include "etl/_type_traits/is_nothrow_swappable.hpp"
+#include "etl/_type_traits/is_swappable.hpp"
+#include "etl/_utility/forward.hpp"
+#include "etl/_utility/move.hpp"
 
 namespace etl {
 /// \brief The stack class is a container adapter that gives the programmer

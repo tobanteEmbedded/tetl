@@ -31,7 +31,7 @@
 #include "etl/system_error.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/strings/conversion.hpp"
+#include "etl/_strings/conversion.hpp"
 
 namespace etl {
 /// \brief A BitmaskType used to specify floating-point formatting for to_chars

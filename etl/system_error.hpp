@@ -26,7 +26,7 @@
 
 #include "etl/version.hpp"
 
-#include "etl/detail/type_traits/bool_constant.hpp"
+#include "etl/_type_traits/bool_constant.hpp"
 
 namespace etl {
 

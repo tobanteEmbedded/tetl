@@ -28,8 +28,8 @@
 
 #include "etl/vector.hpp"
 
-#include "etl/detail/format/argument.hpp"
-#include "etl/detail/format/context.hpp"
+#include "etl/_format/argument.hpp"
+#include "etl/_format/context.hpp"
 
 namespace etl {
 template <typename It>

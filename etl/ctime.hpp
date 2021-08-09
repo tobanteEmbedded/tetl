@@ -26,9 +26,9 @@
 
 #include "etl/version.hpp"
 
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
-#include "etl/detail/cstddef/tm.hpp"
+#include "etl/_cstddef/null.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_cstddef/tm.hpp"
 
 namespace etl {
 

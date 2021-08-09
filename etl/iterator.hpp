@@ -31,11 +31,11 @@
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
-#include "etl/detail/config/warning.hpp"
-#include "etl/detail/iterator/begin.hpp"
-#include "etl/detail/iterator/end.hpp"
-#include "etl/detail/iterator/iterator_traits.hpp"
-#include "etl/detail/iterator/tags.hpp"
+#include "etl/_config/warning.hpp"
+#include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/end.hpp"
+#include "etl/_iterator/iterator_traits.hpp"
+#include "etl/_iterator/tags.hpp"
 
 namespace etl {
 template <typename Iter>

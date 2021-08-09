@@ -34,6 +34,6 @@
 #endif
 #endif
 
-#include "etl/detail/assert/macro.hpp"
+#include "etl/_assert/macro.hpp"
 
 #endif // TETL_CASSERT_HPP

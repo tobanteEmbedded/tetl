@@ -28,11 +28,11 @@
 
 #include "etl/cassert.hpp"
 
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
-#include "etl/detail/cstddef/tm.hpp"
-#include "etl/detail/strings/cstr_algorithm.hpp"
+#include "etl/_cstddef/null.hpp"
+#include "etl/_cstddef/nullptr_t.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_cstddef/tm.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
 #if defined(TETL_MSVC)
 #include <wchar.h>

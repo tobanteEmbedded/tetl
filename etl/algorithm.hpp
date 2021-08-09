@@ -32,17 +32,17 @@
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/algorithm/for_each.hpp"
-#include "etl/detail/algorithm/for_each_n.hpp"
-#include "etl/detail/algorithm/iter_swap.hpp"
-#include "etl/detail/algorithm/move.hpp"
-#include "etl/detail/algorithm/move_backward.hpp"
-#include "etl/detail/algorithm/search.hpp"
-#include "etl/detail/algorithm/swap.hpp"
-#include "etl/detail/algorithm/swap_ranges.hpp"
-#include "etl/detail/algorithm/transform.hpp"
+#include "etl/_algorithm/for_each.hpp"
+#include "etl/_algorithm/for_each_n.hpp"
+#include "etl/_algorithm/iter_swap.hpp"
+#include "etl/_algorithm/move.hpp"
+#include "etl/_algorithm/move_backward.hpp"
+#include "etl/_algorithm/search.hpp"
+#include "etl/_algorithm/swap.hpp"
+#include "etl/_algorithm/swap_ranges.hpp"
+#include "etl/_algorithm/transform.hpp"
 
-#include "etl/detail/concepts/emulation.hpp"
+#include "etl/_concepts/emulation.hpp"
 
 namespace etl {
 

@@ -31,7 +31,7 @@
 #include "etl/new.hpp"
 #include "etl/utility.hpp"
 
-#include "etl/detail/algorithm/search.hpp"
+#include "etl/_algorithm/search.hpp"
 
 namespace etl {
 namespace detail {

@@ -29,10 +29,10 @@
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
 
-// #include "etl/detail/container_utils.hpp"
-#include "etl/detail/strings/char_traits.hpp"
-#include "etl/detail/strings/conversion.hpp"
-#include "etl/detail/strings/find_first_not_of.hpp"
+// #include "etl/_container_utils.hpp"
+#include "etl/_strings/char_traits.hpp"
+#include "etl/_strings/conversion.hpp"
+#include "etl/_strings/find_first_not_of.hpp"
 
 namespace etl {
 /// \brief basic_static_string class with fixed size capacity.

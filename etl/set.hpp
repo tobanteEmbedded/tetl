@@ -32,7 +32,7 @@
 #include "etl/utility.hpp"    // for forward, move
 #include "etl/vector.hpp"     // for static_vector
 
-#include "etl/detail/concepts/requires.hpp"
+#include "etl/_concepts/requires.hpp"
 
 namespace etl {
 /// \brief static_set is an associative container that contains a sorted set

@@ -32,7 +32,7 @@
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/tuple/tuple_size.hpp"
+#include "etl/_tuple/tuple_size.hpp"
 
 /// \file This header is part of the containers library.
 

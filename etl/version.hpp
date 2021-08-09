@@ -25,12 +25,12 @@
 #define TETL_VERSION_HPP
 
 // clang-format off
-#include "etl/detail/config/compiler.hpp"
-#include "etl/detail/config/preprocessor.hpp"
-#include "etl/detail/config/keywords.hpp"
-#include "etl/detail/config/builtin_types.hpp"
-#include "etl/detail/config/builtin_functions.hpp"
-#include "etl/detail/config/attributes.hpp"
+#include "etl/_config/compiler.hpp"
+#include "etl/_config/preprocessor.hpp"
+#include "etl/_config/keywords.hpp"
+#include "etl/_config/builtin_types.hpp"
+#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/attributes.hpp"
 // clang-format on
 
 #if (__has_include(<version>))

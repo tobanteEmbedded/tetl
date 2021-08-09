@@ -28,9 +28,9 @@
 
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/math/abs.hpp"
-#include "etl/detail/math/lerp.hpp"
-#include "etl/detail/type_traits/enable_if.hpp"
+#include "etl/_math/abs.hpp"
+#include "etl/_math/lerp.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 
 #if __has_include(<math.h>)
 #include <math.h>

@@ -29,10 +29,10 @@
 #include "etl/cassert.hpp"
 #include "etl/cstring.hpp"
 
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
-#include "etl/detail/math/abs.hpp"
-#include "etl/detail/strings/conversion.hpp"
+#include "etl/_cstddef/nullptr_t.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_math/abs.hpp"
+#include "etl/_strings/conversion.hpp"
 
 namespace etl {
 #if not defined(EXIT_SUCCESS)

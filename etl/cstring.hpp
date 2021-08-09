@@ -29,7 +29,7 @@
 #include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 
-#include "etl/detail/strings/cstr_algorithm.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
 namespace etl {
 /// \brief Copies the character string pointed to by src, including the null
