@@ -24,6 +24,9 @@
 #ifndef TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
 #define TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
 
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
+
 namespace etl {
 /// \brief The char_traits class is a traits class template that abstracts basic
 /// character and string operations for a given character type. The defined
@@ -88,7 +91,7 @@ struct char_traits<char> {
     /// that is, the position of the terminating null character (CharT()).
     static constexpr auto length(char_type const* str) -> size_t
     {
-        return etl::strlen(str);
+        return detail::strlen_impl<char_type, size_t>(str);
     }
 
     /// \brief Searches for character ch within the first count characters of
@@ -148,7 +151,7 @@ struct char_traits<char> {
     /// \brief Converts a value of char_type to int_type.
     static constexpr auto to_int_type(char_type c) noexcept -> int_type
     {
-        return int_type { static_cast<uint8_t>(c) };
+        return int_type { static_cast<unsigned char>(c) };
     }
 
     /// \brief Checks whether two values of type int_type are equal.

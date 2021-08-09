@@ -26,21 +26,12 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
-#include "etl/_algorithm/for_each.hpp"
-#include "etl/_algorithm/for_each_n.hpp"
-#include "etl/_algorithm/iter_swap.hpp"
-#include "etl/_algorithm/move.hpp"
-#include "etl/_algorithm/move_backward.hpp"
-#include "etl/_algorithm/search.hpp"
-#include "etl/_algorithm/swap.hpp"
-#include "etl/_algorithm/swap_ranges.hpp"
-#include "etl/_algorithm/transform.hpp"
+#include "etl/_assert/macro.hpp"
 
 #include "etl/_algorithm/adjacent_find.hpp"
 #include "etl/_algorithm/count.hpp"
@@ -50,9 +41,14 @@
 #include "etl/_algorithm/find_first_of.hpp"
 #include "etl/_algorithm/find_if.hpp"
 #include "etl/_algorithm/find_if_not.hpp"
+#include "etl/_algorithm/for_each.hpp"
+#include "etl/_algorithm/for_each_n.hpp"
 #include "etl/_algorithm/generate.hpp"
 #include "etl/_algorithm/generate_n.hpp"
+#include "etl/_algorithm/iter_swap.hpp"
 #include "etl/_algorithm/mismatch.hpp"
+#include "etl/_algorithm/move.hpp"
+#include "etl/_algorithm/move_backward.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/remove_copy.hpp"
 #include "etl/_algorithm/remove_copy_if.hpp"
@@ -61,6 +57,9 @@
 #include "etl/_algorithm/replace_if.hpp"
 #include "etl/_algorithm/search.hpp"
 #include "etl/_algorithm/search_n.hpp"
+#include "etl/_algorithm/swap.hpp"
+#include "etl/_algorithm/swap_ranges.hpp"
+#include "etl/_algorithm/transform.hpp"
 
 #include "etl/_concepts/emulation.hpp"
 

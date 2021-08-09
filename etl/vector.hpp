@@ -28,9 +28,9 @@
 
 #include "etl/algorithm.hpp"
 #include "etl/array.hpp"
-#include "etl/cassert.hpp"
 #include "etl/functional.hpp"
 
+#include "etl/_assert/macro.hpp"
 #include "etl/_container/index.hpp"
 #include "etl/_container/smallest_size_t.hpp"
 

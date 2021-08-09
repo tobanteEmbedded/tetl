@@ -26,8 +26,7 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cassert.hpp"
-
+#include "etl/_assert/macro.hpp"
 #include "etl/_cstddef/null.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"

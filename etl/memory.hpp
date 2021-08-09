@@ -26,8 +26,9 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_assert/macro.hpp"
+
 #include "etl/bit.hpp"
-#include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"

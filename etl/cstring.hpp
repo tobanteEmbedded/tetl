@@ -26,10 +26,10 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cassert.hpp"
-#include "etl/cstddef.hpp"
-
+#include "etl/_assert/macro.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
+
+#include "etl/cstddef.hpp"
 
 namespace etl {
 /// \brief Copies the character string pointed to by src, including the null

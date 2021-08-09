@@ -26,8 +26,9 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_assert/macro.hpp"
+
 #include "etl/algorithm.hpp"
-#include "etl/cassert.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
 #include "etl/set.hpp"
