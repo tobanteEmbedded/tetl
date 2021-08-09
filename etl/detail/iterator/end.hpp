@@ -24,6 +24,8 @@
 #ifndef TETL_DETAIL_ITERATOR_END_HPP
 #define TETL_DETAIL_ITERATOR_END_HPP
 
+#include "etl/detail/cstddef/size_t.hpp"
+
 namespace etl {
 
 /// \brief Returns an iterator to the end (i.e. the element after the last
@@ -43,7 +45,7 @@ constexpr auto end(C const& c) -> decltype(c.end())
 }
 
 /// \group end
-template <typename T, size_t N>
+template <typename T, ::etl::size_t N>
 constexpr auto end(T (&array)[N]) noexcept -> T*
 {
     return &array[N];

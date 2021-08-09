@@ -24,6 +24,8 @@
 #ifndef TETL_DETAIL_ITERATOR_BEGIN_HPP
 #define TETL_DETAIL_ITERATOR_BEGIN_HPP
 
+#include "etl/detail/cstddef/size_t.hpp"
+
 namespace etl {
 
 /// \brief Returns an iterator to the beginning of the given container c or
@@ -48,7 +50,7 @@ constexpr auto begin(C const& c) -> decltype(c.begin())
 }
 
 /// \group begin
-template <typename T, size_t N>
+template <typename T, ::etl::size_t N>
 constexpr auto begin(T (&array)[N]) noexcept -> T*
 {
     return &array[0];
