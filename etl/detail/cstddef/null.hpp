@@ -21,21 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTDIO_HPP
-#define TETL_CSTDIO_HPP
+#ifndef TETL_DETAIL_CSTDDEF_NULL_HPP
+#define TETL_DETAIL_CSTDDEF_NULL_HPP
 
-#include "etl/version.hpp"
+#if not defined(NULL)
+/// \brief The macro NULL is an implementation-defined null pointer constant,
+/// which may be a prvalue of type nullptr_t.
+#define NULL nullptr
+#endif
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
-
-#include "etl/detail/cstddef/max_align_t.hpp"
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/ptrdiff_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
-
-#endif // has_include <stdio.h>
-
-#endif // TETL_CSTDIO_HPP
+#endif // TETL_DETAIL_CSTDDEF_NULL_HPP

@@ -26,11 +26,9 @@
 
 #include "etl/version.hpp"
 
-#include "etl/detail/cstddef_internal.hpp"
-
-#if not defined(NULL)
-#define NULL nullptr
-#endif // NULL
+#include "etl/detail/cstddef/null.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
+#include "etl/detail/cstddef/tm.hpp"
 
 namespace etl {
 
@@ -41,8 +39,6 @@ struct timespec {
     etl::time_t tv_sec;
     long tv_nsec;
 };
-
-using tm = detail::tm;
 
 } // namespace etl
 

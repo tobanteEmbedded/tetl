@@ -21,19 +21,12 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTDDEF_INTERNAL_HPP
-#define TETL_DETAIL_CSTDDEF_INTERNAL_HPP
+#ifndef TETL_DETAIL_CSTDDEF_PTRDIFF_T_HPP
+#define TETL_DETAIL_CSTDDEF_PTRDIFF_T_HPP
 
 #include "etl/detail/config/builtin_types.hpp"
-#include "etl/detail/config/compiler.hpp"
 
 namespace etl {
-/// \brief etl::size_t is the unsigned integer type of the result of the sizeof
-/// operator.
-///
-/// \notes
-/// [cppreference.com/w/cpp/types/size_t](https://en.cppreference.com/w/cpp/types/size_t)
-using size_t = TETL_BUILTIN_SIZET;
 
 /// \brief etl::ptrdiff_t is the signed integer type of the result of
 /// subtracting two pointers.
@@ -42,44 +35,6 @@ using size_t = TETL_BUILTIN_SIZET;
 /// [cppreference.com/w/cpp/types/ptrdiff_t](https://en.cppreference.com/w/cpp/types/ptrdiff_t)
 using ptrdiff_t = TETL_BUILTIN_PTRDIFF;
 
-/// \brief etl::nullptr_t is the type of the null pointer literal, nullptr. It
-/// is a distinct type that is not itself a pointer type or a pointer to member
-/// type.
-///
-/// \notes
-/// [cppreference.com/w/cpp/types/nullptr_t](https://en.cppreference.com/w/cpp/types/nullptr_t)
-using nullptr_t = decltype(nullptr);
-
-#if defined(TETL_MSVC)
-#pragma warning(disable : 4324) // Padding was added at the end of a structure
-#endif
-
-/// \brief etl::max_align_t is a trivial standard-layout type whose alignment
-/// requirement is at least as strict (as large) as that of every scalar type.
-///
-/// \notes
-/// [cppreference.com/w/cpp/types/max_align_t](https://en.cppreference.com/w/cpp/types/max_align_t)
-struct alignas(long double) max_align_t {
-};
-
-#if defined(TETL_MSVC)
-#pragma warning(default : 4324) // Padding was added at the end of a structure
-#endif
-
-namespace detail {
-struct tm {
-    int tm_sec;
-    int tm_min;
-    int tm_hour;
-    int tm_mday;
-    int tm_mon;
-    int tm_year;
-    int tm_wday;
-    int tm_yday;
-    int tm_isdst;
-};
-} // namespace detail
-
 } // namespace etl
 
-#endif // TETL_DETAIL_CSTDDEF_INTERNAL_HPP
+#endif // TETL_DETAIL_CSTDDEF_PTRDIFF_T_HPP

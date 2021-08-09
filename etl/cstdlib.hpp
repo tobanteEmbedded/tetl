@@ -28,10 +28,10 @@
 
 #include "etl/cassert.hpp"
 #include "etl/cmath.hpp"
-#include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
 
-#include "etl/detail/cstddef_internal.hpp"
+#include "etl/detail/cstddef/nullptr_t.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
 #include "etl/detail/strings/conversion.hpp"
 
 namespace etl {
@@ -45,13 +45,6 @@ namespace etl {
 
 /// \brief Unsuccessful execution of a program.
 #define EXIT_FAILURE 1
-#endif
-
-#if not defined(NULL)
-
-/// \brief The macro NULL is an implementation-defined null pointer constant,
-/// which may be a prvalue of type nullptr_t.
-#define NULL nullptr
 #endif
 
 /// \brief Return type for div, ldiv, lldiv & imaxdiv.

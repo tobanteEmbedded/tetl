@@ -26,7 +26,10 @@
 
 #include "etl/version.hpp"
 
-#include "etl/detail/cstddef_internal.hpp" // for size_t, max_align_t, nullptr_t
+#include "etl/detail/cstddef/max_align_t.hpp"
+#include "etl/detail/cstddef/nullptr_t.hpp"
+#include "etl/detail/cstddef/ptrdiff_t.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
 
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"

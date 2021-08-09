@@ -21,21 +21,30 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTDIO_HPP
-#define TETL_CSTDIO_HPP
+#ifndef TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP
+#define TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/config/builtin_types.hpp"
+#include "etl/detail/config/compiler.hpp"
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
+namespace etl {
 
-#include "etl/detail/cstddef/max_align_t.hpp"
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/ptrdiff_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
+#if defined(TETL_MSVC)
+#pragma warning(disable : 4324) // Padding was added at the end of a structure
+#endif
 
-#endif // has_include <stdio.h>
+/// \brief etl::max_align_t is a trivial standard-layout type whose alignment
+/// requirement is at least as strict (as large) as that of every scalar type.
+///
+/// \notes
+/// [cppreference.com/w/cpp/types/max_align_t](https://en.cppreference.com/w/cpp/types/max_align_t)
+struct alignas(long double) max_align_t {
+};
 
-#endif // TETL_CSTDIO_HPP
+#if defined(TETL_MSVC)
+#pragma warning(default : 4324) // Padding was added at the end of a structure
+#endif
+
+} // namespace etl
+
+#endif // TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP

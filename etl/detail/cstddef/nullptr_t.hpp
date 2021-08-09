@@ -21,21 +21,18 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTDIO_HPP
-#define TETL_CSTDIO_HPP
+#ifndef TETL_DETAIL_CSTDDEF_NULLPTR_T_HPP
+#define TETL_DETAIL_CSTDDEF_NULLPTR_T_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
+/// \brief etl::nullptr_t is the type of the null pointer literal, nullptr. It
+/// is a distinct type that is not itself a pointer type or a pointer to member
+/// type.
+///
+/// https://en.cppreference.com/w/cpp/types/nullptr_t
+using nullptr_t = decltype(nullptr);
 
-#include "etl/detail/cstddef/max_align_t.hpp"
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/ptrdiff_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
+} // namespace etl
 
-#endif // has_include <stdio.h>
-
-#endif // TETL_CSTDIO_HPP
+#endif // TETL_DETAIL_CSTDDEF_NULLPTR_T_HPP

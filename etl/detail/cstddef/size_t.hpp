@@ -21,21 +21,20 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTDIO_HPP
-#define TETL_CSTDIO_HPP
+#ifndef TETL_DETAIL_CSTDDEF_SIZE_T_HPP
+#define TETL_DETAIL_CSTDDEF_SIZE_T_HPP
 
-#include "etl/version.hpp"
+#include "etl/detail/config/builtin_types.hpp"
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
+namespace etl {
 
-#include "etl/detail/cstddef/max_align_t.hpp"
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/ptrdiff_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
+/// \brief etl::size_t is the unsigned integer type of the result of the sizeof
+/// operator.
+///
+/// \notes
+/// [cppreference.com/w/cpp/types/size_t](https://en.cppreference.com/w/cpp/types/size_t)
+using size_t = TETL_BUILTIN_SIZET;
 
-#endif // has_include <stdio.h>
+} // namespace etl
 
-#endif // TETL_CSTDIO_HPP
+#endif // TETL_DETAIL_CSTDDEF_SIZE_T_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPETRAITS_DECL_HPP
-#define TETL_TYPETRAITS_DECL_HPP
+#ifndef TETL_DETAIL_TYPETRAITS_DECL_HPP
+#define TETL_DETAIL_TYPETRAITS_DECL_HPP
 
 namespace etl {
 // primary type categories:
@@ -76,4 +76,4 @@ constexpr auto swap(T& a, T& b) noexcept -> void;
 
 } // namespace etl
 
-#endif // TETL_TYPETRAITS_DECL_HPP
+#endif // TETL_DETAIL_TYPETRAITS_DECL_HPP

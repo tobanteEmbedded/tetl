@@ -28,7 +28,10 @@
 
 #include "etl/type_traits.hpp"
 
-#include "etl/detail/cstddef_internal.hpp"
+#include "etl/detail/cstddef/max_align_t.hpp"
+#include "etl/detail/cstddef/nullptr_t.hpp"
+#include "etl/detail/cstddef/ptrdiff_t.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 
 /// \file This header was originally in the C standard library as <stddef.h>.

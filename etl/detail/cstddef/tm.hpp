@@ -21,21 +21,23 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTDIO_HPP
-#define TETL_CSTDIO_HPP
+#ifndef TETL_DETAIL_CSTDDEF_TM_HPP
+#define TETL_DETAIL_CSTDDEF_TM_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
+struct tm {
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
+};
 
-#include "etl/detail/cstddef/max_align_t.hpp"
-#include "etl/detail/cstddef/null.hpp"
-#include "etl/detail/cstddef/nullptr_t.hpp"
-#include "etl/detail/cstddef/ptrdiff_t.hpp"
-#include "etl/detail/cstddef/size_t.hpp"
+} // namespace etl
 
-#endif // has_include <stdio.h>
-
-#endif // TETL_CSTDIO_HPP
+#endif // TETL_DETAIL_CSTDDEF_TM_HPP

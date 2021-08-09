@@ -28,16 +28,15 @@
 
 #include "etl/cassert.hpp"
 
-#include "etl/detail/cstddef_internal.hpp"
+#include "etl/detail/cstddef/null.hpp"
+#include "etl/detail/cstddef/nullptr_t.hpp"
+#include "etl/detail/cstddef/size_t.hpp"
+#include "etl/detail/cstddef/tm.hpp"
 #include "etl/detail/strings/cstr_algorithm.hpp"
 
 #if defined(TETL_MSVC)
 #include <wchar.h>
 #else
-
-#if !defined(NULL)
-#define NULL nullptr
-#endif // NULL
 
 #if !defined(WEOF)
 #define WEOF ((wint_t)-1)
@@ -60,8 +59,6 @@ using wint_t = unsigned int;
 #else
 using wint_t = wint_t;
 #endif
-
-using tm = ::etl::detail::tm;
 
 /// \brief Copies the wide string pointed to by src (including the terminating
 /// null wide character) to wide character array pointed to by dest.
