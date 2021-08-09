@@ -32,181 +32,19 @@
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/algorithm/for_each.hpp"
+#include "etl/detail/algorithm/for_each_n.hpp"
+#include "etl/detail/algorithm/iter_swap.hpp"
+#include "etl/detail/algorithm/move.hpp"
+#include "etl/detail/algorithm/move_backward.hpp"
 #include "etl/detail/algorithm/search.hpp"
 #include "etl/detail/algorithm/swap.hpp"
+#include "etl/detail/algorithm/swap_ranges.hpp"
+#include "etl/detail/algorithm/transform.hpp"
 
 #include "etl/detail/concepts/emulation.hpp"
 
 namespace etl {
-/// \brief Swaps the values of the elements the given iterators are pointing to.
-///
-/// \param a Iterators to the elements to swap.
-/// \param b Iterators to the elements to swap.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/iter_swap](https://en.cppreference.com/w/cpp/algorithm/iter_swap)
-///
-/// \module Algorithm
-template <typename ForwardIt1, typename ForwardIt2>
-constexpr auto iter_swap(ForwardIt1 a, ForwardIt2 b) -> void
-{
-    using etl::swap;
-    swap(*a, *b);
-}
-
-/// \brief Exchanges elements between range `[first1 ,last1)` and another range
-/// starting at `first2`.
-///
-/// \param first1 The first range of elements to swap.
-/// \param last1 The first range of elements to swap.
-/// \param first2 Beginning of the second range of elements to swap.
-///
-/// \returns Iterator to the element past the last element exchanged in the
-/// range beginning with `first2`.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/swap_ranges](https://en.cppreference.com/w/cpp/algorithm/swap_ranges)
-///
-/// \module Algorithm
-template <typename ForwardIt1, typename ForwardIt2>
-constexpr auto swap_ranges(
-    ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) -> ForwardIt2
-{
-    while (first1 != last1) {
-        iter_swap(first1, first2);
-        ++first1;
-        ++first2;
-    }
-
-    return first2;
-}
-
-/// \brief Moves the elements in the range `[first, last)`, to another range
-/// beginning at destination, starting from first and proceeding to `last - 1`.
-/// After this operation the elements in the moved-from range will still contain
-/// valid values of the appropriate type, but not necessarily the same values as
-/// before the move.
-///
-/// \param first The range of elements to move.
-/// \param last The range of elements to move.
-/// \param destination The beginning of the destination range.
-///
-/// \returns Output iterator to the element past the last element moved.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/move](https://en.cppreference.com/w/cpp/algorithm/move)
-///
-/// \module Algorithm
-template <typename InputIt, typename OutputIt>
-constexpr auto move(InputIt first, InputIt last, OutputIt destination)
-    -> OutputIt
-{
-    for (; first != last; ++first, ++destination) {
-        *destination = move(*first);
-    }
-    return destination;
-}
-
-/// \brief Moves the elements from the range `[first, last)`, to another range
-/// ending at destination. The elements are moved in reverse order (the last
-/// element is moved first), but their relative order is preserved.
-///
-/// \param first The range of elements to move.
-/// \param last The range of elements to move.
-/// \param destination End of the destination range.
-///
-/// \returns Iterator in the destination range, pointing at the last element
-/// moved.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/move_backward](https://en.cppreference.com/w/cpp/algorithm/move_backward)
-///
-/// \module Algorithm
-template <typename BidirIt1, typename BidirIt2>
-constexpr auto move_backward(
-    BidirIt1 first, BidirIt1 last, BidirIt2 destination) -> BidirIt2
-{
-    for (; first != last;) { *(--destination) = move(*--last); }
-    return destination;
-}
-
-/// \brief Applies the given function object f to the result of dereferencing
-/// every iterator in the range `[first, last)` in order.
-///
-/// \param first The range to apply the function to.
-/// \param last The range to apply the function to.
-/// \param f Function object, to be applied to the result of dereferencing every
-/// iterator in the range.
-///
-/// \complexity Exactly `last - first` applications of f.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/for_each](https://en.cppreference.com/w/cpp/algorithm/for_each)
-///
-/// \module Algorithm
-template <typename InputIt, typename UnaryFunc>
-constexpr auto for_each(InputIt first, InputIt last, UnaryFunc f) noexcept
-    -> UnaryFunc
-{
-    for (; first != last; ++first) { f(*first); }
-    return f;
-}
-
-/// \brief Applies the given function object f to the result of dereferencing
-/// every iterator in the range `[first, first + n]` in order.
-///
-/// \param first The beginning of the range to apply the function to.
-/// \param n The number of elements to apply the function to.
-/// \param f Function object, to be applied to the result of dereferencing every
-/// iterator in the range.
-///
-/// \complexity Exactly n applications of f.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/for_each_n](https://en.cppreference.com/w/cpp/algorithm/for_each_n)
-///
-/// \module Algorithm
-template <typename InputIt, typename Size, typename UnaryFunc>
-constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept
-    -> InputIt
-{
-    for (Size i = 0; i < n; ++first, ++i) { f(*first); }
-    return first;
-}
-
-/// \brief Applies the given function to a range and stores the result in
-/// another range, beginning at dest. The unary operation op is applied to
-/// the range defined by `[first, last)`.
-///
-/// \param first The first range of elements to transform.
-/// \param last The first range of elements to transform.
-/// \param dest The beginning of the destination range, may be equal to first.
-/// \param op Unary operation function object that will be applied.
-///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/transform](https://en.cppreference.com/w/cpp/algorithm/transform)
-///
-/// \group transform
-/// \module Algorithm
-template <typename InputIt, typename OutputIt, typename UnaryOp>
-constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op)
-    -> OutputIt
-{
-    for (; first != last; ++first, ++dest) { *dest = op(*first); }
-    return dest;
-}
-
-/// \group transform
-template <typename InputIt1, typename InputIt2, typename OutputIt,
-    typename BinaryOp>
-constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    OutputIt dest, BinaryOp op) -> OutputIt
-{
-    for (; first1 != last1; ++first1, ++first2, ++dest) {
-        *dest = op(*first1, *first2);
-    }
-    return dest;
-}
 
 /// \brief Assigns each element in range `[first, last)` a value generated by
 /// the given function object g.
