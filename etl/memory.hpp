@@ -34,8 +34,8 @@
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
+#include "etl/detail/concepts/requires.hpp"
 #include "etl/detail/math/pow.hpp"
-#include "etl/detail/type_traits/require_macro.hpp"
 
 namespace etl {
 /// \brief Obtains the actual address of the object or function arg, even in

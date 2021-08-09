@@ -32,7 +32,7 @@
 #include "etl/functional.hpp"
 
 #include "etl/detail/container/index.hpp"
-#include "etl/detail/type_traits/smallest_size_t.hpp"
+#include "etl/detail/container/smallest_size_t.hpp"
 
 /// \file This header is part of the containers library.
 

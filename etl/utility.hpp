@@ -30,9 +30,9 @@
 #include "etl/type_traits.hpp"
 
 #include "etl/detail/algorithm/swap.hpp"
+#include "etl/detail/concepts/requires.hpp"
 #include "etl/detail/tuple/tuple_size.hpp"
 #include "etl/detail/type_traits/declval.hpp"
-#include "etl/detail/type_traits/require_macro.hpp"
 #include "etl/detail/utility/forward.hpp"
 #include "etl/detail/utility/move.hpp"
 

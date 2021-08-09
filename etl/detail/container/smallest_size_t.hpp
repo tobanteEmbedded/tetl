@@ -21,12 +21,12 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_SMALLEST_SIZE_T_HPP
-#define TETL_DETAIL_TYPE_TRAITS_SMALLEST_SIZE_T_HPP
+#ifndef TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP
+#define TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP
 
 #include "etl/cstdint.hpp"
+#include "etl/detail/type_traits/conditional.hpp"
 #include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
 
 namespace etl::detail {
 /// \brief Smallest fixed-width unsigned integer type that can represent values
@@ -43,4 +43,4 @@ using smallest_size_t =
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_TYPE_TRAITS_SMALLEST_SIZE_T_HPP
+#endif // TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP

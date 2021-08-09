@@ -24,9 +24,17 @@
 #ifndef TETL_DETAIL_CONCEPTS_EMULATION_HPP
 #define TETL_DETAIL_CONCEPTS_EMULATION_HPP
 
-#include "etl/cstddef.hpp"
-#include "etl/iterator.hpp"
-#include "etl/type_traits.hpp"
+#include "etl/detail/iterator/begin.hpp"
+#include "etl/detail/iterator/end.hpp"
+#include "etl/detail/iterator/iterator_traits.hpp"
+#include "etl/detail/type_traits/bool_constant.hpp"
+#include "etl/detail/type_traits/declval.hpp"
+#include "etl/detail/type_traits/is_assignable.hpp"
+#include "etl/detail/type_traits/is_convertible.hpp"
+#include "etl/detail/type_traits/is_move_constructible.hpp"
+#include "etl/detail/type_traits/is_object.hpp"
+#include "etl/detail/type_traits/is_swappable.hpp"
+#include "etl/detail/type_traits/void_t.hpp"
 
 namespace etl::detail {
 template <typename T>
@@ -43,38 +51,25 @@ using iterator_reference_t = typename etl::iterator_traits<T>::reference;
 template <typename T>
 using iterator_category_t = typename etl::iterator_traits<T>::iterator_category;
 
-template <typename T, typename Cat, typename = void>
+template <typename T, typename Category, typename = void>
 struct Iterator_ : etl::false_type {
 };
 
-template <typename T, typename Cat>
-struct Iterator_<T, Cat, etl::void_t<iterator_category_t<T>>>
-    : etl::bool_constant<etl::is_convertible_v<iterator_category_t<T>, Cat>> {
+template <typename T, typename Category>
+struct Iterator_<T, Category, etl::void_t<iterator_category_t<T>>>
+    : etl::bool_constant<
+          etl::is_convertible_v<iterator_category_t<T>, Category>> {
 };
 
 // Concepts (poor-man emulation using type traits)
-template <typename T>
-static constexpr bool InputIterator = Iterator_<T, etl::input_iterator_tag> {};
-
-template <typename T>
-static constexpr bool ForwardIterator
-    = Iterator_<T, etl::forward_iterator_tag> {};
-
-template <typename T>
-static constexpr bool OutputIterator
-    = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
-
-template <typename T>
-static constexpr bool BidirectionalIterator
-    = Iterator_<T, etl::bidirectional_iterator_tag> {};
-
-template <typename T>
-static constexpr bool RandomAccessIterator
-    = Iterator_<T, etl::random_access_iterator_tag> {};
-
-template <typename T>
-static constexpr bool RandomAccessRange
-    = RandomAccessIterator<range_iterator_t<T>>;
+// clang-format off
+template <typename T> inline constexpr bool InputIterator           = Iterator_<T, etl::input_iterator_tag> {};
+template <typename T> inline constexpr bool ForwardIterator         = Iterator_<T, etl::forward_iterator_tag> {};
+template <typename T> inline constexpr bool OutputIterator          = Iterator_<T, etl::output_iterator_tag> {} || ForwardIterator<T>;
+template <typename T> inline constexpr bool BidirectionalIterator   = Iterator_<T, etl::bidirectional_iterator_tag> {};
+template <typename T> inline constexpr bool RandomAccessIterator    = Iterator_<T, etl::random_access_iterator_tag> {};
+template <typename T> inline constexpr bool RandomAccessRange       = RandomAccessIterator<range_iterator_t<T>>;
+// clang-format on
 
 } // namespace etl::detail
 
