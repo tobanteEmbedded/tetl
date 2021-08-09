@@ -235,6 +235,18 @@
 #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
 #endif
 
+#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+#define TETL_BUILTIN_SIGNBIT(x) __builtin_signbit(x)
+#else
+#define TETL_BUILTIN_SIGNBIT(x) ::etl::detail::signbit_fallback(x)
+#endif
+
+#if __has_builtin(__builtin_copysign)
+#define TETL_BUILTIN_COPYSIGN(x, y) __builtin_copysign(x, y)
+#else
+#define TETL_BUILTIN_COPYSIGN(x, y) ::etl::detail::copysign_fallback(x, y)
+#endif
+
 #if __has_builtin(__builtin_is_constant_evaluated)
 #define TETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
 #else
@@ -313,5 +325,20 @@
 #define TETL_MAKE_INTEGER_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
 #endif // TETL_MAKE_INTEGER_SEQ
+
+namespace etl::detail {
+template <typename T>
+constexpr auto copysign_fallback(T x, T y) noexcept -> T
+{
+    if ((x < 0 && y > 0) || (x > 0 && y < 0)) { return -x; }
+    return x;
+}
+
+template <typename T>
+constexpr auto signbit_fallback(T arg) noexcept -> bool
+{
+    return arg == T(-0.0) || arg < T(0);
+}
+} // namespace etl::detail
 
 #endif // TETL_INTRINSICS_HPP
