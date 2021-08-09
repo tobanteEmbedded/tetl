@@ -48,12 +48,24 @@
 #include "etl/detail/type_traits/integer_sequence.hpp"
 #include "etl/detail/type_traits/is_abstract.hpp"
 #include "etl/detail/type_traits/is_aggregate.hpp"
+#include "etl/detail/type_traits/is_array.hpp"
+#include "etl/detail/type_traits/is_class.hpp"
 #include "etl/detail/type_traits/is_const.hpp"
+#include "etl/detail/type_traits/is_empty.hpp"
+#include "etl/detail/type_traits/is_enum.hpp"
 #include "etl/detail/type_traits/is_final.hpp"
 #include "etl/detail/type_traits/is_floating_point.hpp"
+#include "etl/detail/type_traits/is_function.hpp"
 #include "etl/detail/type_traits/is_integral.hpp"
+#include "etl/detail/type_traits/is_lvalue_reference.hpp"
+#include "etl/detail/type_traits/is_member_pointer.hpp"
+#include "etl/detail/type_traits/is_null_pointer.hpp"
+#include "etl/detail/type_traits/is_pointer.hpp"
 #include "etl/detail/type_traits/is_polymorphic.hpp"
+#include "etl/detail/type_traits/is_reference.hpp"
+#include "etl/detail/type_traits/is_rvalue_reference.hpp"
 #include "etl/detail/type_traits/is_same.hpp"
+#include "etl/detail/type_traits/is_union.hpp"
 #include "etl/detail/type_traits/is_void.hpp"
 #include "etl/detail/type_traits/is_volatile.hpp"
 #include "etl/detail/type_traits/make_signed.hpp"
@@ -108,219 +120,6 @@ constexpr auto is_complete_or_unbounded(TypeIdentity /*id*/) ->
 }
 
 } // namespace detail
-
-/// \brief If T is a reference type (lvalue reference or rvalue reference),
-/// provides the member constant value equal true. For any other type, value is
-/// false. The behavior of a program that adds specializations for is_reference
-/// or is_reference_v is undefined.
-/// \group is_reference
-template <typename T>
-struct is_reference : false_type {
-};
-
-/// \exclude
-template <typename T>
-struct is_reference<T&> : true_type {
-};
-
-/// \exclude
-template <typename T>
-struct is_reference<T&&> : true_type {
-};
-/// \group is_reference
-template <typename T>
-inline constexpr bool is_reference_v = is_reference<T>::value;
-
-/// \group is_null_pointer
-template <typename T>
-struct is_null_pointer : is_same<nullptr_t, remove_cv_t<T>> {
-};
-
-/// \group is_null_pointer
-template <typename T>
-inline constexpr bool is_null_pointer_v = is_null_pointer<T>::value;
-
-/// \brief Checks whether T is an array type. Provides the member constant value
-/// which is equal to true, if T is an array type. Otherwise, value is equal to
-/// false.
-/// \details The behavior of a program that adds specializations for is_array or
-/// is_array_v is undefined.
-/// \group is_array
-template <typename T>
-struct is_array : false_type {
-};
-
-/// \exclude
-template <typename T>
-struct is_array<T[]> : true_type {
-};
-
-/// \exclude
-template <typename T, size_t N>
-struct is_array<T[N]> : true_type {
-};
-
-/// \group is_array
-template <typename T>
-inline constexpr bool is_array_v = is_array<T>::value;
-
-/// \brief Checks whether T is a function type. Types like etl::function,
-/// lambdas, classes with overloaded operator() and pointers to functions don't
-/// count as function types. Provides the member constant value which is equal
-/// to true, if T is a function type. Otherwise, value is equal to false.
-///
-/// \details The behavior of a program that adds specializations for is_function
-/// or is_function_v is undefined.
-/// \group is_function
-template <typename T>
-struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>> {
-};
-
-/// \group is_function
-template <typename T>
-inline constexpr bool is_function_v = is_function<T>::value;
-
-namespace detail {
-template <typename T>
-struct is_pointer_helper : ::etl::false_type {
-};
-template <typename T>
-struct is_pointer_helper<T*> : ::etl::true_type {
-};
-} // namespace detail
-
-/// \brief Checks whether T is a pointer to object or a pointer to function (but
-/// not a pointer to member/member function). Provides the member constant value
-/// which is equal to true, if T is a object/function pointer type. Otherwise,
-/// value is equal to false.
-///
-/// \details The behavior of a program that adds specializations for is_pointer
-/// or is_pointer_v is undefined.
-/// \group is_pointer
-template <typename T>
-struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type> {
-};
-
-/// \group is_pointer
-template <typename T>
-inline constexpr bool is_pointer_v = is_pointer<T>::value;
-
-/// \brief Checks whether T is a lvalue reference type. Provides the member
-/// constant value which is equal to true, if T is a lvalue reference type.
-/// Otherwise, value is equal to false.
-/// \group is_lvalue_reference
-template <typename T>
-struct is_lvalue_reference : false_type {
-};
-
-/// \exclude
-template <typename T>
-struct is_lvalue_reference<T&> : true_type {
-};
-
-/// \group is_lvalue_reference
-template <typename T>
-inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
-
-/// \brief Checks whether T is a rvalue reference type. Provides the member
-/// constant value which is equal to true, if T is a rvalue reference type.
-/// Otherwise, value is equal to false.
-/// \group is_rvalue_reference
-template <typename T>
-struct is_rvalue_reference : false_type {
-};
-
-/// \exclude
-template <typename T>
-struct is_rvalue_reference<T&&> : true_type {
-};
-
-/// \group is_rvalue_reference
-template <typename T>
-inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
-
-/// \group is_class
-template <typename T>
-struct is_class : bool_constant<TETL_IS_CLASS(T)> {
-};
-
-/// \group is_class
-template <typename T>
-inline constexpr bool is_class_v = is_class<T>::value;
-
-/// \group is_enum
-template <typename T>
-struct is_enum : bool_constant<TETL_IS_ENUM(T)> {
-};
-
-/// \group is_enum
-template <typename T>
-inline constexpr bool is_enum_v = is_enum<T>::value;
-
-/// \group is_union
-template <typename T>
-struct is_union : bool_constant<TETL_IS_UNION(T)> {
-};
-
-/// \group is_union
-template <typename T>
-inline constexpr bool is_union_v = is_union<T>::value;
-
-namespace detail {
-template <typename T>
-struct is_empty_test_struct_1 : T {
-    char dummy_data;
-};
-
-struct is_empty_test_struct_2 {
-    char dummy_data;
-};
-
-template <typename T, bool = ::etl::is_class<T>::value>
-struct is_empty_helper
-    : ::etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
-                           == sizeof(is_empty_test_struct_2)> {
-};
-
-template <typename T>
-struct is_empty_helper<T, false> : ::etl::false_type {
-};
-} // namespace detail
-
-/// \brief f T is an empty type (that is, a non-union class type with no
-/// non-static data members other than bit-fields of size 0, no virtual
-/// functions, no virtual base classes, and no non-empty base classes), provides
-/// the member constant value equal to true. For any other type, value is false.
-/// \group is_empty
-template <typename T>
-struct is_empty : detail::is_empty_helper<T> {
-};
-
-/// \group is_empty
-template <typename T>
-inline constexpr bool is_empty_v = is_empty<T>::value;
-
-namespace detail {
-template <typename T>
-struct is_member_pointer_helper : ::etl::false_type {
-};
-
-template <typename T, typename U>
-struct is_member_pointer_helper<T U::*> : ::etl::true_type {
-};
-} // namespace detail
-
-/// \brief If T is pointer to non-static member object or a pointer to
-/// non-static member function, provides the member constant value equal true.
-/// For any other type, value is false. The behavior of a program that adds
-/// specializations for is_member_pointer or is_member_pointer_v (since C++17)
-/// is undefined.
-template <typename T>
-struct is_member_pointer : detail::is_member_pointer_helper<remove_cv_t<T>> {
-};
-
-template <typename T>
-inline constexpr bool is_member_pointer_v = is_member_pointer<T>::value;
 
 namespace detail {
 template <typename T>
