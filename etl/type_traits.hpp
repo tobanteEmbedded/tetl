@@ -37,6 +37,7 @@
 #include "etl/detail/type_traits/disjunction.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/integral_constant.hpp"
+#include "etl/detail/type_traits/meta.hpp"
 #include "etl/detail/type_traits/negation.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
 #include "etl/detail/type_traits/type_identify.hpp"
@@ -48,55 +49,6 @@
 namespace etl {
 
 namespace detail {
-template <typename...>
-struct meta_or;
-
-template <>
-struct meta_or<> : false_type {
-};
-
-template <typename B1>
-struct meta_or<B1> : B1 {
-};
-
-template <typename B1, typename B2>
-struct meta_or<B1, B2> : conditional<B1::value, B1, B2>::type {
-};
-
-template <typename B1, typename B2, typename B3, typename... BRest>
-struct meta_or<B1, B2, B3, BRest...>
-    : conditional<B1::value, B1, meta_or<B2, B3, BRest...>>::type {
-};
-
-template <typename... BRest>
-inline constexpr bool meta_or_v = meta_or<BRest...>::value;
-
-template <typename...>
-struct meta_and;
-
-template <>
-struct meta_and<> : true_type {
-};
-
-template <typename B1>
-struct meta_and<B1> : B1 {
-};
-
-template <typename B1, typename B2>
-struct meta_and<B1, B2> : conditional<B1::value, B2, B1>::type {
-};
-
-template <typename B1, typename B2, typename B3, typename... BRest>
-struct meta_and<B1, B2, B3, BRest...>
-    : conditional<B1::value, meta_and<B2, B3, BRest...>, B1>::type {
-};
-
-template <typename... BRest>
-inline constexpr bool meta_and_v = meta_and<BRest...>::value;
-
-template <typename P>
-struct meta_not : bool_constant<!bool(P::value)> {
-};
 
 template <typename, unsigned = 0>
 struct extent;
