@@ -28,6 +28,9 @@
 
 #include "etl/type_traits.hpp"
 
+#include "etl/detail/math/abs.hpp"
+#include "etl/detail/math/lerp.hpp"
+
 #include "etl/detail/sfinae.hpp"
 
 #if __has_include(<math.h>)
@@ -76,9 +79,9 @@ using double_t = double;
 }
 
 /// \group isinf
-template <typename IntegralType>
-[[nodiscard]] constexpr auto isinf(IntegralType arg)
-    -> enable_if_t<is_integral_v<IntegralType>, bool>
+template <typename Int>
+[[nodiscard]] constexpr auto isinf(Int arg)
+    -> enable_if_t<is_integral_v<Int>, bool>
 {
     return isinf(static_cast<double>(arg));
 }
@@ -104,9 +107,9 @@ template <typename IntegralType>
 /// (NaN) value.
 /// \notes
 /// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
-template <typename IntegralType>
-[[nodiscard]] constexpr auto isnan(IntegralType arg)
-    -> enable_if_t<is_integral_v<IntegralType>, bool>
+template <typename Int>
+[[nodiscard]] constexpr auto isnan(Int arg)
+    -> enable_if_t<is_integral_v<Int>, bool>
 {
     return isnan(static_cast<double>(arg));
 }
@@ -134,23 +137,6 @@ template <typename IntegralType>
     return !etl::isnan(arg) && !etl::isinf(arg);
 }
 
-namespace detail {
-template <typename Float>
-[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
-    -> ::etl::enable_if_t<::etl::is_floating_point_v<Float>, Float>
-{
-    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
-        return t * b + (1 - t) * a;
-    }
-
-    if (t == 1) { return b; }
-
-    auto const x = a + t * (b - a);
-    if ((t > 1) == (b > a)) { return b < x ? x : b; }
-    return x < b ? x : b;
-}
-} // namespace detail
-
 /// \brief Computes a+t(b−a), i.e. the linear interpolation between a and b for
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 /// \notes
@@ -175,21 +161,6 @@ template <typename Float>
 {
     return detail::lerp_impl<long double>(a, b, t);
 }
-
-namespace detail {
-template <typename T>
-[[nodiscard]] constexpr auto abs_impl(T n) noexcept -> T
-{
-    constexpr auto isInt      = is_same_v<T, int>;
-    constexpr auto isLong     = is_same_v<T, long>;
-    constexpr auto isLongLong = is_same_v<T, long long>;
-    static_assert(isInt || isLong || isLongLong);
-
-    if (n >= T(0)) { return n; }
-    return n * T(-1);
-}
-
-} // namespace detail
 
 /// \brief Computes the absolute value of an integer number. The behavior is
 /// undefined if the result cannot be represented by the return type. If abs
