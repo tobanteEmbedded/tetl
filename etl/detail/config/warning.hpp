@@ -21,9 +21,15 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_WARNING_HPP
-#define TETL_WARNING_HPP
+#ifndef TETL_DETAIL_CONFIG_WARNING_HPP
+#define TETL_DETAIL_CONFIG_WARNING_HPP
 
-#include "etl/detail/config/warning.hpp"
+namespace etl {
+/// Explicitly ignore arguments or variables.
+template <typename... Types>
+constexpr auto ignore_unused(Types&&... /*unused*/) -> void
+{
+}
+} // namespace etl
 
-#endif // TETL_WARNING_HPP
+#endif // TETL_DETAIL_CONFIG_WARNING_HPP

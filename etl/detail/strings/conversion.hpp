@@ -1,9 +1,10 @@
 #ifndef ETL_DETAIL_STRING_CONVERSION_HPP
 #define ETL_DETAIL_STRING_CONVERSION_HPP
 
-#include "etl/cassert.hpp"
 #include "etl/cctype.hpp"
-#include "etl/warning.hpp"
+#include "etl/limits.hpp"
+
+#include "etl/detail/config/warning.hpp"
 
 namespace etl::detail {
 

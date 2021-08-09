@@ -24,13 +24,6 @@
 #ifndef TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
 #define TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/cstddef.hpp"
-#include "etl/cstring.hpp"
-#include "etl/ios.hpp"
-#include "etl/type_traits.hpp"
-
 namespace etl {
 /// \brief The char_traits class is a traits class template that abstracts basic
 /// character and string operations for a given character type. The defined
@@ -50,7 +43,8 @@ template <>
 struct char_traits<char> {
     using char_type = char;
     using int_type  = int;
-    using off_type  = streamoff;
+
+    // using off_type            = streamoff;
     // using pos_type            = streampos;
     // using state_type          = mbstate_t;
     // using comparison_category = strong_ordering;

@@ -27,7 +27,6 @@
 #include "etl/version.hpp"
 
 #include "etl/cassert.hpp"
-#include "etl/limits.hpp"
 
 /// \file This header was originally in the C standard library as <ctype.h>.
 /// This header is part of the null-terminated byte strings library.
