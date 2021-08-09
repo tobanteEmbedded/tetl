@@ -24,13 +24,12 @@
 #ifndef TETL_DETAIL_CONTAINER_INDEX_HPP
 #define TETL_DETAIL_CONTAINER_INDEX_HPP
 
-#include "etl/cstddef.hpp"
-#include "etl/iterator.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
-
 #include "etl/detail/concepts/emulation.hpp"
+#include "etl/detail/cstddef/ptrdiff_t.hpp"
+#include "etl/detail/iterator/begin.hpp"
+#include "etl/detail/iterator/end.hpp"
 #include "etl/detail/type_traits/require_macro.hpp"
+#include "etl/detail/utility/forward.hpp"
 
 namespace etl::detail {
 
@@ -38,7 +37,8 @@ namespace etl::detail {
 template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
-    TETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
+    TETL_ASSERT(
+        static_cast<etl::ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
     return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
 }
 } // namespace etl::detail

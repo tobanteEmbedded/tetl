@@ -31,39 +31,14 @@
 
 #include "etl/detail/algorithm/swap.hpp"
 #include "etl/detail/tuple/tuple_size.hpp"
+#include "etl/detail/type_traits/declval.hpp"
 #include "etl/detail/type_traits/require_macro.hpp"
+#include "etl/detail/utility/forward.hpp"
 #include "etl/detail/utility/move.hpp"
 
 /// \file This header is part of the general utility library.
 
 namespace etl {
-/// \brief Converts any type T to a reference type, making it possible to use
-/// member functions in decltype expressions without the need to go through
-/// constructors.
-template <typename T>
-auto declval() noexcept -> add_rvalue_reference_t<T>; // NOLINT
-
-/// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
-/// When t is a forwarding reference (a function argument that is declared as an
-/// rvalue reference to a cv-unqualified function template parameter), this
-/// overload forwards the argument to another function with the value category
-/// it had when passed to the calling function.
-///
-/// \notes
-/// [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
-/// \group forward
-template <typename T>
-constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
-{
-    return static_cast<T&&>(param);
-}
-
-/// \group forward
-template <typename T>
-constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
-{
-    return static_cast<T&&>(param);
-}
 
 /// \brief Replaces the value of obj with new_value and returns the old value of
 /// obj.

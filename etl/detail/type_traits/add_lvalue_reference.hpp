@@ -21,51 +21,31 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_TUPLE_SIZE_HPP
-#define TETL_TUPLE_TUPLE_SIZE_HPP
+#ifndef TETL_DETAIL_TYPE_TRAITS_ADD_LVALUE_REFERENCE_HPP
+#define TETL_DETAIL_TYPE_TRAITS_ADD_LVALUE_REFERENCE_HPP
 
-#include "etl/type_traits.hpp"
-
-#include "etl/detail/cstddef/size_t.hpp"
-#include "etl/detail/type_traits/integral_constant.hpp"
+#include "etl/detail/type_traits/type_identity.hpp"
 
 namespace etl {
-// class template tuple
-template <typename First, typename... Rest>
-struct tuple;
 
+namespace detail {
 template <typename T>
-struct tuple_size; /*undefined*/
+auto try_add_lvalue_reference(int) -> ::etl::type_identity<T&>;
+template <typename T>
+auto try_add_lvalue_reference(...) -> ::etl::type_identity<T>;
 
-template <typename... Types>
-struct tuple_size<etl::tuple<Types...>>
-    : etl::integral_constant<etl::size_t, sizeof...(Types)> {
+} // namespace detail
+
+/// \brief Creates a lvalue reference type of T.
+/// \group add_lvalue_reference
+template <typename T>
+struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0)) {
 };
 
+/// \group add_lvalue_reference
 template <typename T>
-struct tuple_size<const T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<const volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
-
-template <size_t I, typename T>
-struct tuple_element;
-
-template <size_t I, typename T>
-using tuple_element_t = typename tuple_element<I, T>::type;
+using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
 
 } // namespace etl
 
-#endif // TETL_TUPLE_TUPLE_SIZE_HPP
+#endif // TETL_DETAIL_TYPE_TRAITS_ADD_LVALUE_REFERENCE_HPP

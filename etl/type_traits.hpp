@@ -31,16 +31,19 @@
 #include "etl/detail/cstddef/ptrdiff_t.hpp"
 #include "etl/detail/cstddef/size_t.hpp"
 
+#include "etl/detail/type_traits/add_lvalue_reference.hpp"
+#include "etl/detail/type_traits/add_rvalue_reference.hpp"
 #include "etl/detail/type_traits/bool_constant.hpp"
 #include "etl/detail/type_traits/conditional.hpp"
 #include "etl/detail/type_traits/conjunction.hpp"
+#include "etl/detail/type_traits/declval.hpp"
 #include "etl/detail/type_traits/disjunction.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/integral_constant.hpp"
 #include "etl/detail/type_traits/meta.hpp"
 #include "etl/detail/type_traits/negation.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
-#include "etl/detail/type_traits/type_identify.hpp"
+#include "etl/detail/type_traits/type_identity.hpp"
 #include "etl/detail/type_traits/void_t.hpp"
 
 #include "etl/detail/type_traits/decl.hpp"
@@ -80,43 +83,6 @@ constexpr auto is_complete_or_unbounded(TypeIdentity /*id*/) ->
 }
 
 } // namespace detail
-
-namespace detail {
-template <typename T>
-auto try_add_lvalue_reference(int) -> ::etl::type_identity<T&>;
-template <typename T>
-auto try_add_lvalue_reference(...) -> ::etl::type_identity<T>;
-
-template <typename T>
-auto try_add_rvalue_reference(int) -> ::etl::type_identity<T&&>;
-template <typename T>
-auto try_add_rvalue_reference(...) -> ::etl::type_identity<T>;
-
-} // namespace detail
-
-/// \brief Creates a lvalue reference type of T.
-/// \group add_lvalue_reference
-template <typename T>
-struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0)) {
-};
-
-/// \group add_lvalue_reference
-template <typename T>
-using add_lvalue_reference_t = typename add_lvalue_reference<T>::type;
-
-/// \brief Creates a rvalue reference type of T.
-/// \group add_rvalue_reference
-template <typename T>
-struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0)) {
-};
-
-/// \group add_rvalue_reference
-template <typename T>
-using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
-
-/// \group declval
-template <typename T>
-auto declval() noexcept -> add_rvalue_reference_t<T>;
 
 /// \brief If T is an array type, provides the member constant value equal to
 /// the number of elements along the Nth dimension of the array, if N is in [0,

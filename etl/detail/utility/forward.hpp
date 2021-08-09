@@ -21,51 +21,35 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_TUPLE_SIZE_HPP
-#define TETL_TUPLE_TUPLE_SIZE_HPP
+#ifndef TETL_DETAIL_UTILITY_FORWARD_HPP
+#define TETL_DETAIL_UTILITY_FORWARD_HPP
 
-#include "etl/type_traits.hpp"
-
-#include "etl/detail/cstddef/size_t.hpp"
-#include "etl/detail/type_traits/integral_constant.hpp"
+#include "etl/detail/type_traits/remove_reference.hpp"
 
 namespace etl {
-// class template tuple
-template <typename First, typename... Rest>
-struct tuple;
 
+/// \brief Forwards lvalues as either lvalues or as rvalues, depending on T.
+/// When t is a forwarding reference (a function argument that is declared as an
+/// rvalue reference to a cv-unqualified function template parameter), this
+/// overload forwards the argument to another function with the value category
+/// it had when passed to the calling function.
+///
+/// \notes
+/// [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
+/// \group forward
 template <typename T>
-struct tuple_size; /*undefined*/
+constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
+{
+    return static_cast<T&&>(param);
+}
 
-template <typename... Types>
-struct tuple_size<etl::tuple<Types...>>
-    : etl::integral_constant<etl::size_t, sizeof...(Types)> {
-};
-
+/// \group forward
 template <typename T>
-struct tuple_size<const T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<const volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
-
-template <size_t I, typename T>
-struct tuple_element;
-
-template <size_t I, typename T>
-using tuple_element_t = typename tuple_element<I, T>::type;
+constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
+{
+    return static_cast<T&&>(param);
+}
 
 } // namespace etl
 
-#endif // TETL_TUPLE_TUPLE_SIZE_HPP
+#endif // TETL_DETAIL_UTILITY_FORWARD_HPP
