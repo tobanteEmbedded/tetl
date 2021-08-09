@@ -255,9 +255,54 @@ constexpr auto strncmp(
     return detail::strstr_impl<char const>(haystack, needle);
 }
 
+/// \brief Converts ch to unsigned char and locates the first occurrence of that
+/// value in the initial count characters (each interpreted as unsigned char) of
+/// the object pointed to by ptr.
+///
+/// \details This function behaves as if it reads the characters sequentially
+/// and stops as soon as a matching character is found: if the array pointed to
+/// by ptr is smaller than count, but the match is found within the array, the
+/// behavior is well-defined.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/memchr
+///
+/// \returns Pointer to the location of the character, or a null pointer if no
+/// such character is found.
+///
+/// \module Strings
+[[nodiscard]] constexpr auto memchr(void* ptr, int ch, etl::size_t n) -> void*
+{
+    auto* p = static_cast<unsigned char*>(ptr);
+    return detail::memchr_impl(p, static_cast<unsigned char>(ch), n);
+}
+
+/// \brief Converts ch to unsigned char and locates the first occurrence of that
+/// value in the initial count characters (each interpreted as unsigned char) of
+/// the object pointed to by ptr.
+///
+/// \details This function behaves as if it reads the characters sequentially
+/// and stops as soon as a matching character is found: if the array pointed to
+/// by ptr is smaller than count, but the match is found within the array, the
+/// behavior is well-defined.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/memchr
+///
+/// \returns Pointer to the location of the character, or a null pointer if no
+/// such character is found.
+///
+/// \module Strings
+[[nodiscard]] constexpr auto memchr(void const* ptr, int ch, etl::size_t n)
+    -> void const*
+{
+    auto const* const p = static_cast<unsigned char const*>(ptr);
+    auto const c        = static_cast<unsigned char>(ch);
+    return detail::memchr_impl<unsigned char const, etl::size_t>(p, c, n);
+}
+
 /// \brief Copy the first n bytes pointed to by src to the buffer pointed to by
 /// dest. Source and destination may not overlap. If source and destination
 /// might overlap, memmove() must be used instead.
+///
 /// \module Strings
 constexpr auto memcpy(void* dest, void const* src, etl::size_t n) -> void*
 {
