@@ -185,7 +185,7 @@ constexpr auto operator+(complex<T> const& val) -> complex<T>
 template <typename T>
 constexpr auto operator-(complex<T> const& val) -> complex<T>
 {
-    return { -val.real(), -val.imag() };
+    return { static_cast<T>(-val.real()), static_cast<T>(-val.imag()) };
 }
 
 inline namespace literals {
