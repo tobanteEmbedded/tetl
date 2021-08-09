@@ -21,16 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONTAINER_UTILS_HPP
-#define TETL_CONTAINER_UTILS_HPP
+#ifndef TETL_DETAIL_CONCEPTS_EMULATION_HPP
+#define TETL_DETAIL_CONCEPTS_EMULATION_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
-#include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
-
-#include "etl/detail/type_traits/require_macro.hpp"
 
 namespace etl::detail {
 template <typename T>
@@ -80,24 +77,6 @@ template <typename T>
 static constexpr bool RandomAccessRange
     = RandomAccessIterator<range_iterator_t<T>>;
 
-/// \brief Smallest fixed-width unsigned integer type that can represent values
-/// in the range [0, N].
-// clang-format off
-template<size_t N>
-using smallest_size_t =
-            etl::conditional_t<(N < etl::numeric_limits<uint8_t>::max()),  uint8_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint16_t>::max()), uint16_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint32_t>::max()), uint32_t,
-            etl::conditional_t<(N < etl::numeric_limits<uint64_t>::max()), uint64_t,
-                                                                 size_t>>>>;
-// clang-format on
-
-/// \brief Index a range doing bound checks in debug builds
-template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
-constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
-{
-    TETL_ASSERT(static_cast<ptrdiff_t>(i) < (etl::end(rng) - etl::begin(rng)));
-    return etl::begin(etl::forward<Rng>(rng))[etl::forward<Index>(i)];
-}
 } // namespace etl::detail
-#endif // TETL_CONTAINER_UTILS_HPP
+
+#endif // TETL_DETAIL_CONCEPTS_EMULATION_HPP

@@ -35,7 +35,7 @@
 #include "etl/detail/algorithm/search.hpp"
 #include "etl/detail/algorithm/swap.hpp"
 
-#include "etl/detail/container_utils.hpp"
+#include "etl/detail/concepts/emulation.hpp"
 
 namespace etl {
 /// \brief Swaps the values of the elements the given iterators are pointing to.

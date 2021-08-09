@@ -32,7 +32,7 @@
 #include "etl/iterator.hpp"
 #include "etl/memory.hpp"
 
-#include "etl/detail/container_utils.hpp"
+// #include "etl/detail/container_utils.hpp"
 #include "etl/detail/strings/char_traits.hpp"
 #include "etl/detail/strings/find_first_not_of.hpp"
 #include "etl/detail/type_traits/require_macro.hpp"
