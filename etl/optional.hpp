@@ -26,13 +26,32 @@
 
 #include "etl/version.hpp"
 
-#include "etl/memory.hpp"      // for addressof
-#include "etl/new.hpp"         // for operator new
-#include "etl/type_traits.hpp" // for remove_cvref_t, is_same (ptr only)
-#include "etl/utility.hpp"     // for forward, in_place, in_place_t, move
+#include "etl/memory.hpp"  // for addressof
+#include "etl/new.hpp"     // for operator new
+#include "etl/utility.hpp" // for forward, in_place, in_place_t, move
 
 #include "etl/detail/concepts/requires.hpp"
 #include "etl/detail/optional/sfinae_base.hpp"
+#include "etl/detail/type_traits/conjunction.hpp"
+#include "etl/detail/type_traits/enable_if.hpp"
+#include "etl/detail/type_traits/is_assignable.hpp"
+#include "etl/detail/type_traits/is_constructible.hpp"
+#include "etl/detail/type_traits/is_copy_assignable.hpp"
+#include "etl/detail/type_traits/is_copy_constructible.hpp"
+#include "etl/detail/type_traits/is_move_assignable.hpp"
+#include "etl/detail/type_traits/is_move_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_move_assignable.hpp"
+#include "etl/detail/type_traits/is_nothrow_move_constructible.hpp"
+#include "etl/detail/type_traits/is_nothrow_swappable.hpp"
+#include "etl/detail/type_traits/is_object.hpp"
+#include "etl/detail/type_traits/is_reference.hpp"
+#include "etl/detail/type_traits/is_same.hpp"
+#include "etl/detail/type_traits/is_trivially_copy_constructible.hpp"
+#include "etl/detail/type_traits/is_trivially_destructible.hpp"
+#include "etl/detail/type_traits/is_trivially_move_assignable.hpp"
+#include "etl/detail/type_traits/is_trivially_move_constructible.hpp"
+#include "etl/detail/type_traits/negation.hpp"
+#include "etl/detail/type_traits/remove_cvref.hpp"
 
 namespace etl {
 /// \brief etl::nullopt_t is an empty class type used to indicate optional type
