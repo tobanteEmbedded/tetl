@@ -37,6 +37,7 @@
 #include "etl/detail/type_traits/disjunction.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 #include "etl/detail/type_traits/integral_constant.hpp"
+#include "etl/detail/type_traits/negation.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
 #include "etl/detail/type_traits/type_identify.hpp"
 #include "etl/detail/type_traits/void_t.hpp"
@@ -45,16 +46,6 @@
 
 /// \file This header is part of the type support library.
 namespace etl {
-
-/// \brief Forms the logical negation of the type trait B.
-/// \group negation
-template <typename B>
-struct negation : bool_constant<!bool(B::value)> {
-};
-
-/// \group negation
-template <typename B>
-inline constexpr bool negation_v = negation<B>::value;
 
 namespace detail {
 template <typename...>
