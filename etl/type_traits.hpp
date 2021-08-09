@@ -31,55 +31,18 @@
 #include "etl/detail/cstddef/ptrdiff_t.hpp"
 #include "etl/detail/cstddef/size_t.hpp"
 
+#include "etl/detail/type_traits/bool_constant.hpp"
+#include "etl/detail/type_traits/conditional.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
+#include "etl/detail/type_traits/integral_constant.hpp"
 #include "etl/detail/type_traits/remove_reference.hpp"
+#include "etl/detail/type_traits/type_identify.hpp"
+#include "etl/detail/type_traits/void_t.hpp"
 
 #include "etl/detail/type_traits/decl.hpp"
 
 /// \file This header is part of the type support library.
-
 namespace etl {
-// integral_constant
-template <typename Type, Type Val>
-struct integral_constant {
-    static constexpr Type value = Val;
-    using value_type            = Type;
-    using type                  = integral_constant<Type, Val>;
-    constexpr operator value_type() const noexcept { return value; }
-    constexpr auto operator()() const noexcept -> value_type { return value; }
-};
-
-template <bool B>
-using bool_constant = integral_constant<bool, B>;
-
-using true_type  = bool_constant<true>;
-using false_type = bool_constant<false>;
-
-template <typename...>
-using void_t = void;
-
-template <typename T>
-struct type_identity {
-    using type = T;
-};
-
-/// \brief Provides member typedef type, which is defined as T if B is true at
-/// compile time, or as F if B is false.
-/// \group conditional
-template <bool B, typename T, typename F>
-struct conditional {
-    using type = T;
-};
-
-/// \exclude
-template <typename T, typename F>
-struct conditional<false, T, F> {
-    using type = F;
-};
-
-/// \group conditional
-template <bool B, typename T, typename F>
-using conditional_t = typename conditional<B, T, F>::type;
 
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
