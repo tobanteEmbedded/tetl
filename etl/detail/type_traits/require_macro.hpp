@@ -24,32 +24,24 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_REQUIRE_MACRO_HPP
 #define TETL_DETAIL_TYPE_TRAITS_REQUIRE_MACRO_HPP
 
+#include "etl/detail/config/preprocessor.hpp"
 #include "etl/detail/type_traits/enable_if.hpp"
 
-#define TETL_DETAIL_REQUIRE_CONCAT_(X, Y) X##Y
-#define TETL_DETAIL_REQUIRE_CONCAT(X, Y) TETL_DETAIL_REQUIRE_CONCAT_(X, Y)
-
 /// \brief Requires-clause emulation with SFINAE (for templates).
-///
 /// Copied from https://github.com/gnzlbg/static_vector
 #define TETL_REQUIRES_(...)                                                    \
-    int TETL_DETAIL_REQUIRE_CONCAT(_concept_requires_, __LINE__)               \
+    int TETL_CONCAT(_concept_requires_, __LINE__)                              \
         = 42,                                                                  \
-        ::etl::enable_if_t                                                     \
-                < (TETL_DETAIL_REQUIRE_CONCAT(_concept_requires_, __LINE__)    \
-                    == 43)                                                     \
+        ::etl::enable_if_t < (TETL_CONCAT(_concept_requires_, __LINE__) == 43) \
             || (__VA_ARGS__),                                                  \
         int > = 0
 
 /// \brief Requires-clause emulation with SFINAE (for "non-templates").
-///
 /// Copied from https://github.com/gnzlbg/static_vector
 #define TETL_REQUIRES(...)                                                     \
-    template <int TETL_DETAIL_REQUIRE_CONCAT(_concept_requires_, __LINE__)     \
-              = 42,                                                            \
-        ::etl::enable_if_t<                                                    \
-            (TETL_DETAIL_REQUIRE_CONCAT(_concept_requires_, __LINE__) == 43)   \
-                || (__VA_ARGS__),                                              \
-            int> = 0>
+    template <int TETL_CONCAT(_concept_requires_, __LINE__) = 42,              \
+        ::etl::enable_if_t<(TETL_CONCAT(_concept_requires_, __LINE__) == 43)   \
+                               || (__VA_ARGS__),                               \
+            int>                                            = 0>
 
 #endif // TETL_DETAIL_TYPE_TRAITS_REQUIRE_MACRO_HPP

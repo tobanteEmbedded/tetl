@@ -24,8 +24,6 @@
 #ifndef TETL_DETAIL_CSTRING_ALGORITHM_HPP
 #define TETL_DETAIL_CSTRING_ALGORITHM_HPP
 
-#include "etl/version.hpp"
-
 namespace etl::detail {
 
 template <typename CharT>
