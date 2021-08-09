@@ -27,6 +27,7 @@
 #include "etl/detail/config/builtin_functions.hpp"
 #include "etl/detail/type_traits/bool_constant.hpp"
 #include "etl/detail/type_traits/declval.hpp"
+#include "etl/detail/type_traits/meta.hpp"
 #include "etl/detail/type_traits/remove_all_extents.hpp"
 
 namespace etl {
