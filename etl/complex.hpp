@@ -71,6 +71,22 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator-(complex<T> const& val) -> complex<T>;
 
+template <typename T>
+[[nodiscard]] constexpr auto real(complex<T> const& z) -> T;
+
+template <typename DoubleOrInteger>
+[[nodiscard]] constexpr auto real(DoubleOrInteger z) -> double;
+[[nodiscard]] constexpr auto real(float z) -> float;
+[[nodiscard]] constexpr auto real(long double z) -> long double;
+
+template <typename T>
+[[nodiscard]] constexpr auto imag(complex<T> const& z) -> T;
+
+template <typename DoubleOrInteger>
+[[nodiscard]] constexpr auto imag(DoubleOrInteger z) -> double;
+[[nodiscard]] constexpr auto imag(float z) -> float;
+[[nodiscard]] constexpr auto imag(long double z) -> long double;
+
 inline namespace literals {
 inline namespace complex_literals {
 
@@ -188,6 +204,36 @@ constexpr auto operator-(complex<T> const& val) -> complex<T>
 {
     return { static_cast<T>(-val.real()), static_cast<T>(-val.imag()) };
 }
+
+template <typename T>
+constexpr auto real(complex<T> const& z) -> T
+{
+    return z.real();
+}
+
+template <typename DoubleOrInteger>
+constexpr auto real(DoubleOrInteger z) -> double
+{
+    return static_cast<double>(z);
+}
+
+constexpr auto real(float z) -> float { return z; }
+constexpr auto real(long double z) -> long double { return z; }
+
+template <typename T>
+constexpr auto imag(complex<T> const& z) -> T
+{
+    return z.imag();
+}
+
+template <typename DoubleOrInteger>
+constexpr auto imag(DoubleOrInteger z) -> double
+{
+    return static_cast<double>(z);
+}
+
+constexpr auto imag(float z) -> float { return z; }
+constexpr auto imag(long double z) -> long double { return z; }
 
 inline namespace literals {
 inline namespace complex_literals {

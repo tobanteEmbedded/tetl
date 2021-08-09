@@ -47,6 +47,10 @@ TEMPLATE_TEST_CASE("complex: complex<T>", "[complex]", unsigned char,
     tc = re;
     REQUIRE(tc.real() == T { 1 });
     REQUIRE(tc.imag() == T { 0 });
+    REQUIRE(etl::real(tc) == T { 1 });
+    REQUIRE(etl::imag(tc) == T { 0 });
+    REQUIRE(real(tc) == T { 1 }); // ADL
+    REQUIRE(imag(tc) == T { 0 }); // ADL
 
     tc *= T { 2 };
     REQUIRE(tc.real() == T { 2 });
