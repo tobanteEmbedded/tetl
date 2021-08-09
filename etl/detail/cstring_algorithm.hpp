@@ -99,14 +99,14 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strncmp_impl(
     CharT const* lhs, CharT const* rhs, SizeT const count) -> int
 {
-    int u1 {};
-    int u2 {};
+    CharT u1 {};
+    CharT u2 {};
 
     auto localCount = count;
     while (localCount-- > 0) {
-        u1 = static_cast<int>(*lhs++);
-        u2 = static_cast<int>(*rhs++);
-        if (u1 != u2) { return u1 - u2; }
+        u1 = static_cast<CharT>(*lhs++);
+        u2 = static_cast<CharT>(*rhs++);
+        if (u1 != u2) { return static_cast<int>(u1 - u2); }
         if (u1 == CharT(0)) { return 0; }
     }
 
