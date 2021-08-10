@@ -26,7 +26,7 @@
 
 #include "etl/_type_traits/add_lvalue_reference.hpp"
 #include "etl/_type_traits/add_rvalue_reference.hpp"
-#include "etl/_type_traits/is_nothrow_move_assignable.hpp"
+#include "etl/_type_traits/is_nothrow_assignable.hpp"
 
 namespace etl {
 

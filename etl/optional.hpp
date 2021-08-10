@@ -26,11 +26,8 @@
 
 #include "etl/version.hpp"
 
-#include "etl/memory.hpp"  // for addressof
-#include "etl/new.hpp"     // for operator new
-#include "etl/utility.hpp" // for forward, in_place, in_place_t, move
-
 #include "etl/_concepts/requires.hpp"
+#include "etl/_memory/addressof.hpp"
 #include "etl/_optional/sfinae_base.hpp"
 #include "etl/_type_traits/conjunction.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -52,6 +49,11 @@
 #include "etl/_type_traits/is_trivially_move_constructible.hpp"
 #include "etl/_type_traits/negation.hpp"
 #include "etl/_type_traits/remove_cvref.hpp"
+#include "etl/_utility/forward.hpp"
+#include "etl/_utility/in_place.hpp"
+#include "etl/_utility/move.hpp"
+
+#include "etl/new.hpp" // for operator new
 
 namespace etl {
 /// \brief etl::nullopt_t is an empty class type used to indicate optional type
