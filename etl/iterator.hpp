@@ -26,11 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/memory.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
-
 #include "etl/_config/warning.hpp"
 #include "etl/_iterator/advance.hpp"
 #include "etl/_iterator/back_insert_iterator.hpp"

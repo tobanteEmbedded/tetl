@@ -21,29 +21,35 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
+#ifndef TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP
+#define TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_array.hpp"
-#include "etl/_type_traits/is_class.hpp"
-#include "etl/_type_traits/is_scalar.hpp"
-#include "etl/_type_traits/is_union.hpp"
+#include "etl/_type_traits/conditional.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
 namespace etl {
 
-/// \brief If T is an object type (that is any possibly cv-qualified type other
-/// than function, reference, or void types), provides the member constant value
-/// equal true. For any other type, value is false.
-template <typename T>
-struct is_object
-    : bool_constant<
-          is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T>> {
+namespace detail {
+template <typename T, typename, typename = void>
+struct is_transparent : ::etl::false_type {
 };
 
-template <typename T>
-inline constexpr bool is_object_v = is_object<T>::value;
+/// \brief is_transparent
+/// \group is_transparent
+/// \module Utility
+template <typename T, typename U>
+struct is_transparent<T, U,
+    ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>,
+        void, bool>> : ::etl::true_type {
+};
+
+/// \group is_transparent
+template <typename T, typename U>
+inline constexpr auto transparent_v = is_transparent<T, U>::value;
+
+} // namespace detail
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
+#endif // TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP

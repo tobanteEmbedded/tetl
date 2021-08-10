@@ -23,6 +23,7 @@
 #include "etl/functional.hpp"
 
 #include "etl/array.hpp"
+#include "etl/cstdint.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
 

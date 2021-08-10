@@ -23,6 +23,7 @@
 
 #include "etl/stack.hpp"
 
+#include "etl/utility.hpp"
 #include "etl/vector.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
