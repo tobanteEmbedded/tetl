@@ -29,8 +29,20 @@
 #include "etl/_assert/macro.hpp"
 
 #include "etl/_algorithm/adjacent_find.hpp"
+#include "etl/_algorithm/all_of.hpp"
+#include "etl/_algorithm/any_of.hpp"
+#include "etl/_algorithm/binary_search.hpp"
+#include "etl/_algorithm/clamp.hpp"
+#include "etl/_algorithm/copy.hpp"
+#include "etl/_algorithm/copy_backward.hpp"
+#include "etl/_algorithm/copy_if.hpp"
+#include "etl/_algorithm/copy_n.hpp"
 #include "etl/_algorithm/count.hpp"
 #include "etl/_algorithm/count_if.hpp"
+#include "etl/_algorithm/equal.hpp"
+#include "etl/_algorithm/equal_range.hpp"
+#include "etl/_algorithm/fill.hpp"
+#include "etl/_algorithm/fill_n.hpp"
 #include "etl/_algorithm/find.hpp"
 #include "etl/_algorithm/find_end.hpp"
 #include "etl/_algorithm/find_first_of.hpp"
@@ -40,9 +52,17 @@
 #include "etl/_algorithm/for_each_n.hpp"
 #include "etl/_algorithm/generate.hpp"
 #include "etl/_algorithm/generate_n.hpp"
+#include "etl/_algorithm/includes.hpp"
+#include "etl/_algorithm/is_partitioned.hpp"
+#include "etl/_algorithm/is_permutation.hpp"
+#include "etl/_algorithm/is_sorted.hpp"
+#include "etl/_algorithm/is_sorted_until.hpp"
 #include "etl/_algorithm/iter_swap.hpp"
+#include "etl/_algorithm/lexicographical_compare.hpp"
+#include "etl/_algorithm/lower_bound.hpp"
 #include "etl/_algorithm/max.hpp"
 #include "etl/_algorithm/max_element.hpp"
+#include "etl/_algorithm/merge.hpp"
 #include "etl/_algorithm/min.hpp"
 #include "etl/_algorithm/min_element.hpp"
 #include "etl/_algorithm/minmax.hpp"
@@ -50,17 +70,39 @@
 #include "etl/_algorithm/mismatch.hpp"
 #include "etl/_algorithm/move.hpp"
 #include "etl/_algorithm/move_backward.hpp"
+#include "etl/_algorithm/none_of.hpp"
+#include "etl/_algorithm/nth_element.hpp"
+#include "etl/_algorithm/partial_sort.hpp"
+#include "etl/_algorithm/partition.hpp"
+#include "etl/_algorithm/partition_copy.hpp"
+#include "etl/_algorithm/partition_point.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/remove_copy.hpp"
 #include "etl/_algorithm/remove_copy_if.hpp"
 #include "etl/_algorithm/remove_if.hpp"
 #include "etl/_algorithm/replace.hpp"
 #include "etl/_algorithm/replace_if.hpp"
+#include "etl/_algorithm/reverse.hpp"
+#include "etl/_algorithm/reverse_copy.hpp"
+#include "etl/_algorithm/rotate.hpp"
+#include "etl/_algorithm/rotate_copy.hpp"
 #include "etl/_algorithm/search.hpp"
 #include "etl/_algorithm/search_n.hpp"
+#include "etl/_algorithm/set_difference.hpp"
+#include "etl/_algorithm/set_intersection.hpp"
+#include "etl/_algorithm/set_symmetric_difference.hpp"
+#include "etl/_algorithm/set_union.hpp"
+#include "etl/_algorithm/shift_left.hpp"
+#include "etl/_algorithm/sort.hpp"
+#include "etl/_algorithm/stable_partition.hpp"
+#include "etl/_algorithm/stable_sort.hpp"
 #include "etl/_algorithm/swap.hpp"
 #include "etl/_algorithm/swap_ranges.hpp"
 #include "etl/_algorithm/transform.hpp"
+#include "etl/_algorithm/unique.hpp"
+#include "etl/_algorithm/unique_copy.hpp"
+#include "etl/_algorithm/upper_bound.hpp"
+
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_functional/equal_to.hpp"
 #include "etl/_functional/less.hpp"
@@ -70,187 +112,6 @@
 #include "etl/iterator.hpp"
 
 namespace etl {
-
-/// \brief If v compares less than lo, returns lo; otherwise if hi compares less
-/// than v, returns hi; otherwise returns v. Uses operator< to compare the
-/// values.
-///
-/// \group clamp
-/// \module Algorithm
-template <typename Type>
-[[nodiscard]] constexpr auto clamp(
-    Type const& v, Type const& lo, Type const& hi) noexcept -> Type const&
-{
-    return clamp(v, lo, hi, less<Type>());
-}
-/// \group clamp
-/// \module Algorithm
-template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto clamp(
-    Type const& v, Type const& lo, Type const& hi, Compare comp) -> Type const&
-{
-    TETL_ASSERT(!comp(hi, lo));
-    return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
-}
-
-/// \brief Checks if unary predicate p returns true for all elements in the
-/// range `[first, last)`.
-/// \complexity At most `last - first` applications of the predicate.
-///
-/// \module Algorithm
-template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto all_of(InputIt first, InputIt last, Predicate p)
-    -> bool
-{
-    return find_if_not(first, last, p) == last;
-}
-
-/// \brief Checks if unary predicate p returns true for at least one element in
-/// the range `[first, last)`.
-/// \complexity At most `last - first` applications of the predicate.
-///
-/// \module Algorithm
-template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p)
-    -> bool
-{
-    return find_if(first, last, p) != last;
-}
-
-/// \brief Checks if unary predicate p returns true for no elements in the range
-/// `[first, last)`.
-/// \complexity At most `last - first` applications of the predicate.
-///
-/// \module Algorithm
-template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto none_of(InputIt first, InputIt last, Predicate p)
-    -> bool
-{
-    return find_if(first, last, p) == last;
-}
-
-/// \brief Reverses the order of the elements in the range `[first, last)`.
-/// Behaves as if applying iter_swap to every pair of iterators `first + i`,
-/// `(last-i) - 1` for each non-negative `i < (last - first) / 2`.
-///
-/// \module Algorithm
-template <typename BidirIt>
-constexpr auto reverse(BidirIt first, BidirIt last) -> void
-{
-    while ((first != last) && (first != --last)) { iter_swap(first++, last); }
-}
-
-/// \brief Copies the elements from the range `[first, last)` to another range
-/// beginning at d_first in such a way that the elements in the new range are in
-/// reverse order.
-/// \details If the source and destination ranges (that is, `[first, last)` and
-/// [d_first, d_first+(last-first)) respectively) overlap, the behavior is
-/// undefined.
-///
-/// \module Algorithm
-template <typename BidirIt, typename OutputIt>
-constexpr auto reverse_copy(BidirIt first, BidirIt last, OutputIt destination)
-    -> OutputIt
-{
-    for (; first != last; ++destination) { *(destination) = *(--last); }
-    return destination;
-}
-
-/// \brief Performs a left rotation on a range of elements.
-/// \details Specifically, rotate swaps the elements in the range [first,
-/// last) in such a way that the element n_first becomes the first element of
-/// the new range and n_first - 1 becomes the last element. A precondition of
-/// this function is that [first, n_first) and [n_first, last) are valid ranges.
-///
-/// \module Algorithm
-template <typename ForwardIt>
-constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last)
-    -> ForwardIt
-{
-    if (first == nFirst) { return last; }
-    if (nFirst == last) { return first; }
-
-    auto read     = nFirst;
-    auto write    = first;
-    auto nextRead = first;
-
-    while (read != last) {
-        if (write == nextRead) { nextRead = read; }
-        iter_swap(write++, read++);
-    }
-
-    rotate(write, nextRead, last);
-    return write;
-}
-
-/// \brief Eliminates all except the first element from every consecutive group
-/// of equivalent elements from the range `[first, last)` and returns a
-/// past-the-end iterator for the new logical end of the range.
-/// \group unique
-/// \module Algorithm
-template <typename ForwardIt, typename Predicate>
-constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred)
-    -> ForwardIt
-{
-    if (first == last) { return last; }
-
-    auto result = first;
-    while (++first != last) {
-        if (!pred(*result, *first) && ++result != first) {
-            *result = move(*first);
-        }
-    }
-    return ++result;
-}
-
-/// \brief Eliminates all except the first element from every consecutive group
-/// of equivalent elements from the range `[first, last)` and returns a
-/// past-the-end iterator for the new logical end of the range.
-/// \group unique
-/// \module Algorithm
-template <typename ForwardIt>
-constexpr auto unique(ForwardIt first, ForwardIt last) -> ForwardIt
-{
-    return unique(first, last, equal_to<> {});
-}
-
-/// \brief Copies the elements from the range `[first, last)`, to another range
-/// beginning at d_first in such a way that there are no consecutive equal
-/// elements. Only the first element of each group of equal elements is copied.
-/// \details Elements are compared using the given binary predicate pred. The
-/// behavior is undefined if it is not an equivalence relation.
-/// \group unique_copy
-/// \module Algorithm
-template <typename InputIt, typename OutputIt, typename Predicate>
-constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination,
-    Predicate pred) -> OutputIt
-{
-    if (first != last) {
-        *destination = *first;
-
-        while (++first != last) {
-            if (!pred(*destination, *first)) { *++destination = *first; }
-        }
-
-        ++destination;
-    }
-
-    return destination;
-}
-
-/// \brief Copies the elements from the range `[first, last)`, to another range
-/// beginning at d_first in such a way that there are no consecutive equal
-/// elements. Only the first element of each group of equal elements is copied.
-/// \details Elements are compared using operator==. The behavior is undefined
-/// if it is not an equivalence relation.
-/// \group unique_copy
-/// \module Algorithm
-template <typename InputIt, typename OutputIt>
-constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination)
-    -> OutputIt
-{
-    return unique_copy(first, last, destination, equal_to<> {});
-}
 
 /// \brief Reorders the elements in the range `[first, last)` in such a way that
 /// all elements for which the predicate p returns true precede the elements for
@@ -302,44 +163,6 @@ constexpr auto partition_copy(InputIt first, InputIt last,
     return make_pair(destinationTrue, destinationFalse);
 }
 
-/// \brief Returns true if all elements in the range `[first, last)` that
-/// satisfy the predicate p appear before all elements that don't. Also returns
-/// true if the range is empty.
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/is_partitioned](https://en.cppreference.com/w/cpp/algorithm/is_partitioned)
-///
-/// \module Algorithm
-template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto is_partitioned(
-    InputIt first, InputIt last, Predicate p) -> bool
-{
-    for (; first != last; ++first) {
-        if (!p(*first)) { break; }
-    }
-
-    for (; first != last; ++first) {
-        if (p(*first)) { return false; }
-    }
-
-    return true;
-}
-
-/// \brief Examines the partitioned (as if by partition) range [first,
-/// last) and locates the end of the first partition, that is, the first
-/// element that does not satisfy p or last if all elements satisfy p.
-///
-/// \module Algorithm
-template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto partition_point(
-    ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
-{
-    for (; first != last; ++first) {
-        if (!p(*first)) { break; }
-    }
-
-    return first;
-}
-
 /// \brief  Reorders the elements in the range `[first, last)` in such a way
 /// that all elements for which the predicate p returns true precede the
 /// elements for which predicate p returns false. Relative order of the
@@ -354,81 +177,6 @@ constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
     if (n == 1) { return f + p(*f); }
     auto const m = f + (n / 2);
     return rotate(stable_partition(f, m, p), m, stable_partition(m, l, p));
-}
-
-/// \brief Copies the elements in the range, defined by `[first, last)`, to
-/// another range beginning at destination.
-/// \details Copies all elements in the range `[first, last)` starting from
-/// first and proceeding to `last - 1`. The behavior is undefined if destination
-/// is within the range `[first, last)`. In this case, copy_backward may be used
-/// instead.
-/// \returns Output iterator to the element in the destination range, one past
-/// the last element copied.
-/// \group copy
-/// \module Algorithm
-template <typename InputIt, typename OutputIt>
-constexpr auto copy(InputIt first, InputIt last, OutputIt destination)
-    -> OutputIt
-{
-    for (; first != last; ++first, ++destination) { *destination = *first; }
-    return destination;
-}
-
-/// \brief Copies the elements in the range, defined by `[first, last)`, to
-/// another range beginning at destination.
-/// \details Only copies the elements for which the predicate pred returns true.
-/// The relative order of the elements that are copied is preserved. The
-/// behavior is undefined if the source and the destination ranges overlap.
-/// \returns Output iterator to the element in the destination range, one past
-/// the last element copied.
-/// \group copy
-/// \module Algorithm
-template <typename InputIt, typename OutputIt, typename Predicate>
-constexpr auto copy_if(
-    InputIt first, InputIt last, OutputIt dFirst, Predicate pred) -> OutputIt
-{
-    while (first != last) {
-        if (pred(*first)) { *dFirst++ = *first; }
-        first++;
-    }
-    return dFirst;
-}
-
-/// \brief Copies exactly count values from the range beginning at first to the
-/// range beginning at result. Formally, for each integer `0 <= i < count`,
-/// performs `*(result + i) = *(first + i)`. Overlap of ranges is formally
-/// permitted, but leads to unpredictable ordering of the results.
-///
-/// \returns Iterator in the destination range, pointing past the last element
-/// copied if count>0 or result otherwise.
-///
-/// \module Algorithm
-template <typename InputIt, typename Size, typename OutputIt>
-constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
-{
-    if (count > 0) {
-        *result++ = *first;
-        for (Size i = 1; i < count; ++i) { *result++ = *++first; }
-    }
-    return result;
-}
-
-/// \brief Copies the elements from the range, defined by `[first, last)`, to
-/// another range ending at `dLast`. The elements are copied in reverse order
-/// (the last element is copied first), but their relative order is preserved.
-///
-/// \details The behavior is undefined if `dLast` is within `(first, last]`.
-/// copy must be used instead of copy_backward in that case.
-///
-/// \returns Iterator to the last element copied.
-///
-/// \module Algorithm
-template <typename BidirIt1, typename BidirIt2>
-constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast)
-    -> BidirIt2
-{
-    while (first != last) { *(--dLast) = *(--last); }
-    return dLast;
 }
 
 /// \brief Copies the elements from the range `[first, last)`, to another range
@@ -469,33 +217,6 @@ constexpr auto shift_left(ForwardIt first, const ForwardIt last,
     }
 
     first = move(start, last, first);
-    return first;
-}
-
-/// \brief Assigns the given value to the elements in the range `[first, last)`.
-///
-/// \module Algorithm
-template <typename ForwardIt, typename T>
-constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
-{
-    for (; first != last; ++first) { *first = value; }
-}
-
-/// \brief Assigns the given value to the first count elements in the range
-/// beginning at `first` if `count > 0`. Does nothing otherwise.
-///
-/// \returns Iterator one past the last element assigned if `count > 0`, `first`
-/// otherwise.
-///
-/// \module Algorithm
-template <typename OutputIt, typename Size, typename T>
-constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
-{
-    for (auto i = Size { 0 }; i < count; ++i) {
-        *first = value;
-        ++first;
-    }
-
     return first;
 }
 
