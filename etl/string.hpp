@@ -26,6 +26,7 @@
 
 #include "etl/version.hpp"
 
+#include "etl/cstring.hpp"
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
 

@@ -33,6 +33,7 @@
 
 #include "etl/algorithm.hpp"
 #include "etl/cstddef.hpp"
+#include "etl/cstring.hpp"
 #include "etl/iterator.hpp"
 #include "etl/memory.hpp"
 

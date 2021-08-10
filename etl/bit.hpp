@@ -26,10 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstring.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
-
 #include "etl/_bit/bit_cast.hpp"
 #include "etl/_bit/bit_ceil.hpp"
 #include "etl/_bit/bit_floor.hpp"
