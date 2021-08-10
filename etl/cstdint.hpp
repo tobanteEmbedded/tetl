@@ -24,98 +24,22 @@
 #ifndef TETL_CSTDINT_HPP
 #define TETL_CSTDINT_HPP
 
-#include "etl/version.hpp"
-
 /// \file This header was originally in the C standard library as <stdint.h>.
 /// This header is part of the type support library, providing fixed width
 /// integer types and part of C numeric limits interface.
 
-namespace etl {
-/// \brief Signed integer type with width of exactly 8 bits.
-using int8_t = TETL_BUILTIN_INT8;
+#include "etl/version.hpp"
 
-/// \brief Signed integer type with width of exactly 16 bits.
-using int16_t = TETL_BUILTIN_INT16;
-
-/// \brief Signed integer type with width of exactly 32 bits.
-using int32_t = TETL_BUILTIN_INT32;
-
-/// \brief Signed integer type with width of exactly 64 bits.
-using int64_t = TETL_BUILTIN_INT64;
-
-/// \brief Unsigned integer type with width of exactly 8 bits.
-using uint8_t = TETL_BUILTIN_UINT8;
-
-/// \brief Unsigned integer type with width of exactly 16 bits.
-using uint16_t = TETL_BUILTIN_UINT16;
-
-/// \brief Unsigned integer type with width of exactly 32 bits.
-using uint32_t = TETL_BUILTIN_UINT32;
-
-/// \brief Unsigned integer type with width of exactly 64 bits.
-using uint64_t = TETL_BUILTIN_UINT64;
-
-/// \brief Signed integer type with width of at least 8 bits.
-using int_fast8_t = TETL_BUILTIN_INT8;
-
-/// \brief Signed integer type with width of at least 16 bits.
-using int_fast16_t = TETL_BUILTIN_INT16;
-
-/// \brief Signed integer type with width of at least 32 bits.
-using int_fast32_t = TETL_BUILTIN_INT32;
-
-/// \brief Signed integer type with width of at least 64 bits.
-using int_fast64_t = TETL_BUILTIN_INT64;
-
-/// \brief Signed integer type with width of at least 8 bits.
-using uint_fast8_t = TETL_BUILTIN_UINT8;
-
-/// \brief Signed integer type with width of at least 16 bits.
-using uint_fast16_t = TETL_BUILTIN_UINT16;
-
-/// \brief Signed integer type with width of at least 32 bits.
-using uint_fast32_t = TETL_BUILTIN_UINT32;
-
-/// \brief Signed integer type with width of at least 64 bits.
-using uint_fast64_t = TETL_BUILTIN_UINT64;
-
-/// \brief Signed integer type with width of at least 8 bits.
-using int_least8_t = TETL_BUILTIN_INT8;
-
-/// \brief Signed integer type with width of at least 16 bits.
-using int_least16_t = TETL_BUILTIN_INT16;
-
-/// \brief Signed integer type with width of at least 32 bits.
-using int_least32_t = TETL_BUILTIN_INT32;
-
-/// \brief Signed integer type with width of at least 64 bits.
-using int_least64_t = TETL_BUILTIN_INT64;
-
-/// \brief Signed integer type with width of at least 8 bits.
-using uint_least8_t = TETL_BUILTIN_UINT8;
-
-/// \brief Signed integer type with width of at least 16 bits.
-using uint_least16_t = TETL_BUILTIN_UINT16;
-
-/// \brief Signed integer type with width of at least 32 bits.
-using uint_least32_t = TETL_BUILTIN_UINT32;
-
-/// \brief Signed integer type with width of at least 64 bits.
-using uint_least64_t = TETL_BUILTIN_UINT64;
-
-/// \brief Signed integer type capable of holding a pointer.
-using intptr_t = TETL_BUILTIN_INTPTR;
-
-/// \brief Unsigned integer type capable of holding a pointer.
-using uintptr_t = TETL_BUILTIN_UINTPTR;
-
-/// \brief Maximum-width signed integer type.
-using intmax_t = TETL_BUILTIN_INTMAX;
-
-/// \brief Maximum-width unsigned integer type.
-using uintmax_t = TETL_BUILTIN_UINTMAX;
-
-} // namespace etl
+#include "etl/_cstdint/int_fast_t.hpp"
+#include "etl/_cstdint/int_least_t.hpp"
+#include "etl/_cstdint/int_t.hpp"
+#include "etl/_cstdint/intmax_t.hpp"
+#include "etl/_cstdint/intptr_t.hpp"
+#include "etl/_cstdint/uint_fast_t.hpp"
+#include "etl/_cstdint/uint_least_t.hpp"
+#include "etl/_cstdint/uint_t.hpp"
+#include "etl/_cstdint/uintmax_t.hpp"
+#include "etl/_cstdint/uintptr_t.hpp"
 
 static_assert(sizeof(::etl::int8_t) == 1, "int8_t size should be 1");
 static_assert(sizeof(::etl::int16_t) == 2, "int16_t size should be 2");
