@@ -26,7 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/_algorithm/search.hpp"
 #include "etl/_functional/bit_and.hpp"
 #include "etl/_functional/bit_not.hpp"
 #include "etl/_functional/bit_or.hpp"
@@ -50,7 +49,6 @@
 #include "etl/_functional/not_equal_to.hpp"
 #include "etl/_functional/plus.hpp"
 #include "etl/_functional/reference_wrapper.hpp"
-#include "etl/_utility/pair.hpp"
 
 #include "etl/new.hpp"
 
