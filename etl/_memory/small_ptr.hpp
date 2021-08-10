@@ -24,10 +24,10 @@
 #ifndef TETL_MEMORY_SMALL_PTR_HPP
 #define TETL_MEMORY_SMALL_PTR_HPP
 
-#include "etl/_config/warning.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 namespace etl {
 

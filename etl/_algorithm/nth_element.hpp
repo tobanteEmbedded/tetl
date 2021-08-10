@@ -25,7 +25,7 @@
 #define TETL_ALGORITHM_NTH_ELEMENT_HPP
 
 #include "etl/_algorithm/sort.hpp"
-#include "etl/_config/warning.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 namespace etl {
 
 /// \brief nth_element is a partial sorting algorithm that rearranges elements

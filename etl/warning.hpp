@@ -24,6 +24,6 @@
 #ifndef TETL_WARNING_HPP
 #define TETL_WARNING_HPP
 
-#include "etl/_config/warning.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 #endif // TETL_WARNING_HPP

@@ -28,15 +28,17 @@
 
 #include "etl/cstring.hpp"
 #include "etl/string_view.hpp"
-#include "etl/warning.hpp"
 
 #include "etl/_algorithm/copy.hpp"
 #include "etl/_algorithm/fill.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/rotate.hpp"
+#include "etl/_iterator/distance.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/conversion.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 namespace etl {
 /// \brief basic_static_string class with fixed size capacity.

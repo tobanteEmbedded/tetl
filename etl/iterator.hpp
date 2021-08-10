@@ -26,7 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/_config/warning.hpp"
 #include "etl/_iterator/advance.hpp"
 #include "etl/_iterator/back_insert_iterator.hpp"
 #include "etl/_iterator/begin.hpp"
@@ -43,5 +42,6 @@
 #include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
 #include "etl/_iterator/tags.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 #endif // TETL_ITERATOR_HPP

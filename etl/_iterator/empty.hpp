@@ -24,7 +24,7 @@
 #ifndef TETL_ITERATOR_EMPTY_HPP
 #define TETL_ITERATOR_EMPTY_HPP
 
-#include "etl/_config/warning.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 namespace etl {
 
