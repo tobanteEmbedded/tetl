@@ -24,14 +24,11 @@
 #ifndef TETL_LIMITS_NUMERIC_LIMITS_HPP
 #define TETL_LIMITS_NUMERIC_LIMITS_HPP
 
-#ifdef _MSC_VER
-#include <math.h>
-#else
-#include "etl/cmath.hpp"
-#endif
-
 #include "etl/_cfloat/defines.hpp"
 #include "etl/_climits/defines.hpp"
+#include "etl/_cmath/typedefs.hpp"
+#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/builtin_types.hpp"
 #include "etl/_limits/float_denorm_style.hpp"
 #include "etl/_limits/float_round_style.hpp"
 
