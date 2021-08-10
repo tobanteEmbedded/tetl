@@ -21,13 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_LIMITS_HPP
-#define TETL_LIMITS_HPP
+#ifndef TETL_LIMITS_FLOAT_ROUND_STYLE_HPP
+#define TETL_LIMITS_FLOAT_ROUND_STYLE_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/_limits/float_denorm_style.hpp"
-#include "etl/_limits/float_round_style.hpp"
-#include "etl/_limits/numeric_limits.hpp"
+enum float_round_style {
+    round_indeterminate       = -1,
+    round_toward_zero         = 0,
+    round_to_nearest          = 1,
+    round_toward_infinity     = 2,
+    round_toward_neg_infinity = 3,
+};
 
-#endif // TETL_LIMITS_HPP
+} // namespace etl
+
+#endif // TETL_LIMITS_FLOAT_ROUND_STYLE_HPP
