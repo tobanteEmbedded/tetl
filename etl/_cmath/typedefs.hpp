@@ -21,18 +21,29 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CMATH_HPP
-#define TETL_CMATH_HPP
+#ifndef TETL_CMATH_TYPEDEFS_HPP
+#define TETL_CMATH_TYPEDEFS_HPP
 
-#include "etl/version.hpp"
+#if __has_include(<math.h>)
+#include <math.h>
+#else
 
-#include "etl/_cmath/copysign.hpp"
-#include "etl/_cmath/isfinite.hpp"
-#include "etl/_cmath/isinf.hpp"
-#include "etl/_cmath/isnan.hpp"
-#include "etl/_cmath/lerp.hpp"
-#include "etl/_cmath/signbit.hpp"
-#include "etl/_cmath/typedefs.hpp"
-#include "etl/_math/abs.hpp"
+#ifndef NAN
+#define NAN TETL_BUILTIN_NAN("")
+#endif
 
-#endif // TETL_CMATH_HPP
+#ifndef INFINITY
+#define INFINITY TETL_BUILTIN_HUGE_VAL
+#endif
+
+#endif // has_include<math.h>
+
+namespace etl {
+/// \brief Most efficient floating-point type at least as wide as float.
+using float_t = float;
+
+/// \brief Most efficient floating-point type at least as wide as double.
+using double_t = double;
+} // namespace etl
+
+#endif // TETL_CMATH_TYPEDEFS_HPP

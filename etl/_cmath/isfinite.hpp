@@ -21,18 +21,39 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CMATH_HPP
-#define TETL_CMATH_HPP
+#ifndef TETL_CMATH_ISFINITE_HPP
+#define TETL_CMATH_ISFINITE_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cmath/copysign.hpp"
-#include "etl/_cmath/isfinite.hpp"
 #include "etl/_cmath/isinf.hpp"
 #include "etl/_cmath/isnan.hpp"
-#include "etl/_cmath/lerp.hpp"
-#include "etl/_cmath/signbit.hpp"
-#include "etl/_cmath/typedefs.hpp"
-#include "etl/_math/abs.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
-#endif // TETL_CMATH_HPP
+namespace etl {
+
+/// \brief Determines if the given floating point number arg has finite value
+/// i.e. it is normal, subnormal or zero, but not infinite or NaN.
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isfinite](https://en.cppreference.com/w/cpp/numeric/math/isfinite)
+/// \group isfinite
+/// \module Numeric
+[[nodiscard]] constexpr auto isfinite(float arg) -> bool
+{
+    return !etl::isnan(arg) && !etl::isinf(arg);
+}
+
+/// \group isfinite
+[[nodiscard]] constexpr auto isfinite(double arg) -> bool
+{
+    return !etl::isnan(arg) && !etl::isinf(arg);
+}
+
+/// \group isfinite
+[[nodiscard]] constexpr auto isfinite(long double arg) -> bool
+{
+    return !etl::isnan(arg) && !etl::isinf(arg);
+}
+
+} // namespace etl
+
+#endif // TETL_CMATH_ISFINITE_HPP

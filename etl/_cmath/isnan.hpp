@@ -21,18 +21,42 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CMATH_HPP
-#define TETL_CMATH_HPP
+#ifndef TETL_CMATH_ISNAN_HPP
+#define TETL_CMATH_ISNAN_HPP
 
-#include "etl/version.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
-#include "etl/_cmath/copysign.hpp"
-#include "etl/_cmath/isfinite.hpp"
-#include "etl/_cmath/isinf.hpp"
-#include "etl/_cmath/isnan.hpp"
-#include "etl/_cmath/lerp.hpp"
-#include "etl/_cmath/signbit.hpp"
-#include "etl/_cmath/typedefs.hpp"
-#include "etl/_math/abs.hpp"
+namespace etl {
 
-#endif // TETL_CMATH_HPP
+/// \brief Determines if the given floating point number arg is a not-a-number
+/// (NaN) value.
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
+/// \group isnan
+/// \module Numeric
+[[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
+
+/// \group isnan
+[[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg != arg; }
+
+/// \group isnan
+[[nodiscard]] constexpr auto isnan(long double arg) -> bool
+{
+    return arg != arg;
+}
+
+/// \brief Determines if the given floating point number arg is a not-a-number
+/// (NaN) value.
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
+template <typename Int>
+[[nodiscard]] constexpr auto isnan(Int arg)
+    -> enable_if_t<is_integral_v<Int>, bool>
+{
+    return isnan(static_cast<double>(arg));
+}
+
+} // namespace etl
+
+#endif // TETL_CMATH_ISNAN_HPP

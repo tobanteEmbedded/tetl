@@ -21,18 +21,47 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CMATH_HPP
-#define TETL_CMATH_HPP
+#ifndef TETL_CMATH_ISINF_HPP
+#define TETL_CMATH_ISINF_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cmath/copysign.hpp"
-#include "etl/_cmath/isfinite.hpp"
-#include "etl/_cmath/isinf.hpp"
-#include "etl/_cmath/isnan.hpp"
-#include "etl/_cmath/lerp.hpp"
-#include "etl/_cmath/signbit.hpp"
 #include "etl/_cmath/typedefs.hpp"
-#include "etl/_math/abs.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
-#endif // TETL_CMATH_HPP
+namespace etl {
+
+/// \brief Determines if the given floating point number arg is a positive or
+/// negative infinity.
+/// \returns true if arg is infinite, false otherwise
+/// \notes
+/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
+/// \group isinf
+/// \module Numeric
+[[nodiscard]] constexpr auto isinf(float arg) -> bool
+{
+    return arg == INFINITY;
+}
+
+/// \group isinf
+[[nodiscard]] constexpr auto isinf(double arg) -> bool
+{
+    return arg == INFINITY;
+}
+
+/// \group isinf
+[[nodiscard]] constexpr auto isinf(long double arg) -> bool
+{
+    return arg == INFINITY;
+}
+
+/// \group isinf
+template <typename Int>
+[[nodiscard]] constexpr auto isinf(Int arg)
+    -> enable_if_t<is_integral_v<Int>, bool>
+{
+    return isinf(static_cast<double>(arg));
+}
+
+} // namespace etl
+
+#endif // TETL_CMATH_ISINF_HPP
