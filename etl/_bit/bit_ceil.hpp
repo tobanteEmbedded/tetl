@@ -21,26 +21,44 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_BIT_HPP
-#define TETL_BIT_HPP
+#ifndef TETL_BIT_BIT_CEIL_HPP
+#define TETL_BIT_BIT_CEIL_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/cstring.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
-
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_bit/bit_ceil.hpp"
-#include "etl/_bit/bit_floor.hpp"
 #include "etl/_bit/bit_unsigned_int.hpp"
 #include "etl/_bit/bit_width.hpp"
-#include "etl/_bit/countl_one.hpp"
-#include "etl/_bit/countl_zero.hpp"
-#include "etl/_bit/endian.hpp"
-#include "etl/_bit/has_single_bit.hpp"
-#include "etl/_bit/popcount.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_bit/rotr.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/limits.hpp"
 
-#endif // TETL_BIT_HPP
+namespace etl {
+
+/// \brief Calculates the smallest integral power of two that is not smaller
+/// than x. If that value is not representable in T, the behavior is undefined.
+/// Call to this function is permitted in constant evaluation only if the
+/// undefined behavior does not occur.
+///
+/// \details This overload only participates in overload resolution if T is an
+/// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
+/// unsigned long, unsigned long long, or an extended unsigned integer type).
+///
+/// \returns The smallest integral power of two that is not smaller than x.
+/// \module Numeric
+template <typename T>
+[[nodiscard]] constexpr auto bit_ceil(T x) noexcept
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+{
+    if (x <= 1U) { return T(1); }
+
+    if constexpr (is_same_v<T, decltype(+x)>) {
+        //
+        return T(1) << bit_width(T(x - 1));
+    } else {
+        // for types subject to integral promotion
+        auto offset
+            = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
+        return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
+    }
+}
+
+} // namespace etl
+
+#endif // TETL_BIT_BIT_CEIL_HPP

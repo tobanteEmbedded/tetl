@@ -21,26 +21,30 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_BIT_HPP
-#define TETL_BIT_HPP
+#ifndef TETL_BIT_ENDIAN_HPP
+#define TETL_BIT_ENDIAN_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/cstring.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
+/// \brief Indicates the endianness of all scalar types. If all scalar types are
+/// little-endian, `endian::native` equals `endian::little`. If all scalar types
+/// are big-endian, `endian::native` equals `endian::big`.
+///
+/// \notes
+/// [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
+/// \module Numeric
+enum struct endian {
+#ifdef _WIN32
+    little = 0,
+    big    = 1,
+    native = little
+#else
+    little = __ORDER_LITTLE_ENDIAN__,
+    big    = __ORDER_BIG_ENDIAN__,
+    native = __BYTE_ORDER__
+#endif
+};
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_bit/bit_ceil.hpp"
-#include "etl/_bit/bit_floor.hpp"
-#include "etl/_bit/bit_unsigned_int.hpp"
-#include "etl/_bit/bit_width.hpp"
-#include "etl/_bit/countl_one.hpp"
-#include "etl/_bit/countl_zero.hpp"
-#include "etl/_bit/endian.hpp"
-#include "etl/_bit/has_single_bit.hpp"
-#include "etl/_bit/popcount.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_bit/rotr.hpp"
+} // namespace etl
 
-#endif // TETL_BIT_HPP
+#endif // TETL_BIT_ENDIAN_HPP

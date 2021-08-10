@@ -21,26 +21,24 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_BIT_HPP
-#define TETL_BIT_HPP
+#ifndef TETL_BIT_BIT_UNSIGNED_INT_HPP
+#define TETL_BIT_BIT_UNSIGNED_INT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_type_traits/bool_constant.hpp"
+#include "etl/_type_traits/disjunction.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
-#include "etl/cstring.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
+namespace etl::detail {
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_bit/bit_ceil.hpp"
-#include "etl/_bit/bit_floor.hpp"
-#include "etl/_bit/bit_unsigned_int.hpp"
-#include "etl/_bit/bit_width.hpp"
-#include "etl/_bit/countl_one.hpp"
-#include "etl/_bit/countl_zero.hpp"
-#include "etl/_bit/endian.hpp"
-#include "etl/_bit/has_single_bit.hpp"
-#include "etl/_bit/popcount.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_bit/rotr.hpp"
+template <typename T>
+using bit_unsigned_int
+    = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>,
+        etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
+        etl::is_same<T, unsigned long>, etl::is_same<T, unsigned long long>>>;
 
-#endif // TETL_BIT_HPP
+template <typename T>
+inline constexpr auto bit_unsigned_int_v = bit_unsigned_int<T>::value;
+
+} // namespace etl::detail
+
+#endif // TETL_BIT_BIT_UNSIGNED_INT_HPP

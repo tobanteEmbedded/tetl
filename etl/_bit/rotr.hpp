@@ -21,26 +21,28 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_BIT_HPP
-#define TETL_BIT_HPP
+#ifndef TETL_BIT_ROTR_HPP
+#define TETL_BIT_ROTR_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/cstring.hpp"
-#include "etl/limits.hpp"
-#include "etl/type_traits.hpp"
-
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_bit/bit_ceil.hpp"
-#include "etl/_bit/bit_floor.hpp"
 #include "etl/_bit/bit_unsigned_int.hpp"
-#include "etl/_bit/bit_width.hpp"
-#include "etl/_bit/countl_one.hpp"
-#include "etl/_bit/countl_zero.hpp"
-#include "etl/_bit/endian.hpp"
-#include "etl/_bit/has_single_bit.hpp"
-#include "etl/_bit/popcount.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_bit/rotr.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/limits.hpp"
 
-#endif // TETL_BIT_HPP
+namespace etl {
+
+/// \brief Computes the result of bitwise right-rotating the value of x by s
+/// positions. This operation is also known as a right circular shift.
+/// \module Numeric
+template <typename T>
+constexpr auto rotr(T t, int s) noexcept
+    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+{
+    auto const cnt    = static_cast<unsigned>(s);
+    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+    if ((cnt % digits) == 0) { return t; }
+    return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
+}
+
+} // namespace etl
+
+#endif // TETL_BIT_ROTR_HPP
