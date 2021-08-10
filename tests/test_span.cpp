@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/span.hpp"
 
+#include "etl/algorithm.hpp"
 #include "etl/iterator.hpp"
 #include "etl/vector.hpp"
 

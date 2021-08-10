@@ -26,9 +26,9 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_algorithm/min.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 
-#include "etl/algorithm.hpp"
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/string_view.hpp"

@@ -30,7 +30,10 @@
 #include "etl/string_view.hpp"
 #include "etl/warning.hpp"
 
-// #include "etl/_container_utils.hpp"
+#include "etl/_algorithm/copy.hpp"
+#include "etl/_algorithm/fill.hpp"
+#include "etl/_algorithm/remove.hpp"
+#include "etl/_algorithm/rotate.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/conversion.hpp"
 #include "etl/_strings/find_first_not_of.hpp"

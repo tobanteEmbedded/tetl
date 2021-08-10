@@ -26,9 +26,10 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_algorithm/find_if.hpp"
+#include "etl/_algorithm/for_each.hpp"
 #include "etl/_assert/macro.hpp"
 
-#include "etl/algorithm.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
 #include "etl/set.hpp"

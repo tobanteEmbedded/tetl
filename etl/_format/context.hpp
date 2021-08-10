@@ -1,9 +1,8 @@
 #ifndef TETL_FORMAT_CONTEXT_HPP
 #define TETL_FORMAT_CONTEXT_HPP
 
-#include "etl/algorithm.hpp"
-#include "etl/iterator.hpp"
-#include "etl/warning.hpp"
+#include "etl/_config/warning.hpp"
+#include "etl/_iterator/back_insert_iterator.hpp"
 
 namespace etl {
 template <typename T, typename CharT>

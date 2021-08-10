@@ -26,12 +26,13 @@
 
 #include "etl/version.hpp"
 
-#include "etl/algorithm.hpp"  // for lower_bound, rotate
 #include "etl/functional.hpp" // for less
 #include "etl/iterator.hpp"   // for reverse_iterator
 #include "etl/utility.hpp"    // for forward, move
 #include "etl/vector.hpp"     // for static_vector
 
+#include "etl/_algorithm/lower_bound.hpp"
+#include "etl/_algorithm/rotate.hpp"
 #include "etl/_concepts/requires.hpp"
 
 namespace etl {

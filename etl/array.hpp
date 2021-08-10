@@ -28,11 +28,12 @@
 
 #include "etl/_assert/macro.hpp"
 
-#include "etl/algorithm.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/iterator.hpp"
 #include "etl/type_traits.hpp"
 
+#include "etl/_algorithm/equal.hpp"
+#include "etl/_algorithm/lexicographical_compare.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 
 /// \file This header is part of the containers library.

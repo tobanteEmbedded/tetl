@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/vector.hpp"
 
+#include "etl/algorithm.hpp"
 #include "etl/cstdint.hpp"
 #include "etl/numeric.hpp"
 

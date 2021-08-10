@@ -26,12 +26,16 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_algorithm/clamp.hpp"
+#include "etl/_algorithm/lexicographical_compare.hpp"
+#include "etl/_algorithm/min.hpp"
+#include "etl/_algorithm/none_of.hpp"
 #include "etl/_assert/macro.hpp"
+#include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
 
-#include "etl/algorithm.hpp"
 #include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
 #include "etl/iterator.hpp"

@@ -23,6 +23,7 @@
 
 #include "etl/cstdlib.hpp"
 
+#include "etl/algorithm.hpp"
 #include "etl/cstring.hpp"
 #include "etl/string_view.hpp"
 
