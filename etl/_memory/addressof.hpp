@@ -21,32 +21,35 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_ITERATOR_HPP
-#define TETL_ITERATOR_HPP
+#ifndef TETL_DETAIL_MEMORY_ADDRESSOF_HPP
+#define TETL_DETAIL_MEMORY_ADDRESSOF_HPP
 
-#include "etl/version.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_object.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/memory.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
+namespace etl {
 
-#include "etl/_config/warning.hpp"
-#include "etl/_iterator/advance.hpp"
-#include "etl/_iterator/back_insert_iterator.hpp"
-#include "etl/_iterator/begin.hpp"
-#include "etl/_iterator/data.hpp"
-#include "etl/_iterator/distance.hpp"
-#include "etl/_iterator/empty.hpp"
-#include "etl/_iterator/end.hpp"
-#include "etl/_iterator/front_insert_iterator.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_iterator/next.hpp"
-#include "etl/_iterator/prev.hpp"
-#include "etl/_iterator/rbegin.hpp"
-#include "etl/_iterator/rend.hpp"
-#include "etl/_iterator/reverse_iterator.hpp"
-#include "etl/_iterator/size.hpp"
-#include "etl/_iterator/tags.hpp"
+/// \brief Obtains the actual address of the object or function arg, even in
+/// presence of overloaded operator&.
+/// \group addressof
+template <typename T>
+auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
+{
+    return reinterpret_cast<T*>(
+        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+}
 
-#endif // TETL_ITERATOR_HPP
+/// \group addressof
+template <typename T>
+auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
+{
+    return &arg;
+}
+
+/// \group addressof
+template <typename T>
+auto addressof(T const&&) = delete;
+
+} // namespace etl
+
+#endif // TETL_DETAIL_MEMORY_ADDRESSOF_HPP

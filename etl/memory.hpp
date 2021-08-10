@@ -37,28 +37,9 @@
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_math/pow.hpp"
+#include "etl/_memory/addressof.hpp"
 
 namespace etl {
-/// \brief Obtains the actual address of the object or function arg, even in
-/// presence of overloaded operator&.
-/// \group addressof
-template <typename T>
-auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
-{
-    return reinterpret_cast<T*>(
-        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
-}
-
-/// \group addressof
-template <typename T>
-auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
-{
-    return &arg;
-}
-
-/// \group addressof
-template <typename T>
-auto addressof(T const&&) = delete;
 
 /// \brief Creates a T object initialized with arguments args... at given
 /// address p.
