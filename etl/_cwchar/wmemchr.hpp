@@ -21,35 +21,41 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CWCHAR_HPP
-#define TETL_CWCHAR_HPP
+#ifndef TETL_CWCHAR_WMEMCHR_HPP
+#define TETL_CWCHAR_WMEMCHR_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cstddef/null.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstddef/tm.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cwchar/wint_t.hpp"
+namespace etl {
 
-#include "etl/_cwchar/wcscat.hpp"
-#include "etl/_cwchar/wcschr.hpp"
-#include "etl/_cwchar/wcscmp.hpp"
-#include "etl/_cwchar/wcscpy.hpp"
-#include "etl/_cwchar/wcscspn.hpp"
-#include "etl/_cwchar/wcslen.hpp"
-#include "etl/_cwchar/wcsncat.hpp"
-#include "etl/_cwchar/wcsncmp.hpp"
-#include "etl/_cwchar/wcsncpy.hpp"
-#include "etl/_cwchar/wcspbrk.hpp"
-#include "etl/_cwchar/wcsrchr.hpp"
-#include "etl/_cwchar/wcsspn.hpp"
-#include "etl/_cwchar/wcsstr.hpp"
-#include "etl/_cwchar/wmemchr.hpp"
-#include "etl/_cwchar/wmemcmp.hpp"
-#include "etl/_cwchar/wmemcpy.hpp"
-#include "etl/_cwchar/wmemmove.hpp"
-#include "etl/_cwchar/wmemset.hpp"
+/// \brief Locates the first occurrence of wide character ch in the initial
+/// count wide characters of the wide character array pointed to by ptr.
+///
+/// \details If count is zero, the function returns a null pointer.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wmemchr(
+    wchar_t* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
+{
+    return detail::memchr_impl<wchar_t>(ptr, ch, count);
+}
 
-#endif // TETL_CWCHAR_HPP
+/// \brief Locates the first occurrence of wide character ch in the initial
+/// count wide characters of the wide character array pointed to by ptr.
+///
+/// \details If count is zero, the function returns a null pointer.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wmemchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wmemchr(wchar_t const* ptr, wchar_t ch,
+    etl::size_t count) noexcept -> wchar_t const*
+{
+    return detail::memchr_impl<wchar_t const>(ptr, ch, count);
+}
+} // namespace etl
+
+#endif // TETL_CWCHAR_WMEMCHR_HPP

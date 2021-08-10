@@ -21,35 +21,29 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CWCHAR_HPP
-#define TETL_CWCHAR_HPP
+#ifndef TETL_CWCHAR_WCSCPY_HPP
+#define TETL_CWCHAR_WCSCPY_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cstddef/null.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
+#include "etl/_assert/macro.hpp"
 #include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstddef/tm.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cwchar/wint_t.hpp"
+namespace etl {
 
-#include "etl/_cwchar/wcscat.hpp"
-#include "etl/_cwchar/wcschr.hpp"
-#include "etl/_cwchar/wcscmp.hpp"
-#include "etl/_cwchar/wcscpy.hpp"
-#include "etl/_cwchar/wcscspn.hpp"
-#include "etl/_cwchar/wcslen.hpp"
-#include "etl/_cwchar/wcsncat.hpp"
-#include "etl/_cwchar/wcsncmp.hpp"
-#include "etl/_cwchar/wcsncpy.hpp"
-#include "etl/_cwchar/wcspbrk.hpp"
-#include "etl/_cwchar/wcsrchr.hpp"
-#include "etl/_cwchar/wcsspn.hpp"
-#include "etl/_cwchar/wcsstr.hpp"
-#include "etl/_cwchar/wmemchr.hpp"
-#include "etl/_cwchar/wmemcmp.hpp"
-#include "etl/_cwchar/wmemcpy.hpp"
-#include "etl/_cwchar/wmemmove.hpp"
-#include "etl/_cwchar/wmemset.hpp"
+/// \brief Copies the wide string pointed to by src (including the terminating
+/// null wide character) to wide character array pointed to by dest.
+///
+/// \details The behavior is undefined if the dest array is not large enough.
+/// The behavior is undefined if the strings overlap.
+///
+/// \returns dest
+///
+/// \module Strings
+constexpr auto wcscpy(wchar_t* dest, wchar_t const* src) -> wchar_t*
+{
+    TETL_ASSERT(dest != nullptr && src != nullptr);
+    return detail::strcpy_impl(dest, src);
+}
 
-#endif // TETL_CWCHAR_HPP
+} // namespace etl
+#endif // TETL_CWCHAR_WCSCPY_HPP

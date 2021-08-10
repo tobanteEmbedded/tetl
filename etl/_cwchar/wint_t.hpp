@@ -21,35 +21,38 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CWCHAR_HPP
-#define TETL_CWCHAR_HPP
+#ifndef TETL_CWCHAR_WINT_T_HPP
+#define TETL_CWCHAR_WINT_T_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/builtin_types.hpp"
+#include "etl/_config/compiler.hpp"
 
-#include "etl/_cstddef/null.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstddef/tm.hpp"
+#if defined(TETL_MSVC)
+#include <wchar.h>
+#else
 
-#include "etl/_cwchar/wint_t.hpp"
+#if !defined(WEOF)
+#define WEOF ((wint_t)-1)
+#endif
 
-#include "etl/_cwchar/wcscat.hpp"
-#include "etl/_cwchar/wcschr.hpp"
-#include "etl/_cwchar/wcscmp.hpp"
-#include "etl/_cwchar/wcscpy.hpp"
-#include "etl/_cwchar/wcscspn.hpp"
-#include "etl/_cwchar/wcslen.hpp"
-#include "etl/_cwchar/wcsncat.hpp"
-#include "etl/_cwchar/wcsncmp.hpp"
-#include "etl/_cwchar/wcsncpy.hpp"
-#include "etl/_cwchar/wcspbrk.hpp"
-#include "etl/_cwchar/wcsrchr.hpp"
-#include "etl/_cwchar/wcsspn.hpp"
-#include "etl/_cwchar/wcsstr.hpp"
-#include "etl/_cwchar/wmemchr.hpp"
-#include "etl/_cwchar/wmemcmp.hpp"
-#include "etl/_cwchar/wmemcpy.hpp"
-#include "etl/_cwchar/wmemmove.hpp"
-#include "etl/_cwchar/wmemset.hpp"
+#if !defined(WCHAR_MIN)
+#define WCHAR_MIN TETL_DETAIL_WCHAR_MIN
+#endif
 
-#endif // TETL_CWCHAR_HPP
+#if !defined(WCHAR_MAX)
+#define WCHAR_MAX TETL_DETAIL_WCHAR_MAX
+#endif
+
+#endif
+
+namespace etl {
+
+#if !defined(wint_t)
+using wint_t = unsigned int;
+#else
+using wint_t = wint_t;
+#endif
+
+} // namespace etl
+
+#endif // TETL_CWCHAR_WINT_T_HPP

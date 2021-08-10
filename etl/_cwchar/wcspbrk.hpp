@@ -21,35 +21,37 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CWCHAR_HPP
-#define TETL_CWCHAR_HPP
+#ifndef TETL_CWCHAR_WCSPBRK_HPP
+#define TETL_CWCHAR_WCSPBRK_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cstddef/null.hpp"
-#include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstddef/tm.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cwchar/wint_t.hpp"
+namespace etl {
 
-#include "etl/_cwchar/wcscat.hpp"
-#include "etl/_cwchar/wcschr.hpp"
-#include "etl/_cwchar/wcscmp.hpp"
-#include "etl/_cwchar/wcscpy.hpp"
-#include "etl/_cwchar/wcscspn.hpp"
-#include "etl/_cwchar/wcslen.hpp"
-#include "etl/_cwchar/wcsncat.hpp"
-#include "etl/_cwchar/wcsncmp.hpp"
-#include "etl/_cwchar/wcsncpy.hpp"
-#include "etl/_cwchar/wcspbrk.hpp"
-#include "etl/_cwchar/wcsrchr.hpp"
-#include "etl/_cwchar/wcsspn.hpp"
-#include "etl/_cwchar/wcsstr.hpp"
-#include "etl/_cwchar/wmemchr.hpp"
-#include "etl/_cwchar/wmemcmp.hpp"
-#include "etl/_cwchar/wmemcpy.hpp"
-#include "etl/_cwchar/wmemmove.hpp"
-#include "etl/_cwchar/wmemset.hpp"
+/// \brief Finds the first character in wide string pointed to by dest, that is
+/// also in wide string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcspbrk(wchar_t* dest, wchar_t* breakset) noexcept
+    -> wchar_t*
+{
+    return detail::strpbrk_impl<wchar_t, etl::size_t>(dest, breakset);
+}
 
-#endif // TETL_CWCHAR_HPP
+/// \brief Finds the first character in wide string pointed to by dest, that is
+/// also in wide string pointed to by str.
+///
+/// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto wcspbrk(
+    wchar_t const* dest, wchar_t const* breakset) noexcept -> wchar_t const*
+{
+    return detail::strpbrk_impl<wchar_t const, etl::size_t>(dest, breakset);
+}
+
+} // namespace etl
+#endif // TETL_CWCHAR_WCSPBRK_HPP
