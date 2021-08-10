@@ -26,12 +26,14 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstdint.hpp"
-#include "etl/iterator.hpp"
-#include "etl/system_error.hpp"
-#include "etl/type_traits.hpp"
-
+#include "etl/_cstdint/uint_t.hpp"
+#include "etl/_iterator/distance.hpp"
 #include "etl/_strings/conversion.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_type_traits/is_same.hpp"
+
+#include "etl/system_error.hpp"
 
 namespace etl {
 /// \brief A BitmaskType used to specify floating-point formatting for to_chars

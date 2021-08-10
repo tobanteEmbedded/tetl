@@ -29,6 +29,7 @@
 #include "etl/_assert/macro.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_cstdint/intmax_t.hpp"
 #include "etl/_math/abs.hpp"
 #include "etl/_strings/conversion.hpp"
 

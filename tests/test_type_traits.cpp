@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/type_traits.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/map.hpp"
 #include "etl/vector.hpp"
 

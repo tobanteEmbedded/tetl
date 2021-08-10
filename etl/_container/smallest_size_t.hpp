@@ -24,8 +24,9 @@
 #ifndef TETL_CONTAINER_SMALLEST_SIZE_T_HPP
 #define TETL_CONTAINER_SMALLEST_SIZE_T_HPP
 
+#include "etl/_cstdint/uint_t.hpp"
 #include "etl/_type_traits/conditional.hpp"
-#include "etl/cstdint.hpp"
+
 #include "etl/limits.hpp"
 
 namespace etl::detail {

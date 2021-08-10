@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/vector.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/numeric.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"

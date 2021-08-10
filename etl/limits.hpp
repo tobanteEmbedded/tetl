@@ -36,8 +36,6 @@
 #include "etl/cmath.hpp"
 #endif
 
-#include "etl/cstdint.hpp"
-
 namespace etl {
 
 enum float_round_style {

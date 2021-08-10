@@ -24,10 +24,10 @@
 #ifndef TETL_MEMORY_POINTER_LIKE_TRAITS_HPP
 #define TETL_MEMORY_POINTER_LIKE_TRAITS_HPP
 
-#include "etl/cstddef.hpp"
-#include "etl/cstdint.hpp"
-
+#include "etl/_cstdint/uintptr_t.hpp"
 #include "etl/_math/log2.hpp"
+
+#include "etl/cstddef.hpp"
 
 namespace etl {
 

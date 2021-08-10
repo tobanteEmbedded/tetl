@@ -26,7 +26,7 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstdint.hpp"
+#include "etl/_cstdint/uint_least_t.hpp"
 
 namespace etl {
 

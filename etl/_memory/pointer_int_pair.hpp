@@ -25,10 +25,9 @@
 #define TETL_MEMORY_POINTER_INT_PAIR_HPP
 
 #include "etl/_bit/bit_cast.hpp"
+#include "etl/_cstdint/intptr_t.hpp"
 #include "etl/_memory/pointer_int_pair_info.hpp"
 #include "etl/_memory/pointer_like_traits.hpp"
-
-#include "etl/cstdint.hpp"
 
 namespace etl {
 

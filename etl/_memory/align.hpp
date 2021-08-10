@@ -27,7 +27,7 @@
 #include "etl/_bit/bit_cast.hpp"
 #include "etl/_cstddef/size_t.hpp"
 
-#include "etl/cstdint.hpp"
+#include "etl/_cstdint/uintptr_t.hpp"
 
 namespace etl {
 

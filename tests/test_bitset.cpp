@@ -22,6 +22,8 @@
 // DAMAGE.
 #include "etl/bitset.hpp"
 
+#include "etl/cstddef.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/utility.hpp" // for as_const
 
 #include "catch2/catch_template_test_macros.hpp"

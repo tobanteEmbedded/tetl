@@ -25,6 +25,7 @@
 
 #include "etl/array.hpp"
 #include "etl/cctype.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
 #include "etl/string.hpp"

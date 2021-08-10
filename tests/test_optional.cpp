@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/optional.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
@@ -99,7 +100,7 @@ TEST_CASE("optional: construct() non_trivial", "[optional]")
         S() = default;
         S(S const& /*unused*/) { }
         S(S&& /*unused*/) noexcept { }
-        auto operator=(S const & /*unused*/) -> S& { return *this; }
+        auto operator=(S const& /*unused*/) -> S& { return *this; }
         auto operator=(S&& /*unused*/) noexcept -> S& { return *this; }
         ~S() { }
     };
@@ -202,7 +203,7 @@ TEST_CASE("optional: operator=() non_trivial", "[optional]")
         S() = default;
         S(S const& /*s*/) { }          // NOLINT(modernize-use-equals-default)
         S(S&& /*unused*/) noexcept { } // NOLINT(modernize-use-equals-default)
-        auto operator=(S const & /*s*/) -> S& { return *this; }
+        auto operator=(S const& /*s*/) -> S& { return *this; }
         auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
         ~S() { } // NOLINT(modernize-use-equals-default)
     };

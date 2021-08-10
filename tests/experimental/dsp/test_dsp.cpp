@@ -23,6 +23,8 @@
 
 #include "etl/experimental/dsp/dsp.hpp"
 
+#include "etl/cstdint.hpp"
+
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("experimental/dsp: identity", "[dsp][experimental]",

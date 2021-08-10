@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/bit.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/limits.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"

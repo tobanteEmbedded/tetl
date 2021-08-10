@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/chrono.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
 #include <chrono>

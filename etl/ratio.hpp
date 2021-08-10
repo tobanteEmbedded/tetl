@@ -26,6 +26,8 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_cstdint/intmax_t.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/numeric.hpp"
 #include "etl/type_traits.hpp"
