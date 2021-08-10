@@ -21,25 +21,39 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_MEMORY_HPP
-#define TETL_MEMORY_HPP
+#ifndef TETL_MEMORY_ALIGN_HPP
+#define TETL_MEMORY_ALIGN_HPP
 
-#include "etl/version.hpp"
+#include "etl/_cstddef/size_t.hpp"
 
-#include "etl/_memory/addressof.hpp"
-#include "etl/_memory/align.hpp"
-#include "etl/_memory/allocator_arg_t.hpp"
-#include "etl/_memory/assume_aligned.hpp"
-#include "etl/_memory/construct_at.hpp"
-#include "etl/_memory/default_delete.hpp"
-#include "etl/_memory/destroy.hpp"
-#include "etl/_memory/destroy_at.hpp"
-#include "etl/_memory/destroy_n.hpp"
-#include "etl/_memory/pointer_int_pair.hpp"
-#include "etl/_memory/pointer_int_pair_info.hpp"
-#include "etl/_memory/pointer_like_traits.hpp"
-#include "etl/_memory/pointer_traits.hpp"
-#include "etl/_memory/small_ptr.hpp"
-#include "etl/_memory/uses_allocator.hpp"
+#include "etl/bit.hpp"
+#include "etl/cstdint.hpp"
 
-#endif // TETL_MEMORY_HPP
+namespace etl {
+
+/// \brief Given a pointer ptr to a buffer of size space, returns a pointer
+/// aligned by the specified alignment for size number of bytes and decreases
+/// space argument by the number of bytes used for alignment. The first aligned
+/// address is returned.
+///
+/// The function modifies the pointer only if it would be possible to fit the
+/// wanted number of bytes aligned by the given alignment into the buffer. If
+/// the buffer is too small, the function does nothing and returns nullptr.
+///
+/// The behavior is undefined if alignment is not a power of two.
+[[nodiscard]] inline auto align(::etl::size_t alignment, ::etl::size_t size,
+    void*& ptr, ::etl::size_t& space) noexcept -> void*
+{
+    auto off = static_cast<::etl::size_t>(
+        bit_cast<::etl::uintptr_t>(ptr) & (alignment - 1));
+    if (off != 0) { off = alignment - off; }
+    if (space < off || space - off < size) { return nullptr; }
+
+    ptr = static_cast<char*>(ptr) + off;
+    space -= off;
+    return ptr;
+}
+
+} // namespace etl
+
+#endif // TETL_MEMORY_ALIGN_HPP

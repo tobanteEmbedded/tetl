@@ -22,6 +22,8 @@
 // DAMAGE.
 #include "etl/bitset.hpp"
 
+#include "etl/utility.hpp" // for as_const
+
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE_SIG(

@@ -25,7 +25,9 @@
 
 #include "etl/algorithm.hpp"   // for for_each
 #include "etl/cstddef.hpp"     // for size_t
+#include "etl/iterator.hpp"    // for begin, end, rb...
 #include "etl/string_view.hpp" // for string_view
+#include "etl/utility.hpp"     // for as_const
 
 #include "catch2/catch_template_test_macros.hpp"
 #include "catch2/generators/catch_generators.hpp"

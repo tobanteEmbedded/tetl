@@ -21,25 +21,18 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_MEMORY_HPP
-#define TETL_MEMORY_HPP
+#ifndef TETL_MATH_LOG2_HPP
+#define TETL_MATH_LOG2_HPP
 
-#include "etl/version.hpp"
+namespace etl::detail {
 
-#include "etl/_memory/addressof.hpp"
-#include "etl/_memory/align.hpp"
-#include "etl/_memory/allocator_arg_t.hpp"
-#include "etl/_memory/assume_aligned.hpp"
-#include "etl/_memory/construct_at.hpp"
-#include "etl/_memory/default_delete.hpp"
-#include "etl/_memory/destroy.hpp"
-#include "etl/_memory/destroy_at.hpp"
-#include "etl/_memory/destroy_n.hpp"
-#include "etl/_memory/pointer_int_pair.hpp"
-#include "etl/_memory/pointer_int_pair_info.hpp"
-#include "etl/_memory/pointer_like_traits.hpp"
-#include "etl/_memory/pointer_traits.hpp"
-#include "etl/_memory/small_ptr.hpp"
-#include "etl/_memory/uses_allocator.hpp"
+// Compile time version of log2 that handles 0.
+template <typename IntT>
+[[nodiscard]] static constexpr auto log2(IntT value) -> IntT
+{
+    return (value == 0 || value == 1) ? 0 : 1 + log2(value / 2);
+}
 
-#endif // TETL_MEMORY_HPP
+} // namespace etl::detail
+
+#endif // TETL_MATH_LOG2_HPP

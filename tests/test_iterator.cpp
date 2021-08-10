@@ -24,6 +24,7 @@
 
 #include "etl/array.hpp"
 #include "etl/string_view.hpp"
+#include "etl/utility.hpp" // for as_const
 #include "etl/vector.hpp"
 
 #include <list>
