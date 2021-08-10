@@ -25,6 +25,7 @@
 #define TETL_FUNCTIONAL_DEFAULT_SEARCHER_HPP
 
 #include "etl/_algorithm/search.hpp"
+#include "etl/_functional/equal_to.hpp"
 #include "etl/_iterator/distance.hpp"
 #include "etl/_iterator/next.hpp"
 #include "etl/_utility/forward.hpp"
