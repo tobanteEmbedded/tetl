@@ -24,6 +24,9 @@
 #ifndef TETL_CCTYPE_HPP
 #define TETL_CCTYPE_HPP
 
+/// \file This header was originally in the C standard library as <ctype.h>.
+/// This header is part of the null-terminated byte strings library.
+
 #include "etl/version.hpp"
 
 #include "etl/_cctype/isalnum.hpp"
@@ -41,9 +44,4 @@
 #include "etl/_cctype/tolower.hpp"
 #include "etl/_cctype/toupper.hpp"
 
-/// \file This header was originally in the C standard library as <ctype.h>.
-/// This header is part of the null-terminated byte strings library.
-namespace etl {
-
-} // namespace etl
 #endif // TETL_CCTYPE_HPP

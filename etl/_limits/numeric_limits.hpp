@@ -25,15 +25,14 @@
 #define TETL_LIMITS_NUMERIC_LIMITS_HPP
 
 #ifdef _MSC_VER
-#include <float.h>
 #include <limits.h>
 #include <math.h>
 #else
-#include "etl/cfloat.hpp"
 #include "etl/climits.hpp"
 #include "etl/cmath.hpp"
 #endif
 
+#include "etl/_cfloat/macros.hpp"
 #include "etl/_limits/float_denorm_style.hpp"
 #include "etl/_limits/float_round_style.hpp"
 
