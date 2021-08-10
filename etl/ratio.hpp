@@ -27,20 +27,13 @@
 #include "etl/version.hpp"
 
 #include "etl/_cstdint/intmax_t.hpp"
+#include "etl/_math/abs.hpp"
+#include "etl/_math/sign.hpp"
+#include "etl/_type_traits/bool_constant.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/numeric.hpp"
-#include "etl/type_traits.hpp"
+#include "etl/numeric.hpp" // for gcd
 
 namespace etl {
-namespace detail {
-template <typename T>
-[[nodiscard]] constexpr auto sign(T val)
-{
-    if (val < 0) { return T(-1); }
-    return T(1);
-}
-} // namespace detail
 
 /// \brief The typename template provides compile-time rational
 /// arithmetic support. Each instantiation of this template exactly represents
