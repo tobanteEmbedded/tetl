@@ -24,14 +24,12 @@
 #ifndef TETL_DETAIL_TYPE_TRAITS_IS_SWAPPABLE_HPP
 #define TETL_DETAIL_TYPE_TRAITS_IS_SWAPPABLE_HPP
 
+#include "etl/_algorithm/swap.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
 namespace etl {
-
-template <typename T>
-constexpr auto swap(T& a, T& b) noexcept -> void;
 
 namespace detail {
 struct nat {
