@@ -34,6 +34,9 @@
 #include "etl/cmath.hpp"
 #endif
 
+#include "etl/_limits/float_denorm_style.hpp"
+#include "etl/_limits/float_round_style.hpp"
+
 namespace etl {
 
 // clang-format off

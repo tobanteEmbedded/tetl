@@ -26,8 +26,8 @@
 
 #include "etl/_bit/bit_unsigned_int.hpp"
 #include "etl/_bit/popcount.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
-#include "etl/limits.hpp"
 
 namespace etl {
 

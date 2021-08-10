@@ -26,9 +26,10 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_limits/numeric_limits.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/functional.hpp"
-#include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 

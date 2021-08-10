@@ -24,9 +24,8 @@
 #ifndef TETL_UTILITY_CMP_HPP
 #define TETL_UTILITY_CMP_HPP
 
-#include "etl/limits.hpp"
-
 #include "etl/_concepts/requires.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/is_signed.hpp"

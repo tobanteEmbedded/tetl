@@ -25,9 +25,8 @@
 #define TETL_CONTAINER_SMALLEST_SIZE_T_HPP
 
 #include "etl/_cstdint/uint_t.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/conditional.hpp"
-
-#include "etl/limits.hpp"
 
 namespace etl::detail {
 /// \brief Smallest fixed-width unsigned integer type that can represent values
