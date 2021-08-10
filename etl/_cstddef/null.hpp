@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTDDEF_NULL_HPP
-#define TETL_DETAIL_CSTDDEF_NULL_HPP
+#ifndef TETL_CSTDDEF_NULL_HPP
+#define TETL_CSTDDEF_NULL_HPP
 
 #if not defined(NULL)
 /// \brief The macro NULL is an implementation-defined null pointer constant,
@@ -30,4 +30,4 @@
 #define NULL nullptr
 #endif
 
-#endif // TETL_DETAIL_CSTDDEF_NULL_HPP
+#endif // TETL_CSTDDEF_NULL_HPP

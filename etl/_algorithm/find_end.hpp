@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_FIND_END_HPP
-#define TETL_DETAIL_ALGORITHM_FIND_END_HPP
+#ifndef TETL_ALGORITHM_FIND_END_HPP
+#define TETL_ALGORITHM_FIND_END_HPP
 
 #include "etl/_algorithm/search.hpp"
 #include "etl/_functional/equal_to.hpp"
@@ -68,4 +68,4 @@ template <typename ForwardIt1, typename ForwardIt2>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_FIND_END_HPP
+#endif // TETL_ALGORITHM_FIND_END_HPP

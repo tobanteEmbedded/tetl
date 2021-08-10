@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP
-#define TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP
+#ifndef TETL_CSTDDEF_MAX_ALIGN_T_HPP
+#define TETL_CSTDDEF_MAX_ALIGN_T_HPP
 
 #include "etl/_config/builtin_types.hpp"
 #include "etl/_config/compiler.hpp"
@@ -47,4 +47,4 @@ struct alignas(long double) max_align_t {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_CSTDDEF_MAX_ALIGN_T_HPP
+#endif // TETL_CSTDDEF_MAX_ALIGN_T_HPP

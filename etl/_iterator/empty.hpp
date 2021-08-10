@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_EMPTY_HPP
-#define TETL_DETAIL_ITERATOR_EMPTY_HPP
+#ifndef TETL_ITERATOR_EMPTY_HPP
+#define TETL_ITERATOR_EMPTY_HPP
 
 #include "etl/_config/warning.hpp"
 
@@ -48,4 +48,4 @@ constexpr auto empty(T (&array)[N]) noexcept -> bool
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_EMPTY_HPP
+#endif // TETL_ITERATOR_EMPTY_HPP

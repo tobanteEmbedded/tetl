@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
+#define TETL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
@@ -103,4 +103,4 @@ inline constexpr auto is_destructible_v = is_destructible<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP
+#endif // TETL_TYPE_TRAITS_IS_DESTRUCTIBLE_HPP

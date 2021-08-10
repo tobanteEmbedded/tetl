@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CCTYPE_ISDIGIT_HPP
-#define TETL_DETAIL_CCTYPE_ISDIGIT_HPP
+#ifndef TETL_CCTYPE_ISDIGIT_HPP
+#define TETL_CCTYPE_ISDIGIT_HPP
 
 #include "etl/_assert/macro.hpp"
 
@@ -47,4 +47,4 @@ namespace etl {
 }
 } // namespace etl
 
-#endif // TETL_DETAIL_CCTYPE_ISDIGIT_HPP
+#endif // TETL_CCTYPE_ISDIGIT_HPP

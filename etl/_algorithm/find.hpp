@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_FIND_HPP
-#define TETL_DETAIL_ALGORITHM_FIND_HPP
+#ifndef TETL_ALGORITHM_FIND_HPP
+#define TETL_ALGORITHM_FIND_HPP
 
 namespace etl {
 
@@ -49,4 +49,4 @@ template <typename InputIt, typename T>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_FIND_HPP
+#endif // TETL_ALGORITHM_FIND_HPP

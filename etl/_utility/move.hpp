@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_MOVE_HPP
-#define TETL_DETAIL_UTILITY_MOVE_HPP
+#ifndef TETL_UTILITY_MOVE_HPP
+#define TETL_UTILITY_MOVE_HPP
 
 #include "etl/_type_traits/remove_reference.hpp"
 
@@ -43,4 +43,4 @@ constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_MOVE_HPP
+#endif // TETL_UTILITY_MOVE_HPP

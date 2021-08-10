@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP
-#define TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP
+#ifndef TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
+#define TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/conditional.hpp"
@@ -52,4 +52,4 @@ inline constexpr auto transparent_v = is_transparent<T, U>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_FUNCTIONAL_IS_TRANSPARENT_HPP
+#endif // TETL_FUNCTIONAL_IS_TRANSPARENT_HPP

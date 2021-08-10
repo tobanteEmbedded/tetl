@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_ADVANCE_HPP
-#define TETL_DETAIL_ITERATOR_ADVANCE_HPP
+#ifndef TETL_ITERATOR_ADVANCE_HPP
+#define TETL_ITERATOR_ADVANCE_HPP
 
 #include "etl/_iterator/iterator_traits.hpp"
 #include "etl/_iterator/tags.hpp"
@@ -62,4 +62,4 @@ constexpr auto advance(It& it, Distance n) -> void
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_ADVANCE_HPP
+#endif // TETL_ITERATOR_ADVANCE_HPP

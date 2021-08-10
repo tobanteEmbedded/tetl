@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_DATA_HPP
-#define TETL_DETAIL_ITERATOR_DATA_HPP
+#ifndef TETL_ITERATOR_DATA_HPP
+#define TETL_ITERATOR_DATA_HPP
 
 namespace etl {
 
@@ -53,4 +53,4 @@ constexpr auto data(T (&array)[N]) noexcept -> T*
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_DATA_HPP
+#endif // TETL_ITERATOR_DATA_HPP

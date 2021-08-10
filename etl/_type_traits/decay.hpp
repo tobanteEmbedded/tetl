@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_DECAY_HPP
-#define TETL_DETAIL_TYPE_TRAITS_DECAY_HPP
+#ifndef TETL_TYPE_TRAITS_DECAY_HPP
+#define TETL_TYPE_TRAITS_DECAY_HPP
 
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/conditional.hpp"
@@ -52,4 +52,4 @@ using decay_t = typename decay<T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_DECAY_HPP
+#endif // TETL_TYPE_TRAITS_DECAY_HPP

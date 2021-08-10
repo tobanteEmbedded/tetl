@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_GENERATE_N_HPP
-#define TETL_DETAIL_ALGORITHM_GENERATE_N_HPP
+#ifndef TETL_ALGORITHM_GENERATE_N_HPP
+#define TETL_ALGORITHM_GENERATE_N_HPP
 
 namespace etl {
 
@@ -47,4 +47,4 @@ constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_GENERATE_N_HPP
+#endif // TETL_ALGORITHM_GENERATE_N_HPP

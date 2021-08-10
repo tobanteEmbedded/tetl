@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_TAGS_HPP
-#define TETL_DETAIL_ITERATOR_TAGS_HPP
+#ifndef TETL_ITERATOR_TAGS_HPP
+#define TETL_ITERATOR_TAGS_HPP
 
 namespace etl {
 
@@ -70,4 +70,4 @@ struct contiguous_iterator_tag : random_access_iterator_tag {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_TAGS_HPP
+#endif // TETL_ITERATOR_TAGS_HPP

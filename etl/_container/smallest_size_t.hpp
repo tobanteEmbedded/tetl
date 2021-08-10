@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP
-#define TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP
+#ifndef TETL_CONTAINER_SMALLEST_SIZE_T_HPP
+#define TETL_CONTAINER_SMALLEST_SIZE_T_HPP
 
 #include "etl/_type_traits/conditional.hpp"
 #include "etl/cstdint.hpp"
@@ -43,4 +43,4 @@ using smallest_size_t =
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_CONTAINER_SMALLEST_SIZE_T_HPP
+#endif // TETL_CONTAINER_SMALLEST_SIZE_T_HPP

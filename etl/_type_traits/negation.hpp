@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_NEGATION_HPP
-#define TETL_DETAIL_TYPE_TRAITS_NEGATION_HPP
+#ifndef TETL_TYPE_TRAITS_NEGATION_HPP
+#define TETL_TYPE_TRAITS_NEGATION_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 
@@ -40,4 +40,4 @@ inline constexpr bool negation_v = etl::negation<B>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_NEGATION_HPP
+#endif // TETL_TYPE_TRAITS_NEGATION_HPP

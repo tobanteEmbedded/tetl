@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_FUNCTIONAL_LESS_HPP
-#define TETL_DETAIL_FUNCTIONAL_LESS_HPP
+#ifndef TETL_FUNCTIONAL_LESS_HPP
+#define TETL_FUNCTIONAL_LESS_HPP
 
 #include "etl/_utility/forward.hpp"
 
@@ -58,4 +58,4 @@ struct less<void> {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_FUNCTIONAL_LESS_HPP
+#endif // TETL_FUNCTIONAL_LESS_HPP

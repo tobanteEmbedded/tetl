@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_DISJUNCTION_HPP
-#define TETL_DETAIL_TYPE_TRAITS_DISJUNCTION_HPP
+#ifndef TETL_TYPE_TRAITS_DISJUNCTION_HPP
+#define TETL_TYPE_TRAITS_DISJUNCTION_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/conditional.hpp"
@@ -53,4 +53,4 @@ inline constexpr bool disjunction_v = disjunction<B...>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_DISJUNCTION_HPP
+#endif // TETL_TYPE_TRAITS_DISJUNCTION_HPP

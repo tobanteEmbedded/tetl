@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_SWAP_HPP
-#define TETL_DETAIL_ALGORITHM_SWAP_HPP
+#ifndef TETL_ALGORITHM_SWAP_HPP
+#define TETL_ALGORITHM_SWAP_HPP
 
 #include "etl/_type_traits/remove_reference.hpp"
 #include "etl/_utility/move.hpp"
@@ -47,4 +47,4 @@ constexpr auto swap(T& a, T& b) noexcept -> void
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_SWAP_HPP
+#endif // TETL_ALGORITHM_SWAP_HPP

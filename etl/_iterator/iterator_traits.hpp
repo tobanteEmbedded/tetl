@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_ITERATOR_TRAITS_HPP
-#define TETL_DETAIL_ITERATOR_ITERATOR_TRAITS_HPP
+#ifndef TETL_ITERATOR_ITERATOR_TRAITS_HPP
+#define TETL_ITERATOR_ITERATOR_TRAITS_HPP
 
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_iterator/tags.hpp"
@@ -58,4 +58,4 @@ struct iterator_traits<T*> {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_ITERATOR_TRAITS_HPP
+#endif // TETL_ITERATOR_ITERATOR_TRAITS_HPP

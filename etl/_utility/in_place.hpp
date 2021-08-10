@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_IN_PLACE_HPP
-#define TETL_DETAIL_UTILITY_IN_PLACE_HPP
+#ifndef TETL_UTILITY_IN_PLACE_HPP
+#define TETL_UTILITY_IN_PLACE_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 
@@ -44,4 +44,4 @@ inline constexpr auto in_place = in_place_t {};
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_IN_PLACE_HPP
+#endif // TETL_UTILITY_IN_PLACE_HPP

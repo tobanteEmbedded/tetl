@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_REMOVE_CVREF_HPP
-#define TETL_DETAIL_TYPE_TRAITS_REMOVE_CVREF_HPP
+#ifndef TETL_TYPE_TRAITS_REMOVE_CVREF_HPP
+#define TETL_TYPE_TRAITS_REMOVE_CVREF_HPP
 
 #include "etl/_type_traits/remove_cv.hpp"
 #include "etl/_type_traits/remove_reference.hpp"
@@ -47,4 +47,4 @@ using remove_cvref_t = typename remove_cvref<T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_REMOVE_CVREF_HPP
+#endif // TETL_TYPE_TRAITS_REMOVE_CVREF_HPP

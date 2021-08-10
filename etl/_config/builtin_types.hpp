@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CONFIG_BUILTIN_TYPES_HPP
-#define TETL_DETAIL_CONFIG_BUILTIN_TYPES_HPP
+#ifndef TETL_CONFIG_BUILTIN_TYPES_HPP
+#define TETL_CONFIG_BUILTIN_TYPES_HPP
 
 #ifdef _MSC_VER
 #define TETL_BUILTIN_INT8 __int8
@@ -58,24 +58,24 @@
 #define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
 #endif
 
-#if !defined(TETL_DETAIL_WCHAR_MIN)
+#if !defined(TETL_WCHAR_MIN)
 #if defined(__WCHAR_MIN__)
-#define TETL_DETAIL_WCHAR_MIN __WCHAR_MIN__
+#define TETL_WCHAR_MIN __WCHAR_MIN__
 #elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define TETL_DETAIL_WCHAR_MIN (0 + L'\0')
+#define TETL_WCHAR_MIN (0 + L'\0')
 #else
-#define TETL_DETAIL_WCHAR_MIN (-0x7fffffff - 1 + L'\0')
+#define TETL_WCHAR_MIN (-0x7fffffff - 1 + L'\0')
 #endif
-#endif // TETL_DETAIL_WCHAR_MIN
+#endif // TETL_WCHAR_MIN
 
-#if !defined(TETL_DETAIL_WCHAR_MAX)
+#if !defined(TETL_WCHAR_MAX)
 #if defined(__WCHAR_MAX__)
-#define TETL_DETAIL_WCHAR_MAX __WCHAR_MAX__
+#define TETL_WCHAR_MAX __WCHAR_MAX__
 #elif defined(__WCHAR_UNSIGNED__) || (L'\0' - 1 > 0)
-#define TETL_DETAIL_WCHAR_MAX (0xffffffffu + L'\0')
+#define TETL_WCHAR_MAX (0xffffffffu + L'\0')
 #else
-#define TETL_DETAIL_WCHAR_MAX (0x7fffffff + L'\0')
+#define TETL_WCHAR_MAX (0x7fffffff + L'\0')
 #endif
-#endif // TETL_DETAIL_WCHAR_MAX
+#endif // TETL_WCHAR_MAX
 
-#endif // TETL_DETAIL_CONFIG_BUILTIN_TYPES_HPP
+#endif // TETL_CONFIG_BUILTIN_TYPES_HPP

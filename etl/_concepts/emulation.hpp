@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CONCEPTS_EMULATION_HPP
-#define TETL_DETAIL_CONCEPTS_EMULATION_HPP
+#ifndef TETL_CONCEPTS_EMULATION_HPP
+#define TETL_CONCEPTS_EMULATION_HPP
 
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/end.hpp"
@@ -73,4 +73,4 @@ template <typename T> inline constexpr bool RandomAccessRange       = RandomAcce
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_CONCEPTS_EMULATION_HPP
+#endif // TETL_CONCEPTS_EMULATION_HPP

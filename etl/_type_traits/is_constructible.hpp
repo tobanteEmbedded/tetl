@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP
+#define TETL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
@@ -50,4 +50,4 @@ inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP
+#endif // TETL_TYPE_TRAITS_IS_CONSTRUCTIBLE_HPP

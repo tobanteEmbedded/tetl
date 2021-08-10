@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_REMOVE_HPP
-#define TETL_DETAIL_ALGORITHM_REMOVE_HPP
+#ifndef TETL_ALGORITHM_REMOVE_HPP
+#define TETL_ALGORITHM_REMOVE_HPP
 
 #include "etl/_algorithm/remove_if.hpp"
 
@@ -43,4 +43,4 @@ template <typename ForwardIt, typename T>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_REMOVE_HPP
+#endif // TETL_ALGORITHM_REMOVE_HPP

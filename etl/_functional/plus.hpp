@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_FUNCTIONAL_PLUS_HPP
-#define TETL_DETAIL_FUNCTIONAL_PLUS_HPP
+#ifndef TETL_FUNCTIONAL_PLUS_HPP
+#define TETL_FUNCTIONAL_PLUS_HPP
 
 #include "etl/_utility/forward.hpp"
 
@@ -60,4 +60,4 @@ struct plus<void> {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_FUNCTIONAL_PLUS_HPP
+#endif // TETL_FUNCTIONAL_PLUS_HPP

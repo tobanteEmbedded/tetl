@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_REMOVE_EXTENT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_REMOVE_EXTENT_HPP
+#ifndef TETL_TYPE_TRAITS_REMOVE_EXTENT_HPP
+#define TETL_TYPE_TRAITS_REMOVE_EXTENT_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 
@@ -56,4 +56,4 @@ using remove_extent_t = typename ::etl::remove_extent<T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_REMOVE_EXTENT_HPP
+#endif // TETL_TYPE_TRAITS_REMOVE_EXTENT_HPP

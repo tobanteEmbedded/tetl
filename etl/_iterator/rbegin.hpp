@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_RBEGIN_HPP
-#define TETL_DETAIL_ITERATOR_RBEGIN_HPP
+#ifndef TETL_ITERATOR_RBEGIN_HPP
+#define TETL_ITERATOR_RBEGIN_HPP
 
 #include "etl/_iterator/end.hpp"
 
@@ -63,4 +63,4 @@ constexpr auto crbegin(Container const& c) -> decltype(rbegin(c))
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_RBEGIN_HPP
+#endif // TETL_ITERATOR_RBEGIN_HPP

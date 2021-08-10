@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_INVOKE_RESULT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_INVOKE_RESULT_HPP
+#ifndef TETL_TYPE_TRAITS_INVOKE_RESULT_HPP
+#define TETL_TYPE_TRAITS_INVOKE_RESULT_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/decay.hpp"
@@ -118,4 +118,4 @@ using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_INVOKE_RESULT_HPP
+#endif // TETL_TYPE_TRAITS_INVOKE_RESULT_HPP

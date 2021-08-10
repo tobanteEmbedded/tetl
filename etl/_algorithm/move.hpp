@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_MOVE_HPP
-#define TETL_DETAIL_ALGORITHM_MOVE_HPP
+#ifndef TETL_ALGORITHM_MOVE_HPP
+#define TETL_ALGORITHM_MOVE_HPP
 
 #include "etl/_utility/move.hpp"
 
@@ -56,4 +56,4 @@ constexpr auto move(InputIt first, InputIt last, OutputIt destination)
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_MOVE_HPP
+#endif // TETL_ALGORITHM_MOVE_HPP

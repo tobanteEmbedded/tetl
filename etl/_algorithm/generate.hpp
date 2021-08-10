@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_GENERATE_HPP
-#define TETL_DETAIL_ALGORITHM_GENERATE_HPP
+#ifndef TETL_ALGORITHM_GENERATE_HPP
+#define TETL_ALGORITHM_GENERATE_HPP
 
 namespace etl {
 
@@ -45,4 +45,4 @@ constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_GENERATE_HPP
+#endif // TETL_ALGORITHM_GENERATE_HPP

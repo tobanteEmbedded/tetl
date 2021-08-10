@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_DETAIL_FORMAT_FORMATTER_HPP)
-#define TETL_DETAIL_FORMAT_FORMATTER_HPP
+#if not defined(TETL_FORMAT_FORMATTER_HPP)
+#define TETL_FORMAT_FORMATTER_HPP
 
 #include "etl/_format/context.hpp"
 
@@ -196,4 +196,4 @@ struct formatter<unsigned long long, char> {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_FORMAT_FORMATTER_HPP
+#endif // TETL_FORMAT_FORMATTER_HPP

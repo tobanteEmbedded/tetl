@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_SWAPPABLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_SWAPPABLE_HPP
+#ifndef TETL_TYPE_TRAITS_SWAPPABLE_HPP
+#define TETL_TYPE_TRAITS_SWAPPABLE_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
@@ -55,4 +55,4 @@ inline constexpr bool is_nothrow_swappable_v = is_nothrow_swappable<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_SWAPPABLE_HPP
+#endif // TETL_TYPE_TRAITS_SWAPPABLE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_FORMAT_ARGUMENT_HPP
-#define TETL_DETAIL_FORMAT_ARGUMENT_HPP
+#ifndef TETL_FORMAT_ARGUMENT_HPP
+#define TETL_FORMAT_ARGUMENT_HPP
 
 #include "etl/_format/formatter.hpp"
 
@@ -100,4 +100,4 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_FORMAT_ARGUMENT_HPP
+#endif // TETL_FORMAT_ARGUMENT_HPP

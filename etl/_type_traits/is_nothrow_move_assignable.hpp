@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP
+#define TETL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP
 
 #include "etl/_type_traits/add_lvalue_reference.hpp"
 #include "etl/_type_traits/add_rvalue_reference.hpp"
@@ -54,4 +54,4 @@ inline constexpr bool is_nothrow_move_assignable_v
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP
+#endif // TETL_TYPE_TRAITS_IS_NOTHROW_MOVE_ASSIGNABLE_HPP

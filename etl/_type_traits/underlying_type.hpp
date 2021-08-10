@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
+#define TETL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/is_enum.hpp"
@@ -51,4 +51,4 @@ using underlying_type_t = typename underlying_type<T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
+#endif // TETL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
+#define TETL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
@@ -73,4 +73,4 @@ inline constexpr bool is_convertible_v = is_convertible<From, To>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_CONVERTIBLE_HPP
+#endif // TETL_TYPE_TRAITS_IS_CONVERTIBLE_HPP

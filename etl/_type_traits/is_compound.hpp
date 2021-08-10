@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_COMPOUND_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_COMPOUND_HPP
+#ifndef TETL_TYPE_TRAITS_IS_COMPOUND_HPP
+#define TETL_TYPE_TRAITS_IS_COMPOUND_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/is_fundamental.hpp"
@@ -42,4 +42,4 @@ inline constexpr bool is_compound_v = is_compound<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_COMPOUND_HPP
+#endif // TETL_TYPE_TRAITS_IS_COMPOUND_HPP

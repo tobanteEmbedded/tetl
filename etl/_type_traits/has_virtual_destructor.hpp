@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
-#define TETL_DETAIL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
+#ifndef TETL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
+#define TETL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
@@ -45,4 +45,4 @@ inline constexpr auto has_virtual_destructor_v
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP
+#endif // TETL_TYPE_TRAITS_HAS_VIRTUAL_DESTRUCTOR_HPP

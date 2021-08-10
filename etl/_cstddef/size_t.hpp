@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTDDEF_SIZE_T_HPP
-#define TETL_DETAIL_CSTDDEF_SIZE_T_HPP
+#ifndef TETL_CSTDDEF_SIZE_T_HPP
+#define TETL_CSTDDEF_SIZE_T_HPP
 
 #include "etl/_config/builtin_types.hpp"
 
@@ -37,4 +37,4 @@ using size_t = TETL_BUILTIN_SIZET;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_CSTDDEF_SIZE_T_HPP
+#endif // TETL_CSTDDEF_SIZE_T_HPP

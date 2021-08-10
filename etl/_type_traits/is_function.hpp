@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_FUNCTION_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_FUNCTION_HPP
+#ifndef TETL_TYPE_TRAITS_IS_FUNCTION_HPP
+#define TETL_TYPE_TRAITS_IS_FUNCTION_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/is_const.hpp"
@@ -48,4 +48,4 @@ inline constexpr bool is_function_v = is_function<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_FUNCTION_HPP
+#endif // TETL_TYPE_TRAITS_IS_FUNCTION_HPP

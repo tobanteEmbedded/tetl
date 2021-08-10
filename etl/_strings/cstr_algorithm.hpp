@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTRING_ALGORITHM_HPP
-#define TETL_DETAIL_CSTRING_ALGORITHM_HPP
+#ifndef TETL_CSTRING_ALGORITHM_HPP
+#define TETL_CSTRING_ALGORITHM_HPP
 
 namespace etl::detail {
 
@@ -238,4 +238,4 @@ constexpr auto memchr_impl(CharT* ptr, CharT ch, SizeT n) -> CharT*
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_CSTRING_ALGORITHM_HPP
+#endif // TETL_CSTRING_ALGORITHM_HPP

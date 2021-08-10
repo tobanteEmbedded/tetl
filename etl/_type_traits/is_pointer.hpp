@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_POINTER_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_POINTER_HPP
+#ifndef TETL_TYPE_TRAITS_IS_POINTER_HPP
+#define TETL_TYPE_TRAITS_IS_POINTER_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/remove_cv.hpp"
@@ -56,4 +56,4 @@ inline constexpr bool is_pointer_v = is_pointer<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_POINTER_HPP
+#endif // TETL_TYPE_TRAITS_IS_POINTER_HPP

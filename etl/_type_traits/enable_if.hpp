@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP
-#define TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP
+#ifndef TETL_TYPE_TRAITS_ENABLE_IF_HPP
+#define TETL_TYPE_TRAITS_ENABLE_IF_HPP
 
 namespace etl {
 /// \brief Define a member typedef only if a boolean constant is true.
@@ -41,4 +41,4 @@ using enable_if_t = typename enable_if<B, T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_ENABLE_IF_HPP
+#endif // TETL_TYPE_TRAITS_ENABLE_IF_HPP

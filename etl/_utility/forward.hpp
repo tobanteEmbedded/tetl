@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_FORWARD_HPP
-#define TETL_DETAIL_UTILITY_FORWARD_HPP
+#ifndef TETL_UTILITY_FORWARD_HPP
+#define TETL_UTILITY_FORWARD_HPP
 
 #include "etl/_type_traits/remove_reference.hpp"
 
@@ -52,4 +52,4 @@ constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_FORWARD_HPP
+#endif // TETL_UTILITY_FORWARD_HPP

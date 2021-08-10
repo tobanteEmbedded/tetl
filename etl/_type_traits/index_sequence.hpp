@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_INDEX_SEQUENCE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_INDEX_SEQUENCE_HPP
+#ifndef TETL_TYPE_TRAITS_INDEX_SEQUENCE_HPP
+#define TETL_TYPE_TRAITS_INDEX_SEQUENCE_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_type_traits/integer_sequence.hpp"
@@ -43,4 +43,4 @@ using index_sequence_for = make_index_sequence<sizeof...(T)>;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_INDEX_SEQUENCE_HPP
+#endif // TETL_TYPE_TRAITS_INDEX_SEQUENCE_HPP

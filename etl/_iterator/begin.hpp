@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_BEGIN_HPP
-#define TETL_DETAIL_ITERATOR_BEGIN_HPP
+#ifndef TETL_ITERATOR_BEGIN_HPP
+#define TETL_ITERATOR_BEGIN_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 
@@ -66,4 +66,4 @@ constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c)))
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_BEGIN_HPP
+#endif // TETL_ITERATOR_BEGIN_HPP

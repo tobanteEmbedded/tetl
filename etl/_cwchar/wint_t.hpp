@@ -36,11 +36,11 @@
 #endif
 
 #if !defined(WCHAR_MIN)
-#define WCHAR_MIN TETL_DETAIL_WCHAR_MIN
+#define WCHAR_MIN TETL_WCHAR_MIN
 #endif
 
 #if !defined(WCHAR_MAX)
-#define WCHAR_MAX TETL_DETAIL_WCHAR_MAX
+#define WCHAR_MAX TETL_WCHAR_MAX
 #endif
 
 #endif

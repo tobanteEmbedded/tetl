@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_EXCHANGE_HPP
-#define TETL_DETAIL_UTILITY_EXCHANGE_HPP
+#ifndef TETL_UTILITY_EXCHANGE_HPP
+#define TETL_UTILITY_EXCHANGE_HPP
 
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
@@ -42,4 +42,4 @@ template <typename T, typename U = T>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_EXCHANGE_HPP
+#endif // TETL_UTILITY_EXCHANGE_HPP

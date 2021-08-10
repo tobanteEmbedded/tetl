@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_MAX_HPP
-#define TETL_DETAIL_ALGORITHM_MAX_HPP
+#ifndef TETL_ALGORITHM_MAX_HPP
+#define TETL_ALGORITHM_MAX_HPP
 
 namespace etl {
 
@@ -48,4 +48,4 @@ template <typename Type, typename Compare>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_MAX_HPP
+#endif // TETL_ALGORITHM_MAX_HPP

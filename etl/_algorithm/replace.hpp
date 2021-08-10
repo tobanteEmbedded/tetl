@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_REPLACE_HPP
-#define TETL_DETAIL_ALGORITHM_REPLACE_HPP
+#ifndef TETL_ALGORITHM_REPLACE_HPP
+#define TETL_ALGORITHM_REPLACE_HPP
 
 #include "etl/_algorithm/replace_if.hpp"
 
@@ -43,4 +43,4 @@ constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue,
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_REPLACE_HPP
+#endif // TETL_ALGORITHM_REPLACE_HPP

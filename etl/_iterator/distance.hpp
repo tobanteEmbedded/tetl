@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_DISTANCE_HPP
-#define TETL_DETAIL_ITERATOR_DISTANCE_HPP
+#ifndef TETL_ITERATOR_DISTANCE_HPP
+#define TETL_ITERATOR_DISTANCE_HPP
 
 #include "etl/_iterator/iterator_traits.hpp"
 #include "etl/_iterator/tags.hpp"
@@ -56,4 +56,4 @@ constexpr auto distance(It first, It last) ->
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_DISTANCE_HPP
+#endif // TETL_ITERATOR_DISTANCE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
-#define TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
+#ifndef TETL_OPTIONAL_SFINAE_BASE_HPP
+#define TETL_OPTIONAL_SFINAE_BASE_HPP
 
 namespace etl::detail {
 template <bool CanCopy, bool CanMove>
@@ -83,4 +83,4 @@ struct sfinae_assign_base<false, true> {
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_OPTIONAL_SFINAE_BASE_HPP
+#endif // TETL_OPTIONAL_SFINAE_BASE_HPP

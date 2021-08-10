@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_SEARCH_HPP
-#define TETL_DETAIL_ALGORITHM_SEARCH_HPP
+#ifndef TETL_ALGORITHM_SEARCH_HPP
+#define TETL_ALGORITHM_SEARCH_HPP
 
 namespace etl {
 namespace detail {
@@ -85,4 +85,4 @@ template <typename ForwardIt, typename Searcher>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_SEARCH_HPP
+#endif // TETL_ALGORITHM_SEARCH_HPP

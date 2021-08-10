@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_FINAL_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_FINAL_HPP
+#ifndef TETL_TYPE_TRAITS_IS_FINAL_HPP
+#define TETL_TYPE_TRAITS_IS_FINAL_HPP
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
@@ -44,4 +44,4 @@ inline constexpr bool is_final_v = is_final<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_FINAL_HPP
+#endif // TETL_TYPE_TRAITS_IS_FINAL_HPP

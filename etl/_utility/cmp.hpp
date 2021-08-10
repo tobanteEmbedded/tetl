@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_CMP_HPP
-#define TETL_DETAIL_UTILITY_CMP_HPP
+#ifndef TETL_UTILITY_CMP_HPP
+#define TETL_UTILITY_CMP_HPP
 
 #include "etl/limits.hpp"
 
@@ -193,4 +193,4 @@ template <typename R, typename T, TETL_REQUIRES_(detail::int_and_not_char_v<T>)>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_CMP_HPP
+#endif // TETL_UTILITY_CMP_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_UTILITY_AS_CONST_HPP
-#define TETL_DETAIL_UTILITY_AS_CONST_HPP
+#ifndef TETL_UTILITY_AS_CONST_HPP
+#define TETL_UTILITY_AS_CONST_HPP
 
 #include "etl/_type_traits/add_const.hpp"
 
@@ -42,4 +42,4 @@ constexpr auto as_const(T const&&) -> void
 
 } // namespace etl
 
-#endif // TETL_DETAIL_UTILITY_AS_CONST_HPP
+#endif // TETL_UTILITY_AS_CONST_HPP

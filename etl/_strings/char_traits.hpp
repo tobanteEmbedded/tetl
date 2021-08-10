@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
-#define TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
+#ifndef TETL_STRINGS_CHAR_TRAITS_HPP
+#define TETL_STRINGS_CHAR_TRAITS_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
@@ -188,4 +188,4 @@ struct char_traits<char> {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_STRINGS_CHAR_TRAITS_HPP
+#endif // TETL_STRINGS_CHAR_TRAITS_HPP

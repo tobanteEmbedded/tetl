@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_VOID_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_VOID_HPP
+#ifndef TETL_TYPE_TRAITS_IS_VOID_HPP
+#define TETL_TYPE_TRAITS_IS_VOID_HPP
 
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/remove_cv.hpp"
@@ -41,4 +41,4 @@ inline constexpr bool is_void_v = is_void<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_VOID_HPP
+#endif // TETL_TYPE_TRAITS_IS_VOID_HPP

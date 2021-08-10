@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
+#ifndef TETL_TYPE_TRAITS_IS_OBJECT_HPP
+#define TETL_TYPE_TRAITS_IS_OBJECT_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/is_array.hpp"
@@ -46,4 +46,4 @@ inline constexpr bool is_object_v = is_object<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_OBJECT_HPP
+#endif // TETL_TYPE_TRAITS_IS_OBJECT_HPP

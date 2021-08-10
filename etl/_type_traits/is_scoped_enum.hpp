@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
+#ifndef TETL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
+#define TETL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
@@ -52,4 +52,4 @@ inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
+#endif // TETL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP

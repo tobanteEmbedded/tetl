@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_ADD_CV_HPP
-#define TETL_DETAIL_TYPE_TRAITS_ADD_CV_HPP
+#ifndef TETL_TYPE_TRAITS_ADD_CV_HPP
+#define TETL_TYPE_TRAITS_ADD_CV_HPP
 
 namespace etl {
 
@@ -41,4 +41,4 @@ using add_cv_t = typename add_cv<T>::type;
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_ADD_CV_HPP
+#endif // TETL_TYPE_TRAITS_ADD_CV_HPP

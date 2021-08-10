@@ -1,5 +1,5 @@
-#ifndef TETL_DETAIL_FORMAT_CONTEXT_HPP
-#define TETL_DETAIL_FORMAT_CONTEXT_HPP
+#ifndef TETL_FORMAT_CONTEXT_HPP
+#define TETL_FORMAT_CONTEXT_HPP
 
 #include "etl/algorithm.hpp"
 #include "etl/iterator.hpp"
@@ -60,4 +60,4 @@ using format_context
 
 } // namespace etl
 
-#endif // TETL_DETAIL_FORMAT_CONTEXT_HPP
+#endif // TETL_FORMAT_CONTEXT_HPP

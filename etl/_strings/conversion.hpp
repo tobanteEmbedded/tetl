@@ -1,5 +1,5 @@
-#ifndef ETL_DETAIL_STRING_CONVERSION_HPP
-#define ETL_DETAIL_STRING_CONVERSION_HPP
+#ifndef ETL_STRING_CONVERSION_HPP
+#define ETL_STRING_CONVERSION_HPP
 
 #include "etl/limits.hpp"
 
@@ -175,4 +175,4 @@ template <typename FloatT>
 
 } // namespace etl::detail
 
-#endif // ETL_DETAIL_STRING_CONVERSION_HPP
+#endif // ETL_STRING_CONVERSION_HPP

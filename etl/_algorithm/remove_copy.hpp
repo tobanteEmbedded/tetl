@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_REMOVE_COPY_HPP
-#define TETL_DETAIL_ALGORITHM_REMOVE_COPY_HPP
+#ifndef TETL_ALGORITHM_REMOVE_COPY_HPP
+#define TETL_ALGORITHM_REMOVE_COPY_HPP
 
 namespace etl {
 
@@ -43,4 +43,4 @@ constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination,
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_REMOVE_COPY_HPP
+#endif // TETL_ALGORITHM_REMOVE_COPY_HPP

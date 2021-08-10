@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_MATH_ABS_HPP
-#define TETL_DETAIL_MATH_ABS_HPP
+#ifndef TETL_MATH_ABS_HPP
+#define TETL_MATH_ABS_HPP
 
 namespace etl {
 namespace detail {
@@ -108,4 +108,4 @@ template <typename T>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_MATH_ABS_HPP
+#endif // TETL_MATH_ABS_HPP

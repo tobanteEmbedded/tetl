@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_CSTDDEF_TM_HPP
-#define TETL_DETAIL_CSTDDEF_TM_HPP
+#ifndef TETL_CSTDDEF_TM_HPP
+#define TETL_CSTDDEF_TM_HPP
 
 namespace etl {
 
@@ -40,4 +40,4 @@ struct tm {
 
 } // namespace etl
 
-#endif // TETL_DETAIL_CSTDDEF_TM_HPP
+#endif // TETL_CSTDDEF_TM_HPP

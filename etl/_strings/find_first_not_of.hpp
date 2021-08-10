@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_STRING_ALGORITHM_HPP
-#define TETL_DETAIL_STRING_ALGORITHM_HPP
+#ifndef TETL_STRING_ALGORITHM_HPP
+#define TETL_STRING_ALGORITHM_HPP
 
 #include "etl/_strings/char_traits.hpp"
 
@@ -65,4 +65,4 @@ auto replace_impl(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
 }
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_STRING_ALGORITHM_HPP
+#endif // TETL_STRING_ALGORITHM_HPP

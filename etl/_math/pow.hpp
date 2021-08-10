@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_MATH_POW_HPP
-#define TETL_DETAIL_MATH_POW_HPP
+#ifndef TETL_MATH_POW_HPP
+#define TETL_MATH_POW_HPP
 
 namespace etl::detail {
 
@@ -40,4 +40,4 @@ template <typename Int>
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_MATH_POW_HPP
+#endif // TETL_MATH_POW_HPP

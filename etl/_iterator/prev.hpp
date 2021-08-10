@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_PREV_HPP
-#define TETL_DETAIL_ITERATOR_PREV_HPP
+#ifndef TETL_ITERATOR_PREV_HPP
+#define TETL_ITERATOR_PREV_HPP
 
 #include "etl/_iterator/advance.hpp"
 #include "etl/_iterator/iterator_traits.hpp"
@@ -40,4 +40,4 @@ template <typename BidirIt>
 }
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_PREV_HPP
+#endif // TETL_ITERATOR_PREV_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_MINMAX_HPP
-#define TETL_DETAIL_ALGORITHM_MINMAX_HPP
+#ifndef TETL_ALGORITHM_MINMAX_HPP
+#define TETL_ALGORITHM_MINMAX_HPP
 
 #include "etl/_functional/less.hpp"
 #include "etl/_utility/pair.hpp"
@@ -52,4 +52,4 @@ template <typename T>
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_MINMAX_HPP
+#endif // TETL_ALGORITHM_MINMAX_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ITERATOR_REND_HPP
-#define TETL_DETAIL_ITERATOR_REND_HPP
+#ifndef TETL_ITERATOR_REND_HPP
+#define TETL_ITERATOR_REND_HPP
 
 #include "etl/_iterator/begin.hpp"
 
@@ -64,4 +64,4 @@ constexpr auto crend(Container const& c) -> decltype(rend(c))
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ITERATOR_REND_HPP
+#endif // TETL_ITERATOR_REND_HPP

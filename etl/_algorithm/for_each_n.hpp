@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_ALGORITHM_FOR_EACH_N_HPP
-#define TETL_DETAIL_ALGORITHM_FOR_EACH_N_HPP
+#ifndef TETL_ALGORITHM_FOR_EACH_N_HPP
+#define TETL_ALGORITHM_FOR_EACH_N_HPP
 
 namespace etl {
 
@@ -50,4 +50,4 @@ constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept
 
 } // namespace etl
 
-#endif // TETL_DETAIL_ALGORITHM_FOR_EACH_N_HPP
+#endif // TETL_ALGORITHM_FOR_EACH_N_HPP

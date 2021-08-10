@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
-#define TETL_DETAIL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
+#ifndef TETL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
+#define TETL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
@@ -43,4 +43,4 @@ inline constexpr auto is_trivially_destructible_v
 
 } // namespace etl
 
-#endif // TETL_DETAIL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP
+#endif // TETL_TYPE_TRAITS_IS_TRVIALLY_DETRUCTIBLE_HPP

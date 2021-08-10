@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_DETAIL_MATH_LERP_HPP
-#define TETL_DETAIL_MATH_LERP_HPP
+#ifndef TETL_MATH_LERP_HPP
+#define TETL_MATH_LERP_HPP
 
 namespace etl::detail {
 
@@ -43,4 +43,4 @@ template <typename Float>
 
 } // namespace etl::detail
 
-#endif // TETL_DETAIL_MATH_LERP_HPP
+#endif // TETL_MATH_LERP_HPP
