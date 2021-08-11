@@ -77,7 +77,7 @@ struct port {
     auto operator=(port const&) -> port& = delete;
 
     port(port&&) = delete;
-    auto operator=(port &&) -> port& = delete;
+    auto operator=(port&&) -> port& = delete;
 
     auto toggle_pin(pin_number pin) noexcept -> void;
     auto write(pin_number pin, pin_state state) noexcept -> void;

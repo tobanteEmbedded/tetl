@@ -40,8 +40,8 @@ public:
     auto operator=(test_mutex const&) -> test_mutex& = delete;
     test_mutex(test_mutex const&)                    = delete;
 
-    auto operator=(test_mutex &&) -> test_mutex& = default;
-    test_mutex(test_mutex&&)                     = default;
+    auto operator=(test_mutex&&) -> test_mutex& = default;
+    test_mutex(test_mutex&&)                    = default;
 
     auto lock() noexcept
     {

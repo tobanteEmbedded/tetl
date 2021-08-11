@@ -63,7 +63,7 @@ struct queue {
     auto operator=(queue const&) -> queue& = delete;
 
     queue(queue&&) = delete;
-    auto operator=(queue &&) -> queue& = delete;
+    auto operator=(queue&&) -> queue& = delete;
 
     /// Returns the capacity of the internal buffer
     [[nodiscard]] auto capacity() const -> size_type;
