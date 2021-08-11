@@ -26,10 +26,23 @@
 
 #include "etl/version.hpp"
 
-#include "etl/crtp.hpp"
 #include "etl/utility.hpp"
 
 namespace etl::experimental {
+
+template <typename Type, template <typename> typename CrtpTag>
+struct crtp {
+    [[nodiscard]] constexpr auto underlying() const noexcept -> Type const&
+    {
+        return static_cast<Type const&>(*this);
+    }
+
+    [[nodiscard]] constexpr auto underlying() noexcept -> Type&
+    {
+        return static_cast<Type&>(*this);
+    }
+};
+
 struct skill {
     template <typename StrongType>
     struct addable : crtp<StrongType, addable> {
