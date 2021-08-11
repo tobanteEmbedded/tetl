@@ -26,6 +26,7 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_array/array.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
@@ -36,8 +37,6 @@
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/remove_pointer.hpp"
-
-#include "etl/array.hpp"
 
 namespace etl {
 /// \brief etl::dynamic_extent is a constant of type etl::size_t that is used

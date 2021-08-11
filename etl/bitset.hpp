@@ -27,11 +27,11 @@
 #include "etl/version.hpp"
 
 #include "etl/_algorithm/min.hpp"
+#include "etl/_array/array.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 
-#include "etl/array.hpp"
 #include "etl/string_view.hpp"
 
 namespace etl {
