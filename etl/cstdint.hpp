@@ -41,34 +41,4 @@
 #include "etl/_cstdint/uintmax_t.hpp"
 #include "etl/_cstdint/uintptr_t.hpp"
 
-static_assert(sizeof(::etl::int8_t) == 1, "int8_t size should be 1");
-static_assert(sizeof(::etl::int16_t) == 2, "int16_t size should be 2");
-static_assert(sizeof(::etl::int32_t) == 4, "int32_t size should be 4");
-static_assert(sizeof(::etl::int64_t) == 8, "int64_t size should be 8");
-
-static_assert(sizeof(::etl::uint8_t) == 1, "uint8_t size should be 1");
-static_assert(sizeof(::etl::uint16_t) == 2, "uint16_t size should be 2");
-static_assert(sizeof(::etl::uint32_t) == 4, "uint32_t size should be 4");
-static_assert(sizeof(::etl::uint64_t) == 8, "uint64_t size should be 8");
-
-static_assert(sizeof(::etl::int_fast8_t) >= 1);
-static_assert(sizeof(::etl::int_fast16_t) >= 2);
-static_assert(sizeof(::etl::int_fast32_t) >= 4);
-static_assert(sizeof(::etl::int_fast64_t) >= 8);
-
-static_assert(sizeof(::etl::uint_fast8_t) >= 1);
-static_assert(sizeof(::etl::uint_fast16_t) >= 2);
-static_assert(sizeof(::etl::uint_fast32_t) >= 4);
-static_assert(sizeof(::etl::uint_fast64_t) >= 8);
-
-static_assert(sizeof(::etl::int_least8_t) >= 1);
-static_assert(sizeof(::etl::int_least16_t) >= 2);
-static_assert(sizeof(::etl::int_least32_t) >= 4);
-static_assert(sizeof(::etl::int_least64_t) >= 8);
-
-static_assert(sizeof(::etl::uint_least8_t) >= 1);
-static_assert(sizeof(::etl::uint_least16_t) >= 2);
-static_assert(sizeof(::etl::uint_least32_t) >= 4);
-static_assert(sizeof(::etl::uint_least64_t) >= 8);
-
 #endif // TETL_CSTDINT_HPP

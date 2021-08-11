@@ -42,4 +42,9 @@ using uint_fast64_t = TETL_BUILTIN_UINT64;
 
 } // namespace etl
 
+static_assert(sizeof(::etl::uint_fast8_t) >= 1);
+static_assert(sizeof(::etl::uint_fast16_t) >= 2);
+static_assert(sizeof(::etl::uint_fast32_t) >= 4);
+static_assert(sizeof(::etl::uint_fast64_t) >= 8);
+
 #endif // TETL_CSTDINT_UINT_FAST_T_HPP

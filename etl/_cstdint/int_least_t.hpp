@@ -42,4 +42,9 @@ using int_least64_t = TETL_BUILTIN_INT64;
 
 } // namespace etl
 
+static_assert(sizeof(::etl::int_least8_t) >= 1);
+static_assert(sizeof(::etl::int_least16_t) >= 2);
+static_assert(sizeof(::etl::int_least32_t) >= 4);
+static_assert(sizeof(::etl::int_least64_t) >= 8);
+
 #endif // TETL_CSTDINT_INT_LEAST_T_HPP
