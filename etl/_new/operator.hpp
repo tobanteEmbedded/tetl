@@ -24,6 +24,9 @@
 #ifndef TETL_NEW_OPERATOR_HPP
 #define TETL_NEW_OPERATOR_HPP
 
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_warning/ignore_unused.hpp"
+
 // Some parts of the new header are declared in the global namespace. To avoid
 // ODR violations, we include the header <new> if it is available.
 #if __has_include(<new>)

@@ -29,7 +29,6 @@
 #include "etl/_bit/bit_cast.hpp"
 #include "etl/_bit/bit_ceil.hpp"
 #include "etl/_bit/bit_floor.hpp"
-#include "etl/_bit/bit_unsigned_int.hpp"
 #include "etl/_bit/bit_width.hpp"
 #include "etl/_bit/countl_one.hpp"
 #include "etl/_bit/countl_zero.hpp"
