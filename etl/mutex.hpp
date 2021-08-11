@@ -26,9 +26,9 @@
 
 #include "etl/version.hpp"
 
-#include "etl/chrono.hpp"
-
 #include "etl/_algorithm/swap.hpp"
+#include "etl/_chrono/duration.hpp"
+#include "etl/_chrono/time_point.hpp"
 #include "etl/_utility/exchange.hpp"
 
 namespace etl {
