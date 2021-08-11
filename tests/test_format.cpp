@@ -22,6 +22,7 @@
 // DAMAGE.
 #include "etl/format.hpp"
 
+#include "etl/string.hpp"
 #include "etl/string_view.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"

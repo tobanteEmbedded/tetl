@@ -20,15 +20,17 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#ifndef TETL_STRING_HPP
-#define TETL_STRING_HPP
-
-#include "etl/version.hpp"
+#ifndef TETL_STRING_STATIC_STRING_HPP
+#define TETL_STRING_STATIC_STRING_HPP
 
 #include "etl/_string/basic_static_string.hpp"
-#include "etl/_string/static_string.hpp"
-#include "etl/_string/stoi.hpp"
-#include "etl/_string/to_string.hpp"
 
-#endif // TETL_STRING_HPP
+namespace etl {
+
+/// Typedef for a basic_static_string using 'char'
+template <etl::size_t Capacity>
+using static_string = basic_static_string<char, Capacity>;
+
+} // namespace etl
+
+#endif // TETL_STRING_STATIC_STRING_HPP
