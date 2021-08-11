@@ -21,22 +21,30 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_HPP
-#define TETL_CONCEPTS_HPP
-
-#include "etl/version.hpp"
+#ifndef TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#define TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
 
 #include "etl/_concepts/constructible_from.hpp"
-#include "etl/_concepts/convertible_to.hpp"
-#include "etl/_concepts/copy_constructible.hpp"
-#include "etl/_concepts/default_initializable.hpp"
-#include "etl/_concepts/derived_from.hpp"
-#include "etl/_concepts/destructible.hpp"
-#include "etl/_concepts/floating_point.hpp"
-#include "etl/_concepts/integral.hpp"
-#include "etl/_concepts/move_constructible.hpp"
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_concepts/signed_integral.hpp"
-#include "etl/_concepts/unsigned_integral.hpp"
+#include "etl/_new/operator.hpp"
 
-#endif // TETL_CONCEPTS_HPP
+#if defined(__cpp_concepts)
+namespace etl {
+
+/// \brief The default_initializable concept checks whether variables of type T
+/// can be value-initialized (T() is well-formed); direct-list-initialized from
+/// an empty initializer list (T{} is well-formed); and default-initialized (T
+/// t; is well-formed). Access checking is performed as if in a context
+/// unrelated to T. Only the validity of the immediate context of the variable
+/// initialization is considered.
+// clang-format off
+template <typename T>
+concept default_initializable =
+  constructible_from<T> &&
+  requires { T {}; } &&
+  requires { ::new (static_cast<void*>(nullptr)) T; };
+// clang-format on
+
+} // namespace etl
+#endif
+
+#endif // TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP

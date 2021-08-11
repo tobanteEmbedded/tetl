@@ -21,22 +21,31 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_HPP
-#define TETL_CONCEPTS_HPP
-
-#include "etl/version.hpp"
+#ifndef TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#define TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
 
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_concepts/convertible_to.hpp"
-#include "etl/_concepts/copy_constructible.hpp"
-#include "etl/_concepts/default_initializable.hpp"
-#include "etl/_concepts/derived_from.hpp"
-#include "etl/_concepts/destructible.hpp"
-#include "etl/_concepts/floating_point.hpp"
-#include "etl/_concepts/integral.hpp"
 #include "etl/_concepts/move_constructible.hpp"
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_concepts/signed_integral.hpp"
-#include "etl/_concepts/unsigned_integral.hpp"
 
-#endif // TETL_CONCEPTS_HPP
+#if defined(__cpp_concepts)
+namespace etl {
+
+/// \brief The concept copy_constructible is satisfied if T is an lvalue
+/// reference type, or if it is a move_constructible object type where an object
+/// of that type can constructed from a (possibly const) lvalue or const rvalue
+/// of that type in both direct- and copy-initialization contexts with the usual
+/// semantics (a copy is constructed with the source unchanged).
+// clang-format off
+template <typename T>
+concept copy_constructible =
+  move_constructible<T> &&
+  constructible_from<T, T&> && convertible_to<T&, T> &&
+  constructible_from<T, const T&> && convertible_to<const T&, T> &&
+  constructible_from<T, const T> && convertible_to<const T, T>;
+// clang-format on
+
+} // namespace etl
+#endif
+
+#endif // TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP

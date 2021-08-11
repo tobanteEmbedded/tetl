@@ -21,22 +21,27 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_HPP
-#define TETL_CONCEPTS_HPP
+#ifndef TETL_CONCEPTS_CONVERTIBLE_TO_HPP
+#define TETL_CONCEPTS_CONVERTIBLE_TO_HPP
 
-#include "etl/version.hpp"
+#include "etl/_type_traits/add_rvalue_reference.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
 
-#include "etl/_concepts/constructible_from.hpp"
-#include "etl/_concepts/convertible_to.hpp"
-#include "etl/_concepts/copy_constructible.hpp"
-#include "etl/_concepts/default_initializable.hpp"
-#include "etl/_concepts/derived_from.hpp"
-#include "etl/_concepts/destructible.hpp"
-#include "etl/_concepts/floating_point.hpp"
-#include "etl/_concepts/integral.hpp"
-#include "etl/_concepts/move_constructible.hpp"
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_concepts/signed_integral.hpp"
-#include "etl/_concepts/unsigned_integral.hpp"
+#if defined(__cpp_concepts)
+namespace etl {
 
-#endif // TETL_CONCEPTS_HPP
+/// \brief The concept convertible_to<From, To> specifies that an expression of
+/// the same type and value category as those of declval<From>() can be
+/// implicitly and explicitly converted to the type To, and the two forms of
+/// conversion are equivalent.
+template <typename From, typename To>
+concept convertible_to = is_convertible_v<From, To> && requires(
+    add_rvalue_reference_t<From> (&f)())
+{
+    static_cast<To>(f());
+};
+
+} // namespace etl
+#endif
+
+#endif // TETL_CONCEPTS_CONVERTIBLE_TO_HPP

@@ -21,22 +21,21 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_HPP
-#define TETL_CONCEPTS_HPP
+#ifndef TETL_CONCEPTS_SIGNED_INTEGRAL_HPP
+#define TETL_CONCEPTS_SIGNED_INTEGRAL_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_concepts/constructible_from.hpp"
-#include "etl/_concepts/convertible_to.hpp"
-#include "etl/_concepts/copy_constructible.hpp"
-#include "etl/_concepts/default_initializable.hpp"
-#include "etl/_concepts/derived_from.hpp"
-#include "etl/_concepts/destructible.hpp"
-#include "etl/_concepts/floating_point.hpp"
 #include "etl/_concepts/integral.hpp"
-#include "etl/_concepts/move_constructible.hpp"
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_concepts/signed_integral.hpp"
-#include "etl/_concepts/unsigned_integral.hpp"
+#include "etl/_type_traits/is_signed.hpp"
 
-#endif // TETL_CONCEPTS_HPP
+#if defined(__cpp_concepts)
+namespace etl {
+
+/// \brief The concept signed_integral<T> is satisfied if and only if T is an
+/// integral type and is_signed_v<T> is true.
+template <typename T>
+concept signed_integral = integral<T> && is_signed_v<T>;
+
+} // namespace etl
+#endif
+
+#endif // TETL_CONCEPTS_SIGNED_INTEGRAL_HPP
