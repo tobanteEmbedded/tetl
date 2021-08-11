@@ -58,4 +58,18 @@
 #define TETL_FUNC_SIG __func__
 #endif
 
+// Somehow the abs macro gets included in avr-gcc builds. Not sure where it's
+// coming from.
+#ifdef abs
+#undef abs
+#endif
+
+#ifdef fabs
+#undef fabs
+#endif
+
+#ifdef fabsf
+#undef fabsf
+#endif
+
 #endif // TETL_CONFIG_PREPROCESSOR_HPP

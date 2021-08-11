@@ -25,6 +25,7 @@
 #define TETL_CHRONO_TIME_POINT_HPP
 
 #include "etl/_concepts/requires.hpp"
+#include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 
 namespace etl::chrono {
@@ -197,5 +198,17 @@ template <typename Clock, typename Dur1, typename Dur2>
 }
 
 } // namespace etl::chrono
+
+namespace etl {
+
+/// \brief Exposes the type named type, which is the common type of two
+/// chrono::time_points.
+template <typename Clock, typename Duration1, typename Duration2>
+struct common_type<chrono::time_point<Clock, Duration1>,
+    chrono::time_point<Clock, Duration2>> {
+    using type = chrono::time_point<Clock, common_type_t<Duration1, Duration2>>;
+};
+
+} // namespace etl
 
 #endif // TETL_CHRONO_TIME_POINT_HPP

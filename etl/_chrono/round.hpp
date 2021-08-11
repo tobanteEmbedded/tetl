@@ -25,6 +25,7 @@
 #define TETL_CHRONO_ROUND_HPP
 
 #include "etl/_chrono/duration_cast.hpp"
+#include "etl/_chrono/time_point_cast.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
 
@@ -42,6 +43,14 @@ template <typename To, typename Rep, typename Period,
     if (lowDiff < highDiff) { return low; }
     if (lowDiff > highDiff) { return high; }
     return low.count() & 1 ? high : low;
+}
+
+template <typename To, typename Clock, typename Duration,
+    TETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)
+    -> time_point<Clock, To>
+{
+    return time_point<Clock, To> { round<To>(tp.time_since_epoch()) };
 }
 
 } // namespace etl::chrono

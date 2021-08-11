@@ -21,30 +21,24 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CHRONO_ABS_HPP
-#define TETL_CHRONO_ABS_HPP
+#ifndef TETL_CHRONO_TIME_POINT_CAST_HPP
+#define TETL_CHRONO_TIME_POINT_CAST_HPP
 
 #include "etl/_chrono/duration_cast.hpp"
-#include "etl/_chrono/time_point_cast.hpp"
+#include "etl/_chrono/time_point.hpp"
 #include "etl/_concepts/requires.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/is_arithmetic.hpp"
 
 namespace etl::chrono {
 
-/// \brief Returns the absolute value of the duration d. Specifically, if d >=
-/// d.zero(), return d, otherwise return -d. The function does not participate
-/// in the overload resolution unless etl::numeric_limits<Rep>::is_signed is
-/// true.
-template <typename Rep, typename Period,
-    TETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
-constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
-    -> duration<Rep, Period>
+template <typename ToDuration, typename Clock, typename Duration,
+    TETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
+[[nodiscard]] constexpr auto time_point_cast(
+    time_point<Clock, Duration> const& tp) -> ToDuration
 {
-    return d < duration<Rep, Period>::zero() ? duration<Rep, Period>::zero() - d
-                                             : d;
+    using time_point_t = time_point<Clock, ToDuration>;
+    return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));
 }
 
 } // namespace etl::chrono
 
-#endif // TETL_CHRONO_ABS_HPP
+#endif // TETL_CHRONO_TIME_POINT_CAST_HPP
