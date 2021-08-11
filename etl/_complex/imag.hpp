@@ -21,14 +21,28 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_COMPLEX_HPP
-#define TETL_COMPLEX_HPP
-
-#include "etl/version.hpp"
+#ifndef TETL_COMPLEX_IMAG_HPP
+#define TETL_COMPLEX_IMAG_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/imag.hpp"
-#include "etl/_complex/literals.hpp"
-#include "etl/_complex/real.hpp"
 
-#endif // TETL_COMPLEX_HPP
+namespace etl {
+
+template <typename T>
+[[nodiscard]] constexpr auto imag(complex<T> const& z) -> T
+{
+    return z.imag();
+}
+
+template <typename DoubleOrInteger>
+[[nodiscard]] constexpr auto imag(DoubleOrInteger z) -> double
+{
+    return static_cast<double>(z);
+}
+
+[[nodiscard]] constexpr auto imag(float z) -> float { return z; }
+[[nodiscard]] constexpr auto imag(long double z) -> long double { return z; }
+
+} // namespace etl
+
+#endif // TETL_COMPLEX_IMAG_HPP
