@@ -26,14 +26,20 @@
 
 #include "etl/version.hpp"
 
-#include "etl/functional.hpp" // for less
-#include "etl/iterator.hpp"   // for reverse_iterator
-#include "etl/utility.hpp"    // for forward, move
-#include "etl/vector.hpp"     // for static_vector
-
+#include "etl/_algorithm/lexicographical_compare.hpp"
 #include "etl/_algorithm/lower_bound.hpp"
 #include "etl/_algorithm/rotate.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_functional/less.hpp"
+#include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/data.hpp"
+#include "etl/_iterator/end.hpp"
+#include "etl/_iterator/rbegin.hpp"
+#include "etl/_iterator/rend.hpp"
+#include "etl/_iterator/reverse_iterator.hpp"
+#include "etl/_iterator/size.hpp"
+
+#include "etl/vector.hpp" // for static_vector
 
 namespace etl {
 /// \brief static_set is an associative container that contains a sorted set

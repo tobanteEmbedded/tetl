@@ -26,9 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/array.hpp"
-#include "etl/functional.hpp"
-
 #include "etl/_algorithm/equal_range.hpp"
 #include "etl/_algorithm/find.hpp"
 #include "etl/_algorithm/generate_n.hpp"
@@ -39,6 +36,8 @@
 #include "etl/_assert/macro.hpp"
 #include "etl/_container/index.hpp"
 #include "etl/_container/smallest_size_t.hpp"
+#include "etl/_functional/is_transparent.hpp"
+#include "etl/_new/operator.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
@@ -51,6 +50,8 @@
 #include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_type_traits/is_pointer.hpp"
 #include "etl/_type_traits/is_trivial.hpp"
+
+#include "etl/array.hpp"
 
 /// \file This header is part of the containers library.
 

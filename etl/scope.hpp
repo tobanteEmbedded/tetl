@@ -26,9 +26,9 @@
 
 #include "etl/version.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
+#include "etl/_type_traits/decay.hpp"
+#include "etl/_utility/forward.hpp"
+#include "etl/_utility/move.hpp"
 
 namespace etl {
 namespace detail {

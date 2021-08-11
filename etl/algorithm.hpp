@@ -26,8 +26,6 @@
 
 #include "etl/version.hpp"
 
-#include "etl/_assert/macro.hpp"
-
 #include "etl/_algorithm/adjacent_find.hpp"
 #include "etl/_algorithm/all_of.hpp"
 #include "etl/_algorithm/any_of.hpp"

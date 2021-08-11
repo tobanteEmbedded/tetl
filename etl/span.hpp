@@ -26,10 +26,18 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/data.hpp"
+#include "etl/_iterator/end.hpp"
+#include "etl/_iterator/rbegin.hpp"
+#include "etl/_iterator/rend.hpp"
+#include "etl/_iterator/size.hpp"
 #include "etl/_limits/numeric_limits.hpp"
+#include "etl/_type_traits/declval.hpp"
+#include "etl/_type_traits/remove_pointer.hpp"
 
 #include "etl/array.hpp"
-#include "etl/type_traits.hpp"
 
 namespace etl {
 /// \brief etl::dynamic_extent is a constant of type etl::size_t that is used
@@ -211,13 +219,15 @@ template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 // Deduction Guides. From Container.
-template <typename Container, typename Element = etl::remove_pointer_t<decltype(
-                                  etl::declval<Container&>().data())>>
+template <typename Container,
+    typename Element
+    = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
-template <typename Container, typename Element = etl::remove_pointer_t<decltype(
-                                  etl::declval<Container const&>().data())>>
+template <typename Container,
+    typename Element
+    = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 } // namespace etl
 

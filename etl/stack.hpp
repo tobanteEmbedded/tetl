@@ -28,7 +28,11 @@
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"
+#include "etl/_iterator/rbegin.hpp"
+#include "etl/_iterator/rend.hpp"
+#include "etl/_iterator/size.hpp"
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_type_traits/is_swappable.hpp"
