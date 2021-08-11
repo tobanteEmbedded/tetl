@@ -21,16 +21,16 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NEW_HPP
-#define TETL_NEW_HPP
+#ifndef TETL_NEW_NEW_HANDLER_HPP
+#define TETL_NEW_NEW_HANDLER_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/_new/align_val_t.hpp"
-#include "etl/_new/destroying_delete.hpp"
-#include "etl/_new/hardware_interference_size.hpp"
-#include "etl/_new/new_handler.hpp"
-#include "etl/_new/nothrow.hpp"
-#include "etl/_new/operator.hpp"
+/// \brief etl::new_handler is the function pointer type (pointer to function
+/// that takes no arguments and returns void), which is used by the functions
+/// etl::set_new_handler and etl::get_new_handler
+using new_handler = void (*)();
 
-#endif // TETL_NEW_HPP
+} // namespace etl
+
+#endif // TETL_NEW_NEW_HANDLER_HPP

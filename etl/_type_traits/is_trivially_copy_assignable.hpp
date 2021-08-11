@@ -26,7 +26,7 @@
 
 #include "etl/_type_traits/add_lvalue_reference.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_trivially_copy_assignable.hpp"
+#include "etl/_type_traits/is_trivially_assignable.hpp"
 
 namespace etl {
 

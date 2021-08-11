@@ -21,16 +21,22 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NEW_HPP
-#define TETL_NEW_HPP
+#ifndef TETL_NEW_NOTHROW_HPP
+#define TETL_NEW_NOTHROW_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/_new/align_val_t.hpp"
-#include "etl/_new/destroying_delete.hpp"
-#include "etl/_new/hardware_interference_size.hpp"
-#include "etl/_new/new_handler.hpp"
-#include "etl/_new/nothrow.hpp"
-#include "etl/_new/operator.hpp"
+/// \brief etl::nothrow_t is an empty class type used to disambiguate the
+/// overloads of throwing and non-throwing allocation functions.
+struct nothrow_t {
+    explicit nothrow_t() = default;
+};
 
-#endif // TETL_NEW_HPP
+/// \brief etl::nothrow is a constant of type etl::nothrow_t used to
+/// disambiguate the overloads of throwing and non-throwing allocation
+/// functions.
+inline constexpr auto nothrow = etl::nothrow_t {};
+
+} // namespace etl
+
+#endif // TETL_NEW_NOTHROW_HPP

@@ -21,16 +21,36 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NEW_HPP
-#define TETL_NEW_HPP
+#ifndef TETL_NEW_OPERATOR_HPP
+#define TETL_NEW_OPERATOR_HPP
 
-#include "etl/version.hpp"
+// Some parts of the new header are declared in the global namespace. To avoid
+// ODR violations, we include the header <new> if it is available.
+#if __has_include(<new>)
+#include <new>
+#else
 
-#include "etl/_new/align_val_t.hpp"
-#include "etl/_new/destroying_delete.hpp"
-#include "etl/_new/hardware_interference_size.hpp"
-#include "etl/_new/new_handler.hpp"
-#include "etl/_new/nothrow.hpp"
-#include "etl/_new/operator.hpp"
+/// \brief Called by the standard single-object placement new expression. The
+/// standard library implementation performs no action and returns ptr
+/// unmodified. The behavior is undefined if this function is called through a
+/// placement new expression and ptr is a null pointer.
+[[nodiscard]] auto operator new(etl::size_t count, void* ptr) noexcept -> void*
+{
+    etl::ignore_unused(count);
+    return ptr;
+}
 
-#endif // TETL_NEW_HPP
+/// \brief Called by the standard array form placement new expression. The
+/// standard library implementation performs no action and returns ptr
+/// unmodified. The behavior is undefined if this function is called through a
+/// placement new expression and ptr is a null pointer.
+[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept
+    -> void*
+{
+    etl::ignore_unused(count);
+    return ptr;
+}
+
+#endif
+
+#endif // TETL_NEW_OPERATOR_HPP

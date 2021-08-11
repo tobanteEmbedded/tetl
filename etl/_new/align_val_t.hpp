@@ -21,16 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NEW_HPP
-#define TETL_NEW_HPP
+#ifndef TETL_NEW_ALIGN_VAL_T_HPP
+#define TETL_NEW_ALIGN_VAL_T_HPP
 
-#include "etl/version.hpp"
+#include "etl/_cstddef/size_t.hpp"
 
-#include "etl/_new/align_val_t.hpp"
-#include "etl/_new/destroying_delete.hpp"
-#include "etl/_new/hardware_interference_size.hpp"
-#include "etl/_new/new_handler.hpp"
-#include "etl/_new/nothrow.hpp"
-#include "etl/_new/operator.hpp"
+namespace etl {
 
-#endif // TETL_NEW_HPP
+/// \brief Both new-expression and delete-expression, when used with objects
+/// whose alignment requirement is greater than the default, pass that alignment
+/// requirement as an argument of type align_val_t to the selected
+/// allocation/deallocation function.
+enum struct align_val_t : etl::size_t {};
+
+} // namespace etl
+
+#endif // TETL_NEW_ALIGN_VAL_T_HPP

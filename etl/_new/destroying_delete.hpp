@@ -21,16 +21,21 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NEW_HPP
-#define TETL_NEW_HPP
+#ifndef TETL_NEW_DESTROY_DELETE_HPP
+#define TETL_NEW_DESTROY_DELETE_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/_new/align_val_t.hpp"
-#include "etl/_new/destroying_delete.hpp"
-#include "etl/_new/hardware_interference_size.hpp"
-#include "etl/_new/new_handler.hpp"
-#include "etl/_new/nothrow.hpp"
-#include "etl/_new/operator.hpp"
+/// \brief Tag type used to identify the destroying delete form of operator
+/// delete.
+struct destroying_delete_t {
+    explicit destroying_delete_t() = default;
+};
 
-#endif // TETL_NEW_HPP
+/// \brief Tag type used to identify the destroying delete form of operator
+/// delete.
+inline constexpr auto destroying_delete = destroying_delete_t {};
+
+} // namespace etl
+
+#endif // TETL_NEW_DESTROY_DELETE_HPP
