@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
-#define TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#ifndef TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP
+#define TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP
 
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_new/operator.hpp"
@@ -47,4 +47,4 @@ concept default_initializable =
 } // namespace etl
 #endif
 
-#endif // TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#endif // TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
-#define TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#ifndef TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP
+#define TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP
 
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_concepts/convertible_to.hpp"
@@ -42,4 +42,4 @@ concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 } // namespace etl
 #endif
 
-#endif // TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP
+#endif // TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP

@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONCEPTS_CONSTRUCTIBLE_TO_HPP
-#define TETL_CONCEPTS_CONSTRUCTIBLE_TO_HPP
+#ifndef TETL_CONCEPTS_CONSTRUCTIBLE_FROM_HPP
+#define TETL_CONCEPTS_CONSTRUCTIBLE_FROM_HPP
 
 #include "etl/_concepts/destructible.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
@@ -38,4 +38,4 @@ concept constructible_from = destructible<T> && is_constructible_v<T, Args...>;
 } // namespace etl
 #endif
 
-#endif // TETL_CONCEPTS_CONSTRUCTIBLE_TO_HPP
+#endif // TETL_CONCEPTS_CONSTRUCTIBLE_FROM_HPP

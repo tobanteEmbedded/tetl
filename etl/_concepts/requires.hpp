@@ -21,8 +21,8 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPE_TRAITS_REQUIRE_MACRO_HPP
-#define TETL_TYPE_TRAITS_REQUIRE_MACRO_HPP
+#ifndef TETL_CONCEPTS_REQUIRES_HPP
+#define TETL_CONCEPTS_REQUIRES_HPP
 
 #include "etl/_config/preprocessor.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -44,4 +44,4 @@
                                || (__VA_ARGS__),                               \
             int>                                            = 0>
 
-#endif // TETL_TYPE_TRAITS_REQUIRE_MACRO_HPP
+#endif // TETL_CONCEPTS_REQUIRES_HPP
