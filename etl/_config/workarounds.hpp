@@ -21,41 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CONFIG_PREPROCESSOR_HPP
-#define TETL_CONFIG_PREPROCESSOR_HPP
+#ifndef TETL_CONFIG_WORKAROUNDS_HPP
+#define TETL_CONFIG_WORKAROUNDS_HPP
 
-#ifndef __has_feature
-#define __has_feature(x) 0
+#if defined(__AVR__)
+// Somewhere inside the compiler provided source abs, fabs get defined.
+// undef didn't work, so I have disabled some functions for avr builds.
+#define TETL_WORKAROUND_AVR_GCC_ABS_MACROS 1
 #endif
 
-#ifndef __has_extension
-#define __has_extension(x) 0
-#endif
-
-#ifndef __has_attribute
-#define __has_attribute(x) 0
-#endif
-
-#ifndef __has_builtin
-#define __has_builtin(x) 0
-#endif
-
-#define TETL_STRINGIFY_IMPL(str) #str
-#define TETL_STRINGIFY(str) TETL_STRINGIFY_IMPL(str)
-
-#define TETL_CONCAT_IMPL(s1, s2) s1##s2
-#define TETL_CONCAT(s1, s2) TETL_CONCAT_IMPL(s1, s2)
-
-#ifdef __COUNTER__
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __COUNTER__)
-#else
-#define TETL_ANONYMOUS_VAR(name) TETL_CONCAT(name, __LINE__)
-#endif
-
-#if defined(__GNUC__)
-#define TETL_FUNC_SIG __PRETTY_FUNCTION__
-#else
-#define TETL_FUNC_SIG __func__
-#endif
-
-#endif // TETL_CONFIG_PREPROCESSOR_HPP
+#endif // TETL_CONFIG_WORKAROUNDS_HPP

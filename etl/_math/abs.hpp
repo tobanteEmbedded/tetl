@@ -86,10 +86,12 @@ template <typename T>
     return detail::abs_impl<float>(n);
 }
 
+#if not defined(TETL_WORKAROUND_AVR_GCC_ABS_MACROS)
 [[nodiscard]] constexpr auto fabsf(float n) noexcept -> float
 {
     return detail::abs_impl<float>(n);
 }
+#endif
 
 [[nodiscard]] constexpr auto fabs(double n) noexcept -> double
 {

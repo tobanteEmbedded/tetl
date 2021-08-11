@@ -31,6 +31,7 @@
 #include "etl/_config/builtin_types.hpp"
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_config/attributes.hpp"
+#include "etl/_config/workarounds.hpp"
 // clang-format on
 
 #if (__has_include(<version>))
