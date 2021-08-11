@@ -1,3 +1,4 @@
+
 // Copyright (c) Tobias Hienzsch. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -20,14 +21,27 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#ifndef TETL_STRING_VIEW_LITERAL_HPP
+#define TETL_STRING_VIEW_LITERAL_HPP
 
-#ifndef TETL_STRING_VIEW_HPP
-#define TETL_STRING_VIEW_HPP
-
-#include "etl/version.hpp"
-
-#include "etl/_string_view/basic_string_view.hpp"
-#include "etl/_string_view/literal.hpp"
 #include "etl/_string_view/string_view.hpp"
 
-#endif // TETL_STRING_VIEW_HPP
+namespace etl {
+
+inline namespace literals {
+inline namespace string_view_literals {
+
+/// \brief Forms a string view of a character literal. Returns
+/// etl::string_view{str, len}
+constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept
+    -> etl::string_view
+{
+    return { str, len };
+}
+
+} // namespace string_view_literals
+
+} // namespace literals
+} // namespace etl
+
+#endif // TETL_STRING_VIEW_LITERAL_HPP

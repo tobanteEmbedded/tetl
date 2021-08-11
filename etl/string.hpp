@@ -37,6 +37,7 @@
 #include "etl/_iterator/rbegin.hpp"
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/size.hpp"
+#include "etl/_string_view/string_view.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/conversion.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
@@ -44,7 +45,6 @@
 #include "etl/_warning/ignore_unused.hpp"
 
 #include "etl/cstring.hpp"
-#include "etl/string_view.hpp"
 
 namespace etl {
 /// \brief basic_static_string class with fixed size capacity.

@@ -20,14 +20,16 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-
-#ifndef TETL_STRING_VIEW_HPP
-#define TETL_STRING_VIEW_HPP
-
-#include "etl/version.hpp"
+#ifndef TETL_STRING_VIEW_STRING_VIEW_HPP
+#define TETL_STRING_VIEW_STRING_VIEW_HPP
 
 #include "etl/_string_view/basic_string_view.hpp"
-#include "etl/_string_view/literal.hpp"
-#include "etl/_string_view/string_view.hpp"
 
-#endif // TETL_STRING_VIEW_HPP
+namespace etl {
+
+/// \brief Typedefs for common character type
+using string_view = basic_string_view<char, etl::char_traits<char>>;
+
+} // namespace etl
+
+#endif // TETL_STRING_VIEW_STRING_VIEW_HPP

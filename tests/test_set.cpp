@@ -26,6 +26,7 @@
 #include "etl/algorithm.hpp"
 #include "etl/cstdint.hpp"
 #include "etl/string.hpp"
+#include "etl/string_view.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
@@ -395,7 +396,7 @@ TEMPLATE_TEST_CASE("set/static_set: lower_bound/upper_bound", "[set]",
 
 TEST_CASE("set/static_set: lower_bound/upper_bound(transparent)", "[set]")
 {
-    using namespace etl::literals;
+    using namespace etl::literals::string_view_literals;
     using string_t = etl::static_string<32>;
 
     SECTION("full")

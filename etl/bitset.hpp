@@ -31,8 +31,7 @@
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
-
-#include "etl/string_view.hpp"
+#include "etl/_string_view/string_view.hpp"
 
 namespace etl {
 /// \brief The class template bitset represents a fixed-size sequence of N bits.
