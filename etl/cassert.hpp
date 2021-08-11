@@ -26,14 +26,14 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_assert/macro.hpp"
+
 #if __has_include(<assert.h>)
 #include <assert.h>
 #else
 #ifndef assert
-#define assert(x)
+#define assert(x) TETL_ASSERT(x)
 #endif
 #endif
-
-#include "etl/_assert/macro.hpp"
 
 #endif // TETL_CASSERT_HPP
