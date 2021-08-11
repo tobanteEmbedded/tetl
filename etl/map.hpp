@@ -29,12 +29,16 @@
 #include "etl/_algorithm/find_if.hpp"
 #include "etl/_algorithm/for_each.hpp"
 #include "etl/_assert/macro.hpp"
+#include "etl/_cstddef/ptrdiff_t.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_functional/less.hpp"
+#include "etl/_new/operator.hpp"
+#include "etl/_type_traits/is_constructible.hpp"
+#include "etl/_utility/forward.hpp"
+#include "etl/_utility/move.hpp"
+#include "etl/_utility/pair.hpp"
 
-#include "etl/cstddef.hpp"
-#include "etl/functional.hpp"
 #include "etl/set.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
 
 namespace etl {
 /// \brief Interface base struct for etl::map. Use this struct for function

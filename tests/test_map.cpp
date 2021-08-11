@@ -23,6 +23,7 @@
 #include "etl/map.hpp"
 
 #include "etl/cstdint.hpp"
+#include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
