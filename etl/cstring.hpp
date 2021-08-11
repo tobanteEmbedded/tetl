@@ -27,9 +27,8 @@
 #include "etl/version.hpp"
 
 #include "etl/_assert/macro.hpp"
+#include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
-
-#include "etl/cstddef.hpp"
 
 namespace etl {
 /// \brief Copies the character string pointed to by src, including the null
