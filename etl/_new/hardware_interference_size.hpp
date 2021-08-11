@@ -24,6 +24,8 @@
 #ifndef TETL_NEW_HARDWARE_INTERFERENCE_SIZE_HPP
 #define TETL_NEW_HARDWARE_INTERFERENCE_SIZE_HPP
 
+#include "etl/_cstddef/max_align_t.hpp"
+
 /// Cache line sizes for ARM values are not strictly correct since cache
 /// line sizes depend on implementations, not architectures.  There are even
 /// implementations with cache line sizes configurable at boot time.
