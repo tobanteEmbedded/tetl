@@ -20,28 +20,38 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#ifndef TETL_NUMERIC_ACCUMULATE_HPP
+#define TETL_NUMERIC_ACCUMULATE_HPP
 
-#ifndef TETL_NUMERIC_HPP
-#define TETL_NUMERIC_HPP
+#include "etl/_utility/move.hpp"
 
-#include "etl/version.hpp"
+namespace etl {
 
-// #include "etl/_limits/numeric_limits.hpp"
+/// \brief Computes the sum of the given value init and the elements in the
+/// range `[first, last)`.
+/// 1. Uses `operator+` to sum up the elements.
+/// 2. Uses the BinaryOperation to sum up the elements.
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/accumulate](https://en.cppreference.com/w/cpp/algorithm/accumulate)
+/// \group accumulate
+/// \module Algorithm
+template <typename InputIt, typename Type>
+[[nodiscard]] constexpr auto accumulate(
+    InputIt first, InputIt last, Type init) noexcept -> Type
+{
+    for (; first != last; ++first) { init = move(init) + *first; }
+    return init;
+}
 
-// #include "etl/cstddef.hpp"
-// #include "etl/functional.hpp"
-// #include "etl/type_traits.hpp"
-// #include "etl/utility.hpp"
+/// \group accumulate
+template <typename InputIt, typename Type, typename BinaryOperation>
+[[nodiscard]] constexpr auto accumulate(
+    InputIt first, InputIt last, Type init, BinaryOperation op) noexcept -> Type
+{
+    for (; first != last; ++first) { init = op(move(init), *first); }
+    return init;
+}
 
-#include "etl/_numeric/abs.hpp"
-#include "etl/_numeric/accumulate.hpp"
-#include "etl/_numeric/adjacent_difference.hpp"
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/inner_product.hpp"
-#include "etl/_numeric/iota.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_numeric/midpoint.hpp"
-#include "etl/_numeric/partial_sum.hpp"
-#include "etl/_numeric/reduce.hpp"
+} // namespace etl
 
-#endif // TETL_NUMERIC_HPP
+#endif // TETL_NUMERIC_ACCUMULATE_HPP

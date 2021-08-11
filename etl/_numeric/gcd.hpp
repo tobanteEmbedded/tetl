@@ -20,28 +20,24 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#ifndef TETL_NUMERIC_GCD_HPP
+#define TETL_NUMERIC_GCD_HPP
 
-#ifndef TETL_NUMERIC_HPP
-#define TETL_NUMERIC_HPP
+#include "etl/_type_traits/common_type.hpp"
 
-#include "etl/version.hpp"
+namespace etl {
 
-// #include "etl/_limits/numeric_limits.hpp"
+/// \brief Computes the greatest common divisor of the integers m and n.
+///
+/// \returns If both m and n are zero, returns zero. Otherwise, returns the
+/// greatest common divisor of |m| and |n|.
+template <typename M, typename N>
+[[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
+{
+    if (n == 0) { return m; }
+    return gcd<M, N>(n, m % n);
+}
 
-// #include "etl/cstddef.hpp"
-// #include "etl/functional.hpp"
-// #include "etl/type_traits.hpp"
-// #include "etl/utility.hpp"
+} // namespace etl
 
-#include "etl/_numeric/abs.hpp"
-#include "etl/_numeric/accumulate.hpp"
-#include "etl/_numeric/adjacent_difference.hpp"
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/inner_product.hpp"
-#include "etl/_numeric/iota.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_numeric/midpoint.hpp"
-#include "etl/_numeric/partial_sum.hpp"
-#include "etl/_numeric/reduce.hpp"
-
-#endif // TETL_NUMERIC_HPP
+#endif // TETL_NUMERIC_GCD_HPP

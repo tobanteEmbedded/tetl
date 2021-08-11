@@ -20,28 +20,31 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#ifndef TETL_NUMERIC_LCM_HPP
+#define TETL_NUMERIC_LCM_HPP
 
-#ifndef TETL_NUMERIC_HPP
-#define TETL_NUMERIC_HPP
-
-#include "etl/version.hpp"
-
-// #include "etl/_limits/numeric_limits.hpp"
-
-// #include "etl/cstddef.hpp"
-// #include "etl/functional.hpp"
-// #include "etl/type_traits.hpp"
-// #include "etl/utility.hpp"
-
-#include "etl/_numeric/abs.hpp"
-#include "etl/_numeric/accumulate.hpp"
-#include "etl/_numeric/adjacent_difference.hpp"
+#include "etl/_concepts/requires.hpp"
 #include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/inner_product.hpp"
-#include "etl/_numeric/iota.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_numeric/midpoint.hpp"
-#include "etl/_numeric/partial_sum.hpp"
-#include "etl/_numeric/reduce.hpp"
+#include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
-#endif // TETL_NUMERIC_HPP
+namespace etl {
+
+/// \brief Computes the least common multiple of the integers m and n.
+///
+/// \returns If either m or n is zero, returns zero. Otherwise, returns the
+/// least common multiple of |m| and |n|.
+template <typename M, typename N,
+    TETL_REQUIRES_((
+        is_integral_v<
+            M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
+[[nodiscard]] constexpr auto lcm(M m, N n) ->
+
+    etl::common_type_t<M, N>
+{
+    return (m * n) / gcd(m, n);
+}
+} // namespace etl
+
+#endif // TETL_NUMERIC_LCM_HPP

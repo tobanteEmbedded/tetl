@@ -30,6 +30,7 @@
 
 #include "etl/_format/argument.hpp"
 #include "etl/_format/context.hpp"
+#include "etl/_type_traits/remove_cvref.hpp"
 
 namespace etl {
 template <typename It>

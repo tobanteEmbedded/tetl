@@ -29,9 +29,8 @@
 #include "etl/_cstdint/intmax_t.hpp"
 #include "etl/_math/abs.hpp"
 #include "etl/_math/sign.hpp"
+#include "etl/_numeric/gcd.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
-
-#include "etl/numeric.hpp" // for gcd
 
 namespace etl {
 

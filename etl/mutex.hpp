@@ -28,6 +28,9 @@
 
 #include "etl/chrono.hpp"
 
+#include "etl/_algorithm/swap.hpp"
+#include "etl/_utility/exchange.hpp"
+
 namespace etl {
 /// \brief Empty struct tag types used to specify locking strategy for
 /// etl::lock_guard, etl::scoped_lock, etl::unique_lock, and etl::shared_lock.

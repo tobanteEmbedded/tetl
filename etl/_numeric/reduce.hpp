@@ -20,28 +20,45 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#ifndef TETL_NUMERIC_REDUCE_HPP
+#define TETL_NUMERIC_REDUCE_HPP
 
-#ifndef TETL_NUMERIC_HPP
-#define TETL_NUMERIC_HPP
-
-#include "etl/version.hpp"
-
-// #include "etl/_limits/numeric_limits.hpp"
-
-// #include "etl/cstddef.hpp"
-// #include "etl/functional.hpp"
-// #include "etl/type_traits.hpp"
-// #include "etl/utility.hpp"
-
-#include "etl/_numeric/abs.hpp"
+#include "etl/_functional/plus.hpp"
+#include "etl/_iterator/iterator_traits.hpp"
 #include "etl/_numeric/accumulate.hpp"
-#include "etl/_numeric/adjacent_difference.hpp"
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/inner_product.hpp"
-#include "etl/_numeric/iota.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_numeric/midpoint.hpp"
-#include "etl/_numeric/partial_sum.hpp"
-#include "etl/_numeric/reduce.hpp"
+#include "etl/_utility/move.hpp"
 
-#endif // TETL_NUMERIC_HPP
+namespace etl {
+
+/// \brief Similar to etl::accumulate.
+/// \notes
+/// [cppreference.com/w/cpp/algorithm/reduce](https://en.cppreference.com/w/cpp/algorithm/reduce)
+/// \group reduce
+/// \module Algorithm
+template <typename InputIter, typename T, typename BinaryOp>
+[[nodiscard]] constexpr auto reduce(
+    InputIter first, InputIter last, T init, BinaryOp op) -> T
+{
+    return accumulate(first, last, init, op);
+}
+
+/// \group reduce
+template <typename InputIter, typename T>
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init)
+    -> T
+{
+    return reduce(first, last, init, etl::plus<>());
+}
+
+/// \group reduce
+template <typename InputIter>
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last) ->
+    typename etl::iterator_traits<InputIter>::value_type
+{
+    auto init = typename etl::iterator_traits<InputIter>::value_type {};
+    return reduce(first, last, init);
+}
+
+} // namespace etl
+
+#endif // TETL_NUMERIC_REDUCE_HPP
