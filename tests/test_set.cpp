@@ -26,6 +26,7 @@
 #include "etl/algorithm.hpp"
 #include "etl/cstdint.hpp"
 #include "etl/string.hpp"
+#include "etl/type_traits.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
 

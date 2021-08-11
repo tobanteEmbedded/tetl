@@ -27,9 +27,11 @@
 #include "etl/version.hpp"
 
 #include "etl/ratio.hpp"
-#include "etl/type_traits.hpp"
 
 #include "etl/_concepts/requires.hpp"
+#include "etl/_limits/numeric_limits.hpp"
+#include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 
 // Somehow the abs macro gets included in avr-gcc builds. Not sure where it's
 // coming from.

@@ -26,15 +26,21 @@
 
 #include "etl/version.hpp"
 
-#include "etl/_assert/macro.hpp"
-
-#include "etl/cstddef.hpp"
-#include "etl/iterator.hpp"
-#include "etl/type_traits.hpp"
-
 #include "etl/_algorithm/equal.hpp"
 #include "etl/_algorithm/lexicographical_compare.hpp"
+#include "etl/_assert/macro.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_iterator/begin.hpp"
+#include "etl/_iterator/data.hpp"
+#include "etl/_iterator/end.hpp"
+#include "etl/_iterator/rbegin.hpp"
+#include "etl/_iterator/rend.hpp"
+#include "etl/_iterator/reverse_iterator.hpp"
+#include "etl/_iterator/size.hpp"
 #include "etl/_tuple/tuple_size.hpp"
+#include "etl/_type_traits/index_sequence.hpp"
+#include "etl/_type_traits/is_nothrow_swappable.hpp"
+#include "etl/_type_traits/remove_cv.hpp"
 
 /// \file This header is part of the containers library.
 
