@@ -24,6 +24,7 @@
 #include "etl/experimental/strong_type/strong_type.hpp"
 
 #include "etl/cstdint.hpp"
+#include "etl/type_traits.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
 

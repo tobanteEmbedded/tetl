@@ -28,6 +28,7 @@
 
 #include "etl/array.hpp"
 #include "etl/cstddef.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/source_location.hpp"
 #include "etl/string_view.hpp"
 

@@ -27,10 +27,11 @@
 #include "etl/version.hpp"
 
 #include "etl/_algorithm/min.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_cstdint/uint_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 
 #include "etl/array.hpp"
-#include "etl/cstddef.hpp"
 #include "etl/string_view.hpp"
 
 namespace etl {
@@ -40,7 +41,7 @@ namespace etl {
 /// \todo Converted to and from strings and integers. Add operators & more docs.
 /// \todo Add tests for sizes that are not a power of two. Broken at the moment.
 /// \todo What if position index is out of bounds? Return nullptr?
-template <size_t N>
+template <etl::size_t N>
 struct bitset {
     /// \brief The primary use of etl::bitset::reference is to provide an
     /// l-value that can be returned from operator[].

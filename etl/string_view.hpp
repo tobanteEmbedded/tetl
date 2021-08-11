@@ -33,13 +33,13 @@
 #include "etl/_assert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_iterator/next.hpp"
+#include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
+#include "etl/_type_traits/decay.hpp"
 
-#include "etl/cstddef.hpp"
 #include "etl/cstring.hpp"
-#include "etl/iterator.hpp"
-#include "etl/memory.hpp"
 
 namespace etl {
 /// \brief The class template basic_string_view describes an object that can
