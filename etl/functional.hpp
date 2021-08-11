@@ -49,7 +49,6 @@
 #include "etl/_functional/not_equal_to.hpp"
 #include "etl/_functional/plus.hpp"
 #include "etl/_functional/reference_wrapper.hpp"
-
-#include "etl/new.hpp"
+#include "etl/_new/operator.hpp"
 
 #endif // TETL_FUNCTIONAL_HPP

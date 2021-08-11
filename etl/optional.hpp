@@ -55,7 +55,7 @@
 #include "etl/_utility/in_place.hpp"
 #include "etl/_utility/move.hpp"
 
-#include "etl/new.hpp" // for operator new
+#include "etl/_new/operator.hpp"
 
 namespace etl {
 /// \brief etl::nullopt_t is an empty class type used to indicate optional type
