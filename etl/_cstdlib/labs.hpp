@@ -21,27 +21,22 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_LABS_HPP
+#define TETL_CSTDLIB_LABS_HPP
 
-#include "etl/version.hpp"
+#include "etl/_math/abs.hpp"
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+namespace etl {
 
-#endif // TETL_CSTDLIB_HPP
+/// \brief Computes the absolute value of an integer number. The behavior is
+/// undefined if the result cannot be represented by the return type. If abs
+/// is called with an unsigned integral argument that cannot be converted to int
+/// by integral promotion, the program is ill-formed.
+[[nodiscard]] constexpr auto labs(long n) noexcept -> long
+{
+    return detail::abs_impl<long>(n);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_LABS_HPP

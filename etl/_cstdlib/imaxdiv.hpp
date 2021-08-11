@@ -21,27 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_IMAXDIV_HPP
+#define TETL_CSTDLIB_IMAXDIV_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
 
-#endif // TETL_CSTDLIB_HPP
+namespace etl {
+
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
+struct imaxdiv_t {
+    intmax_t quot;
+    intmax_t rem;
+};
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_IMAXDIV_HPP

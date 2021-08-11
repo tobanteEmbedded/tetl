@@ -21,27 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_EXIT_HPP
+#define TETL_CSTDLIB_EXIT_HPP
 
-#include "etl/version.hpp"
+#if not defined(EXIT_SUCCESS)
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+/// \brief Successful execution of a program.
+#define EXIT_SUCCESS 0
+#endif
 
-#endif // TETL_CSTDLIB_HPP
+#if not defined(EXIT_FAILURE)
+
+/// \brief Unsuccessful execution of a program.
+#define EXIT_FAILURE 1
+#endif
+
+#endif // TETL_CSTDLIB_EXIT_HPP

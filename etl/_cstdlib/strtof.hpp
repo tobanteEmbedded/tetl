@@ -21,27 +21,26 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_STRTOF_HPP
+#define TETL_CSTDLIB_STRTOF_HPP
 
-#include "etl/version.hpp"
+#include "etl/_strings/conversion.hpp"
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+namespace etl {
 
-#endif // TETL_CSTDLIB_HPP
+/// \brief Interprets a floating point value in a byte string pointed to by str.
+/// \param str Pointer to the null-terminated byte string to be interpreted.
+/// \param last Pointer to a pointer to character.
+/// \returns Floating point value corresponding to the contents of str on
+/// success. If the converted value falls out of range of corresponding return
+/// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
+/// If no conversion can be performed, `0` is returned and *last is set to str.
+[[nodiscard]] constexpr auto strtof(
+    const char* str, char const** last = nullptr) noexcept -> float
+{
+    return detail::ascii_to_floating_point<float>(str, last);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_STRTOF_HPP

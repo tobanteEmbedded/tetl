@@ -21,27 +21,33 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_LLDIV_HPP
+#define TETL_CSTDLIB_LLDIV_HPP
 
-#include "etl/version.hpp"
+namespace etl {
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+/// \brief Return type for div, ldiv, lldiv & imaxdiv.
+struct lldiv_t {
+    long long quot;
+    long long rem;
+};
 
-#endif // TETL_CSTDLIB_HPP
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
+[[nodiscard]] constexpr auto div(long long x, long long y) noexcept -> lldiv_t
+{
+    return { x / y, x % y };
+}
+
+/// \brief Computes both the quotient and the remainder of the division of the
+/// numerator x by the denominator y. The quotient is the result of the
+/// expression x/y. The remainder is the result of the expression x%y.
+[[nodiscard]] constexpr auto lldiv(long long x, long long y) noexcept -> lldiv_t
+{
+    return { x / y, x % y };
+}
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_LLDIV_HPP

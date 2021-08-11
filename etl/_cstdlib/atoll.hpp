@@ -21,27 +21,23 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_ATOLL_HPP
+#define TETL_CSTDLIB_ATOLL_HPP
 
-#include "etl/version.hpp"
+#include "etl/_strings/conversion.hpp"
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+namespace etl {
 
-#endif // TETL_CSTDLIB_HPP
+/// \brief Interprets an integer value in a byte string pointed to by str.
+/// Discards any whitespace characters until the first non-whitespace character
+/// is found, then takes as many characters as possible to form a valid integer
+/// number representation and converts them to an integer value.
+[[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
+{
+    auto const result = detail::ascii_to_int_base10<long long>(string);
+    return result.value;
+}
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_ATOLL_HPP

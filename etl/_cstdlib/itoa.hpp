@@ -21,27 +21,31 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#if not defined(TETL_CSTDLIB_HPP)
-#define TETL_CSTDLIB_HPP
+#ifndef TETL_CSTDLIB_IOTA_HPP
+#define TETL_CSTDLIB_IOTA_HPP
 
-#include "etl/version.hpp"
+#include "etl/_assert/macro.hpp"
+#include "etl/_strings/conversion.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/intmax_t.hpp"
-#include "etl/_cstdlib/atoi.hpp"
-#include "etl/_cstdlib/atol.hpp"
-#include "etl/_cstdlib/atoll.hpp"
-#include "etl/_cstdlib/div.hpp"
-#include "etl/_cstdlib/exit.hpp"
-#include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
-#include "etl/_cstdlib/labs.hpp"
-#include "etl/_cstdlib/ldiv.hpp"
-#include "etl/_cstdlib/llabs.hpp"
-#include "etl/_cstdlib/lldiv.hpp"
-#include "etl/_cstdlib/strtod.hpp"
-#include "etl/_cstdlib/strtof.hpp"
-#include "etl/_cstdlib/strtold.hpp"
+namespace etl {
 
-#endif // TETL_CSTDLIB_HPP
+/// \brief Converts an integer value to a null-terminated string using the
+/// specified base and stores the result in the array given by str parameter.
+///
+/// \details If base is 10 and value is negative, the resulting string is
+/// preceded with a minus sign (-). With any other base, value is always
+/// considered unsigned.
+///
+/// \todo Only base 10 is currently supported.
+constexpr auto itoa(int val, char* const buffer, int base) -> char*
+{
+    auto res = detail::int_to_ascii<int>(val, buffer, base);
+    TETL_ASSERT(res.error == detail::int_to_ascii_error::none);
+    ignore_unused(res);
+    return buffer;
+}
+
+} // namespace etl
+
+#endif // TETL_CSTDLIB_IOTA_HPP
