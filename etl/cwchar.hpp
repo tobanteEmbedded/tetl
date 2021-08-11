@@ -30,9 +30,6 @@
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstddef/tm.hpp"
-
-#include "etl/_cwchar/wint_t.hpp"
-
 #include "etl/_cwchar/wcscat.hpp"
 #include "etl/_cwchar/wcschr.hpp"
 #include "etl/_cwchar/wcscmp.hpp"
@@ -46,6 +43,7 @@
 #include "etl/_cwchar/wcsrchr.hpp"
 #include "etl/_cwchar/wcsspn.hpp"
 #include "etl/_cwchar/wcsstr.hpp"
+#include "etl/_cwchar/wint_t.hpp"
 #include "etl/_cwchar/wmemchr.hpp"
 #include "etl/_cwchar/wmemcmp.hpp"
 #include "etl/_cwchar/wmemcpy.hpp"
