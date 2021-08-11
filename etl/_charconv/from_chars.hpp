@@ -28,11 +28,10 @@
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_iterator/distance.hpp"
 #include "etl/_strings/conversion.hpp"
+#include "etl/_system_error/errc.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_same.hpp"
-
-#include "etl/system_error.hpp"
 
 namespace etl {
 
