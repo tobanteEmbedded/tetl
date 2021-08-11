@@ -26,13 +26,6 @@
 
 #include "etl/version.hpp"
 
-// #include "etl/_limits/numeric_limits.hpp"
-
-// #include "etl/cstddef.hpp"
-// #include "etl/functional.hpp"
-// #include "etl/type_traits.hpp"
-// #include "etl/utility.hpp"
-
 #include "etl/_numeric/abs.hpp"
 #include "etl/_numeric/accumulate.hpp"
 #include "etl/_numeric/adjacent_difference.hpp"

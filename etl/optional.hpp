@@ -28,6 +28,7 @@
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_memory/addressof.hpp"
+#include "etl/_new/operator.hpp"
 #include "etl/_optional/sfinae_base.hpp"
 #include "etl/_type_traits/conjunction.hpp"
 #include "etl/_type_traits/decay.hpp"
@@ -54,8 +55,6 @@
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/in_place.hpp"
 #include "etl/_utility/move.hpp"
-
-#include "etl/_new/operator.hpp"
 
 namespace etl {
 /// \brief etl::nullopt_t is an empty class type used to indicate optional type
