@@ -26,12 +26,14 @@
 
 #include "etl/version.hpp"
 
+#include "etl/_cstddef/size_t.hpp"
 #include "etl/_new/operator.hpp"
-
-#include "etl/cstddef.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
-#include "etl/warning.hpp"
+#include "etl/_type_traits/add_pointer.hpp"
+#include "etl/_type_traits/aligned_storage.hpp"
+#include "etl/_type_traits/is_same.hpp"
+#include "etl/_utility/forward.hpp"
+#include "etl/_utility/move.hpp"
+#include "etl/_warning/ignore_unused.hpp"
 
 namespace etl {
 template <typename... Types>
