@@ -21,13 +21,23 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CHARCONV_HPP
-#define TETL_CHARCONV_HPP
+#ifndef TETL_CHARCONV_CHARS_FORMAT_HPP
+#define TETL_CHARCONV_CHARS_FORMAT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_cstdint/uint_t.hpp"
 
-#include "etl/_charconv/chars_format.hpp"
-#include "etl/_charconv/from_chars.hpp"
-#include "etl/_charconv/to_chars.hpp"
+namespace etl {
 
-#endif // TETL_CHARCONV_HPP
+/// \brief A BitmaskType used to specify floating-point formatting for to_chars
+/// and from_chars.
+/// \module Strings
+enum struct chars_format : etl::uint8_t {
+    scientific = 0x1,
+    fixed      = 0x2,
+    hex        = 0x4,
+    general    = fixed | scientific
+};
+
+} // namespace etl
+
+#endif // TETL_CHARCONV_CHARS_FORMAT_HPP
