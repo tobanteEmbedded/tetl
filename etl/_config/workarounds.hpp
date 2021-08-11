@@ -25,9 +25,10 @@
 #define TETL_CONFIG_WORKAROUNDS_HPP
 
 #if defined(__AVR__)
-// Somewhere inside the compiler provided source abs, fabs get defined.
-// undef didn't work, so I have disabled some functions for avr builds.
-#define TETL_WORKAROUND_AVR_GCC_ABS_MACROS 1
+// Somewhere inside the compiler provided source abs & fabs get defined.
+// undef didn't work, so I have disabled the function etl::fabsf for avr builds.
+// Just use fabs, it's exactly the same.
+#define TETL_WORKAROUND_AVR_GCC_FABS_MACROS 1
 #endif
 
 #endif // TETL_CONFIG_WORKAROUNDS_HPP
