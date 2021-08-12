@@ -1,3 +1,5 @@
+
+
 // Copyright (c) Tobias Hienzsch. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -21,17 +23,39 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_HPP
-#define TETL_TUPLE_HPP
+#ifndef TETL_TUPLE_MAKE_TUPLE_HPP
+#define TETL_TUPLE_MAKE_TUPLE_HPP
 
-/// \file This header is part of the general utility library.
-
-#include "etl/_config/all.hpp"
-
-#include "etl/_tuple/ignore.hpp"
-#include "etl/_tuple/make_tuple.hpp"
+#include "etl/_functional/reference_wrapper.hpp"
 #include "etl/_tuple/tuple.hpp"
-#include "etl/_tuple/tuple_element.hpp"
-#include "etl/_tuple/tuple_size.hpp"
+#include "etl/_type_traits/decay.hpp"
+#include "etl/_utility/forward.hpp"
 
-#endif // TETL_TUPLE_HPP
+namespace etl {
+namespace detail {
+template <typename T>
+struct unwrap_refwrapper {
+    using type = T;
+};
+
+template <typename T>
+struct unwrap_refwrapper<reference_wrapper<T>> {
+    using type = T&;
+};
+
+template <typename T>
+using unwrap_decay_t = typename unwrap_refwrapper<decay_t<T>>::type;
+
+} // namespace detail
+
+/// \brief Creates a tuple object, deducing the target type from the types of
+/// arguments.
+template <typename... Types>
+[[nodiscard]] constexpr auto make_tuple(Types&&... args)
+    -> tuple<detail::unwrap_decay_t<Types>...>
+{
+    return tuple<detail::unwrap_decay_t<Types>...>(forward<Types>(args)...);
+}
+} // namespace etl
+
+#endif // TETL_TUPLE_MAKE_TUPLE_HPP
