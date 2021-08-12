@@ -230,6 +230,26 @@ template <typename Iter1, typename Iter2>
     return lhs.base() >= rhs.base();
 }
 
+/// \brief Returns the iterator it incremented by n.
+template <typename Iter>
+[[nodiscard]] constexpr auto operator+(
+    typename reverse_iterator<Iter>::difference_type n,
+    reverse_iterator<Iter> const& it) noexcept(noexcept(it.base() - n))
+    -> reverse_iterator<Iter>
+{
+    return reverse_iterator<Iter>(it.base() - n);
+}
+
+/// \brief Returns the distance between two iterator adaptors.
+template <typename Iterator1, typename Iterator2>
+constexpr auto operator-(reverse_iterator<Iterator1> const& lhs,
+    reverse_iterator<Iterator2> const& rhs) noexcept(noexcept(rhs.base()
+                                                              - lhs.base()))
+    -> decltype(rhs.base() - lhs.base())
+{
+    return rhs.base() - lhs.base();
+}
+
 } // namespace etl
 
 #endif // TETL_ITERATOR_REVERSE_ITERATOR_HPP
