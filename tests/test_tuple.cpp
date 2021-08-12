@@ -81,13 +81,11 @@ TEMPLATE_TEST_CASE("tuple: tuple_size<tuple>", "[tuple]", bool, etl::uint8_t,
     STATIC_REQUIRE(etl::tuple_size_v<etl::tuple<T, float, char, int>> == 4);
 }
 
-TEMPLATE_TEST_CASE("tuple: make_tuple", "[tuple]", bool, etl::uint8_t,
-    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-    etl::uint64_t, etl::int64_t, float, double, long double)
+TEMPLATE_TEST_CASE("tuple: make_tuple", "[tuple]", etl::uint8_t, etl::int8_t,
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
 {
     using T = TestType;
-    using etl::is_same_v;
-    using etl::tuple;
 
     auto t1 = etl::make_tuple(T { 1 }, 'a', true);
     REQUIRE(etl::get<0>(t1) == T { 1 });

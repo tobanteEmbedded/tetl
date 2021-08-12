@@ -21,18 +21,19 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_HPP
-#define TETL_TUPLE_HPP
+#ifndef TETL_TUPLE_TIE_HPP
+#define TETL_TUPLE_TIE_HPP
 
-/// \file This header is part of the general utility library.
-
-#include "etl/_config/all.hpp"
-
-#include "etl/_tuple/ignore.hpp"
-#include "etl/_tuple/make_tuple.hpp"
-#include "etl/_tuple/tie.hpp"
 #include "etl/_tuple/tuple.hpp"
-#include "etl/_tuple/tuple_element.hpp"
-#include "etl/_tuple/tuple_size.hpp"
 
-#endif // TETL_TUPLE_HPP
+namespace etl {
+
+template <typename... Args>
+constexpr auto tie(Args&... args) noexcept -> tuple<Args&...>
+{
+    return { args... };
+}
+
+} // namespace etl
+
+#endif // TETL_TUPLE_TIE_HPP
