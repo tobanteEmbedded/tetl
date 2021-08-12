@@ -26,6 +26,7 @@
 
 #include "etl/_algorithm/swap.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 #include "etl/_type_traits/decay.hpp"
 #include "etl/_type_traits/integral_constant.hpp"

@@ -21,43 +21,17 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_TUPLE_SIZE_HPP
-#define TETL_TUPLE_TUPLE_SIZE_HPP
-
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/integral_constant.hpp"
+#ifndef TETL_TUPLE_TUPLE_ELEMENT_HPP
+#define TETL_TUPLE_TUPLE_ELEMENT_HPP
 
 namespace etl {
-// class template tuple
-template <typename First, typename... Rest>
-struct tuple;
 
-template <typename T>
-struct tuple_size; /*undefined*/
+template <size_t I, typename T>
+struct tuple_element;
 
-template <typename... Types>
-struct tuple_size<etl::tuple<Types...>>
-    : etl::integral_constant<etl::size_t, sizeof...(Types)> {
-};
-
-template <typename T>
-struct tuple_size<const T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<const volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
+template <size_t I, typename T>
+using tuple_element_t = typename tuple_element<I, T>::type;
 
 } // namespace etl
 
-#endif // TETL_TUPLE_TUPLE_SIZE_HPP
+#endif // TETL_TUPLE_TUPLE_ELEMENT_HPP

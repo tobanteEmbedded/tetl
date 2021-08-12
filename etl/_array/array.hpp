@@ -35,6 +35,7 @@
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
+#include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_type_traits/remove_cv.hpp"

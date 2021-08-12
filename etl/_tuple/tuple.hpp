@@ -21,43 +21,65 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TUPLE_TUPLE_SIZE_HPP
-#define TETL_TUPLE_TUPLE_SIZE_HPP
+#ifndef TETL_TUPLE_TUPLE_HPP
+#define TETL_TUPLE_TUPLE_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_tuple/ignore.hpp"
+#include "etl/_tuple/tuple_size.hpp"
 
 namespace etl {
-// class template tuple
 template <typename First, typename... Rest>
-struct tuple;
+struct tuple : public tuple<Rest...> {
+    tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
 
-template <typename T>
-struct tuple_size; /*undefined*/
-
-template <typename... Types>
-struct tuple_size<etl::tuple<Types...>>
-    : etl::integral_constant<etl::size_t, sizeof...(Types)> {
+    First first;
 };
 
-template <typename T>
-struct tuple_size<const T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
+template <typename First>
+struct tuple<First> {
+    tuple(First f) : first(f) { }
+
+    First first;
 };
 
-template <typename T>
-struct tuple_size<volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
+namespace detail {
+template <int Index, typename First, typename... Rest>
+struct get_impl {
+    static constexpr auto value(tuple<First, Rest...> const* t)
+        -> decltype(get_impl<Index - 1, Rest...>::value(t))
+    {
+        return get_impl<Index - 1, Rest...>::value(t);
+    }
 };
 
-template <typename T>
-struct tuple_size<const volatile T>
-    : etl::integral_constant<etl::size_t, tuple_size<T>::value> {
+template <typename First, typename... Rest>
+struct get_impl<0, First, Rest...> {
+    static constexpr auto value(tuple<First, Rest...> const* t) -> First
+    {
+        return t->first;
+    }
 };
 
-template <typename T>
-inline constexpr etl::size_t tuple_size_v = tuple_size<T>::value;
+} // namespace detail
+
+template <int Index, typename First, typename... Rest>
+constexpr auto get(tuple<First, Rest...> const& t)
+    -> decltype(detail::get_impl<Index, First, Rest...>::value(&t))
+{
+    return detail::get_impl<Index, First, Rest...>::value(&t);
+}
+
+//
+//  /// \brief Creates a tuple of lvalue references to its arguments or
+//  instances of
+//  /// etl::ignore.
+//
+// template <typename... Types>
+// constexpr auto tie(Types&... args) -> etl::tuple<Types&...>
+// {
+//     return etl::tuple<Types&...>(args...);
+// }
 
 } // namespace etl
 
-#endif // TETL_TUPLE_TUPLE_SIZE_HPP
+#endif // TETL_TUPLE_TUPLE_HPP
