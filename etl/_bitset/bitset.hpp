@@ -371,6 +371,30 @@ private:
     array<uint8_t, allocated_> bits_   = {};
 };
 
+/// \brief Performs binary AND between two bitsets, lhs and rhs.
+template <etl::size_t N>
+[[nodiscard]] constexpr auto operator&(
+    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+{
+    return bitset<N>(lhs) &= rhs;
+};
+
+/// \brief Performs binary OR between two bitsets, lhs and rhs.
+template <etl::size_t N>
+[[nodiscard]] constexpr auto operator|(
+    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+{
+    return bitset<N>(lhs) |= rhs;
+};
+
+/// \brief Performs binary XOR between two bitsets, lhs and rhs.
+template <etl::size_t N>
+[[nodiscard]] constexpr auto operator^(
+    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+{
+    return bitset<N>(lhs) ^= rhs;
+};
+
 } // namespace etl
 
 #endif // TETL_BITSET_BITSET_HPP

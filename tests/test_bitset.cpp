@@ -24,6 +24,7 @@
 
 #include "etl/cstddef.hpp"
 #include "etl/cstdint.hpp"
+#include "etl/string_view.hpp"
 #include "etl/utility.hpp" // for as_const
 
 #include "catch2/catch_template_test_macros.hpp"
@@ -273,4 +274,16 @@ TEMPLATE_TEST_CASE_SIG(
     CHECK(bits.none());
     bits = ~bits;
     CHECK(bits.all());
+}
+
+TEMPLATE_TEST_CASE_SIG("bitset: non-member operators", "[bitset]",
+    ((etl::size_t N), N), 8, 16, 32, 64)
+{
+    using namespace etl::string_view_literals;
+
+    etl::bitset<N> b1("0110"_sv);
+    etl::bitset<N> b2("0011"_sv);
+    REQUIRE((b1 & b2).count() == 1);
+    REQUIRE((b1 | b2).count() == 3);
+    REQUIRE((b1 ^ b2).count() == 2);
 }
