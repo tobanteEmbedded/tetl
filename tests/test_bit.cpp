@@ -183,6 +183,41 @@ TEMPLATE_TEST_CASE("bit: countl_one", "[bit]", etl::uint8_t, etl::uint16_t,
     REQUIRE(etl::countl_one(etl::uint16_t { 0b1111'0000'1111'1111 }) == 4);
 }
 
+TEMPLATE_TEST_CASE("bit: countr_zero", "[bit]", etl::uint8_t, etl::uint16_t,
+    etl::uint32_t, etl::uint64_t)
+{
+    REQUIRE(etl::countr_zero(TestType { 0 })
+            == etl::numeric_limits<TestType>::digits);
+
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0000'0001 }) == 0);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0000'0010 }) == 1);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0000'0100 }) == 2);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0000'1000 }) == 3);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0001'0000 }) == 4);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0010'0000 }) == 5);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0100'0000 }) == 6);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b1000'0000 }) == 7);
+    REQUIRE(etl::countr_zero(etl::uint8_t { 0b0000'0000 }) == 8);
+}
+
+TEMPLATE_TEST_CASE("bit: countr_one", "[bit]", etl::uint8_t, etl::uint16_t,
+    etl::uint32_t, etl::uint64_t)
+{
+    REQUIRE(etl::countr_one(etl::numeric_limits<TestType>::max())
+            == etl::numeric_limits<TestType>::digits);
+
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b1111'1111 }) == 8);
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b0111'1111 }) == 7);
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b0011'1111 }) == 6);
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b0001'1111 }) == 5);
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b0000'1111 }) == 4);
+    REQUIRE(etl::countr_one(etl::uint8_t { 0b0000'0000 }) == 0);
+
+    REQUIRE(etl::countr_one(etl::uint16_t { 0b1000'0000'1111'1111 }) == 8);
+    REQUIRE(etl::countr_one(etl::uint16_t { 0b0100'0000'0000'1111 }) == 4);
+    REQUIRE(etl::countr_one(etl::uint16_t { 0b0000'0000'0000'0001 }) == 1);
+}
+
 TEMPLATE_TEST_CASE("bit: bit_width", "[bit]", etl::uint8_t, etl::uint16_t,
     etl::uint32_t, etl::uint64_t)
 {
