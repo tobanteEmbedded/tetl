@@ -32,6 +32,16 @@
 
 namespace etl {
 
+namespace detail {
+// clang-format off
+template <typename To, typename From>
+inline constexpr auto bit_castable_types
+    = (sizeof(To) == sizeof(From))
+      && is_trivially_copyable_v<From>
+      && is_trivially_copyable_v<To>;
+}
+// clang-format on
+
 /// \brief Obtain a value of type To by reinterpreting the object representation
 /// of from. Every bit in the value representation of the returned To object is
 /// equal to the corresponding bit in the object representation of from.
@@ -47,14 +57,12 @@ namespace etl {
 ///
 /// \module Numeric
 template <typename To, typename From>
-constexpr auto bit_cast(From const& src) noexcept -> enable_if_t<
-    (sizeof(To) == sizeof(From))
-        and is_trivially_copyable_v<From> and is_trivially_copyable_v<To>,
-    To>
+constexpr auto bit_cast(From const& src) noexcept
+    -> enable_if_t<detail::bit_castable_types<To, From>, To>
 {
-    static_assert(is_trivially_constructible_v<To>,
-        "This implementation additionally requires destination type to be "
-        "trivially constructible");
+    // This implementation additionally requires destination type to be
+    // trivially constructible
+    static_assert(is_trivially_constructible_v<To>);
 
     To dst;
     detail::memcpy_impl<char, etl::size_t>(&dst, &src, sizeof(To));

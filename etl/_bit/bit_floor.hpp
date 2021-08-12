@@ -44,7 +44,7 @@ template <typename T>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept
     -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-    if (x != 0) { return T { 1 } << (bit_width(x) - 1); }
+    if (x != 0) { return T { 1U } << (bit_width(x) - 1U); }
     return 0;
 }
 } // namespace etl

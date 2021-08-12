@@ -48,7 +48,7 @@ template <typename T>
     if (x == etl::numeric_limits<T>::max()) { return totalBits; }
 
     int res = 0;
-    while (x & (T { 1 } << (totalBits - 1))) {
+    while (x & (T { 1 } << (totalBits - 1U))) {
         x = (x << T { 1 });
         res++;
     }

@@ -48,7 +48,7 @@ template <typename T>
     if (x == T { 0 }) { return etl::numeric_limits<T>::digits; }
 
     int res = 0;
-    while (!(x & (T { 1 } << (totalBits - 1)))) {
+    while (!(x & (T { 1 } << (totalBits - 1U)))) {
         x = (x << T { 1 });
         res++;
     }

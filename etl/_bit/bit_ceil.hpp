@@ -46,16 +46,13 @@ template <typename T>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept
     -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-    if (x <= 1U) { return T(1); }
-
+    if (x <= 1U) { return T { 1 }; }
     if constexpr (is_same_v<T, decltype(+x)>) {
-        //
-        return T(1) << bit_width(T(x - 1));
+        return T { 1U } << bit_width(T { x - 1U });
     } else {
         // for types subject to integral promotion
-        auto offset
-            = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
-        return T(1U << (bit_width(T(x - 1)) + offset) >> offset);
+        auto o = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
+        return T { 1U << (bit_width(T { x - 1U }) + o) >> o };
     }
 }
 
