@@ -28,6 +28,7 @@
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"
+#include "etl/_iterator/next.hpp"
 #include "etl/_iterator/rbegin.hpp"
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/reverse_iterator.hpp"
@@ -211,6 +212,42 @@ struct span {
     [[nodiscard]] constexpr auto empty() const noexcept -> bool
     {
         return size() == 0;
+    }
+
+    /// \brief Obtains a span that is a view over the first Count elements of
+    /// this span. The program is ill-formed if Count > Extent.
+    template <size_t Count>
+    [[nodiscard]] constexpr auto first() const -> span<element_type, Count>
+    {
+        static_assert(!(Count > Extent));
+        return { data(), static_cast<size_type>(Count) };
+    }
+
+    /// \brief Obtains a span that is a view over the first Count elements of
+    /// this span. The behavior is undefined if Count > size().
+    [[nodiscard]] constexpr auto first(size_type Count) const
+        -> span<element_type, dynamic_extent>
+    {
+        TETL_ASSERT(!(Count > size()));
+        return { data(), static_cast<size_type>(Count) };
+    }
+
+    /// \brief Obtains a span that is a view over the last Count elements of
+    /// this span. The program is ill-formed if Count > Extent.
+    template <size_t Count>
+    [[nodiscard]] constexpr auto last() const -> span<element_type, Count>
+    {
+        static_assert(!(Count > Extent));
+        return { data() + (size() - Count), static_cast<size_type>(Count) };
+    }
+
+    /// \brief Obtains a span that is a view over the last Count elements of
+    /// this span. The behavior is undefined if Count > size().
+    [[nodiscard]] constexpr auto last(size_type Count) const
+        -> span<element_type, dynamic_extent>
+    {
+        TETL_ASSERT(!(Count > size()));
+        return { data() + (size() - Count), static_cast<size_type>(Count) };
     }
 
 private:

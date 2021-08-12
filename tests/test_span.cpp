@@ -198,6 +198,58 @@ TEMPLATE_TEST_CASE(
 }
 
 TEMPLATE_TEST_CASE(
+    "span: first", "[span]", char, int, float, double, etl::uint64_t)
+{
+    using T   = TestType;
+    auto data = etl::array { T(0), T(1), T(2), T(3), T(4), T(5), T(6) };
+    auto sp   = etl::span<T> { data };
+
+    auto one = sp.first(1);
+    REQUIRE(one.size() == 1);
+    REQUIRE(one[0] == T(0));
+
+    auto two = sp.first(2);
+    REQUIRE(two.size() == 2);
+    REQUIRE(two[0] == T(0));
+    REQUIRE(two[1] == T(1));
+
+    auto onet = sp.first<1>();
+    REQUIRE(onet.size() == 1);
+    REQUIRE(onet[0] == T(0));
+
+    auto twot = sp.first<2>();
+    REQUIRE(twot.size() == 2);
+    REQUIRE(twot[0] == T(0));
+    REQUIRE(twot[1] == T(1));
+}
+
+TEMPLATE_TEST_CASE(
+    "span: last", "[span]", char, int, float, double, etl::uint64_t)
+{
+    using T   = TestType;
+    auto data = etl::array { T(0), T(1), T(2), T(3), T(4), T(5), T(6) };
+    auto sp   = etl::span<T> { data };
+
+    auto one = sp.last(1);
+    REQUIRE(one.size() == 1);
+    REQUIRE(one[0] == T(6));
+
+    auto two = sp.last(2);
+    REQUIRE(two.size() == 2);
+    REQUIRE(two[0] == T(5));
+    REQUIRE(two[1] == T(6));
+
+    auto onet = sp.last<1>();
+    REQUIRE(onet.size() == 1);
+    REQUIRE(onet[0] == T(6));
+
+    auto twot = sp.last<2>();
+    REQUIRE(twot.size() == 2);
+    REQUIRE(twot[0] == T(5));
+    REQUIRE(twot[1] == T(6));
+}
+
+TEMPLATE_TEST_CASE(
     "span: as_bytes", "[span]", char, int, float, double, etl::uint64_t)
 {
     using T   = TestType;
