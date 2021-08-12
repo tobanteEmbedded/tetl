@@ -21,28 +21,26 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_BIT_HPP
-#define TETL_BIT_HPP
+#ifndef TETL_BIT_TOGGLE_BIT_HPP
+#define TETL_BIT_TOGGLE_BIT_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_unsigned.hpp"
 
-#include "etl/_bit/bit_cast.hpp"
-#include "etl/_bit/bit_ceil.hpp"
-#include "etl/_bit/bit_floor.hpp"
-#include "etl/_bit/bit_width.hpp"
-#include "etl/_bit/countl_one.hpp"
-#include "etl/_bit/countl_zero.hpp"
-#include "etl/_bit/countr_one.hpp"
-#include "etl/_bit/countr_zero.hpp"
-#include "etl/_bit/endian.hpp"
-#include "etl/_bit/has_single_bit.hpp"
-#include "etl/_bit/popcount.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_bit/rotr.hpp"
+namespace etl {
 
-// Non-standard extensions
-#include "etl/_bit/clear_bit.hpp"
-#include "etl/_bit/set_bit.hpp"
-#include "etl/_bit/toggle_bit.hpp"
+template <typename T>
+[[nodiscard]] constexpr auto toggle_bit(T val, T bit) noexcept
+    -> enable_if_t<is_unsigned_v<T>, T>
+{
+    return val ^= T(1) << bit;
+}
 
-#endif // TETL_BIT_HPP
+} // namespace etl
+
+static_assert(etl::toggle_bit(0b00000001U, 0U) == 0b00000000U);
+static_assert(etl::toggle_bit(0b00000010U, 1U) == 0b00000000U);
+static_assert(etl::toggle_bit(0b00000100U, 2U) == 0b00000000U);
+static_assert(etl::toggle_bit(0b00000011U, 3U) == 0b00001011U);
+
+#endif // TETL_BIT_TOGGLE_BIT_HPP
