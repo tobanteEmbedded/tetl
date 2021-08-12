@@ -24,6 +24,10 @@
 #ifndef TETL_ITERATOR_SIZE_HPP
 #define TETL_ITERATOR_SIZE_HPP
 
+#include "etl/_cstddef/ptrdiff_t.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/make_signed.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
 namespace etl {
@@ -42,6 +46,21 @@ constexpr auto size(C const& c) noexcept(noexcept(c.size()))
 /// \group size
 template <typename T, size_t N>
 constexpr auto size(T const (&array)[N]) noexcept -> size_t
+{
+    ::etl::ignore_unused(&array[0]);
+    return N;
+}
+
+template <typename C>
+constexpr auto ssize(C const& c)
+    -> common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>
+{
+    using R = common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>;
+    return static_cast<R>(c.size());
+}
+
+template <typename T, ptrdiff_t N>
+constexpr ptrdiff_t ssize(T const (&array)[N]) noexcept
 {
     ::etl::ignore_unused(&array[0]);
     return N;
