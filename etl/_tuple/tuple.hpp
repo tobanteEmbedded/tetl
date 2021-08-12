@@ -25,6 +25,7 @@
 #define TETL_TUPLE_TUPLE_HPP
 
 #include "etl/_tuple/ignore.hpp"
+#include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 
 namespace etl {
@@ -69,16 +70,15 @@ constexpr auto get(tuple<First, Rest...> const& t)
     return detail::get_impl<Index, First, Rest...>::value(&t);
 }
 
-//
-//  /// \brief Creates a tuple of lvalue references to its arguments or
-//  instances of
-//  /// etl::ignore.
-//
-// template <typename... Types>
-// constexpr auto tie(Types&... args) -> etl::tuple<Types&...>
-// {
-//     return etl::tuple<Types&...>(args...);
-// }
+template <etl::size_t I, typename Head, typename... Tail>
+struct tuple_element<I, etl::tuple<Head, Tail...>>
+    : etl::tuple_element<I - 1, etl::tuple<Tail...>> {
+};
+
+template <typename Head, typename... Tail>
+struct tuple_element<0, etl::tuple<Head, Tail...>> {
+    using type = Head;
+};
 
 } // namespace etl
 

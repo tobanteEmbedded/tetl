@@ -22,8 +22,9 @@
 // DAMAGE.
 #include "etl/tuple.hpp"
 
-#include "etl/cstdint.hpp" // for int16_t, int32_t, int64_t, int8_t
-#include "etl/warning.hpp" // for ignore_unused
+#include "etl/cstdint.hpp"     // for int16_t, int32_t, int64_t, int8_t
+#include "etl/type_traits.hpp" // for is_same_v
+#include "etl/warning.hpp"     // for ignore_unused
 
 #include "catch2/catch_template_test_macros.hpp"
 
@@ -43,6 +44,29 @@ TEMPLATE_TEST_CASE("tuple: get", "[tuple]", bool, etl::uint8_t, etl::int8_t,
     auto t1 = etl::tuple<TestType, float> { TestType { 1 }, 2.0F };
     CHECK(etl::get<0>(t1) == TestType { 1 });
     CHECK(etl::get<1>(t1) == 2.0F);
+}
+
+TEMPLATE_TEST_CASE("tuple: tuple_element<tuple>", "[tuple]", bool, etl::uint8_t,
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::is_same_v;
+    using etl::tuple;
+    using etl::tuple_element_t;
+
+    STATIC_REQUIRE(is_same_v<tuple_element_t<0, tuple<T, float>>, T>);
+    STATIC_REQUIRE(is_same_v<tuple_element_t<1, tuple<T, float>>, float>);
+
+    STATIC_REQUIRE(is_same_v<tuple_element_t<0, tuple<T, int>>, T>);
+    STATIC_REQUIRE(is_same_v<tuple_element_t<1, tuple<T, int>>, int>);
+
+    STATIC_REQUIRE(is_same_v<tuple_element_t<0, tuple<double, T>>, double>);
+    STATIC_REQUIRE(is_same_v<tuple_element_t<1, tuple<double, T>>, T>);
+
+    STATIC_REQUIRE(is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>);
+    STATIC_REQUIRE(is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>);
+    STATIC_REQUIRE(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
 }
 
 // TEMPLATE_TEST_CASE("tuple: tie", "[tuple]", bool, etl::uint8_t, etl::int8_t,
