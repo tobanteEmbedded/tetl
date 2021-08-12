@@ -38,7 +38,7 @@ namespace etl {
 namespace detail {
 
 template <typename T, typename Tuple, size_t... I>
-constexpr auto make_from_tuple_impl(Tuple&& t, index_sequence<I...>) -> T
+constexpr auto make_from_tuple_impl(Tuple&& t, index_sequence<I...> /*i*/) -> T
 {
     static_assert(is_constructible_v<T, decltype(get<I>(declval<Tuple>()))...>);
     return T(get<I>(forward<Tuple>(t))...);
