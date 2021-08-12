@@ -33,7 +33,7 @@ template <typename T>
 [[nodiscard]] constexpr auto set_bit(T val, T bit) noexcept
     -> enable_if_t<is_unsigned_v<T>, T>
 {
-    return val |= T { 1 } << bit;
+    return val | (T { 1 } << bit);
 }
 
 } // namespace etl
