@@ -26,12 +26,14 @@
 
 #include "etl/_algorithm/min.hpp"
 #include "etl/_array/array.hpp"
+#include "etl/_bit/set_bit.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_string_view/string_view.hpp"
 
 namespace etl {
+
 /// \brief The class template bitset represents a fixed-size sequence of N bits.
 /// Bitsets can be manipulated by standard logic operators.
 /// \module Utility
@@ -347,6 +349,23 @@ struct bitset {
         return bitset<N>(*this).flip();
     }
 
+    /// \brief Converts the contents of the bitset to an unsigned long integer.
+    /// The first bit corresponds to the least significant digit of the number
+    /// and the last bit corresponds to the most significant digit.
+    [[nodiscard]] constexpr auto to_ulong() const noexcept -> unsigned long
+    {
+        return to_unsigned_type<unsigned long>();
+    }
+
+    /// \brief Converts the contents of the bitset to an unsigned long long
+    /// integer. The first bit corresponds to the least significant digit of the
+    /// number and the last bit corresponds to the most significant digit.
+    [[nodiscard]] constexpr auto to_ullong() const noexcept
+        -> unsigned long long
+    {
+        return to_unsigned_type<unsigned long long>();
+    }
+
 private:
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) const
         -> uint8_t const&
@@ -365,6 +384,18 @@ private:
         -> uint8_t
     {
         return pos & 0x7;
+    }
+
+    template <typename UInt>
+    [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
+    {
+        constexpr auto digits = static_cast<UInt>(numeric_limits<UInt>::digits);
+        auto const idx        = min<UInt>(static_cast<UInt>(size()), digits);
+        UInt result {};
+        for (UInt i { 0 }; i != idx; ++i) {
+            if (test(i)) { result = set_bit(result, i); }
+        }
+        return result;
     }
 
     static constexpr size_t allocated_ = N >> 3;

@@ -213,6 +213,22 @@ TEMPLATE_TEST_CASE_SIG(
 }
 
 TEMPLATE_TEST_CASE_SIG(
+    "bitset: to_ulong", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
+{
+    REQUIRE(etl::bitset<N> { 0U }.to_ulong() == 0UL);
+    REQUIRE(etl::bitset<N> { 0U }.to_ullong() == 0ULL);
+
+    REQUIRE(etl::bitset<N> { 1U }.to_ulong() == 1UL);
+    REQUIRE(etl::bitset<N> { 1U }.to_ullong() == 1ULL);
+
+    REQUIRE(etl::bitset<N> { 0b0000'1111U }.to_ulong() == 15UL);
+    REQUIRE(etl::bitset<N> { 0b0000'1111U }.to_ullong() == 15ULL);
+
+    REQUIRE(etl::bitset<N> { 0b1111'1111U }.to_ulong() == 255UL);
+    REQUIRE(etl::bitset<N> { 0b1111'1111U }.to_ullong() == 255ULL);
+}
+
+TEMPLATE_TEST_CASE_SIG(
     "bitset: operator&=", "[bitset]", ((size_t N), N), 8, 16, 32, 64)
 {
     auto rhs = etl::bitset<N> {};
