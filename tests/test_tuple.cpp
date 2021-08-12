@@ -113,8 +113,8 @@ TEMPLATE_TEST_CASE("tuple: make_from_tuple", "[tuple]", etl::uint8_t,
     using etl::make_from_tuple;
     using etl::make_tuple;
 
-    auto foo = make_from_tuple<Foo<T>>(make_tuple(T { 1 }, 1.0f, true));
+    auto foo = make_from_tuple<Foo<T>>(make_tuple(T { 1 }, 1.0F, true));
     REQUIRE(foo.f == T { 1 });
-    REQUIRE(foo.s == 1.0f);
+    REQUIRE(foo.s == 1.0F);
     REQUIRE(foo.t == true);
 }
