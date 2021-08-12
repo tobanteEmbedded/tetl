@@ -92,3 +92,29 @@ TEMPLATE_TEST_CASE("tuple: make_tuple", "[tuple]", etl::uint8_t, etl::int8_t,
     REQUIRE(etl::get<1>(t1) == 'a');
     REQUIRE(etl::get<2>(t1) == true);
 }
+
+template <typename T>
+struct Foo {
+    Foo(T first, float second, bool third)
+        : f { first }, s { second }, t { third }
+    {
+    }
+
+    T f;
+    float s;
+    bool t;
+};
+
+TEMPLATE_TEST_CASE("tuple: make_from_tuple", "[tuple]", etl::uint8_t,
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::make_from_tuple;
+    using etl::make_tuple;
+
+    auto foo = make_from_tuple<Foo<T>>(make_tuple(T { 1 }, 1.0f, true));
+    REQUIRE(foo.f == T { 1 });
+    REQUIRE(foo.s == 1.0f);
+    REQUIRE(foo.t == true);
+}
