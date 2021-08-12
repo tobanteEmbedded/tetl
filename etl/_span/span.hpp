@@ -30,6 +30,7 @@
 #include "etl/_iterator/end.hpp"
 #include "etl/_iterator/rbegin.hpp"
 #include "etl/_iterator/rend.hpp"
+#include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_span/dynamic_extent.hpp"
@@ -52,16 +53,16 @@ namespace etl {
 /// \module Containers
 template <typename ElementType, size_t Extent = etl::dynamic_extent>
 struct span {
-    using element_type    = ElementType;
-    using value_type      = etl::remove_cv_t<ElementType>;
-    using size_type       = etl::size_t;
-    using difference_type = etl::ptrdiff_t;
-    using pointer         = ElementType*;
-    using const_pointer   = ElementType const*;
-    using reference       = ElementType&;
-    using const_reference = ElementType const&;
-    using iterator        = ElementType const*;
-    // using reverse_iterator = etl::reverse_iterator<iterator>;
+    using element_type     = ElementType;
+    using value_type       = etl::remove_cv_t<ElementType>;
+    using size_type        = etl::size_t;
+    using difference_type  = etl::ptrdiff_t;
+    using pointer          = ElementType*;
+    using const_pointer    = ElementType const*;
+    using reference        = ElementType&;
+    using const_reference  = ElementType const&;
+    using iterator         = ElementType const*;
+    using reverse_iterator = etl::reverse_iterator<iterator>;
 
     /// \brief The number of elements in the sequence, or etl::dynamic_extent
     /// if dynamic.
@@ -150,6 +151,23 @@ struct span {
     [[nodiscard]] constexpr auto end() const noexcept -> iterator
     {
         return begin() + size();
+    }
+
+    /// \brief Returns a reverse iterator to the first element of the reversed
+    /// span. It corresponds to the last element of the non-reversed span. If
+    /// the span is empty, the returned iterator is equal to rend().
+    [[nodiscard]] auto rbegin() const noexcept -> reverse_iterator
+    {
+        return reverse_iterator(end());
+    }
+
+    /// \brief Returns a reverse iterator to the element following the last
+    /// element of the reversed span. It corresponds to the element preceding
+    /// the first element of the non-reversed span. This element acts as a
+    /// placeholder, attempting to access it results in undefined behavior.
+    [[nodiscard]] auto rend() const noexcept -> reverse_iterator
+    {
+        return reverse_iterator(begin());
     }
 
     /// \brief Returns a reference to the first element in the span. Calling
