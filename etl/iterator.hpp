@@ -24,7 +24,7 @@
 #ifndef TETL_ITERATOR_HPP
 #define TETL_ITERATOR_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_iterator/advance.hpp"
 #include "etl/_iterator/back_insert_iterator.hpp"

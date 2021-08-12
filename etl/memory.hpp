@@ -24,7 +24,7 @@
 #ifndef TETL_MEMORY_HPP
 #define TETL_MEMORY_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_memory/addressof.hpp"
 #include "etl/_memory/align.hpp"

@@ -24,7 +24,7 @@
 #ifndef TETL_NEW_HPP
 #define TETL_NEW_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_new/align_val_t.hpp"
 #include "etl/_new/destroying_delete.hpp"

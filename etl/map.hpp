@@ -24,7 +24,7 @@
 #ifndef TETL_MAP_HPP
 #define TETL_MAP_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_algorithm/find_if.hpp"
 #include "etl/_algorithm/for_each.hpp"

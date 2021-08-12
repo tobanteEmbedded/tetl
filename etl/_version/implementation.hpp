@@ -21,20 +21,31 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_NUMERIC_HPP
-#define TETL_NUMERIC_HPP
+#ifndef TETL_VERSION_IMPLEMENTATION_HPP
+#define TETL_VERSION_IMPLEMENTATION_HPP
 
-#include "etl/_config/all.hpp"
+namespace etl {
 
-#include "etl/_numeric/abs.hpp"
-#include "etl/_numeric/accumulate.hpp"
-#include "etl/_numeric/adjacent_difference.hpp"
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/inner_product.hpp"
-#include "etl/_numeric/iota.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_numeric/midpoint.hpp"
-#include "etl/_numeric/partial_sum.hpp"
-#include "etl/_numeric/reduce.hpp"
+enum struct implementation {
+    freestanding = 0,
+    hosted       = 1,
+};
 
-#endif // TETL_NUMERIC_HPP
+#if defined(__STDC_HOSTED__)
+inline constexpr auto current_implementation = implementation::hosted;
+#else
+inline constexpr auto current_implementation = implementation::freestanding;
+#endif
+
+[[nodiscard]] auto constexpr is_hosted() noexcept -> bool
+{
+    return current_implementation == implementation::hosted;
+}
+
+[[nodiscard]] auto constexpr is_freestanding() noexcept -> bool
+{
+    return current_implementation == implementation::freestanding;
+}
+} // namespace etl
+
+#endif // TETL_VERSION_IMPLEMENTATION_HPP

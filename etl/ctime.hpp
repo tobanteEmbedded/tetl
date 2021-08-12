@@ -24,7 +24,7 @@
 #ifndef TETL_CTIME_HPP
 #define TETL_CTIME_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cstddef/null.hpp"
 #include "etl/_cstddef/size_t.hpp"

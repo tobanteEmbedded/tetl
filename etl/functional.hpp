@@ -24,7 +24,7 @@
 #ifndef TETL_FUNCTIONAL_HPP
 #define TETL_FUNCTIONAL_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_functional/bit_and.hpp"
 #include "etl/_functional/bit_not.hpp"

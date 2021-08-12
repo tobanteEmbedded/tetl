@@ -24,7 +24,7 @@
 #ifndef TETL_CHARCONV_HPP
 #define TETL_CHARCONV_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_charconv/chars_format.hpp"
 #include "etl/_charconv/from_chars.hpp"

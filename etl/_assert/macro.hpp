@@ -24,6 +24,7 @@
 #ifndef TETL_ASSERT_MACRO
 #define TETL_ASSERT_MACRO
 
+#include "etl/_version/implementation.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
 #if __has_include(<stdlib.h>)

@@ -24,7 +24,7 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_assert/macro.hpp"
 

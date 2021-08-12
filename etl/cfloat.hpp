@@ -24,7 +24,7 @@
 #ifndef TETL_CFLOAT_HPP
 #define TETL_CFLOAT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cfloat/defines.hpp"
 

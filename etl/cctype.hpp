@@ -27,7 +27,7 @@
 /// \file This header was originally in the C standard library as <ctype.h>.
 /// This header is part of the null-terminated byte strings library.
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cctype/isalnum.hpp"
 #include "etl/_cctype/isalpha.hpp"

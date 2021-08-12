@@ -24,7 +24,7 @@
 #ifndef TETL_CSTDARG_HPP
 #define TETL_CSTDARG_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #if defined(TETL_MSVC)
 #include <cstdarg>

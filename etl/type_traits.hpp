@@ -24,7 +24,7 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_type_traits/add_const.hpp"
 #include "etl/_type_traits/add_cv.hpp"

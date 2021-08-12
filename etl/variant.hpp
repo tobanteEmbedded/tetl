@@ -24,7 +24,7 @@
 #ifndef TETL_VARIANT_HPP
 #define TETL_VARIANT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_new/operator.hpp"

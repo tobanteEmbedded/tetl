@@ -24,7 +24,7 @@
 #ifndef TETL_STRING_VIEW_HPP
 #define TETL_STRING_VIEW_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_string_view/basic_string_view.hpp"
 #include "etl/_string_view/literal.hpp"

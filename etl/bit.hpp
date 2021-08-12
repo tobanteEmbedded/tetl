@@ -24,7 +24,7 @@
 #ifndef TETL_BIT_HPP
 #define TETL_BIT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_bit/bit_cast.hpp"
 #include "etl/_bit/bit_ceil.hpp"

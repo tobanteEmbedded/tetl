@@ -28,7 +28,7 @@
 /// This header is part of the type support library, providing fixed width
 /// integer types and part of C numeric limits interface.
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cstdint/int_fast_t.hpp"
 #include "etl/_cstdint/int_least_t.hpp"

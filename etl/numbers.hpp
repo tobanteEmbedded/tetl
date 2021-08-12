@@ -24,7 +24,7 @@
 #ifndef TETL_NUMBERS_HPP
 #define TETL_NUMBERS_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 namespace etl::numbers {
 

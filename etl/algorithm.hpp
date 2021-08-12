@@ -24,7 +24,7 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_algorithm/adjacent_find.hpp"
 #include "etl/_algorithm/all_of.hpp"

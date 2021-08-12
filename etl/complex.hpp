@@ -24,7 +24,7 @@
 #ifndef TETL_COMPLEX_HPP
 #define TETL_COMPLEX_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_complex/complex.hpp"
 #include "etl/_complex/imag.hpp"

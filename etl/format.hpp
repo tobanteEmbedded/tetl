@@ -24,7 +24,7 @@
 #ifndef TETL_EXPERIMENTAL_FORMAT_HPP
 #define TETL_EXPERIMENTAL_FORMAT_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/vector.hpp"
 

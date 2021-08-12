@@ -26,7 +26,7 @@
 
 /// \file This header is part of the containers library.
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_array/array.hpp"
 #include "etl/_array/to_array.hpp"

@@ -24,7 +24,7 @@
 #ifndef TETL_STACK_HPP
 #define TETL_STACK_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"

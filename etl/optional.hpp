@@ -24,7 +24,7 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_memory/addressof.hpp"

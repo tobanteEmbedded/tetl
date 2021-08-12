@@ -24,7 +24,7 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_utility/as_const.hpp"
 #include "etl/_utility/cmp.hpp"

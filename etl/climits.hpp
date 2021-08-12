@@ -24,7 +24,7 @@
 #ifndef TETL_CLIMITS_HPP
 #define TETL_CLIMITS_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_climits/defines.hpp"
 

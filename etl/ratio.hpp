@@ -24,7 +24,7 @@
 #ifndef TETL_RATIO_HPP
 #define TETL_RATIO_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cstdint/intmax_t.hpp"
 #include "etl/_math/abs.hpp"

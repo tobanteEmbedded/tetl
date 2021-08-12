@@ -24,7 +24,7 @@
 #ifndef TETL_CONCEPTS_HPP
 #define TETL_CONCEPTS_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_concepts/convertible_to.hpp"

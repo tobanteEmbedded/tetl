@@ -24,7 +24,7 @@
 #ifndef TETL_CSTDIO_HPP
 #define TETL_CSTDIO_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #if __has_include(<stdio.h>)
 #include <stdio.h>

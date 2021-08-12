@@ -24,7 +24,7 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_string/basic_static_string.hpp"
 #include "etl/_string/static_string.hpp"

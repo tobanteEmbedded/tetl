@@ -24,7 +24,7 @@
 #ifndef TETL_CSTRING_HPP
 #define TETL_CSTRING_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_assert/macro.hpp"
 #include "etl/_cstddef/size_t.hpp"

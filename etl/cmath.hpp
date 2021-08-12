@@ -24,7 +24,7 @@
 #ifndef TETL_CMATH_HPP
 #define TETL_CMATH_HPP
 
-#include "etl/version.hpp"
+#include "etl/_config/all.hpp"
 
 #include "etl/_cmath/copysign.hpp"
 #include "etl/_cmath/isfinite.hpp"
