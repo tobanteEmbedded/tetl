@@ -33,6 +33,9 @@
 
 namespace etl {
 
+template <class T>
+struct reference_wrapper;
+
 namespace detail {
 template <typename T>
 constexpr auto xforward(remove_reference_t<T>&& param) noexcept -> T&&
@@ -45,11 +48,9 @@ struct is_reference_wrapper : ::etl::false_type {
 };
 
 // TODO: Enable once reference_wrapper is implemented.
-// template <typename U>
-// struct is_reference_wrapper<::etl::reference_wrapper<U>> :
-// ::etl::true_type
-// {
-// };
+template <typename U>
+struct is_reference_wrapper<::etl::reference_wrapper<U>> : ::etl::true_type {
+};
 
 template <typename T>
 struct invoke_impl {
@@ -75,8 +76,8 @@ struct invoke_impl<MT B::*> {
 
     template <typename T, typename... Args, typename MT1,
         typename = ::etl::enable_if_t<::etl::is_function_v<MT1>>>
-    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype(
-        (invoke_impl::get(xforward<T>(t)).*pmf)(xforward<Args>(args)...));
+    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((
+        invoke_impl::get(xforward<T>(t)).*pmf)(xforward<Args>(args)...));
 
     template <typename T>
     static auto call(MT B::*pmd, T&& t)
@@ -94,8 +95,8 @@ template <typename F, typename... Args>
 struct invoke_result<decltype(void(detail::INVOKE(
                          ::etl::declval<F>(), ::etl::declval<Args>()...))),
     F, Args...> {
-    using type = decltype(
-        detail::INVOKE(::etl::declval<F>(), ::etl::declval<Args>()...));
+    using type = decltype(detail::INVOKE(
+        ::etl::declval<F>(), ::etl::declval<Args>()...));
 };
 } // namespace detail
 
