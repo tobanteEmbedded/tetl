@@ -1038,33 +1038,29 @@ TEMPLATE_TEST_CASE("algorithm: copy_n", "[algorithm]", etl::uint8_t,
     etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
     etl::uint64_t, etl::int64_t, float, double, long double)
 {
-    using vector_t = etl::static_vector<TestType, 4>;
-
-    auto source = etl::array<TestType, 4> {};
-    source[0]   = TestType { 1 };
-    source[1]   = TestType { 2 };
-    source[2]   = TestType { 3 };
-    source[3]   = TestType { 4 };
+    using T           = TestType;
+    using vector_t    = etl::static_vector<T, 4>;
+    auto const source = etl::array<T, 4> { T { 1 }, T { 2 }, T { 3 }, T { 4 } };
 
     SECTION("copy_n to c array")
     {
         SECTION("all elements")
         {
-            TestType dest[4] = {};
+            T dest[4] = {};
             etl::copy_n(begin(source), 4, etl::begin(dest));
-            REQUIRE(dest[0] == TestType { 1 });
-            REQUIRE(dest[1] == TestType { 2 });
-            REQUIRE(dest[2] == TestType { 3 });
-            REQUIRE(dest[3] == TestType { 4 });
+            REQUIRE(dest[0] == T { 1 });
+            REQUIRE(dest[1] == T { 2 });
+            REQUIRE(dest[2] == T { 3 });
+            REQUIRE(dest[3] == T { 4 });
         }
 
         SECTION("2 elements")
         {
-            TestType dest[3] = {};
+            T dest[3] = {};
             etl::copy_n(begin(source), 2, etl::begin(dest));
-            REQUIRE(dest[0] == TestType { 1 });
-            REQUIRE(dest[1] == TestType { 2 });
-            REQUIRE(dest[2] == TestType { 0 });
+            REQUIRE(dest[0] == T { 1 });
+            REQUIRE(dest[1] == T { 2 });
+            REQUIRE(dest[2] == T { 0 });
         }
     }
 
@@ -1074,10 +1070,10 @@ TEMPLATE_TEST_CASE("algorithm: copy_n", "[algorithm]", etl::uint8_t,
         REQUIRE(dest.size() == 0);
         etl::copy_n(begin(source), source.size(), etl::back_inserter(dest));
         REQUIRE(dest.size() == 4);
-        REQUIRE(dest[0] == TestType { 1 });
-        REQUIRE(dest[1] == TestType { 2 });
-        REQUIRE(dest[2] == TestType { 3 });
-        REQUIRE(dest[3] == TestType { 4 });
+        REQUIRE(dest[0] == T { 1 });
+        REQUIRE(dest[1] == T { 2 });
+        REQUIRE(dest[2] == T { 3 });
+        REQUIRE(dest[3] == T { 4 });
     }
 }
 

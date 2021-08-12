@@ -35,7 +35,7 @@ template <typename ForwardIter1, typename ForwardIter2,
 {
     for (;; ++first) {
         auto it = first;
-        for (auto sIt = sFirst;; ++it, ++sIt) {
+        for (auto sIt = sFirst;; ++it, (void)++sIt) {
             if (sIt == sLast) { return first; }
             if (it == last) { return last; }
             if (!pred(*it, *sIt)) { break; }

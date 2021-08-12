@@ -48,7 +48,7 @@ template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination)
     -> OutputIt
 {
-    for (; first != last; ++first, ++destination) {
+    for (; first != last; ++first, (void)++destination) {
         *destination = move(*first);
     }
     return destination;

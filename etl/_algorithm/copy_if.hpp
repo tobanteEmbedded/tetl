@@ -35,13 +35,12 @@ namespace etl {
 /// the last element copied.
 /// \group copy
 /// \module Algorithm
-template <typename InputIt, typename OutputIt, typename Predicate>
-constexpr auto copy_if(
-    InputIt first, InputIt last, OutputIt dFirst, Predicate pred) -> OutputIt
+template <typename InIt, typename OutIt, typename Pred>
+constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
 {
     while (first != last) {
         if (pred(*first)) { *dFirst++ = *first; }
-        first++;
+        ++first;
     }
     return dFirst;
 }

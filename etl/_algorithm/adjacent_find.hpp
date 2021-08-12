@@ -50,7 +50,7 @@ template <typename ForwardIt, typename Predicate>
     auto next = first;
     ++next;
 
-    for (; next != last; ++next, ++first) {
+    for (; next != last; ++next, (void)++first) {
         if (pred(*first, *next)) { return first; }
     }
 

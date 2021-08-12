@@ -39,8 +39,8 @@ template <typename InputIt, typename Size, typename OutputIt>
 constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 {
     if (count > 0) {
-        *result++ = *first;
-        for (Size i = 1; i < count; ++i) { *result++ = *++first; }
+        *result = *first;
+        for (Size i = 1; i < count; ++i) { *(++result) = *(++first); }
     }
     return result;
 }

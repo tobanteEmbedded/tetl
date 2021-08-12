@@ -40,7 +40,6 @@ constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
         *first = value;
         ++first;
     }
-
     return first;
 }
 

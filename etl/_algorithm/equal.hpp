@@ -38,7 +38,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto equal(
     InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate p) -> bool
 {
-    for (; first1 != last1; ++first1, ++first2) {
+    for (; first1 != last1; ++first1, (void)++first2) {
         if (!p(*first1, *first2)) { return false; }
     }
     return true;
