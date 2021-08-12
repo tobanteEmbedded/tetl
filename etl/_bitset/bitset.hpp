@@ -408,7 +408,7 @@ template <etl::size_t N>
     bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) &= rhs;
-};
+}
 
 /// \brief Performs binary OR between two bitsets, lhs and rhs.
 template <etl::size_t N>
@@ -416,7 +416,7 @@ template <etl::size_t N>
     bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) |= rhs;
-};
+}
 
 /// \brief Performs binary XOR between two bitsets, lhs and rhs.
 template <etl::size_t N>
@@ -424,7 +424,7 @@ template <etl::size_t N>
     bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) ^= rhs;
-};
+}
 
 } // namespace etl
 
