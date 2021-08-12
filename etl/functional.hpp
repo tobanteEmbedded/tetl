@@ -36,6 +36,7 @@
 #include "etl/_functional/greater.hpp"
 #include "etl/_functional/greater_equal.hpp"
 #include "etl/_functional/hash.hpp"
+#include "etl/_functional/invoke.hpp"
 #include "etl/_functional/is_transparent.hpp"
 #include "etl/_functional/less.hpp"
 #include "etl/_functional/less_equal.hpp"

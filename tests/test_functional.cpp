@@ -255,3 +255,10 @@ TEST_CASE("functional: hash", "[functional]")
 
     CHECK(etl::hash<etl::nullptr_t> {}(nullptr) == 0);
 }
+
+// TEST_CASE("functional: invoke", "[functional]")
+// {
+//     auto lambda = [](int x) -> int { return x; };
+//     REQUIRE(etl::invoke(lambda, 1) == 1);
+//     REQUIRE(etl::invoke([]() { return 42; }) == 42)
+// }

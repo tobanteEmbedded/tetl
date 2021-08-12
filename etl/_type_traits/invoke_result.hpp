@@ -33,7 +33,7 @@
 
 namespace etl {
 
-template <class T>
+template <typename T>
 struct reference_wrapper;
 
 namespace detail {
@@ -43,14 +43,11 @@ constexpr auto xforward(remove_reference_t<T>&& param) noexcept -> T&&
     return static_cast<T&&>(param);
 }
 
-template <typename T>
-struct is_reference_wrapper : ::etl::false_type {
-};
+template <typename>
+constexpr bool is_reference_wrapper_v = false;
 
-// TODO: Enable once reference_wrapper is implemented.
 template <typename U>
-struct is_reference_wrapper<::etl::reference_wrapper<U>> : ::etl::true_type {
-};
+constexpr bool is_reference_wrapper_v<etl::reference_wrapper<U>> = true;
 
 template <typename T>
 struct invoke_impl {
@@ -66,12 +63,12 @@ struct invoke_impl<MT B::*> {
     static auto get(T&& t) -> T&&;
 
     template <typename T, typename Td = ::etl::decay_t<T>,
-        typename = ::etl::enable_if_t<is_reference_wrapper<Td>::value>>
+        typename = ::etl::enable_if_t<is_reference_wrapper_v<Td>>>
     static auto get(T&& t) -> decltype(t.get());
 
     template <typename T, typename Td = ::etl::decay_t<T>,
         typename = ::etl::enable_if_t<!::etl::is_base_of_v<B, Td>>,
-        typename = ::etl::enable_if_t<!is_reference_wrapper<Td>::value>>
+        typename = ::etl::enable_if_t<!is_reference_wrapper_v<Td>>>
     static auto get(T&& t) -> decltype(*xforward<T>(t));
 
     template <typename T, typename... Args, typename MT1,
