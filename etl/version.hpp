@@ -24,34 +24,7 @@
 #ifndef TETL_VERSION_HPP
 #define TETL_VERSION_HPP
 
-// clang-format off
-#include "etl/_config/compiler.hpp"
-#include "etl/_config/preprocessor.hpp"
-#include "etl/_config/keywords.hpp"
-#include "etl/_config/builtin_types.hpp"
-#include "etl/_config/builtin_functions.hpp"
-#include "etl/_config/attributes.hpp"
-#include "etl/_config/workarounds.hpp"
-// clang-format on
-
-#if (__has_include(<version>))
-#include <version>
-#endif
-
-/// The major release version
-#define TETL_VERSION_MAJOR 0
-/// The minor release version
-#define TETL_VERSION_MINOR 4
-/// The patch release version
-#define TETL_VERSION_PATCH 0
-/// The library version as a string literal
-#define TETL_VERSION_STRING "0.4.0"
-
-#if defined(__STDC_HOSTED__)
-#define TETL_HOSTED 1
-#else
-#define TETL_FREESTANDING 1
-#endif
+#include "etl/_config/all.hpp"
 
 namespace etl {
 
