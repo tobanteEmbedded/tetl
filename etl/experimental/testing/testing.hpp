@@ -239,12 +239,8 @@ inline auto session::run_all() -> int
     }
 
     auto const& stats = ctx.stats();
-    auto const* txt   = "%-10s %-10s - tests: %d/%d assertion: %d/%d\n";
-    ::printf(txt, "Pass:", name_,
-        stats.num_test_cases - stats.num_test_cases_failed,
-        stats.num_test_cases,
-        stats.num_assertions - stats.num_assertions_failed,
-        stats.num_assertions);
+    auto const* txt   = "\nAll tests passed (%d assertions in %d test cases)\n";
+    ::printf(txt, stats.num_assertions, stats.num_test_cases);
     return 0;
 }
 
@@ -298,6 +294,11 @@ inline auto context::terminate() const -> bool { return shouldTerminate_; }
 #define TEST_DETAIL_TEST_CASE(...)                                             \
     TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
 
+#define TEST_DETAIL_SECTION2(tc, ...) if (true)
+
+#define TEST_DETAIL_SECTION(...)                                               \
+    TEST_DETAIL_SECTION2(TETL_ANONYMOUS_VAR(tc_section), __VA_ARGS__)
+
 #define TEST_DETAIL_CHECK(disposition, ...)                                    \
     do {                                                                       \
         TEST_DETAIL_IGNORE_BUT_WARN(__VA_ARGS__);                              \
@@ -315,6 +316,8 @@ inline auto context::terminate() const -> bool { return shouldTerminate_; }
 #define TEST_SESSION_RUN(argc, argv)    TEST_DETAIL_SESSION_RUN(argc, argv)
 
 #define TEST_CASE(...)  TEST_DETAIL_TEST_CASE(__VA_ARGS__)
+
+#define SECTION(...)  TEST_DETAIL_SECTION(__VA_ARGS__)
 
 #define CHECK(...)      TEST_DETAIL_CHECK(::etl::test::result_disposition::continue_on_failure, __VA_ARGS__)
 #define REQUIRE(...)    TEST_DETAIL_CHECK(::etl::test::result_disposition::normal, __VA_ARGS__)

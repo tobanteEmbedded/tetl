@@ -30,8 +30,11 @@ TEST_CASE("A", "")
     CHECK_EQUAL(1, 1);
     CHECK_EQUAL(2, 2);
 
-    CHECK_NOT_EQUAL(42, 1);
-    CHECK_NOT_EQUAL(42, 2);
+    SECTION("different assertion macro")
+    {
+        CHECK_NOT_EQUAL(42, 1);
+        CHECK_NOT_EQUAL(42, 2);
+    }
 }
 
 TEST_CASE("B", "")
