@@ -213,11 +213,11 @@ TEMPLATE_TEST_CASE(
     REQUIRE(two[0] == T(0));
     REQUIRE(two[1] == T(1));
 
-    auto onet = sp.first<1>();
+    auto onet = sp.template first<1>();
     REQUIRE(onet.size() == 1);
     REQUIRE(onet[0] == T(0));
 
-    auto twot = sp.first<2>();
+    auto twot = sp.template first<2>();
     REQUIRE(twot.size() == 2);
     REQUIRE(twot[0] == T(0));
     REQUIRE(twot[1] == T(1));
@@ -239,11 +239,11 @@ TEMPLATE_TEST_CASE(
     REQUIRE(two[0] == T(5));
     REQUIRE(two[1] == T(6));
 
-    auto onet = sp.last<1>();
+    auto onet = sp.template last<1>();
     REQUIRE(onet.size() == 1);
     REQUIRE(onet[0] == T(6));
 
-    auto twot = sp.last<2>();
+    auto twot = sp.template last<2>();
     REQUIRE(twot.size() == 2);
     REQUIRE(twot[0] == T(5));
     REQUIRE(twot[1] == T(6));
