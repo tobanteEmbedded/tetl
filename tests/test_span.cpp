@@ -196,3 +196,13 @@ TEMPLATE_TEST_CASE(
 
     REQUIRE(sp.size_bytes() == 4 * sizeof(TestType));
 }
+
+TEMPLATE_TEST_CASE(
+    "span: as_bytes", "[span]", char, int, float, double, etl::uint64_t)
+{
+    using T   = TestType;
+    auto data = etl::array<T, 6> {};
+    auto sp   = etl::span<T> { data };
+    REQUIRE(etl::as_bytes(sp).size() == sizeof(T) * data.size());
+    REQUIRE(etl::as_writable_bytes(sp).size() == sizeof(T) * data.size());
+}
