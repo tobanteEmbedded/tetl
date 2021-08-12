@@ -31,7 +31,7 @@ namespace etl {
 namespace detail {
 struct ignore_t {
     template <typename T>
-    constexpr auto operator=(T const&) const -> const ignore_t&
+    constexpr auto operator=(T const& /*unused*/) const -> ignore_t const&
     {
         return *this;
     }

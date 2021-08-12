@@ -24,6 +24,8 @@
 #ifndef TETL_TUPLE_TUPLE_ELEMENT_HPP
 #define TETL_TUPLE_TUPLE_ELEMENT_HPP
 
+#include "etl/_cstddef/size_t.hpp"
+
 namespace etl {
 
 template <size_t I, typename T>
