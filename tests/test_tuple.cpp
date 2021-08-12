@@ -69,14 +69,14 @@ TEMPLATE_TEST_CASE("tuple: tuple_element<tuple>", "[tuple]", bool, etl::uint8_t,
     STATIC_REQUIRE(is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>);
 }
 
-// TEMPLATE_TEST_CASE("tuple: tie", "[tuple]", bool, etl::uint8_t, etl::int8_t,
-//                    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
-//                    etl::uint64_t, etl::int64_t, float, double, long double)
-// {
-//     auto data      = etl::tuple<TestType, float> {TestType {1}, 2.0F};
-//     auto f         = float {};
-//     auto t         = TestType {};
-//     etl::tie(t, f) = data;
-//     CHECK(t == TestType {1});
-//     CHECK(f == 2.0F);
-// }
+TEMPLATE_TEST_CASE("tuple: tuple_size<tuple>", "[tuple]", bool, etl::uint8_t,
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    STATIC_REQUIRE(etl::tuple_size_v<etl::tuple<T>> == 1);
+    STATIC_REQUIRE(etl::tuple_size_v<etl::tuple<T, float>> == 2);
+    STATIC_REQUIRE(etl::tuple_size_v<etl::tuple<T, float, char>> == 3);
+    STATIC_REQUIRE(etl::tuple_size_v<etl::tuple<T, float, char, int>> == 4);
+}
