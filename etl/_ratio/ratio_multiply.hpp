@@ -21,21 +21,26 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_RATIO_HPP
-#define TETL_RATIO_HPP
-
-#include "etl/_config/all.hpp"
+#ifndef TETL_RATIO_MULTIPLY_HPP
+#define TETL_RATIO_MULTIPLY_HPP
 
 #include "etl/_ratio/ratio.hpp"
-#include "etl/_ratio/ratio_add.hpp"
-#include "etl/_ratio/ratio_divide.hpp"
-#include "etl/_ratio/ratio_equal.hpp"
-#include "etl/_ratio/ratio_greater.hpp"
-#include "etl/_ratio/ratio_greater_equal.hpp"
-#include "etl/_ratio/ratio_less.hpp"
-#include "etl/_ratio/ratio_less_equal.hpp"
-#include "etl/_ratio/ratio_multiply.hpp"
-#include "etl/_ratio/ratio_not_equal.hpp"
-#include "etl/_ratio/ratio_subtract.hpp"
 
-#endif // TETL_RATIO_HPP
+namespace etl {
+
+/// \brief The alias template ratio_multiply denotes the result of
+/// multiplying two exact rational fractions represented by the ratio
+/// specializations R1 and R2.
+///
+/// \details The result is a ratio specialization `ratio<U, V>`, such
+/// that given Num == R1::num * R2::num and Denom == R1::den * R2::den (computed
+/// without arithmetic overflow), U is ratio<Num, Denom>::num and V is
+/// ratio<Num, Denom>::den.
+///
+/// \todo Check overflow.
+template <typename R1, typename R2>
+using ratio_multiply = ratio<R1::num * R2::num, R1::den * R2::den>;
+
+} // namespace etl
+
+#endif // TETL_RATIO_MULTIPLY_HPP

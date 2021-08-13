@@ -29,10 +29,10 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_numeric/gcd.hpp"
 #include "etl/_numeric/lcm.hpp"
+#include "etl/_ratio/ratio.hpp"
+#include "etl/_ratio/ratio_divide.hpp"
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
-
-#include "etl/ratio.hpp"
 
 namespace etl::chrono {
 
