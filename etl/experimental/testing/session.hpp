@@ -89,12 +89,7 @@ private:
     session_stats stats_ {};
 };
 
-inline auto current_session() -> session&
-{
-    static auto buffer      = ::etl::test::session_buffer<16> {};
-    static auto testSession = ::etl::test::session { buffer, "foo" };
-    return testSession;
-}
+inline auto current_session() -> session&;
 
 template <::etl::size_t Capacity>
 inline constexpr session::session(
@@ -176,6 +171,13 @@ inline auto session::fail_assertion(
 }
 
 inline auto session::terminate() const -> bool { return shouldTerminate_; }
+
+inline auto current_session() -> session&
+{
+    static auto buffer      = ::etl::test::session_buffer<16> {};
+    static auto testSession = ::etl::test::session { buffer, "foo" };
+    return testSession;
+}
 
 struct auto_reg {
     explicit auto_reg(name_and_tags const& sp, test_func_t func)
