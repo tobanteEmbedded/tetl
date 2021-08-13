@@ -21,7 +21,7 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#include "etl/experimental/meta/type.hpp"
+#include "etl/experimental/meta/all.hpp"
 
 #include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"

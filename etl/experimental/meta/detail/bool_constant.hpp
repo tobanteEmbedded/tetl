@@ -21,67 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_TYPE_HPP
-#define ETL_EXPERIMENTAL_META_TYPE_HPP
+#ifndef ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
+#define ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
 
-#include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
 
 using etl::bool_constant;
 using etl::false_type;
-using etl::integral_constant;
 using etl::true_type;
 
-template <int i>
-inline constexpr auto int_c = integral_constant<int, i> {};
-
-template <typename V, V v, typename U, U u>
-constexpr auto operator+(integral_constant<V, v>, integral_constant<U, u>)
+template <bool L, bool R>
+constexpr auto operator==(bool_constant<L> /*l*/, bool_constant<R> /*r*/)
 {
-    return integral_constant<decltype(v + u), v + u> {};
+    return bool_constant<L == R> {};
 }
 
-template <typename V, V v, typename U, U u>
-constexpr auto operator==(integral_constant<V, v>, integral_constant<U, u>)
+template <bool L, bool R>
+constexpr auto operator!=(bool_constant<L> /*l*/, bool_constant<R> /*r*/)
 {
-    return integral_constant<bool, v == u> {};
+    return bool_constant<L != R> {};
 }
 
-template <typename T>
-struct type {
-    using name = T;
-};
-
-template <typename T>
-inline constexpr auto type_c = type<T> {};
-
-template <typename T>
-constexpr auto add_pointer(type<T> const&) -> type<T*>
-{
-    return {};
-}
-
-template <typename T>
-constexpr auto is_pointer(type<T> const&) -> false_type
-{
-    return {};
-}
-
-template <typename T>
-constexpr auto is_pointer(type<T*> const&) -> true_type
-{
-    return {};
-}
-
-template <typename... Types>
-[[nodiscard]] constexpr auto make_type_tuple()
-    -> etl::tuple<type<etl::decay_t<Types>>...>
-{
-    return etl::tuple<type<etl::decay_t<Types>>...>();
-}
+template <bool V>
+inline constexpr auto bool_c = bool_constant<V> {};
 
 } // namespace etl::experimental::meta
 
-#endif // ETL_EXPERIMENTAL_META_TYPE_HPP
+#endif // ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
