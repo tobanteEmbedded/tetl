@@ -24,10 +24,15 @@
 #ifndef ETL_EXPERIMENTAL_TESTING_SESSION_HPP
 #define ETL_EXPERIMENTAL_TESTING_SESSION_HPP
 
+#include "etl/experimental/testing/name_and_tags.hpp"
+#include "etl/experimental/testing/source_line_info.hpp"
+#include "etl/experimental/testing/test_case.hpp"
+
 #include "etl/array.hpp"
 #include "etl/cstdint.hpp"
-#include "etl/experimental/testing/name_and_tags.hpp"
-#include "etl/experimental/testing/test_case.hpp"
+#include "etl/stack.hpp"
+#include "etl/string_view.hpp"
+#include "etl/vector.hpp"
 
 #include <stdio.h>
 
@@ -47,9 +52,9 @@ using session_buffer = ::etl::array<test_case, Capacity>;
 struct session {
     template <::etl::size_t Capacity>
     explicit constexpr session(
-        session_buffer<Capacity>& buffer, char const* name);
+        session_buffer<Capacity>& buffer, etl::string_view name);
 
-    [[nodiscard]] constexpr auto name() const noexcept -> char const*;
+    [[nodiscard]] constexpr auto name() const noexcept -> etl::string_view;
 
     [[nodiscard]] constexpr auto begin() -> test_case*;
     [[nodiscard]] constexpr auto end() -> test_case*;
@@ -59,19 +64,29 @@ struct session {
     constexpr auto add_test(name_and_tags const& spec, test_func_t func)
         -> void;
 
+    auto current_test(test_case* tc) -> void;
+
+    auto pass_assertion(source_line_info const& src, char const* expr) -> void;
+    auto fail_assertion(
+        source_line_info const& src, char const* expr, bool terminate) -> void;
+
+    [[nodiscard]] auto terminate() const -> bool;
+
+    [[nodiscard]] auto stats() const -> session_stats const& { return stats_; }
+
 private:
-    char const* name_ = nullptr;
+    using section_stack_t
+        = etl::stack<etl::string_view, etl::static_vector<etl::string_view, 2>>;
+    etl::string_view name_;
 
     test_case* first_    = nullptr;
     test_case* last_     = nullptr;
     ::etl::size_t count_ = 0;
-};
 
-struct auto_reg {
-    explicit auto_reg(session& s, name_and_tags const& sp, test_func_t func)
-    {
-        s.add_test(sp, func);
-    }
+    test_case* current_ { nullptr };
+    section_stack_t sections_ {};
+    bool shouldTerminate_ { false };
+    session_stats stats_ {};
 };
 
 inline auto current_session() -> session&
@@ -81,11 +96,94 @@ inline auto current_session() -> session&
     return testSession;
 }
 
-} // namespace etl::test
+template <::etl::size_t Capacity>
+inline constexpr session::session(
+    session_buffer<Capacity>& buffer, etl::string_view name)
+    : name_ { name }, first_ { buffer.begin() }, last_ { buffer.end() }
+{
+}
 
-// #define TEST_DETAIL_SESSION(name, size)                                        \
-//     static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
-//     static auto g_session = ::etl::test::session { g_session_buffer, name }
-// #define TEST_SESSION(name, size)        TEST_DETAIL_SESSION(name, size)
+inline constexpr auto session::name() const noexcept -> etl::string_view
+{
+    return name_;
+}
+
+inline constexpr auto session::begin() -> test_case* { return first_; }
+
+inline constexpr auto session::end() -> test_case*
+{
+    return ::etl::next(first_, static_cast<::etl::ptrdiff_t>(count_));
+}
+
+inline constexpr auto session::add_test(
+    name_and_tags const& spec, test_func_t func) -> void
+{
+    if (first_ + count_ != last_) {
+        first_[count_].info.name = spec.name;
+        first_[count_].info.tags = spec.tags;
+        first_[count_++].func    = func;
+    }
+}
+
+inline auto session::run_all() -> int
+{
+    ::printf("%-10s %-10s\n", "Run:", name_.data());
+
+    for (auto& tc : (*this)) {
+        if (terminate()) {
+            ::printf("%-10s %-10s\n", "Skip:", tc.info.name.data());
+            continue;
+        }
+
+        current_test(&tc);
+        ::printf("%-10s %-10s\n", "Run:", tc.info.name.data());
+        tc.func();
+
+        if (terminate()) {
+            ::printf("%-10s %-10s\n", "Fail:", tc.info.name.data());
+            continue;
+        }
+
+        ::printf("%-10s %-10s\n", "Pass:", tc.info.name.data());
+    }
+
+    auto const& s   = stats();
+    auto const* txt = "\nAll tests passed (%d assertions in %d test cases)\n";
+    ::printf(txt, s.num_assertions, s.num_test_cases);
+    return 0;
+}
+
+inline auto session::current_test(test_case* tc) -> void
+{
+    ++stats_.num_test_cases;
+    current_ = tc;
+}
+
+inline auto session::pass_assertion(
+    source_line_info const& src, char const* expr) -> void
+{
+    ::etl::ignore_unused(this, src, expr);
+    ++stats_.num_assertions;
+}
+
+inline auto session::fail_assertion(
+    source_line_info const& src, char const* expr, bool terminate) -> void
+{
+    constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
+    ::printf(fmt, "Fail:", src.file, static_cast<int>(src.line), expr);
+    ++stats_.num_assertions_failed;
+    shouldTerminate_ = terminate;
+}
+
+inline auto session::terminate() const -> bool { return shouldTerminate_; }
+
+struct auto_reg {
+    explicit auto_reg(name_and_tags const& sp, test_func_t func)
+    {
+        current_session().add_test(sp, func);
+    }
+};
+
+} // namespace etl::test
 
 #endif // ETL_EXPERIMENTAL_TESTING_SESSION_HPP

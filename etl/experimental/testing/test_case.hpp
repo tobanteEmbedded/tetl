@@ -28,9 +28,7 @@
 
 namespace etl::test {
 
-struct context;
-
-using test_func_t = void (*)(context&);
+using test_func_t = void (*)();
 
 struct test_case {
     name_and_tags info;

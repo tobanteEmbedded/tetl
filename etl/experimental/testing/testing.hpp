@@ -27,7 +27,6 @@
 #include "etl/version.hpp"
 
 #include "etl/experimental/testing/assertion_handler.hpp"
-#include "etl/experimental/testing/context.hpp"
 #include "etl/experimental/testing/macros.hpp"
 #include "etl/experimental/testing/name_and_tags.hpp"
 #include "etl/experimental/testing/result_disposition.hpp"

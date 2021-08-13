@@ -39,15 +39,14 @@
 #endif
 
 #define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
-    static auto tc(::etl::test::context& session_context)->void;               \
+    static auto tc()->void;                                                    \
     namespace {                                                                \
     auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                      \
-        ::etl::test::current_session(),                                        \
         ::etl::test::name_and_tags { __VA_ARGS__ },                            \
         tc,                                                                    \
     };                                                                         \
     }                                                                          \
-    static auto tc(::etl::test::context& session_context)->void
+    static auto tc()->void
 
 #define TEST_DETAIL_TEST_CASE(...)                                             \
     TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
@@ -69,7 +68,6 @@
     do {                                                                       \
         TEST_DETAIL_IGNORE_BUT_WARN(__VA_ARGS__);                              \
         ::etl::test::assertion_handler handler {                               \
-            session_context,                                                   \
             TEST_DETAIL_SOURCE_LINE_INFO,                                      \
             disposition,                                                       \
             TETL_STRINGIFY(__VA_ARGS__),                                       \

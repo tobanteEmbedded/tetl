@@ -24,29 +24,28 @@
 #ifndef ETL_EXPERIMENTAL_TESTING_ASSERTION_HANDLER_HPP
 #define ETL_EXPERIMENTAL_TESTING_ASSERTION_HANDLER_HPP
 
-#include "etl/experimental/testing/context.hpp"
 #include "etl/experimental/testing/result_disposition.hpp"
+#include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 
 namespace etl::test {
 
 struct assertion_handler {
-    assertion_handler(context& ctx, source_line_info const& src,
+    assertion_handler(source_line_info const& src,
         result_disposition::flags flags, char const* expr, bool result)
-        : ctx_ { ctx }
-        , src_ { src }
+        : src_ { src }
         , flags_ { flags }
         , expr_ { expr }
         , res_ { has_flag(result_disposition::false_test) ? !result : result }
     {
         if (res_ || has_flag(result_disposition::suppress_fail)) {
-            ctx_.pass_assertion(src_, expr_);
+            current_session().pass_assertion(src_, expr_);
         }
         if (!res_ && has_flag(result_disposition::normal)) {
-            ctx_.fail_assertion(src_, expr_, true);
+            current_session().fail_assertion(src_, expr_, true);
         }
         if (!res_ && has_flag(result_disposition::continue_on_failure)) {
-            ctx_.fail_assertion(src_, expr_, false);
+            current_session().fail_assertion(src_, expr_, false);
         }
     }
 
@@ -56,7 +55,6 @@ private:
         return (flags_ & flag) != 0;
     }
 
-    context& ctx_;
     source_line_info src_;
     result_disposition::flags flags_;
     char const* expr_;
