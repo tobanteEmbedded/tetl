@@ -30,19 +30,19 @@
 namespace etl::experimental::meta {
 
 template <typename T>
-constexpr auto add_pointer(type<T> const&) -> type<T*>
+constexpr auto add_pointer(type<T> const& /*unused*/) -> type<T*>
 {
     return {};
 }
 
 template <typename T>
-constexpr auto is_pointer(type<T> const&) -> false_type
+constexpr auto is_pointer(type<T> const& /*unused*/) -> false_type
 {
     return {};
 }
 
 template <typename T>
-constexpr auto is_pointer(type<T*> const&) -> true_type
+constexpr auto is_pointer(type<T*> const& /*unused*/) -> true_type
 {
     return {};
 }

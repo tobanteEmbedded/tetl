@@ -30,29 +30,29 @@ namespace etl::experimental::meta {
 
 using etl::integral_constant;
 
-template <typename V, V v, typename U, U u>
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator+(
-    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
 {
-    return integral_constant<decltype(v + u), v + u> {};
+    return integral_constant<decltype(L + R), L + R> {};
 }
 
-template <typename V, V v, typename U, U u>
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator==(
-    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
 {
-    return integral_constant<bool, v == u> {};
+    return integral_constant<bool, L == R> {};
 }
 
-template <typename V, V v, typename U, U u>
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator!=(
-    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
 {
-    return integral_constant<bool, v != u> {};
+    return integral_constant<bool, L != R> {};
 }
 
-template <int i>
-inline constexpr auto int_c = integral_constant<int, i> {};
+template <int Val>
+inline constexpr auto int_c = integral_constant<int, Val> {};
 
 } // namespace etl::experimental::meta
 

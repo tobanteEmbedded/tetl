@@ -31,7 +31,7 @@
 namespace etl::experimental::meta {
 
 template <etl::size_t I = 0, typename FuncT, typename... Tp>
-constexpr auto for_each(etl::tuple<Tp...>&, FuncT)
+constexpr auto for_each(etl::tuple<Tp...>& /*unused*/, FuncT /*unused*/)
     -> etl::enable_if_t<I == sizeof...(Tp), void>
 {
 }
