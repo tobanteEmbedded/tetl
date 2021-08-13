@@ -21,18 +21,59 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_TESTING_TESTING_HPP
-#define ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+#ifndef ETL_EXPERIMENTAL_TESTING_SESSION_HPP
+#define ETL_EXPERIMENTAL_TESTING_SESSION_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/experimental/testing/assertion_handler.hpp"
-#include "etl/experimental/testing/context.hpp"
-#include "etl/experimental/testing/macros.hpp"
+#include "etl/array.hpp"
+#include "etl/cstdint.hpp"
 #include "etl/experimental/testing/name_and_tags.hpp"
-#include "etl/experimental/testing/result_disposition.hpp"
-#include "etl/experimental/testing/session.hpp"
-#include "etl/experimental/testing/source_line_info.hpp"
 #include "etl/experimental/testing/test_case.hpp"
 
-#endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+#include <stdio.h>
+
+namespace etl::test {
+
+struct session_stats {
+    ::etl::uint16_t num_test_cases { 0 };
+    ::etl::uint16_t num_test_cases_failed { 0 };
+
+    ::etl::uint16_t num_assertions { 0 };
+    ::etl::uint16_t num_assertions_failed { 0 };
+};
+
+template <::etl::size_t Capacity>
+using session_buffer = ::etl::array<test_case, Capacity>;
+
+struct session {
+    template <::etl::size_t Capacity>
+    explicit constexpr session(
+        session_buffer<Capacity>& buffer, char const* name);
+
+    [[nodiscard]] constexpr auto name() const noexcept -> char const*;
+
+    [[nodiscard]] constexpr auto begin() -> test_case*;
+    [[nodiscard]] constexpr auto end() -> test_case*;
+
+    [[nodiscard]] auto run_all() -> int;
+
+    constexpr auto add_test(name_and_tags const& spec, test_func_t func)
+        -> void;
+
+private:
+    char const* name_ = nullptr;
+
+    test_case* first_    = nullptr;
+    test_case* last_     = nullptr;
+    ::etl::size_t count_ = 0;
+};
+
+struct auto_reg {
+    explicit auto_reg(session& s, name_and_tags const& sp, test_func_t func)
+    {
+        s.add_test(sp, func);
+    }
+};
+
+} // namespace etl::test
+
+#endif // ETL_EXPERIMENTAL_TESTING_SESSION_HPP

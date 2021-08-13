@@ -21,18 +21,20 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_TESTING_TESTING_HPP
-#define ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+#ifndef ETL_EXPERIMENTAL_TESTING_RESULT_DUSPOSITION_HPP
+#define ETL_EXPERIMENTAL_TESTING_RESULT_DUSPOSITION_HPP
 
-#include "etl/version.hpp"
+namespace etl::test {
 
-#include "etl/experimental/testing/assertion_handler.hpp"
-#include "etl/experimental/testing/context.hpp"
-#include "etl/experimental/testing/macros.hpp"
-#include "etl/experimental/testing/name_and_tags.hpp"
-#include "etl/experimental/testing/result_disposition.hpp"
-#include "etl/experimental/testing/session.hpp"
-#include "etl/experimental/testing/source_line_info.hpp"
-#include "etl/experimental/testing/test_case.hpp"
+struct result_disposition {
+    enum flags : unsigned char {
+        normal              = 0x01,
+        continue_on_failure = 0x02, // Failures test, but execution continues
+        false_test          = 0x04, // Prefix expression with !
+        suppress_fail       = 0x08  // Failures do not fail the test
+    };
+};
 
-#endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+} // namespace etl::test
+
+#endif // ETL_EXPERIMENTAL_TESTING_RESULT_DUSPOSITION_HPP

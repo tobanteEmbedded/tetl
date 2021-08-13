@@ -21,18 +21,48 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_TESTING_TESTING_HPP
-#define ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+#ifndef ETL_EXPERIMENTAL_TESTING_ASSERTION_HANDLER_HPP
+#define ETL_EXPERIMENTAL_TESTING_ASSERTION_HANDLER_HPP
 
-#include "etl/version.hpp"
-
-#include "etl/experimental/testing/assertion_handler.hpp"
 #include "etl/experimental/testing/context.hpp"
-#include "etl/experimental/testing/macros.hpp"
-#include "etl/experimental/testing/name_and_tags.hpp"
 #include "etl/experimental/testing/result_disposition.hpp"
-#include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
-#include "etl/experimental/testing/test_case.hpp"
 
-#endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
+namespace etl::test {
+
+struct assertion_handler {
+    assertion_handler(context& ctx, source_line_info const& src,
+        result_disposition::flags flags, char const* expr, bool result)
+        : ctx_ { ctx }
+        , src_ { src }
+        , flags_ { flags }
+        , expr_ { expr }
+        , res_ { has_flag(result_disposition::false_test) ? !result : result }
+    {
+        if (res_ || has_flag(result_disposition::suppress_fail)) {
+            ctx_.pass_assertion(src_, expr_);
+        }
+        if (!res_ && has_flag(result_disposition::normal)) {
+            ctx_.fail_assertion(src_, expr_, true);
+        }
+        if (!res_ && has_flag(result_disposition::continue_on_failure)) {
+            ctx_.fail_assertion(src_, expr_, false);
+        }
+    }
+
+private:
+    [[nodiscard]] auto has_flag(result_disposition::flags flag) -> bool
+    {
+        return (flags_ & flag) != 0;
+    }
+
+    context& ctx_;
+    source_line_info src_;
+    result_disposition::flags flags_;
+    char const* expr_;
+    bool res_;
+};
+
+} // namespace etl::test
+
+#endif // ETL_EXPERIMENTAL_TESTING_ASSERTION_HANDLER_HPP
