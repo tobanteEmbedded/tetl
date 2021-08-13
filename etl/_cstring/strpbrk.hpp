@@ -21,27 +21,40 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_STRPBRK_HPP
+#define TETL_CSTRING_STRPBRK_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Scans the null-terminated byte string pointed to by dest for any
+/// character from the null-terminated byte string pointed to by breakset, and
+/// returns a pointer to that character.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strpbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strpbrk(
+    char const* dest, char const* breakset) noexcept -> char const*
+{
+    return detail::strpbrk_impl<char const, etl::size_t>(dest, breakset);
+}
+
+/// \brief Scans the null-terminated byte string pointed to by dest for any
+/// character from the null-terminated byte string pointed to by breakset, and
+/// returns a pointer to that character.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strpbrk
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strpbrk(char* dest, char* breakset) noexcept
+    -> char*
+{
+    return detail::strpbrk_impl<char, etl::size_t>(dest, breakset);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_STRPBRK_HPP

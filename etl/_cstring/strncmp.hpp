@@ -21,27 +21,28 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_STRNCMP_HPP
+#define TETL_CSTRING_STRNCMP_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Compares at most count characters of two possibly null-terminated
+/// arrays. The comparison is done lexicographically. Characters following the
+/// null character are not compared.
+///
+/// \details The behavior is undefined when access occurs past the end of either
+/// array lhs or rhs. The behavior is undefined when either lhs or rhs is the
+/// null pointer.
+/// \module Strings
+constexpr auto strncmp(
+    char const* lhs, char const* rhs, etl::size_t const count) -> int
+{
+    return detail::strncmp_impl<char, etl::size_t>(lhs, rhs, count);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_STRNCMP_HPP

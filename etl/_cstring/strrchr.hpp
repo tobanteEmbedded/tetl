@@ -21,27 +21,42 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_STRRCHR_HPP
+#define TETL_CSTRING_STRRCHR_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Finds the last occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
+{
+    return detail::strrchr_impl<char const, etl::size_t>(str, ch);
+}
+
+/// \brief Finds the last occurrence of the character static_cast<char>(ch) in
+/// the byte string pointed to by str.
+///
+/// \details The terminating null character is considered to be a part of the
+/// string and can be found if searching for '\0'.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strrchr
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char*
+{
+    return detail::strrchr_impl<char, etl::size_t>(str, ch);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_STRRCHR_HPP

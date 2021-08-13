@@ -21,27 +21,22 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_MEMSET_HPP
+#define TETL_CSTRING_MEMSET_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Copies the value of c (converted to an unsigned char) into each of
+/// the ﬁrst n characters of the object pointed to by s.
+/// \module Strings
+constexpr auto memset(void* s, int c, etl::size_t n) -> void*
+{
+    return detail::memset_impl(static_cast<unsigned char*>(s), c, n);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_MEMSET_HPP

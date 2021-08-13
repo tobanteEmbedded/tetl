@@ -21,27 +21,27 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_STRSPN_HPP
+#define TETL_CSTRING_STRSPN_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Returns the length of the maximum initial segment (span) of the byte
+/// string pointed to by dest, that consists of only the characters found in
+/// byte string pointed to by src.
+///
+/// https://en.cppreference.com/w/cpp/string/byte/strspn
+///
+/// \module Strings
+[[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
+    -> etl::size_t
+{
+    return detail::str_span_impl<char, etl::size_t, true>(dest, src);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_STRSPN_HPP

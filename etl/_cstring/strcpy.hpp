@@ -21,27 +21,30 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CSTRING_HPP
-#define TETL_CSTRING_HPP
+#ifndef TETL_CSTRING_STRCPY_HPP
+#define TETL_CSTRING_STRCPY_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_assert/macro.hpp"
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_strings/cstr_algorithm.hpp"
 
-#include "etl/_cstring/memchr.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memmove.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strcat.hpp"
-#include "etl/_cstring/strchr.hpp"
-#include "etl/_cstring/strcmp.hpp"
-#include "etl/_cstring/strcpy.hpp"
-#include "etl/_cstring/strcspn.hpp"
-#include "etl/_cstring/strlen.hpp"
-#include "etl/_cstring/strncat.hpp"
-#include "etl/_cstring/strncmp.hpp"
-#include "etl/_cstring/strncpy.hpp"
-#include "etl/_cstring/strpbrk.hpp"
-#include "etl/_cstring/strrchr.hpp"
-#include "etl/_cstring/strspn.hpp"
-#include "etl/_cstring/strstr.hpp"
+namespace etl {
 
-#endif // TETL_CSTRING_HPP
+/// \brief Copies the character string pointed to by src, including the null
+/// terminator, to the character array whose first element is pointed to by
+/// dest.
+///
+/// \details The behavior is undefined if the dest array is not large enough.
+/// The behavior is undefined if the strings overlap.
+///
+/// \returns dest
+/// \module Strings
+constexpr auto strcpy(char* dest, char const* src) -> char*
+{
+    TETL_ASSERT(dest != nullptr && src != nullptr);
+    return detail::strcpy_impl(dest, src);
+}
+
+} // namespace etl
+
+#endif // TETL_CSTRING_STRCPY_HPP
