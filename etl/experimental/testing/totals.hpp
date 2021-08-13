@@ -34,12 +34,12 @@ struct counts {
     constexpr auto operator+=(counts const& other) -> counts&;
 
     [[nodiscard]] constexpr auto total() const -> etl::uint16_t;
-    [[nodiscard]] constexpr auto allPassed() const -> bool;
-    [[nodiscard]] constexpr auto allOk() const -> bool;
+    [[nodiscard]] constexpr auto all_passed() const -> bool;
+    [[nodiscard]] constexpr auto all_ok() const -> bool;
 
     etl::uint16_t passed { 0 };
     etl::uint16_t failed { 0 };
-    etl::uint16_t failedButOk { 0 };
+    etl::uint16_t failed_but_ok { 0 };
 };
 
 struct totals {
@@ -51,15 +51,15 @@ struct totals {
 
     int error { 0 };
     counts assertions {};
-    counts testCases {};
+    counts test_cases {};
 };
 
 constexpr auto counts::operator-(counts const& other) const -> counts
 {
-    auto diff        = counts {};
-    diff.passed      = passed - other.passed;
-    diff.failed      = failed - other.failed;
-    diff.failedButOk = failedButOk - other.failedButOk;
+    auto diff          = counts {};
+    diff.passed        = passed - other.passed;
+    diff.failed        = failed - other.failed;
+    diff.failed_but_ok = failed_but_ok - other.failed_but_ok;
     return diff;
 }
 
@@ -67,33 +67,33 @@ constexpr auto counts::operator+=(counts const& other) -> counts&
 {
     passed += other.passed;
     failed += other.failed;
-    failedButOk += other.failedButOk;
+    failed_but_ok += other.failed_but_ok;
     return *this;
 }
 
 constexpr auto counts::total() const -> etl::uint16_t
 {
-    return passed + failed + failedButOk;
+    return passed + failed + failed_but_ok;
 }
-constexpr auto counts::allPassed() const -> bool
+constexpr auto counts::all_passed() const -> bool
 {
-    return failed == 0 && failedButOk == 0;
+    return failed == 0 && failed_but_ok == 0;
 }
 
-constexpr auto counts::allOk() const -> bool { return failed == 0; }
+constexpr auto counts::all_ok() const -> bool { return failed == 0; }
 
 constexpr auto totals::operator-(totals const& other) const -> totals
 {
     auto diff       = totals {};
     diff.assertions = assertions - other.assertions;
-    diff.testCases  = testCases - other.testCases;
+    diff.test_cases = test_cases - other.test_cases;
     return diff;
 }
 
 constexpr auto totals::operator+=(totals const& other) -> totals&
 {
     assertions += other.assertions;
-    testCases += other.testCases;
+    test_cases += other.test_cases;
     return *this;
 }
 
@@ -101,11 +101,11 @@ constexpr auto totals::delta(totals const& prevtotals) const -> totals
 {
     auto diff = *this - prevtotals;
     if (diff.assertions.failed > 0) {
-        ++diff.testCases.failed;
-    } else if (diff.assertions.failedButOk > 0) {
-        ++diff.testCases.failedButOk;
+        ++diff.test_cases.failed;
+    } else if (diff.assertions.failed_but_ok > 0) {
+        ++diff.test_cases.failed_but_ok;
     } else {
-        ++diff.testCases.passed;
+        ++diff.test_cases.passed;
     }
     return diff;
 }

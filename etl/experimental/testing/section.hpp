@@ -34,12 +34,12 @@ namespace etl::test {
 
 struct section_info {
     constexpr section_info(source_line_info const& sli, etl::string_view n)
-        : name(n), lineInfo(sli)
+        : name(n), line_info(sli)
     {
     }
 
     etl::string_view name;
-    source_line_info lineInfo;
+    source_line_info line_info;
 };
 
 struct section {
