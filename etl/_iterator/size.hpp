@@ -60,7 +60,7 @@ constexpr auto ssize(C const& c)
 }
 
 template <typename T, ptrdiff_t N>
-constexpr ptrdiff_t ssize(T const (&array)[N]) noexcept
+constexpr auto ssize(T const (&array)[N]) noexcept -> ptrdiff_t
 {
     ::etl::ignore_unused(&array[0]);
     return N;
