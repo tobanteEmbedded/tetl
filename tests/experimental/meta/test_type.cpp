@@ -1,0 +1,61 @@
+// Copyright (c) Tobias Hienzsch. All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+//  * Redistributions of source code must retain the above copyright notice,
+//    this list of conditions and the following disclaimer.
+//  * Redistributions in binary form must reproduce the above copyright
+//    notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
+// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+// OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+// DAMAGE.
+
+#include "etl/experimental/meta/type.hpp"
+
+#include "etl/cstdint.hpp"
+#include "etl/type_traits.hpp"
+
+#include "catch2/catch_template_test_macros.hpp"
+
+namespace meta = etl::experimental::meta;
+
+TEST_CASE("experimental/meta: int_c", "[experimental][meta]")
+{
+    STATIC_REQUIRE(meta::int_c<0> + meta::int_c<0> == meta::int_c<0>);
+    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<1> == meta::int_c<2>);
+    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<2> == meta::int_c<3>);
+    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<3> == meta::int_c<4>);
+}
+
+TEMPLATE_TEST_CASE("experimental/meta: is_pointer", "[experimental][meta]",
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    STATIC_REQUIRE(etl::is_same_v<typename meta::type<T>::name, T>);
+    STATIC_REQUIRE(!meta::is_pointer(meta::type<T> {}));
+    STATIC_REQUIRE(meta::is_pointer(meta::type<T*> {}));
+    STATIC_REQUIRE(meta::is_pointer(meta::add_pointer(meta::type<T> {})));
+}
+
+TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple", "[experimental][meta]",
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    auto t  = meta::make_type_tuple<int, T>();
+    STATIC_REQUIRE(etl::is_same_v<decltype(etl::get<0>(t))::name, int>);
+    STATIC_REQUIRE(etl::is_same_v<decltype(etl::get<1>(t))::name, T>);
+}

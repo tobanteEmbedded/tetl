@@ -31,6 +31,7 @@
 namespace etl {
 template <typename First, typename... Rest>
 struct tuple : public tuple<Rest...> {
+    tuple() = default;
     tuple(First f, Rest... rest) : tuple<Rest...>(rest...), first(f) { }
 
     First first;
@@ -38,6 +39,7 @@ struct tuple : public tuple<Rest...> {
 
 template <typename First>
 struct tuple<First> {
+    tuple() = default;
     tuple(First f) : first(f) { }
 
     First first;

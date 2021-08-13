@@ -51,6 +51,8 @@ target_sources(${PROJECT_NAME}
 
         experimental/dsp/test_dsp.cpp
 
+        experimental/meta/test_type.cpp
+
         experimental/net/test_buffer.cpp
         experimental/net/test_byte_order.cpp
 
