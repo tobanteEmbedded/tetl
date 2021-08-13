@@ -76,7 +76,10 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 
-add_executable(${PROJECT_NAME}_testing experimental/testing/test_testing.cpp)
+add_executable(${PROJECT_NAME}_testing 
+    experimental/testing/test_main.cpp
+    experimental/testing/test_test_case.cpp
+)
 add_test(NAME ${PROJECT_NAME}_testing COMMAND ${PROJECT_NAME}_testing)
 target_link_libraries(${PROJECT_NAME}_testing
     PRIVATE

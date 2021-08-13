@@ -74,6 +74,18 @@ struct auto_reg {
     }
 };
 
+inline auto current_session() -> session&
+{
+    static auto buffer      = ::etl::test::session_buffer<16> {};
+    static auto testSession = ::etl::test::session { buffer, "foo" };
+    return testSession;
+}
+
 } // namespace etl::test
+
+// #define TEST_DETAIL_SESSION(name, size)                                        \
+//     static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
+//     static auto g_session = ::etl::test::session { g_session_buffer, name }
+// #define TEST_SESSION(name, size)        TEST_DETAIL_SESSION(name, size)
 
 #endif // ETL_EXPERIMENTAL_TESTING_SESSION_HPP

@@ -23,8 +23,6 @@
 
 #include "etl/experimental/testing/testing.hpp"
 
-TEST_SESSION("test_testing.cpp", 16U);
-
 TEST_CASE("A", "")
 {
     CHECK_EQUAL(1, 1);
@@ -47,9 +45,4 @@ TEST_CASE("C", "")
 {
     REQUIRE(143 == 143);
     REQUIRE_FALSE(42 == 41);
-}
-
-auto main(int argc, char const** argv) -> int
-{
-    return TEST_SESSION_RUN(argc, argv);
 }

@@ -28,6 +28,7 @@
 
 #include "etl/experimental/testing/assertion_handler.hpp"
 #include "etl/experimental/testing/name_and_tags.hpp"
+#include "etl/experimental/testing/section.hpp"
 #include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 
@@ -37,21 +38,11 @@
 #define TEST_DETAIL_IGNORE_BUT_WARN(...)
 #endif
 
-#define TEST_DETAIL_SESSION(name, size)                                        \
-    static auto g_session_buffer = ::etl::test::session_buffer<size> {};       \
-    static auto g_session = ::etl::test::session { g_session_buffer, name }
-
-#define TEST_DETAIL_SESSION_RUN(argc, argv)                                    \
-    [argc, argv] {                                                             \
-        ::etl::ignore_unused(argc, argv);                                      \
-        return g_session.run_all();                                            \
-    }()
-
 #define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
     static auto tc(::etl::test::context& session_context)->void;               \
     namespace {                                                                \
     auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                      \
-        g_session,                                                             \
+        ::etl::test::current_session(),                                        \
         ::etl::test::name_and_tags { __VA_ARGS__ },                            \
         tc,                                                                    \
     };                                                                         \
@@ -61,7 +52,15 @@
 #define TEST_DETAIL_TEST_CASE(...)                                             \
     TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
 
-#define TEST_DETAIL_SECTION2(tc, ...) if (true)
+#define TEST_DETAIL_SECTION2(tcs, ...)                                         \
+    if (::etl::test::section tcs {                                             \
+            ::etl::test::section_info {                                        \
+                TEST_DETAIL_SOURCE_LINE_INFO,                                  \
+                etl::string_view { __VA_ARGS__ },                              \
+            },                                                                 \
+            true,                                                              \
+        };                                                                     \
+        static_cast<bool>(tcs))
 
 #define TEST_DETAIL_SECTION(...)                                               \
     TEST_DETAIL_SECTION2(TETL_ANONYMOUS_VAR(tc_section), __VA_ARGS__)
@@ -79,9 +78,6 @@
     } while (false)
 
 // clang-format off
-#define TEST_SESSION(name, size)        TEST_DETAIL_SESSION(name, size)
-#define TEST_SESSION_RUN(argc, argv)    TEST_DETAIL_SESSION_RUN(argc, argv)
-
 #define TEST_CASE(...)  TEST_DETAIL_TEST_CASE(__VA_ARGS__)
 
 #define SECTION(...)  TEST_DETAIL_SECTION(__VA_ARGS__)

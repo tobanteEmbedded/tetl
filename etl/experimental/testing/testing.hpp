@@ -35,5 +35,6 @@
 #include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 #include "etl/experimental/testing/test_case.hpp"
+#include "etl/experimental/testing/totals.hpp"
 
 #endif // ETL_EXPERIMENTAL_TESTING_TESTING_HPP
