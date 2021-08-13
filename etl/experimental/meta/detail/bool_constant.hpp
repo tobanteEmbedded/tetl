@@ -33,13 +33,15 @@ using etl::false_type;
 using etl::true_type;
 
 template <bool L, bool R>
-constexpr auto operator==(bool_constant<L> /*l*/, bool_constant<R> /*r*/)
+[[nodiscard]] constexpr auto operator==(
+    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
 {
     return bool_constant<L == R> {};
 }
 
 template <bool L, bool R>
-constexpr auto operator!=(bool_constant<L> /*l*/, bool_constant<R> /*r*/)
+[[nodiscard]] constexpr auto operator!=(
+    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
 {
     return bool_constant<L != R> {};
 }

@@ -24,10 +24,25 @@
 #ifndef ETL_EXPERIMENTAL_META_DETAIL_FOR_EACH_HPP
 #define ETL_EXPERIMENTAL_META_DETAIL_FOR_EACH_HPP
 
+#include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
+
+template <etl::size_t I = 0, typename FuncT, typename... Tp>
+constexpr auto for_each(etl::tuple<Tp...>&, FuncT)
+    -> etl::enable_if_t<I == sizeof...(Tp), void>
+{
+}
+
+template <etl::size_t I = 0, typename FuncT, typename... Tp>
+constexpr auto for_each(etl::tuple<Tp...>& t, FuncT f)
+    -> etl::enable_if_t<(I < sizeof...(Tp)), void>
+{
+    f(etl::get<I>(t));
+    for_each<I + 1, FuncT, Tp...>(t, f);
+}
 
 } // namespace etl::experimental::meta
 

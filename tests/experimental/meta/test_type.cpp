@@ -56,6 +56,28 @@ TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple", "[experimental][meta]",
 {
     using T = TestType;
     auto t  = meta::make_type_tuple<int, T>();
-    STATIC_REQUIRE(etl::is_same_v<decltype(etl::get<0>(t))::name, int>);
-    STATIC_REQUIRE(etl::is_same_v<decltype(etl::get<1>(t))::name, T>);
+    STATIC_REQUIRE(
+        etl::is_same_v<typename decltype(etl::get<0>(t))::name, int>);
+    STATIC_REQUIRE(etl::is_same_v<typename decltype(etl::get<1>(t))::name, T>);
+}
+
+TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using etl::is_same_v;
+    using T = TestType;
+
+    auto t       = meta::make_type_tuple<int, T, float, double>();
+    auto counter = 0;
+    meta::for_each(t, [&counter](auto const& x) {
+        using type_t = typename etl::decay_t<decltype(x)>;
+        if (counter == 0) { REQUIRE(is_same_v<type_t::name, int>); }
+        if (counter == 1) { REQUIRE(is_same_v<type_t::name, T>); }
+        if (counter == 2) { REQUIRE(is_same_v<type_t::name, float>); }
+        if (counter == 3) { REQUIRE(is_same_v<type_t::name, double>); }
+        counter++;
+    });
+
+    REQUIRE(counter == 4);
 }

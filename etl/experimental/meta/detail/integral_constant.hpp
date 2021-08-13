@@ -31,19 +31,22 @@ namespace etl::experimental::meta {
 using etl::integral_constant;
 
 template <typename V, V v, typename U, U u>
-constexpr auto operator+(integral_constant<V, v>, integral_constant<U, u>)
+[[nodiscard]] constexpr auto operator+(
+    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
 {
     return integral_constant<decltype(v + u), v + u> {};
 }
 
 template <typename V, V v, typename U, U u>
-constexpr auto operator==(integral_constant<V, v>, integral_constant<U, u>)
+[[nodiscard]] constexpr auto operator==(
+    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
 {
     return integral_constant<bool, v == u> {};
 }
 
 template <typename V, V v, typename U, U u>
-constexpr auto operator!=(integral_constant<V, v>, integral_constant<U, u>)
+[[nodiscard]] constexpr auto operator!=(
+    integral_constant<V, v> /*l*/, integral_constant<U, u> /*r*/) noexcept
 {
     return integral_constant<bool, v != u> {};
 }
