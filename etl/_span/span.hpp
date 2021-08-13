@@ -225,11 +225,11 @@ struct span {
 
     /// \brief Obtains a span that is a view over the first Count elements of
     /// this span. The behavior is undefined if Count > size().
-    [[nodiscard]] constexpr auto first(size_type Count) const
+    [[nodiscard]] constexpr auto first(size_type count) const
         -> span<element_type, dynamic_extent>
     {
-        TETL_ASSERT(!(Count > size()));
-        return { data(), static_cast<size_type>(Count) };
+        TETL_ASSERT(!(count > size()));
+        return { data(), static_cast<size_type>(count) };
     }
 
     /// \brief Obtains a span that is a view over the last Count elements of
@@ -243,11 +243,11 @@ struct span {
 
     /// \brief Obtains a span that is a view over the last Count elements of
     /// this span. The behavior is undefined if Count > size().
-    [[nodiscard]] constexpr auto last(size_type Count) const
+    [[nodiscard]] constexpr auto last(size_type count) const
         -> span<element_type, dynamic_extent>
     {
-        TETL_ASSERT(!(Count > size()));
-        return { data() + (size() - Count), static_cast<size_type>(Count) };
+        TETL_ASSERT(!(count > size()));
+        return { data() + (size() - count), static_cast<size_type>(count) };
     }
 
 private:
