@@ -72,10 +72,10 @@ TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
     auto counter = 0;
     meta::for_each(t, [&counter](auto const& x) {
         using type_t = typename etl::decay_t<decltype(x)>;
-        if (counter == 0) { REQUIRE(is_same_v<type_t::name, int>); }
-        if (counter == 1) { REQUIRE(is_same_v<type_t::name, T>); }
-        if (counter == 2) { REQUIRE(is_same_v<type_t::name, float>); }
-        if (counter == 3) { REQUIRE(is_same_v<type_t::name, double>); }
+        if (counter == 0) { REQUIRE(is_same_v<typename type_t::name, int>); }
+        if (counter == 1) { REQUIRE(is_same_v<typename type_t::name, T>); }
+        if (counter == 2) { REQUIRE(is_same_v<typename type_t::name, float>); }
+        if (counter == 3) { REQUIRE(is_same_v<typename type_t::name, double>); }
         counter++;
     });
 
