@@ -27,6 +27,7 @@
 #include "etl/_algorithm/fill.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/rotate.hpp"
+#include "etl/_cstring/strlen.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/distance.hpp"
@@ -39,8 +40,6 @@
 #include "etl/_strings/find_first_not_of.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_warning/ignore_unused.hpp"
-
-#include "etl/cstring.hpp"
 
 namespace etl {
 

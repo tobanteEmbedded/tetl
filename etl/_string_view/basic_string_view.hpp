@@ -30,6 +30,9 @@
 #include "etl/_assert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_cstring/memcpy.hpp"
+#include "etl/_cstring/memset.hpp"
+#include "etl/_cstring/strlen.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"
@@ -41,8 +44,6 @@
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
 #include "etl/_type_traits/decay.hpp"
-
-#include "etl/cstring.hpp"
 
 namespace etl {
 

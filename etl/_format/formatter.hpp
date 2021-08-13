@@ -25,12 +25,11 @@
 #define TETL_FORMAT_FORMATTER_HPP
 
 #include "etl/_algorithm/copy.hpp"
+#include "etl/_cstring/strlen.hpp"
 #include "etl/_format/context.hpp"
 #include "etl/_string/static_string.hpp"
 #include "etl/_string_view/string_view.hpp"
-
-#include "etl/cstdlib.hpp"
-#include "etl/numeric.hpp"
+#include "etl/_strings/conversion.hpp"
 
 namespace etl {
 /// \brief The enabled specializations of formatter define formatting rules for
