@@ -32,11 +32,42 @@
 #include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 
+#include "etl/experimental/meta/all.hpp"
+
+namespace meta = ::etl::experimental::meta;
+
 // The goal of this macro is to avoid evaluation of the arguments, but
 // still have the compiler warn on problems inside...
 #if !defined(TEST_DETAIL_IGNORE_BUT_WARN)
 #define TEST_DETAIL_IGNORE_BUT_WARN(...)
 #endif
+
+#define TEST_DETAIL_TEMPLATE_TEST_CASE2(name, tags, tc, ...)                   \
+    namespace tc {                                                             \
+    template <typename TestType>                                               \
+    static auto test_func() -> void;                                           \
+    static auto runner = []() {                                                \
+        TETL_EXPAND(TETL_STRING_LITERAL_ARRAY(type_names, __VA_ARGS__));       \
+        auto types = ::meta::make_type_tuple<TETL_EXPAND(__VA_ARGS__)>();      \
+        ::meta::for_each_indexed(types, [](auto idx, auto const& t) {          \
+            using type_t = ::etl::decay_t<decltype(t)>;                        \
+            ::etl::test::current_session().add_test(                           \
+                ::etl::test::name_and_tags {                                   \
+                    name,                                                      \
+                    tags,                                                      \
+                },                                                             \
+                ::tc::test_func<type_t>);                                      \
+            (void)type_names[idx];                                             \
+        });                                                                    \
+        return true;                                                           \
+    }();                                                                       \
+    }                                                                          \
+    template <typename TestType>                                               \
+    static auto tc::test_func()->void
+
+#define TEST_DETAIL_TEMPLATE_TEST_CASE(name, tags, ...)                        \
+    TEST_DETAIL_TEMPLATE_TEST_CASE2(                                           \
+        name, tags, TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
 
 #define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
     static auto tc()->void;                                                    \
@@ -77,6 +108,7 @@
 
 // clang-format off
 #define TEST_CASE(...)  TEST_DETAIL_TEST_CASE(__VA_ARGS__)
+#define TEMPLATE_TEST_CASE(...) TETL_EXPAND(TEST_DETAIL_TEMPLATE_TEST_CASE(__VA_ARGS__))
 
 #define SECTION(...)  TEST_DETAIL_SECTION(__VA_ARGS__)
 

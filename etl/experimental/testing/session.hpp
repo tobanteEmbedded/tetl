@@ -75,8 +75,8 @@ struct session {
     [[nodiscard]] auto stats() const -> session_stats const& { return stats_; }
 
 private:
-    using section_stack_t
-        = etl::stack<etl::string_view, etl::static_vector<etl::string_view, 2>>;
+    // using section_stack_t
+    //  = etl::stack<etl::string_view, etl::static_vector<etl::string_view, 2>>;
     etl::string_view name_;
 
     test_case* first_    = nullptr;
@@ -84,7 +84,7 @@ private:
     ::etl::size_t count_ = 0;
 
     test_case* current_ { nullptr };
-    section_stack_t sections_ {};
+    // section_stack_t sections_ {};
     bool shouldTerminate_ { false };
     session_stats stats_ {};
 };

@@ -62,3 +62,11 @@ TEST_CASE("C", "")
     REQUIRE_FALSE(42 == 41);
     REQUIRE_FALSE(42 == 41);
 }
+
+TEMPLATE_TEST_CASE("template test", "", int)
+{
+    using T = TestType;
+
+    // REQUIRE(T(42) == T(42));
+    // REQUIRE_FALSE(T(42) == T(41));
+}
