@@ -26,6 +26,7 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_algorithm/swap.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_new/operator.hpp"

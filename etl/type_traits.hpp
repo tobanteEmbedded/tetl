@@ -88,6 +88,7 @@
 #include "etl/_type_traits/is_nothrow_move_assignable.hpp"
 #include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
+#include "etl/_type_traits/is_nothrow_swappable_with.hpp"
 #include "etl/_type_traits/is_null_pointer.hpp"
 #include "etl/_type_traits/is_object.hpp"
 #include "etl/_type_traits/is_pointer.hpp"
