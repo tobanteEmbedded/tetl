@@ -1,3 +1,5 @@
+
+
 // Copyright (c) Tobias Hienzsch. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -21,24 +23,33 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_UTILITY_HPP
-#define TETL_UTILITY_HPP
+#ifndef TETL_UTILITY_MOVE_IF_NOEXCEPT_HPP
+#define TETL_UTILITY_MOVE_IF_NOEXCEPT_HPP
 
-#include "etl/_config/all.hpp"
-
-#include "etl/_utility/as_const.hpp"
-#include "etl/_utility/cmp.hpp"
-#include "etl/_utility/exchange.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/in_place.hpp"
-#include "etl/_utility/in_place_index.hpp"
-#include "etl/_utility/in_place_type.hpp"
-#include "etl/_utility/in_range.hpp"
+#include "etl/_type_traits/conditional.hpp"
+#include "etl/_type_traits/is_copy_constructible.hpp"
+#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_utility/move.hpp"
-#include "etl/_utility/move_if_noexcept.hpp"
-#include "etl/_utility/pair.hpp"
-#include "etl/_utility/piecewise_construct.hpp"
-#include "etl/_utility/swap.hpp"
-#include "etl/_utility/to_underlying.hpp"
 
-#endif // TETL_UTILITY_HPP
+namespace etl {
+
+namespace detail {
+template <typename T>
+inline constexpr auto move_if_noexcept_cond
+    = is_nothrow_move_constructible_v<T>&& is_copy_constructible_v<T>;
+} // namespace detail
+
+/// \brief  Conditionally convert a value to an rvalue.
+/// \details Same as etl::move unless the type's move constructor could throw
+/// and the  type is copyable, in which case an lvalue-reference is returned
+/// instead.
+template <typename T>
+[[nodiscard]] constexpr auto move_if_noexcept(T& x) noexcept
+    -> conditional_t<detail::move_if_noexcept_cond<T>, T const&, T&&>
+{
+    return etl::move(x);
+}
+
+} // namespace etl
+
+#endif // TETL_UTILITY_MOVE_IF_NOEXCEPT_HPP
