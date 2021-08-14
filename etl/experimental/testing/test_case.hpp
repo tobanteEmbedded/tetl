@@ -33,6 +33,7 @@ using test_func_t = void (*)();
 struct test_case {
     name_and_tags info;
     test_func_t func;
+    etl::string_view type_name {};
 };
 
 } // namespace etl::test

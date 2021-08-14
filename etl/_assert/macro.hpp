@@ -87,7 +87,7 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
                 __LINE__, /*line of assertion*/                                \
                 __FILE__, /*source file*/                                      \
                 ::etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,        \
-                ::etl::is_hosted() ? TETL_STRINGIFY(exp) : nullptr,            \
+                ::etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,         \
             };                                                                 \
             ::etl::detail::tetl_call_assert_handler(msg);                      \
         }                                                                      \

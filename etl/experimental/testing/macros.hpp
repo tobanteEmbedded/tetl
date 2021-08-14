@@ -46,9 +46,9 @@ namespace meta = ::etl::experimental::meta;
     namespace tc {                                                             \
     template <typename TestType>                                               \
     static auto test_func() -> void;                                           \
-    TETL_EXPAND(TETL_STRING_LITERAL_ARRAY(type_names, __VA_ARGS__));           \
+    TETL_PP_EXPAND(TETL_PP_STRING_VIEW_ARRAY(type_names, __VA_ARGS__));        \
     static auto runner = []() {                                                \
-        auto types = ::meta::make_type_tuple<TETL_EXPAND(__VA_ARGS__)>();      \
+        auto types = ::meta::make_type_tuple<TETL_PP_EXPAND(__VA_ARGS__)>();   \
         ::meta::for_each_indexed(types, [](auto idx, auto const& t) {          \
             using type_t = ::etl::decay_t<decltype(t)>;                        \
             ::etl::test::current_session().add_test(                           \
@@ -66,12 +66,12 @@ namespace meta = ::etl::experimental::meta;
 
 #define TEST_DETAIL_TEMPLATE_TEST_CASE(name, tags, ...)                        \
     TEST_DETAIL_TEMPLATE_TEST_CASE2(                                           \
-        name, tags, TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
+        name, tags, TETL_PP_UNIQUE_NAME(tc), __VA_ARGS__)
 
 #define TEST_DETAIL_TEST_CASE2(tc, ...)                                        \
     static auto tc()->void;                                                    \
     namespace {                                                                \
-    auto TETL_ANONYMOUS_VAR(tc) = ::etl::test::auto_reg {                      \
+    auto TETL_PP_UNIQUE_NAME(tc) = ::etl::test::auto_reg {                     \
         ::etl::test::name_and_tags { __VA_ARGS__ },                            \
         tc,                                                                    \
     };                                                                         \
@@ -79,7 +79,7 @@ namespace meta = ::etl::experimental::meta;
     static auto tc()->void
 
 #define TEST_DETAIL_TEST_CASE(...)                                             \
-    TEST_DETAIL_TEST_CASE2(TETL_ANONYMOUS_VAR(tc), __VA_ARGS__)
+    TEST_DETAIL_TEST_CASE2(TETL_PP_UNIQUE_NAME(tc), __VA_ARGS__)
 
 #define TEST_DETAIL_SECTION2(tcs, ...)                                         \
     if (::etl::test::section tcs {                                             \
@@ -92,7 +92,7 @@ namespace meta = ::etl::experimental::meta;
         static_cast<bool>(tcs))
 
 #define TEST_DETAIL_SECTION(...)                                               \
-    TEST_DETAIL_SECTION2(TETL_ANONYMOUS_VAR(tc_section), __VA_ARGS__)
+    TEST_DETAIL_SECTION2(TETL_PP_UNIQUE_NAME(tc_section), __VA_ARGS__)
 
 #define TEST_DETAIL_CHECK(disposition, ...)                                    \
     do {                                                                       \
@@ -100,14 +100,14 @@ namespace meta = ::etl::experimental::meta;
         ::etl::test::assertion_handler handler {                               \
             TEST_DETAIL_SOURCE_LINE_INFO,                                      \
             disposition,                                                       \
-            TETL_STRINGIFY(__VA_ARGS__),                                       \
+            TETL_PP_STRINGIFY(__VA_ARGS__),                                    \
             static_cast<bool>(!!(__VA_ARGS__)),                                \
         };                                                                     \
     } while (false)
 
 // clang-format off
 #define TEST_CASE(...)  TEST_DETAIL_TEST_CASE(__VA_ARGS__)
-#define TEMPLATE_TEST_CASE(...) TETL_EXPAND(TEST_DETAIL_TEMPLATE_TEST_CASE(__VA_ARGS__))
+#define TEMPLATE_TEST_CASE(...) TETL_PP_EXPAND(TEST_DETAIL_TEMPLATE_TEST_CASE(__VA_ARGS__))
 
 #define SECTION(...)  TEST_DETAIL_SECTION(__VA_ARGS__)
 

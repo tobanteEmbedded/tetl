@@ -113,10 +113,10 @@ inline constexpr auto session::end() -> test_case*
 inline constexpr auto session::add_test(name_and_tags const& spec,
     test_func_t func, ::etl::string_view type_name) -> void
 {
-    ::etl::ignore_unused(type_name);
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
         first_[count_].info.tags = spec.tags;
+        first_[count_].type_name = type_name;
         first_[count_++].func    = func;
     }
 }
@@ -127,12 +127,14 @@ inline auto session::run_all() -> int
 
     for (auto& tc : (*this)) {
         if (terminate()) {
-            ::printf("%-10s %-10s\n", "Skip:", tc.info.name.data());
+            ::printf("%-10s %-10s %-10s\n", "Skip:", tc.info.name.data(),
+                tc.type_name.empty() ? "" : tc.type_name.data());
             continue;
         }
 
         current_test(&tc);
-        ::printf("%-10s %-10s\n", "Run:", tc.info.name.data());
+        ::printf("%-10s %-10s %-10s\n", "Run:", tc.info.name.data(),
+            tc.type_name.empty() ? "" : tc.type_name.data());
         tc.func();
 
         if (terminate()) {
@@ -175,8 +177,8 @@ inline auto session::terminate() const -> bool { return shouldTerminate_; }
 
 inline auto current_session() -> session&
 {
-    static auto buffer      = ::etl::test::session_buffer<16> {};
-    static auto testSession = ::etl::test::session { buffer, "foo" };
+    static auto buffer      = ::etl::test::session_buffer<128> {};
+    static auto testSession = ::etl::test::session { buffer, "DUMMY SESSION" };
     return testSession;
 }
 
