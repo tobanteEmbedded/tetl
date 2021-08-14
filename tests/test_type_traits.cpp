@@ -24,6 +24,7 @@
 
 #include "etl/cstdint.hpp"
 #include "etl/map.hpp"
+#include "etl/utility.hpp"
 #include "etl/vector.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
@@ -1371,7 +1372,6 @@ TEMPLATE_TEST_CASE("type_traits: is_swappable", "[type_traits]", bool,
     using etl::is_swappable_v;
 
     STATIC_REQUIRE(is_swappable_v<T>);
-    STATIC_REQUIRE(is_swappable_v<T volatile>);
 
     STATIC_REQUIRE(is_swappable_v<T*>);
     STATIC_REQUIRE(is_swappable_v<T const*>);

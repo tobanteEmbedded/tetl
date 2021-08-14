@@ -24,11 +24,11 @@
 #ifndef TETL_MUTEX_UNIQUE_LOCK_HPP
 #define TETL_MUTEX_UNIQUE_LOCK_HPP
 
-#include "etl/_algorithm/swap.hpp"
 #include "etl/_chrono/duration.hpp"
 #include "etl/_chrono/time_point.hpp"
 #include "etl/_mutex/tags.hpp"
 #include "etl/_utility/exchange.hpp"
+#include "etl/_utility/swap.hpp"
 
 namespace etl {
 

@@ -24,7 +24,7 @@
 #ifndef TETL_ALGORITHM_ITER_SWAP_HPP
 #define TETL_ALGORITHM_ITER_SWAP_HPP
 
-#include "etl/_algorithm/swap.hpp"
+#include "etl/_utility/swap.hpp"
 
 namespace etl {
 

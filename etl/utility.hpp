@@ -37,6 +37,7 @@
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/pair.hpp"
 #include "etl/_utility/piecewise_construct.hpp"
+#include "etl/_utility/swap.hpp"
 #include "etl/_utility/to_underlying.hpp"
 
 #endif // TETL_UTILITY_HPP

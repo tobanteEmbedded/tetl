@@ -94,7 +94,6 @@
 #include "etl/_algorithm/sort.hpp"
 #include "etl/_algorithm/stable_partition.hpp"
 #include "etl/_algorithm/stable_sort.hpp"
-#include "etl/_algorithm/swap.hpp"
 #include "etl/_algorithm/swap_ranges.hpp"
 #include "etl/_algorithm/transform.hpp"
 #include "etl/_algorithm/unique.hpp"

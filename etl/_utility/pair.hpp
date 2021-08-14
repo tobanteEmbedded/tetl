@@ -24,7 +24,6 @@
 #ifndef TETL_UTILITY_PAIR_HPP
 #define TETL_UTILITY_PAIR_HPP
 
-#include "etl/_algorithm/swap.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
@@ -38,6 +37,7 @@
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
+#include "etl/_utility/swap.hpp"
 
 namespace etl {
 
