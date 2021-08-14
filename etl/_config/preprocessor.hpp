@@ -64,8 +64,8 @@
 
 #define TETL_PP_FOREACH(MACRO, ...)                                            \
     TETL_PP_FOREACH_(TETL_PP_NUM_ARGS(__VA_ARGS__), MACRO, __VA_ARGS__)
-#define TETL_PP_FOREACH_(N, M, ...) TETL_PP_FOREACH__(N, M, __VA_ARGS__)
-#define TETL_PP_FOREACH__(N, M, ...) TETL_PP_FOREACH_##N(M, __VA_ARGS__)
+#define TETL_PP_FOREACH_(N, M, ...) TETL_PP_FOREACH_IMPL(N, M, __VA_ARGS__)
+#define TETL_PP_FOREACH_IMPL(N, M, ...) TETL_PP_FOREACH_##N(M, __VA_ARGS__)
 #define TETL_PP_FOREACH_1(M, A) M(A)
 #define TETL_PP_FOREACH_2(M, A, ...) M(A) TETL_PP_FOREACH_1(M, __VA_ARGS__)
 #define TETL_PP_FOREACH_3(M, A, ...) M(A) TETL_PP_FOREACH_2(M, __VA_ARGS__)
