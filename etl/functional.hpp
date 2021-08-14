@@ -48,6 +48,7 @@
 #include "etl/_functional/multiplies.hpp"
 #include "etl/_functional/negate.hpp"
 #include "etl/_functional/not_equal_to.hpp"
+#include "etl/_functional/placeholder.hpp"
 #include "etl/_functional/plus.hpp"
 #include "etl/_functional/reference_wrapper.hpp"
 
