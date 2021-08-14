@@ -24,6 +24,7 @@
 #ifndef TETL_FUNCTIONAL_HASH_HPP
 #define TETL_FUNCTIONAL_HASH_HPP
 
+#include "etl/_bit/bit_cast.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 
@@ -233,7 +234,7 @@ template <typename T>
 struct hash<T*> {
     [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t
     {
-        return reinterpret_cast<etl::size_t>(val);
+        return etl::bit_cast<etl::size_t>(val);
     }
 };
 
