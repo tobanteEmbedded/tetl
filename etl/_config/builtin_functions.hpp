@@ -124,6 +124,12 @@
     ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
+#if __has_builtin(__builtin_addressof)
+#define TETL_BUILTIN_ADDRESSOF(x) __builtin_addressof(x)
+#else
+#define TETL_BUILTIN_ADDRESSOF(x) ::etl::detail::builtin_addressof_fallback(x)
+#endif
+
 #if __has_builtin(__builtin_is_constant_evaluated)
 #define TETL_IS_CONSTANT_EVALUATED() __builtin_is_constant_evaluated()
 #else
@@ -216,6 +222,14 @@ constexpr auto builtin_signbit_fallback(T arg) noexcept -> bool
 {
     return arg == T(-0.0) || arg < T(0);
 }
+
+template <typename T>
+auto builtin_addressof_fallback(T& arg) noexcept -> T*
+{
+    return reinterpret_cast<T*>(
+        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+}
+
 } // namespace etl::detail
 
 #endif // TETL_CONFIG_BUILTIN_FUNCTIONS_HPP

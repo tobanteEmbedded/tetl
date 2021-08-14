@@ -24,6 +24,7 @@
 #ifndef TETL_MEMORY_ADDRESSOF_HPP
 #define TETL_MEMORY_ADDRESSOF_HPP
 
+#include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_object.hpp"
 
@@ -35,8 +36,7 @@ namespace etl {
 template <typename T>
 auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
 {
-    return reinterpret_cast<T*>(
-        &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
+    return TETL_BUILTIN_ADDRESSOF(arg);
 }
 
 /// \group addressof
@@ -48,7 +48,7 @@ auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
 
 /// \group addressof
 template <typename T>
-auto addressof(T const&&) = delete;
+auto addressof(T const&& /*ignore*/) = delete;
 
 } // namespace etl
 
