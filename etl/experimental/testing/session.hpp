@@ -62,7 +62,7 @@ struct session {
     [[nodiscard]] auto run_all() -> int;
 
     constexpr auto add_test(name_and_tags const& spec, test_func_t func,
-        ::etl::string_view type_name = {}) -> void;
+        ::etl::string_view typeName = {}) -> void;
 
     auto current_test(test_case* tc) -> void;
 
