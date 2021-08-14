@@ -46,8 +46,8 @@ namespace meta = ::etl::experimental::meta;
     namespace tc {                                                             \
     template <typename TestType>                                               \
     static auto test_func() -> void;                                           \
+    TETL_EXPAND(TETL_STRING_LITERAL_ARRAY(type_names, __VA_ARGS__));           \
     static auto runner = []() {                                                \
-        TETL_EXPAND(TETL_STRING_LITERAL_ARRAY(type_names, __VA_ARGS__));       \
         auto types = ::meta::make_type_tuple<TETL_EXPAND(__VA_ARGS__)>();      \
         ::meta::for_each_indexed(types, [](auto idx, auto const& t) {          \
             using type_t = ::etl::decay_t<decltype(t)>;                        \
@@ -56,8 +56,7 @@ namespace meta = ::etl::experimental::meta;
                     name,                                                      \
                     tags,                                                      \
                 },                                                             \
-                ::tc::test_func<type_t>);                                      \
-            (void)type_names[idx];                                             \
+                ::tc::test_func<type_t>, ::tc::type_names[idx]);               \
         });                                                                    \
         return true;                                                           \
     }();                                                                       \

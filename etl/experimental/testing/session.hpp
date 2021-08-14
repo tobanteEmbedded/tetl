@@ -61,8 +61,8 @@ struct session {
 
     [[nodiscard]] auto run_all() -> int;
 
-    constexpr auto add_test(name_and_tags const& spec, test_func_t func)
-        -> void;
+    constexpr auto add_test(name_and_tags const& spec, test_func_t func,
+        ::etl::string_view type_name = {}) -> void;
 
     auto current_test(test_case* tc) -> void;
 
@@ -110,9 +110,10 @@ inline constexpr auto session::end() -> test_case*
     return ::etl::next(first_, static_cast<::etl::ptrdiff_t>(count_));
 }
 
-inline constexpr auto session::add_test(
-    name_and_tags const& spec, test_func_t func) -> void
+inline constexpr auto session::add_test(name_and_tags const& spec,
+    test_func_t func, ::etl::string_view type_name) -> void
 {
+    ::etl::ignore_unused(type_name);
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
         first_[count_].info.tags = spec.tags;
