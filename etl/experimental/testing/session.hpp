@@ -111,12 +111,12 @@ inline constexpr auto session::end() -> test_case*
 }
 
 inline constexpr auto session::add_test(name_and_tags const& spec,
-    test_func_t func, ::etl::string_view type_name) -> void
+    test_func_t func, ::etl::string_view typeName) -> void
 {
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
         first_[count_].info.tags = spec.tags;
-        first_[count_].type_name = type_name;
+        first_[count_].type_name = typeName;
         first_[count_++].func    = func;
     }
 }
