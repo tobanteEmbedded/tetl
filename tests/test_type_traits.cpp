@@ -1551,3 +1551,18 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_copy_constructible",
     STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC volatile>);
     STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC const volatile>);
 }
+
+TEMPLATE_TEST_CASE("type_traits: invoke_result", "[type_traits]", etl::uint8_t,
+    etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
+    etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    struct S {
+        auto operator()(char /*unused*/, int& /*unused*/) -> T { return T(2); }
+        auto operator()(int /*unused*/) -> float { return 1.0f; }
+    };
+
+    STATIC_REQUIRE(etl::is_same_v<etl::invoke_result_t<S, char, int&>, T>);
+    STATIC_REQUIRE(etl::is_same_v<etl::invoke_result_t<S, int>, float>);
+}

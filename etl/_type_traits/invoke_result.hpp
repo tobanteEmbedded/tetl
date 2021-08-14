@@ -30,6 +30,7 @@
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_base_of.hpp"
 #include "etl/_type_traits/is_function.hpp"
+#include "etl/_utility/forward.hpp"
 
 namespace etl {
 
@@ -38,63 +39,50 @@ struct reference_wrapper;
 
 namespace detail {
 template <typename T>
-constexpr auto xforward(remove_reference_t<T>&& param) noexcept -> T&&
-{
-    return static_cast<T&&>(param);
-}
-
-template <typename>
-constexpr bool is_reference_wrapper_v = false;
-
+struct is_reference_wrapper : etl::false_type {
+};
 template <typename U>
-constexpr bool is_reference_wrapper_v<etl::reference_wrapper<U>> = true;
+struct is_reference_wrapper<etl::reference_wrapper<U>> : etl::true_type {
+};
 
+// clang-format off
 template <typename T>
 struct invoke_impl {
     template <typename F, typename... Args>
-    static auto call(F&& f, Args&&... args)
-        -> decltype(xforward<F>(f)(xforward<Args>(args)...));
+    static auto call(F&& f, Args&&... args) -> decltype(etl::forward<F>(f)(etl::forward<Args>(args)...));
 };
 
 template <typename B, typename MT>
 struct invoke_impl<MT B::*> {
-    template <typename T, typename Td = ::etl::decay_t<T>,
-        typename = ::etl::enable_if_t<::etl::is_base_of_v<B, Td>>>
+    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<etl::is_base_of_v<B, Td>>>
     static auto get(T&& t) -> T&&;
 
-    template <typename T, typename Td = ::etl::decay_t<T>,
-        typename = ::etl::enable_if_t<is_reference_wrapper_v<Td>>>
+    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<is_reference_wrapper<Td>::value>>
     static auto get(T&& t) -> decltype(t.get());
 
-    template <typename T, typename Td = ::etl::decay_t<T>,
-        typename = ::etl::enable_if_t<!::etl::is_base_of_v<B, Td>>,
-        typename = ::etl::enable_if_t<!is_reference_wrapper_v<Td>>>
-    static auto get(T&& t) -> decltype(*xforward<T>(t));
+    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<!etl::is_base_of_v<B, Td>>, typename = etl::enable_if_t<!is_reference_wrapper<Td>::value>>
+    static auto get(T&& t) -> decltype(*etl::forward<T>(t));
 
-    template <typename T, typename... Args, typename MT1,
-        typename = ::etl::enable_if_t<::etl::is_function_v<MT1>>>
-    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((
-        invoke_impl::get(xforward<T>(t)).*pmf)(xforward<Args>(args)...));
+    template <typename T, typename... Args, typename MT1, typename = etl::enable_if_t<etl::is_function_v<MT1>>>
+    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((invoke_impl::get(etl::forward<T>(t)).*pmf)(etl::forward<Args>(args)...));
 
     template <typename T>
-    static auto call(MT B::*pmd, T&& t)
-        -> decltype(invoke_impl::get(xforward<T>(t)).*pmd);
+    static auto call(MT B::*pmd, T&& t) -> decltype(invoke_impl::get(etl::forward<T>(t)).*pmd);
 };
 
-template <typename F, typename... Args, typename Fd = ::etl::decay_t<F>>
-auto INVOKE(F&& f, Args&&... args)
-    -> decltype(invoke_impl<Fd>::call(xforward<F>(f), xforward<Args>(args)...));
+template <typename F, typename... Args, typename Fd = etl::decay_t<F>>
+auto INVOKE(F&& f, Args&&... args) -> decltype(invoke_impl<Fd>::call(etl::forward<F>(f), etl::forward<Args>(args)...));
 
 template <typename AlwaysVoid, typename, typename...>
-struct invoke_result {
-};
+struct invoke_result {};
+
 template <typename F, typename... Args>
-struct invoke_result<decltype(void(detail::INVOKE(
-                         ::etl::declval<F>(), ::etl::declval<Args>()...))),
-    F, Args...> {
-    using type = decltype(detail::INVOKE(
-        ::etl::declval<F>(), ::etl::declval<Args>()...));
+struct invoke_result<decltype(void(detail::INVOKE(etl::declval<F>(), etl::declval<Args>()...))), F, Args...> {
+    using type = decltype(detail::INVOKE(etl::declval<F>(), etl::declval<Args>()...));
 };
+
+// clang-format on
+
 } // namespace detail
 
 /// \brief Deduces the return type of an INVOKE expression at compile time.
