@@ -1370,10 +1370,8 @@ TEMPLATE_TEST_CASE("type_traits: is_swappable", "[type_traits]", bool,
     using T = TestType;
     using etl::is_swappable_v;
 
-    STATIC_REQUIRE(is_swappable_v<T&>);
-    STATIC_REQUIRE(is_swappable_v<T const&>);
-    STATIC_REQUIRE(is_swappable_v<T volatile&>);
-    STATIC_REQUIRE(is_swappable_v<T const volatile&>);
+    STATIC_REQUIRE(is_swappable_v<T>);
+    STATIC_REQUIRE(is_swappable_v<T volatile>);
 
     STATIC_REQUIRE(is_swappable_v<T*>);
     STATIC_REQUIRE(is_swappable_v<T const*>);
@@ -1386,7 +1384,7 @@ TEMPLATE_TEST_CASE("type_traits: is_swappable", "[type_traits]", bool,
     STATIC_REQUIRE(is_swappable_v<void const volatile*>);
 }
 
-TEMPLATE_TEST_CASE("type_traits: is_swappable_with", "[type_traits]", bool,
+TEMPLATE_TEST_CASE("type_traits: is_swappable_with", "[type_traits]",
     etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
     etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
@@ -1394,9 +1392,6 @@ TEMPLATE_TEST_CASE("type_traits: is_swappable_with", "[type_traits]", bool,
     using etl::is_swappable_with_v;
 
     STATIC_REQUIRE(is_swappable_with_v<T&, T&>);
-    STATIC_REQUIRE(is_swappable_with_v<T const&, T const&>);
-    STATIC_REQUIRE(is_swappable_with_v<T volatile&, T volatile&>);
-    STATIC_REQUIRE(is_swappable_with_v<T const volatile&, T const volatile&>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: has_virtual_destructor", "[type_traits]", bool,
