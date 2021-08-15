@@ -74,6 +74,7 @@
 #include "etl/_type_traits/is_fundamental.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_invocable.hpp"
+#include "etl/_type_traits/is_invocable_r.hpp"
 #include "etl/_type_traits/is_lvalue_reference.hpp"
 #include "etl/_type_traits/is_member_function_pointer.hpp"
 #include "etl/_type_traits/is_member_object_pointer.hpp"

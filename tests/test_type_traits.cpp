@@ -1575,3 +1575,21 @@ TEMPLATE_TEST_CASE("type_traits: is_invocable", "[type_traits]", etl::uint8_t,
     STATIC_REQUIRE(etl::is_invocable_v<T()>);
     STATIC_REQUIRE(!etl::is_invocable_v<T(), T>);
 }
+
+namespace {
+[[nodiscard]] auto func2(char /*ignore*/) -> int (*)() { return nullptr; }
+} // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_invocable_r", "[type_traits]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+
+    STATIC_REQUIRE(etl::is_invocable_r_v<T, T()>);
+    STATIC_REQUIRE(!etl::is_invocable_r_v<T*, T()>);
+    STATIC_REQUIRE(etl::is_invocable_r_v<void, void(T), T>);
+    STATIC_REQUIRE(!etl::is_invocable_r_v<void, void(T), void>);
+    STATIC_REQUIRE(etl::is_invocable_r_v<int (*)(), decltype(func2), char>);
+    STATIC_REQUIRE(!etl::is_invocable_r_v<T (*)(), decltype(func2), void>);
+}
