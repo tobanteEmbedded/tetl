@@ -40,6 +40,7 @@
 #include "etl/_memory/pointer_like_traits.hpp"
 #include "etl/_memory/pointer_traits.hpp"
 #include "etl/_memory/small_ptr.hpp"
+#include "etl/_memory/to_address.hpp"
 #include "etl/_memory/uses_allocator.hpp"
 
 #endif // TETL_MEMORY_HPP
