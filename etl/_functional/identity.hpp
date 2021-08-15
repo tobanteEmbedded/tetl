@@ -21,37 +21,25 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_FUNCTIONAL_HPP
-#define TETL_FUNCTIONAL_HPP
+#ifndef TETL_FUNCTIONAL_IDENTITY_HPP
+#define TETL_FUNCTIONAL_IDENTITY_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_utility/forward.hpp"
 
-#include "etl/_functional/bit_and.hpp"
-#include "etl/_functional/bit_not.hpp"
-#include "etl/_functional/bit_or.hpp"
-#include "etl/_functional/bit_xor.hpp"
-#include "etl/_functional/default_searcher.hpp"
-#include "etl/_functional/divides.hpp"
-#include "etl/_functional/equal_to.hpp"
-#include "etl/_functional/greater.hpp"
-#include "etl/_functional/greater_equal.hpp"
-#include "etl/_functional/hash.hpp"
-#include "etl/_functional/identity.hpp"
-#include "etl/_functional/inplace_function.hpp"
-#include "etl/_functional/invoke.hpp"
-#include "etl/_functional/is_transparent.hpp"
-#include "etl/_functional/less.hpp"
-#include "etl/_functional/less_equal.hpp"
-#include "etl/_functional/logical_and.hpp"
-#include "etl/_functional/logical_not.hpp"
-#include "etl/_functional/logical_or.hpp"
-#include "etl/_functional/minus.hpp"
-#include "etl/_functional/modulus.hpp"
-#include "etl/_functional/multiplies.hpp"
-#include "etl/_functional/negate.hpp"
-#include "etl/_functional/not_equal_to.hpp"
-#include "etl/_functional/placeholder.hpp"
-#include "etl/_functional/plus.hpp"
-#include "etl/_functional/reference_wrapper.hpp"
+namespace etl {
 
-#endif // TETL_FUNCTIONAL_HPP
+/// \brief etl::identity is a function object type whose operator() returns its
+/// argument unchanged.
+struct identity {
+    using is_transparent = void;
+
+    template <typename T>
+    [[nodiscard]] constexpr auto operator()(T&& t) const noexcept -> T&&
+    {
+        return forward<T>(t);
+    }
+};
+
+} // namespace etl
+
+#endif // TETL_FUNCTIONAL_IDENTITY_HPP
