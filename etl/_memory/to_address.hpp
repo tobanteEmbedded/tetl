@@ -45,7 +45,7 @@ constexpr auto to_address_impl(Ptr const& ptr) noexcept
 }
 
 template <typename Ptr, typename... Ignore>
-constexpr auto to_address_impl(Ptr const& ptr, Ignore...) noexcept
+constexpr auto to_address_impl(Ptr const& ptr, Ignore... /*ignore*/) noexcept
 {
     return to_address_impl(ptr.operator->());
 }
