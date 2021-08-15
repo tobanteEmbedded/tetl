@@ -65,10 +65,11 @@ constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args)
 template <typename F, typename... Args>
 constexpr auto invoke(F&& f, Args&&... args) -> invoke_result_t<F, Args...>
 {
-    if constexpr (is_member_pointer_v<decay_t<F>>)
+    if constexpr (is_member_pointer_v<decay_t<F>>) {
         return detail::invoke_memptr(f, forward<Args>(args)...);
-    else
+    } else {
         return forward<F>(f)(forward<Args>(args)...);
+    }
 }
 
 } // namespace etl
