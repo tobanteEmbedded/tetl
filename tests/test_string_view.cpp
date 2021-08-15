@@ -23,6 +23,7 @@
 
 #include "etl/string_view.hpp"
 
+#include "etl/cstring.hpp"
 #include "etl/string.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"

@@ -25,6 +25,7 @@
 
 #include "etl/algorithm.hpp"   // for for_each
 #include "etl/cstddef.hpp"     // for size_t
+#include "etl/cstring.hpp"     // for strlen
 #include "etl/iterator.hpp"    // for begin, end, rb...
 #include "etl/string_view.hpp" // for string_view
 #include "etl/utility.hpp"     // for as_const

@@ -30,9 +30,6 @@
 #include "etl/_assert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
-#include "etl/_cstring/memcpy.hpp"
-#include "etl/_cstring/memset.hpp"
-#include "etl/_cstring/strlen.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"
@@ -656,7 +653,7 @@ struct basic_string_view {
         auto const* f  = next(begin(), pos);
         auto const* l  = end();
         auto const* sf = s;
-        auto const* sl = next(s, strlen(s));
+        auto const* sl = next(s, traits_type::length(s));
         return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
                + pos;
     }
