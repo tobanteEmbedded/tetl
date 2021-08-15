@@ -546,29 +546,24 @@ TEMPLATE_TEST_CASE("vector/static_vector: non_trivial ctor empty", "[vector]",
     CHECK_FALSE(rhs != lhs);
 }
 
-// TODO: [tobi] Fails clang-tidy with Storage provided to placement new is only
-// 1 bytes, whereas the allocated type requires 3 bytes
-// [clang-analyzer-cplusplus.PlacementNew]
-//
-// TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace_back",
-// "[vector]",
-//     char, int, float)
-// {
-//     etl::static_vector<Vertex<TestType>, 16> lhs {};
-//     CHECK(lhs.empty());
-//     etl::static_vector<Vertex<TestType>, 16> rhs {};
-//     CHECK(rhs.empty());
+TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace_back", "[vector]",
+    char, int, float)
+{
+    etl::static_vector<Vertex<TestType>, 16> lhs {};
+    CHECK(lhs.empty());
+    etl::static_vector<Vertex<TestType>, 16> rhs {};
+    CHECK(rhs.empty());
 
-//     rhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
-//     CHECK_FALSE(rhs.empty());
-//     CHECK_FALSE(rhs == lhs);
-//     CHECK(rhs.size() == 1);
+    rhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
+    CHECK_FALSE(rhs.empty());
+    CHECK_FALSE(rhs == lhs);
+    CHECK(rhs.size() == 1);
 
-//     lhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
-//     CHECK_FALSE(lhs.empty());
-//     CHECK(rhs == lhs);
-//     CHECK(lhs.size() == 1);
-// }
+    lhs.emplace_back(TestType(1.20F), TestType(1.00F), TestType(1.43F));
+    CHECK_FALSE(lhs.empty());
+    CHECK(rhs == lhs);
+    CHECK(lhs.size() == 1);
+}
 
 TEMPLATE_TEST_CASE("vector/static_vector: non_trivial emplace", "[vector]",
     etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
