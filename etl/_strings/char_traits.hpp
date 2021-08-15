@@ -25,6 +25,13 @@
 #define TETL_STRINGS_CHAR_TRAITS_HPP
 
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_cwchar/wcslen.hpp"
+#include "etl/_cwchar/wint_t.hpp"
+#include "etl/_cwchar/wmemchr.hpp"
+#include "etl/_cwchar/wmemcmp.hpp"
+#include "etl/_cwchar/wmemcpy.hpp"
+#include "etl/_cwchar/wmemmove.hpp"
+#include "etl/_cwchar/wmemset.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
 
 namespace etl {
@@ -183,6 +190,99 @@ struct char_traits<char> {
     {
         if (!eq_int_type(c, eof())) { return c; }
         return 0;
+    }
+};
+
+template <>
+struct char_traits<wchar_t> {
+    using char_type = wchar_t;
+    using int_type  = wint_t;
+    // using off_type   = streamoff;
+    // using pos_type   = wstreampos;
+    // using state_type = mbstate_t;
+
+    static constexpr auto assign(wchar_t& lhs, wchar_t const& rhs) noexcept
+        -> void
+    {
+        lhs = rhs;
+    }
+
+    static constexpr auto eq(wchar_t const& lhs, wchar_t const& rhs) noexcept
+        -> bool
+    {
+        return lhs == rhs;
+    }
+
+    static constexpr auto lt(wchar_t const& lhs, wchar_t const& rhs) noexcept
+        -> bool
+    {
+        return lhs < rhs;
+    }
+
+    static constexpr auto compare(
+        wchar_t const* lhs, wchar_t const* rhs, size_t count) -> int
+    {
+        if (count == 0) { return 0; }
+        return ::etl::wmemcmp(lhs, rhs, count);
+    }
+
+    static constexpr auto length(wchar_t const* str) -> size_t
+    {
+        return ::etl::wcslen(str);
+    }
+
+    static constexpr auto find(wchar_t const* str, size_t count,
+        wchar_t const& token) -> wchar_t const*
+    {
+        if (count == 0) { return 0; }
+        return ::etl::wmemchr(str, token, count);
+    }
+
+    static constexpr auto move(wchar_t* dest, wchar_t const* src, size_t count)
+        -> wchar_t*
+    {
+        if (count == 0) { return dest; }
+        return ::etl::wmemmove(dest, src, count);
+    }
+
+    static constexpr auto copy(wchar_t* dest, wchar_t const* src, size_t count)
+        -> wchar_t*
+    {
+        if (count == 0) { return dest; }
+        return ::etl::wmemcpy(dest, src, count);
+    }
+
+    static constexpr auto assign(wchar_t* str, size_t count, wchar_t token)
+        -> wchar_t*
+    {
+        if (count == 0) { return str; }
+        return ::etl::wmemset(str, token, count);
+    }
+
+    static constexpr auto to_char_type(int_type const& ch) noexcept -> wchar_t
+    {
+        return static_cast<wchar_t>(ch);
+    }
+
+    static constexpr auto to_int_type(wchar_t const& ch) noexcept -> int_type
+    {
+        return static_cast<int_type>(ch);
+    }
+
+    static constexpr auto eq_int_type(
+        int_type const& lhs, int_type const& rhs) noexcept -> bool
+    {
+        return lhs == rhs;
+    }
+
+    static constexpr auto eof() noexcept -> int_type
+    {
+        return static_cast<int_type>(WEOF);
+    }
+
+    static constexpr auto not_eof(int_type const& ch) noexcept -> int_type
+    {
+        return eq_int_type(ch, eof()) ? 0 : ch;
     }
 };
 
