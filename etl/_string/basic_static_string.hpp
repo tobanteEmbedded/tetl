@@ -27,7 +27,7 @@
 #include "etl/_algorithm/fill.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/rotate.hpp"
-#include "etl/_cstring/strlen.hpp"
+#include "etl/_cstring/memset.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/distance.hpp"
@@ -97,15 +97,15 @@ public:
         if (str != nullptr && len + 1 < Capacity) {
             clear_storage();
             unsafe_set_size(len);
-            etl::memcpy(&data_[0], str, len);
+            traits_type::copy(&data_[0], str, len);
         }
     }
 
-    /// \brief Character pointer constructor. Calls etl::strlen.
+    /// \brief Character pointer constructor. Calls traits_type::length.
     ///
     /// \details Fails silently if input length is greater then capacity.
     constexpr basic_static_string(const_pointer str) noexcept
-        : basic_static_string(str, etl::strlen(str))
+        : basic_static_string(str, traits_type::length(str))
     {
     }
 
@@ -257,7 +257,7 @@ public:
     /// string pointed to by s.
     constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
     {
-        *this = basic_static_string { s, etl::strlen(s) };
+        *this = basic_static_string { s, traits_type::length(s) };
         return *this;
     }
 
@@ -567,7 +567,7 @@ public:
     /// length of the string is determined by the first null character using
     constexpr auto append(const_pointer s) noexcept -> basic_static_string&
     {
-        auto const len = etl::strlen(s);
+        auto const len = traits_type::length(s);
         return append(s, len);
     };
 
@@ -669,7 +669,7 @@ public:
     constexpr auto insert(size_type const index, const_pointer s) noexcept
         -> basic_static_string&
     {
-        insert_impl(begin() + index, s, etl::strlen(s));
+        insert_impl(begin() + index, s, traits_type::length(s));
         return *this;
     }
 
