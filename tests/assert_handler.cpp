@@ -30,6 +30,6 @@ namespace etl {
 auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
-    ::exit(1);
+    ::exit(1); // NOLINT
 }
 } // namespace etl
