@@ -43,7 +43,7 @@ constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args)
     if constexpr (etl::is_function_v<Pointed>) {
         if constexpr (etl::is_base_of_v<C, etl::decay_t<T1>>) {
             return (etl::forward<T1>(t1).*f)(etl::forward<Args>(args)...);
-        } else if constexpr (is_reference_wrapper_v<etl::decay_t<T1>>) {
+        } else if constexpr (is_reference_wrapper<etl::decay_t<T1>>::value) {
             return (t1.get().*f)(etl::forward<Args>(args)...);
         } else {
             return ((*etl::forward<T1>(t1)).*f)(etl::forward<Args>(args)...);
@@ -52,7 +52,7 @@ constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args)
         static_assert(etl::is_object_v<Pointed> && sizeof...(args) == 0);
         if constexpr (etl::is_base_of_v<C, etl::decay_t<T1>>) {
             return etl::forward<T1>(t1).*f;
-        } else if constexpr (is_reference_wrapper_v<etl::decay_t<T1>>) {
+        } else if constexpr (is_reference_wrapper<etl::decay_t<T1>>::value) {
             return t1.get().*f;
         } else {
             return (*etl::forward<T1>(t1)).*f;

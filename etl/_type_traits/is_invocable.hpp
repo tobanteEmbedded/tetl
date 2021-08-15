@@ -21,40 +21,47 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_TYPE_TRAITS_IS_FUNCTION_HPP
-#define TETL_TYPE_TRAITS_IS_FUNCTION_HPP
+#ifndef TETL_TYPE_TRAITS_IS_INVOCABLE_HPP
+#define TETL_TYPE_TRAITS_IS_INVOCABLE_HPP
 
-#include "etl/_config/compiler.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_const.hpp"
-#include "etl/_type_traits/is_reference.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/invoke_result.hpp"
+#include "etl/_type_traits/is_void.hpp"
+#include "etl/_type_traits/void_t.hpp"
 
 namespace etl {
 
-#if defined(TETL_MSVC)
-#pragma warning(disable : 4180) // Qualifier applied to function has no meaning
-#endif
+// clang-format off
+namespace detail {
+    
+template <typename Result, typename Ret, bool = etl::is_void_v<Ret>, typename = void>
+struct is_invocable_impl : etl::false_type { };
 
-/// \group is_function
-template <typename T>
-struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>> {
+template <typename Result, typename Ret>
+struct is_invocable_impl<Result, Ret, true, etl::void_t<typename Result::type>> : etl::true_type { };
+
+// Check if the return type can be converted to T
+template <typename Result, typename Ret>
+struct is_invocable_impl<Result, Ret, false, etl::void_t<typename Result::type>> {
+    static auto _get() -> typename Result::type;
+    template <typename T> static auto _use(T) -> void;
+    template <typename T, typename = decltype(_use<T>(_get()))> static auto _check(int) -> etl::true_type;
+    template <typename T> static auto _check(...) -> etl::false_type;
+    using type = decltype(_check<Ret>(1));
 };
 
-#if defined(TETL_MSVC)
-#pragma warning(default : 4180) // Qualifier applied to function has no meaning
-#endif
+} // namespace detail
+// clang-format on
 
-/// \brief Checks whether T is a function type. Types like etl::function,
-/// lambdas, classes with overloaded operator() and pointers to functions don't
-/// count as function types. Provides the member constant value which is equal
-/// to true, if T is a function type. Otherwise, value is equal to false.
-///
-/// \details The behavior of a program that adds specializations for is_function
-/// or is_function_v is undefined.
-/// \group is_function
-template <typename T>
-inline constexpr bool is_function_v = is_function<T>::value;
+template <typename Fn, typename... ArgTypes>
+struct is_invocable
+    : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, void>::type {
+};
+
+template <typename Fn, typename... ArgTypes>
+inline constexpr auto is_invocable_v = is_invocable<Fn, ArgTypes...>::value;
 
 } // namespace etl
 
-#endif // TETL_TYPE_TRAITS_IS_FUNCTION_HPP
+#endif // TETL_TYPE_TRAITS_IS_INVOCABLE_HPP
