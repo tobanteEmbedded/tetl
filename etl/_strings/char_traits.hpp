@@ -234,7 +234,7 @@ struct char_traits<wchar_t> {
     static constexpr auto find(wchar_t const* str, size_t count,
         wchar_t const& token) -> wchar_t const*
     {
-        if (count == 0) { return 0; }
+        if (count == 0) { return nullptr; }
         return ::etl::wmemchr(str, token, count);
     }
 
