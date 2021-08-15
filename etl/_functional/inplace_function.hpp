@@ -26,6 +26,8 @@
 
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_exception/exception.hpp"
+#include "etl/_exception/throw.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
@@ -36,14 +38,13 @@
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/swap.hpp"
 
-#ifndef TETL_THROW
-// #define TETL_THROW(x) throw(x)
-#define TETL_THROW(x)
-#endif
-
 namespace etl {
 
-struct bad_function_call {
+struct bad_function_call : exception {
+    constexpr bad_function_call() = default;
+    constexpr explicit bad_function_call(char const* what) : exception { what }
+    {
+    }
 };
 
 namespace detail {
@@ -68,7 +69,7 @@ struct inplace_function_vtable {
 
     explicit constexpr inplace_function_vtable() noexcept
         : invoke_ptr { [](storage_ptr_t, Args&&...) -> R {
-            TETL_THROW(bad_function_call {});
+            TETL_THROW(bad_function_call {"empty inplace_function_vtable"});
         } }
         , copy_ptr { [](storage_ptr_t, storage_ptr_t) -> void {} }
         , relocate_ptr { [](storage_ptr_t, storage_ptr_t) -> void {} }
@@ -79,8 +80,8 @@ struct inplace_function_vtable {
     template <typename C>
     explicit constexpr inplace_function_vtable(wrapper<C> /*ignore*/) noexcept
         : invoke_ptr { [](storage_ptr_t storage_ptr, Args&&... args) -> R {
-            return (*static_cast<C*>(storage_ptr))(
-                static_cast<Args&&>(args)...);
+            return (
+                *static_cast<C*>(storage_ptr))(static_cast<Args&&>(args)...);
         } }
         , copy_ptr { [](storage_ptr_t dst_ptr, storage_ptr_t src_ptr) -> void {
             ::new (dst_ptr) C { (*static_cast<C*>(src_ptr)) };

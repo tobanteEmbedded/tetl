@@ -23,6 +23,7 @@ target_sources(${PROJECT_NAME}
         test_ctime.cpp
         test_cwchar.cpp
         test_expected.cpp
+        test_exception.cpp
         test_format.cpp
         test_functional.cpp
         test_iterator.cpp
