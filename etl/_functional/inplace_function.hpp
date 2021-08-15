@@ -148,6 +148,7 @@ public:
     using capacity  = integral_constant<size_t, Capacity>;
     using alignment = integral_constant<size_t, Alignment>;
 
+    /// \brief Creates an empty function.
     inplace_function() noexcept
         : vtable_ { addressof(detail::empty_vtable<R, Args...>) }
     {
@@ -182,7 +183,8 @@ public:
         other.vtable_ = addressof(detail::empty_vtable<R, Args...>);
     }
 
-    inplace_function(nullptr_t) noexcept
+    /// \brief Creates an empty function.
+    inplace_function(nullptr_t /*ignore*/) noexcept
         : vtable_ { addressof(detail::empty_vtable<R, Args...>) }
     {
     }
@@ -198,6 +200,7 @@ public:
         vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
     }
 
+    /// \brief Assigns a new target to etl::inplace_function. Drops the current target. *this is empty after the call.
     auto operator=(nullptr_t) noexcept -> inplace_function&
     {
         vtable_->destructor_ptr(addressof(storage_));
@@ -214,28 +217,23 @@ public:
     }
 
 
+    /// \brief Destroys the etl::inplace_function instance. 
+    /// If the etl::inplace_function is not empty, its target is destroyed also.
     ~inplace_function() { vtable_->destructor_ptr(addressof(storage_)); }
 
+    /// \brief Invokes the stored callable function target with the parameters args.
     auto operator()(Args... args) const -> R
     {
         return vtable_->invoke_ptr(addressof(storage_), forward<Args>(args)...);
     }
 
-    [[nodiscard]] constexpr auto operator==(nullptr_t) const noexcept -> bool
-    {
-        return !static_cast<bool>(*this);
-    }
-
-    [[nodiscard]] constexpr auto operator!=(nullptr_t) const noexcept -> bool
-    {
-        return static_cast<bool>(*this);
-    }
-
+    /// \brief Checks whether *this stores a callable function target, i.e. is not empty.
     [[nodiscard]] explicit constexpr operator bool() const noexcept
     {
         return vtable_ != addressof(detail::empty_vtable<R, Args...>);
     }
 
+    /// \brief Exchanges the stored callable objects of *this and other.
     auto swap(inplace_function& other) noexcept -> void
     {
         if (this == addressof(other)) { return; }
@@ -251,23 +249,68 @@ public:
     // clang-format on
 
 private:
+    inplace_function(vtable_ptr_t vtable,
+        typename vtable_t::process_ptr_t process,
+        typename vtable_t::storage_ptr_t storage)
+        : vtable_ { vtable }
+    {
+        process(addressof(storage_), storage);
+    }
+
     vtable_ptr_t vtable_;
     storage_t mutable storage_;
-
-    inplace_function(vtable_ptr_t vtablePtr,
-        typename vtable_t::process_ptr_t processPtr,
-        typename vtable_t::storage_ptr_t storagePtr)
-        : vtable_ { vtablePtr }
-    {
-        processPtr(addressof(storage_), storagePtr);
-    }
 };
 
+/// \brief Overloads the etl::swap algorithm for etl::inplace_function.
+/// Exchanges the state of lhs with that of rhs. Effectively calls
+/// lhs.swap(rhs).
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 auto swap(inplace_function<R(Args...), Capacity, Alignment>& lhs,
     inplace_function<R(Args...), Capacity, Alignment>& rhs) noexcept -> void
 {
     lhs.swap(rhs);
+}
+
+/// \brief Compares a etl::inplace_function with a null pointer. Empty functions
+/// (that is, functions without a callable target) compare equal, non-empty
+/// functions compare non-equal.
+template <typename R, typename... Args, size_t Capacity, size_t Alignment>
+[[nodiscard]] constexpr auto operator==(
+    inplace_function<R(Args...), Capacity, Alignment> const& f,
+    nullptr_t /*ignore*/) noexcept -> bool
+{
+    return !static_cast<bool>(f);
+}
+
+/// \brief Compares a etl::inplace_function with a null pointer. Empty functions
+/// (that is, functions without a callable target) compare equal, non-empty
+/// functions compare non-equal.
+template <typename R, typename... Args, size_t Capacity, size_t Alignment>
+[[nodiscard]] constexpr auto operator!=(
+    inplace_function<R(Args...), Capacity, Alignment> const& f,
+    nullptr_t /*ignore*/) noexcept -> bool
+{
+    return static_cast<bool>(f);
+}
+
+/// \brief Compares a etl::inplace_function with a null pointer. Empty functions
+/// (that is, functions without a callable target) compare equal, non-empty
+/// functions compare non-equal.
+template <typename R, typename... Args, size_t Capacity, size_t Alignment>
+[[nodiscard]] constexpr auto operator==(nullptr_t /*ignore*/,
+    inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
+{
+    return !static_cast<bool>(f);
+}
+
+/// \brief Compares a etl::inplace_function with a null pointer. Empty functions
+/// (that is, functions without a callable target) compare equal, non-empty
+/// functions compare non-equal.
+template <typename R, typename... Args, size_t Capacity, size_t Alignment>
+[[nodiscard]] constexpr auto operator!=(nullptr_t /*ignore*/,
+    inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
+{
+    return static_cast<bool>(f);
 }
 
 } // namespace etl
