@@ -55,7 +55,7 @@ struct wrapper {
 };
 
 template <typename R, typename... Args>
-struct inplace_function_vtable {
+struct inplace_func_vtable {
     using storage_ptr_t = void*;
 
     using invoke_ptr_t     = R (*)(storage_ptr_t, Args&&...);
@@ -67,47 +67,47 @@ struct inplace_function_vtable {
     const process_ptr_t relocate_ptr;
     const destructor_ptr_t destructor_ptr;
 
-    explicit constexpr inplace_function_vtable() noexcept
-        : invoke_ptr { [](storage_ptr_t, Args&&...) -> R {
-            TETL_THROW(bad_function_call {"empty inplace_function_vtable"});
+    explicit constexpr inplace_func_vtable() noexcept
+        : invoke_ptr { [](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
+            TETL_THROW(bad_function_call { "empty inplace_func_vtable" });
         } }
-        , copy_ptr { [](storage_ptr_t, storage_ptr_t) -> void {} }
-        , relocate_ptr { [](storage_ptr_t, storage_ptr_t) -> void {} }
-        , destructor_ptr { [](storage_ptr_t) -> void {} }
+        , copy_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {} }
+        , relocate_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {
+        } }
+        , destructor_ptr { [](storage_ptr_t /*p*/) -> void {} }
     {
     }
 
     template <typename C>
-    explicit constexpr inplace_function_vtable(wrapper<C> /*ignore*/) noexcept
-        : invoke_ptr { [](storage_ptr_t storage_ptr, Args&&... args) -> R {
-            return (
-                *static_cast<C*>(storage_ptr))(static_cast<Args&&>(args)...);
+    explicit constexpr inplace_func_vtable(wrapper<C> /*ignore*/) noexcept
+        : invoke_ptr { [](storage_ptr_t storagePtr, Args&&... args) -> R {
+            return (*static_cast<C*>(storagePtr))(static_cast<Args&&>(args)...);
         } }
-        , copy_ptr { [](storage_ptr_t dst_ptr, storage_ptr_t src_ptr) -> void {
-            ::new (dst_ptr) C { (*static_cast<C*>(src_ptr)) };
+        , copy_ptr { [](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C { (*static_cast<C*>(srcPtr)) };
         } }
-        , relocate_ptr { [](storage_ptr_t dst_ptr,
-                             storage_ptr_t src_ptr) -> void {
-            ::new (dst_ptr) C { etl::move(*static_cast<C*>(src_ptr)) };
-            static_cast<C*>(src_ptr)->~C();
+        , relocate_ptr { [](storage_ptr_t dstPtr,
+                             storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C { etl::move(*static_cast<C*>(srcPtr)) };
+            static_cast<C*>(srcPtr)->~C();
         } }
-        , destructor_ptr { [](storage_ptr_t src_ptr) -> void {
-            static_cast<C*>(src_ptr)->~C();
+        , destructor_ptr { [](storage_ptr_t srcPtr) -> void {
+            static_cast<C*>(srcPtr)->~C();
         } }
     {
     }
 
-    inplace_function_vtable(inplace_function_vtable const&) = delete;
-    inplace_function_vtable(inplace_function_vtable&&)      = delete;
+    inplace_func_vtable(inplace_func_vtable const&) = delete;
+    inplace_func_vtable(inplace_func_vtable&&)      = delete;
 
-    inplace_function_vtable& operator=(inplace_function_vtable const&) = delete;
-    inplace_function_vtable& operator=(inplace_function_vtable&&) = delete;
+    auto operator=(inplace_func_vtable const&) -> inplace_func_vtable& = delete;
+    auto operator=(inplace_func_vtable&&) -> inplace_func_vtable& = delete;
 
-    ~inplace_function_vtable() = default;
+    ~inplace_func_vtable() = default;
 };
 
 template <typename R, typename... Args>
-inline constexpr inplace_function_vtable<R, Args...> empty_vtable {};
+inline constexpr auto empty_vtable = inplace_func_vtable<R, Args...> {};
 
 template <size_t DstCap, size_t DstAlign, size_t SrcCap, size_t SrcAlign>
 struct is_valid_inplace_destination : etl::true_type {
@@ -134,7 +134,7 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 struct inplace_function<R(Args...), Capacity, Alignment> {
 private:
     using storage_t    = aligned_storage_t<Capacity, Alignment>;
-    using vtable_t     = detail::inplace_function_vtable<R, Args...>;
+    using vtable_t     = detail::inplace_func_vtable<R, Args...>;
     using vtable_ptr_t = vtable_t const*;
 
     template <typename, size_t, size_t>
@@ -267,12 +267,12 @@ private:
     vtable_ptr_t vtable_;
     storage_t mutable storage_;
 
-    inplace_function(vtable_ptr_t vtable_ptr,
-        typename vtable_t::process_ptr_t process_ptr,
-        typename vtable_t::storage_ptr_t storage_ptr)
-        : vtable_ { vtable_ptr }
+    inplace_function(vtable_ptr_t vtablePtr,
+        typename vtable_t::process_ptr_t processPtr,
+        typename vtable_t::storage_ptr_t storagePtr)
+        : vtable_ { vtablePtr }
     {
-        process_ptr(addressof(storage_), storage_ptr);
+        processPtr(addressof(storage_), storagePtr);
     }
 };
 

@@ -1560,7 +1560,7 @@ TEMPLATE_TEST_CASE("type_traits: invoke_result", "[type_traits]", etl::uint8_t,
 
     struct S {
         auto operator()(char /*unused*/, int& /*unused*/) -> T { return T(2); }
-        auto operator()(int /*unused*/) -> float { return 1.0f; }
+        auto operator()(int /*unused*/) -> float { return 1.0F; }
     };
 
     STATIC_REQUIRE(etl::is_same_v<etl::invoke_result_t<S, char, int&>, T>);
