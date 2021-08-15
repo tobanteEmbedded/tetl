@@ -308,7 +308,7 @@ TEMPLATE_TEST_CASE_SIG("bitset: to_string", "[bitset]", ((size_t N), N), 8)
 {
     using namespace etl::string_view_literals;
     auto const bits = etl::bitset<N> { 0b0010'1010 };
-    REQUIRE((bits.to_string<16>()) == "00101010"_sv);
-    REQUIRE(bits.to_string<16>('*') == "**1*1*1*"_sv);
-    REQUIRE(bits.to_string<16>('O', 'X') == "OOXOXOXO"_sv);
+    REQUIRE(bits.template to_string<16>() == "00101010"_sv);
+    REQUIRE(bits.template to_string<16>('*') == "**1*1*1*"_sv);
+    REQUIRE(bits.template to_string<16>('O', 'X') == "OOXOXOXO"_sv);
 }
