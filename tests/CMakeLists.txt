@@ -4,6 +4,8 @@ add_executable(${PROJECT_NAME})
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
+        assert_handler.cpp
+
         test_algorithm.cpp
         test_array.cpp
         test_bit.cpp
@@ -78,6 +80,7 @@ target_link_libraries(${PROJECT_NAME}
         tobanteEmbedded::CodeCoverage
         Catch2WithMain
 )
+target_compile_definitions(${PROJECT_NAME} PRIVATE TETL_CUSTOM_ASSERT_HANDLER=1)
 
 
 add_executable(${PROJECT_NAME}_testing 
