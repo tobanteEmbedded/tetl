@@ -1592,4 +1592,5 @@ TEMPLATE_TEST_CASE("type_traits: is_invocable_r", "[type_traits]",
     STATIC_REQUIRE(!etl::is_invocable_r_v<void, void(T), void>);
     STATIC_REQUIRE(etl::is_invocable_r_v<int (*)(), decltype(func2), char>);
     STATIC_REQUIRE(!etl::is_invocable_r_v<T (*)(), decltype(func2), void>);
+    etl::ignore_unused(func2);
 }
