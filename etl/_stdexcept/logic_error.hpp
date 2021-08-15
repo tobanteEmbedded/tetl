@@ -33,6 +33,6 @@ struct logic_error : exception {
     constexpr explicit logic_error(char const* what) : exception { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_LOGIC_ERROR_HPP

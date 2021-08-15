@@ -36,6 +36,6 @@ struct underflow_error : runtime_error {
     }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_UNDERFLOW_ERROR_HPP

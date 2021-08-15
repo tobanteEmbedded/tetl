@@ -35,6 +35,6 @@ struct overflow_error : runtime_error {
     }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_OVERFLOW_ERROR_HPP

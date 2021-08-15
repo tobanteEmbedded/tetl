@@ -34,6 +34,6 @@ struct range_error : runtime_error {
         : runtime_error { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_RANGE_ERROR_HPP

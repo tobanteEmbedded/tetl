@@ -33,6 +33,6 @@ struct runtime_error : exception {
     constexpr explicit runtime_error(char const* what) : exception { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_RUNTIME_ERROR_HPP

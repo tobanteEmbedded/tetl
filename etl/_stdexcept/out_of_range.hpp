@@ -33,6 +33,6 @@ struct out_of_range : logic_error {
     constexpr explicit out_of_range(char const* what) : logic_error { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_OUT_OF_RANGE_HPP

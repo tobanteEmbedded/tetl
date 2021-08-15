@@ -35,6 +35,6 @@ struct invalid_argument : logic_error {
     }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_INVALID_ARGUMENT_HPP

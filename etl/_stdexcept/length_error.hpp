@@ -33,6 +33,6 @@ struct length_error : logic_error {
     constexpr explicit length_error(char const* what) : logic_error { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_LENGTH_ERROR_HPP

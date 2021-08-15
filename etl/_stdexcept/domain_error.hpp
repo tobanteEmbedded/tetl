@@ -33,6 +33,6 @@ struct domain_error : logic_error {
     constexpr explicit domain_error(char const* what) : logic_error { what } { }
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_STDEXCEPT_DOMAIN_ERROR_HPP

@@ -39,6 +39,6 @@ private:
     char const* what_ { nullptr };
 };
 
-}; // namespace etl
+} // namespace etl
 
 #endif // TETL_EXCEPTION_EXCEPTION_HPP
