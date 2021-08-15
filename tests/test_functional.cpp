@@ -262,3 +262,14 @@ TEST_CASE("functional: invoke", "[functional]")
     REQUIRE(etl::invoke(lambda, 1) == 1);
     REQUIRE(etl::invoke([]() { return 42; }) == 42);
 }
+
+TEMPLATE_TEST_CASE(
+    "functional: inplace_function", "[functional]", int, float, double)
+{
+    auto func = etl::inplace_function<TestType(TestType)> {
+        [](TestType x) { return x + TestType(1); },
+    };
+
+    REQUIRE(func(TestType { 41 }) == TestType { 42 });
+    REQUIRE(etl::invoke(func, TestType { 41 }) == TestType { 42 });
+}
