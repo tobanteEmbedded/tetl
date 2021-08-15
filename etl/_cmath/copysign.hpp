@@ -59,14 +59,10 @@ namespace etl {
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-///
-/// \todo Fix for AVR, thinks that copysign & copysignf are reimplementing each
-/// other
-
-//[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
-//{
-//    return TETL_BUILTIN_COPYSIGN(mag, sgn);
-//}
+[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
+{
+    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+}
 
 /// \brief Composes a floating point value with the magnitude of mag and the
 /// sign of sgn.

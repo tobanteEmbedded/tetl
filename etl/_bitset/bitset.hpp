@@ -37,7 +37,6 @@ namespace etl {
 /// \brief The class template bitset represents a fixed-size sequence of N bits.
 /// Bitsets can be manipulated by standard logic operators.
 /// \module Utility
-/// \todo Converted to and from strings and integers. Add operators & more docs.
 /// \todo Add tests for sizes that are not a power of two. Broken at the moment.
 /// \todo What if position index is out of bounds? Return nullptr?
 template <etl::size_t N>

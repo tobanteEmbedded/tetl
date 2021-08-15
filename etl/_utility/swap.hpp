@@ -40,10 +40,7 @@ namespace etl {
 /// does not participate in overload resolution unless
 /// etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T> is true.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/swap](https://en.cppreference.com/w/cpp/algorithm/swap)
-///
-/// \todo Fix noexcept specifier.
+/// \notes https://en.cppreference.com/w/cpp/algorithm/swap
 template <typename T>
 constexpr auto swap(T& a, T& b) noexcept(
     is_nothrow_move_constructible_v<T>&& is_nothrow_move_assignable_v<T>)
