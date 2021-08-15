@@ -76,6 +76,20 @@ struct hash<unsigned char> {
         return static_cast<etl::size_t>(val);
     }
 };
+
+#if defined(__cpp_char8_t)
+/// \group hash
+/// \module Utility
+template <>
+struct hash<char8_t> {
+    [[nodiscard]] constexpr auto operator()(char8_t val) const noexcept
+        -> etl::size_t
+    {
+        return static_cast<etl::size_t>(val);
+    }
+};
+#endif
+
 /// \group hash
 /// \module Utility
 template <>
