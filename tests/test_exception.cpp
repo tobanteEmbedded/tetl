@@ -30,28 +30,6 @@
 
 TEST_CASE("exception: excption", "[exception]")
 {
-    using etl::is_constructible_v;
-    using etl::is_default_constructible_v;
-
-    STATIC_REQUIRE(is_default_constructible_v<etl::exception>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::logic_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::domain_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::invalid_argument>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::length_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::out_of_range>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::runtime_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::range_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::overflow_error>);
-    STATIC_REQUIRE(is_default_constructible_v<etl::underflow_error>);
-
-    STATIC_REQUIRE(is_constructible_v<etl::exception, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::logic_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::domain_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::invalid_argument, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::length_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::out_of_range, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::runtime_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::range_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::overflow_error, char const*>);
-    STATIC_REQUIRE(is_constructible_v<etl::underflow_error, char const*>);
+    STATIC_REQUIRE(etl::is_default_constructible_v<etl::exception>);
+    STATIC_REQUIRE(etl::is_constructible_v<etl::exception, char const*>);
 }
