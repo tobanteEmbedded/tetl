@@ -492,12 +492,13 @@ TEMPLATE_TEST_CASE("vector/static_vector: erase/erase_if", "[vector]",
 namespace {
 template <typename T>
 struct Vertex {
+    Vertex() = default;
     Vertex(T xInit, T yInit, T zInit)
         : x { xInit }, y { yInit }, z { zInit } { }
 
-    T x;
-    T y;
-    T z;
+    T x {};
+    T y {};
+    T z {};
 };
 
 template <typename T>
