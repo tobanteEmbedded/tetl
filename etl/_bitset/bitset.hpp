@@ -30,6 +30,7 @@
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
+#include "etl/_string/basic_static_string.hpp"
 #include "etl/_string_view/string_view.hpp"
 
 namespace etl {
@@ -346,6 +347,27 @@ struct bitset {
     constexpr auto operator~() const noexcept -> bitset<N>
     {
         return bitset<N>(*this).flip();
+    }
+
+    /// \brief Converts the contents of the bitset to a string. Uses zero to
+    /// represent bits with value of false and one to represent bits with value
+    /// of true. The resulting string contains N characters with the first
+    /// character corresponds to the last (N-1th) bit and the last character
+    /// corresponding to the first bit.
+    template <size_t Capacity, typename CharT = char,
+        typename Traits = char_traits<CharT>>
+    [[nodiscard]] constexpr auto to_string(
+        CharT zero = CharT('0'), CharT one = CharT('1')) const
+        -> basic_static_string<CharT, Capacity, Traits>
+    {
+        // TODO: [tobi] This currently truncates the low bits, if the string is
+        // large enough.
+        auto str = basic_static_string<CharT, Capacity, Traits> {};
+        for (auto i { size() - 1U }; i != 0; --i) {
+            str.push_back(test(i) ? one : zero);
+        }
+        str.push_back(test(0) ? one : zero);
+        return str;
     }
 
     /// \brief Converts the contents of the bitset to an unsigned long integer.
