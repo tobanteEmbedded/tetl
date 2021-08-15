@@ -70,6 +70,10 @@ struct inplace_func_vtable {
     explicit constexpr inplace_func_vtable() noexcept
         : invoke_ptr { [](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
             TETL_THROW(bad_function_call { "empty inplace_func_vtable" });
+
+            // TODO: [tobi] What about types which are not default
+            // constructible? The next line will probably not compile.
+            return R {};
         } }
         , copy_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {} }
         , relocate_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {
@@ -156,9 +160,8 @@ public:
         static_assert(is_copy_constructible_v<C>, "inplace_function cannot be constructed from non-copyable type");
         static_assert(sizeof(C) <= Capacity, "inplace_function cannot be constructed from object with this (large) size");
         static_assert(Alignment % alignof(C) == 0, "inplace_function cannot be constructed from object with this (large) alignment");
-        // clang-format on
 
-        static vtable_t const vt { detail::wrapper<C> {} };
+        static constexpr vtable_t const vt { detail::wrapper<C> {} };
         vtable_ = addressof(vt);
 
         ::new (addressof(storage_)) C { forward<T>(closure) };
@@ -166,29 +169,16 @@ public:
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align> const& other)
-        : inplace_function {
-            other.vtable_,
-            other.vtable_->copy_ptr,
-            addressof(other.storage_),
-        }
+        : inplace_function { other.vtable_, other.vtable_->copy_ptr, addressof(other.storage_) }
     {
-        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment,
-                          Cap, Align>::value,
-            "conversion not allowed");
+        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align>&& other) noexcept
-        : inplace_function {
-            other.vtable_,
-            other.vtable_->relocate_ptr,
-            addressof(other.storage_),
-        }
+        : inplace_function { other.vtable_, other.vtable_->relocate_ptr, addressof(other.storage_) }
     {
-        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment,
-                          Cap, Align>::value,
-            "conversion not allowed");
-
+        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
         other.vtable_ = addressof(detail::empty_vtable<R, Args...>);
     }
 
@@ -203,8 +193,7 @@ public:
     }
 
     inplace_function(inplace_function&& other) noexcept
-        : vtable_ { exchange(
-            other.vtable_, addressof(detail::empty_vtable<R, Args...>)) }
+        : vtable_ { exchange(other.vtable_, addressof(detail::empty_vtable<R, Args...>)) }
     {
         vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
     }
@@ -219,12 +208,11 @@ public:
     auto operator=(inplace_function other) noexcept -> inplace_function&
     {
         vtable_->destructor_ptr(addressof(storage_));
-
-        vtable_ = exchange(
-            other.vtable_, addressof(detail::empty_vtable<R, Args...>));
+        vtable_ = exchange(other.vtable_, addressof(detail::empty_vtable<R, Args...>));
         vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
         return *this;
     }
+
 
     ~inplace_function() { vtable_->destructor_ptr(addressof(storage_)); }
 
@@ -235,12 +223,12 @@ public:
 
     [[nodiscard]] constexpr auto operator==(nullptr_t) const noexcept -> bool
     {
-        return !operator bool();
+        return !static_cast<bool>(*this);
     }
 
     [[nodiscard]] constexpr auto operator!=(nullptr_t) const noexcept -> bool
     {
-        return operator bool();
+        return static_cast<bool>(*this);
     }
 
     [[nodiscard]] explicit constexpr operator bool() const noexcept
@@ -254,14 +242,13 @@ public:
 
         auto tmp = storage_t {};
         vtable_->relocate_ptr(addressof(tmp), addressof(storage_));
-
-        other.vtable_->relocate_ptr(
-            addressof(storage_), addressof(other.storage_));
-
+        other.vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
         vtable_->relocate_ptr(addressof(other.storage_), addressof(tmp));
 
         swap(vtable_, other.vtable_);
     }
+
+    // clang-format on
 
 private:
     vtable_ptr_t vtable_;

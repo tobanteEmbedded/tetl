@@ -266,10 +266,16 @@ TEST_CASE("functional: invoke", "[functional]")
 TEMPLATE_TEST_CASE(
     "functional: inplace_function", "[functional]", int, float, double)
 {
-    auto func = etl::inplace_function<TestType(TestType)> {
-        [](TestType x) { return x + TestType(1); },
+    using T = TestType;
+    using etl::inplace_function;
+
+    auto func = inplace_function<T(T)> {
+        [](T x) { return x + T(1); },
     };
 
-    REQUIRE(func(TestType { 41 }) == TestType { 42 });
-    REQUIRE(etl::invoke(func, TestType { 41 }) == TestType { 42 });
+    REQUIRE(func(T { 41 }) == T { 42 });
+    REQUIRE(etl::invoke(func, T { 41 }) == T { 42 });
+    REQUIRE(static_cast<bool>(func));
+    REQUIRE_FALSE(static_cast<bool>(inplace_function<T(T)> {}));
+    REQUIRE_FALSE(static_cast<bool>(inplace_function<T(T)> { nullptr }));
 }
