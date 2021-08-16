@@ -85,7 +85,7 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 #define TETL_ASSERT(exp)                                                       \
     do {                                                                       \
         if (TETL_UNLIKELY((exp) == false)) {                                   \
-            TETL_DEBUG_TRAP();                                                 \
+            /* TETL_DEBUG_TRAP(); */                                           \
             auto const msg = ::etl::assert_msg {                               \
                 __LINE__, /*line of assertion*/                                \
                 __FILE__, /*source file*/                                      \
