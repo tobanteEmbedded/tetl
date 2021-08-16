@@ -24,6 +24,8 @@
 #ifndef TETL_UTILITY_EXCHANGE_HPP
 #define TETL_UTILITY_EXCHANGE_HPP
 
+#include "etl/_type_traits/is_nothrow_move_assignable.hpp"
+#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
 
@@ -33,7 +35,8 @@ namespace etl {
 /// obj.
 /// \returns The old value of obj.
 template <typename T, typename U = T>
-[[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) -> T
+[[nodiscard]] constexpr auto exchange(T& obj, U&& newValue) noexcept(
+    is_nothrow_move_constructible_v<T>&& is_nothrow_assignable_v<T&, U>) -> T
 {
     T oldValue = move(obj);
     obj        = forward<U>(newValue);
