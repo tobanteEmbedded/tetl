@@ -61,7 +61,10 @@ inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x7d821008"); }
 #elif defined(__riscv)
 #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
 inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x00100073"); }
-#elif defined(__STDC_HOSTED__) && (__STDC_HOSTED__ == 1) // hosted builds
+#elif defined(__AVR__)
+#define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+inline auto trap_inst() -> void { }
+#elif defined(__STDC_HOSTED__) // hosted builds
 #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_SIGTRAP
 #else
 // TETL_DEBUG_TRAP is not supported on this target
