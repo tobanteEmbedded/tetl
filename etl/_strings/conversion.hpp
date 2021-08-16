@@ -17,20 +17,20 @@ enum struct ascii_to_int_error : ::etl::uint8_t {
     overflow,
 };
 
-template <typename T>
+template <typename T, typename CharT>
 struct ascii_to_int_result {
     T value;
     ascii_to_int_error error { ascii_to_int_error::none };
-    char const* end { nullptr };
+    CharT const* end { nullptr };
 };
 
-template <typename T>
+template <typename T, typename CharT>
 [[nodiscard]] constexpr auto ascii_to_int_base10(
-    char const* str, size_t length = numeric_limits<size_t>::max()) noexcept
-    -> ascii_to_int_result<T>
+    CharT const* str, size_t len = numeric_limits<size_t>::max()) noexcept
+    -> ascii_to_int_result<T, CharT>
 {
-    if (*str == '\0') {
-        return ascii_to_int_result<T> {
+    if (*str == CharT(0)) {
+        return ascii_to_int_result<T, CharT> {
             T {},
             ascii_to_int_error::invalid_input,
             str,
@@ -40,31 +40,32 @@ template <typename T>
     ::etl::size_t i = 0;
 
     // skip leading whitespace
-    while (::etl::isspace(str[i]) && length != 0 && str[i] != '\0') {
+    while (etl::isspace(static_cast<int>(str[i])) && (len != 0)
+           && (str[i] != CharT(0))) {
         i++;
-        length--;
+        len--;
     }
 
     // optional minus for signed types
     [[maybe_unused]] T sign = 1;
     if constexpr (is_signed_v<T>) {
-        if (str[0] == '-') {
+        if (str[0] == CharT('-')) {
             sign = -1;
             i++;
-            length--;
+            len--;
         }
     }
 
     // loop over digits
     T value = 0;
-    for (; str[i] != '\0' && length != 0; ++i) {
-        if (!::etl::isdigit(str[i])) { break; }
-        value = value * 10 + str[i] - '0';
-        length--;
+    for (; (str[i] != CharT(0)) && (len != 0); ++i) {
+        if (!::etl::isdigit(static_cast<int>(str[i]))) { break; }
+        value = value * 10 + str[i] - CharT('0');
+        len--;
     }
 
     // one past the last element used for conversion
-    auto result = ascii_to_int_result<T> { value, {}, &str[i] };
+    auto result = ascii_to_int_result<T, CharT> { value, {}, &str[i] };
     if constexpr (is_signed_v<T>) { result.value *= sign; }
     return result;
 }
