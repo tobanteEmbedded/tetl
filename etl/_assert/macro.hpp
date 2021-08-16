@@ -21,10 +21,10 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_ASSERT_MACRO
-#define TETL_ASSERT_MACRO
+#ifndef TETL_ASSERT_MACRO_HPP
+#define TETL_ASSERT_MACRO_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_config/debug_trap.hpp"
 #include "etl/_version/implementation.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
@@ -96,4 +96,4 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
     } while (false)
 #endif // TETL_ASSERT
 
-#endif // TETL_ASSERT_MACRO
+#endif // TETL_ASSERT_MACRO_HPP

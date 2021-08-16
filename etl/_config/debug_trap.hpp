@@ -61,12 +61,15 @@ inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x7d821008"); }
 #elif defined(__riscv)
 #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
 inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x00100073"); }
-#else
+#elif defined(__STDC_HOSTED__) && (__STDC_HOSTED__ == 1) // hosted builds
 #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_SIGTRAP
+#else
+// TETL_DEBUG_TRAP is not supported on this target
+#define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+inline auto trap_inst() -> void { }
 #endif
 
 #if !defined(TETL_DEBUG_TRAP_IMPL)
-// TETL_DEBUG_TRAP is not supported on this target
 inline auto TETL_DEBUG_TRAP() -> void { }
 #elif TETL_DEBUG_TRAP_IMPL == TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
 inline auto TETL_DEBUG_TRAP() -> void { trap_inst(); }
@@ -76,7 +79,7 @@ inline auto TETL_DEBUG_TRAP() -> void { __builtin_debugtrap(); }
 inline auto TETL_DEBUG_TRAP() -> void { __builtin_trap(); }
 #elif TETL_DEBUG_TRAP_IMPL == TETL_DEBUG_TRAP_IMPL_SIGTRAP
 #include <signal.h>
-inline auto TETL_DEBUG_TRAP() -> void { raise(SIGTRAP); }
+inline auto TETL_DEBUG_TRAP() -> void { ::raise(SIGTRAP); }
 #else
 #error "invalid TETL_DEBUG_TRAP_IMPL value"
 #endif
