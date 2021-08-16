@@ -20,8 +20,8 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
-#ifndef TETL_STRING_WSTATIC_STRING_HPP
-#define TETL_STRING_WSTATIC_STRING_HPP
+#ifndef TETL_STRING_STATIC_WSTRING_HPP
+#define TETL_STRING_STATIC_WSTRING_HPP
 
 #include "etl/_string/basic_static_string.hpp"
 
@@ -29,8 +29,8 @@ namespace etl {
 
 /// Typedef for a basic_static_string using 'wchar_t'
 template <etl::size_t Capacity>
-using wstatic_string = basic_static_string<wchar_t, Capacity>;
+using static_wstring = basic_static_string<wchar_t, Capacity>;
 
 } // namespace etl
 
-#endif // TETL_STRING_WSTATIC_STRING_HPP
+#endif // TETL_STRING_STATIC_WSTRING_HPP
