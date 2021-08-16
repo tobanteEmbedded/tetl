@@ -14,4 +14,4 @@ DEBUGFLAGS = -Os -flto
 endif
 
 MCU ?= atmega328p
-CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} ${DEBUGFLAGS} -I../ -Wall -Wextra -Wpedantic -Werror
+CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} -ffreestanding ${DEBUGFLAGS} -I../ -Wall -Wextra -Wpedantic -Werror
