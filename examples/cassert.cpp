@@ -51,7 +51,7 @@ auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 auto main() -> int
 {
     TETL_ASSERT(2 == 2); // success, nothing is printed
-    TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
+    // TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
     return EXIT_SUCCESS;
 }
 
