@@ -27,6 +27,7 @@
 #include "etl/_algorithm/fill.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/rotate.hpp"
+#include "etl/_container/smallest_size_t.hpp"
 #include "etl/_cstring/memset.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
@@ -35,6 +36,7 @@
 #include "etl/_iterator/rbegin.hpp"
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/size.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 #include "etl/_string_view/string_view.hpp"
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_strings/find_first_not_of.hpp"
@@ -56,6 +58,8 @@ struct basic_static_string {
                               is_convertible_v<T const&, basic_string_view<CharT, Traits>>
                           && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
+
+    using internal_size_t = ::etl::detail::smallest_size_t<Capacity>;
 
 public:
     /// The character type used
@@ -1463,7 +1467,7 @@ private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
         TETL_ASSERT(newSize <= Capacity - 1);
-        size_        = newSize;
+        size_        = static_cast<internal_size_t>(newSize);
         data_[size_] = '\0';
     }
 
@@ -1506,7 +1510,7 @@ private:
 
     auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
 
-    size_type size_            = 0;
+    internal_size_t size_      = 0;
     value_type data_[Capacity] = {};
 };
 
