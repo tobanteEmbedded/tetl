@@ -46,7 +46,7 @@ namespace etl {
 auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
-    ::exit(1);
+    ::exit(1); // NOLINT(concurrency-mt-unsafe)
 }
 
 } // namespace etl
@@ -55,7 +55,7 @@ auto main() -> int
 {
     TETL_ASSERT(2 == 2); // success, nothing is printed
     TETL_ASSERT(2 == 3); // failure, the assert handler is invoked
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS; // unreachable
 }
 
 #if defined(TETL_MSVC)
