@@ -33,7 +33,8 @@
 #undef NDEBUG              // force assertions in release build
 #include "etl/cassert.hpp" // for TETL_ASSERT
 
-#include <stdio.h> // for printf
+#include <stdio.h>  // for printf
+#include <stdlib.h> // for exit
 
 #if defined(TETL_MSVC)
 #pragma warning(disable : 4127) // Conditional expression is constant
@@ -45,6 +46,7 @@ namespace etl {
 auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
+    ::exit(1);
 }
 
 } // namespace etl
