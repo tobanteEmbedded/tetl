@@ -79,7 +79,8 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 
 } // namespace etl
 
-#if not defined(TETL_ASSERT) && (!defined(TETL_NDEBUG) || (TETL_NDEBUG == 0))
+#if not defined(TETL_ASSERT)
+#if !defined(TETL_NDEBUG) || (TETL_NDEBUG == 0)
 /// \brief Assertion macro with customizable runtime behavior
 #define TETL_ASSERT(exp)                                                       \
     do {                                                                       \
@@ -94,6 +95,9 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
             ::etl::detail::tetl_call_assert_handler(msg);                      \
         }                                                                      \
     } while (false)
-#endif // TETL_ASSERT
+#else
+#define TETL_ASSERT(exp)
+#endif // !defined(TETL_NDEBUG)
+#endif // not defined(TETL_ASSERT)
 
 #endif // TETL_ASSERT_MACRO_HPP
