@@ -25,6 +25,7 @@
 
 #include "etl/_algorithm/copy.hpp"
 #include "etl/_algorithm/fill.hpp"
+#include "etl/_algorithm/max.hpp"
 #include "etl/_algorithm/remove.hpp"
 #include "etl/_algorithm/rotate.hpp"
 #include "etl/_container/smallest_size_t.hpp"
@@ -1513,6 +1514,67 @@ private:
     internal_size_t size_      = 0;
     value_type data_[Capacity] = {};
 };
+
+/// \brief Returns a string containing characters from lhs followed by the
+/// characters from rhs.
+template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
+[[nodiscard]] constexpr auto operator+(
+    basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
+    -> basic_static_string<CharT, Capacity1, Traits>
+{
+    auto str = basic_static_string<CharT, Capacity1, Traits> { lhs };
+    str.append(rhs);
+    return str;
+}
+
+/// \brief Returns a string containing characters from lhs followed by the
+/// characters from rhs.
+template <typename CharT, typename Traits, size_t Capacity>
+[[nodiscard]] constexpr auto operator+(
+    basic_static_string<CharT, Capacity, Traits> const& lhs,
+    CharT const* rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
+{
+    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    str.append(rhs);
+    return str;
+}
+
+/// \brief Returns a string containing characters from lhs followed by the
+/// characters from rhs.
+template <typename CharT, typename Traits, size_t Capacity>
+[[nodiscard]] constexpr auto operator+(
+    basic_static_string<CharT, Capacity, Traits> const& lhs, CharT rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
+{
+    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    str.append(1, rhs);
+    return str;
+}
+
+/// \brief Returns a string containing characters from lhs followed by the
+/// characters from rhs.
+template <typename CharT, typename Traits, size_t Capacity>
+[[nodiscard]] constexpr auto operator+(CharT const* lhs,
+    basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
+{
+    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    str.append(rhs);
+    return str;
+}
+
+/// \brief Returns a string containing characters from lhs followed by the
+/// characters from rhs.
+template <typename CharT, typename Traits, size_t Capacity>
+[[nodiscard]] constexpr auto operator+(
+    CharT lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
+{
+    auto str = basic_static_string<CharT, Capacity, Traits> { 1, lhs };
+    str.append(rhs);
+    return str;
+}
 
 /// \brief Compares the contents of a string with another string or a
 /// null-terminated array of CharT.

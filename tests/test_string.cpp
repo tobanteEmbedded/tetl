@@ -1765,6 +1765,28 @@ TEMPLATE_TEST_CASE("string: static_string::find_first_not_of", "[string]",
     REQUIRE(str.find_first_not_of('D', 2) == 3);
 }
 
+TEMPLATE_TEST_CASE("string: static_string::operator+", "[string]",
+    etl::static_string<16>, etl::static_string<32>)
+{
+    auto str = TestType();
+    CHECK(str == "");
+
+    str = str + "tes";
+    CHECK(str == "tes");
+
+    str = str + 't';
+    CHECK(str == "test");
+
+    str = str + TestType { "_foo" };
+    CHECK(str == "test_foo");
+
+    str = "__" + str;
+    CHECK(str == "__test_foo");
+
+    str = 'a' + str;
+    CHECK(str == "a__test_foo");
+}
+
 TEMPLATE_TEST_CASE("string: static_string::operator==/!=", "[string]",
     etl::static_string<12>, etl::static_string<32>)
 {
