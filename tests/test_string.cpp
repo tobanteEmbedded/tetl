@@ -2094,3 +2094,28 @@ TEMPLATE_TEST_CASE("string: to_string", "[string]", int, long, long long,
     CHECK(etl::to_string<32>(input) == expected);
     CHECK(etl::to_string<64>(input) == expected);
 }
+
+TEMPLATE_TEST_CASE("string: static_wstring::operator+", "[string]",
+    etl::static_wstring<16>, etl::static_wstring<32>)
+{
+    auto str = TestType();
+    CHECK(str == L"");
+    CHECK(str.empty());
+    CHECK(str.size() == 0); // NOLINT
+    CHECK(size(str) == 0);  // NOLINT
+
+    str = str + L"tes";
+    CHECK(str == L"tes");
+
+    str = str + wchar_t('t');
+    CHECK(str == L"test");
+
+    str = str + TestType { L"_foo" };
+    CHECK(str == L"test_foo");
+
+    str = L"__" + str;
+    CHECK(str == L"__test_foo");
+
+    str = wchar_t('a') + str;
+    CHECK(str == L"a__test_foo");
+}

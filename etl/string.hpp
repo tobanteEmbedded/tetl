@@ -26,12 +26,6 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/_iterator/begin.hpp"
-#include "etl/_iterator/data.hpp"
-#include "etl/_iterator/end.hpp"
-#include "etl/_iterator/rbegin.hpp"
-#include "etl/_iterator/rend.hpp"
-#include "etl/_iterator/size.hpp"
 #include "etl/_string/basic_static_string.hpp"
 #include "etl/_string/static_string.hpp"
 #include "etl/_string/static_wstring.hpp"
