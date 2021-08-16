@@ -24,6 +24,7 @@
 #ifndef TETL_CONTAINER_INDEX_HPP
 #define TETL_CONTAINER_INDEX_HPP
 
+#include "etl/_assert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
