@@ -29,4 +29,6 @@ foreach(_target
   add_test("example_${_target}" ${_target})
 endforeach()
 
+set_tests_properties(example_cassert PROPERTIES WILL_FAIL TRUE)
+
 add_subdirectory(experimental)

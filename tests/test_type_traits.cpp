@@ -112,8 +112,6 @@ TEMPLATE_TEST_CASE("type_traits: is_const", "[type_traits]", etl::uint8_t,
 {
     STATIC_REQUIRE(etl::is_const<TestType const>::value);
     STATIC_REQUIRE(etl::is_const_v<TestType const>);
-    STATIC_REQUIRE(etl::is_const<const TestType>::value);
-    STATIC_REQUIRE(etl::is_const_v<const TestType>);
 
     STATIC_REQUIRE_FALSE(etl::is_const<TestType>::value);
     STATIC_REQUIRE_FALSE(etl::is_const_v<TestType>);
@@ -126,14 +124,43 @@ TEMPLATE_TEST_CASE("type_traits: is_volatile", "[type_traits]", etl::uint8_t,
     etl::uint64_t, etl::int64_t, float, double, long double)
 {
     STATIC_REQUIRE(etl::is_volatile_v<TestType volatile>);
-    STATIC_REQUIRE(etl::is_volatile_v<TestType volatile>);
-    STATIC_REQUIRE(etl::is_volatile_v<volatile TestType>);
-    STATIC_REQUIRE(etl::is_volatile_v<volatile TestType>);
+    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType>);
+    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType const>);
+}
 
-    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType>);
-    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType>);
-    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType const>);
-    STATIC_REQUIRE_FALSE(etl::is_volatile_v<TestType const>);
+TEST_CASE("type_traits: is_convertible<void, void>", "[type_traits]")
+{
+    using etl::is_convertible_v;
+
+    STATIC_REQUIRE(is_convertible_v<void, void>);
+
+    // TODO: [tobi] The assertions below trigger an internal compiler error on
+    // MSVC
+
+    // STATIC_REQUIRE_FALSE(is_convertible_v<int, void>);
+    // STATIC_REQUIRE_FALSE(is_convertible_v<int, const void>);
+    // STATIC_REQUIRE_FALSE(is_convertible_v<int, volatile void>);
+    // STATIC_REQUIRE_FALSE(is_convertible_v<int, const volatile void>);
+
+    // STATIC_REQUIRE(is_convertible_v<void, void const>);
+    // STATIC_REQUIRE(is_convertible_v<void, void volatile>);
+    // STATIC_REQUIRE(is_convertible_v<void, void const volatile>);
+
+    // STATIC_REQUIRE(is_convertible_v<void const, void>);
+    // STATIC_REQUIRE(is_convertible_v<void const, void const>);
+    // STATIC_REQUIRE(is_convertible_v<void const, void volatile>);
+    // STATIC_REQUIRE(is_convertible_v<void const, void const volatile>);
+
+    // STATIC_REQUIRE(is_convertible_v<void volatile, void>);
+    // STATIC_REQUIRE(is_convertible_v<void volatile, void const>);
+    // STATIC_REQUIRE(is_convertible_v<void volatile, void volatile>);
+    // STATIC_REQUIRE(is_convertible_v<void volatile, void const volatile>);
+
+    // STATIC_REQUIRE(is_convertible_v<void const volatile, void>);
+    // STATIC_REQUIRE(is_convertible_v<void const volatile, void const>);
+    // STATIC_REQUIRE(is_convertible_v<void const volatile, void volatile>);
+    // STATIC_REQUIRE(is_convertible_v<void const volatile, void const
+    // volatile>);
 }
 
 namespace {
@@ -677,6 +704,12 @@ TEMPLATE_TEST_CASE("type_traits: is_bounded_array", "[type_traits]",
     STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType>);
     STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType*>);
     STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType[]>);
+
+    // lvalue/rvalue references aren't bounded/unbounded arrays.
+    STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType(&)[3]>);
+    STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType(&)[]>);
+    STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType(&&)[3]>);
+    STATIC_REQUIRE_FALSE(etl::is_bounded_array_v<TestType(&&)[]>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_unbounded_array", "[type_traits]",
@@ -692,6 +725,12 @@ TEMPLATE_TEST_CASE("type_traits: is_unbounded_array", "[type_traits]",
     STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[1]>);
     STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[2]>);
     STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType[64]>);
+
+    // lvalue/rvalue references aren't bounded/unbounded arrays.
+    STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType(&)[3]>);
+    STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType(&)[]>);
+    STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType(&&)[3]>);
+    STATIC_REQUIRE_FALSE(etl::is_unbounded_array_v<TestType(&&)[]>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: is_constructible", "[type_traits]",
@@ -813,6 +852,23 @@ TEMPLATE_TEST_CASE("type_traits: remove_const", "[type_traits]", etl::uint8_t,
     STATIC_REQUIRE(is_same_v<remove_const_t<T const>, T>);
     STATIC_REQUIRE(is_same_v<remove_const_t<T volatile>, T volatile>);
     STATIC_REQUIRE(is_same_v<remove_const_t<T const volatile>, T volatile>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T>, T>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<T const>, T>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T[42]>, T[42]>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<T const[42]>, T[42]>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T[]>, T[]>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<T const[]>, T[]>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T&>, T&>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<T const&>, T const&>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T&&>, T&&>);
+    STATIC_REQUIRE(is_same_v<remove_const_t<T const&&>, T const&&>);
+
+    STATIC_REQUIRE(is_same_v<remove_const_t<T(T)>, T(T)>);
 }
 
 TEMPLATE_TEST_CASE("type_traits: remove_cv", "[type_traits]", etl::uint8_t,
@@ -921,10 +977,17 @@ TEMPLATE_TEST_CASE("type_traits: add_lvalue_reference", "[type_traits]",
     using etl::add_lvalue_reference_t;
     using etl::is_same_v;
 
+    // clang-format off
     STATIC_REQUIRE(is_same_v<add_lvalue_reference_t<T>, T&>);
     STATIC_REQUIRE(is_same_v<add_lvalue_reference_t<CT>, CT&>);
     STATIC_REQUIRE(is_same_v<add_lvalue_reference_t<VT>, VT&>);
     STATIC_REQUIRE(is_same_v<add_lvalue_reference_t<CVT>, CVT&>);
+
+    STATIC_REQUIRE(is_same_v<void, add_lvalue_reference_t<void>>);
+    STATIC_REQUIRE(is_same_v<void const, add_lvalue_reference_t<void const>>);
+    STATIC_REQUIRE(is_same_v<void volatile, add_lvalue_reference_t<void volatile>>);
+    STATIC_REQUIRE(is_same_v<void const volatile, add_lvalue_reference_t<void const volatile>>);
+    // clang-format on
 }
 
 TEMPLATE_TEST_CASE("type_traits: add_rvalue_reference", "[type_traits]",
@@ -1593,4 +1656,102 @@ TEMPLATE_TEST_CASE("type_traits: is_invocable_r", "[type_traits]",
     STATIC_REQUIRE(etl::is_invocable_r_v<int (*)(), decltype(func2), char>);
     STATIC_REQUIRE(!etl::is_invocable_r_v<T (*)(), decltype(func2), void>);
     etl::ignore_unused(func2);
+}
+
+namespace {
+
+template <typename T>
+constexpr auto test_identity() -> bool
+{
+    using etl::is_same_v;
+    using etl::type_identity;
+    using etl::type_identity_t;
+
+    static_assert(is_same_v<T, typename type_identity<T>::type>);
+    static_assert(is_same_v<T, type_identity_t<T>>);
+
+    // clang-format off
+    if constexpr (!etl::is_function_v<T>) {
+        static_assert(is_same_v<T const, typename type_identity<T const>::type>);
+        static_assert(is_same_v<T volatile, typename type_identity<T volatile>::type>);
+        static_assert(is_same_v<T const volatile, typename type_identity<T const volatile>::type>);
+
+        static_assert(is_same_v<T const, type_identity_t<T const>>);
+        static_assert(is_same_v<T volatile, type_identity_t<T volatile>>);
+        static_assert(is_same_v<T const volatile, type_identity_t<T const volatile>>);
+    }
+
+    if constexpr (!etl::is_void_v<T>) {
+        static_assert(is_same_v<T&, typename type_identity<T&>::type>);
+        static_assert(is_same_v<T&&, typename type_identity<T&&>::type>);
+
+        static_assert(is_same_v<T&, type_identity_t<T&>>);
+        static_assert(is_same_v<T&&, type_identity_t<T&&>>);
+    }
+
+    if constexpr (!etl::is_void_v<T> && !etl::is_function_v<T>) {
+        static_assert(is_same_v<T const&, typename type_identity<T const&>::type>);
+        static_assert(is_same_v<T volatile&, typename type_identity<T volatile&>::type>);
+        static_assert(is_same_v<T const volatile&, typename type_identity<T const volatile&>::type>);
+        static_assert(is_same_v<T const&&, typename type_identity<T const&&>::type>);
+        static_assert(is_same_v<T volatile&&, typename type_identity<T volatile&&>::type>);
+        static_assert(is_same_v<T const volatile&&, typename type_identity<T const volatile&&>::type>);
+
+        static_assert(is_same_v<T const&, type_identity_t<T const&>>);
+        static_assert(is_same_v<T volatile&, type_identity_t<T volatile&>>);
+        static_assert(is_same_v<T const volatile&, type_identity_t<T const volatile&>>);
+        static_assert(is_same_v<T const&&, type_identity_t<T const&&>>);
+        static_assert(is_same_v<T volatile&&, type_identity_t<T volatile&&>>);
+        static_assert(is_same_v<T const volatile&&, type_identity_t<T const volatile&&>>);
+    }
+
+    // clang-format on
+    return true;
+}
+struct IDS {
+};
+} // namespace
+
+TEMPLATE_TEST_CASE("type_traits: type_identity", "[type_traits]", etl::uint16_t,
+    etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
+{
+    using T = TestType;
+
+    // clang-format off
+    STATIC_REQUIRE(test_identity<void>());
+    STATIC_REQUIRE(test_identity<T>());
+    STATIC_REQUIRE(test_identity<T*>());
+    STATIC_REQUIRE(test_identity<T const*>());
+    STATIC_REQUIRE(test_identity<T volatile*>());
+    STATIC_REQUIRE(test_identity<T const volatile*>());
+    STATIC_REQUIRE(test_identity<T[3]>());
+    STATIC_REQUIRE(test_identity<T[]>());
+    STATIC_REQUIRE(test_identity<T(T)>());
+    STATIC_REQUIRE(test_identity<T&(T)>());
+    STATIC_REQUIRE(test_identity<T const&(T)>());
+    STATIC_REQUIRE(test_identity<T volatile&(T)>());
+    STATIC_REQUIRE(test_identity<T const volatile&(T)>());
+    STATIC_REQUIRE(test_identity<T(T&)>());
+    STATIC_REQUIRE(test_identity<T(T const&)>());
+    STATIC_REQUIRE(test_identity<T(T volatile&)>());
+    STATIC_REQUIRE(test_identity<T(T const volatile&)>());
+    STATIC_REQUIRE(test_identity<T IDS::*>());
+    STATIC_REQUIRE(test_identity<T const IDS::*>());
+    STATIC_REQUIRE(test_identity<T volatile IDS::*>());
+    STATIC_REQUIRE(test_identity<T const volatile IDS::*>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T)>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T&)>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T const&) const>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T volatile&) volatile>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T const volatile&) const volatile>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T)&>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T) const&>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T) &&>());
+    STATIC_REQUIRE(test_identity<T (IDS::*)(T) const&&>());
+    STATIC_REQUIRE(test_identity<T& (IDS::*)(T)>());
+    STATIC_REQUIRE(test_identity<T const& (IDS::*)(T)>());
+    STATIC_REQUIRE(test_identity<T volatile& (IDS::*)(T)>());
+    STATIC_REQUIRE(test_identity<T const volatile& (IDS::*)(T)>());
+    // clang-format on
 }
