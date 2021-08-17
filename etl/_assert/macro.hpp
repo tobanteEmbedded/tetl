@@ -30,8 +30,10 @@
 
 #if __has_include(<stdlib.h>)
 #include <stdlib.h>
+
+#include "etl/_config/workarounds.hpp" // For AVR macros
 #else
-auto exit(int /*ignore*/) -> void { }
+inline auto exit(int /*ignore*/) -> void { }
 #endif
 
 namespace etl {

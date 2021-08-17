@@ -34,15 +34,13 @@ namespace etl::chrono {
 
 /// \brief Returns the absolute value of the duration d. Specifically, if d >=
 /// d.zero(), return d, otherwise return -d. The function does not participate
-/// in the overload resolution unless etl::numeric_limits<Rep>::is_signed is
+/// in the overload resolution unless etl::numeric_limits<R>::is_signed is
 /// true.
-template <typename Rep, typename Period,
-    TETL_REQUIRES_(numeric_limits<Rep>::is_signed)>
-constexpr auto abs(duration<Rep, Period> d) noexcept(is_arithmetic_v<Rep>)
-    -> duration<Rep, Period>
+template <typename R, typename P, TETL_REQUIRES_(numeric_limits<R>::is_signed)>
+constexpr auto abs(duration<R, P> d) noexcept(is_arithmetic_v<R>)
+    -> duration<R, P>
 {
-    return d < duration<Rep, Period>::zero() ? duration<Rep, Period>::zero() - d
-                                             : d;
+    return d < duration<R, P>::zero() ? duration<R, P>::zero() - d : d;
 }
 
 } // namespace etl::chrono
