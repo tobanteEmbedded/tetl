@@ -42,26 +42,25 @@ template <typename T, typename CharT>
     // skip leading whitespace
     while (etl::isspace(static_cast<int>(str[i])) && (len != 0)
            && (str[i] != CharT(0))) {
-        i++;
-        len--;
+        ++i;
+        --len;
     }
 
     // optional minus for signed types
     [[maybe_unused]] T sign = 1;
     if constexpr (is_signed_v<T>) {
-        if (str[0] == CharT('-')) {
+        if (str[i] == CharT('-')) {
             sign = -1;
-            i++;
-            len--;
+            ++i;
+            --len;
         }
     }
 
     // loop over digits
     T value = 0;
-    for (; (str[i] != CharT(0)) && (len != 0); ++i) {
+    for (; (str[i] != CharT(0)) && (len != 0); ++i, --len) {
         if (!::etl::isdigit(static_cast<int>(str[i]))) { break; }
         value = value * 10 + str[i] - CharT('0');
-        len--;
     }
 
     // one past the last element used for conversion
