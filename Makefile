@@ -29,27 +29,22 @@ build:
 
 .PHONY: test
 test:
-	cd $(BUILD_DIR) && ctest -C $(CONFIG) 
+	cd $(BUILD_DIR) && ctest -C $(CONFIG)
 
 
 .PHONY: coverage
 coverage:
-	mkdir -p $(COVERAGE_DIR)
-	cmake -S . -G Ninja -B$(COVERAGE_DIR) -D TETL_BUILD_COVERAGE=ON -D TETL_BUILD_CPP20=ON
-	cmake --build $(COVERAGE_DIR) -- -j6
-	cd $(COVERAGE_DIR) && $(LCOV) -c -i -d . --base-directory . -o base_cov.info
-	cd $(COVERAGE_DIR) && ctest -j12
-	cd $(COVERAGE_DIR) && $(LCOV) -c -d . --base-directory . -o test_cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) -a base_cov.info -a test_cov.info -o cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*3rd_party/*" -o cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*c++*" -o cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*v1*" -o cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*Xcode.app*" -o cov.info
-	cd $(COVERAGE_DIR) && $(LCOV) --remove cov.info "*test_*" -o cov.info
+	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE
+	cmake --build cmake-build-coverage --parallel 6
+	cd cmake-build-coverage && ctest
 
-.PHONY: report
-report:
-	cd $(COVERAGE_DIR) && genhtml cov.info --output-directory lcov
+.PHONY: coverage-html
+coverage-html: coverage
+	cd cmake-build-coverage && gcovr --html --html-details --exclude-unreachable-branches -o coverage.html -r ../etl -j ${shell nproc} -s .
+
+.PHONY: coverage-xml
+coverage-xml: coverage
+	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../etl -j ${shell nproc} -s .
 
 .PHONY: docs
 docs:
