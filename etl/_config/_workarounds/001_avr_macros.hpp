@@ -21,32 +21,45 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_CMATH_TYPEDEFS_HPP
-#define TETL_CMATH_TYPEDEFS_HPP
+/// \file This header needs to be included after every include of a standard C
+/// header. AVR defines the macros listed below. It doesn't have any include
+/// guards on purpose.
 
-#if __has_include(<math.h>)
-#include <math.h>
-
-#include "etl/_config/_workarounds/001_avr_macros.hpp" // for AVR macros
-
-#else
-
-#ifndef NAN
-#define NAN TETL_BUILTIN_NAN("")
+#if defined(__AVR__)
+#undef abs
+#undef acosf
+#undef asinf
+#undef atan2f
+#undef atanf
+#undef cbrtf
+#undef ceilf
+#undef copysignf
+#undef cosf
+#undef coshf
+#undef expf
+#undef fabsf
+#undef fdimf
+#undef floorf
+#undef fmaf
+#undef fmaxf
+#undef fminf
+#undef fmodf
+#undef frexpf
+#undef hypotf
+#undef isfinitef
+#undef isinff
+#undef ldexpf
+#undef log10f
+#undef logf
+#undef lrintf
+#undef lroundf
+#undef powf
+#undef roundf
+#undef signbitf
+#undef sinf
+#undef sinhf
+#undef squaref
+#undef tanf
+#undef tanhf
+#undef truncf
 #endif
-
-#ifndef INFINITY
-#define INFINITY TETL_BUILTIN_HUGE_VAL
-#endif
-
-#endif // has_include<math.h>
-
-namespace etl {
-/// \brief Most efficient floating-point type at least as wide as float.
-using float_t = float;
-
-/// \brief Most efficient floating-point type at least as wide as double.
-using double_t = double;
-} // namespace etl
-
-#endif // TETL_CMATH_TYPEDEFS_HPP

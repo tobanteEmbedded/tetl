@@ -24,44 +24,4 @@
 #ifndef TETL_CONFIG_WORKAROUNDS_HPP
 #define TETL_CONFIG_WORKAROUNDS_HPP
 
-#if defined(__AVR__)
-#define TETL_WORKAROUND_001_AVR_MACROS 1
-#undef abs
-#undef acosf
-#undef asinf
-#undef atan2f
-#undef atanf
-#undef cbrtf
-#undef ceilf
-#undef copysignf
-#undef cosf
-#undef coshf
-#undef expf
-#undef fabsf
-#undef fdimf
-#undef floorf
-#undef fmaf
-#undef fmaxf
-#undef fminf
-#undef fmodf
-#undef frexpf
-#undef hypotf
-#undef isfinitef
-#undef isinff
-#undef ldexpf
-#undef log10f
-#undef logf
-#undef lrintf
-#undef lroundf
-#undef powf
-#undef roundf
-#undef signbitf
-#undef sinf
-#undef sinhf
-#undef squaref
-#undef tanf
-#undef tanhf
-#undef truncf
-#endif
-
 #endif // TETL_CONFIG_WORKAROUNDS_HPP

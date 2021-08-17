@@ -31,7 +31,7 @@
 #if __has_include(<stdlib.h>)
 #include <stdlib.h>
 
-#include "etl/_config/workarounds.hpp" // For AVR macros
+#include "etl/_config/_workarounds/001_avr_macros.hpp" // For AVR macros
 #else
 inline auto exit(int /*ignore*/) -> void { }
 #endif
