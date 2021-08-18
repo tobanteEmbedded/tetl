@@ -34,10 +34,22 @@ COMMONFLAGS += -fno-unroll-loops
 COMMONFLAGS += -fomit-frame-pointer
 COMMONFLAGS += -ffunction-sections
 COMMONFLAGS += -fdata-sections
-COMMONFLAGS += -Werror
-COMMONFLAGS += -Wall
-COMMONFLAGS += -Wextra
-COMMONFLAGS += -Wpedantic
+
+WARNINGFLAGS  = -Wall -Wextra -Wpedantic -Werror
+WARNINGFLAGS += -Wstrict-aliasing
+WARNINGFLAGS += -Wshadow
+WARNINGFLAGS += -Wunused-parameter
+WARNINGFLAGS += -Wnarrowing
+WARNINGFLAGS += -Wreorder
+WARNINGFLAGS += -Wsign-compare
+WARNINGFLAGS += -Wswitch-enum
+WARNINGFLAGS += -Wmisleading-indentation
+WARNINGFLAGS += -Wlogical-op
+WARNINGFLAGS += -Wduplicated-branches
+WARNINGFLAGS += -Wduplicated-cond
+# WARNINGFLAGS += -Wsign-conversion
+
+COMMONFLAGS += ${WARNINGFLAGS}
 
 CFLAGS += $(COMMONFLAGS)
 CFLAGS += -std=c11
