@@ -209,65 +209,6 @@ private:
     streamsize width_ { 0 };
 };
 
-template <typename CharT, size_t Capacity, typename Traits, typename Child>
-struct basic_streambuf {
-private:
-    // The program is ill-formed if Traits::char_type is not CharT.
-    static_assert(is_same_v<typename Traits::char_type, CharT>);
-
-public:
-    using char_type   = CharT;
-    using traits_type = Traits;
-    using int_type    = typename Traits::int_type;
-    using off_type    = typename Traits::off_type;
-    // using pos_type    = typename Traits::pos_type;
-
-    auto pubsetbuf(char_type* str, streamsize n) -> basic_streambuf*
-    {
-        return self().setbuf(str, n);
-    };
-
-    // auto pubseekoff(off_type off, ios_base::seekdir dir,
-    //     ios_base::openmode which = ios_base::in | ios_base::out) -> pos_type
-    // {
-    //     return self().seekoff(off, dir, which);
-    // }
-
-protected:
-    auto setbuf(char_type* str, streamsize n) -> basic_streambuf*
-    {
-        ignore_unused(str, n);
-        return *this;
-    };
-
-    // auto seekoff(off_type off, ios_base::seekdir dir,
-    //     ios_base::openmode which = ios_base::in | ios_base::out) -> pos_type
-    // {
-    //     return pos_type(off_type(-1));
-    // }
-
-private:
-    auto self() -> Child& { return static_cast<Child&>(*this); }
-    auto self() const -> Child const&
-    {
-        return static_cast<Child const&>(*this);
-    }
-};
-
-template <typename CharT, size_t Capacity, typename Traits>
-struct basic_stringbuf : basic_streambuf<CharT, Capacity, Traits,
-                             basic_stringbuf<CharT, Capacity, Traits>> {
-private:
-    // The program is ill-formed if Traits::char_type is not CharT.
-    static_assert(is_same_v<typename Traits::char_type, CharT>);
-
-public:
-    using char_type   = CharT;
-    using traits_type = Traits;
-    using int_type    = typename Traits::int_type;
-    // using pos_type    = typename Traits::pos_type;
-    // using off_type    = typename Traits::off_type;
-};
-
 } // namespace etl
+
 #endif // TETL_IOS_IOS_BASE_HPP
