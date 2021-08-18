@@ -21,11 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef TETL_IOS_HPP
-#define TETL_IOS_HPP
+#ifndef TETL_IOS_IOSFWD_HPP
+#define TETL_IOS_IOSFWD_HPP
 
-#include "etl/_config/all.hpp"
+#include "etl/_cstddef/size_t.hpp"
 
-#include "etl/_ios/ios_base.hpp"
+namespace etl {
 
-#endif // TETL_IOS_HPP
+template <class CharT>
+struct char_traits;
+template <>
+struct char_traits<char>;
+template <>
+struct char_traits<wchar_t>;
+
+//   template<> struct char_traits<char8_t>;
+//   template<> struct char_traits<char16_t>;
+//   template<> struct char_traits<char32_t>;
+
+template <typename CharT, size_t Capacity, typename Traits, typename Child>
+struct basic_streambuf;
+
+template <typename CharT, size_t Capacity, typename Traits = char_traits<CharT>>
+struct basic_stringbuf;
+
+template <size_t Capacity>
+using stringbuf = basic_stringbuf<char, Capacity>;
+
+} // namespace etl
+#endif // TETL_IOS_IOSFWD_HPP

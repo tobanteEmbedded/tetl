@@ -20,12 +20,32 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
+#include "etl/ios.hpp"
 
-#ifndef TETL_IOS_HPP
-#define TETL_IOS_HPP
+#include "etl/warning.hpp"
 
-#include "etl/_config/all.hpp"
+#include "catch2/catch_template_test_macros.hpp"
 
-#include "etl/_ios/ios_base.hpp"
+TEST_CASE("ios: ios_base::openmode", "[ios]")
+{
+    STATIC_REQUIRE(etl::is_bitmask_type_v<etl::ios_base::openmode>);
+}
 
-#endif // TETL_IOS_HPP
+TEST_CASE("ios: ios_base::fmtflags", "[ios]")
+{
+    STATIC_REQUIRE(etl::is_bitmask_type_v<etl::ios_base::fmtflags>);
+}
+
+TEST_CASE("ios: ios_base::iostate", "[ios]")
+{
+    STATIC_REQUIRE(etl::is_bitmask_type_v<etl::ios_base::iostate>);
+}
+
+TEMPLATE_TEST_CASE("ios: ios_base::basic_stringbuf", "[ios]", char, wchar_t)
+{
+    using CharT = TestType;
+
+    auto sbuf = etl::basic_stringbuf<CharT, 16> {};
+    etl::ignore_unused(sbuf);
+    SUCCEED();
+}

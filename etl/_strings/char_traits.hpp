@@ -32,6 +32,8 @@
 #include "etl/_cwchar/wmemcpy.hpp"
 #include "etl/_cwchar/wmemmove.hpp"
 #include "etl/_cwchar/wmemset.hpp"
+#include "etl/_ios/iosfwd.hpp"
+#include "etl/_ios/typedefs.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
 
 namespace etl {
@@ -53,9 +55,8 @@ template <>
 struct char_traits<char> {
     using char_type = char;
     using int_type  = int;
-
-    // using off_type            = streamoff;
-    // using pos_type            = streampos;
+    using off_type  = streamoff;
+    // using pos_type  = streampos;
     // using state_type          = mbstate_t;
     // using comparison_category = strong_ordering;
 
@@ -197,7 +198,7 @@ template <>
 struct char_traits<wchar_t> {
     using char_type = wchar_t;
     using int_type  = wint_t;
-    // using off_type   = streamoff;
+    using off_type  = streamoff;
     // using pos_type   = wstreampos;
     // using state_type = mbstate_t;
 

@@ -28,6 +28,7 @@ target_sources(${PROJECT_NAME}
         test_exception.cpp
         test_format.cpp
         test_functional.cpp
+        test_ios.cpp
         test_iterator.cpp
         test_limits.cpp
         test_map.cpp
@@ -83,7 +84,7 @@ target_link_libraries(${PROJECT_NAME}
 target_compile_definitions(${PROJECT_NAME} PRIVATE TETL_CUSTOM_ASSERT_HANDLER=1)
 
 
-add_executable(${PROJECT_NAME}_testing 
+add_executable(${PROJECT_NAME}_testing
     experimental/testing/test_main.cpp
     experimental/testing/test_test_case.cpp
 )
