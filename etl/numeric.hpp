@@ -24,6 +24,9 @@
 #ifndef TETL_NUMERIC_HPP
 #define TETL_NUMERIC_HPP
 
+/// \file This header is part of the algorithm library.
+/// \example numeric.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_numeric/abs.hpp"

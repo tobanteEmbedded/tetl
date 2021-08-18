@@ -24,6 +24,9 @@
 #ifndef TETL_MAP_HPP
 #define TETL_MAP_HPP
 
+/// \file This header is part of the container library.
+/// \example map.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_algorithm/find_if.hpp"

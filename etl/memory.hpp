@@ -24,6 +24,8 @@
 #ifndef TETL_MEMORY_HPP
 #define TETL_MEMORY_HPP
 
+/// \example memory.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_memory/addressof.hpp"

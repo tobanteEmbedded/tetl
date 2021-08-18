@@ -24,6 +24,9 @@
 #ifndef TETL_CASSERT_HPP
 #define TETL_CASSERT_HPP
 
+/// \file This header is part of the error handling library.
+/// \example cassert.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_assert/macro.hpp"

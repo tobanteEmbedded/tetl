@@ -24,6 +24,9 @@
 #ifndef TETL_CHRONO_HPP
 #define TETL_CHRONO_HPP
 
+/// \file This header is part of the utility library.
+/// \example chrono.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_chrono/abs.hpp"

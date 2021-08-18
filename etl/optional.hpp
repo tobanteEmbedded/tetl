@@ -24,6 +24,9 @@
 #ifndef TETL_OPTIONAL_HPP
 #define TETL_OPTIONAL_HPP
 
+/// \file This header is part of the utility library.
+/// \example optional.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_concepts/requires.hpp"

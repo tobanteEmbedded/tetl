@@ -25,6 +25,7 @@
 #define TETL_TUPLE_HPP
 
 /// \file This header is part of the general utility library.
+/// \example tuple.cpp
 
 #include "etl/_config/all.hpp"
 

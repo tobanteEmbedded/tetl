@@ -25,6 +25,7 @@
 #define TETL_ARRAY_HPP
 
 /// \file This header is part of the containers library.
+/// \example array.cpp
 
 #include "etl/_config/all.hpp"
 

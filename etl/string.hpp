@@ -24,6 +24,9 @@
 #ifndef TETL_STRING_HPP
 #define TETL_STRING_HPP
 
+/// \file This header is part of the strings library.
+/// \example string.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_string/basic_static_string.hpp"

@@ -24,6 +24,9 @@
 #ifndef TETL_ALGORITHM_HPP
 #define TETL_ALGORITHM_HPP
 
+/// \file This header is part of the algorithm library.
+/// \example algorithm.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_algorithm/adjacent_find.hpp"

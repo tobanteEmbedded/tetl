@@ -24,6 +24,9 @@
 #ifndef TETL_TYPETRAITS_HPP
 #define TETL_TYPETRAITS_HPP
 
+/// \file This header is part of the utility library.
+/// \example type_traits.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_type_traits/add_const.hpp"

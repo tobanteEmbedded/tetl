@@ -24,6 +24,9 @@
 #ifndef TETL_UTILITY_HPP
 #define TETL_UTILITY_HPP
 
+/// \file This header is part of the utility library.
+/// \example utility.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_utility/as_const.hpp"

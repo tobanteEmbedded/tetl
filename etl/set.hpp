@@ -24,6 +24,9 @@
 #ifndef TETL_SET_HPP
 #define TETL_SET_HPP
 
+/// \file This header is part of the container library.
+/// \example set.cpp
+
 #include "etl/_config/all.hpp"
 
 #include "etl/_algorithm/lexicographical_compare.hpp"

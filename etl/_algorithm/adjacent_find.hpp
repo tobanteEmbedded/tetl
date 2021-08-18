@@ -28,6 +28,9 @@
 
 namespace etl {
 
+/// \addtogroup Algorithm
+///  @{
+
 /// \brief Searches the range `[first, last)` for two consecutive equal
 /// elements. Elements are compared using the given binary predicate p.
 ///
@@ -64,6 +67,8 @@ template <typename ForwardIt>
 {
     return adjacent_find(first, last, equal_to<> {});
 }
+
+/// @}
 
 } // namespace etl
 
