@@ -67,11 +67,8 @@ struct is_swappable_with : bool_constant<conjunction_v<_swappable_with_helper<T,
 template <typename T, typename U>
 inline constexpr bool is_swappable_with_v = is_swappable_with<T, U>::value;
 
-
 // clang-format on
 
 } // namespace etl
-
-
 
 #endif // TETL_TYPE_TRAITS_IS_SWAPPABLE_WITH_HPP

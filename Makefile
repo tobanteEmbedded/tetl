@@ -80,6 +80,6 @@ stats:
 
 .PHONY: format
 format:
-	find etl -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
-	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
-	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+	find etl -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
+	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
+	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
