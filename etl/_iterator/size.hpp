@@ -60,8 +60,12 @@ constexpr auto ssize(C const& c)
 }
 
 template <typename T, ptrdiff_t N>
-constexpr auto ssize(T const (&array)[N]) noexcept -> ptrdiff_t
+constexpr auto ssize(T const (&array)[static_cast<size_t>(N)]) noexcept
+    -> ptrdiff_t
 {
+    // The static_cast<size_t>(N) inside the array parameter is to keep gcc's
+    // sign-conversion warnings happy. Array sizes are of type size_t which
+    // triggers a signed to unsigned conversion in this case.
     ::etl::ignore_unused(&array[0]);
     return N;
 }

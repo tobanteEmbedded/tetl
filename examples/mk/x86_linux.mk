@@ -16,6 +16,6 @@ WARNINGFLAGS += -Wmisleading-indentation
 WARNINGFLAGS += -Wlogical-op
 WARNINGFLAGS += -Wduplicated-branches
 WARNINGFLAGS += -Wduplicated-cond
-# WARNINGFLAGS += -Wsign-conversion
+WARNINGFLAGS += -Wsign-conversion
 
 CXXFLAGS = -std=c++${CXXSTD} ${DEBUGFLAGS} -I../ ${WARNINGFLAGS}

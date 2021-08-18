@@ -30,7 +30,7 @@ template <typename T>
 auto func(T val) ->
     typename etl::enable_if<etl::is_integral<T>::value, int>::type
 {
-    return val;
+    return static_cast<int>(val);
 }
 
 auto func(float val) -> float { return val; }

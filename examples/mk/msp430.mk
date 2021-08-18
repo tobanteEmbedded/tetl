@@ -28,7 +28,7 @@ WARNINGFLAGS += -Wmisleading-indentation
 WARNINGFLAGS += -Wlogical-op
 WARNINGFLAGS += -Wduplicated-branches
 WARNINGFLAGS += -Wduplicated-cond
-# WARNINGFLAGS += -Wsign-conversion
+WARNINGFLAGS += -Wsign-conversion
 
 MCU ?= msp430fr5969
 CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} ${DEBUGFLAGS} -I../ ${WARNINGFLAGS}

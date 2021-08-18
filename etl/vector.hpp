@@ -226,7 +226,7 @@ struct static_vector_trivial_storage {
     {
         TETL_ASSERT(!full());
         index(data_, size()) = T(forward<Args>(args)...);
-        unsafe_set_size(static_cast<size_type>(size()) + 1);
+        unsafe_set_size(static_cast<size_type>(size()) + 1U);
     }
 
     /// \brief Remove the last element from the container.
