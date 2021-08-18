@@ -32,6 +32,7 @@
 #include "etl/_strings/char_traits.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/make_signed.hpp"
+#include "etl/_utility/exchange.hpp"
 
 namespace etl {
 
@@ -144,33 +145,68 @@ struct ios_base {
     /// \brief Manages format flags. Replaces current settings with given ones.
     constexpr auto flags(fmtflags flags) noexcept -> fmtflags
     {
-        auto const old = fmtFlags_;
-        fmtFlags_      = flags;
-        return old;
+        return exchange(fmtFlags_, flags);
     }
 
     /// \brief Sets the formatting flags identified by flags.
     constexpr auto setf(fmtflags flags) noexcept -> fmtflags
     {
-        auto const old = fmtFlags_;
-        fmtFlags_      = fmtFlags_ | flags;
-        return old;
-    };
+        return exchange(fmtFlags_, fmtFlags_ | flags);
+    }
 
     /// \brief Clears the formatting flags under mask, and sets the cleared
     /// flags to those specified by flags.
     constexpr auto setf(fmtflags flags, fmtflags mask) noexcept -> fmtflags
     {
-        auto const old = fmtFlags_;
-        fmtFlags_      = (fmtFlags_ & ~mask) | (flags & mask);
-        return old;
-    };
+        return exchange(fmtFlags_, (fmtFlags_ & ~mask) | (flags & mask));
+    }
+
+    /// \brief Unsets the formatting flags identified by flags.
+    constexpr auto unsetf(fmtflags flags) noexcept -> void
+    {
+        fmtFlags_ &= (~flags);
+    }
+
+    /// \brief Manages the precision (i.e. how many digits are generated) of
+    /// floating point output performed by num_put::do_put. Returns the current
+    /// precision.
+    [[nodiscard]] constexpr auto precision() const noexcept -> streamsize
+    {
+        return precision_;
+    }
+
+    /// \brief Manages the precision (i.e. how many digits are generated) of
+    /// floating point output performed by num_put::do_put. Sets the precision
+    /// to the given one. Returns the previous precision.
+    constexpr auto precision(streamsize newPrecision) noexcept -> streamsize
+    {
+        return exchange(precision_, newPrecision);
+    }
+
+    /// \brief Manages the minimum number of characters to generate on certain
+    /// output operations and the maximum number of characters to generate on
+    /// certain input operations. Returns the current width.
+    [[nodiscard]] constexpr auto width() const noexcept -> streamsize
+    {
+        return width_;
+    }
+
+    /// \brief Manages the minimum number of characters to generate on certain
+    /// output operations and the maximum number of characters to generate on
+    /// certain input operations. Sets the width to the given one. Returns the
+    /// previous width.
+    constexpr auto width(streamsize newWidth) noexcept -> streamsize
+    {
+        return exchange(width_, newWidth);
+    }
 
 protected:
     ios_base() = default;
 
 private:
     fmtflags fmtFlags_ {};
+    streamsize precision_ { 6 };
+    streamsize width_ { 0 };
 };
 
 template <typename CharT, size_t Capacity, typename Traits, typename Child>
@@ -200,6 +236,7 @@ public:
 protected:
     auto setbuf(char_type* str, streamsize n) -> basic_streambuf*
     {
+        ignore_unused(str, n);
         return *this;
     };
 
