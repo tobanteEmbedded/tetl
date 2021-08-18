@@ -467,7 +467,7 @@ public:
     [[nodiscard]] constexpr auto data() noexcept -> pointer
     {
         return &data_[0];
-    };
+    }
 
     /// \brief Returns a pointer to the underlying array serving as character
     /// storage. The pointer is such that the range [data(); data() + size()) is
@@ -478,7 +478,7 @@ public:
     [[nodiscard]] constexpr auto data() const noexcept -> const_pointer
     {
         return c_str();
-    };
+    }
 
     /// \brief Returns a pointer to a null-terminated character array.
     ///
@@ -489,7 +489,7 @@ public:
     [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer
     {
         return &data_[0];
-    };
+    }
 
     /// \brief Returns a etl::basic_string_view.
     [[nodiscard]] constexpr
@@ -566,7 +566,7 @@ public:
         for (size_type i = 0; i < safeCount; i++) { data_[size() + i] = s; }
         unsafe_set_size(size() + safeCount);
         return *this;
-    };
+    }
 
     /// \brief Appends the null-terminated character string pointed to by s. The
     /// length of the string is determined by the first null character using
@@ -574,7 +574,7 @@ public:
     {
         auto const len = traits_type::length(s);
         return append(s, len);
-    };
+    }
 
     /// \brief Appends characters in the range [ s, s + count ). This range can
     /// contain null characters.
@@ -585,7 +585,7 @@ public:
         for (size_type i = 0; i < safeCount; i++) { data_[size() + i] = s[i]; }
         unsafe_set_size(size() + safeCount);
         return *this;
-    };
+    }
 
     /// \brief Appends characters in the range [ first , last ).
     template <typename InputIter,

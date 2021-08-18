@@ -43,7 +43,7 @@ namespace etl {
 /// operations.
 [[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float
 {
-    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+    return TETL_BUILTIN_COPYSIGNF(mag, sgn);
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -61,7 +61,7 @@ namespace etl {
 /// operations.
 [[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
 {
-    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+    return TETL_BUILTIN_COPYSIGNF(mag, sgn);
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -98,7 +98,7 @@ namespace etl {
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn)
     -> long double
 {
-    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+    return TETL_BUILTIN_COPYSIGNL(mag, sgn);
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -117,7 +117,7 @@ namespace etl {
 [[nodiscard]] constexpr auto copysignl(long double mag, long double sgn)
     -> long double
 {
-    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+    return TETL_BUILTIN_COPYSIGNL(mag, sgn);
 }
 
 } // namespace etl

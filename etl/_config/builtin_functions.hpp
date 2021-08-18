@@ -124,6 +124,20 @@
     ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
+#if __has_builtin(__builtin_copysignf)
+#define TETL_BUILTIN_COPYSIGNF(x, y) __builtin_copysignf(x, y)
+#else
+#define TETL_BUILTIN_COPYSIGNF(x, y)                                           \
+    ::etl::detail::builtin_copysign_fallback(x, y)
+#endif
+
+#if __has_builtin(__builtin_copysignl)
+#define TETL_BUILTIN_COPYSIGNL(x, y) __builtin_copysignl(x, y)
+#else
+#define TETL_BUILTIN_COPYSIGNL(x, y)                                           \
+    ::etl::detail::builtin_copysign_fallback(x, y)
+#endif
+
 #if __has_builtin(__builtin_addressof)
 #define TETL_BUILTIN_ADDRESSOF(x) __builtin_addressof(x)
 #else

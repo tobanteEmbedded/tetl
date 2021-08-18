@@ -24,7 +24,7 @@
 #ifndef TETL_CMATH_ISINF_HPP
 #define TETL_CMATH_ISINF_HPP
 
-#include "etl/_cmath/typedefs.hpp"
+#include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 
@@ -39,19 +39,19 @@ namespace etl {
 /// \module Numeric
 [[nodiscard]] constexpr auto isinf(float arg) -> bool
 {
-    return arg == INFINITY;
+    return arg == TETL_BUILTIN_HUGE_VALF;
 }
 
 /// \group isinf
 [[nodiscard]] constexpr auto isinf(double arg) -> bool
 {
-    return arg == INFINITY;
+    return arg == TETL_BUILTIN_HUGE_VAL;
 }
 
 /// \group isinf
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool
 {
-    return arg == INFINITY;
+    return arg == TETL_BUILTIN_HUGE_VALL;
 }
 
 /// \group isinf

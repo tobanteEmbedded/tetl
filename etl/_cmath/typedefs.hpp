@@ -24,10 +24,10 @@
 #ifndef TETL_CMATH_TYPEDEFS_HPP
 #define TETL_CMATH_TYPEDEFS_HPP
 
-#if __has_include(<math.h>)
-#include <math.h>
+#include "etl/_config/builtin_functions.hpp"
 
-#include "etl/_config/_workarounds/001_avr_macros.hpp" // for AVR macros
+#if defined(_MSC_VER)
+#include <math.h>
 
 #else
 
@@ -36,7 +36,19 @@
 #endif
 
 #ifndef INFINITY
-#define INFINITY TETL_BUILTIN_HUGE_VAL
+#define INFINITY TETL_BUILTIN_HUGE_VALF
+#endif
+
+#ifndef HUGE_VALF
+#define HUGE_VALF TETL_BUILTIN_HUGE_VALF
+#endif
+
+#ifndef HUGE_VAL
+#define HUGE_VAL TETL_BUILTIN_HUGE_VAL
+#endif
+
+#ifndef HUGE_VALL
+#define HUGE_VALL TETL_BUILTIN_HUGE_VALL
 #endif
 
 #endif // has_include<math.h>

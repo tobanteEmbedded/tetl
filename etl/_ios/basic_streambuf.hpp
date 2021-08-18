@@ -46,7 +46,7 @@ public:
     auto pubsetbuf(char_type* str, streamsize n) -> basic_streambuf*
     {
         return self().setbuf(str, n);
-    };
+    }
 
     // auto pubseekoff(off_type off, ios_base::seekdir dir,
     //     ios_base::openmode which = ios_base::in | ios_base::out) -> pos_type
@@ -59,7 +59,7 @@ protected:
     {
         ignore_unused(str, n);
         return *this;
-    };
+    }
 
     // auto seekoff(off_type off, ios_base::seekdir dir,
     //     ios_base::openmode which = ios_base::in | ios_base::out) -> pos_type

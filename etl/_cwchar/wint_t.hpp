@@ -32,7 +32,7 @@
 #else
 
 #if !defined(WEOF)
-#define WEOF ((wint_t)-1)
+#define WEOF (static_cast<wint_t>(-1))
 #endif
 
 #if !defined(WCHAR_MIN)

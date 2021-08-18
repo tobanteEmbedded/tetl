@@ -142,7 +142,7 @@ public:
             mutex_->lock();
             owns_ = true;
         }
-    };
+    }
 
     /// \brief Tries to lock (i.e., takes ownership of) the associated mutex
     /// without blocking.
@@ -158,7 +158,7 @@ public:
         }
 
         return false;
-    };
+    }
 
     /// \brief Tries to lock (i.e., takes ownership of) the associated mutex.
     /// Blocks until specified timeout_duration has elapsed or the lock is

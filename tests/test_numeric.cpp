@@ -43,11 +43,11 @@ TEMPLATE_TEST_CASE("numeric: abs(integer)", "[numeric]", etl::int8_t,
 TEMPLATE_TEST_CASE(
     "numeric: abs(floating)", "[numeric]", float, double, long double)
 {
-    REQUIRE(etl::abs<TestType>(0.0) == TestType { 0.0 });
-    REQUIRE(etl::abs<TestType>(1.0) == TestType { 1.0 });
-    REQUIRE(etl::abs<TestType>(-1.0) == TestType { 1.0 });
-    REQUIRE(etl::abs<TestType>(10.0) == TestType { 10.0 });
-    REQUIRE(etl::abs<TestType>(-10.0) == TestType { 10.0 });
+    REQUIRE(etl::abs<TestType>(0) == TestType { 0 });
+    REQUIRE(etl::abs<TestType>(1) == TestType { 1 });
+    REQUIRE(etl::abs<TestType>(-1) == TestType { 1 });
+    REQUIRE(etl::abs<TestType>(10) == TestType { 10 });
+    REQUIRE(etl::abs<TestType>(-10) == TestType { 10 });
 }
 
 TEMPLATE_TEST_CASE("numeric: iota", "[numeric]", etl::int16_t, etl::int32_t,

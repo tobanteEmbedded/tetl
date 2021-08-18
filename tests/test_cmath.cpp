@@ -26,25 +26,24 @@
 
 TEMPLATE_TEST_CASE("cmath: isinf", "[cmath]", float, double, long double)
 {
-    REQUIRE(etl::isinf(TestType { INFINITY }));
-    REQUIRE_FALSE(etl::isinf(TestType { NAN }));
+    REQUIRE(etl::isinf(HUGE_VAL));
+    REQUIRE(etl::isinf(HUGE_VALF));
+    REQUIRE(etl::isinf(HUGE_VALL));
+    REQUIRE_FALSE(etl::isinf(NAN));
     REQUIRE_FALSE(etl::isinf(TestType { 0 }));
     REQUIRE_FALSE(etl::isinf(TestType { 1 }));
 }
 
 TEMPLATE_TEST_CASE("cmath: isnan", "[cmath]", float, double, long double)
 {
-    auto val = TestType { 0.0 };
-    REQUIRE_FALSE(etl::isnan(val));
+    REQUIRE(etl::isnan(NAN));
 
-    val = 1.0;
-    REQUIRE_FALSE(etl::isnan(val));
-
-    val = INFINITY;
-    REQUIRE_FALSE(etl::isnan(val));
-
-    val = NAN;
-    REQUIRE(etl::isnan(val));
+    REQUIRE_FALSE(etl::isnan(TestType { 0 }));
+    REQUIRE_FALSE(etl::isnan(TestType { 1 }));
+    REQUIRE_FALSE(etl::isnan(INFINITY));
+    REQUIRE_FALSE(etl::isnan(HUGE_VAL));
+    REQUIRE_FALSE(etl::isnan(HUGE_VALF));
+    REQUIRE_FALSE(etl::isnan(HUGE_VALL));
 }
 
 TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double, long double)
@@ -52,8 +51,11 @@ TEMPLATE_TEST_CASE("cmath: isfinite", "[cmath]", float, double, long double)
     REQUIRE(etl::isfinite(TestType { 0 }));
     REQUIRE(etl::isfinite(TestType { 1 }));
 
-    REQUIRE_FALSE(etl::isfinite(TestType { INFINITY }));
-    REQUIRE_FALSE(etl::isfinite(TestType { NAN }));
+    REQUIRE_FALSE(etl::isfinite(INFINITY));
+    REQUIRE_FALSE(etl::isfinite(HUGE_VAL));
+    REQUIRE_FALSE(etl::isfinite(HUGE_VALF));
+    REQUIRE_FALSE(etl::isfinite(HUGE_VALL));
+    REQUIRE_FALSE(etl::isfinite(NAN));
 }
 
 TEMPLATE_TEST_CASE("cmath: lerp", "[cmath]", float, double, long double)

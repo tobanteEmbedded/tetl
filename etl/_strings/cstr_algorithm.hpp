@@ -31,7 +31,7 @@ template <typename CharT>
     -> CharT*
 {
     auto* temp = dest;
-    while ((*dest++ = *src++) != CharT(0)) { ; }
+    while ((*dest++ = *src++) != CharT(0)) { }
     return temp;
 }
 
@@ -54,7 +54,7 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strlen_impl(CharT const* str) -> SizeT
 {
     CharT const* s = nullptr;
-    for (s = str; *s != CharT(0); ++s) { ; }
+    for (s = str; *s != CharT(0); ++s) { }
     return static_cast<SizeT>(s - str);
 }
 

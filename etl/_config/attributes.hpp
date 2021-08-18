@@ -32,12 +32,4 @@
 #define TETL_ALWAYS_INLINE
 #endif
 
-#ifdef __GNUC__
-#define TETL_NORETURN __attribute__((noreturn))
-#elif defined(_MSC_VER)
-#define TETL_NORETURN __declspec(noreturn)
-#else
-#define TETL_NORETURN
-#endif
-
 #endif // TETL_CONFIG_ATTRIBUTES_HPP

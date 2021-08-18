@@ -60,7 +60,7 @@ template <typename T, typename CharT>
     T value = 0;
     for (; (str[i] != CharT(0)) && (len != 0); ++i, --len) {
         if (!::etl::isdigit(static_cast<int>(str[i]))) { break; }
-        value = value * 10 + str[i] - CharT('0');
+        value = value * T(10) + static_cast<T>(str[i] - CharT('0'));
     }
 
     // one past the last element used for conversion
@@ -115,7 +115,7 @@ template <typename Int, bool TerminateWithNull = true>
     }
 
     while (num != 0) {
-        auto const rem = static_cast<char>(num % base);
+        auto const rem = static_cast<char>(num % static_cast<Int>(base));
         str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
         num            = num / static_cast<Int>(base);
 
