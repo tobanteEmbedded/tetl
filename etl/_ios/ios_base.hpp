@@ -140,7 +140,10 @@ struct ios_base {
     ios_base(ios_base const&) = delete;
 
     /// \brief Manages format flags. Returns current formatting setting.
-    constexpr auto flags() const noexcept -> fmtflags { return fmtFlags_; }
+    [[nodiscard]] constexpr auto flags() const noexcept -> fmtflags
+    {
+        return fmtFlags_;
+    }
 
     /// \brief Manages format flags. Replaces current settings with given ones.
     constexpr auto flags(fmtflags flags) noexcept -> fmtflags

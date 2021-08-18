@@ -68,8 +68,8 @@ protected:
     // }
 
 private:
-    auto self() -> Child& { return static_cast<Child&>(*this); }
-    auto self() const -> Child const&
+    [[nodiscard]] auto self() -> Child& { return static_cast<Child&>(*this); }
+    [[nodiscard]] auto self() const -> Child const&
     {
         return static_cast<Child const&>(*this);
     }
