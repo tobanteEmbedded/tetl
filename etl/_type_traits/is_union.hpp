@@ -31,7 +31,7 @@ namespace etl {
 
 /// \group is_union
 template <typename T>
-struct is_union : bool_constant<TETL_IS_UNION(T)> {
+struct is_union : bool_constant<TETL_BUILTIN_IS_UNION(T)> {
 };
 
 /// \group is_union

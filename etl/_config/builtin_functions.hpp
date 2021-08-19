@@ -48,6 +48,7 @@
 #define TETL_BUILTIN_FUNCTION() ""
 #endif
 
+// UNREACHABLE
 #if __has_builtin(__builtin_unreachable)
 #define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
@@ -65,6 +66,7 @@
     }
 #endif
 
+// EXPECT
 #if __has_builtin(__builtin_expect)
 #define TETL_LIKELY(expr) __builtin_expect(static_cast<bool>(expr), true)
 #define TETL_UNLIKELY(expr) __builtin_expect(static_cast<bool>(expr), false)
@@ -73,49 +75,40 @@
 #define TETL_UNLIKELY(expr) (expr)
 #endif
 
-#if not defined(TETL_BUILTIN_NANF)
+// NAN
 #if __has_builtin(__builtin_nanf) or defined(_MSC_VER)
 #define TETL_BUILTIN_NANF (__builtin_nanf(""))
 #else
 #define TETL_BUILTIN_NANF (0.0F / 0.0F)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_NAN)
 #if __has_builtin(__builtin_nan) or defined(_MSC_VER)
 #define TETL_BUILTIN_NAN (__builtin_nan(""))
 #else
 #define TETL_BUILTIN_NAN (0.0 / 0.0)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_NANL)
-#if __has_builtin(__builtin_nanl) or defined(_MSC_VER)
+#if __has_builtin(__builtin_nanl)
 #define TETL_BUILTIN_NANL (__builtin_nanl(""))
 #elif defined(_MSC_VER)
 #define TETL_BUILTIN_NANL (__builtin_nan(""))
 #else
 #define TETL_BUILTIN_NANL (0.0L / 0.0L)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_NANSF)
+// SIGNALING NAN
 #if __has_builtin(__builtin_nansf) or defined(_MSC_VER)
 #define TETL_BUILTIN_NANSF (__builtin_nansf(""))
 #else
 #define TETL_BUILTIN_NANSF (0.0F / 0.0F)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_NANS)
 #if __has_builtin(__builtin_nans) or defined(_MSC_VER)
 #define TETL_BUILTIN_NANS (__builtin_nans(""))
 #else
 #define TETL_BUILTIN_NANS (0.0 / 0.0)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_NANSL)
 #if __has_builtin(__builtin_nansl)
 #define TETL_BUILTIN_NANSL (__builtin_nansl(""))
 #elif defined(_MSC_VER)
@@ -123,25 +116,20 @@
 #else
 #define TETL_BUILTIN_NANSL (0.0L / 0.0L)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_HUGE_VALF)
+// HUGE VAL
 #if __has_builtin(__builtin_huge_valf) or defined(_MSC_VER)
 #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
 #else
 #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_HUGE_VAL)
 #if __has_builtin(__builtin_huge_val) or defined(_MSC_VER)
 #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
 #else
 #define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_HUGE_VALL)
 #if __has_builtin(__builtin_huge_vall)
 #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
 #elif defined(_MSC_VER)
@@ -149,12 +137,13 @@
 #else
 #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
-#endif
 
-#if not defined(TETL_BUILTIN_VA_LIST)
+// VA LIST
 #define TETL_BUILTIN_VA_LIST __builtin_va_list
-#endif // TETL_BUILTIN_VA_LIST
 
+// clang-format off
+
+// ASSUME ALIGNED
 #if __has_builtin(__builtin_assume_aligned)
 #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) __builtin_assume_aligned(p, a)
 #else
@@ -170,22 +159,19 @@
 #if __has_builtin(__builtin_copysign)
 #define TETL_BUILTIN_COPYSIGN(x, y) __builtin_copysign(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGN(x, y)                                            \
-    ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGN(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_copysignf)
 #define TETL_BUILTIN_COPYSIGNF(x, y) __builtin_copysignf(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGNF(x, y)                                           \
-    ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGNF(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_copysignl)
 #define TETL_BUILTIN_COPYSIGNL(x, y) __builtin_copysignl(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGNL(x, y)                                           \
-    ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGNL(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_addressof)
@@ -200,85 +186,33 @@
 #define TETL_BUILTIN_IS_CONSTANT_EVALUATED() false
 #endif
 
-#if not defined(TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR)
-#define TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
-#endif // TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR
-
-#if not defined(TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION)
-#define TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION(Type)                    \
-    __has_unique_object_representations(Type)
-#endif // TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION
-
-#if not defined(TETL_BUILTIN_IS_ABSTRACT)
-#define TETL_BUILTIN_IS_ABSTRACT(Type) __is_abstract(Type)
-#endif // TETL_BUILTIN_IS_ABSTRACT
-
-#if not defined(TETL_BUILTIN_IS_AGGREGATE)
-#define TETL_BUILTIN_IS_AGGREGATE(Type) __is_aggregate(Type)
-#endif // TETL_BUILTIN_IS_AGGREGATE
-
-#if not defined(TETL_BUILTIN_IS_ASSIGNABLE)
-#define TETL_BUILTIN_IS_ASSIGNABLE(Type, Arg) __is_assignable(Type, Arg)
-#endif // TETL_BUILTIN_IS_ASSIGNABLE
-
-#if not defined(TETL_BUILTIN_IS_CONSTRUCTIBLE)
-#define TETL_BUILTIN_IS_CONSTRUCTIBLE(Type, Args) __is_constructible(Type, Args)
-#endif // TETL_BUILTIN_IS_CONSTRUCTIBLE
-
-#if not defined(TETL_BUILTIN_IS_CLASS)
-#define TETL_BUILTIN_IS_CLASS(Type) __is_class(Type)
-#endif // TETL_BUILTIN_IS_CLASS
-
-#if not defined(TETL_BUILTIN_IS_ENUM)
-#define TETL_BUILTIN_IS_ENUM(Type) __is_enum(Type)
-#endif // TETL_BUILTIN_IS_ENUM
-
-#if not defined(TETL_BUILTIN_IS_FINAL)
-#define TETL_BUILTIN_IS_FINAL(Type) __is_final(Type)
-#endif // TETL_BUILTIN_IS_FINAL
-
-#if not defined(TETL_BUILTIN_IS_POLYMORPHIC)
-#define TETL_BUILTIN_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
-#endif // TETL_BUILTIN_IS_POLYMORPHIC
-
-#if not defined(TETL_BUILTIN_IS_STANDARD_LAYOUT)
-#define TETL_BUILTIN_IS_STANDARD_LAYOUT(Type) __is_standard_layout(Type)
-#endif // TETL_BUILTIN_IS_STANDARD_LAYOUT
-
-#if not defined(TETL_BUILTIN_IS_TRIVIALLY_ASSIGNABLE)
-#define TETL_BUILTIN_IS_TRIVIALLY_ASSIGNABLE(T, Arg)                           \
-    __is_trivially_assignable(T, Arg)
-#endif // TETL_BUILTIN_IS_TRIVIALLY_ASSIGNABLE
-
-#if not defined(TETL_BUILTIN_IS_TRIVIAL_CONSTRUCTIBLE)
-#define TETL_BUILTIN_IS_TRIVIAL_CONSTRUCTIBLE(Type)                            \
-    __is_trivially_constructible(Type)
-#endif // TETL_BUILTIN_IS_TRIVIAL_CONSTRUCTIBLE
-
-#if not defined(TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE)
-#define TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE(Type)                             \
-    __has_trivial_destructor(Type)
-#endif // TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE
-
-#if not defined(TETL_IS_UNION)
-#define TETL_IS_UNION(Type) __is_union(Type)
-#endif // TETL_IS_UNION
-
-#if not defined(TETL_BUILTIN_UNDERLYING_TYPE)
-#define TETL_BUILTIN_UNDERLYING_TYPE(Type) __underlying_type(Type)
-#endif // TETL_BUILTIN_UNDERLYING_TYPE
-
-#if not defined(TETL_BUILTIN_MAKE_INTEGER_SEQ)
 #if defined(TETL_CLANG) or defined(TETL_MSVC)
-#define TETL_BUILTIN_MAKE_INTEGER_SEQ(T, N)                                    \
-    __make_integer_seq<integer_sequence, T, N>
+#define TETL_BUILTIN_INT_SEQ(T, N) __make_integer_seq<integer_sequence, T, N>
 #else
-#define TETL_BUILTIN_MAKE_INTEGER_SEQ(T, N)                                    \
-    integer_sequence<T, __integer_pack(N)...>
+#define TETL_BUILTIN_INT_SEQ(T, N) integer_sequence<T, __integer_pack(N)...>
 #endif
-#endif // TETL_BUILTIN_MAKE_INTEGER_SEQ
 
-namespace etl::detail {
+#define TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION(Type) __has_unique_object_representations(Type)
+#define TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR(Type) __has_virtual_destructor(Type)
+#define TETL_BUILTIN_IS_ABSTRACT(Type) __is_abstract(Type)
+#define TETL_BUILTIN_IS_AGGREGATE(Type) __is_aggregate(Type)
+#define TETL_BUILTIN_IS_ASSIGNABLE(Type, Arg) __is_assignable(Type, Arg)
+#define TETL_BUILTIN_IS_CONSTRUCTIBLE(Type, Args) __is_constructible(Type, Args)
+#define TETL_BUILTIN_IS_CLASS(Type) __is_class(Type)
+#define TETL_BUILTIN_IS_ENUM(Type) __is_enum(Type)
+#define TETL_BUILTIN_IS_FINAL(Type) __is_final(Type)
+#define TETL_BUILTIN_IS_UNION(Type) __is_union(Type)
+#define TETL_BUILTIN_IS_POLYMORPHIC(Type) __is_polymorphic(Type)
+#define TETL_BUILTIN_IS_STANDARD_LAYOUT(Type) __is_standard_layout(Type)
+#define TETL_BUILTIN_IS_TRIVIALLY_ASSIGNABLE(T, Arg) __is_trivially_assignable(T, Arg)
+#define TETL_BUILTIN_IS_TRIVIAL_CONSTRUCTIBLE(Type) __is_trivially_constructible(Type)
+#define TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE(Type) __has_trivial_destructor(Type)
+#define TETL_BUILTIN_UNDERLYING_TYPE(Type) __underlying_type(Type)
+
+// clang-format on
+
+namespace etl {
+namespace detail {
 template <typename T>
 constexpr auto builtin_copysign_fallback(T x, T y) noexcept -> T
 {
@@ -298,7 +232,7 @@ auto builtin_addressof_fallback(T& arg) noexcept -> T*
     return reinterpret_cast<T*>(
         &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
 }
-
-} // namespace etl::detail
+} // namespace detail
+} // namespace etl
 
 #endif // TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
