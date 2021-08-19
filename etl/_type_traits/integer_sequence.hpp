@@ -45,7 +45,7 @@ struct integer_sequence {
 
 /// \group integer_sequence
 template <typename T, T Size>
-using make_integer_sequence = TETL_MAKE_INTEGER_SEQ(T, Size);
+using make_integer_sequence = TETL_BUILTIN_MAKE_INTEGER_SEQ(T, Size);
 
 } // namespace etl
 

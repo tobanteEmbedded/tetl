@@ -48,7 +48,7 @@ namespace etl {
 /// has_unique_object_representations_v is undefined.
 template <typename T>
 struct has_unique_object_representations
-    : bool_constant<TETL_HAS_UNIQUE_OBJECT_REPRESENTATION(
+    : bool_constant<TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION(
           remove_cv_t<remove_all_extents_t<T>>)> {
 };
 

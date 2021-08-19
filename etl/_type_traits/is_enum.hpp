@@ -31,7 +31,7 @@ namespace etl {
 
 /// \group is_enum
 template <typename T>
-struct is_enum : bool_constant<TETL_IS_ENUM(T)> {
+struct is_enum : bool_constant<TETL_BUILTIN_IS_ENUM(T)> {
 };
 
 /// \group is_enum

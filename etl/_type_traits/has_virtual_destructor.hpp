@@ -33,7 +33,8 @@ namespace etl {
 /// [https://en.cppreference.com/w/cpp/types/has_virtual_destructor](https://en.cppreference.com/w/cpp/types/has_virtual_destructor)
 /// \group has_virtual_destructor
 template <typename T>
-struct has_virtual_destructor : bool_constant<TETL_HAS_VIRTUAL_DESTRUCTOR(T)> {
+struct has_virtual_destructor
+    : bool_constant<TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR(T)> {
 };
 
 /// \notes

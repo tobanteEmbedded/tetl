@@ -37,7 +37,7 @@ namespace etl {
 /// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
-    return TETL_IS_CONSTANT_EVALUATED();
+    return TETL_BUILTIN_IS_CONSTANT_EVALUATED();
 }
 
 } // namespace etl

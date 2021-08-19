@@ -32,7 +32,7 @@ namespace etl {
 
 /// \group is_aggregate
 template <typename T>
-struct is_aggregate : bool_constant<TETL_IS_AGGREGATE(remove_cv_t<T>)> {
+struct is_aggregate : bool_constant<TETL_BUILTIN_IS_AGGREGATE(remove_cv_t<T>)> {
 };
 
 /// \group is_aggregate

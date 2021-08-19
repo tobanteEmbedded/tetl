@@ -31,7 +31,7 @@ namespace etl {
 
 /// \group is_class
 template <typename T>
-struct is_class : bool_constant<TETL_IS_CLASS(T)> {
+struct is_class : bool_constant<TETL_BUILTIN_IS_CLASS(T)> {
 };
 
 /// \group is_class

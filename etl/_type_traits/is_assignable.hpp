@@ -34,7 +34,7 @@ namespace etl {
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
 template <typename T, typename U>
-struct is_assignable : bool_constant<TETL_IS_ASSIGNABLE(T, U)> {
+struct is_assignable : bool_constant<TETL_BUILTIN_IS_ASSIGNABLE(T, U)> {
 };
 
 template <typename T, typename U>

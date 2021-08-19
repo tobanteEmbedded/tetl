@@ -35,7 +35,7 @@ namespace etl {
 /// otherwise, the behavior is undefined.
 /// \group is_final
 template <typename T>
-struct is_final : bool_constant<TETL_IS_FINAL(T)> {
+struct is_final : bool_constant<TETL_BUILTIN_IS_FINAL(T)> {
 };
 
 /// \group is_final

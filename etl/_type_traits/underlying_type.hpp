@@ -32,7 +32,7 @@ namespace etl {
 namespace detail {
 template <typename T, bool = is_enum_v<T>>
 struct underlying_type_impl {
-    using type = TETL_IS_UNDERLYING_TYPE(T);
+    using type = TETL_BUILTIN_UNDERLYING_TYPE(T);
 };
 
 template <typename T>

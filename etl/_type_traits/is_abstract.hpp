@@ -31,7 +31,7 @@ namespace etl {
 
 /// \group is_abstract
 template <typename T>
-struct is_abstract : bool_constant<TETL_IS_ABSTRACT(T)> {
+struct is_abstract : bool_constant<TETL_BUILTIN_IS_ABSTRACT(T)> {
 };
 
 /// \group is_abstract

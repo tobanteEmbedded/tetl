@@ -34,7 +34,7 @@ namespace etl {
 /// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
 template <typename T>
 struct is_trivially_destructible
-    : bool_constant<TETL_IS_TRIVIAL_DESTRUCTIBLE(T)> {
+    : bool_constant<TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE(T)> {
 };
 
 template <typename T>

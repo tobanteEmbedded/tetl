@@ -31,7 +31,7 @@ namespace etl {
 
 /// \group is_polymorphic
 template <typename T>
-struct is_polymorphic : bool_constant<TETL_IS_POLYMORPHIC(T)> {
+struct is_polymorphic : bool_constant<TETL_BUILTIN_IS_POLYMORPHIC(T)> {
 };
 
 /// \group is_polymorphic

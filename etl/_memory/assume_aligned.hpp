@@ -49,7 +49,7 @@ template <::etl::size_t N, typename T>
     static_assert(detail::is_power2(N));
     static_assert(alignof(T) <= N);
 
-#if defined(TETL_IS_CONSTANT_EVALUATED)
+#if defined(TETL_BUILTIN_IS_CONSTANT_EVALUATED)
     if (::etl::is_constant_evaluated()) { return ptr; }
 #endif
 
