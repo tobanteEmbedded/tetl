@@ -26,6 +26,7 @@
 
 #include "etl/_config/builtin_functions.hpp"
 
+#if not defined(_MSC_VER)
 #ifndef NAN
 #define NAN TETL_BUILTIN_NAN
 #endif
@@ -44,6 +45,7 @@
 
 #ifndef HUGE_VALL
 #define HUGE_VALL TETL_BUILTIN_HUGE_VALL
+#endif
 #endif
 
 namespace etl {
