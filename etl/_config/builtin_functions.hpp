@@ -74,11 +74,19 @@
 #endif
 
 #if not defined(TETL_BUILTIN_NANF)
-#define TETL_BUILTIN_NANF(x) __builtin_nanf((x))
+#if __has_builtin(__builtin_nanf)
+#define TETL_BUILTIN_NANF(x) (__builtin_nanf((x)))
+#else
+#define TETL_BUILTIN_NANF(x) (0.0F / 0.0F)
+#endif
 #endif
 
 #if not defined(TETL_BUILTIN_NAN)
-#define TETL_BUILTIN_NAN(x) __builtin_nan((x))
+#if __has_builtin(__builtin_nan)
+#define TETL_BUILTIN_NAN(x) (__builtin_nan((x)))
+#else
+#define TETL_BUILTIN_NAN(x) (0.0 / 0.0)
+#endif
 #endif
 
 #if not defined(TETL_BUILTIN_HUGE_VALF)
