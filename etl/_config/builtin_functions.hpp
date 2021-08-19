@@ -24,6 +24,10 @@
 #ifndef TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
 #define TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
 
+#if defined(_MSC_VER)
+#include <math.h>
+#endif
+
 #if __has_builtin(__builtin_COLUMN)
 #define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
 #else
@@ -76,6 +80,8 @@
 #if not defined(TETL_BUILTIN_NANF)
 #if __has_builtin(__builtin_nanf)
 #define TETL_BUILTIN_NANF(x) (__builtin_nanf((x)))
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_NANF NAN
 #else
 #define TETL_BUILTIN_NANF(x) (0.0F / 0.0F)
 #endif
@@ -84,6 +90,8 @@
 #if not defined(TETL_BUILTIN_NAN)
 #if __has_builtin(__builtin_nan)
 #define TETL_BUILTIN_NAN(x) (__builtin_nan((x)))
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_NAN NAN
 #else
 #define TETL_BUILTIN_NAN(x) (0.0 / 0.0)
 #endif
@@ -92,6 +100,8 @@
 #if not defined(TETL_BUILTIN_HUGE_VALF)
 #if __has_builtin(__builtin_huge_valf)
 #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_HUGE_VALF HUGE_VALF
 #else
 #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
 #endif
@@ -100,6 +110,8 @@
 #if not defined(TETL_BUILTIN_HUGE_VAL)
 #if __has_builtin(__builtin_huge_val)
 #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_HUGE_VAL HUGE_VAL
 #else
 #define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
 #endif
@@ -108,6 +120,8 @@
 #if not defined(TETL_BUILTIN_HUGE_VALL)
 #if __has_builtin(__builtin_huge_vall)
 #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_HUGE_VALL HUGE_VALL
 #else
 #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
