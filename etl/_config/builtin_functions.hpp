@@ -77,28 +77,32 @@
 #define TETL_BUILTIN_NANF(x) __builtin_nanf((x))
 #endif
 
-#if not defined(TETL_BUILTIN_SIGNAL_NANF)
-#define TETL_BUILTIN_SIGNAL_NANF(x) __builtin_nansf((x))
-#endif
-
 #if not defined(TETL_BUILTIN_NAN)
 #define TETL_BUILTIN_NAN(x) __builtin_nan((x))
 #endif
 
-#if not defined(TETL_BUILTIN_SIGNAL_NAN)
-#define TETL_BUILTIN_SIGNAL_NAN(x) __builtin_nans((x))
-#endif
-
 #if not defined(TETL_BUILTIN_HUGE_VALF)
+#if __has_builtin(__builtin_huge_valf)
 #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
+#else
+#define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
+#endif
 #endif
 
 #if not defined(TETL_BUILTIN_HUGE_VAL)
+#if __has_builtin(__builtin_huge_val)
 #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
+#else
+#define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
+#endif
 #endif
 
 #if not defined(TETL_BUILTIN_HUGE_VALL)
+#if __has_builtin(__builtin_huge_vall)
 #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
+#else
+#define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
+#endif
 #endif
 
 #if not defined(TETL_BUILTIN_VA_LIST)
