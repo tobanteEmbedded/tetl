@@ -369,20 +369,18 @@ public:
     /// as if direct-initializing.
     template <typename... Args,
         TETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
-    constexpr explicit optional(etl::in_place_t /*unused*/, Args&&... arguments)
-        : base_type(in_place, etl::forward<Args>(arguments)...)
+    constexpr explicit optional(in_place_t /*unused*/, Args&&... arguments)
+        : base_type(in_place, forward<Args>(arguments)...)
     {
     }
 
     /// \brief Constructs an optional object that contains a value, initialized
     /// as if direct-initializing.
     template <typename U = value_type,
-        typename         = typename etl::enable_if_t<
-            conjunction_v<is_constructible<ValueType, U&&>,
-                negation<is_same<remove_cvref_t<U>, optional<ValueType>>>,
-                negation<is_same<remove_cvref_t<U>, etl::in_place_t>>>>>
-    constexpr optional(U&& value)
-        : base_type(etl::in_place, etl::forward<U>(value))
+        typename = enable_if_t<conjunction_v<is_constructible<ValueType, U&&>,
+            negation<is_same<remove_cvref_t<U>, optional<ValueType>>>,
+            negation<is_same<remove_cvref_t<U>, in_place_t>>>>>
+    constexpr optional(U&& value) : base_type(in_place, forward<U>(value))
     {
     }
 

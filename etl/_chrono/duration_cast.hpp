@@ -29,6 +29,7 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
 
 namespace etl::chrono {
@@ -41,6 +42,9 @@ struct is_duration : ::etl::false_type {
 template <typename Rep, typename Period>
 struct is_duration<::etl::chrono::duration<Rep, Period>> : ::etl::true_type {
 };
+
+template <typename T>
+inline constexpr auto is_duration_v = is_duration<T>::value;
 
 template <typename ToDuration, typename CF, typename CR, bool NumIsOne = false,
     bool DenIsOne = false>
@@ -103,7 +107,7 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true> {
 
 /// \brief Converts a duration to a duration of different type ToDur.
 template <typename ToDur, typename Rep, typename Period,
-    TETL_REQUIRES_(detail::is_duration<ToDur>::value)>
+    TETL_REQUIRES_(detail::is_duration_v<ToDur>)>
 [[nodiscard]] constexpr auto
 duration_cast(duration<Rep, Period> const& duration) noexcept(
     is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDur::rep>) -> ToDur

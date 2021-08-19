@@ -14,7 +14,7 @@ CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-12
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
 CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
 
-STANDARDESE_BIN ?= ~/.builds/standardese/cmake-build-release/tool/standardese
+STANDARDESE_BIN ?= standardese
 
 .PHONY: all
 all: config build test

@@ -55,7 +55,7 @@ template <typename CharT, etl::size_t Capacity,
 struct basic_static_string {
     // clang-format off
     template <typename T>
-    constexpr static bool string_view_and_not_char_pointer =
+    constexpr static bool view_and_not_char_ptr =
                               is_convertible_v<T const&, basic_string_view<CharT, Traits>>
                           && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
@@ -131,9 +131,9 @@ public:
 
     /// Constructs the string with the contents of the range [ first,
     /// last). Fails silently if input length is greater then capacity.
-    template <typename InputIter,
-        TETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    constexpr basic_static_string(InputIter first, InputIter last) noexcept
+    template <typename InputIt,
+        enable_if_t<detail::InputIterator<InputIt>, bool> = true>
+    constexpr basic_static_string(InputIt first, InputIt last) noexcept
         : basic_static_string(
             first, static_cast<size_type>(distance(first, last)))
     {
@@ -155,7 +155,7 @@ public:
 
     /// Implicitly converts t to a string view sv, then initializes the
     /// string with the contents of sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T, enable_if_t<view_and_not_char_ptr<T>, bool> = true>
     explicit constexpr basic_static_string(T const& t) noexcept
 
     {
@@ -165,7 +165,7 @@ public:
 
     /// Implicitly converts t to a string view sv, then initializes the
     /// string with the subrange [ pos, pos + n ) of sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T, enable_if_t<view_and_not_char_ptr<T>, bool> = true>
     explicit constexpr basic_static_string(
         T const& t, size_type pos, size_type n)
         : basic_static_string {
@@ -209,8 +209,9 @@ public:
 
     /// Implicitly converts t to a string view sv, then replaces the
     /// contents with those of the sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    constexpr auto operator=(T const& t) noexcept -> basic_static_string&
+    template <typename T>
+    constexpr auto operator=(T const& t) noexcept
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         assign(t);
         return *this;
@@ -268,9 +269,9 @@ public:
 
     /// \brief Replaces the contents with copies of the characters in the
     /// range [ first , last ).
-    template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
+    template <typename InputIt>
     constexpr auto assign(InputIt first, InputIt last) noexcept
-        -> basic_static_string&
+        -> enable_if_t<detail::InputIterator<InputIt>, basic_static_string&>
     {
         *this = basic_static_string { first, last };
         return *this;
@@ -278,8 +279,9 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then replaces the
     /// contents with the characters from sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    constexpr auto assign(T const& t) noexcept -> basic_static_string&
+    template <typename T>
+    constexpr auto assign(T const& t) noexcept
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         auto tmp = basic_static_string { basic_static_string { t } };
         *this    = tmp;
@@ -289,9 +291,10 @@ public:
     /// \brief Implicitly converts t to a string view sv, then replaces the
     /// contents with the characters from the subview [ pos, pos + count ) of
     /// sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    constexpr auto assign(T const& t, size_type pos,
-        size_type count = npos) noexcept -> basic_static_string&
+    template <typename T>
+    constexpr auto assign(
+        T const& t, size_type pos, size_type count = npos) noexcept
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         auto tmp
             = basic_static_string { basic_static_string { t, pos, count } };
@@ -588,10 +591,9 @@ public:
     }
 
     /// \brief Appends characters in the range [ first , last ).
-    template <typename InputIter,
-        TETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    template <typename InputIter>
     constexpr auto append(InputIter first, InputIter last) noexcept
-        -> basic_static_string&
+        -> enable_if_t<detail::InputIterator<InputIter>, basic_static_string&>
     {
         TETL_ASSERT(capacity() - size()
                     > static_cast<size_type>(etl::distance(first, last)));
@@ -615,8 +617,9 @@ public:
 
     /// \brief Implicitly converts t to a string_view sv, then appends all
     /// characters from sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    constexpr auto append(T const& t) -> basic_static_string&
+    template <typename T>
+    constexpr auto append(T const& t)
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         etl::basic_string_view<value_type, traits_type> sv = t;
         return append(sv.data(), sv.size());
@@ -624,9 +627,9 @@ public:
 
     /// \brief Implicitly converts t to a string_view sv then appends the
     /// characters from the subview [ pos, pos + count ) of sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T>
     constexpr auto append(T const& t, size_type pos, size_type count = npos)
-        -> basic_static_string&
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         etl::basic_string_view<value_type, traits_type> sv = t;
         return append(sv.substr(pos, count));
@@ -653,8 +656,9 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then appends
     /// characters in the string view sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    constexpr auto operator+=(T const& t) noexcept -> basic_static_string&
+    template <typename T>
+    constexpr auto operator+=(T const& t) noexcept
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         return append(t);
     }
@@ -736,9 +740,9 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then inserts the
     /// elements from sv before the element (if any) pointed by pos.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T>
     constexpr auto insert(size_type const pos, T const& t) noexcept
-        -> basic_static_string&
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         basic_string_view<value_type, traits_type> sv = t;
         insert_impl(begin() + pos, sv.data(), sv.size());
@@ -748,10 +752,10 @@ public:
     /// \brief Implicitly converts t to a string view sv, then inserts, before
     /// the element (if any) pointed by pos, the characters from the subview
     /// [index_str, index_str+count) of sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T>
     constexpr auto insert(size_type const index, T const& t,
         size_type const indexStr, size_type const count = npos) noexcept
-        -> basic_static_string&
+        -> enable_if_t<view_and_not_char_ptr<T>, basic_static_string&>
     {
         basic_string_view<value_type, traits_type> sv = t;
 
@@ -838,21 +842,22 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then compares the
     /// content of this string to sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
+    template <typename T>
+    [[nodiscard]] constexpr auto compare(T const& t) const noexcept
+        -> enable_if_t<view_and_not_char_ptr<T>, int>
     {
-        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        using view_type    = basic_string_view<CharT, Traits>;
         view_type const sv = t;
         return view_type(*this).compare(sv);
     }
 
     /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
-    [[nodiscard]] constexpr auto compare(
-        size_type pos1, size_type count1, T const& t) const noexcept -> int
+    template <typename T>
+    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
+        T const& t) const noexcept -> enable_if_t<view_and_not_char_ptr<T>, int>
     {
-        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        using view_type    = basic_string_view<CharT, Traits>;
         view_type const sv = t;
         return view_type(*this).substr(pos1, count1).compare(sv);
     }
@@ -860,12 +865,12 @@ public:
     /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to a substring [pos2, pos2+count2)
     /// of sv.
-    template <typename T, TETL_REQUIRES_(string_view_and_not_char_pointer<T>)>
+    template <typename T>
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1,
         T const& t, size_type pos2, size_type count2 = npos) const noexcept
-        -> int
+        -> enable_if_t<view_and_not_char_ptr<T>, int>
     {
-        using view_type    = etl::basic_string_view<value_type, traits_type>;
+        using view_type    = basic_string_view<CharT, Traits>;
         view_type const sv = t;
         return view_type(*this)
             .substr(pos1, count1)
@@ -874,49 +879,41 @@ public:
 
     /// \brief Checks if the string begins with the given prefix.
     [[nodiscard]] constexpr auto starts_with(
-        etl::basic_string_view<value_type, traits_type> sv) const noexcept
-        -> bool
+        basic_string_view<CharT, Traits> sv) const noexcept -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .starts_with(sv);
+        return basic_string_view<CharT, Traits>(data(), size()).starts_with(sv);
     }
 
     /// \brief Checks if the string begins with the given prefix.
     [[nodiscard]] constexpr auto starts_with(value_type c) const noexcept
         -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .starts_with(c);
+        return basic_string_view<CharT, Traits>(data(), size()).starts_with(c);
     }
 
     /// \brief Checks if the string begins with the given prefix.
-    [[nodiscard]] constexpr auto starts_with(const_pointer str) const -> bool
+    [[nodiscard]] constexpr auto starts_with(const_pointer s) const -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .starts_with(str);
+        return basic_string_view<CharT, Traits>(data(), size()).starts_with(s);
     }
 
     /// \brief Checks if the string ends with the given prefix.
     [[nodiscard]] constexpr auto ends_with(
-        etl::basic_string_view<value_type, traits_type> sv) const noexcept
-        -> bool
+        basic_string_view<CharT, Traits> sv) const noexcept -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .ends_with(sv);
+        return basic_string_view<CharT, Traits>(data(), size()).ends_with(sv);
     }
 
     /// \brief Checks if the string ends with the given prefix.
     [[nodiscard]] constexpr auto ends_with(value_type c) const noexcept -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .ends_with(c);
+        return basic_string_view<CharT, Traits>(data(), size()).ends_with(c);
     }
 
     /// \brief Checks if the string ends with the given prefix.
     [[nodiscard]] constexpr auto ends_with(const_pointer str) const -> bool
     {
-        return etl::basic_string_view<value_type, traits_type>(data(), size())
-            .ends_with(str);
+        return basic_string_view<CharT, Traits>(data(), size()).ends_with(str);
     }
 
     /// \brief Replaces the part of the string indicated [pos, pos + count) with

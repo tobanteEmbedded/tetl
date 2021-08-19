@@ -28,6 +28,7 @@
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 #include "etl/_type_traits/decay.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
@@ -53,6 +54,13 @@ namespace etl {
 /// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
 struct pair {
+private:
+    template <typename U1, typename U2>
+    using is_constructible_
+        = enable_if_t<is_constructible_v<T1, U1> && is_constructible_v<T2, U2>,
+            bool>;
+
+public:
     using first_type  = T1;
     using second_type = T2;
 
@@ -66,33 +74,27 @@ struct pair {
     TETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
     constexpr pair(T1 const& t1, T2 const& t2) : first { t1 }, second { t2 } { }
 
-    /// \brief Initializes first with etl::forward<U1>(x) and second with
-    /// etl::forward<U2>(y).
+    /// \brief Initializes first with forward<U1>(x) and second with
+    /// forward<U2>(y).
     template <typename U1 = T1, typename U2 = T2,
-        TETL_REQUIRES_(is_constructible_v<U1&&, first_type>&&
-                is_constructible_v<U2&&, second_type>)>
+        is_constructible_<U1&&, U2&&> = true>
     constexpr pair(U1&& x, U2&& y)
-        : first(etl::forward<U1>(x)), second(etl::forward<U2>(y))
+        : first(forward<U1>(x)), second(forward<U2>(y))
     {
     }
 
     /// \brief Initializes first with p.first and second with p.second.
     template <typename U1, typename U2,
-        TETL_REQUIRES_(is_constructible_v<first_type, U1 const&>&&
-                is_constructible_v<second_type, U2 const&>)>
-    constexpr pair(pair<U1, U2> const& p)
-        : first { static_cast<T1>(p.first) }
-        , second { static_cast<T2>(p.second) }
+        is_constructible_<U1 const&, U2 const&> = true>
+    constexpr pair(pair<U1, U2> const& p) : first(p.first), second(p.second)
     {
     }
 
-    /// \brief Initializes first with etl::forward<U1>(p.first) and second with
-    /// etl::forward<U2>(p.second).
-    template <typename U1, typename U2,
-        TETL_REQUIRES_(is_constructible_v<first_type, U1&&>&&
-                is_constructible_v<second_type, U2&&>)>
+    /// \brief Initializes first with forward<U1>(p.first) and second with
+    /// forward<U2>(p.second).
+    template <typename U1, typename U2, is_constructible_<U1&&, U2&&> = true>
     constexpr pair(pair<U1, U2>&& p)
-        : first(etl::forward<U1>(p.first)), second(etl::forward<U2>(p.second))
+        : first(forward<U1>(p.first)), second(forward<U2>(p.second))
     {
     }
 

@@ -23,9 +23,9 @@
 #ifndef TETL_NUMERIC_LCM_HPP
 #define TETL_NUMERIC_LCM_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_numeric/gcd.hpp"
 #include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
@@ -35,13 +35,11 @@ namespace etl {
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
-template <typename M, typename N,
-    TETL_REQUIRES_((
-        is_integral_v<
-            M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>))>
-[[nodiscard]] constexpr auto lcm(M m, N n) ->
-
-    etl::common_type_t<M, N>
+template <typename M, typename N>
+[[nodiscard]] constexpr auto lcm(M m, N n) -> enable_if_t<
+    is_integral_v<
+        M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>,
+    common_type_t<M, N>>
 {
     return (m * n) / gcd(m, n);
 }

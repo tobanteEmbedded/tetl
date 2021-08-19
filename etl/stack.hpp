@@ -214,9 +214,9 @@ stack(Container) -> stack<typename Container::value_type, Container>;
 /// \brief Specializes the swap algorithm for stack. Swaps the contents of lhs
 /// and rhs. This overload only participates in overload resolution if
 /// is_swappable<C>::value is true.
-template <typename T, typename C, TETL_REQUIRES_(is_swappable_v<C>)>
+template <typename T, typename C>
 constexpr auto swap(stack<T, C>& lhs, stack<T, C>& rhs) noexcept(
-    noexcept(lhs.swap(rhs))) -> void
+    noexcept(lhs.swap(rhs))) -> enable_if_t<is_swappable_v<C>, void>
 {
     lhs.swap(rhs);
 }

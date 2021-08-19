@@ -26,6 +26,7 @@
 
 #include "etl/_concepts/requires.hpp"
 #include "etl/_config/builtin_functions.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_function.hpp"
 #include "etl/_type_traits/is_void.hpp"
@@ -54,16 +55,16 @@ struct default_delete<T[]> {
     constexpr default_delete() noexcept = default;
 
     template <typename U,
-        TETL_REQUIRES_((etl::is_convertible_v<U (*)[], T (*)[]>))>
+        enable_if_t<is_convertible_v<U (*)[], T (*)[]>, bool> = true>
     default_delete(default_delete<U[]> const& /*unused*/) noexcept
     {
     }
 
-    template <typename U,
-        TETL_REQUIRES_(etl::is_convertible_v<U (*)[], T (*)[]>)>
-    auto operator()(U* arrayPtr) const noexcept -> void
+    template <typename U>
+    auto operator()(U* ptr) const noexcept
+        -> enable_if_t<is_convertible_v<U (*)[], T (*)[]>, void>
     {
-        delete[] arrayPtr;
+        delete[] ptr;
     }
 
 private:
