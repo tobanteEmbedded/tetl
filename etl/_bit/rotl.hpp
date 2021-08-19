@@ -37,10 +37,10 @@ template <typename T>
 constexpr auto rotl(T t, int s) noexcept
     -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
 {
-    auto const cnt    = static_cast<unsigned>(s);
-    auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-    if ((cnt % digits) == 0) { return t; }
-    return (t << (cnt % digits)) | (t >> (digits - (cnt % digits)));
+    auto const c = static_cast<unsigned>(s);
+    auto const d = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+    if ((c % d) == 0U) { return t; }
+    return static_cast<T>((t << (c % d)) | (t >> (d - (c % d))));
 }
 
 } // namespace etl

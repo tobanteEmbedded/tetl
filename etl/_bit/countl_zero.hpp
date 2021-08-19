@@ -45,12 +45,12 @@ template <typename T>
     -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
 {
     auto const totalBits = etl::numeric_limits<T>::digits;
-    if (x == T { 0 }) { return etl::numeric_limits<T>::digits; }
+    if (x == T(0)) { return etl::numeric_limits<T>::digits; }
 
-    int res = 0;
-    while (!(x & (T { 1 } << (totalBits - 1U)))) {
-        x = (x << T { 1 });
-        res++;
+    auto res = 0;
+    while (!(x & (T(1) << (static_cast<T>(totalBits) - T(1))))) {
+        x = static_cast<T>(x << T(1));
+        ++res;
     }
 
     return res;
