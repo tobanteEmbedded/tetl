@@ -26,10 +26,8 @@
 
 #include "etl/_config/builtin_functions.hpp"
 
-#if not defined(_MSC_VER)
-
 #ifndef NAN
-#define NAN TETL_BUILTIN_NAN("")
+#define NAN TETL_BUILTIN_NAN
 #endif
 
 #ifndef INFINITY
@@ -47,8 +45,6 @@
 #ifndef HUGE_VALL
 #define HUGE_VALL TETL_BUILTIN_HUGE_VALL
 #endif
-
-#endif // not defined(_MSC_VER)
 
 namespace etl {
 /// \brief Most efficient floating-point type at least as wide as float.

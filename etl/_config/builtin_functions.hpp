@@ -24,10 +24,6 @@
 #ifndef TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
 #define TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
 
-#if defined(_MSC_VER)
-#include <math.h>
-#endif
-
 #if __has_builtin(__builtin_COLUMN)
 #define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
 #else
@@ -70,48 +66,76 @@
 #endif
 
 #if __has_builtin(__builtin_expect)
-#define TETL_LIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), true)
-#define TETL_UNLIKELY(EXPR) __builtin_expect(static_cast<bool>(EXPR), false)
+#define TETL_LIKELY(expr) __builtin_expect(static_cast<bool>(expr), true)
+#define TETL_UNLIKELY(expr) __builtin_expect(static_cast<bool>(expr), false)
 #else
-#define TETL_LIKELY(EXPR) (EXPR)
-#define TETL_UNLIKELY(EXPR) (EXPR)
+#define TETL_LIKELY(expr) (expr)
+#define TETL_UNLIKELY(expr) (expr)
 #endif
 
 #if not defined(TETL_BUILTIN_NANF)
-#if __has_builtin(__builtin_nanf)
-#define TETL_BUILTIN_NANF(x) (__builtin_nanf((x)))
-#elif defined(_MSC_VER)
-#define TETL_BUILTIN_NANF NAN
+#if __has_builtin(__builtin_nanf) or defined(_MSC_VER)
+#define TETL_BUILTIN_NANF (__builtin_nanf(""))
 #else
-#define TETL_BUILTIN_NANF(x) (0.0F / 0.0F)
+#define TETL_BUILTIN_NANF (0.0F / 0.0F)
 #endif
 #endif
 
 #if not defined(TETL_BUILTIN_NAN)
-#if __has_builtin(__builtin_nan)
-#define TETL_BUILTIN_NAN(x) (__builtin_nan((x)))
-#elif defined(_MSC_VER)
-#define TETL_BUILTIN_NAN NAN
+#if __has_builtin(__builtin_nan) or defined(_MSC_VER)
+#define TETL_BUILTIN_NAN (__builtin_nan(""))
 #else
-#define TETL_BUILTIN_NAN(x) (0.0 / 0.0)
+#define TETL_BUILTIN_NAN (0.0 / 0.0)
+#endif
+#endif
+
+#if not defined(TETL_BUILTIN_NANL)
+#if __has_builtin(__builtin_nanl) or defined(_MSC_VER)
+#define TETL_BUILTIN_NANL (__builtin_nanl(""))
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_NANL (__builtin_nan(""))
+#else
+#define TETL_BUILTIN_NANL (0.0L / 0.0L)
+#endif
+#endif
+
+#if not defined(TETL_BUILTIN_NANSF)
+#if __has_builtin(__builtin_nansf) or defined(_MSC_VER)
+#define TETL_BUILTIN_NANSF (__builtin_nansf(""))
+#else
+#define TETL_BUILTIN_NANSF (0.0F / 0.0F)
+#endif
+#endif
+
+#if not defined(TETL_BUILTIN_NANS)
+#if __has_builtin(__builtin_nans) or defined(_MSC_VER)
+#define TETL_BUILTIN_NANS (__builtin_nans(""))
+#else
+#define TETL_BUILTIN_NANS (0.0 / 0.0)
+#endif
+#endif
+
+#if not defined(TETL_BUILTIN_NANSL)
+#if __has_builtin(__builtin_nansl)
+#define TETL_BUILTIN_NANSL (__builtin_nansl(""))
+#elif defined(_MSC_VER)
+#define TETL_BUILTIN_NANSL (__builtin_nans(""))
+#else
+#define TETL_BUILTIN_NANSL (0.0L / 0.0L)
 #endif
 #endif
 
 #if not defined(TETL_BUILTIN_HUGE_VALF)
-#if __has_builtin(__builtin_huge_valf)
+#if __has_builtin(__builtin_huge_valf) or defined(_MSC_VER)
 #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
-#elif defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VALF HUGE_VALF
 #else
 #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
 #endif
 #endif
 
 #if not defined(TETL_BUILTIN_HUGE_VAL)
-#if __has_builtin(__builtin_huge_val)
+#if __has_builtin(__builtin_huge_val) or defined(_MSC_VER)
 #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
-#elif defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VAL HUGE_VAL
 #else
 #define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
 #endif
@@ -121,7 +145,7 @@
 #if __has_builtin(__builtin_huge_vall)
 #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
 #elif defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VALL HUGE_VALL
+#define TETL_BUILTIN_HUGE_VALL (__builtin_huge_val())
 #else
 #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
