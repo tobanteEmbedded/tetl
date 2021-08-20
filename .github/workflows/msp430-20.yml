@@ -1,0 +1,19 @@
+name: MSP430 C++20
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: tobante/msp430-gcc:9.3
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build examples project (C++20, Debug)
+        run: MSP430=1 CXXSTD=2a DEBUG=1 make -C examples clean all
+
+      - name: Build examples project (C++20, Release)
+        run: MSP430=1 CXXSTD=2a make -C examples clean all
