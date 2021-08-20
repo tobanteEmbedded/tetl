@@ -14,6 +14,6 @@ RUN apt-get update && \
       bzip2 \
       wget && \
     apt-get clean
-RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2020q2/gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2 | tar -xj
+RUN wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.07/gcc-arm-none-eabi-10.3-2021.07-x86_64-linux.tar.bz2 | tar -xj
 
-ENV PATH "/toolchain/gcc-arm-none-eabi-9-2020-q2-update/bin:$PATH"
+ENV PATH "/toolchain/gcc-arm-none-eabi-10.3-2021.07/bin:$PATH"

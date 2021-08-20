@@ -7,13 +7,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: tobante/arm-gcc:9.3
+      image: tobante/arm-gcc:10.3
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
       - name: Build examples project (C++20, Debug)
-        run: ARM=1 CXXSTD=2a DEBUG=1 make -C examples clean all
+        run: ARM=1 CXXSTD=20 DEBUG=1 make -C examples clean all
 
       - name: Build examples project (C++20, Release)
-        run: ARM=1 CXXSTD=2a make -C examples clean all
+        run: ARM=1 CXXSTD=20 make -C examples clean all
