@@ -37,4 +37,8 @@
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 
+#if not defined(__clang__)
+#include "etl/_tuple/xtuple.hpp"
+#endif
+
 #endif // TETL_TUPLE_HPP
