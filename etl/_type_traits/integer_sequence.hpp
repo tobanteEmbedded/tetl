@@ -48,7 +48,7 @@ struct integer_sequence {
         return sizeof...(Ints);
     }
 
-    using to_tuple_indices = detail::tuple_indices<Ints...>;
+    using to_tuple_indices = typename detail::tuple_indices<Ints...>;
 };
 
 /// \group integer_sequence
