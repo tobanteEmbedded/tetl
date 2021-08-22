@@ -63,6 +63,7 @@ TEST_CASE("C", "")
     REQUIRE_FALSE(42 == 41);
 }
 
+#if not defined(TETL_MSVC)
 namespace {
 struct TestStruct {
 };
@@ -73,3 +74,4 @@ TEMPLATE_TEST_CASE("template test", "", int, long, float, double, TestStruct)
     using T = TestType;
     etl::ignore_unused(T {});
 }
+#endif

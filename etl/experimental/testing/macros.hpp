@@ -42,27 +42,28 @@ namespace meta = ::etl::experimental::meta;
 #define TEST_DETAIL_IGNORE_BUT_WARN(...)
 #endif
 
-#define TEST_DETAIL_TEMPLATE_TEST_CASE2(name, tags, tc, ...)                   \
+#define TEST_DETAIL_TEMPLATE_TEST_CASE2(title, tags, tc, ...)                  \
     namespace tc {                                                             \
     template <typename TestType>                                               \
-    static auto test_func() -> void;                                           \
-    TETL_PP_EXPAND(TETL_PP_STRING_VIEW_ARRAY(type_names, __VA_ARGS__));        \
+    static auto template_test_case_function() -> void;                         \
+    TETL_PP_STRING_VIEW_ARRAY(type_names, __VA_ARGS__);                        \
     static auto runner = []() {                                                \
         auto types = ::meta::make_type_tuple<TETL_PP_EXPAND(__VA_ARGS__)>();   \
         ::meta::for_each_indexed(types, [](auto idx, auto const& t) {          \
-            using type_t = ::etl::decay_t<decltype(t)>;                        \
+            using type_t = typename ::etl::decay_t<decltype(t)>::name;         \
             ::etl::test::current_session().add_test(                           \
                 ::etl::test::name_and_tags {                                   \
-                    name,                                                      \
+                    title,                                                     \
                     tags,                                                      \
                 },                                                             \
-                ::tc::test_func<type_t>, ::tc::type_names[idx]);               \
+                ::tc::template_test_case_function<type_t>,                     \
+                ::tc::type_names[idx]);                                        \
         });                                                                    \
         return true;                                                           \
     }();                                                                       \
     }                                                                          \
     template <typename TestType>                                               \
-    static auto tc::test_func()->void
+    static auto tc::template_test_case_function()->void
 
 #define TEST_DETAIL_TEMPLATE_TEST_CASE(name, tags, ...)                        \
     TEST_DETAIL_TEMPLATE_TEST_CASE2(                                           \
