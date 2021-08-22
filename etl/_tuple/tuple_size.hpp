@@ -28,28 +28,21 @@
 #include "etl/_type_traits/integral_constant.hpp"
 
 namespace etl {
-// class template tuple
-template <typename First, typename... Rest>
-struct tuple;
 
 template <typename T>
 struct tuple_size; /*undefined*/
 
-template <typename... Ts>
-struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
+template <typename T>
+struct tuple_size<T const> : integral_constant<size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
-struct tuple_size<const T> : integral_constant<size_t, tuple_size<T>::value> {
-};
-
-template <typename T>
-struct tuple_size<volatile T>
+struct tuple_size<T volatile>
     : integral_constant<size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
-struct tuple_size<const volatile T>
+struct tuple_size<T const volatile>
     : integral_constant<size_t, tuple_size<T>::value> {
 };
 

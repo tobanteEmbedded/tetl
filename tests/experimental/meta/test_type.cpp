@@ -50,16 +50,18 @@ TEMPLATE_TEST_CASE("experimental/meta: is_pointer", "[experimental][meta]",
     STATIC_REQUIRE(meta::is_pointer(meta::add_pointer(meta::type<T> {})));
 }
 
-TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple", "[experimental][meta]",
-    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
-{
-    using T = TestType;
-    auto t  = meta::make_type_tuple<int, T>();
-    STATIC_REQUIRE(
-        etl::is_same_v<typename decltype(etl::get<0>(t))::name, int>);
-    STATIC_REQUIRE(etl::is_same_v<typename decltype(etl::get<1>(t))::name, T>);
-}
+// TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple",
+// "[experimental][meta]",
+//     etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+//     etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+// {
+//     using T = TestType;
+//     auto t  = meta::make_type_tuple<int, T>();
+//     STATIC_REQUIRE(
+//         etl::is_same_v<typename decltype(etl::get<0>(t))::name, int>);
+//     STATIC_REQUIRE(etl::is_same_v<typename decltype(etl::get<1>(t))::name,
+//     T>);
+// }
 
 TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
     etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,

@@ -22,8 +22,6 @@
 // DAMAGE.
 #include "etl/tuple.hpp"
 
-#include "etl/_tuple/xtuple.hpp"
-
 #include "etl/cstdint.hpp"     // for int16_t, int32_t, int64_t, int8_t
 #include "etl/type_traits.hpp" // for is_same_v
 #include "etl/warning.hpp"     // for ignore_unused
@@ -121,35 +119,35 @@ TEMPLATE_TEST_CASE("tuple: make_from_tuple", "[tuple]", etl::uint8_t,
     REQUIRE(foo.t == true);
 }
 
-TEMPLATE_TEST_CASE("tuple: xtuple", "[tuple]", etl::uint8_t, etl::int8_t,
+TEMPLATE_TEST_CASE("tuple: tuple", "[tuple]", etl::uint8_t, etl::int8_t,
     etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
     etl::int64_t, float, double, long double)
 {
     using T = TestType;
     using etl::is_same_v;
+    using etl::tuple;
     using etl::tuple_element_t;
-    using etl::xtuple;
 
-    CHECK((is_same_v<tuple_element_t<0, xtuple<T, float>>, T>));
-    CHECK((is_same_v<tuple_element_t<1, xtuple<T, float>>, float>));
+    CHECK((is_same_v<tuple_element_t<0, tuple<T, float>>, T>));
+    CHECK((is_same_v<tuple_element_t<1, tuple<T, float>>, float>));
 
-    CHECK((is_same_v<tuple_element_t<0, xtuple<T, int>>, T>));
-    CHECK((is_same_v<tuple_element_t<1, xtuple<T, int>>, int>));
+    CHECK((is_same_v<tuple_element_t<0, tuple<T, int>>, T>));
+    CHECK((is_same_v<tuple_element_t<1, tuple<T, int>>, int>));
 
-    CHECK((is_same_v<tuple_element_t<0, xtuple<double, T>>, double>));
-    CHECK((is_same_v<tuple_element_t<1, xtuple<double, T>>, T>));
+    CHECK((is_same_v<tuple_element_t<0, tuple<double, T>>, double>));
+    CHECK((is_same_v<tuple_element_t<1, tuple<double, T>>, T>));
 
-    CHECK((is_same_v<tuple_element_t<0, xtuple<int, T, float>>, int>));
-    CHECK((is_same_v<tuple_element_t<1, xtuple<int, T, float>>, T>));
-    CHECK((is_same_v<tuple_element_t<2, xtuple<int, T, float>>, float>));
+    CHECK((is_same_v<tuple_element_t<0, tuple<int, T, float>>, int>));
+    CHECK((is_same_v<tuple_element_t<1, tuple<int, T, float>>, T>));
+    CHECK((is_same_v<tuple_element_t<2, tuple<int, T, float>>, float>));
 
-    CHECK((etl::tuple_size_v<xtuple<short>> == 1));
-    CHECK((etl::tuple_size_v<xtuple<short, float>> == 2));
-    CHECK((etl::tuple_size_v<xtuple<short, float, T>> == 3));
-    CHECK((etl::tuple_size_v<xtuple<short, float, T, int>> == 4));
+    CHECK((etl::tuple_size_v<tuple<short>> == 1));
+    CHECK((etl::tuple_size_v<tuple<short, float>> == 2));
+    CHECK((etl::tuple_size_v<tuple<short, float, T>> == 3));
+    CHECK((etl::tuple_size_v<tuple<short, float, T, int>> == 4));
 
-    auto t = etl::xtuple<int, char> { 1, 'a' };
-    auto b = etl::xtuple<int, char> { 2, 'b' };
+    auto t = etl::tuple<int, char> { 1, 'a' };
+    auto b = etl::tuple<int, char> { 2, 'b' };
     CHECK(etl::get<0>(t) == 1);
     CHECK(etl::get<1>(t) == 'a');
     CHECK(etl::get<0>(b) == 2);
@@ -167,5 +165,5 @@ TEMPLATE_TEST_CASE("tuple: xtuple", "[tuple]", etl::uint8_t, etl::int8_t,
     CHECK(b == b);
     CHECK(t != b);
 
-    CHECK(etl::get<1>(etl::xtuple<int, char> { 1, 'c' }) == 'c');
+    CHECK(etl::get<1>(etl::tuple<int, char> { 1, 'c' }) == 'c');
 }
