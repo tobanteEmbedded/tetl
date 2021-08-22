@@ -22,9 +22,7 @@
 // DAMAGE.
 #include "etl/tuple.hpp"
 
-#if not defined(__clang__)
 #include "etl/_tuple/xtuple.hpp"
-#endif
 
 #include "etl/cstdint.hpp"     // for int16_t, int32_t, int64_t, int8_t
 #include "etl/type_traits.hpp" // for is_same_v
@@ -123,7 +121,6 @@ TEMPLATE_TEST_CASE("tuple: make_from_tuple", "[tuple]", etl::uint8_t,
     REQUIRE(foo.t == true);
 }
 
-#if not defined(__clang__)
 TEMPLATE_TEST_CASE("tuple: xtuple", "[tuple]", etl::uint8_t, etl::int8_t,
     etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
     etl::int64_t, float, double, long double)
@@ -172,4 +169,3 @@ TEMPLATE_TEST_CASE("tuple: xtuple", "[tuple]", etl::uint8_t, etl::int8_t,
 
     CHECK(etl::get<1>(etl::xtuple<int, char> { 1, 'c' }) == 'c');
 }
-#endif

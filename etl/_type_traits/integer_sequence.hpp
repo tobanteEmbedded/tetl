@@ -30,6 +30,12 @@
 
 namespace etl {
 
+namespace detail {
+template <size_t...>
+struct tuple_indices {
+};
+} // namespace detail
+
 /// \group integer_sequence
 template <typename T, T... Ints>
 struct integer_sequence {
@@ -41,6 +47,8 @@ struct integer_sequence {
     {
         return sizeof...(Ints);
     }
+
+    using to_tuple_indices = detail::tuple_indices<Ints...>;
 };
 
 /// \group integer_sequence

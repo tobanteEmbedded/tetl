@@ -45,6 +45,12 @@
 
 namespace etl {
 
+namespace detail {
+template <size_t Size>
+using make_tuple_indices =
+    typename make_integer_sequence<size_t, Size>::to_tuple_indices;
+}
+
 template <size_t I, typename T>
 struct _tuple_leaf {
     auto _get_type(integral_constant<size_t, I> ic) -> T;
@@ -175,7 +181,8 @@ template <typename... Ts>
 struct _tuple_impl;
 
 template <size_t... Idx, typename... Ts>
-struct _tuple_impl<index_sequence<Idx...>, Ts...> : _tuple_leaf<Idx, Ts>... {
+struct _tuple_impl<detail::tuple_indices<Idx...>, Ts...>
+    : _tuple_leaf<Idx, Ts>... {
 private:
     using _tuple_leaf<Idx, Ts>::_get...;
 
@@ -224,8 +231,8 @@ struct tuple_size<_tuple_impl<Ts...>>
 
 template <size_t... Idx, typename... Ts, typename... Us>
 constexpr auto _tuple_equal(
-    _tuple_impl<index_sequence<Idx...>, Ts...> const& lhs,
-    _tuple_impl<index_sequence<Idx...>, Us...> const& rhs) -> bool
+    _tuple_impl<detail::tuple_indices<Idx...>, Ts...> const& lhs,
+    _tuple_impl<detail::tuple_indices<Idx...>, Us...> const& rhs) -> bool
 {
     static_assert(sizeof...(Ts) != 0);
     return ((lhs.template _get<Idx>(integral_constant<size_t, Idx> {})
@@ -234,7 +241,7 @@ constexpr auto _tuple_equal(
 }
 
 template <typename... Ts>
-using xtuple = _tuple_impl<make_index_sequence<sizeof...(Ts)>, Ts...>;
+using xtuple = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
 
 template <size_t N, typename... Ts>
 constexpr auto& get(xtuple<Ts...>& t)
