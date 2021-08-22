@@ -63,9 +63,13 @@ TEST_CASE("C", "")
     REQUIRE_FALSE(42 == 41);
 }
 
-TEMPLATE_TEST_CASE("template test", "", int)
+namespace {
+struct TestStruct {
+};
+} // namespace
+
+TEMPLATE_TEST_CASE("template test", "", int, long, float, double, TestStruct)
 {
-    // using T = TestType;
-    // REQUIRE(T(42) == T(42));
-    // REQUIRE_FALSE(T(42) == T(41));
+    using T = TestType;
+    etl::ignore_unused(T {});
 }
