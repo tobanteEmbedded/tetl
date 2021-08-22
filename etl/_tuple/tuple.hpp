@@ -53,25 +53,26 @@ using make_tuple_indices =
 
 template <size_t I, typename T>
 struct _tuple_leaf {
-    auto _get_type(integral_constant<size_t, I> ic) -> T;
+    auto get_type(integral_constant<size_t, I> ic) -> T;
 
     template <typename... Args>
     constexpr _tuple_leaf(Args&&... args) : value_ { forward<Args>(args)... }
     {
     }
 
-    constexpr auto _get(integral_constant<size_t, I> /*ignore*/) noexcept -> T&
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> /*ignore*/) noexcept -> T&
     {
         return value_;
     }
 
-    constexpr auto _get(integral_constant<size_t, I> /*ignore*/) const noexcept
-        -> T const&
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> /*ignore*/) const noexcept -> T const&
     {
         return value_;
     }
 
-    constexpr auto _swap(integral_constant<size_t, I> /*ignore*/,
+    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/,
         T& other) noexcept(is_nothrow_swappable_v<T>) -> void
     {
         using etl::swap;
@@ -184,7 +185,7 @@ template <size_t... Idx, typename... Ts>
 struct _tuple_impl<detail::tuple_indices<Idx...>, Ts...>
     : _tuple_leaf<Idx, Ts>... {
 private:
-    using _tuple_leaf<Idx, Ts>::_get...;
+    using _tuple_leaf<Idx, Ts>::get_impl...;
 
 public:
     // No. 1
@@ -205,24 +206,26 @@ public:
     constexpr _tuple_impl(_tuple_impl const&) = default;
     constexpr _tuple_impl(_tuple_impl&&)      = default;
 
-    using _tuple_leaf<Idx, Ts>::_get_type...;
+    using _tuple_leaf<Idx, Ts>::get_type...;
 
     template <size_t I>
-    constexpr auto& _get(integral_constant<size_t, I> ic)
+    constexpr auto get_impl(integral_constant<size_t, I> ic) noexcept -> auto&
     {
-        return _get(ic);
+        return get_impl(ic);
     }
+
     template <size_t I>
-    constexpr auto const& _get(integral_constant<size_t, I> ic) const
+    constexpr auto get_impl(integral_constant<size_t, I> ic) const noexcept
+        -> auto const&
     {
-        return _get(ic);
+        return get_impl(ic);
     }
 
     constexpr auto swap(_tuple_impl& other) noexcept(
         (is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (_tuple_leaf<Idx, Ts>::_swap(integral_constant<size_t, Idx> {},
-             other._get(integral_constant<size_t, Idx> {})),
+        (_tuple_leaf<Idx, Ts>::swap_impl(integral_constant<size_t, Idx> {},
+             other.get_impl(integral_constant<size_t, Idx> {})),
             ...);
     }
 };
@@ -238,30 +241,31 @@ constexpr auto _tuple_equal(
     _tuple_impl<detail::tuple_indices<Idx...>, Us...> const& rhs) -> bool
 {
     static_assert(sizeof...(Ts) != 0);
-    return ((lhs.template _get<Idx>(integral_constant<size_t, Idx> {})
-                == rhs.template _get<Idx>(integral_constant<size_t, Idx> {}))
-            && ...);
+    return (
+        (lhs.template get_impl<Idx>(integral_constant<size_t, Idx> {})
+            == rhs.template get_impl<Idx>(integral_constant<size_t, Idx> {}))
+        && ...);
 }
 
 template <typename... Ts>
 using tuple = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
 
 template <size_t N, typename... Ts>
-constexpr auto& get(tuple<Ts...>& t)
+[[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
-    return t.template _get<N>(integral_constant<size_t, N> {});
+    return t.template get_impl<N>(integral_constant<size_t, N> {});
 }
 
 template <size_t N, typename... Ts>
-constexpr auto const& get(tuple<Ts...> const& t)
+[[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
-    return t.template _get<N>(integral_constant<size_t, N> {});
+    return t.template get_impl<N>(integral_constant<size_t, N> {});
 }
 
 template <size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>()._get_type(
+    using type = decltype(declval<tuple<Ts...>>().get_type(
         integral_constant<size_t, I> {}));
 };
 
