@@ -52,7 +52,6 @@ using unwrap_decay_t = typename unwrap_refwrapper<decay_t<T>>::type;
 /// arguments.
 template <typename... Types>
 [[nodiscard]] constexpr auto make_tuple(Types&&... args)
-    -> tuple<detail::unwrap_decay_t<Types>...>
 {
     return tuple<detail::unwrap_decay_t<Types>...>(forward<Types>(args)...);
 }

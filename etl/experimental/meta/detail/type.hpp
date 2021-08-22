@@ -39,7 +39,6 @@ inline constexpr auto type_c = type<T> {};
 
 template <typename... Types>
 [[nodiscard]] constexpr auto make_type_tuple()
-    -> etl::tuple<type<etl::decay_t<Types>>...>
 {
     return etl::tuple<type<etl::decay_t<Types>>...>();
 }
