@@ -30,6 +30,9 @@
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/index_sequence.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
+#include "etl/_type_traits/is_copy_constructible.hpp"
+#include "etl/_type_traits/is_default_constructible.hpp"
 #include "etl/_type_traits/is_move_assignable.hpp"
 #include "etl/_type_traits/is_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_move_assignable.hpp"
@@ -73,6 +76,101 @@ private:
     T value_;
 };
 
+namespace detail {
+template <typename T>
+void test_implicit_default_constructible(T);
+
+template <typename T, typename = void,
+    typename = typename is_default_constructible<T>::type>
+struct is_implicit_default_constructible : false_type {
+};
+
+template <typename T>
+struct is_implicit_default_constructible<T,
+    decltype(test_implicit_default_constructible<T const&>({})), true_type>
+    : true_type {
+};
+
+template <typename T>
+struct is_implicit_default_constructible<T,
+    decltype(test_implicit_default_constructible<T const&>({})), false_type>
+    : false_type {
+};
+
+template <typename T>
+inline constexpr auto is_implicit_default_constructible_v
+    = is_implicit_default_constructible<T>::value;
+} // namespace detail
+
+template <typename... Ts>
+struct _tuple_constraints {
+    // This overload participates in overload resolution only if
+    // is_default_constructible_v<Ts> is true for all i
+    template <typename>
+    static constexpr auto ctor_1_sfinae
+        = (is_default_constructible_v<Ts> && ...);
+
+    // The ctor is explicit if and only if Ts is not
+    // copy-list-initializable from {} for at least one i.
+    template <typename>
+    static constexpr auto ctor_1_explicit
+        = !(detail::is_implicit_default_constructible_v<Ts> && ...);
+
+    template <typename>
+    using enable_ctor_1_implicit
+        = enable_if_t<(ctor_1_sfinae<Ts...> && (!ctor_1_explicit<Ts...>)),
+            bool>;
+
+    template <typename>
+    using enable_ctor_1_explicit
+        = enable_if_t<(ctor_1_sfinae<Ts...> && ctor_1_explicit<Ts...>), bool>;
+
+    // This overload participates in overload resolution only if
+    // sizeof...(Ts) >= 1 and is_copy_constructible_v<Ts> is true for all i.
+    template <typename>
+    static constexpr auto ctor_2_sfinae
+        = (is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0);
+
+    // This ctor is explicit if and only if is_convertible_v<Ts const&, Ts> is
+    // false for at least one i.
+    template <typename>
+    static constexpr auto ctor_2_explicit
+        = !(is_convertible_v<Ts const&, Ts> && ...);
+
+    template <typename Tag>
+    using enable_ctor_2_implicit
+        = enable_if_t<(ctor_2_sfinae<Ts...> && (!ctor_2_explicit<Ts...>)), Tag>;
+
+    template <typename>
+    using enable_ctor_2_explicit
+        = enable_if_t<(ctor_2_sfinae<Ts...> && ctor_2_explicit<Ts...>), bool>;
+
+    // This overload participates in overload resolution only if sizeof...(Ts)
+    // == sizeof...(Us) and sizeof...(Ts) >= 1 and is_constructible_v<Ts, Us&&>
+    // is true for all i.
+    template <typename... Us>
+    static constexpr auto ctor_3_sfinae         //
+        = (is_constructible_v<Ts, Us&&> && ...) //
+          && (sizeof...(Ts) > 0)                //
+          && (sizeof...(Ts) == sizeof...(Us))   //
+        ;
+
+    // The constructor is explicit if and only if is_convertible_v<Us&&, Ts> is
+    // false for at least one type.
+    template <typename... Us>
+    static constexpr auto ctor_3_explicit
+        = !(is_convertible_v<Us&&, Ts> && ...);
+
+    template <typename... Us>
+    using enable_ctor_3_implicit = enable_if_t<
+        (ctor_3_sfinae<Ts..., Us...> && (!ctor_3_explicit<Ts..., Us...>)),
+        bool>;
+
+    template <typename... Us>
+    using enable_ctor_3_explicit = enable_if_t<
+        (ctor_3_sfinae<Ts..., Us...> && ctor_3_explicit<Ts..., Us...>), bool>;
+};
+
 template <typename... Ts>
 struct _tuple_impl;
 
@@ -82,6 +180,21 @@ private:
     using _tuple_leaf<Idx, Ts>::_get...;
 
 public:
+    // No. 2
+    constexpr _tuple_impl(Ts const&... args) : _tuple_leaf<Idx, Ts> { args }...
+    {
+    }
+
+    // No. 3
+    template <typename... Args>
+    constexpr _tuple_impl(Args&&... args)
+        : _tuple_leaf<Idx, Ts> { forward<Args>(args) }...
+    {
+    }
+
+    constexpr _tuple_impl(_tuple_impl const&) = default;
+    constexpr _tuple_impl(_tuple_impl&&)      = default;
+
     using _tuple_leaf<Idx, Ts>::_get_type...;
 
     template <size_t I>
@@ -138,8 +251,8 @@ constexpr auto const& get(xtuple<Ts...> const& t)
 template <size_t I, typename... Ts>
 struct tuple_element<I, xtuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(
-        declval<xtuple<Ts...>>()._get_type(integral_constant<size_t, I> {}));
+    using type = decltype(declval<xtuple<Ts...>>()._get_type(
+        integral_constant<size_t, I> {}));
 };
 
 template <typename... Ts, typename... Us>

@@ -22,6 +22,10 @@
 // DAMAGE.
 #include "etl/tuple.hpp"
 
+#if not defined(__clang__)
+#include "etl/_tuple/xtuple.hpp"
+#endif
+
 #include "etl/cstdint.hpp"     // for int16_t, int32_t, int64_t, int8_t
 #include "etl/type_traits.hpp" // for is_same_v
 #include "etl/warning.hpp"     // for ignore_unused
