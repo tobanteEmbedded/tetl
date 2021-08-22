@@ -147,27 +147,26 @@ struct _tuple_constraints {
     // This overload participates in overload resolution only if sizeof...(Ts)
     // == sizeof...(Us) and sizeof...(Ts) >= 1 and is_constructible_v<Ts, Us&&>
     // is true for all i.
-    // template <typename... Us>
-    // static constexpr auto ctor_3_sfinae         //
-    //     = (is_constructible_v<Ts, Us&&> && ...) //
-    //       && (sizeof...(Ts) > 0)                //
-    //       && (sizeof...(Ts) == sizeof...(Us))   //
-    //     ;
+    template <typename... Us>
+    static constexpr auto ctor_3_sfinae         //
+        = (is_constructible_v<Ts, Us&&> && ...) //
+          && (sizeof...(Ts) > 0)                //
+          && (sizeof...(Ts) == sizeof...(Us))   //
+        ;
 
-    // // The constructor is explicit if and only if is_convertible_v<Us&&, Ts>
-    // is
-    // // false for at least one type.
-    // template <typename... Us>
-    // static constexpr auto ctor_3_explicit
-    //     = !(is_convertible_v<Us&&, Ts> && ...);
+    // The constructor is explicit if and only if is_convertible_v<Us&&, Ts> is
+    // false for at least one type.
+    template <typename... Us>
+    static constexpr auto ctor_3_explicit
+        = !(is_convertible_v<Us&&, Ts> && ...);
 
-    // template <typename... Us>
-    // static constexpr auto enable_ctor_3_implicit
-    //     = (ctor_3_sfinae<Ts..., Us...> && (!ctor_3_explicit<Ts..., Us...>));
+    template <typename... Us>
+    static constexpr auto enable_ctor_3_implicit
+        = (ctor_3_sfinae<Us...> && (!ctor_3_explicit<Us...>));
 
-    // template <typename... Us>
-    // static constexpr auto enable_ctor_3_explicit
-    //     = (ctor_3_sfinae<Ts..., Us...> && ctor_3_explicit<Ts..., Us...>);
+    template <typename... Us>
+    static constexpr auto enable_ctor_3_explicit
+        = (ctor_3_sfinae<Us...> && ctor_3_explicit<Us...>);
 };
 
 template <typename... Ts>
