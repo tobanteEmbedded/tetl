@@ -24,6 +24,7 @@
 #ifndef TETL_TUPLE_TUPLE_HPP
 #define TETL_TUPLE_TUPLE_HPP
 
+#include "etl/_concepts/requires.hpp"
 #include "etl/_tuple/ignore.hpp"
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
@@ -113,69 +114,60 @@ template <typename... Ts>
 struct _tuple_constraints {
     // This overload participates in overload resolution only if
     // is_default_constructible_v<Ts> is true for all i
-    template <typename>
     static constexpr auto ctor_1_sfinae
         = (is_default_constructible_v<Ts> && ...);
 
     // The ctor is explicit if and only if Ts is not
     // copy-list-initializable from {} for at least one i.
-    template <typename>
     static constexpr auto ctor_1_explicit
         = !(detail::is_implicit_default_constructible_v<Ts> && ...);
 
-    template <typename>
-    using enable_ctor_1_implicit
-        = enable_if_t<(ctor_1_sfinae<Ts...> && (!ctor_1_explicit<Ts...>)),
-            bool>;
+    static constexpr auto enable_ctor_1_implicit
+        = ctor_1_sfinae && (!ctor_1_explicit);
 
-    template <typename>
-    using enable_ctor_1_explicit
-        = enable_if_t<(ctor_1_sfinae<Ts...> && ctor_1_explicit<Ts...>), bool>;
+    static constexpr auto enable_ctor_1_explicit
+        = (ctor_1_sfinae) && (ctor_1_explicit);
 
     // This overload participates in overload resolution only if
     // sizeof...(Ts) >= 1 and is_copy_constructible_v<Ts> is true for all i.
-    template <typename>
     static constexpr auto ctor_2_sfinae
         = (is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0);
 
     // This ctor is explicit if and only if is_convertible_v<Ts const&, Ts> is
     // false for at least one i.
-    template <typename>
     static constexpr auto ctor_2_explicit
         = !(is_convertible_v<Ts const&, Ts> && ...);
 
-    template <typename Tag>
-    using enable_ctor_2_implicit
-        = enable_if_t<(ctor_2_sfinae<Ts...> && (!ctor_2_explicit<Ts...>)), Tag>;
+    static constexpr auto enable_ctor_2_implicit
+        = ctor_2_sfinae && (!ctor_2_explicit);
 
-    template <typename>
-    using enable_ctor_2_explicit
-        = enable_if_t<(ctor_2_sfinae<Ts...> && ctor_2_explicit<Ts...>), bool>;
+    static constexpr auto enable_ctor_2_explicit
+        = ctor_2_sfinae && ctor_2_explicit;
 
     // This overload participates in overload resolution only if sizeof...(Ts)
     // == sizeof...(Us) and sizeof...(Ts) >= 1 and is_constructible_v<Ts, Us&&>
     // is true for all i.
-    template <typename... Us>
-    static constexpr auto ctor_3_sfinae         //
-        = (is_constructible_v<Ts, Us&&> && ...) //
-          && (sizeof...(Ts) > 0)                //
-          && (sizeof...(Ts) == sizeof...(Us))   //
-        ;
+    // template <typename... Us>
+    // static constexpr auto ctor_3_sfinae         //
+    //     = (is_constructible_v<Ts, Us&&> && ...) //
+    //       && (sizeof...(Ts) > 0)                //
+    //       && (sizeof...(Ts) == sizeof...(Us))   //
+    //     ;
 
-    // The constructor is explicit if and only if is_convertible_v<Us&&, Ts> is
-    // false for at least one type.
-    template <typename... Us>
-    static constexpr auto ctor_3_explicit
-        = !(is_convertible_v<Us&&, Ts> && ...);
+    // // The constructor is explicit if and only if is_convertible_v<Us&&, Ts>
+    // is
+    // // false for at least one type.
+    // template <typename... Us>
+    // static constexpr auto ctor_3_explicit
+    //     = !(is_convertible_v<Us&&, Ts> && ...);
 
-    template <typename... Us>
-    using enable_ctor_3_implicit = enable_if_t<
-        (ctor_3_sfinae<Ts..., Us...> && (!ctor_3_explicit<Ts..., Us...>)),
-        bool>;
+    // template <typename... Us>
+    // static constexpr auto enable_ctor_3_implicit
+    //     = (ctor_3_sfinae<Ts..., Us...> && (!ctor_3_explicit<Ts..., Us...>));
 
-    template <typename... Us>
-    using enable_ctor_3_explicit = enable_if_t<
-        (ctor_3_sfinae<Ts..., Us...> && ctor_3_explicit<Ts..., Us...>), bool>;
+    // template <typename... Us>
+    // static constexpr auto enable_ctor_3_explicit
+    //     = (ctor_3_sfinae<Ts..., Us...> && ctor_3_explicit<Ts..., Us...>);
 };
 
 template <typename... Ts>
@@ -189,10 +181,21 @@ private:
 
 public:
     // No. 1
-    constexpr _tuple_impl() { }
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_implicit)
+    constexpr _tuple_impl() : _tuple_leaf<Idx, Ts> {}... { }
+
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_explicit)
+    explicit constexpr _tuple_impl() : _tuple_leaf<Idx, Ts> {}... { }
 
     // No. 2
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_implicit)
     constexpr _tuple_impl(Ts const&... args) : _tuple_leaf<Idx, Ts> { args }...
+    {
+    }
+
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_explicit)
+    explicit constexpr _tuple_impl(Ts const&... args)
+        : _tuple_leaf<Idx, Ts> { args }...
     {
     }
 
@@ -203,20 +206,21 @@ public:
     {
     }
 
-    constexpr _tuple_impl(_tuple_impl const&) = default;
-    constexpr _tuple_impl(_tuple_impl&&)      = default;
+    constexpr _tuple_impl(_tuple_impl const&)     = default;
+    constexpr _tuple_impl(_tuple_impl&&) noexcept = default;
 
     using _tuple_leaf<Idx, Ts>::get_type...;
 
     template <size_t I>
-    constexpr auto get_impl(integral_constant<size_t, I> ic) noexcept -> auto&
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> ic) noexcept -> auto&
     {
         return get_impl(ic);
     }
 
     template <size_t I>
-    constexpr auto get_impl(integral_constant<size_t, I> ic) const noexcept
-        -> auto const&
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> ic) const noexcept -> auto const&
     {
         return get_impl(ic);
     }
