@@ -164,8 +164,7 @@ struct char_traits<char> {
 
     /// \brief Checks whether two values of type int_type are equal.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/char_traits/eq_int_type](https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type)
+    /// https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
     static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept
         -> bool
     {

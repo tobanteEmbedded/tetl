@@ -37,8 +37,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isprint](https://en.cppreference.com/w/cpp/string/byte/isprint)
+/// https://en.cppreference.com/w/cpp/string/byte/isprint
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int

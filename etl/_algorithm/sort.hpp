@@ -32,8 +32,7 @@ namespace etl {
 /// \brief Sorts the elements in the range `[first, last)` in non-descending
 /// order. The order of equal elements is not guaranteed to be preserved.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/sort](https://en.cppreference.com/w/cpp/algorithm/sort)
+/// https://en.cppreference.com/w/cpp/algorithm/sort
 ///
 /// \group sort
 /// \module Algorithm

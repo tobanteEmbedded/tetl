@@ -36,8 +36,7 @@ namespace etl {
 /// \brief etl::max_align_t is a trivial standard-layout type whose alignment
 /// requirement is at least as strict (as large) as that of every scalar type.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/max_align_t](https://en.cppreference.com/w/cpp/types/max_align_t)
+/// https://en.cppreference.com/w/cpp/types/max_align_t
 struct alignas(long double) max_align_t {
 };
 

@@ -36,8 +36,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a lowercase letter, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/islower](https://en.cppreference.com/w/cpp/string/byte/islower)
+/// https://en.cppreference.com/w/cpp/string/byte/islower
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int

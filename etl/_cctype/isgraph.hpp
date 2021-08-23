@@ -41,8 +41,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a punctuation character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isgraph](https://en.cppreference.com/w/cpp/string/byte/isgraph)
+/// https://en.cppreference.com/w/cpp/string/byte/isgraph
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int

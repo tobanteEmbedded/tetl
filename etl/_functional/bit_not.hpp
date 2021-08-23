@@ -30,8 +30,9 @@ namespace etl {
 
 /// \brief Function object for performing bitwise NOT.
 /// Effectively calls operator~ on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_not](https://en.cppreference.com/w/cpp/utility/functional/bit_not)
+///
+/// https://en.cppreference.com/w/cpp/utility/functional/bit_not
+///
 /// \group bit_not
 /// \module Utility
 template <typename T = void>

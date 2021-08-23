@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing addition. Effectively calls operator+
 /// on two instances of type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/plus](https://en.cppreference.com/w/cpp/utility/functional/plus)
+/// https://en.cppreference.com/w/cpp/utility/functional/plus
 /// \group plus
 /// \module Utility
 template <typename T = void>

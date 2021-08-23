@@ -41,8 +41,7 @@ namespace etl {
 /// object to another function and then use that object after the function
 /// returns.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/variadic/va_list](https://en.cppreference.com/w/cpp/utility/variadic/va_list)
+/// https://en.cppreference.com/w/cpp/utility/variadic/va_list
 using va_list = TETL_BUILTIN_VA_LIST;
 #else
 using va_list = ::std::va_list;
@@ -59,8 +58,7 @@ using va_list = ::std::va_list;
 /// is declared with reference type or with a type not compatible with the type
 /// that results from default argument promotions, the behavior is undefined.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/variadic/va_start](https://en.cppreference.com/w/cpp/utility/variadic/va_start)
+/// https://en.cppreference.com/w/cpp/utility/variadic/va_start
 #define va_start(ap, param) __builtin_va_start(ap, param)
 #endif
 
@@ -74,8 +72,7 @@ using va_list = ::std::va_list;
 /// va_end is not called before a function that calls va_start or va_copy
 /// returns, the behavior is undefined.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/variadic/va_end](https://en.cppreference.com/w/cpp/utility/variadic/va_end)
+/// https://en.cppreference.com/w/cpp/utility/variadic/va_end
 #define va_end(ap) __builtin_va_end(ap)
 #endif
 
@@ -87,8 +84,7 @@ using va_list = ::std::va_list;
 /// call to va_end. Each invocation of the va_arg macro modifies ap to point to
 /// the next variable argument.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/variadic/va_arg](https://en.cppreference.com/w/cpp/utility/variadic/va_arg)
+/// https://en.cppreference.com/w/cpp/utility/variadic/va_arg
 #define va_arg(ap, type) __builtin_va_arg(ap, type)
 #endif
 
@@ -99,8 +95,7 @@ using va_list = ::std::va_list;
 /// \details va_end should be called on dest before the function returns or any
 /// subsequent re-initialization of dest (via calls to va_start or va_copy).
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/variadic/va_copy](https://en.cppreference.com/w/cpp/utility/variadic/va_copy)
+/// https://en.cppreference.com/w/cpp/utility/variadic/va_copy
 #define va_copy(dest, src) __builtin_va_copy(dest, src)
 #endif
 

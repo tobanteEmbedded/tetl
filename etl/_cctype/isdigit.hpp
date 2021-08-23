@@ -35,8 +35,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a numeric character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isdigit](https://en.cppreference.com/w/cpp/string/byte/isdigit)
+/// https://en.cppreference.com/w/cpp/string/byte/isdigit
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int

@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing negation. Effectively calls operator-
 /// on an instance of type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/negate](https://en.cppreference.com/w/cpp/utility/functional/negate)
+/// https://en.cppreference.com/w/cpp/utility/functional/negate
 /// \group negate
 /// \module Utility
 template <typename T = void>

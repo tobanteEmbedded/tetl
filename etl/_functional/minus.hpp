@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing subtraction. Effectively calls
 /// operator- on two instances of type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/minus](https://en.cppreference.com/w/cpp/utility/functional/minus)
+/// https://en.cppreference.com/w/cpp/utility/functional/minus
 /// \group minus
 /// \module Utility
 template <typename T = void>

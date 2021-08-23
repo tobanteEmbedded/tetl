@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing multiplication. Effectively calls
 /// operator* on two instances of type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/multiplies](https://en.cppreference.com/w/cpp/utility/functional/multiplies)
+/// https://en.cppreference.com/w/cpp/utility/functional/multiplies
 /// \group multiplies
 /// \module Utility
 template <typename T = void>

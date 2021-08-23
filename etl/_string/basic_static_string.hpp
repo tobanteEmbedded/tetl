@@ -1089,8 +1089,7 @@ public:
     /// Search begins at pos, i.e. the found substring must not begin in a
     /// position preceding pos.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/find](https://en.cppreference.com/w/cpp/string/basic_string/find)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/find
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
@@ -1104,8 +1103,7 @@ public:
     /// Search begins at pos, i.e. the found substring must not begin in a
     /// position preceding pos.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/find](https://en.cppreference.com/w/cpp/string/basic_string/find)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/find
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
@@ -1127,8 +1125,7 @@ public:
     /// Search begins at pos, i.e. the found substring must not begin in a
     /// position preceding pos.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/find](https://en.cppreference.com/w/cpp/string/basic_string/find)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/find
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
@@ -1142,8 +1139,7 @@ public:
     /// Search begins at pos, i.e. the found substring must not begin in a
     /// position preceding pos.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/find](https://en.cppreference.com/w/cpp/string/basic_string/find)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/find
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
@@ -1158,8 +1154,7 @@ public:
     /// position following pos. If npos or any value not smaller than size()-1
     /// is passed as pos, whole string will be searched.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/rfind](https://en.cppreference.com/w/cpp/string/basic_string/rfind)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found. Note that this is an offset from the
@@ -1175,8 +1170,7 @@ public:
     /// position following pos. If npos or any value not smaller than size()-1
     /// is passed as pos, whole string will be searched.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/rfind](https://en.cppreference.com/w/cpp/string/basic_string/rfind)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found. Note that this is an offset from the
@@ -1200,8 +1194,7 @@ public:
     /// position following pos. If npos or any value not smaller than size()-1
     /// is passed as pos, whole string will be searched.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/rfind](https://en.cppreference.com/w/cpp/string/basic_string/rfind)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found. Note that this is an offset from the
@@ -1217,8 +1210,7 @@ public:
     /// position following pos. If npos or any value not smaller than size()-1
     /// is passed as pos, whole string will be searched.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string/rfind](https://en.cppreference.com/w/cpp/string/basic_string/rfind)
+    /// https://en.cppreference.com/w/cpp/string/basic_string/rfind
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found. Note that this is an offset from the

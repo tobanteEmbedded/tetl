@@ -34,8 +34,10 @@ namespace etl {
 /// iterator, `reverse_iterator` produces a new iterator that moves from the end
 /// to the beginning of the sequence defined by the underlying bidirectional
 /// iterator. This is the iterator returned by member functions `rbegin()` and
-/// `rend()` of the standard library containers. \notes
-/// [cppreference.com/w/cpp/iterator/reverse_iterator](https://en.cppreference.com/w/cpp/iterator/reverse_iterator)
+/// `rend()` of the standard library containers.
+///
+/// https://en.cppreference.com/w/cpp/iterator/reverse_iterator
+///
 /// \module Iterator
 template <typename Iter>
 struct reverse_iterator {

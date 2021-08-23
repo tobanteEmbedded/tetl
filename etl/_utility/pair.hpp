@@ -48,8 +48,7 @@ namespace etl {
 /// cv-qualified class type with non-trivial destructor, or array thereof, the
 /// destructor of pair is trivial.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/pair](https://en.cppreference.com/w/cpp/utility/pair)
+/// https://en.cppreference.com/w/cpp/utility/pair
 ///
 /// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
@@ -181,8 +180,7 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(
 /// etl::decay<T2>::type (the usual type transformations applied to arguments of
 /// functions passed by value).
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/pair/make_pair](https://en.cppreference.com/w/cpp/utility/pair/make_pair)
+/// https://en.cppreference.com/w/cpp/utility/pair/make_pair
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
     -> pair<decay_t<T1>, decay_t<T2>>

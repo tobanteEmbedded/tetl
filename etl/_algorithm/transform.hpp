@@ -35,8 +35,7 @@ namespace etl {
 /// \param dest The beginning of the destination range, may be equal to first.
 /// \param op Unary operation function object that will be applied.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/transform](https://en.cppreference.com/w/cpp/algorithm/transform)
+/// https://en.cppreference.com/w/cpp/algorithm/transform
 ///
 /// \group transform
 /// \module Algorithm

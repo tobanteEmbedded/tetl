@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing bitwise XOR. Effectively calls
 /// operator^ on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_xor](https://en.cppreference.com/w/cpp/utility/functional/bit_xor)
+/// https://en.cppreference.com/w/cpp/utility/functional/bit_xor
 /// \group bit_xor
 /// \module Utility
 template <typename T = void>

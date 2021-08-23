@@ -31,8 +31,7 @@ namespace etl {
 /// \brief etl::size_t is the unsigned integer type of the result of the sizeof
 /// operator.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/size_t](https://en.cppreference.com/w/cpp/types/size_t)
+/// https://en.cppreference.com/w/cpp/types/size_t
 using size_t = TETL_BUILTIN_SIZET;
 
 } // namespace etl

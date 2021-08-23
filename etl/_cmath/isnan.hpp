@@ -31,8 +31,9 @@ namespace etl {
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
-/// \notes
-/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/isnan
+///
 /// \group isnan
 /// \module Numeric
 [[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
@@ -48,8 +49,7 @@ namespace etl {
 
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
-/// \notes
-/// [cppreference.com/w/cpp/numeric/math/isnan](https://en.cppreference.com/w/cpp/numeric/math/isnan)
+/// https://en.cppreference.com/w/cpp/numeric/math/isnan
 template <typename Int>
 [[nodiscard]] constexpr auto isnan(Int arg)
     -> enable_if_t<is_integral_v<Int>, bool>

@@ -969,8 +969,9 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs,
 /// \brief Erases all elements that satisfy the predicate pred from the
 /// container.
 /// \returns The number of erased elements.
-/// \notes
-/// [cppreference.com/w/cpp/container/vector/erase2](https://en.cppreference.com/w/cpp/container/vector/erase2)
+///
+/// https://en.cppreference.com/w/cpp/container/vector/erase2
+///
 /// \group static_vector_erase
 template <typename T, size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) ->

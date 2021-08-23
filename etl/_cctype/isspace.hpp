@@ -36,8 +36,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a whitespace character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isspace](https://en.cppreference.com/w/cpp/string/byte/isspace)
+/// https://en.cppreference.com/w/cpp/string/byte/isspace
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int

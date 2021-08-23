@@ -29,10 +29,7 @@ namespace etl {
 
 /// \brief Computes the sum of the given value init and the elements in the
 /// range `[first, last)`.
-/// 1. Uses `operator+` to sum up the elements.
-/// 2. Uses the BinaryOperation to sum up the elements.
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/accumulate](https://en.cppreference.com/w/cpp/algorithm/accumulate)
+/// https://en.cppreference.com/w/cpp/algorithm/accumulate
 /// \group accumulate
 /// \module Algorithm
 template <typename InputIt, typename Type>

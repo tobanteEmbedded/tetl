@@ -33,9 +33,10 @@ namespace etl::chrono {
 /// \brief Class template time_point represents a point in time. It is
 /// implemented as if it stores a value of type Duration indicating the time
 /// interval from the start of the Clock's epoch.
+///
 /// \tparam Clock Must meet the requirements for Clock
-/// \notes
-/// [cppreference.com/w/cpp/named_req/Clock](https://en.cppreference.com/w/cpp/named_req/Clock)
+///
+/// https://en.cppreference.com/w/cpp/named_req/Clock
 template <typename Clock, typename Duration = typename Clock::duration>
 struct time_point {
     /// \brief Clock, the clock on which this time point is measured.

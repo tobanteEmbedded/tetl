@@ -36,8 +36,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a uppercase letter, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isupper](https://en.cppreference.com/w/cpp/string/byte/isupper)
+/// https://en.cppreference.com/w/cpp/string/byte/isupper
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int

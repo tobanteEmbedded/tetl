@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing bitwise AND. Effectively
 /// calls operator& on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_and](https://en.cppreference.com/w/cpp/utility/functional/bit_and)
+/// https://en.cppreference.com/w/cpp/utility/functional/bit_and
 /// \group bit_and
 /// \module Utility
 template <typename T = void>

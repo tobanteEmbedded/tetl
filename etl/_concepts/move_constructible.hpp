@@ -34,8 +34,8 @@ namespace etl {
 /// or if it is an object type where an object of that type can be constructed
 /// from an rvalue of that type in both direct- and copy-initialization
 /// contexts, with the usual semantics.
-/// \notes
-/// [cppreference.com/w/cpp/concepts/move_constructible](https://en.cppreference.com/w/cpp/concepts/move_constructible)
+///
+/// https://en.cppreference.com/w/cpp/concepts/move_constructible
 template <typename T>
 concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 

@@ -80,8 +80,9 @@ struct is_destructible_safe<T, false, true> : ::etl::true_type {
 /// practical destructors are non-throwing even if they are not declared
 /// noexcept. All destructors found in the C++ standard library are
 /// non-throwing.
-/// \notes
-/// [cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
+///
+/// https://en.cppreference.com/w/cpp/types/is_destructible
+///
 /// \group is_destructible
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T> {

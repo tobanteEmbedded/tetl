@@ -292,8 +292,7 @@ struct basic_string_view {
 
     /// \brief Compares two character sequences.
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/string/basic_string_view/compare](https://en.cppreference.com/w/cpp/string/basic_string_view/compare)
+    /// https://en.cppreference.com/w/cpp/string/basic_string_view/compare
     [[nodiscard]] constexpr auto compare(basic_string_view v) const noexcept
         -> int
     {

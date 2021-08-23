@@ -36,8 +36,7 @@ namespace etl {
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/adjacent_find](https://en.cppreference.com/w/cpp/algorithm/adjacent_find)
+/// https://en.cppreference.com/w/cpp/algorithm/adjacent_find
 ///
 /// \group adjacent_find
 /// \module Algorithm

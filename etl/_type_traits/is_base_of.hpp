@@ -50,8 +50,7 @@ auto test_pre_is_base_of(int)
 /// not the same type (ignoring cv-qualification), Derived shall be a complete
 /// type; otherwise the behavior is undefined.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/is_base_of](https://en.cppreference.com/w/cpp/types/is_base_of)
+/// https://en.cppreference.com/w/cpp/types/is_base_of
 template <typename Base, typename Derived>
 struct is_base_of
     : bool_constant<

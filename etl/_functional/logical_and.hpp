@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing logical AND (logical conjunction).
 /// Effectively calls operator&& on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_and](https://en.cppreference.com/w/cpp/utility/functional/logical_and)
+/// https://en.cppreference.com/w/cpp/utility/functional/logical_and
 /// \group logical_and
 /// \module Utility
 template <typename T = void>

@@ -44,8 +44,7 @@ struct is_nothrow_destructible_helper<true, Type>
 };
 } // namespace detail
 
-/// \notes
-/// [https://en.cppreference.com/w/cpp/types/is_destructible](https://en.cppreference.com/w/cpp/types/is_destructible)
+/// https://en.cppreference.com/w/cpp/types/is_destructible
 /// \group is_nothrow_destructible
 template <typename Type>
 struct is_nothrow_destructible

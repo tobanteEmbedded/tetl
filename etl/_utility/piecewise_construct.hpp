@@ -37,8 +37,7 @@ namespace etl {
 /// construct, piecewise, a new object of specified type, which will become the
 /// element of the pair.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/piecewise_construct_t](https://en.cppreference.com/w/cpp/utility/piecewise_construct_t)
+/// https://en.cppreference.com/w/cpp/utility/piecewise_construct_t
 struct piecewise_construct_t {
     explicit piecewise_construct_t() = default;
 };

@@ -37,8 +37,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a blank character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isblank](https://en.cppreference.com/w/cpp/string/byte/isblank)
+/// https://en.cppreference.com/w/cpp/string/byte/isblank
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isblank(int ch) noexcept -> int

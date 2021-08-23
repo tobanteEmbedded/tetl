@@ -36,8 +36,7 @@ namespace etl {
 ///
 /// \complexity Exactly n applications of f.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/for_each_n](https://en.cppreference.com/w/cpp/algorithm/for_each_n)
+/// https://en.cppreference.com/w/cpp/algorithm/for_each_n
 ///
 /// \module Algorithm
 template <typename InputIt, typename Size, typename UnaryFunc>

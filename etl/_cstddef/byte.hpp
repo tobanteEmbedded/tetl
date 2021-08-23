@@ -30,11 +30,13 @@
 namespace etl {
 /// \brief etl::byte is a distinct type that implements the concept of byte as
 /// specified in the C++ language definition.
+///
 /// \details Like char and unsigned char, it can be used to access raw memory
 /// occupied by other objects, but unlike those types, it is not a character
 /// type and is not an arithmetic type. A byte is only a collection of bits, and
-/// the only operators defined for it are the bitwise ones. \notes
-/// [cppreference.com/w/cpp/types/byte](https://en.cppreference.com/w/cpp/types/byte)
+/// the only operators defined for it are the bitwise ones.
+///
+/// https://en.cppreference.com/w/cpp/types/byte
 enum struct byte : unsigned char {};
 
 /// \brief Equivalent to: `return Int(b);`

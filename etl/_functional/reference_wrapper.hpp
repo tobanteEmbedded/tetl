@@ -69,8 +69,7 @@ struct reference_wrapper {
     /// void FUN(T&) noexcept;
     /// void FUN(T&&) = delete;
     ///
-    /// \notes
-    /// [cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper](https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper)
+    /// https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper
     template <typename U,
         typename = decltype(detail::FUN<T>(declval<U>()),
             enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>

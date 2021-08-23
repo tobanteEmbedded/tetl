@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator!= on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/not_equal_to](https://en.cppreference.com/w/cpp/utility/functional/not_equal_to)
+/// https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
 /// \group not_equal_to
 /// \module Utility
 template <typename T = void>

@@ -37,8 +37,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a control character, zero
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/iscntrl](https://en.cppreference.com/w/cpp/string/byte/iscntrl)
+/// https://en.cppreference.com/w/cpp/string/byte/iscntrl
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto iscntrl(int ch) noexcept -> int

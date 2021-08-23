@@ -35,8 +35,7 @@ namespace etl {
 /// `[first, last)` that is not less than (i.e. greater or equal to) value, or
 /// last if no such element is found.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/lower_bound](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
+/// https://en.cppreference.com/w/cpp/algorithm/lower_bound
 ///
 /// \group lower_bound
 /// \module Algorithm

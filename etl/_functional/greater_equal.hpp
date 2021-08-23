@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator>= on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/greater_equal](https://en.cppreference.com/w/cpp/utility/functional/greater_equal)
+/// https://en.cppreference.com/w/cpp/utility/functional/greater_equal
 /// \group greater_equal
 /// \module Utility
 template <typename T = void>

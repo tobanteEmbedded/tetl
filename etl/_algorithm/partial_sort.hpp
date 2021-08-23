@@ -34,8 +34,7 @@ namespace etl {
 /// The order of equal elements is not guaranteed to be preserved. The order of
 /// the remaining elements in the range `[middle, last)` is unspecified.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/partial_sort](https://en.cppreference.com/w/cpp/algorithm/partial_sort)
+/// https://en.cppreference.com/w/cpp/algorithm/partial_sort
 ///
 /// \group partial_sort
 /// \module Algorithm

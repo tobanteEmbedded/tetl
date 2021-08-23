@@ -33,8 +33,7 @@ namespace etl {
 /// \brief Returns a range containing all elements equivalent to value in the
 /// range `[first, last)`.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/equal_range](https://en.cppreference.com/w/cpp/algorithm/equal_range)
+/// https://en.cppreference.com/w/cpp/algorithm/equal_range
 ///
 /// \group equal_range
 /// \module Algorithm

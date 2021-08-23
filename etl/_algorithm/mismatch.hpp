@@ -39,8 +39,7 @@ namespace etl {
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/mismatch](https://en.cppreference.com/w/cpp/algorithm/mismatch)
+/// https://en.cppreference.com/w/cpp/algorithm/mismatch
 ///
 /// \group mismatch
 /// \module Algorithm

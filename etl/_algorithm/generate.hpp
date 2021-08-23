@@ -33,8 +33,7 @@ namespace etl {
 /// \param last The range of elements to generate.
 /// \param g Generator function object that will be called.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/generate](https://en.cppreference.com/w/cpp/algorithm/generate)
+/// https://en.cppreference.com/w/cpp/algorithm/generate
 ///
 /// \module Algorithm
 template <typename ForwardIt, typename Generator>

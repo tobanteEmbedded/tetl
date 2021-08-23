@@ -45,8 +45,7 @@ struct is_scoped_enum<T, true>
 /// Otherwise, value is equal to false. The behavior of a program that adds
 /// specializations for is_scoped_enum or is_scoped_enum_v is undefined.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/is_scoped_enum](https://en.cppreference.com/w/cpp/types/is_scoped_enum)
+/// https://en.cppreference.com/w/cpp/types/is_scoped_enum
 template <typename T>
 inline constexpr bool is_scoped_enum_v = is_scoped_enum<T>::value;
 

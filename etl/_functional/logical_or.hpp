@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing logical OR (logical disjunction).
 /// Effectively calls operator|| on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_or](https://en.cppreference.com/w/cpp/utility/functional/logical_or)
+/// https://en.cppreference.com/w/cpp/utility/functional/logical_or
 /// \group logical_or
 /// \module Utility
 template <typename T = void>

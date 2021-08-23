@@ -41,11 +41,9 @@ namespace etl {
 ///
 /// \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
 ///
-/// \notes
-/// [.youtube.com/watch?v=sBtAGxBh-XI](https://www.youtube.com/watch?v=sBtAGxBh-XI)
+/// https://www.youtube.com/watch?v=sBtAGxBh-XI)
+/// https://en.cppreference.com/w/cpp/numeric/midpoint
 ///
-/// \notes
-/// [cppreference.com/w/cpp/numeric/midpoint](https://en.cppreference.com/w/cpp/numeric/midpoint)
 /// \group midpoint
 template <typename Int,
     TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>

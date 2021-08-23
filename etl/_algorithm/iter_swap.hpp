@@ -33,8 +33,7 @@ namespace etl {
 /// \param a Iterators to the elements to swap.
 /// \param b Iterators to the elements to swap.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/iter_swap](https://en.cppreference.com/w/cpp/algorithm/iter_swap)
+/// https://en.cppreference.com/w/cpp/algorithm/iter_swap
 ///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>

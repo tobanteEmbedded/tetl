@@ -34,8 +34,8 @@ namespace etl {
 /// iterator is decremented. In this case, InputIt must meet the requirements of
 /// LegacyBidirectionalIterator, otherwise the behavior is undefined.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/iterator/advance](https://en.cppreference.com/w/cpp/iterator/advance)
+/// https://en.cppreference.com/w/cpp/iterator/advance
+///
 /// \module Iterator
 template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void

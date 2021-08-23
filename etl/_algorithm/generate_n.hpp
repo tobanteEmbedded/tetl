@@ -34,8 +34,7 @@ namespace etl {
 /// \param count Number of the elements to generate.
 /// \param g Generator function object that will be called.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/generate_n](https://en.cppreference.com/w/cpp/algorithm/generate_n)
+/// https://en.cppreference.com/w/cpp/algorithm/generate_n
 ///
 /// \module Algorithm
 template <typename OutputIt, typename SizeT, typename Generator>

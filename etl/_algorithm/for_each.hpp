@@ -36,8 +36,7 @@ namespace etl {
 ///
 /// \complexity Exactly `last - first` applications of f.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/for_each](https://en.cppreference.com/w/cpp/algorithm/for_each)
+/// https://en.cppreference.com/w/cpp/algorithm/for_each
 ///
 /// \module Algorithm
 template <typename InputIt, typename UnaryFunc>

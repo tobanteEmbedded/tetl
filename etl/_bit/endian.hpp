@@ -30,8 +30,7 @@ namespace etl {
 /// little-endian, `endian::native` equals `endian::little`. If all scalar types
 /// are big-endian, `endian::native` equals `endian::big`.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/endian](https://en.cppreference.com/w/cpp/types/endian)
+/// https://en.cppreference.com/w/cpp/types/endian
 /// \module Numeric
 enum struct endian {
 #ifdef _WIN32

@@ -31,8 +31,7 @@
 namespace etl {
 
 /// \brief Similar to etl::accumulate.
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/reduce](https://en.cppreference.com/w/cpp/algorithm/reduce)
+/// https://en.cppreference.com/w/cpp/algorithm/reduce
 /// \group reduce
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>

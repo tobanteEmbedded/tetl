@@ -35,8 +35,7 @@ namespace etl {
 /// \returns Non-zero value if the character is a hexadecimal numeric character,
 /// zero otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isxdigit](https://en.cppreference.com/w/cpp/string/byte/isxdigit)
+/// https://en.cppreference.com/w/cpp/string/byte/isxdigit
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int

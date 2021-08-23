@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing division. Effectively calls operator/
 /// on two instances of type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/divides](https://en.cppreference.com/w/cpp/utility/functional/divides)
+/// https://en.cppreference.com/w/cpp/utility/functional/divides
 /// \group divides
 /// \module Utility
 template <typename T = void>

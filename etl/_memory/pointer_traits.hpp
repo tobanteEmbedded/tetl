@@ -31,8 +31,8 @@ namespace etl {
 /// \brief The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/memory/pointer_traits](https://en.cppreference.com/w/cpp/memory/pointer_traits)
+/// https://en.cppreference.com/w/cpp/memory/pointer_traits
+///
 /// \group pointer_traits
 template <typename Ptr>
 struct pointer_traits {
@@ -41,11 +41,10 @@ struct pointer_traits {
     using difference_type = typename Ptr::difference_type;
 
     /// \brief Constructs a dereferenceable pointer or pointer-like object
-    /// ("fancy pointer") to its argument. \param r  Reference to an object of
-    /// type element_type&. \returns A pointer to r, of the type
-    /// pointer_traits::pointer. \notes
-    /// [cppreference.com/w/cpp/memory/pointer_traits/pointer_to
-    /// ](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to )
+    /// ("fancy pointer") to its argument.
+    /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+    /// \param r  Reference to an object of type element_type&.
+    /// \returns A pointer to r, of the type pointer_traits::pointer.
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
     {
         return Ptr::pointer_to(r);
@@ -54,9 +53,8 @@ struct pointer_traits {
 
 /// \brief The pointer_traits class template provides the standardized way to
 /// access certain properties of pointer-like types.
+/// https://en.cppreference.com/w/cpp/memory/pointer_traits
 /// \tparam T A raw pointer
-/// \notes
-/// [cppreference.com/w/cpp/memory/pointer_traits](https://en.cppreference.com/w/cpp/memory/pointer_traits)
 /// \group pointer_traits
 template <typename T>
 struct pointer_traits<T*> {
@@ -67,10 +65,10 @@ struct pointer_traits<T*> {
     using rebind = U*;
 
     /// \brief Constructs a dereferenceable pointer or pointer-like object
-    /// ("fancy pointer") to its argument. \param r  Reference to an object of
-    /// type element_type&. \returns A pointer to r, of the type
-    /// pointer_traits::pointer. \notes
-    /// [cppreference.com/w/cpp/memory/pointer_traits/pointer_to](https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to)
+    /// ("fancy pointer") to its argument.
+    /// \param r  Reference to an object of type element_type&.
+    /// \returns A pointer to r, of the type pointer_traits::pointer.
+    /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
     {
         return addressof(r);

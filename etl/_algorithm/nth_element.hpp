@@ -35,8 +35,7 @@ namespace etl {
 /// - All of the elements before this new nth element are less than or equal to
 /// the elements after the new nth element.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/nth_element](https://en.cppreference.com/w/cpp/algorithm/nth_element)
+/// https://en.cppreference.com/w/cpp/algorithm/nth_element
 ///
 /// \group nth_element
 /// \module Algorithm

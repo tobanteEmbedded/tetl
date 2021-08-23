@@ -38,8 +38,8 @@ namespace etl {
 /// the information about the iterator can be retrieved even if the type does
 /// not provide the usual typedefs.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/iterator/iterator_traits](https://en.cppreference.com/w/cpp/iterator/iterator_traits)
+/// https://en.cppreference.com/w/cpp/iterator/iterator_traits
+///
 /// \group iterator_traits
 /// \module Iterator
 template <typename Iter>

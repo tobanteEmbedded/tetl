@@ -34,8 +34,8 @@ namespace etl {
 /// overload forwards the argument to another function with the value category
 /// it had when passed to the calling function.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/forward](https://en.cppreference.com/w/cpp/utility/forward)
+/// https://en.cppreference.com/w/cpp/utility/forward
+///
 /// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&

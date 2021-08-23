@@ -38,8 +38,7 @@ namespace etl {
 /// \returns Iterator to the element past the last element exchanged in the
 /// range beginning with `first2`.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/swap_ranges](https://en.cppreference.com/w/cpp/algorithm/swap_ranges)
+/// https://en.cppreference.com/w/cpp/algorithm/swap_ranges
 ///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>

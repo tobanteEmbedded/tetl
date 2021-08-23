@@ -33,8 +33,7 @@ namespace etl {
 /// \brief Determines if the given floating point number arg is a positive or
 /// negative infinity.
 /// \returns true if arg is infinite, false otherwise
-/// \notes
-/// [cppreference.com/w/cpp/numeric/math/isinf](https://en.cppreference.com/w/cpp/numeric/math/isinf)
+/// https://en.cppreference.com/w/cpp/numeric/math/isinf
 /// \group isinf
 /// \module Numeric
 [[nodiscard]] constexpr auto isinf(float arg) -> bool

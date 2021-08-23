@@ -33,8 +33,7 @@ namespace etl {
 /// evaluation of an expression or conversion that is manifestly
 /// constant-evaluated; otherwise returns false.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/is_constant_evaluated](https://en.cppreference.com/w/cpp/types/is_constant_evaluated)
+/// https://en.cppreference.com/w/cpp/types/is_constant_evaluated
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
     return TETL_BUILTIN_IS_CONSTANT_EVALUATED();

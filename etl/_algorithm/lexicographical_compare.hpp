@@ -31,8 +31,7 @@ namespace etl {
 /// \brief Checks if the first range `[f1, l1)` is lexicographically
 /// less than the second range `[f2, l2)`.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/lexicographical_compare](https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare)
+/// https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
 ///
 /// \group lexicographical_compare
 /// \module Algorithm

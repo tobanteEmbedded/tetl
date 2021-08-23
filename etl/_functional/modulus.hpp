@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for computing remainders of divisions. Implements
 /// operator% for type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/modulus](https://en.cppreference.com/w/cpp/utility/functional/modulus)
+/// https://en.cppreference.com/w/cpp/utility/functional/modulus
 /// \group modulus
 /// \module Utility
 template <typename T = void>

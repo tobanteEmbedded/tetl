@@ -31,8 +31,7 @@ namespace etl {
 /// \brief etl::ptrdiff_t is the signed integer type of the result of
 /// subtracting two pointers.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/ptrdiff_t](https://en.cppreference.com/w/cpp/types/ptrdiff_t)
+/// https://en.cppreference.com/w/cpp/types/ptrdiff_t
 using ptrdiff_t = TETL_BUILTIN_PTRDIFF;
 
 } // namespace etl

@@ -30,8 +30,7 @@ namespace etl {
 
 /// \brief Function object for performing logical NOT (logical negation).
 /// Effectively calls operator! for type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/logical_not](https://en.cppreference.com/w/cpp/utility/functional/logical_not)
+/// https://en.cppreference.com/w/cpp/utility/functional/logical_not
 /// \group logical_not
 /// \module Utility
 template <typename T = void>

@@ -35,8 +35,8 @@ namespace etl {
 /// possibly cv-qualified), provides the member constant value equal to true.
 /// For any other type, value is false.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/types/is_trivial](https://en.cppreference.com/w/cpp/types/is_trivial)
+/// https://en.cppreference.com/w/cpp/types/is_trivial
+///
 /// \group is_trivial
 template <typename T>
 struct is_trivial

@@ -32,8 +32,7 @@ namespace etl {
 /// \param last The range of elements to examine.
 /// \param pred Unary predicate which returns ​true for the required element.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/find](https://en.cppreference.com/w/cpp/algorithm/find)
+/// https://en.cppreference.com/w/cpp/algorithm/find
 ///
 /// \group find_if_not
 /// \module Algorithm

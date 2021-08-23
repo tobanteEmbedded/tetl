@@ -29,9 +29,7 @@ namespace etl {
 /// \brief Returns true if all elements in the range `[first, last)` that
 /// satisfy the predicate p appear before all elements that don't. Also returns
 /// true if the range is empty.
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/is_partitioned](https://en.cppreference.com/w/cpp/algorithm/is_partitioned)
-///
+/// https://en.cppreference.com/w/cpp/algorithm/is_partitioned
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto is_partitioned(

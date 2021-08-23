@@ -37,8 +37,7 @@ namespace etl {
 /// \param pred Predicate which returns ​true if the elements should be
 /// treated as equal.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+/// https://en.cppreference.com/w/cpp/algorithm/find_first_of
 ///
 /// \group find_first_of
 /// \module Algorithm
@@ -63,8 +62,7 @@ template <typename InputIt, typename ForwardIt, typename Predicate>
 /// \param sFirst The range of elements to search for.
 /// \param sLast The range of elements to search for.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/find_first_of](https://en.cppreference.com/w/cpp/algorithm/find_first_of)
+/// https://en.cppreference.com/w/cpp/algorithm/find_first_of
 ///
 /// \group find_first_of
 /// \module Algorithm

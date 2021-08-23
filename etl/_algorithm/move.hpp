@@ -40,8 +40,7 @@ namespace etl {
 ///
 /// \returns Output iterator to the element past the last element moved.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/move](https://en.cppreference.com/w/cpp/algorithm/move)
+/// https://en.cppreference.com/w/cpp/algorithm/move
 ///
 /// \module Algorithm
 template <typename InputIt, typename OutputIt>

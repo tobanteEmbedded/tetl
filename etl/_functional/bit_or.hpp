@@ -30,8 +30,9 @@ namespace etl {
 
 /// \brief Function object for performing bitwise OR. Effectively calls
 /// operator| on type T.
-/// \notes
-/// [cppreference.com/w/cpp/utility/functional/bit_or](https://en.cppreference.com/w/cpp/utility/functional/bit_or)
+///
+/// https://en.cppreference.com/w/cpp/utility/functional/bit_or
+///
 /// \group bit_or
 /// \module Utility
 template <typename T = void>

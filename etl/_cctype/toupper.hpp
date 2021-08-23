@@ -42,8 +42,7 @@ namespace etl {
 /// \returns Converted character or ch if no uppercase version is defined by the
 /// current C locale.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/toupper](https://en.cppreference.com/w/cpp/string/byte/toupper)
+/// https://en.cppreference.com/w/cpp/string/byte/toupper
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int

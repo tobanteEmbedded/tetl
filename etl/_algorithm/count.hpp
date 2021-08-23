@@ -38,8 +38,7 @@ namespace etl {
 /// \complexity Exactly `last - first` comparisons / applications of the
 /// predicate.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/count](https://en.cppreference.com/w/cpp/algorithm/count)
+/// https://en.cppreference.com/w/cpp/algorithm/count
 ///
 /// \group count
 /// \module Algorithm

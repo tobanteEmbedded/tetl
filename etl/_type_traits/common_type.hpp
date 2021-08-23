@@ -32,8 +32,9 @@ namespace etl {
 
 /// \brief Determines the common type among all types `T...`, that is the type
 /// all `T...` can be implicitly converted to. If such a type exists, the member
-/// type names that type. Otherwise, there is no member type. \notes
-/// [cppreference.com/w/cpp/types/common_type](https://en.cppreference.com/w/cpp/types/common_type)
+/// type names that type. Otherwise, there is no member type.
+///
+/// https://en.cppreference.com/w/cpp/types/common_type
 /// \group common_type
 template <typename... T>
 struct common_type;

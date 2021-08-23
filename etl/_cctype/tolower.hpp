@@ -42,8 +42,7 @@ namespace etl {
 /// \returns Lowercase version of ch or unmodified ch if no lowercase version is
 /// listed in the current C locale.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/tolower](https://en.cppreference.com/w/cpp/string/byte/tolower)
+/// https://en.cppreference.com/w/cpp/string/byte/tolower
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int

@@ -35,8 +35,8 @@ namespace etl {
 /// \brief The enabled specializations of formatter define formatting rules for
 /// a given type. Enabled specializations meet the Formatter requirements.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/format/formatter](https://en.cppreference.com/w/cpp/utility/format/formatter)
+/// https://en.cppreference.com/w/cpp/utility/format/formatter
+///
 /// \group formatter
 template <typename T, typename CharT = char>
 struct formatter;

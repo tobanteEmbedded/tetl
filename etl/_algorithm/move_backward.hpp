@@ -39,8 +39,7 @@ namespace etl {
 /// \returns Iterator in the destination range, pointing at the last element
 /// moved.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/move_backward](https://en.cppreference.com/w/cpp/algorithm/move_backward)
+/// https://en.cppreference.com/w/cpp/algorithm/move_backward
 ///
 /// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>

@@ -36,8 +36,7 @@ namespace etl {
 /// \details BinaryFunction must not invalidate any iterators, including the end
 /// iterators, or modify any elements of the range involved.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/partial_sum](https://en.cppreference.com/w/cpp/algorithm/partial_sum)
+/// https://en.cppreference.com/w/cpp/algorithm/partial_sum
 ///
 /// \returns Iterator to the element past the last element written.
 /// \group partial_sum

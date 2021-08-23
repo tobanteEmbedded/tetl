@@ -35,8 +35,7 @@ namespace etl {
 /// \returns Non-zero value if the character is an alphanumeric character, 0
 /// otherwise.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/string/byte/isalnum](https://en.cppreference.com/w/cpp/string/byte/isalnum)
+/// https://en.cppreference.com/w/cpp/string/byte/isalnum
 ///
 /// \module Strings
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int

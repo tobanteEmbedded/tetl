@@ -54,8 +54,7 @@ template <typename ForwardIter1, typename ForwardIter2,
 /// \param pred Binary predicate which returns ​true if the elements should be
 /// treated as equal.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/search](https://en.cppreference.com/w/cpp/algorithm/search)
+/// https://en.cppreference.com/w/cpp/algorithm/search
 ///
 /// \group search
 /// \module Algorithm

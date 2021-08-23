@@ -32,8 +32,7 @@ namespace etl {
 /// \param last The range of elements to examine.
 /// \param value Value to compare the elements to.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/algorithm/find](https://en.cppreference.com/w/cpp/algorithm/find)
+/// https://en.cppreference.com/w/cpp/algorithm/find
 ///
 /// \group find
 /// \module Algorithm

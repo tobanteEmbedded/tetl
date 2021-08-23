@@ -14,8 +14,7 @@ struct formatter;
 /// The behavior is undefined if OutputIt does not model output_iterator<const
 /// CharT&>.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/format/basic_format_context](https://en.cppreference.com/w/cpp/utility/format/basic_format_context)
+/// https://en.cppreference.com/w/cpp/utility/format/basic_format_context
 template <typename OutputIt, typename CharT>
 struct basic_format_context {
     using iterator  = OutputIt;
@@ -51,8 +50,7 @@ private:
 /// The behavior is undefined if OutputIt does not model output_iterator<const
 /// CharT&>.
 ///
-/// \notes
-/// [cppreference.com/w/cpp/utility/format/basic_format_context](https://en.cppreference.com/w/cpp/utility/format/basic_format_context)
+/// https://en.cppreference.com/w/cpp/utility/format/basic_format_context
 template <typename ContainerT>
 using format_context
     = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
