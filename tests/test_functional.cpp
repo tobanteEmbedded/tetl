@@ -292,9 +292,9 @@ auto test_function_ref(T x) -> T
 TEMPLATE_TEST_CASE(
     "functional: function_ref", "[functional]", int, float, double)
 {
-    using T       = TestType;
-    auto lambda   = [](T x) { return x + T(1); };
-    auto lambda_2 = [](T x) { return x + T(0); };
+    using T      = TestType;
+    auto lambda  = [](T x) { return x + T(1); };
+    auto lambda2 = [](T x) { return x + T(0); };
 
     STATIC_REQUIRE(sizeof(etl::function_ref<T(T)>) == sizeof(void*) * 2);
 
@@ -306,7 +306,7 @@ TEMPLATE_TEST_CASE(
     REQUIRE(ref(T { 41 }) == T { 82 });
     REQUIRE(etl::invoke(ref, T { 41 }) == T { 82 });
 
-    ref = lambda_2;
+    ref = lambda2;
     REQUIRE(ref(T { 41 }) == T { 41 });
     REQUIRE(etl::invoke(ref, T { 41 }) == T { 41 });
 
