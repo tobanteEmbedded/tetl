@@ -69,9 +69,9 @@ struct TestStruct {
 };
 } // namespace
 
-TEMPLATE_TEST_CASE("template test", "", int, long, float, double, TestStruct)
+TEMPLATE_TEST_CASE("template test", "", int, char, float, TestStruct)
 {
     using T = TestType;
-    etl::ignore_unused(T {});
+    if constexpr (etl::is_arithmetic_v<T>) { CHECK(T(1) > T(0)); }
 }
 #endif
