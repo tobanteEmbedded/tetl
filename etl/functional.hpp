@@ -33,6 +33,7 @@
 #include "etl/_functional/default_searcher.hpp"
 #include "etl/_functional/divides.hpp"
 #include "etl/_functional/equal_to.hpp"
+#include "etl/_functional/function_ref.hpp"
 #include "etl/_functional/greater.hpp"
 #include "etl/_functional/greater_equal.hpp"
 #include "etl/_functional/hash.hpp"

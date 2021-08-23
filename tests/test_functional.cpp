@@ -279,3 +279,50 @@ TEMPLATE_TEST_CASE(
     REQUIRE_FALSE(static_cast<bool>(inplace_function<T(T)> {}));
     REQUIRE_FALSE(static_cast<bool>(inplace_function<T(T)> { nullptr }));
 }
+
+namespace {
+
+template <typename T>
+auto test_function_ref(T x) -> T
+{
+    return x * 2;
+}
+
+} // namespace
+TEMPLATE_TEST_CASE(
+    "functional: function_ref", "[functional]", int, float, double)
+{
+    using T       = TestType;
+    auto lambda   = [](T x) { return x + T(1); };
+    auto lambda_2 = [](T x) { return x + T(0); };
+
+    STATIC_REQUIRE(sizeof(etl::function_ref<T(T)>) == sizeof(void*) * 2);
+
+    auto ref = etl::function_ref<T(T)> { lambda };
+    REQUIRE(ref(T { 41 }) == T { 42 });
+    REQUIRE(etl::invoke(ref, T { 41 }) == T { 42 });
+
+    ref = test_function_ref<T>;
+    REQUIRE(ref(T { 41 }) == T { 82 });
+    REQUIRE(etl::invoke(ref, T { 41 }) == T { 82 });
+
+    ref = lambda_2;
+    REQUIRE(ref(T { 41 }) == T { 41 });
+    REQUIRE(etl::invoke(ref, T { 41 }) == T { 41 });
+
+    auto other = etl::function_ref<T(T)> { test_function_ref<T> };
+    REQUIRE(other(T { 41 }) == T { 82 });
+    REQUIRE(etl::invoke(other, T { 41 }) == T { 82 });
+
+    other.swap(ref);
+    REQUIRE(ref(T { 41 }) == T { 82 });
+    REQUIRE(etl::invoke(ref, T { 41 }) == T { 82 });
+    REQUIRE(other(T { 41 }) == T { 41 });
+    REQUIRE(etl::invoke(other, T { 41 }) == T { 41 });
+
+    swap(other, ref);
+    REQUIRE(other(T { 41 }) == T { 82 });
+    REQUIRE(etl::invoke(other, T { 41 }) == T { 82 });
+    REQUIRE(ref(T { 41 }) == T { 41 });
+    REQUIRE(etl::invoke(ref, T { 41 }) == T { 41 });
+}
