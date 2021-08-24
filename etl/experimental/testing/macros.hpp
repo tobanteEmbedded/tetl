@@ -32,7 +32,7 @@
 #include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 
-#include "etl/experimental/meta/all.hpp"
+#include "etl/experimental/meta/meta.hpp"
 
 namespace meta = ::etl::experimental::meta;
 

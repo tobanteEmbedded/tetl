@@ -21,32 +21,28 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_DETAIL_TYPE_TRAITS_HPP
-#define ETL_EXPERIMENTAL_META_DETAIL_TYPE_TRAITS_HPP
+#ifndef ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
+#define ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
 
-#include "etl/experimental/meta/detail/bool_constant.hpp"
-#include "etl/experimental/meta/detail/type.hpp"
+#include "etl/tuple.hpp"
+#include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
 
 template <typename T>
-constexpr auto add_pointer(type<T> const& /*unused*/) -> type<T*>
-{
-    return {};
-}
+struct type {
+    using name = T;
+};
 
 template <typename T>
-constexpr auto is_pointer(type<T> const& /*unused*/) -> false_type
-{
-    return {};
-}
+inline constexpr auto type_c = type<T> {};
 
-template <typename T>
-constexpr auto is_pointer(type<T*> const& /*unused*/) -> true_type
+template <typename... Types>
+[[nodiscard]] constexpr auto make_type_tuple()
 {
-    return {};
+    return etl::tuple<type<etl::decay_t<Types>>...>();
 }
 
 } // namespace etl::experimental::meta
 
-#endif // ETL_EXPERIMENTAL_META_DETAIL_TYPE_TRAITS_HPP
+#endif // ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP

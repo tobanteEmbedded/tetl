@@ -21,42 +21,39 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_DETAIL_FOR_EACH_HPP
-#define ETL_EXPERIMENTAL_META_DETAIL_FOR_EACH_HPP
+#ifndef ETL_EXPERIMENTAL_META_TYPES_INTEGRAL_CONSTANT_HPP
+#define ETL_EXPERIMENTAL_META_TYPES_INTEGRAL_CONSTANT_HPP
 
-#include "etl/cstddef.hpp"
-#include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
 
-namespace detail {
+using etl::integral_constant;
 
-template <bool WithI, etl::size_t... Index, typename... Ts, typename Func>
-auto for_each_impl(etl::index_sequence<Index...>, etl::tuple<Ts...>& t, Func f)
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
+[[nodiscard]] constexpr auto operator+(
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
 {
-    if constexpr (WithI) {
-        (f(Index, etl::get<Index>(t)), ...);
-    } else {
-        (f(etl::get<Index>(t)), ...);
-    }
-}
-} // namespace detail
-
-template <typename... Ts, typename Func>
-constexpr auto for_each(etl::tuple<Ts...>& t, Func f) -> void
-{
-    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
-    detail::for_each_impl<false>(indices, t, f);
+    return integral_constant<decltype(L + R), L + R> {};
 }
 
-template <typename... Ts, typename Func>
-constexpr auto for_each_indexed(etl::tuple<Ts...>& t, Func f) -> void
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
+[[nodiscard]] constexpr auto operator==(
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
 {
-    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
-    detail::for_each_impl<true>(indices, t, f);
+    return integral_constant<bool, L == R> {};
 }
+
+template <typename Rhs, Rhs R, typename Lhs, Lhs L>
+[[nodiscard]] constexpr auto operator!=(
+    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
+{
+    return integral_constant<bool, L != R> {};
+}
+
+template <int Val>
+inline constexpr auto int_c = integral_constant<int, Val> {};
 
 } // namespace etl::experimental::meta
 
-#endif // ETL_EXPERIMENTAL_META_DETAIL_FOR_EACH_HPP
+#endif // ETL_EXPERIMENTAL_META_TYPES_INTEGRAL_CONSTANT_HPP

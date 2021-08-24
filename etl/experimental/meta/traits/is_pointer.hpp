@@ -21,13 +21,32 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_ALL_HPP
-#define ETL_EXPERIMENTAL_META_ALL_HPP
+#ifndef ETL_EXPERIMENTAL_META_TRAITS_IS_POINTER_HPP
+#define ETL_EXPERIMENTAL_META_TRAITS_IS_POINTER_HPP
 
-#include "etl/experimental/meta/detail/bool_constant.hpp"
-#include "etl/experimental/meta/detail/for_each.hpp"
-#include "etl/experimental/meta/detail/integral_constant.hpp"
-#include "etl/experimental/meta/detail/type.hpp"
-#include "etl/experimental/meta/detail/type_traits.hpp"
+#include "etl/experimental/meta/types/bool_constant.hpp"
+#include "etl/experimental/meta/types/type.hpp"
 
-#endif // ETL_EXPERIMENTAL_META_ALL_HPP
+namespace etl::experimental::meta {
+
+template <typename T>
+constexpr auto add_pointer(type<T> const& /*unused*/) -> type<T*>
+{
+    return {};
+}
+
+template <typename T>
+constexpr auto is_pointer(type<T> const& /*unused*/) -> false_type
+{
+    return {};
+}
+
+template <typename T>
+constexpr auto is_pointer(type<T*> const& /*unused*/) -> true_type
+{
+    return {};
+}
+
+} // namespace etl::experimental::meta
+
+#endif // ETL_EXPERIMENTAL_META_TRAITS_IS_POINTER_HPP

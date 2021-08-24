@@ -21,39 +21,13 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_DETAIL_INTEGRAL_CONSTANT_HPP
-#define ETL_EXPERIMENTAL_META_DETAIL_INTEGRAL_CONSTANT_HPP
+#ifndef ETL_EXPERIMENTAL_META_META_HPP
+#define ETL_EXPERIMENTAL_META_META_HPP
 
-#include "etl/type_traits.hpp"
+#include "etl/experimental/meta/algorithm/for_each.hpp"
+#include "etl/experimental/meta/traits/is_pointer.hpp"
+#include "etl/experimental/meta/types/bool_constant.hpp"
+#include "etl/experimental/meta/types/integral_constant.hpp"
+#include "etl/experimental/meta/types/type.hpp"
 
-namespace etl::experimental::meta {
-
-using etl::integral_constant;
-
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator+(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<decltype(L + R), L + R> {};
-}
-
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator==(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<bool, L == R> {};
-}
-
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator!=(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<bool, L != R> {};
-}
-
-template <int Val>
-inline constexpr auto int_c = integral_constant<int, Val> {};
-
-} // namespace etl::experimental::meta
-
-#endif // ETL_EXPERIMENTAL_META_DETAIL_INTEGRAL_CONSTANT_HPP
+#endif // ETL_EXPERIMENTAL_META_META_HPP

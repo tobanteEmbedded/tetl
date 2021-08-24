@@ -21,28 +21,34 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_DETAIL_TYPE_HPP
-#define ETL_EXPERIMENTAL_META_DETAIL_TYPE_HPP
+#ifndef ETL_EXPERIMENTAL_META_TYPES_BOOL_CONSTANT_HPP
+#define ETL_EXPERIMENTAL_META_TYPES_BOOL_CONSTANT_HPP
 
-#include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
 
-template <typename T>
-struct type {
-    using name = T;
-};
+using etl::bool_constant;
+using etl::false_type;
+using etl::true_type;
 
-template <typename T>
-inline constexpr auto type_c = type<T> {};
-
-template <typename... Types>
-[[nodiscard]] constexpr auto make_type_tuple()
+template <bool L, bool R>
+[[nodiscard]] constexpr auto operator==(
+    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
 {
-    return etl::tuple<type<etl::decay_t<Types>>...>();
+    return bool_constant<L == R> {};
 }
+
+template <bool L, bool R>
+[[nodiscard]] constexpr auto operator!=(
+    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
+{
+    return bool_constant<L != R> {};
+}
+
+template <bool V>
+inline constexpr auto bool_c = bool_constant<V> {};
 
 } // namespace etl::experimental::meta
 
-#endif // ETL_EXPERIMENTAL_META_DETAIL_TYPE_HPP
+#endif // ETL_EXPERIMENTAL_META_TYPES_BOOL_CONSTANT_HPP

@@ -21,34 +21,42 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
-#define ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
+#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
+#define ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
 
+#include "etl/cstddef.hpp"
+#include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
 namespace etl::experimental::meta {
 
-using etl::bool_constant;
-using etl::false_type;
-using etl::true_type;
+namespace detail {
 
-template <bool L, bool R>
-[[nodiscard]] constexpr auto operator==(
-    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
+template <bool WithI, etl::size_t... Index, typename... Ts, typename Func>
+auto for_each_impl(etl::index_sequence<Index...>, etl::tuple<Ts...>& t, Func f)
 {
-    return bool_constant<L == R> {};
+    if constexpr (WithI) {
+        (f(Index, etl::get<Index>(t)), ...);
+    } else {
+        (f(etl::get<Index>(t)), ...);
+    }
+}
+} // namespace detail
+
+template <typename... Ts, typename Func>
+constexpr auto for_each(etl::tuple<Ts...>& t, Func f) -> void
+{
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    detail::for_each_impl<false>(indices, t, f);
 }
 
-template <bool L, bool R>
-[[nodiscard]] constexpr auto operator!=(
-    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
+template <typename... Ts, typename Func>
+constexpr auto for_each_indexed(etl::tuple<Ts...>& t, Func f) -> void
 {
-    return bool_constant<L != R> {};
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    detail::for_each_impl<true>(indices, t, f);
 }
-
-template <bool V>
-inline constexpr auto bool_c = bool_constant<V> {};
 
 } // namespace etl::experimental::meta
 
-#endif // ETL_EXPERIMENTAL_META_DETAIL_BOOL_CONSTANT_HPP
+#endif // ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
