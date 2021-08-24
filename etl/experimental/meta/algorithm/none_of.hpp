@@ -21,16 +21,34 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_META_HPP
-#define ETL_EXPERIMENTAL_META_META_HPP
+#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_NONE_OF_HPP
+#define ETL_EXPERIMENTAL_META_ALGORITHM_NONE_OF_HPP
 
-#include "etl/experimental/meta/algorithm/all_of.hpp"
-#include "etl/experimental/meta/algorithm/any_of.hpp"
-#include "etl/experimental/meta/algorithm/for_each.hpp"
-#include "etl/experimental/meta/algorithm/none_of.hpp"
-#include "etl/experimental/meta/traits/is_pointer.hpp"
-#include "etl/experimental/meta/types/bool_constant.hpp"
-#include "etl/experimental/meta/types/integral_constant.hpp"
-#include "etl/experimental/meta/types/type.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/tuple.hpp"
+#include "etl/type_traits.hpp"
 
-#endif // ETL_EXPERIMENTAL_META_META_HPP
+namespace etl::experimental::meta {
+
+namespace detail {
+
+template <etl::size_t... Idxs, typename... Ts, typename F>
+constexpr auto none_of_impl(etl::index_sequence<Idxs...>, tuple<Ts...>& t, F f)
+    -> etl::bool_constant<(etl::is_same_v<decltype(f(etl::get<Idxs>(t))),
+                               etl::bool_constant<false>> && ...)>
+{
+    return {};
+}
+
+} // namespace detail
+
+template <typename... Ts, typename F>
+constexpr auto none_of(tuple<Ts...>& t, F f)
+{
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    return detail::none_of_impl(indices, t, f);
+}
+
+} // namespace etl::experimental::meta
+
+#endif // ETL_EXPERIMENTAL_META_ALGORITHM_NONE_OF_HPP

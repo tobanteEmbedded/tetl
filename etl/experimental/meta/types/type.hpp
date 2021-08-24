@@ -37,6 +37,12 @@ struct type {
 template <typename T>
 inline constexpr auto type_c = type<T> {};
 
+template <typename T>
+constexpr auto type_id(type<T> /*t*/) -> T
+{
+    return {};
+}
+
 template <typename... Types>
 [[nodiscard]] constexpr auto make_type_tuple()
 {

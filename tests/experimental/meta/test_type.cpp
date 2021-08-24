@@ -84,3 +84,22 @@ TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
 
     REQUIRE(counter == 4);
 }
+
+TEMPLATE_TEST_CASE("experimental/meta: all_of,any_of,none_of",
+    "[experimental][meta]", etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+{
+    auto const sizeGreater1 = [](auto t) {
+        return etl::bool_constant<(sizeof(decltype(meta::type_id(t))) > 1)> {};
+    };
+
+    auto const sizeEqual16 = [](auto t) {
+        constexpr auto is16bytes = sizeof(decltype(meta::type_id(t))) == 16;
+        return etl::bool_constant<is16bytes> {};
+    };
+
+    auto l = meta::make_type_tuple<TestType, long, long long>();
+    STATIC_REQUIRE(meta::all_of(l, sizeGreater1));
+    STATIC_REQUIRE(meta::none_of(l, sizeEqual16));
+    STATIC_REQUIRE(meta::any_of(l, sizeGreater1));
+}
