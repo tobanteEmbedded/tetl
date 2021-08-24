@@ -37,6 +37,17 @@ struct type {
 template <typename T>
 inline constexpr auto type_c = type<T> {};
 
+template <typename T, typename U>
+constexpr auto operator==(type<T>, type<U>) -> etl::false_type
+{
+    return {};
+}
+template <typename T>
+constexpr auto operator==(type<T>, type<T>) -> etl::true_type
+{
+    return {};
+}
+
 template <typename T>
 constexpr auto type_id(type<T> /*t*/) -> T
 {

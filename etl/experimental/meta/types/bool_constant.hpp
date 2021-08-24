@@ -46,8 +46,8 @@ template <bool L, bool R>
     return bool_constant<L != R> {};
 }
 
-template <bool V>
-inline constexpr auto bool_c = bool_constant<V> {};
+inline constexpr auto true_c  = true_type {};
+inline constexpr auto false_c = false_type {};
 
 } // namespace etl::experimental::meta
 

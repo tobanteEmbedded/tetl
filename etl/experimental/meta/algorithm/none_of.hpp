@@ -32,12 +32,15 @@ namespace etl::experimental::meta {
 
 namespace detail {
 
-template <etl::size_t... Idxs, typename... Ts, typename F>
-constexpr auto none_of_impl(etl::index_sequence<Idxs...>, tuple<Ts...>& t, F f)
-    -> etl::bool_constant<(etl::is_same_v<decltype(f(etl::get<Idxs>(t))),
-                               etl::bool_constant<false>> && ...)>
+template <etl::size_t... Is, typename... Ts, typename F>
+constexpr auto none_of_impl(etl::index_sequence<Is...>, tuple<Ts...>& t, F f)
 {
-    return {};
+    constexpr auto false_t = type<false_type>();
+    if constexpr (((type<decltype(f(get<Is>(t)))> {} == false_t) && ...)) {
+        return true_c;
+    } else {
+        return false_c;
+    }
 }
 
 } // namespace detail

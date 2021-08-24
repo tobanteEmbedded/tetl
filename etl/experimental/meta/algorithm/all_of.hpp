@@ -24,6 +24,9 @@
 #ifndef ETL_EXPERIMENTAL_META_ALGORITHM_ALL_OF_HPP
 #define ETL_EXPERIMENTAL_META_ALGORITHM_ALL_OF_HPP
 
+#include "etl/experimental/meta/types/bool_constant.hpp"
+#include "etl/experimental/meta/types/type.hpp"
+
 #include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
@@ -32,12 +35,15 @@ namespace etl::experimental::meta {
 
 namespace detail {
 
-template <etl::size_t... Idx, typename... Ts, typename F>
-constexpr auto all_of_impl(etl::index_sequence<Idx...>, tuple<Ts...>& t, F f)
-    -> etl::bool_constant<(etl::is_same_v<decltype(f(etl::get<Idx>(t))),
-                               etl::bool_constant<true>> && ...)>
+template <etl::size_t... Is, typename... Ts, typename F>
+constexpr auto all_of_impl(etl::index_sequence<Is...>, tuple<Ts...>& t, F f)
 {
-    return {};
+    constexpr auto true_t = type<true_type>();
+    if constexpr (((type<decltype(f(get<Is>(t)))> {} == true_t) && ...)) {
+        return true_c;
+    } else {
+        return false_c;
+    }
 }
 
 } // namespace detail

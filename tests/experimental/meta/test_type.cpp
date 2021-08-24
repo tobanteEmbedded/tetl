@@ -87,7 +87,7 @@ TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
 
 TEMPLATE_TEST_CASE("experimental/meta: all_of,any_of,none_of",
     "[experimental][meta]", etl::uint16_t, etl::int16_t, etl::uint32_t,
-    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
 {
     auto const sizeGreater1 = [](auto t) {
         return etl::bool_constant<(sizeof(decltype(meta::type_id(t))) > 1)> {};
