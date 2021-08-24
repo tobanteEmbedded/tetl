@@ -30,20 +30,12 @@
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_base_of.hpp"
 #include "etl/_type_traits/is_function.hpp"
+#include "etl/_type_traits/is_reference_wrapper.hpp"
 #include "etl/_utility/forward.hpp"
 
 namespace etl {
 
-template <typename T>
-struct reference_wrapper;
-
 namespace detail {
-template <typename T>
-struct is_reference_wrapper : etl::false_type {
-};
-template <typename U>
-struct is_reference_wrapper<etl::reference_wrapper<U>> : etl::true_type {
-};
 
 // clang-format off
 template <typename T>
@@ -57,10 +49,10 @@ struct invoke_impl<MT B::*> {
     template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<etl::is_base_of_v<B, Td>>>
     static auto get(T&& t) -> T&&;
 
-    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<is_reference_wrapper<Td>::value>>
+    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<etl::is_reference_wrapper<Td>::value>>
     static auto get(T&& t) -> decltype(t.get());
 
-    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<!etl::is_base_of_v<B, Td>>, typename = etl::enable_if_t<!is_reference_wrapper<Td>::value>>
+    template <typename T, typename Td = etl::decay_t<T>, typename = etl::enable_if_t<!etl::is_base_of_v<B, Td>>, typename = etl::enable_if_t<!etl::is_reference_wrapper<Td>::value>>
     static auto get(T&& t) -> decltype(*etl::forward<T>(t));
 
     template <typename T, typename... Args, typename MT1, typename = etl::enable_if_t<etl::is_function_v<MT1>>>
