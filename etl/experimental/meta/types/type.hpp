@@ -38,12 +38,12 @@ template <typename T>
 inline constexpr auto type_c = type<T> {};
 
 template <typename T, typename U>
-constexpr auto operator==(type<T>, type<U>) -> etl::false_type
+constexpr auto operator==(type<T> /*lhs*/, type<U> /*rhs*/) -> etl::false_type
 {
     return {};
 }
 template <typename T>
-constexpr auto operator==(type<T>, type<T>) -> etl::true_type
+constexpr auto operator==(type<T> /*lhs*/, type<T> /*rhs*/) -> etl::true_type
 {
     return {};
 }
