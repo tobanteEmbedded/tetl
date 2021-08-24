@@ -30,32 +30,31 @@
 
 namespace etl::experimental::meta {
 
-template <etl::size_t I = 0, typename FuncT, typename... Tp>
-constexpr auto for_each(etl::tuple<Tp...>& /*unused*/, FuncT /*unused*/)
-    -> etl::enable_if_t<I == sizeof...(Tp), void>
+namespace detail {
+
+template <bool WithI, etl::size_t... Index, typename... Ts, typename Func>
+auto for_each_impl(etl::index_sequence<Index...>, etl::tuple<Ts...>& t, Func f)
 {
+    if constexpr (WithI) {
+        (f(Index, etl::get<Index>(t)), ...);
+    } else {
+        (f(etl::get<Index>(t)), ...);
+    }
+}
+} // namespace detail
+
+template <typename... Ts, typename Func>
+constexpr auto for_each(etl::tuple<Ts...>& t, Func f) -> void
+{
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    detail::for_each_impl<false>(indices, t, f);
 }
 
-template <etl::size_t I = 0, typename FuncT, typename... Tp>
-constexpr auto for_each(etl::tuple<Tp...>& t, FuncT f)
-    -> etl::enable_if_t<(I < sizeof...(Tp)), void>
+template <typename... Ts, typename Func>
+constexpr auto for_each_indexed(etl::tuple<Ts...>& t, Func f) -> void
 {
-    f(etl::get<I>(t));
-    for_each<I + 1, FuncT, Tp...>(t, f);
-}
-
-template <etl::size_t I = 0, typename FuncT, typename... Tp>
-constexpr auto for_each_indexed(etl::tuple<Tp...>& /*unused*/, FuncT /*unused*/)
-    -> etl::enable_if_t<I == sizeof...(Tp), void>
-{
-}
-
-template <etl::size_t I = 0, typename FuncT, typename... Tp>
-constexpr auto for_each_indexed(etl::tuple<Tp...>& t, FuncT f)
-    -> etl::enable_if_t<(I < sizeof...(Tp)), void>
-{
-    f(I, etl::get<I>(t));
-    for_each_indexed<I + 1, FuncT, Tp...>(t, f);
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    detail::for_each_impl<true>(indices, t, f);
 }
 
 } // namespace etl::experimental::meta
