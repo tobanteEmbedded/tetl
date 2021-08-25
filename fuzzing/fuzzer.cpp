@@ -1,25 +1,6 @@
-// Copyright (c) Tobias Hienzsch. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  * Redistributions of source code must retain the above copyright notice,
-//    this list of conditions and the following disclaimer.
-//  * Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY
-// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-// OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
-// DAMAGE.
+/// \copyright Tobias Hienzsch 2019-2021
+/// Distributed under the Boost Software License, Version 1.0.
+/// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
 #include "fuzzing.hpp"
 
@@ -35,183 +16,183 @@
 template <typename IntType>
 [[nodiscard]] auto test_sort_integers(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-  auto vec       = etl::static_vector<IntType, 128> {};
-  etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
+    auto vec       = etl::static_vector<IntType, 128> {};
+    etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
 
-  auto etlSet = etl::static_set<IntType, 128> {begin(vec), end(vec)};
-  auto stdSet = std::set<IntType> {begin(vec), end(vec)};
-  if (etlSet.size() != stdSet.size()) { return 1; }
+    auto etlSet = etl::static_set<IntType, 128> { begin(vec), end(vec) };
+    auto stdSet = std::set<IntType> { begin(vec), end(vec) };
+    if (etlSet.size() != stdSet.size()) { return 1; }
 
-  etl::sort(begin(vec), end(vec));
-  if (!etl::is_sorted(begin(vec), end(vec))) { return 1; }
+    etl::sort(begin(vec), end(vec));
+    if (!etl::is_sorted(begin(vec), end(vec))) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 template <typename FloatType>
 [[nodiscard]] auto test_sort_floats(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeFloatingPoint<FloatType>(); };
-  auto vec       = etl::static_vector<FloatType, 128> {};
-  etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeFloatingPoint<FloatType>(); };
+    auto vec       = etl::static_vector<FloatType, 128> {};
+    etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
 
-  auto etlSet = etl::static_set<FloatType, 128> {begin(vec), end(vec)};
-  auto stdSet = std::set<FloatType> {begin(vec), end(vec)};
-  if (etlSet.size() != stdSet.size()) { return 1; }
+    auto etlSet = etl::static_set<FloatType, 128> { begin(vec), end(vec) };
+    auto stdSet = std::set<FloatType> { begin(vec), end(vec) };
+    if (etlSet.size() != stdSet.size()) { return 1; }
 
-  etl::sort(begin(vec), end(vec));
-  if (!etl::is_sorted(begin(vec), end(vec))) { return 1; }
+    etl::sort(begin(vec), end(vec));
+    if (!etl::is_sorted(begin(vec), end(vec))) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 template <typename IntType>
 [[nodiscard]] auto test_search_integers(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-  auto src       = etl::static_vector<IntType, 128> {};
-  etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
+    auto src       = etl::static_vector<IntType, 128> {};
+    etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
 
-  auto objs = etl::static_vector<IntType, 4> {};
-  etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
+    auto objs = etl::static_vector<IntType, 4> {};
+    etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
 
-  auto e = etl::search(begin(src), end(src), begin(objs), end(objs));
-  auto s = std::search(begin(src), end(src), begin(objs), end(objs));
-  if (e != s) { return 1; }
+    auto e = etl::search(begin(src), end(src), begin(objs), end(objs));
+    auto s = std::search(begin(src), end(src), begin(objs), end(objs));
+    if (e != s) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 template <typename IntType>
 [[nodiscard]] auto test_mismatch_integers(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-  auto src       = etl::static_vector<IntType, 128> {};
-  etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
+    auto src       = etl::static_vector<IntType, 128> {};
+    etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
 
-  auto objs = etl::static_vector<IntType, 4> {};
-  etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
+    auto objs = etl::static_vector<IntType, 4> {};
+    etl::generate_n(etl::back_inserter(objs), objs.capacity(), generator);
 
-  auto e = etl::mismatch(begin(src), end(src), begin(objs), end(objs));
-  auto s = std::mismatch(begin(src), end(src), begin(objs), end(objs));
-  if ((e.first != s.first) || (e.second != s.second)) { return 1; }
+    auto e = etl::mismatch(begin(src), end(src), begin(objs), end(objs));
+    auto s = std::mismatch(begin(src), end(src), begin(objs), end(objs));
+    if ((e.first != s.first) || (e.second != s.second)) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 template <typename IntType>
 [[nodiscard]] auto test_max_element_integers(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-  auto src       = etl::static_vector<IntType, 128> {};
-  etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
+    auto src       = etl::static_vector<IntType, 128> {};
+    etl::generate_n(etl::back_inserter(src), src.capacity(), generator);
 
-  auto e = etl::max_element(begin(src), end(src));
-  auto s = std::max_element(begin(src), end(src));
-  if (e != s) { return 1; }
+    auto e = etl::max_element(begin(src), end(src));
+    auto s = std::max_element(begin(src), end(src));
+    if (e != s) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 template <typename IntType>
 [[nodiscard]] auto test_equal_integers(FuzzedDataProvider& p) -> int
 {
-  auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
-  auto lhs       = etl::static_vector<IntType, 16> {};
-  etl::generate_n(etl::back_inserter(lhs), lhs.capacity(), generator);
+    auto generator = [&p] { return p.ConsumeIntegral<IntType>(); };
+    auto lhs       = etl::static_vector<IntType, 16> {};
+    etl::generate_n(etl::back_inserter(lhs), lhs.capacity(), generator);
 
-  auto rhs = etl::static_vector<IntType, 16> {};
-  etl::generate_n(etl::back_inserter(rhs), rhs.capacity(), generator);
+    auto rhs = etl::static_vector<IntType, 16> {};
+    etl::generate_n(etl::back_inserter(rhs), rhs.capacity(), generator);
 
-  auto e = etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
-  auto s = std::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
-  if (e != s) { return 1; }
+    auto e = etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
+    auto s = std::equal(begin(lhs), end(lhs), begin(rhs), end(rhs));
+    if (e != s) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 [[nodiscard]] auto test_string(FuzzedDataProvider& p) -> int
 {
-  auto const chars = p.ConsumeBytesWithTerminator<char>(127, 0);
+    auto const chars = p.ConsumeBytesWithTerminator<char>(127, 0);
 
-  auto etlString = etl::static_string<128> {};
-  etl::copy(chars.begin(), chars.end(), etl::back_inserter(etlString));
+    auto etlString = etl::static_string<128> {};
+    etl::copy(chars.begin(), chars.end(), etl::back_inserter(etlString));
 
-  auto stdString = std::string {chars.begin(), chars.end()};
+    auto stdString = std::string { chars.begin(), chars.end() };
 
-  if (etlString.size() != stdString.size()) { return 1; }
-  if (etl::strlen(chars.data()) != std::strlen(chars.data())) { return 1; }
+    if (etlString.size() != stdString.size()) { return 1; }
+    if (etl::strlen(chars.data()) != std::strlen(chars.data())) { return 1; }
 
-  return 0;
+    return 0;
 }
 
 #define RUN(func)                                                              \
-  do {                                                                         \
-    if (auto rc = func; rc != 0) { throw rc; }                                 \
-  } while (false)
+    do {                                                                       \
+        if (auto rc = func; rc != 0) { throw rc; }                             \
+    } while (false)
 
-extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data,
-                                       etl::size_t size) -> int
+extern "C" auto LLVMFuzzerTestOneInput(
+    etl::uint8_t const* data, etl::size_t size) -> int
 {
-  if (size == 0) { return 0; }
-  auto p = FuzzedDataProvider {data, size};
+    if (size == 0) { return 0; }
+    auto p = FuzzedDataProvider { data, size };
 
-  RUN(test_sort_integers<etl::uint8_t>(p));
-  RUN(test_sort_integers<etl::uint16_t>(p));
-  RUN(test_sort_integers<etl::uint32_t>(p));
-  RUN(test_sort_integers<etl::uint64_t>(p));
+    RUN(test_sort_integers<etl::uint8_t>(p));
+    RUN(test_sort_integers<etl::uint16_t>(p));
+    RUN(test_sort_integers<etl::uint32_t>(p));
+    RUN(test_sort_integers<etl::uint64_t>(p));
 
-  RUN(test_sort_integers<etl::uint8_t>(p));
-  RUN(test_sort_integers<etl::uint16_t>(p));
-  RUN(test_sort_integers<etl::uint32_t>(p));
-  RUN(test_sort_integers<etl::uint64_t>(p));
+    RUN(test_sort_integers<etl::uint8_t>(p));
+    RUN(test_sort_integers<etl::uint16_t>(p));
+    RUN(test_sort_integers<etl::uint32_t>(p));
+    RUN(test_sort_integers<etl::uint64_t>(p));
 
-  RUN(test_sort_floats<etl::float_t>(p));
-  RUN(test_sort_floats<etl::double_t>(p));
-  RUN(test_sort_floats<long double>(p));
+    RUN(test_sort_floats<etl::float_t>(p));
+    RUN(test_sort_floats<etl::double_t>(p));
+    RUN(test_sort_floats<long double>(p));
 
-  RUN(test_search_integers<etl::uint8_t>(p));
-  RUN(test_search_integers<etl::uint16_t>(p));
-  RUN(test_search_integers<etl::uint32_t>(p));
-  RUN(test_search_integers<etl::uint64_t>(p));
+    RUN(test_search_integers<etl::uint8_t>(p));
+    RUN(test_search_integers<etl::uint16_t>(p));
+    RUN(test_search_integers<etl::uint32_t>(p));
+    RUN(test_search_integers<etl::uint64_t>(p));
 
-  RUN(test_search_integers<etl::uint8_t>(p));
-  RUN(test_search_integers<etl::uint16_t>(p));
-  RUN(test_search_integers<etl::uint32_t>(p));
-  RUN(test_search_integers<etl::uint64_t>(p));
+    RUN(test_search_integers<etl::uint8_t>(p));
+    RUN(test_search_integers<etl::uint16_t>(p));
+    RUN(test_search_integers<etl::uint32_t>(p));
+    RUN(test_search_integers<etl::uint64_t>(p));
 
-  RUN(test_mismatch_integers<etl::uint8_t>(p));
-  RUN(test_mismatch_integers<etl::uint16_t>(p));
-  RUN(test_mismatch_integers<etl::uint32_t>(p));
-  RUN(test_mismatch_integers<etl::uint64_t>(p));
+    RUN(test_mismatch_integers<etl::uint8_t>(p));
+    RUN(test_mismatch_integers<etl::uint16_t>(p));
+    RUN(test_mismatch_integers<etl::uint32_t>(p));
+    RUN(test_mismatch_integers<etl::uint64_t>(p));
 
-  RUN(test_mismatch_integers<etl::uint8_t>(p));
-  RUN(test_mismatch_integers<etl::uint16_t>(p));
-  RUN(test_mismatch_integers<etl::uint32_t>(p));
-  RUN(test_mismatch_integers<etl::uint64_t>(p));
+    RUN(test_mismatch_integers<etl::uint8_t>(p));
+    RUN(test_mismatch_integers<etl::uint16_t>(p));
+    RUN(test_mismatch_integers<etl::uint32_t>(p));
+    RUN(test_mismatch_integers<etl::uint64_t>(p));
 
-  RUN(test_max_element_integers<etl::uint8_t>(p));
-  RUN(test_max_element_integers<etl::uint16_t>(p));
-  RUN(test_max_element_integers<etl::uint32_t>(p));
-  RUN(test_max_element_integers<etl::uint64_t>(p));
+    RUN(test_max_element_integers<etl::uint8_t>(p));
+    RUN(test_max_element_integers<etl::uint16_t>(p));
+    RUN(test_max_element_integers<etl::uint32_t>(p));
+    RUN(test_max_element_integers<etl::uint64_t>(p));
 
-  RUN(test_max_element_integers<etl::uint8_t>(p));
-  RUN(test_max_element_integers<etl::uint16_t>(p));
-  RUN(test_max_element_integers<etl::uint32_t>(p));
-  RUN(test_max_element_integers<etl::uint64_t>(p));
+    RUN(test_max_element_integers<etl::uint8_t>(p));
+    RUN(test_max_element_integers<etl::uint16_t>(p));
+    RUN(test_max_element_integers<etl::uint32_t>(p));
+    RUN(test_max_element_integers<etl::uint64_t>(p));
 
-  RUN(test_equal_integers<etl::uint8_t>(p));
-  RUN(test_equal_integers<etl::uint16_t>(p));
-  RUN(test_equal_integers<etl::uint32_t>(p));
-  RUN(test_equal_integers<etl::uint64_t>(p));
+    RUN(test_equal_integers<etl::uint8_t>(p));
+    RUN(test_equal_integers<etl::uint16_t>(p));
+    RUN(test_equal_integers<etl::uint32_t>(p));
+    RUN(test_equal_integers<etl::uint64_t>(p));
 
-  RUN(test_equal_integers<etl::uint8_t>(p));
-  RUN(test_equal_integers<etl::uint16_t>(p));
-  RUN(test_equal_integers<etl::uint32_t>(p));
-  RUN(test_equal_integers<etl::uint64_t>(p));
+    RUN(test_equal_integers<etl::uint8_t>(p));
+    RUN(test_equal_integers<etl::uint16_t>(p));
+    RUN(test_equal_integers<etl::uint32_t>(p));
+    RUN(test_equal_integers<etl::uint64_t>(p));
 
-  RUN(test_string(p));
+    RUN(test_string(p));
 
-  return 0;
+    return 0;
 }
