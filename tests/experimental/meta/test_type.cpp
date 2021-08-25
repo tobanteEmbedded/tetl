@@ -85,11 +85,11 @@ TEMPLATE_TEST_CASE("experimental/meta: all_of,any_of,none_of",
     etl::int32_t, etl::uint64_t, etl::int64_t, float, double)
 {
     auto const sizeGreater1 = [](auto t) {
-        return etl::bool_constant<(sizeof(decltype(meta::type_id(t))) > 1)> {};
+        return etl::bool_constant<(sizeof(typename decltype(t)::name) > 1)> {};
     };
 
     auto const sizeEqual16 = [](auto t) {
-        constexpr auto is16bytes = sizeof(decltype(meta::type_id(t))) == 16;
+        constexpr auto is16bytes = sizeof(typename decltype(t)::name) == 16;
         return etl::bool_constant<is16bytes> {};
     };
 
@@ -124,17 +124,36 @@ TEMPLATE_TEST_CASE("experimental/meta: count_if", "[experimental][meta]",
     etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
     etl::int64_t)
 {
-    auto isFloat = [](auto x) { return meta::traits::is_floating_point(x); };
+    auto isFloat = [](auto x) {
+        return meta::traits::is_floating_point(meta::type_id(x));
+    };
 
     auto t0 = meta::make_type_tuple<TestType, long, int>();
-    REQUIRE(meta::count_if(t0, isFloat) == meta::int_c<0>);
+    STATIC_REQUIRE(meta::count_if(t0, isFloat) == meta::int_c<0>);
 
     // auto t1 = meta::make_type_tuple<TestType, long, int, float>();
-    // REQUIRE(meta::count_if(t1, isFloat) == meta::int_c<1>);
+    // STATIC_REQUIRE(meta::count_if(t1, isFloat) == meta::int_c<1>);
 
     // auto t2 = meta::make_type_tuple<TestType, long, int, float, double>();
     // REQUIRE(meta::count_if(t2, isFloat) == meta::int_c<2>);
 
     // auto t3 = meta::make_type_tuple<TestType, float, double, long double>();
     // REQUIRE(meta::count_if(t3, isFloat) == meta::int_c<3>);
+}
+
+TEMPLATE_TEST_CASE("experimental/meta: size_of", "[experimental][meta]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    using T = TestType;
+    using meta::size_c;
+    using meta::size_of;
+    using meta::type_c;
+    using meta::traits::is_same;
+
+    REQUIRE(size_of(type_c<T>) == size_c<sizeof(T)>);
+    REQUIRE(decltype(size_of(type_c<T>) == size_c<sizeof(T)>)::value);
+    // REQUIRE(is_same(type_c<decltype(size_of(type_c<T>) ==
+    // size_c<sizeof(T)>)>,
+    //    type_c<meta::true_type>));
 }

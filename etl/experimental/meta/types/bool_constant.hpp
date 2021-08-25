@@ -32,20 +32,6 @@ using etl::bool_constant;
 using etl::false_type;
 using etl::true_type;
 
-template <bool L, bool R>
-[[nodiscard]] constexpr auto operator==(
-    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
-{
-    return bool_constant<L == R> {};
-}
-
-template <bool L, bool R>
-[[nodiscard]] constexpr auto operator!=(
-    bool_constant<L> /*l*/, bool_constant<R> /*r*/) noexcept
-{
-    return bool_constant<L != R> {};
-}
-
 inline constexpr auto true_c  = true_type {};
 inline constexpr auto false_c = false_type {};
 

@@ -30,29 +30,11 @@ namespace etl::experimental::meta {
 
 using etl::integral_constant;
 
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator+(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<decltype(L + R), L + R> {};
-}
-
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator==(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<bool, L == R> {};
-}
-
-template <typename Rhs, Rhs R, typename Lhs, Lhs L>
-[[nodiscard]] constexpr auto operator!=(
-    integral_constant<Rhs, R> /*l*/, integral_constant<Lhs, L> /*r*/) noexcept
-{
-    return integral_constant<bool, L != R> {};
-}
-
 template <int Val>
 inline constexpr auto int_c = integral_constant<int, Val> {};
+
+template <etl::size_t Size>
+inline constexpr auto size_c = integral_constant<etl::size_t, Size> {};
 
 } // namespace etl::experimental::meta
 

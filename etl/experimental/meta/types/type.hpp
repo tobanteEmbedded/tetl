@@ -24,6 +24,8 @@
 #ifndef ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
 #define ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
 
+#include "etl/experimental/meta/types/integral_constant.hpp"
+
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
@@ -48,10 +50,33 @@ constexpr auto operator==(type<T> /*lhs*/, type<T> /*rhs*/) -> etl::true_type
     return {};
 }
 
-template <typename T>
-constexpr auto type_id(type<T> /*t*/) -> T
+template <typename T, typename U>
+constexpr auto operator!=(type<T> /*lhs*/, type<U> /*rhs*/) -> etl::true_type
 {
     return {};
+}
+template <typename T>
+constexpr auto operator!=(type<T> /*lhs*/, type<T> /*rhs*/) -> etl::false_type
+{
+    return {};
+}
+
+template <typename T>
+constexpr auto type_id(T&& /*t*/)
+{
+    return type_c<remove_cvref_t<T>>;
+}
+
+template <typename T>
+constexpr auto type_id(type<T>&& /*t*/)
+{
+    return type_c<remove_reference_t<T>>;
+}
+
+template <typename T>
+constexpr auto size_of(type<T> /*t*/)
+{
+    return size_c<sizeof(T)>;
 }
 
 template <typename... Types>
