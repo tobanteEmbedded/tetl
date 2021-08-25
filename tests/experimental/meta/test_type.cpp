@@ -119,3 +119,22 @@ TEMPLATE_TEST_CASE("experimental/meta: transform", "[experimental][meta]",
     STATIC_REQUIRE(type_c<tuple_element_t<1, new_t>> == type_c<int>);
     STATIC_REQUIRE(type_c<tuple_element_t<2, new_t>> == type_c<int>);
 }
+
+TEMPLATE_TEST_CASE("experimental/meta: count_if", "[experimental][meta]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    auto isFloat = [](auto x) { return meta::traits::is_floating_point(x); };
+
+    auto t0 = meta::make_type_tuple<TestType, long, int>();
+    REQUIRE(meta::count_if(t0, isFloat) == meta::int_c<0>);
+
+    // auto t1 = meta::make_type_tuple<TestType, long, int, float>();
+    // REQUIRE(meta::count_if(t1, isFloat) == meta::int_c<1>);
+
+    // auto t2 = meta::make_type_tuple<TestType, long, int, float, double>();
+    // REQUIRE(meta::count_if(t2, isFloat) == meta::int_c<2>);
+
+    // auto t3 = meta::make_type_tuple<TestType, float, double, long double>();
+    // REQUIRE(meta::count_if(t3, isFloat) == meta::int_c<3>);
+}

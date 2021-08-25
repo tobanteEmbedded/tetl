@@ -21,19 +21,37 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_META_HPP
-#define ETL_EXPERIMENTAL_META_META_HPP
+#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
+#define ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
 
-#include "etl/experimental/meta/algorithm/all_of.hpp"
-#include "etl/experimental/meta/algorithm/any_of.hpp"
-#include "etl/experimental/meta/algorithm/count_if.hpp"
-#include "etl/experimental/meta/algorithm/for_each.hpp"
-#include "etl/experimental/meta/algorithm/none_of.hpp"
-#include "etl/experimental/meta/algorithm/transform.hpp"
-#include "etl/experimental/meta/traits/add.hpp"
-#include "etl/experimental/meta/traits/is.hpp"
-#include "etl/experimental/meta/types/bool_constant.hpp"
 #include "etl/experimental/meta/types/integral_constant.hpp"
 #include "etl/experimental/meta/types/type.hpp"
 
-#endif // ETL_EXPERIMENTAL_META_META_HPP
+#include "etl/cstddef.hpp"
+#include "etl/tuple.hpp"
+#include "etl/type_traits.hpp"
+
+namespace etl::experimental::meta {
+
+namespace detail {
+
+template <etl::size_t... I, typename... Ts, typename F>
+constexpr auto count_if_impl(index_sequence<I...> /*is*/, tuple<Ts...>& t, F f)
+{
+    constexpr int c
+        = ((type<decltype(f(get<I>(t)))>() == type<true_type>() ? 1 : 0) + ...);
+    return meta::integral_constant<int, c> {};
+}
+
+} // namespace detail
+
+template <typename... Ts, typename F>
+constexpr auto count_if(tuple<Ts...>& t, F f)
+{
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    return detail::count_if_impl(indices, t, f);
+}
+
+} // namespace etl::experimental::meta
+
+#endif // ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
