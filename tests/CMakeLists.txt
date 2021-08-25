@@ -6,7 +6,10 @@ target_sources(${PROJECT_NAME}
     PRIVATE
         assert_handler.cpp
 
-        test_algorithm.cpp
+        algorithm/test_algorithm_01.cpp
+        algorithm/test_algorithm_02.cpp
+        algorithm/test_algorithm_03.cpp
+
         test_array.cpp
         test_bit.cpp
         test_bitset.cpp
