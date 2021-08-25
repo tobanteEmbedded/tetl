@@ -103,3 +103,24 @@ TEMPLATE_TEST_CASE("experimental/meta: all_of,any_of,none_of",
     STATIC_REQUIRE(meta::none_of(l, sizeEqual16));
     STATIC_REQUIRE(meta::any_of(l, sizeGreater1));
 }
+
+TEMPLATE_TEST_CASE("experimental/meta: transform", "[experimental][meta]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double)
+{
+    using T = TestType;
+    using etl::tuple_element_t;
+    using meta::type_c;
+
+    auto old    = etl::tuple<T, long, int>();
+    using old_t = decltype(old);
+    STATIC_REQUIRE(type_c<tuple_element_t<0, old_t>> == type_c<T>);
+    STATIC_REQUIRE(type_c<tuple_element_t<1, old_t>> == type_c<long>);
+    STATIC_REQUIRE(type_c<tuple_element_t<2, old_t>> == type_c<int>);
+
+    auto transformed = meta::transform(old, [](auto /*t*/) { return 0; });
+    using new_t      = decltype(transformed);
+    STATIC_REQUIRE(type_c<tuple_element_t<0, new_t>> == type_c<int>);
+    STATIC_REQUIRE(type_c<tuple_element_t<1, new_t>> == type_c<int>);
+    STATIC_REQUIRE(type_c<tuple_element_t<2, new_t>> == type_c<int>);
+}

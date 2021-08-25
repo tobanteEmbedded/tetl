@@ -21,18 +21,33 @@
 // OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 // DAMAGE.
 
-#ifndef ETL_EXPERIMENTAL_META_META_HPP
-#define ETL_EXPERIMENTAL_META_META_HPP
+#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_TRANSFORM_HPP
+#define ETL_EXPERIMENTAL_META_ALGORITHM_TRANSFORM_HPP
 
-#include "etl/experimental/meta/algorithm/all_of.hpp"
-#include "etl/experimental/meta/algorithm/any_of.hpp"
-#include "etl/experimental/meta/algorithm/for_each.hpp"
-#include "etl/experimental/meta/algorithm/none_of.hpp"
-#include "etl/experimental/meta/algorithm/transform.hpp"
-#include "etl/experimental/meta/traits/add.hpp"
-#include "etl/experimental/meta/traits/is.hpp"
-#include "etl/experimental/meta/types/bool_constant.hpp"
-#include "etl/experimental/meta/types/integral_constant.hpp"
-#include "etl/experimental/meta/types/type.hpp"
+#include "etl/cstddef.hpp"
+#include "etl/tuple.hpp"
+#include "etl/type_traits.hpp"
 
-#endif // ETL_EXPERIMENTAL_META_META_HPP
+namespace etl::experimental::meta {
+
+namespace detail {
+
+template <etl::size_t... Is, typename... Ts, typename F>
+constexpr auto transform_impl(
+    etl::index_sequence<Is...> /*is*/, tuple<Ts...>& t, F f)
+{
+    return etl::tuple<decltype(f(get<Is>(t)))...> {};
+}
+
+} // namespace detail
+
+template <typename... Ts, typename F>
+constexpr auto transform(tuple<Ts...>& t, F f)
+{
+    constexpr auto indices = etl::make_index_sequence<sizeof...(Ts)> {};
+    return detail::transform_impl(indices, t, f);
+}
+
+} // namespace etl::experimental::meta
+
+#endif // ETL_EXPERIMENTAL_META_ALGORITHM_TRANSFORM_HPP
