@@ -158,7 +158,7 @@ protected:
 /// \brief Storage for trivial types.
 template <typename T, size_t Capacity>
 struct static_vector_trivial_storage {
-    static_assert(::etl::is_trivial_v<T>);
+    static_assert(etl::is_trivial_v<T>);
     static_assert(Capacity != size_t { 0 });
 
     using size_type       = smallest_size_t<Capacity>;
@@ -448,9 +448,9 @@ public:
     /// The type being used
     using size_type = size_t;
     /// The type being used
-    using reverse_iterator = ::etl::reverse_iterator<iterator>;
+    using reverse_iterator = etl::reverse_iterator<iterator>;
     /// The type being used
-    using const_reverse_iterator = ::etl::reverse_iterator<const_iterator>;
+    using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
 private:
     constexpr auto emplace_n(size_type n) noexcept(

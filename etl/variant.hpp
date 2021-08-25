@@ -97,7 +97,7 @@ struct variant_storage;
 template <typename Head>
 struct variant_storage<Head> {
     using storage_t =
-        typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+        typename etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
     storage_t data;
 
     // alignas(Head) unsigned char data[sizeof(Head)];
@@ -120,7 +120,7 @@ struct variant_storage<Head> {
 template <typename Head, typename... Tail>
 struct variant_storage<Head, Tail...> {
     using storage_t =
-        typename ::etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
+        typename etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
 
     union {
         storage_t data;

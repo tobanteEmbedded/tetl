@@ -50,7 +50,7 @@ namespace etl::experimental::freertos {
 ///
 /// \ingroup StreamBuffer
 struct stream_buffer {
-    using size_type = ::etl::size_t;
+    using size_type = etl::size_t;
 
     /// \brief Creates a new stream buffer using dynamically allocated memory.
     ///

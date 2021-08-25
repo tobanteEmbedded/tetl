@@ -223,40 +223,40 @@ struct char_traits<wchar_t> {
         wchar_t const* lhs, wchar_t const* rhs, size_t count) -> int
     {
         if (count == 0) { return 0; }
-        return ::etl::wmemcmp(lhs, rhs, count);
+        return etl::wmemcmp(lhs, rhs, count);
     }
 
     static constexpr auto length(wchar_t const* str) -> size_t
     {
-        return ::etl::wcslen(str);
+        return etl::wcslen(str);
     }
 
     static constexpr auto find(wchar_t const* str, size_t count,
         wchar_t const& token) -> wchar_t const*
     {
         if (count == 0) { return nullptr; }
-        return ::etl::wmemchr(str, token, count);
+        return etl::wmemchr(str, token, count);
     }
 
     static constexpr auto move(wchar_t* dest, wchar_t const* src, size_t count)
         -> wchar_t*
     {
         if (count == 0) { return dest; }
-        return ::etl::wmemmove(dest, src, count);
+        return etl::wmemmove(dest, src, count);
     }
 
     static constexpr auto copy(wchar_t* dest, wchar_t const* src, size_t count)
         -> wchar_t*
     {
         if (count == 0) { return dest; }
-        return ::etl::wmemcpy(dest, src, count);
+        return etl::wmemcpy(dest, src, count);
     }
 
     static constexpr auto assign(wchar_t* str, size_t count, wchar_t token)
         -> wchar_t*
     {
         if (count == 0) { return str; }
-        return ::etl::wmemset(str, token, count);
+        return etl::wmemset(str, token, count);
     }
 
     static constexpr auto to_char_type(int_type const& ch) noexcept -> wchar_t

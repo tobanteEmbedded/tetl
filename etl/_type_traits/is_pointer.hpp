@@ -31,10 +31,10 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-struct is_pointer_helper : ::etl::false_type {
+struct is_pointer_helper : etl::false_type {
 };
 template <typename T>
-struct is_pointer_helper<T*> : ::etl::true_type {
+struct is_pointer_helper<T*> : etl::true_type {
 };
 } // namespace detail
 

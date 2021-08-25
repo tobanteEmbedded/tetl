@@ -32,19 +32,19 @@ namespace etl {
 
 namespace detail {
 template <typename>
-using true_type_for = ::etl::true_type;
+using true_type_for = etl::true_type;
 
 template <typename T>
 auto test_returnable(int) -> true_type_for<T()>;
 template <typename>
-auto test_returnable(...) -> ::etl::false_type;
+auto test_returnable(...) -> etl::false_type;
 
 template <typename From, typename To>
 auto test_nonvoid_convertible(int)
-    -> true_type_for<decltype(::etl::declval<void (&)(To)>()(
-        ::etl::declval<From>()))>;
+    -> true_type_for<decltype(etl::declval<void (&)(To)>()(
+        etl::declval<From>()))>;
 template <typename, typename>
-auto test_nonvoid_convertible(...) -> ::etl::false_type;
+auto test_nonvoid_convertible(...) -> etl::false_type;
 
 } // namespace detail
 

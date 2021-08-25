@@ -31,12 +31,12 @@ namespace etl {
 
 namespace detail {
 template <typename B>
-auto test_pre_ptr_convertible(B const volatile*) -> ::etl::true_type;
+auto test_pre_ptr_convertible(B const volatile*) -> etl::true_type;
 template <typename>
-auto test_pre_ptr_convertible(void const volatile*) -> ::etl::false_type;
+auto test_pre_ptr_convertible(void const volatile*) -> etl::false_type;
 
 template <typename, typename>
-auto test_pre_is_base_of(...) -> ::etl::true_type;
+auto test_pre_is_base_of(...) -> etl::true_type;
 template <typename B, typename D>
 auto test_pre_is_base_of(int)
     -> decltype(test_pre_ptr_convertible<B>(static_cast<D*>(nullptr)));

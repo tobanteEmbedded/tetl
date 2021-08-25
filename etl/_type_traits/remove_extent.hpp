@@ -45,14 +45,14 @@ struct remove_extent<T[]> {
 };
 
 /// \exclude
-template <typename T, ::etl::size_t N>
+template <typename T, etl::size_t N>
 struct remove_extent<T[N]> {
     using type = T;
 };
 
 /// \group remove_extent
 template <typename T>
-using remove_extent_t = typename ::etl::remove_extent<T>::type;
+using remove_extent_t = typename etl::remove_extent<T>::type;
 
 } // namespace etl
 

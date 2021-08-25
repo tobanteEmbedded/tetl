@@ -239,8 +239,8 @@ public:
     {
         if (!full()) {
             auto cmp = key_compare {};
-            auto* p  = ::etl::lower_bound(
-                memory_.begin(), memory_.end(), value, cmp);
+            auto* p
+                = etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
             if (p == memory_.end() || *(p) != value) {
                 memory_.push_back(move(value));
                 auto* pos = rotate(p, memory_.end() - 1, memory_.end());
@@ -317,7 +317,7 @@ public:
     /// \returns Number of elements removed.
     constexpr auto erase(key_type const& key) noexcept -> size_type
     {
-        if (auto* pos = ::etl::lower_bound(begin(), end(), key); pos != end()) {
+        if (auto* pos = etl::lower_bound(begin(), end(), key); pos != end()) {
             erase(pos);
             return 1;
         }
@@ -329,7 +329,7 @@ public:
         is_nothrow_swappable_v<key_type>)
         -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
     {
-        using ::etl::move;
+        using etl::move;
 
         static_set tmp = move(other);
         other          = move(*this);
@@ -359,7 +359,7 @@ public:
     /// element is found, past-the-end (see end()) iterator is returned.
     [[nodiscard]] constexpr auto find(key_type const& key) noexcept -> iterator
     {
-        return ::etl::find(begin(), end(), key);
+        return etl::find(begin(), end(), key);
     }
 
     /// \brief Finds an element with key equivalent to key.
@@ -369,7 +369,7 @@ public:
     [[nodiscard]] constexpr auto find(key_type const& key) const noexcept
         -> const_iterator
     {
-        return ::etl::find(begin(), end(), key);
+        return etl::find(begin(), end(), key);
     }
 
     /// \brief Finds an element with key that compares equivalent to the value
@@ -414,7 +414,7 @@ public:
     /// less than (i.e. greater or equal to) key.
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
     {
-        return ::etl::lower_bound(begin(), end(), key, key_compare {});
+        return etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is not
@@ -422,7 +422,7 @@ public:
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
         -> const_iterator
     {
-        return ::etl::lower_bound(begin(), end(), key, key_compare {});
+        return etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is not
@@ -430,7 +430,7 @@ public:
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
     {
-        return ::etl::lower_bound(begin(), end(), key, key_compare {});
+        return etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is not
@@ -439,14 +439,14 @@ public:
     [[nodiscard]] constexpr auto lower_bound(K const& key) const
         -> const_iterator
     {
-        return ::etl::lower_bound(begin(), end(), key, key_compare {});
+        return etl::lower_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
     [[nodiscard]] constexpr auto upper_bound(key_type const& key) -> iterator
     {
-        return ::etl::upper_bound(begin(), end(), key, key_compare {});
+        return etl::upper_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is greater
@@ -454,7 +454,7 @@ public:
     [[nodiscard]] constexpr auto upper_bound(key_type const& key) const
         -> const_iterator
     {
-        return ::etl::upper_bound(begin(), end(), key, key_compare {});
+        return etl::upper_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is greater
@@ -462,7 +462,7 @@ public:
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator
     {
-        return ::etl::upper_bound(begin(), end(), key, key_compare {});
+        return etl::upper_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns an iterator pointing to the first element that is greater
@@ -471,7 +471,7 @@ public:
     [[nodiscard]] constexpr auto upper_bound(K const& key) const
         -> const_iterator
     {
-        return ::etl::upper_bound(begin(), end(), key, key_compare {});
+        return etl::upper_bound(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns a range containing all elements with the given key in the
@@ -481,7 +481,7 @@ public:
     /// obtained with lower_bound(), and the second with upper_bound().
     [[nodiscard]] constexpr auto equal_range(key_type const& key) -> iterator
     {
-        return ::etl::equal_range(begin(), end(), key, key_compare {});
+        return etl::equal_range(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns a range containing all elements with the given key in the
@@ -492,7 +492,7 @@ public:
     [[nodiscard]] constexpr auto equal_range(key_type const& key) const
         -> const_iterator
     {
-        return ::etl::equal_range(begin(), end(), key, key_compare {});
+        return etl::equal_range(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns a range containing all elements with the given key in the
@@ -503,7 +503,7 @@ public:
     template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
     [[nodiscard]] constexpr auto equal_range(K const& key) -> iterator
     {
-        return ::etl::equal_range(begin(), end(), key, key_compare {});
+        return etl::equal_range(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns a range containing all elements with the given key in the
@@ -515,7 +515,7 @@ public:
     [[nodiscard]] constexpr auto equal_range(K const& key) const
         -> const_iterator
     {
-        return ::etl::equal_range(begin(), end(), key, key_compare {});
+        return etl::equal_range(begin(), end(), key, key_compare {});
     }
 
     /// \brief Returns the function object that compares the keys, which is a

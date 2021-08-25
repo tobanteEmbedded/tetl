@@ -63,7 +63,7 @@ auto tetl_assert_handler(assert_msg const& msg) -> void;
 /// is triggered at runtime.
 inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
 {
-    ::etl::ignore_unused(msg);
+    etl::ignore_unused(msg);
     ::exit(1); // NOLINT
 }
 
@@ -71,9 +71,9 @@ namespace detail {
 inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 {
 #if defined(TETL_CUSTOM_ASSERT_HANDLER)
-    ::etl::tetl_assert_handler(msg);
+    etl::tetl_assert_handler(msg);
 #else
-    ::etl::tetl_default_assert_handler(msg);
+    etl::tetl_default_assert_handler(msg);
 #endif
 }
 
@@ -88,13 +88,13 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
     do {                                                                       \
         if (TETL_UNLIKELY((exp) == false)) {                                   \
             /* TETL_DEBUG_TRAP(); */                                           \
-            auto const msg = ::etl::assert_msg {                               \
+            auto const msg = etl::assert_msg {                                 \
                 __LINE__, /*line of assertion*/                                \
                 __FILE__, /*source file*/                                      \
-                ::etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,        \
-                ::etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,         \
+                etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,          \
+                etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,           \
             };                                                                 \
-            ::etl::detail::tetl_call_assert_handler(msg);                      \
+            etl::detail::tetl_call_assert_handler(msg);                        \
         }                                                                      \
     } while (false)
 #else

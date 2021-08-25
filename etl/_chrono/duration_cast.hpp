@@ -36,11 +36,11 @@ namespace etl::chrono {
 
 namespace detail {
 template <typename T>
-struct is_duration : ::etl::false_type {
+struct is_duration : etl::false_type {
 };
 
 template <typename Rep, typename Period>
-struct is_duration<::etl::chrono::duration<Rep, Period>> : ::etl::true_type {
+struct is_duration<etl::chrono::duration<Rep, Period>> : etl::true_type {
 };
 
 template <typename T>

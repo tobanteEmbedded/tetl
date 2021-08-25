@@ -39,14 +39,13 @@ struct is_empty_test_struct_2 {
     char dummy_data;
 };
 
-template <typename T, bool = ::etl::is_class<T>::value>
-struct is_empty_helper
-    : ::etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
-                           == sizeof(is_empty_test_struct_2)> {
+template <typename T, bool = etl::is_class<T>::value>
+struct is_empty_helper : etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
+                                            == sizeof(is_empty_test_struct_2)> {
 };
 
 template <typename T>
-struct is_empty_helper<T, false> : ::etl::false_type {
+struct is_empty_helper<T, false> : etl::false_type {
 };
 } // namespace detail
 

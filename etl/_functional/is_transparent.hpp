@@ -32,7 +32,7 @@ namespace etl {
 
 namespace detail {
 template <typename T, typename, typename = void>
-struct is_transparent : ::etl::false_type {
+struct is_transparent : etl::false_type {
 };
 
 /// \brief is_transparent
@@ -40,8 +40,8 @@ struct is_transparent : ::etl::false_type {
 /// \module Utility
 template <typename T, typename U>
 struct is_transparent<T, U,
-    ::etl::conditional_t<::etl::is_same_v<typename T::is_transparent, void>,
-        void, bool>> : ::etl::true_type {
+    etl::conditional_t<etl::is_same_v<typename T::is_transparent, void>, void,
+        bool>> : etl::true_type {
 };
 
 /// \group is_transparent

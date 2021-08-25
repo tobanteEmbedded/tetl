@@ -60,7 +60,7 @@ template <typename T>
 struct pointer_traits<T*> {
     using pointer         = T*;
     using element_type    = T;
-    using difference_type = ::etl::ptrdiff_t;
+    using difference_type = etl::ptrdiff_t;
     template <typename U>
     using rebind = U*;
 

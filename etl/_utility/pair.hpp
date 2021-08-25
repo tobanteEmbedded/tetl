@@ -149,7 +149,7 @@ public:
         (is_nothrow_swappable_v<
              first_type> and is_nothrow_swappable_v<second_type>))
     {
-        using ::etl::swap;
+        using etl::swap;
         swap(first, other.first);
         swap(second, other.second);
     }

@@ -30,12 +30,12 @@
 namespace etl {
 
 namespace detail {
-template <typename T, bool = ::etl::is_arithmetic_v<T>>
-struct is_unsigned : ::etl::bool_constant<T(0) < T(-1)> {
+template <typename T, bool = etl::is_arithmetic_v<T>>
+struct is_unsigned : etl::bool_constant<T(0) < T(-1)> {
 };
 
 template <typename T>
-struct is_unsigned<T, false> : ::etl::false_type {
+struct is_unsigned<T, false> : etl::false_type {
 };
 } // namespace detail
 

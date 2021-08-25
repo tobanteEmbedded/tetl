@@ -50,7 +50,7 @@ constexpr auto begin(C const& c) -> decltype(c.begin())
 }
 
 /// \group begin
-template <typename T, ::etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto begin(T (&array)[N]) noexcept -> T*
 {
     return &array[0];

@@ -41,11 +41,11 @@ namespace etl {
 namespace detail {
 
 struct try_is_destructible_impl {
-    template <typename T, typename = decltype(::etl::declval<T&>().~T())>
-    static auto test(int) -> ::etl::true_type;
+    template <typename T, typename = decltype(etl::declval<T&>().~T())>
+    static auto test(int) -> etl::true_type;
 
     template <typename>
-    static auto test(...) -> ::etl::false_type;
+    static auto test(...) -> etl::false_type;
 };
 
 template <typename T>
@@ -54,23 +54,22 @@ struct is_destructible_impl : try_is_destructible_impl {
 };
 
 template <typename T,
-    bool = ::etl::disjunction<::etl::is_void<T>, ::etl::is_function<T>,
-        ::etl::is_unbounded_array<T>>::value,
-    bool
-    = ::etl::disjunction<::etl::is_reference<T>, ::etl::is_scalar<T>>::value>
+    bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>,
+        etl::is_unbounded_array<T>>::value,
+    bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
 struct is_destructible_safe;
 
 template <typename T>
 struct is_destructible_safe<T, false, false>
-    : is_destructible_impl<typename ::etl::remove_all_extents_t<T>>::type {
+    : is_destructible_impl<typename etl::remove_all_extents_t<T>>::type {
 };
 
 template <typename T>
-struct is_destructible_safe<T, true, false> : ::etl::false_type {
+struct is_destructible_safe<T, true, false> : etl::false_type {
 };
 
 template <typename T>
-struct is_destructible_safe<T, false, true> : ::etl::true_type {
+struct is_destructible_safe<T, false, true> : etl::true_type {
 };
 
 } // namespace detail

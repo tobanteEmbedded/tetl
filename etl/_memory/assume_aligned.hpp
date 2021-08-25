@@ -43,14 +43,14 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/memory/assume_aligned
 ///
-template <::etl::size_t N, typename T>
+template <etl::size_t N, typename T>
 [[nodiscard]] constexpr auto assume_aligned(T* ptr) -> T*
 {
     static_assert(detail::is_power2(N));
     static_assert(alignof(T) <= N);
 
 #if defined(TETL_BUILTIN_IS_CONSTANT_EVALUATED)
-    if (::etl::is_constant_evaluated()) { return ptr; }
+    if (etl::is_constant_evaluated()) { return ptr; }
 #endif
 
     return static_cast<T*>(TETL_BUILTIN_ASSUME_ALIGNED(ptr, N));

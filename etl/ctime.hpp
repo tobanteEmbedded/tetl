@@ -32,8 +32,8 @@
 
 namespace etl {
 
-using clock_t = ::etl::size_t;
-using time_t  = ::etl::size_t;
+using clock_t = etl::size_t;
+using time_t  = etl::size_t;
 
 struct timespec {
     etl::time_t tv_sec;

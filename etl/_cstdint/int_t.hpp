@@ -42,9 +42,9 @@ using int64_t = TETL_BUILTIN_INT64;
 
 } // namespace etl
 
-static_assert(sizeof(::etl::int8_t) == 1, "int8_t size should be 1");
-static_assert(sizeof(::etl::int16_t) == 2, "int16_t size should be 2");
-static_assert(sizeof(::etl::int32_t) == 4, "int32_t size should be 4");
-static_assert(sizeof(::etl::int64_t) == 8, "int64_t size should be 8");
+static_assert(sizeof(etl::int8_t) == 1, "int8_t size should be 1");
+static_assert(sizeof(etl::int16_t) == 2, "int16_t size should be 2");
+static_assert(sizeof(etl::int32_t) == 4, "int32_t size should be 4");
+static_assert(sizeof(etl::int64_t) == 8, "int64_t size should be 8");
 
 #endif // TETL_CSTDINT_INT_T_HPP

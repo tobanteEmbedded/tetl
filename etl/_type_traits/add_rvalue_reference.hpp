@@ -30,9 +30,9 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-auto try_add_rvalue_reference(int) -> ::etl::type_identity<T&&>;
+auto try_add_rvalue_reference(int) -> etl::type_identity<T&&>;
 template <typename T>
-auto try_add_rvalue_reference(...) -> ::etl::type_identity<T>;
+auto try_add_rvalue_reference(...) -> etl::type_identity<T>;
 } // namespace detail
 
 /// \brief Creates a rvalue reference type of T.

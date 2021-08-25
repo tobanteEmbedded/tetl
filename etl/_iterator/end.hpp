@@ -45,7 +45,7 @@ constexpr auto end(C const& c) -> decltype(c.end())
 }
 
 /// \group end
-template <typename T, ::etl::size_t N>
+template <typename T, etl::size_t N>
 constexpr auto end(T (&array)[N]) noexcept -> T*
 {
     return &array[N];

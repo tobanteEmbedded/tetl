@@ -83,7 +83,7 @@
 
 #define TETL_PP_STRING_VIEW_ARRAY(var_name, ...)                               \
     static constexpr auto var_name                                             \
-        = ::etl::array<::etl::string_view, TETL_PP_NUM_ARGS(__VA_ARGS__)>      \
+        = etl::array<etl::string_view, TETL_PP_NUM_ARGS(__VA_ARGS__)>          \
     {                                                                          \
         TETL_PP_FOREACH(TETL_PP_COMMA_STRINGIFY, __VA_ARGS__)                  \
     }

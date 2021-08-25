@@ -33,8 +33,7 @@ namespace etl {
 namespace detail {
 template <typename T, typename U>
 struct is_nothrow_assignable_helper
-    : ::etl::bool_constant<noexcept(
-          ::etl::declval<T>() = ::etl::declval<U>())> {
+    : etl::bool_constant<noexcept(etl::declval<T>() = etl::declval<U>())> {
 };
 } // namespace detail
 

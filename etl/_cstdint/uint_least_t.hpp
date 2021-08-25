@@ -41,9 +41,9 @@ using uint_least32_t = TETL_BUILTIN_UINT32;
 using uint_least64_t = TETL_BUILTIN_UINT64;
 } // namespace etl
 
-static_assert(sizeof(::etl::uint_least8_t) >= 1);
-static_assert(sizeof(::etl::uint_least16_t) >= 2);
-static_assert(sizeof(::etl::uint_least32_t) >= 4);
-static_assert(sizeof(::etl::uint_least64_t) >= 8);
+static_assert(sizeof(etl::uint_least8_t) >= 1);
+static_assert(sizeof(etl::uint_least16_t) >= 2);
+static_assert(sizeof(etl::uint_least32_t) >= 4);
+static_assert(sizeof(etl::uint_least64_t) >= 8);
 
 #endif // TETL_CSTDINT_UINT_LEAST_T_HPP

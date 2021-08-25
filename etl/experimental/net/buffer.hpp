@@ -43,27 +43,27 @@ inline auto make_buffer(void const* data, size_t size) noexcept -> const_buffer
     return const_buffer { data, size };
 }
 
-template <typename T, ::etl::size_t Size>
+template <typename T, etl::size_t Size>
 inline auto make_buffer(etl::array<T, Size>& array) noexcept -> mutable_buffer
 {
     return mutable_buffer { array.data(), array.size() };
 }
 
-template <typename T, ::etl::size_t Size>
+template <typename T, etl::size_t Size>
 inline auto make_buffer(etl::array<T, Size> const& array) noexcept
     -> const_buffer
 {
     return const_buffer { array.data(), array.size() };
 }
 
-template <typename T, ::etl::size_t Size>
+template <typename T, etl::size_t Size>
 inline auto make_buffer(etl::static_vector<T, Size>& vec) noexcept
     -> mutable_buffer
 {
     return mutable_buffer { vec.data(), vec.size() };
 }
 
-template <typename T, ::etl::size_t Size>
+template <typename T, etl::size_t Size>
 inline auto make_buffer(etl::static_vector<T, Size> const& vec) noexcept
     -> const_buffer
 {

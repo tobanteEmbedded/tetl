@@ -35,12 +35,12 @@ template <bool, typename Type>
 struct is_nothrow_destructible_helper;
 
 template <typename Type>
-struct is_nothrow_destructible_helper<false, Type> : ::etl::false_type {
+struct is_nothrow_destructible_helper<false, Type> : etl::false_type {
 };
 
 template <typename Type>
 struct is_nothrow_destructible_helper<true, Type>
-    : ::etl::bool_constant<noexcept(::etl::declval<Type>().~Type())> {
+    : etl::bool_constant<noexcept(etl::declval<Type>().~Type())> {
 };
 } // namespace detail
 

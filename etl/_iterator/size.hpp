@@ -47,7 +47,7 @@ constexpr auto size(C const& c) noexcept(noexcept(c.size()))
 template <typename T, size_t N>
 constexpr auto size(T const (&array)[N]) noexcept -> size_t
 {
-    ::etl::ignore_unused(&array[0]);
+    etl::ignore_unused(&array[0]);
     return N;
 }
 
@@ -66,7 +66,7 @@ constexpr auto ssize(T const (&array)[static_cast<size_t>(N)]) noexcept
     // The static_cast<size_t>(N) inside the array parameter is to keep gcc's
     // sign-conversion warnings happy. Array sizes are of type size_t which
     // triggers a signed to unsigned conversion in this case.
-    ::etl::ignore_unused(&array[0]);
+    etl::ignore_unused(&array[0]);
     return N;
 }
 

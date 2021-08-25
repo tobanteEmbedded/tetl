@@ -37,7 +37,7 @@ template <typename T, typename... Args,
 [[nodiscard]] constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
     TETL_ASSERT(p != nullptr);
-    return ::new (static_cast<void*>(p)) T(::etl::forward<Args>(args)...);
+    return ::new (static_cast<void*>(p)) T(etl::forward<Args>(args)...);
 }
 
 } // namespace etl

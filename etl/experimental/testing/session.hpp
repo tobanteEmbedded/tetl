@@ -39,18 +39,18 @@
 namespace etl::test {
 
 struct session_stats {
-    ::etl::uint16_t num_test_cases { 0 };
-    ::etl::uint16_t num_test_cases_failed { 0 };
+    etl::uint16_t num_test_cases { 0 };
+    etl::uint16_t num_test_cases_failed { 0 };
 
-    ::etl::uint16_t num_assertions { 0 };
-    ::etl::uint16_t num_assertions_failed { 0 };
+    etl::uint16_t num_assertions { 0 };
+    etl::uint16_t num_assertions_failed { 0 };
 };
 
-template <::etl::size_t Capacity>
-using session_buffer = ::etl::array<test_case, Capacity>;
+template <etl::size_t Capacity>
+using session_buffer = etl::array<test_case, Capacity>;
 
 struct session {
-    template <::etl::size_t Capacity>
+    template <etl::size_t Capacity>
     explicit constexpr session(
         session_buffer<Capacity>& buffer, etl::string_view name);
 
@@ -62,7 +62,7 @@ struct session {
     [[nodiscard]] auto run_all() -> int;
 
     constexpr auto add_test(name_and_tags const& spec, test_func_t func,
-        ::etl::string_view typeName = {}) -> void;
+        etl::string_view typeName = {}) -> void;
 
     auto current_test(test_case* tc) -> void;
 
@@ -79,9 +79,9 @@ private:
     //  = etl::stack<etl::string_view, etl::static_vector<etl::string_view, 2>>;
     etl::string_view name_;
 
-    test_case* first_    = nullptr;
-    test_case* last_     = nullptr;
-    ::etl::size_t count_ = 0;
+    test_case* first_  = nullptr;
+    test_case* last_   = nullptr;
+    etl::size_t count_ = 0;
 
     test_case* current_ { nullptr };
     // section_stack_t sections_ {};
@@ -91,7 +91,7 @@ private:
 
 inline auto current_session() -> session&;
 
-template <::etl::size_t Capacity>
+template <etl::size_t Capacity>
 inline constexpr session::session(
     session_buffer<Capacity>& buffer, etl::string_view name)
     : name_ { name }, first_ { buffer.begin() }, last_ { buffer.end() }
@@ -107,11 +107,11 @@ inline constexpr auto session::begin() -> test_case* { return first_; }
 
 inline constexpr auto session::end() -> test_case*
 {
-    return ::etl::next(first_, static_cast<::etl::ptrdiff_t>(count_));
+    return etl::next(first_, static_cast<etl::ptrdiff_t>(count_));
 }
 
 inline constexpr auto session::add_test(name_and_tags const& spec,
-    test_func_t func, ::etl::string_view typeName) -> void
+    test_func_t func, etl::string_view typeName) -> void
 {
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
@@ -160,7 +160,7 @@ inline auto session::current_test(test_case* tc) -> void
 inline auto session::pass_assertion(
     source_line_info const& src, char const* expr) -> void
 {
-    ::etl::ignore_unused(this, src, expr);
+    etl::ignore_unused(this, src, expr);
     ++stats_.num_assertions;
 }
 
@@ -177,8 +177,8 @@ inline auto session::terminate() const -> bool { return shouldTerminate_; }
 
 inline auto current_session() -> session&
 {
-    static auto buffer      = ::etl::test::session_buffer<128> {};
-    static auto testSession = ::etl::test::session { buffer, "DUMMY SESSION" };
+    static auto buffer      = etl::test::session_buffer<128> {};
+    static auto testSession = etl::test::session { buffer, "DUMMY SESSION" };
     return testSession;
 }
 

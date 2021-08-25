@@ -34,10 +34,10 @@ namespace etl::detail {
 // clang-format off
 template<size_t N>
 using smallest_size_t =
-            etl::conditional_t<(N < etl::numeric_limits<::etl::uint8_t>::max()),  ::etl::uint8_t,
-            etl::conditional_t<(N < etl::numeric_limits<::etl::uint16_t>::max()), ::etl::uint16_t,
-            etl::conditional_t<(N < etl::numeric_limits<::etl::uint32_t>::max()), ::etl::uint32_t,
-            etl::conditional_t<(N < etl::numeric_limits<::etl::uint64_t>::max()), ::etl::uint64_t,
+            etl::conditional_t<(N < etl::numeric_limits<etl::uint8_t>::max()),  etl::uint8_t,
+            etl::conditional_t<(N < etl::numeric_limits<etl::uint16_t>::max()), etl::uint16_t,
+            etl::conditional_t<(N < etl::numeric_limits<etl::uint32_t>::max()), etl::uint32_t,
+            etl::conditional_t<(N < etl::numeric_limits<etl::uint64_t>::max()), etl::uint64_t,
                                                                  size_t>>>>;
 // clang-format on
 

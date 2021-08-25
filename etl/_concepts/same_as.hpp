@@ -31,7 +31,7 @@ namespace etl {
 
 namespace detail {
 template <typename T, typename U>
-concept same_helper = ::etl::is_same_v<T, U>;
+concept same_helper = etl::is_same_v<T, U>;
 }
 
 /// \brief The concept same_as<T, U> is satisfied if and only if T and U denote

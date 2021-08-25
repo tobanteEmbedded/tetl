@@ -46,7 +46,7 @@ struct common_type<T> : common_type<T, T> {
 
 namespace detail {
 template <typename T1, typename T2>
-using cond_t = decltype(false ? ::etl::declval<T1>() : ::etl::declval<T2>());
+using cond_t = decltype(false ? etl::declval<T1>() : etl::declval<T2>());
 
 template <typename T1, typename T2, typename = void>
 struct common_type_2_impl {
@@ -54,7 +54,7 @@ struct common_type_2_impl {
 
 template <typename T1, typename T2>
 struct common_type_2_impl<T1, T2, void_t<cond_t<T1, T2>>> {
-    using type = ::etl::decay_t<cond_t<T1, T2>>;
+    using type = etl::decay_t<cond_t<T1, T2>>;
 };
 
 template <typename AlwaysVoid, typename T1, typename T2, typename... R>

@@ -35,7 +35,7 @@ template <typename InputIt>
 [[nodiscard]] constexpr auto next(InputIt it,
     typename iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {
-    ::etl::advance(it, n);
+    etl::advance(it, n);
     return it;
 }
 

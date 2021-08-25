@@ -48,10 +48,9 @@ struct default_searcher {
     auto operator()(ForwardIter2 f, ForwardIter2 l) const
         -> etl::pair<ForwardIter2, ForwardIter2>
     {
-        if (auto i
-            = ::etl::detail::search_impl(f, l, first_, last_, predicate_);
+        if (auto i = etl::detail::search_impl(f, l, first_, last_, predicate_);
             i != l) {
-            auto j = ::etl::next(i, etl::distance(first_, last_));
+            auto j = etl::next(i, etl::distance(first_, last_));
             return etl::pair<ForwardIter2, ForwardIter2> { i, j };
         }
 

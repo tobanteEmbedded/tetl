@@ -153,31 +153,31 @@
 #if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
 #define TETL_BUILTIN_SIGNBIT(x) __builtin_signbit(x)
 #else
-#define TETL_BUILTIN_SIGNBIT(x) ::etl::detail::builtin_signbit_fallback(x)
+#define TETL_BUILTIN_SIGNBIT(x) etl::detail::builtin_signbit_fallback(x)
 #endif
 
 #if __has_builtin(__builtin_copysign)
 #define TETL_BUILTIN_COPYSIGN(x, y) __builtin_copysign(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGN(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGN(x, y) etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_copysignf)
 #define TETL_BUILTIN_COPYSIGNF(x, y) __builtin_copysignf(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGNF(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGNF(x, y) etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_copysignl)
 #define TETL_BUILTIN_COPYSIGNL(x, y) __builtin_copysignl(x, y)
 #else
-#define TETL_BUILTIN_COPYSIGNL(x, y) ::etl::detail::builtin_copysign_fallback(x, y)
+#define TETL_BUILTIN_COPYSIGNL(x, y) etl::detail::builtin_copysign_fallback(x, y)
 #endif
 
 #if __has_builtin(__builtin_addressof)
 #define TETL_BUILTIN_ADDRESSOF(x) __builtin_addressof(x)
 #else
-#define TETL_BUILTIN_ADDRESSOF(x) ::etl::detail::builtin_addressof_fallback(x)
+#define TETL_BUILTIN_ADDRESSOF(x) etl::detail::builtin_addressof_fallback(x)
 #endif
 
 #if __has_builtin(__builtin_is_constant_evaluated)

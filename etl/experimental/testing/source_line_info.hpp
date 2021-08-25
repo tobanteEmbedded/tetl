@@ -43,7 +43,6 @@ struct source_line_info {
 } // namespace etl::test
 
 #define TEST_DETAIL_SOURCE_LINE_INFO                                           \
-    ::etl::test::source_line_info(                                             \
-        __FILE__, static_cast<::etl::size_t>(__LINE__))
+    etl::test::source_line_info(__FILE__, static_cast<etl::size_t>(__LINE__))
 
 #endif // ETL_EXPERIMENTAL_TESTING_SOURCE_LINE_INFO_HPP

@@ -30,9 +30,9 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-auto try_add_lvalue_reference(int) -> ::etl::type_identity<T&>;
+auto try_add_lvalue_reference(int) -> etl::type_identity<T&>;
 template <typename T>
-auto try_add_lvalue_reference(...) -> ::etl::type_identity<T>;
+auto try_add_lvalue_reference(...) -> etl::type_identity<T>;
 
 } // namespace detail
 

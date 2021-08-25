@@ -42,7 +42,7 @@ constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
 template <typename T, size_t N>
 constexpr auto empty(T (&array)[N]) noexcept -> bool
 {
-    ::etl::ignore_unused(&array);
+    etl::ignore_unused(&array);
     return false;
 }
 

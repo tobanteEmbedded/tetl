@@ -66,7 +66,7 @@ struct formatter<char const*, char> {
 };
 
 /// \group formatter_specialization
-template <::etl::size_t N>
+template <etl::size_t N>
 struct formatter<char[N], char> {
     template <typename FormatContext>
     constexpr auto format(char const* val, FormatContext& fc)
@@ -94,7 +94,7 @@ struct formatter<etl::static_string<Capacity>, char> {
     constexpr auto format(etl::static_string<Capacity> const& str,
         FormatContext& fc) -> decltype(fc.out())
     {
-        return formatter<::etl::string_view>().format(str, fc);
+        return formatter<etl::string_view>().format(str, fc);
     }
 };
 

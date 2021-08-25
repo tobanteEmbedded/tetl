@@ -55,15 +55,14 @@ inline auto split_at_next_argument(etl::string_view str)
 }
 
 template <typename FormatContext>
-auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
-    -> void
+auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
 {
     // Loop as long as escaped sequences are found.
     auto const* first = begin(str);
     while (true) {
         // Find open sequence {{
-        const auto* const openFirst = ::etl::find(first, end(str), token_begin);
-        const auto* const openSec   = ::etl::next(openFirst);
+        const auto* const openFirst = etl::find(first, end(str), token_begin);
+        const auto* const openSec   = etl::next(openFirst);
         auto const escapeStart      = openFirst != end(str) //
                                  && openSec != end(str)     //
                                  && *openSec == token_begin;
@@ -74,8 +73,8 @@ auto format_escaped_sequences(::etl::string_view str, FormatContext& ctx)
 
             // Find sequence }}
             auto const* closeFirst
-                = ::etl::find(::etl::next(openSec), end(str), token_end);
-            auto const* closeSec = ::etl::next(closeFirst);
+                = etl::find(etl::next(openSec), end(str), token_end);
+            auto const* closeSec = etl::next(closeFirst);
             auto escapeClose     = closeFirst != end(str) //
                                && closeSec != end(str)    //
                                && *closeSec == token_end;

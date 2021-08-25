@@ -11,7 +11,7 @@
 
 namespace etl::detail {
 
-enum struct ascii_to_int_error : ::etl::uint8_t {
+enum struct ascii_to_int_error : etl::uint8_t {
     none,
     invalid_input,
     overflow,
@@ -37,7 +37,7 @@ template <typename T, typename CharT>
         };
     }
 
-    ::etl::size_t i = 0;
+    etl::size_t i = 0;
 
     // skip leading whitespace
     while (etl::isspace(static_cast<int>(str[i])) && (len != 0)
@@ -59,7 +59,7 @@ template <typename T, typename CharT>
     // loop over digits
     T value = 0;
     for (; (str[i] != CharT(0)) && (len != 0); ++i, --len) {
-        if (!::etl::isdigit(static_cast<int>(str[i]))) { break; }
+        if (!etl::isdigit(static_cast<int>(str[i]))) { break; }
         value = value * T(10) + static_cast<T>(str[i] - CharT('0'));
     }
 
@@ -69,7 +69,7 @@ template <typename T, typename CharT>
     return result;
 }
 
-enum struct int_to_ascii_error : ::etl::uint8_t {
+enum struct int_to_ascii_error : etl::uint8_t {
     none,
     buffer_overflow,
 };
@@ -96,7 +96,7 @@ template <typename Int, bool TerminateWithNull = true>
     };
 
     // Handle 0 explicitely, otherwise empty string is printed for 0
-    ::etl::size_t i = 0;
+    etl::size_t i = 0;
     if (num == 0) {
         if (length < (1 + static_cast<size_t>(TerminateWithNull))) {
             return { str + length, int_to_ascii_error::buffer_overflow };
@@ -107,7 +107,7 @@ template <typename Int, bool TerminateWithNull = true>
     }
 
     bool isNegative = false;
-    if constexpr (::etl::is_signed_v<Int>) {
+    if constexpr (etl::is_signed_v<Int>) {
         if (num < 0 && base == 10) {
             isNegative = true;
             num        = -num;
@@ -124,7 +124,7 @@ template <typename Int, bool TerminateWithNull = true>
         }
     }
 
-    if constexpr (::etl::is_signed_v<Int>) {
+    if constexpr (etl::is_signed_v<Int>) {
         if (isNegative) { str[i++] = '-'; }
     }
 
@@ -151,10 +151,10 @@ template <typename FloatT>
 
     auto const* ptr = str;
     for (; *ptr != '\0'; ++ptr) {
-        if (::etl::isspace(*ptr) && leadingSpaces) { continue; }
+        if (etl::isspace(*ptr) && leadingSpaces) { continue; }
         leadingSpaces = false;
 
-        if (::etl::isdigit(*ptr)) {
+        if (etl::isdigit(*ptr)) {
             if (!afterDecimalPoint) {
                 res *= 10;         // Shift the previous digits to the left
                 res += *ptr - '0'; // Add the new one

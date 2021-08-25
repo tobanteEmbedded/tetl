@@ -38,7 +38,7 @@ template <typename CharT, typename SizeT>
         auto const* ssf = sf;
         auto const* ssl = sl;
         for (; ssf != ssl; ++ssf) {
-            if (::etl::char_traits<CharT>::eq(*ssf, ch)) { return true; }
+            if (etl::char_traits<CharT>::eq(*ssf, ch)) { return true; }
         }
         return false;
     };

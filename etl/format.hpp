@@ -35,7 +35,7 @@
 namespace etl {
 template <typename It>
 using diff_t =
-    typename ::etl::iterator_traits<::etl::remove_cvref_t<It>>::difference_type;
+    typename etl::iterator_traits<etl::remove_cvref_t<It>>::difference_type;
 
 /// \brief Format args according to the format string fmt, and write the result
 /// to the output iterator out.
@@ -48,7 +48,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
     -> OutputIt
 {
     // TODO: Make more generic. What about other string types.
-    auto ctx = format_context<::etl::static_string<32>> { out };
+    auto ctx = format_context<etl::static_string<32>> { out };
 
     // Format leading text before the first argument.
     auto const slices = detail::split_at_next_argument(fmt);
@@ -57,7 +57,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
     // Save rest of format string. Supress warning if format_to was called
     // without arguments.
     auto rest = slices.second;
-    ::etl::ignore_unused(rest);
+    etl::ignore_unused(rest);
 
     (
         [&] {
@@ -102,12 +102,12 @@ struct format_to_n_result {
 ///
 /// \module Strings
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
+auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt,
     Args const&... args) -> format_to_n_result<OutputIter>
 {
-    ::etl::ignore_unused(n);
+    etl::ignore_unused(n);
 
-    auto indices = ::etl::static_vector<::etl::size_t, sizeof...(args)> {};
+    auto indices = etl::static_vector<etl::size_t, sizeof...(args)> {};
     auto result  = format_to_n_result<OutputIter> { out, {} };
 
     auto writeChar = [&result](auto ch) {
@@ -115,7 +115,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
         result.size++;
     };
 
-    auto varStart = ::etl::size_t {};
+    auto varStart = etl::size_t {};
     for (decltype(fmt)::size_type i {}; i < fmt.size(); ++i) {
         auto ch = fmt[i];
         if (ch == '{') {
@@ -147,7 +147,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, ::etl::string_view fmt,
     if (indices.size() > 0) {
         [[maybe_unused]] auto replaceCharAt
             = [n](auto output, auto pos, char val) {
-                  ::etl::ignore_unused(n);
+                  etl::ignore_unused(n);
                   // TETL_ASSERT((long)pos < n);
                   output[pos] = val;
               };

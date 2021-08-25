@@ -135,7 +135,7 @@ constexpr auto operator""_ns(long double m)
 } // namespace literals
 
 namespace chrono {
-using namespace ::etl::literals::chrono_literals;
+using namespace etl::literals::chrono_literals;
 }
 
 } // namespace etl

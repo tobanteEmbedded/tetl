@@ -62,7 +62,7 @@ template <typename T>
     TETL_ASSERT(base == 10);
     ignore_unused(base);
 
-    auto len = static_cast<::etl::size_t>(::etl::distance(first, last));
+    auto len = static_cast<etl::size_t>(etl::distance(first, last));
     auto res = detail::ascii_to_int_base10<T>(first, len);
     if (res.error == detail::ascii_to_int_error::none) {
         value = res.value;

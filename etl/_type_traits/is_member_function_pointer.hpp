@@ -32,11 +32,11 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-struct is_member_function_pointer_helper : ::etl::false_type {
+struct is_member_function_pointer_helper : etl::false_type {
 };
 
 template <typename T, typename U>
-struct is_member_function_pointer_helper<T U::*> : ::etl::is_function<T> {
+struct is_member_function_pointer_helper<T U::*> : etl::is_function<T> {
 };
 
 } // namespace detail

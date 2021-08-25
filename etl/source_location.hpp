@@ -72,8 +72,8 @@ struct source_location {
     }
 
 private:
-    ::etl::uint_least32_t line_ {};
-    ::etl::uint_least32_t column_ {};
+    etl::uint_least32_t line_ {};
+    etl::uint_least32_t column_ {};
     char const* file_     = "";
     char const* function_ = "";
 };

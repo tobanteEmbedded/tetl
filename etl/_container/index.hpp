@@ -38,10 +38,10 @@ namespace etl::detail {
 template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
-    using ::etl::begin;
-    using ::etl::end;
-    using ::etl::forward;
-    using ::etl::ptrdiff_t;
+    using etl::begin;
+    using etl::end;
+    using etl::forward;
+    using etl::ptrdiff_t;
 
     TETL_ASSERT(static_cast<ptrdiff_t>(i) < (end(rng) - begin(rng)));
     return begin(forward<Rng>(rng))[forward<Index>(i)];
