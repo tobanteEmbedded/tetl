@@ -88,3 +88,35 @@ TEMPLATE_TEST_CASE("experimental/meta: count_if", "[experimental][meta]",
     // auto t3 = meta::make_type_tuple<TestType, float, double, long double>();
     // REQUIRE(meta::count_if(t3, isFloat) == meta::int_c<3>);
 }
+
+TEMPLATE_TEST_CASE("experimental/meta: reverse", "[experimental][meta]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    using T = TestType;
+    using etl::tuple_element_t;
+    using meta::type_c;
+
+    auto normal    = etl::tuple<T, long, int>();
+    using normal_t = decltype(normal);
+    STATIC_REQUIRE(type_c<tuple_element_t<0, normal_t>> == type_c<T>);
+    STATIC_REQUIRE(type_c<tuple_element_t<1, normal_t>> == type_c<long>);
+    STATIC_REQUIRE(type_c<tuple_element_t<2, normal_t>> == type_c<int>);
+
+    // auto reversed    = meta::reverse(normal);
+    // using reversed_t = decltype(meta::reverse(normal));
+    // STATIC_REQUIRE(type_c<tuple_element_t<0, reversed_t>> == type_c<int>);
+    // STATIC_REQUIRE(type_c<tuple_element_t<1, reversed_t>> == type_c<long>);
+    // STATIC_REQUIRE(type_c<tuple_element_t<2, reversed_t>> == type_c<T>);
+}
+
+TEMPLATE_TEST_CASE("experimental/meta: remove_last", "[experimental][meta]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    using T = TestType;
+    using etl::tuple_size_v;
+    auto original = etl::tuple<T, long, int>();
+    STATIC_REQUIRE(tuple_size_v<decltype(original)> == 3);
+    // STATIC_REQUIRE(tuple_size_v<decltype(meta::remove_last(original))> == 2);
+}

@@ -214,11 +214,6 @@ public:
     }
 };
 
-template <typename... Ts>
-struct tuple_size<_tuple_impl<Ts...>>
-    : integral_constant<size_t, sizeof...(Ts) - 1> {
-};
-
 template <size_t... Idx, typename... Ts, typename... Us>
 constexpr auto _tuple_equal(
     _tuple_impl<detail::tuple_indices<Idx...>, Ts...> const& lhs,
@@ -233,6 +228,10 @@ constexpr auto _tuple_equal(
 
 template <typename... Ts>
 using tuple = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+
+template <typename... Ts>
+struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
+};
 
 template <size_t N, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
