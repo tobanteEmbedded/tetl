@@ -56,7 +56,9 @@ target_sources(${PROJECT_NAME}
 
         experimental/dsp/test_dsp.cpp
 
-        experimental/meta/test_type.cpp
+        experimental/meta/test_meta_algorithm.cpp
+        experimental/meta/test_meta_traits.cpp
+        experimental/meta/test_meta_types.cpp
 
         experimental/net/test_buffer.cpp
         experimental/net/test_byte_order.cpp
