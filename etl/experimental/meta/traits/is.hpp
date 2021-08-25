@@ -27,7 +27,7 @@
 #include "etl/experimental/meta/types/bool_constant.hpp"
 #include "etl/experimental/meta/types/type.hpp"
 
-namespace etl::experimental::meta {
+namespace etl::experimental::meta::traits {
 
 #define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                              \
     template <typename T>                                                      \
@@ -120,6 +120,6 @@ TETL_META_DEFINE_TRAITS_IS_FUNCTION(is_trivially_assignable)
 
 #undef TETL_META_DEFINE_TRAITS_IS_FUNCTION
 
-} // namespace etl::experimental::meta
+} // namespace etl::experimental::meta::traits
 
 #endif // ETL_EXPERIMENTAL_META_TRAITS_IS_HPP

@@ -43,11 +43,13 @@ TEMPLATE_TEST_CASE("experimental/meta: is_pointer", "[experimental][meta]",
     etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     using T = TestType;
+    using meta::traits::add_pointer;
+    using meta::traits::is_pointer;
 
     STATIC_REQUIRE(etl::is_same_v<typename meta::type<T>::name, T>);
-    STATIC_REQUIRE(!meta::is_pointer(meta::type<T> {}));
-    STATIC_REQUIRE(meta::is_pointer(meta::type<T*> {}));
-    STATIC_REQUIRE(meta::is_pointer(meta::add_pointer(meta::type<T> {})));
+    STATIC_REQUIRE(!is_pointer(meta::type<T> {}));
+    STATIC_REQUIRE(is_pointer(meta::type<T*> {}));
+    STATIC_REQUIRE(is_pointer(add_pointer(meta::type<T> {})));
 }
 
 TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple", "[experimental][meta]",
@@ -55,14 +57,10 @@ TEMPLATE_TEST_CASE("experimental/meta: make_type_tuple", "[experimental][meta]",
     etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double)
 {
     using T = TestType;
-    using etl::get;
-    using etl::is_same_v;
 
-    auto t = meta::make_type_tuple<int, T>();
-    STATIC_REQUIRE(
-        is_same_v<typename etl::decay_t<decltype(get<0>(t))>::name, int>);
-    STATIC_REQUIRE(
-        is_same_v<typename etl::decay_t<decltype(get<1>(t))>::name, T>);
+    constexpr auto t = meta::make_type_tuple<int, T>();
+    STATIC_REQUIRE(etl::get<0>(t) == meta::type_c<int>);
+    STATIC_REQUIRE(etl::get<1>(t) == meta::type_c<T>);
 }
 
 TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
@@ -71,14 +69,11 @@ TEMPLATE_TEST_CASE("experimental/meta: for_each", "[experimental][meta]",
 {
     auto t       = meta::make_type_tuple<int, TestType, float, double>();
     auto counter = 0;
-    meta::for_each(t, [&counter](auto const& x) {
-        using etl::is_same_v;
-        using T      = TestType;
-        using type_t = typename etl::decay_t<decltype(x)>;
-        if (counter == 0) { REQUIRE(is_same_v<typename type_t::name, int>); }
-        if (counter == 1) { REQUIRE(is_same_v<typename type_t::name, T>); }
-        if (counter == 2) { REQUIRE(is_same_v<typename type_t::name, float>); }
-        if (counter == 3) { REQUIRE(is_same_v<typename type_t::name, double>); }
+    meta::for_each(t, [&counter](auto x) {
+        if (counter == 0) { REQUIRE(x == meta::type_c<int>); }
+        if (counter == 1) { REQUIRE(x == meta::type_c<TestType>); }
+        if (counter == 2) { REQUIRE(x == meta::type_c<float>); }
+        if (counter == 3) { REQUIRE(x == meta::type_c<double>); }
         counter++;
     });
 

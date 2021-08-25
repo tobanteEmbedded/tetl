@@ -28,7 +28,7 @@
 
 #include "etl/type_traits.hpp"
 
-namespace etl::experimental::meta {
+namespace etl::experimental::meta::traits {
 
 #define TETL_META_DEFINE_TRAITS_ADD_FUNCTION(name)                             \
     template <typename T>                                                      \
@@ -47,6 +47,6 @@ TETL_META_DEFINE_TRAITS_ADD_FUNCTION(add_volatile)
 
 #undef TETL_META_DEFINE_TRAITS_ADD_FUNCTION
 
-} // namespace etl::experimental::meta
+} // namespace etl::experimental::meta::traits
 
 #endif // ETL_EXPERIMENTAL_META_TRAITS_ADD_HPP
