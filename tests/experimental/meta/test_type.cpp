@@ -32,10 +32,36 @@ namespace meta = etl::experimental::meta;
 
 TEST_CASE("experimental/meta: int_c", "[experimental][meta]")
 {
-    STATIC_REQUIRE(meta::int_c<0> + meta::int_c<0> == meta::int_c<0>);
-    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<1> == meta::int_c<2>);
-    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<2> == meta::int_c<3>);
-    STATIC_REQUIRE(meta::int_c<1> + meta::int_c<3> == meta::int_c<4>);
+    using etl::integral_constant;
+    using meta::int_c;
+    using meta::type_c;
+
+    STATIC_REQUIRE(int_c<0> + int_c<0> == int_c<0>);
+    STATIC_REQUIRE(int_c<1> + int_c<1> == int_c<2>);
+    STATIC_REQUIRE(int_c<1> + int_c<2> == int_c<3>);
+    STATIC_REQUIRE(int_c<1> + int_c<3> == int_c<4>);
+
+    // clang-format off
+    STATIC_REQUIRE(type_c<decltype(int_c<1> + int_c<1>)> == type_c<integral_constant<int, 2>>);
+    STATIC_REQUIRE(type_c<decltype(int_c<1> + int_c<2>)> == type_c<integral_constant<int, 3>>);
+    STATIC_REQUIRE(type_c<decltype(int_c<1> + int_c<3>)> == type_c<integral_constant<int, 4>>);
+    // clang-format on
+}
+
+TEST_CASE("experimental/meta: type_c", "[experimental][meta]")
+{
+    STATIC_REQUIRE(meta::type_c<int> == meta::type_c<int>);
+    STATIC_REQUIRE(meta::type_c<int const> == meta::type_c<int const>);
+    STATIC_REQUIRE(meta::type_c<int> != meta::type_c<int const>);
+
+    // clang-format off
+    STATIC_REQUIRE(etl::is_same_v<decltype(meta::type_c<int> == meta::type_c<int>), etl::bool_constant<true>>);
+    STATIC_REQUIRE(etl::is_same_v<decltype(meta::type_c<int> != meta::type_c<int>), etl::bool_constant<false>>);
+
+    STATIC_REQUIRE(decltype(meta::type_id(etl::declval<int const>())) {} == meta::type_c<int>);
+    STATIC_REQUIRE(decltype(meta::type_id(etl::declval<int volatile>())) {} == meta::type_c<int>);
+    STATIC_REQUIRE(decltype(meta::type_id(etl::declval<int const volatile>())) {} == meta::type_c<int>);
+    // clang-format on
 }
 
 TEMPLATE_TEST_CASE("experimental/meta: is_pointer", "[experimental][meta]",
@@ -149,11 +175,7 @@ TEMPLATE_TEST_CASE("experimental/meta: size_of", "[experimental][meta]",
     using meta::size_c;
     using meta::size_of;
     using meta::type_c;
-    using meta::traits::is_same;
 
     REQUIRE(size_of(type_c<T>) == size_c<sizeof(T)>);
     REQUIRE(decltype(size_of(type_c<T>) == size_c<sizeof(T)>)::value);
-    // REQUIRE(is_same(type_c<decltype(size_of(type_c<T>) ==
-    // size_c<sizeof(T)>)>,
-    //    type_c<meta::true_type>));
 }
