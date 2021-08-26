@@ -28,17 +28,40 @@
 namespace etl {
 
 namespace detail {
+template <typename T>
+void test_implicit_default_constructible(T);
+
+template <typename T, typename = void,
+    typename = typename is_default_constructible<T>::type>
+struct is_implicit_default_constructible : false_type {
+};
+
+template <typename T>
+struct is_implicit_default_constructible<T,
+    decltype(test_implicit_default_constructible<T const&>({})), true_type>
+    : true_type {
+};
+
+template <typename T>
+struct is_implicit_default_constructible<T,
+    decltype(test_implicit_default_constructible<T const&>({})), false_type>
+    : false_type {
+};
+
+template <typename T>
+inline constexpr auto is_implicit_default_constructible_v
+    = is_implicit_default_constructible<T>::value;
+
 template <size_t Size>
 using make_tuple_indices =
     typename make_integer_sequence<size_t, Size>::to_tuple_indices;
-}
 
 template <size_t I, typename T>
-struct _tuple_leaf {
+struct tuple_leaf {
     auto get_type(integral_constant<size_t, I> ic) -> T;
 
     template <typename... Args>
-    constexpr _tuple_leaf(Args&&... args) : value_ { forward<Args>(args)... }
+    constexpr tuple_leaf(Args&&... args) : value_ { forward<Args>(args)... }
     {
     }
 
@@ -65,34 +88,8 @@ private:
     T value_;
 };
 
-namespace detail {
-template <typename T>
-void test_implicit_default_constructible(T);
-
-template <typename T, typename = void,
-    typename = typename is_default_constructible<T>::type>
-struct is_implicit_default_constructible : false_type {
-};
-
-template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), true_type>
-    : true_type {
-};
-
-template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), false_type>
-    : false_type {
-};
-
-template <typename T>
-inline constexpr auto is_implicit_default_constructible_v
-    = is_implicit_default_constructible<T>::value;
-} // namespace detail
-
 template <typename... Ts>
-struct _tuple_constraints {
+struct tuple_constraints {
     // This overload participates in overload resolution only if
     // is_default_constructible_v<Ts> is true for all i
     static constexpr auto ctor_1_sfinae
@@ -101,7 +98,7 @@ struct _tuple_constraints {
     // The ctor is explicit if and only if Ts is not
     // copy-list-initializable from {} for at least one i.
     static constexpr auto ctor_1_explicit
-        = !(detail::is_implicit_default_constructible_v<Ts> && ...);
+        = !(is_implicit_default_constructible_v<Ts> && ...);
 
     static constexpr auto enable_ctor_1_implicit
         = ctor_1_sfinae && (!ctor_1_explicit);
@@ -151,85 +148,68 @@ struct _tuple_constraints {
 };
 
 template <typename... Ts>
-struct _tuple_impl;
+struct tuple_impl;
 
 template <size_t... Idx, typename... Ts>
-struct _tuple_impl<detail::tuple_indices<Idx...>, Ts...>
-    : _tuple_leaf<Idx, Ts>... {
+struct tuple_impl<tuple_indices<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
 private:
 public:
     // No. 1
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_implicit)
-    constexpr _tuple_impl() : _tuple_leaf<Idx, Ts> {}... { }
+    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_1_implicit)
+    constexpr tuple_impl() : tuple_leaf<Idx, Ts> {}... { }
 
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_explicit)
-    explicit constexpr _tuple_impl() : _tuple_leaf<Idx, Ts> {}... { }
+    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_1_explicit)
+    explicit constexpr tuple_impl() : tuple_leaf<Idx, Ts> {}... { }
 
     // No. 2
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_implicit)
-    constexpr _tuple_impl(Ts const&... args) : _tuple_leaf<Idx, Ts> { args }...
-    {
-    }
+    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_2_implicit)
+    constexpr tuple_impl(Ts const&... args) : tuple_leaf<Idx, Ts>(args)... { }
 
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_explicit)
-    explicit constexpr _tuple_impl(Ts const&... args)
-        : _tuple_leaf<Idx, Ts> { args }...
+    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_2_explicit)
+    explicit constexpr tuple_impl(Ts const&... args)
+        : tuple_leaf<Idx, Ts> { args }...
     {
     }
 
     // No. 3
     template <typename... Args>
-    constexpr _tuple_impl(Args&&... args)
-        : _tuple_leaf<Idx, Ts> { forward<Args>(args) }...
+    constexpr tuple_impl(Args&&... args)
+        : tuple_leaf<Idx, Ts> { forward<Args>(args) }...
     {
     }
 
-    constexpr _tuple_impl(_tuple_impl const&)     = default;
-    constexpr _tuple_impl(_tuple_impl&&) noexcept = default;
+    constexpr tuple_impl(tuple_impl const&)     = default;
+    constexpr tuple_impl(tuple_impl&&) noexcept = default;
 
-    using _tuple_leaf<Idx, Ts>::get_type...;
-    using _tuple_leaf<Idx, Ts>::get_impl...;
+    using tuple_leaf<Idx, Ts>::get_type...;
+    using tuple_leaf<Idx, Ts>::get_impl...;
 
-    constexpr auto swap(_tuple_impl& other) noexcept(
+    constexpr auto swap(tuple_impl& other) noexcept(
         (is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (_tuple_leaf<Idx, Ts>::swap_impl(integral_constant<size_t, Idx> {},
+        (tuple_leaf<Idx, Ts>::swap_impl(integral_constant<size_t, Idx> {},
              other.get_impl(integral_constant<size_t, Idx> {})),
             ...);
     }
 };
 
+} // namespace detail
+
 template <typename... Ts>
 struct tuple {
 private:
     // clang-format off
-    using impl_t = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
-    impl_t impl_;
+    using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+    impl_t impl_; // NOLINT(modernize-use-default-member-init)
     // clang-format on
 
-public:
-    // No. 1
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_implicit)
-    constexpr tuple() : impl_() { }
+    template <size_t I, typename T>
+    friend struct tuple_element;
 
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_explicit)
-    explicit constexpr tuple() : impl_ {} { }
-
-    // No. 2
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_implicit)
-    constexpr tuple(Ts const&... args) : impl_(args...) { }
-
-    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_explicit)
-    explicit constexpr tuple(Ts const&... args) : impl_ { args... } { }
-
-    //// No. 3
-    //template <typename... Args>
-    //constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
-    //{
-    //}
-
-    constexpr tuple(tuple const&)     = default;
-    constexpr tuple(tuple&&) noexcept = default;
+    template <size_t N, typename... Us>
+    friend constexpr auto get(tuple<Us...>& t) -> auto&;
+    template <size_t N, typename... Us>
+    friend constexpr auto get(tuple<Us...> const& t) -> auto const&;
 
     template <size_t I>
     [[nodiscard]] constexpr auto get_impl(
@@ -245,20 +225,39 @@ public:
         return impl_.get_impl(ic);
     }
 
+    template <size_t I>
+    auto get_type(integral_constant<size_t, I> ic)
+        -> decltype(impl_.get_type(ic));
+
+public:
+    // No. 1
+    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_1_implicit)
+    constexpr tuple() : impl_() { }
+
+    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_1_explicit)
+    explicit constexpr tuple() : impl_ {} { }
+
+    // No. 2
+    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_2_implicit)
+    constexpr tuple(Ts const&... args) : impl_(args...) { }
+
+    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_2_explicit)
+    explicit constexpr tuple(Ts const&... args) : impl_ { args... } { }
+
+    //// No. 3
+    // template <typename... Args>
+    // constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
+    //{
+    //}
+
+    constexpr tuple(tuple const&)     = default;
+    constexpr tuple(tuple&&) noexcept = default;
+
     constexpr auto swap(tuple& other) noexcept(
         (is_nothrow_swappable_v<Ts> && ...)) -> void
     {
         impl_.swap(other.impl_);
     }
-
-    friend constexpr auto equal_impl(tuple const& l, tuple const& r) -> bool
-    {
-        return _tuple_equal(l.impl_, r.impl_);
-    }
-
-    template <size_t I>
-    auto get_type(integral_constant<size_t, I> ic)
-        -> decltype(impl_.get_type(ic));
 };
 
 template <typename... Ts>
