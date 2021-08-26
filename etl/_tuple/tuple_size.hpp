@@ -10,6 +10,9 @@
 
 namespace etl {
 
+template <typename... Ts>
+struct tuple;
+
 template <typename T>
 struct tuple_size; /*undefined*/
 

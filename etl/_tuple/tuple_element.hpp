@@ -12,6 +12,9 @@
 
 namespace etl {
 
+template <typename... Ts>
+struct tuple;
+
 template <size_t I, typename T>
 struct tuple_element;
 

@@ -157,8 +157,6 @@ template <size_t... Idx, typename... Ts>
 struct _tuple_impl<detail::tuple_indices<Idx...>, Ts...>
     : _tuple_leaf<Idx, Ts>... {
 private:
-    using _tuple_leaf<Idx, Ts>::get_impl...;
-
 public:
     // No. 1
     TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_implicit)
@@ -190,20 +188,7 @@ public:
     constexpr _tuple_impl(_tuple_impl&&) noexcept = default;
 
     using _tuple_leaf<Idx, Ts>::get_type...;
-
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> ic) noexcept -> auto&
-    {
-        return get_impl(ic);
-    }
-
-    template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> ic) const noexcept -> auto const&
-    {
-        return get_impl(ic);
-    }
+    using _tuple_leaf<Idx, Ts>::get_impl...;
 
     constexpr auto swap(_tuple_impl& other) noexcept(
         (is_nothrow_swappable_v<Ts> && ...)) -> void
@@ -214,20 +199,67 @@ public:
     }
 };
 
-template <size_t... Idx, typename... Ts, typename... Us>
-constexpr auto _tuple_equal(
-    _tuple_impl<detail::tuple_indices<Idx...>, Ts...> const& lhs,
-    _tuple_impl<detail::tuple_indices<Idx...>, Us...> const& rhs) -> bool
-{
-    static_assert(sizeof...(Ts) != 0);
-    return (
-        (lhs.template get_impl<Idx>(integral_constant<size_t, Idx> {})
-            == rhs.template get_impl<Idx>(integral_constant<size_t, Idx> {}))
-        && ...);
-}
-
 template <typename... Ts>
-using tuple = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+struct tuple {
+private:
+    // clang-format off
+    using impl_t = _tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+    impl_t impl_;
+    // clang-format on
+
+public:
+    // No. 1
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_implicit)
+    constexpr tuple() : impl_() { }
+
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_1_explicit)
+    explicit constexpr tuple() : impl_ {} { }
+
+    // No. 2
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_implicit)
+    constexpr tuple(Ts const&... args) : impl_(args...) { }
+
+    TETL_REQUIRES(_tuple_constraints<Ts...>::enable_ctor_2_explicit)
+    explicit constexpr tuple(Ts const&... args) : impl_ { args... } { }
+
+    //// No. 3
+    //template <typename... Args>
+    //constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
+    //{
+    //}
+
+    constexpr tuple(tuple const&)     = default;
+    constexpr tuple(tuple&&) noexcept = default;
+
+    template <size_t I>
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> ic) noexcept -> auto&
+    {
+        return impl_.get_impl(ic);
+    }
+
+    template <size_t I>
+    [[nodiscard]] constexpr auto get_impl(
+        integral_constant<size_t, I> ic) const noexcept -> auto const&
+    {
+        return impl_.get_impl(ic);
+    }
+
+    constexpr auto swap(tuple& other) noexcept(
+        (is_nothrow_swappable_v<Ts> && ...)) -> void
+    {
+        impl_.swap(other.impl_);
+    }
+
+    friend constexpr auto equal_impl(tuple const& l, tuple const& r) -> bool
+    {
+        return _tuple_equal(l.impl_, r.impl_);
+    }
+
+    template <size_t I>
+    auto get_type(integral_constant<size_t, I> ic)
+        -> decltype(impl_.get_type(ic));
+};
 
 template <typename... Ts>
 struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
@@ -252,6 +284,24 @@ struct tuple_element<I, tuple<Ts...>> {
         integral_constant<size_t, I> {}));
 };
 
+namespace detail {
+
+template <size_t... Idx, typename... Ts, typename... Us>
+constexpr auto tuple_equal_impl(index_sequence<Idx...> /*i*/,
+    tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
+{
+    return ((get<Idx>(l) == get<Idx>(r)) && ...);
+}
+
+template <typename... Ts, typename... Us>
+constexpr auto tuple_equal(tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
+{
+    static_assert(sizeof...(Ts) != 0);
+    static_assert(sizeof...(Ts) == sizeof...(Us));
+    return tuple_equal_impl(make_index_sequence<sizeof...(Ts)> {}, l, r);
+}
+} // namespace detail
+
 template <typename... Ts, typename... Us>
 constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs)
     -> bool
@@ -260,7 +310,7 @@ constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs)
     if constexpr (sizeof...(Ts) == 0) {
         return false;
     } else {
-        return _tuple_equal(lhs, rhs);
+        return detail::tuple_equal(lhs, rhs);
     }
 }
 
