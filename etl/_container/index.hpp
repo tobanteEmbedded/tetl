@@ -16,6 +16,7 @@
 namespace etl::detail {
 
 /// \brief Index a range doing bound checks in debug builds
+/// Copied from https://github.com/gnzlbg/static_vector
 template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
