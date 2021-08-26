@@ -199,35 +199,35 @@ template <typename... Ts>
 struct tuple {
 private:
     // clang-format off
-    using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
-    impl_t impl_; // NOLINT(modernize-use-default-member-init)
-    // clang-format on
-
     template <size_t I, typename T>
     friend struct tuple_element;
 
+    // NOLINTNEXTLINE(readability-redundant-declaration)
     template <size_t N, typename... Us>
     friend constexpr auto get(tuple<Us...>& t) -> auto&;
+
+    // NOLINTNEXTLINE(readability-redundant-declaration)
     template <size_t N, typename... Us>
     friend constexpr auto get(tuple<Us...> const& t) -> auto const&;
 
+    using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
+    impl_t impl_; // NOLINT(modernize-use-default-member-init)
+
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> ic) noexcept -> auto&
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) noexcept -> auto&
     {
         return impl_.get_impl(ic);
     }
 
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> ic) const noexcept -> auto const&
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const noexcept -> auto const&
     {
         return impl_.get_impl(ic);
     }
 
     template <size_t I>
-    auto get_type(integral_constant<size_t, I> ic)
-        -> decltype(impl_.get_type(ic));
+    auto get_type(integral_constant<size_t, I> ic) -> decltype(impl_.get_type(ic));
+    // clang-format on
 
 public:
     // No. 1
@@ -267,12 +267,14 @@ struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
 template <size_t N, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
+    static_assert(N < sizeof...(Ts));
     return t.template get_impl<N>(integral_constant<size_t, N> {});
 }
 
 template <size_t N, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
+    static_assert(N < sizeof...(Ts));
     return t.template get_impl<N>(integral_constant<size_t, N> {});
 }
 
