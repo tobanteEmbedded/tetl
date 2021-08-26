@@ -17,17 +17,17 @@ template <>
 struct meta_or<> : false_type {
 };
 
-template <typename B1>
-struct meta_or<B1> : B1 {
+template <typename BF1>
+struct meta_or<BF1> : BF1 {
 };
 
-template <typename B1, typename B2>
-struct meta_or<B1, B2> : conditional<B1::value, B1, B2>::type {
+template <typename BF1, typename BF2>
+struct meta_or<BF1, BF2> : conditional<BF1::value, BF1, BF2>::type {
 };
 
-template <typename B1, typename B2, typename B3, typename... BRest>
-struct meta_or<B1, B2, B3, BRest...>
-    : conditional<B1::value, B1, meta_or<B2, B3, BRest...>>::type {
+template <typename BF1, typename BF2, typename BF3, typename... BRest>
+struct meta_or<BF1, BF2, BF3, BRest...>
+    : conditional<BF1::value, BF1, meta_or<BF2, BF3, BRest...>>::type {
 };
 
 template <typename... BRest>
@@ -40,17 +40,17 @@ template <>
 struct meta_and<> : true_type {
 };
 
-template <typename B1>
-struct meta_and<B1> : B1 {
+template <typename BF1>
+struct meta_and<BF1> : BF1 {
 };
 
-template <typename B1, typename B2>
-struct meta_and<B1, B2> : conditional<B1::value, B2, B1>::type {
+template <typename BF1, typename BF2>
+struct meta_and<BF1, BF2> : conditional<BF1::value, BF2, BF1>::type {
 };
 
-template <typename B1, typename B2, typename B3, typename... BRest>
-struct meta_and<B1, B2, B3, BRest...>
-    : conditional<B1::value, meta_and<B2, B3, BRest...>, B1>::type {
+template <typename BF1, typename BF2, typename BF3, typename... BRest>
+struct meta_and<BF1, BF2, BF3, BRest...>
+    : conditional<BF1::value, meta_and<BF2, BF3, BRest...>, BF1>::type {
 };
 
 template <typename... BRest>

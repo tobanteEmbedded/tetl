@@ -18,14 +18,14 @@ struct conjunction : true_type {
 };
 
 /// \exclude
-template <typename B1>
-struct conjunction<B1> : B1 {
+template <typename Bool1>
+struct conjunction<Bool1> : Bool1 {
 };
 
 /// \exclude
-template <typename B1, typename... Bn>
-struct conjunction<B1, Bn...>
-    : conditional_t<bool(B1::value), conjunction<Bn...>, B1> {
+template <typename Bool1, typename... BoolN>
+struct conjunction<Bool1, BoolN...>
+    : conditional_t<bool(Bool1::value), conjunction<BoolN...>, Bool1> {
 };
 
 /// \group conjunction

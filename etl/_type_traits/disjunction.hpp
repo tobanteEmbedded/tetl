@@ -18,14 +18,14 @@ struct disjunction : false_type {
 };
 
 /// \exclude
-template <typename B1>
-struct disjunction<B1> : B1 {
+template <typename BF1>
+struct disjunction<BF1> : BF1 {
 };
 
 /// \exclude
-template <typename B1, typename... Bn>
-struct disjunction<B1, Bn...>
-    : conditional_t<bool(B1::value), B1, disjunction<Bn...>> {
+template <typename BF1, typename... Bn>
+struct disjunction<BF1, Bn...>
+    : conditional_t<bool(BF1::value), BF1, disjunction<Bn...>> {
 };
 
 /// \group disjunction
