@@ -22,8 +22,7 @@
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
-
-#include "etl/vector.hpp" // for static_vector
+#include "etl/_vector/static_vector.hpp"
 
 namespace etl {
 /// \brief static_set is an associative container that contains a sorted set

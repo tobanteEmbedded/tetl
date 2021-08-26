@@ -5,7 +5,9 @@
 #ifndef TETL_FORMAT_ARGUMENT_HPP
 #define TETL_FORMAT_ARGUMENT_HPP
 
+#include "etl/_algorithm/find.hpp"
 #include "etl/_format/formatter.hpp"
+#include "etl/_utility/pair.hpp"
 
 namespace etl::detail {
 // Escape tokens

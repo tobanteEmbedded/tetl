@@ -7,11 +7,10 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/vector.hpp"
-
 #include "etl/_format/argument.hpp"
 #include "etl/_format/context.hpp"
 #include "etl/_type_traits/remove_cvref.hpp"
+#include "etl/_vector/static_vector.hpp"
 
 namespace etl {
 template <typename It>
