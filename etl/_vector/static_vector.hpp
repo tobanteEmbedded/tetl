@@ -31,8 +31,6 @@
 #include "etl/_type_traits/is_pointer.hpp"
 #include "etl/_type_traits/is_trivial.hpp"
 
-/// \file This header is part of the containers library.
-
 namespace etl {
 namespace detail {
 /// \brief Storage for zero elements.
