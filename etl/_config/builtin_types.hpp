@@ -6,10 +6,10 @@
 #define TETL_CONFIG_BUILTIN_TYPES_HPP
 
 #ifdef _MSC_VER
-#define TETL_BUILTIN_INT8 __int8
-#define TETL_BUILTIN_INT16 __int16
-#define TETL_BUILTIN_INT32 __int32
-#define TETL_BUILTIN_INT64 __int64
+#define TETL_BUILTIN_INT8 signed __int8
+#define TETL_BUILTIN_INT16 signed __int16
+#define TETL_BUILTIN_INT32 signed __int32
+#define TETL_BUILTIN_INT64 signed __int64
 #define TETL_BUILTIN_UINT8 unsigned __int8
 #define TETL_BUILTIN_UINT16 unsigned __int16
 #define TETL_BUILTIN_UINT32 unsigned __int32

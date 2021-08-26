@@ -201,14 +201,10 @@ private:
     // clang-format off
     template <size_t I, typename T>
     friend struct tuple_element;
-
-    // NOLINTNEXTLINE(readability-redundant-declaration)
     template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...>& t) -> auto&;
-
-    // NOLINTNEXTLINE(readability-redundant-declaration)
+    friend constexpr auto get(tuple<Us...>& t) -> auto&; // NOLINT
     template <size_t N, typename... Us>
-    friend constexpr auto get(tuple<Us...> const& t) -> auto const&;
+    friend constexpr auto get(tuple<Us...> const& t) -> auto const&; // NOLINT
 
     using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
     impl_t impl_; // NOLINT(modernize-use-default-member-init)
