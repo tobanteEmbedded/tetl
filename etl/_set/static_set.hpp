@@ -5,8 +5,6 @@
 #ifndef TETL_SET_STATIC_SET_HPP
 #define TETL_SET_STATIC_SET_HPP
 
-#include "etl/_config/all.hpp"
-
 #include "etl/_algorithm/lexicographical_compare.hpp"
 #include "etl/_algorithm/lower_bound.hpp"
 #include "etl/_algorithm/rotate.hpp"
