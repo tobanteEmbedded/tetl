@@ -103,7 +103,6 @@ TEMPLATE_TEST_CASE("experimental/meta: reverse", "[experimental][meta]",
     STATIC_REQUIRE(type_c<tuple_element_t<1, normal_t>> == type_c<long>);
     STATIC_REQUIRE(type_c<tuple_element_t<2, normal_t>> == type_c<int>);
 
-    auto reversed    = meta::reverse(normal);
     using reversed_t = decltype(meta::reverse(normal));
     STATIC_REQUIRE(type_c<tuple_element_t<0, reversed_t>> == type_c<int>);
     STATIC_REQUIRE(type_c<tuple_element_t<1, reversed_t>> == type_c<long>);
