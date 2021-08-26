@@ -13,7 +13,7 @@ namespace etl::experimental::meta {
 
 namespace detail {
 template <typename T, etl::size_t... I>
-constexpr auto reverse_impl(T t, etl::index_sequence<I...>)
+constexpr auto reverse_impl(T t, etl::index_sequence<I...> /*is*/)
 {
     return etl::make_tuple(etl::get<sizeof...(I) - 1 - I>(t)...);
 }
