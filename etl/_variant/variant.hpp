@@ -8,6 +8,7 @@
 #include "etl/_array/array.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_functional//equal_to.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
@@ -30,6 +31,7 @@ namespace etl {
 
 namespace detail {
 
+// swap
 template <typename Variant>
 using variant_swap_func_t = void (*)(Variant&, Variant&);
 
@@ -49,6 +51,27 @@ constexpr auto make_variant_swap_table(etl::index_sequence<Indices...> /*is*/)
 template <typename Variant, typename... Ts>
 inline constexpr auto variant_swap_table
     = make_variant_swap_table<Variant>(etl::index_sequence_for<Ts...> {});
+
+// compare
+template <typename Variant>
+using variant_cmp_func_t = bool (*)(Variant const&, Variant const&);
+
+// compare equal
+template <typename Variant, etl::size_t Index>
+constexpr auto variant_equal_func(Variant const& l, Variant const& r) -> bool
+{
+    return etl::equal_to<>()(*etl::get_if<Index>(&l), *etl::get_if<Index>(&r));
+}
+
+template <typename Variant, etl::size_t... Indices>
+constexpr auto make_variant_equal_table(etl::index_sequence<Indices...> /*is*/)
+{
+    return etl::array { &variant_equal_func<Variant, Indices>... };
+}
+
+template <typename Variant, typename... Ts>
+inline constexpr auto variant_equal_table
+    = make_variant_equal_table<Variant>(etl::index_sequence_for<Ts...> {});
 
 template <typename...>
 struct variant_storage;
@@ -263,6 +286,33 @@ constexpr auto swap(etl::variant<Ts...>& lhs,
     lhs.swap(rhs);
 }
 
+/// \brief Equality operator for variants:
+///     - If lhs.index() != rhs.index(), returns false;
+///     - If lhs.valueless_by_exception(), returns true;
+///     - Otherwise returns get<lhs.index()>(lhs) == get<lhs.index()>(rhs)
+template <typename... Ts>
+constexpr auto operator==(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    TETL_ASSERT(!lhs.valueless_by_exception());
+    TETL_ASSERT(!rhs.valueless_by_exception());
+
+    using var_t = etl::variant<Ts...>;
+    if (lhs.index() != rhs.index()) { return false; }
+    return detail::variant_equal_table<var_t, Ts...>[lhs.index()](lhs, rhs);
+}
+
+/// \brief Equality operator for variants:
+///     - If lhs.index() != rhs.index(), returns false;
+///     - If lhs.valueless_by_exception(), returns true;
+///     - Otherwise returns get<lhs.index()>(lhs) == get<lhs.index()>(rhs)
+template <typename... Ts>
+constexpr auto operator!=(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    return !(lhs == rhs);
+}
+
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...
 template <typename T, typename... Types>
@@ -283,8 +333,8 @@ template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
 {
-    etl::ignore_unused(pv);
-    return nullptr;
+    using alternative_t = etl::variant_alternative_t<I, etl::variant<Types...>>;
+    return etl::get_if<alternative_t>(pv);
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -298,8 +348,8 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<
         etl::variant_alternative_t<I, etl::variant<Types...>> const>
 {
-    etl::ignore_unused(pv);
-    return nullptr;
+    using alternative_t = etl::variant_alternative_t<I, etl::variant<Types...>>;
+    return etl::get_if<alternative_t>(pv);
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not

@@ -6,7 +6,10 @@
 #define TETL_VARIANT_VARIANT_FWD_HPP
 
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_type_traits/add_const.hpp"
+#include "etl/_type_traits/add_cv.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
+#include "etl/_type_traits/add_volatile.hpp"
 
 namespace etl {
 
@@ -22,10 +25,23 @@ struct variant_size;
 template <etl::size_t I, typename T>
 struct variant_alternative;
 
+template <typename T, typename... Types>
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept
+    -> etl::add_pointer_t<T>; // NOLINT
+
+template <typename T, typename... Types>
+constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
+    -> etl::add_pointer_t<const T>; // NOLINT
+
 template <etl::size_t I, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* v) noexcept
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept
     -> etl::add_pointer_t<typename etl::variant_alternative<I,
         etl::variant<Types...>>::type>; // NOLINT
+
+template <etl::size_t I, typename... Types>
+constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
+    -> etl::add_pointer_t<typename etl::variant_alternative<I,
+        etl::variant<Types...>>::type const>; // NOLINT
 
 } // namespace etl
 
