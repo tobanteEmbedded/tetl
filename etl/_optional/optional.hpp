@@ -8,6 +8,7 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_new/operator.hpp"
+#include "etl/_optional/nullopt.hpp"
 #include "etl/_optional/sfinae_base.hpp"
 #include "etl/_type_traits/conjunction.hpp"
 #include "etl/_type_traits/decay.hpp"
@@ -35,7 +36,6 @@
 #include "etl/_utility/in_place.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/swap.hpp"
-#include "etl/_optional/nullopt.hpp"
 
 namespace etl {
 
@@ -145,24 +145,24 @@ struct optional_storage_base : optional_destruct_base<T> {
         this->internal_has_value = true;
     }
 
-    template <typename T>
-    void construct_from(T&& opt)
+    template <typename U>
+    void construct_from(U&& opt)
     {
-        if (opt.has_value()) { construct(etl::forward<T>(opt).get()); }
+        if (opt.has_value()) { construct(etl::forward<U>(opt).get()); }
     }
 
-    template <typename T>
-    void assign_from(T&& opt)
+    template <typename U>
+    void assign_from(U&& opt)
     {
         if (this->internal_has_value == opt.has_value()) {
             if (this->internal_has_value) {
-                this->internal_value = etl::forward<T>(opt).get();
+                this->internal_value = etl::forward<U>(opt).get();
             }
         } else {
             if (this->internal_has_value) {
                 this->reset();
             } else {
-                construct(etl::forward<T>(opt).get());
+                construct(etl::forward<U>(opt).get());
             }
         }
     }
