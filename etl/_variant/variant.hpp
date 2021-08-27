@@ -5,6 +5,7 @@
 #ifndef TETL_VARIANT_VARIANT_HPP
 #define TETL_VARIANT_VARIANT_HPP
 
+#include "etl/_array/array.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_const.hpp"
@@ -12,11 +13,15 @@
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/add_volatile.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
+#include "etl/_type_traits/index_sequence.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
+#include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/type_pack_element.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
+#include "etl/_utility/swap.hpp"
 #include "etl/_variant/monostate.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
@@ -24,8 +29,61 @@ namespace etl {
 template <typename... Types>
 struct variant;
 
+/// \brief Provides compile-time indexed access to the types of the alternatives
+/// of the possibly cv-qualified variant, combining cv-qualifications of the
+/// variant (if any) with the cv-qualifications of the alternative.
+template <etl::size_t I, typename T>
+struct variant_alternative;
+
+template <etl::size_t Idx, typename... Ts>
+struct variant_alternative<Idx, etl::variant<Ts...>> {
+    static_assert(Idx < sizeof...(Ts));
+    using type = type_pack_element_t<Idx, Ts...>;
+};
+
+template <etl::size_t I, typename T>
+using variant_alternative_t = typename variant_alternative<I, T>::type;
+
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T const> {
+    using type = etl::add_const_t<variant_alternative_t<Idx, T>>;
+};
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T volatile> {
+    using type = etl::add_volatile_t<variant_alternative_t<Idx, T>>;
+};
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T const volatile> {
+    using type = etl::add_cv_t<variant_alternative_t<Idx, T>>;
+};
+
+template <etl::size_t I, typename... Types>
+constexpr auto get_if(etl::variant<Types...>* v) noexcept -> etl::add_pointer_t<
+    etl::variant_alternative_t<I, etl::variant<Types...>>>; // NOLINT
+
 namespace detail {
+
 using union_index_type = size_t;
+
+template <typename Variant>
+using variant_swap_func_t = void (*)(Variant&, Variant&);
+
+template <typename Variant, etl::size_t Index>
+constexpr auto variant_swap_func(Variant& lhs, Variant& rhs) -> void
+{
+    using etl::swap;
+    swap(*etl::get_if<Index>(&lhs), *etl::get_if<Index>(&rhs));
+}
+
+template <typename Variant, etl::size_t... Indices>
+constexpr auto make_variant_swap_table(etl::index_sequence<Indices...> /*is*/)
+{
+    return etl::array { &variant_swap_func<Variant, Indices>... };
+}
+
+template <typename Variant, typename... Ts>
+inline constexpr auto variant_swap_table
+    = make_variant_swap_table<Variant>(etl::index_sequence_for<Ts...> {});
 
 template <typename...>
 struct variant_storage;
@@ -39,12 +97,12 @@ struct variant_storage<Head> {
     // alignas(Head) unsigned char data[sizeof(Head)];
 
     template <typename T>
-    void construct(T&& headInit, union_index_type& unionIndex)
+    void construct(T&& headInit, union_index_type& index)
     {
         static_assert(etl::is_same_v<T, Head>,
             "Tried to access non-existent type in union");
         new (&data) Head(etl::forward<T>(headInit));
-        unionIndex = 0;
+        index = 0;
     }
 
     void destruct(union_index_type /*unused*/)
@@ -63,40 +121,40 @@ struct variant_storage<Head, Tail...> {
         variant_storage<Tail...> tail;
     };
 
-    void construct(Head const& headInit, union_index_type& unionIndex)
+    void construct(Head const& headInit, union_index_type& index)
     {
         new (&data) Head(headInit);
-        unionIndex = 0;
+        index = 0;
     }
 
-    void construct(Head& headInit, union_index_type& unionIndex)
+    void construct(Head& headInit, union_index_type& index)
     {
         const auto& headCref = headInit;
-        construct(headCref, unionIndex);
+        construct(headCref, index);
     }
 
-    void construct(Head&& headInit, union_index_type& unionIndex)
+    void construct(Head&& headInit, union_index_type& index)
     {
         using etl::move;
         new (&data) Head(move(headInit));
-        unionIndex = 0;
+        index = 0;
     }
 
     template <typename T>
-    void construct(T&& t, union_index_type& unionIndex)
+    void construct(T&& t, union_index_type& index)
     {
-        tail.construct(etl::forward<T>(t), unionIndex);
-        ++unionIndex;
+        tail.construct(etl::forward<T>(t), index);
+        ++index;
     }
 
-    void destruct(union_index_type unionIndex)
+    void destruct(union_index_type index)
     {
-        if (unionIndex == 0) {
+        if (index == 0) {
             static_cast<Head*>(static_cast<void*>(&data))->~Head();
             return;
         }
 
-        tail.destruct(unionIndex - 1);
+        tail.destruct(index - 1);
     }
 };
 template <typename...>
@@ -153,7 +211,7 @@ struct variant {
     template <typename T>
     explicit variant(T&& t)
     {
-        data_.construct(etl::forward<T>(t), unionIndex_);
+        data_.construct(etl::forward<T>(t), index_);
     }
 
     /// \brief If valueless_by_exception is true, does nothing. Otherwise,
@@ -163,7 +221,7 @@ struct variant {
     /// etl::is_trivially_destructible_v<T_i> is true for all T_i in Types...
     ~variant()
     {
-        if (!valueless_by_exception()) { data_.destruct(unionIndex_); }
+        if (!valueless_by_exception()) { data_.destruct(index_); }
     }
 
     /// \brief Copy-assignment
@@ -192,7 +250,7 @@ struct variant {
     /// variant_npos.
     [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t
     {
-        return valueless_by_exception() ? variant_npos : unionIndex_;
+        return valueless_by_exception() ? variant_npos : index_;
     }
 
     /// \brief Returns false if and only if the variant holds a value. Currently
@@ -202,13 +260,26 @@ struct variant {
         return false;
     }
 
+    /// \brief Swaps two variant objects.
+    constexpr auto swap(variant& rhs) noexcept(
+        ((etl::is_nothrow_move_constructible_v<
+              Types> && etl::is_nothrow_swappable_v<Types>)&&...)) -> void
+    {
+        if (valueless_by_exception() && rhs.valueless_by_exception()) {
+            return;
+        }
+        if (index() == rhs.index()) {
+            detail::variant_swap_table<variant, Types...>[index()](*this, rhs);
+        }
+    }
+
     /// \todo Remove & replace with friendship for etl::get_if.
     [[nodiscard]] auto data() const noexcept { return &data_; }
     auto data() noexcept { return &data_; }
 
 private:
     detail::variant_storage<Types...> data_;
-    detail::union_index_type unionIndex_;
+    detail::union_index_type index_;
 };
 
 template <typename T>
@@ -233,34 +304,6 @@ struct variant_size<T const volatile> : variant_size<T>::type {
 
 template <typename T>
 inline constexpr auto variant_size_v = variant_size<T>::value;
-
-/// \brief Provides compile-time indexed access to the types of the alternatives
-/// of the possibly cv-qualified variant, combining cv-qualifications of the
-/// variant (if any) with the cv-qualifications of the alternative.
-template <etl::size_t I, typename T>
-struct variant_alternative;
-
-template <etl::size_t Idx, typename... Ts>
-struct variant_alternative<Idx, etl::variant<Ts...>> {
-    static_assert(Idx < sizeof...(Ts));
-    using type = type_pack_element_t<Idx, Ts...>;
-};
-
-template <etl::size_t I, typename T>
-using variant_alternative_t = typename variant_alternative<I, T>::type;
-
-template <etl::size_t Idx, typename T>
-struct variant_alternative<Idx, T const> {
-    using type = etl::add_const_t<variant_alternative_t<Idx, T>>;
-};
-template <etl::size_t Idx, typename T>
-struct variant_alternative<Idx, T volatile> {
-    using type = etl::add_volatile_t<variant_alternative_t<Idx, T>>;
-};
-template <etl::size_t Idx, typename T>
-struct variant_alternative<Idx, T const volatile> {
-    using type = etl::add_cv_t<variant_alternative_t<Idx, T>>;
-};
 
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...

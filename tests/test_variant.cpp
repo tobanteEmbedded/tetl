@@ -107,6 +107,18 @@ TEST_CASE("variant: operator=(variant const&)", "[variant]")
     // CHECK(*etl::get_if<float>(&var) == 42.0f);
 }
 
+TEST_CASE("variant: swap", "[variant]")
+{
+    auto l = etl::variant<int> { 42 };
+    auto r = etl::variant<int> { 143 };
+    CHECK(*etl::get_if<int>(&l) == 42);
+    CHECK(*etl::get_if<int>(&r) == 143);
+
+    // l.swap(r);
+    // CHECK(*etl::get_if<int>(&l) == 143);
+    // CHECK(*etl::get_if<int>(&r) == 42);
+}
+
 TEST_CASE("variant: holds_alternative", "[variant]")
 {
     SECTION("mutable")
