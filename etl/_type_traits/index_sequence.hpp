@@ -12,15 +12,15 @@ namespace etl {
 
 /// \group integer_sequence
 template <etl::size_t... Ints>
-using index_sequence = integer_sequence<etl::size_t, Ints...>;
+using index_sequence = etl::integer_sequence<etl::size_t, Ints...>;
 
 /// \group integer_sequence
 template <etl::size_t Size>
-using make_index_sequence = make_integer_sequence<etl::size_t, Size>;
+using make_index_sequence = etl::make_integer_sequence<etl::size_t, Size>;
 
 /// \group integer_sequence
 template <typename... T>
-using index_sequence_for = make_index_sequence<sizeof...(T)>;
+using index_sequence_for = etl::make_index_sequence<sizeof...(T)>;
 
 } // namespace etl
 

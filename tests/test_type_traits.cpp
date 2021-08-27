@@ -1736,3 +1736,16 @@ TEMPLATE_TEST_CASE("type_traits: type_identity", "[type_traits]", etl::uint16_t,
     STATIC_REQUIRE(test_identity<T const volatile& (IDS::*)(T)>());
     // clang-format on
 }
+
+TEMPLATE_TEST_CASE("type_traits: type_pack_element_t", "[type_traits]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, float, double, long double)
+{
+    using T = TestType;
+    using etl::is_same_v;
+    using etl::type_pack_element_t;
+
+    STATIC_REQUIRE(is_same_v<type_pack_element_t<0, T>, T>);
+    STATIC_REQUIRE(is_same_v<type_pack_element_t<1, T, float>, float>);
+    STATIC_REQUIRE(is_same_v<type_pack_element_t<2, T, char, short>, short>);
+}

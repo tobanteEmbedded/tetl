@@ -127,4 +127,7 @@
 // experience.
 #include "etl/_utility/swap.hpp"
 
+// Non-standard extensions
+#include "etl/_type_traits/type_pack_element.hpp"
+
 #endif // TETL_TYPETRAITS_HPP
