@@ -7,9 +7,14 @@
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_new/operator.hpp"
+#include "etl/_type_traits/add_const.hpp"
+#include "etl/_type_traits/add_cv.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
+#include "etl/_type_traits/add_volatile.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
+#include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_same.hpp"
+#include "etl/_type_traits/type_pack_element.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_variant/monostate.hpp"
@@ -132,37 +137,6 @@ struct variant_storage_type_get<Target, variant_storage<Head, Tail...>> {
 
 } // namespace detail
 
-/// \brief Provides compile-time indexed access to the types of the alternatives
-/// of the possibly cv-qualified variant, combining cv-qualifications of the
-/// variant (if any) with the cv-qualifications of the alternative.
-///
-/// \todo Implement
-template <etl::size_t I, typename T>
-struct variant_alternative;
-
-/// \brief Provides compile-time indexed access to the types of the alternatives
-/// of the possibly cv-qualified variant, combining cv-qualifications of the
-/// variant (if any) with the cv-qualifications of the alternative.
-///
-/// \todo Implement
-template <etl::size_t I, typename... Types>
-struct variant_alternative<I, variant<Types...>> {
-    using type = void;
-};
-
-/// \brief Provides compile-time indexed access to the types of the alternatives
-/// of the possibly cv-qualified variant, combining cv-qualifications of the
-/// variant (if any) with the cv-qualifications of the alternative.
-///
-/// \todo Implement
-template <etl::size_t I, typename T>
-struct variant_alternative<I, T const> {
-    using type = void;
-};
-
-template <size_t I, typename T>
-using variant_alternative_t = typename variant_alternative<I, T>::type;
-
 /// \brief This is a special value equal to the largest value representable by
 /// the type etl::size_t, used as the return value of index() when
 /// valueless_by_exception() is true.
@@ -237,6 +211,57 @@ private:
     detail::union_index_type unionIndex_;
 };
 
+template <typename T>
+struct variant_size;
+
+template <typename... Ts>
+struct variant_size<variant<Ts...>>
+    : integral_constant<etl::size_t, sizeof...(Ts)> {
+};
+
+template <typename T>
+struct variant_size<T const> : variant_size<T>::type {
+};
+
+template <typename T>
+struct variant_size<T volatile> : variant_size<T>::type {
+};
+
+template <typename T>
+struct variant_size<T const volatile> : variant_size<T>::type {
+};
+
+template <typename T>
+inline constexpr auto variant_size_v = variant_size<T>::value;
+
+/// \brief Provides compile-time indexed access to the types of the alternatives
+/// of the possibly cv-qualified variant, combining cv-qualifications of the
+/// variant (if any) with the cv-qualifications of the alternative.
+template <etl::size_t I, typename T>
+struct variant_alternative;
+
+template <etl::size_t Idx, typename... Ts>
+struct variant_alternative<Idx, etl::variant<Ts...>> {
+    static_assert(Idx < sizeof...(Ts));
+    using type = type_pack_element_t<Idx, Ts...>;
+};
+
+template <etl::size_t I, typename T>
+using variant_alternative_t = typename variant_alternative<I, T>::type;
+
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T const> {
+    using type = etl::add_const_t<variant_alternative_t<Idx, T>>;
+};
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T volatile> {
+    using type = etl::add_volatile_t<variant_alternative_t<Idx, T>>;
+};
+template <etl::size_t Idx, typename T>
+struct variant_alternative<Idx, T const volatile> {
+    using type = etl::add_cv_t<variant_alternative_t<Idx, T>>;
+};
+
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...
 template <typename T, typename... Types>
@@ -307,28 +332,6 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 
     return nullptr;
 }
-
-template <typename T>
-struct variant_size;
-
-template <typename... Ts>
-struct variant_size<variant<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
-};
-
-template <typename T>
-struct variant_size<T const> : variant_size<T>::type {
-};
-
-template <typename T>
-struct variant_size<T volatile> : variant_size<T>::type {
-};
-
-template <typename T>
-struct variant_size<T const volatile> : variant_size<T>::type {
-};
-
-template <typename T>
-inline constexpr auto variant_size_v = variant_size<T>::value;
 
 } // namespace etl
 

@@ -6,6 +6,7 @@
 #define TETL_TYPE_TRAITS_TYPE_PACK_ELEMENT_HPP
 
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/index_sequence.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 
@@ -26,7 +27,8 @@ private:
     using type_pack_element_wrapper<Is, Ts>::get_type...;
 
 public:
-    using type = decltype(get_type(etl::integral_constant<etl::size_t, I> {}));
+    using type = decltype(get_type(
+        etl::declval<etl::integral_constant<etl::size_t, I>>()));
 };
 
 } // namespace detail

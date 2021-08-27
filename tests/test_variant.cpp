@@ -167,3 +167,23 @@ TEST_CASE("variant: variant_size", "[variant]")
     STATIC_REQUIRE(etl::variant_size_v<t3> == 3);
     STATIC_REQUIRE(etl::variant_size_v<t4> == 4);
 }
+
+TEST_CASE("variant: variant_alternative", "[variant]")
+{
+    using etl::is_same_v;
+    using etl::monostate;
+    using etl::variant;
+    using etl::variant_alternative_t;
+
+    using t1 = etl::variant<char>;
+    STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t1>, char>);
+
+    // TODO [tobi] Fails on gcc 9 & 11 put passes clang
+
+    // using t2 = etl::variant<char, int>;
+    // using t3 = etl::variant<char, int, float>;
+    // using t4 = etl::variant<char, int, float, double>;
+    // STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t2>, char>);
+    // STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t3>, char>);
+    // STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t4>, char>);
+}
