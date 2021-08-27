@@ -376,8 +376,8 @@ constexpr auto operator<=(
     if (i > rhs.index()) { return false; }
 
     using var_t = etl::variant<Ts...>;
-    using cmp_t = etl::less_equal<>;
-    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+    using cmp_t = etl::less<>;
+    return !detail::variant_compare_table<cmp_t, var_t, Ts...>[i](rhs, lhs);
 }
 
 /// \brief Greater-than operator for variants:
@@ -398,8 +398,8 @@ constexpr auto operator>(
     if (i < rhs.index()) { return false; }
 
     using var_t = etl::variant<Ts...>;
-    using cmp_t = etl::greater<>;
-    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+    using cmp_t = etl::less<>;
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](rhs, lhs);
 }
 
 /// \brief Greater-equal operator for variants:
@@ -420,8 +420,8 @@ constexpr auto operator>=(
     if (i < rhs.index()) { return false; }
 
     using var_t = etl::variant<Ts...>;
-    using cmp_t = etl::greater_equal<>;
-    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+    using cmp_t = etl::less<>;
+    return !detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
 }
 
 /// \brief Checks if the variant v holds the alternative T. The call is
