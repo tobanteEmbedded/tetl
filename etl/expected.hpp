@@ -7,14 +7,6 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/type_traits.hpp"
+#include "etl/_expected/unexpected.hpp"
 
-namespace etl {
-struct unexpect_t {
-    unexpect_t() = default;
-};
-
-inline constexpr unexpect_t unexpect {};
-
-} // namespace etl
 #endif // TETL_EXPECTED_HPP
