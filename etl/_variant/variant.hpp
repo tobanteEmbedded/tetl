@@ -225,7 +225,7 @@ inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
 template <typename... Types>
 struct variant {
 private:
-    using internal_size_t = etl::detail::smallest_size_t<sizeof...(Types)>;
+    using internal_size_t = etl::smallest_size_t<sizeof...(Types)>;
 
 public:
     /// \brief Converting constructor.

@@ -135,7 +135,7 @@ struct static_vector_trivial_storage {
     static_assert(etl::is_trivial_v<T>);
     static_assert(Capacity != size_t { 0 });
 
-    using size_type       = smallest_size_t<Capacity>;
+    using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
     using difference_type = ptrdiff_t;
     using pointer         = T*;
@@ -250,7 +250,7 @@ struct static_vector_non_trivial_storage {
     static_assert(!is_trivial_v<T>);
     static_assert(Capacity != size_t { 0 });
 
-    using size_type       = smallest_size_t<Capacity>;
+    using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
     using difference_type = ptrdiff_t;
     using pointer         = T*;

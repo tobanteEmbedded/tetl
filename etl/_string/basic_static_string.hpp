@@ -41,7 +41,7 @@ struct basic_static_string {
                           && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
 
-    using internal_size_t = etl::detail::smallest_size_t<Capacity>;
+    using internal_size_t = etl::smallest_size_t<Capacity>;
 
 public:
     /// The character type used

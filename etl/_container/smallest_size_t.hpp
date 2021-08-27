@@ -9,7 +9,7 @@
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/conditional.hpp"
 
-namespace etl::detail {
+namespace etl {
 /// \brief Smallest fixed-width unsigned integer type that can represent values
 /// in the range [0, N].
 // clang-format off
@@ -22,6 +22,6 @@ using smallest_size_t =
                                                                  size_t>>>>;
 // clang-format on
 
-} // namespace etl::detail
+} // namespace etl
 
 #endif // TETL_CONTAINER_SMALLEST_SIZE_T_HPP
