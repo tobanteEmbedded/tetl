@@ -55,13 +55,12 @@ struct nullopt_t {
 inline constexpr auto nullopt = etl::nullopt_t { {} };
 
 namespace detail {
-template <typename ValueType,
-    bool = etl::is_trivially_destructible_v<ValueType>>
+template <typename T, bool = etl::is_trivially_destructible_v<T>>
 struct optional_destruct_base;
 
-template <typename ValueType>
-struct optional_destruct_base<ValueType, false> {
-    using value_type = ValueType;
+template <typename T>
+struct optional_destruct_base<T, false> {
+    using value_type = T;
     static_assert(etl::is_object_v<value_type>, "undefined behavior");
 
     ~optional_destruct_base()
@@ -78,7 +77,7 @@ struct optional_destruct_base<ValueType, false> {
     {
     }
 
-    void reset() noexcept
+    auto reset() noexcept -> void
     {
         if (internal_has_value) {
             internal_value.~value_type();
@@ -94,9 +93,9 @@ struct optional_destruct_base<ValueType, false> {
     bool internal_has_value = false;
 };
 
-template <typename ValueType>
-struct optional_destruct_base<ValueType, true> {
-    using value_type = ValueType;
+template <typename T>
+struct optional_destruct_base<T, true> {
+    using value_type = T;
     static_assert(etl::is_object_v<value_type>, "undefined behavior");
 
     constexpr optional_destruct_base() noexcept { }
@@ -121,10 +120,10 @@ struct optional_destruct_base<ValueType, true> {
     bool internal_has_value { false };
 };
 
-template <typename ValueType, bool = etl::is_reference_v<ValueType>>
-struct optional_storage_base : optional_destruct_base<ValueType> {
-    using base_t     = optional_destruct_base<ValueType>;
-    using value_type = ValueType;
+template <typename T, bool = etl::is_reference_v<T>>
+struct optional_storage_base : optional_destruct_base<T> {
+    using base_t     = optional_destruct_base<T>;
+    using value_type = T;
     using base_t::base_t;
 
     [[nodiscard]] constexpr auto has_value() const noexcept -> bool
@@ -184,20 +183,19 @@ struct optional_storage_base : optional_destruct_base<ValueType> {
     }
 };
 
-template <typename ValueType,
-    bool = etl::is_trivially_copy_constructible_v<ValueType>>
-struct optional_copy_base : optional_storage_base<ValueType> {
-    using optional_storage_base<ValueType>::optional_storage_base;
+template <typename T, bool = etl::is_trivially_copy_constructible_v<T>>
+struct optional_copy_base : optional_storage_base<T> {
+    using optional_storage_base<T>::optional_storage_base;
 };
 
-template <typename ValueType>
-struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType> {
-    using optional_storage_base<ValueType>::optional_storage_base;
+template <typename T>
+struct optional_copy_base<T, false> : optional_storage_base<T> {
+    using optional_storage_base<T>::optional_storage_base;
 
     optional_copy_base() = default;
 
     optional_copy_base(optional_copy_base const& opt)
-        : optional_storage_base<ValueType>::optional_storage_base {}
+        : optional_storage_base<T>::optional_storage_base {}
     {
         this->construct_from(opt);
     }
@@ -209,16 +207,15 @@ struct optional_copy_base<ValueType, false> : optional_storage_base<ValueType> {
         -> optional_copy_base& = default;
 };
 
-template <typename ValueType,
-    bool = etl::is_trivially_move_constructible_v<ValueType>>
-struct optional_move_base : optional_copy_base<ValueType> {
-    using optional_copy_base<ValueType>::optional_copy_base;
+template <typename T, bool = etl::is_trivially_move_constructible_v<T>>
+struct optional_move_base : optional_copy_base<T> {
+    using optional_copy_base<T>::optional_copy_base;
 };
 
-template <typename ValueType>
-struct optional_move_base<ValueType, false> : optional_copy_base<ValueType> {
-    using value_type = ValueType;
-    using optional_copy_base<ValueType>::optional_copy_base;
+template <typename T>
+struct optional_move_base<T, false> : optional_copy_base<T> {
+    using value_type = T;
+    using optional_copy_base<T>::optional_copy_base;
 
     optional_move_base() = default;
 
@@ -236,18 +233,16 @@ struct optional_move_base<ValueType, false> : optional_copy_base<ValueType> {
         -> optional_move_base& = default;
 };
 
-template <typename ValueType,
-    bool = etl::is_trivially_destructible_v<ValueType>&&
-        etl::is_trivially_copy_constructible_v<ValueType>&&
-            etl::is_trivially_copy_assignable_v<ValueType>>
-struct optional_copy_assign_base : optional_move_base<ValueType> {
-    using optional_move_base<ValueType>::optional_move_base;
+template <typename T, bool = etl::is_trivially_destructible_v<T>&&
+                          etl::is_trivially_copy_constructible_v<T>&&
+                              etl::is_trivially_copy_assignable_v<T>>
+struct optional_copy_assign_base : optional_move_base<T> {
+    using optional_move_base<T>::optional_move_base;
 };
 
-template <typename ValueType>
-struct optional_copy_assign_base<ValueType, false>
-    : optional_move_base<ValueType> {
-    using optional_move_base<ValueType>::optional_move_base;
+template <typename T>
+struct optional_copy_assign_base<T, false> : optional_move_base<T> {
+    using optional_move_base<T>::optional_move_base;
 
     optional_copy_assign_base() = default;
 
@@ -266,19 +261,17 @@ struct optional_copy_assign_base<ValueType, false>
         -> optional_copy_assign_base& = default;
 };
 
-template <typename ValueType,
-    bool = etl::is_trivially_destructible_v<ValueType>&&
-        etl::is_trivially_move_constructible_v<ValueType>&&
-            etl::is_trivially_move_assignable_v<ValueType>>
-struct optional_move_assign_base : optional_copy_assign_base<ValueType> {
-    using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
+template <typename T, bool = etl::is_trivially_destructible_v<T>&&
+                          etl::is_trivially_move_constructible_v<T>&&
+                              etl::is_trivially_move_assignable_v<T>>
+struct optional_move_assign_base : optional_copy_assign_base<T> {
+    using optional_copy_assign_base<T>::optional_copy_assign_base;
 };
 
-template <typename ValueType>
-struct optional_move_assign_base<ValueType, false>
-    : optional_copy_assign_base<ValueType> {
-    using value_type = ValueType;
-    using optional_copy_assign_base<ValueType>::optional_copy_assign_base;
+template <typename T>
+struct optional_move_assign_base<T, false> : optional_copy_assign_base<T> {
+    using value_type = T;
+    using optional_copy_assign_base<T>::optional_copy_assign_base;
 
     optional_move_assign_base() = default;
 
@@ -299,38 +292,36 @@ struct optional_move_assign_base<ValueType, false>
     }
 };
 
-template <typename ValueType>
+template <typename T>
 using optional_sfinae_ctor_base_t
-    = sfinae_ctor_base<etl::is_copy_constructible_v<ValueType>,
-        etl::is_move_constructible_v<ValueType>>;
+    = sfinae_ctor_base<etl::is_copy_constructible_v<T>,
+        etl::is_move_constructible_v<T>>;
 
-template <typename ValueType>
+template <typename T>
 using optional_sfinae_assign_base_t = sfinae_assign_base<
-    (etl::is_copy_constructible_v<
-         ValueType> && etl::is_copy_assignable_v<ValueType>),
-    (etl::is_move_constructible_v<
-         ValueType> && etl::is_move_assignable_v<ValueType>)>;
+    (etl::is_copy_constructible_v<T> && etl::is_copy_assignable_v<T>),
+    (etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)>;
 
 } // namespace detail
 
-template <typename ValueType>
-struct optional : private detail::optional_move_assign_base<ValueType>,
-                  private detail::optional_sfinae_ctor_base_t<ValueType>,
-                  private detail::optional_sfinae_assign_base_t<ValueType> {
+template <typename T>
+struct optional : private detail::optional_move_assign_base<T>,
+                  private detail::optional_sfinae_ctor_base_t<T>,
+                  private detail::optional_sfinae_assign_base_t<T> {
 private:
-    using base_type = detail::optional_move_assign_base<ValueType>;
+    using base_type = detail::optional_move_assign_base<T>;
 
-    static_assert(!is_same_v<remove_cvref_t<ValueType>, in_place_t>,
+    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>,
         "instantiation of optional with in_place_t is ill-formed");
-    static_assert(!is_same_v<remove_cvref_t<ValueType>, nullopt_t>,
+    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>,
         "instantiation of optional with nullopt_t is ill-formed");
-    static_assert(!is_reference_v<ValueType>,
+    static_assert(!is_reference_v<T>,
         "instantiation of optional with a reference type is ill-formed");
-    static_assert(!is_array_v<ValueType>,
+    static_assert(!is_array_v<T>,
         "instantiation of optional with an array type is ill-formed");
 
 public:
-    using value_type = ValueType;
+    using value_type = T;
 
     /// \brief Constructs an object that does not contain a value.
     constexpr optional() noexcept = default;
@@ -358,8 +349,8 @@ public:
     /// \brief Constructs an optional object that contains a value, initialized
     /// as if direct-initializing.
     template <typename U = value_type,
-        typename = enable_if_t<conjunction_v<is_constructible<ValueType, U&&>,
-            negation<is_same<remove_cvref_t<U>, optional<ValueType>>>,
+        typename         = enable_if_t<conjunction_v<is_constructible<T, U&&>,
+            negation<is_same<remove_cvref_t<U>, optional<T>>>,
             negation<is_same<remove_cvref_t<U>, in_place_t>>>>>
     constexpr optional(U&& value) : base_type(in_place, forward<U>(value))
     {
@@ -384,14 +375,13 @@ public:
     /// \brief Perfect-forwarded assignment.
     ///
     /// \todo Cleanup & fix SFINAE.
-    template <typename U = ValueType>
+    template <typename U = T>
     constexpr auto operator=(U&& value) -> etl::enable_if_t<
         etl::conjunction_v<etl::negation<etl::is_same<etl::remove_cvref_t<U>,
-                               etl::optional<ValueType>>>,
-            etl::is_constructible<ValueType, U>,
-            etl::is_assignable<ValueType&, U>>,
-        // && (!etl::is_scalar_v<ValueType> || !etl::is_same_v<etl::decay_t<U>,
-        // ValueType>),
+                               etl::optional<T>>>,
+            etl::is_constructible<T, U>, etl::is_assignable<T&, U>>,
+        // && (!etl::is_scalar_v<T> || !etl::is_same_v<etl::decay_t<U>,
+        // T>),
         optional&>
     {
         if (this->has_value()) {
@@ -860,19 +850,17 @@ template <typename T>
 // }
 
 /// \brief Creates an optional object from value.
-template <typename ValueType>
-constexpr auto make_optional(ValueType&& value)
-    -> etl::optional<etl::decay_t<ValueType>>
+template <typename T>
+constexpr auto make_optional(T&& value) -> etl::optional<etl::decay_t<T>>
 {
-    return etl::optional<etl::decay_t<ValueType>>(
-        etl::forward<ValueType>(value));
+    return etl::optional<etl::decay_t<T>>(etl::forward<T>(value));
 }
 
 /// \brief Creates an optional object constructed in-place from args...
-template <typename ValueType, typename... Args>
-constexpr auto make_optional(Args&&... args) -> etl::optional<ValueType>
+template <typename T, typename... Args>
+constexpr auto make_optional(Args&&... args) -> etl::optional<T>
 {
-    return etl::optional<ValueType>(etl::in_place, etl::forward<Args>(args)...);
+    return etl::optional<T>(etl::in_place, etl::forward<Args>(args)...);
 }
 
 // One deduction guide is provided for etl::optional to account for the
