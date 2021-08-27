@@ -101,19 +101,19 @@ struct variant_storage<Index, Head> {
         static_cast<Head*>(static_cast<void*>(&data))->~Head();
     }
 
-    constexpr auto get_index(Head const& /*head*/) const
+    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const
         -> etl::integral_constant<etl::size_t, Index>
     {
         return {};
     }
 
-    constexpr auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/)
-        -> Head&
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
     {
         return *static_cast<Head*>(static_cast<void*>(&data));
     }
 
-    constexpr auto get_value(
+    [[nodiscard]] constexpr auto get_value(
         etl::integral_constant<etl::size_t, Index> /*ic*/) const -> Head const&
     {
         return *static_cast<Head const*>(static_cast<void const*>(&data));
@@ -165,39 +165,40 @@ struct variant_storage<Index, Head, Tail...> {
         tail.destruct(index - 1);
     }
 
-    constexpr auto get_index(Head const& /*head*/) const
+    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const
         -> etl::integral_constant<etl::size_t, Index>
     {
         return {};
     }
 
     template <typename T>
-    constexpr auto get_index(T const& t) const
+    [[nodiscard]] constexpr auto get_index(T const& t) const
     {
         return tail.get_index(t);
     }
 
-    constexpr auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/)
-        -> Head&
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
     {
         return *static_cast<Head*>(static_cast<void*>(&data));
     }
 
-    constexpr auto get_value(
+    [[nodiscard]] constexpr auto get_value(
         etl::integral_constant<etl::size_t, Index> /*ic*/) const -> Head const&
     {
         return *static_cast<Head const*>(static_cast<void const*>(&data));
     }
 
     template <etl::size_t N>
-    constexpr auto get_value(etl::integral_constant<etl::size_t, N> ic) -> auto&
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, N> ic) -> auto&
     {
         return tail.get_value(ic);
     }
 
     template <etl::size_t N>
-    constexpr auto get_value(etl::integral_constant<etl::size_t, N> ic) const
-        -> auto const&
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, N> ic) const -> auto const&
     {
         return tail.get_value(ic);
     }
