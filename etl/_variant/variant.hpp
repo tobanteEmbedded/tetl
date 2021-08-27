@@ -7,6 +7,7 @@
 
 #include "etl/_array/array.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_container/smallest_size_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_functional/equal_to.hpp"
 #include "etl/_functional/greater.hpp"
@@ -223,12 +224,18 @@ inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
 /// its alternative types.
 template <typename... Types>
 struct variant {
+private:
+    using internal_size_t = etl::detail::smallest_size_t<sizeof...(Types)>;
+
+public:
     /// \brief Converting constructor.
     /// \details Constructs a variant holding the alternative type T.
     template <typename T>
     explicit variant(T&& t)
     {
-        data_.construct(etl::forward<T>(t), index_);
+        auto tmpIndex = etl::size_t { index_ };
+        data_.construct(etl::forward<T>(t), tmpIndex);
+        index_ = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief If valueless_by_exception is true, does nothing. Otherwise,
@@ -296,7 +303,7 @@ struct variant {
 
 private:
     detail::variant_storage_for<Types...> data_;
-    etl::size_t index_;
+    internal_size_t index_;
 };
 
 /// \brief Overloads the swap algorithm for variant. Effectively calls

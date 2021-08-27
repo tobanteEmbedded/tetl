@@ -3,6 +3,7 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 #include "etl/variant.hpp"
 
+#include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
@@ -35,17 +36,29 @@ TEST_CASE("variant: monostate", "[variant]")
 
 TEST_CASE("variant: sizeof", "[variant]")
 {
-    if constexpr (sizeof(etl::size_t) == 8) {
-        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int>) == 16);
-        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int, float>) == 16);
-        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, int, double>) == 16);
+    using etl::int8_t;
+    using etl::monostate;
+    using etl::uint16_t;
+    using etl::uint32_t;
+    using etl::uint64_t;
+    using etl::uint8_t;
+    using etl::variant;
 
-        struct S {
-            float data[4];
-        };
+    struct S {
+        uint32_t data[4];
+    };
 
-        STATIC_REQUIRE(sizeof(etl::variant<etl::monostate, S, double>) == 24);
-    }
+    STATIC_REQUIRE(sizeof(variant<monostate, uint8_t>) == 2);
+    STATIC_REQUIRE(sizeof(variant<monostate, int8_t, uint8_t>) == 2);
+    STATIC_REQUIRE(sizeof(variant<monostate, char, int8_t, uint8_t>) == 2);
+
+    STATIC_REQUIRE(sizeof(variant<monostate, uint16_t>) == 4);
+    STATIC_REQUIRE(sizeof(variant<monostate, char, int8_t, uint16_t>) == 4);
+
+    STATIC_REQUIRE(sizeof(variant<monostate, uint32_t>) == 8);
+    STATIC_REQUIRE(sizeof(variant<monostate, uint32_t, uint32_t>) == 8);
+    STATIC_REQUIRE(sizeof(variant<monostate, uint32_t, uint64_t>) == 16);
+    STATIC_REQUIRE(sizeof(variant<monostate, S, uint64_t>) == 24);
 }
 
 TEST_CASE("variant: construct", "[variant]")
