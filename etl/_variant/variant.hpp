@@ -16,6 +16,7 @@
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
+#include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
@@ -78,16 +79,16 @@ inline constexpr auto variant_compare_table
     = make_variant_compare_table<Op, Variant>(
         etl::index_sequence_for<Ts...> {});
 
-template <typename...>
+template <etl::size_t Index, typename...>
 struct variant_storage;
 
-template <typename Head>
-struct variant_storage<Head> {
+template <etl::size_t Index, typename Head>
+struct variant_storage<Index, Head> {
     using storage_t = etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
     storage_t data;
 
     template <typename T>
-    void construct(T&& headInit, etl::size_t& index)
+    auto construct(T&& headInit, etl::size_t& index) -> void
     {
         static_assert(etl::is_same_v<T, Head>,
             "Tried to access non-existent type in union");
@@ -95,19 +96,36 @@ struct variant_storage<Head> {
         index = 0;
     }
 
-    void destruct(etl::size_t /*unused*/)
+    auto destruct(etl::size_t /*unused*/) -> void
     {
         static_cast<Head*>(static_cast<void*>(&data))->~Head();
     }
+
+    constexpr auto get_index(Head const& /*head*/) const
+        -> etl::integral_constant<etl::size_t, Index>
+    {
+        return {};
+    }
+
+    auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
+    {
+        return *static_cast<Head*>(static_cast<void*>(&data));
+    }
+
+    auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/) const
+        -> Head const&
+    {
+        return *static_cast<Head const*>(static_cast<void const*>(&data));
+    }
 };
 
-template <typename Head, typename... Tail>
-struct variant_storage<Head, Tail...> {
+template <etl::size_t Index, typename Head, typename... Tail>
+struct variant_storage<Index, Head, Tail...> {
     using storage_t = etl::aligned_storage_t<sizeof(Head), alignof(Head)>;
 
     union {
         storage_t data;
-        variant_storage<Tail...> tail;
+        variant_storage<Index + 1, Tail...> tail;
     };
 
     void construct(Head const& headInit, etl::size_t& index)
@@ -145,41 +163,42 @@ struct variant_storage<Head, Tail...> {
 
         tail.destruct(index - 1);
     }
-};
-template <typename...>
-struct variant_storage_type_get;
 
-template <typename Head, typename... Tail>
-struct variant_storage_type_get<Head, variant_storage<Head, Tail...>> {
-    static auto get(variant_storage<Head, Tail...>& vu) -> Head&
+    constexpr auto get_index(Head const& /*head*/) const
+        -> etl::integral_constant<etl::size_t, Index>
     {
-        return *static_cast<Head*>(static_cast<void*>(&vu.data));
+        return {};
     }
 
-    static auto get(variant_storage<Head, Tail...> const& vu) -> Head const&
+    template <typename T>
+    constexpr auto get_index(T const& head) const
     {
-        return *static_cast<Head const*>(static_cast<void const*>(&vu.data));
+        return tail.get_index(head);
     }
 
-    static constexpr const etl::size_t index = 0;
-};
-
-template <typename Target, typename Head, typename... Tail>
-struct variant_storage_type_get<Target, variant_storage<Head, Tail...>> {
-    static auto get(variant_storage<Head, Tail...>& vu) -> Target&
+    auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
     {
-        return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-            vu.tail);
+        return *static_cast<Head*>(static_cast<void*>(&data));
     }
 
-    static auto get(variant_storage<Head, Tail...> const& vu) -> Target const&
+    auto get_value(etl::integral_constant<etl::size_t, Index> /*ic*/) const
+        -> Head const&
     {
-        return variant_storage_type_get<Target, variant_storage<Tail...>>::get(
-            vu.tail);
+        return *static_cast<Head const*>(static_cast<void const*>(&data));
     }
 
-    static constexpr const etl::size_t index
-        = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
+    template <etl::size_t N>
+    auto get_value(etl::integral_constant<etl::size_t, N> ic) -> auto&
+    {
+        return tail.get_value(ic);
+    }
+
+    template <etl::size_t N>
+    auto get_value(etl::integral_constant<etl::size_t, N> ic) const
+        -> auto const&
+    {
+        return tail.get_value(ic);
+    }
 };
 
 template <typename... Ts>
@@ -274,7 +293,7 @@ struct variant {
     auto data() noexcept { return &data_; }
 
 private:
-    detail::variant_storage<Types...> data_;
+    detail::variant_storage<0, Types...> data_;
     etl::size_t index_;
 };
 
@@ -411,8 +430,8 @@ template <typename T, typename... Types>
 constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
     -> bool
 {
-    using storage_t = detail::variant_storage<Types...>;
-    return detail::variant_storage_type_get<T, storage_t>::index == v.index();
+    using index_t = decltype(v.data()->get_index(etl::declval<T>()));
+    return index_t::value == v.index();
 }
 
 /// \brief Index-based non-throwing accessor: If pv is not a null pointer and
@@ -447,30 +466,24 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept
+constexpr auto get_if(etl::variant<Types...>* v) noexcept
     -> etl::add_pointer_t<T>
 {
-    if (holds_alternative<T>(*pv)) {
-        using storage_t = detail::variant_storage<Types...>;
-        return &detail::variant_storage_type_get<T, storage_t>::get(
-            *pv->data());
-    }
-
+    using idx  = decltype((*v).data()->get_index(etl::declval<T const>()));
+    using ic_t = etl::integral_constant<etl::size_t, idx::value>;
+    if (holds_alternative<T>(*v)) { return &(v->data()->get_value(ic_t {})); }
     return nullptr;
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
 /// a unique element of Types....
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-    -> etl::add_pointer_t<const T>
+constexpr auto get_if(etl::variant<Types...> const* v) noexcept
+    -> etl::add_pointer_t<T const>
 {
-    if (holds_alternative<T>(*pv)) {
-        using storage_t = detail::variant_storage<Types...>;
-        return &detail::variant_storage_type_get<T, storage_t>::get(
-            *pv->data());
-    }
-
+    using idx  = decltype((*v).data()->get_index(etl::declval<T>()));
+    using ic_t = etl::integral_constant<etl::size_t, idx::value>;
+    if (holds_alternative<T>(*v)) { return &(v->data()->get_value(ic_t {})); }
     return nullptr;
 }
 
