@@ -303,7 +303,7 @@ public:
 
 private:
     detail::variant_storage_for<Types...> data_;
-    internal_size_t index_;
+    internal_size_t index_ { 0 };
 };
 
 /// \brief Overloads the swap algorithm for variant. Effectively calls
