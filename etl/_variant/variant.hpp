@@ -6,6 +6,7 @@
 #define TETL_VARIANT_VARIANT_HPP
 
 #include "etl/_array/array.hpp"
+#include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
@@ -153,6 +154,10 @@ struct variant_storage_type_get<Target, variant_storage<Head, Tail...>> {
         = variant_storage_type_get<Target, variant_storage<Tail...>>::index + 1;
 };
 
+template <typename... Ts>
+inline constexpr auto enable_variant_swap
+    = ((is_move_constructible_v<Ts> && is_swappable_v<Ts>)&&...);
+
 } // namespace detail
 
 /// \brief This is a special value equal to the largest value representable by
@@ -224,6 +229,10 @@ struct variant {
     /// \brief Swaps two variant objects.
     constexpr auto swap(variant& rhs) noexcept(is_swap_noexcept) -> void
     {
+        // The behavior is undefined unless lvalues of type T_i are Swappable
+        // and is_move_constructible_v<T_i> is true for all T_i in Types....
+        static_assert(detail::enable_variant_swap<Types...>);
+
         if (valueless_by_exception() && rhs.valueless_by_exception()) {
             return;
         }
@@ -240,6 +249,19 @@ private:
     detail::variant_storage<Types...> data_;
     etl::size_t index_;
 };
+
+/// \brief Overloads the swap algorithm for variant. Effectively calls
+/// lhs.swap(rhs).
+///
+/// \details This overload participates in overload resolution only if
+/// is_move_constructible_v<T_i> and is_swappable_v<T_i> are both true for all
+/// T_i in Types...
+template <typename... Ts, TETL_REQUIRES_(detail::enable_variant_swap<Ts...>)>
+constexpr auto swap(etl::variant<Ts...>& lhs,
+    etl::variant<Ts...>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+{
+    lhs.swap(rhs);
+}
 
 /// \brief Checks if the variant v holds the alternative T. The call is
 /// ill-formed if T does not appear exactly once in Types...
