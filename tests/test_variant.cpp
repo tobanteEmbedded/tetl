@@ -3,7 +3,20 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 #include "etl/variant.hpp"
 
+#include "etl/type_traits.hpp"
+
 #include "catch2/catch_template_test_macros.hpp"
+
+TEST_CASE("variant: bad_variant_access", "[variant]")
+{
+    using etl::is_base_of_v;
+    using etl::is_constructible_v;
+    using etl::is_default_constructible_v;
+
+    STATIC_REQUIRE(is_default_constructible_v<etl::bad_variant_access>);
+    STATIC_REQUIRE(is_constructible_v<etl::bad_variant_access, char const*>);
+    STATIC_REQUIRE(is_base_of_v<etl::exception, etl::bad_variant_access>);
+}
 
 TEST_CASE("variant: monostate", "[variant]")
 {
