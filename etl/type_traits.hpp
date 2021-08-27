@@ -30,8 +30,6 @@
 #include "etl/_type_traits/extent.hpp"
 #include "etl/_type_traits/has_unique_object_representations.hpp"
 #include "etl/_type_traits/has_virtual_destructor.hpp"
-#include "etl/_type_traits/index_sequence.hpp"
-#include "etl/_type_traits/integer_sequence.hpp"
 #include "etl/_type_traits/invoke_result.hpp"
 #include "etl/_type_traits/is_abstract.hpp"
 #include "etl/_type_traits/is_aggregate.hpp"

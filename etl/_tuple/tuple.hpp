@@ -10,7 +10,6 @@
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 #include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/index_sequence.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_copy_constructible.hpp"
@@ -22,6 +21,7 @@
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_utility/forward.hpp"
+#include "etl/_utility/index_sequence.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/swap.hpp"
 

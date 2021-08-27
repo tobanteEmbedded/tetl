@@ -7,8 +7,8 @@
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/index_sequence.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_utility/index_sequence.hpp"
 
 namespace etl {
 namespace detail {

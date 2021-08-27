@@ -18,6 +18,8 @@
 #include "etl/_utility/in_place_index.hpp"
 #include "etl/_utility/in_place_type.hpp"
 #include "etl/_utility/in_range.hpp"
+#include "etl/_utility/index_sequence.hpp"
+#include "etl/_utility/integer_sequence.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/move_if_noexcept.hpp"
 #include "etl/_utility/pair.hpp"

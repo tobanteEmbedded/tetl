@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_TYPE_TRAITS_INTEGER_SEQUENCE_HPP
-#define TETL_TYPE_TRAITS_INTEGER_SEQUENCE_HPP
+#ifndef TETL_UTILITY_INTEGER_SEQUENCE_HPP
+#define TETL_UTILITY_INTEGER_SEQUENCE_HPP
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_cstddef/size_t.hpp"
@@ -38,4 +38,4 @@ using make_integer_sequence = TETL_BUILTIN_INT_SEQ(T, Size);
 
 } // namespace etl
 
-#endif // TETL_TYPE_TRAITS_INTEGER_SEQUENCE_HPP
+#endif // TETL_UTILITY_INTEGER_SEQUENCE_HPP
