@@ -48,6 +48,7 @@ TEST_CASE("variant: sizeof", "[variant]")
         uint32_t data[4];
     };
 
+    STATIC_REQUIRE(sizeof(variant<monostate>) == 2);
     STATIC_REQUIRE(sizeof(variant<monostate, uint8_t>) == 2);
     STATIC_REQUIRE(sizeof(variant<monostate, int8_t, uint8_t>) == 2);
     STATIC_REQUIRE(sizeof(variant<monostate, char, int8_t, uint8_t>) == 2);
@@ -83,6 +84,35 @@ TEST_CASE("variant: construct", "[variant]")
         auto var = etl::variant<etl::monostate, int, float> { 143.0F };
         CHECK(etl::holds_alternative<float>(var));
         CHECK(*etl::get_if<float>(&var) == 143.0F);
+    }
+
+    SECTION("in_place_type_t")
+    {
+        struct Point {
+            Point(float initX, float initY) : x { initX }, y { initY } { }
+            float x { 0.0F };
+            float y { 0.0F };
+        };
+
+        auto v1 = etl::variant<etl::monostate, int, Point> {
+            etl::in_place_type<Point>,
+            143.0F,
+            42.0F,
+        };
+
+        CHECK(etl::holds_alternative<Point>(v1));
+        CHECK(etl::get_if<Point>(&v1)->x == 143.0F);
+        CHECK(etl::get_if<Point>(&v1)->y == 42.0F);
+
+        auto v2 = etl::variant<etl::monostate, int, Point> {
+            etl::in_place_index<2>,
+            143.0F,
+            42.0F,
+        };
+
+        CHECK(etl::holds_alternative<Point>(v2));
+        CHECK(etl::get_if<Point>(&v2)->x == 143.0F);
+        CHECK(etl::get_if<Point>(&v2)->y == 42.0F);
     }
 }
 

@@ -24,6 +24,8 @@
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/type_pack_element.hpp"
 #include "etl/_utility/forward.hpp"
+#include "etl/_utility/in_place_index.hpp"
+#include "etl/_utility/in_place_type.hpp"
 #include "etl/_utility/index_sequence.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/swap.hpp"
@@ -91,9 +93,19 @@ struct variant_storage<Index, Head> {
     template <typename T>
     constexpr auto construct(T&& head, etl::size_t& index) -> void
     {
-        static_assert(etl::is_same_v<T, Head>,
-            "Tried to access non-existent type in union");
+        // Tried to access non-existent type in union
+        static_assert(etl::is_same_v<T, Head>);
         new (&data) Head(etl::forward<T>(head));
+        index = 0;
+    }
+
+    template <typename T, typename... Args>
+    constexpr auto construct(etl::in_place_type_t<T> /*tag*/,
+        etl::size_t& index, Args&&... args) -> void
+    {
+        // Tried to access non-existent type in union
+        static_assert(etl::is_same_v<T, Head>);
+        new (&data) Head(etl::forward<Args>(args)...);
         index = 0;
     }
 
@@ -149,10 +161,26 @@ struct variant_storage<Index, Head, Tail...> {
         index = 0;
     }
 
+    template <typename... Args>
+    constexpr auto construct(etl::in_place_type_t<Head> /*tag*/,
+        etl::size_t& index, Args&&... args) -> void
+    {
+        new (&data) Head(etl::forward<Args>(args));
+        index = 0;
+    }
+
     template <typename T>
     constexpr auto construct(T&& t, etl::size_t& index) -> void
     {
         tail.construct(etl::forward<T>(t), index);
+        ++index;
+    }
+
+    template <typename T, typename... Args>
+    constexpr auto construct(
+        etl::in_place_type_t<T> tag, etl::size_t& index, Args&&... args) -> void
+    {
+        tail.construct(tag, index, etl::forward<Args>(args)...);
         ++index;
     }
 
@@ -228,14 +256,58 @@ private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Types)>;
 
 public:
-    /// \brief Converting constructor.
+    /// \brief (4) Converting constructor.
     /// \details Constructs a variant holding the alternative type T.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/variant/variant
     template <typename T>
     explicit variant(T&& t)
     {
         auto tmpIndex = etl::size_t { index_ };
         data_.construct(etl::forward<T>(t), tmpIndex);
         index_ = static_cast<internal_size_t>(tmpIndex);
+    }
+
+    /// \brief (5) Constructs a variant with the specified alternative T and
+    /// initializes the contained value with the arguments
+    /// etl::forward<Args>(args)....
+    ///
+    /// \details This overload participates in overload resolution only if there
+    /// is exactly one occurrence of T in Types... and
+    /// etl::is_constructible_v<T, Args...> is true.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/variant/variant
+    ///
+    /// \todo Improve sfinae (single unique type in variant)
+    template <typename T, typename... Args,
+        TETL_REQUIRES_(etl::is_constructible_v<T, Args...>)>
+    constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
+    {
+        auto tmpIndex = etl::size_t { index_ };
+        data_.construct(tag, tmpIndex, etl::forward<Args>(args)...);
+        index_ = static_cast<internal_size_t>(tmpIndex);
+    }
+
+    template <etl::size_t I, typename... Args>
+    static constexpr auto _ctor_7
+        = (I < sizeof...(Types))
+          && (etl::is_constructible_v<etl::variant_alternative_t<I, variant>,
+              Args...>); // NOLINT
+
+    /// \brief (7) Constructs a variant with the alternative T_i specified by
+    /// the index I and initializes the contained value with the arguments
+    /// etl::forward<Args>(args)...
+    ///
+    /// \details This overload participates in overload resolution only if I <
+    /// sizeof...(Types) and etl::is_constructible_v<T_i, Args...> is true.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/variant/variant
+    template <etl::size_t I, typename... Args,
+        TETL_REQUIRES_(_ctor_7<I, Args...>)>
+    constexpr explicit variant(etl::in_place_index_t<I> tag, Args&&... args)
+        : variant(etl::in_place_type<etl::variant_alternative_t<I, variant>>,
+            etl::forward<Args>(args)...)
+    {
     }
 
     /// \brief If valueless_by_exception is true, does nothing. Otherwise,
