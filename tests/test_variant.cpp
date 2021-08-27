@@ -132,13 +132,20 @@ TEST_CASE("variant: swap", "[variant]")
     CHECK(*etl::get_if<int>(&r) == 42);
 }
 
-TEST_CASE("variant: operator==", "[variant]")
+TEST_CASE("variant: compare", "[variant]")
 {
     CHECK_FALSE(etl::variant<int> { 41 } == etl::variant<int> { 42 });
     CHECK(etl::variant<int> { 42 } == etl::variant<int> { 42 });
 
     CHECK(etl::variant<int> { 41 } != etl::variant<int> { 42 });
+    CHECK(etl::variant<int> { 41 } <= etl::variant<int> { 42 });
+    CHECK(etl::variant<int> { 42 } >= etl::variant<int> { 42 });
+    CHECK(etl::variant<int> { 42 } <= etl::variant<int> { 42 });
+
+    CHECK_FALSE(etl::variant<int> { 41 } >= etl::variant<int> { 42 });
     CHECK_FALSE(etl::variant<int> { 42 } != etl::variant<int> { 42 });
+    CHECK_FALSE(etl::variant<int> { 42 } < etl::variant<int> { 42 });
+    CHECK_FALSE(etl::variant<int> { 42 } > etl::variant<int> { 42 });
 }
 
 TEST_CASE("variant: holds_alternative", "[variant]")

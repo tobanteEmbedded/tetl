@@ -8,7 +8,11 @@
 #include "etl/_array/array.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/size_t.hpp"
-#include "etl/_functional//equal_to.hpp"
+#include "etl/_functional/equal_to.hpp"
+#include "etl/_functional/greater.hpp"
+#include "etl/_functional/greater_equal.hpp"
+#include "etl/_functional/less.hpp"
+#include "etl/_functional/less_equal.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
@@ -56,22 +60,23 @@ inline constexpr auto variant_swap_table
 template <typename Variant>
 using variant_cmp_func_t = bool (*)(Variant const&, Variant const&);
 
-// compare equal
-template <typename Variant, etl::size_t Index>
-constexpr auto variant_equal_func(Variant const& l, Variant const& r) -> bool
+template <typename Op, typename Variant, etl::size_t Index>
+constexpr auto variant_compare_func(Variant const& l, Variant const& r) -> bool
 {
-    return etl::equal_to<>()(*etl::get_if<Index>(&l), *etl::get_if<Index>(&r));
+    return Op {}(*etl::get_if<Index>(&l), *etl::get_if<Index>(&r));
 }
 
-template <typename Variant, etl::size_t... Indices>
-constexpr auto make_variant_equal_table(etl::index_sequence<Indices...> /*is*/)
+template <typename Op, typename Variant, etl::size_t... Indices>
+constexpr auto make_variant_compare_table(
+    etl::index_sequence<Indices...> /*is*/)
 {
-    return etl::array { &variant_equal_func<Variant, Indices>... };
+    return etl::array { &variant_compare_func<Op, Variant, Indices>... };
 }
 
-template <typename Variant, typename... Ts>
-inline constexpr auto variant_equal_table
-    = make_variant_equal_table<Variant>(etl::index_sequence_for<Ts...> {});
+template <typename Op, typename Variant, typename... Ts>
+inline constexpr auto variant_compare_table
+    = make_variant_compare_table<Op, Variant>(
+        etl::index_sequence_for<Ts...> {});
 
 template <typename...>
 struct variant_storage;
@@ -294,23 +299,110 @@ template <typename... Ts>
 constexpr auto operator==(
     etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
 {
-    TETL_ASSERT(!lhs.valueless_by_exception());
-    TETL_ASSERT(!rhs.valueless_by_exception());
-
-    using var_t = etl::variant<Ts...>;
-    if (lhs.index() != rhs.index()) { return false; }
-    return detail::variant_equal_table<var_t, Ts...>[lhs.index()](lhs, rhs);
+    using var_t  = etl::variant<Ts...>;
+    using cmp_t  = etl::equal_to<>;
+    auto const i = lhs.index();
+    if (i != rhs.index()) { return false; }
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
 }
 
-/// \brief Equality operator for variants:
-///     - If lhs.index() != rhs.index(), returns false;
-///     - If lhs.valueless_by_exception(), returns true;
-///     - Otherwise returns get<lhs.index()>(lhs) == get<lhs.index()>(rhs)
+/// \brief Inequality operator for variants:
+///     - If lhs.index() != rhs.index(), returns true;
+///     - If lhs.valueless_by_exception(), returns false;
+///     - Otherwise returns get<lhs.index()>(lhs) != get<lhs.index()>(rhs)
 template <typename... Ts>
 constexpr auto operator!=(
     etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
 {
     return !(lhs == rhs);
+}
+
+/// \brief Less-than operator for variants:
+///     - If rhs.valueless_by_exception(), returns false;
+///     - If lhs.valueless_by_exception(), returns true;
+///     - If lhs.index() < rhs.index(), returns true;
+///     - If lhs.index() > rhs.index(), returns false;
+///     - Otherwise returns get<lhs.index()>(v) < get<lhs.index()>(w)
+template <typename... Ts>
+constexpr auto operator<(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    // if (rhs.valueless_by_exception()) { return false; }
+    // if (lhs.valueless_by_exception()) { return true; }
+
+    auto const i = lhs.index();
+    if (i < rhs.index()) { return true; }
+    if (i > rhs.index()) { return false; }
+
+    using var_t = etl::variant<Ts...>;
+    using cmp_t = etl::less<>;
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+}
+
+/// \brief Less-equal operator for variants:
+///     - If lhs.valueless_by_exception(), returns true;
+///     - If rhs.valueless_by_exception(), returns false;
+///     - If lhs.index() < rhs.index(), returns true;
+///     - If lhs.index() > rhs.index(), returns false;
+///     - Otherwise returns get<lhs.index()>(v) <= get<lhs.index()>(w)
+template <typename... Ts>
+constexpr auto operator<=(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    // if (lhs.valueless_by_exception()) { return true; }
+    // if (rhs.valueless_by_exception()) { return false; }
+
+    auto const i = lhs.index();
+    if (i < rhs.index()) { return true; }
+    if (i > rhs.index()) { return false; }
+
+    using var_t = etl::variant<Ts...>;
+    using cmp_t = etl::less_equal<>;
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+}
+
+/// \brief Greater-than operator for variants:
+///     - If lhs.valueless_by_exception(), returns false;
+///     - If rhs.valueless_by_exception(), returns true;
+///     - If lhs.index() > rhs.index(), returns true;
+///     - If lhs.index() < rhs.index(), returns false;
+///     - Otherwise returns get<lhs.index()>(v) > get<lhs.index()>(w)
+template <typename... Ts>
+constexpr auto operator>(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    // if (lhs.valueless_by_exception()) { return false; }
+    // if (rhs.valueless_by_exception()) { return true; }
+
+    auto const i = lhs.index();
+    if (i > rhs.index()) { return true; }
+    if (i < rhs.index()) { return false; }
+
+    using var_t = etl::variant<Ts...>;
+    using cmp_t = etl::greater<>;
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
+}
+
+/// \brief Greater-equal operator for variants:
+///     - If lhs.valueless_by_exception(), returns false;
+///     - If rhs.valueless_by_exception(), returns true;
+///     - If lhs.index() > rhs.index(), returns true;
+///     - If lhs.index() < rhs.index(), returns false;
+///     - Otherwise returns get<lhs.index()>(v) >= get<lhs.index()>(w)
+template <typename... Ts>
+constexpr auto operator>=(
+    etl::variant<Ts...> const& lhs, etl::variant<Ts...> const& rhs) -> bool
+{
+    // if (lhs.valueless_by_exception()) { return false; }
+    // if (rhs.valueless_by_exception()) { return true; }
+
+    auto const i = lhs.index();
+    if (i > rhs.index()) { return true; }
+    if (i < rhs.index()) { return false; }
+
+    using var_t = etl::variant<Ts...>;
+    using cmp_t = etl::greater_equal<>;
+    return detail::variant_compare_table<cmp_t, var_t, Ts...>[i](lhs, rhs);
 }
 
 /// \brief Checks if the variant v holds the alternative T. The call is
