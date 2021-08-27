@@ -308,6 +308,28 @@ constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     return nullptr;
 }
 
+template <typename T>
+struct variant_size;
+
+template <typename... Ts>
+struct variant_size<variant<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
+};
+
+template <typename T>
+struct variant_size<T const> : variant_size<T>::type {
+};
+
+template <typename T>
+struct variant_size<T volatile> : variant_size<T>::type {
+};
+
+template <typename T>
+struct variant_size<T const volatile> : variant_size<T>::type {
+};
+
+template <typename T>
+inline constexpr auto variant_size_v = variant_size<T>::value;
+
 } // namespace etl
 
 #endif // TETL_VARIANT_VARIANT_HPP

@@ -154,3 +154,16 @@ TEST_CASE("variant: get_if", "[variant]")
         CHECK(etl::get_if<double>(&var) == nullptr);
     }
 }
+
+TEST_CASE("variant: variant_size", "[variant]")
+{
+    using t1 = etl::variant<etl::monostate>;
+    using t2 = etl::variant<etl::monostate, int>;
+    using t3 = etl::variant<etl::monostate, int, float>;
+    using t4 = etl::variant<etl::monostate, int, float, double>;
+
+    STATIC_REQUIRE(etl::variant_size_v<t1> == 1);
+    STATIC_REQUIRE(etl::variant_size_v<t2> == 2);
+    STATIC_REQUIRE(etl::variant_size_v<t3> == 3);
+    STATIC_REQUIRE(etl::variant_size_v<t4> == 4);
+}
