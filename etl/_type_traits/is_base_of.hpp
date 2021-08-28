@@ -34,9 +34,14 @@ auto test_pre_is_base_of(int)
 /// https://en.cppreference.com/w/cpp/types/is_base_of
 template <typename Base, typename Derived>
 struct is_base_of
-    : bool_constant<
-          is_class_v<
-              Base> and is_class_v<Derived>and decltype(detail::test_pre_is_base_of<Base, Derived>(0))::value> {
+    // clang-format off
+    : etl::bool_constant<
+          etl::is_class_v<Base>
+          && etl::is_class_v<Derived>
+          && decltype(detail::test_pre_is_base_of<Base, Derived>(0))::value
+    >
+// clang-format on
+{
 };
 
 template <typename Base, typename Derived>

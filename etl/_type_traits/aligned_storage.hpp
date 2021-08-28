@@ -16,7 +16,7 @@ namespace detail {
 // equals the behavoir from libc++ and MSVC-STL. Copied from
 // https://github.com/WG21-SG14/SG14/commit/98baf1aeab
 // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61458#c10
-template <size_t Cap>
+template <etl::size_t Cap>
 union aligned_storage_impl {
     template <typename T>
     using maybe = conditional_t<(Cap >= sizeof(T)), T, char>;
@@ -48,7 +48,8 @@ union aligned_storage_impl {
 /// default value is not used, Align must be the value of alignof(T) for some
 /// type T, or the behavior is undefined.
 /// \group aligned_storage
-template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+template <etl::size_t Len,
+    etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 struct aligned_storage {
     struct type {
         alignas(Align) unsigned char data[Len];
@@ -56,8 +57,9 @@ struct aligned_storage {
 };
 
 /// \group aligned_storage
-template <size_t Len, size_t Align = alignof(detail::aligned_storage_impl<Len>)>
-using aligned_storage_t = typename aligned_storage<Len, Align>::type;
+template <etl::size_t Len,
+    etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+using aligned_storage_t = typename etl::aligned_storage<Len, Align>::type;
 
 } // namespace etl
 

@@ -34,7 +34,7 @@ struct common_type_2_impl {
 };
 
 template <typename T1, typename T2>
-struct common_type_2_impl<T1, T2, void_t<cond_t<T1, T2>>> {
+struct common_type_2_impl<T1, T2, etl::void_t<cond_t<T1, T2>>> {
     using type = etl::decay_t<cond_t<T1, T2>>;
 };
 
@@ -43,15 +43,15 @@ struct common_type_multi_impl {
 };
 
 template <typename T1, typename T2, typename... R>
-struct common_type_multi_impl<void_t<typename common_type<T1, T2>::type>, T1,
-    T2, R...> : common_type<typename common_type<T1, T2>::type, R...> {
+struct common_type_multi_impl<etl::void_t<typename common_type<T1, T2>::type>,
+    T1, T2, R...> : common_type<typename common_type<T1, T2>::type, R...> {
 };
 } // namespace detail
 
 /// \exclude
 template <typename T1, typename T2>
 struct common_type<T1, T2>
-    : detail::common_type_2_impl<decay_t<T1>, decay_t<T2>> {
+    : detail::common_type_2_impl<etl::decay_t<T1>, etl::decay_t<T2>> {
 };
 
 /// \exclude
@@ -62,7 +62,7 @@ struct common_type<T1, T2, R...>
 
 /// \group common_type
 template <typename... T>
-using common_type_t = typename common_type<T...>::type;
+using common_type_t = typename etl::common_type<T...>::type;
 
 } // namespace etl
 

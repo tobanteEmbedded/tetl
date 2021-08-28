@@ -18,7 +18,7 @@ struct add_volatile {
 
 /// \group add_volatile
 template <typename T>
-using add_volatile_t = typename add_volatile<T>::type;
+using add_volatile_t = typename etl::add_volatile<T>::type;
 
 } // namespace etl
 

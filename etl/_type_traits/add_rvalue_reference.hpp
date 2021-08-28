@@ -24,7 +24,7 @@ struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0)) {
 
 /// \group add_rvalue_reference
 template <typename T>
-using add_rvalue_reference_t = typename add_rvalue_reference<T>::type;
+using add_rvalue_reference_t = typename etl::add_rvalue_reference<T>::type;
 
 } // namespace etl
 

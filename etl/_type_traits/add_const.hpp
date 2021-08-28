@@ -18,7 +18,7 @@ struct add_const {
 
 /// \group add_const
 template <typename T>
-using add_const_t = typename add_const<T>::type;
+using add_const_t = typename etl::add_const<T>::type;
 
 } // namespace etl
 

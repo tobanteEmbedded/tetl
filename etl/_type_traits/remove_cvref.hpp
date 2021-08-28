@@ -19,12 +19,12 @@ namespace etl {
 /// \group remove_cvref
 template <typename T>
 struct remove_cvref {
-    using type = remove_cv_t<remove_reference_t<T>>;
+    using type = etl::remove_cv_t<etl::remove_reference_t<T>>;
 };
 
 /// \group remove_cvref
 template <typename T>
-using remove_cvref_t = typename remove_cvref<T>::type;
+using remove_cvref_t = etl::remove_cv_t<etl::remove_reference_t<T>>;
 
 } // namespace etl
 

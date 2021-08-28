@@ -17,7 +17,7 @@ struct is_abstract : bool_constant<TETL_BUILTIN_IS_ABSTRACT(T)> {
 
 /// \group is_abstract
 template <typename T>
-inline constexpr bool is_abstract_v = is_abstract<T>::value;
+inline constexpr bool is_abstract_v = TETL_BUILTIN_IS_ABSTRACT(T);
 
 } // namespace etl
 

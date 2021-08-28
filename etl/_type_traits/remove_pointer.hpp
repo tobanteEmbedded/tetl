@@ -42,7 +42,7 @@ struct remove_pointer<T* const volatile> {
 
 /// \group remove_pointer
 template <typename T>
-using remove_pointer_t = typename remove_pointer<T>::type;
+using remove_pointer_t = typename etl::remove_pointer<T>::type;
 
 } // namespace etl
 

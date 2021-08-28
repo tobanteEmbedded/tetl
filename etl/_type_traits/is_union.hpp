@@ -17,7 +17,7 @@ struct is_union : bool_constant<TETL_BUILTIN_IS_UNION(T)> {
 
 /// \group is_union
 template <typename T>
-inline constexpr bool is_union_v = is_union<T>::value;
+inline constexpr bool is_union_v = TETL_BUILTIN_IS_UNION(T);
 
 } // namespace etl
 

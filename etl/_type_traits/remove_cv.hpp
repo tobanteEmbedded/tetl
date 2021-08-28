@@ -16,14 +16,14 @@ namespace etl {
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
 /// \group remove_cv
-template <typename Type>
+template <typename T>
 struct remove_cv {
-    using type = remove_const_t<remove_volatile_t<Type>>;
+    using type = etl::remove_const_t<etl::remove_volatile_t<T>>;
 };
 
 /// \group remove_cv
 template <typename T>
-using remove_cv_t = typename remove_cv<T>::type;
+using remove_cv_t = etl::remove_const_t<etl::remove_volatile_t<T>>;
 
 } // namespace etl
 

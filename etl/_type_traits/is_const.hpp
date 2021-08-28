@@ -14,17 +14,17 @@ namespace etl {
 /// is false.
 /// \group is_const
 template <typename T>
-struct is_const : false_type {
+struct is_const : etl::false_type {
 };
 
 /// \exclude
 template <typename T>
-struct is_const<const T> : true_type {
+struct is_const<T const> : etl::true_type {
 };
 
 /// \group is_const
 template <typename T>
-inline constexpr bool is_const_v = is_const<T>::value;
+inline constexpr bool is_const_v = etl::is_const<T>::value;
 
 } // namespace etl
 

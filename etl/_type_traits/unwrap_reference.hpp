@@ -29,7 +29,7 @@ struct unwrap_ref_decay
 };
 
 template <typename T>
-using unwrap_ref_decay_t = typename unwrap_ref_decay<T>::type;
+using unwrap_ref_decay_t = typename etl::unwrap_ref_decay<T>::type;
 
 } // namespace etl
 

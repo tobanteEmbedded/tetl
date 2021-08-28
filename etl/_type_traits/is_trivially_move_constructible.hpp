@@ -17,12 +17,12 @@ namespace etl {
 /// value equal to etl::is_trivially_constructible<T, T&&>::value.
 template <typename T>
 struct is_trivially_move_constructible
-    : is_trivially_constructible<T, add_rvalue_reference_t<T>> {
+    : etl::is_trivially_constructible<T, etl::add_rvalue_reference_t<T>> {
 };
 
 template <typename T>
 inline constexpr auto is_trivially_move_constructible_v
-    = is_trivially_move_constructible<T>::value;
+    = etl::is_trivially_move_constructible<T>::value;
 
 } // namespace etl
 

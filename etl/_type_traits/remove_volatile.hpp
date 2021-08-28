@@ -25,7 +25,7 @@ struct remove_volatile<Type volatile> {
 
 /// \group remove_volatile
 template <typename T>
-using remove_volatile_t = typename remove_volatile<T>::type;
+using remove_volatile_t = typename etl::remove_volatile<T>::type;
 
 } // namespace etl
 

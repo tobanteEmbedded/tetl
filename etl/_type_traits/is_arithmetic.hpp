@@ -18,11 +18,12 @@ namespace etl {
 /// (since C++17) is undefined.
 template <typename T>
 struct is_arithmetic
-    : bool_constant<is_integral_v<T> || is_floating_point_v<T>> {
+    : etl::bool_constant<etl::is_integral_v<T> || etl::is_floating_point_v<T>> {
 };
 
 template <typename T>
-inline constexpr bool is_arithmetic_v = is_arithmetic<T>::value;
+inline constexpr bool is_arithmetic_v
+    = etl::is_integral_v<T> || etl::is_floating_point_v<T>;
 
 } // namespace etl
 

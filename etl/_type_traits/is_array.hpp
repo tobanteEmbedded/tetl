@@ -17,22 +17,22 @@ namespace etl {
 /// is_array_v is undefined.
 /// \group is_array
 template <typename T>
-struct is_array : false_type {
+struct is_array : etl::false_type {
 };
 
 /// \exclude
 template <typename T>
-struct is_array<T[]> : true_type {
+struct is_array<T[]> : etl::true_type {
 };
 
 /// \exclude
-template <typename T, size_t N>
-struct is_array<T[N]> : true_type {
+template <typename T, etl::size_t N>
+struct is_array<T[N]> : etl::true_type {
 };
 
 /// \group is_array
 template <typename T>
-inline constexpr bool is_array_v = is_array<T>::value;
+inline constexpr bool is_array_v = etl::is_array<T>::value;
 
 } // namespace etl
 

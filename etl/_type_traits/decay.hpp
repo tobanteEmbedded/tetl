@@ -21,15 +21,17 @@ namespace etl {
 template <typename T>
 struct decay {
 private:
-    using U = remove_reference_t<T>;
+    using U = etl::remove_reference_t<T>;
 
 public:
-    using type = conditional_t<is_array_v<U>, remove_extent_t<U>*,
-        conditional_t<is_function_v<U>, add_pointer_t<U>, remove_cv_t<U>>>;
+    using type
+        = etl::conditional_t<etl::is_array_v<U>, etl::remove_extent_t<U>*,
+            etl::conditional_t<etl::is_function_v<U>, etl::add_pointer_t<U>,
+                etl::remove_cv_t<U>>>;
 };
 
 template <typename T>
-using decay_t = typename decay<T>::type;
+using decay_t = typename etl::decay<T>::type;
 
 } // namespace etl
 

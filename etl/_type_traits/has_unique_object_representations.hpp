@@ -30,12 +30,12 @@ namespace etl {
 template <typename T>
 struct has_unique_object_representations
     : bool_constant<TETL_BUILTIN_HAS_UNIQUE_OBJECT_REPRESENTATION(
-          remove_cv_t<remove_all_extents_t<T>>)> {
+          etl::remove_cv_t<etl::remove_all_extents_t<T>>)> {
 };
 
 template <typename T>
 inline constexpr bool has_unique_object_representations_v
-    = has_unique_object_representations<T>::value;
+    = etl::has_unique_object_representations<T>::value;
 
 } // namespace etl
 

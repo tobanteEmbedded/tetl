@@ -27,7 +27,7 @@ struct remove_reference<T&&> {
 
 /// \group remove_reference
 template <typename T>
-using remove_reference_t = typename remove_reference<T>::type;
+using remove_reference_t = typename etl::remove_reference<T>::type;
 
 } // namespace etl
 

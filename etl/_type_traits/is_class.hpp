@@ -12,12 +12,12 @@ namespace etl {
 
 /// \group is_class
 template <typename T>
-struct is_class : bool_constant<TETL_BUILTIN_IS_CLASS(T)> {
+struct is_class : etl::bool_constant<TETL_BUILTIN_IS_CLASS(T)> {
 };
 
 /// \group is_class
 template <typename T>
-inline constexpr bool is_class_v = is_class<T>::value;
+inline constexpr bool is_class_v = TETL_BUILTIN_IS_CLASS(T);
 
 } // namespace etl
 

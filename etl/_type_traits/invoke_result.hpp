@@ -73,7 +73,7 @@ struct invoke_result : detail::invoke_result<void, F, ArgTypes...> {
 
 /// \group invoke_result
 template <typename F, typename... ArgTypes>
-using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
+using invoke_result_t = typename etl::invoke_result<F, ArgTypes...>::type;
 
 } // namespace etl
 

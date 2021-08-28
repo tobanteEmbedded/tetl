@@ -28,7 +28,7 @@ struct underlying_type : detail::underlying_type_impl<T> {
 };
 
 template <typename T>
-using underlying_type_t = typename underlying_type<T>::type;
+using underlying_type_t = typename etl::underlying_type<T>::type;
 
 } // namespace etl
 

@@ -24,7 +24,8 @@ struct is_constructible_helper<
 } // namespace detail
 
 template <typename T, typename... Args>
-using is_constructible = detail::is_constructible_helper<void_t<>, T, Args...>;
+using is_constructible
+    = detail::is_constructible_helper<etl::void_t<>, T, Args...>;
 
 template <typename T, typename... Args>
 inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;

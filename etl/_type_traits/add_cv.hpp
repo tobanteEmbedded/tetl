@@ -18,7 +18,7 @@ struct add_cv {
 
 /// \group add_cv
 template <typename T>
-using add_cv_t = typename add_cv<T>::type;
+using add_cv_t = typename etl::add_cv<T>::type;
 
 } // namespace etl
 
