@@ -531,8 +531,6 @@ constexpr auto holds_alternative(etl::variant<Types...> const& v) noexcept
 /// pv->index() == I, returns a pointer to the value stored in the variant
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
-///
-/// \todo Implement
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* pv) noexcept
     -> etl::add_pointer_t<etl::variant_alternative_t<I, etl::variant<Types...>>>
@@ -545,8 +543,6 @@ constexpr auto get_if(etl::variant<Types...>* pv) noexcept
 /// pv->index() == I, returns a pointer to the value stored in the variant
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
-///
-/// \todo Implement
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
     -> etl::add_pointer_t<

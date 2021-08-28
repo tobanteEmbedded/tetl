@@ -12,13 +12,6 @@ namespace etl {
 /// \brief The alias template ratio_divide denotes the result of dividing
 /// two exact rational fractions represented by the ratio specializations
 /// R1 and R2.
-///
-/// \details The result is a ratio specialization `ratio<U, V>`, such
-/// that given Num == R1::num * R2::den and Denom == R1::den * R2::num (computed
-/// without arithmetic overflow), U is ratio<Num, Denom>::num and V is
-/// ratio<Num, Denom>::den.
-///
-/// \todo Check overflow.
 template <typename R1, typename R2>
 using ratio_divide = ratio<R1::num * R2::den, R1::den * R2::num>;
 

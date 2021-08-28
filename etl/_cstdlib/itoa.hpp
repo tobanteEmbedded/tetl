@@ -17,8 +17,6 @@ namespace etl {
 /// \details If base is 10 and value is negative, the resulting string is
 /// preceded with a minus sign (-). With any other base, value is always
 /// considered unsigned.
-///
-/// \todo Only base 10 is currently supported.
 constexpr auto itoa(int val, char* const buffer, int base) -> char*
 {
     auto res = detail::int_to_ascii<int>(val, buffer, base);
