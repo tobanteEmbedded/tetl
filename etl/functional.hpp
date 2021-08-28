@@ -7,6 +7,7 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_functional/bind_front.hpp"
 #include "etl/_functional/bit_and.hpp"
 #include "etl/_functional/bit_not.hpp"
 #include "etl/_functional/bit_or.hpp"
