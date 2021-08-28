@@ -64,6 +64,22 @@ TEST_CASE("variant: sizeof", "[variant]")
 
 TEST_CASE("variant: construct", "[variant]")
 {
+    struct S {
+        S() : x { 42 } { }
+        int x; // NOLINT
+    };
+
+    SECTION("default")
+    {
+        auto v1 = etl::variant<int, float> {};
+        CHECK(etl::holds_alternative<int>(v1));
+        auto v2 = etl::variant<float, int> {};
+        CHECK(etl::holds_alternative<float>(v2));
+        auto v3 = etl::variant<S, int> {};
+        CHECK(etl::holds_alternative<S>(v3));
+        CHECK(etl::get_if<S>(&v3)->x == 42);
+    }
+
     SECTION("monostate")
     {
         auto var

@@ -19,6 +19,8 @@
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_type_traits/is_default_constructible.hpp"
+#include "etl/_type_traits/is_nothrow_default_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_type_traits/is_same.hpp"
@@ -165,7 +167,7 @@ struct variant_storage<Index, Head, Tail...> {
     constexpr auto construct(etl::in_place_type_t<Head> /*tag*/,
         etl::size_t& index, Args&&... args) -> void
     {
-        new (&data) Head(etl::forward<Args>(args));
+        new (&data) Head(etl::forward<Args>(args)...);
         index = 0;
     }
 
@@ -254,8 +256,18 @@ template <typename... Types>
 struct variant {
 private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Types)>;
+    using first_type      = etl::type_pack_element_t<0, Types...>;
 
 public:
+    TETL_REQUIRES(etl::is_default_constructible_v<first_type>)
+    constexpr variant() noexcept(
+        noexcept(etl::is_nothrow_default_constructible_v<first_type>))
+    {
+        auto tmpIndex = etl::size_t { index_ };
+        data_.construct(etl::in_place_type<first_type>, tmpIndex);
+        index_ = static_cast<internal_size_t>(tmpIndex);
+    }
+
     /// \brief (4) Converting constructor.
     /// \details Constructs a variant holding the alternative type T.
     ///
