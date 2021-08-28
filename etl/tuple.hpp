@@ -10,6 +10,7 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_tuple/apply.hpp"
 #include "etl/_tuple/ignore.hpp"
 #include "etl/_tuple/make_from_tuple.hpp"
 #include "etl/_tuple/make_tuple.hpp"
