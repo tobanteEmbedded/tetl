@@ -1596,6 +1596,44 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_copy_constructible",
     STATIC_REQUIRE(is_trivially_copy_constructible_v<TCC const volatile>);
 }
 
+namespace detail {
+struct trivial_type {
+};
+
+} // namespace detail
+
+TEMPLATE_TEST_CASE("type_traits: is_trivial", "[type_traits]", bool,
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t, float, double, long double,
+    detail::trivial_type)
+{
+    using T = TestType;
+
+    STATIC_REQUIRE(etl::is_trivial_v<T>);
+    STATIC_REQUIRE(etl::is_trivial_v<T const>);
+    STATIC_REQUIRE(etl::is_trivial_v<T volatile>);
+    STATIC_REQUIRE(etl::is_trivial_v<T const volatile>);
+
+    STATIC_REQUIRE(etl::is_trivial_v<T*>);
+    STATIC_REQUIRE(etl::is_trivial_v<T const*>);
+    STATIC_REQUIRE(etl::is_trivial_v<T volatile*>);
+    STATIC_REQUIRE(etl::is_trivial_v<T const volatile*>);
+
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<T&>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<T const&>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<T volatile&>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<T const volatile&>);
+
+    struct non_trivial_type {
+        non_trivial_type() { } // NOLINT
+    };
+
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<non_trivial_type>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<non_trivial_type const>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<non_trivial_type volatile>);
+    STATIC_REQUIRE_FALSE(etl::is_trivial_v<non_trivial_type const volatile>);
+}
+
 TEMPLATE_TEST_CASE("type_traits: invoke_result", "[type_traits]", etl::uint8_t,
     etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t,
     etl::uint64_t, etl::int64_t, float, double, long double)
