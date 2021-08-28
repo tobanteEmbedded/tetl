@@ -37,5 +37,6 @@
 #include "etl/_functional/placeholder.hpp"
 #include "etl/_functional/plus.hpp"
 #include "etl/_functional/reference_wrapper.hpp"
+#include "etl/_type_traits/unwrap_reference.hpp"
 
 #endif // TETL_FUNCTIONAL_HPP

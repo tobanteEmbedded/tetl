@@ -12,7 +12,7 @@
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/invoke_result.hpp"
 #include "etl/_type_traits/is_base_of.hpp"
-#include "etl/_type_traits/unwrap_ref_decay.hpp"
+#include "etl/_type_traits/unwrap_reference.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
 

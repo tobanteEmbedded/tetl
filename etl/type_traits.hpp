@@ -117,6 +117,7 @@
 #include "etl/_type_traits/remove_volatile.hpp"
 #include "etl/_type_traits/type_identity.hpp"
 #include "etl/_type_traits/underlying_type.hpp"
+#include "etl/_type_traits/unwrap_reference.hpp"
 #include "etl/_type_traits/void_t.hpp"
 
 // Also include swap, because it's declaration is visible anyway (needed by
