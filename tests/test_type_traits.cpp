@@ -1252,27 +1252,27 @@ TEST_CASE("type_traits: make_unsigned", "[type_traits]")
     using etl::make_unsigned_t;
 
     // clang-format off
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<int8_t>, uint8_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<int16_t>, uint16_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<int32_t>, uint32_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<int64_t>, uint64_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<int8_t>, uint8_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<int16_t>, uint16_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<int32_t>, uint32_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<int64_t>, uint64_t>);
 
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint8_t>, uint8_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint16_t>, uint16_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint32_t>, uint32_t>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<uint64_t>, uint64_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<uint8_t>, uint8_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<uint16_t>, uint16_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<uint32_t>, uint32_t>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<uint64_t>, uint64_t>);
 
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<signed char>, unsigned char>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<short>, unsigned short>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<int>, unsigned int>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<long>, unsigned long>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<long long>, unsigned long long>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<signed char>, unsigned char>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<short>, unsigned short>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<int>, unsigned int>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<long>, unsigned long>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<long long>, unsigned long long>);
 
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned char>, unsigned char>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned short>, unsigned short>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned int>, unsigned int>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long>, unsigned long>);
-  STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long long>, unsigned long long>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned char>, unsigned char>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned short>, unsigned short>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned int>, unsigned int>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long>, unsigned long>);
+    STATIC_REQUIRE(is_same_v<make_unsigned_t<unsigned long long>, unsigned long long>);
     // clang-format on
 }
 

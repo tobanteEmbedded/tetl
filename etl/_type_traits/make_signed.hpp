@@ -7,6 +7,62 @@
 
 namespace etl {
 
+namespace detail {
+template <typename>
+struct make_signed_helper;
+
+template <>
+struct make_signed_helper<signed char> {
+    using type = signed char;
+};
+
+template <>
+struct make_signed_helper<signed short> {
+    using type = signed short;
+};
+
+template <>
+struct make_signed_helper<signed int> {
+    using type = signed int;
+};
+
+template <>
+struct make_signed_helper<signed long> {
+    using type = signed long;
+};
+
+template <>
+struct make_signed_helper<signed long long> {
+    using type = signed long long;
+};
+
+template <>
+struct make_signed_helper<unsigned char> {
+    using type = signed char;
+};
+
+template <>
+struct make_signed_helper<unsigned short> {
+    using type = signed short;
+};
+
+template <>
+struct make_signed_helper<unsigned int> {
+    using type = signed int;
+};
+
+template <>
+struct make_signed_helper<unsigned long> {
+    using type = signed long;
+};
+
+template <>
+struct make_signed_helper<unsigned long long> {
+    using type = signed long long;
+};
+
+} // namespace detail
+
 /// \brief If T is an integral (except bool) or enumeration type, provides the
 /// member typedef type which is the unsigned integer type corresponding to T,
 /// with the same cv-qualifiers. If T is signed or unsigned char, short, int,
@@ -20,22 +76,7 @@ namespace etl {
 /// ```
 /// \group make_signed
 template <typename Type>
-struct make_signed {
-private:
-    static auto make_signed_helper(signed char) -> signed char;
-    static auto make_signed_helper(signed short) -> signed short;
-    static auto make_signed_helper(signed int) -> signed int;
-    static auto make_signed_helper(signed long) -> signed long;
-    static auto make_signed_helper(signed long long) -> signed long long;
-
-    static auto make_signed_helper(unsigned char) -> signed char;
-    static auto make_signed_helper(unsigned short) -> signed short;
-    static auto make_signed_helper(unsigned int) -> signed int;
-    static auto make_signed_helper(unsigned long) -> signed long;
-    static auto make_signed_helper(unsigned long long) -> signed long long;
-
-public:
-    using type = decltype(make_signed_helper(Type {}));
+struct make_signed : detail::make_signed_helper<Type> {
 };
 
 /// \group make_signed
