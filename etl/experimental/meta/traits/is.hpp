@@ -12,7 +12,8 @@ namespace etl::experimental::meta::traits {
 
 #define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                              \
     template <typename T>                                                      \
-    constexpr auto func(type<T> /*t*/)->etl::func<T>                           \
+        constexpr auto func(type<T>&& /*t*/)                                   \
+            ->meta::bool_constant<etl::TETL_PP_CONCAT(func, _v) < T> >         \
     {                                                                          \
         return {};                                                             \
     }

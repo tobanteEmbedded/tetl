@@ -72,21 +72,34 @@ TEMPLATE_TEST_CASE("experimental/meta: count_if", "[experimental][meta]",
     etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
     etl::int64_t)
 {
-    auto isFloat = [](auto x) {
-        return meta::traits::is_floating_point(meta::type_id(x));
+    auto const isFalse = [](auto /*x*/) { return meta::false_c; };
+    auto const isTrue  = [](auto /*x*/) { return meta::true_c; };
+
+    auto t1 = meta::make_type_tuple<TestType>();
+    STATIC_REQUIRE(meta::count_if(t1, isFalse) == meta::int_c<0>);
+    STATIC_REQUIRE(meta::count_if(t1, isTrue) == meta::int_c<1>);
+
+    auto t2 = meta::make_type_tuple<TestType, long>();
+    STATIC_REQUIRE(meta::count_if(t2, isFalse) == meta::int_c<0>);
+    STATIC_REQUIRE(meta::count_if(t2, isTrue) == meta::int_c<2>);
+
+    auto t3 = meta::make_type_tuple<TestType, long, int>();
+    STATIC_REQUIRE(meta::count_if(t3, isFalse) == meta::int_c<0>);
+    STATIC_REQUIRE(meta::count_if(t3, isTrue) == meta::int_c<3>);
+
+    auto const isFloat = [](auto x) {
+        using type_t = typename decltype(x)::name;
+        return meta::traits::is_floating_point(meta::type<type_t> {});
     };
 
-    auto t0 = meta::make_type_tuple<TestType, long, int>();
-    STATIC_REQUIRE(meta::count_if(t0, isFloat) == meta::int_c<0>);
+    auto tf1 = meta::make_type_tuple<TestType, long, int, float>();
+    STATIC_REQUIRE(meta::count_if(tf1, isFloat) == meta::int_c<1>);
 
-    // auto t1 = meta::make_type_tuple<TestType, long, int, float>();
-    // STATIC_REQUIRE(meta::count_if(t1, isFloat) == meta::int_c<1>);
+    auto tf2 = meta::make_type_tuple<TestType, long, int, float, double>();
+    STATIC_REQUIRE(meta::count_if(tf2, isFloat) == meta::int_c<2>);
 
-    // auto t2 = meta::make_type_tuple<TestType, long, int, float, double>();
-    // REQUIRE(meta::count_if(t2, isFloat) == meta::int_c<2>);
-
-    // auto t3 = meta::make_type_tuple<TestType, float, double, long double>();
-    // REQUIRE(meta::count_if(t3, isFloat) == meta::int_c<3>);
+    auto tf3 = meta::make_type_tuple<TestType, float, double, long double>();
+    STATIC_REQUIRE(meta::count_if(tf3, isFloat) == meta::int_c<3>);
 }
 
 TEMPLATE_TEST_CASE("experimental/meta: reverse", "[experimental][meta]",
