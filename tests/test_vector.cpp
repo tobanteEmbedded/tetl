@@ -35,7 +35,6 @@ TEMPLATE_TEST_CASE("vector/static_vector: trivial", "[vector]", etl::uint8_t,
 
     STATIC_REQUIRE(etl::is_trivial_v<TestType>);
     STATIC_REQUIRE(etl::is_default_constructible_v<vec_t>);
-    STATIC_REQUIRE(etl::is_trivially_copyable_v<vec_t>);
     STATIC_REQUIRE(etl::is_trivially_destructible_v<vec_t>);
 
     struct NonTrivial {
