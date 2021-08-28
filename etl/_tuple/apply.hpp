@@ -18,7 +18,7 @@ namespace etl {
 
 namespace detail {
 template <typename F, typename Tuple, etl::size_t... I>
-constexpr auto apply_impl(F&& f, Tuple&& t, etl::index_sequence<I...>)
+constexpr auto apply_impl(F&& f, Tuple&& t, etl::index_sequence<I...> /*is*/)
     -> decltype(auto)
 {
     return etl::invoke(
