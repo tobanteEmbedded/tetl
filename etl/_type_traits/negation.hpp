@@ -17,7 +17,7 @@ struct negation : etl::bool_constant<!bool(B::value)> {
 
 /// \group negation
 template <typename B>
-inline constexpr bool negation_v = etl::negation<B>::value;
+inline constexpr bool negation_v = !bool(B::value);
 
 } // namespace etl
 

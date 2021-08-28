@@ -13,24 +13,13 @@ namespace etl {
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
 /// \group conjunction
-template <typename...>
-struct conjunction : true_type {
-};
-
-/// \exclude
-template <typename Bool1>
-struct conjunction<Bool1> : Bool1 {
-};
-
-/// \exclude
-template <typename Bool1, typename... BoolN>
-struct conjunction<Bool1, BoolN...>
-    : conditional_t<bool(Bool1::value), conjunction<BoolN...>, Bool1> {
+template <typename... B>
+struct conjunction : etl::bool_constant<(B::value && ...)> {
 };
 
 /// \group conjunction
 template <typename... B>
-inline constexpr bool conjunction_v = conjunction<B...>::value;
+inline constexpr bool conjunction_v = (B::value && ...);
 
 } // namespace etl
 
