@@ -7,62 +7,6 @@
 
 namespace etl {
 
-namespace detail {
-template <typename>
-struct make_unsigned_helper;
-
-template <>
-struct make_unsigned_helper<signed char> {
-    using type = unsigned char;
-};
-
-template <>
-struct make_unsigned_helper<signed short> {
-    using type = unsigned short;
-};
-
-template <>
-struct make_unsigned_helper<signed int> {
-    using type = unsigned int;
-};
-
-template <>
-struct make_unsigned_helper<signed long> {
-    using type = unsigned long;
-};
-
-template <>
-struct make_unsigned_helper<signed long long> {
-    using type = unsigned long long;
-};
-
-template <>
-struct make_unsigned_helper<unsigned char> {
-    using type = unsigned char;
-};
-
-template <>
-struct make_unsigned_helper<unsigned short> {
-    using type = unsigned short;
-};
-
-template <>
-struct make_unsigned_helper<unsigned int> {
-    using type = unsigned int;
-};
-
-template <>
-struct make_unsigned_helper<unsigned long> {
-    using type = unsigned long;
-};
-
-template <>
-struct make_unsigned_helper<unsigned long long> {
-    using type = unsigned long long;
-};
-
-} // namespace detail
-
 /// \brief If T is an integral (except bool) or enumeration type, provides the
 /// member typedef type which is the unsigned integer type corresponding to T,
 /// with the same cv-qualifiers. If T is signed or unsigned char, short, int,
@@ -71,7 +15,22 @@ struct make_unsigned_helper<unsigned long long> {
 /// make_unsigned is undefined.
 /// \group make_unsigned
 template <typename Type>
-struct make_unsigned : detail::make_unsigned_helper<Type> {
+struct make_unsigned {
+private:
+    static auto make_unsigned_helper(signed char) -> unsigned char;
+    static auto make_unsigned_helper(signed short) -> unsigned short;
+    static auto make_unsigned_helper(signed int) -> unsigned int;
+    static auto make_unsigned_helper(signed long) -> unsigned long;
+    static auto make_unsigned_helper(signed long long) -> unsigned long long;
+
+    static auto make_unsigned_helper(unsigned char) -> unsigned char;
+    static auto make_unsigned_helper(unsigned short) -> unsigned short;
+    static auto make_unsigned_helper(unsigned int) -> unsigned int;
+    static auto make_unsigned_helper(unsigned long) -> unsigned long;
+    static auto make_unsigned_helper(unsigned long long) -> unsigned long long;
+
+public:
+    using type = decltype(make_unsigned_helper(Type {}));
 };
 
 /// \group make_unsigned
