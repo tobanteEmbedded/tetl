@@ -301,7 +301,7 @@ public:
     }
 
     template <etl::size_t I, typename... Args>
-    static constexpr auto _ctor_7
+    static constexpr bool _ctor_7
         = (I < sizeof...(Types))
           && (etl::is_constructible_v<etl::variant_alternative_t<I, variant>,
               Args...>); // NOLINT
@@ -315,8 +315,8 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
     template <etl::size_t I, typename... Args,
-        TETL_REQUIRES_(_ctor_7<I, Args...>)>
-    constexpr explicit variant(etl::in_place_index_t<I> tag, Args&&... args)
+        TETL_REQUIRES_((_ctor_7<I, Args...>))>
+    constexpr explicit variant(etl::in_place_index_t<I> /*tag*/, Args&&... args)
         : variant(etl::in_place_type<etl::variant_alternative_t<I, variant>>,
             etl::forward<Args>(args)...)
     {

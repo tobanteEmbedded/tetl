@@ -12,9 +12,11 @@
 
 namespace etl {
 namespace detail {
+
 template <etl::size_t I, typename T>
 struct type_pack_element_wrapper {
-    static auto get_type(etl::integral_constant<etl::size_t, I> /*ic*/) -> T;
+    static constexpr auto get_type(
+        etl::integral_constant<etl::size_t, I> /*ic*/) -> T;
 };
 
 template <etl::size_t I, typename... Ts>
@@ -27,8 +29,7 @@ private:
     using type_pack_element_wrapper<Is, Ts>::get_type...;
 
 public:
-    using type = decltype(get_type(
-        etl::declval<etl::integral_constant<etl::size_t, I>>()));
+    using type = decltype(get_type(etl::integral_constant<etl::size_t, I> {}));
 };
 
 } // namespace detail
