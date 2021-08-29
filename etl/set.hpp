@@ -10,6 +10,8 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_set/flat_set.hpp"
+#include "etl/_set/sorted_unique.hpp"
 #include "etl/_set/static_set.hpp"
 
 #endif // TETL_SET_HPP

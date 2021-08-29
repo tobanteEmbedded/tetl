@@ -10,6 +10,7 @@
 #include "etl/string_view.hpp"
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
+#include "etl/warning.hpp"
 
 #include "catch2/catch_template_test_macros.hpp"
 
@@ -469,3 +470,16 @@ TEMPLATE_TEST_CASE("set/static_set: operator==/!=", "[set]", etl::uint8_t,
 //         CHECK_FALSE(set.contains(TestType {1}));
 //     }
 // }
+
+TEMPLATE_TEST_CASE("set/flat_set: flat_set", "[set]", etl::uint8_t, etl::int8_t,
+    etl::uint16_t, etl::uint32_t, etl::int32_t, etl::uint64_t, etl::int64_t,
+    float, double, long double)
+{
+    using T     = TestType;
+    using set_t = etl::flat_set<T, etl::static_vector<T, 8>>;
+
+    auto s1 = set_t {};
+    REQUIRE(s1.size() == 0); // NOLINT
+    REQUIRE(s1.empty());
+    REQUIRE(s1.max_size() == 8);
+}
