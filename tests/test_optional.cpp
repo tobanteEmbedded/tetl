@@ -116,6 +116,31 @@ TEMPLATE_TEST_CASE("optional: operator=(nullopt)", "[optional]", bool,
     CHECK_FALSE(opt.has_value());
 }
 
+TEST_CASE("optional: operator=(optional<U>)", "[optional]")
+{
+    etl::optional<int> opt1 { 42 };
+
+    etl::optional<long> opt2 {};
+    CHECK_FALSE(opt2.has_value());
+    opt2 = opt1;
+    CHECK(opt2.has_value());
+    CHECK(opt2.value() == 42);
+
+    etl::optional<long> opt3 {};
+    CHECK_FALSE(opt3.has_value());
+    opt3 = etl::move(opt1);
+    CHECK(opt3.has_value());
+    CHECK(opt3.value() == 42);
+
+    etl::optional<long> opt4 { opt1 };
+    CHECK(opt4.has_value());
+    CHECK(opt4.value() == 42);
+
+    etl::optional<long> opt5 { etl::move(opt1) };
+    CHECK(opt5.has_value());
+    CHECK(opt5.value() == 42);
+}
+
 TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]",
     etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
     etl::int32_t, etl::uint64_t, etl::int64_t, float, double)

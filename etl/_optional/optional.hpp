@@ -30,6 +30,7 @@
 #include "etl/_type_traits/is_object.hpp"
 #include "etl/_type_traits/is_reference.hpp"
 #include "etl/_type_traits/is_same.hpp"
+#include "etl/_type_traits/is_scalar.hpp"
 #include "etl/_type_traits/is_specialized.hpp"
 #include "etl/_type_traits/is_swappable.hpp"
 #include "etl/_type_traits/is_trivially_copy_assignable.hpp"
@@ -404,6 +405,42 @@ private:
     using enable_ctor_8_implicit = etl::enable_if_t<enable_ctor_8<U> && etl::is_convertible_v<U&&, T>, int>;
     template<typename U>
     using enable_ctor_8_explicit = etl::enable_if_t<enable_ctor_8<U> && (!etl::is_convertible_v<U&&, T>), int>;
+
+    template <typename U>
+    using enable_assign_forward = etl::enable_if_t<
+            (!etl::is_same_v<optional<T>, etl::decay_t<U>>)
+        &&  (!etl::is_scalar_v<T>)
+        &&  (!etl::is_same_v<T, etl::decay_t<U>>)
+        &&    etl::is_constructible_v<T, U>
+        &&    etl::is_assignable_v<T&, U>, int>;
+
+    template <typename U>
+    static constexpr bool enable_assign_other =
+            etl::is_constructible_v<T, etl::optional<U>&>
+        &&  etl::is_constructible_v<T, etl::optional<U> const&>
+        &&  etl::is_constructible_v<T, etl::optional<U>&&>
+        &&  etl::is_constructible_v<T, etl::optional<U> const&&>
+        &&  etl::is_convertible_v<etl::optional<U>&, T>
+        &&  etl::is_convertible_v<etl::optional<U> const&, T>
+        &&  etl::is_convertible_v<etl::optional<U>&&, T>
+        &&  etl::is_convertible_v<etl::optional<U> const&&, T>
+        &&  etl::is_assignable_v<T&, etl::optional<U>&>
+        &&  etl::is_assignable_v<T&, etl::optional<U> const&>
+        &&  etl::is_assignable_v<T&, etl::optional<U>&&>
+        &&  etl::is_assignable_v<T&, etl::optional<U> const&&>;
+
+    template <typename U>
+    using enable_assign_other_copy = etl::enable_if_t<
+            enable_assign_other<U>
+        &&  etl::is_constructible_v<T, U const&>
+        &&  etl::is_assignable_v<T&, U const&>, int>;
+
+    template <typename U>
+    using enable_assign_other_move = etl::enable_if_t<
+            enable_assign_other<U>
+        &&  etl::is_constructible_v<T, U>
+        &&  etl::is_assignable_v<T&, U>, int>;
+
     // clang-format on
 
 public:
@@ -514,22 +551,20 @@ public:
     }
 
     /// \brief Assigns the state of other.
-    constexpr auto operator=(optional const& other) -> optional&
-    {
-        this->assign_from(other);
-        return *this;
-    }
+    constexpr auto operator=(optional const& other) -> optional& = default;
+
+    /// \brief Assigns the state of other.
+    constexpr auto operator=(optional&& other) -> optional& = default;
 
     /// \brief Perfect-forwarded assignment.
-    /// \bug Fix SFINAE.
-    template <typename U = T>
-    constexpr auto operator=(U&& value) -> etl::enable_if_t<
-        etl::conjunction_v<etl::negation<etl::is_same<etl::remove_cvref_t<U>,
-                               etl::optional<T>>>,
-            etl::is_constructible<T, U>, etl::is_assignable<T&, U>>,
-        // && (!etl::is_scalar_v<T> || !etl::is_same_v<etl::decay_t<U>,
-        // T>),
-        optional&>
+    ///
+    /// \details Depending on whether *this contains a value before the call,
+    /// the contained value is either direct-initialized from
+    /// etl::forward<U>(value) or assigned from etl::forward<U>(value).
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/operator%3D
+    template <typename U = T, enable_assign_forward<U> = 0>
+    constexpr auto operator=(U&& value) -> optional&
     {
         if (this->has_value()) {
             this->get() = etl::forward<U>(value);
@@ -537,6 +572,32 @@ public:
         }
 
         this->construct(etl::forward<U>(value));
+        return *this;
+    }
+
+    /// \brief Assigns the state of other.
+    template <typename U = T, enable_assign_other_copy<U> = 0>
+    constexpr auto operator=(optional<U> const& other) -> optional&
+    {
+        if (this->has_value()) {
+            if (other.has_value()) { this->get() = *other; }
+            this->reset();
+        }
+
+        if (other.has_value()) { this->construct(*other); }
+        return *this;
+    }
+
+    /// \brief Assigns the state of other.
+    template <typename U = T, enable_assign_other_move<U> = 0>
+    constexpr auto operator=(optional<U>&& other) -> optional&
+    {
+        if (this->has_value()) {
+            if (other.has_value()) { this->get() = etl::move(*other); }
+            this->reset();
+        }
+
+        if (other.has_value()) { this->construct(etl::move(*other)); }
         return *this;
     }
 
