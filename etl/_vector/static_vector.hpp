@@ -395,8 +395,8 @@ using static_vector_storage_type = conditional_t<Capacity == 0,
 } // namespace detail
 
 /// \brief Dynamically-resizable fixed-capacity vector.
+/// \include vector.cpp
 /// \module Containers
-/// \example vector.cpp
 template <typename T, size_t Capacity>
 struct static_vector : detail::static_vector_storage_type<T, Capacity> {
 private:

@@ -30,6 +30,7 @@ namespace etl {
 /// \brief basic_static_string class with fixed size capacity.
 /// \tparam CharT Build in type for character size (mostly 'char')
 /// \tparam Capacity Capacity for basic_static_string
+/// \include string.cpp
 /// \module Strings
 template <typename CharT, etl::size_t Capacity,
     typename Traits = etl::char_traits<CharT>>

@@ -32,7 +32,7 @@ namespace etl {
 /// Type: `array<int, 3> a = {1,2,3};`
 ///
 /// \module Containers
-/// \example array.cpp
+/// \include array.cpp
 template <typename Type, size_t Size>
 struct array {
     using value_type       = Type;

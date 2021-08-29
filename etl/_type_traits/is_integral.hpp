@@ -39,12 +39,13 @@ template <>         struct is_integral_impl<unsigned long long> : etl::true_type
 
 } // namespace detail
 
-/// \group is_integral
+/// \brief is_integral
+/// \include type_traits.cpp
 template <typename Type>
 struct is_integral : detail::is_integral_impl<remove_cv_t<Type>>::type {
 };
 
-/// \group is_integral
+/// \brief is_integral_v
 template <typename T>
 inline constexpr bool is_integral_v = is_integral<T>::value;
 

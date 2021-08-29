@@ -18,6 +18,7 @@
 namespace etl::chrono {
 
 /// \brief Class template etl::chrono::duration represents a time interval.
+///
 /// \details It consists of a count of ticks of type Rep and a tick period,
 /// where the tick period is a compile-time rational constant representing the
 /// number of seconds from one tick to the next. The only data stored in a

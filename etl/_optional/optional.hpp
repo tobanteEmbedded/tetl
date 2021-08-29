@@ -289,6 +289,8 @@ using optional_sfinae_assign_base_t = sfinae_assign_base<
 
 } // namespace detail
 
+/// \brief Optional
+/// \include optional.cpp
 template <typename T>
 struct optional : private detail::optional_move_assign_base<T>,
                   private detail::optional_sfinae_ctor_base_t<T>,

@@ -14,6 +14,7 @@ namespace etl {
 #if TETL_CPP_STANDARD >= 20
 
 /// \brief Source location
+/// \include source_location.cpp
 struct source_location {
     [[nodiscard]] static constexpr auto current(
         uint_least32_t const line   = TETL_BUILTIN_LINE(),

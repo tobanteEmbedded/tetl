@@ -79,6 +79,9 @@ for header in headers:
         '\\complexity',
         '\\requires',
         '\\synopsis',
+        '/// \\copyright'
+        '/// Distributed under the Boost So',
+        '/// See accompanying file LICENSE or'
     ]
     with open(f'cmake-build-doxygen/pre/{header}.hpp') as oldfile, open(f'cmake-build-doxygen/etl/{header}.hpp', 'w') as newfile:
         newfile.write(f'/// \\addtogroup {header}\n///  @{{\n\n')

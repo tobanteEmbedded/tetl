@@ -8,8 +8,7 @@
 #include "etl/type_traits.hpp" // for enable_if
 
 template <typename T>
-auto func(T val) ->
-    typename etl::enable_if<etl::is_integral<T>::value, int>::type
+auto func(T val) -> etl::enable_if_t<etl::is_integral_v<T>, int>
 {
     return static_cast<int>(val);
 }

@@ -6,7 +6,14 @@
 #define TETL_WARNING_IGNORE_UNUSED_HPP
 
 namespace etl {
-/// Explicitly ignore arguments or variables.
+/// \brief Explicitly ignore arguments or variables.
+/// \code
+/// auto main(int argc, char** argv) -> int
+/// {
+///   etl::ignore_unused(argc, argv);
+///   return 0;
+/// }
+/// \endcode
 template <typename... Types>
 constexpr auto ignore_unused(Types&&... /*unused*/) -> void
 {

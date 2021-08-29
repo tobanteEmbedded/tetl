@@ -24,6 +24,8 @@ namespace etl {
 /// bits to be used for something else.  For example, this allows:
 ///  pointer_int_pair<pointer_int_pair<void*, 1, bool>, 1, bool>
 /// ... and the two bools will land in different bits.
+///
+/// \include memory.cpp
 template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
     typename PtrTraits = pointer_like_traits<PointerT>,
     typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
