@@ -554,7 +554,7 @@ public:
     constexpr auto operator=(optional const& other) -> optional& = default;
 
     /// \brief Assigns the state of other.
-    constexpr auto operator=(optional&& other) -> optional& = default;
+    constexpr auto operator=(optional&& other) noexcept -> optional& = default;
 
     /// \brief Perfect-forwarded assignment.
     ///
@@ -580,7 +580,10 @@ public:
     constexpr auto operator=(optional<U> const& other) -> optional&
     {
         if (this->has_value()) {
-            if (other.has_value()) { this->get() = *other; }
+            if (other.has_value()) {
+                this->get() = *other;
+                return *this;
+            }
             this->reset();
         }
 
@@ -593,7 +596,10 @@ public:
     constexpr auto operator=(optional<U>&& other) -> optional&
     {
         if (this->has_value()) {
-            if (other.has_value()) { this->get() = etl::move(*other); }
+            if (other.has_value()) {
+                this->get() = etl::move(*other);
+                return *this;
+            }
             this->reset();
         }
 
