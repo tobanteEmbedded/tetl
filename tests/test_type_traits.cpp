@@ -1652,10 +1652,6 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_copyable", "[type_traits]", bool,
         TCB(TCB const&) { }
     };
 
-    struct TCC { // NOLINT
-        virtual void foo();
-    };
-
     struct TCD { // NOLINT
         TCD(TCD const&) = default;
         TCD(int x) : m(x + 1) { }
@@ -1666,7 +1662,6 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_copyable", "[type_traits]", bool,
     STATIC_REQUIRE(etl::is_trivially_copyable<TCD>::value);
 
     STATIC_REQUIRE_FALSE(etl::is_trivially_copyable<TCB>::value);
-    STATIC_REQUIRE_FALSE(etl::is_trivially_copyable<TCC>::value);
 }
 
 TEMPLATE_TEST_CASE("type_traits: invoke_result", "[type_traits]", etl::uint8_t,
