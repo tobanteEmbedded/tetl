@@ -28,10 +28,21 @@
 
 namespace etl {
 
-/// \brief A flat_multiset is a container adaptor that provides an associative
-/// container interface that supports equivalent keys (possibly containing
-/// multiple copies of the same key value) and provides for fast retrieval of
-/// the keys themselves. flat_multiset supports random access iterators.
+/// \brief A flat_set is a container adaptor that provides an associative
+/// container interface that supports unique keys (contains at most one of each
+/// key value) and provides for fast retrieval of the keys themselves. flat_set
+/// supports random access iterators. Any sequence container supporting random
+/// access iteration can be used to instantiate flat_set
+///
+/// \details A flat_set satisfies all of the requirements of a container and of
+/// a reversible container. flat_set satisfies the requirements of an
+/// associative container, except that:
+///
+/// - it does not meet the requirements related to node handles,
+/// - it does not meet the requirements related to iterator invalidation, and
+/// - the time complexity of the insert, emplace, emplace_hint, and erase
+/// members that respectively insert, emplace or erase a single element from the
+/// set is linear, including the ones that take an insertion position iterator.
 ///
 /// https://isocpp.org/files/papers/P1222R1.pdf
 template <typename Key, typename Container, typename Compare = etl::less<Key>>
