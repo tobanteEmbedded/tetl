@@ -1817,3 +1817,26 @@ TEMPLATE_TEST_CASE("type_traits: type_pack_element_t", "[type_traits]",
     STATIC_REQUIRE(is_same_v<type_pack_element_t<1, T, float>, float>);
     STATIC_REQUIRE(is_same_v<type_pack_element_t<2, T, char, short>, short>);
 }
+
+namespace {
+template <typename T>
+struct test_is_specialized;
+
+template <>
+struct test_is_specialized<float> {
+};
+
+struct not_specialized {
+};
+} // namespace
+
+TEMPLATE_TEST_CASE("type_traits: is_specialized", "[type_traits]",
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t, not_specialized)
+{
+    using T = TestType;
+
+    STATIC_REQUIRE(etl::is_specialized_v<test_is_specialized, float>);
+    STATIC_REQUIRE_FALSE(etl::is_specialized_v<test_is_specialized, T>);
+    STATIC_REQUIRE_FALSE(etl::is_specialized_v<test_is_specialized, double>);
+}
