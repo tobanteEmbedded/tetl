@@ -7,13 +7,14 @@
 
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_cstdint/uint_least_t.hpp"
+#include "etl/_version/language_standard.hpp"
 
 namespace etl {
 
-#if (TETL_CPP_STANDARD >= 20) && defined(__cpp_consteval)
+#if TETL_CPP_STANDARD >= 20
 
 struct source_location {
-    [[nodiscard]] static consteval auto current(
+    [[nodiscard]] static constexpr auto current(
         uint_least32_t const line   = TETL_BUILTIN_LINE(),
         uint_least32_t const column = TETL_BUILTIN_COLUMN(),
         char const* const file      = TETL_BUILTIN_FILE(),
