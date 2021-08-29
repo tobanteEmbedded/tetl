@@ -10,7 +10,7 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 
 #if __has_include(<assert.h>)
 #include <assert.h>

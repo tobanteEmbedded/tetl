@@ -7,16 +7,10 @@
 
 #include "etl/_config/all.hpp"
 
-#if __has_include(<stdio.h>)
-#include <stdio.h>
-#else
-
 #include "etl/_cstddef/max_align_t.hpp"
 #include "etl/_cstddef/null.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
-
-#endif // has_include <stdio.h>
 
 #endif // TETL_CSTDIO_HPP

@@ -7,7 +7,7 @@
 
 #include "etl/_algorithm/find_if.hpp"
 #include "etl/_algorithm/for_each.hpp"
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_functional/less.hpp"

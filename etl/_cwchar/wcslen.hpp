@@ -5,7 +5,7 @@
 #ifndef TETL_CWCHAR_WCSLEN_HPP
 #define TETL_CWCHAR_WCSLEN_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
 

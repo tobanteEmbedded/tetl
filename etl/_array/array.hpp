@@ -7,7 +7,7 @@
 
 #include "etl/_algorithm/equal.hpp"
 #include "etl/_algorithm/lexicographical_compare.hpp"
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"

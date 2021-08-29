@@ -5,7 +5,7 @@
 #ifndef TETL_ALGORITHM_CLAMP_HPP
 #define TETL_ALGORITHM_CLAMP_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_functional/less.hpp"
 
 namespace etl {

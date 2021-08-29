@@ -5,7 +5,7 @@
 #ifndef TETL_CCTYPE_TOUPPER_HPP
 #define TETL_CCTYPE_TOUPPER_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_cctype/islower.hpp"
 
 namespace etl {

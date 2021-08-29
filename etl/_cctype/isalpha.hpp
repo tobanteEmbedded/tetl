@@ -5,7 +5,7 @@
 #ifndef TETL_CCTYPE_ISALPHA_HPP
 #define TETL_CCTYPE_ISALPHA_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 
 namespace etl {
 /// \brief Checks if the given character is an alphabetic character as

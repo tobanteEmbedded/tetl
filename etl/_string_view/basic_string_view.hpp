@@ -8,7 +8,7 @@
 #include "etl/_algorithm/lexicographical_compare.hpp"
 #include "etl/_algorithm/min.hpp"
 #include "etl/_algorithm/none_of.hpp"
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"

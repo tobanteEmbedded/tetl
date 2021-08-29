@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_ASSERT_MACRO_HPP
-#define TETL_ASSERT_MACRO_HPP
+#ifndef TETL_CASSERT_MACRO_HPP
+#define TETL_CASSERT_MACRO_HPP
 
 #include "etl/_config/debug_trap.hpp"
 #include "etl/_version/implementation.hpp"
@@ -83,4 +83,4 @@ inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 #endif // !defined(TETL_NDEBUG)
 #endif // not defined(TETL_ASSERT)
 
-#endif // TETL_ASSERT_MACRO_HPP
+#endif // TETL_CASSERT_MACRO_HPP

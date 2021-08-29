@@ -5,7 +5,7 @@ headers = [
     'array',
     'bit',
     'bitset',
-    # 'cassert',
+    'cassert',
     'cctype',
     'cfloat',
     'charconv',
@@ -17,7 +17,6 @@ headers = [
     'cstdarg',
     'cstddef',
     'cstdint',
-    # 'cstdio',
     'cstdlib',
     'cstring',
     'ctime',
@@ -53,7 +52,6 @@ headers = [
     'vector',
     'version',
     'warning',
-
 ]
 
 for header in headers:

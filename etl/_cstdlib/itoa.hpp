@@ -5,7 +5,7 @@
 #ifndef TETL_CSTDLIB_IOTA_HPP
 #define TETL_CSTDLIB_IOTA_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 #include "etl/_strings/conversion.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 

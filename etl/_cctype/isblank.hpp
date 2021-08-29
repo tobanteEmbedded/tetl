@@ -5,7 +5,7 @@
 #ifndef TETL_CCTYPE_ISBLANK_HPP
 #define TETL_CCTYPE_ISBLANK_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 
 namespace etl {
 /// \brief Checks if the given character is a blank character as classified by

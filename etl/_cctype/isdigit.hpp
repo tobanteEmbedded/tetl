@@ -5,7 +5,7 @@
 #ifndef TETL_CCTYPE_ISDIGIT_HPP
 #define TETL_CCTYPE_ISDIGIT_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 
 namespace etl {
 /// \brief Checks if the given character is one of the 10 decimal digits:

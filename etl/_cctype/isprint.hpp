@@ -5,7 +5,7 @@
 #ifndef TETL_CCTYPE_ISPRINT_HPP
 #define TETL_CCTYPE_ISPRINT_HPP
 
-#include "etl/_assert/macro.hpp"
+#include "etl/_cassert/macro.hpp"
 
 #include "etl/_cctype/isgraph.hpp"
 

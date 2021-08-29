@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_STRINGS_CHAR_TRAITS_HPP
-#define TETL_STRINGS_CHAR_TRAITS_HPP
+#ifndef TETL_STRING_CHAR_TRAITS_HPP
+#define TETL_STRING_CHAR_TRAITS_HPP
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cwchar/wcslen.hpp"
@@ -269,4 +269,4 @@ struct char_traits<wchar_t> {
 
 } // namespace etl
 
-#endif // TETL_STRINGS_CHAR_TRAITS_HPP
+#endif // TETL_STRING_CHAR_TRAITS_HPP
