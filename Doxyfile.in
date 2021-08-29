@@ -2,21 +2,23 @@ PROJECT_NAME           = tetl
 PROJECT_NUMBER         = 0.4.0
 
 USE_MDFILE_AS_MAINPAGE = README.md
-INPUT                  = ./README.md   \
+INPUT                  = ../README.md   \
                         ./etl          \
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.hpp *.h *.md
+FILE_PATTERNS          = *.hpp *.md
 RECURSIVE              = YES
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = NO # document private members & functions
 EXTRACT_STATIC         = YES # document static members & functions
 
-EXAMPLE_PATH           = ./examples
+EXAMPLE_PATH           = ../examples
 EXAMPLE_PATTERNS       = *.cpp
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_RECURSIVE      = YES
 
 PREDEFINED             = DOXYGEN=1
 ENABLE_PREPROCESSING   = YES
+MULTILINE_CPP_IS_BRIEF = YES
+INLINE_GROUPED_CLASSES = YES
 
 # Disable doc gen for symbols detail namespace.
 EXCLUDE_SYMBOLS = detail
@@ -26,5 +28,5 @@ GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 
 # Set output directory
-OUTPUT_DIRECTORY       = ./build-doc
-#HTML_EXTRA_STYLESHEET  = 3rd_party/doxygen-awesome-css/doxygen-awesome.css
+OUTPUT_DIRECTORY       = ./out
+#HTML_EXTRA_STYLESHEET  = ../3rd_party/doxygen-awesome-css/doxygen-awesome.css

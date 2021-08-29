@@ -26,7 +26,6 @@ constexpr auto count_if_impl(index_sequence<I...> /*is*/, tuple<Ts...>& t, F f)
 
 } // namespace detail
 
-// \todo Fix. See tests
 template <typename... Ts, typename F>
 constexpr auto count_if(tuple<Ts...>& t, F f)
 {

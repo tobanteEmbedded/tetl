@@ -93,7 +93,7 @@ struct basic_string_view {
     /// \brief Constructs a basic_string_view over the range [first, last). The
     /// behavior is undefined if [first, last) is not a valid range.
     ///
-    /// \todo Improve SFINAE protection. See C++20 standard.
+    /// \bug Improve SFINAE protection. See C++20 standard.
     template <typename Iter, TETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
     constexpr basic_string_view(Iter first, Iter last)
         : basic_string_view { first, static_cast<size_type>(last - first) }

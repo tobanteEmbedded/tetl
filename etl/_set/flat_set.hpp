@@ -45,6 +45,8 @@ namespace etl {
 /// set is linear, including the ones that take an insertion position iterator.
 ///
 /// https://isocpp.org/files/papers/P1222R1.pdf
+///
+/// https://youtu.be/b9ZYM0d6htg
 template <typename Key, typename Container, typename Compare = etl::less<Key>>
 struct flat_set {
     using key_type               = Key;

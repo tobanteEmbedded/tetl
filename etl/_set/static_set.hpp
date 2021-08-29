@@ -60,8 +60,6 @@ public:
     /// \brief Constructs with the contents of the range [first, last). If
     /// multiple elements in the range have keys that compare equivalent, all
     /// but the first will be discarded.
-    ///
-    /// \todo Fix noexcept. Maybe: noexcept(noexcept(insert(first, last)))
     template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
     static_set(InputIt first, InputIt last)
     {

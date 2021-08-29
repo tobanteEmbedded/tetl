@@ -358,8 +358,7 @@ public:
     }
 
     /// \brief Perfect-forwarded assignment.
-    ///
-    /// \todo Cleanup & fix SFINAE.
+    /// \bug Fix SFINAE.
     template <typename U = T>
     constexpr auto operator=(U&& value) -> etl::enable_if_t<
         etl::conjunction_v<etl::negation<etl::is_same<etl::remove_cvref_t<U>,

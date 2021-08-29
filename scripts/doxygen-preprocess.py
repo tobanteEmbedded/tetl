@@ -14,34 +14,34 @@ headers = [
     'cmath',
     'complex',
     'concepts',
-    # 'cstdarg',
+    'cstdarg',
     'cstddef',
     'cstdint',
     # 'cstdio',
     'cstdlib',
     'cstring',
-    # 'ctime',
+    'ctime',
     'cwchar',
     'exception',
-    # 'expected',
+    'expected',
     'format',
     'functional',
     'ios',
     'iterator',
     'limits',
-    # 'map',
+    'map',
     'memory',
     'mutex',
     'new',
-    # 'numbers',
+    'numbers',
     'numeric',
     'optional',
     'ratio',
     'scope',
-    # 'set',
-    # 'source_location',
+    'set',
+    'source_location',
     'span',
-    # 'stack',
+    'stack',
     'stdexcept',
     'string',
     'string_view',
@@ -49,8 +49,8 @@ headers = [
     'tuple',
     'type_traits',
     'utility',
-    # 'variant',
-    # 'vector',
+    'variant',
+    'vector',
     'version',
     'warning',
 
@@ -68,12 +68,12 @@ for header in headers:
         with open(names) as infile:
             header_content += infile.read()
 
-    with open(f'build-doc-new/pre/{header}.hpp', 'w') as outfile:
+    with open(f'cmake-build-doxygen/pre/{header}.hpp', 'w') as outfile:
         outfile.write(header_content)
         outfile.write('\n')
 
     bad_words = ['#include', '_HPP', '\\module', '\\group']
-    with open(f'build-doc-new/pre/{header}.hpp') as oldfile, open(f'build-doc-new/etl/{header}.hpp', 'w') as newfile:
+    with open(f'cmake-build-doxygen/pre/{header}.hpp') as oldfile, open(f'cmake-build-doxygen/etl/{header}.hpp', 'w') as newfile:
         newfile.write(f'/// \\addtogroup {header}\n///  @{{\n\n')
         for line in oldfile:
             if not any(bad_word in line for bad_word in bad_words):

@@ -46,15 +46,20 @@ coverage-html: coverage
 coverage-xml: coverage
 	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../etl -j ${shell nproc} -s .
 
-.PHONY: docs
-docs:
-	doxygen Doxyfile.in
+.PHONY: doxygen
+doxygen:
+	mkdir -p cmake-build-doxygen/etl
+	mkdir -p cmake-build-doxygen/pre
+	mkdir -p cmake-build-doxygen/out
+	python scripts/doxygen-preprocess.py
+	cp Doxyfile.in cmake-build-doxygen/
+	cd cmake-build-doxygen && doxygen Doxyfile.in
 
 .PHONY: standardese
 standardese:
-	rm -rf cmake-build-docs
-	mkdir cmake-build-docs
-	cd cmake-build-docs && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./etl)
+	rm -rf cmake-build-standardese
+	mkdir cmake-build-standardese
+	cd cmake-build-standardese && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./etl)
 	./scripts/standardese-md.py
 
 .PHONY: tidy-check
@@ -70,9 +75,8 @@ tidy-fix:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)
-	rm -rf build_avr
-	rm -rf build-doc
+	rm -rf $(BUILD_DIR) build_avr build-doc cmake-build-doxygen cmake-build-standardese
+
 
 .PHONY: stats
 stats:

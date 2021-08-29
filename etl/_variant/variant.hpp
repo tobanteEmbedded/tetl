@@ -254,6 +254,15 @@ private:
     using internal_size_t = etl::smallest_size_t<sizeof...(Types)>;
     using first_type      = etl::type_pack_element_t<0, Types...>;
 
+    template <etl::size_t I, typename... Args>
+    static constexpr bool _ctor_7
+        = (I < sizeof...(Types))
+          && (etl::is_constructible_v<etl::variant_alternative_t<I, variant>,
+              Args...>); // NOLINT
+    static constexpr auto is_swap_noexcept
+        = ((etl::is_nothrow_move_constructible_v<
+                Types> && etl::is_nothrow_swappable_v<Types>)&&...);
+
 public:
     TETL_REQUIRES(etl::is_default_constructible_v<first_type>)
     constexpr variant() noexcept(
@@ -286,7 +295,7 @@ public:
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
     ///
-    /// \todo Improve sfinae (single unique type in variant)
+    /// \bug Improve sfinae (single unique type in variant)
     template <typename T, typename... Args,
         TETL_REQUIRES_(etl::is_constructible_v<T, Args...>)>
     constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
@@ -295,12 +304,6 @@ public:
         data_.construct(tag, tmpIndex, etl::forward<Args>(args)...);
         index_ = static_cast<internal_size_t>(tmpIndex);
     }
-
-    template <etl::size_t I, typename... Args>
-    static constexpr bool _ctor_7
-        = (I < sizeof...(Types))
-          && (etl::is_constructible_v<etl::variant_alternative_t<I, variant>,
-              Args...>); // NOLINT
 
     /// \brief (7) Constructs a variant with the alternative T_i specified by
     /// the index I and initializes the contained value with the arguments
@@ -361,10 +364,6 @@ public:
     {
         return false;
     }
-
-    static constexpr auto is_swap_noexcept
-        = ((etl::is_nothrow_move_constructible_v<
-                Types> && etl::is_nothrow_swappable_v<Types>)&&...);
 
     /// \brief Swaps two variant objects.
     constexpr auto swap(variant& rhs) noexcept(is_swap_noexcept) -> void
