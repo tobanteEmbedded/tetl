@@ -53,6 +53,7 @@ doxygen:
 	mkdir -p cmake-build-doxygen/out
 	python scripts/doxygen-preprocess.py
 	cp Doxyfile.in cmake-build-doxygen/
+	find cmake-build-doxygen/etl -iname '*.hpp' | xargs clang-format-12 -i
 	cd cmake-build-doxygen && doxygen Doxyfile.in
 
 .PHONY: standardese

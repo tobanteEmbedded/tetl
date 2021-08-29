@@ -15,7 +15,7 @@ namespace etl {
 /// order. The order of equivalent elements is guaranteed to be preserved.
 /// Elements are compared using the given comparison function comp.
 ///
-/// \notes https://en.cppreference.com/w/cpp/algorithm/stable_sort
+/// \details https://en.cppreference.com/w/cpp/algorithm/stable_sort
 ///
 /// \group stable_sort
 /// \module Algorithm

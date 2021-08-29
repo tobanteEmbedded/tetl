@@ -10,7 +10,7 @@
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_ios/iosfwd.hpp"
 #include "etl/_ios/typedefs.hpp"
-#include "etl/_strings/char_traits.hpp"
+#include "etl/_string/char_traits.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_type_traits/make_signed.hpp"
 #include "etl/_utility/exchange.hpp"

@@ -5,7 +5,7 @@
 #ifndef TETL_STRING_ALGORITHM_HPP
 #define TETL_STRING_ALGORITHM_HPP
 
-#include "etl/_strings/char_traits.hpp"
+#include "etl/_string/char_traits.hpp"
 
 namespace etl::detail {
 

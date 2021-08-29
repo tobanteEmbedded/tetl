@@ -14,7 +14,7 @@ namespace etl {
 /// `[first, last)`. For binary_search to succeed, the range `[first, last)`
 /// must be at least partially ordered with respect to `value`.
 ///
-/// \notes https://en.cppreference.com/w/cpp/algorithm/binary_search
+/// \details https://en.cppreference.com/w/cpp/algorithm/binary_search
 ///
 /// \group binary_search
 /// \module Algorithm

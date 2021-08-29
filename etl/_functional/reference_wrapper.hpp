@@ -43,12 +43,14 @@ struct reference_wrapper {
 
     /// \brief Constructs a new reference wrapper. Converts x to T& as if by T&
     /// t = forward<U>(x);, then stores a reference to t. This overload only
-    /// participates in overload resolution if decay_t<U> is not the same type
-    /// as reference_wrapper and the expression FUN(declval<U>()) is
+    /// participates in overload resolution if `decay_t<U>` is not the same type
+    /// as reference_wrapper and the expression `FUN(declval<U>())` is
     /// well-formed, where FUN names the set of imaginary functions:
     ///
+    /// \code
     /// void FUN(T&) noexcept;
     /// void FUN(T&&) = delete;
+    /// \endcode
     ///
     /// https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper
     template <typename U,

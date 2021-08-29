@@ -15,7 +15,7 @@ EXAMPLE_PATH           = ../examples
 EXAMPLE_PATTERNS       = *.cpp
 EXAMPLE_RECURSIVE      = YES
 
-PREDEFINED             = DOXYGEN=1
+PREDEFINED             = DOXYGEN=1 __cpp_concepts=1 __cplusplus=202902L TETL_CPP_STANDARD=23
 ENABLE_PREPROCESSING   = YES
 MULTILINE_CPP_IS_BRIEF = YES
 INLINE_GROUPED_CLASSES = YES
@@ -26,6 +26,8 @@ EXCLUDE_SYMBOLS = detail
 # Generate html output
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+INCLUDE_GRAPH          = NO
 
 # Set output directory
 OUTPUT_DIRECTORY       = ./out

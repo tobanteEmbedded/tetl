@@ -34,7 +34,7 @@ inline constexpr auto bit_castable_types
 /// participates in overload resolution if sizeof(To) == sizeof(From) and both
 /// To and From are TriviallyCopyable types.
 ///
-/// \notes https://en.cppreference.com/w/cpp/numeric/bit_cast
+/// \details https://en.cppreference.com/w/cpp/numeric/bit_cast
 ///
 /// \module Numeric
 template <typename To, typename From>

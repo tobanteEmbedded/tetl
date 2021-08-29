@@ -72,7 +72,16 @@ for header in headers:
         outfile.write(header_content)
         outfile.write('\n')
 
-    bad_words = ['#include', '_HPP', '\\module', '\\group']
+    bad_words = [
+        '#include',
+        '_HPP',
+        '\\module',
+        '\\group',
+        '\\exclude',
+        '\\complexity',
+        '\\requires',
+        '\\synopsis',
+    ]
     with open(f'cmake-build-doxygen/pre/{header}.hpp') as oldfile, open(f'cmake-build-doxygen/etl/{header}.hpp', 'w') as newfile:
         newfile.write(f'/// \\addtogroup {header}\n///  @{{\n\n')
         for line in oldfile:
