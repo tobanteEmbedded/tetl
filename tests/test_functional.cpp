@@ -10,150 +10,158 @@
 
 TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(etl::detail::is_transparent<etl::plus<>>::value);
-    CHECK(etl::plus<TestType> {}(TestType { 2 }, TestType { 1 })
-          == TestType { 3 });
-    CHECK(etl::plus<TestType> {}(TestType { 1 }, TestType { 1 })
-          == TestType { 2 });
-    CHECK(etl::plus<TestType> {}(TestType { 100 }, TestType { 100 })
-          == TestType { 200 });
+    using T = TestType;
 
-    CHECK(etl::plus<> {}(TestType { 2 }, TestType { 1 }) == TestType { 3 });
-    CHECK(etl::plus<> {}(TestType { 1 }, TestType { 1 }) == TestType { 2 });
-    CHECK(
-        etl::plus<> {}(TestType { 100 }, TestType { 100 }) == TestType { 200 });
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::plus<>>::value);
+    CHECK(etl::plus<T> {}(T { 2 }, T { 1 }) == T { 3 });
+    CHECK(etl::plus<T> {}(T { 1 }, T { 1 }) == T { 2 });
+    CHECK(etl::plus<T> {}(T { 100 }, T { 100 }) == T { 200 });
+
+    CHECK(etl::plus<> {}(T { 2 }, T { 1 }) == T { 3 });
+    CHECK(etl::plus<> {}(T { 1 }, T { 1 }) == T { 2 });
+    CHECK(etl::plus<> {}(T { 100 }, T { 100 }) == T { 200 });
 }
 
 TEMPLATE_TEST_CASE("functional: minus", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(etl::detail::is_transparent<etl::minus<>>::value);
-    CHECK(etl::minus<TestType> {}(TestType { 99 }, 98) == TestType { 1 });
-    CHECK(etl::minus<> {}(TestType { 2 }, TestType { 1 }) == TestType { 1 });
-    CHECK(etl::minus<> {}(TestType { 1 }, TestType { 1 }) == TestType { 0 });
-    CHECK(
-        etl::minus<> {}(TestType { 99 }, TestType { 100 }) == TestType { -1 });
+    using T = TestType;
 
-    CHECK(etl::minus<TestType> {}(TestType { 99 }, TestType { 98 })
-          == TestType { 1 });
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::minus<>>::value);
+    CHECK(etl::minus<T> {}(T { 99 }, 98) == T { 1 });
+    CHECK(etl::minus<> {}(T { 2 }, T { 1 }) == T { 1 });
+    CHECK(etl::minus<> {}(T { 1 }, T { 1 }) == T { 0 });
+    CHECK(etl::minus<> {}(T { 99 }, T { 100 }) == T { -1 });
+    CHECK(etl::minus<T> {}(T { 99 }, T { 98 }) == T { 1 });
 }
 
 TEMPLATE_TEST_CASE("functional: multiplies", "[functional]", int, float, double)
 {
+    using T = TestType;
+
     STATIC_REQUIRE(etl::detail::is_transparent<etl::multiplies<>>::value);
 
-    CHECK(etl::multiplies<TestType> {}(TestType { 99 }, 2) == TestType { 198 });
-    CHECK(
-        etl::multiplies<> {}(TestType { 2 }, TestType { 1 }) == TestType { 2 });
-    CHECK(
-        etl::multiplies<> {}(TestType { 1 }, TestType { 1 }) == TestType { 1 });
-    CHECK(etl::multiplies<> {}(TestType { 99 }, TestType { 100 })
-          == TestType { 9900 });
+    CHECK(etl::multiplies<T> {}(T { 99 }, 2) == T { 198 });
+    CHECK(etl::multiplies<> {}(T { 2 }, T { 1 }) == T { 2 });
+    CHECK(etl::multiplies<> {}(T { 1 }, T { 1 }) == T { 1 });
+    CHECK(etl::multiplies<> {}(T { 99 }, T { 100 }) == T { 9900 });
 
-    CHECK(etl::multiplies<TestType> {}(TestType { 99 }, TestType { 1 })
-          == TestType { 99 });
+    CHECK(etl::multiplies<T> {}(T { 99 }, T { 1 }) == T { 99 });
 }
 
 TEMPLATE_TEST_CASE("functional: divides", "[functional]", int, float, double)
 {
+    using T = TestType;
+
     STATIC_REQUIRE(etl::detail::is_transparent<etl::divides<>>::value);
 
-    CHECK(etl::divides<TestType> {}(TestType { 100 }, 2) == TestType { 50 });
-    CHECK(etl::divides<> {}(TestType { 2 }, TestType { 1 }) == TestType { 2 });
-    CHECK(etl::divides<> {}(TestType { 1 }, TestType { 1 }) == TestType { 1 });
-    CHECK(etl::divides<> {}(TestType { 100 }, TestType { 100 })
-          == TestType { 1 });
+    CHECK(etl::divides<T> {}(T { 100 }, 2) == T { 50 });
+    CHECK(etl::divides<> {}(T { 2 }, T { 1 }) == T { 2 });
+    CHECK(etl::divides<> {}(T { 1 }, T { 1 }) == T { 1 });
+    CHECK(etl::divides<> {}(T { 100 }, T { 100 }) == T { 1 });
 
-    CHECK(etl::divides<TestType> {}(TestType { 99 }, TestType { 1 })
-          == TestType { 99 });
+    CHECK(etl::divides<T> {}(T { 99 }, T { 1 }) == T { 99 });
 }
 
 TEMPLATE_TEST_CASE("functional: modulus", "[functional]", int, unsigned)
 {
+    using T = TestType;
+
     STATIC_REQUIRE(etl::detail::is_transparent<etl::modulus<>>::value);
 
-    CHECK(etl::modulus<TestType> {}(TestType { 100 }, 2) == TestType { 0 });
-    CHECK(etl::modulus<> {}(TestType { 2 }, TestType { 1 }) == TestType { 0 });
-    CHECK(etl::modulus<> {}(TestType { 5 }, TestType { 3 }) == TestType { 2 });
-    CHECK(
-        etl::modulus<> {}(TestType { 100 }, TestType { 99 }) == TestType { 1 });
+    CHECK(etl::modulus<T> {}(T { 100 }, 2) == T { 0 });
+    CHECK(etl::modulus<> {}(T { 2 }, T { 1 }) == T { 0 });
+    CHECK(etl::modulus<> {}(T { 5 }, T { 3 }) == T { 2 });
+    CHECK(etl::modulus<> {}(T { 100 }, T { 99 }) == T { 1 });
 
-    CHECK(etl::modulus<TestType> {}(TestType { 99 }, TestType { 90 })
-          == TestType { 9 });
+    CHECK(etl::modulus<T> {}(T { 99 }, T { 90 }) == T { 9 });
 }
 
 TEMPLATE_TEST_CASE("functional: negate", "[functional]", int, float, double)
 {
+    using T = TestType;
+
     STATIC_REQUIRE(etl::detail::is_transparent<etl::negate<>>::value);
 
-    CHECK(etl::negate<TestType> {}(TestType { 50 }) == TestType { -50 });
-    CHECK(etl::negate<> {}(TestType { 2 }) == TestType { -2 });
-    CHECK(etl::negate<> {}(TestType { -1 }) == TestType { 1 });
-    CHECK(etl::negate<> {}(TestType { 100 }) == TestType { -100 });
+    CHECK(etl::negate<T> {}(T { 50 }) == T { -50 });
+    CHECK(etl::negate<> {}(T { 2 }) == T { -2 });
+    CHECK(etl::negate<> {}(T { -1 }) == T { 1 });
+    CHECK(etl::negate<> {}(T { 100 }) == T { -100 });
 
-    CHECK(etl::negate<TestType> {}(TestType { 99 }) == TestType { -99 });
+    CHECK(etl::negate<T> {}(T { 99 }) == T { -99 });
 }
 
 TEMPLATE_TEST_CASE("functional: equal_to", "[functional]", int, float, double)
 {
-    REQUIRE(etl::equal_to<TestType> {}(TestType { 99 }, 99));
-    REQUIRE(etl::equal_to<> {}(TestType { 1 }, TestType { 1 }));
+    using T = TestType;
 
-    REQUIRE_FALSE(etl::equal_to<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE_FALSE(etl::equal_to<> {}(TestType { 99 }, TestType { 100 }));
-    REQUIRE_FALSE(etl::equal_to<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE(etl::equal_to<T> {}(T { 99 }, 99));
+    REQUIRE(etl::equal_to<> {}(T { 1 }, T { 1 }));
+
+    REQUIRE_FALSE(etl::equal_to<> {}(T { 2 }, T { 1 }));
+    REQUIRE_FALSE(etl::equal_to<> {}(T { 99 }, T { 100 }));
+    REQUIRE_FALSE(etl::equal_to<T> {}(T { 99 }, T { 98 }));
 }
 
 TEMPLATE_TEST_CASE(
     "functional: not_equal_to", "[functional]", int, float, double)
 {
-    REQUIRE_FALSE(etl::not_equal_to<TestType> {}(TestType { 99 }, 99));
-    REQUIRE_FALSE(etl::not_equal_to<> {}(TestType { 1 }, TestType { 1 }));
+    using T = TestType;
 
-    REQUIRE(etl::not_equal_to<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE(etl::not_equal_to<> {}(TestType { 99 }, TestType { 100 }));
-    REQUIRE(etl::not_equal_to<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE_FALSE(etl::not_equal_to<T> {}(T { 99 }, 99));
+    REQUIRE_FALSE(etl::not_equal_to<> {}(T { 1 }, T { 1 }));
+
+    REQUIRE(etl::not_equal_to<> {}(T { 2 }, T { 1 }));
+    REQUIRE(etl::not_equal_to<> {}(T { 99 }, T { 100 }));
+    REQUIRE(etl::not_equal_to<T> {}(T { 99 }, T { 98 }));
 }
 
 TEMPLATE_TEST_CASE("functional: greater", "[functional]", int, float, double)
 {
-    REQUIRE_FALSE(etl::greater<TestType> {}(TestType { 99 }, 99));
-    REQUIRE_FALSE(etl::greater<> {}(TestType { 1 }, TestType { 1 }));
+    using T = TestType;
 
-    REQUIRE(etl::greater<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE(etl::greater<> {}(TestType { 101 }, TestType { 100 }));
-    REQUIRE(etl::greater<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE_FALSE(etl::greater<T> {}(T { 99 }, 99));
+    REQUIRE_FALSE(etl::greater<> {}(T { 1 }, T { 1 }));
+
+    REQUIRE(etl::greater<> {}(T { 2 }, T { 1 }));
+    REQUIRE(etl::greater<> {}(T { 101 }, T { 100 }));
+    REQUIRE(etl::greater<T> {}(T { 99 }, T { 98 }));
 }
 
 TEMPLATE_TEST_CASE(
     "functional: greater_equal", "[functional]", int, float, double)
 {
-    REQUIRE_FALSE(etl::greater_equal<TestType> {}(TestType { 99 }, 100));
-    REQUIRE_FALSE(etl::greater_equal<> {}(TestType { 1 }, TestType { 2 }));
+    using T = TestType;
 
-    REQUIRE(etl::greater_equal<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE(etl::greater_equal<> {}(TestType { 100 }, TestType { 100 }));
-    REQUIRE(etl::greater_equal<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE_FALSE(etl::greater_equal<T> {}(T { 99 }, 100));
+    REQUIRE_FALSE(etl::greater_equal<> {}(T { 1 }, T { 2 }));
+
+    REQUIRE(etl::greater_equal<> {}(T { 2 }, T { 1 }));
+    REQUIRE(etl::greater_equal<> {}(T { 100 }, T { 100 }));
+    REQUIRE(etl::greater_equal<T> {}(T { 99 }, T { 98 }));
 }
 
 TEMPLATE_TEST_CASE("functional: less", "[functional]", int, float, double)
 {
-    REQUIRE(etl::less<TestType> {}(TestType { 99 }, 100));
-    REQUIRE(etl::less<> {}(TestType { 1 }, TestType { 2 }));
+    using T = TestType;
 
-    REQUIRE_FALSE(etl::less<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE_FALSE(etl::less<> {}(TestType { 101 }, TestType { 100 }));
-    REQUIRE_FALSE(etl::less<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE(etl::less<T> {}(T { 99 }, 100));
+    REQUIRE(etl::less<> {}(T { 1 }, T { 2 }));
+
+    REQUIRE_FALSE(etl::less<> {}(T { 2 }, T { 1 }));
+    REQUIRE_FALSE(etl::less<> {}(T { 101 }, T { 100 }));
+    REQUIRE_FALSE(etl::less<T> {}(T { 99 }, T { 98 }));
 }
 
 TEMPLATE_TEST_CASE("functional: less_equal", "[functional]", int, float, double)
 {
-    REQUIRE(etl::less_equal<TestType> {}(TestType { 100 }, 100));
-    REQUIRE(etl::less_equal<> {}(TestType { 1 }, TestType { 2 }));
+    using T = TestType;
 
-    REQUIRE_FALSE(etl::less_equal<> {}(TestType { 2 }, TestType { 1 }));
-    REQUIRE_FALSE(etl::less_equal<> {}(TestType { 1024 }, TestType { 100 }));
-    REQUIRE_FALSE(
-        etl::less_equal<TestType> {}(TestType { 99 }, TestType { 98 }));
+    REQUIRE(etl::less_equal<T> {}(T { 100 }, 100));
+    REQUIRE(etl::less_equal<> {}(T { 1 }, T { 2 }));
+
+    REQUIRE_FALSE(etl::less_equal<> {}(T { 2 }, T { 1 }));
+    REQUIRE_FALSE(etl::less_equal<> {}(T { 1024 }, T { 100 }));
+    REQUIRE_FALSE(etl::less_equal<T> {}(T { 99 }, T { 98 }));
 }
 
 TEST_CASE("functional: logical_and", "[functional]")
