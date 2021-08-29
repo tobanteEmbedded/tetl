@@ -766,185 +766,173 @@ template <typename T>
     return !opt;
 }
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator==(optional<T> const&, U const &) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator==(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt == value : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator==(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator==(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value == *opt : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator!=(optional<T> const&, U const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator!=(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt != value : true;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator!=(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator!=(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value != *opt : true;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator<(optional<T> const&, U const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator<(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt < value : true;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator<(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator<(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value < *opt : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator>(optional<T> const&, U const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator>(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt > value : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator>(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator>(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value > *opt : true;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator<=(optional<T> const&, U const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator<=(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt <= value : true;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator<=(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator<=(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value <= *opt : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator>=(optional<T> const&, U const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator>=(optional<T> const& opt, U const& value)
+    -> bool
+{
+    return static_cast<bool>(opt) ? *opt >= value : false;
+}
 
-//
-// /// \brief Compares opt with a value. The values are compared (using the
-//  corresponding
-// /// operator of T) only if opt contains a value. Otherwise, opt is considered
-//  less than
-// /// value. If the corresponding two-way comparison expression between *opt
-// and
-//  value is not
-// /// well-formed, or if its result is not convertible to bool, the program is
-//  ill-formed.
-// template <typename T, typename U>
-// constexpr auto operator>=(T const&, optional<U> const&) -> bool
-// {
-// }
+/// \brief Compares opt with a value. The values are compared (using the
+/// corresponding operator of T) only if opt contains a value. Otherwise, opt is
+/// considered less than value. If the corresponding two-way comparison
+/// expression between *opt and value is not well-formed, or if its result is
+/// not convertible to bool, the program is ill-formed.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator>=(T const& value, optional<U> const& opt)
+    -> bool
+{
+    return static_cast<bool>(opt) ? value >= *opt : true;
+}
 
 } // namespace etl
 
