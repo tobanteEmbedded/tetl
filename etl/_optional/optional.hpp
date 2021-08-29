@@ -28,6 +28,7 @@
 #include "etl/_type_traits/is_object.hpp"
 #include "etl/_type_traits/is_reference.hpp"
 #include "etl/_type_traits/is_same.hpp"
+#include "etl/_type_traits/is_swappable.hpp"
 #include "etl/_type_traits/is_trivially_copy_assignable.hpp"
 #include "etl/_type_traits/is_trivially_copy_constructible.hpp"
 #include "etl/_type_traits/is_trivially_destructible.hpp"
@@ -476,6 +477,62 @@ public:
         return nullptr;
     }
 
+    /// \brief Returns a reference to the contained value.
+    ///
+    /// \details This operator only checks whether the optional contains a
+    /// value in debug builds! You can do so manually by using has_value() or
+    /// simply operator bool(). Alternatively, if checked access is needed,
+    /// value() or value_or() may be used.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/operator*
+    [[nodiscard]] constexpr auto operator*() const& -> T const&
+    {
+        TETL_ASSERT(has_value());
+        return this->get();
+    }
+
+    /// \brief Returns a reference to the contained value.
+    ///
+    /// \details This operator only checks whether the optional contains a
+    /// value in debug builds! You can do so manually by using has_value() or
+    /// simply operator bool(). Alternatively, if checked access is needed,
+    /// value() or value_or() may be used.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/operator*
+    [[nodiscard]] constexpr auto operator*() & -> T&
+    {
+        TETL_ASSERT(has_value());
+        return this->get();
+    }
+
+    /// \brief Returns a reference to the contained value.
+    ///
+    /// \details This operator only checks whether the optional contains a
+    /// value in debug builds! You can do so manually by using has_value() or
+    /// simply operator bool(). Alternatively, if checked access is needed,
+    /// value() or value_or() may be used.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/operator*
+    [[nodiscard]] constexpr auto operator*() const&& -> T const&&
+    {
+        TETL_ASSERT(has_value());
+        return etl::move(this->get());
+    }
+
+    /// \brief Returns a reference to the contained value.
+    ///
+    /// \details This operator only checks whether the optional contains a
+    /// value in debug builds! You can do so manually by using has_value() or
+    /// simply operator bool(). Alternatively, if checked access is needed,
+    /// value() or value_or() may be used.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/operator*
+    [[nodiscard]] constexpr auto operator*() && -> T&&
+    {
+        TETL_ASSERT(has_value());
+        return etl::move(this->get());
+    }
+
     /// \brief Swaps the contents with those of other.
     constexpr auto swap(optional& other) noexcept(
         etl::is_nothrow_move_constructible_v<value_type>&&
@@ -527,6 +584,19 @@ public:
 // non-copyable arguments and array to pointer conversion.
 template <typename T>
 optional(T) -> optional<T>;
+
+/// \brief Overloads the etl::swap algorithm for etl::optional. Exchanges the
+/// state of lhs with that of rhs. Effectively calls lhs.swap(rhs).
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/swap2
+template <typename T>
+constexpr auto swap(etl::optional<T>& lhs, etl::optional<T>& rhs) noexcept(
+    noexcept(lhs.swap(rhs)))
+    -> etl::enable_if_t<
+        etl::is_move_constructible_v<T> && etl::is_swappable_v<T>>
+{
+    lhs.swap(rhs);
+}
 
 /// \brief Compares two optional objects, lhs and rhs.
 template <typename T, typename U>
