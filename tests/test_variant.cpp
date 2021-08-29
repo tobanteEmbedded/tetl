@@ -73,10 +73,15 @@ TEST_CASE("variant: construct", "[variant]")
     {
         auto v1 = etl::variant<int, float> {};
         CHECK(etl::holds_alternative<int>(v1));
+        CHECK_FALSE(etl::holds_alternative<float>(v1));
+
         auto v2 = etl::variant<float, int> {};
         CHECK(etl::holds_alternative<float>(v2));
+        CHECK_FALSE(etl::holds_alternative<int>(v2));
+
         auto v3 = etl::variant<S, int> {};
         CHECK(etl::holds_alternative<S>(v3));
+        CHECK_FALSE(etl::holds_alternative<int>(v3));
         CHECK(etl::get_if<S>(&v3)->x == 42);
     }
 
@@ -90,9 +95,20 @@ TEST_CASE("variant: construct", "[variant]")
 
     SECTION("int")
     {
-        auto var = etl::variant<etl::monostate, int, float> { 42 };
-        CHECK(etl::holds_alternative<int>(var));
-        CHECK(*etl::get_if<int>(&var) == 42);
+        auto v1 = etl::variant<etl::monostate, int, float> { 42 };
+        CHECK(etl::holds_alternative<int>(v1));
+        CHECK(*etl::get_if<int>(&v1) == 42);
+
+        auto i  = 143;
+        auto v2 = etl::variant<etl::monostate, int, float> { i };
+        CHECK(etl::holds_alternative<int>(v2));
+        CHECK(*etl::get_if<int>(&v2) == 143);
+
+        auto const ic = 99;
+        auto v3       = etl::variant<etl::monostate, float, int> { ic };
+        CHECK(etl::holds_alternative<int>(v3));
+        CHECK(*etl::get_if<int>(&v3) == 99);
+        CHECK(*etl::get_if<2>(&v3) == 99);
     }
 
     SECTION("float")
@@ -181,14 +197,19 @@ TEST_CASE("variant: operator=(variant const&)", "[variant]")
 
 TEST_CASE("variant: swap", "[variant]")
 {
-    auto l = etl::variant<int> { 42 };
-    auto r = etl::variant<int> { 143 };
+    auto l = etl::variant<int, float> { 42 };
+    auto r = etl::variant<int, float> { 143 };
     CHECK(*etl::get_if<int>(&l) == 42);
     CHECK(*etl::get_if<int>(&r) == 143);
 
     l.swap(r);
     CHECK(*etl::get_if<int>(&l) == 143);
     CHECK(*etl::get_if<int>(&r) == 42);
+
+    auto other = etl::variant<int, float> { 999.0F };
+    l.swap(other);
+    CHECK(etl::holds_alternative<int>(l));
+    CHECK(etl::holds_alternative<float>(other));
 }
 
 TEST_CASE("variant: compare", "[variant]")

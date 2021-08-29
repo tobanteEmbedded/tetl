@@ -95,8 +95,6 @@ struct variant_storage<Index, Head> {
     template <typename T>
     constexpr auto construct(T&& head, etl::size_t& index) -> void
     {
-        // Tried to access non-existent type in union
-        static_assert(etl::is_same_v<T, Head>);
         new (&data) Head(etl::forward<T>(head));
         index = 0;
     }
@@ -105,8 +103,6 @@ struct variant_storage<Index, Head> {
     constexpr auto construct(etl::in_place_type_t<T> /*tag*/,
         etl::size_t& index, Args&&... args) -> void
     {
-        // Tried to access non-existent type in union
-        static_assert(etl::is_same_v<T, Head>);
         new (&data) Head(etl::forward<Args>(args)...);
         index = 0;
     }
@@ -373,9 +369,6 @@ public:
     /// \brief Swaps two variant objects.
     constexpr auto swap(variant& rhs) noexcept(is_swap_noexcept) -> void
     {
-        if (valueless_by_exception() && rhs.valueless_by_exception()) {
-            return;
-        }
         if (index() == rhs.index()) {
             detail::variant_swap_table<variant, Types...>[index()](*this, rhs);
         }
