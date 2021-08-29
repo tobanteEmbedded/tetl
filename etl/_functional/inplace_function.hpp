@@ -8,7 +8,7 @@
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_exception/exception.hpp"
-#include "etl/_exception/throw.hpp"
+#include "etl/_exception/raise.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
@@ -50,11 +50,7 @@ struct inplace_func_vtable {
 
     explicit constexpr inplace_func_vtable() noexcept
         : invoke_ptr { [](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
-            TETL_THROW(bad_function_call { "empty inplace_func_vtable" });
-
-            // TODO: [tobi] What about types which are not default
-            // constructible? The next line will probably not compile.
-            return R {};
+            etl::raise<etl::bad_function_call>("empty inplace_func_vtable");
         } }
         , copy_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {} }
         , relocate_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {
@@ -198,7 +194,7 @@ public:
     }
 
 
-    /// \brief Destroys the etl::inplace_function instance. 
+    /// \brief Destroys the etl::inplace_function instance.
     /// If the etl::inplace_function is not empty, its target is destroyed also.
     ~inplace_function() { vtable_->destructor_ptr(addressof(storage_)); }
 

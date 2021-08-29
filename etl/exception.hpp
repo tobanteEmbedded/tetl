@@ -8,6 +8,6 @@
 #include "etl/_config/all.hpp"
 
 #include "etl/_exception/exception.hpp"
-#include "etl/_exception/throw.hpp"
+#include "etl/_exception/raise.hpp"
 
 #endif // TETL_EXCEPTION_HPP

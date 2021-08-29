@@ -5,6 +5,8 @@
 #ifndef TETL_CASSERT_MACRO_HPP
 #define TETL_CASSERT_MACRO_HPP
 
+#include "etl/_config/attributes.hpp"
+#include "etl/_config/builtin_functions.hpp"
 #include "etl/_config/debug_trap.hpp"
 #include "etl/_version/implementation.hpp"
 #include "etl/_warning/ignore_unused.hpp"
@@ -35,21 +37,22 @@ namespace etl {
 /// `TETL_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably the
 /// best idea, because you can not recover from any of the exceptional cases in
 /// the library.
-auto tetl_assert_handler(assert_msg const& msg) -> void;
+[[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void;
 #else
 
 #endif
 
 /// \brief The default assert handler. This will be called, if an assertion
 /// is triggered at runtime.
-inline auto tetl_default_assert_handler(assert_msg const& msg) -> void
+[[noreturn]] inline auto tetl_default_assert_handler(assert_msg const& msg)
+    -> void
 {
     etl::ignore_unused(msg);
     ::exit(1); // NOLINT
 }
 
 namespace detail {
-inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
+[[noreturn]] inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 {
 #if defined(TETL_CUSTOM_ASSERT_HANDLER)
     etl::tetl_assert_handler(msg);
