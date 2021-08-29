@@ -19,6 +19,7 @@
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_copy_assignable.hpp"
 #include "etl/_type_traits/is_copy_constructible.hpp"
 #include "etl/_type_traits/is_move_assignable.hpp"
@@ -347,14 +348,63 @@ struct optional : private detail::optional_move_assign_base<T>,
 private:
     using base_type = detail::optional_move_assign_base<T>;
 
-    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>,
-        "instantiation of optional with in_place_t is ill-formed");
-    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>,
-        "instantiation of optional with nullopt_t is ill-formed");
-    static_assert(!is_reference_v<T>,
-        "instantiation of optional with a reference type is ill-formed");
-    static_assert(!is_array_v<T>,
-        "instantiation of optional with an array type is ill-formed");
+    // clang-format off
+    static_assert(!is_same_v<remove_cvref_t<T>, in_place_t>, "instantiation of optional with in_place_t is ill-formed");
+    static_assert(!is_same_v<remove_cvref_t<T>, nullopt_t>, "instantiation of optional with nullopt_t is ill-formed");
+    static_assert(!is_reference_v<T>, "instantiation of optional with a reference type is ill-formed");
+    static_assert(!is_array_v<T>, "instantiation of optional with an array type is ill-formed");
+
+    template<typename U>
+    static constexpr bool not_in_place_t = !etl::is_same_v<etl::remove_cvref_t<U>, etl::in_place_t>;
+    template<typename U>
+    static constexpr bool not_self = !etl::is_same_v<etl::remove_cvref_t<U>, etl::optional<T>>;
+
+    template<typename U>
+    static constexpr bool enable_ctor_4_5_base =
+            (!etl::is_constructible_v<T, etl::optional<U>&>)
+        &&  (!etl::is_constructible_v<T, etl::optional<U> const&>)
+        &&  (!etl::is_constructible_v<T, etl::optional<U>&&>)
+        &&  (!etl::is_constructible_v<T, etl::optional<U> const&&>)
+        &&  (!etl::is_convertible_v<etl::optional<U>&, T>)
+        &&  (!etl::is_convertible_v<etl::optional<U> const&, T>)
+        &&  (!etl::is_convertible_v<etl::optional<U>&&, T>)
+        &&  (!etl::is_convertible_v<etl::optional<U> const&&, T>);
+
+    template<typename U>
+    using enable_ctor_4_implicit = etl::enable_if_t<
+        etl::is_constructible_v<T, U const&>
+        && enable_ctor_4_5_base<U>
+        && etl::is_convertible_v<U const&, T>, int>;
+
+    template<typename U>
+    using enable_ctor_4_explicit = etl::enable_if_t<
+        etl::is_constructible_v<T, U const&>
+        && enable_ctor_4_5_base<U>
+        && (!etl::is_convertible_v<U const&, T>), int>;
+
+    template<typename U>
+    using enable_ctor_5_implicit = etl::enable_if_t<
+        etl::is_constructible_v<T, U&&>
+        && enable_ctor_4_5_base<U>
+        && etl::is_convertible_v<U&&, T>, int>;
+
+    template<typename U>
+    using enable_ctor_5_explicit = etl::enable_if_t<
+        etl::is_constructible_v<T, U&&>
+        && enable_ctor_4_5_base<U>
+        && (!etl::is_convertible_v<U&&, T>), int>;
+
+
+    template<typename ...Args>
+    using enable_ctor_6 = etl::enable_if_t<etl::is_constructible_v<T, Args...>, int>;
+
+    template<typename U>
+    static constexpr bool enable_ctor_8 = etl::is_constructible_v<T, U&&> && not_in_place_t<U> && not_self<U>;
+    template<typename U>
+    using enable_ctor_8_implicit = etl::enable_if_t<enable_ctor_8<U> && etl::is_convertible_v<U&&, T>, int>;
+    template<typename U>
+    using enable_ctor_8_explicit = etl::enable_if_t<enable_ctor_8<U> && (!etl::is_convertible_v<U&&, T>), int>;
+    // clang-format on
 
 public:
     using value_type = T;
@@ -373,22 +423,84 @@ public:
         etl::is_nothrow_move_constructible_v<value_type>)
         = default;
 
-    /// \brief Constructs an optional object that contains a value, initialized
-    /// as if direct-initializing.
-    template <typename... Args,
-        TETL_REQUIRES_((is_constructible_v<value_type, Args...>))>
+    /// \brief (4) Converting copy constructor: If other doesn't contain a
+    /// value, constructs an optional object that does not contain a value.
+    /// Otherwise, constructs an optional object that contains a value,
+    /// initialized as if direct-initializing (but not direct-list-initializing)
+    /// an object of type T with the expression *other.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U, enable_ctor_4_implicit<U> = 0>
+    constexpr optional(optional<U> const& other)
+    {
+        if (other.has_value()) { this->construct(*other); }
+    }
+
+    /// \brief (4) Converting copy constructor: If other doesn't contain a
+    /// value, constructs an optional object that does not contain a value.
+    /// Otherwise, constructs an optional object that contains a value,
+    /// initialized as if direct-initializing (but not direct-list-initializing)
+    /// an object of type T with the expression *other.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U, enable_ctor_4_explicit<U> = 0>
+    explicit constexpr optional(optional<U> const& other)
+    {
+        if (other.has_value()) { this->construct(*other); }
+    }
+
+    /// \brief (5) Converting move constructor: If other doesn't contain a
+    /// value, constructs an optional object that does not contain a value.
+    /// Otherwise, constructs an optional object that contains a value,
+    /// initialized as if direct-initializing (but not direct-list-initializing)
+    /// an object of type T with the expression etl::move(*other).
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U, enable_ctor_5_implicit<U> = 0>
+    constexpr optional(optional<U>&& other)
+    {
+        if (other.has_value()) { this->construct(*etl::move(other)); }
+    }
+
+    /// \brief (5) Converting move constructor: If other doesn't contain a
+    /// value, constructs an optional object that does not contain a value.
+    /// Otherwise, constructs an optional object that contains a value,
+    /// initialized as if direct-initializing (but not direct-list-initializing)
+    /// an object of type T with the expression etl::move(*other).
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U, enable_ctor_5_explicit<U> = 0>
+    explicit constexpr optional(optional<U>&& other)
+    {
+        if (other.has_value()) { this->construct(*etl::move(other)); }
+    }
+
+    /// \brief (6) Constructs an optional object that contains a value,
+    /// initialized as if direct-initializing.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename... Args, enable_ctor_6<Args...> = 0>
     constexpr explicit optional(in_place_t /*unused*/, Args&&... arguments)
         : base_type(in_place, forward<Args>(arguments)...)
     {
     }
 
-    /// \brief Constructs an optional object that contains a value, initialized
-    /// as if direct-initializing.
-    template <typename U = value_type,
-        typename         = enable_if_t<conjunction_v<is_constructible<T, U&&>,
-            negation<is_same<remove_cvref_t<U>, optional<T>>>,
-            negation<is_same<remove_cvref_t<U>, in_place_t>>>>>
+    /// \brief (8) Constructs an optional object that contains a value,
+    /// initialized as if direct-initializing.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U = T, enable_ctor_8_implicit<U> = 0>
     constexpr optional(U&& value) : base_type(in_place, forward<U>(value))
+    {
+    }
+
+    /// \brief (8) Constructs an optional object that contains a value,
+    /// initialized as if direct-initializing.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/optional
+    template <typename U = T, enable_ctor_8_explicit<U> = 0>
+    explicit constexpr optional(U&& value)
+        : base_type(in_place, forward<U>(value))
     {
     }
 
