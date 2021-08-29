@@ -476,10 +476,16 @@ TEMPLATE_TEST_CASE("set/flat_set: flat_set", "[set]", etl::uint8_t, etl::int8_t,
     float, double, long double)
 {
     using T     = TestType;
-    using set_t = etl::flat_set<T, etl::static_vector<T, 8>>;
+    using vec_t = etl::static_vector<T, 8>;
+    using set_t = etl::flat_set<T, vec_t>;
 
     auto s1 = set_t {};
     REQUIRE(s1.size() == 0); // NOLINT
     REQUIRE(s1.empty());
     REQUIRE(s1.max_size() == 8);
+
+    auto s2 = set_t { vec_t {} };
+    REQUIRE(s2.size() == 0); // NOLINT
+    REQUIRE(s2.empty());
+    REQUIRE(s2.max_size() == 8);
 }

@@ -7,7 +7,11 @@
 
 #include "etl/_algorithm/equal.hpp"
 #include "etl/_algorithm/lexicographical_compare.hpp"
+#include "etl/_algorithm/partition_point.hpp"
+#include "etl/_concepts/emulation.hpp"
+#include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_functional/is_transparent.hpp"
 #include "etl/_functional/less.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
@@ -46,7 +50,7 @@ struct flat_set {
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
     using container_type         = Container;
 
-    flat_set() : flat_set(Compare()) { }
+    flat_set() : flat_set { Compare {} } { }
 
     /// \brief Initializes c with etl::move(cont), value-initializes compare,
     /// sorts the range [begin(),end()) with respect to compare, and finally
@@ -54,7 +58,11 @@ struct flat_set {
     ///
     /// Complexity: Linear in N if cont is sorted with respect to compare and
     /// otherwise N log N, where N is cont.size().
-    explicit flat_set(container_type);
+    TETL_REQUIRES(detail::RandomAccessRange<container_type>)
+    explicit flat_set(container_type const& container)
+        : flat_set { etl::begin(container), etl::end(container), Compare() }
+    {
+    }
 
     flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
         : container_ { etl::move(cont) }, compare_ { Compare() }
@@ -161,18 +169,32 @@ struct flat_set {
 
     // 21.6.5.3, modifiers
     template <typename... Args>
-    constexpr auto emplace(Args&&... args) -> pair<iterator, bool>;
+    constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
+    {
+        auto key = Key { etl::forward<Args>(args)... };
+        auto it  = this->lower_bound(key);
+
+        if (it == end() || compare_(key, *it)) {
+            it = container_.emplace(it, etl::move(key));
+            return etl::make_pair(it, true);
+        }
+
+        return etl::make_pair(it, false);
+    }
 
     template <typename... Args>
-    constexpr auto emplace_hint(const_iterator position, Args&&... args)
-        -> iterator;
+    constexpr auto emplace_hint(const_iterator /*position*/, Args&&... args)
+        -> iterator
+    {
+        return emplace(etl::forward<Args>(args)...).first;
+    }
 
-    constexpr auto insert(value_type const& x) -> pair<iterator, bool>
+    constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool>
     {
         return emplace(x);
     }
 
-    constexpr auto insert(value_type&& x) -> pair<iterator, bool>
+    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool>
     {
         return emplace(etl::move(x));
     }
@@ -189,36 +211,99 @@ struct flat_set {
     }
 
     template <typename InputIt>
-    constexpr auto insert(InputIt first, InputIt last) -> void;
+    constexpr auto insert(InputIt first, InputIt last) -> void
+    {
+        while (first != last) {
+            insert(*first);
+            ++first;
+        }
+    }
+
     template <typename InputIt>
     constexpr auto insert(
         etl::sorted_unique_t /*tag*/, InputIt first, InputIt last) -> void;
 
-    constexpr auto extract() && -> container_type;
+    constexpr auto extract() && -> container_type
+    {
+        auto&& container = etl::move(container_);
+        clear();
+        return container;
+    }
 
-    constexpr auto replace(container_type&&) -> void;
+    constexpr auto replace(container_type&& container) -> void
+    {
+        container_ = etl::move(container);
+    }
 
-    constexpr auto erase(iterator position) -> iterator;
-    constexpr auto erase(const_iterator position) -> iterator;
+    constexpr auto erase(iterator position) -> iterator
+    {
+        return container_.erase(position);
+    }
+
+    constexpr auto erase(const_iterator position) -> iterator
+    {
+        return container_.erase(position);
+    }
+
     constexpr auto erase(key_type const& x) -> size_type;
-    constexpr auto erase(const_iterator first, const_iterator last) -> iterator;
+    constexpr auto erase(const_iterator first, const_iterator last) -> iterator
+    {
+        return container_.erase(first, last);
+    }
 
-    constexpr auto swap(flat_set& fs) noexcept(
-        etl::is_nothrow_swappable_v<key_compare>) -> void;
-    constexpr auto clear() noexcept -> void;
+    constexpr auto swap(flat_set& other) noexcept(
+        etl::is_nothrow_swappable_v<Container>&&
+            etl::is_nothrow_swappable_v<Compare>) -> void
+    {
+        using etl::swap;
+        swap(compare_, other.compare_);
+        swap(container_, other.container_);
+    }
+
+    constexpr auto clear() noexcept -> void { container_.clear(); }
 
     // observers
-    [[nodiscard]] constexpr auto key_comp() const -> key_compare;
-    [[nodiscard]] constexpr auto value_comp() const -> value_compare;
+    [[nodiscard]] constexpr auto key_comp() const -> key_compare
+    {
+        return compare_;
+    }
+
+    [[nodiscard]] constexpr auto value_comp() const -> value_compare
+    {
+        return compare_;
+    }
 
     // set operations
-    [[nodiscard]] constexpr auto find(key_type const& x) -> iterator;
-    [[nodiscard]] constexpr auto find(key_type const& x) const
-        -> const_iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto find(K const& x) -> iterator;
-    template <typename K>
-    [[nodiscard]] constexpr auto find(K const& x) const -> const_iterator;
+    [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
+    {
+        auto it = lower_bound(key);
+        if (it == end() || compare_(key, *it)) { return end(); }
+        return it;
+    }
+
+    [[nodiscard]] constexpr auto find(key_type const& key) const
+        -> const_iterator
+    {
+        auto it = lower_bound(key);
+        if (it == end() || compare_(key, *it)) { return end(); }
+        return it;
+    }
+
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
+    [[nodiscard]] constexpr auto find(K const& key) -> iterator
+    {
+        auto it = lower_bound(key);
+        if (it == end() || compare_(key, *it)) { return end(); }
+        return it;
+    }
+
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
+    [[nodiscard]] constexpr auto find(K const& key) const -> const_iterator
+    {
+        auto it = lower_bound(key);
+        if (it == end() || compare_(key, *it)) { return end(); }
+        return it;
+    }
 
     [[nodiscard]] constexpr auto count(key_type const& x) const -> size_type;
     template <typename K>
@@ -228,9 +313,19 @@ struct flat_set {
     template <typename K>
     [[nodiscard]] constexpr auto contains(K const& x) const -> bool;
 
-    [[nodiscard]] constexpr auto lower_bound(key_type const& x) -> iterator;
-    [[nodiscard]] constexpr auto lower_bound(key_type const& x) const
-        -> const_iterator;
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
+    {
+        auto cmp = [&](auto const& k) -> bool { return compare_(k, key); };
+        return etl::partition_point(this->begin(), this->end(), cmp);
+    }
+
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
+        -> const_iterator
+    {
+        auto cmp = [&](auto const& k) -> bool { return compare_(k, key); };
+        return etl::partition_point(this->begin(), this->end(), cmp);
+    }
+
     template <typename K>
     [[nodiscard]] constexpr auto lower_bound(K const& x) -> iterator;
     template <typename K>
@@ -247,15 +342,15 @@ struct flat_set {
         -> const_iterator;
 
     [[nodiscard]] constexpr auto equal_range(key_type const& x)
-        -> pair<iterator, iterator>;
+        -> etl::pair<iterator, iterator>;
     [[nodiscard]] constexpr auto equal_range(key_type const& x) const
-        -> pair<const_iterator, const_iterator>;
+        -> etl::pair<const_iterator, const_iterator>;
     template <typename K>
     [[nodiscard]] constexpr auto equal_range(K const& x)
-        -> pair<iterator, iterator>;
+        -> etl::pair<iterator, iterator>;
     template <typename K>
     [[nodiscard]] constexpr auto equal_range(K const& x) const
-        -> pair<const_iterator, const_iterator>;
+        -> etl::pair<const_iterator, const_iterator>;
 
 private:
     container_type container_;
