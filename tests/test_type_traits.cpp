@@ -1649,11 +1649,11 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_copyable", "[type_traits]", bool,
     };
 
     struct TCB { // NOLINT
-        TCB(TCB const&) { }
+        TCB(TCB const& /*ignore*/) { }
     };
 
     struct TCD { // NOLINT
-        TCD(TCD const&) = default;
+        TCD(TCD const& /*ignore*/) = default;
         TCD(int x) : m(x + 1) { }
         int m;
     };
