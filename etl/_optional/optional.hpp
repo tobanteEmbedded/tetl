@@ -293,7 +293,49 @@ using optional_sfinae_assign_base_t = sfinae_assign_base<
 
 } // namespace detail
 
-/// \brief Optional
+/// \brief The class template optional manages an optional contained value,
+/// i.e. a value that may or may not be present.
+///
+/// \details A common use case for optional is the return value of a function
+/// that may fail. As opposed to other approaches, such as etl::pair<T,bool>,
+/// optional handles expensive-to-construct objects well and is more readable,
+/// as the intent is expressed explicitly.
+///
+/// Any instance of optional at any given point in time either contains a
+/// value or does not contain a value.
+///
+/// If an optional contains a value, the value is guaranteed to be
+/// allocated as part of the optional object footprint, i.e. no dynamic memory
+/// allocation ever takes place. Thus, an optional object models an object, not
+/// a pointer, even though operator*() and operator->() are defined.
+///
+/// When an object of type optional is contextually converted to bool, the
+/// conversion returns true if the object contains a value and false if it does
+/// not contain a value.
+///
+/// The optional object contains a value in the following conditions:
+///     - The object is initialized with/assigned from a value of type T or
+///     another optional that contains a value.
+///
+/// The object does not contain a value in the following conditions:
+///     - The object is default-initialized.
+///     - The object is initialized with/assigned from a value of type
+///     etl::nullopt_t or an optional object that does not contain a value.
+///     - The member function reset() is called.
+///
+/// There are no optional references; a program is ill-formed if it instantiates
+/// an optional with a reference type. Alternatively, an optional of a
+/// etl::reference_wrapper of type T may be used to hold a reference. In
+/// addition, a program is ill-formed if it instantiates an optional with the
+/// (possibly cv-qualified) tag types etl::nullopt_t or etl::in_place_t.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional
+///
+/// \tparam T The type of the value to manage initialization state for. The type
+/// must meet the requirements of Destructible (in particular, array types are
+/// not allowed).
+///
+/// \headerfile optional.hpp "etl/optional.hpp"
 /// \include optional.cpp
 template <typename T>
 struct optional : private detail::optional_move_assign_base<T>,

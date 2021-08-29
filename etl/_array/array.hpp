@@ -254,8 +254,8 @@ struct array {
         }
     }
 
-    // NOLINTNEXTLINE(readability-identifier-naming)
-    Type _internal_data[Size];
+    /// \internal
+    Type _internal_data[Size]; // NOLINT(readability-identifier-naming)
 };
 
 // One deduction guide is provided for array to provide an equivalent of

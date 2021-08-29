@@ -16,7 +16,9 @@ namespace etl {
 /// Container, this returns `C::iterator` when c is not const-qualified, and
 /// `C::const_iterator` otherwise. Custom overloads of begin may be provided for
 /// classes that do not expose a suitable begin() member function, yet can be
-/// iterated. \group begin \module Iterator
+/// iterated.
+/// \group begin
+/// \module Iterator
 template <typename C>
 constexpr auto begin(C& c) -> decltype(c.begin())
 {

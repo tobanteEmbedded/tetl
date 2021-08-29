@@ -19,6 +19,7 @@ PREDEFINED             = DOXYGEN=1 __cpp_concepts=1 __cplusplus=202902L TETL_CPP
 ENABLE_PREPROCESSING   = YES
 MULTILINE_CPP_IS_BRIEF = YES
 INLINE_GROUPED_CLASSES = YES
+SORT_MEMBER_DOCS       = NO
 
 # Disable doc gen for symbols detail namespace.
 EXCLUDE_SYMBOLS = detail
