@@ -10,7 +10,7 @@
 
 TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(etl::detail::is_transparent<etl::plus<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::plus<>>::value);
     CHECK(etl::plus<TestType> {}(TestType { 2 }, TestType { 1 })
           == TestType { 3 });
     CHECK(etl::plus<TestType> {}(TestType { 1 }, TestType { 1 })
@@ -26,7 +26,7 @@ TEMPLATE_TEST_CASE("functional: plus", "[functional]", int, float, double)
 
 TEMPLATE_TEST_CASE("functional: minus", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(etl::detail::is_transparent<etl::minus<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::minus<>>::value);
     CHECK(etl::minus<TestType> {}(TestType { 99 }, 98) == TestType { 1 });
     CHECK(etl::minus<> {}(TestType { 2 }, TestType { 1 }) == TestType { 1 });
     CHECK(etl::minus<> {}(TestType { 1 }, TestType { 1 }) == TestType { 0 });
@@ -39,8 +39,7 @@ TEMPLATE_TEST_CASE("functional: minus", "[functional]", int, float, double)
 
 TEMPLATE_TEST_CASE("functional: multiplies", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(
-        etl::detail::is_transparent<etl::multiplies<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::multiplies<>>::value);
 
     CHECK(etl::multiplies<TestType> {}(TestType { 99 }, 2) == TestType { 198 });
     CHECK(
@@ -56,8 +55,7 @@ TEMPLATE_TEST_CASE("functional: multiplies", "[functional]", int, float, double)
 
 TEMPLATE_TEST_CASE("functional: divides", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(
-        etl::detail::is_transparent<etl::divides<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::divides<>>::value);
 
     CHECK(etl::divides<TestType> {}(TestType { 100 }, 2) == TestType { 50 });
     CHECK(etl::divides<> {}(TestType { 2 }, TestType { 1 }) == TestType { 2 });
@@ -71,8 +69,7 @@ TEMPLATE_TEST_CASE("functional: divides", "[functional]", int, float, double)
 
 TEMPLATE_TEST_CASE("functional: modulus", "[functional]", int, unsigned)
 {
-    STATIC_REQUIRE(
-        etl::detail::is_transparent<etl::modulus<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::modulus<>>::value);
 
     CHECK(etl::modulus<TestType> {}(TestType { 100 }, 2) == TestType { 0 });
     CHECK(etl::modulus<> {}(TestType { 2 }, TestType { 1 }) == TestType { 0 });
@@ -86,7 +83,7 @@ TEMPLATE_TEST_CASE("functional: modulus", "[functional]", int, unsigned)
 
 TEMPLATE_TEST_CASE("functional: negate", "[functional]", int, float, double)
 {
-    STATIC_REQUIRE(etl::detail::is_transparent<etl::negate<>, TestType>::value);
+    STATIC_REQUIRE(etl::detail::is_transparent<etl::negate<>>::value);
 
     CHECK(etl::negate<TestType> {}(TestType { 50 }) == TestType { -50 });
     CHECK(etl::negate<> {}(TestType { 2 }) == TestType { -2 });

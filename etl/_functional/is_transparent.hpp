@@ -12,22 +12,22 @@
 namespace etl {
 
 namespace detail {
-template <typename T, typename, typename = void>
+template <typename T, typename = void>
 struct is_transparent : etl::false_type {
 };
 
 /// \brief is_transparent
 /// \group is_transparent
 /// \module Utility
-template <typename T, typename U>
-struct is_transparent<T, U,
+template <typename T>
+struct is_transparent<T,
     etl::conditional_t<etl::is_same_v<typename T::is_transparent, void>, void,
         bool>> : etl::true_type {
 };
 
 /// \group is_transparent
-template <typename T, typename U>
-inline constexpr auto transparent_v = is_transparent<T, U>::value;
+template <typename T>
+inline constexpr auto is_transparent_v = is_transparent<T>::value;
 
 } // namespace detail
 

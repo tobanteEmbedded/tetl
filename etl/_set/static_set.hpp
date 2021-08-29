@@ -322,7 +322,7 @@ public:
 
     /// \brief Returns the number of elements with key that compares equivalent
     /// to the value x.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto count(K const& x) const -> size_type
     {
         return contains(x) ? 1 : 0;
@@ -349,7 +349,7 @@ public:
 
     /// \brief Finds an element with key that compares equivalent to the value
     /// x.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     constexpr auto find(K const& x) -> iterator
     {
         return find_if(begin(), end(), [&x](auto const& val) {
@@ -360,7 +360,7 @@ public:
 
     /// \brief Finds an element with key that compares equivalent to the value
     /// x.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     constexpr auto find(K const& x) const -> const_iterator
     {
         return find_if(cbegin(), cend(), [&x](auto const& val) {
@@ -379,7 +379,7 @@ public:
 
     /// \brief Checks if there is an element with key that compares equivalent
     /// to the value x.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto contains(K const& x) const -> bool
     {
         return find(x) != end();
@@ -402,7 +402,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is not
     /// less than (i.e. greater or equal to) key.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto lower_bound(K const& key) -> iterator
     {
         return etl::lower_bound(begin(), end(), key, key_compare {});
@@ -410,7 +410,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is not
     /// less than (i.e. greater or equal to) key.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto lower_bound(K const& key) const
         -> const_iterator
     {
@@ -434,7 +434,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto upper_bound(K const& key) -> iterator
     {
         return etl::upper_bound(begin(), end(), key, key_compare {});
@@ -442,7 +442,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto upper_bound(K const& key) const
         -> const_iterator
     {
@@ -475,7 +475,7 @@ public:
     /// first element that is not less than key and another pointing to the
     /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto equal_range(K const& key) -> iterator
     {
         return etl::equal_range(begin(), end(), key, key_compare {});
@@ -486,7 +486,7 @@ public:
     /// first element that is not less than key and another pointing to the
     /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
-    template <typename K, TETL_REQUIRES_(detail::transparent_v<key_compare, K>)>
+    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
     [[nodiscard]] constexpr auto equal_range(K const& key) const
         -> const_iterator
     {
