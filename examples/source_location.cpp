@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 
+#if (TETL_CPP_STANDARD >= 20) && defined(__cpp_consteval)
+
 auto log(etl::string_view const message,
     etl::source_location const location = etl::source_location::current())
     -> void
@@ -33,3 +35,7 @@ auto main(int /*argc*/, char const** /*argv*/) -> int
     fun("Hello C++20!");
     return 0;
 }
+
+#else
+auto main() -> int { return 0; }
+#endif

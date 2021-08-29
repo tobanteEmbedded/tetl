@@ -8,7 +8,6 @@
 // clang-format off
 #include "etl/_config/compiler.hpp"
 #include "etl/_config/preprocessor.hpp"
-#include "etl/_config/keywords.hpp"
 #include "etl/_config/attributes.hpp"
 #include "etl/_config/builtin_types.hpp"
 #include "etl/_config/builtin_functions.hpp"
