@@ -171,8 +171,8 @@ struct flat_set {
     template <typename... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
-        auto key = Key { etl::forward<Args>(args)... };
-        auto it  = this->lower_bound(key);
+        auto key    = Key { etl::forward<Args>(args)... };
+        iterator it = lower_bound(key);
 
         if (it == end() || compare_(key, *it)) {
             it = container_.emplace(it, etl::move(key));
@@ -276,7 +276,7 @@ struct flat_set {
     // set operations
     [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
     {
-        auto it = lower_bound(key);
+        iterator it = lower_bound(key);
         if (it == end() || compare_(key, *it)) { return end(); }
         return it;
     }
@@ -284,7 +284,7 @@ struct flat_set {
     [[nodiscard]] constexpr auto find(key_type const& key) const
         -> const_iterator
     {
-        auto it = lower_bound(key);
+        const_iterator it = lower_bound(key);
         if (it == end() || compare_(key, *it)) { return end(); }
         return it;
     }
@@ -292,7 +292,7 @@ struct flat_set {
     template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
     [[nodiscard]] constexpr auto find(K const& key) -> iterator
     {
-        auto it = lower_bound(key);
+        iterator it = lower_bound(key);
         if (it == end() || compare_(key, *it)) { return end(); }
         return it;
     }
@@ -300,7 +300,7 @@ struct flat_set {
     template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
     [[nodiscard]] constexpr auto find(K const& key) const -> const_iterator
     {
-        auto it = lower_bound(key);
+        const_iterator it = lower_bound(key);
         if (it == end() || compare_(key, *it)) { return end(); }
         return it;
     }
@@ -316,14 +316,14 @@ struct flat_set {
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) -> iterator
     {
         auto cmp = [&](auto const& k) -> bool { return compare_(k, key); };
-        return etl::partition_point(this->begin(), this->end(), cmp);
+        return etl::partition_point(begin(), end(), cmp);
     }
 
     [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
         -> const_iterator
     {
         auto cmp = [&](auto const& k) -> bool { return compare_(k, key); };
-        return etl::partition_point(this->begin(), this->end(), cmp);
+        return etl::partition_point(begin(), end(), cmp);
     }
 
     template <typename K>
