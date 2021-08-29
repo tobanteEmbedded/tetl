@@ -38,9 +38,12 @@ auto main() -> int
     TETL_ASSERT(static_cast<bool>(opt4));
 
     // value & value_or
-    static_assert(optional<int>().value() == nullptr);
     static_assert(optional<int>().value_or(1) == 1);
-    static_assert(*optional<int>(1).value() == 1);
+    static_assert(optional<int>(1).value() == 1);
+
+    // Fails to compile, or raises an exception if invoked at runtime
+    // static_assert(optional<int>().value());
+    // TETL_ASSERT(optional<int>().value());
 
     // reset
     auto opt5 = optional<float>(1.0F);

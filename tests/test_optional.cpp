@@ -57,21 +57,21 @@ TEMPLATE_TEST_CASE("optional: construct(optional)", "[optional]", etl::uint8_t,
     {
         auto opt = etl::optional<TestType> { TestType { 42 } };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType { 42 });
+        CHECK(opt.value() == TestType { 42 });
 
         // copy ctor
         auto opt1 { opt };
         CHECK(opt1.has_value());
-        CHECK(*opt1.value() == TestType { 42 });
+        CHECK(opt1.value() == TestType { 42 });
 
         // move ctor
         auto opt2 { etl::move(opt) };
         CHECK(opt2.has_value());
-        CHECK(*opt2.value() == TestType { 42 });
+        CHECK(opt2.value() == TestType { 42 });
 
         auto opt3 { etl::optional<TestType> { TestType { 42 } } };
         CHECK(opt3.has_value());
-        CHECK(*opt3.value() == TestType { 42 });
+        CHECK(opt3.value() == TestType { 42 });
     }
 }
 
@@ -126,18 +126,18 @@ TEMPLATE_TEST_CASE("optional: operator=(value_type)", "[optional]",
         CHECK_FALSE(opt.has_value());
         opt = TestType { 42 };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType { 42 });
+        CHECK(opt.value() == TestType { 42 });
     }
 
     SECTION("with value")
     {
         etl::optional<TestType> opt { TestType {} };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType {});
+        CHECK(opt.value() == TestType {});
 
         opt = TestType { 42 };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType { 42 });
+        CHECK(opt.value() == TestType { 42 });
     }
 }
 
@@ -163,7 +163,7 @@ TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
     {
         etl::optional<TestType> opt { TestType { 42 } };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType { 42 });
+        CHECK(opt.value() == TestType { 42 });
         opt = etl::optional<TestType> {};
         CHECK_FALSE(opt.has_value());
     }
@@ -174,7 +174,7 @@ TEMPLATE_TEST_CASE("optional: operator=(optional)", "[optional]", etl::uint8_t,
         CHECK_FALSE(opt.has_value());
         opt = etl::optional<TestType> { TestType { 42 } };
         CHECK(opt.has_value());
-        CHECK(*opt.value() == TestType { 42 });
+        CHECK(opt.value() == TestType { 42 });
     }
 }
 
@@ -184,9 +184,9 @@ TEST_CASE("optional: operator=() non_trivial", "[optional]")
         S() = default;
         S(S const& /*s*/) { }          // NOLINT(modernize-use-equals-default)
         S(S&& /*unused*/) noexcept { } // NOLINT(modernize-use-equals-default)
+        ~S() { }                       // NOLINT(modernize-use-equals-default)
         auto operator=(S const& /*s*/) -> S& { return *this; }
         auto operator=(S&& /*s*/) noexcept -> S& { return *this; }
-        ~S() { } // NOLINT(modernize-use-equals-default)
     };
 
     STATIC_REQUIRE_FALSE(etl::is_trivially_destructible_v<S>);
@@ -604,7 +604,7 @@ TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
             opt1.swap(opt2);
             CHECK_FALSE(opt1.has_value());
             CHECK(opt2.has_value());
-            CHECK(*opt2.value() == 1);
+            CHECK(opt2.value() == 1);
 
             etl::optional<TestType> opt3 {};
             etl::optional<TestType> opt4 { TestType { 1 } };
@@ -613,7 +613,7 @@ TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
 
             opt3.swap(opt4);
             CHECK(opt3.has_value());
-            CHECK(*opt3.value() == 1);
+            CHECK(opt3.value() == 1);
             CHECK_FALSE(opt4.has_value());
         }
 
@@ -627,8 +627,8 @@ TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
             opt1.swap(opt2);
             CHECK(opt1.has_value());
             CHECK(opt2.has_value());
-            CHECK(*opt1.value() == 2);
-            CHECK(*opt2.value() == 1);
+            CHECK(opt1.value() == 2);
+            CHECK(opt2.value() == 1);
         }
     }
 
@@ -649,8 +649,8 @@ TEMPLATE_TEST_CASE("optional: swap", "[optional]", etl::uint8_t, etl::int8_t,
         opt1.swap(opt2);
         CHECK(opt1.has_value());
         CHECK(opt2.has_value());
-        CHECK(opt1.value()->data == 2);
-        CHECK(opt2.value()->data == 1);
+        CHECK(opt1.value().data == 2);
+        CHECK(opt2.value().data == 1);
     }
 }
 
@@ -687,8 +687,8 @@ TEMPLATE_TEST_CASE("optional: make_optional(args...)", "[optional]",
     auto const opt = etl::make_optional<S>(TestType { 42 }, 1);
     STATIC_REQUIRE(etl::is_same_v<typename decltype(opt)::value_type, S>);
 
-    CHECK(opt.value()->data_1 == TestType { 42 });
-    CHECK(opt.value()->data_2 == 1);
+    CHECK(opt.value().data_1 == TestType { 42 });
+    CHECK(opt.value().data_2 == 1);
 }
 
 TEMPLATE_TEST_CASE("optional: deduction guide", "[optional]", etl::uint8_t,

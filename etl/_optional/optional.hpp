@@ -6,8 +6,11 @@
 #define TETL_OPTIONAL_OPTIONAL_HPP
 
 #include "etl/_concepts/requires.hpp"
+#include "etl/_config/all.hpp"
+#include "etl/_exception/raise.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_new/operator.hpp"
+#include "etl/_optional/bad_optional_access.hpp"
 #include "etl/_optional/nullopt.hpp"
 #include "etl/_optional/sfinae_base.hpp"
 #include "etl/_type_traits/conjunction.hpp"
@@ -121,7 +124,7 @@ struct optional_storage_base : optional_destruct_base<T> {
         return this->internal_value;
     }
 
-    [[nodiscard]] constexpr auto get() const& noexcept -> const value_type&
+    [[nodiscard]] constexpr auto get() const& noexcept -> value_type const&
     {
         return this->internal_value;
     }
@@ -131,7 +134,7 @@ struct optional_storage_base : optional_destruct_base<T> {
         return etl::move(this->internal_value);
     }
 
-    [[nodiscard]] constexpr auto get() const&& noexcept -> const value_type&&
+    [[nodiscard]] constexpr auto get() const&& noexcept -> value_type const&&
     {
         return etl::move(this->internal_value);
     }
@@ -393,18 +396,48 @@ public:
     /// contain a value after this call.
     using base_type::reset;
 
-    /// \brief If the optional contains a value, returns a pointer. If empty the
-    /// pointer will be null.
-    [[nodiscard]] constexpr auto value() -> value_type*
+    /// \brief If *this contains a value, returns a reference to the contained
+    /// value. Otherwise, raises a etl::bad_optional_access exception.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/value
+    [[nodiscard]] constexpr auto value() & -> value_type&
     {
-        return this->has_value() ? &this->get() : nullptr;
+        if (TETL_LIKELY(has_value())) { return this->get(); }
+        etl::raise<etl::bad_optional_access>(
+            "called value() on empty optional");
     }
 
-    /// \brief If the optional contains a value, returns a pointer. If empty the
-    /// pointer will be null.
-    [[nodiscard]] constexpr auto value() const -> const value_type*
+    /// \brief If *this contains a value, returns a reference to the contained
+    /// value. Otherwise, raises a etl::bad_optional_access exception.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/value
+    [[nodiscard]] constexpr auto value() const& -> value_type const&
     {
-        return this->has_value() ? &this->get() : nullptr;
+        if (TETL_LIKELY(has_value())) { return this->get(); }
+        etl::raise<etl::bad_optional_access>(
+            "called value() on empty optional");
+    }
+
+    /// \brief If *this contains a value, returns a reference to the contained
+    /// value. Otherwise, raises a etl::bad_optional_access exception.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/value
+    [[nodiscard]] constexpr auto value() && -> value_type&&
+    {
+        if (TETL_LIKELY(has_value())) { return etl::move(this->get()); }
+        etl::raise<etl::bad_optional_access>(
+            "called value() on empty optional");
+    }
+
+    /// \brief If *this contains a value, returns a reference to the contained
+    /// value. Otherwise, raises a etl::bad_optional_access exception.
+    ///
+    /// https://en.cppreference.com/w/cpp/utility/optional/value
+    [[nodiscard]] constexpr auto value() const&& -> value_type const&&
+    {
+        if (TETL_LIKELY(has_value())) { return etl::move(this->get()); }
+        etl::raise<etl::bad_optional_access>(
+            "called value() on empty optional");
     }
 
     /// \brief Returns the contained value if *this has a value, otherwise
@@ -413,7 +446,7 @@ public:
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) const& -> value_type
     {
         return has_value()
-                   ? *this->value()
+                   ? this->value()
                    : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
@@ -423,22 +456,24 @@ public:
     [[nodiscard]] constexpr auto value_or(U&& defaultValue) && -> value_type
     {
         return has_value()
-                   ? etl::move(*this->value())
+                   ? etl::move(this->value())
                    : static_cast<value_type>(etl::forward<U>(defaultValue));
     }
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
-    [[nodiscard]] constexpr auto operator->() const -> const value_type*
+    [[nodiscard]] constexpr auto operator->() const -> value_type const*
     {
-        return this->value();
+        if (has_value()) { return &this->value(); }
+        return nullptr;
     }
 
     /// \brief Returns a pointer to the contained value. The pointer is null if
     /// the optional is empty.
     [[nodiscard]] constexpr auto operator->() -> value_type*
     {
-        return this->value();
+        if (has_value()) { return &this->value(); }
+        return nullptr;
     }
 
     /// \brief Swaps the contents with those of other.
@@ -480,7 +515,7 @@ public:
     {
         this->reset();
         this->construct(etl::forward<Args>(args)...);
-        return *value();
+        return value();
     }
 
     /// \brief Implementation detail. Do not use!
@@ -500,7 +535,7 @@ template <typename T, typename U>
 {
     if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return false; }
     if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return true; }
-    return *lhs.value() == *rhs.value();
+    return lhs.value() == rhs.value();
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
@@ -510,7 +545,7 @@ template <typename T, typename U>
 {
     if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return true; }
     if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return false; }
-    return *lhs.value() != *rhs.value();
+    return lhs.value() != rhs.value();
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
@@ -520,7 +555,7 @@ template <typename T, typename U>
 {
     if (!static_cast<bool>(rhs)) { return false; }
     if (!static_cast<bool>(lhs)) { return true; }
-    return *lhs.value() < *rhs.value();
+    return lhs.value() < rhs.value();
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
@@ -530,7 +565,7 @@ template <typename T, typename U>
 {
     if (!static_cast<bool>(lhs)) { return false; }
     if (!static_cast<bool>(rhs)) { return true; }
-    return *lhs.value() > *rhs.value();
+    return lhs.value() > rhs.value();
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
@@ -540,7 +575,7 @@ template <typename T, typename U>
 {
     if (!static_cast<bool>(lhs)) { return true; }
     if (!static_cast<bool>(rhs)) { return false; }
-    return *lhs.value() <= *rhs.value();
+    return lhs.value() <= rhs.value();
 }
 
 /// \brief Compares two optional objects, lhs and rhs.
@@ -550,7 +585,7 @@ template <typename T, typename U>
 {
     if (!static_cast<bool>(rhs)) { return true; }
     if (!static_cast<bool>(lhs)) { return false; }
-    return *lhs.value() >= *rhs.value();
+    return lhs.value() >= rhs.value();
 }
 
 /// \brief Compares opt with a nullopt. Equivalent to when comparing to an
