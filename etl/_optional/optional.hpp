@@ -8,6 +8,7 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_config/all.hpp"
 #include "etl/_exception/raise.hpp"
+#include "etl/_functional/hash.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_optional/bad_optional_access.hpp"
@@ -28,6 +29,7 @@
 #include "etl/_type_traits/is_object.hpp"
 #include "etl/_type_traits/is_reference.hpp"
 #include "etl/_type_traits/is_same.hpp"
+#include "etl/_type_traits/is_specialized.hpp"
 #include "etl/_type_traits/is_swappable.hpp"
 #include "etl/_type_traits/is_trivially_copy_assignable.hpp"
 #include "etl/_type_traits/is_trivially_copy_constructible.hpp"
@@ -35,6 +37,7 @@
 #include "etl/_type_traits/is_trivially_move_assignable.hpp"
 #include "etl/_type_traits/is_trivially_move_constructible.hpp"
 #include "etl/_type_traits/negation.hpp"
+#include "etl/_type_traits/remove_const.hpp"
 #include "etl/_type_traits/remove_cvref.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/in_place.hpp"
@@ -976,6 +979,34 @@ template <typename T, typename U>
     return static_cast<bool>(opt) ? value >= *opt : true;
 }
 
+/// \brief The template specialization of etl::hash for the etl::optional class
+/// allows users to obtain hashes of the values contained in optional objects.
+///
+/// \details The specialization etl::hash<optional<T>> is enabled (see
+/// etl::hash) if etl::hash<etl::remove_const_t<T>> is enabled, and is disabled
+/// otherwise.
+///
+/// When enabled, for an object opt of type etl::optional<T> that contains a
+/// value, etl::hash<etl::optional<T>>()(opt) evaluates to the same value as
+/// etl::hash<etl::remove_const_t<T>>()(*opt). For an optional that does not
+/// contain a value, the hash is unspecified.
+///
+/// The member functions of this specialization are not guaranteed to be
+/// noexcept because the hash of the underlying type might throw.
+///
+/// https://en.cppreference.com/w/cpp/utility/optional/hash
+///
+/// \headerfile optional.hpp "etl/optional.hpp"
+template <typename T>
+struct hash<etl::optional<T>> {
+    [[nodiscard]] constexpr auto operator()(etl::optional<T> const& opt) const
+        -> etl::size_t
+    {
+        using type = etl::remove_const_t<T>;
+        static_assert(etl::is_specialized_v<etl::hash, type>);
+        return static_cast<bool>(opt) ? etl::hash<type> {}(*opt) : 0;
+    }
+};
 } // namespace etl
 
 #endif // TETL_OPTIONAL_OPTIONAL_HPP
