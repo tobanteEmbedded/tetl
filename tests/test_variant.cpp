@@ -207,7 +207,7 @@ TEST_CASE("variant: swap", "[variant]")
     CHECK(*etl::get_if<int>(&r) == 42);
 
     auto other = etl::variant<int, float> { 999.0F };
-    l.swap(other);
+    etl::swap(l, other);
     CHECK(etl::holds_alternative<int>(l));
     CHECK(etl::holds_alternative<float>(other));
 }
@@ -252,28 +252,31 @@ TEST_CASE("variant: holds_alternative", "[variant]")
 
 TEST_CASE("variant: get_if", "[variant]")
 {
-    SECTION("mutable")
-    {
-        auto var = etl::variant<etl::monostate, int, float, double> { 42 };
-        CHECK(etl::get_if<int>(&var) != nullptr);
-        CHECK(*etl::get_if<int>(&var) == 42);
+    auto v1 = etl::variant<etl::monostate, int, float, double> { 42 };
+    CHECK(etl::get_if<int>(&v1) != nullptr);
+    CHECK(*etl::get_if<int>(&v1) == 42);
+    CHECK(etl::get_if<1>(&v1) != nullptr);
+    CHECK(*etl::get_if<1>(&v1) == 42);
 
-        CHECK(etl::get_if<etl::monostate>(&var) == nullptr);
-        CHECK(etl::get_if<float>(&var) == nullptr);
-        CHECK(etl::get_if<double>(&var) == nullptr);
-    }
+    CHECK(etl::get_if<etl::monostate>(&v1) == nullptr);
+    CHECK(etl::get_if<float>(&v1) == nullptr);
+    CHECK(etl::get_if<double>(&v1) == nullptr);
+    CHECK(etl::get_if<0>(&v1) == nullptr);
+    CHECK(etl::get_if<2>(&v1) == nullptr);
+    CHECK(etl::get_if<3>(&v1) == nullptr);
 
-    SECTION("const")
-    {
-        auto const var
-            = etl::variant<etl::monostate, int, float, double> { 42 };
-        CHECK(etl::get_if<int>(&var) != nullptr);
-        CHECK(*etl::get_if<int>(&var) == 42);
+    auto const v2 = etl::variant<etl::monostate, int, float, double> { 42.0f };
+    CHECK(etl::get_if<float>(&v2) != nullptr);
+    CHECK(*etl::get_if<float>(&v2) == 42.0f);
+    CHECK(etl::get_if<2>(&v2) != nullptr);
+    CHECK(*etl::get_if<2>(&v2) == 42.0f);
 
-        CHECK(etl::get_if<etl::monostate>(&var) == nullptr);
-        CHECK(etl::get_if<float>(&var) == nullptr);
-        CHECK(etl::get_if<double>(&var) == nullptr);
-    }
+    CHECK(etl::get_if<etl::monostate>(&v2) == nullptr);
+    CHECK(etl::get_if<int>(&v2) == nullptr);
+    CHECK(etl::get_if<double>(&v2) == nullptr);
+    CHECK(etl::get_if<0>(&v2) == nullptr);
+    CHECK(etl::get_if<1>(&v2) == nullptr);
+    CHECK(etl::get_if<3>(&v2) == nullptr);
 }
 
 TEST_CASE("variant: get", "[variant]")
@@ -298,6 +301,13 @@ TEST_CASE("variant: variant_size", "[variant]")
     STATIC_REQUIRE(etl::variant_size_v<t2> == 2);
     STATIC_REQUIRE(etl::variant_size_v<t3> == 3);
     STATIC_REQUIRE(etl::variant_size_v<t4> == 4);
+
+    using t5 = etl::variant<etl::monostate> const;
+    using t6 = etl::variant<etl::monostate, int> const;
+    using t7 = etl::variant<etl::monostate, int, float> const;
+    STATIC_REQUIRE(etl::variant_size_v<t5> == 1);
+    STATIC_REQUIRE(etl::variant_size_v<t6> == 2);
+    STATIC_REQUIRE(etl::variant_size_v<t7> == 3);
 }
 
 TEMPLATE_TEST_CASE("variant: variant_alternative", "[variant]", bool,
