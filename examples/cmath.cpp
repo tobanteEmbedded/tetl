@@ -46,6 +46,19 @@ constexpr auto test() -> bool
     etl::ignore_unused(etl::sinh(1.4F));
     etl::ignore_unused(etl::sinh(1.4));
 
+    etl::ignore_unused(etl::acos(1.4F));
+    etl::ignore_unused(etl::acos(1.4));
+
+    etl::ignore_unused(etl::asin(1.4F));
+    etl::ignore_unused(etl::asin(1.4));
+
+    etl::ignore_unused(etl::asinh(1.4F));
+    etl::ignore_unused(etl::asinh(1.4));
+
+    etl::ignore_unused(etl::hypotf(1.0F, 1.0F));
+    etl::ignore_unused(etl::hypot(1.0F, 1.0F));
+    etl::ignore_unused(etl::hypot(1.0, 1.0));
+
     return true;
 }
 

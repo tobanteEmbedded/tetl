@@ -27,6 +27,7 @@
 #include "etl/_cmath/fmax.hpp"
 #include "etl/_cmath/fmin.hpp"
 #include "etl/_cmath/fmod.hpp"
+#include "etl/_cmath/hypot.hpp"
 #include "etl/_cmath/isfinite.hpp"
 #include "etl/_cmath/isinf.hpp"
 #include "etl/_cmath/isnan.hpp"
