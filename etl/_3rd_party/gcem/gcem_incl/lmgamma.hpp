@@ -22,15 +22,15 @@
  * log multivariate gamma function
  */
 
-#ifndef _gcem_lmgamma_HPP
-#define _gcem_lmgamma_HPP
+#ifndef GCEM_lmgamma_HPP
+#define GCEM_lmgamma_HPP
 
 namespace internal {
 
 // see https://en.wikipedia.org/wiki/Multivariate_gamma_function
 
 template <typename T1, typename T2>
-constexpr T1 lmgamma_recur(const T1 a, const T2 p) noexcept
+constexpr auto lmgamma_recur(const T1 a, const T2 p) noexcept -> T1
 {
     return ( // NaN check
         is_nan(a) ? GCLIM<T1>::quiet_NaN() :
@@ -56,7 +56,7 @@ constexpr T1 lmgamma_recur(const T1 a, const T2 p) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr return_t<T1> lmgamma(const T1 a, const T2 p) noexcept
+constexpr auto lmgamma(const T1 a, const T2 p) noexcept -> return_t<T1>
 {
     return internal::lmgamma_recur(static_cast<return_t<T1>>(a), p);
 }

@@ -24,35 +24,35 @@
  * see eq. 18.5.17a in the Handbook of Continued Fractions for Special Functions
  */
 
-#ifndef _gcem_incomplete_beta_HPP
-#define _gcem_incomplete_beta_HPP
+#ifndef GCEM_incomplete_beta_HPP
+#define GCEM_incomplete_beta_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T incomplete_beta_cf(const T a, const T b, const T z, const T c_j,
-    const T d_j, const T f_j, const int depth) noexcept;
+constexpr auto incomplete_beta_cf(
+    T a, T b, T z, T cJ, T dJ, T fJ, int depth) noexcept -> T;
 
 //
 // coefficients; see eq. 18.5.17b
 
 template <typename T>
-constexpr T incomplete_beta_coef_even(
-    const T a, const T b, const T z, const int k) noexcept
+constexpr auto incomplete_beta_coef_even(
+    const T a, const T b, const T z, const int k) noexcept -> T
 {
     return (-z * (a + k) * (a + b + k) / ((a + 2 * k) * (a + 2 * k + T(1))));
 }
 
 template <typename T>
-constexpr T incomplete_beta_coef_odd(
-    const T a, const T b, const T z, const int k) noexcept
+constexpr auto incomplete_beta_coef_odd(
+    const T a, const T b, const T z, const int k) noexcept -> T
 {
     return (z * k * (b - k) / ((a + 2 * k - T(1)) * (a + 2 * k)));
 }
 
 template <typename T>
-constexpr T incomplete_beta_coef(
-    const T a, const T b, const T z, const int depth) noexcept
+constexpr auto incomplete_beta_coef(
+    const T a, const T b, const T z, const int depth) noexcept -> T
 {
     return (!is_odd(depth)
                 ? incomplete_beta_coef_even(a, b, z, depth / 2)
@@ -63,50 +63,51 @@ constexpr T incomplete_beta_coef(
 // update formulae for the modified Lentz method
 
 template <typename T>
-constexpr T incomplete_beta_c_update(
-    const T a, const T b, const T z, const T c_j, const int depth) noexcept
+constexpr auto incomplete_beta_c_update(
+    const T a, const T b, const T z, const T cJ, const int depth) noexcept -> T
 {
-    return (T(1) + incomplete_beta_coef(a, b, z, depth) / c_j);
+    return (T(1) + incomplete_beta_coef(a, b, z, depth) / cJ);
 }
 
 template <typename T>
-constexpr T incomplete_beta_d_update(
-    const T a, const T b, const T z, const T d_j, const int depth) noexcept
+constexpr auto incomplete_beta_d_update(
+    const T a, const T b, const T z, const T dJ, const int depth) noexcept -> T
 {
-    return (T(1) / (T(1) + incomplete_beta_coef(a, b, z, depth) * d_j));
+    return (T(1) / (T(1) + incomplete_beta_coef(a, b, z, depth) * dJ));
 }
 
 //
 // convergence-type condition
 
 template <typename T>
-constexpr T incomplete_beta_decision(const T a, const T b, const T z,
-    const T c_j, const T d_j, const T f_j, const int depth) noexcept
+constexpr auto incomplete_beta_decision(const T a, const T b, const T z,
+    const T cJ, const T dJ, const T fJ, const int depth) noexcept -> T
 {
     return ( // tolerance check
-        abs(c_j * d_j - T(1)) < GCEM_INCML_BETA_TOL ? f_j * c_j * d_j :
-                                                    // max_iter check
+        abs(cJ * dJ - T(1)) < GCEM_INCML_BETA_TOL ? fJ * cJ * dJ :
+                                                  // max_iter check
             depth < GCEM_INCML_BETA_MAX_ITER ? // if
-            incomplete_beta_cf(a, b, z, c_j, d_j, f_j * c_j * d_j, depth + 1)
+            incomplete_beta_cf(a, b, z, cJ, dJ, fJ * cJ * dJ, depth + 1)
                                              :
                                              // else
-            f_j * c_j * d_j);
+            fJ * cJ * dJ);
 }
 
 template <typename T>
-constexpr T incomplete_beta_cf(const T a, const T b, const T z, const T c_j,
-    const T d_j, const T f_j, const int depth) noexcept
+constexpr auto incomplete_beta_cf(const T a, const T b, const T z, const T cJ,
+    const T dJ, const T fJ, const int depth) noexcept -> T
 {
     return incomplete_beta_decision(a, b, z,
-        incomplete_beta_c_update(a, b, z, c_j, depth),
-        incomplete_beta_d_update(a, b, z, d_j, depth), f_j, depth);
+        incomplete_beta_c_update(a, b, z, cJ, depth),
+        incomplete_beta_d_update(a, b, z, dJ, depth), fJ, depth);
 }
 
 //
 // x^a (1-x)^{b} / (a beta(a,b)) * cf
 
 template <typename T>
-constexpr T incomplete_beta_begin(const T a, const T b, const T z) noexcept
+constexpr auto incomplete_beta_begin(const T a, const T b, const T z) noexcept
+    -> T
 {
     return ((exp(a * log(z) + b * log(T(1) - z) - lbeta(a, b)) / a)
             * incomplete_beta_cf(a, b, z, T(1),
@@ -115,7 +116,8 @@ constexpr T incomplete_beta_begin(const T a, const T b, const T z) noexcept
 }
 
 template <typename T>
-constexpr T incomplete_beta_check(const T a, const T b, const T z) noexcept
+constexpr auto incomplete_beta_check(const T a, const T b, const T z) noexcept
+    -> T
 {
     return ( // NaN check
         any_nan(a, b, z) ? GCLIM<T>::quiet_NaN() :
@@ -130,8 +132,8 @@ constexpr T incomplete_beta_check(const T a, const T b, const T z) noexcept
 
 template <typename T1, typename T2, typename T3,
     typename TC = common_return_t<T1, T2, T3>>
-constexpr TC incomplete_beta_type_check(
-    const T1 a, const T2 b, const T3 p) noexcept
+constexpr auto incomplete_beta_type_check(
+    const T1 a, const T2 b, const T3 p) noexcept -> TC
 {
     return incomplete_beta_check(
         static_cast<TC>(a), static_cast<TC>(b), static_cast<TC>(p));
@@ -163,8 +165,8 @@ constexpr TC incomplete_beta_type_check(
  */
 
 template <typename T1, typename T2, typename T3>
-constexpr common_return_t<T1, T2, T3> incomplete_beta(
-    const T1 a, const T2 b, const T3 z) noexcept
+constexpr auto incomplete_beta(const T1 a, const T2 b, const T3 z) noexcept
+    -> common_return_t<T1, T2, T3>
 {
     return internal::incomplete_beta_type_check(a, b, z);
 }

@@ -22,8 +22,8 @@
  * compile-time natural logarithm function
  */
 
-#ifndef _gcem_log_HPP
-#define _gcem_log_HPP
+#ifndef GCEM_log_HPP
+#define GCEM_log_HPP
 
 namespace internal {
 
@@ -31,7 +31,7 @@ namespace internal {
 // see http://functions.wolfram.com/ElementaryFunctions/Log/10/0005/
 
 template <typename T>
-constexpr T log_cf_main(const T xx, const int depth) noexcept
+constexpr auto log_cf_main(const T xx, const int depth) noexcept -> T
 {
     return (depth < GCEM_LOG_MAX_ITER_SMALL ? // if
                 T(2 * depth - 1)
@@ -42,18 +42,18 @@ constexpr T log_cf_main(const T xx, const int depth) noexcept
 }
 
 template <typename T>
-constexpr T log_cf_begin(const T x) noexcept
+constexpr auto log_cf_begin(const T x) noexcept -> T
 {
     return (T(2) * x / log_cf_main(x * x, 1));
 }
 
 template <typename T>
-constexpr T log_main(const T x) noexcept
+constexpr auto log_main(const T x) noexcept -> T
 {
     return (log_cf_begin((x - T(1)) / (x + T(1))));
 }
 
-constexpr long double log_mantissa_integer(const int x) noexcept
+constexpr auto log_mantissa_integer(const int x) noexcept -> long double
 {
     return (x == 2    ? 0.6931471805599453094172321214581765680755L
             : x == 3  ? 1.0986122886681096913952452369225257046475L
@@ -68,7 +68,7 @@ constexpr long double log_mantissa_integer(const int x) noexcept
 }
 
 template <typename T>
-constexpr T log_mantissa(const T x) noexcept
+constexpr auto log_mantissa(const T x) noexcept -> T
 { // divide by the integer part of x, which will be in [1,10], then adjust using
   // tables
     return (log_main(x / T(static_cast<int>(x)))
@@ -76,14 +76,14 @@ constexpr T log_mantissa(const T x) noexcept
 }
 
 template <typename T>
-constexpr T log_breakup(const T x) noexcept
+constexpr auto log_breakup(const T x) noexcept -> T
 { // x = a*b, where b = 10^c
     return (
         log_mantissa(mantissa(x)) + T(GCEM_LOG_10) * T(find_exponent(x, 0)));
 }
 
 template <typename T>
-constexpr T log_check(const T x) noexcept
+constexpr auto log_check(const T x) noexcept -> T
 {
     return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
                       // x < 0
@@ -120,7 +120,7 @@ constexpr T log_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> log(const T x) noexcept
+constexpr auto log(const T x) noexcept -> return_t<T>
 {
     return internal::log_check(static_cast<return_t<T>>(x));
 }

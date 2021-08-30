@@ -22,12 +22,12 @@
  * compile-time check if integer is even
  */
 
-#ifndef _gcem_is_even_HPP
-#define _gcem_is_even_HPP
+#ifndef GCEM_is_even_HPP
+#define GCEM_is_even_HPP
 
 namespace internal {
 
-constexpr bool is_even(const llint_t x) noexcept { return !is_odd(x); }
+constexpr auto is_even(const llint_t x) noexcept -> bool { return !is_odd(x); }
 
 } // namespace internal
 

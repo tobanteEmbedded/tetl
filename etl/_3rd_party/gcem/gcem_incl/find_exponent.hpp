@@ -22,13 +22,14 @@
  * compile-time find_exponent function
  */
 
-#ifndef _gcem_find_exponent_HPP
-#define _gcem_find_exponent_HPP
+#ifndef GCEM_find_exponent_HPP
+#define GCEM_find_exponent_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr llint_t find_exponent(const T x, const llint_t exponent) noexcept
+constexpr auto find_exponent(const T x, const llint_t exponent) noexcept
+    -> llint_t
 {
     return (x < T(1)    ? find_exponent(x * T(10), exponent - llint_t(1))
             : x > T(10) ? find_exponent(x / T(10), exponent + llint_t(1))

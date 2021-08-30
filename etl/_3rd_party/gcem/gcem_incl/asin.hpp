@@ -22,13 +22,13 @@
  * compile-time arcsine function
  */
 
-#ifndef _gcem_asin_HPP
-#define _gcem_asin_HPP
+#ifndef GCEM_asin_HPP
+#define GCEM_asin_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T asin_compute(const T x) noexcept
+constexpr auto asin_compute(const T x) noexcept -> T
 {
     return ( // only defined on [-1,1]
         x > T(1) ? GCLIM<T>::quiet_NaN() :
@@ -41,7 +41,7 @@ constexpr T asin_compute(const T x) noexcept
 }
 
 template <typename T>
-constexpr T asin_check(const T x) noexcept
+constexpr auto asin_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -61,7 +61,7 @@ constexpr T asin_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> asin(const T x) noexcept
+constexpr auto asin(const T x) noexcept -> return_t<T>
 {
     return internal::asin_check(static_cast<return_t<T>>(x));
 }

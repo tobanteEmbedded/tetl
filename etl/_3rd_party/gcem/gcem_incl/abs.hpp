@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_abs_HPP
-#define _gcem_abs_HPP
+#ifndef GCEM_abs_HPP
+#define GCEM_abs_HPP
 
 /**
  * Compile-time absolute value function
@@ -29,7 +29,7 @@
  */
 
 template <typename T>
-constexpr T abs(const T x) noexcept
+constexpr auto abs(const T x) noexcept -> T
 {
     return ( // deal with signed-zeros
         x == T(0) ? T(0) :

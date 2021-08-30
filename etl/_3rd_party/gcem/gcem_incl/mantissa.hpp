@@ -22,13 +22,13 @@
  * compile-time mantissa function
  */
 
-#ifndef _gcem_mantissa_HPP
-#define _gcem_mantissa_HPP
+#ifndef GCEM_mantissa_HPP
+#define GCEM_mantissa_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T mantissa(const T x) noexcept
+constexpr auto mantissa(const T x) noexcept -> T
 {
     return (x < T(1)    ? mantissa(x * T(10))
             : x > T(10) ? mantissa(x / T(10))

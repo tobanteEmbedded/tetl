@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_sgn_HPP
-#define _gcem_sgn_HPP
+#ifndef GCEM_sgn_HPP
+#define GCEM_sgn_HPP
 
 /**
  * Compile-time sign function
@@ -30,7 +30,7 @@
  */
 
 template <typename T>
-constexpr int sgn(const T x) noexcept
+constexpr auto sgn(const T x) noexcept -> int
 {
     return ( // positive
         x > T(0) ? 1 :

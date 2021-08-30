@@ -25,8 +25,8 @@
  * http://my.fit.edu/~gabdo/gamma.txt
  */
 
-#ifndef _gcem_lgamma_HPP
-#define _gcem_lgamma_HPP
+#ifndef GCEM_lgamma_HPP
+#define GCEM_lgamma_HPP
 
 namespace internal {
 
@@ -48,7 +48,7 @@ namespace internal {
 //   -.26190838401581408670e-4
 //    .36899182659531622704e-5
 
-constexpr long double lgamma_coef_term(const long double x) noexcept
+constexpr auto lgamma_coef_term(const long double x) noexcept -> long double
 {
     return (0.99999999999999709182L + 57.156235665862923517L / (x + 1)
             - 59.597960355475491248L / (x + 2)
@@ -67,25 +67,25 @@ constexpr long double lgamma_coef_term(const long double x) noexcept
 }
 
 template <typename T>
-constexpr T lgamma_term_2(const T x) noexcept
+constexpr auto lgamma_term_2(const T x) noexcept -> T
 { //
     return (T(GCEM_LOG_SQRT_2PI) + log(T(lgamma_coef_term(x))));
 }
 
 template <typename T>
-constexpr T lgamma_term_1(const T x) noexcept
+constexpr auto lgamma_term_1(const T x) noexcept -> T
 { // note: 607/128 + 0.5 = 5.2421875
     return ((x + T(0.5)) * log(x + T(5.2421875L)) - (x + T(5.2421875L)));
 }
 
 template <typename T>
-constexpr T lgamma_begin(const T x) noexcept
+constexpr auto lgamma_begin(const T x) noexcept -> T
 { // returns lngamma(x+1)
     return (lgamma_term_1(x) + lgamma_term_2(x));
 }
 
 template <typename T>
-constexpr T lgamma_check(const T x) noexcept
+constexpr auto lgamma_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -114,7 +114,7 @@ constexpr T lgamma_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> lgamma(const T x) noexcept
+constexpr auto lgamma(const T x) noexcept -> return_t<T>
 {
     return internal::lgamma_check(static_cast<return_t<T>>(x));
 }

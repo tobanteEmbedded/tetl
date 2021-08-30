@@ -22,37 +22,37 @@
  * compile-time check if a float is not NaN-valued or +/-Inf
  */
 
-#ifndef _gcem_is_finite_HPP
-#define _gcem_is_finite_HPP
+#ifndef GCEM_is_finite_HPP
+#define GCEM_is_finite_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr bool is_finite(const T x) noexcept
+constexpr auto is_finite(const T x) noexcept -> bool
 {
     return (!is_nan(x)) && (!is_inf(x));
 }
 
 template <typename T1, typename T2>
-constexpr bool any_finite(const T1 x, const T2 y) noexcept
+constexpr auto any_finite(const T1 x, const T2 y) noexcept -> bool
 {
     return (is_finite(x) || is_finite(y));
 }
 
 template <typename T1, typename T2>
-constexpr bool all_finite(const T1 x, const T2 y) noexcept
+constexpr auto all_finite(const T1 x, const T2 y) noexcept -> bool
 {
     return (is_finite(x) && is_finite(y));
 }
 
 template <typename T1, typename T2, typename T3>
-constexpr bool any_finite(const T1 x, const T2 y, const T3 z) noexcept
+constexpr auto any_finite(const T1 x, const T2 y, const T3 z) noexcept -> bool
 {
     return (is_finite(x) || is_finite(y) || is_finite(z));
 }
 
 template <typename T1, typename T2, typename T3>
-constexpr bool all_finite(const T1 x, const T2 y, const T3 z) noexcept
+constexpr auto all_finite(const T1 x, const T2 y, const T3 z) noexcept -> bool
 {
     return (is_finite(x) && is_finite(y) && is_finite(z));
 }

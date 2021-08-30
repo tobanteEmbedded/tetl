@@ -22,13 +22,13 @@
  * find the fraction part of x = n + r, where -0.5 <= r <= 0.5
  */
 
-#ifndef _gcem_find_fraction_HPP
-#define _gcem_find_fraction_HPP
+#ifndef GCEM_find_fraction_HPP
+#define GCEM_find_fraction_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T find_fraction(const T x) noexcept
+constexpr auto find_fraction(const T x) noexcept -> T
 {
     return (abs(x - internal::floor_check(x)) >= T(0.5) ? // if
                 x - internal::floor_check(x) - sgn(x)

@@ -22,13 +22,13 @@
  * compile-time inverse hyperbolic cosine function
  */
 
-#ifndef _gcem_acosh_HPP
-#define _gcem_acosh_HPP
+#ifndef GCEM_acosh_HPP
+#define GCEM_acosh_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T acosh_compute(const T x) noexcept
+constexpr auto acosh_compute(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -53,7 +53,7 @@ constexpr T acosh_compute(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> acosh(const T x) noexcept
+constexpr auto acosh(const T x) noexcept -> return_t<T>
 {
     return internal::acosh_compute(static_cast<return_t<T>>(x));
 }

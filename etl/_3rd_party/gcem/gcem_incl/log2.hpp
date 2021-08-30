@@ -22,13 +22,13 @@
  * compile-time binary logarithm function
  */
 
-#ifndef _gcem_log2_HPP
-#define _gcem_log2_HPP
+#ifndef GCEM_log2_HPP
+#define GCEM_log2_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T log2_check(const T x) noexcept
+constexpr auto log2_check(const T x) noexcept -> T
 {
     return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
                       // x < 0
@@ -58,7 +58,7 @@ constexpr T log2_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> log2(const T x) noexcept
+constexpr auto log2(const T x) noexcept -> return_t<T>
 {
     return internal::log2_check(static_cast<return_t<T>>(x));
 }

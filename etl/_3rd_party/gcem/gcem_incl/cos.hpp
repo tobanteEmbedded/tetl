@@ -22,19 +22,19 @@
  * compile-time cosine function using tan(x/2)
  */
 
-#ifndef _gcem_cos_HPP
-#define _gcem_cos_HPP
+#ifndef GCEM_cos_HPP
+#define GCEM_cos_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T cos_compute(const T x) noexcept
+constexpr auto cos_compute(const T x) noexcept -> T
 {
     return (T(1) - x * x) / (T(1) + x * x);
 }
 
 template <typename T>
-constexpr T cos_check(const T x) noexcept
+constexpr auto cos_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -62,7 +62,7 @@ constexpr T cos_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> cos(const T x) noexcept
+constexpr auto cos(const T x) noexcept -> return_t<T>
 {
     return internal::cos_check(static_cast<return_t<T>>(x));
 }

@@ -22,13 +22,13 @@
  * compile-time exponential function
  */
 
-#ifndef _gcem_expm1_HPP
-#define _gcem_expm1_HPP
+#ifndef GCEM_expm1_HPP
+#define GCEM_expm1_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T expm1_compute(const T x) noexcept
+constexpr auto expm1_compute(const T x) noexcept -> T
 {
     // return x * ( T(1) + x * ( T(1)/T(2) + x * ( T(1)/T(6) + x * ( T(1)/T(24)
     // +  x/T(120) ) ) ) ); // O(x^6)
@@ -41,7 +41,7 @@ constexpr T expm1_compute(const T x) noexcept
 }
 
 template <typename T>
-constexpr T expm1_check(const T x) noexcept
+constexpr auto expm1_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -64,7 +64,7 @@ constexpr T expm1_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> expm1(const T x) noexcept
+constexpr auto expm1(const T x) noexcept -> return_t<T>
 {
     return internal::expm1_check(static_cast<return_t<T>>(x));
 }

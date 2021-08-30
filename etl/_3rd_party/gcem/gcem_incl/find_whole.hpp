@@ -22,13 +22,13 @@
  * find the whole number part of x = n + r, where -0.5 <= r <= 0.5
  */
 
-#ifndef _gcem_find_whole_HPP
-#define _gcem_find_whole_HPP
+#ifndef GCEM_find_whole_HPP
+#define GCEM_find_whole_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr llint_t find_whole(const T x) noexcept
+constexpr auto find_whole(const T x) noexcept -> llint_t
 {
     return (abs(x - internal::floor_check(x)) >= T(0.5) ? // if
                 static_cast<llint_t>(internal::floor_check(x) + sgn(x))

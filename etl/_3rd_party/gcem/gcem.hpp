@@ -18,13 +18,14 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_HPP
-#define _gcem_HPP
+#ifndef GCEM_HPP
+#define GCEM_HPP
 
 #include "gcem_incl/gcem_options.hpp"
 
-namespace gcem
-{
+// clang-format off
+
+namespace gcem {
     #include "gcem_incl/quadrature/gauss_legendre_50.hpp"
 
     #include "gcem_incl/is_inf.hpp"
@@ -96,6 +97,9 @@ namespace gcem
     #include "gcem_incl/incomplete_beta_inv.hpp"
     #include "gcem_incl/incomplete_gamma.hpp"
     #include "gcem_incl/incomplete_gamma_inv.hpp"
-}
+
+} // namespace gcem
+
+// clang-format on
 
 #endif

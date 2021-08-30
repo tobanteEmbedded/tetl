@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_lbeta_HPP
-#define _gcem_lbeta_HPP
+#ifndef GCEM_lbeta_HPP
+#define GCEM_lbeta_HPP
 
 /**
  * Compile-time log-beta function
@@ -33,7 +33,7 @@
  */
 
 template <typename T1, typename T2>
-constexpr common_return_t<T1, T2> lbeta(const T1 a, const T2 b) noexcept
+constexpr auto lbeta(const T1 a, const T2 b) noexcept -> common_return_t<T1, T2>
 {
     return ((lgamma(a) + lgamma(b)) - lgamma(a + b));
 }

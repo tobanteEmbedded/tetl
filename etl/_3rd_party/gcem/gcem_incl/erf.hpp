@@ -22,8 +22,8 @@
  * compile-time error function
  */
 
-#ifndef _gcem_erf_HPP
-#define _gcem_erf_HPP
+#ifndef GCEM_erf_HPP
+#define GCEM_erf_HPP
 
 namespace internal {
 
@@ -31,7 +31,7 @@ namespace internal {
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0007/
 
 template <typename T>
-constexpr T erf_cf_large_recur(const T x, const int depth) noexcept
+constexpr auto erf_cf_large_recur(const T x, const int depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 x + 2 * depth / erf_cf_large_recur(x, depth + 1)
@@ -41,7 +41,7 @@ constexpr T erf_cf_large_recur(const T x, const int depth) noexcept
 }
 
 template <typename T>
-constexpr T erf_cf_large_main(const T x) noexcept
+constexpr auto erf_cf_large_main(const T x) noexcept -> T
 {
     return (T(1)
             - T(2) * (exp(-x * x) / T(GCEM_SQRT_PI))
@@ -52,7 +52,7 @@ constexpr T erf_cf_large_main(const T x) noexcept
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0005/
 
 template <typename T>
-constexpr T erf_cf_small_recur(const T xx, const int depth) noexcept
+constexpr auto erf_cf_small_recur(const T xx, const int depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 (2 * depth - 1) - 2 * xx
@@ -63,7 +63,7 @@ constexpr T erf_cf_small_recur(const T xx, const int depth) noexcept
 }
 
 template <typename T>
-constexpr T erf_cf_small_main(const T x) noexcept
+constexpr auto erf_cf_small_main(const T x) noexcept -> T
 {
     return (T(2) * x * (exp(-x * x) / T(GCEM_SQRT_PI))
             / erf_cf_small_recur(x * x, 1));
@@ -72,7 +72,7 @@ constexpr T erf_cf_small_main(const T x) noexcept
 //
 
 template <typename T>
-constexpr T erf_begin(const T x) noexcept
+constexpr auto erf_begin(const T x) noexcept -> T
 {
     return (x > T(2.1) ? // if
                 erf_cf_large_main(x)
@@ -82,7 +82,7 @@ constexpr T erf_begin(const T x) noexcept
 }
 
 template <typename T>
-constexpr T erf_check(const T x) noexcept
+constexpr auto erf_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -113,7 +113,7 @@ constexpr T erf_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> erf(const T x) noexcept
+constexpr auto erf(const T x) noexcept -> return_t<T>
 {
     return internal::erf_check(static_cast<return_t<T>>(x));
 }

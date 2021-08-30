@@ -24,19 +24,19 @@
  * see eq. 5.4.8 in Numerical Recipes
  */
 
-#ifndef _gcem_sin_HPP
-#define _gcem_sin_HPP
+#ifndef GCEM_sin_HPP
+#define GCEM_sin_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T sin_compute(const T x) noexcept
+constexpr auto sin_compute(const T x) noexcept -> T
 {
     return T(2) * x / (T(1) + x * x);
 }
 
 template <typename T>
-constexpr T sin_check(const T x) noexcept
+constexpr auto sin_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -64,7 +64,7 @@ constexpr T sin_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> sin(const T x) noexcept
+constexpr auto sin(const T x) noexcept -> return_t<T>
 {
     return internal::sin_check(static_cast<return_t<T>>(x));
 }

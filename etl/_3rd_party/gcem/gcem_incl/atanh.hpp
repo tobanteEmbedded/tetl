@@ -22,19 +22,19 @@
  * compile-time inverse hyperbolic tangent function
  */
 
-#ifndef _gcem_atanh_HPP
-#define _gcem_atanh_HPP
+#ifndef GCEM_atanh_HPP
+#define GCEM_atanh_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T atanh_compute(const T x) noexcept
+constexpr auto atanh_compute(const T x) noexcept -> T
 {
     return (log((T(1) + x) / (T(1) - x)) / T(2));
 }
 
 template <typename T>
-constexpr T atanh_check(const T x) noexcept
+constexpr auto atanh_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -60,7 +60,7 @@ constexpr T atanh_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> atanh(const T x) noexcept
+constexpr auto atanh(const T x) noexcept -> return_t<T>
 {
     return internal::atanh_check(static_cast<return_t<T>>(x));
 }

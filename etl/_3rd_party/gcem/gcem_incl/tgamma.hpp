@@ -22,13 +22,13 @@
  * the ('true') gamma function
  */
 
-#ifndef _gcem_tgamma_HPP
-#define _gcem_tgamma_HPP
+#ifndef GCEM_tgamma_HPP
+#define GCEM_tgamma_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T tgamma_check(const T x) noexcept
+constexpr auto tgamma_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -65,7 +65,7 @@ constexpr T tgamma_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> tgamma(const T x) noexcept
+constexpr auto tgamma(const T x) noexcept -> return_t<T>
 {
     return internal::tgamma_check(static_cast<return_t<T>>(x));
 }

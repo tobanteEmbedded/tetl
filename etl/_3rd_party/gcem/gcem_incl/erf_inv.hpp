@@ -25,14 +25,14 @@
  * 'Approximating the erfinv function' by Mike Giles
  */
 
-#ifndef _gcem_erf_inv_HPP
-#define _gcem_erf_inv_HPP
+#ifndef GCEM_erf_inv_HPP
+#define GCEM_erf_inv_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T erf_inv_decision(
-    const T value, const T p, const T direc, const int iter_count) noexcept;
+constexpr auto erf_inv_decision(T value, T p, T direc, int iterCount) noexcept
+    -> T;
 
 //
 // initial value
@@ -40,63 +40,63 @@ constexpr T erf_inv_decision(
 // two cases: (1) a < 5; and (2) otherwise
 
 template <typename T>
-constexpr T erf_inv_initial_val_coef_2(
-    const T a, const T p_term, const int order) noexcept
+constexpr auto erf_inv_initial_val_coef_2(
+    const T a, const T pTerm, const int order) noexcept -> T
 {
     return (order == 1   ? T(-0.000200214257L)
-            : order == 2 ? T(0.000100950558L) + a * p_term
-            : order == 3 ? T(0.00134934322L) + a * p_term
-            : order == 4 ? T(-0.003673428440L) + a * p_term
-            : order == 5 ? T(0.005739507730L) + a * p_term
-            : order == 6 ? T(-0.00762246130L) + a * p_term
-            : order == 7 ? T(0.009438870470L) + a * p_term
-            : order == 8 ? T(1.001674060000L) + a * p_term
-            : order == 9 ? T(2.83297682000L) + a * p_term
-                         : p_term);
+            : order == 2 ? T(0.000100950558L) + a * pTerm
+            : order == 3 ? T(0.00134934322L) + a * pTerm
+            : order == 4 ? T(-0.003673428440L) + a * pTerm
+            : order == 5 ? T(0.005739507730L) + a * pTerm
+            : order == 6 ? T(-0.00762246130L) + a * pTerm
+            : order == 7 ? T(0.009438870470L) + a * pTerm
+            : order == 8 ? T(1.001674060000L) + a * pTerm
+            : order == 9 ? T(2.83297682000L) + a * pTerm
+                         : pTerm);
 }
 
 template <typename T>
-constexpr T erf_inv_initial_val_case_2(
-    const T a, const T p_term, const int order) noexcept
+constexpr auto erf_inv_initial_val_case_2(
+    const T a, const T pTerm, const int order) noexcept -> T
 {
     return (order == 9 ? // if
-                erf_inv_initial_val_coef_2(a, p_term, order)
+                erf_inv_initial_val_coef_2(a, pTerm, order)
                        :
                        // else
-                erf_inv_initial_val_case_2(a,
-                    erf_inv_initial_val_coef_2(a, p_term, order), order + 1));
+                erf_inv_initial_val_case_2(
+                    a, erf_inv_initial_val_coef_2(a, pTerm, order), order + 1));
 }
 
 template <typename T>
-constexpr T erf_inv_initial_val_coef_1(
-    const T a, const T p_term, const int order) noexcept
+constexpr auto erf_inv_initial_val_coef_1(
+    const T a, const T pTerm, const int order) noexcept -> T
 {
     return (order == 1   ? T(2.81022636e-08L)
-            : order == 2 ? T(3.43273939e-07L) + a * p_term
-            : order == 3 ? T(-3.5233877e-06L) + a * p_term
-            : order == 4 ? T(-4.39150654e-06L) + a * p_term
-            : order == 5 ? T(0.00021858087L) + a * p_term
-            : order == 6 ? T(-0.00125372503L) + a * p_term
-            : order == 7 ? T(-0.004177681640L) + a * p_term
-            : order == 8 ? T(0.24664072700L) + a * p_term
-            : order == 9 ? T(1.50140941000L) + a * p_term
-                         : p_term);
+            : order == 2 ? T(3.43273939e-07L) + a * pTerm
+            : order == 3 ? T(-3.5233877e-06L) + a * pTerm
+            : order == 4 ? T(-4.39150654e-06L) + a * pTerm
+            : order == 5 ? T(0.00021858087L) + a * pTerm
+            : order == 6 ? T(-0.00125372503L) + a * pTerm
+            : order == 7 ? T(-0.004177681640L) + a * pTerm
+            : order == 8 ? T(0.24664072700L) + a * pTerm
+            : order == 9 ? T(1.50140941000L) + a * pTerm
+                         : pTerm);
 }
 
 template <typename T>
-constexpr T erf_inv_initial_val_case_1(
-    const T a, const T p_term, const int order) noexcept
+constexpr auto erf_inv_initial_val_case_1(
+    const T a, const T pTerm, const int order) noexcept -> T
 {
     return (order == 9 ? // if
-                erf_inv_initial_val_coef_1(a, p_term, order)
+                erf_inv_initial_val_coef_1(a, pTerm, order)
                        :
                        // else
-                erf_inv_initial_val_case_1(a,
-                    erf_inv_initial_val_coef_1(a, p_term, order), order + 1));
+                erf_inv_initial_val_case_1(
+                    a, erf_inv_initial_val_coef_1(a, pTerm, order), order + 1));
 }
 
 template <typename T>
-constexpr T erf_inv_initial_val_int(const T a) noexcept
+constexpr auto erf_inv_initial_val_int(const T a) noexcept -> T
 {
     return (a < T(5) ? // if
                 erf_inv_initial_val_case_1(a - T(2.5), T(0), 1)
@@ -106,7 +106,7 @@ constexpr T erf_inv_initial_val_int(const T a) noexcept
 }
 
 template <typename T>
-constexpr T erf_inv_initial_val(const T x) noexcept
+constexpr auto erf_inv_initial_val(const T x) noexcept -> T
 {
     return x * erf_inv_initial_val_int(-log((T(1) - x) * (T(1) + x)));
 }
@@ -115,74 +115,74 @@ constexpr T erf_inv_initial_val(const T x) noexcept
 // Halley recursion
 
 template <typename T>
-constexpr T erf_inv_err_val(const T value, const T p) noexcept
+constexpr auto erf_inv_err_val(const T value, const T p) noexcept -> T
 { // err_val = f(x)
     return (erf(value) - p);
 }
 
 template <typename T>
-constexpr T erf_inv_deriv_1(const T value) noexcept
+constexpr auto erf_inv_deriv_1(const T value) noexcept -> T
 { // derivative of the error function w.r.t. x
     return (exp(-value * value));
 }
 
 template <typename T>
-constexpr T erf_inv_deriv_2(const T value, const T deriv_1) noexcept
+constexpr auto erf_inv_deriv_2(const T value, const T deriv1) noexcept -> T
 { // second derivative of the error function w.r.t. x
-    return (deriv_1 * (-T(2) * value));
+    return (deriv1 * (-T(2) * value));
 }
 
 template <typename T>
-constexpr T erf_inv_ratio_val_1(
-    const T value, const T p, const T deriv_1) noexcept
+constexpr auto erf_inv_ratio_val_1(
+    const T value, const T p, const T deriv1) noexcept -> T
 {
-    return (erf_inv_err_val(value, p) / deriv_1);
+    return (erf_inv_err_val(value, p) / deriv1);
 }
 
 template <typename T>
-constexpr T erf_inv_ratio_val_2(const T value, const T deriv_1) noexcept
+constexpr auto erf_inv_ratio_val_2(const T value, const T deriv1) noexcept -> T
 {
-    return (erf_inv_deriv_2(value, deriv_1) / deriv_1);
+    return (erf_inv_deriv_2(value, deriv1) / deriv1);
 }
 
 template <typename T>
-constexpr T erf_inv_halley(const T ratio_val_1, const T ratio_val_2) noexcept
+constexpr auto erf_inv_halley(const T ratioVal1, const T ratioVal2) noexcept
+    -> T
 {
-    return (
-        ratio_val_1
-        / max(T(0.8), min(T(1.2), T(1) - T(0.5) * ratio_val_1 * ratio_val_2)));
+    return (ratioVal1
+            / max(T(0.8), min(T(1.2), T(1) - T(0.5) * ratioVal1 * ratioVal2)));
 }
 
 template <typename T>
-constexpr T erf_inv_recur(
-    const T value, const T p, const T deriv_1, const int iter_count) noexcept
+constexpr auto erf_inv_recur(
+    const T value, const T p, const T deriv1, const int iterCount) noexcept -> T
 {
     return erf_inv_decision(value, p,
-        erf_inv_halley(erf_inv_ratio_val_1(value, p, deriv_1),
-            erf_inv_ratio_val_2(value, deriv_1)),
-        iter_count);
+        erf_inv_halley(erf_inv_ratio_val_1(value, p, deriv1),
+            erf_inv_ratio_val_2(value, deriv1)),
+        iterCount);
 }
 
 template <typename T>
-constexpr T erf_inv_decision(
-    const T value, const T p, const T direc, const int iter_count) noexcept
+constexpr auto erf_inv_decision(
+    const T value, const T p, const T direc, const int iterCount) noexcept -> T
 {
-    return (iter_count < GCEM_ERF_INV_MAX_ITER ? // if
+    return (iterCount < GCEM_ERF_INV_MAX_ITER ? // if
                 erf_inv_recur(
-                    value - direc, p, erf_inv_deriv_1(value), iter_count + 1)
-                                               :
-                                               // else
+                    value - direc, p, erf_inv_deriv_1(value), iterCount + 1)
+                                              :
+                                              // else
                 value - direc);
 }
 
 template <typename T>
-constexpr T erf_inv_recur_begin(const T initial_val, const T p) noexcept
+constexpr auto erf_inv_recur_begin(const T initialVal, const T p) noexcept -> T
 {
-    return erf_inv_recur(initial_val, p, erf_inv_deriv_1(initial_val), 1);
+    return erf_inv_recur(initialVal, p, erf_inv_deriv_1(initialVal), 1);
 }
 
 template <typename T>
-constexpr T erf_inv_begin(const T p) noexcept
+constexpr auto erf_inv_begin(const T p) noexcept -> T
 {
     return ( // NaN check
         is_nan(p) ? GCLIM<T>::quiet_NaN() :
@@ -215,7 +215,7 @@ constexpr T erf_inv_begin(const T p) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> erf_inv(const T p) noexcept
+constexpr auto erf_inv(const T p) noexcept -> return_t<T>
 {
     return internal::erf_inv_begin(static_cast<return_t<T>>(p));
 }

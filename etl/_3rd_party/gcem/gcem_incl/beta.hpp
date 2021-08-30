@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_beta_HPP
-#define _gcem_beta_HPP
+#ifndef GCEM_beta_HPP
+#define GCEM_beta_HPP
 
 /**
  * Compile-time beta function
@@ -33,7 +33,7 @@
  */
 
 template <typename T1, typename T2>
-constexpr common_return_t<T1, T2> beta(const T1 a, const T2 b) noexcept
+constexpr auto beta(const T1 a, const T2 b) noexcept -> common_return_t<T1, T2>
 {
     return exp(lbeta(a, b));
 }

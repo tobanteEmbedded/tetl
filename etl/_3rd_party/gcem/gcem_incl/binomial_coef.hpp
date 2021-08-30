@@ -18,13 +18,13 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_binomial_coef_HPP
-#define _gcem_binomial_coef_HPP
+#ifndef GCEM_binomial_coef_HPP
+#define GCEM_binomial_coef_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T binomial_coef_recur(const T n, const T k) noexcept
+constexpr auto binomial_coef_recur(const T n, const T k) noexcept -> T
 {
     return (                           // edge cases
         (k == T(0) || n == k) ? T(1) : // deals with 0 choose 0 case
@@ -36,14 +36,14 @@ constexpr T binomial_coef_recur(const T n, const T k) noexcept
 
 template <typename T,
     typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr T binomial_coef_check(const T n, const T k) noexcept
+constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
 {
     return binomial_coef_recur(n, k);
 }
 
 template <typename T,
     typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr T binomial_coef_check(const T n, const T k) noexcept
+constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
 {
     return ( // NaN check; removed due to MSVC problems; template not being
              // ignored in <int> cases (is_nan(n) || is_nan(k)) ?
@@ -54,7 +54,7 @@ constexpr T binomial_coef_check(const T n, const T k) noexcept
 }
 
 template <typename T1, typename T2, typename TC = common_t<T1, T2>>
-constexpr TC binomial_coef_type_check(const T1 n, const T2 k) noexcept
+constexpr auto binomial_coef_type_check(const T1 n, const T2 k) noexcept -> TC
 {
     return binomial_coef_check(static_cast<TC>(n), static_cast<TC>(k));
 }
@@ -72,7 +72,8 @@ constexpr TC binomial_coef_type_check(const T1 n, const T2 k) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr common_t<T1, T2> binomial_coef(const T1 n, const T2 k) noexcept
+constexpr auto binomial_coef(const T1 n, const T2 k) noexcept
+    -> common_t<T1, T2>
 {
     return internal::binomial_coef_type_check(n, k);
 }

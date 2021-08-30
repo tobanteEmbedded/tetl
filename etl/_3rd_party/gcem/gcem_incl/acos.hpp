@@ -22,13 +22,13 @@
  * compile-time arccosine function
  */
 
-#ifndef _gcem_acos_HPP
-#define _gcem_acos_HPP
+#ifndef GCEM_acos_HPP
+#define GCEM_acos_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T acos_compute(const T x) noexcept
+constexpr auto acos_compute(const T x) noexcept -> T
 {
     return ( // only defined on [-1,1]
         abs(x) > T(1) ? GCLIM<T>::quiet_NaN() :
@@ -41,7 +41,7 @@ constexpr T acos_compute(const T x) noexcept
 }
 
 template <typename T>
-constexpr T acos_check(const T x) noexcept
+constexpr auto acos_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -64,7 +64,7 @@ constexpr T acos_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> acos(const T x) noexcept
+constexpr auto acos(const T x) noexcept -> return_t<T>
 {
     return internal::acos_check(static_cast<return_t<T>>(x));
 }

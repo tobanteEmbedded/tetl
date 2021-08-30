@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_copysign_HPP
-#define _gcem_copysign_HPP
+#ifndef GCEM_copysign_HPP
+#define GCEM_copysign_HPP
 
 /**
  * Compile-time copy sign function
@@ -30,7 +30,7 @@
  */
 
 template <typename T1, typename T2>
-constexpr T1 copysign(const T1 x, const T2 y) noexcept
+constexpr auto copysign(const T1 x, const T2 y) noexcept -> T1
 {
     return (signbit(x) != signbit(y) ? -x : x);
 }

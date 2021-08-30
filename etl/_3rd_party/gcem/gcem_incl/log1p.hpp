@@ -22,8 +22,8 @@
  * compile-time natural logarithm(x+1) function
  */
 
-#ifndef _gcem_log1p_HPP
-#define _gcem_log1p_HPP
+#ifndef GCEM_log1p_HPP
+#define GCEM_log1p_HPP
 
 namespace internal {
 
@@ -31,7 +31,7 @@ namespace internal {
 // http://functions.wolfram.com/ElementaryFunctions/Log/06/01/04/01/0003/
 
 template <typename T>
-constexpr T log1p_compute(const T x) noexcept
+constexpr auto log1p_compute(const T x) noexcept -> T
 {
     // return x * ( T(1) + x * ( -T(1)/T(2) +  x * ( T(1)/T(3) +  x * (
     // -T(1)/T(4) + x/T(5) ) ) ) ); // O(x^6)
@@ -44,7 +44,7 @@ constexpr T log1p_compute(const T x) noexcept
 }
 
 template <typename T>
-constexpr T log1p_check(const T x) noexcept
+constexpr auto log1p_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -67,7 +67,7 @@ constexpr T log1p_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> log1p(const T x) noexcept
+constexpr auto log1p(const T x) noexcept -> return_t<T>
 {
     return internal::log1p_check(static_cast<return_t<T>>(x));
 }

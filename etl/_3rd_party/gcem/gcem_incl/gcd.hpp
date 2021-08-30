@@ -18,33 +18,33 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_gcd_HPP
-#define _gcem_gcd_HPP
+#ifndef GCEM_gcd_HPP
+#define GCEM_gcd_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T gcd_recur(const T a, const T b) noexcept
+constexpr auto gcd_recur(const T a, const T b) noexcept -> T
 {
     return (b == T(0) ? a : gcd_recur(b, a % b));
 }
 
 template <typename T,
     typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr T gcd_int_check(const T a, const T b) noexcept
+constexpr auto gcd_int_check(const T a, const T b) noexcept -> T
 {
     return gcd_recur(a, b);
 }
 
 template <typename T,
     typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr T gcd_int_check(const T a, const T b) noexcept
+constexpr auto gcd_int_check(const T a, const T b) noexcept -> T
 {
     return gcd_recur(static_cast<ullint_t>(a), static_cast<ullint_t>(b));
 }
 
 template <typename T1, typename T2, typename TC = common_t<T1, T2>>
-constexpr TC gcd_type_check(const T1 a, const T2 b) noexcept
+constexpr auto gcd_type_check(const T1 a, const T2 b) noexcept -> TC
 {
     return gcd_int_check(static_cast<TC>(abs(a)), static_cast<TC>(abs(b)));
 }
@@ -61,7 +61,7 @@ constexpr TC gcd_type_check(const T1 a, const T2 b) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr common_t<T1, T2> gcd(const T1 a, const T2 b) noexcept
+constexpr auto gcd(const T1 a, const T2 b) noexcept -> common_t<T1, T2>
 {
     return internal::gcd_type_check(a, b);
 }

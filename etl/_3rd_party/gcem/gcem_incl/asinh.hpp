@@ -22,13 +22,13 @@
  * compile-time inverse hyperbolic sine function
  */
 
-#ifndef _gcem_asinh_HPP
-#define _gcem_asinh_HPP
+#ifndef GCEM_asinh_HPP
+#define GCEM_asinh_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T asinh_compute(const T x) noexcept
+constexpr auto asinh_compute(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -50,7 +50,7 @@ constexpr T asinh_compute(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> asinh(const T x) noexcept
+constexpr auto asinh(const T x) noexcept -> return_t<T>
 {
     return internal::asinh_compute(static_cast<return_t<T>>(x));
 }

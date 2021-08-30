@@ -22,13 +22,13 @@
  * compile-time two-argument arctangent function
  */
 
-#ifndef _gcem_atan2_HPP
-#define _gcem_atan2_HPP
+#ifndef GCEM_atan2_HPP
+#define GCEM_atan2_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T atan2_compute(const T y, const T x) noexcept
+constexpr auto atan2_compute(const T y, const T x) noexcept -> T
 {
     return ( // NaN check
         any_nan(y, x) ? GCLIM<T>::quiet_NaN() :
@@ -50,7 +50,7 @@ constexpr T atan2_compute(const T y, const T x) noexcept
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>
-constexpr TC atan2_type_check(const T1 y, const T2 x) noexcept
+constexpr auto atan2_type_check(const T1 y, const T2 x) noexcept -> TC
 {
     return atan2_compute(static_cast<TC>(x), static_cast<TC>(y));
 }
@@ -74,7 +74,7 @@ constexpr TC atan2_type_check(const T1 y, const T2 x) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr common_return_t<T1, T2> atan2(const T1 y, const T2 x) noexcept
+constexpr auto atan2(const T1 y, const T2 x) noexcept -> common_return_t<T1, T2>
 {
     return internal::atan2_type_check(x, y);
 }

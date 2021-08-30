@@ -18,25 +18,25 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_floor_HPP
-#define _gcem_floor_HPP
+#ifndef GCEM_floor_HPP
+#define GCEM_floor_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr int floor_resid(const T x, const T x_whole) noexcept
+constexpr auto floor_resid(const T x, const T xWhole) noexcept -> int
 {
-    return ((x < T(0)) && (x < x_whole));
+    return ((x < T(0)) && (x < xWhole));
 }
 
 template <typename T>
-constexpr T floor_int(const T x, const T x_whole) noexcept
+constexpr auto floor_int(const T x, const T xWhole) noexcept -> T
 {
-    return (x_whole - static_cast<T>(floor_resid(x, x_whole)));
+    return (xWhole - static_cast<T>(floor_resid(x, xWhole)));
 }
 
 template <typename T>
-constexpr T floor_check(const T x) noexcept
+constexpr auto floor_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -60,7 +60,7 @@ constexpr T floor_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> floor(const T x) noexcept
+constexpr auto floor(const T x) noexcept -> return_t<T>
 {
     return internal::floor_check(static_cast<return_t<T>>(x));
 }

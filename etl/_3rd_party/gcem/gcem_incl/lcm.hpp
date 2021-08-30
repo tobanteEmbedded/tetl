@@ -18,19 +18,19 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_lcm_HPP
-#define _gcem_lcm_HPP
+#ifndef GCEM_lcm_HPP
+#define GCEM_lcm_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T lcm_compute(const T a, const T b) noexcept
+constexpr auto lcm_compute(const T a, const T b) noexcept -> T
 {
     return abs(a * (b / gcd(a, b)));
 }
 
 template <typename T1, typename T2, typename TC = common_t<T1, T2>>
-constexpr TC lcm_type_check(const T1 a, const T2 b) noexcept
+constexpr auto lcm_type_check(const T1 a, const T2 b) noexcept -> TC
 {
     return lcm_compute(static_cast<TC>(a), static_cast<TC>(b));
 }
@@ -49,7 +49,7 @@ constexpr TC lcm_type_check(const T1 a, const T2 b) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr common_t<T1, T2> lcm(const T1 a, const T2 b) noexcept
+constexpr auto lcm(const T1 a, const T2 b) noexcept -> common_t<T1, T2>
 {
     return internal::lcm_type_check(a, b);
 }

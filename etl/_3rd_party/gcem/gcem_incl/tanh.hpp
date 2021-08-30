@@ -22,13 +22,13 @@
  * compile-time hyperbolic tangent function
  */
 
-#ifndef _gcem_tanh_HPP
-#define _gcem_tanh_HPP
+#ifndef GCEM_tanh_HPP
+#define GCEM_tanh_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T tanh_cf(const T xx, const int depth) noexcept
+constexpr auto tanh_cf(const T xx, const int depth) noexcept -> T
 {
     return (depth < GCEM_TANH_MAX_ITER ? // if
                 (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)
@@ -38,13 +38,13 @@ constexpr T tanh_cf(const T xx, const int depth) noexcept
 }
 
 template <typename T>
-constexpr T tanh_begin(const T x) noexcept
+constexpr auto tanh_begin(const T x) noexcept -> T
 {
     return (x / tanh_cf(x * x, 1));
 }
 
 template <typename T>
-constexpr T tanh_check(const T x) noexcept
+constexpr auto tanh_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -67,7 +67,7 @@ constexpr T tanh_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> tanh(const T x) noexcept
+constexpr auto tanh(const T x) noexcept -> return_t<T>
 {
     return internal::tanh_check(static_cast<return_t<T>>(x));
 }

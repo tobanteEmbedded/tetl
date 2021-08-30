@@ -22,13 +22,13 @@
  * compile-time square-root function
  */
 
-#ifndef _gcem_sqrt_HPP
-#define _gcem_sqrt_HPP
+#ifndef GCEM_sqrt_HPP
+#define GCEM_sqrt_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T sqrt_recur(const T x, const T xn, const int count) noexcept
+constexpr auto sqrt_recur(const T x, const T xn, const int count) noexcept -> T
 {
     return (abs(xn - x / xn) / (T(1) + xn) < GCLIM<T>::epsilon()
                 ? // if
@@ -39,7 +39,7 @@ constexpr T sqrt_recur(const T x, const T xn, const int count) noexcept
 }
 
 template <typename T>
-constexpr T sqrt_check(const T x, const T m_val) noexcept
+constexpr auto sqrt_check(const T x, const T mVal) noexcept -> T
 {
     return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
                       //
@@ -53,8 +53,8 @@ constexpr T sqrt_check(const T x, const T m_val) noexcept
             : GCLIM<T>::epsilon() > abs(T(1) - x) ? x
                                                   :
                                                   // else
-                x > T(4) ? sqrt_check(x / T(4), T(2) * m_val)
-                         : m_val * sqrt_recur(x, x / T(2), 0));
+                x > T(4) ? sqrt_check(x / T(4), T(2) * mVal)
+                         : mVal * sqrt_recur(x, x / T(2), 0));
 }
 
 } // namespace internal
@@ -67,7 +67,7 @@ constexpr T sqrt_check(const T x, const T m_val) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> sqrt(const T x) noexcept
+constexpr auto sqrt(const T x) noexcept -> return_t<T>
 {
     return internal::sqrt_check(static_cast<return_t<T>>(x), return_t<T>(1));
 }

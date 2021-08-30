@@ -18,25 +18,25 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_ceil_HPP
-#define _gcem_ceil_HPP
+#ifndef GCEM_ceil_HPP
+#define GCEM_ceil_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr int ceil_resid(const T x, const T x_whole) noexcept
+constexpr auto ceil_resid(const T x, const T xWhole) noexcept -> int
 {
-    return ((x > T(0)) && (x > x_whole));
+    return ((x > T(0)) && (x > xWhole));
 }
 
 template <typename T>
-constexpr T ceil_int(const T x, const T x_whole) noexcept
+constexpr auto ceil_int(const T x, const T xWhole) noexcept -> T
 {
-    return (x_whole + static_cast<T>(ceil_resid(x, x_whole)));
+    return (xWhole + static_cast<T>(ceil_resid(x, xWhole)));
 }
 
 template <typename T>
-constexpr T ceil_check(const T x) noexcept
+constexpr auto ceil_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -60,7 +60,7 @@ constexpr T ceil_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> ceil(const T x) noexcept
+constexpr auto ceil(const T x) noexcept -> return_t<T>
 {
     return internal::ceil_check(static_cast<return_t<T>>(x));
 }

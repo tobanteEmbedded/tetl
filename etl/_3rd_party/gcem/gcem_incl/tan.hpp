@@ -22,13 +22,13 @@
  * compile-time tangent function
  */
 
-#ifndef _gcem_tan_HPP
-#define _gcem_tan_HPP
+#ifndef GCEM_tan_HPP
+#define GCEM_tan_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T tan_series_exp_long(const T z) noexcept
+constexpr auto tan_series_exp_long(const T z) noexcept -> T
 { // this is based on a fourth-order expansion of tan(z) using Bernoulli numbers
     return (
         -1 / z
@@ -38,7 +38,7 @@ constexpr T tan_series_exp_long(const T z) noexcept
 }
 
 template <typename T>
-constexpr T tan_series_exp(const T x) noexcept
+constexpr auto tan_series_exp(const T x) noexcept -> T
 {
     return (GCLIM<T>::epsilon() > abs(x - T(GCEM_HALF_PI))
                 ? // the value tan(pi/2) is somewhat of a convention;
@@ -51,18 +51,18 @@ constexpr T tan_series_exp(const T x) noexcept
 }
 
 template <typename T>
-constexpr T tan_cf_recur(
-    const T xx, const int depth, const int max_depth) noexcept
+constexpr auto tan_cf_recur(
+    const T xx, const int depth, const int maxDepth) noexcept -> T
 {
-    return (depth < max_depth ? // if
-                T(2 * depth - 1) - xx / tan_cf_recur(xx, depth + 1, max_depth)
-                              :
-                              // else
+    return (depth < maxDepth ? // if
+                T(2 * depth - 1) - xx / tan_cf_recur(xx, depth + 1, maxDepth)
+                             :
+                             // else
                 T(2 * depth - 1));
 }
 
 template <typename T>
-constexpr T tan_cf_main(const T x) noexcept
+constexpr auto tan_cf_main(const T x) noexcept -> T
 {
     return ((x > T(1.55) && x < T(1.60))
                 ? tan_series_exp(x)
@@ -76,7 +76,7 @@ constexpr T tan_cf_main(const T x) noexcept
 }
 
 template <typename T>
-constexpr T tan_begin(const T x, const int count = 0) noexcept
+constexpr auto tan_begin(const T x, const int count = 0) noexcept -> T
 {                            // tan(x) = tan(x + pi)
     return (x > T(GCEM_PI) ? // if
                 count > 1 ? GCLIM<T>::quiet_NaN()
@@ -90,7 +90,7 @@ constexpr T tan_begin(const T x, const int count = 0) noexcept
 }
 
 template <typename T>
-constexpr T tan_check(const T x) noexcept
+constexpr auto tan_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -117,7 +117,7 @@ constexpr T tan_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> tan(const T x) noexcept
+constexpr auto tan(const T x) noexcept -> return_t<T>
 {
     return internal::tan_check(static_cast<return_t<T>>(x));
 }

@@ -22,15 +22,15 @@
  * compile-time factorial function
  */
 
-#ifndef _gcem_factorial_HPP
-#define _gcem_factorial_HPP
+#ifndef GCEM_factorial_HPP
+#define GCEM_factorial_HPP
 
 namespace internal {
 
 // T should be int, long int, unsigned int, etc.
 
 template <typename T>
-constexpr T factorial_table(const T x) noexcept
+constexpr auto factorial_table(const T x) noexcept -> T
 { // table for x! when x = {2,...,16}
     return (x == T(2)   ? T(2)
             : x == T(3) ? T(6)
@@ -53,7 +53,7 @@ constexpr T factorial_table(const T x) noexcept
 
 template <typename T,
     typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr T factorial_recur(const T x) noexcept
+constexpr auto factorial_recur(const T x) noexcept -> T
 {
     return (x == T(0)   ? T(1)
             : x == T(1) ? x
@@ -68,7 +68,7 @@ constexpr T factorial_recur(const T x) noexcept
 
 template <typename T,
     typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr T factorial_recur(const T x) noexcept
+constexpr auto factorial_recur(const T x) noexcept -> T
 {
     return tgamma(x + 1);
 }
@@ -86,7 +86,7 @@ constexpr T factorial_recur(const T x) noexcept
  */
 
 template <typename T>
-constexpr T factorial(const T x) noexcept
+constexpr auto factorial(const T x) noexcept -> T
 {
     return internal::factorial_recur(x);
 }

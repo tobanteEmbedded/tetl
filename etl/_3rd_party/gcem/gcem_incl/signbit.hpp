@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_signbit_HPP
-#define _gcem_signbit_HPP
+#ifndef GCEM_signbit_HPP
+#define GCEM_signbit_HPP
 
 /**
  * Compile-time sign bit detection function
@@ -29,7 +29,7 @@
  */
 
 template <typename T>
-constexpr bool signbit(const T x) noexcept
+constexpr auto signbit(const T x) noexcept -> bool
 {
 #ifdef _MSC_VER
     return ((x == T(0)) ? (_fpclass(x) == _FPCLASS_NZ) : (x < T(0)));

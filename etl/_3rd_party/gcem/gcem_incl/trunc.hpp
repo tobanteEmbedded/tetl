@@ -18,19 +18,19 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_trunc_HPP
-#define _gcem_trunc_HPP
+#ifndef GCEM_trunc_HPP
+#define GCEM_trunc_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T trunc_int(const T x) noexcept
+constexpr auto trunc_int(const T x) noexcept -> T
 {
     return (T(static_cast<llint_t>(x)));
 }
 
 template <typename T>
-constexpr T trunc_check(const T x) noexcept
+constexpr auto trunc_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -55,7 +55,7 @@ constexpr T trunc_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> trunc(const T x) noexcept
+constexpr auto trunc(const T x) noexcept -> return_t<T>
 {
     return internal::trunc_check(static_cast<return_t<T>>(x));
 }

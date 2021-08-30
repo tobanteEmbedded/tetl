@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_min_HPP
-#define _gcem_min_HPP
+#ifndef GCEM_min_HPP
+#define GCEM_min_HPP
 
 /**
  * Compile-time pairwise minimum function
@@ -31,7 +31,7 @@
  */
 
 template <typename T1, typename T2>
-constexpr common_t<T1, T2> min(const T1 x, const T2 y) noexcept
+constexpr auto min(const T1 x, const T2 y) noexcept -> common_t<T1, T2>
 {
     return (y > x ? x : y);
 }

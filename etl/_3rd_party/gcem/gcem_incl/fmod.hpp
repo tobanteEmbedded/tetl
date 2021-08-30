@@ -18,13 +18,13 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_fmod_HPP
-#define _gcem_fmod_HPP
+#ifndef GCEM_fmod_HPP
+#define GCEM_fmod_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T fmod_check(const T x, const T y) noexcept
+constexpr auto fmod_check(const T x, const T y) noexcept -> T
 {
     return ( // NaN check
         any_nan(x, y) ? GCLIM<T>::quiet_NaN() :
@@ -36,7 +36,7 @@ constexpr T fmod_check(const T x, const T y) noexcept
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>
-constexpr TC fmod_type_check(const T1 x, const T2 y) noexcept
+constexpr auto fmod_type_check(const T1 x, const T2 y) noexcept -> TC
 {
     return fmod_check(static_cast<TC>(x), static_cast<TC>(y));
 }
@@ -52,7 +52,7 @@ constexpr TC fmod_type_check(const T1 x, const T2 y) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr common_return_t<T1, T2> fmod(const T1 x, const T2 y) noexcept
+constexpr auto fmod(const T1 x, const T2 y) noexcept -> common_return_t<T1, T2>
 {
     return internal::fmod_type_check(x, y);
 }

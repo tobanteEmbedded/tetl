@@ -22,13 +22,13 @@
  * compile-time exponential function
  */
 
-#ifndef _gcem_exp_HPP
-#define _gcem_exp_HPP
+#ifndef GCEM_exp_HPP
+#define GCEM_exp_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T exp_cf_recur(const T x, const int depth) noexcept
+constexpr auto exp_cf_recur(const T x, const int depth) noexcept -> T
 {
     return (depth < GCEM_EXP_MAX_ITER_SMALL ? // if
                 depth == 1 ? T(1) - x / exp_cf_recur(x, depth + 1)
@@ -40,19 +40,19 @@ constexpr T exp_cf_recur(const T x, const int depth) noexcept
 }
 
 template <typename T>
-constexpr T exp_cf(const T x) noexcept
+constexpr auto exp_cf(const T x) noexcept -> T
 {
     return (T(1) / exp_cf_recur(x, 1));
 }
 
 template <typename T>
-constexpr T exp_split(const T x) noexcept
+constexpr auto exp_split(const T x) noexcept -> T
 {
     return (pow_integral(GCEM_E, find_whole(x)) * exp_cf(find_fraction(x)));
 }
 
 template <typename T>
-constexpr T exp_check(const T x) noexcept
+constexpr auto exp_check(const T x) noexcept -> T
 {
     return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
                       //
@@ -83,7 +83,7 @@ constexpr T exp_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> exp(const T x) noexcept
+constexpr auto exp(const T x) noexcept -> return_t<T>
 {
     return internal::exp_check(static_cast<return_t<T>>(x));
 }

@@ -18,8 +18,8 @@
   ##
   ################################################################################*/
 
-#ifndef _gcem_max_HPP
-#define _gcem_max_HPP
+#ifndef GCEM_max_HPP
+#define GCEM_max_HPP
 
 /**
  * Compile-time pairwise maximum function
@@ -31,7 +31,7 @@
  */
 
 template <typename T1, typename T2>
-constexpr common_t<T1, T2> max(const T1 x, const T2 y) noexcept
+constexpr auto max(const T1 x, const T2 y) noexcept -> common_t<T1, T2>
 {
     return (y < x ? x : y);
 }

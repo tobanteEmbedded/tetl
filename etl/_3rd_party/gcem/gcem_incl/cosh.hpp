@@ -22,13 +22,13 @@
  * compile-time hyperbolic cosine function
  */
 
-#ifndef _gcem_cosh_HPP
-#define _gcem_cosh_HPP
+#ifndef GCEM_cosh_HPP
+#define GCEM_cosh_HPP
 
 namespace internal {
 
 template <typename T>
-constexpr T cosh_compute(const T x) noexcept
+constexpr auto cosh_compute(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -50,7 +50,7 @@ constexpr T cosh_compute(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> cosh(const T x) noexcept
+constexpr auto cosh(const T x) noexcept -> return_t<T>
 {
     return internal::cosh_compute(static_cast<return_t<T>>(x));
 }

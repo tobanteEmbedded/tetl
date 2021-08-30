@@ -26,41 +26,40 @@
 // http://functions.wolfram.com/ElementaryFunctions/ArcTan/10/0001/
 // http://functions.wolfram.com/ElementaryFunctions/ArcTan/06/01/06/01/0002/
 
-#ifndef _gcem_atan_HPP
-#define _gcem_atan_HPP
+#ifndef GCEM_atan_HPP
+#define GCEM_atan_HPP
 
 namespace internal {
 
 // Series
 
 template <typename T>
-constexpr T atan_series_order_calc(
-    const T x, const T x_pow, const uint_t order) noexcept
+constexpr auto atan_series_order_calc(
+    const T x, const T xPow, const uint_t order) noexcept -> T
 {
-    return (T(1) / (T((order - 1) * 4 - 1) * x_pow)
-            - T(1) / (T((order - 1) * 4 + 1) * x_pow * x));
+    return (T(1) / (T((order - 1) * 4 - 1) * xPow)
+            - T(1) / (T((order - 1) * 4 + 1) * xPow * x));
 }
 
 template <typename T>
-constexpr T atan_series_order(const T x, const T x_pow, const uint_t order,
-    const uint_t max_order) noexcept
+constexpr auto atan_series_order(const T x, const T xPow, const uint_t order,
+    const uint_t maxOrder) noexcept -> T
 {
-    return (
-        order == 1
-            ? GCEM_HALF_PI - T(1) / x
-                  + atan_series_order(x * x, pow(x, 3), order + 1, max_order)
-            :
-            // NOTE: x changes to x*x for order > 1
-            order < max_order
-            ? atan_series_order_calc(x, x_pow, order)
-                  + atan_series_order(x, x_pow * x * x, order + 1, max_order)
-            :
-            // order == max_order
-            atan_series_order_calc(x, x_pow, order));
+    return (order == 1
+                ? GCEM_HALF_PI - T(1) / x
+                      + atan_series_order(x * x, pow(x, 3), order + 1, maxOrder)
+                :
+                // NOTE: x changes to x*x for order > 1
+                order < maxOrder
+                ? atan_series_order_calc(x, xPow, order)
+                      + atan_series_order(x, xPow * x * x, order + 1, maxOrder)
+                :
+                // order == max_order
+                atan_series_order_calc(x, xPow, order));
 }
 
 template <typename T>
-constexpr T atan_series_main(const T x) noexcept
+constexpr auto atan_series_main(const T x) noexcept -> T
 {
     return (x < T(3) ? atan_series_order(x, x, 1U, 10U) : // O(1/x^39)
                 x < T(4) ? atan_series_order(x, x, 1U, 9U)
@@ -83,20 +82,20 @@ constexpr T atan_series_main(const T x) noexcept
 // CF
 
 template <typename T>
-constexpr T atan_cf_recur(
-    const T xx, const uint_t depth, const uint_t max_depth) noexcept
+constexpr auto atan_cf_recur(
+    const T xx, const uint_t depth, const uint_t maxDepth) noexcept -> T
 {
     return (
-        depth < max_depth ? // if
+        depth < maxDepth ? // if
             T(2 * depth - 1)
-                + depth * depth * xx / atan_cf_recur(xx, depth + 1, max_depth)
-                          :
-                          // else
+                + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
+                         :
+                         // else
             T(2 * depth - 1));
 }
 
 template <typename T>
-constexpr T atan_cf_main(const T x) noexcept
+constexpr auto atan_cf_main(const T x) noexcept -> T
 {
     return (x < T(0.5)   ? x / atan_cf_recur(x * x, 1U, 15U)
             : x < T(1)   ? x / atan_cf_recur(x * x, 1U, 25U)
@@ -108,13 +107,13 @@ constexpr T atan_cf_main(const T x) noexcept
 //
 
 template <typename T>
-constexpr T atan_begin(const T x) noexcept
+constexpr auto atan_begin(const T x) noexcept -> T
 {
     return (x > T(2.5) ? atan_series_main(x) : atan_cf_main(x));
 }
 
 template <typename T>
-constexpr T atan_check(const T x) noexcept
+constexpr auto atan_check(const T x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? GCLIM<T>::quiet_NaN() :
@@ -137,7 +136,7 @@ constexpr T atan_check(const T x) noexcept
  */
 
 template <typename T>
-constexpr return_t<T> atan(const T x) noexcept
+constexpr auto atan(const T x) noexcept -> return_t<T>
 {
     return internal::atan_check(static_cast<return_t<T>>(x));
 }

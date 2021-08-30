@@ -22,39 +22,39 @@
  * compile-time check if a float is NaN-valued
  */
 
-#ifndef _gcem_is_nan_HPP
-#define _gcem_is_nan_HPP
+#ifndef GCEM_is_nan_HPP
+#define GCEM_is_nan_HPP
 
 namespace internal {
 
 // future: consider using __builtin_isnan(__x)
 
 template <typename T>
-constexpr bool is_nan(const T x) noexcept
+constexpr auto is_nan(const T x) noexcept -> bool
 {
     return x != x;
 }
 
 template <typename T1, typename T2>
-constexpr bool any_nan(const T1 x, const T2 y) noexcept
+constexpr auto any_nan(const T1 x, const T2 y) noexcept -> bool
 {
     return (is_nan(x) || is_nan(y));
 }
 
 template <typename T1, typename T2>
-constexpr bool all_nan(const T1 x, const T2 y) noexcept
+constexpr auto all_nan(const T1 x, const T2 y) noexcept -> bool
 {
     return (is_nan(x) && is_nan(y));
 }
 
 template <typename T1, typename T2, typename T3>
-constexpr bool any_nan(const T1 x, const T2 y, const T3 z) noexcept
+constexpr auto any_nan(const T1 x, const T2 y, const T3 z) noexcept -> bool
 {
     return (is_nan(x) || is_nan(y) || is_nan(z));
 }
 
 template <typename T1, typename T2, typename T3>
-constexpr bool all_nan(const T1 x, const T2 y, const T3 z) noexcept
+constexpr auto all_nan(const T1 x, const T2 y, const T3 z) noexcept -> bool
 {
     return (is_nan(x) && is_nan(y) && is_nan(z));
 }
