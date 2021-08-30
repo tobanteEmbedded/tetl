@@ -54,11 +54,10 @@ template <class T>
 using GCLIM = etl::numeric_limits<T>;
 
 template <typename T>
-using return_t =
-    typename etl::conditional<etl::is_integral<T>::value, double, T>::type;
+using return_t = etl::conditional_t<etl::is_integral_v<T>, double, T>;
 
 template <typename... T>
-using common_t = typename etl::common_type<T...>::type;
+using common_t = etl::common_type_t<T...>;
 
 template <typename... T>
 using common_return_t = return_t<common_t<T...>>;
