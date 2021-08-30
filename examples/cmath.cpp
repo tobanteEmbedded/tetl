@@ -24,6 +24,15 @@ constexpr auto test() -> bool
 
     etl::ignore_unused(etl::ceil(1.4F));
     etl::ignore_unused(etl::ceil(1.4));
+
+    etl::ignore_unused(etl::trunc(1.4F));
+    etl::ignore_unused(etl::trunc(1.4));
+
+    etl::ignore_unused(etl::tan(1.4F));
+    etl::ignore_unused(etl::tan(1.4));
+
+    etl::ignore_unused(etl::cos(1.4F));
+    etl::ignore_unused(etl::cos(1.4));
     return true;
 }
 

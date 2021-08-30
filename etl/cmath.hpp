@@ -11,6 +11,7 @@
 
 #include "etl/_cmath/ceil.hpp"
 #include "etl/_cmath/copysign.hpp"
+#include "etl/_cmath/cos.hpp"
 #include "etl/_cmath/exp.hpp"
 #include "etl/_cmath/floor.hpp"
 #include "etl/_cmath/isfinite.hpp"
@@ -20,6 +21,7 @@
 #include "etl/_cmath/log.hpp"
 #include "etl/_cmath/round.hpp"
 #include "etl/_cmath/signbit.hpp"
+#include "etl/_cmath/tan.hpp"
 #include "etl/_cmath/trunc.hpp"
 #include "etl/_cmath/typedefs.hpp"
 #include "etl/_math/abs.hpp"
