@@ -3,7 +3,7 @@ add_library(tobanteEmbedded::CompilerWarnings ALIAS compiler_warnings)
 
 if (MSVC)
   if (TETL_BUILD_WERROR)
-    # target_compile_options(compiler_warnings INTERFACE /WX)
+    target_compile_options(compiler_warnings INTERFACE /WX)
   endif (TETL_BUILD_WERROR)
   target_compile_options(compiler_warnings INTERFACE /W3)
 else ()
