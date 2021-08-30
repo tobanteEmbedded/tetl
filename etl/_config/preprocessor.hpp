@@ -6,19 +6,19 @@
 #define TETL_CONFIG_PREPROCESSOR_HPP
 
 #ifndef __has_feature
-#define __has_feature(x) 0
+    #define __has_feature(x) 0
 #endif
 
 #ifndef __has_extension
-#define __has_extension(x) 0
+    #define __has_extension(x) 0
 #endif
 
 #ifndef __has_attribute
-#define __has_attribute(x) 0
+    #define __has_attribute(x) 0
 #endif
 
 #ifndef __has_builtin
-#define __has_builtin(x) 0
+    #define __has_builtin(x) 0
 #endif
 
 #define TETL_PP_EMPTY()
@@ -32,9 +32,9 @@
 #define TETL_PP_CONCAT(s1, s2) TETL_PP_CONCAT_IMPL(s1, s2)
 
 #ifdef __COUNTER__
-#define TETL_PP_UNIQUE_NAME(name) TETL_PP_CONCAT(name, __COUNTER__)
+    #define TETL_PP_UNIQUE_NAME(name) TETL_PP_CONCAT(name, __COUNTER__)
 #else
-#define TETL_PP_UNIQUE_NAME(name) TETL_PP_CONCAT(name, __LINE__)
+    #define TETL_PP_UNIQUE_NAME(name) TETL_PP_CONCAT(name, __LINE__)
 #endif
 
 // clang-format off
@@ -70,9 +70,9 @@
     }
 
 #if defined(__GNUC__)
-#define TETL_PP_FUNC_SIG __PRETTY_FUNCTION__
+    #define TETL_PP_FUNC_SIG __PRETTY_FUNCTION__
 #else
-#define TETL_PP_FUNC_SIG __func__
+    #define TETL_PP_FUNC_SIG __func__
 #endif
 
 #endif // TETL_CONFIG_PREPROCESSOR_HPP

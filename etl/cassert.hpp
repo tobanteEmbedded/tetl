@@ -13,11 +13,11 @@
 #include "etl/_cassert/macro.hpp"
 
 #if __has_include(<assert.h>)
-#include <assert.h>
+    #include <assert.h>
 #else
-#ifndef assert
-#define assert(x) TETL_ASSERT(x)
-#endif
+    #ifndef assert
+        #define assert(x) TETL_ASSERT(x)
+    #endif
 #endif
 
 #endif // TETL_CASSERT_HPP

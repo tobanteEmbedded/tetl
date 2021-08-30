@@ -20,7 +20,7 @@ namespace meta = etl::experimental::meta;
 // The goal of this macro is to avoid evaluation of the arguments, but
 // still have the compiler warn on problems inside...
 #if !defined(TEST_DETAIL_IGNORE_BUT_WARN)
-#define TEST_DETAIL_IGNORE_BUT_WARN(...)
+    #define TEST_DETAIL_IGNORE_BUT_WARN(...)
 #endif
 
 #define TEST_DETAIL_TEMPLATE_TEST_CASE2(title, tags, tc, ...)                  \

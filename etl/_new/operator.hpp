@@ -11,7 +11,7 @@
 // Some parts of the new header are declared in the global namespace. To avoid
 // ODR violations, we include the header <new> if it is available.
 #if __has_include(<new>)
-#include <new>
+    #include <new>
 #else
 
 /// \brief Called by the standard single-object placement new expression. The

@@ -9,20 +9,20 @@
 #include "etl/_config/compiler.hpp"
 
 #if defined(TETL_MSVC)
-#include <wchar.h>
+    #include <wchar.h>
 #else
 
-#if !defined(WEOF)
-#define WEOF (static_cast<wint_t>(-1))
-#endif
+    #if !defined(WEOF)
+        #define WEOF (static_cast<wint_t>(-1))
+    #endif
 
-#if !defined(WCHAR_MIN)
-#define WCHAR_MIN TETL_WCHAR_MIN
-#endif
+    #if !defined(WCHAR_MIN)
+        #define WCHAR_MIN TETL_WCHAR_MIN
+    #endif
 
-#if !defined(WCHAR_MAX)
-#define WCHAR_MAX TETL_WCHAR_MAX
-#endif
+    #if !defined(WCHAR_MAX)
+        #define WCHAR_MAX TETL_WCHAR_MAX
+    #endif
 
 #endif
 

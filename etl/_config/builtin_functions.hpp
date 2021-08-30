@@ -6,127 +6,127 @@
 #define TETL_CONFIG_BUILTIN_FUNCTIONS_HPP
 
 #if __has_builtin(__builtin_COLUMN)
-#define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
+    #define TETL_BUILTIN_COLUMN() __builtin_COLUMN()
 #else
-#define TETL_BUILTIN_COLUMN() 0
+    #define TETL_BUILTIN_COLUMN() 0
 #endif
 
 #if __has_builtin(__builtin_LINE)
-#define TETL_BUILTIN_LINE() __builtin_LINE()
+    #define TETL_BUILTIN_LINE() __builtin_LINE()
 #else
-#define TETL_BUILTIN_LINE() 0
+    #define TETL_BUILTIN_LINE() 0
 #endif
 
 #if __has_builtin(__builtin_FILE)
-#define TETL_BUILTIN_FILE() __builtin_FILE()
+    #define TETL_BUILTIN_FILE() __builtin_FILE()
 #else
-#define TETL_BUILTIN_FILE() __FILE__
+    #define TETL_BUILTIN_FILE() __FILE__
 #endif
 
 #if __has_builtin(__builtin_FUNCTION)
-#define TETL_BUILTIN_FUNCTION() __builtin_FUNCTION()
+    #define TETL_BUILTIN_FUNCTION() __builtin_FUNCTION()
 #else
-#define TETL_BUILTIN_FUNCTION() ""
+    #define TETL_BUILTIN_FUNCTION() ""
 #endif
 
 // UNREACHABLE
 #if __has_builtin(__builtin_unreachable)
-#define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
+    #define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
-#define TETL_BUILTIN_UNREACHABLE __assume(false)
+    #define TETL_BUILTIN_UNREACHABLE __assume(false)
 #else
-// https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
-// Answer from user iammilind.
-#define TETL_BUILTIN_UNREACHABLE                                               \
-    {                                                                          \
-        struct etl_builtin_unreachable_t {                                     \
-            etl_builtin_unreachable_t& operator=(                              \
-                etl_builtin_unreachable_t const&);                             \
-        } x;                                                                   \
-        x = x;                                                                 \
-    }
+    // https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
+    // Answer from user iammilind.
+    #define TETL_BUILTIN_UNREACHABLE                                           \
+        {                                                                      \
+            struct etl_builtin_unreachable_t {                                 \
+                etl_builtin_unreachable_t& operator=(                          \
+                    etl_builtin_unreachable_t const&);                         \
+            } x;                                                               \
+            x = x;                                                             \
+        }
 #endif
 
 // NAN
 #if __has_builtin(__builtin_nanf) or defined(_MSC_VER)
-#define TETL_BUILTIN_NANF (__builtin_nanf(""))
+    #define TETL_BUILTIN_NANF (__builtin_nanf(""))
 #else
-#define TETL_BUILTIN_NANF (0.0F / 0.0F)
+    #define TETL_BUILTIN_NANF (0.0F / 0.0F)
 #endif
 
 #if __has_builtin(__builtin_nan) or defined(_MSC_VER)
-#define TETL_BUILTIN_NAN (__builtin_nan(""))
+    #define TETL_BUILTIN_NAN (__builtin_nan(""))
 #else
-#define TETL_BUILTIN_NAN (0.0 / 0.0)
+    #define TETL_BUILTIN_NAN (0.0 / 0.0)
 #endif
 
 #if __has_builtin(__builtin_nanl)
-#define TETL_BUILTIN_NANL (__builtin_nanl(""))
+    #define TETL_BUILTIN_NANL (__builtin_nanl(""))
 #elif defined(_MSC_VER)
-#define TETL_BUILTIN_NANL (__builtin_nan(""))
+    #define TETL_BUILTIN_NANL (__builtin_nan(""))
 #else
-#define TETL_BUILTIN_NANL (0.0L / 0.0L)
+    #define TETL_BUILTIN_NANL (0.0L / 0.0L)
 #endif
 
 // SIGNALING NAN
 #if __has_builtin(__builtin_nansf) or defined(_MSC_VER)
-#define TETL_BUILTIN_NANSF (__builtin_nansf(""))
+    #define TETL_BUILTIN_NANSF (__builtin_nansf(""))
 #else
-#define TETL_BUILTIN_NANSF (0.0F / 0.0F)
+    #define TETL_BUILTIN_NANSF (0.0F / 0.0F)
 #endif
 
 #if __has_builtin(__builtin_nans) or defined(_MSC_VER)
-#define TETL_BUILTIN_NANS (__builtin_nans(""))
+    #define TETL_BUILTIN_NANS (__builtin_nans(""))
 #else
-#define TETL_BUILTIN_NANS (0.0 / 0.0)
+    #define TETL_BUILTIN_NANS (0.0 / 0.0)
 #endif
 
 #if __has_builtin(__builtin_nansl)
-#define TETL_BUILTIN_NANSL (__builtin_nansl(""))
+    #define TETL_BUILTIN_NANSL (__builtin_nansl(""))
 #elif defined(_MSC_VER)
-#define TETL_BUILTIN_NANSL (__builtin_nans(""))
+    #define TETL_BUILTIN_NANSL (__builtin_nans(""))
 #else
-#define TETL_BUILTIN_NANSL (0.0L / 0.0L)
+    #define TETL_BUILTIN_NANSL (0.0L / 0.0L)
 #endif
 
 // HUGE VAL
 #if __has_builtin(__builtin_huge_valf) or defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
+    #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
 #else
-#define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
+    #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
 #endif
 
 #if __has_builtin(__builtin_huge_val) or defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
+    #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
 #else
-#define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
+    #define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
 #endif
 
 #if __has_builtin(__builtin_huge_vall)
-#define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
+    #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
 #elif defined(_MSC_VER)
-#define TETL_BUILTIN_HUGE_VALL (__builtin_huge_val())
+    #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_val())
 #else
-#define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
+    #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
 
 // VA LIST
 #define TETL_BUILTIN_VA_LIST __builtin_va_list
 
-// clang-format off
-
 // ASSUME ALIGNED
 #if __has_builtin(__builtin_assume_aligned)
-#define TETL_BUILTIN_ASSUME_ALIGNED(p, a) __builtin_assume_aligned(p, a)
+    #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) __builtin_assume_aligned(p, a)
 #else
-#define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
+    #define TETL_BUILTIN_ASSUME_ALIGNED(p, a) (p)
 #endif
 
 #if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
-#define TETL_BUILTIN_SIGNBIT(x) __builtin_signbit(x)
+    #define TETL_BUILTIN_SIGNBIT(x) __builtin_signbit(x)
 #else
-#define TETL_BUILTIN_SIGNBIT(x) etl::detail::builtin_signbit_fallback(x)
+    #define TETL_BUILTIN_SIGNBIT(x) etl::detail::builtin_signbit_fallback(x)
 #endif
+
+// clang-format off
 
 #if __has_builtin(__builtin_copysign)
 #define TETL_BUILTIN_COPYSIGN(x, y) __builtin_copysign(x, y)

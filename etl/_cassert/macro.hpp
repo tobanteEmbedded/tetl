@@ -12,9 +12,9 @@
 #include "etl/_warning/ignore_unused.hpp"
 
 #if __has_include(<stdlib.h>)
-#include <stdlib.h>
+    #include <stdlib.h>
 
-#include "etl/_config/_workarounds/001_avr_macros.hpp" // For AVR macros
+    #include "etl/_config/_workarounds/001_avr_macros.hpp" // For AVR macros
 #else
 inline auto exit(int /*ignore*/) -> void { }
 #endif
@@ -66,24 +66,24 @@ namespace detail {
 } // namespace etl
 
 #if not defined(TETL_ASSERT)
-#if !defined(TETL_NDEBUG) || (TETL_NDEBUG == 0)
-/// \brief Assertion macro with customizable runtime behavior
-#define TETL_ASSERT(exp)                                                       \
-    do {                                                                       \
-        if (TETL_UNLIKELY((exp) == false)) {                                   \
-            /* TETL_DEBUG_TRAP(); */                                           \
-            auto const msg = etl::assert_msg {                                 \
-                __LINE__, /*line of assertion*/                                \
-                __FILE__, /*source file*/                                      \
-                etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,          \
-                etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,           \
-            };                                                                 \
-            etl::detail::tetl_call_assert_handler(msg);                        \
-        }                                                                      \
-    } while (false)
-#else
-#define TETL_ASSERT(exp)
-#endif // !defined(TETL_NDEBUG)
-#endif // not defined(TETL_ASSERT)
+    #if !defined(TETL_NDEBUG) || (TETL_NDEBUG == 0)
+  /// \brief Assertion macro with customizable runtime behavior
+        #define TETL_ASSERT(exp)                                               \
+            do {                                                               \
+                if (TETL_UNLIKELY((exp) == false)) {                           \
+                    /* TETL_DEBUG_TRAP(); */                                   \
+                    auto const msg = etl::assert_msg {                         \
+                        __LINE__, /*line of assertion*/                        \
+                        __FILE__, /*source file*/                              \
+                        etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,  \
+                        etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,   \
+                    };                                                         \
+                    etl::detail::tetl_call_assert_handler(msg);                \
+                }                                                              \
+            } while (false)
+    #else
+        #define TETL_ASSERT(exp)
+    #endif // !defined(TETL_NDEBUG)
+#endif     // not defined(TETL_ASSERT)
 
 #endif // TETL_CASSERT_MACRO_HPP

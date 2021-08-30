@@ -6,7 +6,7 @@
 #define TETL_CONFIG_VERSION_HPP
 
 #if (__has_include(<version>))
-#include <version>
+    #include <version>
 #endif
 
 /// The major release version
@@ -19,9 +19,9 @@
 #define TETL_VERSION_STRING "0.4.0"
 
 #if defined(__STDC_HOSTED__)
-#define TETL_HOSTED 1
+    #define TETL_HOSTED 1
 #else
-#define TETL_FREESTANDING 1
+    #define TETL_FREESTANDING 1
 #endif
 
 #endif // TETL_CONFIG_VERSION_HPP

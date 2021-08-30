@@ -11,7 +11,7 @@
 #include "etl/warning.hpp"
 
 #if defined(TETL_FREERTOS_USE_STUBS)
-#include "etl/experimental/freertos/stubs.hpp"
+    #include "etl/experimental/freertos/stubs.hpp"
 #endif
 
 namespace etl::experimental::freertos {

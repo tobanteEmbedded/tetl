@@ -13,6 +13,7 @@ AlwaysBreakTemplateDeclarations: true
 ColumnLimit: 80
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 FixNamespaceComments: true
+IndentPPDirectives: BeforeHash
 Language: Cpp
 NamespaceIndentation: None
 ReflowComments: true

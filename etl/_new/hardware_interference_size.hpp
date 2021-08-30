@@ -11,17 +11,17 @@
 /// line sizes depend on implementations, not architectures.  There are even
 /// implementations with cache line sizes configurable at boot time.
 #if defined(__aarch64__)
-#define TETL_CACHELINE_SIZE 64
+    #define TETL_CACHELINE_SIZE 64
 #elif defined(__ARM_ARCH_5T__)
-#define TETL_CACHELINE_SIZE 32
+    #define TETL_CACHELINE_SIZE 32
 #elif defined(__ARM_ARCH_7A__)
-#define TETL_CACHELINE_SIZE 64
+    #define TETL_CACHELINE_SIZE 64
 #elif defined(__PPC64__)
-#define TETL_CACHELINE_SIZE 128
+    #define TETL_CACHELINE_SIZE 128
 #elif defined(__i386__) || defined(__x86_64__)
-#define TETL_CACHELINE_SIZE 64
+    #define TETL_CACHELINE_SIZE 64
 #else
-#define TETL_CACHELINE_SIZE alignof(max_align_t)
+    #define TETL_CACHELINE_SIZE alignof(max_align_t)
 #endif
 
 namespace etl {

@@ -2,7 +2,7 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#if not defined(TETL_CSTDLIB_HPP)
+#ifndef TETL_CSTDLIB_HPP
 #define TETL_CSTDLIB_HPP
 
 #include "etl/_config/all.hpp"
