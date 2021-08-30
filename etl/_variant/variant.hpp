@@ -9,6 +9,7 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_container/smallest_size_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_exception/raise.hpp"
 #include "etl/_functional/equal_to.hpp"
 #include "etl/_functional/greater.hpp"
 #include "etl/_functional/greater_equal.hpp"
@@ -31,6 +32,7 @@
 #include "etl/_utility/index_sequence.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/swap.hpp"
+#include "etl/_variant/bad_variant_access.hpp"
 #include "etl/_variant/monostate.hpp"
 #include "etl/_variant/variant_alternative.hpp"
 #include "etl/_variant/variant_fwd.hpp"
@@ -119,15 +121,38 @@ struct variant_storage<Index, Head> {
     }
 
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
+        etl::integral_constant<etl::size_t, Index> /*ic*/) & -> Head&
     {
-        return *static_cast<Head*>(static_cast<void*>(&data));
+        return *to_ptr();
     }
 
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, Index> /*ic*/) const -> Head const&
+        etl::integral_constant<etl::size_t, Index> /*ic*/) const& -> Head const&
     {
-        return *static_cast<Head const*>(static_cast<void const*>(&data));
+        return *to_ptr();
+    }
+
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/) && -> Head&&
+    {
+        return etl::move(*to_ptr());
+    }
+
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/)
+        const&& -> Head const&&
+    {
+        return etl::move(*to_ptr());
+    }
+
+    [[nodiscard]] constexpr auto to_ptr() noexcept -> Head*
+    {
+        return static_cast<Head*>(static_cast<void*>(&data));
+    }
+
+    [[nodiscard]] constexpr auto to_ptr() const noexcept -> Head const*
+    {
+        return static_cast<Head const*>(static_cast<void const*>(&data));
     }
 };
 
@@ -205,29 +230,66 @@ struct variant_storage<Index, Head, Tail...> {
     }
 
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, Index> /*ic*/) -> Head&
+        etl::integral_constant<etl::size_t, Index> /*ic*/) & -> Head&
     {
-        return *static_cast<Head*>(static_cast<void*>(&data));
+        return *to_ptr();
     }
 
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, Index> /*ic*/) const -> Head const&
+        etl::integral_constant<etl::size_t, Index> /*ic*/) const& -> Head const&
     {
-        return *static_cast<Head const*>(static_cast<void const*>(&data));
+        return *to_ptr();
+    }
+
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/) && -> Head&&
+    {
+        return etl::move(*to_ptr());
+    }
+
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, Index> /*ic*/)
+        const&& -> Head const&&
+    {
+        return etl::move(*to_ptr());
     }
 
     template <etl::size_t N>
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, N> ic) -> auto&
+        etl::integral_constant<etl::size_t, N> ic) & -> auto&
     {
         return tail.get_value(ic);
     }
 
     template <etl::size_t N>
     [[nodiscard]] constexpr auto get_value(
-        etl::integral_constant<etl::size_t, N> ic) const -> auto const&
+        etl::integral_constant<etl::size_t, N> ic) const& -> auto const&
     {
         return tail.get_value(ic);
+    }
+
+    template <etl::size_t N>
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, N> ic) && -> auto&&
+    {
+        return etl::move(tail).get_value(ic);
+    }
+
+    template <etl::size_t N>
+    [[nodiscard]] constexpr auto get_value(
+        etl::integral_constant<etl::size_t, N> ic) const&& -> auto const&&
+    {
+        return etl::move(tail).get_value(ic);
+    }
+
+    [[nodiscard]] constexpr auto to_ptr() noexcept -> Head*
+    {
+        return static_cast<Head*>(static_cast<void*>(&data));
+    }
+
+    [[nodiscard]] constexpr auto to_ptr() const noexcept -> Head const*
+    {
+        return static_cast<Head const*>(static_cast<void const*>(&data));
     }
 };
 
@@ -566,6 +628,70 @@ constexpr auto get_if(etl::variant<Types...> const* v) noexcept
     using ic_t = etl::integral_constant<etl::size_t, idx::value>;
     if (holds_alternative<T>(*v)) { return &(v->_impl()->get_value(ic_t {})); }
     return nullptr;
+}
+
+/// \brief Index-based value accessor
+///
+/// \details If v.index() == I, returns a reference to the value stored in v.
+/// Otherwise, raises a etl::bad_variant_access. The call is ill-formed if I is
+/// not a valid index in the variant.
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <etl::size_t I, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...>& v)
+    -> etl::variant_alternative_t<I, etl::variant<Types...>>&
+{
+    static_assert(I < sizeof...(Types));
+    if (v.index() == I) { return *etl::get_if<I>(&v); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Index-based value accessor
+///
+/// \details If v.index() == I, returns a reference to the value stored in v.
+/// Otherwise, raises a etl::bad_variant_access. The call is ill-formed if I is
+/// not a valid index in the variant.
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <etl::size_t I, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...>&& v)
+    -> etl::variant_alternative_t<I, etl::variant<Types...>>&&
+{
+    static_assert(I < sizeof...(Types));
+    if (v.index() == I) { return etl::move(*etl::get_if<I>(&v)); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Index-based value accessor
+///
+/// \details If v.index() == I, returns a reference to the value stored in v.
+/// Otherwise, raises a etl::bad_variant_access. The call is ill-formed if I is
+/// not a valid index in the variant.
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <etl::size_t I, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...> const& v)
+    -> etl::variant_alternative_t<I, etl::variant<Types...>> const&
+{
+    static_assert(I < sizeof...(Types));
+    if (v.index() == I) { return *etl::get_if<I>(&v); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Index-based value accessor
+///
+/// \details If v.index() == I, returns a reference to the value stored in v.
+/// Otherwise, raises a etl::bad_variant_access. The call is ill-formed if I is
+/// not a valid index in the variant.
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <etl::size_t I, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...> const&& v)
+    -> etl::variant_alternative_t<I, etl::variant<Types...>> const&&
+{
+    static_assert(I < sizeof...(Types));
+    if (v.index() == I) { return etl::move(*etl::get_if<I>(&v)); }
+    etl::raise<etl::bad_variant_access>("");
 }
 
 } // namespace etl

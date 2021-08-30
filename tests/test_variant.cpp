@@ -276,6 +276,15 @@ TEST_CASE("variant: get_if", "[variant]")
     }
 }
 
+TEST_CASE("variant: get", "[variant]")
+{
+    auto v1 = etl::variant<etl::monostate, int, float, double> { 42 };
+    CHECK(etl::get<1>(v1) == 42);
+
+    auto const v2 = etl::variant<etl::monostate, int, float, double> { 42 };
+    CHECK(etl::get<1>(v2) == 42);
+}
+
 TEST_CASE("variant: variant_size", "[variant]")
 {
     using t1 = etl::variant<etl::monostate>;
