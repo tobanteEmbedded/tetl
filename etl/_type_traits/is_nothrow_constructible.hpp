@@ -8,7 +8,6 @@
 #include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/meta.hpp"
 #include "etl/_type_traits/remove_all_extents.hpp"
 
 namespace etl {
@@ -45,7 +44,7 @@ struct nothrow_constructible_impl<true, T[Size], Arg>
 
 template <typename T, size_t Size, typename... Args>
 struct nothrow_constructible_impl<true, T[Size], Args...>
-    : meta_and<nothrow_constructible_impl<true, T, Args>...> {
+    : bool_constant<(nothrow_constructible_impl<true, T, Args>::value && ...)> {
 };
 #endif
 

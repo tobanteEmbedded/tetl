@@ -104,7 +104,6 @@
 #include "etl/_type_traits/is_volatile.hpp"
 #include "etl/_type_traits/make_signed.hpp"
 #include "etl/_type_traits/make_unsigned.hpp"
-#include "etl/_type_traits/meta.hpp"
 #include "etl/_type_traits/negation.hpp"
 #include "etl/_type_traits/rank.hpp"
 #include "etl/_type_traits/remove_all_extents.hpp"
