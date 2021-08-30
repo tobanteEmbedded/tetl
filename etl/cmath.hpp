@@ -7,6 +7,9 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_cmath/acos.hpp"
+#include "etl/_cmath/asin.hpp"
+#include "etl/_cmath/atan.hpp"
 #include "etl/_cmath/ceil.hpp"
 #include "etl/_cmath/copysign.hpp"
 #include "etl/_cmath/cos.hpp"
