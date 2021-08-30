@@ -2,10 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_STRING_ALGORITHM_HPP
-#define TETL_STRING_ALGORITHM_HPP
-
-#include "etl/_string/char_traits.hpp"
+#ifndef TETL_STRING_STR_FIND_FIRST_NOT_OF_HPP
+#define TETL_STRING_STR_FIND_FIRST_NOT_OF_HPP
 
 namespace etl::detail {
 
@@ -37,17 +35,6 @@ template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
     return Npos;
 }
 
-template <typename CharT>
-auto replace_impl(CharT* f, CharT* l, CharT ch) -> void
-{
-    for (; f != l; ++f) { *f = ch; }
-}
-
-template <typename CharT>
-auto replace_impl(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
-{
-    for (; (f != l) && (sf != sl); ++f, ++sf) { *f = *sf; }
-}
 } // namespace etl::detail
 
-#endif // TETL_STRING_ALGORITHM_HPP
+#endif // TETL_STRING_STR_FIND_FIRST_NOT_OF_HPP

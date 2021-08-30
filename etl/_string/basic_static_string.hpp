@@ -21,6 +21,7 @@
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_string/char_traits.hpp"
 #include "etl/_string/str_find_first_not_of.hpp"
+#include "etl/_string/str_replace.hpp"
 #include "etl/_string/str_rfind.hpp"
 #include "etl/_string_view/string_view.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
@@ -909,7 +910,7 @@ public:
 
         auto* f = data() + pos;
         auto* l = data() + pos + count;
-        detail::replace_impl(f, l, str.begin(), str.end());
+        detail::str_replace(f, l, str.begin(), str.end());
         return *this;
     }
 
@@ -920,7 +921,7 @@ public:
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
-        detail::replace_impl(f, l, str.begin(), str.end());
+        detail::str_replace(f, l, str.begin(), str.end());
         return *this;
     }
 
@@ -938,7 +939,7 @@ public:
         auto* l        = data() + min(pos + count, size());
         auto const* sf = next(begin(str), min(pos2, str.size()));
         auto const* sl = next(begin(str), min(pos2 + count2, str.size()));
-        detail::replace_impl(f, l, sf, sl);
+        detail::str_replace(f, l, sf, sl);
         return *this;
     }
 
@@ -950,7 +951,7 @@ public:
 
         auto* f = next(data(), min(pos, size()));
         auto* l = next(data(), min(pos + count, size()));
-        detail::replace_impl(f, l, str, next(str, count2));
+        detail::str_replace(f, l, str, next(str, count2));
         return *this;
     }
 
@@ -959,7 +960,7 @@ public:
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
-        detail::replace_impl(f, l, str, next(str, count2));
+        detail::str_replace(f, l, str, next(str, count2));
         return *this;
     }
 
@@ -971,7 +972,7 @@ public:
 
         auto* f = next(data(), min(pos, size()));
         auto* l = next(data(), min(pos + count, size()));
-        detail::replace_impl(f, l, str, next(str, strlen(str)));
+        detail::str_replace(f, l, str, next(str, strlen(str)));
         return *this;
     }
 
@@ -980,7 +981,7 @@ public:
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
-        detail::replace_impl(f, l, str, next(str, strlen(str)));
+        detail::str_replace(f, l, str, next(str, strlen(str)));
         return *this;
     }
 
@@ -992,7 +993,7 @@ public:
     //
     //    auto* f = next(data(), min(pos, size()));
     //    auto* l = next(data(), min(pos + count, size()));
-    //    detail::replace_impl(f, l, ch);
+    //    detail::str_replace(f, l, ch);
     //    return *this;
     //}
 
@@ -1001,7 +1002,7 @@ public:
     {
         auto* f = const_cast<iterator>(first);
         auto* l = min(const_cast<iterator>(last), f + count2);
-        detail::replace_impl(f, l, ch);
+        detail::str_replace(f, l, ch);
         return *this;
     }
 
