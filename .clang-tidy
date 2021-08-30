@@ -1,4 +1,4 @@
-Checks: '*-,bugprone-*,-bugprone-easily-swappable-parameters,-bugprone-forwarding-reference-overload,-bugprone-unhandled-self-assignment,-clang-analyzer-core.*,-clang-analyzer-cplusplus.PlacementNew,cert-*,-cert-oop54-cpp,-cert-err58-cpp,concurrency-*,modernize-*,-modernize-avoid-c-arrays,-modernize-deprecated-headers,-modernize-use-equals-default,performance-*,-performance-no-int-to-ptr,readability-*,-readability-container-size-empty,-readability-magic-numbers,-readability-function-cognitive-complexity'
+Checks: '*-,bugprone-*,-bugprone-easily-swappable-parameters,-bugprone-forwarding-reference-overload,-bugprone-unhandled-self-assignment,-clang-analyzer-core.*,-clang-analyzer-cplusplus.PlacementNew,cert-*,-cert-oop54-cpp,-cert-err58-cpp,concurrency-*,modernize-*,-modernize-avoid-c-arrays,-modernize-deprecated-headers,-modernize-use-equals-default,performance-*,-performance-no-int-to-ptr,readability-*,-readability-container-size-empty,-readability-magic-numbers,-readability-function-cognitive-complexity,-readability-suspicious-call-argument'
 WarningsAsErrors: '*'
 FormatStyle: none
 CheckOptions:
