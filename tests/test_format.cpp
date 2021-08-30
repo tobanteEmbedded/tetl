@@ -240,7 +240,7 @@ TEST_CASE("format: format_to_n", "[format]")
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("{abc}");
         auto res    = etl::format_to_n(
-            buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
+               buffer.data(), (ptrdiff_t)buffer.size(), "{{abc}}");
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);
@@ -251,7 +251,7 @@ TEST_CASE("format: format_to_n", "[format]")
         auto buffer = etl::static_string<32> {};
         auto target = etl::string_view("test");
         auto res    = etl::format_to_n(
-            data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
+               data(buffer), (ptrdiff_t)buffer.size(), "tes{}", 't');
         CHECK(res.out == buffer.begin() + target.size());
         CHECK(res.size == static_cast<decltype(res.size)>(target.size()));
         CHECK(etl::string_view(buffer.begin()) == target);

@@ -105,7 +105,7 @@ struct small_ptr {
     [[nodiscard]] operator Type*() noexcept { return get(); }
 
     /// \brief Implicit conversion to raw pointer to const.
-    [[nodiscard]] operator Type const *() const noexcept { return get(); }
+    [[nodiscard]] operator Type const*() const noexcept { return get(); }
 
 private:
     [[nodiscard]] static auto compress(Type* ptr) -> StorageType

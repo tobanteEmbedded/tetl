@@ -26,7 +26,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t,
         auto source = etl::array { T(0), T(0), T(0), T(1), T(2), T(3) };
         auto target = etl::array { T(1), T(2), T(3) };
         auto* res   = etl::search(
-            begin(source), end(source), begin(target), end(target));
+              begin(source), end(source), begin(target), end(target));
         CHECK(*res == T(1));
     }
 
@@ -35,7 +35,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t,
         auto source = etl::array { T(0), T(0), T(0), T(0), T(2), T(3) };
         auto target = etl::array { T(1), T(2), T(3) };
         auto* res   = etl::search(
-            begin(source), end(source), begin(target), end(target));
+              begin(source), end(source), begin(target), end(target));
         CHECK(res == end(source));
     }
 
@@ -44,7 +44,7 @@ TEMPLATE_TEST_CASE("algorithm: search", "[algorithm]", etl::uint8_t,
         auto source = etl::array { T(0), T(0), T(0), T(0), T(2), T(3) };
         auto target = etl::static_vector<T, 0> {};
         auto* res   = etl::search(
-            begin(source), end(source), begin(target), end(target));
+              begin(source), end(source), begin(target), end(target));
         CHECK(res == begin(source));
     }
 
@@ -178,7 +178,7 @@ TEMPLATE_TEST_CASE("algorithm: copy_if", "[algorithm]", etl::uint8_t,
     {
         TestType dest[4] = {};
         auto* res        = etl::copy_if(
-            begin(source), end(source), etl::begin(dest), predicate);
+                   begin(source), end(source), etl::begin(dest), predicate);
         REQUIRE(res == &dest[2]);
         REQUIRE(dest[0] == TestType { 7 });
         REQUIRE(dest[1] == TestType { 9 });
