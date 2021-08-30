@@ -612,7 +612,7 @@ template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...>* v) noexcept
     -> etl::add_pointer_t<T>
 {
-    using idx  = decltype((*v)._impl()->get_index(etl::declval<T const>()));
+    using idx  = decltype((*v)._impl()->get_index(etl::declval<T>()));
     using ic_t = etl::integral_constant<etl::size_t, idx::value>;
     if (holds_alternative<T>(*v)) { return &(v->_impl()->get_value(ic_t {})); }
     return nullptr;
@@ -624,7 +624,7 @@ template <typename T, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* v) noexcept
     -> etl::add_pointer_t<T const>
 {
-    using idx  = decltype((*v)._impl()->get_index(etl::declval<T>()));
+    using idx  = decltype((*v)._impl()->get_index(etl::declval<T const>()));
     using ic_t = etl::integral_constant<etl::size_t, idx::value>;
     if (holds_alternative<T>(*v)) { return &(v->_impl()->get_value(ic_t {})); }
     return nullptr;
