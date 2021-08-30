@@ -12,6 +12,12 @@ constexpr auto test() -> bool
 {
     etl::ignore_unused(etl::exp(1.0F));
     etl::ignore_unused(etl::exp(1.0));
+
+    etl::ignore_unused(etl::round(1.4F));
+    etl::ignore_unused(etl::round(1.4));
+
+    etl::ignore_unused(etl::log(1.4F));
+    etl::ignore_unused(etl::log(1.4));
     return true;
 }
 
