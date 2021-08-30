@@ -33,6 +33,34 @@ template <typename CharT, typename SizeT>
     return static_cast<SizeT>(-1);
 }
 
+template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
+[[nodiscard]] constexpr auto str_find_first_not_of(CharT const* str, SizeT size,
+    CharT const* search, SizeT pos, SizeT n) noexcept -> SizeT
+{
+    if (pos < size) {
+        auto const* last = str + size;
+        for (auto const* s = str + pos; s != last; ++s) {
+            if (Traits::find(search, n, *s) == nullptr) {
+                return static_cast<SizeT>(s - str);
+            }
+        }
+    }
+    return Npos;
+}
+
+template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
+[[nodiscard]] constexpr auto str_find_first_not_of(
+    CharT const* str, SizeT size, CharT c, SizeT pos) noexcept -> SizeT
+{
+    if (pos < size) {
+        auto const* last = str + size;
+        for (auto const* s = str + pos; s != last; ++s) {
+            if (!Traits::eq(*s, c)) { return static_cast<SizeT>(s - str); }
+        }
+    }
+    return Npos;
+}
+
 template <typename CharT>
 auto replace_impl(CharT* f, CharT* l, CharT ch) -> void
 {

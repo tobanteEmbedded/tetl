@@ -20,8 +20,9 @@
 #include "etl/_iterator/size.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_string/char_traits.hpp"
+#include "etl/_string/str_find_first_not_of.hpp"
+#include "etl/_string/str_rfind.hpp"
 #include "etl/_string_view/string_view.hpp"
-#include "etl/_strings/find_first_not_of.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
@@ -1144,7 +1145,8 @@ public:
     [[nodiscard]] constexpr auto rfind(basic_static_string const& str,
         size_type pos = 0) const noexcept -> size_type
     {
-        return rfind(str.c_str(), pos, str.size());
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), str.begin(), pos, str.size());
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1162,13 +1164,8 @@ public:
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos,
         size_type count) const noexcept -> size_type
     {
-        if (count == 0) {
-            if (pos <= size()) { return pos; }
-            return size();
-        }
-
-        auto view = static_cast<basic_string_view<value_type>>(*this);
-        return view.rfind(s, pos, count);
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), s, pos, count);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1184,7 +1181,8 @@ public:
     [[nodiscard]] constexpr auto rfind(
         const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
-        return rfind(s, pos, traits_type::length(s));
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), s, pos, traits_type::length(s));
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1200,7 +1198,8 @@ public:
     [[nodiscard]] constexpr auto rfind(
         value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        return rfind(etl::addressof(ch), pos, 1);
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), ch, pos);
     }
 
     /// \brief Finds the first character equal to one of the characters in the

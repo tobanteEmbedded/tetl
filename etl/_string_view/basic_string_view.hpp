@@ -20,7 +20,8 @@
 #include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
 #include "etl/_string/char_traits.hpp"
-#include "etl/_strings/find_first_not_of.hpp"
+#include "etl/_string/str_find_first_not_of.hpp"
+#include "etl/_string/str_rfind.hpp"
 #include "etl/_type_traits/decay.hpp"
 
 namespace etl {
@@ -453,29 +454,10 @@ struct basic_string_view {
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
     [[nodiscard]] constexpr auto rfind(
-        basic_string_view v, size_type pos = npos) const noexcept -> size_type
+        basic_string_view sv, size_type pos = npos) const noexcept -> size_type
     {
-        auto const offset = etl::clamp<size_type>(pos, 0, size());
-        if (v.size() > size()) { return npos; }
-
-        size_type outer = offset;
-        do {
-            if (unsafe_at(outer) == v.front()) {
-                auto found = [&] {
-                    for (size_type inner = 0; inner < v.size(); ++inner) {
-                        if (unsafe_at(outer + inner) != v[inner]) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }();
-
-                if (found) { return outer; }
-            }
-        } while (outer-- != 0);
-
-        return npos;
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), sv.begin(), pos, sv.size());
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -485,9 +467,9 @@ struct basic_string_view {
     /// if no such substring is found.
     [[nodiscard]] constexpr auto rfind(
         CharType c, size_type pos = npos) const noexcept -> size_type
-
     {
-        return rfind(basic_string_view(etl::addressof(c), 1), pos);
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), c, pos);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -495,10 +477,11 @@ struct basic_string_view {
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
-    constexpr auto rfind(
-        CharType const* s, size_type pos, size_type count) const -> size_type
+    constexpr auto rfind(CharType const* s, size_type pos,
+        size_type count) const noexcept -> size_type
     {
-        return rfind(basic_string_view(s, count), pos);
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), s, pos, count);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -506,10 +489,11 @@ struct basic_string_view {
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
-    constexpr auto rfind(CharType const* s, size_type pos = npos) const
+    constexpr auto rfind(CharType const* s, size_type pos = npos) const noexcept
         -> size_type
     {
-        return rfind(basic_string_view { s }, pos);
+        return detail::str_rfind<value_type, size_type, traits_type, npos>(
+            begin(), size(), s, pos, traits_type::length(s));
     }
 
     /// \brief Finds the first character equal to any of the characters in the
@@ -572,16 +556,10 @@ struct basic_string_view {
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(
-        basic_string_view v, size_type pos = 0) const noexcept -> size_type
+        basic_string_view sv, size_type pos = 0) const noexcept -> size_type
     {
-        TETL_ASSERT(pos < size());
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = v.begin();
-        auto const* sl = v.end();
-        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
-               + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(data(), size(), sv.data(), pos, sv.size());
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -592,14 +570,8 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_first_not_of(
         CharType c, size_type pos = 0) const noexcept -> size_type
     {
-        TETL_ASSERT(pos < size());
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = &c;
-        auto const* sl = &c + 1;
-        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
-               + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(data(), size(), c, pos);
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -610,14 +582,8 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_first_not_of(
         CharType const* s, size_type pos, size_type count) const -> size_type
     {
-        TETL_ASSERT(pos < size());
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = s;
-        auto const* sl = next(s, count);
-        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
-               + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(data(), size(), s, pos, count);
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -628,14 +594,8 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_first_not_of(
         CharType const* s, size_type pos = 0) const -> size_type
     {
-        TETL_ASSERT(pos < size());
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = s;
-        auto const* sl = next(s, traits_type::length(s));
-        return detail::find_first_not_of<CharType, size_type>(f, l, sf, sl)
-               + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(data(), size(), s, pos, traits_type::length(s));
     }
 
     /// \brief Finds the last character equal to one of characters in the given
