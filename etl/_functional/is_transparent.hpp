@@ -9,9 +9,7 @@
 #include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
-namespace etl {
-
-namespace detail {
+namespace etl::detail {
 template <typename T, typename = void>
 struct is_transparent : etl::false_type {
 };
@@ -29,8 +27,6 @@ struct is_transparent<T,
 template <typename T>
 inline constexpr auto is_transparent_v = is_transparent<T>::value;
 
-} // namespace detail
-
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_FUNCTIONAL_IS_TRANSPARENT_HPP

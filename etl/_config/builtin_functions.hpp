@@ -184,8 +184,7 @@
 
 // clang-format on
 
-namespace etl {
-namespace detail {
+namespace etl::detail {
 template <typename T>
 constexpr auto builtin_copysign_fallback(T x, T y) noexcept -> T
 {
@@ -205,7 +204,6 @@ auto builtin_addressof_fallback(T& arg) noexcept -> T*
     return reinterpret_cast<T*>(
         &const_cast<char&>(reinterpret_cast<const volatile char&>(arg)));
 }
-} // namespace detail
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_CONFIG_BUILTIN_FUNCTIONS_HPP

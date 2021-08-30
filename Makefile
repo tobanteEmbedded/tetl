@@ -9,8 +9,8 @@ else
 endif
 COVERAGE_DIR=$(BUILD_DIR_BASE)-coverage
 
-CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-12
-CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-12
+CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-13
+CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-13
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
 CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
 
@@ -85,6 +85,6 @@ stats:
 
 .PHONY: format
 format:
-	find etl -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
-	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
-	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-12 -i
+	find etl -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-13 -i
+	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-13 -i
+	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format-13 -i

@@ -8,8 +8,7 @@
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
 
-namespace etl {
-namespace detail {
+namespace etl::detail {
 template <typename FuncT, typename PolicyT>
 struct scope_guard {
 public:
@@ -51,8 +50,6 @@ struct scope_exit_impl {
     explicit operator bool() const noexcept { return should_execute; }
     bool should_execute = true;
 };
-} // namespace detail
-
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_SCOPE_SCOPE_GUARD_HPP
