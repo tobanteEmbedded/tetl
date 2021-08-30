@@ -9,8 +9,10 @@
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
 
+#include "etl/_cmath/ceil.hpp"
 #include "etl/_cmath/copysign.hpp"
 #include "etl/_cmath/exp.hpp"
+#include "etl/_cmath/floor.hpp"
 #include "etl/_cmath/isfinite.hpp"
 #include "etl/_cmath/isinf.hpp"
 #include "etl/_cmath/isnan.hpp"
