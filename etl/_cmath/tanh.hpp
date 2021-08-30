@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 [[nodiscard]] constexpr auto tanh(float arg) noexcept -> float
 {
-    return gcem::tanh(arg);
+    return etl::detail::gcem::tanh(arg);
 }
 
 /// \brief Computes the hyperbolic tangent of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 [[nodiscard]] constexpr auto tanhf(float arg) noexcept -> float
 {
-    return gcem::tanh(arg);
+    return etl::detail::gcem::tanh(arg);
 }
 
 /// \brief Computes the hyperbolic tangent of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 [[nodiscard]] constexpr auto tanh(double arg) noexcept -> double
 {
-    return gcem::tanh(arg);
+    return etl::detail::gcem::tanh(arg);
 }
 
 /// \brief Computes the hyperbolic tangent of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 [[nodiscard]] constexpr auto tanh(long double arg) noexcept -> long double
 {
-    return gcem::tanh(arg);
+    return etl::detail::gcem::tanh(arg);
 }
 
 /// \brief Computes the hyperbolic tangent of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 [[nodiscard]] constexpr auto tanhl(long double arg) noexcept -> long double
 {
-    return gcem::tanh(arg);
+    return etl::detail::gcem::tanh(arg);
 }
 
 /// \brief Computes the hyperbolic tangent of arg
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto tanh(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::tanh(static_cast<double>(arg));
+    return etl::detail::gcem::tanh(static_cast<double>(arg));
 }
 
 } // namespace etl

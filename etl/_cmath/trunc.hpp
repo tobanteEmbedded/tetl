@@ -14,35 +14,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/trunc
 [[nodiscard]] constexpr auto trunc(float arg) noexcept -> float
 {
-    return gcem::trunc(arg);
+    return etl::detail::gcem::trunc(arg);
 }
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/trunc
 [[nodiscard]] constexpr auto truncf(float arg) noexcept -> float
 {
-    return gcem::trunc(arg);
+    return etl::detail::gcem::trunc(arg);
 }
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/trunc
 [[nodiscard]] constexpr auto trunc(double arg) noexcept -> double
 {
-    return gcem::trunc(arg);
+    return etl::detail::gcem::trunc(arg);
 }
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/trunc
 [[nodiscard]] constexpr auto trunc(long double arg) noexcept -> long double
 {
-    return gcem::trunc(arg);
+    return etl::detail::gcem::trunc(arg);
 }
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/trunc
 [[nodiscard]] constexpr auto truncl(long double arg) noexcept -> long double
 {
-    return gcem::trunc(arg);
+    return etl::detail::gcem::trunc(arg);
 }
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
@@ -51,7 +51,7 @@ template <typename T>
 [[nodiscard]] constexpr auto trunc(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::trunc(static_cast<double>(arg));
+    return etl::detail::gcem::trunc(static_cast<double>(arg));
 }
 
 } // namespace etl

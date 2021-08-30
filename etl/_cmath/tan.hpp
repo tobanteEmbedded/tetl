@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/tan
 [[nodiscard]] constexpr auto tan(float arg) noexcept -> float
 {
-    return gcem::tan(arg);
+    return etl::detail::gcem::tan(arg);
 }
 
 /// \brief Computes the tangent of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/tan
 [[nodiscard]] constexpr auto tanf(float arg) noexcept -> float
 {
-    return gcem::tan(arg);
+    return etl::detail::gcem::tan(arg);
 }
 
 /// \brief Computes the tangent of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/tan
 [[nodiscard]] constexpr auto tan(double arg) noexcept -> double
 {
-    return gcem::tan(arg);
+    return etl::detail::gcem::tan(arg);
 }
 
 /// \brief Computes the tangent of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/tan
 [[nodiscard]] constexpr auto tan(long double arg) noexcept -> long double
 {
-    return gcem::tan(arg);
+    return etl::detail::gcem::tan(arg);
 }
 
 /// \brief Computes the tangent of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/tan
 [[nodiscard]] constexpr auto tanl(long double arg) noexcept -> long double
 {
-    return gcem::tan(arg);
+    return etl::detail::gcem::tan(arg);
 }
 
 /// \brief Computes the tangent of arg (measured in radians).
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto tan(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::tan(static_cast<double>(arg));
+    return etl::detail::gcem::tan(static_cast<double>(arg));
 }
 
 } // namespace etl

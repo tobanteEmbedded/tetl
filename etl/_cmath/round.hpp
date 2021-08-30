@@ -18,7 +18,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/round
 [[nodiscard]] constexpr auto round(float arg) noexcept -> float
 {
-    return gcem::round(arg);
+    return etl::detail::gcem::round(arg);
 }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -28,7 +28,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/round
 [[nodiscard]] constexpr auto roundf(float arg) noexcept -> float
 {
-    return gcem::round(arg);
+    return etl::detail::gcem::round(arg);
 }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -38,7 +38,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/round
 [[nodiscard]] constexpr auto round(double arg) noexcept -> double
 {
-    return gcem::round(arg);
+    return etl::detail::gcem::round(arg);
 }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -48,7 +48,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/round
 [[nodiscard]] constexpr auto round(long double arg) noexcept -> long double
 {
-    return gcem::round(arg);
+    return etl::detail::gcem::round(arg);
 }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -58,7 +58,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/round
 [[nodiscard]] constexpr auto roundl(long double arg) noexcept -> long double
 {
-    return gcem::round(arg);
+    return etl::detail::gcem::round(arg);
 }
 
 /// \brief Computes the nearest integer value to arg (in floating-point format),
@@ -70,7 +70,7 @@ template <typename T>
 [[nodiscard]] constexpr auto round(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::round(static_cast<double>(arg));
+    return etl::detail::gcem::round(static_cast<double>(arg));
 }
 
 } // namespace etl

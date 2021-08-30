@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(float arg) noexcept -> float
 {
-    return gcem::sin(arg);
+    return etl::detail::gcem::sin(arg);
 }
 
 /// \brief Computes the sine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sinf(float arg) noexcept -> float
 {
-    return gcem::sin(arg);
+    return etl::detail::gcem::sin(arg);
 }
 
 /// \brief Computes the sine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(double arg) noexcept -> double
 {
-    return gcem::sin(arg);
+    return etl::detail::gcem::sin(arg);
 }
 
 /// \brief Computes the sine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sin(long double arg) noexcept -> long double
 {
-    return gcem::sin(arg);
+    return etl::detail::gcem::sin(arg);
 }
 
 /// \brief Computes the sine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
 [[nodiscard]] constexpr auto sinl(long double arg) noexcept -> long double
 {
-    return gcem::sin(arg);
+    return etl::detail::gcem::sin(arg);
 }
 
 /// \brief Computes the sine of arg (measured in radians).
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto sin(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::sin(static_cast<double>(arg));
+    return etl::detail::gcem::sin(static_cast<double>(arg));
 }
 
 } // namespace etl

@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/atan
 [[nodiscard]] constexpr auto atan(float arg) noexcept -> float
 {
-    return gcem::atan(arg);
+    return etl::detail::gcem::atan(arg);
 }
 
 /// \brief Computes the principal value of the arc tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atan
 [[nodiscard]] constexpr auto atanf(float arg) noexcept -> float
 {
-    return gcem::atan(arg);
+    return etl::detail::gcem::atan(arg);
 }
 
 /// \brief Computes the principal value of the arc tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atan
 [[nodiscard]] constexpr auto atan(double arg) noexcept -> double
 {
-    return gcem::atan(arg);
+    return etl::detail::gcem::atan(arg);
 }
 
 /// \brief Computes the principal value of the arc tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atan
 [[nodiscard]] constexpr auto atan(long double arg) noexcept -> long double
 {
-    return gcem::atan(arg);
+    return etl::detail::gcem::atan(arg);
 }
 
 /// \brief Computes the principal value of the arc tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atan
 [[nodiscard]] constexpr auto atanl(long double arg) noexcept -> long double
 {
-    return gcem::atan(arg);
+    return etl::detail::gcem::atan(arg);
 }
 
 /// \brief Computes the principal value of the arc tangent of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto atan(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::atan(static_cast<double>(arg));
+    return etl::detail::gcem::atan(static_cast<double>(arg));
 }
 
 } // namespace etl

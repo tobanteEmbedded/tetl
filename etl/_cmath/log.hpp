@@ -16,7 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 [[nodiscard]] constexpr auto log(float v) noexcept -> float
 {
-    return gcem::log(v);
+    return etl::detail::gcem::log(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of arg.
@@ -24,7 +24,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 [[nodiscard]] constexpr auto logf(float v) noexcept -> float
 {
-    return gcem::log(v);
+    return etl::detail::gcem::log(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of arg.
@@ -32,7 +32,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 [[nodiscard]] constexpr auto log(double v) noexcept -> double
 {
-    return gcem::log(v);
+    return etl::detail::gcem::log(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of arg.
@@ -40,7 +40,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 [[nodiscard]] constexpr auto log(long double v) noexcept -> long double
 {
-    return gcem::log(v);
+    return etl::detail::gcem::log(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of arg.
@@ -48,7 +48,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 [[nodiscard]] constexpr auto logl(long double v) noexcept -> long double
 {
-    return gcem::log(v);
+    return etl::detail::gcem::log(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of arg.
@@ -58,7 +58,7 @@ template <typename T>
 [[nodiscard]] constexpr auto log(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::log(static_cast<double>(arg));
+    return etl::detail::gcem::log(static_cast<double>(arg));
 }
 
 } // namespace etl

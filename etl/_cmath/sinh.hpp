@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(float arg) noexcept -> float
 {
-    return gcem::sinh(arg);
+    return etl::detail::gcem::sinh(arg);
 }
 
 /// \brief Computes the hyperbolic sine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinhf(float arg) noexcept -> float
 {
-    return gcem::sinh(arg);
+    return etl::detail::gcem::sinh(arg);
 }
 
 /// \brief Computes the hyperbolic sine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(double arg) noexcept -> double
 {
-    return gcem::sinh(arg);
+    return etl::detail::gcem::sinh(arg);
 }
 
 /// \brief Computes the hyperbolic sine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinh(long double arg) noexcept -> long double
 {
-    return gcem::sinh(arg);
+    return etl::detail::gcem::sinh(arg);
 }
 
 /// \brief Computes the hyperbolic sine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/sinh
 [[nodiscard]] constexpr auto sinhl(long double arg) noexcept -> long double
 {
-    return gcem::sinh(arg);
+    return etl::detail::gcem::sinh(arg);
 }
 
 /// \brief Computes the hyperbolic sine of arg
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto sinh(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::sinh(static_cast<double>(arg));
+    return etl::detail::gcem::sinh(static_cast<double>(arg));
 }
 
 } // namespace etl

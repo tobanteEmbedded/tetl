@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 [[nodiscard]] constexpr auto cosh(float arg) noexcept -> float
 {
-    return gcem::cosh(arg);
+    return etl::detail::gcem::cosh(arg);
 }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 [[nodiscard]] constexpr auto coshf(float arg) noexcept -> float
 {
-    return gcem::cosh(arg);
+    return etl::detail::gcem::cosh(arg);
 }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 [[nodiscard]] constexpr auto cosh(double arg) noexcept -> double
 {
-    return gcem::cosh(arg);
+    return etl::detail::gcem::cosh(arg);
 }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 [[nodiscard]] constexpr auto cosh(long double arg) noexcept -> long double
 {
-    return gcem::cosh(arg);
+    return etl::detail::gcem::cosh(arg);
 }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 [[nodiscard]] constexpr auto coshl(long double arg) noexcept -> long double
 {
-    return gcem::cosh(arg);
+    return etl::detail::gcem::cosh(arg);
 }
 
 /// \brief Computes the hyperbolic cosine of arg
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto cosh(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::cosh(static_cast<double>(arg));
+    return etl::detail::gcem::cosh(static_cast<double>(arg));
 }
 
 } // namespace etl

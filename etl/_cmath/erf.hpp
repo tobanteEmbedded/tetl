@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erf(float arg) noexcept -> float
 {
-    return gcem::erf(arg);
+    return etl::detail::gcem::erf(arg);
 }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erff(float arg) noexcept -> float
 {
-    return gcem::erf(arg);
+    return etl::detail::gcem::erf(arg);
 }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erf(double arg) noexcept -> double
 {
-    return gcem::erf(arg);
+    return etl::detail::gcem::erf(arg);
 }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double
 {
-    return gcem::erf(arg);
+    return etl::detail::gcem::erf(arg);
 }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 [[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double
 {
-    return gcem::erf(arg);
+    return etl::detail::gcem::erf(arg);
 }
 
 /// \brief Computes the error function of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto erf(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::erf(static_cast<double>(arg));
+    return etl::detail::gcem::erf(static_cast<double>(arg));
 }
 
 } // namespace etl

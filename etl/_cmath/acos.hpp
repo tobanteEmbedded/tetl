@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acos(float arg) noexcept -> float
 {
-    return gcem::acos(arg);
+    return etl::detail::gcem::acos(arg);
 }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acosf(float arg) noexcept -> float
 {
-    return gcem::acos(arg);
+    return etl::detail::gcem::acos(arg);
 }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acos(double arg) noexcept -> double
 {
-    return gcem::acos(arg);
+    return etl::detail::gcem::acos(arg);
 }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double
 {
-    return gcem::acos(arg);
+    return etl::detail::gcem::acos(arg);
 }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 [[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double
 {
-    return gcem::acos(arg);
+    return etl::detail::gcem::acos(arg);
 }
 
 /// \brief Computes the principal value of the arc cosine of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto acos(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::acos(static_cast<double>(arg));
+    return etl::detail::gcem::acos(static_cast<double>(arg));
 }
 
 } // namespace etl

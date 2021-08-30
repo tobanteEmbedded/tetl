@@ -17,7 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
 [[nodiscard]] constexpr auto log1p(float v) noexcept -> float
 {
-    return gcem::log1p(v);
+    return etl::detail::gcem::log1p(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of 1+arg. This function is
@@ -26,7 +26,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
 [[nodiscard]] constexpr auto log1pf(float v) noexcept -> float
 {
-    return gcem::log1p(v);
+    return etl::detail::gcem::log1p(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of 1+arg. This function is
@@ -35,7 +35,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
 [[nodiscard]] constexpr auto log1p(double v) noexcept -> double
 {
-    return gcem::log1p(v);
+    return etl::detail::gcem::log1p(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of 1+arg. This function is
@@ -44,7 +44,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
 [[nodiscard]] constexpr auto log1p(long double v) noexcept -> long double
 {
-    return gcem::log1p(v);
+    return etl::detail::gcem::log1p(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of 1+arg. This function is
@@ -53,7 +53,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
 [[nodiscard]] constexpr auto log1pl(long double v) noexcept -> long double
 {
-    return gcem::log1p(v);
+    return etl::detail::gcem::log1p(v);
 }
 
 /// \brief Computes the natural (base e) logarithm of 1+arg. This function is
@@ -64,7 +64,7 @@ template <typename T>
 [[nodiscard]] constexpr auto log1p(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::log1p(static_cast<double>(arg));
+    return etl::detail::gcem::log1p(static_cast<double>(arg));
 }
 
 } // namespace etl

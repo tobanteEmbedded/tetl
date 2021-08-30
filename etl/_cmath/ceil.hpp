@@ -16,35 +16,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/ceil
 [[nodiscard]] constexpr auto ceil(float arg) noexcept -> float
 {
-    return gcem::ceil(arg);
+    return etl::detail::gcem::ceil(arg);
 }
 
 /// \brief Computes the smallest integer value not less than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/ceil
 [[nodiscard]] constexpr auto ceilf(float arg) noexcept -> float
 {
-    return gcem::ceil(arg);
+    return etl::detail::gcem::ceil(arg);
 }
 
 /// \brief Computes the smallest integer value not less than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/ceil
 [[nodiscard]] constexpr auto ceil(double arg) noexcept -> double
 {
-    return gcem::ceil(arg);
+    return etl::detail::gcem::ceil(arg);
 }
 
 /// \brief Computes the smallest integer value not less than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/ceil
 [[nodiscard]] constexpr auto ceil(long double arg) noexcept -> long double
 {
-    return gcem::ceil(arg);
+    return etl::detail::gcem::ceil(arg);
 }
 
 /// \brief Computes the smallest integer value not less than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/ceil
 [[nodiscard]] constexpr auto ceill(long double arg) noexcept -> long double
 {
-    return gcem::ceil(arg);
+    return etl::detail::gcem::ceil(arg);
 }
 
 /// \brief Computes the smallest integer value not less than arg.
@@ -53,7 +53,7 @@ template <typename T>
 [[nodiscard]] constexpr auto ceil(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::ceil(static_cast<double>(arg));
+    return etl::detail::gcem::ceil(static_cast<double>(arg));
 }
 
 } // namespace etl

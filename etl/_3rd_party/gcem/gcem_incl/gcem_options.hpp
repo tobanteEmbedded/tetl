@@ -44,7 +44,7 @@
 //
 // types
 
-namespace gcem {
+namespace etl::detail::gcem {
 using uint_t   = unsigned int;
 using ullint_t = unsigned long long int;
 
@@ -61,7 +61,7 @@ using common_t = etl::common_type_t<T...>;
 
 template <typename... T>
 using common_return_t = return_t<common_t<T...>>;
-} // namespace gcem
+} // namespace etl::detail::gcem
 
 //
 // constants

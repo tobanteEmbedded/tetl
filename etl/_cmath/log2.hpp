@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/log2
 [[nodiscard]] constexpr auto log2(float v) noexcept -> float
 {
-    return gcem::log2(v);
+    return etl::detail::gcem::log2(v);
 }
 
 /// \brief Computes the binary (base-2) logarithm of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/log2
 [[nodiscard]] constexpr auto log2f(float v) noexcept -> float
 {
-    return gcem::log2(v);
+    return etl::detail::gcem::log2(v);
 }
 
 /// \brief Computes the binary (base-2) logarithm of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/log2
 [[nodiscard]] constexpr auto log2(double v) noexcept -> double
 {
-    return gcem::log2(v);
+    return etl::detail::gcem::log2(v);
 }
 
 /// \brief Computes the binary (base-2) logarithm of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/log2
 [[nodiscard]] constexpr auto log2(long double v) noexcept -> long double
 {
-    return gcem::log2(v);
+    return etl::detail::gcem::log2(v);
 }
 
 /// \brief Computes the binary (base-2) logarithm of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/log2
 [[nodiscard]] constexpr auto log2l(long double v) noexcept -> long double
 {
-    return gcem::log2(v);
+    return etl::detail::gcem::log2(v);
 }
 
 /// \brief Computes the binary (base-2) logarithm of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto log2(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::log2(static_cast<double>(arg));
+    return etl::detail::gcem::log2(static_cast<double>(arg));
 }
 
 } // namespace etl

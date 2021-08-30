@@ -25,7 +25,7 @@
 
 // clang-format off
 
-namespace gcem {
+namespace etl::detail::gcem {
     #include "gcem_incl/quadrature/gauss_legendre_50.hpp"
 
     #include "gcem_incl/is_inf.hpp"
@@ -98,7 +98,7 @@ namespace gcem {
     #include "gcem_incl/incomplete_gamma.hpp"
     #include "gcem_incl/incomplete_gamma_inv.hpp"
 
-} // namespace gcem
+} // namespace etl::detail::gcem
 
 // clang-format on
 

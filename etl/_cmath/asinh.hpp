@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinh(float arg) noexcept -> float
 {
-    return gcem::asinh(arg);
+    return etl::detail::gcem::asinh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float
 {
-    return gcem::asinh(arg);
+    return etl::detail::gcem::asinh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinh(double arg) noexcept -> double
 {
-    return gcem::asinh(arg);
+    return etl::detail::gcem::asinh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double
 {
-    return gcem::asinh(arg);
+    return etl::detail::gcem::asinh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 [[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double
 {
-    return gcem::asinh(arg);
+    return etl::detail::gcem::asinh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto asinh(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::asinh(static_cast<double>(arg));
+    return etl::detail::gcem::asinh(static_cast<double>(arg));
 }
 
 } // namespace etl

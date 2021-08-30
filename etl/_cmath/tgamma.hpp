@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 [[nodiscard]] constexpr auto tgamma(float arg) noexcept -> float
 {
-    return gcem::tgamma(arg);
+    return etl::detail::gcem::tgamma(arg);
 }
 
 /// \brief Computes the gamma function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 [[nodiscard]] constexpr auto tgammaf(float arg) noexcept -> float
 {
-    return gcem::tgamma(arg);
+    return etl::detail::gcem::tgamma(arg);
 }
 
 /// \brief Computes the gamma function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 [[nodiscard]] constexpr auto tgamma(double arg) noexcept -> double
 {
-    return gcem::tgamma(arg);
+    return etl::detail::gcem::tgamma(arg);
 }
 
 /// \brief Computes the gamma function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 [[nodiscard]] constexpr auto tgamma(long double arg) noexcept -> long double
 {
-    return gcem::tgamma(arg);
+    return etl::detail::gcem::tgamma(arg);
 }
 
 /// \brief Computes the gamma function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 [[nodiscard]] constexpr auto tgammal(long double arg) noexcept -> long double
 {
-    return gcem::tgamma(arg);
+    return etl::detail::gcem::tgamma(arg);
 }
 
 /// \brief Computes the gamma function of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto tgamma(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::tgamma(static_cast<double>(arg));
+    return etl::detail::gcem::tgamma(static_cast<double>(arg));
 }
 
 } // namespace etl

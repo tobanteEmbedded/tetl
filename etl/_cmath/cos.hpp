@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/cos
 [[nodiscard]] constexpr auto cos(float arg) noexcept -> float
 {
-    return gcem::cos(arg);
+    return etl::detail::gcem::cos(arg);
 }
 
 /// \brief Computes the cosine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/cos
 [[nodiscard]] constexpr auto cosf(float arg) noexcept -> float
 {
-    return gcem::cos(arg);
+    return etl::detail::gcem::cos(arg);
 }
 
 /// \brief Computes the cosine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/cos
 [[nodiscard]] constexpr auto cos(double arg) noexcept -> double
 {
-    return gcem::cos(arg);
+    return etl::detail::gcem::cos(arg);
 }
 
 /// \brief Computes the cosine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/cos
 [[nodiscard]] constexpr auto cos(long double arg) noexcept -> long double
 {
-    return gcem::cos(arg);
+    return etl::detail::gcem::cos(arg);
 }
 
 /// \brief Computes the cosine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/cos
 [[nodiscard]] constexpr auto cosl(long double arg) noexcept -> long double
 {
-    return gcem::cos(arg);
+    return etl::detail::gcem::cos(arg);
 }
 
 /// \brief Computes the cosine of arg (measured in radians).
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto cos(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::cos(static_cast<double>(arg));
+    return etl::detail::gcem::cos(static_cast<double>(arg));
 }
 
 } // namespace etl

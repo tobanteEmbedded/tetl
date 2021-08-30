@@ -15,35 +15,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 [[nodiscard]] constexpr auto atanh(float arg) noexcept -> float
 {
-    return gcem::atanh(arg);
+    return etl::detail::gcem::atanh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 [[nodiscard]] constexpr auto atanhf(float arg) noexcept -> float
 {
-    return gcem::atanh(arg);
+    return etl::detail::gcem::atanh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 [[nodiscard]] constexpr auto atanh(double arg) noexcept -> double
 {
-    return gcem::atanh(arg);
+    return etl::detail::gcem::atanh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 [[nodiscard]] constexpr auto atanh(long double arg) noexcept -> long double
 {
-    return gcem::atanh(arg);
+    return etl::detail::gcem::atanh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 [[nodiscard]] constexpr auto atanhl(long double arg) noexcept -> long double
 {
-    return gcem::atanh(arg);
+    return etl::detail::gcem::atanh(arg);
 }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
@@ -52,7 +52,7 @@ template <typename T>
 [[nodiscard]] constexpr auto atanh(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::atanh(static_cast<double>(arg));
+    return etl::detail::gcem::atanh(static_cast<double>(arg));
 }
 
 } // namespace etl

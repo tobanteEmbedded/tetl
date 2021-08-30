@@ -17,7 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 [[nodiscard]] constexpr auto lgamma(float arg) noexcept -> float
 {
-    return gcem::lgamma(arg);
+    return etl::detail::gcem::lgamma(arg);
 }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
@@ -26,7 +26,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 [[nodiscard]] constexpr auto lgammaf(float arg) noexcept -> float
 {
-    return gcem::lgamma(arg);
+    return etl::detail::gcem::lgamma(arg);
 }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
@@ -35,7 +35,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 [[nodiscard]] constexpr auto lgamma(double arg) noexcept -> double
 {
-    return gcem::lgamma(arg);
+    return etl::detail::gcem::lgamma(arg);
 }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
@@ -44,7 +44,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 [[nodiscard]] constexpr auto lgamma(long double arg) noexcept -> long double
 {
-    return gcem::lgamma(arg);
+    return etl::detail::gcem::lgamma(arg);
 }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
@@ -53,7 +53,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 [[nodiscard]] constexpr auto lgammal(long double arg) noexcept -> long double
 {
-    return gcem::lgamma(arg);
+    return etl::detail::gcem::lgamma(arg);
 }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
@@ -64,7 +64,7 @@ template <typename T>
 [[nodiscard]] constexpr auto lgamma(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::lgamma(static_cast<double>(arg));
+    return etl::detail::gcem::lgamma(static_cast<double>(arg));
 }
 
 } // namespace etl

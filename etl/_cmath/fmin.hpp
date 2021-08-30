@@ -16,7 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/fmin
 [[nodiscard]] constexpr auto fmin(float x, float y) noexcept -> float
 {
-    return gcem::min(x, y);
+    return etl::detail::gcem::min(x, y);
 }
 
 /// \brief Returns the smaller of two floating point arguments, treating NaNs as
@@ -26,7 +26,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/fmin
 [[nodiscard]] constexpr auto fminf(float x, float y) noexcept -> float
 {
-    return gcem::min(x, y);
+    return etl::detail::gcem::min(x, y);
 }
 
 /// \brief Returns the smaller of two floating point arguments, treating NaNs as
@@ -36,7 +36,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/fmin
 [[nodiscard]] constexpr auto fmin(double x, double y) noexcept -> double
 {
-    return gcem::min(x, y);
+    return etl::detail::gcem::min(x, y);
 }
 
 /// \brief Returns the smaller of two floating point arguments, treating NaNs as
@@ -47,7 +47,7 @@ namespace etl {
 [[nodiscard]] constexpr auto fmin(long double x, long double y) noexcept
     -> long double
 {
-    return gcem::min(x, y);
+    return etl::detail::gcem::min(x, y);
 }
 
 /// \brief Returns the smaller of two floating point arguments, treating NaNs as
@@ -58,7 +58,7 @@ namespace etl {
 [[nodiscard]] constexpr auto fminl(long double x, long double y) noexcept
     -> long double
 {
-    return gcem::min(x, y);
+    return etl::detail::gcem::min(x, y);
 }
 
 } // namespace etl

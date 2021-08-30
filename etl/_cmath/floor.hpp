@@ -16,35 +16,35 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 [[nodiscard]] constexpr auto floor(float arg) noexcept -> float
 {
-    return gcem::floor(arg);
+    return etl::detail::gcem::floor(arg);
 }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 [[nodiscard]] constexpr auto floorf(float arg) noexcept -> float
 {
-    return gcem::floor(arg);
+    return etl::detail::gcem::floor(arg);
 }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 [[nodiscard]] constexpr auto floor(double arg) noexcept -> double
 {
-    return gcem::floor(arg);
+    return etl::detail::gcem::floor(arg);
 }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 [[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double
 {
-    return gcem::floor(arg);
+    return etl::detail::gcem::floor(arg);
 }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 [[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double
 {
-    return gcem::floor(arg);
+    return etl::detail::gcem::floor(arg);
 }
 
 /// \brief Computes the largest integer value not greater than arg.
@@ -53,7 +53,7 @@ template <typename T>
 [[nodiscard]] constexpr auto floor(T arg) noexcept
     -> etl::enable_if<etl::is_integral_v<T>, double>
 {
-    return gcem::floor(static_cast<double>(arg));
+    return etl::detail::gcem::floor(static_cast<double>(arg));
 }
 
 } // namespace etl
