@@ -3,6 +3,8 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 #include "etl/cmath.hpp"
 
+#include "etl/warning.hpp"
+
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE("cmath: isinf", "[cmath]", float, double, long double)
@@ -75,4 +77,11 @@ TEMPLATE_TEST_CASE("cmath: abs", "[cmath]", int, long, long long)
     CHECK(etl::abs(T(-1)) == T(1));
     CHECK(etl::abs(T(-2)) == T(2));
     CHECK(etl::abs(T(-3)) == T(3));
+}
+
+TEMPLATE_TEST_CASE("cmath: abs", "[cmath]", float, double)
+{
+    using T = TestType;
+    etl::ignore_unused(etl::exp(T { 1 }));
+    SUCCEED();
 }

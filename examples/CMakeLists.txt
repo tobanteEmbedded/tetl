@@ -2,10 +2,12 @@ project(examples)
 
 foreach(_target
   "algorithm"
+  "all_headers"
   "array"
   "bitset"
   "cassert"
   "chrono"
+  "cmath"
   "map"
   "memory"
   "numeric"

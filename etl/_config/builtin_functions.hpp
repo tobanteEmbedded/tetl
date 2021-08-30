@@ -32,7 +32,7 @@
 // UNREACHABLE
 #if __has_builtin(__builtin_unreachable)
     #define TETL_BUILTIN_UNREACHABLE __builtin_unreachable()
-#elif defined(_MSC_VER)
+#elif defined(TETL_MSVC)
     #define TETL_BUILTIN_UNREACHABLE __assume(false)
 #else
     // https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
@@ -48,13 +48,13 @@
 #endif
 
 // NAN
-#if __has_builtin(__builtin_nanf) or defined(_MSC_VER)
+#if __has_builtin(__builtin_nanf) or defined(TETL_MSVC)
     #define TETL_BUILTIN_NANF (__builtin_nanf(""))
 #else
     #define TETL_BUILTIN_NANF (0.0F / 0.0F)
 #endif
 
-#if __has_builtin(__builtin_nan) or defined(_MSC_VER)
+#if __has_builtin(__builtin_nan) or defined(TETL_MSVC)
     #define TETL_BUILTIN_NAN (__builtin_nan(""))
 #else
     #define TETL_BUILTIN_NAN (0.0 / 0.0)
@@ -62,20 +62,20 @@
 
 #if __has_builtin(__builtin_nanl)
     #define TETL_BUILTIN_NANL (__builtin_nanl(""))
-#elif defined(_MSC_VER)
+#elif defined(TETL_MSVC)
     #define TETL_BUILTIN_NANL (__builtin_nan(""))
 #else
     #define TETL_BUILTIN_NANL (0.0L / 0.0L)
 #endif
 
 // SIGNALING NAN
-#if __has_builtin(__builtin_nansf) or defined(_MSC_VER)
+#if __has_builtin(__builtin_nansf) or defined(TETL_MSVC)
     #define TETL_BUILTIN_NANSF (__builtin_nansf(""))
 #else
     #define TETL_BUILTIN_NANSF (0.0F / 0.0F)
 #endif
 
-#if __has_builtin(__builtin_nans) or defined(_MSC_VER)
+#if __has_builtin(__builtin_nans) or defined(TETL_MSVC)
     #define TETL_BUILTIN_NANS (__builtin_nans(""))
 #else
     #define TETL_BUILTIN_NANS (0.0 / 0.0)
@@ -83,28 +83,29 @@
 
 #if __has_builtin(__builtin_nansl)
     #define TETL_BUILTIN_NANSL (__builtin_nansl(""))
-#elif defined(_MSC_VER)
+#elif defined(TETL_MSVC)
     #define TETL_BUILTIN_NANSL (__builtin_nans(""))
 #else
     #define TETL_BUILTIN_NANSL (0.0L / 0.0L)
 #endif
 
 // HUGE VAL
-#if __has_builtin(__builtin_huge_valf) or defined(_MSC_VER)
+#if __has_builtin(__builtin_huge_valf) or defined(TETL_MSVC)                   \
+    or defined(TETL_GCC)
     #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
 #else
     #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)
 #endif
 
-#if __has_builtin(__builtin_huge_val) or defined(_MSC_VER)
+#if __has_builtin(__builtin_huge_val) or defined(TETL_MSVC) or defined(TETL_GCC)
     #define TETL_BUILTIN_HUGE_VAL (__builtin_huge_val())
 #else
     #define TETL_BUILTIN_HUGE_VAL (1.0 / 0.0)
 #endif
 
-#if __has_builtin(__builtin_huge_vall)
+#if __has_builtin(__builtin_huge_vall) or defined(TETL_GCC)
     #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_vall())
-#elif defined(_MSC_VER)
+#elif defined(TETL_MSVC)
     #define TETL_BUILTIN_HUGE_VALL (__builtin_huge_val())
 #else
     #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
