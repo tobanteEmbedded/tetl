@@ -9,7 +9,7 @@
 // If you enabled the custom handler in your projects, please define the macro
 // below in your build system and not in your source code to avoid mixing
 // configurations.
-#define TETL_CUSTOM_ASSERT_HANDLER 1
+#define TETL_ENABLE_CUSTOM_ASSERT_HANDLER 1
 
 #undef NDEBUG              // force assertions in release build
 #include "etl/cassert.hpp" // for TETL_ASSERT

@@ -3,7 +3,6 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
 #include "etl/cassert.hpp"
-#include "etl/exception.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,5 +14,4 @@ auto tetl_assert_handler(etl::assert_msg const& msg) -> void
     ::exit(1); // NOLINT
 }
 
-auto tetl_exception_handler(etl::exception const& e) -> void { throw e; }
 } // namespace etl

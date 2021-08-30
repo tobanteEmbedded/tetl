@@ -30,12 +30,12 @@ struct assert_msg {
 } // namespace etl
 
 namespace etl {
-#if defined(TETL_CUSTOM_ASSERT_HANDLER)
+#if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
 
 /// \brief This functions needs to be implemented if you enabled the
-/// `TETL_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably the
-/// best idea, because you can not recover from any of the exceptional cases in
-/// the library.
+/// `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably
+/// the best idea, because you can not recover from any of the exceptional cases
+/// in the library.
 [[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void;
 #else
 
@@ -53,7 +53,7 @@ namespace etl {
 namespace detail {
 [[noreturn]] inline auto tetl_call_assert_handler(assert_msg const& msg) -> void
 {
-#if defined(TETL_CUSTOM_ASSERT_HANDLER)
+#if defined(TETL_ENABLE_CUSTOM_ASSERT_HANDLER)
     etl::tetl_assert_handler(msg);
 #else
     etl::tetl_default_assert_handler(msg);
