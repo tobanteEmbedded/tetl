@@ -10,6 +10,7 @@
 #include "etl/_cstddef/nullptr_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_cstdint/intmax_t.hpp"
+#include "etl/_cstdlib/atof.hpp"
 #include "etl/_cstdlib/atoi.hpp"
 #include "etl/_cstdlib/atol.hpp"
 #include "etl/_cstdlib/atoll.hpp"
