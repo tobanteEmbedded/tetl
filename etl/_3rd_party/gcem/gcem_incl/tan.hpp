@@ -77,15 +77,17 @@ constexpr auto tan_cf_main(const T x) noexcept -> T
 
 template <typename T>
 constexpr auto tan_begin(const T x, const int count = 0) noexcept -> T
-{                            // tan(x) = tan(x + pi)
-    return (x > T(GCEM_PI) ? // if
+{                                     // tan(x) = tan(x + pi)
+    return (x > T(etl::numbers::pi) ? // if
                 count > 1 ? etl::numeric_limits<T>::quiet_NaN()
                           : // protect against undefined behavior
-                    tan_begin(
-                        x - T(GCEM_PI) * internal::floor_check(x / T(GCEM_PI)),
+                    tan_begin(x
+                                  - T(etl::numbers::pi)
+                                        * internal::floor_check(
+                                            x / T(etl::numbers::pi)),
                         count + 1)
-                           :
-                           // else
+                                    :
+                                    // else
                 tan_cf_main(x));
 }
 

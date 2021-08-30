@@ -20,14 +20,12 @@
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
+#include "etl/_numbers/constants.hpp"
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_signed.hpp"
-
-//
-// version
 
 #ifndef GCEM_VERSION_MAJOR
     #define GCEM_VERSION_MAJOR 1
@@ -69,10 +67,6 @@ using common_return_t = return_t<common_t<T...>>;
 
 #ifndef GCEM_LOG_10
     #define GCEM_LOG_10 2.3025850929940456840179914546843642076011L
-#endif
-
-#ifndef GCEM_PI
-    #define GCEM_PI 3.1415926535897932384626433832795028841972L
 #endif
 
 #ifndef GCEM_LOG_PI

@@ -48,26 +48,19 @@ constexpr auto exp_cf(const T x) noexcept -> T
 template <typename T>
 constexpr auto exp_split(const T x) noexcept -> T
 {
-    return static_cast<T>(
-        pow_integral(GCEM_E, find_whole(x)) * exp_cf(find_fraction(x)));
+    return static_cast<T>(pow_integral(etl::numbers::e, find_whole(x))
+                          * exp_cf(find_fraction(x)));
 }
 
 template <typename T>
 constexpr auto exp_check(const T x) noexcept -> T
 {
-    return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                      //
-                is_neginf(x) ? T(0)
-                             :
-                             //
-                etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
-                                                           :
-                                                           //
-                is_posinf(x) ? etl::numeric_limits<T>::infinity()
-                             :
-                             //
-                abs(x) < T(2) ? exp_cf(x)
-                              : exp_split(x));
+    return static_cast<T>(is_nan(x)      ? etl::numeric_limits<T>::quiet_NaN()
+                          : is_neginf(x) ? T(0)
+                          : etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
+                          : is_posinf(x)  ? etl::numeric_limits<T>::infinity()
+                          : abs(x) < T(2) ? exp_cf(x)
+                                          : exp_split(x));
 }
 
 } // namespace internal

@@ -35,17 +35,17 @@ constexpr auto atan2_compute(const T y, const T x) noexcept -> T
                       //
             etl::numeric_limits<T>::epsilon() > abs(x) ? //
             etl::numeric_limits<T>::epsilon() > abs(y)
-                ? neg_zero(y)   ? neg_zero(x) ? -T(GCEM_PI) : -T(0)
-                    : neg_zero(x) ? T(GCEM_PI)
+                ? neg_zero(y)   ? neg_zero(x) ? -T(etl::numbers::pi) : -T(0)
+                    : neg_zero(x) ? T(etl::numbers::pi)
                                 : T(0)
             : y > T(0) ? T(GCEM_HALF_PI)
                        : -T(GCEM_HALF_PI)
                                                        :
                                                        //
-            x < T(0)
-                ? y < T(0) ? atan(y / x) - T(GCEM_PI) : atan(y / x) + T(GCEM_PI)
-                :
-                //
+            x < T(0) ? y < T(0) ? atan(y / x) - T(etl::numbers::pi)
+                                : atan(y / x) + T(etl::numbers::pi)
+                     :
+                     //
                 atan(y / x));
 }
 

@@ -50,7 +50,7 @@ constexpr auto acos_check(const T x) noexcept -> T
             acos_compute(x)
                      :
                      // else
-            T(GCEM_PI) - acos_compute(-x));
+            T(etl::numbers::pi) - acos_compute(-x));
 }
 
 } // namespace internal
