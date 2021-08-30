@@ -9,30 +9,6 @@
 
 namespace etl::detail {
 
-/// \brief Finds the first character not equal to any of the characters in the
-/// given character sequence.
-template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto find_first_not_of(CharT const* f, CharT const* l,
-    CharT const* const sf, CharT const* const sl) -> SizeT
-{
-    auto const legalChar = [sf, sl](CharT ch) -> bool {
-        auto const* ssf = sf;
-        auto const* ssl = sl;
-        for (; ssf != ssl; ++ssf) {
-            if (etl::char_traits<CharT>::eq(*ssf, ch)) { return true; }
-        }
-        return false;
-    };
-
-    SizeT counter { 0 };
-    for (; f != l; ++f) {
-        if (!legalChar(*f)) { return counter; }
-        ++counter;
-    }
-
-    return static_cast<SizeT>(-1);
-}
-
 template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
 [[nodiscard]] constexpr auto str_find_first_not_of(CharT const* str, SizeT size,
     CharT const* search, SizeT pos, SizeT n) noexcept -> SizeT

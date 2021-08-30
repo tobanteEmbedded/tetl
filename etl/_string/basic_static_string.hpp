@@ -1268,14 +1268,8 @@ public:
         -> size_type
     {
         TETL_ASSERT(pos < size());
-
-        using detail::find_first_not_of;
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = str.begin();
-        auto const* sl = str.end();
-        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(begin(), size(), str.begin(), pos, str.size());
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1284,17 +1278,24 @@ public:
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(
-        value_type c, size_type pos = 0) const noexcept -> size_type
+        value_type ch, size_type pos = 0) const noexcept -> size_type
     {
         TETL_ASSERT(pos < size());
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(begin(), size(), ch, pos);
+    }
 
-        using detail::find_first_not_of;
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = &c;
-        auto const* sl = &c + 1;
-        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+    /// \brief Finds the first character not equal to any of the characters in
+    /// the given character sequence.
+    ///
+    /// \return Position of the first character not equal to any of the
+    /// characters in the given string, or npos if no such character is found.
+    [[nodiscard]] constexpr auto find_first_not_of(
+        value_type const* s, size_type pos) const -> size_type
+    {
+        TETL_ASSERT(pos < size());
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(begin(), size(), s, pos, traits_type::length(s));
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1306,14 +1307,8 @@ public:
         value_type const* s, size_type pos, size_type count) const -> size_type
     {
         TETL_ASSERT(pos < size());
-
-        using detail::find_first_not_of;
-
-        auto const* f  = next(begin(), pos);
-        auto const* l  = end();
-        auto const* sf = s;
-        auto const* sl = next(s, count);
-        return find_first_not_of<value_type, size_type>(f, l, sf, sl) + pos;
+        return detail::str_find_first_not_of<value_type, size_type, traits_type,
+            npos>(begin(), size(), s, pos, count);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
