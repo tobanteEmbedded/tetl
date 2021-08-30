@@ -189,10 +189,10 @@ TEST_CASE("variant: operator=(variant const&)", "[variant]")
     CHECK(etl::holds_alternative<int>(var2));
     CHECK(*etl::get_if<int>(&var2) == 42);
 
-    // var = 42.0f;
+    // var = 42.0F;
     // CHECK(etl::holds_alternative<float>(var));
     // CHECK(etl::get_if<int>(&var) == nullptr);
-    // CHECK(*etl::get_if<float>(&var) == 42.0f);
+    // CHECK(*etl::get_if<float>(&var) == 42.0F);
 }
 
 TEST_CASE("variant: swap", "[variant]")
@@ -265,11 +265,11 @@ TEST_CASE("variant: get_if", "[variant]")
     CHECK(etl::get_if<2>(&v1) == nullptr);
     CHECK(etl::get_if<3>(&v1) == nullptr);
 
-    auto const v2 = etl::variant<etl::monostate, int, float, double> { 42.0f };
+    auto const v2 = etl::variant<etl::monostate, int, float, double> { 42.0F };
     CHECK(etl::get_if<float>(&v2) != nullptr);
-    CHECK(*etl::get_if<float>(&v2) == 42.0f);
+    CHECK(*etl::get_if<float>(&v2) == 42.0F);
     CHECK(etl::get_if<2>(&v2) != nullptr);
-    CHECK(*etl::get_if<2>(&v2) == 42.0f);
+    CHECK(*etl::get_if<2>(&v2) == 42.0F);
 
     CHECK(etl::get_if<etl::monostate>(&v2) == nullptr);
     CHECK(etl::get_if<int>(&v2) == nullptr);
@@ -345,4 +345,17 @@ TEMPLATE_TEST_CASE("variant: variant_alternative", "[variant]", bool,
 
     using t7 = variant<T, float> const volatile;
     STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t7>, T const volatile>);
+}
+
+TEMPLATE_TEST_CASE("variant: visit", "[variant]", etl::uint8_t, etl::int8_t,
+    etl::uint16_t, etl::int16_t, etl::uint32_t, etl::int32_t, etl::uint64_t,
+    etl::int64_t)
+{
+    using T         = TestType;
+    using variant_t = etl::variant<TestType, float>;
+    auto v1         = variant_t { 143.0F };
+    etl::visit([](auto const& val) { REQUIRE(val == 143.0F); }, v1);
+
+    auto v2 = variant_t { T { 42 } };
+    etl::visit([](auto const& val) { REQUIRE(val == T { 42 }); }, v2);
 }

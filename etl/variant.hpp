@@ -13,5 +13,6 @@
 #include "etl/_variant/variant_alternative.hpp"
 #include "etl/_variant/variant_fwd.hpp"
 #include "etl/_variant/variant_size.hpp"
+#include "etl/_variant/visit.hpp"
 
 #endif // TETL_VARIANT_HPP
