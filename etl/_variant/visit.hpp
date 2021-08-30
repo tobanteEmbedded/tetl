@@ -14,7 +14,6 @@
 #include "etl/_type_traits/is_lvalue_reference.hpp"
 #include "etl/_type_traits/is_reference.hpp"
 #include "etl/_type_traits/is_rvalue_reference.hpp"
-#include "etl/_type_traits/remove_const.hpp"
 #include "etl/_type_traits/remove_reference.hpp"
 #include "etl/_type_traits/void_t.hpp"
 #include "etl/_utility/forward.hpp"
@@ -32,18 +31,18 @@ template <typename T>
 using variant_access_t
     = decltype(variant_access(static_cast<etl::decay_t<T>*>(nullptr)));
 
-template <template <typename...> class, typename = void, typename...>
-struct detected : etl::false_type {
+template <template <typename...> typename, typename = void, typename...>
+struct is_detected_impl : etl::false_type {
 };
 
-template <template <typename...> class D, typename... Ts>
-struct detected<D, etl::void_t<D<Ts...>>, Ts...> : etl::true_type {
+template <template <typename...> typename D, typename... Ts>
+struct is_detected_impl<D, etl::void_t<D<Ts...>>, Ts...> : etl::true_type {
 };
 
-template <template <typename...> class D, typename... Ts>
-using is_detected = typename detected<D, void, Ts...>::type;
+template <template <typename...> typename D, typename... Ts>
+using is_detected = typename is_detected_impl<D, void, Ts...>::type;
 
-template <template <typename...> class D, typename... Ts>
+template <template <typename...> typename D, typename... Ts>
 constexpr bool is_detected_v = is_detected<D, Ts...>::value;
 
 template <typename T>
@@ -86,7 +85,7 @@ using as_if_forwarded = etl::conditional_t<!etl::is_reference<TSource> {},
     copy_referenceness_t<T, TSource>>;
 
 template <typename TLike, typename T>
-constexpr decltype(auto) forward_like(T&& x) noexcept
+constexpr auto forward_like(T&& x) noexcept -> decltype(auto)
 {
     static_assert(!(etl::is_rvalue_reference<decltype(x)> {}
                     && etl::is_lvalue_reference<TLike> {}));
@@ -112,11 +111,8 @@ static constexpr auto sum(etl::index_sequence<I...> /*ignore*/) -> etl::size_t
     return (I + ...);
 }
 
-template <typename T>
-using remove_cv_ref_t = etl::remove_const_t<etl::remove_reference_t<T>>;
-
 template <etl::size_t I, typename T>
-decltype(auto) get(T&& t)
+constexpr auto get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
         return etl::get<I>(etl::forward<T>(t));
@@ -127,7 +123,7 @@ decltype(auto) get(T&& t)
 }
 
 template <etl::size_t I, typename T>
-auto get_if(T* t)
+constexpr auto get_if(T* t)
 {
     if constexpr (is_variant_v<T>) {
         return etl::get_if<I>(t);
