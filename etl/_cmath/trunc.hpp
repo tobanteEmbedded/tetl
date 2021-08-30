@@ -6,7 +6,8 @@
 #define TETL_CMATH_TRUNC_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 namespace etl {
 
 /// \brief Computes the nearest integer not greater in magnitude than arg.
