@@ -7,6 +7,8 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_3rd_party/gcem/gcem.hpp"
+
 #include "etl/_cmath/copysign.hpp"
 #include "etl/_cmath/isfinite.hpp"
 #include "etl/_cmath/isinf.hpp"
