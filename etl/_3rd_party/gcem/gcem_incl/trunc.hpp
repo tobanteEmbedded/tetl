@@ -21,53 +21,43 @@
 #ifndef _gcem_trunc_HPP
 #define _gcem_trunc_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-T
-trunc_int(const T x)
-noexcept
+template <typename T>
+constexpr T trunc_int(const T x) noexcept
 {
-    return( T(static_cast<llint_t>(x)) );
+    return (T(static_cast<llint_t>(x)));
 }
 
-template<typename T>
-constexpr
-T
-trunc_check(const T x)
-noexcept
+template <typename T>
+constexpr T trunc_check(const T x) noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // +/- infinite
-            !is_finite(x) ? \
-                x :
-            // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? \
-                x :
-            // else
-                trunc_int(x) );
+    return ( // NaN check
+        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+                  // +/- infinite
+            !is_finite(x) ? x
+                          :
+                          // signed-zero cases
+            GCLIM<T>::epsilon() > abs(x) ? x
+                                         :
+                                         // else
+            trunc_int(x));
 }
 
-}
+} // namespace internal
 
 /**
  * Compile-time trunc function
  *
  * @param x a real-valued input.
- * @return computes the trunc-value of the input, essentially returning the integer part of the input.
+ * @return computes the trunc-value of the input, essentially returning the
+ * integer part of the input.
  */
 
-template<typename T>
-constexpr
-return_t<T>
-trunc(const T x)
-noexcept
+template <typename T>
+constexpr return_t<T> trunc(const T x) noexcept
 {
-    return internal::trunc_check( static_cast<return_t<T>>(x) );
+    return internal::trunc_check(static_cast<return_t<T>>(x));
 }
 
 #endif

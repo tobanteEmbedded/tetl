@@ -21,47 +21,36 @@
 #ifndef _gcem_floor_HPP
 #define _gcem_floor_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-int
-floor_resid(const T x, const T x_whole)
-noexcept
+template <typename T>
+constexpr int floor_resid(const T x, const T x_whole) noexcept
 {
-    return( (x < T(0)) && (x < x_whole) );
+    return ((x < T(0)) && (x < x_whole));
 }
 
-template<typename T>
-constexpr
-T
-floor_int(const T x, const T x_whole)
-noexcept
+template <typename T>
+constexpr T floor_int(const T x, const T x_whole) noexcept
 {
-    return( x_whole - static_cast<T>(floor_resid(x,x_whole)) );
+    return (x_whole - static_cast<T>(floor_resid(x, x_whole)));
 }
 
-template<typename T>
-constexpr
-T
-floor_check(const T x)
-noexcept
+template <typename T>
+constexpr T floor_check(const T x) noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // +/- infinite
-            !is_finite(x) ? \
-                x :
-            // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? \
-                x :
-            // else
-                floor_int(x, T(static_cast<llint_t>(x))) );
+    return ( // NaN check
+        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+                  // +/- infinite
+            !is_finite(x) ? x
+                          :
+                          // signed-zero cases
+            GCLIM<T>::epsilon() > abs(x) ? x
+                                         :
+                                         // else
+            floor_int(x, T(static_cast<llint_t>(x))));
 }
 
-}
+} // namespace internal
 
 /**
  * Compile-time floor function
@@ -70,13 +59,10 @@ noexcept
  * @return computes the floor-value of the input.
  */
 
-template<typename T>
-constexpr
-return_t<T>
-floor(const T x)
-noexcept
+template <typename T>
+constexpr return_t<T> floor(const T x) noexcept
 {
-    return internal::floor_check( static_cast<return_t<T>>(x) );
+    return internal::floor_check(static_cast<return_t<T>>(x));
 }
 
 #endif

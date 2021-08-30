@@ -25,18 +25,14 @@
 #ifndef _gcem_is_odd_HPP
 #define _gcem_is_odd_HPP
 
-namespace internal
-{
+namespace internal {
 
-constexpr
-bool
-is_odd(const llint_t x)
-noexcept
+constexpr bool is_odd(const llint_t x) noexcept
 {
     // return( x % llint_t(2) == llint_t(0) ? false : true );
     return (x & 1U) != 0;
 }
 
-}
+} // namespace internal
 
 #endif

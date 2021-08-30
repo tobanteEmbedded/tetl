@@ -22,16 +22,12 @@
  * extract signbit for signed zeros
  */
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr 
-bool 
-neg_zero(const T x)
-noexcept
+template <typename T>
+constexpr bool neg_zero(const T x) noexcept
 {
-    return( (x == T(0.0)) && (copysign(T(1.0), x) == T(-1.0)) );
+    return ((x == T(0.0)) && (copysign(T(1.0), x) == T(-1.0)));
 }
 
-}
+} // namespace internal

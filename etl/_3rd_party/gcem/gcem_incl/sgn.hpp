@@ -25,21 +25,20 @@
  * Compile-time sign function
  *
  * @param x a real-valued input
- * @return a value \f$ y \f$ such that \f[ y = \begin{cases} 1 \ &\text{ if } x > 0 \\ 0 \ &\text{ if } x = 0 \\ -1 \ &\text{ if } x < 0 \end{cases} \f]
+ * @return a value \f$ y \f$ such that \f[ y = \begin{cases} 1 \ &\text{ if } x
+ * > 0 \\ 0 \ &\text{ if } x = 0 \\ -1 \ &\text{ if } x < 0 \end{cases} \f]
  */
 
-template<typename T>
-constexpr
-int
-sgn(const T x)
-noexcept
+template <typename T>
+constexpr int sgn(const T x) noexcept
 {
-    return( // positive
-            x > T(0) ?  1 :
-            // negative
-            x < T(0) ? -1 :
-            // else
-                0 );
+    return ( // positive
+        x > T(0) ? 1 :
+                 // negative
+            x < T(0) ? -1
+                     :
+                     // else
+            0);
 }
 
 #endif

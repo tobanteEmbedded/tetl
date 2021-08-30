@@ -20,9 +20,9 @@
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/common_type.hpp"
+#include "etl/_type_traits/conditional.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_signed.hpp"
 
@@ -44,25 +44,25 @@
 //
 // types
 
-namespace gcem
-{
-    using uint_t = unsigned int;
-    using ullint_t = unsigned long long int;
+namespace gcem {
+using uint_t   = unsigned int;
+using ullint_t = unsigned long long int;
 
-    using llint_t = long long int;
+using llint_t = long long int;
 
-    template<class T>
-    using GCLIM = etl::numeric_limits<T>;
+template <class T>
+using GCLIM = etl::numeric_limits<T>;
 
-    template<typename T>
-    using return_t = typename etl::conditional<etl::is_integral<T>::value,double,T>::type;
+template <typename T>
+using return_t =
+    typename etl::conditional<etl::is_integral<T>::value, double, T>::type;
 
-    template<typename ...T>
-    using common_t = typename etl::common_type<T...>::type;
+template <typename... T>
+using common_t = typename etl::common_type<T...>::type;
 
-    template<typename ...T>
-    using common_return_t = return_t<common_t<T...>>;
-}
+template <typename... T>
+using common_return_t = return_t<common_t<T...>>;
+} // namespace gcem
 
 //
 // constants
@@ -178,13 +178,13 @@ namespace gcem
         #define GCEM_SIGNBIT(x) _signbit(x)
     #endif
     #ifndef GCEM_COPYSIGN
-        #define GCEM_COPYSIGN(x,y) _copysign(x,y)
+        #define GCEM_COPYSIGN(x, y) _copysign(x, y)
     #endif
 #else
     #ifndef GCEM_SIGNBIT
         #define GCEM_SIGNBIT(x) __builtin_signbit(x)
     #endif
     #ifndef GCEM_COPYSIGN
-        #define GCEM_COPYSIGN(x,y) __builtin_copysign(x,y)
+        #define GCEM_COPYSIGN(x, y) __builtin_copysign(x, y)
     #endif
 #endif

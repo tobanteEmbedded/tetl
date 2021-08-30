@@ -25,42 +25,34 @@
 #ifndef _gcem_asinh_HPP
 #define _gcem_asinh_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-T
-asinh_compute(const T x)
-noexcept
+template <typename T>
+constexpr T asinh_compute(const T x) noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? \
-                T(0) :
-            // else
-                log( x + sqrt(x*x + T(1)) ) );
+    return ( // NaN check
+        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+                  // indistinguishable from zero
+            GCLIM<T>::epsilon() > abs(x) ? T(0)
+                                         :
+                                         // else
+            log(x + sqrt(x * x + T(1))));
 }
 
-}
+} // namespace internal
 
 /**
  * Compile-time inverse hyperbolic sine function
  *
  * @param x a real-valued input.
- * @return the inverse hyperbolic sine function using \f[ \text{asinh}(x) = \ln \left( x + \sqrt{x^2 + 1} \right) \f]
+ * @return the inverse hyperbolic sine function using \f[ \text{asinh}(x) = \ln
+ * \left( x + \sqrt{x^2 + 1} \right) \f]
  */
 
-template<typename T>
-constexpr
-return_t<T>
-asinh(const T x)
-noexcept
+template <typename T>
+constexpr return_t<T> asinh(const T x) noexcept
 {
-    return internal::asinh_compute( static_cast<return_t<T>>(x) );
+    return internal::asinh_compute(static_cast<return_t<T>>(x));
 }
-
 
 #endif

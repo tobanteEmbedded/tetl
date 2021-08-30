@@ -21,38 +21,30 @@
 #ifndef _gcem_round_HPP
 #define _gcem_round_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-T
-round_int(const T x)
-noexcept
+template <typename T>
+constexpr T round_int(const T x) noexcept
 {
     return static_cast<T>(find_whole(x));
 }
 
-template<typename T>
-constexpr
-T
-round_check(const T x)
-noexcept
+template <typename T>
+constexpr T round_check(const T x) noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // +/- infinite
-            !is_finite(x) ? \
-                x :
-            // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? \
-                x :
-            // else
-                sgn(x) * round_int(abs(x)) );
+    return ( // NaN check
+        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+                  // +/- infinite
+            !is_finite(x) ? x
+                          :
+                          // signed-zero cases
+            GCLIM<T>::epsilon() > abs(x) ? x
+                                         :
+                                         // else
+            sgn(x) * round_int(abs(x)));
 }
 
-}
+} // namespace internal
 
 /**
  * Compile-time round function
@@ -61,13 +53,10 @@ noexcept
  * @return computes the rounding value of the input.
  */
 
-template<typename T>
-constexpr
-return_t<T>
-round(const T x)
-noexcept
+template <typename T>
+constexpr return_t<T> round(const T x) noexcept
 {
-    return internal::round_check( static_cast<return_t<T>>(x) );
+    return internal::round_check(static_cast<return_t<T>>(x));
 }
 
 #endif

@@ -25,17 +25,10 @@
 #ifndef _gcem_is_even_HPP
 #define _gcem_is_even_HPP
 
-namespace internal
-{
+namespace internal {
 
-constexpr
-bool
-is_even(const llint_t x)
-noexcept
-{
-    return !is_odd(x);
-}
+constexpr bool is_even(const llint_t x) noexcept { return !is_odd(x); }
 
-}
+} // namespace internal
 
 #endif

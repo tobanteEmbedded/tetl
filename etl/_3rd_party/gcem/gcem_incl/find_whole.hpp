@@ -25,22 +25,18 @@
 #ifndef _gcem_find_whole_HPP
 #define _gcem_find_whole_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-llint_t
-find_whole(const T x)
-noexcept
+template <typename T>
+constexpr llint_t find_whole(const T x) noexcept
 {
-    return( abs(x - internal::floor_check(x)) >= T(0.5) ? \
-            // if 
-                static_cast<llint_t>(internal::floor_check(x) + sgn(x)) :
-            // else 
-                static_cast<llint_t>(internal::floor_check(x)) );
+    return (abs(x - internal::floor_check(x)) >= T(0.5) ? // if
+                static_cast<llint_t>(internal::floor_check(x) + sgn(x))
+                                                        :
+                                                        // else
+                static_cast<llint_t>(internal::floor_check(x)));
 }
 
-}
+} // namespace internal
 
 #endif

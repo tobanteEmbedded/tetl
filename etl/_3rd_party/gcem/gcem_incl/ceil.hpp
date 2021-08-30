@@ -21,47 +21,36 @@
 #ifndef _gcem_ceil_HPP
 #define _gcem_ceil_HPP
 
-namespace internal
-{
+namespace internal {
 
-template<typename T>
-constexpr
-int
-ceil_resid(const T x, const T x_whole)
-noexcept
+template <typename T>
+constexpr int ceil_resid(const T x, const T x_whole) noexcept
 {
-    return( (x > T(0)) && (x > x_whole) );
+    return ((x > T(0)) && (x > x_whole));
 }
 
-template<typename T>
-constexpr
-T
-ceil_int(const T x, const T x_whole)
-noexcept
+template <typename T>
+constexpr T ceil_int(const T x, const T x_whole) noexcept
 {
-    return( x_whole + static_cast<T>(ceil_resid(x,x_whole)) );
+    return (x_whole + static_cast<T>(ceil_resid(x, x_whole)));
 }
 
-template<typename T>
-constexpr
-T
-ceil_check(const T x)
-noexcept
+template <typename T>
+constexpr T ceil_check(const T x) noexcept
 {
-    return( // NaN check
-            is_nan(x) ? \
-                GCLIM<T>::quiet_NaN() :
-            // +/- infinite
-            !is_finite(x) ? \
-                x :
-            // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? \
-                x :
-            // else
-                ceil_int(x, T(static_cast<llint_t>(x))) );
+    return ( // NaN check
+        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+                  // +/- infinite
+            !is_finite(x) ? x
+                          :
+                          // signed-zero cases
+            GCLIM<T>::epsilon() > abs(x) ? x
+                                         :
+                                         // else
+            ceil_int(x, T(static_cast<llint_t>(x))));
 }
 
-}
+} // namespace internal
 
 /**
  * Compile-time ceil function
@@ -70,13 +59,10 @@ noexcept
  * @return computes the ceiling-value of the input.
  */
 
-template<typename T>
-constexpr
-return_t<T>
-ceil(const T x)
-noexcept
+template <typename T>
+constexpr return_t<T> ceil(const T x) noexcept
 {
-    return internal::ceil_check( static_cast<return_t<T>>(x) );
+    return internal::ceil_check(static_cast<return_t<T>>(x));
 }
 
 #endif
