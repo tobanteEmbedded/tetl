@@ -23,6 +23,8 @@
 #include "etl/_cstdlib/lldiv.hpp"
 #include "etl/_cstdlib/strtod.hpp"
 #include "etl/_cstdlib/strtof.hpp"
+#include "etl/_cstdlib/strtol.hpp"
 #include "etl/_cstdlib/strtold.hpp"
+#include "etl/_cstdlib/strtoul.hpp"
 
 #endif // TETL_CSTDLIB_HPP
