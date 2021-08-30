@@ -45,6 +45,15 @@ namespace etl {
     return gcem::ceil(arg);
 }
 
+/// \brief Computes the smallest integer value not less than arg.
+/// https://en.cppreference.com/w/cpp/numeric/math/ceil
+template <typename T>
+[[nodiscard]] constexpr auto ceil(T arg) noexcept
+    -> etl::enable_if<etl::is_integral_v<T>, double>
+{
+    return gcem::ceil(static_cast<double>(arg));
+}
+
 } // namespace etl
 
 #endif // TETL_CMATH_CEIL_HPP

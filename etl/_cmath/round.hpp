@@ -60,6 +60,18 @@ namespace etl {
     return gcem::round(arg);
 }
 
+/// \brief Computes the nearest integer value to arg (in floating-point format),
+/// rounding halfway cases away from zero, regardless of the current rounding
+/// mode.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/round
+template <typename T>
+[[nodiscard]] constexpr auto round(T arg) noexcept
+    -> etl::enable_if<etl::is_integral_v<T>, double>
+{
+    return gcem::round(static_cast<double>(arg));
+}
+
 } // namespace etl
 
 #endif // TETL_CMATH_ROUND_HPP

@@ -49,6 +49,16 @@ namespace etl {
     return gcem::log(v);
 }
 
+/// \brief Computes the natural (base e) logarithm of arg.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/log
+template <typename T>
+[[nodiscard]] constexpr auto log(T arg) noexcept
+    -> etl::enable_if<etl::is_integral_v<T>, double>
+{
+    return gcem::log(static_cast<double>(arg));
+}
+
 } // namespace etl
 
 #endif // TETL_CMATH_LOG_HPP

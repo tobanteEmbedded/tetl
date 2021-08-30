@@ -45,6 +45,15 @@ namespace etl {
     return gcem::floor(arg);
 }
 
+/// \brief Computes the largest integer value not greater than arg.
+/// https://en.cppreference.com/w/cpp/numeric/math/floor
+template <typename T>
+[[nodiscard]] constexpr auto floor(T arg) noexcept
+    -> etl::enable_if<etl::is_integral_v<T>, double>
+{
+    return gcem::floor(static_cast<double>(arg));
+}
+
 } // namespace etl
 
 #endif // TETL_CMATH_FLOOR_HPP

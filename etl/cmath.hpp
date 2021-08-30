@@ -20,6 +20,7 @@
 #include "etl/_cmath/log.hpp"
 #include "etl/_cmath/round.hpp"
 #include "etl/_cmath/signbit.hpp"
+#include "etl/_cmath/trunc.hpp"
 #include "etl/_cmath/typedefs.hpp"
 #include "etl/_math/abs.hpp"
 

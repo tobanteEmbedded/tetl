@@ -10,7 +10,6 @@
 namespace etl {
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
-///
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
 [[nodiscard]] constexpr auto exp(float v) noexcept -> float
 {
@@ -18,7 +17,6 @@ namespace etl {
 }
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
-///
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
 [[nodiscard]] constexpr auto expf(float v) noexcept -> float
 {
@@ -26,7 +24,6 @@ namespace etl {
 }
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
-///
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
 [[nodiscard]] constexpr auto exp(double v) noexcept -> double
 {
@@ -34,7 +31,6 @@ namespace etl {
 }
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
-///
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
 [[nodiscard]] constexpr auto exp(long double v) noexcept -> long double
 {
@@ -42,11 +38,19 @@ namespace etl {
 }
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
-///
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
 [[nodiscard]] constexpr auto expl(long double v) noexcept -> long double
 {
     return gcem::exp(v);
+}
+
+/// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
+/// https://en.cppreference.com/w/cpp/numeric/math/exp
+template <typename T>
+[[nodiscard]] constexpr auto exp(T v) noexcept
+    -> etl::enable_if<etl::is_integral_v<T>, double>
+{
+    return gcem::exp(static_cast<double>(v));
 }
 
 } // namespace etl
