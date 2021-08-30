@@ -42,13 +42,14 @@ constexpr auto exp_cf_recur(const T x, const int depth) noexcept -> T
 template <typename T>
 constexpr auto exp_cf(const T x) noexcept -> T
 {
-    return (T(1) / exp_cf_recur(x, 1));
+    return static_cast<T>(T(1) / exp_cf_recur(x, 1));
 }
 
 template <typename T>
 constexpr auto exp_split(const T x) noexcept -> T
 {
-    return (pow_integral(GCEM_E, find_whole(x)) * exp_cf(find_fraction(x)));
+    return static_cast<T>(
+        pow_integral(GCEM_E, find_whole(x)) * exp_cf(find_fraction(x)));
 }
 
 template <typename T>

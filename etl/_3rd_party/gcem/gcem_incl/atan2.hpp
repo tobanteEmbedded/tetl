@@ -30,7 +30,7 @@ namespace internal {
 template <typename T>
 constexpr auto atan2_compute(const T y, const T x) noexcept -> T
 {
-    return ( // NaN check
+    return static_cast<T>( // NaN check
         any_nan(y, x) ? GCLIM<T>::quiet_NaN() :
                       //
             GCLIM<T>::epsilon() > abs(x) ? //
