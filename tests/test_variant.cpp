@@ -300,20 +300,39 @@ TEST_CASE("variant: variant_size", "[variant]")
     STATIC_REQUIRE(etl::variant_size_v<t4> == 4);
 }
 
-TEST_CASE("variant: variant_alternative", "[variant]")
+TEMPLATE_TEST_CASE("variant: variant_alternative", "[variant]", bool,
+    etl::uint8_t, etl::int8_t, etl::uint16_t, etl::int16_t, etl::uint32_t,
+    etl::int32_t, etl::uint64_t, etl::int64_t)
 {
+    using T = TestType;
     using etl::is_same_v;
     using etl::monostate;
     using etl::variant;
     using etl::variant_alternative_t;
 
-    using t1 = etl::variant<char>;
-    STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t1>, char>);
+    using t1 = variant<T>;
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t1>, T>);
 
-    using t2 = etl::variant<char, int>;
-    using t3 = etl::variant<char, int, float>;
-    using t4 = etl::variant<char, int, float, double>;
-    STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t2>, char>);
-    STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t3>, char>);
-    STATIC_REQUIRE(is_same_v<etl::variant_alternative_t<0, t4>, char>);
+    using t2 = variant<T>;
+    using t3 = variant<T, float>;
+    using t4 = variant<T, float, double>;
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t2>, T>);
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t3>, T>);
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t4>, T>);
+
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<1, t3>, float>);
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<1, t4>, float>);
+
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<2, t4>, double>);
+
+    using t5 = variant<T, float> const;
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t5>, T const>);
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<1, t5>, float const>);
+
+    using t6 = variant<T, float> volatile;
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t6>, T volatile>);
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<1, t6>, float volatile>);
+
+    using t7 = variant<T, float> const volatile;
+    STATIC_REQUIRE(is_same_v<variant_alternative_t<0, t7>, T const volatile>);
 }
