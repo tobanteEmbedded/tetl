@@ -8,7 +8,7 @@ if (MSVC)
   target_compile_options(compiler_warnings INTERFACE /W3)
 else ()
   if (TETL_BUILD_WERROR)
-    # target_compile_options(compiler_warnings INTERFACE -Werror)
+    target_compile_options(compiler_warnings INTERFACE -Werror)
   endif (TETL_BUILD_WERROR)
     target_compile_options(compiler_warnings
       INTERFACE
