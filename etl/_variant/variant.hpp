@@ -694,6 +694,62 @@ template <etl::size_t I, typename... Types>
     etl::raise<etl::bad_variant_access>("");
 }
 
+/// \brief Type-based value accessor
+///
+/// \details If v holds the alternative T, returns a reference to the value
+/// stored in v. Otherwise, throws etl::bad_variant_access. The call is
+/// ill-formed if T is not a unique element of Types....
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <typename T, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...>& v) -> T&
+{
+    if (etl::holds_alternative<T>(v)) { return *etl::get_if<T>(&v); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Type-based value accessor
+///
+/// \details If v holds the alternative T, returns a reference to the value
+/// stored in v. Otherwise, throws etl::bad_variant_access. The call is
+/// ill-formed if T is not a unique element of Types....
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <typename T, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...>&& v) -> T&&
+{
+    if (etl::holds_alternative<T>(v)) { return etl::move(*etl::get_if<T>(&v)); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Type-based value accessor
+///
+/// \details If v holds the alternative T, returns a reference to the value
+/// stored in v. Otherwise, throws etl::bad_variant_access. The call is
+/// ill-formed if T is not a unique element of Types....
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <typename T, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...> const& v) -> T const&
+{
+    if (etl::holds_alternative<T>(v)) { return *etl::get_if<T>(&v); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
+/// \brief Type-based value accessor
+///
+/// \details If v holds the alternative T, returns a reference to the value
+/// stored in v. Otherwise, throws etl::bad_variant_access. The call is
+/// ill-formed if T is not a unique element of Types....
+///
+/// https://en.cppreference.com/w/cpp/utility/variant/get
+template <typename T, typename... Types>
+[[nodiscard]] constexpr auto get(etl::variant<Types...> const&& v) -> T const&&
+{
+    if (etl::holds_alternative<T>(v)) { return etl::move(*etl::get_if<T>(&v)); }
+    etl::raise<etl::bad_variant_access>("");
+}
+
 } // namespace etl
 
 #endif // TETL_VARIANT_VARIANT_HPP
