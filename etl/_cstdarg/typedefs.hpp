@@ -5,7 +5,7 @@
 #ifndef TETL_CSTDARG_TYPEDEFS_HPP
 #define TETL_CSTDARG_TYPEDEFS_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
 
 #if defined(TETL_MSVC)
     #include <cstdarg>

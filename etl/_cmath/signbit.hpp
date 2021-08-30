@@ -5,7 +5,7 @@
 #ifndef TETL_CMATH_SIGNBIT_HPP
 #define TETL_CMATH_SIGNBIT_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
 
 namespace etl {
 

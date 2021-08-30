@@ -5,7 +5,7 @@
 #ifndef TETL_CSTDDEF_SIZE_T_HPP
 #define TETL_CSTDDEF_SIZE_T_HPP
 
-#include "etl/_config/builtin_types.hpp"
+#include "etl/_config/all.hpp"
 
 namespace etl {
 

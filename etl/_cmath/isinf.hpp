@@ -5,7 +5,8 @@
 #ifndef TETL_CMATH_ISINF_HPP
 #define TETL_CMATH_ISINF_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
+
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 

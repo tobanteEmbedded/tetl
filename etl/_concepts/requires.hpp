@@ -5,7 +5,7 @@
 #ifndef TETL_CONCEPTS_REQUIRES_HPP
 #define TETL_CONCEPTS_REQUIRES_HPP
 
-#include "etl/_config/preprocessor.hpp"
+#include "etl/_config/all.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 
 /// \brief Requires-clause emulation with SFINAE (for templates).

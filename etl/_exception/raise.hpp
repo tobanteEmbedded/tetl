@@ -5,8 +5,9 @@
 #ifndef TETL_EXCEPTION_RAISE_HPP
 #define TETL_EXCEPTION_RAISE_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_cassert/macro.hpp"
-#include "etl/_config/attributes.hpp"
 #include "etl/_exception/exception.hpp"
 #include "etl/_source_location/source_location.hpp"
 

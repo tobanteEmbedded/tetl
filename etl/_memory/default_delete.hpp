@@ -5,8 +5,9 @@
 #ifndef TETL_MEMORY_DEFAULT_DELETE_HPP
 #define TETL_MEMORY_DEFAULT_DELETE_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_concepts/requires.hpp"
-#include "etl/_config/builtin_functions.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_function.hpp"
@@ -35,8 +36,7 @@ template <typename T>
 struct default_delete<T[]> {
     constexpr default_delete() noexcept = default;
 
-    template <typename U,
-        enable_if_t<is_convertible_v<U (*)[], T (*)[]>, bool> = true>
+    template <typename U, enable_if_t<is_convertible_v<U (*)[], T (*)[]>>>
     default_delete(default_delete<U[]> const& /*unused*/) noexcept
     {
     }

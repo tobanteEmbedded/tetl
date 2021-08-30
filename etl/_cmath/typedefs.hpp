@@ -5,7 +5,7 @@
 #ifndef TETL_CMATH_TYPEDEFS_HPP
 #define TETL_CMATH_TYPEDEFS_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
 
 #if not defined(_MSC_VER)
     #ifndef NAN

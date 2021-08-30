@@ -5,7 +5,7 @@
 #ifndef TETL_TYPE_TRAITS_IS_CONSTANT_EVALUATED_HPP
 #define TETL_TYPE_TRAITS_IS_CONSTANT_EVALUATED_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
 
 namespace etl {
 

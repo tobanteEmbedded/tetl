@@ -5,7 +5,8 @@
 #ifndef TETL_UTILITY_INTEGER_SEQUENCE_HPP
 #define TETL_UTILITY_INTEGER_SEQUENCE_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
+
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 

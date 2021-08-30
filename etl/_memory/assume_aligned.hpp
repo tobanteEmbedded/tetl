@@ -5,7 +5,8 @@
 #ifndef TETL_MEMORY_ASSUME_ALIGNED_HPP
 #define TETL_MEMORY_ASSUME_ALIGNED_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
+
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_math/pow.hpp"
 #include "etl/_type_traits/is_constant_evaluated.hpp"

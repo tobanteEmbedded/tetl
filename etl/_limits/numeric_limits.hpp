@@ -5,11 +5,11 @@
 #ifndef TETL_LIMITS_NUMERIC_LIMITS_HPP
 #define TETL_LIMITS_NUMERIC_LIMITS_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_cfloat/defines.hpp"
 #include "etl/_climits/defines.hpp"
 #include "etl/_cmath/typedefs.hpp"
-#include "etl/_config/builtin_functions.hpp"
-#include "etl/_config/builtin_types.hpp"
 #include "etl/_limits/float_denorm_style.hpp"
 #include "etl/_limits/float_round_style.hpp"
 

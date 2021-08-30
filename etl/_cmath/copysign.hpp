@@ -5,7 +5,7 @@
 #ifndef TETL_CMATH_COPYSIGN_HPP
 #define TETL_CMATH_COPYSIGN_HPP
 
-#include "etl/_config/builtin_functions.hpp"
+#include "etl/_config/all.hpp"
 
 namespace etl {
 
