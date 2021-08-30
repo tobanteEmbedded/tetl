@@ -7,35 +7,48 @@
 
 #include "etl/_cassert/macro.hpp"
 #include "etl/_config/attributes.hpp"
+#include "etl/_exception/exception.hpp"
 #include "etl/_source_location/source_location.hpp"
 
 namespace etl {
+
+#if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+[[noreturn]] auto tetl_exception_handler(etl::exception const& e) -> void;
+#endif
+
 #if TETL_CPP_STANDARD >= 20
-template <typename E>
-[[noreturn]] TETL_NO_INLINE TETL_COLD constexpr auto raise(char const* msg,
+template <typename Exception>
+[[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(char const* msg,
     etl::source_location const loc = etl::source_location::current()) -> void
 {
-    auto const assertion = etl::assert_msg {
+    #if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+    (void)loc;
+    etl::tetl_exception_handler(Exception { msg });
+    #else
+    detail::tetl_call_assert_handler(etl::assert_msg {
         static_cast<int>(loc.line()),
         loc.file_name(),
         loc.function_name(),
-        E { msg }.what(),
-    };
-    detail::tetl_call_assert_handler(assertion);
+        Exception { msg }.what(),
+    });
+    #endif
 }
 
 #else
 
-template <typename E>
-[[noreturn]] TETL_NO_INLINE TETL_COLD constexpr auto raise(char const* msg)
-    -> void
+template <typename Exception>
+[[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(char const* msg) -> void
 {
+    #if defined(TETL_CUSTOM_EXCEPTION_HANDLER)
+    etl::tetl_exception_handler(Exception { msg });
+    #else
     detail::tetl_call_assert_handler(etl::assert_msg {
         0,
         nullptr,
         nullptr,
-        E { msg }.what(),
+        Exception { msg }.what(),
     });
+    #endif
 }
 #endif
 } // namespace etl

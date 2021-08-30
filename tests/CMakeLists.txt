@@ -86,7 +86,7 @@ target_link_libraries(${PROJECT_NAME}
         tobanteEmbedded::CodeCoverage
         Catch2WithMain
 )
-target_compile_definitions(${PROJECT_NAME} PRIVATE TETL_CUSTOM_ASSERT_HANDLER=1)
+target_compile_definitions(${PROJECT_NAME} PRIVATE TETL_CUSTOM_ASSERT_HANDLER=1 TETL_CUSTOM_EXCEPTION_HANDLER=1)
 
 
 add_executable(${PROJECT_NAME}_testing
