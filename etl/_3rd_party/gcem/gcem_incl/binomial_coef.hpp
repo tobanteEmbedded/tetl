@@ -47,7 +47,7 @@ constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
 {
     return ( // NaN check; removed due to MSVC problems; template not being
              // ignored in <int> cases (is_nan(n) || is_nan(k)) ?
-             // GCLIM<T>::quiet_NaN() :
+             // etl::numeric_limits<T>::quiet_NaN() :
              //
         static_cast<T>(binomial_coef_recur(
             static_cast<ullint_t>(n), static_cast<ullint_t>(k))));

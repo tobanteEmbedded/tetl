@@ -31,12 +31,12 @@ template <typename T>
 constexpr auto asin_compute(const T x) noexcept -> T
 {
     return ( // only defined on [-1,1]
-        x > T(1) ? GCLIM<T>::quiet_NaN() :
+        x > T(1) ? etl::numeric_limits<T>::quiet_NaN() :
                  // indistinguishable from one or zero
-            GCLIM<T>::epsilon() > abs(x - T(1)) ? T(GCEM_HALF_PI)
-        : GCLIM<T>::epsilon() > abs(x)          ? T(0)
-                                                :
-                                       // else
+            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(GCEM_HALF_PI)
+        : etl::numeric_limits<T>::epsilon() > abs(x)          ? T(0)
+                                                              :
+                                                     // else
             atan(x / sqrt(T(1) - x * x)));
 }
 
@@ -44,7 +44,7 @@ template <typename T>
 constexpr auto asin_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   //
             x < T(0) ? -asin_compute(-x)
                      : asin_compute(x));

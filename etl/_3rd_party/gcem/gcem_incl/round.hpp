@@ -33,14 +33,14 @@ template <typename T>
 constexpr auto round_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // +/- infinite
             !is_finite(x) ? x
                           :
                           // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? x
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? x
+                                                       :
+                                                       // else
             sgn(x) * round_int(abs(x)));
 }
 

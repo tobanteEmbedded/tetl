@@ -39,14 +39,14 @@ template <typename T>
 constexpr auto ceil_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // +/- infinite
             !is_finite(x) ? x
                           :
                           // signed-zero cases
-            GCLIM<T>::epsilon() > abs(x) ? x
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? x
+                                                       :
+                                                       // else
             ceil_int(x, T(static_cast<llint_t>(x))));
 }
 

@@ -31,14 +31,14 @@ template <typename T>
 constexpr auto acosh_compute(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // function defined for x >= 1
-            x < T(1) ? GCLIM<T>::quiet_NaN()
+            x < T(1) ? etl::numeric_limits<T>::quiet_NaN()
                      :
                      // indistinguishable from 1
-            GCLIM<T>::epsilon() > abs(x - T(1)) ? T(0)
-                                                :
-                                                // else
+            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
+                                                              :
+                                                              // else
             log(x + sqrt(x * x - T(1))));
 }
 

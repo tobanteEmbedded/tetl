@@ -33,10 +33,10 @@ template <typename T1, typename T2>
 constexpr auto lmgamma_recur(const T1 a, const T2 p) noexcept -> T1
 {
     return ( // NaN check
-        is_nan(a) ? GCLIM<T1>::quiet_NaN() :
+        is_nan(a) ? etl::numeric_limits<T1>::quiet_NaN() :
                   //
             p == T2(1) ? lgamma(a)
-        : p < T2(1)    ? GCLIM<T1>::quiet_NaN()
+        : p < T2(1)    ? etl::numeric_limits<T1>::quiet_NaN()
                        :
                     // else
             T1(GCEM_LOG_PI) * (p - T1(1)) / T1(2) + lgamma(a)

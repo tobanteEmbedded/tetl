@@ -40,7 +40,7 @@ constexpr auto tan_series_exp_long(const T z) noexcept -> T
 template <typename T>
 constexpr auto tan_series_exp(const T x) noexcept -> T
 {
-    return (GCLIM<T>::epsilon() > abs(x - T(GCEM_HALF_PI))
+    return (etl::numeric_limits<T>::epsilon() > abs(x - T(GCEM_HALF_PI))
                 ? // the value tan(pi/2) is somewhat of a convention;
                   // technically the function is not defined at EXACTLY pi/2,
                   // but this is floating point pi/2
@@ -79,7 +79,7 @@ template <typename T>
 constexpr auto tan_begin(const T x, const int count = 0) noexcept -> T
 {                            // tan(x) = tan(x + pi)
     return (x > T(GCEM_PI) ? // if
-                count > 1 ? GCLIM<T>::quiet_NaN()
+                count > 1 ? etl::numeric_limits<T>::quiet_NaN()
                           : // protect against undefined behavior
                     tan_begin(
                         x - T(GCEM_PI) * internal::floor_check(x / T(GCEM_PI)),
@@ -93,11 +93,11 @@ template <typename T>
 constexpr auto tan_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(0)
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
+                                                       :
+                                                       // else
             x < T(0) ? -tan_begin(-x)
                      : tan_begin(x));
 }

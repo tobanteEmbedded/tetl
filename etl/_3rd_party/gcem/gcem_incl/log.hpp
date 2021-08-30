@@ -85,20 +85,22 @@ constexpr auto log_breakup(const T x) noexcept -> T
 template <typename T>
 constexpr auto log_check(const T x) noexcept -> T
 {
-    return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
+    return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                       // x < 0
-                x < T(0) ? GCLIM<T>::quiet_NaN()
+                x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
                          :
                          // x ~= 0
-                GCLIM<T>::epsilon() > x ? -GCLIM<T>::infinity()
-                                        :
-                                        // indistinguishable from 1
-                GCLIM<T>::epsilon() > abs(x - T(1)) ? T(0)
-                                                    :
-                                                    //
-                x == GCLIM<T>::infinity() ? GCLIM<T>::infinity()
-                                          :
-                                          // else
+                etl::numeric_limits<T>::epsilon() > x
+                ? -etl::numeric_limits<T>::infinity()
+                :
+                // indistinguishable from 1
+                etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
+                                                                  :
+                                                                  //
+                x == etl::numeric_limits<T>::infinity()
+                ? etl::numeric_limits<T>::infinity()
+                :
+                // else
                 (x < T(0.5) || x > T(1.5)) ?
                                            // if
                 log_breakup(x)

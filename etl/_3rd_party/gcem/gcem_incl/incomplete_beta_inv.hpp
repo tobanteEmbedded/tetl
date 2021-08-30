@@ -178,10 +178,10 @@ constexpr auto incomplete_beta_inv_deriv_1(const T value, const T alphaPar,
     const T betaPar, const T lbVal) noexcept -> T
 {            // derivative of the incomplete beta function w.r.t. x
     return ( // indistinguishable from zero or one
-        GCLIM<T>::epsilon() > abs(value)          ? T(0)
-        : GCLIM<T>::epsilon() > abs(T(1) - value) ? T(0)
-                                                  :
-                                                  // else
+        etl::numeric_limits<T>::epsilon() > abs(value)          ? T(0)
+        : etl::numeric_limits<T>::epsilon() > abs(T(1) - value) ? T(0)
+                                                                :
+                                                                // else
             exp((alphaPar - T(1)) * log(value)
                 + (betaPar - T(1)) * log(T(1) - value) - lbVal));
 }
@@ -223,10 +223,11 @@ constexpr auto incomplete_beta_inv_recur(const T value, const T alphaPar,
     const int iterCount) noexcept -> T
 {
     return ( // derivative = 0
-        GCLIM<T>::epsilon() > abs(deriv1) ? incomplete_beta_inv_decision(value,
-            alphaPar, betaPar, p, T(0), lbVal, GCEM_INCML_BETA_INV_MAX_ITER + 1)
-                                          :
-                                          // else
+        etl::numeric_limits<T>::epsilon() > abs(deriv1)
+            ? incomplete_beta_inv_decision(value, alphaPar, betaPar, p, T(0),
+                lbVal, GCEM_INCML_BETA_INV_MAX_ITER + 1)
+            :
+            // else
             incomplete_beta_inv_decision(value, alphaPar, betaPar, p,
                 incomplete_beta_inv_halley(
                     incomplete_beta_inv_ratio_val_1(
@@ -266,12 +267,12 @@ constexpr auto incomplete_beta_inv_check(
     const T alphaPar, const T betaPar, const T p) noexcept -> T
 {
     return ( // NaN check
-        any_nan(alphaPar, betaPar, p) ? GCLIM<T>::quiet_NaN() :
+        any_nan(alphaPar, betaPar, p) ? etl::numeric_limits<T>::quiet_NaN() :
                                       // indistinguishable from zero or one
-            GCLIM<T>::epsilon() > p           ? T(0)
-        : GCLIM<T>::epsilon() > abs(T(1) - p) ? T(1)
-                                              :
-                                              // else
+            etl::numeric_limits<T>::epsilon() > p           ? T(0)
+        : etl::numeric_limits<T>::epsilon() > abs(T(1) - p) ? T(1)
+                                                            :
+                                                            // else
             incomplete_beta_inv_begin(
                 incomplete_beta_inv_initial_val(alphaPar, betaPar, p), alphaPar,
                 betaPar, p, lbeta(alphaPar, betaPar)));

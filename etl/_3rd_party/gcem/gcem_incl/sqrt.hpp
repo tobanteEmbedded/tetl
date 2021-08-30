@@ -30,7 +30,7 @@ namespace internal {
 template <typename T>
 constexpr auto sqrt_recur(const T x, const T xn, const int count) noexcept -> T
 {
-    return (abs(xn - x / xn) / (T(1) + xn) < GCLIM<T>::epsilon()
+    return (abs(xn - x / xn) / (T(1) + xn) < etl::numeric_limits<T>::epsilon()
                 ? // if
                 xn
                 : count < GCEM_SQRT_MAX_ITER ? // else
@@ -41,18 +41,18 @@ constexpr auto sqrt_recur(const T x, const T xn, const int count) noexcept -> T
 template <typename T>
 constexpr auto sqrt_check(const T x, const T mVal) noexcept -> T
 {
-    return (is_nan(x) ? GCLIM<T>::quiet_NaN() :
+    return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                       //
-                x < T(0) ? GCLIM<T>::quiet_NaN()
+                x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
                          :
                          //
                 is_posinf(x) ? x
                              :
                              // indistinguishable from zero or one
-                GCLIM<T>::epsilon() > abs(x)      ? T(0)
-            : GCLIM<T>::epsilon() > abs(T(1) - x) ? x
-                                                  :
-                                                  // else
+                etl::numeric_limits<T>::epsilon() > abs(x)      ? T(0)
+            : etl::numeric_limits<T>::epsilon() > abs(T(1) - x) ? x
+                                                                :
+                                                                // else
                 x > T(4) ? sqrt_check(x / T(4), T(2) * mVal)
                          : mVal * sqrt_recur(x, x / T(2), 0));
 }

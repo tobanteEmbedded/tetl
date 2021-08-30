@@ -88,12 +88,13 @@ template <typename T>
 constexpr auto lgamma_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from one or <= zero
-            GCLIM<T>::epsilon() > abs(x - T(1)) ? T(0)
-        : GCLIM<T>::epsilon() > x               ? GCLIM<T>::infinity()
-                                                :
-                                  // else
+            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
+        : etl::numeric_limits<T>::epsilon() > x
+            ? etl::numeric_limits<T>::infinity()
+            :
+            // else
             lgamma_begin(x - T(1)));
 }
 

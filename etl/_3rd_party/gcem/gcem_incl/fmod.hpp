@@ -27,9 +27,9 @@ template <typename T>
 constexpr auto fmod_check(const T x, const T y) noexcept -> T
 {
     return ( // NaN check
-        any_nan(x, y) ? GCLIM<T>::quiet_NaN() :
+        any_nan(x, y) ? etl::numeric_limits<T>::quiet_NaN() :
                       // +/- infinite
-            !all_finite(x, y) ? GCLIM<T>::quiet_NaN()
+            !all_finite(x, y) ? etl::numeric_limits<T>::quiet_NaN()
                               :
                               // else
             x - trunc(x / y) * y);

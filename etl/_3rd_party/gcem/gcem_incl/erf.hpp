@@ -85,15 +85,15 @@ template <typename T>
 constexpr auto erf_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // +/-Inf
             is_posinf(x) ? T(1)
         : is_neginf(x)   ? -T(1)
                          :
                        // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(0)
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
+                                                       :
+                                                       // else
             x < T(0) ? -erf_begin(-x)
                      : erf_begin(x));
 }

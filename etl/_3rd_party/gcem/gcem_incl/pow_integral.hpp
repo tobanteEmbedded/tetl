@@ -75,10 +75,11 @@ constexpr auto pow_integral_compute(const T1 base, const T2 expTerm) noexcept
             : expTerm == T2(0) ? T1(1)
                                :
                                // check for overflow
-                expTerm == GCLIM<T2>::min() ? T1(0)
-            : expTerm == GCLIM<T2>::max()   ? GCLIM<T1>::infinity()
-                                            :
-                                          // else
+                expTerm == etl::numeric_limits<T2>::min() ? T1(0)
+            : expTerm == etl::numeric_limits<T2>::max()
+                ? etl::numeric_limits<T1>::infinity()
+                :
+                // else
                 pow_integral_sgn_check(base, expTerm));
 }
 
@@ -95,7 +96,7 @@ template <typename T1, typename T2,
 constexpr auto pow_integral_type_check(const T1 base, const T2 expTerm) noexcept
     -> T1
 {
-    // return GCLIM<return_t<T1>>::quiet_NaN();
+    // return etl::numeric_limits<return_t<T1>>::quiet_NaN();
     return pow_integral_compute(base, static_cast<llint_t>(expTerm));
 }
 

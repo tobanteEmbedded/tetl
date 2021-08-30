@@ -47,7 +47,7 @@ template <typename T>
 constexpr auto log1p_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   //
             abs(x) > T(1e-04) ? // if
             log(T(1) + x)

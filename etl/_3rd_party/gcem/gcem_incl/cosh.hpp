@@ -31,11 +31,11 @@ template <typename T>
 constexpr auto cosh_compute(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(1)
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
+                                                       :
+                                                       // else
             (exp(x) + exp(-x)) / T(2));
 }
 

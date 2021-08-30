@@ -118,11 +118,11 @@ template <typename T>
 constexpr auto atan_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(0)
-                                         :
-                                         // negative or positive
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
+                                                       :
+                                                       // negative or positive
             x < T(0) ? -atan_begin(-x)
                      : atan_begin(x));
 }

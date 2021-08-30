@@ -120,11 +120,12 @@ constexpr auto incomplete_beta_check(const T a, const T b, const T z) noexcept
     -> T
 {
     return ( // NaN check
-        any_nan(a, b, z) ? GCLIM<T>::quiet_NaN() :
+        any_nan(a, b, z) ? etl::numeric_limits<T>::quiet_NaN() :
                          // indistinguishable from zero
-            GCLIM<T>::epsilon() > z ? T(0)
-                                    :
-                                    // parameter check for performance
+            etl::numeric_limits<T>::epsilon() > z
+            ? T(0)
+            :
+            // parameter check for performance
             (a + T(1)) / (a + b + T(2)) > z
             ? incomplete_beta_begin(a, b, z)
             : T(1) - incomplete_beta_begin(b, a, T(1) - z));

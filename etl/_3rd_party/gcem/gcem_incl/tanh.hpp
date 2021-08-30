@@ -47,11 +47,11 @@ template <typename T>
 constexpr auto tanh_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(0)
-                                         :
-                                         // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
+                                                       :
+                                                       // else
             x < T(0) ? -tanh_begin(-x)
                      : tanh_begin(x));
 }

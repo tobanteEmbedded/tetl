@@ -44,7 +44,7 @@ template <typename T>
 constexpr auto expm1_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   //
             abs(x) > T(1e-04) ? // if
             exp(x) - T(1)

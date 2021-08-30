@@ -50,9 +50,6 @@ using ullint_t = unsigned long long int;
 
 using llint_t = long long int;
 
-template <class T>
-using GCLIM = etl::numeric_limits<T>;
-
 template <typename T>
 using return_t = etl::conditional_t<etl::is_integral_v<T>, double, T>;
 

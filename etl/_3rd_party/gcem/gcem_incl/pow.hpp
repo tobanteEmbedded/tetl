@@ -37,7 +37,7 @@ template <typename T1, typename T2, typename TC = common_t<T1, T2>,
     typename etl::enable_if<!etl::is_integral<T2>::value>::type* = nullptr>
 constexpr auto pow_check(const T1 base, const T2 expTerm) noexcept -> TC
 {
-    return (base < T1(0) ? GCLIM<TC>::quiet_NaN() :
+    return (base < T1(0) ? etl::numeric_limits<TC>::quiet_NaN() :
                          //
                 pow_dbl(static_cast<TC>(base), static_cast<TC>(expTerm)));
 }

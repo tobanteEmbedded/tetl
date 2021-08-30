@@ -171,17 +171,17 @@ template <typename T>
 constexpr auto incomplete_gamma_check(const T a, const T z) noexcept -> T
 {
     return ( // NaN check
-        any_nan(a, z) ? GCLIM<T>::quiet_NaN() :
+        any_nan(a, z) ? etl::numeric_limits<T>::quiet_NaN() :
                       //
-            a < T(0) ? GCLIM<T>::quiet_NaN()
+            a < T(0) ? etl::numeric_limits<T>::quiet_NaN()
                      :
                      //
-            GCLIM<T>::epsilon() > z ? T(0)
-                                    :
-                                    //
-            GCLIM<T>::epsilon() > a ? T(1)
-                                    :
-                                    // cf or quadrature
+            etl::numeric_limits<T>::epsilon() > z ? T(0)
+                                                  :
+                                                  //
+            etl::numeric_limits<T>::epsilon() > a ? T(1)
+                                                  :
+                                                  // cf or quadrature
             (a < T(10)) && (z - a < T(10)) ? incomplete_gamma_cf_1(a, z)
         : (a < T(10)) || (z / a > T(3))    ? incomplete_gamma_cf_2(a, z)
                                            :

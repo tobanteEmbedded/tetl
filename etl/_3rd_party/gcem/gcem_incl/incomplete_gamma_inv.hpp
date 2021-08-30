@@ -185,16 +185,17 @@ template <typename T>
 constexpr auto incomplete_gamma_inv_check(const T a, const T p) noexcept -> T
 {
     return ( // NaN check
-        any_nan(a, p) ? GCLIM<T>::quiet_NaN() :
+        any_nan(a, p) ? etl::numeric_limits<T>::quiet_NaN() :
                       //
-            GCLIM<T>::epsilon() > p           ? T(0)
-        : p > T(1)                            ? GCLIM<T>::quiet_NaN()
-        : GCLIM<T>::epsilon() > abs(T(1) - p) ? GCLIM<T>::infinity()
-                                              :
-                                              //
-            GCLIM<T>::epsilon() > a ? T(0)
-                                    :
-                                    // else
+            etl::numeric_limits<T>::epsilon() > p ? T(0)
+        : p > T(1) ? etl::numeric_limits<T>::quiet_NaN()
+        : etl::numeric_limits<T>::epsilon() > abs(T(1) - p)
+            ? etl::numeric_limits<T>::infinity()
+            :
+            //
+            etl::numeric_limits<T>::epsilon() > a ? T(0)
+                                                  :
+                                                  // else
             incomplete_gamma_inv_begin(
                 incomplete_gamma_inv_initial_val(a, p), a, p, lgamma(a)));
 }

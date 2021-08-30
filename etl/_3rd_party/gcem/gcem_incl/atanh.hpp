@@ -37,15 +37,16 @@ template <typename T>
 constexpr auto atanh_check(const T x) noexcept -> T
 {
     return ( // NaN check
-        is_nan(x) ? GCLIM<T>::quiet_NaN() :
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // function is defined for |x| < 1
-            T(1) < abs(x)                       ? GCLIM<T>::quiet_NaN()
-        : GCLIM<T>::epsilon() > (T(1) - abs(x)) ? sgn(x) * GCLIM<T>::infinity()
-                                                :
-                                                // indistinguishable from zero
-            GCLIM<T>::epsilon() > abs(x) ? T(0)
-                                         :
-                                         // else
+            T(1) < abs(x) ? etl::numeric_limits<T>::quiet_NaN()
+        : etl::numeric_limits<T>::epsilon() > (T(1) - abs(x))
+            ? sgn(x) * etl::numeric_limits<T>::infinity()
+            :
+            // indistinguishable from zero
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
+                                                       :
+                                                       // else
             atanh_compute(x));
 }
 
