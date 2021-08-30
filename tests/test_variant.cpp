@@ -358,4 +358,16 @@ TEMPLATE_TEST_CASE("variant: visit", "[variant]", etl::uint8_t, etl::int8_t,
 
     auto v2 = variant_t { T { 42 } };
     etl::visit([](auto const& val) { REQUIRE(val == T { 42 }); }, v2);
+
+    auto calledT     = false;
+    auto calledFloat = false;
+    auto funcs       = etl::overload {
+        [&calledFloat](float /*val*/) -> void { calledFloat = true; },
+        [&calledT](T /*val*/) -> void { calledT= true; },
+    };
+
+    auto v3 = variant_t { T { 1 } };
+    etl::visit(funcs, v3);
+    REQUIRE(calledT);
+    REQUIRE_FALSE(calledFloat);
 }
