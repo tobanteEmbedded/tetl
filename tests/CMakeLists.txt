@@ -35,7 +35,6 @@ target_sources(${PROJECT_NAME}
         test_cctype.cpp
         test_charconv.cpp
         test_chrono.cpp
-        test_cmath.cpp
         test_complex.cpp
         test_cstdarg.cpp
         test_cstddef.cpp
