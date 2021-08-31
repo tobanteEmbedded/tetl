@@ -59,11 +59,15 @@ constexpr auto test_builtin_types() -> bool
         assert(arr.back() == T(3));
 
         auto counter = 0;
-        for (auto& x : arr) { assert(x == static_cast<T>(counter++)); }
+        for (auto& x : arr) {
+            assert(x == static_cast<T>(counter));
+            ++counter;
+        }
 
         counter = 0;
         for (auto const x : etl::as_const(arr)) {
-            assert(x == static_cast<T>(counter++));
+            assert(x == static_cast<T>(counter));
+            ++counter;
         }
     }
 
