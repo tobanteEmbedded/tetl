@@ -115,7 +115,7 @@ struct bitset {
     /// \param zero alternate character for set bits in str
     /// \param one alternate character for unset bits in str
     template <typename CharT, typename Traits>
-    explicit bitset(basic_string_view<CharT, Traits> const& str,
+    explicit constexpr bitset(basic_string_view<CharT, Traits> const& str,
         typename basic_string_view<CharT, Traits>::size_type pos = 0,
         typename basic_string_view<CharT, Traits>::size_type n
         = basic_string_view<CharT, Traits>::npos,
@@ -139,7 +139,7 @@ struct bitset {
     /// \param zero alternate character for set bits in str
     /// \param one alternate character for unset bits in str
     template <typename CharT>
-    explicit bitset(CharT const* str,
+    explicit constexpr bitset(CharT const* str,
         typename basic_string_view<CharT>::size_type n
         = basic_string_view<CharT>::npos,
         CharT zero = CharT('0'), CharT one = CharT('1'))
