@@ -32,7 +32,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_02.cpp
         algorithm/test_algorithm_03.cpp
 
-        test_bit.cpp
         test_bitset.cpp
         test_charconv.cpp
         test_chrono.cpp
@@ -114,6 +113,7 @@ target_link_libraries(${PROJECT_NAME}_testing
 
 
 add_subdirectory(array)
+add_subdirectory(bit)
 add_subdirectory(cctype)
 add_subdirectory(cmath)
 add_subdirectory(limits)

@@ -45,7 +45,7 @@ constexpr auto bit_cast(From const& src) noexcept
     // trivially constructible
     static_assert(is_trivially_constructible_v<To>);
 
-    To dst;
+    To dst {};
     detail::memcpy_impl<char, etl::size_t>(&dst, &src, sizeof(To));
     return dst;
 }
