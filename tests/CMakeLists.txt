@@ -12,7 +12,7 @@ target_link_libraries(testing_defs
 )
 
 function(tetl_add_test _group _target)
-  add_executable("test_${_group}_${_target}" "${_target}.cpp")
+  add_executable("test_${_group}_${_target}" "${_target}.t.cpp")
   add_test(NAME "test_${_group}_${_target}" COMMAND "test_${_group}_${_target}")
   target_compile_definitions(test_${_group}_${_target} PRIVATE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
   target_include_directories(test_${_group}_${_target} PRIVATE ${PROJECT_SOURCE_DIR}/..)
@@ -52,7 +52,6 @@ target_sources(${PROJECT_NAME}
         test_functional.cpp
         test_ios.cpp
         test_iterator.cpp
-        test_limits.cpp
         test_map.cpp
         test_memory.cpp
         test_mutex.cpp
@@ -115,3 +114,5 @@ target_link_libraries(${PROJECT_NAME}_testing
 
 
 add_subdirectory(cmath)
+add_subdirectory(limits)
+add_subdirectory(numeric)
