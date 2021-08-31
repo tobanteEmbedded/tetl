@@ -53,19 +53,18 @@
 template <typename T>
 [[nodiscard]] constexpr auto test_signed() -> bool
 {
-    using l = etl::numeric_limits<T>;
-    assert(l::is_specialized == true);
-    assert(l::is_signed == true);
-    assert(l::is_integer == true);
-    assert(l::is_bounded == true);
-    assert(l::lowest() == l::min());
-    assert(l::max() > l::min());
-    assert(l::epsilon() == T {});
-    assert(l::round_error() == T {});
-    assert(l::infinity() == T {});
-    assert(l::quiet_NaN() == T {});
-    assert(l::signaling_NaN() == T {});
-    assert(l::denorm_min() == T {});
+    assert(etl::numeric_limits<T>::is_specialized == true);
+    assert(etl::numeric_limits<T>::is_signed == true);
+    assert(etl::numeric_limits<T>::is_integer == true);
+    assert(etl::numeric_limits<T>::is_bounded == true);
+    assert(etl::numeric_limits<T>::lowest() == etl::numeric_limits<T>::min());
+    assert(etl::numeric_limits<T>::max() > etl::numeric_limits<T>::min());
+    assert(etl::numeric_limits<T>::epsilon() == T {});
+    assert(etl::numeric_limits<T>::round_error() == T {});
+    assert(etl::numeric_limits<T>::infinity() == T {});
+    assert(etl::numeric_limits<T>::quiet_NaN() == T {});
+    assert(etl::numeric_limits<T>::signaling_NaN() == T {});
+    assert(etl::numeric_limits<T>::denorm_min() == T {});
 
     using lc = etl::numeric_limits<T const>;
     assert(lc::is_specialized == true);
