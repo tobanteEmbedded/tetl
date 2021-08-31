@@ -46,7 +46,6 @@ target_sources(${PROJECT_NAME}
         test_mutex.cpp
         test_numeric.cpp
         test_optional.cpp
-        test_ratio.cpp
         test_set.cpp
         test_span.cpp
         test_stack.cpp
@@ -113,6 +112,7 @@ add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numbers)
 add_subdirectory(numeric)
+add_subdirectory(ratio)
 add_subdirectory(scope)
 add_subdirectory(stdexcept)
 add_subdirectory(version)
