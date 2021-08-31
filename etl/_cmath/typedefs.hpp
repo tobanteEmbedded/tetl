@@ -7,26 +7,24 @@
 
 #include "etl/_config/all.hpp"
 
-#if not defined(_MSC_VER)
-    #ifndef NAN
-        #define NAN TETL_BUILTIN_NAN
-    #endif
+#ifndef NAN
+    #define NAN TETL_BUILTIN_NAN
+#endif
 
-    #ifndef INFINITY
-        #define INFINITY TETL_BUILTIN_HUGE_VALF
-    #endif
+#ifndef INFINITY
+    #define INFINITY TETL_BUILTIN_HUGE_VALF
+#endif
 
-    #ifndef HUGE_VALF
-        #define HUGE_VALF TETL_BUILTIN_HUGE_VALF
-    #endif
+#ifndef HUGE_VALF
+    #define HUGE_VALF TETL_BUILTIN_HUGE_VALF
+#endif
 
-    #ifndef HUGE_VAL
-        #define HUGE_VAL TETL_BUILTIN_HUGE_VAL
-    #endif
+#ifndef HUGE_VAL
+    #define HUGE_VAL TETL_BUILTIN_HUGE_VAL
+#endif
 
-    #ifndef HUGE_VALL
-        #define HUGE_VALL TETL_BUILTIN_HUGE_VALL
-    #endif
+#ifndef HUGE_VALL
+    #define HUGE_VALL TETL_BUILTIN_HUGE_VALL
 #endif
 
 namespace etl {

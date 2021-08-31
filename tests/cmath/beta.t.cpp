@@ -12,7 +12,8 @@
 template <typename T>
 constexpr auto binom(int n, int k) -> T
 {
-    return 1 / ((n + 1) * etl::beta(n - k + 1, k + 1));
+    auto const tmp = 1 / ((n + 1) * etl::beta(n - k + 1, k + 1));
+    return static_cast<T>(tmp);
 }
 
 template <typename T>
