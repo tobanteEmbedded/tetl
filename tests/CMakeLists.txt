@@ -63,7 +63,6 @@ target_sources(${PROJECT_NAME}
         test_utility.cpp
         test_variant.cpp
         test_vector.cpp
-        test_version.cpp
 
         _strings/test_conversion.cpp
 
@@ -118,3 +117,4 @@ add_subdirectory(cstdint)
 add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
+add_subdirectory(version)
