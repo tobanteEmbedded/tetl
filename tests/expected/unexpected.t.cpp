@@ -6,9 +6,9 @@
 
 #include "etl/type_traits.hpp"
 
-#include "catch2/catch_template_test_macros.hpp"
+#include "helper.hpp"
 
-TEST_CASE("expected: unexpect_t", "[expected]")
+constexpr auto test() -> bool
 {
     using etl::decay_t;
     using etl::is_default_constructible_v;
@@ -16,6 +16,15 @@ TEST_CASE("expected: unexpect_t", "[expected]")
     using etl::unexpect;
     using etl::unexpect_t;
 
-    STATIC_REQUIRE(is_same_v<unexpect_t, decay_t<decltype(unexpect)>>);
-    STATIC_REQUIRE(is_default_constructible_v<unexpect_t>);
+    assert((is_same_v<unexpect_t, decay_t<decltype(unexpect)>>));
+    assert((is_default_constructible_v<unexpect_t>));
+
+    return true;
+}
+
+auto main() -> int
+{
+    assert(test());
+    static_assert(test());
+    return 0;
 }
