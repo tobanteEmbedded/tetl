@@ -105,34 +105,29 @@ constexpr auto test_builtin_types() -> bool
         // assert(*it == T(1));
     }
 
+    { // not eqaul
+        etl::array<T, 3> lhs { T { 1 }, T { 2 }, T { 3 } };
+        etl::array<T, 3> rhs { T { 7 }, T { 8 }, T { 9 } };
+
+        assert(!(lhs == rhs));
+        assert(lhs != rhs);
+        assert(lhs < rhs);
+        assert(lhs <= rhs);
+        assert(!(lhs > rhs));
+        assert(!(lhs >= rhs));
+    }
+
     {
-        // compare
+        // eqaul
+        etl::array<T, 3> lhs { T { 1 }, T { 2 }, T { 3 } };
+        etl::array<T, 3> rhs { T { 1 }, T { 2 }, T { 3 } };
 
-        {
-            // not eqaul
-            etl::array<T, 3> lhs { T { 1 }, T { 2 }, T { 3 } };
-            etl::array<T, 3> rhs { T { 7 }, T { 8 }, T { 9 } };
-
-            assert(!(lhs == rhs));
-            assert(lhs != rhs);
-            assert(lhs < rhs);
-            assert(lhs <= rhs);
-            assert(!(lhs > rhs));
-            assert(!(lhs >= rhs));
-        }
-
-        {
-            // eqaul
-            etl::array<T, 3> lhs { T { 1 }, T { 2 }, T { 3 } };
-            etl::array<T, 3> rhs { T { 1 }, T { 2 }, T { 3 } };
-
-            assert(lhs == rhs);
-            assert(!(lhs != rhs));
-            assert(!(lhs < rhs));
-            assert(lhs <= rhs);
-            assert(!(lhs > rhs));
-            assert(lhs >= rhs);
-        }
+        assert(lhs == rhs);
+        assert(!(lhs != rhs));
+        assert(!(lhs < rhs));
+        assert(lhs <= rhs);
+        assert(!(lhs > rhs));
+        assert(lhs >= rhs);
     }
 
     {
