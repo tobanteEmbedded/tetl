@@ -48,7 +48,6 @@ target_sources(${PROJECT_NAME}
         test_numeric.cpp
         test_optional.cpp
         test_ratio.cpp
-        test_scope.cpp
         test_set.cpp
         test_span.cpp
         test_stack.cpp
@@ -115,4 +114,5 @@ add_subdirectory(exception)
 add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
+add_subdirectory(scope)
 add_subdirectory(version)
