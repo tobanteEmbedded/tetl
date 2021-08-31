@@ -12,14 +12,14 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::sin(short { 0 }) == 0.0);
-    assert(etl::sinl(0) == 0.0L);
-    assert(etl::sin(T(0)) == T(0));
+    assert(etl::asin(short { 0 }) == 0.0);
+    assert(etl::asinl(0) == 0.0L);
+    assert(etl::asin(T(0)) == T(0));
 
-    assert(approx(etl::sin(T(1)), T(0.841471)));
-    assert(approx(etl::sin(T(2)), T(0.909297)));
+    assert(approx(etl::asin(T(0.5)), T(0.523599)));
+    assert(approx(etl::asin(T(1)), T(1.5708)));
 
-    assert(approx(etl::sin(static_cast<T>(etl::numbers::pi)), T(0)));
+    assert(etl::isnan(etl::asin(T(2))));
 
     return true;
 }
@@ -32,7 +32,5 @@ auto main() -> int
     static_assert(test<double>());
     assert(test<double>());
 
-    static_assert(test<long double>());
-    assert(test<long double>());
     return 0;
 }

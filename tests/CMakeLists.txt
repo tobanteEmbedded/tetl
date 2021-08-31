@@ -1,5 +1,24 @@
 project(etl-tests)
 
+add_library(testing_defs INTERFACE)
+target_compile_definitions(testing_defs INTERFACE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+target_include_directories(testing_defs INTERFACE ${PROJECT_SOURCE_DIR})
+target_link_libraries(testing_defs
+    INTERFACE
+        tobanteEmbedded::etl
+        tobanteEmbedded::CompilerOptions
+        tobanteEmbedded::CompilerWarnings
+        tobanteEmbedded::CodeCoverage
+)
+
+function(tetl_add_test _group _target)
+  add_executable("test_${_group}_${_target}" "${_target}.cpp")
+  add_test(NAME "test_${_group}_${_target}" COMMAND "test_${_group}_${_target}")
+  target_compile_definitions(test_${_group}_${_target} PRIVATE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+  target_include_directories(test_${_group}_${_target} PRIVATE ${PROJECT_SOURCE_DIR}/..)
+  target_link_libraries("test_${_group}_${_target}" PRIVATE testing_defs)
+endfunction()
+
 add_executable(${PROJECT_NAME})
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
@@ -78,16 +97,7 @@ target_sources(${PROJECT_NAME}
         experimental/mcp23017/test_mcp23017.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-        tobanteEmbedded::etl
-        tobanteEmbedded::CompilerOptions
-        tobanteEmbedded::CompilerWarnings
-        tobanteEmbedded::CodeCoverage
-        Catch2WithMain
-)
-target_compile_definitions(${PROJECT_NAME} PRIVATE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} PRIVATE testing_defs Catch2WithMain)
 
 
 add_executable(${PROJECT_NAME}_testing
@@ -102,5 +112,6 @@ target_link_libraries(${PROJECT_NAME}_testing
         tobanteEmbedded::CompilerWarnings
         tobanteEmbedded::CodeCoverage
 )
+
 
 add_subdirectory(cmath)
