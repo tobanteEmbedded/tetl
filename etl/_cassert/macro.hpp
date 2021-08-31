@@ -68,21 +68,22 @@ namespace detail {
 #if not defined(TETL_ASSERT)
     #if !defined(TETL_NDEBUG) || (TETL_NDEBUG == 0)
   /// \brief Assertion macro with customizable runtime behavior
-        #define TETL_ASSERT(exp)                                               \
+        #define TETL_ASSERT(...)                                               \
             do {                                                               \
-                if (TETL_UNLIKELY((exp) == false)) {                           \
+                if (TETL_UNLIKELY((__VA_ARGS__) == false)) {                   \
                     /* TETL_DEBUG_TRAP(); */                                   \
                     auto const msg = etl::assert_msg {                         \
                         __LINE__, /*line of assertion*/                        \
                         __FILE__, /*source file*/                              \
                         etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,  \
-                        etl::is_hosted() ? TETL_PP_STRINGIFY(exp) : nullptr,   \
+                        etl::is_hosted() ? TETL_PP_STRINGIFY(__VA_ARGS__)      \
+                                         : nullptr,                            \
                     };                                                         \
                     etl::detail::tetl_call_assert_handler(msg);                \
                 }                                                              \
             } while (false)
     #else
-        #define TETL_ASSERT(exp)
+        #define TETL_ASSERT(...)
     #endif // !defined(TETL_NDEBUG)
 #endif     // not defined(TETL_ASSERT)
 
