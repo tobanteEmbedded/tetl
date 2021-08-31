@@ -8,7 +8,7 @@
 #include "etl/string_view.hpp"
 #include "etl/utility.hpp"
 
-#include "helper.hpp"
+#include "testing.hpp"
 
 template <etl::size_t N>
 constexpr auto test_bitset() -> bool

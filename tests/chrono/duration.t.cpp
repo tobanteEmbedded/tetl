@@ -8,7 +8,7 @@
 #include "etl/ratio.hpp"
 #include "etl/type_traits.hpp"
 
-#include "helper.hpp"
+#include "testing.hpp"
 
 using etl::chrono::microseconds;
 using etl::chrono::milliseconds;
