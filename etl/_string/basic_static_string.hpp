@@ -1475,7 +1475,10 @@ private:
         return 0;
     }
 
-    auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
+    constexpr auto clear_storage() noexcept -> void
+    {
+        etl::fill(begin(), end(), CharT(0));
+    }
 
     internal_size_t size_      = 0;
     value_type data_[Capacity] = {};
