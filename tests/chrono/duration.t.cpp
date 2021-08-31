@@ -52,9 +52,12 @@ constexpr auto test() -> bool
     {
         using duration_t = etl::chrono::duration<T>;
         auto dur         = duration_t { T { 0 } };
-        assert(dur++.count() == 0);
+
+        auto o = dur++;
+        assert(o.count() == 0);
         assert(dur.count() == 1);
-        assert(dur--.count() == 1);
+        o = dur--;
+        assert(o.count() == 1);
         assert(dur.count() == 0);
         ++dur;
         assert(dur.count() == 1);

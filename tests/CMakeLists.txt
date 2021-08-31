@@ -45,7 +45,6 @@ target_sources(${PROJECT_NAME}
         test_expected.cpp
         test_exception.cpp
         test_format.cpp
-        test_functional.cpp
         test_ios.cpp
         test_iterator.cpp
         test_map.cpp
@@ -116,5 +115,6 @@ add_subdirectory(cctype)
 add_subdirectory(charconv)
 add_subdirectory(chrono)
 add_subdirectory(cmath)
+add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
