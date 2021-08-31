@@ -11,12 +11,15 @@ target_link_libraries(testing_defs
         tobanteEmbedded::CodeCoverage
 )
 
-function(tetl_add_test _group _target)
-  add_executable("test_${_group}_${_target}" "${_target}.t.cpp")
-  add_test(NAME "test_${_group}_${_target}" COMMAND "test_${_group}_${_target}")
-  target_compile_definitions(test_${_group}_${_target} PRIVATE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-  target_include_directories(test_${_group}_${_target} PRIVATE ${PROJECT_SOURCE_DIR}/..)
-  target_link_libraries("test_${_group}_${_target}" PRIVATE testing_defs)
+function(tetl_add_test _header _target)
+  set(options OPTIONAL WILL_FAIL)
+  cmake_parse_arguments(TETL_ADD_TEST_PREFIX "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  add_executable("test_${_header}_${_target}" "${_target}.t.cpp")
+  add_test(NAME "test_${_header}_${_target}" COMMAND "test_${_header}_${_target}")
+  target_compile_definitions(test_${_header}_${_target} PRIVATE TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+  target_include_directories(test_${_header}_${_target} PRIVATE ${PROJECT_SOURCE_DIR}/..)
+  target_link_libraries("test_${_header}_${_target}" PRIVATE testing_defs)
+  set_tests_properties("test_${_header}_${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
 
 add_executable(${PROJECT_NAME})
@@ -32,7 +35,6 @@ target_sources(${PROJECT_NAME}
         test_array.cpp
         test_bit.cpp
         test_bitset.cpp
-        test_cctype.cpp
         test_charconv.cpp
         test_chrono.cpp
         test_complex.cpp
@@ -112,6 +114,7 @@ target_link_libraries(${PROJECT_NAME}_testing
 )
 
 
+add_subdirectory(cctype)
 add_subdirectory(cmath)
 add_subdirectory(limits)
 add_subdirectory(numeric)
