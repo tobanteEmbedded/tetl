@@ -4,6 +4,8 @@
 
 #include "etl/exception.hpp"
 
+#include "etl/type_traits.hpp"
+
 #include "helper.hpp"
 
 constexpr auto test() -> bool

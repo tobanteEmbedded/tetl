@@ -50,7 +50,6 @@ target_sources(${PROJECT_NAME}
         test_set.cpp
         test_span.cpp
         test_stack.cpp
-        test_stdexcept.cpp
         test_string.cpp
         test_string_view.cpp
         test_tuple.cpp
@@ -115,4 +114,5 @@ add_subdirectory(limits)
 add_subdirectory(numbers)
 add_subdirectory(numeric)
 add_subdirectory(scope)
+add_subdirectory(stdexcept)
 add_subdirectory(version)
