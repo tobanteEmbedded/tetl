@@ -4,6 +4,8 @@
 
 #include "etl/exception.hpp"
 
+#include "etl/string_view.hpp"
+
 #include "helper.hpp"
 
 auto main() -> int
@@ -12,7 +14,7 @@ auto main() -> int
         etl::raise<etl::exception>("should fail");
         assert(false);
     } catch (etl::exception const& e) {
-        assert(true);
+        assert(e.what() == etl::string_view { "should fail" });
     }
     return 0;
 }
