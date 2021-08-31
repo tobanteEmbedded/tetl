@@ -20,7 +20,7 @@ constexpr auto approx(T a, T b, T epsilon = static_cast<T>(0.001)) -> bool
 namespace etl {
 inline auto tetl_assert_handler(etl::assert_msg const& msg) -> void
 {
-    ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
+    ::printf("ASSERTION: %s:%d - %s\n", msg.file, msg.line, msg.expression);
     ::exit(1); // NOLINT
 }
 
