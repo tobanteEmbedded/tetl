@@ -35,8 +35,8 @@ auto main() -> int
 {
     assert(test_all());
 
-    // TODO [tobi] Does not compile. GCC: accessing value of ‘original’
-    // through a ‘const char’ glvalue in a constant expression
-    // static_assert(test_all());
+#if __has_builtin(__builtin_bit_cast)
+    static_assert(test_all());
+#endif
     return 0;
 }

@@ -5,6 +5,8 @@
 #ifndef TETL_BIT_BIT_CAST_HPP
 #define TETL_BIT_BIT_CAST_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -41,6 +43,9 @@ template <typename To, typename From>
 constexpr auto bit_cast(From const& src) noexcept
     -> enable_if_t<detail::bit_castable_types<To, From>, To>
 {
+#if __has_builtin(__builtin_bit_cast)
+    return __builtin_bit_cast(To, src);
+#else
     // This implementation additionally requires destination type to be
     // trivially constructible
     static_assert(is_trivially_constructible_v<To>);
@@ -48,6 +53,7 @@ constexpr auto bit_cast(From const& src) noexcept
     To dst {};
     detail::memcpy_impl<char, etl::size_t>(&dst, &src, sizeof(To));
     return dst;
+#endif
 }
 
 } // namespace etl
