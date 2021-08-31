@@ -32,7 +32,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_02.cpp
         algorithm/test_algorithm_03.cpp
 
-        test_chrono.cpp
         test_complex.cpp
         test_cstdarg.cpp
         test_cstddef.cpp
@@ -115,6 +114,7 @@ add_subdirectory(bit)
 add_subdirectory(bitset)
 add_subdirectory(cctype)
 add_subdirectory(charconv)
+add_subdirectory(chrono)
 add_subdirectory(cmath)
 add_subdirectory(limits)
 add_subdirectory(numeric)
