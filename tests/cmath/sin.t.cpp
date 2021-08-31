@@ -32,7 +32,5 @@ auto main() -> int
     static_assert(test<double>());
     assert(test<double>());
 
-    static_assert(test<long double>());
-    assert(test<long double>());
     return 0;
 }

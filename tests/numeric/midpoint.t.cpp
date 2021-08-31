@@ -108,8 +108,6 @@ auto main() -> int
     assert(test_floats<float>());
     static_assert(test_floats<double>());
     assert(test_floats<double>());
-    static_assert(test_floats<long double>());
-    assert(test_floats<long double>());
 
     static_assert(test_pointer<char>());
     assert(test_pointer<char>());
@@ -123,8 +121,6 @@ auto main() -> int
     assert(test_pointer<float>());
     static_assert(test_pointer<double>());
     assert(test_pointer<double>());
-    static_assert(test_pointer<long double>());
-    assert(test_pointer<long double>());
 
     return 0;
 }
