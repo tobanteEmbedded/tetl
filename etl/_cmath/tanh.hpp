@@ -50,7 +50,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/tanh
 template <typename T>
 [[nodiscard]] constexpr auto tanh(T arg) noexcept
-    -> etl::enable_if<etl::is_integral_v<T>, double>
+    -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::tanh(static_cast<double>(arg));
 }

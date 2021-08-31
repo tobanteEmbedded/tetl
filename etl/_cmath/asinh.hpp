@@ -50,7 +50,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 template <typename T>
 [[nodiscard]] constexpr auto asinh(T arg) noexcept
-    -> etl::enable_if<etl::is_integral_v<T>, double>
+    -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::asinh(static_cast<double>(arg));
 }

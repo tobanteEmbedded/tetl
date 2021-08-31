@@ -50,7 +50,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/tgamma
 template <typename T>
 [[nodiscard]] constexpr auto tgamma(T arg) noexcept
-    -> etl::enable_if<etl::is_integral_v<T>, double>
+    -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::tgamma(static_cast<double>(arg));
 }
