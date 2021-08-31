@@ -102,3 +102,5 @@ target_link_libraries(${PROJECT_NAME}_testing
         tobanteEmbedded::CompilerWarnings
         tobanteEmbedded::CodeCoverage
 )
+
+add_subdirectory(cmath)
