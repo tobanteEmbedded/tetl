@@ -34,7 +34,6 @@ target_sources(${PROJECT_NAME}
 
         test_cstdarg.cpp
         test_cstddef.cpp
-        test_cstdint.cpp
         test_cstdio.cpp
         test_cstdlib.cpp
         test_cstring.cpp
@@ -115,6 +114,7 @@ add_subdirectory(chrono)
 add_subdirectory(cmath)
 add_subdirectory(complex)
 add_subdirectory(concepts)
+add_subdirectory(cstdint)
 add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
