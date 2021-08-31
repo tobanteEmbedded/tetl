@@ -5,8 +5,9 @@
 #ifndef TETL_TEST_CMATH_HELPER_HPP
 #define TETL_TEST_CMATH_HELPER_HPP
 
-#include "etl/cassert.hpp"
 #include "etl/cmath.hpp"
+
+#include "etl/cassert.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
