@@ -40,7 +40,6 @@ target_sources(${PROJECT_NAME}
         test_ctime.cpp
         test_cwchar.cpp
         test_expected.cpp
-        test_exception.cpp
         test_format.cpp
         test_ios.cpp
         test_iterator.cpp
@@ -114,6 +113,7 @@ add_subdirectory(cmath)
 add_subdirectory(complex)
 add_subdirectory(concepts)
 add_subdirectory(cstdint)
+add_subdirectory(exception)
 add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
