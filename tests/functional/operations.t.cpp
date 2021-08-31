@@ -108,8 +108,6 @@ constexpr auto test_all() -> bool
     assert(test<etl::int16_t>());
     assert(test<etl::int32_t>());
     assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
 
     assert(etl::detail::is_transparent<etl::logical_and<>>::value);
     assert(!(etl::logical_and<bool> {}(true, false)));
