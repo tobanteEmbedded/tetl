@@ -39,7 +39,6 @@ target_sources(${PROJECT_NAME}
         test_cstdio.cpp
         test_cstdlib.cpp
         test_cstring.cpp
-        test_concepts.cpp
         test_ctime.cpp
         test_cwchar.cpp
         test_expected.cpp
@@ -115,6 +114,7 @@ add_subdirectory(cctype)
 add_subdirectory(charconv)
 add_subdirectory(chrono)
 add_subdirectory(cmath)
+add_subdirectory(concepts)
 add_subdirectory(functional)
 add_subdirectory(limits)
 add_subdirectory(numeric)
