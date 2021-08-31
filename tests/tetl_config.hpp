@@ -19,6 +19,13 @@ template <typename Exception>
     ::puts(e.what());
     throw e;
 }
+
+template <typename AssertionMessage>
+[[noreturn]] auto tetl_assert_handler(AssertionMessage const& msg) -> void
+{
+    ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
+    ::exit(1); // NOLINT
+}
 } // namespace etl
 
 #endif // TETL_CONFIG_FOR_CATCH2_BASED_TESTS_HPP

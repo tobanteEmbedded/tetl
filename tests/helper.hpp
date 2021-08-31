@@ -9,22 +9,10 @@
 
 #include "etl/cassert.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 template <typename T>
 constexpr auto approx(T a, T b, T epsilon = static_cast<T>(0.001)) -> bool
 {
     return etl::fabs(a - b) < epsilon;
 }
-
-namespace etl {
-inline auto tetl_assert_handler(etl::assert_msg const& msg) -> void
-{
-    ::printf("ASSERTION: %s:%d - %s\n", msg.file, msg.line, msg.expression);
-    ::exit(1); // NOLINT
-}
-
-} // namespace etl
 
 #endif // TETL_TEST_CMATH_HELPER_HPP

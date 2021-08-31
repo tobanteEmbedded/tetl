@@ -36,7 +36,8 @@ namespace etl {
 /// `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro. Rebooting the chip is probably
 /// the best idea, because you can not recover from any of the exceptional cases
 /// in the library.
-[[noreturn]] auto tetl_assert_handler(assert_msg const& msg) -> void;
+template <typename AssertionMessage>
+[[noreturn]] auto tetl_assert_handler(AssertionMessage const& msg) -> void;
 #else
 
 #endif

@@ -26,8 +26,6 @@ add_executable(${PROJECT_NAME})
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
-        assert_handler.cpp
-
         algorithm/test_algorithm_01.cpp
         algorithm/test_algorithm_02.cpp
         algorithm/test_algorithm_03.cpp

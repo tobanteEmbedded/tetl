@@ -9,8 +9,6 @@
 #include "etl/utility.hpp" // for as_const
 #include "etl/vector.hpp"
 
-#include <list>
-
 #include "catch2/catch_template_test_macros.hpp"
 
 TEMPLATE_TEST_CASE(
