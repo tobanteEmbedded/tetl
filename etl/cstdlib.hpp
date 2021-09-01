@@ -17,7 +17,6 @@
 #include "etl/_cstdlib/div.hpp"
 #include "etl/_cstdlib/exit.hpp"
 #include "etl/_cstdlib/imaxdiv.hpp"
-#include "etl/_cstdlib/itoa.hpp"
 #include "etl/_cstdlib/labs.hpp"
 #include "etl/_cstdlib/ldiv.hpp"
 #include "etl/_cstdlib/llabs.hpp"
