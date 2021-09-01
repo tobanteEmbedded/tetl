@@ -76,6 +76,7 @@ target_link_libraries(${PROJECT_NAME}_testing
 )
 
 
+add_subdirectory(algorithm)
 add_subdirectory(array)
 add_subdirectory(bit)
 add_subdirectory(bitset)

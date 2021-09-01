@@ -1,0 +1,11 @@
+project(algorithm)
+
+tetl_add_test(${PROJECT_NAME} count)
+tetl_add_test(${PROJECT_NAME} find)
+tetl_add_test(${PROJECT_NAME} for_each)
+tetl_add_test(${PROJECT_NAME} generate)
+tetl_add_test(${PROJECT_NAME} minmax)
+tetl_add_test(${PROJECT_NAME} mismatch)
+tetl_add_test(${PROJECT_NAME} partition)
+tetl_add_test(${PROJECT_NAME} transform)
+tetl_add_test(${PROJECT_NAME} unique)
