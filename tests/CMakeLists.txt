@@ -29,7 +29,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_02.cpp
         algorithm/test_algorithm_03.cpp
 
-        test_format.cpp
         test_type_traits.cpp
         test_variant.cpp
 
@@ -88,6 +87,7 @@ add_subdirectory(cstdlib)
 add_subdirectory(cstring)
 add_subdirectory(exception)
 add_subdirectory(expected)
+add_subdirectory(format)
 add_subdirectory(functional)
 add_subdirectory(ios)
 add_subdirectory(iterator)
