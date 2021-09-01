@@ -41,7 +41,6 @@ target_sources(${PROJECT_NAME}
         test_span.cpp
         test_string.cpp
         test_string_view.cpp
-        test_tuple.cpp
         test_type_traits.cpp
         test_utility.cpp
         test_variant.cpp
@@ -112,4 +111,5 @@ add_subdirectory(scope)
 add_subdirectory(set)
 add_subdirectory(stack)
 add_subdirectory(stdexcept)
+add_subdirectory(tuple)
 add_subdirectory(version)
