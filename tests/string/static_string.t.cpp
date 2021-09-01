@@ -75,7 +75,7 @@ constexpr auto test() -> bool
     {
         auto testCtorCharPointers = [](char const* s, etl::size_t size) {
             using string_t = T;
-            string_t str { s, etl::next(s, size) };
+            string_t str { s, etl::next(s, static_cast<etl::ptrdiff_t>(size)) };
             assert(!str.full());
             assert(str.capacity() == str.max_size());
             assert(str.size() == size);

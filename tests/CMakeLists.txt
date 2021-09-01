@@ -22,53 +22,53 @@ function(tetl_add_test _header _target)
   set_tests_properties("test_${_header}_${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
 
-add_executable(${PROJECT_NAME})
-add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
-target_sources(${PROJECT_NAME}
-    PRIVATE
-        algorithm/test_algorithm_02.cpp
-        algorithm/test_algorithm_03.cpp
+# add_executable(${PROJECT_NAME})
+# add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
+# target_sources(${PROJECT_NAME}
+#     PRIVATE
+#         algorithm/test_algorithm_02.cpp
+#         algorithm/test_algorithm_03.cpp
 
-        test_format.cpp
-        test_type_traits.cpp
-        test_variant.cpp
+#         test_format.cpp
+#         test_type_traits.cpp
+#         test_variant.cpp
 
-        experimental/dsp/test_dsp.cpp
+#         experimental/dsp/test_dsp.cpp
 
-        experimental/meta/test_meta_algorithm.cpp
-        experimental/meta/test_meta_traits.cpp
-        experimental/meta/test_meta_types.cpp
+#         experimental/meta/test_meta_algorithm.cpp
+#         experimental/meta/test_meta_traits.cpp
+#         experimental/meta/test_meta_types.cpp
 
-        experimental/net/test_buffer.cpp
-        experimental/net/test_byte_order.cpp
+#         experimental/net/test_buffer.cpp
+#         experimental/net/test_byte_order.cpp
 
-        experimental/freertos/test_task.cpp
-        experimental/freertos/test_stream_buffer.cpp
-        experimental/freertos/test_queue.cpp
+#         experimental/freertos/test_task.cpp
+#         experimental/freertos/test_stream_buffer.cpp
+#         experimental/freertos/test_queue.cpp
 
-        experimental/stm32/test_gpio.cpp
-        experimental/stm32/test_interrupt.cpp
+#         experimental/stm32/test_gpio.cpp
+#         experimental/stm32/test_interrupt.cpp
 
-        experimental/strong_type/test_strong_type.cpp
+#         experimental/strong_type/test_strong_type.cpp
 
-        experimental/mcp23017/test_mcp23017.cpp
-)
+#         experimental/mcp23017/test_mcp23017.cpp
+# )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE testing_defs Catch2WithMain)
+# target_link_libraries(${PROJECT_NAME} PRIVATE testing_defs Catch2WithMain)
 
 
-add_executable(${PROJECT_NAME}_testing
-    experimental/testing/test_main.cpp
-    experimental/testing/test_test_case.cpp
-)
-add_test(NAME ${PROJECT_NAME}_testing COMMAND ${PROJECT_NAME}_testing)
-target_link_libraries(${PROJECT_NAME}_testing
-    PRIVATE
-        tobanteEmbedded::etl
-        tobanteEmbedded::CompilerOptions
-        tobanteEmbedded::CompilerWarnings
-        tobanteEmbedded::CodeCoverage
-)
+# add_executable(${PROJECT_NAME}_testing
+#     experimental/testing/test_main.cpp
+#     experimental/testing/test_test_case.cpp
+# )
+# add_test(NAME ${PROJECT_NAME}_testing COMMAND ${PROJECT_NAME}_testing)
+# target_link_libraries(${PROJECT_NAME}_testing
+#     PRIVATE
+#         tobanteEmbedded::etl
+#         tobanteEmbedded::CompilerOptions
+#         tobanteEmbedded::CompilerWarnings
+#         tobanteEmbedded::CodeCoverage
+# )
 
 
 add_subdirectory(algorithm)
