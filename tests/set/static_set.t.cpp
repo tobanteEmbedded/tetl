@@ -16,7 +16,7 @@
 #include "testing.hpp"
 
 template <typename T>
-auto test() -> bool
+auto test() -> bool // NOLINT(readability-function-size)
 {
     {
         using etl::is_same_v;
