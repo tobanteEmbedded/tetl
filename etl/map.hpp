@@ -6,11 +6,7 @@
 #define TETL_MAP_HPP
 
 /// \file This header is part of the container library.
-/// \example map.cpp
 
 #include "etl/_config/all.hpp"
-
-#include "etl/_map/map.hpp"
-#include "etl/_map/static_map.hpp"
 
 #endif // TETL_MAP_HPP

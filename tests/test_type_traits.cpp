@@ -4,7 +4,6 @@
 #include "etl/type_traits.hpp"
 
 #include "etl/cstdint.hpp"
-#include "etl/map.hpp"
 #include "etl/utility.hpp"
 #include "etl/vector.hpp"
 
@@ -1277,10 +1276,6 @@ TEST_CASE("type_traits: make_unsigned", "[type_traits]")
 }
 
 namespace {
-struct Ex1 {
-    // member has a non-trivial default ctor
-    etl::map<int, float, 4> str;
-};
 
 struct Ex2 {
     // trivial and non-throwing
@@ -1296,8 +1291,8 @@ struct Ex3 {
 
 } // namespace
 
-TEMPLATE_TEST_CASE("type_traits: is_default_constructible", "[type_traits]",
-    int, float, Ex1, Ex2)
+TEMPLATE_TEST_CASE(
+    "type_traits: is_default_constructible", "[type_traits]", int, float, Ex2)
 {
     STATIC_REQUIRE(etl::is_default_constructible<TestType>::value);
     STATIC_REQUIRE(etl::is_default_constructible_v<TestType>);
@@ -1311,7 +1306,6 @@ TEMPLATE_TEST_CASE("type_traits: is_trivially_default_constructible",
     STATIC_REQUIRE(etl::is_trivially_default_constructible<TestType>::value);
     STATIC_REQUIRE(etl::is_trivially_default_constructible_v<TestType>);
 
-    STATIC_REQUIRE_FALSE(etl::is_trivially_default_constructible_v<Ex1>);
     STATIC_REQUIRE_FALSE(etl::is_trivially_default_constructible_v<Ex3>);
 }
 

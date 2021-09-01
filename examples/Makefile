@@ -26,7 +26,6 @@ EXAMPLES 	+= bitset
 EXAMPLES 	+= cassert
 EXAMPLES 	+= chrono
 EXAMPLES 	+= cmath
-EXAMPLES 	+= map
 EXAMPLES 	+= numeric
 EXAMPLES 	+= optional
 EXAMPLES 	+= set
