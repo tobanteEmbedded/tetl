@@ -30,7 +30,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_02.cpp
         algorithm/test_algorithm_03.cpp
 
-        test_cstddef.cpp
         test_cstdlib.cpp
         test_cstring.cpp
         test_format.cpp
@@ -102,6 +101,7 @@ add_subdirectory(cmath)
 add_subdirectory(complex)
 add_subdirectory(concepts)
 add_subdirectory(cstdarg)
+add_subdirectory(cstddef)
 add_subdirectory(cstdint)
 add_subdirectory(exception)
 add_subdirectory(expected)
