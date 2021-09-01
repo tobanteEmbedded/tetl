@@ -34,8 +34,6 @@ target_sources(${PROJECT_NAME}
         test_type_traits.cpp
         test_variant.cpp
 
-        _strings/test_conversion.cpp
-
         experimental/dsp/test_dsp.cpp
 
         experimental/meta/test_meta_algorithm.cpp
