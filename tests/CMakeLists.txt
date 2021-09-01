@@ -32,7 +32,6 @@ target_sources(${PROJECT_NAME}
 
         test_format.cpp
         test_map.cpp
-        test_memory.cpp
         test_optional.cpp
         test_string.cpp
         test_string_view.cpp
@@ -100,6 +99,7 @@ add_subdirectory(functional)
 add_subdirectory(ios)
 add_subdirectory(iterator)
 add_subdirectory(limits)
+add_subdirectory(memory)
 add_subdirectory(mutex)
 add_subdirectory(numbers)
 add_subdirectory(numeric)
