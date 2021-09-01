@@ -29,9 +29,9 @@ template <typename ForwardIt, typename T, typename Compare>
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
 
-    ForwardIt it;
-    diff_t count;
-    diff_t step;
+    ForwardIt it {};
+    diff_t count {};
+    diff_t step {};
     count = distance(first, last);
 
     while (count > 0) {

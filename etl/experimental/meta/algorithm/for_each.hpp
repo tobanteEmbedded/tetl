@@ -14,7 +14,7 @@ namespace etl::experimental::meta {
 namespace detail {
 
 template <bool WithI, etl::size_t... Index, typename... Ts, typename Func>
-auto for_each_impl(
+constexpr auto for_each_impl(
     etl::index_sequence<Index...> /*is*/, etl::tuple<Ts...>& t, Func f)
 {
     if constexpr (WithI) {

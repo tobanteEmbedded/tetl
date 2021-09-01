@@ -8,7 +8,6 @@ foreach(_target
   "cassert"
   "chrono"
   "cmath"
-  "map"
   "memory"
   "numeric"
   "optional"

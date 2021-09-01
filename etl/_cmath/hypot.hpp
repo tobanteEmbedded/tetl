@@ -5,10 +5,11 @@
 #ifndef TETL_CMATH_HYPOT_HPP
 #define TETL_CMATH_HYPOT_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_cmath/isinf.hpp"
 #include "etl/_cmath/isnan.hpp"
 #include "etl/_cmath/sqrt.hpp"
-#include "etl/_cmath/typedefs.hpp"
 
 namespace etl {
 
@@ -22,7 +23,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return HUGE_VALF; }
+    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF; }
     return etl::sqrt(x * x + y * y);
 }
@@ -37,7 +38,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return HUGE_VALF; }
+    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF; }
     return etl::sqrt(x * x + y * y);
 }
@@ -52,7 +53,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return HUGE_VAL; }
+    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN; }
     return etl::sqrt(x * x + y * y);
 }
@@ -68,7 +69,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept
     -> long double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return HUGE_VALL; }
+    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL; }
     return etl::sqrt(x * x + y * y);
 }
@@ -84,7 +85,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept
     -> long double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return HUGE_VALL; }
+    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL; }
     return etl::sqrt(x * x + y * y);
 }

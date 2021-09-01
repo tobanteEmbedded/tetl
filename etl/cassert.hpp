@@ -13,7 +13,7 @@
 #include "etl/_cassert/macro.hpp"
 
 #ifndef assert
-    #define assert(x) TETL_ASSERT(x)
+    #define assert(...) TETL_ASSERT(__VA_ARGS__)
 #endif
 
 #endif // TETL_CASSERT_HPP

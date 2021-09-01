@@ -20,13 +20,14 @@ namespace etl {
 /// \module Utility
 template <typename ForwardIter, typename Predicate = equal_to<>>
 struct default_searcher {
-    default_searcher(ForwardIter f, ForwardIter l, Predicate p = Predicate())
+    constexpr default_searcher(
+        ForwardIter f, ForwardIter l, Predicate p = Predicate())
         : first_(f), last_(l), predicate_(p)
     {
     }
 
     template <typename ForwardIter2>
-    auto operator()(ForwardIter2 f, ForwardIter2 l) const
+    constexpr auto operator()(ForwardIter2 f, ForwardIter2 l) const
         -> etl::pair<ForwardIter2, ForwardIter2>
     {
         if (auto i = etl::detail::search_impl(f, l, first_, last_, predicate_);

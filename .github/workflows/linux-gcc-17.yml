@@ -21,9 +21,6 @@ jobs:
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug
 
-      - name: Run main tests -- Debug
-        run: ./cmake-build-debug/tests/etl-tests
-      
       - name: Run all tests -- Debug
         run: cd cmake-build-debug; ctest -VV; cd -
 
@@ -32,9 +29,6 @@ jobs:
 
       - name: CMake build -- Release
         run: cmake --build cmake-build-release
-      
-      - name: Run main tests -- Release
-        run: ./cmake-build-release/tests/etl-tests
-      
+
       - name: Run all tests -- Release
         run: cd cmake-build-release; ctest -VV; cd -

@@ -22,12 +22,11 @@
 #endif
 
 namespace etl {
-// This function only needs to be implemented if you defined the custom
-// assert handler macro.
-auto tetl_assert_handler(etl::assert_msg const& msg) -> void
+template <typename Assertion>
+[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
-    ::exit(1); // NOLINT(concurrency-mt-unsafe)
+    ::exit(1); // NOLINT
 }
 
 } // namespace etl

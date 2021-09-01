@@ -11,7 +11,7 @@ namespace etl {
 
 namespace detail {
 template <size_t Capacity, typename Int>
-auto to_string_impl(Int val) -> static_string<Capacity>
+constexpr auto to_string_impl(Int val) -> static_string<Capacity>
 {
     char buffer[Capacity] {};
     auto* first    = etl::begin(buffer);

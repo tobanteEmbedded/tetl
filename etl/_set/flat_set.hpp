@@ -63,7 +63,7 @@ struct flat_set {
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
     using container_type         = Container;
 
-    flat_set() : flat_set { Compare {} } { }
+    constexpr flat_set() : flat_set { Compare {} } { }
 
     /// \brief Initializes c with etl::move(cont), value-initializes compare,
     /// sorts the range [begin(),end()) with respect to compare, and finally
@@ -72,28 +72,32 @@ struct flat_set {
     /// Complexity: Linear in N if cont is sorted with respect to compare and
     /// otherwise N log N, where N is cont.size().
     TETL_REQUIRES(detail::RandomAccessRange<container_type>)
-    explicit flat_set(container_type const& container)
+    explicit constexpr flat_set(container_type const& container)
         : flat_set { etl::begin(container), etl::end(container), Compare() }
     {
     }
 
-    flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
+    constexpr flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
         : container_ { etl::move(cont) }, compare_ { Compare() }
     {
     }
 
-    explicit flat_set(Compare const& comp) : container_ {}, compare_(comp) { }
+    explicit constexpr flat_set(Compare const& comp)
+        : container_ {}, compare_(comp)
+    {
+    }
 
     template <typename InputIt>
-    flat_set(InputIt first, InputIt last, Compare const& comp = Compare())
+    constexpr flat_set(
+        InputIt first, InputIt last, Compare const& comp = Compare())
         : container_ {}, compare_ { comp }
     {
         insert(first, last);
     }
 
     template <typename InputIt>
-    flat_set(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last,
-        Compare const& comp = Compare())
+    constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first,
+        InputIt last, Compare const& comp = Compare())
         : container_ { first, last }, compare_ { comp }
     {
     }

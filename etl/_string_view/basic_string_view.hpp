@@ -424,7 +424,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find(
         CharType ch, size_type pos = 0) const noexcept -> size_type
     {
-        return find(basic_string_view(etl::addressof(ch), 1), pos);
+        return find(basic_string_view(&ch, 1), pos);
     }
 
     /// \brief Finds the first substring equal to the given character sequence.
@@ -461,7 +461,7 @@ struct basic_string_view {
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
-    /// Equivalent to rfind(basic_string_view(etl::addressof(c), 1), pos).
+    /// Equivalent to rfind(basic_string_view(&c, 1), pos).
     ///
     /// \returns Position of the first character of the found substring or npos
     /// if no such substring is found.
@@ -516,14 +516,14 @@ struct basic_string_view {
 
     /// \brief Finds the first character equal to any of the characters in the
     /// given character sequence. Equivalent to
-    /// find_first_of(basic_string_view(etl::addressof(c), 1), pos)
+    /// find_first_of(basic_string_view(&c, 1), pos)
     ///
     /// \returns Position of the first occurrence of any character of the
     /// substring, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_of(
         CharType c, size_type pos = 0) const noexcept -> size_type
     {
-        return find_first_of(basic_string_view(etl::addressof(c), 1), pos);
+        return find_first_of(basic_string_view(&c, 1), pos);
     }
 
     /// \brief Finds the first character equal to any of the characters in the
@@ -624,14 +624,14 @@ struct basic_string_view {
     /// character sequence. Exact search algorithm is not specified. The search
     /// considers only the interval [0; pos]. If the character is not present in
     /// the interval, npos will be returned. Equivalent to
-    /// find_last_of(basic_string_view(etl::addressof(c), 1), pos).
+    /// find_last_of(basic_string_view(&c, 1), pos).
     ///
     /// \returns Position of the last occurrence of any character of the
     /// substring, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_last_of(
         CharType c, size_type pos = npos) const noexcept -> size_type
     {
-        return find_last_of(basic_string_view(etl::addressof(c), 1), pos);
+        return find_last_of(basic_string_view(&c, 1), pos);
     }
 
     /// \brief Finds the last character equal to one of characters in the given
@@ -681,14 +681,14 @@ struct basic_string_view {
 
     /// \brief Finds the last character not equal to any of the characters in
     /// the given character sequence. Equivalent to
-    /// find_last_not_of(basic_string_view(etl::addressof(c), 1), pos).
+    /// find_last_not_of(basic_string_view(&c, 1), pos).
     ///
     /// \returns Position of the last character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_last_not_of(
         CharType c, size_type pos = npos) const noexcept -> size_type
     {
-        return find_last_not_of(basic_string_view(etl::addressof(c), 1), pos);
+        return find_last_not_of(basic_string_view(&c, 1), pos);
     }
 
     /// \brief Finds the last character not equal to any of the characters in

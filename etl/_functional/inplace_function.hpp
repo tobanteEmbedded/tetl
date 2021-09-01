@@ -10,6 +10,7 @@
 #include "etl/_exception/exception.hpp"
 #include "etl/_exception/raise.hpp"
 #include "etl/_memory/addressof.hpp"
+#include "etl/_new/operator.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/enable_if.hpp"

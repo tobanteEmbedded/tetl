@@ -187,7 +187,7 @@ public:
     /// Replaces the contents with character ch.
     constexpr auto operator=(value_type ch) noexcept -> basic_static_string&
     {
-        assign(etl::addressof(ch), 1);
+        assign(&ch, 1);
         return *this;
     }
 
@@ -652,7 +652,7 @@ public:
         value_type const ch) noexcept -> basic_static_string&
     {
         for (size_type i = 0; i < count; ++i) {
-            insert_impl(begin() + index, etl::addressof(ch), 1);
+            insert_impl(begin() + index, &ch, 1);
         }
         return *this;
     }
@@ -1130,7 +1130,7 @@ public:
     [[nodiscard]] constexpr auto find(
         value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        return find(etl::addressof(ch), pos, 1);
+        return find(&ch, pos, 1);
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1245,7 +1245,7 @@ public:
     [[nodiscard]] constexpr auto find_first_of(
         value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        return find_first_of(etl::addressof(ch), pos, 1);
+        return find_first_of(&ch, pos, 1);
     }
 
     /// \brief Finds the first character equal to one of the characters in the
@@ -1475,7 +1475,10 @@ private:
         return 0;
     }
 
-    auto clear_storage() noexcept -> void { etl::memset(begin(), 0, Capacity); }
+    constexpr auto clear_storage() noexcept -> void
+    {
+        etl::fill(begin(), end(), CharT(0));
+    }
 
     internal_size_t size_      = 0;
     value_type data_[Capacity] = {};

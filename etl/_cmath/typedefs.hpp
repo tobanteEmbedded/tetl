@@ -7,7 +7,9 @@
 
 #include "etl/_config/all.hpp"
 
-#if not defined(_MSC_VER)
+#if defined(_MSC_VER)
+    #include <math.h>
+#else
     #ifndef NAN
         #define NAN TETL_BUILTIN_NAN
     #endif
