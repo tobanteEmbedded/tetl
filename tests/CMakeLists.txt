@@ -36,7 +36,6 @@ target_sources(${PROJECT_NAME}
         test_iterator.cpp
         test_map.cpp
         test_memory.cpp
-        test_mutex.cpp
         test_numeric.cpp
         test_optional.cpp
         test_span.cpp
@@ -105,6 +104,7 @@ add_subdirectory(expected)
 add_subdirectory(functional)
 add_subdirectory(ios)
 add_subdirectory(limits)
+add_subdirectory(mutex)
 add_subdirectory(numbers)
 add_subdirectory(numeric)
 add_subdirectory(ratio)
