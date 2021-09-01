@@ -55,13 +55,13 @@ public:
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
     /// \brief Constructs empty container.
-    static_set() = default;
+    constexpr static_set() = default;
 
     /// \brief Constructs with the contents of the range [first, last). If
     /// multiple elements in the range have keys that compare equivalent, all
     /// but the first will be discarded.
     template <typename InputIt, TETL_REQUIRES_(detail::InputIterator<InputIt>)>
-    static_set(InputIt first, InputIt last)
+    constexpr static_set(InputIt first, InputIt last)
     {
         if constexpr (detail::RandomAccessIterator<InputIt>) {
             TETL_ASSERT(last - first >= 0);
