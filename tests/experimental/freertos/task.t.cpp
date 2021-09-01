@@ -1,11 +1,10 @@
 /// \copyright Tobias Hienzsch 2019-2021
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
-
-#include "catch2/catch_template_test_macros.hpp"
-
 #define TETL_FREERTOS_USE_STUBS
 #include "etl/experimental/freertos/task.hpp"
+
+#include "testing.hpp"
 
 namespace rtos = etl::experimental::freertos;
 
@@ -20,14 +19,23 @@ struct example_task {
     }
 };
 
-TEST_CASE("experimental/freertos/task: create", "[experimental][rtos]")
+auto test_all() -> bool
 {
+
     auto task = example_task<rtos::once> {};
 
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();
 
-    // Run would normally be called by rtos::start_scheduler(). Only used for
-    // stubs.
+    // Run would normally be called by rtos::start_scheduler(). Only used
+    // for stubs.
     task.run();
+
+    return true;
+}
+
+auto main() -> int
+{
+    assert(test_all());
+    return 0;
 }
