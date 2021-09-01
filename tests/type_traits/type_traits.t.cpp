@@ -271,6 +271,7 @@ constexpr auto test() -> bool
 
     // TODO: [tobi] The assertions below trigger an internal compiler error on
     // MSVC
+#if not defined(TETL_MSVC)
 
     assert(!(is_convertible_v<int, void>));
     assert(!(is_convertible_v<int, const void>));
@@ -279,7 +280,7 @@ constexpr auto test() -> bool
     assert((is_convertible_v<void const, void>));
     assert((is_convertible_v<void const, void const>));
 
-#if TETL_CPP_STANDARD == 17
+    #if TETL_CPP_STANDARD < 20
     assert(!(is_convertible_v<int, volatile void>));
     assert(!(is_convertible_v<int, const volatile void>));
     assert((is_convertible_v<void, void volatile>));
@@ -294,6 +295,8 @@ constexpr auto test() -> bool
     assert((is_convertible_v<void const volatile, void const>));
     assert((is_convertible_v<void const volatile, void volatile>));
     assert((is_convertible_v<void const volatile, void const volatile>));
+    #endif
+
 #endif
 
     assert(etl::is_lvalue_reference_v<T&>);
