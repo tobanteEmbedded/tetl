@@ -34,7 +34,6 @@ target_sources(${PROJECT_NAME}
         test_iterator.cpp
         test_map.cpp
         test_memory.cpp
-        test_numeric.cpp
         test_optional.cpp
         test_span.cpp
         test_string.cpp

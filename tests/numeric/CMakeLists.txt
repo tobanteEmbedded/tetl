@@ -1,4 +1,12 @@
 project(numeric)
 
+tetl_add_test(${PROJECT_NAME} abs)
+tetl_add_test(${PROJECT_NAME} accumulate)
+tetl_add_test(${PROJECT_NAME} adjacent_difference)
+tetl_add_test(${PROJECT_NAME} gcd)
+tetl_add_test(${PROJECT_NAME} inner_product)
+tetl_add_test(${PROJECT_NAME} iota)
+tetl_add_test(${PROJECT_NAME} lcm)
 tetl_add_test(${PROJECT_NAME} midpoint)
-
+tetl_add_test(${PROJECT_NAME} partial_sum)
+tetl_add_test(${PROJECT_NAME} reduce)

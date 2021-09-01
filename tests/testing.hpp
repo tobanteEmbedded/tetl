@@ -8,6 +8,7 @@
 #include "etl/cmath.hpp"
 
 #include "etl/cassert.hpp"
+#include "etl/cstdint.hpp"
 
 template <typename T>
 constexpr auto approx(T a, T b, T epsilon = static_cast<T>(0.001)) -> bool
