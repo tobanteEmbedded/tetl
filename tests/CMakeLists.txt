@@ -34,7 +34,6 @@ target_sources(${PROJECT_NAME}
         test_map.cpp
         test_memory.cpp
         test_optional.cpp
-        test_span.cpp
         test_string.cpp
         test_string_view.cpp
         test_type_traits.cpp
@@ -107,6 +106,7 @@ add_subdirectory(numeric)
 add_subdirectory(ratio)
 add_subdirectory(scope)
 add_subdirectory(set)
+add_subdirectory(span)
 add_subdirectory(stack)
 add_subdirectory(stdexcept)
 add_subdirectory(tuple)
