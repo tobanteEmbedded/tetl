@@ -31,11 +31,8 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_03.cpp
 
         test_cstddef.cpp
-        test_cstdio.cpp
         test_cstdlib.cpp
         test_cstring.cpp
-        test_ctime.cpp
-        test_cwchar.cpp
         test_format.cpp
         test_ios.cpp
         test_iterator.cpp
