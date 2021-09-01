@@ -458,19 +458,20 @@ public:
         return data() + size();
     }
 
-    [[nodiscard]] auto rbegin() noexcept -> reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
     {
         return reverse_iterator(end());
     }
-    [[nodiscard]] auto rbegin() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() const noexcept
+        -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
-    [[nodiscard]] auto rend() noexcept -> reverse_iterator
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
     {
         return reverse_iterator(begin());
     }
-    [[nodiscard]] auto rend() const noexcept -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(begin());
     }

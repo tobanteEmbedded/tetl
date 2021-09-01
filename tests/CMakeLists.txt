@@ -37,7 +37,6 @@ target_sources(${PROJECT_NAME}
         test_string_view.cpp
         test_type_traits.cpp
         test_variant.cpp
-        test_vector.cpp
 
         _strings/test_conversion.cpp
 
@@ -111,4 +110,5 @@ add_subdirectory(stack)
 add_subdirectory(stdexcept)
 add_subdirectory(tuple)
 add_subdirectory(utility)
+add_subdirectory(vector)
 add_subdirectory(version)
