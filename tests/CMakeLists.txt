@@ -32,7 +32,6 @@ target_sources(${PROJECT_NAME}
 
         test_format.cpp
         test_string.cpp
-        test_string_view.cpp
         test_type_traits.cpp
         test_variant.cpp
 
@@ -109,6 +108,7 @@ add_subdirectory(span)
 add_subdirectory(stack)
 add_subdirectory(stdexcept)
 add_subdirectory(string)
+add_subdirectory(string_view)
 add_subdirectory(tuple)
 add_subdirectory(type_traits)
 add_subdirectory(utility)
