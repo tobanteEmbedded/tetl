@@ -33,7 +33,6 @@ target_sources(${PROJECT_NAME}
         test_cstdlib.cpp
         test_cstring.cpp
         test_format.cpp
-        test_ios.cpp
         test_iterator.cpp
         test_map.cpp
         test_memory.cpp
@@ -105,6 +104,7 @@ add_subdirectory(cstdint)
 add_subdirectory(exception)
 add_subdirectory(expected)
 add_subdirectory(functional)
+add_subdirectory(ios)
 add_subdirectory(limits)
 add_subdirectory(numbers)
 add_subdirectory(numeric)
