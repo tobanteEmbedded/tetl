@@ -15,23 +15,22 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-
     {
         auto a        = etl::array { T(1), T(2) };
         decltype(a) b = {};
 
         etl::swap_ranges(begin(a), end(a), begin(b));
-        CHECK(a[0] == T(0));
-        CHECK(a[1] == T(0));
-        CHECK(b[0] == T(1));
-        CHECK(b[1] == T(2));
+        assert(a[0] == T(0));
+        assert(a[1] == T(0));
+        assert(b[0] == T(1));
+        assert(b[1] == T(2));
     }
 
     {
-        auto data = etl::array { TestType(1), TestType(2) };
+        auto data = etl::array { T(1), T(2) };
         etl::iter_swap(begin(data), begin(data) + 1);
-        CHECK(data[0] == TestType(2));
-        CHECK(data[1] == TestType(1));
+        assert(data[0] == T(2));
+        assert(data[1] == T(1));
     }
 
     return true;
