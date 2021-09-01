@@ -31,7 +31,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_03.cpp
 
         test_format.cpp
-        test_string.cpp
         test_type_traits.cpp
         test_variant.cpp
 

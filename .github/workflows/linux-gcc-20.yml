@@ -25,7 +25,7 @@ jobs:
       - name: Set up GCC
         uses: egor-tensin/setup-gcc@v1
         with:
-          version: 10
+          version: 11
           platform: x64
 
       - name: CMake configure -- Debug

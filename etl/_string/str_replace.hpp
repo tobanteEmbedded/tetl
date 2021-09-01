@@ -8,13 +8,14 @@
 namespace etl::detail {
 
 template <typename CharT>
-auto str_replace(CharT* f, CharT* l, CharT ch) -> void
+constexpr auto str_replace(CharT* f, CharT* l, CharT ch) -> void
 {
     for (; f != l; ++f) { *f = ch; }
 }
 
 template <typename CharT>
-auto str_replace(CharT* f, CharT* l, CharT const* sf, CharT const* sl) -> void
+constexpr auto str_replace(CharT* f, CharT* l, CharT const* sf, CharT const* sl)
+    -> void
 {
     for (; (f != l) && (sf != sl); ++f, ++sf) { *f = *sf; }
 }
