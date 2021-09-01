@@ -31,7 +31,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_03.cpp
 
         test_format.cpp
-        test_iterator.cpp
         test_map.cpp
         test_memory.cpp
         test_optional.cpp
@@ -101,6 +100,7 @@ add_subdirectory(exception)
 add_subdirectory(expected)
 add_subdirectory(functional)
 add_subdirectory(ios)
+add_subdirectory(iterator)
 add_subdirectory(limits)
 add_subdirectory(mutex)
 add_subdirectory(numbers)
