@@ -31,7 +31,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_03.cpp
 
         test_cstdlib.cpp
-        test_cstring.cpp
         test_format.cpp
         test_iterator.cpp
         test_map.cpp
@@ -98,6 +97,7 @@ add_subdirectory(concepts)
 add_subdirectory(cstdarg)
 add_subdirectory(cstddef)
 add_subdirectory(cstdint)
+add_subdirectory(cstring)
 add_subdirectory(exception)
 add_subdirectory(expected)
 add_subdirectory(functional)
