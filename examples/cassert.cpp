@@ -22,8 +22,8 @@
 #endif
 
 namespace etl {
-template <typename AssertionMessage>
-[[noreturn]] auto tetl_assert_handler(AssertionMessage const& msg) -> void
+template <typename Assertion>
+[[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
     ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
     ::exit(1); // NOLINT
