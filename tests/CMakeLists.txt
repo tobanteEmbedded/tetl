@@ -30,7 +30,6 @@ target_sources(${PROJECT_NAME}
         algorithm/test_algorithm_03.cpp
 
         test_type_traits.cpp
-        test_variant.cpp
 
         experimental/dsp/test_dsp.cpp
 
@@ -108,5 +107,6 @@ add_subdirectory(string_view)
 add_subdirectory(tuple)
 add_subdirectory(type_traits)
 add_subdirectory(utility)
+add_subdirectory(variant)
 add_subdirectory(vector)
 add_subdirectory(version)

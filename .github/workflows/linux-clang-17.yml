@@ -27,7 +27,7 @@ jobs:
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug
 
-        - name: Run all tests -- Debug
+      - name: Run all tests -- Debug
         run: cd cmake-build-debug; ctest -VV; cd -
 
       - name: CMake configure -- Release

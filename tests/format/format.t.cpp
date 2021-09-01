@@ -115,16 +115,16 @@ auto test_all() -> bool
         assert(string_view(str.begin()) == target);
     }
 
-    // escape single arg
-    {
-        auto str1 = etl::static_string<32> {};
-        etl::format_to(etl::back_inserter(str1), "{} {{test}}", "abc");
-        assert(string_view(str1.begin()) == string_view("abc {test}"));
+    // // escape single arg
+    // {
+    //     auto str1 = etl::static_string<32> {};
+    //     etl::format_to(etl::back_inserter(str1), "{} {{test}}", "abc");
+    //     assert(string_view(str1.begin()) == string_view("abc {test}"));
 
-        auto str2 = etl::static_string<32> {};
-        etl::format_to(etl::back_inserter(str2), "{{test}} {}", "abc");
-        assert(string_view(str2.begin()) == string_view("{test} abc"));
-    }
+    //     auto str2 = etl::static_string<32> {};
+    //     etl::format_to(etl::back_inserter(str2), "{{test}} {}", "abc");
+    //     assert(string_view(str2.begin()) == string_view("{test} abc"));
+    // }
 
     // escape
     {
