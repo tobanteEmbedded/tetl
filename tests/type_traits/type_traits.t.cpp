@@ -449,6 +449,7 @@ constexpr auto test() -> bool
     assert((is_same_v<remove_const_t<TC>, T>));
     assert((is_same_v<remove_const_t<TV>, TV>));
     assert((is_same_v<remove_const_t<TCV>, TV>));
+
     assert((is_same_v<remove_const_t<T>, T>));
     assert((is_same_v<remove_const_t<TC>, T>));
     assert((is_same_v<remove_const_t<T[42]>, T[42]>));
