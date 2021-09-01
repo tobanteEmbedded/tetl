@@ -114,6 +114,7 @@ auto test() -> bool
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const data = etl::array<T, 4> {};
         auto ptr        = ptr_t { &data[1] };
+        // NOLINTNEXTLINE(bugprone-assert-side-effect)
         assert((--ptr).get() == ptr_t { &data[0] }.get());
     }
 
@@ -123,6 +124,7 @@ auto test() -> bool
 
         auto const data = etl::array<T, 4> {};
         auto ptr        = ptr_t { &data[1] };
+        // NOLINTNEXTLINE(bugprone-assert-side-effect)
         assert((ptr--).get() == ptr_t { &data[1] }.get());
         assert(ptr.get() == ptr_t { &data[0] }.get());
     }
@@ -132,6 +134,7 @@ auto test() -> bool
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const data = etl::array<T, 4> {};
         auto ptr        = ptr_t { &data[1] };
+        // NOLINTNEXTLINE(bugprone-assert-side-effect)
         assert((++ptr).get() == ptr_t { &data[2] }.get());
     }
 
@@ -140,6 +143,7 @@ auto test() -> bool
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const data = etl::array<T, 4> {};
         auto ptr        = ptr_t { &data[1] };
+        // NOLINTNEXTLINE(bugprone-assert-side-effect)
         assert((ptr++).get() == ptr_t { &data[1] }.get());
         assert(ptr.get() == ptr_t { &data[2] }.get());
     }
