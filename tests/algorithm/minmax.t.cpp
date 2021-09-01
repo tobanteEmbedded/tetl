@@ -19,8 +19,7 @@ constexpr auto test() -> bool
         assert((etl::max<T>(-10, 5) == 5));
         assert((etl::max<T>(-10, -20) == -10));
 
-        auto cmp
-            = [](auto x, auto y) { return etl::abs(x) < etl::abs(y) ? y : x; };
+        auto cmp = [](auto x, auto y) { return etl::abs(x) < etl::abs(y); };
         assert((etl::max<T>(-10, -20, cmp) == -20));
         assert((etl::max<T>(10, -20, cmp) == -20));
     }
