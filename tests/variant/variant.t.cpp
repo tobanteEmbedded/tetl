@@ -179,9 +179,9 @@ auto test() -> bool
         auto var2 = variant<monostate, int, float> { 143 };
         assert((etl::holds_alternative<int>(var2)));
         assert((*etl::get_if<int>(&var2) == 143));
-        var2 = var;
-        assert((etl::holds_alternative<int>(var2)));
-        assert((*etl::get_if<int>(&var2) == 42));
+        // var2 = var;
+        // assert((etl::holds_alternative<int>(var2)));
+        // assert((*etl::get_if<int>(&var2) == 42));
 
         // var = 42.0F;
         // assert((etl::holds_alternative<float>(var)));
