@@ -31,7 +31,7 @@ struct back_insert_iterator {
     /// \brief Initializes the underlying pointer to the container to
     /// etl::addressof(c).
     constexpr explicit back_insert_iterator(Container& container)
-        : container_ { &container }
+        : container_ { etl::addressof(container) }
     {
     }
 

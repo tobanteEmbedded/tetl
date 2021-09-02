@@ -6,6 +6,9 @@
 #define TETL_MEMORY_POINTER_TRAITS_HPP
 
 #include "etl/_cstddef/ptrdiff_t.hpp"
+#include "etl/_memory/addressof.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_void.hpp"
 
 namespace etl {
 
@@ -23,7 +26,10 @@ struct pointer_traits {
 
     /// \brief Constructs a dereferenceable pointer or pointer-like object
     /// ("fancy pointer") to its argument.
+    ///
+    /// \details
     /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+    ///
     /// \param r  Reference to an object of type element_type&.
     /// \returns A pointer to r, of the type pointer_traits::pointer.
     [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
@@ -47,12 +53,16 @@ struct pointer_traits<T*> {
 
     /// \brief Constructs a dereferenceable pointer or pointer-like object
     /// ("fancy pointer") to its argument.
+    ///
+    /// \details
+    /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
+    ///
     /// \param r  Reference to an object of type element_type&.
     /// \returns A pointer to r, of the type pointer_traits::pointer.
-    /// https://en.cppreference.com/w/cpp/memory/pointer_traits/pointer_to
-    [[nodiscard]] static auto pointer_to(element_type& r) -> pointer
+    template <bool B = etl::is_void_v<T>>
+    [[nodiscard]] static auto pointer_to(etl::enable_if_t<!B, T>& r) -> pointer
     {
-        return addressof(r);
+        return etl::addressof(r);
     }
 };
 

@@ -16,14 +16,14 @@ namespace etl {
 /// presence of overloaded operator&.
 /// \group addressof
 template <typename T>
-auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
+constexpr auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
 {
-    return TETL_BUILTIN_ADDRESSOF(arg);
+    return __builtin_addressof(arg);
 }
 
 /// \group addressof
 template <typename T>
-auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
+constexpr auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
 {
     return &arg;
 }
