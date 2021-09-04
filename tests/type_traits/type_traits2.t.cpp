@@ -81,6 +81,51 @@ struct IsAbstract_D : IsAbstract_C {
 
 constexpr auto test_all() -> bool
 {
+    using etl::make_signed_t;
+    TEST_TRAIT_TYPE(make_signed, etl::int8_t, etl::int8_t);
+    TEST_TRAIT_TYPE(make_signed, etl::int16_t, etl::int16_t);
+    TEST_TRAIT_TYPE(make_signed, etl::int32_t, etl::int32_t);
+    TEST_TRAIT_TYPE(make_signed, etl::int64_t, etl::int64_t);
+
+    TEST_TRAIT_TYPE(make_signed, etl::uint8_t, etl::int8_t);
+    TEST_TRAIT_TYPE(make_signed, etl::uint16_t, etl::int16_t);
+    TEST_TRAIT_TYPE(make_signed, etl::uint32_t, etl::int32_t);
+    TEST_TRAIT_TYPE(make_signed, etl::uint64_t, etl::int64_t);
+
+    TEST_TRAIT_TYPE(make_signed, signed char, signed char);
+    TEST_TRAIT_TYPE(make_signed, short, short);
+    TEST_TRAIT_TYPE(make_signed, int, int);
+    TEST_TRAIT_TYPE(make_signed, long, long);
+    TEST_TRAIT_TYPE(make_signed, long long, long long);
+
+    TEST_TRAIT_TYPE(make_signed, unsigned char, signed char);
+    TEST_TRAIT_TYPE(make_signed, unsigned short, short);
+    TEST_TRAIT_TYPE(make_signed, unsigned int, int);
+    TEST_TRAIT_TYPE(make_signed, unsigned long, long);
+    TEST_TRAIT_TYPE(make_signed, unsigned long long, long long);
+
+    TEST_TRAIT_TYPE(make_unsigned, etl::int8_t, etl::uint8_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::int16_t, etl::uint16_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::int32_t, etl::uint32_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::int64_t, etl::uint64_t);
+
+    TEST_TRAIT_TYPE(make_unsigned, etl::uint8_t, etl::uint8_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::uint16_t, etl::uint16_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::uint32_t, etl::uint32_t);
+    TEST_TRAIT_TYPE(make_unsigned, etl::uint64_t, etl::uint64_t);
+
+    TEST_TRAIT_TYPE(make_unsigned, signed char, unsigned char);
+    TEST_TRAIT_TYPE(make_unsigned, short, unsigned short);
+    TEST_TRAIT_TYPE(make_unsigned, int, unsigned int);
+    TEST_TRAIT_TYPE(make_unsigned, long, unsigned long);
+    TEST_TRAIT_TYPE(make_unsigned, long long, unsigned long long);
+
+    TEST_TRAIT_TYPE(make_unsigned, unsigned char, unsigned char);
+    TEST_TRAIT_TYPE(make_unsigned, unsigned short, unsigned short);
+    TEST_TRAIT_TYPE(make_unsigned, unsigned int, unsigned int);
+    TEST_TRAIT_TYPE(make_unsigned, unsigned long, unsigned long);
+    TEST_TRAIT_TYPE(make_unsigned, unsigned long long, unsigned long long);
+
     TEST_IS_TRAIT_CV(is_standard_layout, A);
     TEST_IS_TRAIT_CV(is_standard_layout, B);
     TEST_IS_TRAIT_CV(is_standard_layout, C);

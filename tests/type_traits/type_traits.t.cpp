@@ -9,57 +9,6 @@
 #include "testing.hpp"
 #include "types.hpp"
 
-using etl::is_same;
-using etl::is_same_v;
-
-using etl::make_signed_t;
-static_assert(is_same_v<make_signed_t<etl::int8_t>, etl::int8_t>);
-static_assert(is_same_v<make_signed_t<etl::int16_t>, etl::int16_t>);
-static_assert(is_same_v<make_signed_t<etl::int32_t>, etl::int32_t>);
-static_assert(is_same_v<make_signed_t<etl::int64_t>, etl::int64_t>);
-
-static_assert(is_same_v<make_signed_t<etl::uint8_t>, etl::int8_t>);
-static_assert(is_same_v<make_signed_t<etl::uint16_t>, etl::int16_t>);
-static_assert(is_same_v<make_signed_t<etl::uint32_t>, etl::int32_t>);
-static_assert(is_same_v<make_signed_t<etl::uint64_t>, etl::int64_t>);
-
-static_assert(is_same_v<make_signed_t<signed char>, signed char>);
-static_assert(is_same_v<make_signed_t<short>, short>);
-static_assert(is_same_v<make_signed_t<int>, int>);
-static_assert(is_same_v<make_signed_t<long>, long>);
-static_assert(is_same_v<make_signed_t<long long>, long long>);
-
-static_assert(is_same_v<make_signed_t<unsigned char>, signed char>);
-static_assert(is_same_v<make_signed_t<unsigned short>, short>);
-static_assert(is_same_v<make_signed_t<unsigned int>, int>);
-static_assert(is_same_v<make_signed_t<unsigned long>, long>);
-static_assert(is_same_v<make_signed_t<unsigned long long>, long long>);
-
-// clang-format off
-using etl::make_unsigned_t;
-static_assert(is_same_v<make_unsigned_t<etl::int8_t>, etl::uint8_t>);
-static_assert(is_same_v<make_unsigned_t<etl::int16_t>, etl::uint16_t>);
-static_assert(is_same_v<make_unsigned_t<etl::int32_t>, etl::uint32_t>);
-static_assert(is_same_v<make_unsigned_t<etl::int64_t>, etl::uint64_t>);
-
-static_assert(is_same_v<make_unsigned_t<etl::uint8_t>, etl::uint8_t>);
-static_assert(is_same_v<make_unsigned_t<etl::uint16_t>, etl::uint16_t>);
-static_assert(is_same_v<make_unsigned_t<etl::uint32_t>, etl::uint32_t>);
-static_assert(is_same_v<make_unsigned_t<etl::uint64_t>, etl::uint64_t>);
-
-static_assert(is_same_v<make_unsigned_t<signed char>, unsigned char>);
-static_assert(is_same_v<make_unsigned_t<short>, unsigned short>);
-static_assert(is_same_v<make_unsigned_t<int>, unsigned int>);
-static_assert(is_same_v<make_unsigned_t<long>, unsigned long>);
-static_assert(is_same_v<make_unsigned_t<long long>, unsigned long long>);
-
-static_assert(is_same_v<make_unsigned_t<unsigned char>, unsigned char>);
-static_assert(is_same_v<make_unsigned_t<unsigned short>, unsigned short>);
-static_assert(is_same_v<make_unsigned_t<unsigned int>, unsigned int>);
-static_assert(is_same_v<make_unsigned_t<unsigned long>, unsigned long>);
-static_assert(is_same_v<make_unsigned_t<unsigned long long>, unsigned long long>);
-// clang-format on
-
 namespace {
 template <typename T>
 struct Foo {
@@ -131,36 +80,12 @@ constexpr auto test_identity() -> bool
 template <typename T>
 constexpr auto test() -> bool
 {
+    using etl::is_same;
+    using etl::is_same_v;
 
     using TC  = T const;
     using TV  = T volatile;
     using TCV = T const volatile;
-
-    using etl::conjunction_v;
-    assert((conjunction_v<is_same<Foo<T>, Foo<T>>, is_same<short, short>>));
-    assert((conjunction_v<is_same<short, short>, is_same<float, float>>));
-    assert((conjunction_v<is_same<Foo<T>, Foo<T>>, is_same<double, double>>));
-    assert(!(conjunction_v<is_same<float, Foo<T>>, is_same<char, char>>));
-    assert(!(conjunction_v<is_same<Foo<T>, short>, is_same<char, char>>));
-    assert(!(conjunction_v<is_same<Foo<T>, Foo<T>>, is_same<char, float>>));
-
-    using etl::disjunction_v;
-    assert((disjunction_v<is_same<Foo<T>, Foo<T>>, is_same<short, short>>));
-    assert((disjunction_v<is_same<short, short>, is_same<float, float>>));
-    assert((disjunction_v<is_same<Foo<T>, Foo<T>>, is_same<double, double>>));
-    assert((disjunction_v<is_same<float, Foo<T>>, is_same<short, short>>));
-    assert((disjunction_v<is_same<Foo<T>, short>, is_same<float, float>>));
-    assert((disjunction_v<is_same<Foo<T>, Foo<T>>, is_same<double, float>>));
-    assert(!(disjunction_v<is_same<char, Foo<T>>, is_same<short, char>>));
-    assert(!(disjunction_v<is_same<Foo<T>, short>, is_same<float, Foo<T>>>));
-    assert(!(disjunction_v<is_same<bool, Foo<T>>, is_same<char, float>>));
-
-    assert((etl::negation_v<etl::is_same<short, float>>));
-    assert((etl::negation_v<etl::is_same<bool, float>>));
-    assert((etl::negation_v<etl::is_same<Foo<T>, float>>));
-    assert(!(etl::negation_v<etl::is_same<Foo<T>, Foo<T>>>));
-    assert(!(etl::negation_v<etl::is_same<bool, bool>>));
-    assert(!(etl::negation_v<etl::is_same<float, float>>));
 
     TEST_TRAIT_VALUE_CV(rank, T, 0);
     TEST_TRAIT_VALUE_CV(rank, T[], 1);
@@ -586,7 +511,6 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(add_rvalue_reference, TV, TV &&);
     TEST_TRAIT_TYPE(add_rvalue_reference, TCV, TCV &&);
 
-    TEST_IS_TRAIT_CV(is_trivial, T);
     TEST_IS_TRAIT_CV(is_trivial, T*);
     TEST_IS_TRAIT_CV_FALSE(is_trivial, T&);
 

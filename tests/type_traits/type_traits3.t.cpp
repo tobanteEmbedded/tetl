@@ -80,6 +80,9 @@ constexpr auto test() -> bool
         assert((disjunction_v<is_same<T, T>, etl::false_type>));
     }
 
+    TEST_TRAIT_VALUE(negation, etl::true_type, false);
+    TEST_TRAIT_VALUE(negation, etl::false_type, true);
+
     assert((etl::is_swappable_with_v<T&, T&>));
 
     {
