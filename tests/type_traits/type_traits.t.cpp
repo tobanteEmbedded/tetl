@@ -7,6 +7,7 @@
 #include "etl/version.hpp"
 
 #include "testing.hpp"
+#include "types.hpp"
 
 using etl::is_same;
 using etl::is_same_v;
