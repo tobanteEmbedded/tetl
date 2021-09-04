@@ -5,28 +5,16 @@
 #include "etl/type_traits.hpp"
 
 #include "testing.hpp"
+#include "types.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::is_same_v;
-    using etl::underlying_type;
-    using etl::underlying_type_t;
-
     enum E : T { foobar };
     enum struct SE : T { a, b, c };
 
-    assert((is_same_v<T, typename underlying_type<E>::type>));
-    assert((is_same_v<T, underlying_type_t<SE>>));
-
-    assert((is_same_v<T, typename underlying_type<E const>::type>));
-    assert((is_same_v<T, underlying_type_t<SE const>>));
-
-    assert((is_same_v<T, typename underlying_type<E volatile>::type>));
-    assert((is_same_v<T, underlying_type_t<SE volatile>>));
-
-    assert((is_same_v<T, typename underlying_type<E const volatile>::type>));
-    assert((is_same_v<T, underlying_type_t<SE const volatile>>));
+    TEST_TRAIT_TYPE_CV(underlying_type, E, T);
+    TEST_TRAIT_TYPE_CV(underlying_type, SE, T);
 
     return true;
 }

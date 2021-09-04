@@ -143,4 +143,28 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
     TEST_IS_TRAIT_FALSE(trait, volatile type);                                 \
     TEST_IS_TRAIT_FALSE(trait, const volatile type);
 
+#define TEST_TRAIT_VALUE(trait, type, expected)                                \
+    do {                                                                       \
+        assert((etl::trait<type>::value == (expected)));                       \
+        assert(((etl::TETL_PP_CONCAT(trait, _v) < type >) == (expected)));     \
+    } while (false)
+
+#define TEST_TRAIT_VALUE_CV(trait, type, expected)                             \
+    TEST_TRAIT_VALUE(trait, type, expected);                                   \
+    TEST_TRAIT_VALUE(trait, const type, expected);                             \
+    TEST_TRAIT_VALUE(trait, volatile type, expected);                          \
+    TEST_TRAIT_VALUE(trait, const volatile type, expected);
+
+#define TEST_TRAIT_TYPE(trait, T, e)                                           \
+    do {                                                                       \
+        assert((etl::is_same_v<typename etl::trait<T>::type, e>));             \
+        assert((etl::is_same_v<etl::TETL_PP_CONCAT(trait, _t) < T>, e >));     \
+    } while (false)
+
+#define TEST_TRAIT_TYPE_CV(trait, type, expected)                              \
+    TEST_TRAIT_TYPE(trait, type, expected);                                    \
+    TEST_TRAIT_TYPE(trait, const type, expected);                              \
+    TEST_TRAIT_TYPE(trait, volatile type, expected);                           \
+    TEST_TRAIT_TYPE(trait, const volatile type, expected);
+
 #endif // TETL_TEST_TYPE_TRAITS_TYPES_HPP

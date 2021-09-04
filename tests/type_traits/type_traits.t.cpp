@@ -190,14 +190,13 @@ constexpr auto test() -> bool
     assert((is_same_v<remove_all_extents_t<T[1][2]>, T>));
     assert((is_same_v<remove_all_extents_t<T[1][2][3]>, T>));
 
-    using etl::decay_t;
     // TODO: Broken on MSVC
     //  assert((is_same_v<decay_t<T(T)>, T (*)(T)>));
-    assert((is_same_v<decay_t<T>, T>));
-    assert((is_same_v<decay_t<T&>, T>));
-    assert((is_same_v<decay_t<T&&>, T>));
-    assert((is_same_v<decay_t<T const&>, T>));
-    assert((is_same_v<decay_t<T[2]>, T*>));
+    TEST_TRAIT_TYPE(decay, T, T);
+    TEST_TRAIT_TYPE(decay, T&, T);
+    TEST_TRAIT_TYPE(decay, T&&, T);
+    TEST_TRAIT_TYPE(decay, T const&, T);
+    TEST_TRAIT_TYPE(decay, T[2], T*);
 
     using etl::common_type_t;
     assert((is_same_v<common_type_t<T>, T>));
@@ -207,7 +206,7 @@ constexpr auto test() -> bool
     assert((is_same_v<common_type_t<T, T const volatile>, T>));
     assert((is_same_v<common_type_t<T, double>, double>));
 
-    {
+    if constexpr (etl::is_integral_v<T>) {
         auto const constant = etl::integral_constant<T, T { 0 }> {};
         assert(decltype(constant)::value == T { 0 });
         assert(constant() == T { 0 });
@@ -317,26 +316,6 @@ constexpr auto test() -> bool
     assert(!(etl::is_rvalue_reference<T*>::value));
     assert(!(etl::is_rvalue_reference<TC*>::value));
 
-    assert(etl::is_class_v<T> == false);
-
-    assert(etl::is_enum_v<T> == false);
-    assert(etl::is_enum_v<TC> == false);
-    assert(etl::is_enum_v<TV> == false);
-    assert(etl::is_enum_v<T*> == false);
-    assert(etl::is_enum_v<TC*> == false);
-    assert(etl::is_enum_v<TC* const> == false);
-    assert(etl::is_enum_v<T&> == false);
-    assert(etl::is_enum_v<TC&> == false);
-
-    assert(etl::is_union_v<T> == false);
-    assert(etl::is_union_v<TC> == false);
-    assert(etl::is_union_v<TV> == false);
-    assert(etl::is_union_v<T*> == false);
-    assert(etl::is_union_v<TC*> == false);
-    assert(etl::is_union_v<TC* const> == false);
-    assert(etl::is_union_v<T&> == false);
-    assert(etl::is_union_v<TC&> == false);
-
     assert(etl::is_arithmetic<bool>::value);
     assert(etl::is_arithmetic<T>::value);
     assert(etl::is_arithmetic<TC>::value);
@@ -347,130 +326,110 @@ constexpr auto test() -> bool
     assert(!(etl::is_arithmetic<TC*>::value));
     assert(!(etl::is_arithmetic<TC* const>::value));
 
-    assert(etl::is_scalar_v<etl::nullptr_t>);
-    assert(etl::is_scalar_v<etl::nullptr_t const>);
-    assert(etl::is_scalar_v<etl::nullptr_t volatile>);
-    assert(etl::is_scalar_v<etl::nullptr_t*>);
-    assert(etl::is_scalar_v<etl::nullptr_t const*>);
-    assert(etl::is_scalar_v<etl::nullptr_t const* const>);
-    assert(etl::is_scalar_v<bool>);
-    assert(etl::is_scalar_v<bool const>);
-    assert(etl::is_scalar_v<bool volatile>);
-    assert(etl::is_scalar_v<bool*>);
-    assert(etl::is_scalar_v<bool const*>);
-    assert(etl::is_scalar_v<bool const* const>);
-    assert(etl::is_scalar_v<T>);
-    assert(etl::is_scalar_v<TC>);
-    assert(etl::is_scalar_v<TV>);
-    assert(etl::is_scalar_v<T*>);
-    assert(etl::is_scalar_v<TC*>);
-    assert(etl::is_scalar_v<TC* const>);
+    TEST_IS_TRAIT_CV(is_scalar, etl::nullptr_t);
+    TEST_IS_TRAIT_CV(is_scalar, etl::nullptr_t*);
+    TEST_IS_TRAIT_CV(is_scalar, bool);
+    TEST_IS_TRAIT_CV(is_scalar, bool*);
+    TEST_IS_TRAIT_CV(is_scalar, T);
+    TEST_IS_TRAIT_CV(is_scalar, T*);
+    TEST_IS_TRAIT_CV(is_scalar, T* const);
+    TEST_IS_TRAIT_CV_FALSE(is_scalar, T&);
 
-    assert(!(etl::is_scalar_v<T&>));
-    assert(!(etl::is_scalar_v<TC&>));
+    TEST_IS_TRAIT_CV(is_object, T);
+    TEST_IS_TRAIT_CV(is_object, T*);
+    TEST_IS_TRAIT_CV(is_object, T* const);
+    TEST_IS_TRAIT_CV(is_object, T* const);
+    TEST_IS_TRAIT_CV_FALSE(is_object, T&);
 
-    assert(etl::is_object_v<T>);
-    assert(etl::is_object_v<TC>);
-    assert(etl::is_object_v<TV>);
-    assert(etl::is_object_v<T*>);
-    assert(etl::is_object_v<TC*>);
-    assert(etl::is_object_v<TC* const>);
+    TEST_IS_TRAIT_CV(is_reference, T&);
+    TEST_IS_TRAIT_CV(is_reference, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_reference, T*);
+    TEST_IS_TRAIT_CV_FALSE(is_reference, T);
 
-    assert(!(etl::is_object_v<T&>));
-    assert(!(etl::is_object_v<TC&>));
+    TEST_IS_TRAIT_CV(is_fundamental, void);
+    TEST_IS_TRAIT_CV(is_fundamental, bool);
+    TEST_IS_TRAIT_CV(is_fundamental, etl::nullptr_t);
+    TEST_IS_TRAIT_CV(is_fundamental, T);
+    TEST_IS_TRAIT_CV_FALSE(is_fundamental, T*);
+    TEST_IS_TRAIT_CV_FALSE(is_fundamental, T&);
+    TEST_IS_TRAIT_CV_FALSE(is_fundamental, T &&);
 
-    assert(!(etl::is_compound<T>::value));
-    assert(!(etl::is_compound_v<T>));
-    assert(etl::is_compound_v<T*>);
-    assert(etl::is_compound_v<T&>);
+    TEST_IS_TRAIT_CV(is_bounded_array, T[1]);
+    TEST_IS_TRAIT_CV(is_bounded_array, T[2]);
+    TEST_IS_TRAIT_CV(is_bounded_array, T[32]);
+    TEST_IS_TRAIT_CV(is_bounded_array, T[64]);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T*);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T&);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T[]);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&)[3]);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&)[]);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&&)[3]);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&&)[]);
 
-    assert(!(etl::is_reference<T>::value));
-    assert(!(etl::is_reference_v<T>));
+    TEST_IS_TRAIT_CV(is_unbounded_array, T[]);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T[64]);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T*);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T&);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&)[3]);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&)[]);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&&)[3]);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&&)[]);
 
-    assert((etl::is_reference_v<T&&>));
-    assert((etl::is_reference_v<T&>));
-    assert((etl::is_reference_v<TC&&>));
-    assert((etl::is_reference_v<TC&>));
-    assert((etl::is_reference_v<TV&&>));
-    assert((etl::is_reference_v<TV&>));
-    assert((etl::is_reference_v<TV const&&>));
-    assert((etl::is_reference_v<TV const&>));
+    TEST_TRAIT_TYPE(remove_volatile, TV, T);
+    TEST_TRAIT_TYPE(remove_volatile, T, T);
+    TEST_TRAIT_TYPE(remove_volatile, TC, TC);
+    TEST_TRAIT_TYPE(remove_volatile, TCV, TC);
 
-    assert((etl::is_fundamental_v<void>));
-    assert((etl::is_fundamental_v<etl::nullptr_t>));
-    assert((etl::is_fundamental_v<T>));
-    assert((etl::is_fundamental_v<TC>));
-    assert((etl::is_fundamental_v<TV>));
+    TEST_TRAIT_TYPE(add_volatile, T, TV);
+    TEST_TRAIT_TYPE(add_volatile, TV, TV);
+    TEST_TRAIT_TYPE(add_volatile, TC, TCV);
+    TEST_TRAIT_TYPE(add_volatile, TCV, TCV);
+    TEST_TRAIT_TYPE(add_volatile, T[42], TV[42]);
+    TEST_TRAIT_TYPE(add_volatile, TC[42], TCV[42]);
+    TEST_TRAIT_TYPE(add_volatile, TV[42], TV[42]);
+    TEST_TRAIT_TYPE(add_volatile, TCV[42], TCV[42]);
+    TEST_TRAIT_TYPE(add_volatile, T[], TV[]);
+    TEST_TRAIT_TYPE(add_volatile, TC[], TCV[]);
+    TEST_TRAIT_TYPE(add_volatile, TV[], TV[]);
+    TEST_TRAIT_TYPE(add_volatile, TCV[], TCV[]);
 
-    assert(!(etl::is_fundamental_v<T&>));
-    assert(!(etl::is_fundamental_v<TC&>));
-    assert(!(etl::is_fundamental_v<T*>));
-    assert(!(etl::is_fundamental_v<TC*>));
-    assert(!(etl::is_fundamental_v<TC* const>));
+    TEST_TRAIT_TYPE(remove_const, TC, T);
+    TEST_TRAIT_TYPE(remove_const, T, T);
+    TEST_TRAIT_TYPE(remove_const, TV, TV);
+    TEST_TRAIT_TYPE(remove_const, TCV, TV);
+    TEST_TRAIT_TYPE(remove_const, T&, T&);
+    TEST_TRAIT_TYPE(remove_const, TC&, TC&);
+    TEST_TRAIT_TYPE(remove_const, TV&, TV&);
+    TEST_TRAIT_TYPE(remove_const, TCV&, TCV&);
+    TEST_TRAIT_TYPE(remove_const, T&&, T &&);
+    TEST_TRAIT_TYPE(remove_const, TC&&, TC &&);
+    TEST_TRAIT_TYPE(remove_const, TV&&, TV &&);
+    TEST_TRAIT_TYPE(remove_const, TCV&&, TCV &&);
+    TEST_TRAIT_TYPE(remove_const, T[42], T[42]);
+    TEST_TRAIT_TYPE(remove_const, TC[42], T[42]);
+    TEST_TRAIT_TYPE(remove_const, TV[42], TV[42]);
+    TEST_TRAIT_TYPE(remove_const, TCV[42], TV[42]);
+    TEST_TRAIT_TYPE(remove_const, T[], T[]);
+    TEST_TRAIT_TYPE(remove_const, TC[], T[]);
+    TEST_TRAIT_TYPE(remove_const, TV[], TV[]);
+    TEST_TRAIT_TYPE(remove_const, TCV[], TV[]);
 
-    assert((etl::is_bounded_array_v<T[1]>));
-    assert((etl::is_bounded_array_v<T[2]>));
-    assert((etl::is_bounded_array_v<T[64]>));
-
-    assert(!(etl::is_bounded_array_v<T>));
-    assert(!(etl::is_bounded_array_v<T>));
-    assert(!(etl::is_bounded_array_v<T*>));
-    assert(!(etl::is_bounded_array_v<T[]>));
-
-    // lvalue/rvalue references aren't bounded/unbounded arrays.
-    assert(!(etl::is_bounded_array_v<T(&)[3]>));
-    assert(!(etl::is_bounded_array_v<T(&)[]>));
-    assert(!(etl::is_bounded_array_v<T(&&)[3]>));
-    assert(!(etl::is_bounded_array_v<T(&&)[]>));
-
-    assert((etl::is_unbounded_array_v<T[]>));
-
-    assert(!(etl::is_unbounded_array_v<T>));
-    assert(!(etl::is_unbounded_array_v<T*>));
-    assert(!(etl::is_unbounded_array_v<T&>));
-    assert(!(etl::is_unbounded_array_v<T[1]>));
-    assert(!(etl::is_unbounded_array_v<T[2]>));
-    assert(!(etl::is_unbounded_array_v<T[64]>));
-
-    // lvalue/rvalue references aren't bounded/unbounded arrays.
-    assert(!(etl::is_unbounded_array_v<T(&)[3]>));
-    assert(!(etl::is_unbounded_array_v<T(&)[]>));
-    assert(!(etl::is_unbounded_array_v<T(&&)[3]>));
-    assert(!(etl::is_unbounded_array_v<T(&&)[]>));
-
-    using etl::remove_volatile_t;
-    assert((is_same_v<remove_volatile_t<TC>, TC>));
-    assert((is_same_v<remove_volatile_t<TV>, T>));
-    assert((is_same_v<remove_volatile_t<TCV>, TC>));
-
-    using etl::add_volatile_t;
-    assert((is_same_v<add_volatile_t<T>, TV>));
-    assert((is_same_v<add_volatile_t<TC>, TCV>));
-    assert((is_same_v<add_volatile_t<TV>, TV>));
-    assert((is_same_v<add_volatile_t<TCV>, TCV>));
-
-    using etl::remove_const_t;
-    assert((is_same_v<remove_const_t<TC>, T>));
-    assert((is_same_v<remove_const_t<TV>, TV>));
-    assert((is_same_v<remove_const_t<TCV>, TV>));
-
-    assert((is_same_v<remove_const_t<T>, T>));
-    assert((is_same_v<remove_const_t<TC>, T>));
-    assert((is_same_v<remove_const_t<T[42]>, T[42]>));
-    assert((is_same_v<remove_const_t<TC[42]>, T[42]>));
-    assert((is_same_v<remove_const_t<T[]>, T[]>));
-    assert((is_same_v<remove_const_t<TC[]>, T[]>));
-    assert((is_same_v<remove_const_t<T&>, T&>));
-    assert((is_same_v<remove_const_t<TC&>, TC&>));
-    assert((is_same_v<remove_const_t<T&&>, T&&>));
-    assert((is_same_v<remove_const_t<TC&&>, TC&&>));
-    assert((is_same_v<remove_const_t<T(T)>, T(T)>));
-
-    using etl::add_const_t;
-    assert((is_same_v<add_const_t<T>, T const>));
-    assert((is_same_v<add_const_t<T const>, T const>));
-    assert((is_same_v<add_const_t<T volatile>, T const volatile>));
-    assert((is_same_v<add_const_t<T const volatile>, T const volatile>));
+    TEST_TRAIT_TYPE(add_const, T, TC);
+    TEST_TRAIT_TYPE(add_const, TV, TCV);
+    TEST_TRAIT_TYPE(add_const, TC, TC);
+    TEST_TRAIT_TYPE(add_const, TCV, TCV);
+    TEST_TRAIT_TYPE(add_const, T[42], TC[42]);
+    TEST_TRAIT_TYPE(add_const, TC[42], TC[42]);
+    TEST_TRAIT_TYPE(add_const, TV[42], TCV[42]);
+    TEST_TRAIT_TYPE(add_const, TCV[42], TCV[42]);
+    TEST_TRAIT_TYPE(add_const, T[], TC[]);
+    TEST_TRAIT_TYPE(add_const, TC[], TC[]);
+    TEST_TRAIT_TYPE(add_const, TV[], TCV[]);
+    TEST_TRAIT_TYPE(add_const, TCV[], TCV[]);
 
     using etl::remove_cv_t;
     assert((is_same_v<remove_cv_t<TC>, T>));
@@ -621,6 +580,7 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
+    assert(test<char>());
     assert(test<etl::uint8_t>());
     assert(test<etl::int8_t>());
     assert(test<etl::uint16_t>());
@@ -630,8 +590,8 @@ constexpr auto test_all() -> bool
     assert(test<etl::uint64_t>());
     assert(test<etl::int64_t>());
 
-    // assert(test<float>());
-    // assert(test<double>());
+    assert(test<float>());
+    assert(test<double>());
     // assert(test<long double>());
 
     return true;

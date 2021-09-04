@@ -50,10 +50,10 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_enum, EmptyClass);
     TEST_IS_TRAIT_CV_FALSE(is_enum, EmptyUnion);
     TEST_IS_TRAIT_CV_FALSE(is_enum, Abstract);
+    TEST_IS_TRAIT_CV_FALSE(is_enum, T);
 
     TEST_IS_TRAIT_CV(is_union, EmptyUnion);
     TEST_IS_TRAIT_CV(is_union, DummyUnion);
-
     TEST_IS_TRAIT_CV_FALSE(is_union, Enum);
     TEST_IS_TRAIT_CV_FALSE(is_union, EnumWithType);
     TEST_IS_TRAIT_CV_FALSE(is_union, ScopedEnum);
@@ -61,17 +61,18 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_union, EmptyClass);
     TEST_IS_TRAIT_CV_FALSE(is_union, DummyClass);
     TEST_IS_TRAIT_CV_FALSE(is_union, Abstract);
+    TEST_IS_TRAIT_CV_FALSE(is_union, T);
 
     TEST_IS_TRAIT_CV(is_class, EmptyClass);
     TEST_IS_TRAIT_CV(is_class, DummyClass);
     TEST_IS_TRAIT_CV(is_class, Abstract);
-
     TEST_IS_TRAIT_CV_FALSE(is_class, Enum);
     TEST_IS_TRAIT_CV_FALSE(is_class, EnumWithType);
     TEST_IS_TRAIT_CV_FALSE(is_class, ScopedEnum);
     TEST_IS_TRAIT_CV_FALSE(is_class, ScopedEnumWithType);
     TEST_IS_TRAIT_CV_FALSE(is_class, EmptyUnion);
     TEST_IS_TRAIT_CV_FALSE(is_class, DummyUnion);
+    TEST_IS_TRAIT_CV_FALSE(is_class, T);
 
     TEST_IS_TRAIT_CV(is_compound, EmptyClass);
     TEST_IS_TRAIT_CV(is_compound, DummyClass);
@@ -198,36 +199,36 @@ constexpr auto test() -> bool
         float f; // NOLINT
     };
 
-    assert((etl::alignment_of_v<char> == 1));
-    assert((etl::alignment_of_v<signed char> == 1));
-    assert((etl::alignment_of_v<unsigned char> == 1));
+    TEST_TRAIT_VALUE_CV(alignment_of, char, 1);
+    TEST_TRAIT_VALUE_CV(alignment_of, signed char, 1);
+    TEST_TRAIT_VALUE_CV(alignment_of, unsigned char, 1);
 
-    assert((etl::alignment_of_v<short> == 2));
-    assert((etl::alignment_of_v<signed short> == 2));
-    assert((etl::alignment_of_v<unsigned short> == 2));
+    TEST_TRAIT_VALUE_CV(alignment_of, short, 2);
+    TEST_TRAIT_VALUE_CV(alignment_of, signed short, 2);
+    TEST_TRAIT_VALUE_CV(alignment_of, unsigned short, 2);
 
-    assert((etl::alignment_of_v<int> == 4));
-    assert((etl::alignment_of_v<signed int> == 4));
-    assert((etl::alignment_of_v<unsigned int> == 4));
+    TEST_TRAIT_VALUE_CV(alignment_of, int, 4);
+    TEST_TRAIT_VALUE_CV(alignment_of, signed int, 4);
+    TEST_TRAIT_VALUE_CV(alignment_of, unsigned int, 4);
 
     if constexpr (sizeof(long) == 4U) {
-        assert((etl::alignment_of_v<long> == 4));
-        assert((etl::alignment_of_v<signed long> == 4));
-        assert((etl::alignment_of_v<unsigned long> == 4));
+        TEST_TRAIT_VALUE_CV(alignment_of, long, 4);
+        TEST_TRAIT_VALUE_CV(alignment_of, signed long, 4);
+        TEST_TRAIT_VALUE_CV(alignment_of, unsigned long, 4);
     } else {
-        assert((etl::alignment_of_v<long> == 8));
-        assert((etl::alignment_of_v<signed long> == 8));
-        assert((etl::alignment_of_v<unsigned long> == 8));
+        TEST_TRAIT_VALUE_CV(alignment_of, long, 8);
+        TEST_TRAIT_VALUE_CV(alignment_of, signed long, 8);
+        TEST_TRAIT_VALUE_CV(alignment_of, unsigned long, 8);
     }
 
-    assert((etl::alignment_of_v<long long> == 8));
-    assert((etl::alignment_of_v<signed long long> == 8));
-    assert((etl::alignment_of_v<unsigned long long> == 8));
+    TEST_TRAIT_VALUE_CV(alignment_of, long long, 8);
+    TEST_TRAIT_VALUE_CV(alignment_of, signed long long, 8);
+    TEST_TRAIT_VALUE_CV(alignment_of, unsigned long long, 8);
 
-    assert((etl::alignment_of_v<float> == 4));
-    assert((etl::alignment_of_v<double> == 8));
+    TEST_TRAIT_VALUE_CV(alignment_of, float, 4);
+    TEST_TRAIT_VALUE_CV(alignment_of, double, 8);
 
-    assert((etl::alignment_of_v<AlignmenTest> == 4));
+    TEST_TRAIT_VALUE_CV(alignment_of, AlignmenTest, 4);
 
     return true;
 }
