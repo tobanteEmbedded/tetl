@@ -38,10 +38,14 @@ struct VirtualDtor {
 struct DerivedFromVirtualDtor : VirtualDtor {
 };
 
-struct Movable {
-    Movable();
-    Movable(Movable&&);                    // NOLINT
-    auto operator=(Movable&&) -> Movable&; // NOLINT
+struct CopyAndMovable {
+    CopyAndMovable();
+
+    CopyAndMovable(CopyAndMovable const&);
+    auto operator=(CopyAndMovable const&) -> CopyAndMovable&;
+
+    CopyAndMovable(CopyAndMovable&&);                    // NOLINT
+    auto operator=(CopyAndMovable&&) -> CopyAndMovable&; // NOLINT
 };
 
 struct MovableOnly {
@@ -110,6 +114,22 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
         assert(!(etl::trait<type>::value));                                    \
         assert(!(etl::TETL_PP_CONCAT(trait, _v) < type >));                    \
     } while (false)
+
+#define TEST_IS_TRAIT_C(trait, type)                                           \
+    TEST_IS_TRAIT(trait, type);                                                \
+    TEST_IS_TRAIT(trait, const type);
+
+#define TEST_IS_TRAIT_C_FALSE(trait, type)                                     \
+    TEST_IS_TRAIT_FALSE(trait, type);                                          \
+    TEST_IS_TRAIT_FALSE(trait, const type);
+
+#define TEST_IS_TRAIT_V(trait, type)                                           \
+    TEST_IS_TRAIT(trait, type);                                                \
+    TEST_IS_TRAIT(trait, volatile type);
+
+#define TEST_IS_TRAIT_V_FALSE(trait, type)                                     \
+    TEST_IS_TRAIT_FALSE(trait, type);                                          \
+    TEST_IS_TRAIT_FALSE(trait, volatile type);
 
 #define TEST_IS_TRAIT_CV(trait, type)                                          \
     TEST_IS_TRAIT(trait, type);                                                \

@@ -4,8 +4,6 @@
 
 #include "etl/type_traits.hpp"
 
-#include "etl/version.hpp"
-
 #include "testing.hpp"
 #include "types.hpp"
 
@@ -196,43 +194,46 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int32_t);
     TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int64_t);
 
-    {
-        struct AlignmenTest {
-            float f; // NOLINT
-        };
+    struct AlignmenTest {
+        float f; // NOLINT
+    };
 
-        assert((etl::alignment_of_v<char> == 1));
-        assert((etl::alignment_of_v<signed char> == 1));
-        assert((etl::alignment_of_v<unsigned char> == 1));
+    assert((etl::alignment_of_v<char> == 1));
+    assert((etl::alignment_of_v<signed char> == 1));
+    assert((etl::alignment_of_v<unsigned char> == 1));
 
-        assert((etl::alignment_of_v<short> == 2));
-        assert((etl::alignment_of_v<signed short> == 2));
-        assert((etl::alignment_of_v<unsigned short> == 2));
+    assert((etl::alignment_of_v<short> == 2));
+    assert((etl::alignment_of_v<signed short> == 2));
+    assert((etl::alignment_of_v<unsigned short> == 2));
 
-        assert((etl::alignment_of_v<int> == 4));
-        assert((etl::alignment_of_v<signed int> == 4));
-        assert((etl::alignment_of_v<unsigned int> == 4));
+    assert((etl::alignment_of_v<int> == 4));
+    assert((etl::alignment_of_v<signed int> == 4));
+    assert((etl::alignment_of_v<unsigned int> == 4));
 
+    if constexpr (sizeof(long) == 4U) {
         assert((etl::alignment_of_v<long> == 4));
         assert((etl::alignment_of_v<signed long> == 4));
         assert((etl::alignment_of_v<unsigned long> == 4));
-
-        assert((etl::alignment_of_v<long long> == 8));
-        assert((etl::alignment_of_v<signed long long> == 8));
-        assert((etl::alignment_of_v<unsigned long long> == 8));
-
-        assert((etl::alignment_of_v<float> == 4));
-        assert((etl::alignment_of_v<double> == 8));
-
-        assert((etl::alignment_of_v<AlignmenTest> == 4));
+    } else {
+        assert((etl::alignment_of_v<long> == 8));
+        assert((etl::alignment_of_v<signed long> == 8));
+        assert((etl::alignment_of_v<unsigned long> == 8));
     }
+
+    assert((etl::alignment_of_v<long long> == 8));
+    assert((etl::alignment_of_v<signed long long> == 8));
+    assert((etl::alignment_of_v<unsigned long long> == 8));
+
+    assert((etl::alignment_of_v<float> == 4));
+    assert((etl::alignment_of_v<double> == 8));
+
+    assert((etl::alignment_of_v<AlignmenTest> == 4));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<bool>());
     assert(test<char>());
     assert(test<etl::uint8_t>());
     assert(test<etl::uint16_t>());

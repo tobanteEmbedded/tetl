@@ -4,41 +4,55 @@
 
 #include "etl/type_traits.hpp"
 
-#include "etl/version.hpp"
-
 #include "testing.hpp"
+#include "types.hpp"
 
 namespace {
 [[nodiscard]] auto func2(char /*ignore*/) -> int (*)() { return nullptr; }
+
+template <typename T>
+class Foo {
+    T v1;      // NOLINT
+    double v2; // NOLINT
+
+public:
+    Foo(T n) : v1(n), v2() { }
+    Foo(T n, double f) noexcept : v1(n), v2(f) { }
+};
 
 } // namespace
 
 template <typename T>
 constexpr auto test() -> bool
 {
+    TEST_IS_TRAIT_CV(is_copy_constructible, T);
+    TEST_IS_TRAIT_CV(is_copy_constructible, T&);
+    TEST_IS_TRAIT_C(is_copy_constructible, CopyAndMovable);
+    TEST_IS_TRAIT_C_FALSE(is_copy_constructible, MovableOnly);
 
-    {
-        assert((etl::is_constructible_v<T>));
-        assert((etl::is_constructible_v<T*>));
-        assert((etl::is_constructible_v<T, T&>));
-        assert((etl::is_constructible_v<T, T const&>));
+    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, T);
+    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, T*);
+    TEST_IS_TRAIT_CV(is_trivially_copy_constructible, EmptyClass);
+    TEST_IS_TRAIT_CV_FALSE(is_trivially_copy_constructible, T&);
 
-        assert(!(etl::is_constructible_v<T&>));
-        assert(!(etl::is_constructible_v<T const&>));
+    TEST_IS_TRAIT_CV(is_scoped_enum, ScopedEnum);
+    TEST_IS_TRAIT_CV(is_scoped_enum, ScopedEnumWithType);
 
-        class Foo {
-            T v1;      // NOLINT
-            double v2; // NOLINT
+    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, T);
+    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyClass);
+    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EmptyUnion);
+    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, Enum);
+    TEST_IS_TRAIT_CV_FALSE(is_scoped_enum, EnumWithType);
 
-        public:
-            Foo(T n) : v1(n), v2() { }
-            Foo(T n, double f) noexcept : v1(n), v2(f) { }
-        };
+    TEST_IS_TRAIT_CV(is_constructible, T);
+    TEST_IS_TRAIT_CV(is_constructible, T*);
+    TEST_IS_TRAIT_FALSE(is_constructible, T&);
+    TEST_IS_TRAIT_FALSE(is_constructible, T const&);
 
-        assert((etl::is_constructible_v<Foo, T>));
-        assert((etl::is_constructible_v<Foo, T, double>));
-        assert(!(etl::is_constructible_v<Foo, T, struct S>));
-    }
+    assert((etl::is_constructible_v<Foo<T>, T>));
+    assert((etl::is_constructible_v<Foo<T>, T, double>));
+    assert(!(etl::is_constructible_v<Foo<T>, T, struct S>));
+
     {
         using etl::conjunction_v;
         using etl::is_same;
@@ -65,109 +79,8 @@ constexpr auto test() -> bool
         assert((disjunction_v<is_same<T, T>, is_same<T const, T const>>));
         assert((disjunction_v<is_same<T, T>, etl::false_type>));
     }
-    {
-        class SomeClass {
-        };
-
-        enum CEnum : int {};
-
-        enum struct Es { oz };
-
-        enum class Ec : int {};
-
-        assert(!(etl::is_scoped_enum_v<int>));
-        assert(!(etl::is_scoped_enum<SomeClass>::value));
-        assert(!(etl::is_scoped_enum<CEnum>::value));
-
-        assert((etl::is_scoped_enum<Es>::value));
-        assert((etl::is_scoped_enum_v<Ec>));
-    }
 
     assert((etl::is_swappable_with_v<T&, T&>));
-
-    {
-        using etl::is_copy_constructible_v;
-
-        assert((is_copy_constructible_v<T>));
-        assert((is_copy_constructible_v<T&>));
-        assert((is_copy_constructible_v<T const&>));
-        assert((is_copy_constructible_v<T volatile&>));
-        assert((is_copy_constructible_v<T const volatile&>));
-
-        struct CopyableS {
-            T value {};
-        };
-
-        class CopyableC {
-        public:
-            T value {};
-        };
-
-        struct NonCopyableS {
-            NonCopyableS(NonCopyableS const&) = delete; // NOLINT
-            T value {};
-        };
-
-        class NonCopyableC {
-        public:
-            NonCopyableC(NonCopyableC const&) = delete; // NOLINT
-            T value {};
-        };
-
-        assert((is_copy_constructible_v<CopyableS>));
-        assert((is_copy_constructible_v<CopyableS const>));
-        assert(!(is_copy_constructible_v<CopyableS volatile>));
-        assert(!(is_copy_constructible_v<CopyableS const volatile>));
-
-        assert((is_copy_constructible_v<CopyableC>));
-        assert((is_copy_constructible_v<CopyableC const>));
-        assert(!(is_copy_constructible_v<CopyableC volatile>));
-        assert(!(is_copy_constructible_v<CopyableC const volatile>));
-
-        assert(!(is_copy_constructible_v<NonCopyableS>));
-        assert(!(is_copy_constructible_v<NonCopyableS const>));
-        assert(!(is_copy_constructible_v<NonCopyableS volatile>));
-        assert(!(is_copy_constructible_v<NonCopyableS const volatile>));
-
-        assert(!(is_copy_constructible_v<NonCopyableC>));
-        assert(!(is_copy_constructible_v<NonCopyableC const>));
-        assert(!(is_copy_constructible_v<NonCopyableC volatile>));
-        assert(!(is_copy_constructible_v<NonCopyableC const volatile>));
-    }
-
-    {
-        using etl::is_trivially_copy_constructible_v;
-
-        assert((is_trivially_copy_constructible_v<T>));
-
-        assert((is_trivially_copy_constructible_v<T*>));
-        assert((is_trivially_copy_constructible_v<T const*>));
-        assert((is_trivially_copy_constructible_v<T volatile*>));
-        assert((is_trivially_copy_constructible_v<T const volatile*>));
-
-        assert(!(is_trivially_copy_constructible_v<T&>));
-        assert(!(is_trivially_copy_constructible_v<T const&>));
-        assert(!(is_trivially_copy_constructible_v<T volatile&>));
-        assert(!(is_trivially_copy_constructible_v<T const volatile&>));
-
-        struct TCS {
-        };
-
-        class TCC {
-        public:
-            T value;
-        };
-
-        assert((is_trivially_copy_constructible_v<TCS>));
-        assert((is_trivially_copy_constructible_v<TCS const>));
-        assert((is_trivially_copy_constructible_v<TCS volatile>));
-        assert((is_trivially_copy_constructible_v<TCS const volatile>));
-
-        assert((is_trivially_copy_constructible_v<TCC>));
-        assert((is_trivially_copy_constructible_v<TCC const>));
-        assert((is_trivially_copy_constructible_v<TCC volatile>));
-        assert((is_trivially_copy_constructible_v<TCC const volatile>));
-    }
 
     {
         using etl::is_trivially_copyable_v;
