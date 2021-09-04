@@ -61,6 +61,32 @@ struct Throws {
     ~Throws() noexcept(false);                                // NOLINT
 };
 
+struct TriviallyConstructable {
+    TriviallyConstructable() = default; // trivial and non-throwing
+    int n;
+};
+
+struct NonTriviallyConstructable {
+    NonTriviallyConstructable(int& n) : ref { n } { }
+
+    int& ref;
+};
+
+struct TrivialDtor {
+};
+
+struct TrivialDtorDefaulted {
+    ~TrivialDtorDefaulted() = default;
+};
+
+struct NonTrivialDtor {
+    ~NonTrivialDtor() { } // NOLINT
+};
+
+struct NonTrivialDtorMember {
+    NonTrivialDtor member;
+};
+
 using PointerToMemberObj         = int VirtualDtor::*;
 using PointerToConstMemberObj    = int const VirtualDtor::*;
 using PointerToVolatileMemberObj = int volatile VirtualDtor::*;

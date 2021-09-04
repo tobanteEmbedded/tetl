@@ -88,18 +88,159 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV(is_compound, T&);
     TEST_IS_TRAIT_CV_FALSE(is_compound, T);
 
+    TEST_IS_TRAIT_CV(is_trivially_destructible, T);
+    TEST_IS_TRAIT_CV(is_trivially_destructible, TrivialDtor);
+    TEST_IS_TRAIT_CV(is_trivially_destructible, TrivialDtorDefaulted);
+    TEST_IS_TRAIT_CV_FALSE(is_trivially_destructible, NonTrivialDtor);
+    TEST_IS_TRAIT_CV_FALSE(is_trivially_destructible, NonTrivialDtorMember);
+
+    // clang-format off
+    TEST_IS_TRAIT(is_default_constructible, T);
+    TEST_IS_TRAIT(is_default_constructible, T*);
+    TEST_IS_TRAIT(is_default_constructible, TriviallyConstructable);
+    TEST_IS_TRAIT_FALSE(is_default_constructible, NonTriviallyConstructable);
+    
+    TEST_IS_TRAIT(is_nothrow_default_constructible, T);
+    TEST_IS_TRAIT(is_nothrow_default_constructible, T*);
+    TEST_IS_TRAIT(is_nothrow_default_constructible, TriviallyConstructable);
+    TEST_IS_TRAIT_FALSE(is_nothrow_default_constructible, NonTriviallyConstructable);
+    
+    TEST_IS_TRAIT(is_trivially_default_constructible, T);
+    TEST_IS_TRAIT(is_trivially_default_constructible, T*);
+    TEST_IS_TRAIT(is_trivially_default_constructible, TriviallyConstructable);
+    TEST_IS_TRAIT_FALSE(is_trivially_default_constructible, NonTriviallyConstructable);
+    // clang-format on
+
+    using etl::is_trivially_constructible_v;
+
+    assert((is_trivially_constructible_v<T>));
+    assert((is_trivially_constructible_v<T*>));
+    assert((is_trivially_constructible_v<T, T&>));
+    assert((is_trivially_constructible_v<T, T const&>));
+
+    assert(!(is_trivially_constructible_v<T&>));
+    assert(!(is_trivially_constructible_v<T const&>));
+
+    class Foo {
+        T v1;      // NOLINT
+        double v2; // NOLINT
+
+    public:
+        Foo(T n) : v1(n), v2() { }
+        Foo(T n, double f) noexcept : v1(n), v2(f) { }
+    };
+
+    assert(!(is_trivially_constructible_v<Foo, T, double>));
+    assert(!(is_trivially_constructible_v<Foo, T>));
+
+    using etl::is_nothrow_constructible_v;
+
+    assert((is_nothrow_constructible_v<T>));
+    assert((is_nothrow_constructible_v<T*>));
+    assert((is_nothrow_constructible_v<T, T&>));
+    assert((is_nothrow_constructible_v<T, T const&>));
+
+    assert(!(is_nothrow_constructible_v<T&>));
+    assert(!(is_nothrow_constructible_v<T const&>));
+
+    assert((is_nothrow_constructible_v<Foo, T, double>));
+    assert(!(is_nothrow_constructible_v<Foo, T>));
+
+    TEST_IS_TRAIT_CV(is_signed, signed char);
+    TEST_IS_TRAIT_CV(is_signed, signed short);
+    TEST_IS_TRAIT_CV(is_signed, signed int);
+    TEST_IS_TRAIT_CV(is_signed, signed long);
+    TEST_IS_TRAIT_CV(is_signed, signed long long);
+    TEST_IS_TRAIT_CV(is_signed, short);
+    TEST_IS_TRAIT_CV(is_signed, int);
+    TEST_IS_TRAIT_CV(is_signed, long);
+    TEST_IS_TRAIT_CV(is_signed, long long);
+    TEST_IS_TRAIT_CV(is_signed, signed);
+    TEST_IS_TRAIT_CV(is_signed, etl::int8_t);
+    TEST_IS_TRAIT_CV(is_signed, etl::int16_t);
+    TEST_IS_TRAIT_CV(is_signed, etl::int32_t);
+    TEST_IS_TRAIT_CV(is_signed, etl::int64_t);
+
+    TEST_IS_TRAIT_CV_FALSE(is_signed, unsigned char);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, unsigned short);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, unsigned int);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, unsigned long);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, unsigned long long);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, etl::uint8_t);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, etl::uint16_t);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, etl::uint32_t);
+    TEST_IS_TRAIT_CV_FALSE(is_signed, etl::uint64_t);
+
+    TEST_IS_TRAIT_CV(is_unsigned, unsigned char);
+    TEST_IS_TRAIT_CV(is_unsigned, unsigned short);
+    TEST_IS_TRAIT_CV(is_unsigned, unsigned int);
+    TEST_IS_TRAIT_CV(is_unsigned, unsigned long);
+    TEST_IS_TRAIT_CV(is_unsigned, unsigned long long);
+    TEST_IS_TRAIT_CV(is_unsigned, etl::uint8_t);
+    TEST_IS_TRAIT_CV(is_unsigned, etl::uint16_t);
+    TEST_IS_TRAIT_CV(is_unsigned, etl::uint32_t);
+    TEST_IS_TRAIT_CV(is_unsigned, etl::uint64_t);
+
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed char);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed short);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed int);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed long);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed long long);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, short);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, int);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, long);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, long long);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, signed);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int8_t);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int16_t);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int32_t);
+    TEST_IS_TRAIT_CV_FALSE(is_unsigned, etl::int64_t);
+
+    {
+        struct AlignmenTest {
+            float f; // NOLINT
+        };
+
+        assert((etl::alignment_of_v<char> == 1));
+        assert((etl::alignment_of_v<signed char> == 1));
+        assert((etl::alignment_of_v<unsigned char> == 1));
+
+        assert((etl::alignment_of_v<short> == 2));
+        assert((etl::alignment_of_v<signed short> == 2));
+        assert((etl::alignment_of_v<unsigned short> == 2));
+
+        assert((etl::alignment_of_v<int> == 4));
+        assert((etl::alignment_of_v<signed int> == 4));
+        assert((etl::alignment_of_v<unsigned int> == 4));
+
+        assert((etl::alignment_of_v<long> == 4));
+        assert((etl::alignment_of_v<signed long> == 4));
+        assert((etl::alignment_of_v<unsigned long> == 4));
+
+        assert((etl::alignment_of_v<long long> == 8));
+        assert((etl::alignment_of_v<signed long long> == 8));
+        assert((etl::alignment_of_v<unsigned long long> == 8));
+
+        assert((etl::alignment_of_v<float> == 4));
+        assert((etl::alignment_of_v<double> == 8));
+
+        assert((etl::alignment_of_v<AlignmenTest> == 4));
+    }
+
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
+    assert(test<bool>());
+    assert(test<char>());
     assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
     assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
     assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
     assert(test<etl::uint64_t>());
+    assert(test<etl::int8_t>());
+    assert(test<etl::int16_t>());
+    assert(test<etl::int32_t>());
     assert(test<etl::int64_t>());
 
     assert(test<float>());
