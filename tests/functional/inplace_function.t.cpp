@@ -13,7 +13,7 @@
 using namespace etl::string_view_literals;
 
 template <typename T>
-constexpr auto test() -> bool
+auto test() -> bool
 {
     using func_t = etl::inplace_function<T(T)>;
 
@@ -40,7 +40,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-constexpr auto test_all() -> bool
+auto test_all() -> bool
 {
     assert(test<etl::int8_t>());
     assert(test<etl::int16_t>());
