@@ -46,15 +46,6 @@ TEST_CASE("type_traits: is_function", "[type_traits]")
 
 #endif
 
-TEMPLATE_TEST_CASE("type_traits: is_compound = true", "[type_traits]",
-    struct StructIsCompound, class ClassIsCompound, union UnionIsCompound)
-{
-    STATIC_REQUIRE(etl::is_compound<TestType>::value);
-    STATIC_REQUIRE(etl::is_compound_v<TestType>);
-    STATIC_REQUIRE(etl::is_compound_v<TestType*>);
-    STATIC_REQUIRE(etl::is_compound_v<TestType&>);
-}
-
 enum B : unsigned {};
 enum class C : unsigned {};
 

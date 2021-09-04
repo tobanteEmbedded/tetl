@@ -71,4 +71,30 @@ using PointerToConstMemberFunc    = void (VirtualDtor::*)() const;
 using PointerToVolatileMemberFunc = void (VirtualDtor::*)() volatile;
 using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 
+#define TEST_IS_TRAIT(trait, type)                                             \
+    do {                                                                       \
+        assert(etl::is_base_of_v<etl::true_type, etl::trait<type>>);           \
+        assert((etl::trait<type>::value));                                     \
+        assert((etl::TETL_PP_CONCAT(trait, _v) < type >));                     \
+    } while (false)
+
+#define TEST_IS_TRAIT_FALSE(trait, type)                                       \
+    do {                                                                       \
+        assert((etl::is_base_of_v<etl::false_type, etl::trait<type>>));        \
+        assert(!(etl::trait<type>::value));                                    \
+        assert(!(etl::TETL_PP_CONCAT(trait, _v) < type >));                    \
+    } while (false)
+
+#define TEST_IS_TRAIT_CV(trait, type)                                          \
+    TEST_IS_TRAIT(trait, type);                                                \
+    TEST_IS_TRAIT(trait, const type);                                          \
+    TEST_IS_TRAIT(trait, volatile type);                                       \
+    TEST_IS_TRAIT(trait, const volatile type);
+
+#define TEST_IS_TRAIT_CV_FALSE(trait, type)                                    \
+    TEST_IS_TRAIT_FALSE(trait, type);                                          \
+    TEST_IS_TRAIT_FALSE(trait, const type);                                    \
+    TEST_IS_TRAIT_FALSE(trait, volatile type);                                 \
+    TEST_IS_TRAIT_FALSE(trait, const volatile type);
+
 #endif // TETL_TEST_TYPE_TRAITS_TYPES_HPP
