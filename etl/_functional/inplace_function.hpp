@@ -221,7 +221,7 @@ public:
         other.vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
         vtable_->relocate_ptr(addressof(other.storage_), addressof(tmp));
 
-        swap(vtable_, other.vtable_);
+        etl::swap(vtable_, other.vtable_);
     }
 
     // clang-format on
