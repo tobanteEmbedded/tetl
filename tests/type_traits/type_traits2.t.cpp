@@ -4,9 +4,8 @@
 
 #include "etl/type_traits.hpp"
 
-// #include "etl/version.hpp"
-
 #include "testing.hpp"
+#include "types.hpp"
 
 namespace {
 
@@ -82,164 +81,71 @@ struct IsAbstract_D : IsAbstract_C {
 
 constexpr auto test_all() -> bool
 {
-    assert((etl::is_standard_layout<A>::value));
-    assert((etl::is_standard_layout_v<A>));
-    assert((etl::is_standard_layout<B>::value));
-    assert((etl::is_standard_layout_v<B>));
-    assert((etl::is_standard_layout<C>::value));
-    assert((etl::is_standard_layout_v<C>));
-    assert((etl::is_standard_layout<E>::value));
-    assert((etl::is_standard_layout_v<E>));
-    assert((!etl::is_standard_layout<D>::value));
-    assert((!etl::is_standard_layout_v<D>));
+    TEST_IS_TRAIT_CV(is_standard_layout, A);
+    TEST_IS_TRAIT_CV(is_standard_layout, B);
+    TEST_IS_TRAIT_CV(is_standard_layout, C);
+    TEST_IS_TRAIT_CV(is_standard_layout, E);
+    TEST_IS_TRAIT_CV_FALSE(is_standard_layout, D);
 
-    assert((etl::is_empty<A>::value));
-    assert((etl::is_empty_v<A>));
-    assert((etl::is_empty<C>::value));
-    assert((etl::is_empty_v<C>));
+    TEST_IS_TRAIT_CV(is_empty, A);
+    TEST_IS_TRAIT_CV(is_empty, C);
+    TEST_IS_TRAIT_CV_FALSE(is_empty, B);
+    TEST_IS_TRAIT_CV_FALSE(is_empty, D);
+    TEST_IS_TRAIT_CV_FALSE(is_empty, E);
 
-    assert((!etl::is_empty<B>::value));
-    assert((!etl::is_empty_v<B>));
-    assert((!etl::is_empty<D>::value));
-    assert((!etl::is_empty_v<D>));
-    assert((!etl::is_empty<E>::value));
-    assert((!etl::is_empty_v<E>));
+    TEST_IS_TRAIT_CV(is_polymorphic, IsPolymorphic_B);
+    TEST_IS_TRAIT_CV(is_polymorphic, IsPolymorphic_C);
+    TEST_IS_TRAIT_CV(is_polymorphic, IsPolymorphic_D);
+    TEST_IS_TRAIT_CV_FALSE(is_polymorphic, int);
+    TEST_IS_TRAIT_CV_FALSE(is_polymorphic, IsPolymorphic_A);
 
-    assert((!etl::is_polymorphic<int>::value));
-    assert((!etl::is_polymorphic_v<int>));
-    assert((!etl::is_polymorphic<IsPolymorphic_A>::value));
-    assert((!etl::is_polymorphic_v<IsPolymorphic_A>));
+    TEST_IS_TRAIT_CV(is_final, IsFinal_C);
+    TEST_IS_TRAIT_CV(is_final, IsFinal_E);
+    TEST_IS_TRAIT_CV_FALSE(is_final, int);
+    TEST_IS_TRAIT_CV_FALSE(is_final, float);
+    TEST_IS_TRAIT_CV_FALSE(is_final, IsFinal_A);
+    TEST_IS_TRAIT_CV_FALSE(is_final, IsFinal_B);
+    TEST_IS_TRAIT_CV_FALSE(is_final, IsFinal_D);
 
-    assert((etl::is_polymorphic<IsPolymorphic_B>::value));
-    assert((etl::is_polymorphic_v<IsPolymorphic_B>));
-    assert((etl::is_polymorphic<IsPolymorphic_C>::value));
-    assert((etl::is_polymorphic_v<IsPolymorphic_C>));
-    assert((etl::is_polymorphic<IsPolymorphic_D>::value));
-    assert((etl::is_polymorphic_v<IsPolymorphic_D>));
+    TEST_IS_TRAIT_CV(is_abstract, IsAbstract_C);
+    TEST_IS_TRAIT_CV(is_abstract, IsAbstract_D);
+    TEST_IS_TRAIT_CV_FALSE(is_abstract, int);
+    TEST_IS_TRAIT_CV_FALSE(is_abstract, float);
+    TEST_IS_TRAIT_CV_FALSE(is_abstract, IsAbstract_A);
+    TEST_IS_TRAIT_CV_FALSE(is_abstract, IsAbstract_B);
 
-    assert((!etl::is_final<int>::value));
-    assert((!etl::is_final_v<int>));
-    assert((!etl::is_final<float>::value));
-    assert((!etl::is_final_v<float>));
-    assert((!etl::is_final<IsFinal_A>::value));
-    assert((!etl::is_final_v<IsFinal_A>));
-    assert((!etl::is_final<IsFinal_B>::value));
-    assert((!etl::is_final_v<IsFinal_B>));
-    assert((!etl::is_final<IsFinal_D>::value));
-    assert((!etl::is_final_v<IsFinal_D>));
+    TEST_IS_TRAIT_CV(is_integral, char);
+    TEST_IS_TRAIT_CV(is_integral, unsigned char);
+    TEST_IS_TRAIT_CV(is_integral, signed char);
+    TEST_IS_TRAIT_CV(is_integral, unsigned short);
+    TEST_IS_TRAIT_CV(is_integral, signed short);
+    TEST_IS_TRAIT_CV(is_integral, unsigned int);
+    TEST_IS_TRAIT_CV(is_integral, signed int);
+    TEST_IS_TRAIT_CV(is_integral, unsigned long);
+    TEST_IS_TRAIT_CV(is_integral, signed long);
+    TEST_IS_TRAIT_CV(is_integral, unsigned long long);
+    TEST_IS_TRAIT_CV(is_integral, signed long long);
+    TEST_IS_TRAIT_CV_FALSE(is_integral, float);
+    TEST_IS_TRAIT_CV_FALSE(is_integral, double);
+    TEST_IS_TRAIT_CV_FALSE(is_integral, long double);
+    TEST_IS_TRAIT_CV_FALSE(is_integral, struct NotIntegral);
+    TEST_IS_TRAIT_CV_FALSE(is_integral, etl::nullptr_t);
 
-    assert((etl::is_final<IsFinal_C>::value));
-    assert((etl::is_final_v<IsFinal_C>));
-    assert((etl::is_final<IsFinal_E>::value));
-    assert((etl::is_final_v<IsFinal_E>));
-
-    assert((!etl::is_abstract<int>::value));
-    assert((!etl::is_abstract_v<int>));
-    assert((!etl::is_abstract<float>::value));
-    assert((!etl::is_abstract_v<float>));
-    assert((!etl::is_abstract<IsAbstract_A>::value));
-    assert((!etl::is_abstract_v<IsAbstract_A>));
-    assert((!etl::is_abstract<IsAbstract_B>::value));
-    assert((!etl::is_abstract_v<IsAbstract_B>));
-
-    assert((etl::is_abstract<IsAbstract_C>::value));
-    assert((etl::is_abstract_v<IsAbstract_C>));
-    assert((etl::is_abstract<IsAbstract_D>::value));
-    assert((etl::is_abstract_v<IsAbstract_D>));
-
-    assert((etl::is_integral_v<float> == false));
-    assert((etl::is_integral_v<double> == false));
-    assert((etl::is_integral_v<long double> == false));
-    assert((etl::is_integral_v<struct NotIntegral> == false));
-    assert((etl::is_integral_v<decltype(nullptr)> == false));
-
-    assert((etl::is_integral_v<etl::int8_t>));
-    assert((etl::is_integral_v<etl::int16_t>));
-    assert((etl::is_integral_v<etl::int32_t>));
-    assert((etl::is_integral_v<etl::int64_t>));
-    assert((etl::is_integral_v<etl::uint8_t>));
-    assert((etl::is_integral_v<etl::uint16_t>));
-    assert((etl::is_integral_v<etl::uint32_t>));
-    assert((etl::is_integral_v<etl::uint64_t>));
-
-    assert((etl::is_floating_point_v<float>));
-    assert((etl::is_floating_point_v<double>));
-    assert((etl::is_floating_point_v<long double>));
-
-    assert((etl::is_floating_point_v<char> == false));
-    assert((etl::is_floating_point_v<int> == false));
-    assert((etl::is_floating_point_v<decltype(nullptr)> == false));
-    assert((etl::is_floating_point_v<struct FooBar> == false));
-
-    assert((etl::is_null_pointer_v<int> == false));
-    assert((etl::is_null_pointer_v<float> == false));
-    assert((etl::is_null_pointer_v<decltype(nullptr)>));
-
-    assert((etl::is_array_v<float> == false));
-    assert((etl::is_array_v<float[]>));
-    assert((etl::is_array_v<float[4]>));
-
-    assert((etl::is_pointer_v<float*>));
-    assert((etl::is_pointer_v<float> == false));
-
-    using etl::has_virtual_destructor_v;
-
-    assert(!(has_virtual_destructor_v<int>));
-    assert(!(has_virtual_destructor_v<int const>));
-    assert(!(has_virtual_destructor_v<int volatile>));
-    assert(!(has_virtual_destructor_v<int const volatile>));
-
-    assert(!(has_virtual_destructor_v<int&>));
-    assert(!(has_virtual_destructor_v<int const&>));
-    assert(!(has_virtual_destructor_v<int volatile&>));
-    assert(!(has_virtual_destructor_v<int const volatile&>));
-
-    assert(!(has_virtual_destructor_v<int*>));
-    assert(!(has_virtual_destructor_v<int const*>));
-    assert(!(has_virtual_destructor_v<int volatile*>));
-    assert(!(has_virtual_destructor_v<int const volatile*>));
-
-    struct NVS {
-        ~NVS() { } // NOLINT
-        float value {};
-    };
-
-    struct VS {
-        virtual ~VS() { } // NOLINT
-        float value {};
-    };
-
-    class NVC {
-    public:
-        ~NVC() { } // NOLINT
-        float value {};
-    };
-
-    class VC {
-    public:
-        virtual ~VC() { } // NOLINT
-        float value {};
-    };
-
-    assert(!(has_virtual_destructor_v<NVS>));
-    assert(!(has_virtual_destructor_v<NVS const>));
-    assert(!(has_virtual_destructor_v<NVS volatile>));
-    assert(!(has_virtual_destructor_v<NVS const volatile>));
-
-    assert(!(has_virtual_destructor_v<NVC>));
-    assert(!(has_virtual_destructor_v<NVC const>));
-    assert(!(has_virtual_destructor_v<NVC volatile>));
-    assert(!(has_virtual_destructor_v<NVC const volatile>));
-
-    assert((has_virtual_destructor_v<VS>));
-    assert((has_virtual_destructor_v<VS const>));
-    assert((has_virtual_destructor_v<VS volatile>));
-    assert((has_virtual_destructor_v<VS const volatile>));
-
-    assert((has_virtual_destructor_v<VC>));
-    assert((has_virtual_destructor_v<VC const>));
-    assert((has_virtual_destructor_v<VC volatile>));
-    assert((has_virtual_destructor_v<VC const volatile>));
+    TEST_IS_TRAIT_CV(is_floating_point, float);
+    TEST_IS_TRAIT_CV(is_floating_point, double);
+    TEST_IS_TRAIT_CV(is_floating_point, long double);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, char);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, unsigned char);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, signed char);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, unsigned short);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, signed short);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, unsigned int);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, signed int);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, unsigned long);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, signed long);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, unsigned long long);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, signed long long);
+    TEST_IS_TRAIT_CV_FALSE(is_floating_point, etl::nullptr_t);
 
     return true;
 }
@@ -247,6 +153,6 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-    assert((test_all()));
+    static_assert(test_all());
     return 0;
 }
