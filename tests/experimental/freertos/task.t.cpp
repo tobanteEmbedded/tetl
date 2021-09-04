@@ -29,7 +29,7 @@ auto test_all() -> bool
 
     // Run would normally be called by rtos::start_scheduler(). Only used
     // for stubs.
-    task.run();
+    rtos::rtos_task<example_task<rtos::once>>(static_cast<void*>(&task));
 
     return true;
 }

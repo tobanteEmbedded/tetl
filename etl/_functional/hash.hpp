@@ -227,8 +227,7 @@ struct hash<etl::nullptr_t> {
 /// \module Utility
 template <typename T>
 struct hash<T*> {
-    [[nodiscard]] constexpr auto operator()(T* val) const noexcept
-        -> etl::size_t
+    [[nodiscard]] auto operator()(T* val) const noexcept -> etl::size_t
     {
         return etl::bit_cast<etl::size_t>(val);
     }

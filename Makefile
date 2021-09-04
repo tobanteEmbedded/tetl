@@ -34,7 +34,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE
+	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE -D TETL_BUILD_CPP20=ON
 	cmake --build cmake-build-coverage --parallel 6
 	cd cmake-build-coverage && ctest
 

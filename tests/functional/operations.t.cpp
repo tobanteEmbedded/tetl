@@ -144,29 +144,6 @@ constexpr auto test_all() -> bool
     assert(etl::detail::is_transparent<etl::bit_not<>>::value);
     assert((etl::bit_not<uint8_t> {}(0b0000'0101) == 0b1111'1010));
 
-    assert(etl::hash<bool> {}(true) != 0);
-
-    assert(etl::hash<char16_t> {}('a') != 0);
-    assert(etl::hash<char32_t> {}('a') != 0);
-    assert(etl::hash<wchar_t> {}('a') != 0);
-
-    assert(etl::hash<signed char> {}(42) != 0);
-    assert(etl::hash<unsigned char> {}(143) != 0);
-    assert(etl::hash<short> {}(143) != 0);
-    assert(etl::hash<unsigned short> {}(143) != 0);
-    assert(etl::hash<int> {}(143) != 0);
-    assert(etl::hash<unsigned int> {}(143) != 0);
-    assert(etl::hash<long> {}(143) != 0);
-    assert(etl::hash<unsigned long> {}(143) != 0);
-    assert(etl::hash<long long> {}(143) != 0);
-    assert(etl::hash<unsigned long long> {}(143) != 0);
-
-    assert(etl::hash<float> {}(143) != 0);
-    assert(etl::hash<double> {}(143) != 0);
-    assert(etl::hash<long double> {}(143) != 0);
-
-    assert(etl::hash<etl::nullptr_t> {}(nullptr) == 0);
-
     return true;
 }
 
