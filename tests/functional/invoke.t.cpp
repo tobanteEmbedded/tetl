@@ -8,12 +8,36 @@
 
 #include "testing.hpp"
 
+namespace {
+struct Class {
+    constexpr Class(int n) : num(n) { }
+    constexpr auto get_num(int i) const -> int { return num + i; }
+    int num;
+};
+
+constexpr auto get_num(int i) -> int { return i; }
+
+} // namespace
+
 template <typename T>
 constexpr auto test() -> bool
 {
     auto lambda = [](T x) -> T { return x; };
     assert(etl::invoke(lambda, T(1)) == T(1));
     assert(etl::invoke([]() { return T(42); }) == T(42));
+
+    assert(etl::invoke(get_num, T(42)) == T(42));
+    assert(etl::invoke(&Class::get_num, Class { 0 }, T(42)) == T(42));
+    assert(etl::invoke(&Class::num, Class { 2 }) == T(2));
+
+    auto c   = Class { 0 };
+    auto ref = etl::ref(c);
+    assert(etl::invoke(&Class::get_num, ref, T(42)) == T(42));
+    assert(etl::invoke(&Class::num, ref) == T(0));
+
+    auto cref = etl::cref(c);
+    assert(etl::invoke(&Class::get_num, cref, T(42)) == T(42));
+    assert(etl::invoke(&Class::num, cref) == T(0));
     return true;
 }
 
