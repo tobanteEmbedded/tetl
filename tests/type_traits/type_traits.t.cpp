@@ -6,8 +6,8 @@
 
 #include "etl/version.hpp"
 
-#include "testing.hpp"
-#include "types.hpp"
+#include "testing/testing.hpp"
+#include "testing/types.hpp"
 
 namespace {
 template <typename T>

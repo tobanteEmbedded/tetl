@@ -6,7 +6,7 @@
 #include "etl/warning.hpp"
 
 #include "test_mutex.hpp"
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 auto test() -> bool
 {

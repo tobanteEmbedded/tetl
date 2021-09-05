@@ -7,7 +7,7 @@
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool

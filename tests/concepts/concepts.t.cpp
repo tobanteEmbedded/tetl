@@ -6,7 +6,7 @@
 
 #include "etl/cstdint.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 #if defined(__cpp_concepts) && TETL_CPP_STANDARD >= 20
 

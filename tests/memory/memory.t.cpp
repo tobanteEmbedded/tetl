@@ -9,7 +9,7 @@
 #include "etl/cstdint.hpp"
 #include "etl/new.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 namespace {
 struct Counter {

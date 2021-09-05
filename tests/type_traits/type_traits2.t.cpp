@@ -4,8 +4,8 @@
 
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
-#include "types.hpp"
+#include "testing/testing.hpp"
+#include "testing/types.hpp"
 
 namespace {
 

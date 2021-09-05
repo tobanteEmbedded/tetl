@@ -3,7 +3,7 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 #include "etl/experimental/hardware/stm32/interrupt.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using namespace etl::experimental::hardware;
 

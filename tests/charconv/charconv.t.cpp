@@ -10,7 +10,7 @@
 #include "etl/string_view.hpp"
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 constexpr auto test_chars_format() -> bool
 {

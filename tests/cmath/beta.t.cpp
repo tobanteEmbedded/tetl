@@ -7,7 +7,7 @@
 #include "etl/cassert.hpp"
 #include "etl/numbers.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto binom(int n, int k) -> T

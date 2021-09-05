@@ -7,7 +7,7 @@
 #include "etl/array.hpp"
 #include "etl/cstdint.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 auto test() -> bool

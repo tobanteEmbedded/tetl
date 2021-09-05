@@ -10,7 +10,7 @@
 #include "etl/string_view.hpp"
 #include "etl/utility.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool

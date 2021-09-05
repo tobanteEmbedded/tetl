@@ -7,7 +7,7 @@
 #include "etl/exception.hpp"
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 constexpr auto test() -> bool
 {

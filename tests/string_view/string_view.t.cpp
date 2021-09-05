@@ -6,7 +6,7 @@
 
 #include "etl/string.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using etl::string_view;
 using namespace etl::literals;

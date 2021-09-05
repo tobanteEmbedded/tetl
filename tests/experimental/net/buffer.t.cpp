@@ -8,7 +8,7 @@
 
 #include "etl/array.hpp" // for array
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 auto test_all() -> bool
 {

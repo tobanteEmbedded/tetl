@@ -9,7 +9,8 @@
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
-#include "testing.hpp"
+#include "testing/iterator_types.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
@@ -23,6 +24,7 @@ constexpr auto test() -> bool
 
         auto const p1 = [](auto a) { return etl::abs(a) > 0; };
         assert(etl::all_of(vec.begin(), vec.end(), p1));
+        assert(etl::all_of(InIter(vec.begin()), InIter(vec.end()), p1));
 
         auto const p2 = [](auto a) { return etl::abs(a) > 10; };
         assert(!etl::all_of(vec.begin(), vec.end(), p2));

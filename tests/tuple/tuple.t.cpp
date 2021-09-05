@@ -8,7 +8,7 @@
 #include "etl/type_traits.hpp"
 #include "etl/warning.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 namespace {
 template <typename T>

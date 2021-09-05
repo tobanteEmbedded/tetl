@@ -7,7 +7,7 @@
 #include "etl/array.hpp"
 #include "etl/iterator.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool

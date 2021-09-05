@@ -7,7 +7,7 @@
 #include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using etl::int8_t;
 using etl::monostate;

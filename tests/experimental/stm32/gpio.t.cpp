@@ -5,7 +5,7 @@
 
 #include "etl/bitset.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using namespace etl::experimental::hardware;
 using register_bits = etl::bitset<32>;

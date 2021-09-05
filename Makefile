@@ -12,7 +12,7 @@ COVERAGE_DIR=$(BUILD_DIR_BASE)-coverage
 CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-13
 CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-13
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
-CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
+CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./tests)
 
 STANDARDESE_BIN ?= standardese
 

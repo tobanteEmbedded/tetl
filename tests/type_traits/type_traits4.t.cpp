@@ -4,8 +4,8 @@
 
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
-#include "types.hpp"
+#include "testing/testing.hpp"
+#include "testing/types.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
@@ -98,12 +98,12 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT(is_default_constructible, T*);
     TEST_IS_TRAIT(is_default_constructible, TriviallyConstructable);
     TEST_IS_TRAIT_FALSE(is_default_constructible, NonTriviallyConstructable);
-    
+
     TEST_IS_TRAIT(is_nothrow_default_constructible, T);
     TEST_IS_TRAIT(is_nothrow_default_constructible, T*);
     TEST_IS_TRAIT(is_nothrow_default_constructible, TriviallyConstructable);
     TEST_IS_TRAIT_FALSE(is_nothrow_default_constructible, NonTriviallyConstructable);
-    
+
     TEST_IS_TRAIT(is_trivially_default_constructible, T);
     TEST_IS_TRAIT(is_trivially_default_constructible, T*);
     TEST_IS_TRAIT(is_trivially_default_constructible, TriviallyConstructable);

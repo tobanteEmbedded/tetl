@@ -8,7 +8,7 @@
 #include "etl/limits.hpp"
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test_integer() -> bool

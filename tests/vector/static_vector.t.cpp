@@ -10,7 +10,7 @@
 #include "etl/type_traits.hpp"
 #include "etl/utility.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using etl::all_of;
 using etl::static_vector;

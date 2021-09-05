@@ -4,7 +4,7 @@
 #define TETL_FREERTOS_USE_STUBS
 #include "etl/experimental/freertos/stream_buffer.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 namespace rtos = etl::experimental::freertos;
 namespace net  = etl::experimental::net;

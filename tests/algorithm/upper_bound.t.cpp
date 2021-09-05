@@ -9,7 +9,7 @@
 #include "etl/functional.hpp"
 #include "etl/vector.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool

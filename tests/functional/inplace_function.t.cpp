@@ -8,7 +8,7 @@
 #include "etl/string_view.hpp"
 #include "etl/type_traits.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 using namespace etl::string_view_literals;
 

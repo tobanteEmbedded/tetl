@@ -6,7 +6,7 @@
 
 #include "etl/cstdint.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 // TODO: Fix on MSVC
 #if not defined(TETL_MSVC)

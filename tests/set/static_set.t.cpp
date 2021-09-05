@@ -13,7 +13,7 @@
 #include "etl/utility.hpp"
 #include "etl/warning.hpp"
 
-#include "testing.hpp"
+#include "testing/testing.hpp"
 
 template <typename T>
 auto test() -> bool // NOLINT(readability-function-size)
