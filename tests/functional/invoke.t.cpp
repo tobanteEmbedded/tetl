@@ -9,13 +9,19 @@
 #include "testing.hpp"
 
 namespace {
+
+template <typename T>
 struct Class {
-    constexpr Class(int n) : num(n) { }
-    constexpr auto get_num(int i) const -> int { return num + i; }
-    int num;
+    constexpr Class(T n) : num(n) { }
+    [[nodiscard]] constexpr auto get_num(T i) const -> T { return num + i; }
+    T num;
 };
 
-constexpr auto get_num(int i) -> int { return i; }
+template <typename T>
+[[nodiscard]] constexpr auto get_num(T i) -> T
+{
+    return i;
+}
 
 } // namespace
 
@@ -26,18 +32,18 @@ constexpr auto test() -> bool
     assert(etl::invoke(lambda, T(1)) == T(1));
     assert(etl::invoke([]() { return T(42); }) == T(42));
 
-    assert(etl::invoke(get_num, T(42)) == T(42));
-    assert(etl::invoke(&Class::get_num, Class { 0 }, T(42)) == T(42));
-    assert(etl::invoke(&Class::num, Class { 2 }) == T(2));
+    assert(etl::invoke(get_num<T>, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::get_num, Class<T> { 0 }, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::num, Class<T> { 2 }) == T(2));
 
-    auto c   = Class { 0 };
+    auto c   = Class<T> { 0 };
     auto ref = etl::ref(c);
-    assert(etl::invoke(&Class::get_num, ref, T(42)) == T(42));
-    assert(etl::invoke(&Class::num, ref) == T(0));
+    assert(etl::invoke(&Class<T>::get_num, ref, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::num, ref) == T(0));
 
     auto cref = etl::cref(c);
-    assert(etl::invoke(&Class::get_num, cref, T(42)) == T(42));
-    assert(etl::invoke(&Class::num, cref) == T(0));
+    assert(etl::invoke(&Class<T>::get_num, cref, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::num, cref) == T(0));
     return true;
 }
 
