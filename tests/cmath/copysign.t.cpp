@@ -5,26 +5,26 @@
 #include "etl/cmath.hpp"
 
 #include "etl/cassert.hpp"
+#include "etl/numbers.hpp"
 
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(approx(etl::exp(T(0)), T(1)));
-    assert(approx(etl::exp(T(0.5)), T(1.64872)));
-    assert(approx(etl::exp(T(1)), T(2.71828)));
-    assert(approx(etl::exp(T(2)), T(7.38906)));
-    assert(approx(etl::exp(T(4)), T(54.5982)));
+    assert(approx(etl::copysign(T(0), T(1)), T(0)));
+    assert(approx(etl::copysign(T(1), T(1)), T(1)));
+    assert(approx(etl::copysign(T(1), T(-1)), T(-1)));
+
     return true;
 }
 
 auto main() -> int
 {
     static_assert(test<float>());
-    assert(test<float>());
-
     static_assert(test<double>());
+
+    assert(test<float>());
     assert(test<double>());
 
     return 0;

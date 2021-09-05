@@ -19,6 +19,13 @@ constexpr auto test() -> bool
     assert(approx(etl::atan(T(0.5)), T(0.463648)));
     assert(approx(etl::atan(T(1)), T(0.785398)));
     assert(approx(etl::atan(T(2)), T(1.10715)));
+    assert(approx(etl::atan(T(4)), T(1.32582)));
+    assert(approx(etl::atan(T(8)), T(1.44644)));
+    assert(approx(etl::atan(T(16)), T(1.50838)));
+    assert(approx(etl::atan(T(32)), T(1.53956)));
+    assert(approx(etl::atan(T(64)), T(1.55517)));
+    assert(approx(etl::atan(T(128)), T(1.56298)));
+    assert(approx(etl::atan(T(1024)), T(1.56982)));
 
     return true;
 }
