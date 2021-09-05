@@ -7,6 +7,7 @@
 #include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"
 
+#include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
 using etl::int8_t;
@@ -19,6 +20,8 @@ using etl::variant;
 
 auto test() -> bool
 {
+    TEST_EXCEPTION(etl::bad_variant_access, etl::exception);
+
     {
         using etl::is_base_of_v;
         using etl::is_constructible_v;

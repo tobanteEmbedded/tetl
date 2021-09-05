@@ -7,11 +7,14 @@
 #include "etl/cstdint.hpp"
 #include "etl/warning.hpp"
 
+#include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
+    TEST_EXCEPTION(etl::bad_optional_access, etl::exception);
+
     {
         assert(!(etl::optional<T> {}.has_value()));
         assert(!(etl::optional<T>(etl::nullopt).has_value()));

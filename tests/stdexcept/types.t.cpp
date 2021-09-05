@@ -7,52 +7,21 @@
 #include "etl/exception.hpp"
 #include "etl/type_traits.hpp"
 
+#include "testing/exception.hpp"
 #include "testing/testing.hpp"
 
 constexpr auto test() -> bool
 {
-    assert((etl::is_default_constructible_v<etl::logic_error>));
-    assert((etl::is_constructible_v<etl::logic_error, char const*>));
-    assert((etl::is_base_of_v<etl::exception, etl::logic_error>));
+    TEST_EXCEPTION(etl::logic_error, etl::exception);
+    TEST_EXCEPTION(etl::domain_error, etl::logic_error);
+    TEST_EXCEPTION(etl::invalid_argument, etl::logic_error);
+    TEST_EXCEPTION(etl::length_error, etl::logic_error);
+    TEST_EXCEPTION(etl::out_of_range, etl::logic_error);
 
-    assert((etl::is_default_constructible_v<etl::domain_error>));
-    assert((etl::is_constructible_v<etl::domain_error, char const*>));
-    assert((etl::is_base_of_v<etl::logic_error, etl::domain_error>));
-    assert((etl::is_base_of_v<etl::exception, etl::domain_error>));
-
-    assert((etl::is_default_constructible_v<etl::invalid_argument>));
-    assert((etl::is_constructible_v<etl::invalid_argument, char const*>));
-    assert((etl::is_base_of_v<etl::logic_error, etl::invalid_argument>));
-    assert((etl::is_base_of_v<etl::exception, etl::invalid_argument>));
-
-    assert((etl::is_default_constructible_v<etl::length_error>));
-    assert((etl::is_constructible_v<etl::length_error, char const*>));
-    assert((etl::is_base_of_v<etl::logic_error, etl::length_error>));
-    assert((etl::is_base_of_v<etl::exception, etl::length_error>));
-
-    assert((etl::is_default_constructible_v<etl::out_of_range>));
-    assert((etl::is_constructible_v<etl::out_of_range, char const*>));
-    assert((etl::is_base_of_v<etl::logic_error, etl::out_of_range>));
-    assert((etl::is_base_of_v<etl::exception, etl::out_of_range>));
-
-    assert((etl::is_default_constructible_v<etl::runtime_error>));
-    assert((etl::is_constructible_v<etl::runtime_error, char const*>));
-    assert((etl::is_base_of_v<etl::exception, etl::runtime_error>));
-
-    assert((etl::is_default_constructible_v<etl::range_error>));
-    assert((etl::is_constructible_v<etl::range_error, char const*>));
-    assert((etl::is_base_of_v<etl::runtime_error, etl::range_error>));
-    assert((etl::is_base_of_v<etl::exception, etl::range_error>));
-
-    assert((etl::is_default_constructible_v<etl::overflow_error>));
-    assert((etl::is_constructible_v<etl::overflow_error, char const*>));
-    assert((etl::is_base_of_v<etl::runtime_error, etl::overflow_error>));
-    assert((etl::is_base_of_v<etl::exception, etl::overflow_error>));
-
-    assert((etl::is_default_constructible_v<etl::underflow_error>));
-    assert((etl::is_constructible_v<etl::underflow_error, char const*>));
-    assert((etl::is_base_of_v<etl::runtime_error, etl::underflow_error>));
-    assert((etl::is_base_of_v<etl::exception, etl::underflow_error>));
+    TEST_EXCEPTION(etl::runtime_error, etl::exception);
+    TEST_EXCEPTION(etl::range_error, etl::runtime_error);
+    TEST_EXCEPTION(etl::overflow_error, etl::runtime_error);
+    TEST_EXCEPTION(etl::underflow_error, etl::runtime_error);
 
     return true;
 }
