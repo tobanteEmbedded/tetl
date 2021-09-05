@@ -28,9 +28,13 @@ auto main() -> int
 {
     static_assert(test<float>());
     static_assert(test<double>());
-    static_assert(test<long double>());
     assert(test<float>());
     assert(test<double>());
+
+#if not defined(TETL_MSVC)
+    // TODO
+    static_assert(test<long double>());
     assert(test<long double>());
+#endif
     return 0;
 }
