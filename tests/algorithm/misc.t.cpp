@@ -14,48 +14,6 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    using etl::back_inserter;
-    using etl::begin;
-    using etl::end;
-    using etl::set_difference;
-
-    // cppreference.com example #1
-    {
-        auto const v1 = etl::array { T(1), T(2), T(5), T(5), T(5), T(9) };
-        auto const v2 = etl::array { T(2), T(5), T(7) };
-        auto diff     = etl::static_vector<T, 4> {};
-
-        set_difference(
-            begin(v1), end(v1), begin(v2), end(v2), back_inserter(diff));
-
-        assert((diff[0] == T { 1 }));
-        assert((diff[1] == T { 5 }));
-        assert((diff[2] == T { 5 }));
-        assert((diff[3] == T { 9 }));
-    }
-
-    // cppreference.com example #2
-    {
-        // we want to know which orders "cut" between old and new states:
-        etl::array<T, 4> oldOrders { T(1), T(2), T(5), T(9) };
-        etl::array<T, 3> newOrders { T(2), T(5), T(7) };
-        etl::static_vector<T, 2> cutOrders {};
-
-        set_difference(oldOrders.begin(), oldOrders.end(), newOrders.begin(),
-            newOrders.end(), back_inserter(cutOrders), etl::less<> {});
-
-        assert((oldOrders[0] == T { 1 }));
-        assert((oldOrders[1] == T { 2 }));
-        assert((oldOrders[2] == T { 5 }));
-        assert((oldOrders[3] == T { 9 }));
-
-        assert((newOrders[0] == T { 2 }));
-        assert((newOrders[1] == T { 5 }));
-        assert((newOrders[2] == T { 7 }));
-
-        assert((cutOrders[0] == T { 1 }));
-        assert((cutOrders[1] == T { 9 }));
-    }
 
     // cppreference.com example
     {

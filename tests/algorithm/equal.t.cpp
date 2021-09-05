@@ -23,6 +23,9 @@ constexpr auto test() -> bool
     assert(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs)));
     assert(!etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
 
+    auto small = etl::array { T(1) };
+    assert(!etl::equal(begin(lhs), end(lhs), begin(small), end(small), cmp));
+
     return true;
 }
 
