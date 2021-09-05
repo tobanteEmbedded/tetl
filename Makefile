@@ -40,11 +40,11 @@ coverage:
 
 .PHONY: coverage-html
 coverage-html: coverage
-	cd cmake-build-coverage && gcovr --html --html-details --exclude-unreachable-branches -o coverage.html -r ../ -j ${shell nproc} -s .
+	cd cmake-build-coverage && gcovr --html --html-details --exclude-unreachable-branches -o coverage.html -r ../etl -j ${shell nproc} -s .
 
 .PHONY: coverage-xml
 coverage-xml: coverage
-	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../ -j ${shell nproc} -s .
+	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../etl -j ${shell nproc} -s .
 
 .PHONY: doxygen
 doxygen:
