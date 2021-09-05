@@ -5,53 +5,35 @@
 
 #include "testing/testing.hpp"
 
-constexpr auto test() -> bool
+template <typename T, typename F>
+constexpr auto test(F func) -> bool
 {
-    // "int"
-    {
-        assert(etl::div(2, 1).quot == 2);
-        assert(etl::div(2, 1).rem == 0);
+    assert(etl::div(T(2), T(1)).quot == T(2));
+    assert(etl::div(T(2), T(1)).rem == T(0));
 
-        assert(etl::div(1, 2).quot == 0);
-        assert(etl::div(1, 2).rem == 1);
-    }
+    assert(etl::div(T(1), T(2)).quot == T(0));
+    assert(etl::div(T(1), T(2)).rem == T(1));
 
-    // "long"
-    {
-        assert(etl::div(2L, 1L).quot == 2L);
-        assert(etl::div(2L, 1L).rem == 0L);
+    assert(func(T(2), T(1)).quot == T(2));
+    assert(func(T(2), T(1)).rem == T(0));
 
-        assert(etl::div(1L, 2L).quot == 0L);
-        assert(etl::div(1L, 2L).rem == 1L);
+    assert(func(T(1), T(2)).quot == T(0));
+    assert(func(T(1), T(2)).rem == T(1));
 
-        assert(etl::ldiv(2LL, 1LL).quot == 2LL);
-        assert(etl::ldiv(2LL, 1LL).rem == 0LL);
+    return true;
+}
 
-        assert(etl::ldiv(1LL, 2LL).quot == 0LL);
-        assert(etl::ldiv(1LL, 2LL).rem == 1LL);
-    }
-
-    // "long long"
-    {
-        assert(etl::div(2LL, 1LL).quot == 2LL);
-        assert(etl::div(2LL, 1LL).rem == 0LL);
-
-        assert(etl::div(1LL, 2LL).quot == 0LL);
-        assert(etl::div(1LL, 2LL).rem == 1LL);
-
-        assert(etl::lldiv(2LL, 1LL).quot == 2LL);
-        assert(etl::lldiv(2LL, 1LL).rem == 0LL);
-
-        assert(etl::lldiv(1LL, 2LL).quot == 0LL);
-        assert(etl::lldiv(1LL, 2LL).rem == 1LL);
-    }
-
+constexpr auto test_all() -> bool
+{
+    assert(test<int>(static_cast<etl::div_t (*)(int, int)>(etl::div)));
+    assert(test<long>(etl::ldiv));
+    assert(test<long long>(etl::lldiv));
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
-    static_assert(test());
+    assert(test_all());
+    static_assert(test_all());
     return 0;
 }
