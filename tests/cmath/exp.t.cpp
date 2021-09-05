@@ -22,10 +22,12 @@ constexpr auto test() -> bool
 auto main() -> int
 {
     static_assert(test<float>());
-    assert(test<float>());
-
     static_assert(test<double>());
+    assert(test<float>());
     assert(test<double>());
 
+    // TODO: Fix long double tests
+    // static_assert(test<long double>());
+    // assert(test<long double>());
     return 0;
 }

@@ -18,8 +18,11 @@ constexpr auto test() -> bool
 
     assert(approx(etl::atanh(T(0.5)), T(0.549306)));
 
-    assert(etl::isinf(etl::atanh(T(1))));
-    assert(etl::isnan(etl::atanh(T(2))));
+    // TODO: Fix long double tests
+    if constexpr (!etl::is_same_v<T, long double>) {
+        assert(etl::isinf(etl::atanh(T(1))));
+        assert(etl::isnan(etl::atanh(T(2))));
+    }
 
     return true;
 }
@@ -27,10 +30,10 @@ constexpr auto test() -> bool
 auto main() -> int
 {
     static_assert(test<float>());
-    assert(test<float>());
-
     static_assert(test<double>());
+    static_assert(test<long double>());
+    assert(test<float>());
     assert(test<double>());
-
+    assert(test<long double>());
     return 0;
 }

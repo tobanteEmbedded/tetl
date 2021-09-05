@@ -17,15 +17,21 @@ namespace etl {
 ///
 /// \group isnan
 /// \module Numeric
-[[nodiscard]] constexpr auto isnan(float arg) -> bool { return arg != arg; }
+[[nodiscard]] constexpr auto isnan(float arg) -> bool
+{
+    return TETL_BUILTIN_ISNANF(arg);
+}
 
 /// \group isnan
-[[nodiscard]] constexpr auto isnan(double arg) -> bool { return arg != arg; }
+[[nodiscard]] constexpr auto isnan(double arg) -> bool
+{
+    return TETL_BUILTIN_ISNAN(arg);
+}
 
 /// \group isnan
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool
 {
-    return arg != arg;
+    return TETL_BUILTIN_ISNANL(arg);
 }
 
 /// \brief Determines if the given floating point number arg is a not-a-number

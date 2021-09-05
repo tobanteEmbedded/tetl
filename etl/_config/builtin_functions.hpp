@@ -89,6 +89,25 @@
     #define TETL_BUILTIN_NANSL (0.0L / 0.0L)
 #endif
 
+// ISNAN
+#if __has_builtin(__builtin_isnanf) or defined(TETL_GCC)
+    #define TETL_BUILTIN_ISNANF(x) (__builtin_isnanf(x))
+#else
+    #define TETL_BUILTIN_ISNANF(x) (x != x)
+#endif
+
+#if __has_builtin(__builtin_isnan) or defined(TETL_GCC)
+    #define TETL_BUILTIN_ISNAN(x) (__builtin_isnan(x))
+#else
+    #define TETL_BUILTIN_ISNAN(x) (x != x)
+#endif
+
+#if __has_builtin(__builtin_isnanl) or defined(TETL_GCC)
+    #define TETL_BUILTIN_ISNANL(x) (__builtin_isnanl(x))
+#else
+    #define TETL_BUILTIN_ISNANL(x) (x != x)
+#endif
+
 // HUGE VAL
 #if __has_builtin(__builtin_huge_valf) or defined(TETL_MSVC)                   \
     or defined(TETL_GCC)

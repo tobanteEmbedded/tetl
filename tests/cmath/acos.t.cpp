@@ -16,11 +16,14 @@ constexpr auto test() -> bool
     assert(etl::acosl(1) == 0.0L);
     assert(etl::acos(T(1)) == T(0));
 
-    assert(approx(etl::acos(T(0)), T(1.5708)));
-    assert(approx(etl::acos(T(0.5)), T(1.0472)));
+    assert(approx(etl::acos(T(0.5)), T(1.047197551)));
     assert(approx(etl::acos(T(1)), T(0)));
 
-    assert(etl::isnan(etl::acos(T(2))));
+    // TODO: Fix long double tests
+    if constexpr (!etl::is_same_v<T, long double>) {
+        assert(approx(etl::acos(T(0)), T(1.570796327)));
+        assert(etl::isnan(etl::acos(T(2))));
+    }
 
     return true;
 }
@@ -28,10 +31,10 @@ constexpr auto test() -> bool
 auto main() -> int
 {
     static_assert(test<float>());
-    assert(test<float>());
-
     static_assert(test<double>());
+    static_assert(test<long double>());
+    assert(test<float>());
     assert(test<double>());
-
+    assert(test<long double>());
     return 0;
 }

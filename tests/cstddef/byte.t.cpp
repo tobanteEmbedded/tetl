@@ -96,7 +96,6 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
-    // Smaller types get promoted when used with va_list
     assert(test<etl::uint8_t>());
     assert(test<etl::uint16_t>());
     assert(test<etl::uint32_t>());
