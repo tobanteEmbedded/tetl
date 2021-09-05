@@ -29,7 +29,7 @@ auto main() -> int
     // need. Apart from that it behaves almost the same as the standard version.
     etl::static_vector<Person, 32> people {};
     TETL_ASSERT(people.empty());
-    static_assert(people.capacity() == 32);
+    TETL_ASSERT(people.capacity() == 32);
 
     // You can push_back/emplace_back into the vector
     people.push_back(Person { 20, 0 });

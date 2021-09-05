@@ -540,9 +540,8 @@ auto test_all_runtime() -> bool
 
 auto main() -> int
 {
-    static_assert(test_all_cx());
-
-    assert(test_all_cx());
     assert(test_all_runtime());
+    assert(test_all_cx());
+    static_assert(test_all_cx());
     return 0;
 }

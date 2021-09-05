@@ -262,17 +262,16 @@ struct static_vector_non_trivial_storage {
     using pointer         = T*;
     using const_pointer   = T const*;
 
-    constexpr static_vector_non_trivial_storage() = default;
+    static_vector_non_trivial_storage() = default;
 
-    constexpr static_vector_non_trivial_storage(
-        static_vector_non_trivial_storage const&)
+    static_vector_non_trivial_storage(static_vector_non_trivial_storage const&)
         = default;
-    constexpr auto operator=(static_vector_non_trivial_storage const&)
+    auto operator=(static_vector_non_trivial_storage const&)
         -> static_vector_non_trivial_storage& = default;
 
-    constexpr static_vector_non_trivial_storage(
+    static_vector_non_trivial_storage(
         static_vector_non_trivial_storage&&) noexcept = default;
-    constexpr auto operator=(static_vector_non_trivial_storage&&) noexcept
+    auto operator=(static_vector_non_trivial_storage&&) noexcept
         -> static_vector_non_trivial_storage& = default;
 
     ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>)
@@ -302,26 +301,23 @@ struct static_vector_non_trivial_storage {
     [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
 
     /// \brief Number of elements in the storage.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] auto size() const noexcept -> size_type { return size_; }
 
     /// \brief Maximum number of elements that can be allocated in the
     /// storage.
-    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type
+    [[nodiscard]] auto capacity() const noexcept -> size_type
     {
         return Capacity;
     }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
+    [[nodiscard]] auto empty() const noexcept -> bool
     {
         return size() == size_type { 0 };
     }
 
     /// \brief Is the storage full?
-    [[nodiscard]] constexpr auto full() const noexcept -> bool
+    [[nodiscard]] auto full() const noexcept -> bool
     {
         return size() == Capacity;
     }
@@ -350,7 +346,7 @@ protected:
     /// \brief (unsafe) Changes the container size to new_size.
     ///
     /// \warning No elements are constructed or destroyed.
-    constexpr void unsafe_set_size(size_t newSize) noexcept
+    auto unsafe_set_size(size_t newSize) noexcept -> void
     {
         TETL_ASSERT(newSize <= Capacity);
         size_ = size_type(newSize);
@@ -360,8 +356,8 @@ protected:
     ///
     /// \warning The size of the storage is not changed.
     template <typename InputIt>
-    void unsafe_destroy(InputIt first, InputIt last) noexcept(
-        is_nothrow_destructible_v<T>)
+    auto unsafe_destroy(InputIt first, InputIt last) noexcept(
+        is_nothrow_destructible_v<T>) -> void
     {
         TETL_ASSERT(first >= data() && first <= end());
         TETL_ASSERT(last >= data() && last <= end());
@@ -371,7 +367,7 @@ protected:
     /// \brief (unsafe) Destroys all elements of the storage.
     ///
     /// \warning The size of the storage is not changed.
-    void unsafe_destroy_all() noexcept(is_nothrow_destructible_v<T>)
+    auto unsafe_destroy_all() noexcept(is_nothrow_destructible_v<T>) -> void
     {
         unsafe_destroy(data(), end());
     }
