@@ -9,26 +9,24 @@
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
+#include "testing/iterator_types.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    // empty range
-    {
-        auto const data = etl::static_vector<T, 4> {};
-        assert(!etl::binary_search(begin(data), end(data), T(0)));
-    }
+    // epmty range
+    auto const e = etl::static_vector<T, 4> {};
+    assert(!etl::binary_search(begin(e), end(e), T(0)));
+    assert(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
-    {
-        auto const data = etl::array { T(0), T(1), T(2) };
-        assert(etl::binary_search(begin(data), end(data), T(0)));
-        assert(etl::binary_search(begin(data), end(data), T(1)));
-        assert(etl::binary_search(begin(data), end(data), T(2)));
-        assert(!etl::binary_search(begin(data), end(data), T(3)));
-        assert(!etl::binary_search(begin(data), end(data), T(4)));
-    }
+    auto const data = etl::array { T(0), T(1), T(2) };
+    assert(etl::binary_search(begin(data), end(data), T(0)));
+    assert(etl::binary_search(begin(data), end(data), T(1)));
+    assert(etl::binary_search(begin(data), end(data), T(2)));
+    assert(!etl::binary_search(begin(data), end(data), T(3)));
+    assert(!etl::binary_search(begin(data), end(data), T(4)));
 
     return true;
 }

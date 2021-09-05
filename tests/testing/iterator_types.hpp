@@ -15,22 +15,22 @@ struct InIter {
     using pointer         = It;
     using reference       = typename etl::iterator_traits<It>::reference;
 
-    [[nodiscard]] constexpr auto base() const -> It { return it_; }
+    [[nodiscard]] constexpr auto base() const -> It { return iter_; }
 
-    constexpr InIter() : it_() { }
-    explicit constexpr InIter(It it) : it_(it) { }
+    constexpr InIter() : iter_() { }
+    explicit constexpr InIter(It it) : iter_(it) { }
 
     template <typename U>
-    constexpr InIter(const InIter<U>& u) : it_(u.it_)
+    constexpr InIter(const InIter<U>& u) : iter_(u.iter_)
     {
     }
 
-    constexpr auto operator*() const -> reference { return *it_; }
-    constexpr auto operator->() const -> pointer { return it_; }
+    constexpr auto operator*() const -> reference { return *iter_; }
+    constexpr auto operator->() const -> pointer { return iter_; }
 
     constexpr auto operator++() -> InIter&
     {
-        ++it_;
+        ++iter_;
         return *this;
     }
     constexpr auto operator++(int) -> InIter
@@ -41,7 +41,7 @@ struct InIter {
     }
 
 private:
-    It it_;
+    It iter_;
 
     template <typename U>
     friend struct InIter;
@@ -55,6 +55,66 @@ constexpr auto operator==(InIter<T> const& x, InIter<U> const& y) -> bool
 
 template <typename T, typename U>
 constexpr auto operator!=(InIter<T> const& x, InIter<U> const& y) -> bool
+{
+    return !(x == y);
+}
+
+template <typename Iter>
+struct FwdIter {
+    using iterator_category = etl::forward_iterator_tag;
+    using value_type        = typename etl::iterator_traits<Iter>::value_type;
+    using difference_type =
+        typename etl::iterator_traits<Iter>::difference_type;
+    using pointer   = Iter;
+    using reference = typename etl::iterator_traits<Iter>::reference;
+
+    [[nodiscard]] constexpr auto base() const -> Iter { return iter_; }
+
+    constexpr FwdIter() = default;
+
+    explicit constexpr FwdIter(Iter it) : iter_ { it } { }
+
+    template <typename U>
+    constexpr FwdIter(FwdIter<U> const& u) : iter_(u.iter_)
+    {
+    }
+
+    [[nodiscard]] constexpr auto operator*() const -> reference
+    {
+        return *iter_;
+    }
+
+    [[nodiscard]] constexpr auto operator->() const -> pointer { return iter_; }
+
+    constexpr auto operator++() -> FwdIter&
+    {
+        ++iter_;
+        return *this;
+    }
+    [[nodiscard]] constexpr auto operator++(int) -> FwdIter
+    {
+        FwdIter tmp(*this);
+        ++(*this);
+        return tmp;
+    }
+
+private:
+    Iter iter_ {};
+
+    template <typename U>
+    friend struct FwdIter;
+};
+
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator==(
+    FwdIter<T> const& x, FwdIter<U> const& y) -> bool
+{
+    return x.base() == y.base();
+}
+
+template <typename T, typename U>
+[[nodiscard]] constexpr auto operator!=(
+    FwdIter<T> const& x, FwdIter<U> const& y) -> bool
 {
     return !(x == y);
 }

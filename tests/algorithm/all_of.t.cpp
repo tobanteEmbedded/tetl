@@ -15,47 +15,22 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    {
-        etl::static_vector<T, 16> vec;
-        vec.push_back(1);
-        vec.push_back(2);
-        vec.push_back(3);
-        vec.push_back(4);
+    auto data     = etl::array { T(1), T(2), T(3), T(4) };
+    auto const p1 = [](T a) { return etl::abs(a) > T(0); };
+    auto const p2 = [](T a) { return etl::abs(a) > T(10); };
+    auto const p3 = [](T a) { return a < T(10); };
 
-        auto const p1 = [](auto a) { return etl::abs(a) > 0; };
-        assert(etl::all_of(vec.begin(), vec.end(), p1));
-        assert(etl::all_of(InIter(vec.begin()), InIter(vec.end()), p1));
+    assert(etl::all_of(data.begin(), data.end(), p1));
+    assert(!etl::all_of(data.begin(), data.end(), p2));
+    assert(etl::all_of(InIter(data.begin()), InIter(data.end()), p1));
 
-        auto const p2 = [](auto a) { return etl::abs(a) > 10; };
-        assert(!etl::all_of(vec.begin(), vec.end(), p2));
-    }
+    assert(etl::any_of(data.begin(), data.end(), p1));
+    assert(!etl::any_of(data.begin(), data.end(), p2));
+    assert(etl::any_of(InIter(data.begin()), InIter(data.end()), p1));
 
-    {
-        etl::static_vector<T, 16> vec;
-        vec.push_back(1);
-        vec.push_back(2);
-        vec.push_back(3);
-        vec.push_back(4);
-
-        auto const p1 = [](auto a) { return etl::abs(a) > 0; };
-        assert(etl::any_of(vec.begin(), vec.end(), p1));
-        auto const p2 = [](auto a) { return etl::abs(a) > 10; };
-        assert(!etl::any_of(vec.begin(), vec.end(), p2));
-    }
-
-    {
-        etl::static_vector<T, 16> vec;
-        vec.push_back(1);
-        vec.push_back(2);
-        vec.push_back(3);
-        vec.push_back(4);
-
-        auto const p1 = [](auto a) { return etl::abs(a) > 10; };
-        assert(etl::none_of(vec.begin(), vec.end(), p1));
-
-        auto const p2 = [](auto a) { return a < 10; };
-        assert(!etl::none_of(vec.begin(), vec.end(), p2));
-    }
+    assert(etl::none_of(data.begin(), data.end(), p2));
+    assert(!etl::none_of(data.begin(), data.end(), p3));
+    assert(etl::none_of(InIter(data.begin()), InIter(data.end()), p2));
 
     return true;
 }

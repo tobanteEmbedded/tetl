@@ -11,6 +11,7 @@
 #include "etl/numeric.hpp"
 #include "etl/vector.hpp"
 
+#include "testing/iterator_types.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -42,11 +43,7 @@ constexpr auto test() -> bool
         assert(d[3] == T { 4 });
     }
 
-    auto s = etl::array<T, 4> {};
-    s[0]   = T { 1 };
-    s[1]   = T { 7 };
-    s[2]   = T { 3 };
-    s[3]   = T { 9 };
+    auto const s = etl::array { T(1), T(7), T(3), T(9) };
 
     auto p = [](auto val) { return static_cast<int>(val) >= 5; };
 
@@ -114,6 +111,19 @@ constexpr auto test() -> bool
         assert(dest[1] == T { 2 });
         assert(dest[2] == T { 3 });
         assert(dest[3] == T { 4 });
+    }
+
+    // input iterator
+    {
+        auto d = etl::static_vector<T, 4> {};
+        etl::copy(InIter(begin(s)), InIter(end(s)), etl::back_inserter(d));
+        assert(etl::equal(begin(s), end(s), begin(d), end(d)));
+    }
+    // forward iterator
+    {
+        auto d = etl::static_vector<T, 4> {};
+        etl::copy(FwdIter(begin(s)), FwdIter(end(s)), etl::back_inserter(d));
+        assert(etl::equal(begin(s), end(s), begin(d), end(d)));
     }
     return true;
 }

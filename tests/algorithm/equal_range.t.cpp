@@ -8,6 +8,7 @@
 #include "etl/cstdint.hpp"
 #include "etl/functional.hpp"
 
+#include "testing/iterator_types.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
@@ -40,6 +41,11 @@ constexpr auto test() -> bool
     auto const value = S { T(2), '?' };
     auto const p     = etl::equal_range(vec.begin(), vec.end(), value);
     assert(p.first->name == 'B');
+
+    // clang-format off
+    assert(etl::equal_range(FwdIter(begin(vec)), FwdIter(end(vec)), value).first->name == 'B');
+    // clang-format on
+
     return true;
 }
 

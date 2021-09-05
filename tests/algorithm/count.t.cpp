@@ -9,31 +9,37 @@
 #include "etl/iterator.hpp"
 #include "etl/numeric.hpp"
 
+#include "testing/iterator_types.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    {
-        auto data = etl::array<T, 4> {};
-        etl::iota(begin(data), end(data), T { 0 });
-        assert(etl::count(begin(data), end(data), T { 0 }) == 1);
-        assert(etl::count(begin(data), end(data), T { 1 }) == 1);
-        assert(etl::count(begin(data), end(data), T { 2 }) == 1);
-        assert(etl::count(begin(data), end(data), T { 3 }) == 1);
-        assert(etl::count(begin(data), end(data), T { 4 }) == 0);
-    }
+    auto src = etl::array<T, 4> {};
+    etl::iota(begin(src), end(src), T { 0 });
 
-    {
-        auto data = etl::array<T, 4> {};
-        etl::iota(begin(data), end(data), T { 0 });
+    assert(etl::count(begin(src), end(src), T { 0 }) == 1);
+    assert(etl::count(begin(src), end(src), T { 1 }) == 1);
+    assert(etl::count(begin(src), end(src), T { 2 }) == 1);
+    assert(etl::count(begin(src), end(src), T { 3 }) == 1);
+    assert(etl::count(begin(src), end(src), T { 4 }) == 0);
 
-        auto p1 = [](auto val) { return val < T { 2 }; };
-        auto p2 = [](auto val) -> bool { return static_cast<int>(val) % 2; };
+    // input iterator
+    assert(etl::count(InIter(begin(src)), InIter(end(src)), T(0)) == 1);
+    // forward iterator
+    assert(etl::count(FwdIter(begin(src)), FwdIter(end(src)), T(0)) == 1);
 
-        assert(etl::count_if(begin(data), end(data), p1) == 2);
-        assert(etl::count_if(begin(data), end(data), p2) == 2);
-    }
+    auto p1 = [](auto val) { return val < T { 2 }; };
+    auto p2 = [](auto val) -> bool { return static_cast<int>(val) % 2; };
+
+    assert(etl::count_if(begin(src), end(src), p1) == 2);
+    assert(etl::count_if(begin(src), end(src), p2) == 2);
+
+    // input iterator
+    assert(etl::count_if(InIter(begin(src)), InIter(end(src)), p1) == 2);
+    // forward iterator
+    assert(etl::count_if(FwdIter(begin(src)), FwdIter(end(src)), p1) == 2);
+
     return true;
 }
 
