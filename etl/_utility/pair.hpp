@@ -13,8 +13,10 @@
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_copy_constructible.hpp"
 #include "etl/_type_traits/is_default_constructible.hpp"
+#include "etl/_type_traits/is_implicit_default_constructible.hpp"
 #include "etl/_type_traits/is_move_assignable.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_utility/forward.hpp"
@@ -23,6 +25,62 @@
 
 namespace etl {
 
+namespace detail {
+template <typename T1, typename T2>
+struct pair_constraints {
+    // 1
+    static constexpr auto ctor_1_sfinae =   //
+        etl::is_default_constructible_v<T1> //
+        && etl::is_default_constructible_v<T2>;
+
+    static constexpr auto ctor_1_explicit =             //
+        (!etl::is_implicit_default_constructible_v<T1>) //
+        || (!etl::is_implicit_default_constructible_v<T2>);
+
+    // 2
+    static constexpr auto ctor_2_sfinae = //
+        etl::is_copy_constructible_v<T1>  //
+        && etl::is_copy_constructible_v<T2>;
+
+    static constexpr auto ctor_2_explicit =     //
+        (!etl::is_convertible_v<T1 const&, T1>) //
+        || (!etl::is_convertible_v<T2 const&, T2>);
+
+    // 3
+    template <typename U1, typename U2>
+    static constexpr auto ctor_3_sfinae = //
+        etl::is_constructible_v<T1, U1&&> //
+            && etl::is_constructible_v<T2, U2&&>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_3_explicit = //
+        (!etl::is_convertible_v<U1&&, T1>)  //
+        || (!etl::is_convertible_v<U2&&, T2>);
+
+    // 4
+    template <typename U1, typename U2>
+    static constexpr auto ctor_4_sfinae =      //
+        etl::is_constructible_v<T1, U1 const&> //
+            && etl::is_constructible_v<T2, U2 const&>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_4_explicit =     //
+        (!etl::is_convertible_v<U1 const&, T1>) //
+        || (!etl::is_convertible_v<U2 const&, T2>);
+
+    // 5
+    template <typename U1, typename U2>
+    static constexpr auto ctor_5_sfinae = //
+        etl::is_constructible_v<T1, U1&&> //
+            && etl::is_constructible_v<T2, U2&&>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_5_explicit = //
+        (!etl::is_convertible_v<U1&&, T1>)  //
+        || (!etl::is_convertible_v<U2&&, T2>);
+};
+} // namespace detail
+
 /// \brief etl::pair is a class template that provides a way to store two
 /// heterogeneous objects as a single unit. A pair is a specific case of a
 /// etl::tuple with two elements. If neither T1 nor T2 is a possibly
@@ -30,8 +88,6 @@ namespace etl {
 /// destructor of pair is trivial.
 ///
 /// https://en.cppreference.com/w/cpp/utility/pair
-///
-/// \todo Add conditional explicit when C++20 is available.
 template <typename T1, typename T2>
 struct pair {
 private:
@@ -40,40 +96,115 @@ private:
         = enable_if_t<is_constructible_v<T1, U1> && is_constructible_v<T2, U2>,
             bool>;
 
+    using constraints = detail::pair_constraints<T1, T2>;
+
+    static constexpr auto ctor_1_implicit
+        = constraints::ctor_1_sfinae && (!constraints::ctor_1_explicit);
+
+    static constexpr auto ctor_1_explicit
+        = (constraints::ctor_1_sfinae) && (constraints::ctor_1_explicit);
+
+    static constexpr auto ctor_2_implicit
+        = constraints::ctor_2_sfinae && (!constraints::ctor_2_explicit);
+
+    static constexpr auto ctor_2_explicit
+        = (constraints::ctor_2_sfinae) && (constraints::ctor_2_explicit);
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_3_implicit
+        = constraints::template ctor_3_sfinae<U1,
+              U2> && !constraints::template ctor_3_explicit<U1, U2>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_3_explicit
+        = constraints::template ctor_3_sfinae<U1, U2>&&
+            constraints::template ctor_3_explicit<U1, U2>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_4_implicit
+        = constraints::template ctor_4_sfinae<U1,
+              U2> && !constraints::template ctor_4_explicit<U1, U2>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_4_explicit
+        = constraints::template ctor_4_sfinae<U1, U2>&&
+            constraints::template ctor_4_explicit<U1, U2>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_5_implicit
+        = constraints::template ctor_5_sfinae<U1,
+              U2> && !constraints::template ctor_5_explicit<U1, U2>;
+
+    template <typename U1, typename U2>
+    static constexpr auto ctor_5_explicit
+        = constraints::template ctor_5_sfinae<U1, U2>&&
+            constraints::template ctor_5_explicit<U1, U2>;
+
 public:
     using first_type  = T1;
     using second_type = T2;
 
-    /// \brief Default constructor. Value-initializes both elements of the pair,
-    /// first and second.
-    TETL_REQUIRES(
-        is_default_constructible_v<T1>&& is_default_constructible_v<T2>)
+    /// \brief (1) Default constructor. Value-initializes both elements.
+    TETL_REQUIRES(ctor_1_implicit)
     constexpr pair() : first {}, second {} { }
 
-    /// \brief Initializes first with x and second with y.
-    TETL_REQUIRES(is_copy_constructible_v<T1>&& is_copy_constructible_v<T2>)
-    constexpr pair(T1 const& t1, T2 const& t2) : first { t1 }, second { t2 } { }
+    /// \brief (1) Default constructor. Value-initializes both elements.
+    TETL_REQUIRES(ctor_1_explicit)
+    explicit constexpr pair() : first {}, second {} { }
 
-    /// \brief Initializes first with forward<U1>(x) and second with
+    /// \brief (2) Initializes first with x and second with y.
+    TETL_REQUIRES(ctor_2_implicit)
+    constexpr pair(T1 const& t1, T2 const& t2) : first(t1), second(t2) { }
+
+    /// \brief (2) Initializes first with x and second with y.
+    TETL_REQUIRES(ctor_2_explicit)
+    explicit constexpr pair(T1 const& t1, T2 const& t2) : first(t1), second(t2)
+    {
+    }
+
+    /// \brief (3) Initializes first with forward<U1>(x) and second with
     /// forward<U2>(y).
     template <typename U1 = T1, typename U2 = T2,
-        is_constructible_<U1&&, U2&&> = true>
+        TETL_REQUIRES_(ctor_3_implicit<U1, U2>)>
     constexpr pair(U1&& x, U2&& y)
         : first(forward<U1>(x)), second(forward<U2>(y))
     {
     }
 
-    /// \brief Initializes first with p.first and second with p.second.
-    template <typename U1, typename U2,
-        is_constructible_<U1 const&, U2 const&> = true>
+    /// \brief (3) Initializes first with forward<U1>(x) and second with
+    /// forward<U2>(y).
+    template <typename U1 = T1, typename U2 = T2,
+        TETL_REQUIRES_(ctor_3_explicit<U1, U2>)>
+    explicit constexpr pair(U1&& x, U2&& y)
+        : first(forward<U1>(x)), second(forward<U2>(y))
+    {
+    }
+
+    /// \brief (4) Initializes first with p.first and second with p.second.
+    template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_implicit<U1, U2>)>
     constexpr pair(pair<U1, U2> const& p) : first(p.first), second(p.second)
     {
     }
 
-    /// \brief Initializes first with forward<U1>(p.first) and second with
+    /// \brief (4) Initializes first with p.first and second with p.second.
+    template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_explicit<U1, U2>)>
+    explicit constexpr pair(pair<U1, U2> const& p)
+        : first(p.first), second(p.second)
+    {
+    }
+
+    /// \brief (5) Initializes first with forward<U1>(p.first) and second with
     /// forward<U2>(p.second).
-    template <typename U1, typename U2, is_constructible_<U1&&, U2&&> = true>
+    template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_implicit<U1, U2>)>
     constexpr pair(pair<U1, U2>&& p)
+        : first(forward<U1>(p.first)), second(forward<U2>(p.second))
+    {
+    }
+
+    /// \brief (5) Initializes first with forward<U1>(p.first) and second with
+    /// forward<U2>(p.second).
+    template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_explicit<U1, U2>)>
+    explicit constexpr pair(pair<U1, U2>&& p)
         : first(forward<U1>(p.first)), second(forward<U2>(p.second))
     {
     }

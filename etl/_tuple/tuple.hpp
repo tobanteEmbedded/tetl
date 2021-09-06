@@ -14,6 +14,7 @@
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_copy_constructible.hpp"
 #include "etl/_type_traits/is_default_constructible.hpp"
+#include "etl/_type_traits/is_implicit_default_constructible.hpp"
 #include "etl/_type_traits/is_move_assignable.hpp"
 #include "etl/_type_traits/is_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_move_assignable.hpp"
@@ -25,34 +26,9 @@
 #include "etl/_utility/index_sequence.hpp"
 #include "etl/_utility/move.hpp"
 #include "etl/_utility/swap.hpp"
-
 namespace etl {
 
 namespace detail {
-template <typename T>
-void test_implicit_default_constructible(T);
-
-template <typename T, typename = void,
-    typename = typename is_default_constructible<T>::type>
-struct is_implicit_default_constructible : false_type {
-};
-
-template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), true_type>
-    : true_type {
-};
-
-template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), false_type>
-    : false_type {
-};
-
-template <typename T>
-inline constexpr auto is_implicit_default_constructible_v
-    = is_implicit_default_constructible<T>::value;
-
 template <size_t Size>
 using make_tuple_indices =
     typename make_integer_sequence<size_t, Size>::to_tuple_indices;
@@ -111,7 +87,7 @@ struct tuple_constraints {
     // The ctor is explicit if and only if Ts is not
     // copy-list-initializable from {} for at least one i.
     static constexpr auto ctor_1_explicit
-        = !(is_implicit_default_constructible_v<Ts> && ...);
+        = !(etl::is_implicit_default_constructible_v<Ts> && ...);
 
     static constexpr auto enable_ctor_1_implicit
         = ctor_1_sfinae && (!ctor_1_explicit);
