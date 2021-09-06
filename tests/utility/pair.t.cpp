@@ -6,12 +6,34 @@
 
 #include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"
+#include "etl/warning.hpp"
 
 #include "testing/testing.hpp"
+
+namespace {
+struct DummyString;
+struct DummyStringView {
+    constexpr DummyStringView() = default;
+    constexpr DummyStringView(DummyString const& /*ignore*/);
+};
+struct DummyString {
+    constexpr DummyString() = default;
+    constexpr explicit DummyString(DummyStringView /*ignore*/) { }
+    constexpr operator DummyStringView() const noexcept { return { *this }; }
+};
+constexpr DummyStringView::DummyStringView(DummyString const& /*ignore*/) { }
+
+} // namespace
 
 template <typename T>
 constexpr auto test() -> bool
 {
+    // explicit ctors
+    etl::ignore_unused(etl::pair<T, DummyString>(T(0), DummyStringView()));
+    etl::ignore_unused(etl::pair<T, DummyString>(T(0), DummyString()));
+    etl::ignore_unused(etl::pair<T, DummyStringView>(T(0), DummyStringView()));
+    etl::ignore_unused(etl::pair<T, DummyStringView>(T(0), DummyStringView()));
+
     using etl::is_same_v;
 
     // mutable
@@ -21,29 +43,13 @@ constexpr auto test() -> bool
         assert((is_same_v<int, decltype(p.second)>));
         assert(p.first == T {});
         assert(p.second == int {});
-    }
-
-    // const
-    {
-        auto const p = etl::pair<T, int> {};
-        assert((is_same_v<T, decltype(p.first)>));
-        assert((is_same_v<int, decltype(p.second)>));
-        assert(p.first == T {});
-        assert(p.second == int {});
+        assert(etl::as_const(p).first == T {});
+        assert(etl::as_const(p).second == int {});
     }
 
     // same type twice
     {
         auto p = etl::pair<T, T> {};
-        assert((is_same_v<T, decltype(p.first)>));
-        assert((is_same_v<T, decltype(p.second)>));
-        assert(p.first == T {});
-        assert(p.second == T {});
-    }
-
-    // same type twice no auto
-    {
-        etl::pair<T, T> p {};
         assert((is_same_v<T, decltype(p.first)>));
         assert((is_same_v<T, decltype(p.second)>));
         assert(p.first == T {});
