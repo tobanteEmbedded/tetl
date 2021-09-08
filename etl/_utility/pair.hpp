@@ -29,53 +29,53 @@ namespace detail {
 template <typename T1, typename T2>
 struct pair_constraints {
     // 1
-    static constexpr auto ctor_1_sfinae =   //
+    static constexpr bool ctor_1_sfinae =   //
         etl::is_default_constructible_v<T1> //
         && etl::is_default_constructible_v<T2>;
 
-    static constexpr auto ctor_1_explicit =             //
+    static constexpr bool ctor_1_explicit =             //
         (!etl::is_implicit_default_constructible_v<T1>) //
         || (!etl::is_implicit_default_constructible_v<T2>);
 
     // 2
-    static constexpr auto ctor_2_sfinae = //
+    static constexpr bool ctor_2_sfinae = //
         etl::is_copy_constructible_v<T1>  //
         && etl::is_copy_constructible_v<T2>;
 
-    static constexpr auto ctor_2_explicit =     //
+    static constexpr bool ctor_2_explicit =     //
         (!etl::is_convertible_v<T1 const&, T1>) //
         || (!etl::is_convertible_v<T2 const&, T2>);
 
     // 3
     template <typename U1, typename U2>
-    static constexpr auto ctor_3_sfinae = //
+    static constexpr bool ctor_3_sfinae = //
         etl::is_constructible_v<T1, U1&&> //
             && etl::is_constructible_v<T2, U2&&>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_3_explicit = //
+    static constexpr bool ctor_3_explicit = //
         (!etl::is_convertible_v<U1&&, T1>)  //
         || (!etl::is_convertible_v<U2&&, T2>);
 
     // 4
     template <typename U1, typename U2>
-    static constexpr auto ctor_4_sfinae =      //
+    static constexpr bool ctor_4_sfinae =      //
         etl::is_constructible_v<T1, U1 const&> //
             && etl::is_constructible_v<T2, U2 const&>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_4_explicit =     //
+    static constexpr bool ctor_4_explicit =     //
         (!etl::is_convertible_v<U1 const&, T1>) //
         || (!etl::is_convertible_v<U2 const&, T2>);
 
     // 5
     template <typename U1, typename U2>
-    static constexpr auto ctor_5_sfinae = //
+    static constexpr bool ctor_5_sfinae = //
         etl::is_constructible_v<T1, U1&&> //
             && etl::is_constructible_v<T2, U2&&>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_5_explicit = //
+    static constexpr bool ctor_5_explicit = //
         (!etl::is_convertible_v<U1&&, T1>)  //
         || (!etl::is_convertible_v<U2&&, T2>);
 };
@@ -98,45 +98,45 @@ private:
 
     using constraints = detail::pair_constraints<T1, T2>;
 
-    static constexpr auto ctor_1_implicit
+    static constexpr bool ctor_1_implicit
         = constraints::ctor_1_sfinae && (!constraints::ctor_1_explicit);
 
-    static constexpr auto ctor_1_explicit
+    static constexpr bool ctor_1_explicit
         = (constraints::ctor_1_sfinae) && (constraints::ctor_1_explicit);
 
-    static constexpr auto ctor_2_implicit
+    static constexpr bool ctor_2_implicit
         = constraints::ctor_2_sfinae && (!constraints::ctor_2_explicit);
 
-    static constexpr auto ctor_2_explicit
+    static constexpr bool ctor_2_explicit
         = (constraints::ctor_2_sfinae) && (constraints::ctor_2_explicit);
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_3_implicit
+    static constexpr bool ctor_3_implicit
         = constraints::template ctor_3_sfinae<U1,
               U2> && !constraints::template ctor_3_explicit<U1, U2>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_3_explicit
+    static constexpr bool ctor_3_explicit
         = constraints::template ctor_3_sfinae<U1, U2>&&
             constraints::template ctor_3_explicit<U1, U2>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_4_implicit
+    static constexpr bool ctor_4_implicit
         = constraints::template ctor_4_sfinae<U1,
               U2> && !constraints::template ctor_4_explicit<U1, U2>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_4_explicit
+    static constexpr bool ctor_4_explicit
         = constraints::template ctor_4_sfinae<U1, U2>&&
             constraints::template ctor_4_explicit<U1, U2>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_5_implicit
+    static constexpr bool ctor_5_implicit
         = constraints::template ctor_5_sfinae<U1,
               U2> && !constraints::template ctor_5_explicit<U1, U2>;
 
     template <typename U1, typename U2>
-    static constexpr auto ctor_5_explicit
+    static constexpr bool ctor_5_explicit
         = constraints::template ctor_5_sfinae<U1, U2>&&
             constraints::template ctor_5_explicit<U1, U2>;
 
