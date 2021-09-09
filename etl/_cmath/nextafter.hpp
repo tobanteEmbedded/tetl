@@ -15,13 +15,9 @@ namespace etl {
 namespace detail {
 
 template <typename T>
-using nextafter_uint_t = etl::conditional_t<etl::is_same_v<float, T>,
-    etl::uint32_t, etl::uint64_t>;
-
-template <typename T>
 [[nodiscard]] constexpr auto nextafter_impl(T from, T to) -> T
 {
-    using U             = nextafter_uint_t<T>;
+    using U = etl::conditional_t<sizeof(T) == 4U, etl::uint32_t, etl::uint64_t>;
     auto const fromBits = etl::bit_cast<U>(from);
     auto const toBits   = etl::bit_cast<U>(to);
     if (toBits == fromBits) { return to; }
