@@ -40,6 +40,10 @@ inline constexpr etl::half::storage_type sign_mask { 0b1000'0000'0000'0000 };
 
 constexpr half::half(binary_t /*tag*/, half::storage_type bits) : bits_ { bits }
 {
+    // [tobi] This needs to be here, or clang will complain about an unused
+    // member. All free functions use bit_cast to access the underlying bits of
+    // the half float, so no "getter" method exists.
+    (void)bits_;
 }
 
 constexpr auto isfinite(half arg) noexcept -> bool
