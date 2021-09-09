@@ -24,7 +24,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -39,7 +39,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -54,7 +54,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -70,7 +70,7 @@ namespace etl {
     -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -86,7 +86,7 @@ namespace etl {
     -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -101,7 +101,7 @@ namespace etl {
 [[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 
@@ -117,7 +117,7 @@ namespace etl {
     -> double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 
@@ -133,7 +133,7 @@ namespace etl {
     long double x, long double y, long double z) noexcept -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL; }
+    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 

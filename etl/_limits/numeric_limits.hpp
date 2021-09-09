@@ -670,8 +670,8 @@ struct numeric_limits<float> {
     static constexpr bool has_denorm_loss          = false;
 
     static constexpr auto infinity() noexcept -> float { return TETL_BUILTIN_HUGE_VALF; }
-    static constexpr auto quiet_NaN() noexcept -> float { return TETL_BUILTIN_NANF; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> float { return TETL_BUILTIN_NANSF; } // NOLINT(readability-identifier-naming)
+    static constexpr auto quiet_NaN() noexcept -> float { return TETL_BUILTIN_NANF(""); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> float { return TETL_BUILTIN_NANSF(""); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> float { return 0.0F; }
 
     static constexpr bool is_iec559  = true;
@@ -714,8 +714,8 @@ struct numeric_limits<double> {
     static constexpr float_denorm_style has_denorm = denorm_present;
 
     static constexpr auto infinity() noexcept -> double { return TETL_BUILTIN_HUGE_VAL; }
-    static constexpr auto quiet_NaN() noexcept -> double { return TETL_BUILTIN_NAN; }     // NOLINT(readability-identifier-naming)
-    static constexpr auto signaling_NaN() noexcept -> double { return TETL_BUILTIN_NANS; } // NOLINT(readability-identifier-naming)
+    static constexpr auto quiet_NaN() noexcept -> double { return TETL_BUILTIN_NAN(""); }     // NOLINT(readability-identifier-naming)
+    static constexpr auto signaling_NaN() noexcept -> double { return TETL_BUILTIN_NANS(""); } // NOLINT(readability-identifier-naming)
     static constexpr auto denorm_min() noexcept -> double { return 0.0; }
 
     static constexpr bool is_iec559  = true;

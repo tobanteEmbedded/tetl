@@ -49,44 +49,44 @@
 
 // NAN
 #if __has_builtin(__builtin_nanf) or defined(TETL_MSVC) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NANF (__builtin_nanf(""))
+    #define TETL_BUILTIN_NANF(arg) (__builtin_nanf(arg))
 #else
-    #define TETL_BUILTIN_NANF (0.0F / 0.0F)
+    #define TETL_BUILTIN_NANF(arg) (0.0F / 0.0F)
 #endif
 
 #if __has_builtin(__builtin_nan) or defined(TETL_MSVC) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NAN (__builtin_nan(""))
+    #define TETL_BUILTIN_NAN(arg) (__builtin_nan(arg))
 #else
     #define TETL_BUILTIN_NAN (0.0 / 0.0)
 #endif
 
 #if __has_builtin(__builtin_nanl) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NANL (__builtin_nanl(""))
+    #define TETL_BUILTIN_NANL(arg) (__builtin_nanl(arg))
 #elif defined(TETL_MSVC)
-    #define TETL_BUILTIN_NANL (__builtin_nan(""))
+    #define TETL_BUILTIN_NANL(arg) (__builtin_nan(arg))
 #else
-    #define TETL_BUILTIN_NANL (0.0L / 0.0L)
+    #define TETL_BUILTIN_NANL(arg) (0.0L / 0.0L)
 #endif
 
 // SIGNALING NAN
 #if __has_builtin(__builtin_nansf) or defined(TETL_MSVC) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NANSF (__builtin_nansf(""))
+    #define TETL_BUILTIN_NANSF(arg) (__builtin_nansf(arg))
 #else
-    #define TETL_BUILTIN_NANSF (0.0F / 0.0F)
+    #define TETL_BUILTIN_NANSF(arg) (0.0F / 0.0F)
 #endif
 
 #if __has_builtin(__builtin_nans) or defined(TETL_MSVC) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NANS (__builtin_nans(""))
+    #define TETL_BUILTIN_NANS(arg) (__builtin_nans(arg))
 #else
-    #define TETL_BUILTIN_NANS (0.0 / 0.0)
+    #define TETL_BUILTIN_NANS(arg) (0.0 / 0.0)
 #endif
 
 #if __has_builtin(__builtin_nansl) or defined(TETL_GCC)
-    #define TETL_BUILTIN_NANSL (__builtin_nansl(""))
+    #define TETL_BUILTIN_NANSL(arg) (__builtin_nansl(arg))
 #elif defined(TETL_MSVC)
-    #define TETL_BUILTIN_NANSL (__builtin_nans(""))
+    #define TETL_BUILTIN_NANSL(arg) (__builtin_nans(arg))
 #else
-    #define TETL_BUILTIN_NANSL (0.0L / 0.0L)
+    #define TETL_BUILTIN_NANSL(arg) (0.0L / 0.0L)
 #endif
 
 // ISNAN

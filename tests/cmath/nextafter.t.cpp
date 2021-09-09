@@ -10,11 +10,16 @@ constexpr auto test() -> bool
 {
     using etl::bit_cast;
     using etl::nextafter;
+    using etl::nextafterf;
     using etl::uint32_t;
     using etl::uint64_t;
 
     assert(bit_cast<uint32_t>(nextafter(0.0F, 1.0F)) == 1U);
     assert(bit_cast<uint64_t>(nextafter(0.0, 1.0)) == 1U);
+
+    assert(bit_cast<uint32_t>(nextafterf(1.0F, 1.0F)) == 1065353216U);
+    assert(bit_cast<uint32_t>(nextafterf(1.0F, 0.0F)) == 1065353215U);
+    assert(bit_cast<uint32_t>(nextafterf(1.0F, 2.0F)) == 1065353217U);
 
     assert(bit_cast<uint32_t>(nextafter(1.0F, 1.0F)) == 1065353216U);
     assert(bit_cast<uint32_t>(nextafter(1.0F, 0.0F)) == 1065353215U);
