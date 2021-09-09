@@ -36,6 +36,7 @@
 #include "etl/_cmath/log.hpp"
 #include "etl/_cmath/log1p.hpp"
 #include "etl/_cmath/log2.hpp"
+#include "etl/_cmath/nextafter.hpp"
 #include "etl/_cmath/pow.hpp"
 #include "etl/_cmath/remainder.hpp"
 #include "etl/_cmath/round.hpp"
