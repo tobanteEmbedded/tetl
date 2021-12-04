@@ -127,6 +127,7 @@
 
 // Non-standard extensions
 #include "etl/_container/smallest_size_t.hpp"
+#include "etl/_type_traits/always_false.hpp"
 #include "etl/_type_traits/is_specialized.hpp"
 #include "etl/_type_traits/type_pack_element.hpp"
 
