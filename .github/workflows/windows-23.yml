@@ -1,4 +1,4 @@
-name: Windows C++20
+name: Windows C++23
 
 on: [push, pull_request]
 
@@ -13,7 +13,7 @@ jobs:
           submodules: true
 
       - name: CMake configure -- Debug
-        run: cmake -S . -B cmake-build-debug -G "Visual Studio 16 2019" -D TETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-debug -G "Visual Studio 17 2022" -D TETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug --config "Debug"
@@ -22,7 +22,7 @@ jobs:
         run: cd cmake-build-debug; ctest -C Debug; cd -
 
       - name: CMake configure -- Release
-        run: cmake -S . -B cmake-build-release -G "Visual Studio 16 2019" -D TETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -B cmake-build-release -G "Visual Studio 17 2022" -D TETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build cmake-build-release --config "Release"
