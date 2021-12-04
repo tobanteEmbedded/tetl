@@ -23,9 +23,8 @@ namespace etl {
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
 /// \module Numeric
-template <typename T>
-[[nodiscard]] constexpr auto bit_ceil(T x) noexcept
-    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+[[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
     if (x <= 1U) { return T { 1 }; }
     if constexpr (is_same_v<T, decltype(+x)>) {

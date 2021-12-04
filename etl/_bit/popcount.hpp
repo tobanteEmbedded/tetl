@@ -18,9 +18,8 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \module Numeric
-template <typename T>
-[[nodiscard]] constexpr auto popcount(T input) noexcept
-    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
 {
     auto count = T { 0 };
     while (input) {

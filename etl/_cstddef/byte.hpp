@@ -22,9 +22,8 @@ enum struct byte : unsigned char {};
 
 /// \brief Equivalent to: `return Int(b);`
 /// \requires etl::is_integral_v<Int>
-template <typename Int>
-[[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept
-    -> enable_if_t<is_integral_v<Int>, Int>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+[[nodiscard]] constexpr auto to_integer(etl::byte b) noexcept -> Int
 {
     return static_cast<Int>(b);
 }
@@ -32,9 +31,9 @@ template <typename Int>
 /// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) <<`
 /// shift)
 /// \requires etl::is_integral_v<Int>
-template <typename Int>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
 [[nodiscard]] constexpr auto operator<<(etl::byte b, Int shift) noexcept
-    -> enable_if_t<is_integral_v<Int>, etl::byte>
+    -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) << shift);
 }
@@ -42,18 +41,17 @@ template <typename Int>
 /// \brief Equivalent to: `return etl::byte(static_cast<unsigned int>(b) >>`
 /// shift)
 /// \requires etl::is_integral_v<Int>
-template <typename Int>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
 [[nodiscard]] constexpr auto operator>>(etl::byte b, Int shift) noexcept
-    -> enable_if_t<is_integral_v<Int>, etl::byte>
+    -> etl::byte
 {
     return etl::byte(static_cast<unsigned int>(b) >> shift);
 }
 
 /// \brief Equivalent to: `return b = b << shift;`
 /// \requires etl::is_integral_v<Int>
-template <typename Int>
-constexpr auto operator<<=(etl::byte& b, Int shift) noexcept
-    -> enable_if_t<is_integral_v<Int>, etl::byte&>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+constexpr auto operator<<=(etl::byte& b, Int shift) noexcept -> etl::byte&
 
 {
     return b = b << shift;
@@ -61,9 +59,8 @@ constexpr auto operator<<=(etl::byte& b, Int shift) noexcept
 
 /// \brief Equivalent to: `return b = b >> shift;`
 /// \requires etl::is_integral_v<Int>
-template <typename Int>
-constexpr auto operator>>=(etl::byte& b, Int shift) noexcept
-    -> enable_if_t<is_integral_v<Int>, etl::byte&>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+constexpr auto operator>>=(etl::byte& b, Int shift) noexcept -> etl::byte&
 {
     return b = b >> shift;
 }

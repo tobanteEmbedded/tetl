@@ -14,9 +14,8 @@ namespace etl {
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
 /// \module Numeric
-template <typename T>
-constexpr auto rotl(T t, int s) noexcept
-    -> enable_if_t<detail::bit_unsigned_int_v<T>, T>
+template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+constexpr auto rotl(T t, int s) noexcept -> T
 {
     auto const c = static_cast<unsigned>(s);
     auto const d = static_cast<unsigned>(etl::numeric_limits<T>::digits);

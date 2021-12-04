@@ -22,9 +22,8 @@ namespace etl {
 /// the least significant bit.
 ///
 /// \module Numeric
-template <typename T>
-[[nodiscard]] constexpr auto countr_zero(T x) noexcept
-    -> enable_if_t<detail::bit_unsigned_int_v<T>, int>
+template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+[[nodiscard]] constexpr auto countr_zero(T x) noexcept -> int
 {
     auto isBitSet = [](auto val, int pos) -> bool {
         return val & (T { 1 } << static_cast<T>(pos));

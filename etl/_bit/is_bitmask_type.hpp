@@ -19,55 +19,48 @@ struct is_bitmask_type : false_type {
 template <typename T>
 inline constexpr auto is_bitmask_type_v = is_bitmask_type<T>::value;
 
-template <typename T>
-[[nodiscard]] constexpr auto operator&(T x, T y)
-    -> enable_if_t<is_bitmask_type_v<T>, T>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+[[nodiscard]] constexpr auto operator&(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
     return T { static_cast<type>(static_cast<type>(x) & static_cast<type>(y)) };
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto operator|(T x, T y)
-    -> enable_if_t<is_bitmask_type_v<T>, T>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+[[nodiscard]] constexpr auto operator|(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
     return T { static_cast<type>(static_cast<type>(x) | static_cast<type>(y)) };
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto operator^(T x, T y)
-    -> enable_if_t<is_bitmask_type_v<T>, T>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+[[nodiscard]] constexpr auto operator^(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
     return T { static_cast<type>(static_cast<type>(x) ^ static_cast<type>(y)) };
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto operator~(T x)
-    -> enable_if_t<is_bitmask_type_v<T>, T>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+[[nodiscard]] constexpr auto operator~(T x) -> T
 {
     using type = underlying_type_t<T>;
     return T { static_cast<type>(~static_cast<type>(x)) };
 }
 
-template <typename T>
-constexpr auto operator|=(T& x, T y) noexcept
-    -> enable_if_t<is_bitmask_type_v<T>, T const&>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+constexpr auto operator|=(T& x, T y) noexcept -> T const&
 {
     return x = x | y;
 }
 
-template <typename T>
-constexpr auto operator&=(T& x, T y) noexcept
-    -> enable_if_t<is_bitmask_type_v<T>, T const&>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+constexpr auto operator&=(T& x, T y) noexcept -> T const&
 {
     return x = x & y;
 }
 
-template <typename T>
-constexpr auto operator^=(T& x, T y) noexcept
-    -> enable_if_t<is_bitmask_type_v<T>, T const&>
+template <typename T, enable_if_t<is_bitmask_type_v<T>, int> = 0>
+constexpr auto operator^=(T& x, T y) noexcept -> T const&
 {
     return x = x ^ y;
 }

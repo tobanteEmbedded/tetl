@@ -15,15 +15,15 @@ namespace etl {
 /// \brief Obtains the actual address of the object or function arg, even in
 /// presence of overloaded operator&.
 /// \group addressof
-template <typename T>
-constexpr auto addressof(T& arg) noexcept -> enable_if_t<is_object_v<T>, T*>
+template <typename T, enable_if_t<is_object_v<T>, int> = 0>
+constexpr auto addressof(T& arg) noexcept -> T*
 {
     return __builtin_addressof(arg);
 }
 
 /// \group addressof
-template <typename T>
-constexpr auto addressof(T& arg) noexcept -> enable_if_t<!is_object_v<T>, T*>
+template <typename T, enable_if_t<!is_object_v<T>, int> = 0>
+constexpr auto addressof(T& arg) noexcept -> T*
 {
     return &arg;
 }

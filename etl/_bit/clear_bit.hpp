@@ -10,9 +10,8 @@
 
 namespace etl {
 
-template <typename T>
-[[nodiscard]] constexpr auto clear_bit(T val, T bit) noexcept
-    -> enable_if_t<is_unsigned_v<T>, T>
+template <typename T, enable_if_t<is_unsigned_v<T>, int> = 0>
+[[nodiscard]] constexpr auto clear_bit(T val, T bit) noexcept -> T
 {
     return val & (~(T(1) << bit));
 }

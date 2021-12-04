@@ -37,9 +37,8 @@ namespace etl {
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 /// https://en.cppreference.com/w/cpp/numeric/math/isnan
-template <typename Int>
-[[nodiscard]] constexpr auto isnan(Int arg)
-    -> enable_if_t<is_integral_v<Int>, bool>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+[[nodiscard]] constexpr auto isnan(Int arg) -> bool
 {
     return isnan(static_cast<double>(arg));
 }

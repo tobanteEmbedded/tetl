@@ -39,9 +39,9 @@ inline constexpr auto bit_castable_types
 /// \details https://en.cppreference.com/w/cpp/numeric/bit_cast
 ///
 /// \module Numeric
-template <typename To, typename From>
-constexpr auto bit_cast(From const& src) noexcept
-    -> enable_if_t<detail::bit_castable_types<To, From>, To>
+template <typename To, typename From,
+    enable_if_t<detail::bit_castable_types<To, From>, int> = 0>
+constexpr auto bit_cast(From const& src) noexcept -> To
 {
 #if __has_builtin(__builtin_bit_cast)
     return __builtin_bit_cast(To, src);

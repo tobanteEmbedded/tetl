@@ -36,9 +36,8 @@ namespace etl {
 }
 
 /// \group isinf
-template <typename Int>
-[[nodiscard]] constexpr auto isinf(Int arg)
-    -> enable_if_t<is_integral_v<Int>, bool>
+template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+[[nodiscard]] constexpr auto isinf(Int arg) -> bool
 {
     return isinf(static_cast<double>(arg));
 }

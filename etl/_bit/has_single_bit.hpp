@@ -20,9 +20,8 @@ namespace etl {
 ///
 /// \returns true if x is an integral power of two; otherwise false.
 /// \module Numeric
-template <typename T>
-[[nodiscard]] constexpr auto has_single_bit(T x) noexcept
-    -> enable_if_t<detail::bit_unsigned_int_v<T>, bool>
+template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+[[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
     return popcount(x) == 1;
 }

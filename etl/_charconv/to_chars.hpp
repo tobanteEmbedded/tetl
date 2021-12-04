@@ -38,9 +38,10 @@ struct to_chars_result {
 /// than zero, the representation starts with a minus sign. The library provides
 /// overloads for all signed and unsigned integer types and for the type char as
 /// the type of the parameter value.
-template <typename T>
+template <typename T,
+    enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
 [[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10)
-    -> enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, to_chars_result>
+    -> to_chars_result
 {
     auto const len = static_cast<etl::size_t>(etl::distance(f, l));
     auto const res = detail::int_to_ascii<T>(val, f, base, len);
