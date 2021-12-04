@@ -11,6 +11,7 @@
 #include "etl/_bit/bit_ceil.hpp"
 #include "etl/_bit/bit_floor.hpp"
 #include "etl/_bit/bit_width.hpp"
+#include "etl/_bit/byteswap.hpp"
 #include "etl/_bit/countl_one.hpp"
 #include "etl/_bit/countl_zero.hpp"
 #include "etl/_bit/countr_one.hpp"
