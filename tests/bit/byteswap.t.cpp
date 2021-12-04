@@ -33,7 +33,7 @@ constexpr auto test_byteswap_u32() -> bool
 {
     using etl::uint32_t;
     assert(etl::byteswap(uint32_t { 0 }) == uint32_t { 0 });
-    assert(etl::byteswap(0xDEADBEEF) == 0xEFBEADDE);
+    assert(etl::byteswap(0xDEADBEEFU) == 0xEFBEADDEU);
     return true;
 }
 
@@ -41,7 +41,7 @@ constexpr auto test_byteswap_u64() -> bool
 {
     using etl::uint64_t;
     assert(etl::byteswap(etl::uint64_t { 0 }) == etl::uint64_t { 0 });
-    assert(etl::byteswap(0x0123456789ABCDEF) == 0xEFCDAB8967452301);
+    assert(etl::byteswap(0x0123456789ABCDEFULL) == 0xEFCDAB8967452301ULL);
     return true;
 }
 
