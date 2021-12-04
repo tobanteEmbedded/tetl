@@ -42,7 +42,7 @@ namespace detail {
 
 [[nodiscard]] constexpr auto byteswap_u16(uint16_t val) noexcept -> uint16_t
 {
-    if (is_constant_evaluated()) { byteswap_u16_fallback(val); }
+    if (is_constant_evaluated()) { return byteswap_u16_fallback(val); }
 #if __has_builtin(__builtin_bswap16)
     return __builtin_bswap16(val);
 #else
@@ -52,7 +52,7 @@ namespace detail {
 
 [[nodiscard]] constexpr auto byteswap_u32(uint32_t val) noexcept -> uint32_t
 {
-    if (is_constant_evaluated()) { byteswap_u32_fallback(val); }
+    if (is_constant_evaluated()) { return byteswap_u32_fallback(val); }
 #if __has_builtin(__builtin_bswap32)
     return __builtin_bswap32(val);
 #else
@@ -62,7 +62,7 @@ namespace detail {
 
 [[nodiscard]] constexpr auto byteswap_u64(uint64_t val) noexcept -> uint64_t
 {
-    if (is_constant_evaluated()) { byteswap_u64_fallback(val); }
+    if (is_constant_evaluated()) { return byteswap_u64_fallback(val); }
 #if __has_builtin(__builtin_bswap64)
     return __builtin_bswap64(val);
 #else
