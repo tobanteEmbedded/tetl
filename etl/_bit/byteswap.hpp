@@ -5,27 +5,32 @@
 #ifndef TETL_BIT_BYTESWAP_HPP
 #define TETL_BIT_BYTESWAP_HPP
 
+#include "etl/_config/all.hpp"
 #include "etl/_cstdint/uint_t.hpp"
 #include "etl/_type_traits/always_false.hpp"
 #include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_constant_evaluated.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 
 namespace detail {
 
-[[nodiscard]] constexpr auto byteswap_u16(uint16_t val) noexcept -> uint16_t
+[[nodiscard]] constexpr auto byteswap_u16_fallback(uint16_t val) noexcept
+    -> uint16_t
 {
     return static_cast<uint16_t>((val << 8) | (val >> 8));
 }
 
-[[nodiscard]] constexpr auto byteswap_u32(uint32_t val) noexcept -> uint32_t
+[[nodiscard]] constexpr auto byteswap_u32_fallback(uint32_t val) noexcept
+    -> uint32_t
 {
     return (val << 24) | ((val << 8) & 0x00FF'0000) | ((val >> 8) & 0x0000'FF00)
            | (val >> 24);
 }
 
-[[nodiscard]] constexpr auto byteswap_u64(uint64_t val) noexcept -> uint64_t
+[[nodiscard]] constexpr auto byteswap_u64_fallback(uint64_t val) noexcept
+    -> uint64_t
 {
     return (val << 56) | ((val << 40) & 0x00FF'0000'0000'0000)
            | ((val << 24) & 0x0000'FF00'0000'0000)
@@ -33,6 +38,36 @@ namespace detail {
            | ((val >> 8) & 0x0000'0000'FF00'0000)
            | ((val >> 24) & 0x0000'0000'00FF'0000)
            | ((val >> 40) & 0x0000'0000'0000'FF00) | (val >> 56);
+}
+
+[[nodiscard]] constexpr auto byteswap_u16(uint16_t val) noexcept -> uint16_t
+{
+    if (is_constant_evaluated()) { byteswap_u16_fallback(val); }
+#if __has_builtin(__builtin_bswap16)
+    return __builtin_bswap16(val);
+#else
+    return byteswap_u16_fallback(val);
+#endif
+}
+
+[[nodiscard]] constexpr auto byteswap_u32(uint32_t val) noexcept -> uint32_t
+{
+    if (is_constant_evaluated()) { byteswap_u32_fallback(val); }
+#if __has_builtin(__builtin_bswap32)
+    return __builtin_bswap32(val);
+#else
+    return byteswap_u32_fallback(val);
+#endif
+}
+
+[[nodiscard]] constexpr auto byteswap_u64(uint64_t val) noexcept -> uint64_t
+{
+    if (is_constant_evaluated()) { byteswap_u64_fallback(val); }
+#if __has_builtin(__builtin_bswap64)
+    return __builtin_bswap64(val);
+#else
+    return byteswap_u64_fallback(val);
+#endif
 }
 
 } // namespace detail
