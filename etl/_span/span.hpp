@@ -5,6 +5,8 @@
 #ifndef TETL_SPAN_SPAN_HPP
 #define TETL_SPAN_SPAN_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_array/array.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
@@ -20,6 +22,16 @@
 #include "etl/_type_traits/remove_pointer.hpp"
 
 namespace etl {
+
+namespace detail {
+template <size_t Offset, size_t Count, size_t Extent>
+[[nodiscard]] TETL_CONSTEVAL auto subspan_extent() -> size_t
+{
+    if (Count != dynamic_extent) { return Count; }
+    if (Extent != dynamic_extent) { return Extent - Offset; }
+    return dynamic_extent;
+}
+} // namespace detail
 
 /// \brief A non-owning view over a contiguous sequence of objects.
 ///
@@ -229,6 +241,34 @@ struct span {
     {
         TETL_ASSERT(!(count > size()));
         return { data() + (size() - count), static_cast<size_type>(count) };
+    }
+
+    /// \brief Obtains a span that is a view over the Count elements of this
+    /// span starting at offset Offset. If Count is etl::dynamic_extent, the
+    /// number of elements in the subspan is size() - offset (i.e., it ends at
+    /// the end of *this.).
+    template <size_t Offset, size_t Count = dynamic_extent>
+    [[nodiscard]] constexpr auto subspan() const
+        -> span<element_type, detail::subspan_extent<Offset, Count, Extent>()>
+    {
+        static_assert(!(Offset > Extent));
+        static_assert(!(Count != dynamic_extent && Count > Extent - Offset));
+        auto const sz = Count == dynamic_extent ? size() - Offset : Count;
+        return { data() + Offset, static_cast<size_type>(sz) };
+    }
+
+    /// \brief Obtains a span that is a view over the Count elements of this
+    /// span starting at offset Offset. If Count is etl::dynamic_extent, the
+    /// number of elements in the subspan is size() - offset (i.e., it ends at
+    /// the end of *this.).
+    [[nodiscard]] constexpr auto subspan(
+        size_type offset, size_type count = dynamic_extent) const
+        -> span<element_type, dynamic_extent>
+    {
+        TETL_ASSERT(!(offset > size()));
+        TETL_ASSERT(!(count != dynamic_extent && count > size() - offset));
+        auto const sz = count == dynamic_extent ? size() - offset : count;
+        return { data() + offset, static_cast<size_type>(sz) };
     }
 
 private:
