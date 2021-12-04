@@ -1428,7 +1428,7 @@ public:
     /// generally used either as end of string indicator by the functions that
     /// expect a string index or as the error indicator by the functions that
     /// return a string index.
-    constexpr static size_type npos = static_cast<size_type>(-1);
+    constexpr static size_type npos = numeric_limits<size_type>::max();
 
 private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void

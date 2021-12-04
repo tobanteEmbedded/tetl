@@ -15,6 +15,7 @@
 #include "etl/_functional/greater_equal.hpp"
 #include "etl/_functional/less.hpp"
 #include "etl/_functional/less_equal.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
@@ -38,6 +39,7 @@
 #include "etl/_variant/variant_fwd.hpp"
 #include "etl/_variant/variant_size.hpp"
 #include "etl/_warning/ignore_unused.hpp"
+
 
 namespace etl {
 
@@ -305,7 +307,7 @@ inline constexpr auto enable_variant_swap
 /// \brief This is a special value equal to the largest value representable by
 /// the type etl::size_t, used as the return value of index() when
 /// valueless_by_exception() is true.
-inline constexpr auto variant_npos = static_cast<etl::size_t>(-1);
+inline constexpr auto variant_npos = numeric_limits<etl::size_t>::max();
 
 /// \brief The class template etl::variant represents a type-safe union. An
 /// instance of etl::variant at any given time either holds a value of one of

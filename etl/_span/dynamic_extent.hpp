@@ -6,12 +6,13 @@
 #define TETL_SPAN_DYNAMIC_EXTENT_HPP
 
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 
 namespace etl {
 
 /// \brief etl::dynamic_extent is a constant of type etl::size_t that is used
 /// to differentiate etl::span of static and dynamic extent.
-inline constexpr auto dynamic_extent = static_cast<etl::size_t>(-1);
+inline constexpr auto dynamic_extent = numeric_limits<etl::size_t>::max();
 
 } // namespace etl
 
