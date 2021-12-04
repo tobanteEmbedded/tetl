@@ -5,7 +5,7 @@
 #ifndef TETL_BIT_ROTL_HPP
 #define TETL_BIT_ROTL_HPP
 
-#include "etl/_bit/bit_unsigned_int.hpp"
+#include "etl/_bit/bit_uint.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 
@@ -14,7 +14,7 @@ namespace etl {
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
 /// \module Numeric
-template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
     auto const c = static_cast<unsigned>(s);

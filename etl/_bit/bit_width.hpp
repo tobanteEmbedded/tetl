@@ -5,7 +5,7 @@
 #ifndef TETL_BIT_BIT_WIDTH_HPP
 #define TETL_BIT_BIT_WIDTH_HPP
 
-#include "etl/_bit/bit_unsigned_int.hpp"
+#include "etl/_bit/bit_uint.hpp"
 #include "etl/_bit/countl_zero.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -19,7 +19,7 @@ namespace etl {
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 /// \module Numeric
-template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
     return etl::numeric_limits<T>::digits - etl::countl_zero(x);

@@ -5,7 +5,7 @@
 #ifndef TETL_BIT_BIT_CEIL_HPP
 #define TETL_BIT_BIT_CEIL_HPP
 
-#include "etl/_bit/bit_unsigned_int.hpp"
+#include "etl/_bit/bit_uint.hpp"
 #include "etl/_bit/bit_width.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -23,7 +23,7 @@ namespace etl {
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
 /// \module Numeric
-template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
     if (x <= 1U) { return T { 1 }; }

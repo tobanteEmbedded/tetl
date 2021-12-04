@@ -5,7 +5,7 @@
 #ifndef TETL_BIT_HAS_SINGLE_BIT_HPP
 #define TETL_BIT_HAS_SINGLE_BIT_HPP
 
-#include "etl/_bit/bit_unsigned_int.hpp"
+#include "etl/_bit/bit_uint.hpp"
 #include "etl/_bit/popcount.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
@@ -20,7 +20,7 @@ namespace etl {
 ///
 /// \returns true if x is an integral power of two; otherwise false.
 /// \module Numeric
-template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
     return popcount(x) == 1;

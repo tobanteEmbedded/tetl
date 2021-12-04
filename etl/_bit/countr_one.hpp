@@ -5,7 +5,7 @@
 #ifndef TETL_BIT_COUNTR_ONE_HPP
 #define TETL_BIT_COUNTR_ONE_HPP
 
-#include "etl/_bit/bit_unsigned_int.hpp"
+#include "etl/_bit/bit_uint.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 
@@ -22,7 +22,7 @@ namespace etl {
 /// the least significant bit.
 ///
 /// \module Numeric
-template <typename T, enable_if_t<detail::bit_unsigned_int_v<T>, int> = 0>
+template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto countr_one(T x) noexcept -> int
 {
     auto isBitSet = [](auto val, int pos) -> bool {
