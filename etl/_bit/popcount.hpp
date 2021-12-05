@@ -5,11 +5,27 @@
 #ifndef TETL_BIT_POPCOUNT_HPP
 #define TETL_BIT_POPCOUNT_HPP
 
+#include "etl/_config/all.hpp"
+
 #include "etl/_bit/bit_uint.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_constant_evaluated.hpp"
 
 namespace etl {
+
+namespace detail {
+template <typename T>
+[[nodiscard]] constexpr auto popcount_fallback(T val) noexcept -> int
+{
+    auto count = T { 0 };
+    while (val) {
+        count = count + (val & T { 1 });
+        val   = val >> T { 1 };
+    }
+    return static_cast<int>(count);
+}
+} // namespace detail
 
 /// \brief Returns the number of 1 bits in the value of x.
 ///
@@ -19,14 +35,14 @@ namespace etl {
 ///
 /// \module Numeric
 template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
-[[nodiscard]] constexpr auto popcount(T input) noexcept -> int
+[[nodiscard]] constexpr auto popcount(T val) noexcept -> int
 {
-    auto count = T { 0 };
-    while (input) {
-        count = count + (input & T { 1 });
-        input = input >> T { 1 };
-    }
-    return static_cast<int>(count);
+    if (is_constant_evaluated()) { return detail::popcount_fallback(val); }
+#if __has_builtin(__builtin_popcount)
+    return __builtin_popcount(x);
+#else
+    return detail::popcount_fallback(val);
+#endif
 }
 
 } // namespace etl
