@@ -13,12 +13,12 @@ namespace etl {
 
 /// \group is_union
 template <typename T>
-struct is_union : bool_constant<TETL_BUILTIN_IS_UNION(T)> {
+struct is_union : bool_constant<__is_union(T)> {
 };
 
 /// \group is_union
 template <typename T>
-inline constexpr bool is_union_v = TETL_BUILTIN_IS_UNION(T);
+inline constexpr bool is_union_v = __is_union(T);
 
 } // namespace etl
 

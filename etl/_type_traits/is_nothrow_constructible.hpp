@@ -51,8 +51,7 @@ struct nothrow_constructible_impl<true, T[Size], Args...>
 
 template <typename T, typename... Args>
 using is_nothrow_constructible_helper
-    = nothrow_constructible_impl<TETL_BUILTIN_IS_CONSTRUCTIBLE(T, Args...), T,
-        Args...>;
+    = nothrow_constructible_impl<__is_constructible(T, Args...), T, Args...>;
 } // namespace detail
 
 /// \brief The variable definition does not call any operation that is not

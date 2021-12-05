@@ -19,19 +19,31 @@ namespace etl {
 /// \module Numeric
 [[nodiscard]] constexpr auto isnan(float arg) -> bool
 {
-    return TETL_BUILTIN_ISNANF(arg);
+#if __has_builtin(__builtin_isnanf) or defined(TETL_GCC)
+    return __builtin_isnanf(arg);
+#else
+    return arg != arg;
+#endif
 }
 
 /// \group isnan
 [[nodiscard]] constexpr auto isnan(double arg) -> bool
 {
-    return TETL_BUILTIN_ISNAN(arg);
+#if __has_builtin(__builtin_isnan) or defined(TETL_GCC)
+    return __builtin_isnan(arg);
+#else
+    return arg != arg;
+#endif
 }
 
 /// \group isnan
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool
 {
-    return TETL_BUILTIN_ISNANL(arg);
+#if __has_builtin(__builtin_isnanl) or defined(TETL_GCC)
+    return __builtin_isnanl(arg);
+#else
+    return arg != arg;
+#endif
 }
 
 /// \brief Determines if the given floating point number arg is a not-a-number

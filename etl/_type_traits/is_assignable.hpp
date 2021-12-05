@@ -16,11 +16,11 @@ namespace etl {
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
 template <typename T, typename U>
-struct is_assignable : etl::bool_constant<TETL_BUILTIN_IS_ASSIGNABLE(T, U)> {
+struct is_assignable : etl::bool_constant<__is_assignable(T, U)> {
 };
 
 template <typename T, typename U>
-inline constexpr bool is_assignable_v = TETL_BUILTIN_IS_ASSIGNABLE(T, U);
+inline constexpr bool is_assignable_v = __is_assignable(T, U);
 
 } // namespace etl
 

@@ -17,7 +17,11 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/types/is_constant_evaluated
 [[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
 {
-    return TETL_BUILTIN_IS_CONSTANT_EVALUATED();
+#if __has_builtin(__builtin_is_constant_evaluated)
+    return __builtin_is_constant_evaluated();
+#else
+    return false;
+#endif
 }
 
 } // namespace etl

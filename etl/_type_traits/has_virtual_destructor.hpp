@@ -14,15 +14,13 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
 /// \group has_virtual_destructor
 template <typename T>
-struct has_virtual_destructor
-    : etl::bool_constant<TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR(T)> {
+struct has_virtual_destructor : bool_constant<__has_virtual_destructor(T)> {
 };
 
 /// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
 /// \group has_virtual_destructor
 template <typename T>
-inline constexpr auto has_virtual_destructor_v
-    = TETL_BUILTIN_HAS_VIRTUAL_DESTRUCTOR(T);
+inline constexpr auto has_virtual_destructor_v = __has_virtual_destructor(T);
 
 } // namespace etl
 

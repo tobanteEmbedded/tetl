@@ -16,13 +16,11 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/types/is_destructible
 template <typename T>
-struct is_trivially_destructible
-    : bool_constant<TETL_BUILTIN_IS_TRIVIAL_DESTRUCTIBLE(T)> {
+struct is_trivially_destructible : bool_constant<__has_trivial_destructor(T)> {
 };
 
 template <typename T>
-inline constexpr auto is_trivially_destructible_v
-    = is_trivially_destructible<T>::value;
+inline constexpr auto is_trivially_destructible_v = __has_trivial_destructor(T);
 
 } // namespace etl
 

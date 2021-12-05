@@ -17,7 +17,7 @@ namespace etl {
 /// context unrelated to either type.
 template <typename T, typename U>
 struct is_trivially_assignable
-    : bool_constant<TETL_BUILTIN_IS_TRIVIALLY_ASSIGNABLE(T, U)> {
+    : bool_constant<__is_trivially_assignable(T, U)> {
 };
 
 template <typename T, typename U>

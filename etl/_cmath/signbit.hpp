@@ -7,7 +7,19 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_type_traits/is_constant_evaluated.hpp"
+
 namespace etl {
+
+namespace detail {
+
+template <typename T>
+[[nodiscard]] constexpr auto signbit_fallback(T arg) noexcept -> bool
+{
+    return arg == T(-0.0) || arg < T(0);
+}
+
+} // namespace detail
 
 /// \brief Determines if the given floating point number arg is negative.
 ///
@@ -18,7 +30,12 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(float arg) noexcept -> bool
 {
-    return TETL_BUILTIN_SIGNBIT(arg);
+    if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
+#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+    return __builtin_signbit(arg);
+#else
+    return detail::signbit_fallback(arg);
+#endif
 }
 
 /// \brief Determines if the given floating point number arg is negative.
@@ -30,7 +47,12 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(double arg) noexcept -> bool
 {
-    return TETL_BUILTIN_SIGNBIT(arg);
+    if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
+#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+    return __builtin_signbit(arg);
+#else
+    return detail::signbit_fallback(arg);
+#endif
 }
 
 /// \brief Determines if the given floating point number arg is negative.
@@ -42,7 +64,12 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/signbit
 [[nodiscard]] constexpr auto signbit(long double arg) noexcept -> bool
 {
-    return TETL_BUILTIN_SIGNBIT(arg);
+    if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
+#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+    return __builtin_signbit(arg);
+#else
+    return detail::signbit_fallback(arg);
+#endif
 }
 
 } // namespace etl

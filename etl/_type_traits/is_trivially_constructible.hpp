@@ -16,7 +16,7 @@ namespace etl {
 /// considered trivial.
 template <typename T, typename... Args>
 struct is_trivially_constructible
-    : bool_constant<TETL_BUILTIN_IS_TRIVIAL_CONSTRUCTIBLE(T)> {
+    : bool_constant<__is_trivially_constructible(T)> {
 };
 
 template <typename T, typename... Args>

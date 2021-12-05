@@ -31,11 +31,13 @@ template <etl::size_t N, typename T>
     static_assert(detail::is_power2(N));
     static_assert(alignof(T) <= N);
 
-#if defined(TETL_BUILTIN_IS_CONSTANT_EVALUATED)
     if (etl::is_constant_evaluated()) { return ptr; }
-#endif
 
-    return static_cast<T*>(TETL_BUILTIN_ASSUME_ALIGNED(ptr, N));
+#if __has_builtin(__builtin_assume_aligned)
+    return static_cast<T*>(__builtin_assume_aligned(ptr, N));
+#else
+    return ptr;
+#endif
 }
 
 } // namespace etl

@@ -7,7 +7,18 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_type_traits/is_constant_evaluated.hpp"
+
 namespace etl {
+
+namespace detail {
+template <typename T>
+constexpr auto copysign_fallback(T x, T y) noexcept -> T
+{
+    if ((x < 0 && y > 0) || (x > 0 && y < 0)) { return -x; }
+    return x;
+}
+} // namespace detail
 
 /// \brief Composes a floating point value with the magnitude of mag and the
 /// sign of sgn.
@@ -24,7 +35,12 @@ namespace etl {
 /// operations.
 [[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float
 {
-    return TETL_BUILTIN_COPYSIGNF(mag, sgn);
+    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
+#if __has_builtin(__builtin_copysignf)
+    return __builtin_copysignf(mag, sgn);
+#else
+    return detail::copysign_fallback(mag, sgn);
+#endif
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -42,7 +58,12 @@ namespace etl {
 /// operations.
 [[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
 {
-    return TETL_BUILTIN_COPYSIGNF(mag, sgn);
+    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
+#if __has_builtin(__builtin_copysignf)
+    return __builtin_copysignf(mag, sgn);
+#else
+    return detail::copysign_fallback(mag, sgn);
+#endif
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -60,7 +81,12 @@ namespace etl {
 /// operations.
 [[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double
 {
-    return TETL_BUILTIN_COPYSIGN(mag, sgn);
+    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
+#if __has_builtin(__builtin_copysign)
+    return __builtin_copysign(mag, sgn);
+#else
+    return detail::copysign_fallback(mag, sgn);
+#endif
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -79,7 +105,12 @@ namespace etl {
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn)
     -> long double
 {
-    return TETL_BUILTIN_COPYSIGNL(mag, sgn);
+    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
+#if __has_builtin(__builtin_copysignl)
+    return __builtin_copysignl(mag, sgn);
+#else
+    return detail::copysign_fallback(mag, sgn);
+#endif
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -98,7 +129,12 @@ namespace etl {
 [[nodiscard]] constexpr auto copysignl(long double mag, long double sgn)
     -> long double
 {
-    return TETL_BUILTIN_COPYSIGNL(mag, sgn);
+    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
+#if __has_builtin(__builtin_copysignl)
+    return __builtin_copysignl(mag, sgn);
+#else
+    return detail::copysign_fallback(mag, sgn);
+#endif
 }
 
 } // namespace etl

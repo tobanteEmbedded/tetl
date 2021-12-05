@@ -17,12 +17,12 @@ namespace etl {
 /// otherwise, the behavior is undefined.
 /// \group is_final
 template <typename T>
-struct is_final : bool_constant<TETL_BUILTIN_IS_FINAL(T)> {
+struct is_final : bool_constant<__is_final(T)> {
 };
 
 /// \group is_final
 template <typename T>
-inline constexpr bool is_final_v = is_final<T>::value;
+inline constexpr bool is_final_v = __is_final(T);
 
 } // namespace etl
 
