@@ -39,7 +39,7 @@ template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 {
     if (is_constant_evaluated()) { return detail::popcount_fallback(val); }
 #if __has_builtin(__builtin_popcount)
-    return __builtin_popcount(x);
+    return __builtin_popcount(val);
 #else
     return detail::popcount_fallback(val);
 #endif
