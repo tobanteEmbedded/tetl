@@ -16,11 +16,16 @@ namespace etl {
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
-template <typename M, typename N>
-[[nodiscard]] constexpr auto lcm(M m, N n) -> enable_if_t<
-    is_integral_v<
-        M> && !is_same_v<M, bool> && is_integral_v<N> && !is_same_v<N, bool>,
-    common_type_t<M, N>>
+// clang-format off
+template <typename M, typename N,
+    enable_if_t<
+        is_integral_v<M>
+        && !is_same_v<M, bool>
+        && is_integral_v<N>
+        && !is_same_v<N, bool>,
+    int> = 0>
+// clang-format on
+[[nodiscard]] constexpr auto lcm(M m, N n) -> common_type_t<M, N>
 {
     return (m * n) / gcd(m, n);
 }

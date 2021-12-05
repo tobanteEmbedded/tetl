@@ -61,10 +61,9 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
 }
 
 /// \group midpoint
-/// \synopsis_return Pointer
-template <typename Pointer>
-constexpr auto midpoint(Pointer a, Pointer b) noexcept
-    -> enable_if_t<is_pointer_v<Pointer>, Pointer>
+/// \synopsis_return Ptr
+template <typename Ptr, enable_if_t<is_pointer_v<Ptr>, int> = 0>
+constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr
 {
     return a + midpoint(ptrdiff_t { 0 }, b - a);
 }

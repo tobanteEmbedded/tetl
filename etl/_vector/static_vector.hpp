@@ -100,9 +100,9 @@ struct static_vector_zero_storage {
     /// \brief Constructs a new element at the end of the storagein-place.
     /// Increases size of the storage by one. Always fails for empty
     /// storage.
-    template <typename... Args>
-    static constexpr auto emplace_back(Args&&... /*unused*/) noexcept
-        -> enable_if_t<is_constructible_v<T, Args...>, void>
+    template <typename... Args,
+        enable_if_t<is_constructible_v<T, Args...>, int> = 0>
+    static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
     {
         TETL_ASSERT(false);
     }
@@ -199,10 +199,11 @@ struct static_vector_trivial_storage {
     }
 
     /// \brief Constructs an element in-place at the end of the storage.
-    template <typename... Args>
-    constexpr auto emplace_back(Args&&... args) noexcept -> enable_if_t<
-        is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>,
-        void>
+    template <typename... Args,
+        enable_if_t<
+            is_constructible_v<T, Args...> && is_assignable_v<value_type&, T>,
+            int> = 0>
+    constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
         TETL_ASSERT(!full());
         index(data_, size()) = T(forward<Args>(args)...);
@@ -432,8 +433,7 @@ private:
     constexpr auto emplace_n(size_type n) noexcept(
         (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
         || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
-        -> enable_if_t<is_move_constructible_v<T> or is_copy_constructible_v<T>,
-            void>
+        -> void
     {
         TETL_ASSERT(n <= capacity());
         while (n != size()) { emplace_back(T {}); }
@@ -505,14 +505,13 @@ public:
         emplace_back(forward<U>(value));
     }
 
-    template <typename InputIt>
-    constexpr auto move_insert(const_iterator position, InputIt first,
-        InputIt last) noexcept(noexcept(emplace_back(move(*first))))
-        -> enable_if_t<detail::InputIterator<InputIt>, iterator>
+    template <typename InIt, enable_if_t<detail::InputIterator<InIt>, int> = 0>
+    constexpr auto move_insert(const_iterator position, InIt first,
+        InIt last) noexcept(noexcept(emplace_back(move(*first)))) -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
-        if constexpr (detail::RandomAccessIterator<InputIt>) {
+        if constexpr (detail::RandomAccessIterator<InIt>) {
             TETL_ASSERT(
                 size() + static_cast<size_type>(last - first) <= capacity());
         }
@@ -525,11 +524,11 @@ public:
         return writablePosition;
     }
 
-    template <typename... Args>
+    template <typename... Args,
+        enable_if_t<is_constructible_v<T, Args...>, int> = 0>
     constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
-        noexcept(move_insert(
-            position, declval<value_type*>(), declval<value_type*>())))
-        -> enable_if_t<is_constructible_v<T, Args...>, iterator>
+        noexcept(move_insert(position, declval<value_type*>(),
+            declval<value_type*>()))) -> iterator
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);

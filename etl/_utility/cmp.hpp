@@ -34,8 +34,7 @@ template <typename T>
 inline constexpr auto int_and_not_char_v = is_integer_and_not_char<T>::value;
 
 template <typename T, typename U>
-inline constexpr auto all_int_and_not_char_v
-    = int_and_not_char_v<T>&& int_and_not_char_v<U>;
+inline constexpr auto cmp_int_v = int_and_not_char_v<T>&& int_and_not_char_v<U>;
 
 } // namespace detail
 
@@ -47,9 +46,8 @@ inline constexpr auto all_int_and_not_char_v
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_equal(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
     using UU = etl::make_unsigned_t<U>;
@@ -71,9 +69,8 @@ template <typename T, typename U>
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_not_equal(T t, U u) noexcept -> bool
 {
     return !cmp_equal(t, u);
 }
@@ -86,9 +83,8 @@ template <typename T, typename U>
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_less(T t, U u) noexcept -> bool
 {
     using UT = etl::make_unsigned_t<T>;
     using UU = etl::make_unsigned_t<U>;
@@ -109,9 +105,8 @@ template <typename T, typename U>
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_greater(T t, U u) noexcept -> bool
 {
     return cmp_less(u, t);
 }
@@ -124,9 +119,8 @@ template <typename T, typename U>
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_less_equal(T t, U u) noexcept -> bool
 {
     return !cmp_greater(t, u);
 }
@@ -139,9 +133,8 @@ template <typename T, typename U>
 /// unsigned integer type (including standard integer type and extended integer
 /// type).
 /// https://en.cppreference.com/w/cpp/utility/intcmp
-template <typename T, typename U>
-[[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept
-    -> enable_if_t<detail::all_int_and_not_char_v<T, U>, bool>
+template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
+[[nodiscard]] constexpr auto cmp_greater_equal(T t, U u) noexcept -> bool
 {
     return !cmp_less(t, u);
 }
@@ -155,9 +148,9 @@ template <typename T, typename U>
 /// char32_t, wchar_t and bool.
 ///
 /// https://en.cppreference.com/w/cpp/utility/in_range
-template <typename R, typename T>
-[[nodiscard]] constexpr auto in_range(T t) noexcept
-    -> enable_if_t<detail::int_and_not_char_v<T>, bool>
+template <typename R, typename T,
+    enable_if_t<detail::int_and_not_char_v<T>, int> = 0>
+[[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
     return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())
            && etl::cmp_less_equal(t, etl::numeric_limits<R>::max());
