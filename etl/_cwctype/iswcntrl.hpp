@@ -21,7 +21,7 @@ namespace etl {
 /// \module Strings
 [[nodiscard]] constexpr auto iswcntrl(wint_t ch) noexcept -> int
 {
-    return static_cast<int>((ch >= 0x00 && ch <= 0x1F) || ch == 0x7F);
+    return static_cast<int>((ch <= wint_t(0x1F)) || ch == wint_t(0x7F));
 }
 
 } // namespace etl
