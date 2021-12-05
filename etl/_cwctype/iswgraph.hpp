@@ -27,7 +27,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswgraph
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto iswgraph(int ch) noexcept -> int
+[[nodiscard]] constexpr auto iswgraph(wint_t ch) noexcept -> int
 {
     auto const isDigit = iswdigit(ch) != 0;
     auto const isUpper = iswupper(ch) != 0;
