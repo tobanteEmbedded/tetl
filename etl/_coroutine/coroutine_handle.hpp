@@ -6,17 +6,17 @@
 #define TETL_COROUTINE_COROUTINE_HANDLE_HPP
 
 #include "etl/_cstddef/nullptr_t.hpp"
+#include "etl/_functional/hash.hpp"
 
 #if defined(__cpp_coroutines)
 
 namespace etl {
 
-template <typename _Promise = void>
+template <typename Promise = void>
 struct coroutine_handle;
 
 template <>
 struct coroutine_handle<void> {
-public:
     constexpr coroutine_handle() noexcept = default;
 
     constexpr coroutine_handle(nullptr_t handle) noexcept : handle_(handle) { }
@@ -58,6 +58,15 @@ public:
 
 protected:
     void* handle_ { nullptr };
+};
+
+template <typename T>
+struct hash<coroutine_handle<T>> {
+    [[nodiscard]] auto operator()(coroutine_handle<T> const& v) const noexcept
+        -> size_t
+    {
+        return hash<void*>()(v.address());
+    }
 };
 
 } // namespace etl
