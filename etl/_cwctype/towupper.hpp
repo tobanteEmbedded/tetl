@@ -18,7 +18,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/towupper
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto toupper(wint_t ch) noexcept -> wint_t
+[[nodiscard]] constexpr auto towupper(wint_t ch) noexcept -> wint_t
 {
     if (iswlower(ch) != 0) { return ch - wint_t(32); }
     return ch;

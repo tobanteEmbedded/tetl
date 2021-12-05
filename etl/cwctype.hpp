@@ -21,7 +21,7 @@
 #include "etl/_cwctype/iswspace.hpp"
 #include "etl/_cwctype/iswupper.hpp"
 #include "etl/_cwctype/iswxdigit.hpp"
-#include "etl/_cwctype/tolower.hpp"
-#include "etl/_cwctype/toupper.hpp"
+#include "etl/_cwctype/towlower.hpp"
+#include "etl/_cwctype/towupper.hpp"
 
 #endif // TETL_CWCTYPE_HPP

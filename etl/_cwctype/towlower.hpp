@@ -18,7 +18,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/towlower
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto tolower(wint_t ch) noexcept -> wint_t
+[[nodiscard]] constexpr auto towlower(wint_t ch) noexcept -> wint_t
 {
     if (iswupper(ch) != 0) { return ch + wint_t(32); }
     return ch;
