@@ -15,6 +15,7 @@
 #include "etl/_iterator/empty.hpp"
 #include "etl/_iterator/end.hpp"
 #include "etl/_iterator/front_insert_iterator.hpp"
+#include "etl/_iterator/full.hpp"
 #include "etl/_iterator/iterator_traits.hpp"
 #include "etl/_iterator/next.hpp"
 #include "etl/_iterator/prev.hpp"
