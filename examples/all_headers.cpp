@@ -24,6 +24,7 @@
 #include "etl/cstring.hpp"
 #include "etl/ctime.hpp"
 #include "etl/cwchar.hpp"
+#include "etl/cwctype.hpp"
 #include "etl/exception.hpp"
 #include "etl/expected.hpp"
 #include "etl/format.hpp"
