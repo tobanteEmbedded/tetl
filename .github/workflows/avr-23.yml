@@ -33,7 +33,6 @@ jobs:
           cmake --build build --config Debug --target tests/string_view/all
           cmake --build build --config Debug --target tests/tuple/all
           cmake --build build --config Debug --target tests/utility/all
-          cmake --build build --config Debug --target tests/variant/all
           cmake --build build --config Debug --target tests/vector/all
           cmake --build build --config Debug --target tests/version/all
           cmake --build build --config Release --target tests/stack/all
@@ -42,6 +41,5 @@ jobs:
           cmake --build build --config Release --target tests/string_view/all
           cmake --build build --config Release --target tests/tuple/all
           cmake --build build --config Release --target tests/utility/all
-          cmake --build build --config Release --target tests/variant/all
           cmake --build build --config Release --target tests/vector/all
           cmake --build build --config Release --target tests/version/all
