@@ -7,18 +7,18 @@
 
 namespace etl {
 
+/// \group add_cv
+template <typename T>
+using add_cv_t = T const volatile;
+
 /// \brief Provides the member typedef type which is the same as T, except it
 /// has a cv-qualifier added (unless T is a function, a reference, or already
 /// has this cv-qualifier). Adds both const and volatile.
 /// \group add_cv
 template <typename T>
 struct add_cv {
-    using type = T const volatile;
+    using type = add_cv_t<T>;
 };
-
-/// \group add_cv
-template <typename T>
-using add_cv_t = typename etl::add_cv<T>::type;
 
 } // namespace etl
 

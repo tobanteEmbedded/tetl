@@ -10,16 +10,16 @@
 
 namespace etl {
 
+/// \group conjunction
+template <typename... B>
+inline constexpr bool conjunction_v = (B::value && ...);
+
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
 /// \group conjunction
 template <typename... B>
-struct conjunction : etl::bool_constant<(B::value && ...)> {
+struct conjunction : bool_constant<conjunction_v<B...>> {
 };
-
-/// \group conjunction
-template <typename... B>
-inline constexpr bool conjunction_v = (B::value && ...);
 
 } // namespace etl
 
