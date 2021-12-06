@@ -1,4 +1,4 @@
-name: MSP430 C++17
+name: MSP430 C++23
 
 on: [push, pull_request]
 
@@ -19,8 +19,8 @@ jobs:
           grep --version
           msp430-elf-g++ --version
 
-      - name: Build examples project (C++17, Debug)
-        run: MSP430=1 CXXSTD=17 DEBUG=1 make -C examples clean all
+      - name: Build examples project (C++23, Debug)
+        run: MSP430=1 CXXSTD=2b DEBUG=1 make -C examples clean all
 
-      - name: Build examples project (C++17, Release)
-        run: MSP430=1 CXXSTD=17 make -C examples clean all
+      - name: Build examples project (C++23, Release)
+        run: MSP430=1 CXXSTD=2b make -C examples clean all
