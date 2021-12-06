@@ -26,13 +26,12 @@ jobs:
 
       - name: Build tests
         run: |
-          cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake
+          cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake -D TETL_BUILD_WERROR=ON
           cmake --build build --config Debug --target tests/stack/all
           cmake --build build --config Debug --target tests/stdexcept/all
           cmake --build build --config Debug --target tests/string/all
           cmake --build build --config Debug --target tests/string_view/all
           cmake --build build --config Debug --target tests/tuple/all
-          cmake --build build --config Debug --target tests/type_traits/all
           cmake --build build --config Debug --target tests/utility/all
           cmake --build build --config Debug --target tests/variant/all
           cmake --build build --config Debug --target tests/vector/all
@@ -42,7 +41,6 @@ jobs:
           cmake --build build --config Release --target tests/string/all
           cmake --build build --config Release --target tests/string_view/all
           cmake --build build --config Release --target tests/tuple/all
-          cmake --build build --config Release --target tests/type_traits/all
           cmake --build build --config Release --target tests/utility/all
           cmake --build build --config Release --target tests/variant/all
           cmake --build build --config Release --target tests/vector/all
