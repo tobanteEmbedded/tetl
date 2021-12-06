@@ -7,7 +7,7 @@
 
 #include "etl/_config/all.hpp"
 
-#if defined(_MSC_VER)
+#if defined(TETL_MSVC)
     #include <math.h>
 #else
     #ifndef NAN
