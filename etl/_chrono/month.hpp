@@ -64,13 +64,13 @@ struct month {
     };
 
 private:
-    auto add(int count) noexcept -> void
+    constexpr auto add(int count) noexcept -> void
     {
         count_ += static_cast<uint8_t>(count);
         count_ %= 12;
     }
 
-    auto sub(int count) noexcept -> void
+    constexpr auto sub(int count) noexcept -> void
     {
         count_ -= static_cast<uint8_t>(count);
         count_ %= 12;
@@ -84,6 +84,19 @@ private:
 {
     return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
 }
+
+inline constexpr auto January   = etl::chrono::month { 1 };
+inline constexpr auto February  = etl::chrono::month { 2 };
+inline constexpr auto March     = etl::chrono::month { 3 };
+inline constexpr auto April     = etl::chrono::month { 4 };
+inline constexpr auto May       = etl::chrono::month { 5 };
+inline constexpr auto June      = etl::chrono::month { 6 };
+inline constexpr auto July      = etl::chrono::month { 7 };
+inline constexpr auto August    = etl::chrono::month { 8 };
+inline constexpr auto September = etl::chrono::month { 9 };
+inline constexpr auto October   = etl::chrono::month { 10 };
+inline constexpr auto November  = etl::chrono::month { 11 };
+inline constexpr auto December  = etl::chrono::month { 12 };
 
 } // namespace etl::chrono
 
