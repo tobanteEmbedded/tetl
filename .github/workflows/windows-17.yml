@@ -18,7 +18,7 @@ jobs:
         with:
           arch: x64
 
-      - name: CMake configure -- Debug
+      - name: CMake configure
         run: cmake -S . -B build -G "Ninja Multi-Config" -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug

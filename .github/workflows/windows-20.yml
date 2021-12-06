@@ -10,20 +10,25 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: CMake configure -- Debug
-        run: cmake -S . -B cmake-build-debug -G "Visual Studio 16 2019" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
+      - name: Install ninja
+        run: choco install ninja
+
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+
+      - name: CMake configure
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
-        run: cmake --build cmake-build-debug --config "Debug"
+        run: cmake --build build --config "Debug"
 
       - name: Run tests -- Debug
-        run: cd cmake-build-debug; ctest -C Debug; cd -
-
-      - name: CMake configure -- Release
-        run: cmake -S . -B cmake-build-release -G "Visual Studio 16 2019" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
+        run: cd build; ctest -C Debug; cd -
 
       - name: CMake build -- Release
-        run: cmake --build cmake-build-release --config "Release"
+        run: cmake --build build --config "Release"
 
       - name: Run tests -- Release
-        run: cd cmake-build-release; ctest -C Release; cd -
+        run: cd build; ctest -C Release; cd -

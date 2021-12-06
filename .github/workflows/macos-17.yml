@@ -10,20 +10,20 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: CMake configure -- Debug
-        run: cmake -S . -B cmake-build-debug -D TETL_BUILD_WERROR=ON
+      - name: Install ninja
+        run: brew install ninja
+
+      - name: CMake configure
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
-        run: cmake --build cmake-build-debug --config Debug
+        run: cmake --build build --config Debug
 
       - name: Run tests -- Debug
-        run: cd cmake-build-debug; ctest -VV; cd -
-
-      - name: CMake configure -- Release
-        run: cmake -S . -B cmake-build-release -D TETL_BUILD_WERROR=ON
+        run: cd build; ctest -VV -C Debug; cd -
 
       - name: CMake build -- Release
-        run: cmake --build cmake-build-release --config Release
+        run: cmake --build build --config Release
 
       - name: Run tests -- Release
-        run: cd cmake-build-release; ctest -VV; cd -
+        run: cd build; ctest -VV -C Release; cd -
