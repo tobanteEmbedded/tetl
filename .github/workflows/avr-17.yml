@@ -16,6 +16,7 @@ jobs:
         run: |
           apk add git --no-cache
           apk add make gcc-avr avr-libc --no-cache
+          avr-g++ --version
 
       - name: Build examples project (C++17, Debug)
         run: AVR=1 CXXSTD=17 DEBUG=1 make -C examples clean all
