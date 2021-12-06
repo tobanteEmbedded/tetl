@@ -5,15 +5,20 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
-      image: tobante/arm-gcc:9.3
+      image: alpine:latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: |
+          apk add git --no-cache
+          apk add make gcc-arm-none-eabi --no-cache
+
       - name: Build examples project (C++17, Debug)
-        run: ARM=1 DEBUG=1 make -C examples clean all
+        run: ARM=1 CXXSTD=17 DEBUG=1 make -C examples clean all
 
       - name: Build examples project (C++17, Release)
-        run: ARM=1 make -C examples clean all
+        run: ARM=1 CXXSTD=17 make -C examples clean all

@@ -1,4 +1,4 @@
-name: ARM C++20
+name: ARM C++23
 
 on: [push, pull_request]
 
@@ -17,8 +17,8 @@ jobs:
           apk add git --no-cache
           apk add make gcc-arm-none-eabi --no-cache
 
-      - name: Build examples project (C++20, Debug)
-        run: ARM=1 CXXSTD=20 DEBUG=1 make -C examples clean all
+      - name: Build examples project (C++23, Debug)
+        run: ARM=1 CXXSTD=2b DEBUG=1 make -C examples clean all
 
-      - name: Build examples project (C++20, Release)
-        run: ARM=1 CXXSTD=20 make -C examples clean all
+      - name: Build examples project (C++23, Release)
+        run: ARM=1 CXXSTD=2b make -C examples clean all
