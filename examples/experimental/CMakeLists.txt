@@ -9,5 +9,5 @@ foreach(_target "stm32_freertos")
       tobanteEmbedded::CompilerWarnings
       tobanteEmbedded::CodeCoverage
   )
-  add_test("example_${_target}" ${_target})
+  add_test(NAME "example_${_target}" COMMAND ${_target})
 endforeach()

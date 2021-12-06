@@ -21,6 +21,7 @@ set(CPU_FLAGS "-mmcu=atmega328p")
 set(COMPILER_FLAGS "-ffreestanding")
 
 # general
+set(CMAKE_EXECUTABLE_SUFFIX ".elf"                                            CACHE INTERNAL "")
 set(CMAKE_ASM_FLAGS         "${CPU_FLAGS} -x assembler-with-cpp -Wno-comment" CACHE INTERNAL "")
 set(CMAKE_C_FLAGS           "${CPU_FLAGS} ${COMPILER_FLAGS}"                  CACHE INTERNAL "")
 set(CMAKE_CXX_FLAGS         "${CPU_FLAGS} ${COMPILER_FLAGS}"                  CACHE INTERNAL "")
@@ -33,7 +34,7 @@ set(CMAKE_CXX_FLAGS_DEBUG           "-Og -g -DDEBUG"    CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG    ""                  CACHE INTERNAL "")
 
 # release only
-set(CMAKE_ASM_FLAGS_RELEASE         ""                  CACHE INTERNAL "")
-set(CMAKE_C_FLAGS_RELEASE           "-Os -DNDEBUG "     CACHE INTERNAL "")
-set(CMAKE_CXX_FLAGS_RELEASE         "-Os -DNDEBUG "     CACHE INTERNAL "")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE  ""                  CACHE INTERNAL "")
+set(CMAKE_ASM_FLAGS_RELEASE         ""                        CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_RELEASE           "-Os -DNDEBUG -flto "     CACHE INTERNAL "")
+set(CMAKE_CXX_FLAGS_RELEASE         "-Os -DNDEBUG -flto "     CACHE INTERNAL "")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE  "-flto "                  CACHE INTERNAL "")

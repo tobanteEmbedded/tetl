@@ -15,6 +15,11 @@ option(TETL_BUILD_COVERAGE  "Build with coverage reporting for gcc/clang" OFF)
 # Only do these if this is the main project,
 # and not if it is included through add_subdirectory.
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    find_program(CCACHE ccache)
+    if(CCACHE)
+        set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+    endif()
+
     if(TETL_BUILD_CPP23)
       set(CMAKE_CXX_STANDARD 23 CACHE STRING "C++ standard to conform to")
     elseif(TETL_BUILD_CPP20)
@@ -28,6 +33,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     set(BUILD_SHARED_LIBS OFF)
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 endif()
 
 
