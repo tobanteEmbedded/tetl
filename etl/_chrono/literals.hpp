@@ -5,12 +5,21 @@
 #ifndef TETL_CHRONO_LITERALS_HPP
 #define TETL_CHRONO_LITERALS_HPP
 
+#include "etl/_chrono/day.hpp"
 #include "etl/_chrono/duration.hpp"
 
 namespace etl {
 
 inline namespace literals {
 inline namespace chrono_literals {
+
+/// \brief Forms a etl::chrono::day literal representing a day of the month in
+/// the calendar.
+constexpr auto operator""_d(unsigned long long d) noexcept -> etl::chrono::day
+{
+    return etl::chrono::day(d);
+}
+
 /// \brief Forms a etl::chrono::duration literal representing hours.
 /// Integer literal, returns exactly etl::chrono::hours(hrs).
 constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
