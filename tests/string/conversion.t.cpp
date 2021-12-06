@@ -48,8 +48,11 @@ constexpr auto test_int() -> bool
     assert(test(999, "999"_sv));
     assert(test(-999, "-999"_sv));
     assert(test(1111, "1111"_sv));
-    assert(test(123456789, "123456789"_sv));
-    assert(test(-123456789, "-123456789"_sv));
+
+    if constexpr (sizeof(int) >= 4) {
+        assert(test(123456789, "123456789"_sv));
+        assert(test(-123456789, "-123456789"_sv));
+    }
 
     return true;
 }

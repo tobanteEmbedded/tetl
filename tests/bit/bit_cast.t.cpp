@@ -19,15 +19,19 @@ constexpr auto test_roundtrip() -> bool
 
 constexpr auto test_all() -> bool
 {
-    assert((test_roundtrip<float, etl::uint32_t>()));
-    assert((test_roundtrip<float, etl::int32_t>()));
-    assert((test_roundtrip<etl::uint32_t, float>()));
-    assert((test_roundtrip<etl::int32_t, float>()));
+    if constexpr (sizeof(float) == sizeof(etl::uint32_t)) {
+        assert((test_roundtrip<float, etl::uint32_t>()));
+        assert((test_roundtrip<float, etl::int32_t>()));
+        assert((test_roundtrip<etl::uint32_t, float>()));
+        assert((test_roundtrip<etl::int32_t, float>()));
+    }
 
-    assert((test_roundtrip<double, etl::uint64_t>()));
-    assert((test_roundtrip<double, etl::int64_t>()));
-    assert((test_roundtrip<etl::uint64_t, double>()));
-    assert((test_roundtrip<etl::int64_t, double>()));
+    if constexpr (sizeof(double) == sizeof(etl::uint64_t)) {
+        assert((test_roundtrip<double, etl::uint64_t>()));
+        assert((test_roundtrip<double, etl::int64_t>()));
+        assert((test_roundtrip<etl::uint64_t, double>()));
+        assert((test_roundtrip<etl::int64_t, double>()));
+    }
 
     return true;
 }

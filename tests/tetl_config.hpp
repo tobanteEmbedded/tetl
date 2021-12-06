@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "etl/_config/_workarounds/001_avr_macros.hpp"
+
 #define TETL_ENABLE_CUSTOM_ASSERT_HANDLER 1
 #define TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER 1
 
