@@ -68,19 +68,19 @@ private:
 [[nodiscard]] constexpr auto operator+(day const& d, days const& ds) noexcept
     -> day
 {
-    return day(unsigned(d) + ds.count());
+    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator+(days const& ds, day const& d) noexcept
     -> day
 {
-    return day(unsigned(d) + ds.count());
+    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& d, days const& ds) noexcept
     -> day
 {
-    return day(unsigned(d) - ds.count());
+    return day(static_cast<unsigned>(d) - static_cast<unsigned>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& x, day const& y) noexcept
