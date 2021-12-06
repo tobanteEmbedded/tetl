@@ -10,16 +10,16 @@
 
 namespace etl {
 
+/// \group disjunction
+template <typename... B>
+inline constexpr bool disjunction_v = (B::value || ...);
+
 /// \brief Forms the logical disjunction of the type traits B..., effectively
 /// performing a logical OR on the sequence of traits.
 /// \group disjunction
 template <typename... B>
-struct disjunction : etl::bool_constant<(B::value || ...)> {
+struct disjunction : bool_constant<disjunction_v<B...>> {
 };
-
-/// \group disjunction
-template <typename... B>
-inline constexpr bool disjunction_v = (B::value || ...);
 
 } // namespace etl
 

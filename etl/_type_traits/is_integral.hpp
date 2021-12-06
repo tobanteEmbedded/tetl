@@ -6,48 +6,38 @@
 #define TETL_TYPE_TRAITS_IS_INTEGRAL_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
+#include "etl/_type_traits/is_any_of.hpp"
 #include "etl/_type_traits/remove_cv.hpp"
 
 namespace etl {
 
-namespace detail {
-
 // clang-format off
-template <typename> struct is_integral_impl                     : etl::false_type {};
-
-template <>         struct is_integral_impl<bool>               : etl::true_type {};
-
-template <>         struct is_integral_impl<char>               : etl::true_type {};
-template <>         struct is_integral_impl<signed char>        : etl::true_type {};
-template <>         struct is_integral_impl<unsigned char>      : etl::true_type {};
-
-template <>         struct is_integral_impl<char16_t>           : etl::true_type {};
-template <>         struct is_integral_impl<char32_t>           : etl::true_type {};
-
-template <>         struct is_integral_impl<short>              : etl::true_type {};
-template <>         struct is_integral_impl<unsigned short>     : etl::true_type {};
-
-template <>         struct is_integral_impl<int>                : etl::true_type {};
-template <>         struct is_integral_impl<unsigned int>       : etl::true_type {};
-
-template <>         struct is_integral_impl<long>               : etl::true_type {};
-template <>         struct is_integral_impl<unsigned long>      : etl::true_type {};
-
-template <>         struct is_integral_impl<long long>          : etl::true_type {};
-template <>         struct is_integral_impl<unsigned long long> : etl::true_type {};
+template <typename T>
+inline constexpr bool is_integral_v = is_any_of_v<remove_cv_t<T>,
+        bool,
+        char,
+        signed char,
+        unsigned char,
+        wchar_t,
+    #ifdef __cpp_char8_t
+        char8_t,
+    #endif
+        char16_t,
+        char32_t,
+        short,
+        unsigned short,
+        int,
+        unsigned int,
+        long,
+        unsigned long,
+        long long,
+        unsigned long long
+    >;
 // clang-format on
 
-} // namespace detail
-
-/// \brief is_integral
-/// \include type_traits.cpp
-template <typename Type>
-struct is_integral : detail::is_integral_impl<remove_cv_t<Type>>::type {
-};
-
-/// \brief is_integral_v
 template <typename T>
-inline constexpr bool is_integral_v = is_integral<T>::value;
+struct is_integral : bool_constant<is_integral_v<T>> {
+};
 
 } // namespace etl
 
