@@ -24,5 +24,6 @@
 #include "etl/_chrono/time_point.hpp"
 #include "etl/_chrono/time_point_cast.hpp"
 #include "etl/_chrono/treat_as_floating_point.hpp"
+#include "etl/_chrono/year.hpp"
 
 #endif // TETL_CHRONO_HPP
