@@ -7,7 +7,7 @@ jobs:
     name: Build
     runs-on: ubuntu-20.04
     container:
-      image: alpine:latest
+      image: alpine:edge
     steps:
       - name: Check out code
         uses: actions/checkout@v2
