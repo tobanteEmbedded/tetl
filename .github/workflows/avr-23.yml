@@ -1,4 +1,4 @@
-name: AVR C++20
+name: AVR C++23
 
 on: [push, pull_request]
 
@@ -17,8 +17,8 @@ jobs:
           apk add git --no-cache
           apk add make gcc-avr avr-libc --no-cache
 
-      - name: Build examples project (C++20, Debug)
-        run: AVR=1 CXXSTD=20 DEBUG=1 make -C examples clean all
+      - name: Build examples project (C++23, Debug)
+        run: AVR=1 CXXSTD=23 DEBUG=1 make -C examples clean all
 
-      - name: Build examples project (C++20, Release)
-        run: AVR=1 CXXSTD=20 make -C examples clean all
+      - name: Build examples project (C++23, Release)
+        run: AVR=1 CXXSTD=23 make -C examples clean all
