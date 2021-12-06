@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        with:
-          submodules: true
 
       - name: Install ninja-build
         run: sudo apt install -y ninja-build

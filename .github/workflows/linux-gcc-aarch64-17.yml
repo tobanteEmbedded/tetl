@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        with:
-          submodules: true
 
       - uses: uraimo/run-on-arch-action@v2.0.5
         name: Run commands

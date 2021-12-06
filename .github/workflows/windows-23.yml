@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        with:
-          submodules: true
 
       - name: CMake configure -- Debug
         run: cmake -S . -B cmake-build-debug -G "Visual Studio 17 2022" -D TETL_BUILD_CPP23=ON -D TETL_BUILD_WERROR=ON
