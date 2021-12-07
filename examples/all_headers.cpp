@@ -13,6 +13,7 @@
 #include "etl/chrono.hpp"
 #include "etl/climits.hpp"
 #include "etl/cmath.hpp"
+#include "etl/compare.hpp"
 #include "etl/complex.hpp"
 #include "etl/concepts.hpp"
 #include "etl/coroutine.hpp"
@@ -56,6 +57,7 @@
 #include "etl/vector.hpp"
 #include "etl/version.hpp"
 #include "etl/warning.hpp"
+
 
 auto main(int const argc, char const** argv) -> int
 {
