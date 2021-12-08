@@ -16,15 +16,13 @@
 namespace etl {
 
 namespace detail {
+// https://en.wikichip.org/wiki/population_count
 template <typename T>
 [[nodiscard]] constexpr auto popcount_fallback(T val) noexcept -> int
 {
-    auto count = T { 0 };
-    while (val) {
-        count = count + (val & T { 1 });
-        val   = val >> T { 1 };
-    }
-    return static_cast<int>(count);
+    auto c = 0;
+    for (; val != 0; val &= val - T(1)) { c++; }
+    return c;
 }
 } // namespace detail
 

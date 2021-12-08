@@ -8,7 +8,7 @@
 
 #include "testing/testing.hpp"
 
-#if defined(__cpp_concepts) && TETL_CPP_STANDARD >= 20
+#if defined(__cpp_concepts)
 
 namespace {
 auto floating_point_test(etl::floating_point auto /*v*/) { return true; }
