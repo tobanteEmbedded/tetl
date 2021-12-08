@@ -12,12 +12,12 @@
 
 namespace etl {
 
-#if TETL_CPP_STANDARD >= 20
+#if defined(__cpp_consteval)
 
 /// \brief Source location
 /// \include source_location.cpp
 struct source_location {
-    [[nodiscard]] static constexpr auto current(uint_least32_t const line = TETL_BUILTIN_LINE(),
+    [[nodiscard]] static consteval auto current(uint_least32_t const line = TETL_BUILTIN_LINE(),
         uint_least32_t const column = TETL_BUILTIN_COLUMN(), char const* const file = TETL_BUILTIN_FILE(),
         char const* const function = TETL_BUILTIN_FUNCTION()) noexcept -> source_location
     {

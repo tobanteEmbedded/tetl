@@ -13,7 +13,7 @@
 
 namespace etl {
 
-#if TETL_CPP_STANDARD >= 20
+#if defined(__cpp_consteval)
 template <typename Exception>
 [[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(
     char const* msg, etl::source_location const loc = etl::source_location::current()) -> void
