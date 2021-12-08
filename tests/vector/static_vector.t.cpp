@@ -19,10 +19,7 @@ namespace {
 template <typename T>
 struct Vertex {
     constexpr Vertex() = default;
-    constexpr Vertex(T xInit, T yInit, T zInit)
-        : x { xInit }, y { yInit }, z { zInit }
-    {
-    }
+    constexpr Vertex(T xInit, T yInit, T zInit) : x { xInit }, y { yInit }, z { zInit } { }
 
     T x {};
     T y {};
@@ -30,8 +27,7 @@ struct Vertex {
 };
 
 template <typename T>
-[[nodiscard]] constexpr auto operator==(
-    Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
+[[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
 {
     return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
 }
@@ -249,8 +245,7 @@ constexpr auto test_cx() -> bool
 
     {
         auto vec = etl::static_vector<T, 4> { 4 };
-        etl::generate(etl::begin(vec), etl::end(vec),
-            [v = T {}]() mutable { return v += T(1); });
+        etl::generate(etl::begin(vec), etl::end(vec), [v = T {}]() mutable { return v += T(1); });
 
         assert(vec.front() == T(1));
         vec.erase(vec.begin());

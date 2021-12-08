@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asin(float arg) noexcept -> float
-{
-    return etl::detail::gcem::asin(arg);
-}
+[[nodiscard]] constexpr auto asin(float arg) noexcept -> float { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asinf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::asin(arg);
-}
+[[nodiscard]] constexpr auto asinf(float arg) noexcept -> float { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asin(double arg) noexcept -> double
-{
-    return etl::detail::gcem::asin(arg);
-}
+[[nodiscard]] constexpr auto asin(double arg) noexcept -> double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::asin(arg);
-}
+[[nodiscard]] constexpr auto asin(long double arg) noexcept -> long double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
-[[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::asin(arg);
-}
+[[nodiscard]] constexpr auto asinl(long double arg) noexcept -> long double { return etl::detail::gcem::asin(arg); }
 
 /// \brief Computes the principal value of the arc sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asin
 template <typename T>
-[[nodiscard]] constexpr auto asin(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto asin(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::asin(static_cast<double>(arg));
 }

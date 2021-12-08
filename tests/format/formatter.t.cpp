@@ -18,8 +18,8 @@ constexpr auto test() -> bool
     {
         using string_t = T;
 
-        auto str = string_t();
-        auto ctx = etl::format_context<string_t> { etl::back_inserter(str) };
+        auto str       = string_t();
+        auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
         auto formatter = etl::formatter<char, char> {};
 
         formatter.format('a', ctx);
@@ -49,8 +49,8 @@ constexpr auto test() -> bool
     {
         using string_t = T;
 
-        auto str = string_t();
-        auto ctx = etl::format_context<string_t> { etl::back_inserter(str) };
+        auto str       = string_t();
+        auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
         auto formatter = etl::formatter<char const*, char> {};
 
         auto const* cStr1 = "test";
@@ -65,8 +65,8 @@ constexpr auto test() -> bool
     {
         using string_t = T;
 
-        auto str = string_t();
-        auto ctx = etl::format_context<string_t> { etl::back_inserter(str) };
+        auto str       = string_t();
+        auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
         auto formatter = etl::formatter<etl::string_view, char> {};
 
         etl::string_view str1 = "test";
@@ -81,8 +81,8 @@ constexpr auto test() -> bool
     {
         using string_t = T;
 
-        auto str = string_t();
-        auto ctx = etl::format_context<string_t> { etl::back_inserter(str) };
+        auto str       = string_t();
+        auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
         auto formatter = etl::formatter<string_t, char> {};
 
         string_t str1 = "test";

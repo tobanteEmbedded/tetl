@@ -53,11 +53,9 @@ struct reference_wrapper {
     /// \endcode
     ///
     /// https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper
-    template <typename U,
-        typename = decltype(detail::FUN<T>(declval<U>()),
-            enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
-    constexpr reference_wrapper(U&& u) noexcept(
-        noexcept(detail::FUN<T>(forward<U>(u))))
+    template <typename U, typename = decltype(detail::FUN<T>(declval<U>()),
+                              enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
+    constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(forward<U>(u))))
         : ptr_(addressof(detail::FUN<T>(forward<U>(u))))
     {
     }
@@ -68,8 +66,7 @@ struct reference_wrapper {
 
     /// \brief Copy assignment operator. Drops the current reference and stores
     /// a reference to other.get().
-    constexpr auto operator   =(reference_wrapper const& x) noexcept
-        -> reference_wrapper& = default;
+    constexpr auto operator=(reference_wrapper const& x) noexcept -> reference_wrapper& = default;
 
     /// \brief Returns the stored reference.
     [[nodiscard]] constexpr operator type&() const noexcept { return *ptr_; }
@@ -83,9 +80,8 @@ struct reference_wrapper {
     ///
     /// \returns The return value of the called function.
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) const
-        noexcept(noexcept(invoke(get(), forward<Args>(args)...)))
-            -> invoke_result_t<T&, Args...>
+    constexpr auto operator()(Args&&... args) const noexcept(noexcept(invoke(get(), forward<Args>(args)...)))
+        -> invoke_result_t<T&, Args...>
     {
         return invoke(get(), forward<Args>(args)...);
     }
@@ -112,8 +108,7 @@ template <typename T>
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
 template <typename T>
-[[nodiscard]] constexpr auto ref(reference_wrapper<T> t) noexcept
-    -> reference_wrapper<T>
+[[nodiscard]] constexpr auto ref(reference_wrapper<T> t) noexcept -> reference_wrapper<T>
 {
     return ref(t.get());
 }
@@ -124,16 +119,14 @@ template <typename T>
 /// \group cref
 /// module Utility
 template <typename T>
-[[nodiscard]] constexpr auto cref(T const& t) noexcept
-    -> reference_wrapper<T const>
+[[nodiscard]] constexpr auto cref(T const& t) noexcept -> reference_wrapper<T const>
 {
     return reference_wrapper<T const>(t);
 }
 
 /// \group cref
 template <typename T>
-[[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept
-    -> reference_wrapper<T const>
+[[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept -> reference_wrapper<T const>
 {
     return cref(t.get());
 }

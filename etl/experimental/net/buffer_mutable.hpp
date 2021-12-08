@@ -16,10 +16,7 @@ struct mutable_buffer {
     mutable_buffer() noexcept = default;
 
     /// \brief Construct a buffer to represent a given memory range.
-    mutable_buffer(void* data, etl::size_t size)
-        : data_ { data }, size_ { size }
-    {
-    }
+    mutable_buffer(void* data, etl::size_t size) : data_ { data }, size_ { size } { }
 
     /// \brief Get a pointer to the beginning of the memory range.
     [[nodiscard]] auto data() const noexcept -> void* { return data_; }
@@ -44,8 +41,7 @@ private:
 /// \brief Create a new modifiable buffer that is offset from the start of
 /// another.
 /// \relates mutable_buffer
-inline auto operator+(mutable_buffer const& b, etl::size_t const n) noexcept
-    -> mutable_buffer
+inline auto operator+(mutable_buffer const& b, etl::size_t const n) noexcept -> mutable_buffer
 {
     auto offset = n < b.size() ? n : b.size();
     auto* data  = static_cast<char*>(b.data()) + offset;
@@ -56,11 +52,7 @@ inline auto operator+(mutable_buffer const& b, etl::size_t const n) noexcept
 /// \brief Create a new modifiable buffer that is offset from the start of
 /// another.
 /// \relates mutable_buffer
-inline auto operator+(etl::size_t const n, mutable_buffer const& b) noexcept
-    -> mutable_buffer
-{
-    return b + n;
-}
+inline auto operator+(etl::size_t const n, mutable_buffer const& b) noexcept -> mutable_buffer { return b + n; }
 
 } // namespace etl::experimental::net
 

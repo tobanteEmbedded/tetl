@@ -19,8 +19,7 @@ namespace etl {
 /// size of src is limited to count. The behavior is undefined if the strings
 /// overlap.
 /// \module Strings
-constexpr auto strncat(char* dest, char const* src, etl::size_t const count)
-    -> char*
+constexpr auto strncat(char* dest, char const* src, etl::size_t const count) -> char*
 {
     return detail::strncat_impl<char, etl::size_t>(dest, src, count);
 }

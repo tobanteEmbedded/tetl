@@ -20,8 +20,7 @@ namespace etl {
 /// \group partial_sort
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
-constexpr auto partial_sort(
-    RandomIt first, RandomIt middle, RandomIt last, Compare comp) -> void
+constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
     etl::ignore_unused(middle);
@@ -30,8 +29,7 @@ constexpr auto partial_sort(
 
 /// \group partial_sort
 template <typename RandomIt>
-constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last)
-    -> void
+constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last) -> void
 {
     etl::ignore_unused(middle);
     etl::sort(first, last);

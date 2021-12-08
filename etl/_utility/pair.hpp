@@ -92,53 +92,41 @@ template <typename T1, typename T2>
 struct pair {
 private:
     template <typename U1, typename U2>
-    using is_constructible_
-        = enable_if_t<is_constructible_v<T1, U1> && is_constructible_v<T2, U2>,
-            bool>;
+    using is_constructible_ = enable_if_t<is_constructible_v<T1, U1> && is_constructible_v<T2, U2>, bool>;
 
     using constraints = detail::pair_constraints<T1, T2>;
 
-    static constexpr bool ctor_1_implicit
-        = constraints::ctor_1_sfinae && (!constraints::ctor_1_explicit);
+    static constexpr bool ctor_1_implicit = constraints::ctor_1_sfinae && (!constraints::ctor_1_explicit);
 
-    static constexpr bool ctor_1_explicit
-        = (constraints::ctor_1_sfinae) && (constraints::ctor_1_explicit);
+    static constexpr bool ctor_1_explicit = (constraints::ctor_1_sfinae) && (constraints::ctor_1_explicit);
 
-    static constexpr bool ctor_2_implicit
-        = constraints::ctor_2_sfinae && (!constraints::ctor_2_explicit);
+    static constexpr bool ctor_2_implicit = constraints::ctor_2_sfinae && (!constraints::ctor_2_explicit);
 
-    static constexpr bool ctor_2_explicit
-        = (constraints::ctor_2_sfinae) && (constraints::ctor_2_explicit);
+    static constexpr bool ctor_2_explicit = (constraints::ctor_2_sfinae) && (constraints::ctor_2_explicit);
 
     template <typename U1, typename U2>
     static constexpr bool ctor_3_implicit
-        = constraints::template ctor_3_sfinae<U1,
-              U2> && !constraints::template ctor_3_explicit<U1, U2>;
+        = constraints::template ctor_3_sfinae<U1, U2> && !constraints::template ctor_3_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_3_explicit
-        = constraints::template ctor_3_sfinae<U1, U2>&&
-            constraints::template ctor_3_explicit<U1, U2>;
+        = constraints::template ctor_3_sfinae<U1, U2>&& constraints::template ctor_3_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_4_implicit
-        = constraints::template ctor_4_sfinae<U1,
-              U2> && !constraints::template ctor_4_explicit<U1, U2>;
+        = constraints::template ctor_4_sfinae<U1, U2> && !constraints::template ctor_4_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_4_explicit
-        = constraints::template ctor_4_sfinae<U1, U2>&&
-            constraints::template ctor_4_explicit<U1, U2>;
+        = constraints::template ctor_4_sfinae<U1, U2>&& constraints::template ctor_4_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_5_implicit
-        = constraints::template ctor_5_sfinae<U1,
-              U2> && !constraints::template ctor_5_explicit<U1, U2>;
+        = constraints::template ctor_5_sfinae<U1, U2> && !constraints::template ctor_5_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_5_explicit
-        = constraints::template ctor_5_sfinae<U1, U2>&&
-            constraints::template ctor_5_explicit<U1, U2>;
+        = constraints::template ctor_5_sfinae<U1, U2>&& constraints::template ctor_5_explicit<U1, U2>;
 
 public:
     using first_type  = T1;
@@ -158,25 +146,19 @@ public:
 
     /// \brief (2) Initializes first with x and second with y.
     TETL_REQUIRES(ctor_2_explicit)
-    explicit constexpr pair(T1 const& t1, T2 const& t2) : first(t1), second(t2)
+    explicit constexpr pair(T1 const& t1, T2 const& t2) : first(t1), second(t2) { }
+
+    /// \brief (3) Initializes first with forward<U1>(x) and second with
+    /// forward<U2>(y).
+    template <typename U1 = T1, typename U2 = T2, TETL_REQUIRES_(ctor_3_implicit<U1, U2>)>
+    constexpr pair(U1&& x, U2&& y) : first(forward<U1>(x)), second(forward<U2>(y))
     {
     }
 
     /// \brief (3) Initializes first with forward<U1>(x) and second with
     /// forward<U2>(y).
-    template <typename U1 = T1, typename U2 = T2,
-        TETL_REQUIRES_(ctor_3_implicit<U1, U2>)>
-    constexpr pair(U1&& x, U2&& y)
-        : first(forward<U1>(x)), second(forward<U2>(y))
-    {
-    }
-
-    /// \brief (3) Initializes first with forward<U1>(x) and second with
-    /// forward<U2>(y).
-    template <typename U1 = T1, typename U2 = T2,
-        TETL_REQUIRES_(ctor_3_explicit<U1, U2>)>
-    explicit constexpr pair(U1&& x, U2&& y)
-        : first(forward<U1>(x)), second(forward<U2>(y))
+    template <typename U1 = T1, typename U2 = T2, TETL_REQUIRES_(ctor_3_explicit<U1, U2>)>
+    explicit constexpr pair(U1&& x, U2&& y) : first(forward<U1>(x)), second(forward<U2>(y))
     {
     }
 
@@ -188,24 +170,21 @@ public:
 
     /// \brief (4) Initializes first with p.first and second with p.second.
     template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_explicit<U1, U2>)>
-    explicit constexpr pair(pair<U1, U2> const& p)
-        : first(p.first), second(p.second)
+    explicit constexpr pair(pair<U1, U2> const& p) : first(p.first), second(p.second)
     {
     }
 
     /// \brief (5) Initializes first with forward<U1>(p.first) and second with
     /// forward<U2>(p.second).
     template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_implicit<U1, U2>)>
-    constexpr pair(pair<U1, U2>&& p)
-        : first(forward<U1>(p.first)), second(forward<U2>(p.second))
+    constexpr pair(pair<U1, U2>&& p) : first(forward<U1>(p.first)), second(forward<U2>(p.second))
     {
     }
 
     /// \brief (5) Initializes first with forward<U1>(p.first) and second with
     /// forward<U2>(p.second).
     template <typename U1, typename U2, TETL_REQUIRES_(ctor_4_explicit<U1, U2>)>
-    explicit constexpr pair(pair<U1, U2>&& p)
-        : first(forward<U1>(p.first)), second(forward<U2>(p.second))
+    explicit constexpr pair(pair<U1, U2>&& p) : first(forward<U1>(p.first)), second(forward<U2>(p.second))
     {
     }
 
@@ -229,8 +208,7 @@ public:
     }
 
     template <typename U1, typename U2,
-        TETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&&
-                is_assignable_v<second_type&, U2 const&>)>
+        TETL_REQUIRES_(is_assignable_v<first_type&, U1 const&>&& is_assignable_v<second_type&, U2 const&>)>
     constexpr auto operator=(pair<U1, U2> const& p) -> pair&
     {
         first  = p.first;
@@ -238,8 +216,7 @@ public:
         return *this;
     }
 
-    TETL_REQUIRES(
-        is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
+    TETL_REQUIRES(is_move_assignable_v<first_type>&& is_move_assignable_v<second_type>)
     constexpr auto operator=(pair&& p) noexcept -> pair&
     {
         first  = etl::move(p.first);
@@ -248,8 +225,7 @@ public:
     }
 
     template <typename U1, typename U2,
-        TETL_REQUIRES_(is_assignable_v<first_type&, U1>&&
-                is_assignable_v<second_type&, U2>)>
+        TETL_REQUIRES_(is_assignable_v<first_type&, U1>&& is_assignable_v<second_type&, U2>)>
     constexpr auto operator=(pair<U1, U2>&& p) -> pair&
     {
         first  = etl::move(p.first);
@@ -258,8 +234,7 @@ public:
     }
 
     constexpr void swap(pair& other) noexcept(
-        (is_nothrow_swappable_v<
-             first_type> and is_nothrow_swappable_v<second_type>))
+        (is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
     {
         using etl::swap;
         swap(first, other.first);
@@ -279,8 +254,7 @@ pair(T1, T2) -> pair<T1, T2>;
 
 /// \brief Swaps the contents of x and y. Equivalent to x.swap(y).
 template <typename T1, typename T2>
-constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(
-    noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }
@@ -294,8 +268,7 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(
 ///
 /// https://en.cppreference.com/w/cpp/utility/pair/make_pair
 template <typename T1, typename T2>
-[[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u)
-    -> pair<decay_t<T1>, decay_t<T2>>
+[[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u) -> pair<decay_t<T1>, decay_t<T2>>
 {
     return { forward<T1>(t), forward<T2>(u) };
 }
@@ -303,8 +276,7 @@ template <typename T1, typename T2>
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares
 /// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
-constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     return (lhs.first == rhs.first) && (lhs.second == rhs.second);
 }
@@ -312,8 +284,7 @@ constexpr auto operator==(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares
 /// lhs.first with rhs.first and lhs.second with rhs.second.
 template <typename T1, typename T2>
-constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     return !(lhs == rhs);
 }
@@ -322,8 +293,7 @@ constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     if (lhs.first < rhs.first) { return true; }
     if (rhs.first < lhs.first) { return false; }
@@ -335,8 +305,7 @@ constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     return !(rhs < lhs);
 }
@@ -345,8 +314,7 @@ constexpr auto operator<=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     return rhs < lhs;
 }
@@ -355,8 +323,7 @@ constexpr auto operator>(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
 /// compares the first elements and only if they are equivalent, compares the
 /// second elements.
 template <typename T1, typename T2>
-constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs)
-    -> bool
+constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
     return !(lhs < rhs);
 }
@@ -383,8 +350,7 @@ struct tuple_element<I, pair<T1, T2>> {
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-constexpr auto get(pair<T1, T2>& p) noexcept
-    -> tuple_element_t<I, pair<T1, T2>>&
+constexpr auto get(pair<T1, T2>& p) noexcept -> tuple_element_t<I, pair<T1, T2>>&
 {
     if constexpr (I == 0) {
         return p.first;
@@ -399,8 +365,7 @@ constexpr auto get(pair<T1, T2>& p) noexcept
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-[[nodiscard]] constexpr auto get(pair<T1, T2> const& p) noexcept
-    -> tuple_element_t<I, pair<T1, T2>> const&
+[[nodiscard]] constexpr auto get(pair<T1, T2> const& p) noexcept -> tuple_element_t<I, pair<T1, T2>> const&
 {
     if constexpr (I == 0) {
         return p.first;
@@ -415,8 +380,7 @@ template <size_t I, typename T1, typename T2>
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-[[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept
-    -> tuple_element_t<I, pair<T1, T2>>&&
+[[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept -> tuple_element_t<I, pair<T1, T2>>&&
 {
     if constexpr (I == 0) {
         return move(p.first);
@@ -431,8 +395,7 @@ template <size_t I, typename T1, typename T2>
 /// neither 0 nor 1. See Alisdar Meredith talk "Recreational C++" 35:00 to
 /// 46:00. https://youtu.be/ovxNM865WaU
 template <size_t I, typename T1, typename T2>
-[[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept
-    -> tuple_element_t<I, pair<T1, T2>> const&&
+[[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept -> tuple_element_t<I, pair<T1, T2>> const&&
 {
     if constexpr (I == 0) {
         return move(p.first);

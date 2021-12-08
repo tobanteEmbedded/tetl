@@ -25,13 +25,11 @@ namespace etl {
 /// described on this page is undefined.
 template <typename T>
 struct is_trivially_copy_assignable
-    : is_trivially_assignable<add_lvalue_reference_t<T>,
-          add_lvalue_reference_t<const T>> {
+    : is_trivially_assignable<add_lvalue_reference_t<T>, add_lvalue_reference_t<const T>> {
 };
 
 template <typename T>
-inline constexpr bool is_trivially_copy_assignable_v
-    = is_trivially_copy_assignable<T>::value;
+inline constexpr bool is_trivially_copy_assignable_v = is_trivially_copy_assignable<T>::value;
 
 } // namespace etl
 

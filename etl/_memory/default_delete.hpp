@@ -41,8 +41,7 @@ struct default_delete<T[]> {
     {
     }
 
-    template <typename U,
-        enable_if_t<is_convertible_v<U (*)[], T (*)[]>, int> = 0>
+    template <typename U, enable_if_t<is_convertible_v<U (*)[], T (*)[]>, int> = 0>
     auto operator()(U* ptr) const noexcept -> void
     {
         delete[] ptr;

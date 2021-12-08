@@ -15,8 +15,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p)
-    -> bool
+[[nodiscard]] constexpr auto any_of(InputIt first, InputIt last, Predicate p) -> bool
 {
     return find_if(first, last, p) != last;
 }

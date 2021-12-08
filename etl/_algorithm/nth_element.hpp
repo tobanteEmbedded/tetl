@@ -21,8 +21,7 @@ namespace etl {
 /// \group nth_element
 /// \module Algorithm
 template <typename RandomIt, typename Compare>
-constexpr auto nth_element(
-    RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
+constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
     etl::ignore_unused(nth);

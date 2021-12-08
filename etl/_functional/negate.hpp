@@ -16,10 +16,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct negate {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
-    {
-        return -arg;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return -arg; }
 };
 
 /// \group negate
@@ -28,8 +25,7 @@ struct negate<void> {
     using is_transparent = void;
 
     template <typename T>
-    [[nodiscard]] constexpr auto operator()(T&& arg) const
-        -> decltype(-etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(-etl::forward<T>(arg))
     {
         return -arg;
     }

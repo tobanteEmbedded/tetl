@@ -122,9 +122,7 @@ static auto test() -> bool
     // in_place_type_t
     {
         struct Point {
-            constexpr Point(float initX, float initY) : x { initX }, y { initY }
-            {
-            }
+            constexpr Point(float initX, float initY) : x { initX }, y { initY } { }
             float x { 0.0F };
             float y { 0.0F };
         };

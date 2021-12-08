@@ -30,8 +30,8 @@ constexpr auto make_from_tuple_impl(Tuple&& t, index_sequence<I...> /*i*/) -> T
 template <typename T, typename Tuple>
 [[nodiscard]] constexpr auto make_from_tuple(Tuple&& t) -> T
 {
-    return detail::make_from_tuple_impl<T>(forward<Tuple>(t),
-        make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>> {});
+    return detail::make_from_tuple_impl<T>(
+        forward<Tuple>(t), make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>> {});
 }
 
 } // namespace etl

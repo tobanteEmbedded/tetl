@@ -12,10 +12,8 @@
 namespace etl::detail {
 
 template <typename T>
-using bit_uint
-    = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>,
-        etl::is_same<T, unsigned short>, etl::is_same<T, unsigned int>,
-        etl::is_same<T, unsigned long>, etl::is_same<T, unsigned long long>>>;
+using bit_uint = etl::bool_constant<etl::disjunction_v<etl::is_same<T, unsigned char>, etl::is_same<T, unsigned short>,
+    etl::is_same<T, unsigned int>, etl::is_same<T, unsigned long>, etl::is_same<T, unsigned long long>>>;
 
 template <typename T>
 inline constexpr auto bit_uint_v = bit_uint<T>::value;

@@ -46,8 +46,7 @@ namespace etl {
 /// such character is found.
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto memchr(void const* ptr, int ch, etl::size_t n)
-    -> void const*
+[[nodiscard]] constexpr auto memchr(void const* ptr, int ch, etl::size_t n) -> void const*
 {
     auto const* const p = static_cast<unsigned char const*>(ptr);
     auto const c        = static_cast<unsigned char>(ch);

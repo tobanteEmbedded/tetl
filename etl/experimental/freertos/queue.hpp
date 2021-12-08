@@ -50,15 +50,13 @@ struct queue {
     [[nodiscard]] auto capacity() const -> size_type;
 
     /// Push an element on to the queue.
-    [[nodiscard]] auto send(T const& data, TickType_t ticksToWait = 0) const
-        -> bool;
+    [[nodiscard]] auto send(T const& data, TickType_t ticksToWait = 0) const -> bool;
 
     /// Pop an element of the queue.
     auto receive(T& data, TickType_t ticksToWait = 0) const -> bool;
 
     /// Pop an element of the queue.
-    [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const
-        -> pair<bool, T>;
+    [[nodiscard]] auto receive(TickType_t ticksToWait = 0) const -> pair<bool, T>;
 
     [[nodiscard]] auto reset() const -> bool;
     [[nodiscard]] auto messages_waiting() const -> etl::uint32_t;
@@ -68,8 +66,7 @@ private:
 };
 
 template <typename T, etl::uint32_t Size>
-inline queue<T, Size>::queue()
-    : handle_ { []() { return xQueueCreate(Size, sizeof(T)); }() }
+inline queue<T, Size>::queue() : handle_ { []() { return xQueueCreate(Size, sizeof(T)); }() }
 {
 }
 
@@ -86,8 +83,7 @@ inline auto queue<T, Size>::capacity() const -> size_type
 }
 
 template <typename T, etl::uint32_t Size>
-inline auto queue<T, Size>::send(T const& data, TickType_t ticksToWait) const
-    -> bool
+inline auto queue<T, Size>::send(T const& data, TickType_t ticksToWait) const -> bool
 {
     const auto* const rawData = static_cast<const void*>(&data);
     auto const success        = xQueueSend(handle_, rawData, ticksToWait);
@@ -95,8 +91,7 @@ inline auto queue<T, Size>::send(T const& data, TickType_t ticksToWait) const
 }
 
 template <typename T, etl::uint32_t Size>
-inline auto queue<T, Size>::receive(T& data, TickType_t ticksToWait) const
-    -> bool
+inline auto queue<T, Size>::receive(T& data, TickType_t ticksToWait) const -> bool
 {
     auto* const rawData = static_cast<void*>(&data);
     auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
@@ -104,8 +99,7 @@ inline auto queue<T, Size>::receive(T& data, TickType_t ticksToWait) const
 }
 
 template <typename T, etl::uint32_t Size>
-inline auto queue<T, Size>::receive(TickType_t ticksToWait) const
-    -> pair<bool, T>
+inline auto queue<T, Size>::receive(TickType_t ticksToWait) const -> pair<bool, T>
 {
     auto value          = T {};
     auto* const rawData = static_cast<void*>(&value);

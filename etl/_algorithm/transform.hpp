@@ -21,22 +21,17 @@ namespace etl {
 /// \group transform
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename UnaryOp>
-constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op)
-    -> OutputIt
+constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op) -> OutputIt
 {
     for (; first != last; ++first, (void)++dest) { *dest = op(*first); }
     return dest;
 }
 
 /// \group transform
-template <typename InputIt1, typename InputIt2, typename OutputIt,
-    typename BinaryOp>
-constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    OutputIt dest, BinaryOp op) -> OutputIt
+template <typename InputIt1, typename InputIt2, typename OutputIt, typename BinaryOp>
+constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2, OutputIt dest, BinaryOp op) -> OutputIt
 {
-    for (; first1 != last1; ++first1, (void)++first2, ++dest) {
-        *dest = op(*first1, *first2);
-    }
+    for (; first1 != last1; ++first1, (void)++first2, ++dest) { *dest = op(*first1, *first2); }
     return dest;
 }
 

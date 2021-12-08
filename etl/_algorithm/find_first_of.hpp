@@ -23,8 +23,8 @@ namespace etl {
 /// \group find_first_of
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last,
-    ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
+[[nodiscard]] constexpr auto find_first_of(
+    InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
 {
     for (; first != last; ++first) {
         for (auto it = sFirst; it != sLast; ++it) {
@@ -48,8 +48,7 @@ template <typename InputIt, typename ForwardIt, typename Predicate>
 /// \group find_first_of
 /// \module Algorithm
 template <typename InputIt, typename ForwardIt>
-[[nodiscard]] constexpr auto find_first_of(
-    InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
+[[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {
     auto const eq = [](auto const& l, auto const& r) { return l == r; };
     return find_first_of(first, last, sFirst, sLast, eq);

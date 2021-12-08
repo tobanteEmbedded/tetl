@@ -16,8 +16,7 @@ namespace etl {
 /// implicitly and explicitly converted to the type To, and the two forms of
 /// conversion are equivalent.
 template <typename From, typename To>
-concept convertible_to = is_convertible_v<From, To> && requires(
-    add_rvalue_reference_t<From> (&f)())
+concept convertible_to = is_convertible_v<From, To> && requires(add_rvalue_reference_t<From> (&f)())
 {
     static_cast<To>(f());
 };

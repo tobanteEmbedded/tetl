@@ -27,8 +27,7 @@ struct totals {
     constexpr auto operator-(totals const& other) const -> totals;
     constexpr auto operator+=(totals const& other) -> totals&;
 
-    [[nodiscard]] constexpr auto delta(totals const& prevtotals) const
-        -> totals;
+    [[nodiscard]] constexpr auto delta(totals const& prevtotals) const -> totals;
 
     int error { 0 };
     counts assertions {};
@@ -52,14 +51,8 @@ constexpr auto counts::operator+=(counts const& other) -> counts&
     return *this;
 }
 
-constexpr auto counts::total() const -> etl::uint16_t
-{
-    return passed + failed + failed_but_ok;
-}
-constexpr auto counts::all_passed() const -> bool
-{
-    return failed == 0 && failed_but_ok == 0;
-}
+constexpr auto counts::total() const -> etl::uint16_t { return passed + failed + failed_but_ok; }
+constexpr auto counts::all_passed() const -> bool { return failed == 0 && failed_but_ok == 0; }
 
 constexpr auto counts::all_ok() const -> bool { return failed == 0; }
 

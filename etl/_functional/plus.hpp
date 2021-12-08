@@ -17,11 +17,7 @@ namespace etl {
 template <typename T = void>
 struct plus {
     /// \brief Returns the sum of lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> T
-    {
-        return lhs + rhs;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs + rhs; }
 };
 
 /// \group plus
@@ -31,8 +27,7 @@ struct plus<void> {
 
     /// \brief Returns the sum of lhs and rhs.
     template <typename T, typename U>
-    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        -> decltype(forward<T>(lhs) + forward<U>(rhs))
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const -> decltype(forward<T>(lhs) + forward<U>(rhs))
     {
         return lhs + rhs;
     }

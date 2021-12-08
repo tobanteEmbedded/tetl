@@ -59,13 +59,11 @@ constexpr auto test() -> bool
         vec.push_back(T(4));
 
         // find_if
-        auto* res3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
-            return static_cast<bool>(static_cast<int>(x) % 2);
-        });
+        auto* res3 = etl::find_if(
+            vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(static_cast<int>(x) % 2); });
         assert(!(res3 == vec.end()));
 
-        auto* res4 = etl::find_if(vec.begin(), vec.end(),
-            [](auto& x) -> bool { return static_cast<bool>(x == 100); });
+        auto* res4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
         assert(res4 == vec.end());
     }
 
@@ -76,18 +74,16 @@ constexpr auto test() -> bool
         vec.push_back(T(3));
         vec.push_back(T(4));
         // find_if_not
-        auto* result5
-            = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
-                  return static_cast<bool>(static_cast<int>(x) % 2);
-              });
+        auto* result5 = etl::find_if_not(
+            vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(static_cast<int>(x) % 2); });
         assert(!(result5 == vec.end()));
 
-        auto* result6 = etl::find_if_not(vec.begin(), vec.end(),
-            [](auto& x) -> bool { return static_cast<bool>(x == 100); });
+        auto* result6
+            = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
         assert(!(result6 == vec.end()));
 
-        auto* result7 = etl::find_if_not(vec.begin(), vec.end(),
-            [](auto& x) -> bool { return static_cast<bool>(x != 100); });
+        auto* result7
+            = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x != 100); });
         assert(result7 == vec.end());
     }
 

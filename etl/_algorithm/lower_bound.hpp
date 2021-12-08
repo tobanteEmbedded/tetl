@@ -21,8 +21,8 @@ namespace etl {
 /// \group lower_bound
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept
+    -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
     ForwardIt it {};
@@ -47,8 +47,7 @@ template <typename ForwardIt, typename T, typename Compare>
 
 /// \group lower_bound
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto lower_bound(
-    ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {
     return lower_bound(first, last, value, less<> {});
 }

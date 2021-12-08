@@ -26,8 +26,7 @@ struct is_trivially_default_constructible : is_trivially_constructible<T> {
 };
 
 template <typename T>
-inline constexpr bool is_trivially_default_constructible_v
-    = is_trivially_default_constructible<T>::value;
+inline constexpr bool is_trivially_default_constructible_v = is_trivially_default_constructible<T>::value;
 
 } // namespace etl
 

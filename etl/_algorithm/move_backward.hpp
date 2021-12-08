@@ -24,8 +24,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
-constexpr auto move_backward(
-    BidirIt1 first, BidirIt1 last, BidirIt2 destination) -> BidirIt2
+constexpr auto move_backward(BidirIt1 first, BidirIt1 last, BidirIt2 destination) -> BidirIt2
 {
     for (; first != last;) { *(--destination) = move(*--last); }
     return destination;

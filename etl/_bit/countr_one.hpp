@@ -25,9 +25,7 @@ namespace etl {
 template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto countr_one(T x) noexcept -> int
 {
-    auto isBitSet = [](auto val, int pos) -> bool {
-        return val & (T { 1 } << static_cast<T>(pos));
-    };
+    auto isBitSet = [](auto val, int pos) -> bool { return val & (T { 1 } << static_cast<T>(pos)); };
 
     auto totalBits = numeric_limits<T>::digits;
     auto result    = 0;

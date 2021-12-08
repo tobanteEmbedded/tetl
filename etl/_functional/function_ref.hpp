@@ -42,8 +42,7 @@ private:
 
     template <typename F>
     using enable_if_invocable_and_not_function_ref
-        = enable_if_t<!is_same_v<decay_t<F>, function_ref> && invocable_<F>,
-            int>;
+        = enable_if_t<!is_same_v<decay_t<F>, function_ref> && invocable_<F>, int>;
 
 public:
     /// \brief Constructs a function_ref referring to f.
@@ -87,10 +86,7 @@ public:
     ///  Equivalent to return invoke(f, forward<Args>(args)...);, where f is the
     ///  callable object referred to by *this, qualified with the same
     ///  cv-qualifiers as the function type Signature.
-    auto operator()(Args... args) const -> R
-    {
-        return callable_(obj_, forward<Args>(args)...);
-    }
+    auto operator()(Args... args) const -> R { return callable_(obj_, forward<Args>(args)...); }
 };
 
 template <typename R, typename... Args>
@@ -98,8 +94,7 @@ function_ref(R (*)(Args...)) -> function_ref<R(Args...)>;
 
 /// Exchanges the values of lhs and rhs. Equivalent to lhs.swap(rhs).
 template <typename R, typename... Args>
-auto swap(function_ref<R(Args...)>& lhs, function_ref<R(Args...)>& rhs) noexcept
-    -> void
+auto swap(function_ref<R(Args...)>& lhs, function_ref<R(Args...)>& rhs) noexcept -> void
 {
     lhs.swap(rhs);
 }

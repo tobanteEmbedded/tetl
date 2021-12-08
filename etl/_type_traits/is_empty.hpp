@@ -21,8 +21,7 @@ struct is_empty_test_struct_2 {
 };
 
 template <typename T, bool = etl::is_class<T>::value>
-struct is_empty_helper : etl::bool_constant<sizeof(is_empty_test_struct_1<T>)
-                                            == sizeof(is_empty_test_struct_2)> {
+struct is_empty_helper : etl::bool_constant<sizeof(is_empty_test_struct_1<T>) == sizeof(is_empty_test_struct_2)> {
 };
 
 template <typename T>

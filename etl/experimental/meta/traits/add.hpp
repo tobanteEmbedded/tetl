@@ -11,12 +11,11 @@
 
 namespace etl::experimental::meta::traits {
 
-#define TETL_META_DEFINE_TRAITS_ADD_FUNCTION(name)                             \
-    template <typename T>                                                      \
-    constexpr auto name(type<T> const& /*unused*/)                             \
-        ->type<typename etl::name<T>::type>                                    \
-    {                                                                          \
-        return {};                                                             \
+#define TETL_META_DEFINE_TRAITS_ADD_FUNCTION(name)                                                                     \
+    template <typename T>                                                                                              \
+    constexpr auto name(type<T> const& /*unused*/)->type<typename etl::name<T>::type>                                  \
+    {                                                                                                                  \
+        return {};                                                                                                     \
     }
 
 TETL_META_DEFINE_TRAITS_ADD_FUNCTION(add_const)

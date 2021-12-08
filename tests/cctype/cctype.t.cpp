@@ -202,17 +202,11 @@ constexpr auto test_tolower() -> bool
     assert(static_cast<char>(etl::tolower('a')) == 'a');
     assert(static_cast<char>(etl::tolower('A')) == 'a');
 
-    for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch);
-    }
+    for (auto ch = '0'; ch <= '9'; ++ch) { assert(static_cast<char>(etl::tolower(ch)) == ch); }
 
-    for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch);
-    }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { assert(static_cast<char>(etl::tolower(ch)) == ch); }
 
-    for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(static_cast<char>(etl::tolower(ch)) == ch + 32);
-    }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { assert(static_cast<char>(etl::tolower(ch)) == ch + 32); }
 
     return true;
 }
@@ -222,17 +216,11 @@ constexpr auto test_toupper() -> bool
     assert(static_cast<char>(etl::toupper('a')) == 'A');
     assert(static_cast<char>(etl::toupper('A')) == 'A');
 
-    for (auto ch = '0'; ch <= '9'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch);
-    }
+    for (auto ch = '0'; ch <= '9'; ++ch) { assert(static_cast<char>(etl::toupper(ch)) == ch); }
 
-    for (auto ch = 'A'; ch <= 'Z'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch);
-    }
+    for (auto ch = 'A'; ch <= 'Z'; ++ch) { assert(static_cast<char>(etl::toupper(ch)) == ch); }
 
-    for (auto ch = 'a'; ch <= 'z'; ++ch) {
-        assert(static_cast<char>(etl::toupper(ch)) == ch - 32);
-    }
+    for (auto ch = 'a'; ch <= 'z'; ++ch) { assert(static_cast<char>(etl::toupper(ch)) == ch - 32); }
 
     return true;
 }

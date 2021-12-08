@@ -22,10 +22,7 @@ struct pointer_like_traits;
 template <typename T>
 struct pointer_like_traits<T*> {
     [[nodiscard]] static auto get_as_void_pointer(T* p) -> void* { return p; }
-    [[nodiscard]] static auto get_from_void_pointer(void* p) -> T*
-    {
-        return static_cast<T*>(p);
-    }
+    [[nodiscard]] static auto get_from_void_pointer(void* p) -> T* { return static_cast<T*>(p); }
 
     static constexpr size_t free_bits = detail::log2(alignof(T));
 };
@@ -70,14 +67,8 @@ struct pointer_like_traits<const T*> {
 /// \group pointer_like_traits
 template <>
 struct pointer_like_traits<uintptr_t> {
-    [[nodiscard]] static auto get_as_void_pointer(uintptr_t p) -> void*
-    {
-        return bit_cast<void*>(p);
-    }
-    [[nodiscard]] static auto get_from_void_pointer(void* p) -> uintptr_t
-    {
-        return bit_cast<uintptr_t>(p);
-    }
+    [[nodiscard]] static auto get_as_void_pointer(uintptr_t p) -> void* { return bit_cast<void*>(p); }
+    [[nodiscard]] static auto get_from_void_pointer(void* p) -> uintptr_t { return bit_cast<uintptr_t>(p); }
     // No bits are available!
     static constexpr size_t free_bits = 0;
 };

@@ -19,8 +19,8 @@ namespace etl {
 /// the element originally at position first + n + i to position first + i. The
 /// moves are performed in increasing order of i starting from ​0​.
 template <typename ForwardIt>
-constexpr auto shift_left(ForwardIt first, const ForwardIt last,
-    typename iterator_traits<ForwardIt>::difference_type n) -> ForwardIt
+constexpr auto shift_left(ForwardIt first, const ForwardIt last, typename iterator_traits<ForwardIt>::difference_type n)
+    -> ForwardIt
 {
     if (n <= 0) { return last; }
     auto start = first;

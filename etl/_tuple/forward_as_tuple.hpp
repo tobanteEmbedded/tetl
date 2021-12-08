@@ -17,8 +17,7 @@ namespace etl {
 /// data members when rvalues are used as arguments, and otherwise has lvalue
 /// reference data members.
 template <typename... Types>
-[[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept
-    -> tuple<Types&&...>
+[[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept -> tuple<Types&&...>
 {
     return tuple<Types&&...> { forward<Types>(args)... };
 }

@@ -11,8 +11,7 @@ namespace etl {
 /// \group min
 /// \module Algorithm
 template <typename Type>
-[[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept
-    -> Type const&
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (b < a) ? b : a;
 }
@@ -21,8 +20,7 @@ template <typename Type>
 /// \group min
 /// \module Algorithm
 template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto min(
-    Type const& a, Type const& b, Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto min(Type const& a, Type const& b, Compare comp) noexcept -> Type const&
 {
     return (comp(b, a)) ? b : a;
 }

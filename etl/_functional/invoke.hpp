@@ -18,8 +18,7 @@ namespace etl {
 namespace detail {
 
 template <typename C, typename Pointed, typename T1, typename... Args>
-constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args)
-    -> decltype(auto)
+constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args) -> decltype(auto)
 {
     if constexpr (etl::is_function_v<Pointed>) {
         if constexpr (etl::is_base_of_v<C, etl::decay_t<T1>>) {

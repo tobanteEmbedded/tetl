@@ -16,8 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcsstr(wchar_t* haystack, wchar_t* needle) noexcept
-    -> wchar_t*
+[[nodiscard]] constexpr auto wcsstr(wchar_t* haystack, wchar_t* needle) noexcept -> wchar_t*
 {
     return detail::strstr_impl<wchar_t>(haystack, needle);
 }
@@ -29,8 +28,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcsstr(
-    wchar_t const* haystack, wchar_t const* needle) noexcept -> wchar_t const*
+[[nodiscard]] constexpr auto wcsstr(wchar_t const* haystack, wchar_t const* needle) noexcept -> wchar_t const*
 {
     return detail::strstr_impl<wchar_t const>(haystack, needle);
 }

@@ -14,8 +14,7 @@ namespace etl {
 /// \group empty
 /// \module Iterator
 template <typename C>
-constexpr auto empty(C const& c) noexcept(noexcept(c.empty()))
-    -> decltype(c.empty())
+constexpr auto empty(C const& c) noexcept(noexcept(c.empty())) -> decltype(c.empty())
 {
     return c.empty();
 }

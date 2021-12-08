@@ -24,10 +24,8 @@ private:
     using U = etl::remove_reference_t<T>;
 
 public:
-    using type
-        = etl::conditional_t<etl::is_array_v<U>, etl::remove_extent_t<U>*,
-            etl::conditional_t<etl::is_function_v<U>, etl::add_pointer_t<U>,
-                etl::remove_cv_t<U>>>;
+    using type = etl::conditional_t<etl::is_array_v<U>, etl::remove_extent_t<U>*,
+        etl::conditional_t<etl::is_function_v<U>, etl::add_pointer_t<U>, etl::remove_cv_t<U>>>;
 };
 
 template <typename T>

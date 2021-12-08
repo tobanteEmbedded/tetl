@@ -36,10 +36,7 @@ enum struct pin_state : etl::uint8_t {
     set,
 };
 
-inline auto val(pin_number pin) -> etl::uint16_t
-{
-    return static_cast<etl::uint16_t>(pin);
-}
+inline auto val(pin_number pin) -> etl::uint16_t { return static_cast<etl::uint16_t>(pin); }
 
 struct gpio_memory_layout {
     etl::uint32_t volatile control_low;
@@ -78,8 +75,7 @@ inline auto port::read(pin_number const pin) noexcept -> pin_state
     return {};
 }
 
-inline auto port::write(pin_number const pin, pin_state const state) noexcept
-    -> void
+inline auto port::write(pin_number const pin, pin_state const state) noexcept -> void
 {
     if (state == pin_state::reset) {
         memory_.bit_set_reset = (1U << val(pin));

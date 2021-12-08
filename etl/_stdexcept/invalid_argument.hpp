@@ -11,9 +11,7 @@ namespace etl {
 
 struct invalid_argument : logic_error {
     constexpr invalid_argument() = default;
-    constexpr explicit invalid_argument(char const* what) : logic_error { what }
-    {
-    }
+    constexpr explicit invalid_argument(char const* what) : logic_error { what } { }
 };
 
 } // namespace etl

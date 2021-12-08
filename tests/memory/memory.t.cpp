@@ -46,9 +46,7 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) {
-            new (buffer + sizeof(Counter) * i) Counter { counter };
-        }
+        for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter { counter }; }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -61,9 +59,7 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) {
-            new (buffer + sizeof(Counter) * i) Counter { counter };
-        }
+        for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter { counter }; }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -76,9 +72,7 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) {
-            new (&buffer[0] + sizeof(Counter) * i) Counter { counter };
-        }
+        for (auto i = 0U; i < 8; ++i) { new (&buffer[0] + sizeof(Counter) * i) Counter { counter }; }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);

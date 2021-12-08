@@ -8,8 +8,7 @@
 namespace etl::detail {
 
 template <typename CharT>
-[[nodiscard]] constexpr auto strcpy_impl(CharT* dest, CharT const* src)
-    -> CharT*
+[[nodiscard]] constexpr auto strcpy_impl(CharT* dest, CharT const* src) -> CharT*
 {
     auto* temp = dest;
     while ((*dest++ = *src++) != CharT(0)) { }
@@ -17,8 +16,7 @@ template <typename CharT>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strncpy_impl(
-    CharT* dest, CharT const* src, SizeT count) -> CharT*
+[[nodiscard]] constexpr auto strncpy_impl(CharT* dest, CharT const* src, SizeT count) -> CharT*
 {
     auto* temp = dest;
     for (SizeT counter = 0; *src != CharT(0) && counter != count;) {
@@ -40,8 +38,7 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strcat_impl(CharT* dest, CharT const* src)
-    -> CharT*
+[[nodiscard]] constexpr auto strcat_impl(CharT* dest, CharT const* src) -> CharT*
 {
     auto* ptr = dest + strlen_impl<CharT, SizeT>(dest);
     while (*src != CharT(0)) { *ptr++ = *src++; }
@@ -50,8 +47,7 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strncat_impl(
-    CharT* dest, CharT const* src, SizeT const count) -> CharT*
+[[nodiscard]] constexpr auto strncat_impl(CharT* dest, CharT const* src, SizeT const count) -> CharT*
 {
     auto* ptr          = dest + strlen_impl<CharT, SizeT>(dest);
     SizeT localCounter = 0;
@@ -65,8 +61,7 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT>
-[[nodiscard]] constexpr auto strcmp_impl(CharT const* lhs, CharT const* rhs)
-    -> int
+[[nodiscard]] constexpr auto strcmp_impl(CharT const* lhs, CharT const* rhs) -> int
 {
     for (; *lhs != CharT(0); ++lhs, ++rhs) {
         if (*lhs != *rhs) { break; }
@@ -75,8 +70,7 @@ template <typename CharT>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strncmp_impl(
-    CharT const* lhs, CharT const* rhs, SizeT const count) -> int
+[[nodiscard]] constexpr auto strncmp_impl(CharT const* lhs, CharT const* rhs, SizeT const count) -> int
 {
     CharT u1 {};
     CharT u2 {};
@@ -121,8 +115,7 @@ template <typename CharT, typename SizeT>
 }
 
 template <typename CharT, typename SizeT, bool InclusiveSearch>
-[[nodiscard]] constexpr auto is_legal_char_impl(
-    CharT const* options, SizeT len, CharT ch) noexcept -> bool
+[[nodiscard]] constexpr auto is_legal_char_impl(CharT const* options, SizeT len, CharT ch) noexcept -> bool
 {
     for (SizeT i = 0; i < len; ++i) {
         if (options[i] == ch) { return InclusiveSearch; }
@@ -131,17 +124,13 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
 }
 
 template <typename CharT, typename SizeT, bool InclusiveSearch>
-[[nodiscard]] constexpr auto str_span_impl(
-    CharT const* dest, CharT const* src) noexcept -> SizeT
+[[nodiscard]] constexpr auto str_span_impl(CharT const* dest, CharT const* src) noexcept -> SizeT
 {
     auto result       = SizeT { 0 };
     auto const length = strlen_impl<CharT, SizeT>(dest);
     auto const srcLen = strlen_impl<CharT, SizeT>(src);
     for (SizeT i = 0; i < length; ++i) {
-        if (!is_legal_char_impl<CharT, SizeT, InclusiveSearch>(
-                src, srcLen, dest[i])) {
-            break;
-        }
+        if (!is_legal_char_impl<CharT, SizeT, InclusiveSearch>(src, srcLen, dest[i])) { break; }
         ++result;
     }
 
@@ -149,26 +138,19 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
 }
 
 template <typename CharT, typename SizeT>
-[[nodiscard]] constexpr auto strpbrk_impl(CharT* s, CharT* del) noexcept
-    -> CharT*
+[[nodiscard]] constexpr auto strpbrk_impl(CharT* s, CharT* del) noexcept -> CharT*
 {
     auto const i = str_span_impl<CharT, SizeT, false>(s, del);
     if (i != 0) { return s + i; }
-    if (is_legal_char_impl<CharT, SizeT, true>(
-            del, strlen_impl<CharT, SizeT>(del), s[0])) {
-        return s;
-    }
+    if (is_legal_char_impl<CharT, SizeT, true>(del, strlen_impl<CharT, SizeT>(del), s[0])) { return s; }
     return nullptr;
 }
 
 template <typename CharT>
-[[nodiscard]] constexpr auto strstr_impl(
-    CharT* haystack, CharT* needle) noexcept -> CharT*
+[[nodiscard]] constexpr auto strstr_impl(CharT* haystack, CharT* needle) noexcept -> CharT*
 {
     while (*haystack != CharT(0)) {
-        if ((*haystack == *needle) && (strcmp_impl(haystack, needle) == 0)) {
-            return haystack;
-        }
+        if ((*haystack == *needle) && (strcmp_impl(haystack, needle) == 0)) { return haystack; }
         haystack++;
     }
     return nullptr;

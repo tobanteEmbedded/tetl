@@ -17,12 +17,9 @@ namespace etl {
 /// \brief Source location
 /// \include source_location.cpp
 struct source_location {
-    [[nodiscard]] static constexpr auto current(
-        uint_least32_t const line   = TETL_BUILTIN_LINE(),
-        uint_least32_t const column = TETL_BUILTIN_COLUMN(),
-        char const* const file      = TETL_BUILTIN_FILE(),
-        char const* const function  = TETL_BUILTIN_FUNCTION()) noexcept
-        -> source_location
+    [[nodiscard]] static constexpr auto current(uint_least32_t const line = TETL_BUILTIN_LINE(),
+        uint_least32_t const column = TETL_BUILTIN_COLUMN(), char const* const file = TETL_BUILTIN_FILE(),
+        char const* const function = TETL_BUILTIN_FUNCTION()) noexcept -> source_location
     {
         auto result      = source_location {};
         result.line_     = line;
@@ -34,25 +31,13 @@ struct source_location {
 
     constexpr source_location() noexcept = default;
 
-    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t
-    {
-        return line_;
-    }
+    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t { return line_; }
 
-    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t
-    {
-        return column_;
-    }
+    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t { return column_; }
 
-    [[nodiscard]] constexpr auto file_name() const noexcept -> char const*
-    {
-        return file_;
-    }
+    [[nodiscard]] constexpr auto file_name() const noexcept -> char const* { return file_; }
 
-    [[nodiscard]] constexpr auto function_name() const noexcept -> char const*
-    {
-        return function_;
-    }
+    [[nodiscard]] constexpr auto function_name() const noexcept -> char const* { return function_; }
 
 private:
     etl::uint_least32_t line_ {};

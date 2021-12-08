@@ -102,8 +102,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysign(long double mag, long double sgn)
-    -> long double
+[[nodiscard]] constexpr auto copysign(long double mag, long double sgn) -> long double
 {
     if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
 #if __has_builtin(__builtin_copysignl)
@@ -126,8 +125,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysignl(long double mag, long double sgn)
-    -> long double
+[[nodiscard]] constexpr auto copysignl(long double mag, long double sgn) -> long double
 {
     if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
 #if __has_builtin(__builtin_copysignl)

@@ -21,8 +21,8 @@ constexpr auto test() -> bool
         T source[4] = {};
         etl::fill(etl::begin(source), etl::end(source), T { 42 });
 
-        auto const all42 = etl::all_of(etl::begin(source), etl::end(source),
-            [](auto const& val) { return val == T { 42 }; });
+        auto const all42
+            = etl::all_of(etl::begin(source), etl::end(source), [](auto const& val) { return val == T { 42 }; });
 
         assert(all42);
     }
@@ -32,8 +32,7 @@ constexpr auto test() -> bool
         auto source = etl::array<T, 4> {};
         etl::fill(begin(source), end(source), T { 42 });
 
-        auto const all42 = etl::all_of(begin(source), end(source),
-            [](auto const& val) { return val == T { 42 }; });
+        auto const all42 = etl::all_of(begin(source), end(source), [](auto const& val) { return val == T { 42 }; });
 
         assert(all42);
     }

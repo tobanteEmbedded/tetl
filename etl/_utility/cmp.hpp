@@ -148,8 +148,7 @@ template <typename T, typename U, enable_if_t<detail::cmp_int_v<T, U>, int> = 0>
 /// char32_t, wchar_t and bool.
 ///
 /// https://en.cppreference.com/w/cpp/utility/in_range
-template <typename R, typename T,
-    enable_if_t<detail::int_and_not_char_v<T>, int> = 0>
+template <typename R, typename T, enable_if_t<detail::int_and_not_char_v<T>, int> = 0>
 [[nodiscard]] constexpr auto in_range(T t) noexcept -> bool
 {
     return etl::cmp_greater_equal(t, etl::numeric_limits<R>::min())

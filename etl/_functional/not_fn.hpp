@@ -17,32 +17,28 @@ struct not_fn_t {
     F f;
 
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) & noexcept(
-        noexcept(!invoke(f, forward<Args>(args)...)))
+    constexpr auto operator()(Args&&... args) & noexcept(noexcept(!invoke(f, forward<Args>(args)...)))
         -> decltype(!invoke(f, forward<Args>(args)...))
     {
         return !invoke(f, forward<Args>(args)...);
     }
 
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) const& noexcept(
-        noexcept(!invoke(f, forward<Args>(args)...)))
+    constexpr auto operator()(Args&&... args) const& noexcept(noexcept(!invoke(f, forward<Args>(args)...)))
         -> decltype(!invoke(f, forward<Args>(args)...))
     {
         return !invoke(f, forward<Args>(args)...);
     }
 
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) && noexcept(
-        noexcept(!invoke(move(f), forward<Args>(args)...)))
+    constexpr auto operator()(Args&&... args) && noexcept(noexcept(!invoke(move(f), forward<Args>(args)...)))
         -> decltype(!invoke(move(f), forward<Args>(args)...))
     {
         return !invoke(move(f), forward<Args>(args)...);
     }
 
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) const&& noexcept(
-        noexcept(!invoke(move(f), forward<Args>(args)...)))
+    constexpr auto operator()(Args&&... args) const&& noexcept(noexcept(!invoke(move(f), forward<Args>(args)...)))
         -> decltype(!invoke(move(f), forward<Args>(args)...))
     {
         return !invoke(move(f), forward<Args>(args)...);

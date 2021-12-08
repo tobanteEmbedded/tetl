@@ -22,8 +22,7 @@ namespace etl {
 /// \group adjacent_find
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto adjacent_find(
-    ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
+[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -39,8 +38,7 @@ template <typename ForwardIt, typename Predicate>
 
 /// \group adjacent_find
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last)
-    -> ForwardIt
+[[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
 {
     return adjacent_find(first, last, equal_to<> {});
 }

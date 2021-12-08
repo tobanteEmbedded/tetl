@@ -17,8 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcscspn
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcscspn(
-    wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
+[[nodiscard]] constexpr auto wcscspn(wchar_t const* dest, wchar_t const* src) noexcept -> etl::size_t
 {
     return detail::str_span_impl<wchar_t, etl::size_t, false>(dest, src);
 }

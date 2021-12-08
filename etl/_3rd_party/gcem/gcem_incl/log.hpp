@@ -34,8 +34,7 @@ template <typename T>
 constexpr auto log_cf_main(const T xx, const int depth) noexcept -> T
 {
     return (depth < GCEM_LOG_MAX_ITER_SMALL ? // if
-                T(2 * depth - 1)
-                    - T(depth * depth) * xx / log_cf_main(xx, depth + 1)
+                T(2 * depth - 1) - T(depth * depth) * xx / log_cf_main(xx, depth + 1)
                                             :
                                             // else
                 T(2 * depth - 1));
@@ -71,15 +70,13 @@ template <typename T>
 constexpr auto log_mantissa(const T x) noexcept -> T
 { // divide by the integer part of x, which will be in [1,10], then adjust using
   // tables
-    return (log_main(x / T(static_cast<int>(x)))
-            + T(log_mantissa_integer(static_cast<int>(x))));
+    return (log_main(x / T(static_cast<int>(x))) + T(log_mantissa_integer(static_cast<int>(x))));
 }
 
 template <typename T>
 constexpr auto log_breakup(const T x) noexcept -> T
 { // x = a*b, where b = 10^c
-    return (
-        log_mantissa(mantissa(x)) + T(GCEM_LOG_10) * T(find_exponent(x, 0)));
+    return (log_mantissa(mantissa(x)) + T(GCEM_LOG_10) * T(find_exponent(x, 0)));
 }
 
 template <typename T>
@@ -90,17 +87,15 @@ constexpr auto log_check(const T x) noexcept -> T
                 x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
                          :
                          // x ~= 0
-                etl::numeric_limits<T>::epsilon() > x
-                ? -etl::numeric_limits<T>::infinity()
-                :
-                // indistinguishable from 1
+                etl::numeric_limits<T>::epsilon() > x ? -etl::numeric_limits<T>::infinity()
+                                                      :
+                                                      // indistinguishable from 1
                 etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
                                                                   :
                                                                   //
-                x == etl::numeric_limits<T>::infinity()
-                ? etl::numeric_limits<T>::infinity()
-                :
-                // else
+                x == etl::numeric_limits<T>::infinity() ? etl::numeric_limits<T>::infinity()
+                                                        :
+                                                        // else
                 (x < T(0.5) || x > T(1.5)) ?
                                            // if
                 log_breakup(x)

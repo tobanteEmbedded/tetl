@@ -52,8 +52,7 @@ struct common_comparison_category :
 };
 
 template <typename... Ts>
-using common_comparison_category_t =
-    typename common_comparison_category<Ts...>::type;
+using common_comparison_category_t = typename common_comparison_category<Ts...>::type;
 
 } // namespace etl
 

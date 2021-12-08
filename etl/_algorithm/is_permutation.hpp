@@ -21,8 +21,7 @@ namespace etl {
 /// \group is_permuatation
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto is_permutation(
-    ForwardIt1 first, ForwardIt1 last, ForwardIt2 first2) -> bool
+[[nodiscard]] constexpr auto is_permutation(ForwardIt1 first, ForwardIt1 last, ForwardIt2 first2) -> bool
 {
     // skip common prefix
     auto const [fDiff1, fDiff2] = mismatch(first, last, first2);
@@ -45,8 +44,8 @@ template <typename ForwardIt1, typename ForwardIt2>
 
 /// \group is_permuatation
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto is_permutation(ForwardIt1 first1, ForwardIt1 last1,
-    ForwardIt2 first2, ForwardIt2 last2) -> bool
+[[nodiscard]] constexpr auto is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2)
+    -> bool
 {
     if (distance(first1, last1) != distance(first2, last2)) { return false; }
     return is_permutation(first1, last1, first2);

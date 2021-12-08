@@ -62,11 +62,10 @@
 #define TETL_PP_COMMA(X) X,
 #define TETL_PP_COMMA_STRINGIFY(X) TETL_PP_COMMA(TETL_PP_STRINGIFY(X))
 
-#define TETL_PP_STRING_VIEW_ARRAY(var_name, ...)                               \
-    static constexpr auto var_name                                             \
-        = etl::array<etl::string_view, TETL_PP_NUM_ARGS(__VA_ARGS__)>          \
-    {                                                                          \
-        TETL_PP_FOREACH(TETL_PP_COMMA_STRINGIFY, __VA_ARGS__)                  \
+#define TETL_PP_STRING_VIEW_ARRAY(var_name, ...)                                                                       \
+    static constexpr auto var_name = etl::array<etl::string_view, TETL_PP_NUM_ARGS(__VA_ARGS__)>                       \
+    {                                                                                                                  \
+        TETL_PP_FOREACH(TETL_PP_COMMA_STRINGIFY, __VA_ARGS__)                                                          \
     }
 
 #if defined(__GNUC__)

@@ -51,8 +51,7 @@ constexpr auto factorial_table(const T x) noexcept -> T
                            : T(20922789888000));
 }
 
-template <typename T,
-    typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
+template <typename T, typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
 constexpr auto factorial_recur(const T x) noexcept -> T
 {
     return (x == T(0)   ? T(1)
@@ -66,8 +65,7 @@ constexpr auto factorial_recur(const T x) noexcept -> T
                 x * factorial_recur(x - 1));
 }
 
-template <typename T,
-    typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
+template <typename T, typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
 constexpr auto factorial_recur(const T x) noexcept -> T
 {
     return tgamma(x + 1);

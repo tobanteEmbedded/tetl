@@ -114,8 +114,7 @@ auto test() -> bool // NOLINT(readability-function-size)
         assert(rbegin(etl::as_const(set)) != rend(etl::as_const(set)));
         assert(crbegin(set) != crend(set));
 
-        etl::for_each(
-            rbegin(set), rend(set), [](auto key) { assert(key == 0); });
+        etl::for_each(rbegin(set), rend(set), [](auto key) { assert(key == 0); });
 
         set.emplace(T(2));
         set.emplace(T(1));
@@ -339,9 +338,8 @@ auto test() -> bool // NOLINT(readability-function-size)
     using namespace etl::literals::string_view_literals;
     using str_t = etl::static_string<32>;
 
-    auto data
-        = etl::array { str_t { "test" }, str_t { "test" }, str_t { "test" } };
-    auto set = etl::static_set<str_t, 4> { begin(data), end(data) };
+    auto data = etl::array { str_t { "test" }, str_t { "test" }, str_t { "test" } };
+    auto set  = etl::static_set<str_t, 4> { begin(data), end(data) };
     assert(set.lower_bound("test") == set.begin());
     assert(set.upper_bound("test") == etl::next(set.begin(), 1));
 }

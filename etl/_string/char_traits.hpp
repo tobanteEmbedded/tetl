@@ -43,29 +43,18 @@ struct char_traits<char> {
     // using comparison_category = strong_ordering;
 
     /// \brief Assigns character a to character r.
-    static constexpr auto assign(char_type& a, char_type const& b) noexcept
-        -> void
-    {
-        a = b;
-    }
+    static constexpr auto assign(char_type& a, char_type const& b) noexcept -> void { a = b; }
 
     /// \brief Returns true if a and b are equal, false otherwise.
-    static constexpr auto eq(char_type a, char_type b) noexcept -> bool
-    {
-        return a == b;
-    }
+    static constexpr auto eq(char_type a, char_type b) noexcept -> bool { return a == b; }
 
     /// \brief Returns true if a is less than b, false otherwise.
-    static constexpr auto lt(char_type a, char_type b) noexcept -> bool
-    {
-        return a < b;
-    }
+    static constexpr auto lt(char_type a, char_type b) noexcept -> bool { return a < b; }
 
     /// \brief Compares the first count characters of the character strings s1
     /// and s2. The comparison is done lexicographically. If count is zero,
     /// strings are considered equal.
-    static constexpr auto compare(
-        char_type const* lhs, char_type const* rhs, size_t count) -> int
+    static constexpr auto compare(char_type const* lhs, char_type const* rhs, size_t count) -> int
     {
         if (count == 0) { return 0; }
 
@@ -79,10 +68,7 @@ struct char_traits<char> {
 
     /// \brief Returns the length of the character sequence pointed to by s,
     /// that is, the position of the terminating null character (CharT()).
-    static constexpr auto length(char_type const* str) -> size_t
-    {
-        return detail::strlen_impl<char_type, size_t>(str);
-    }
+    static constexpr auto length(char_type const* str) -> size_t { return detail::strlen_impl<char_type, size_t>(str); }
 
     /// \brief Searches for character ch within the first count characters of
     /// the sequence pointed to by p.
@@ -90,8 +76,7 @@ struct char_traits<char> {
     /// \returns A pointer to the first character in the range specified by [p,
     /// p
     /// + count) that compares equal to ch, or a null pointer if not found.
-    static constexpr auto find(char_type const* str, size_t count,
-        char_type const& token) -> char_type const*
+    static constexpr auto find(char_type const* str, size_t count, char_type const& token) -> char_type const*
     {
         for (size_t i = 0; i < count; ++i) {
             if (str[i] == token) { return &str[i]; }
@@ -104,8 +89,7 @@ struct char_traits<char> {
     /// src to the character string pointed to by dest. Performs correctly even
     /// if the copied character ranges overlap, i.e. src is in [dest, dest +
     /// count).
-    static constexpr auto move(
-        char_type* dest, char_type const* source, size_t count) -> char_type*
+    static constexpr auto move(char_type* dest, char_type const* source, size_t count) -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
         return dest;
@@ -115,8 +99,7 @@ struct char_traits<char> {
     /// src to the character string pointed to by dest. Formally, for each i in
     /// [0, count), performs assign(src[i], dest[i]). The behavior is undefined
     /// if copied character ranges overlap, i.e. src is in [dest, dest + count).
-    static constexpr auto copy(
-        char_type* dest, char_type const* source, size_t count) -> char_type*
+    static constexpr auto copy(char_type* dest, char_type const* source, size_t count) -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
         return dest;
@@ -124,8 +107,7 @@ struct char_traits<char> {
 
     /// \brief Assigns character a to each character in count characters in the
     /// character sequence pointed to by p.
-    static constexpr auto assign(char_type* str, size_t count, char_type token)
-        -> char_type*
+    static constexpr auto assign(char_type* str, size_t count, char_type token) -> char_type*
     {
         for (size_t i = 0; i < count; ++i) { assign(str[i], token); }
         return str;
@@ -147,8 +129,7 @@ struct char_traits<char> {
     /// \brief Checks whether two values of type int_type are equal.
     ///
     /// https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
-    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept
-        -> bool
+    static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
     {
         if (lhs == rhs) { return true; }
         if ((lhs == eof()) && (rhs == eof())) { return true; }
@@ -183,89 +164,53 @@ struct char_traits<wchar_t> {
     // using pos_type   = wstreampos;
     // using state_type = mbstate_t;
 
-    static constexpr auto assign(wchar_t& lhs, wchar_t const& rhs) noexcept
-        -> void
-    {
-        lhs = rhs;
-    }
+    static constexpr auto assign(wchar_t& lhs, wchar_t const& rhs) noexcept -> void { lhs = rhs; }
 
-    static constexpr auto eq(wchar_t const& lhs, wchar_t const& rhs) noexcept
-        -> bool
-    {
-        return lhs == rhs;
-    }
+    static constexpr auto eq(wchar_t const& lhs, wchar_t const& rhs) noexcept -> bool { return lhs == rhs; }
 
-    static constexpr auto lt(wchar_t const& lhs, wchar_t const& rhs) noexcept
-        -> bool
-    {
-        return lhs < rhs;
-    }
+    static constexpr auto lt(wchar_t const& lhs, wchar_t const& rhs) noexcept -> bool { return lhs < rhs; }
 
-    static constexpr auto compare(
-        wchar_t const* lhs, wchar_t const* rhs, size_t count) -> int
+    static constexpr auto compare(wchar_t const* lhs, wchar_t const* rhs, size_t count) -> int
     {
         if (count == 0) { return 0; }
         return etl::wmemcmp(lhs, rhs, count);
     }
 
-    static constexpr auto length(wchar_t const* str) -> size_t
-    {
-        return etl::wcslen(str);
-    }
+    static constexpr auto length(wchar_t const* str) -> size_t { return etl::wcslen(str); }
 
-    static constexpr auto find(wchar_t const* str, size_t count,
-        wchar_t const& token) -> wchar_t const*
+    static constexpr auto find(wchar_t const* str, size_t count, wchar_t const& token) -> wchar_t const*
     {
         if (count == 0) { return nullptr; }
         return etl::wmemchr(str, token, count);
     }
 
-    static constexpr auto move(wchar_t* dest, wchar_t const* src, size_t count)
-        -> wchar_t*
+    static constexpr auto move(wchar_t* dest, wchar_t const* src, size_t count) -> wchar_t*
     {
         if (count == 0) { return dest; }
         return etl::wmemmove(dest, src, count);
     }
 
-    static constexpr auto copy(wchar_t* dest, wchar_t const* src, size_t count)
-        -> wchar_t*
+    static constexpr auto copy(wchar_t* dest, wchar_t const* src, size_t count) -> wchar_t*
     {
         if (count == 0) { return dest; }
         return etl::wmemcpy(dest, src, count);
     }
 
-    static constexpr auto assign(wchar_t* str, size_t count, wchar_t token)
-        -> wchar_t*
+    static constexpr auto assign(wchar_t* str, size_t count, wchar_t token) -> wchar_t*
     {
         if (count == 0) { return str; }
         return etl::wmemset(str, token, count);
     }
 
-    static constexpr auto to_char_type(int_type const& ch) noexcept -> wchar_t
-    {
-        return static_cast<wchar_t>(ch);
-    }
+    static constexpr auto to_char_type(int_type const& ch) noexcept -> wchar_t { return static_cast<wchar_t>(ch); }
 
-    static constexpr auto to_int_type(wchar_t const& ch) noexcept -> int_type
-    {
-        return static_cast<int_type>(ch);
-    }
+    static constexpr auto to_int_type(wchar_t const& ch) noexcept -> int_type { return static_cast<int_type>(ch); }
 
-    static constexpr auto eq_int_type(
-        int_type const& lhs, int_type const& rhs) noexcept -> bool
-    {
-        return lhs == rhs;
-    }
+    static constexpr auto eq_int_type(int_type const& lhs, int_type const& rhs) noexcept -> bool { return lhs == rhs; }
 
-    static constexpr auto eof() noexcept -> int_type
-    {
-        return static_cast<int_type>(WEOF);
-    }
+    static constexpr auto eof() noexcept -> int_type { return static_cast<int_type>(WEOF); }
 
-    static constexpr auto not_eof(int_type const& ch) noexcept -> int_type
-    {
-        return eq_int_type(ch, eof()) ? 0 : ch;
-    }
+    static constexpr auto not_eof(int_type const& ch) noexcept -> int_type { return eq_int_type(ch, eof()) ? 0 : ch; }
 };
 
 } // namespace etl

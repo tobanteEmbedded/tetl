@@ -26,8 +26,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
 ///
 /// \group midpoint
-template <typename Int,
-    TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+template <typename Int, TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
     using U = make_unsigned_t<Int>;
@@ -42,8 +41,7 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
         n    = static_cast<U>(a);
     }
 
-    return static_cast<Int>(
-        a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
+    return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
 /// \group midpoint

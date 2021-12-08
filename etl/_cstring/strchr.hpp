@@ -33,10 +33,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strchr
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto strchr(char* str, int ch) -> char*
-{
-    return detail::strchr_impl<char>(str, ch);
-}
+[[nodiscard]] constexpr auto strchr(char* str, int ch) -> char* { return detail::strchr_impl<char>(str, ch); }
 
 } // namespace etl
 

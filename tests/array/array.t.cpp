@@ -145,8 +145,7 @@ constexpr auto test_builtin_types() -> bool
     }
 
     {
-        assert((etl::is_same_v<
-            typename etl::tuple_element<1, etl::array<T, 2>>::type, T>));
+        assert((etl::is_same_v<typename etl::tuple_element<1, etl::array<T, 2>>::type, T>));
     }
 
     {

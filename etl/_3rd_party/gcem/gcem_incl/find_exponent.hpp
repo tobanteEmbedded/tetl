@@ -28,8 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto find_exponent(const T x, const llint_t exponent) noexcept
-    -> llint_t
+constexpr auto find_exponent(const T x, const llint_t exponent) noexcept -> llint_t
 {
     return (x < T(1)    ? find_exponent(x * T(10), exponent - llint_t(1))
             : x > T(10) ? find_exponent(x / T(10), exponent + llint_t(1))

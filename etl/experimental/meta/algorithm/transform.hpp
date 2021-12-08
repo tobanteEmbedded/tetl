@@ -14,8 +14,7 @@ namespace etl::experimental::meta {
 namespace detail {
 
 template <etl::size_t... Is, typename... Ts, typename F>
-constexpr auto transform_impl(
-    etl::index_sequence<Is...> /*is*/, tuple<Ts...>& t, F f)
+constexpr auto transform_impl(etl::index_sequence<Is...> /*is*/, tuple<Ts...>& t, F f)
 {
     return etl::tuple<decltype(f(get<Is>(t)))...> {};
 }

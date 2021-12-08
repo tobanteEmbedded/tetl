@@ -15,8 +15,7 @@ namespace etl {
 /// \group minmax_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto minmax_element(
-    ForwardIt first, ForwardIt last, Compare comp) -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last, Compare comp) -> pair<ForwardIt, ForwardIt>
 {
     auto min = first;
     auto max = first;
@@ -56,8 +55,7 @@ template <typename ForwardIt, typename Compare>
 /// \group minmax_element
 /// \module Algorithm
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last)
-    -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto minmax_element(ForwardIt first, ForwardIt last) -> pair<ForwardIt, ForwardIt>
 {
     using value_type = typename iterator_traits<ForwardIt>::value_type;
     return minmax_element(first, last, less<value_type>());

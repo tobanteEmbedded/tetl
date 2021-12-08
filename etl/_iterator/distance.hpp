@@ -17,8 +17,7 @@ namespace etl {
 ///
 /// \module Iterator
 template <typename It>
-constexpr auto distance(It first, It last) ->
-    typename iterator_traits<It>::difference_type
+constexpr auto distance(It first, It last) -> typename iterator_traits<It>::difference_type
 {
     using category = typename iterator_traits<It>::iterator_category;
     static_assert(is_base_of_v<input_iterator_tag, category>);

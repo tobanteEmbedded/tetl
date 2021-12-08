@@ -19,8 +19,7 @@ auto test_pre_ptr_convertible(void const volatile*) -> etl::false_type;
 template <typename, typename>
 auto test_pre_is_base_of(...) -> etl::true_type;
 template <typename B, typename D>
-auto test_pre_is_base_of(int)
-    -> decltype(test_pre_ptr_convertible<B>(static_cast<D*>(nullptr)));
+auto test_pre_is_base_of(int) -> decltype(test_pre_ptr_convertible<B>(static_cast<D*>(nullptr)));
 } // namespace detail
 
 /// \brief If Derived is derived from Base or if both are the same non-union

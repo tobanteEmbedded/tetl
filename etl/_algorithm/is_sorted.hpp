@@ -22,8 +22,7 @@ template <typename ForwardIt>
 
 /// \group is_sorted
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto is_sorted(
-    ForwardIt first, ForwardIt last, Compare comp) -> bool
+[[nodiscard]] constexpr auto is_sorted(ForwardIt first, ForwardIt last, Compare comp) -> bool
 {
     return is_sorted_until(first, last, comp) == last;
 }

@@ -19,8 +19,7 @@ constexpr auto to_address_impl(T* ptr) noexcept -> T*
 }
 
 template <typename Ptr>
-constexpr auto to_address_impl(Ptr const& ptr) noexcept
-    -> decltype(pointer_traits<Ptr>::to_address(ptr))
+constexpr auto to_address_impl(Ptr const& ptr) noexcept -> decltype(pointer_traits<Ptr>::to_address(ptr))
 {
     return pointer_traits<Ptr>::to_address(ptr);
 }

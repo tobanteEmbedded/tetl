@@ -18,11 +18,9 @@ namespace etl {
 /// output ranges.
 ///
 /// \module Algorithm
-template <typename InputIt, typename OutputIt1, typename OutputIt2,
-    typename Predicate>
-constexpr auto partition_copy(InputIt first, InputIt last,
-    OutputIt1 destinationTrue, OutputIt2 destinationFalse, Predicate p)
-    -> pair<OutputIt1, OutputIt2>
+template <typename InputIt, typename OutputIt1, typename OutputIt2, typename Predicate>
+constexpr auto partition_copy(InputIt first, InputIt last, OutputIt1 destinationTrue, OutputIt2 destinationFalse,
+    Predicate p) -> pair<OutputIt1, OutputIt2>
 {
     for (; first != last; ++first) {
         if (p(*first)) {

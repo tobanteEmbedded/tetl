@@ -19,10 +19,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswlower
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto iswlower(wint_t ch) noexcept -> int
-{
-    return static_cast<int>(ch >= L'a' && ch <= L'z');
-}
+[[nodiscard]] constexpr auto iswlower(wint_t ch) noexcept -> int { return static_cast<int>(ch >= L'a' && ch <= L'z'); }
 
 } // namespace etl
 

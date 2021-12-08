@@ -36,22 +36,17 @@ public:
 
     /// \brief Initializes the underlying pointer to the container to
     /// addressof(c).
-    constexpr explicit front_insert_iterator(Container& container)
-        : container_ { addressof(container) }
-    {
-    }
+    constexpr explicit front_insert_iterator(Container& container) : container_ { addressof(container) } { }
 
     /// \brief Inserts the given value value to the container.
-    constexpr auto operator=(typename Container::value_type const& value)
-        -> front_insert_iterator&
+    constexpr auto operator=(typename Container::value_type const& value) -> front_insert_iterator&
     {
         container_->push_front(value);
         return *this;
     }
 
     /// \brief Inserts the given value value to the container.
-    constexpr auto operator=(typename Container::value_type&& value)
-        -> front_insert_iterator&
+    constexpr auto operator=(typename Container::value_type&& value) -> front_insert_iterator&
     {
         container_->push_front(move(value));
         return *this;
@@ -81,8 +76,7 @@ public:
 /// the type of the argument.
 /// \module Iterator
 template <typename Container>
-[[nodiscard]] constexpr auto front_inserter(Container& c)
-    -> front_insert_iterator<Container>
+[[nodiscard]] constexpr auto front_inserter(Container& c) -> front_insert_iterator<Container>
 {
     return front_insert_iterator<Container>(c);
 }

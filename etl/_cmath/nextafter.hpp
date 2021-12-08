@@ -17,7 +17,7 @@ namespace detail {
 template <typename T>
 [[nodiscard]] constexpr auto nextafter_impl(T from, T to) -> T
 {
-    using U = etl::conditional_t<sizeof(T) == 4U, etl::uint32_t, etl::uint64_t>;
+    using U             = etl::conditional_t<sizeof(T) == 4U, etl::uint32_t, etl::uint64_t>;
     auto const fromBits = etl::bit_cast<U>(from);
     auto const toBits   = etl::bit_cast<U>(to);
     if (toBits == fromBits) { return to; }
@@ -48,8 +48,7 @@ template <typename T>
 /// If from equals to, to is returned.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/nextafter
-[[nodiscard]] constexpr auto nextafter(double from, double to) noexcept
-    -> double
+[[nodiscard]] constexpr auto nextafter(double from, double to) noexcept -> double
 {
     return detail::nextafter_impl(from, to);
 }

@@ -15,8 +15,8 @@ namespace etl {
 
 #if TETL_CPP_STANDARD >= 20
 template <typename Exception>
-[[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(char const* msg,
-    etl::source_location const loc = etl::source_location::current()) -> void
+[[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(
+    char const* msg, etl::source_location const loc = etl::source_location::current()) -> void
 {
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
     (void)loc;

@@ -25,14 +25,11 @@ namespace etl {
 /// behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_trivially_move_assignable
-    : is_trivially_assignable<add_lvalue_reference_t<T>,
-          add_rvalue_reference_t<T>> {
+struct is_trivially_move_assignable : is_trivially_assignable<add_lvalue_reference_t<T>, add_rvalue_reference_t<T>> {
 };
 
 template <typename T>
-inline constexpr bool is_trivially_move_assignable_v
-    = is_trivially_move_assignable<T>::value;
+inline constexpr bool is_trivially_move_assignable_v = is_trivially_move_assignable<T>::value;
 
 } // namespace etl
 

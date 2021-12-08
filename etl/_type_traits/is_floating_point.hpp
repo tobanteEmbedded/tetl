@@ -23,8 +23,7 @@ template <typename T>
 struct is_floating_point
     : bool_constant<
           is_same_v<float,
-              remove_cv_t<
-                  T>> || is_same_v<double, remove_cv_t<T>> || is_same_v<long double, remove_cv_t<T>>> {
+              remove_cv_t<T>> || is_same_v<double, remove_cv_t<T>> || is_same_v<long double, remove_cv_t<T>>> {
 };
 
 /// \group is_floating_point

@@ -66,8 +66,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept
-    -> long double
+[[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
@@ -82,8 +81,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept
-    -> long double
+[[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
@@ -113,8 +111,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept
-    -> double
+[[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN(""); }
@@ -129,8 +126,7 @@ namespace etl {
 /// - hypot(x,y) is NAN if x or y is NAN.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
-[[nodiscard]] constexpr auto hypot(
-    long double x, long double y, long double z) noexcept -> long double
+[[nodiscard]] constexpr auto hypot(long double x, long double y, long double z) noexcept -> long double
 {
     if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
     if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }

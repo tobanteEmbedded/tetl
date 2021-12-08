@@ -17,9 +17,7 @@ constexpr auto test() -> bool
     assert(approx(etl::erf(T(4)), T(0.9999999846)));
 
     // TODO: Fix for long double
-    if constexpr (!etl::is_same_v<T, long double>) {
-        assert(approx(etl::erf(T(0)), T(0)));
-    }
+    if constexpr (!etl::is_same_v<T, long double>) { assert(approx(etl::erf(T(0)), T(0))); }
 
     return true;
 }

@@ -18,22 +18,13 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/isinf
 /// \group isinf
 /// \module Numeric
-[[nodiscard]] constexpr auto isinf(float arg) -> bool
-{
-    return arg == TETL_BUILTIN_HUGE_VALF;
-}
+[[nodiscard]] constexpr auto isinf(float arg) -> bool { return arg == TETL_BUILTIN_HUGE_VALF; }
 
 /// \group isinf
-[[nodiscard]] constexpr auto isinf(double arg) -> bool
-{
-    return arg == TETL_BUILTIN_HUGE_VAL;
-}
+[[nodiscard]] constexpr auto isinf(double arg) -> bool { return arg == TETL_BUILTIN_HUGE_VAL; }
 
 /// \group isinf
-[[nodiscard]] constexpr auto isinf(long double arg) -> bool
-{
-    return arg == TETL_BUILTIN_HUGE_VALL;
-}
+[[nodiscard]] constexpr auto isinf(long double arg) -> bool { return arg == TETL_BUILTIN_HUGE_VALL; }
 
 /// \group isinf
 template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>

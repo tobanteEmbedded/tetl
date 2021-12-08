@@ -15,9 +15,7 @@ namespace etl {
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {
-    for (; n > 0; (void)++first, --n) {
-        etl::destroy_at(etl::addressof(*first));
-    }
+    for (; n > 0; (void)++first, --n) { etl::destroy_at(etl::addressof(*first)); }
     return first;
 }
 

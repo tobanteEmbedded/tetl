@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
-[[nodiscard]] constexpr auto cosh(float arg) noexcept -> float
-{
-    return etl::detail::gcem::cosh(arg);
-}
+[[nodiscard]] constexpr auto cosh(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
-[[nodiscard]] constexpr auto coshf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::cosh(arg);
-}
+[[nodiscard]] constexpr auto coshf(float arg) noexcept -> float { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
-[[nodiscard]] constexpr auto cosh(double arg) noexcept -> double
-{
-    return etl::detail::gcem::cosh(arg);
-}
+[[nodiscard]] constexpr auto cosh(double arg) noexcept -> double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
-[[nodiscard]] constexpr auto cosh(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::cosh(arg);
-}
+[[nodiscard]] constexpr auto cosh(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
-[[nodiscard]] constexpr auto coshl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::cosh(arg);
-}
+[[nodiscard]] constexpr auto coshl(long double arg) noexcept -> long double { return etl::detail::gcem::cosh(arg); }
 
 /// \brief Computes the hyperbolic cosine of arg
 /// https://en.cppreference.com/w/cpp/numeric/math/cosh
 template <typename T>
-[[nodiscard]] constexpr auto cosh(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto cosh(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::cosh(static_cast<double>(arg));
 }

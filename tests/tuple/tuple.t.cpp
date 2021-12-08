@@ -13,10 +13,7 @@
 namespace {
 template <typename T>
 struct Foo {
-    constexpr Foo(T first, float second, bool third)
-        : f { first }, s { second }, t { third }
-    {
-    }
+    constexpr Foo(T first, float second, bool third) : f { first }, s { second }, t { third } { }
 
     T f;
     float s;

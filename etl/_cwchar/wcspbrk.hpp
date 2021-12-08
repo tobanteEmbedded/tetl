@@ -16,8 +16,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcspbrk(wchar_t* dest, wchar_t* breakset) noexcept
-    -> wchar_t*
+[[nodiscard]] constexpr auto wcspbrk(wchar_t* dest, wchar_t* breakset) noexcept -> wchar_t*
 {
     return detail::strpbrk_impl<wchar_t, etl::size_t>(dest, breakset);
 }
@@ -28,8 +27,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wcspbrk
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcspbrk(
-    wchar_t const* dest, wchar_t const* breakset) noexcept -> wchar_t const*
+[[nodiscard]] constexpr auto wcspbrk(wchar_t const* dest, wchar_t const* breakset) noexcept -> wchar_t const*
 {
     return detail::strpbrk_impl<wchar_t const, etl::size_t>(dest, breakset);
 }

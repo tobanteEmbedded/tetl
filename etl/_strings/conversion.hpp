@@ -25,8 +25,7 @@ struct ascii_to_int_result {
 };
 
 template <typename T, typename CharT>
-[[nodiscard]] constexpr auto ascii_to_int_base10(
-    CharT const* str, size_t len = numeric_limits<size_t>::max()) noexcept
+[[nodiscard]] constexpr auto ascii_to_int_base10(CharT const* str, size_t len = numeric_limits<size_t>::max()) noexcept
     -> ascii_to_int_result<T, CharT>
 {
     if (*str == CharT(0)) {
@@ -40,8 +39,7 @@ template <typename T, typename CharT>
     etl::size_t i = 0;
 
     // skip leading whitespace
-    while (etl::isspace(static_cast<int>(str[i])) && (len != 0)
-           && (str[i] != CharT(0))) {
+    while (etl::isspace(static_cast<int>(str[i])) && (len != 0) && (str[i] != CharT(0))) {
         ++i;
         --len;
     }
@@ -80,8 +78,8 @@ struct int_to_ascii_result {
 };
 
 template <typename Int, bool TerminateWithNull = true>
-[[nodiscard]] constexpr auto int_to_ascii(Int num, char* str, int base = 10,
-    size_t length = etl::numeric_limits<size_t>::max()) -> int_to_ascii_result
+[[nodiscard]] constexpr auto int_to_ascii(
+    Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max()) -> int_to_ascii_result
 {
     auto reverseString = [](char* string, etl::size_t len) {
         etl::size_t f = 0;
@@ -119,9 +117,7 @@ template <typename Int, bool TerminateWithNull = true>
         str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
         num            = num / static_cast<Int>(base);
 
-        if (length <= i) {
-            return { nullptr, int_to_ascii_error::buffer_overflow };
-        }
+        if (length <= i) { return { nullptr, int_to_ascii_error::buffer_overflow }; }
     }
 
     if constexpr (etl::is_signed_v<Int>) {
@@ -141,8 +137,7 @@ template <typename Int, bool TerminateWithNull = true>
 /// \returns Floating point value corresponding to the contents of str on
 /// success.
 template <typename FloatT>
-[[nodiscard]] constexpr auto ascii_to_floating_point(
-    const char* str, char const** last = nullptr) noexcept -> FloatT
+[[nodiscard]] constexpr auto ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept -> FloatT
 {
     auto res               = FloatT { 0 };
     auto div               = FloatT { 1 };

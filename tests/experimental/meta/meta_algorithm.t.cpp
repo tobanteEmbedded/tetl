@@ -27,10 +27,8 @@ constexpr auto test() -> bool
         assert(counter == 4);
     }
     {
-        auto const sizeGreaterOr1 = [](auto t) {
-            return etl::bool_constant<(
-                sizeof(typename decltype(t)::name) >= 1)> {};
-        };
+        auto const sizeGreaterOr1
+            = [](auto t) { return etl::bool_constant<(sizeof(typename decltype(t)::name) >= 1)> {}; };
 
         auto const sizeEqual16 = [](auto t) {
             constexpr auto is16bytes = sizeof(typename decltype(t)::name) == 16;

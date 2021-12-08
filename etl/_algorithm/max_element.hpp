@@ -12,8 +12,7 @@ namespace etl {
 /// \group max_element
 /// \module Algorithm
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto max_element(
-    ForwardIt first, ForwardIt last) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
     if (first == last) { return last; }
 
@@ -30,8 +29,7 @@ template <typename ForwardIt>
 /// \group max_element
 /// \module Algorithm
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto max_element(
-    ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
     if (first == last) { return last; }
 

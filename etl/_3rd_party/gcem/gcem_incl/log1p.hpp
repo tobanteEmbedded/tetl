@@ -35,12 +35,7 @@ constexpr auto log1p_compute(const T x) noexcept -> T
 {
     // return x * ( T(1) + x * ( -T(1)/T(2) +  x * ( T(1)/T(3) +  x * (
     // -T(1)/T(4) + x/T(5) ) ) ) ); // O(x^6)
-    return x
-           + x
-                 * (-x / T(2)
-                     + x
-                           * (x / T(3)
-                               + x * (-x / T(4) + x * x / T(5)))); // O(x^6)
+    return x + x * (-x / T(2) + x * (x / T(3) + x * (-x / T(4) + x * x / T(5)))); // O(x^6)
 }
 
 template <typename T>

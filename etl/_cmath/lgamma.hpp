@@ -15,54 +15,38 @@ namespace etl {
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-[[nodiscard]] constexpr auto lgamma(float arg) noexcept -> float
-{
-    return etl::detail::gcem::lgamma(arg);
-}
+[[nodiscard]] constexpr auto lgamma(float arg) noexcept -> float { return etl::detail::gcem::lgamma(arg); }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-[[nodiscard]] constexpr auto lgammaf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::lgamma(arg);
-}
+[[nodiscard]] constexpr auto lgammaf(float arg) noexcept -> float { return etl::detail::gcem::lgamma(arg); }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-[[nodiscard]] constexpr auto lgamma(double arg) noexcept -> double
-{
-    return etl::detail::gcem::lgamma(arg);
-}
+[[nodiscard]] constexpr auto lgamma(double arg) noexcept -> double { return etl::detail::gcem::lgamma(arg); }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-[[nodiscard]] constexpr auto lgamma(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::lgamma(arg);
-}
+[[nodiscard]] constexpr auto lgamma(long double arg) noexcept -> long double { return etl::detail::gcem::lgamma(arg); }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-[[nodiscard]] constexpr auto lgammal(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::lgamma(arg);
-}
+[[nodiscard]] constexpr auto lgammal(long double arg) noexcept -> long double { return etl::detail::gcem::lgamma(arg); }
 
 /// \brief Computes the natural logarithm of the absolute value of the gamma
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
 template <typename T>
-[[nodiscard]] constexpr auto lgamma(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto lgamma(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::lgamma(static_cast<double>(arg));
 }

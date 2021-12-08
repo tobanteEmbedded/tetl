@@ -24,8 +24,7 @@ namespace etl {
 /// overlap.
 ///
 /// \module Strings
-constexpr auto wcsncat(
-    wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
+constexpr auto wcsncat(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
     return detail::strncat_impl<wchar_t, etl::size_t>(dest, src, count);
 }

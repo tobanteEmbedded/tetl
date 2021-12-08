@@ -27,28 +27,18 @@ struct coroutine_handle<void> {
         return *this;
     }
 
-    [[nodiscard]] constexpr auto address() const noexcept -> void*
-    {
-        return handle_;
-    }
+    [[nodiscard]] constexpr auto address() const noexcept -> void* { return handle_; }
 
-    [[nodiscard]] constexpr static auto from_address(void* addr) noexcept
-        -> coroutine_handle
+    [[nodiscard]] constexpr static auto from_address(void* addr) noexcept -> coroutine_handle
     {
         auto self    = coroutine_handle {};
         self.handle_ = addr;
         return self;
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept
-    {
-        return handle_ != nullptr;
-    }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return handle_ != nullptr; }
 
-    [[nodiscard]] auto done() const noexcept -> bool
-    {
-        return __builtin_coro_done(handle_);
-    }
+    [[nodiscard]] auto done() const noexcept -> bool { return __builtin_coro_done(handle_); }
 
     auto operator()() const -> void { resume(); }
 
@@ -62,8 +52,7 @@ protected:
 
 template <typename T>
 struct hash<coroutine_handle<T>> {
-    [[nodiscard]] auto operator()(coroutine_handle<T> const& v) const noexcept
-        -> size_t
+    [[nodiscard]] auto operator()(coroutine_handle<T> const& v) const noexcept -> size_t
     {
         return hash<void*>()(v.address());
     }

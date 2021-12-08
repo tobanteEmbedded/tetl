@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::erf(arg);
-}
+[[nodiscard]] constexpr auto erf(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erff(float arg) noexcept -> float
-{
-    return etl::detail::gcem::erf(arg);
-}
+[[nodiscard]] constexpr auto erff(float arg) noexcept -> float { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erf(double arg) noexcept -> double
-{
-    return etl::detail::gcem::erf(arg);
-}
+[[nodiscard]] constexpr auto erf(double arg) noexcept -> double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::erf(arg);
-}
+[[nodiscard]] constexpr auto erf(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
-[[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::erf(arg);
-}
+[[nodiscard]] constexpr auto erfl(long double arg) noexcept -> long double { return etl::detail::gcem::erf(arg); }
 
 /// \brief Computes the error function of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/erf
 template <typename T>
-[[nodiscard]] constexpr auto erf(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto erf(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::erf(static_cast<double>(arg));
 }

@@ -49,21 +49,18 @@ private:
 };
 
 template <typename T>
-constexpr complex<T>::complex(T const& re, T const& im)
-    : real_ { re }, imag_ { im }
+constexpr complex<T>::complex(T const& re, T const& im) : real_ { re }, imag_ { im }
 {
 }
 
 template <typename T>
-constexpr complex<T>::complex(complex const& other)
-    : real_ { other.real() }, imag_ { other.imag() }
+constexpr complex<T>::complex(complex const& other) : real_ { other.real() }, imag_ { other.imag() }
 {
 }
 
 template <typename T>
 template <typename X>
-constexpr complex<T>::complex(complex<X> const& other)
-    : real_ { other.real() }, imag_ { other.imag() }
+constexpr complex<T>::complex(complex<X> const& other) : real_ { other.real() }, imag_ { other.imag() }
 {
 }
 

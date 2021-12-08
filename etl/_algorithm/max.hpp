@@ -11,8 +11,7 @@ namespace etl {
 /// \group max
 /// \module Algorithm
 template <typename Type>
-[[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept
-    -> Type const&
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b) noexcept -> Type const&
 {
     return (a < b) ? b : a;
 }
@@ -21,8 +20,7 @@ template <typename Type>
 /// \group max
 /// \module Algorithm
 template <typename Type, typename Compare>
-[[nodiscard]] constexpr auto max(
-    Type const& a, Type const& b, Compare comp) noexcept -> Type const&
+[[nodiscard]] constexpr auto max(Type const& a, Type const& b, Compare comp) noexcept -> Type const&
 {
     return (comp(a, b)) ? b : a;
 }

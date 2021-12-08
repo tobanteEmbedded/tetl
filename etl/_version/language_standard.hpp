@@ -22,43 +22,37 @@ enum struct language_standard : unsigned char {
 /// \brief Compares language_standards
 /// \group language_standard_compare
 /// \module Utility
-[[nodiscard]] constexpr auto operator==(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return static_cast<unsigned char>(lhs) == static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
-[[nodiscard]] constexpr auto operator!=(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
 
 /// \group language_standard_compare
-[[nodiscard]] constexpr auto operator<(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return static_cast<unsigned char>(lhs) < static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
-[[nodiscard]] constexpr auto operator<=(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return static_cast<unsigned char>(lhs) <= static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
-[[nodiscard]] constexpr auto operator>(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return static_cast<unsigned char>(lhs) > static_cast<unsigned char>(rhs);
 }
 
 /// \group language_standard_compare
-[[nodiscard]] constexpr auto operator>=(
-    language_standard lhs, language_standard rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(language_standard lhs, language_standard rhs) noexcept -> bool
 {
     return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
 }

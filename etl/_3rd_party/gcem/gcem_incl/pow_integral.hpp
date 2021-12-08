@@ -34,21 +34,15 @@ constexpr auto pow_integral_compute(T1 base, T2 expTerm) noexcept -> T1;
 // https://en.wikipedia.org/wiki/Exponentiation_by_squaring
 
 template <typename T1, typename T2>
-constexpr auto pow_integral_compute_recur(
-    const T1 base, const T1 val, const T2 expTerm) noexcept -> T1
+constexpr auto pow_integral_compute_recur(const T1 base, const T1 val, const T2 expTerm) noexcept -> T1
 {
-    return (expTerm > T2(1) ? (
-                is_odd(expTerm)
-                    ? pow_integral_compute_recur(
-                        base * base, val * base, expTerm / 2)
-                    : pow_integral_compute_recur(base * base, val, expTerm / 2))
+    return (expTerm > T2(1) ? (is_odd(expTerm) ? pow_integral_compute_recur(base * base, val * base, expTerm / 2)
+                                               : pow_integral_compute_recur(base * base, val, expTerm / 2))
                             : (expTerm == T2(1) ? val * base : val));
 }
 
-template <typename T1, typename T2,
-    typename etl::enable_if<etl::is_signed<T2>::value>::type* = nullptr>
-constexpr auto pow_integral_sgn_check(const T1 base, const T2 expTerm) noexcept
-    -> T1
+template <typename T1, typename T2, typename etl::enable_if<etl::is_signed<T2>::value>::type* = nullptr>
+constexpr auto pow_integral_sgn_check(const T1 base, const T2 expTerm) noexcept -> T1
 {
     return (expTerm < T2(0) ? //
                 T1(1) / pow_integral_compute(base, -expTerm)
@@ -57,17 +51,14 @@ constexpr auto pow_integral_sgn_check(const T1 base, const T2 expTerm) noexcept
                 pow_integral_compute_recur(base, T1(1), expTerm));
 }
 
-template <typename T1, typename T2,
-    typename etl::enable_if<!etl::is_signed<T2>::value>::type* = nullptr>
-constexpr auto pow_integral_sgn_check(const T1 base, const T2 expTerm) noexcept
-    -> T1
+template <typename T1, typename T2, typename etl::enable_if<!etl::is_signed<T2>::value>::type* = nullptr>
+constexpr auto pow_integral_sgn_check(const T1 base, const T2 expTerm) noexcept -> T1
 {
     return (pow_integral_compute_recur(base, T1(1), expTerm));
 }
 
 template <typename T1, typename T2>
-constexpr auto pow_integral_compute(const T1 base, const T2 expTerm) noexcept
-    -> T1
+constexpr auto pow_integral_compute(const T1 base, const T2 expTerm) noexcept -> T1
 {
     return (expTerm == T2(3)   ? base * base * base
             : expTerm == T2(2) ? base * base
@@ -76,25 +67,20 @@ constexpr auto pow_integral_compute(const T1 base, const T2 expTerm) noexcept
                                :
                                // check for overflow
                 expTerm == etl::numeric_limits<T2>::min() ? T1(0)
-            : expTerm == etl::numeric_limits<T2>::max()
-                ? etl::numeric_limits<T1>::infinity()
-                :
-                // else
+            : expTerm == etl::numeric_limits<T2>::max()   ? etl::numeric_limits<T1>::infinity()
+                                                          :
+                                                        // else
                 pow_integral_sgn_check(base, expTerm));
 }
 
-template <typename T1, typename T2,
-    typename etl::enable_if<etl::is_integral<T2>::value>::type* = nullptr>
-constexpr auto pow_integral_type_check(const T1 base, const T2 expTerm) noexcept
-    -> T1
+template <typename T1, typename T2, typename etl::enable_if<etl::is_integral<T2>::value>::type* = nullptr>
+constexpr auto pow_integral_type_check(const T1 base, const T2 expTerm) noexcept -> T1
 {
     return pow_integral_compute(base, expTerm);
 }
 
-template <typename T1, typename T2,
-    typename etl::enable_if<!etl::is_integral<T2>::value>::type* = nullptr>
-constexpr auto pow_integral_type_check(const T1 base, const T2 expTerm) noexcept
-    -> T1
+template <typename T1, typename T2, typename etl::enable_if<!etl::is_integral<T2>::value>::type* = nullptr>
+constexpr auto pow_integral_type_check(const T1 base, const T2 expTerm) noexcept -> T1
 {
     // return etl::numeric_limits<return_t<T1>>::quiet_NaN();
     return pow_integral_compute(base, static_cast<llint_t>(expTerm));

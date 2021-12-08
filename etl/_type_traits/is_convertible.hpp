@@ -21,9 +21,7 @@ template <typename>
 auto test_returnable(...) -> etl::false_type;
 
 template <typename From, typename To>
-auto test_nonvoid_convertible(int)
-    -> true_type_for<decltype(etl::declval<void (&)(To)>()(
-        etl::declval<From>()))>;
+auto test_nonvoid_convertible(int) -> true_type_for<decltype(etl::declval<void (&)(To)>()(etl::declval<From>()))>;
 template <typename, typename>
 auto test_nonvoid_convertible(...) -> etl::false_type;
 
@@ -41,11 +39,9 @@ auto test_nonvoid_convertible(...) -> etl::false_type;
 /// type) is considered.
 /// \group is_convertible
 template <typename From, typename To>
-struct is_convertible
-    : bool_constant<(decltype(detail::test_returnable<To>(0))::value
-                        && decltype(detail::test_nonvoid_convertible<From, To>(
-                            0))::value)
-                    || (is_void_v<From> && is_void_v<To>)> {
+struct is_convertible : bool_constant<(decltype(detail::test_returnable<To>(0))::value
+                                          && decltype(detail::test_nonvoid_convertible<From, To>(0))::value)
+                                      || (is_void_v<From> && is_void_v<To>)> {
 };
 
 /// \group is_convertible

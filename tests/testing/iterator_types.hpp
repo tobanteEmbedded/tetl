@@ -11,9 +11,9 @@ template <typename It>
 struct InIter {
     using iterator_category = etl::input_iterator_tag;
     using value_type        = typename etl::iterator_traits<It>::value_type;
-    using difference_type = typename etl::iterator_traits<It>::difference_type;
-    using pointer         = It;
-    using reference       = typename etl::iterator_traits<It>::reference;
+    using difference_type   = typename etl::iterator_traits<It>::difference_type;
+    using pointer           = It;
+    using reference         = typename etl::iterator_traits<It>::reference;
 
     [[nodiscard]] constexpr auto base() const -> It { return iter_; }
 
@@ -63,10 +63,9 @@ template <typename Iter>
 struct FwdIter {
     using iterator_category = etl::forward_iterator_tag;
     using value_type        = typename etl::iterator_traits<Iter>::value_type;
-    using difference_type =
-        typename etl::iterator_traits<Iter>::difference_type;
-    using pointer   = Iter;
-    using reference = typename etl::iterator_traits<Iter>::reference;
+    using difference_type   = typename etl::iterator_traits<Iter>::difference_type;
+    using pointer           = Iter;
+    using reference         = typename etl::iterator_traits<Iter>::reference;
 
     [[nodiscard]] constexpr auto base() const -> Iter { return iter_; }
 
@@ -79,10 +78,7 @@ struct FwdIter {
     {
     }
 
-    [[nodiscard]] constexpr auto operator*() const -> reference
-    {
-        return *iter_;
-    }
+    [[nodiscard]] constexpr auto operator*() const -> reference { return *iter_; }
 
     [[nodiscard]] constexpr auto operator->() const -> pointer { return iter_; }
 
@@ -106,15 +102,13 @@ private:
 };
 
 template <typename T, typename U>
-[[nodiscard]] constexpr auto operator==(
-    FwdIter<T> const& x, FwdIter<U> const& y) -> bool
+[[nodiscard]] constexpr auto operator==(FwdIter<T> const& x, FwdIter<U> const& y) -> bool
 {
     return x.base() == y.base();
 }
 
 template <typename T, typename U>
-[[nodiscard]] constexpr auto operator!=(
-    FwdIter<T> const& x, FwdIter<U> const& y) -> bool
+[[nodiscard]] constexpr auto operator!=(FwdIter<T> const& x, FwdIter<U> const& y) -> bool
 {
     return !(x == y);
 }

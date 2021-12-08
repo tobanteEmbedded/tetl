@@ -34,15 +34,12 @@ constexpr auto tgamma_check(const T x) noexcept -> T
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from one or zero
             etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(1)
-        : etl::numeric_limits<T>::epsilon() > abs(x)
-            ? etl::numeric_limits<T>::infinity()
-            :
-            // negative numbers
+        : etl::numeric_limits<T>::epsilon() > abs(x)          ? etl::numeric_limits<T>::infinity()
+                                                              :
+                                                     // negative numbers
             x < T(0) ? // check for integer
-            etl::numeric_limits<T>::epsilon() > abs(x - find_whole(x))
-                ? etl::numeric_limits<T>::quiet_NaN()
-                :
-                // else
+            etl::numeric_limits<T>::epsilon() > abs(x - find_whole(x)) ? etl::numeric_limits<T>::quiet_NaN() :
+                                                                       // else
                 tgamma_check(x + T(1)) / x
                      :
 

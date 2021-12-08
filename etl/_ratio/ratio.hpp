@@ -18,8 +18,7 @@ namespace etl {
 /// Denom are representable as compile-time constants of type intmax_t.
 template <intmax_t Num, intmax_t Denom = 1>
 struct ratio {
-    static constexpr intmax_t num
-        = detail::sign(Num) * detail::sign(Denom) * abs(Num) / gcd(Num, Denom);
+    static constexpr intmax_t num = detail::sign(Num) * detail::sign(Denom) * abs(Num) / gcd(Num, Denom);
     static constexpr intmax_t den = abs(Denom) / gcd(Num, Denom);
 
     using type = ratio<num, den>;

@@ -21,15 +21,13 @@ namespace etl {
 }
 
 /// \group lerp
-[[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept
-    -> double
+[[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept -> double
 {
     return detail::lerp_impl<double>(a, b, t);
 }
 
 /// \group lerp
-[[nodiscard]] constexpr auto lerp(
-    long double a, long double b, long double t) noexcept -> long double
+[[nodiscard]] constexpr auto lerp(long double a, long double b, long double t) noexcept -> long double
 {
     return detail::lerp_impl<long double>(a, b, t);
 }

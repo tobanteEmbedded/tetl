@@ -35,12 +35,10 @@ template <typename T0, typename T1, typename... Ts>
 /// undefined.
 template <etl::size_t Len, typename... Types>
 struct aligned_union {
-    static constexpr etl::size_t alignment_value
-        = detail::vmax(alignof(Types)...);
+    static constexpr etl::size_t alignment_value = detail::vmax(alignof(Types)...);
 
     struct type {
-        alignas(
-            alignment_value) char storage[detail::vmax(Len, sizeof(Types)...)];
+        alignas(alignment_value) char storage[detail::vmax(Len, sizeof(Types)...)];
     };
 };
 

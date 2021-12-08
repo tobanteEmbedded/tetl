@@ -17,8 +17,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strspn
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept
-    -> etl::size_t
+[[nodiscard]] constexpr auto strspn(char const* dest, char const* src) noexcept -> etl::size_t
 {
     return detail::str_span_impl<char, etl::size_t, true>(dest, src);
 }

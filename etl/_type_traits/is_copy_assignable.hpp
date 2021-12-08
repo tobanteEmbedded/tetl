@@ -24,8 +24,7 @@ namespace etl {
 /// behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_copy_assignable : is_assignable<add_lvalue_reference_t<T>,
-                                add_lvalue_reference_t<const T>> {
+struct is_copy_assignable : is_assignable<add_lvalue_reference_t<T>, add_lvalue_reference_t<const T>> {
 };
 
 template <typename T>

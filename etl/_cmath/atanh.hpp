@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
-[[nodiscard]] constexpr auto atanh(float arg) noexcept -> float
-{
-    return etl::detail::gcem::atanh(arg);
-}
+[[nodiscard]] constexpr auto atanh(float arg) noexcept -> float { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
-[[nodiscard]] constexpr auto atanhf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::atanh(arg);
-}
+[[nodiscard]] constexpr auto atanhf(float arg) noexcept -> float { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
-[[nodiscard]] constexpr auto atanh(double arg) noexcept -> double
-{
-    return etl::detail::gcem::atanh(arg);
-}
+[[nodiscard]] constexpr auto atanh(double arg) noexcept -> double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
-[[nodiscard]] constexpr auto atanh(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::atanh(arg);
-}
+[[nodiscard]] constexpr auto atanh(long double arg) noexcept -> long double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
-[[nodiscard]] constexpr auto atanhl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::atanh(arg);
-}
+[[nodiscard]] constexpr auto atanhl(long double arg) noexcept -> long double { return etl::detail::gcem::atanh(arg); }
 
 /// \brief Computes the inverse hyperbolic tangent of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/atanh
 template <typename T>
-[[nodiscard]] constexpr auto atanh(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto atanh(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::atanh(static_cast<double>(arg));
 }

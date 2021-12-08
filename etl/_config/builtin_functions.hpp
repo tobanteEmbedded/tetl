@@ -37,13 +37,12 @@
 #else
     // https://stackoverflow.com/questions/6031819/emulating-gccs-builtin-unreachable
     // Answer from user iammilind.
-    #define TETL_BUILTIN_UNREACHABLE                                           \
-        {                                                                      \
-            struct etl_builtin_unreachable_t {                                 \
-                etl_builtin_unreachable_t& operator=(                          \
-                    etl_builtin_unreachable_t const&);                         \
-            } x;                                                               \
-            x = x;                                                             \
+    #define TETL_BUILTIN_UNREACHABLE                                                                                   \
+        {                                                                                                              \
+            struct etl_builtin_unreachable_t {                                                                         \
+                etl_builtin_unreachable_t& operator=(etl_builtin_unreachable_t const&);                                \
+            } x;                                                                                                       \
+            x = x;                                                                                                     \
         }
 #endif
 
@@ -90,8 +89,7 @@
 #endif
 
 // HUGE VAL
-#if __has_builtin(__builtin_huge_valf) or defined(TETL_MSVC)                   \
-    or defined(TETL_GCC)
+#if __has_builtin(__builtin_huge_valf) or defined(TETL_MSVC) or defined(TETL_GCC)
     #define TETL_BUILTIN_HUGE_VALF (__builtin_huge_valf())
 #else
     #define TETL_BUILTIN_HUGE_VALF (1.0F / 0.0F)

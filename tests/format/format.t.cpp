@@ -19,7 +19,7 @@ auto test_ints() -> bool
     auto test = [](T in, auto expected) -> bool {
         using string_t = etl::static_string<32>;
         auto str       = string_t();
-        auto ctx = etl::format_context<string_t> { etl::back_inserter(str) };
+        auto ctx       = etl::format_context<string_t> { etl::back_inserter(str) };
         auto formatter = etl::formatter<T, char> {};
         formatter.format(in, ctx);
         assert(str == expected);

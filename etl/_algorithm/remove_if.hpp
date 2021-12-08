@@ -16,8 +16,7 @@ namespace etl {
 /// \group remove_if
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto remove_if(
-    ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
+[[nodiscard]] constexpr auto remove_if(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
     first = find_if(first, last, pred);
 

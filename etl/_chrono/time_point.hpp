@@ -48,17 +48,13 @@ struct time_point {
     /// constructor only participates in overload resolution if Duration2 is
     /// implicitly convertible to duration.
     template <typename Dur2, TETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
-    constexpr time_point(time_point<clock, Dur2> const& t)
-        : d_ { t.time_since_epch() }
+    constexpr time_point(time_point<clock, Dur2> const& t) : d_ { t.time_since_epch() }
     {
     }
 
     /// \brief Returns a duration representing the amount of time between *this
     /// and the clock's epoch.
-    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration
-    {
-        return d_;
-    }
+    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return d_; }
 
     /// \brief Modifies the time point by the given duration. Applies the offset
     /// d to pt. Effectively, d is added to the internally stored duration d_ as
@@ -89,10 +85,7 @@ struct time_point {
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator++(int) noexcept -> time_point
-    {
-        return time_point(d_++);
-    }
+    constexpr auto operator++(int) noexcept -> time_point { return time_point(d_++); }
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
@@ -104,22 +97,13 @@ struct time_point {
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator--(int) noexcept -> time_point
-    {
-        return time_point(d_--);
-    }
+    constexpr auto operator--(int) noexcept -> time_point { return time_point(d_--); }
 
     /// \brief Returns a time_point with the smallest possible duration,
-    [[nodiscard]] static constexpr auto min() noexcept -> time_point
-    {
-        return time_point(duration::min());
-    }
+    [[nodiscard]] static constexpr auto min() noexcept -> time_point { return time_point(duration::min()); }
 
     /// \brief Returns a time_point with the largest possible duration,
-    [[nodiscard]] static constexpr auto max() noexcept -> time_point
-    {
-        return time_point(duration::max());
-    }
+    [[nodiscard]] static constexpr auto max() noexcept -> time_point { return time_point(duration::max()); }
 
 private:
     duration d_ {};
@@ -128,8 +112,8 @@ private:
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator==(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return lhs.time_since_epoch() == rhs.time_since_epoch();
 }
@@ -137,8 +121,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator!=(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return !(lhs == rhs);
 }
@@ -146,8 +130,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return lhs.time_since_epoch() < rhs.time_since_epoch();
 }
@@ -155,8 +139,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<=(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator<=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return lhs.time_since_epoch() <= rhs.time_since_epoch();
 }
@@ -164,8 +148,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return lhs.time_since_epoch() > rhs.time_since_epoch();
 }
@@ -173,8 +157,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>=(time_point<Clock, Dur1> const& lhs,
-    time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator>=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept
+    -> bool
 {
     return lhs.time_since_epoch() >= rhs.time_since_epoch();
 }
@@ -186,8 +170,7 @@ namespace etl {
 /// \brief Exposes the type named type, which is the common type of two
 /// chrono::time_points.
 template <typename Clock, typename Duration1, typename Duration2>
-struct common_type<chrono::time_point<Clock, Duration1>,
-    chrono::time_point<Clock, Duration2>> {
+struct common_type<chrono::time_point<Clock, Duration1>, chrono::time_point<Clock, Duration2>> {
     using type = chrono::time_point<Clock, common_type_t<Duration1, Duration2>>;
 };
 

@@ -14,49 +14,33 @@ namespace etl {
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto log(float v) noexcept -> float
-{
-    return etl::detail::gcem::log(v);
-}
+[[nodiscard]] constexpr auto log(float v) noexcept -> float { return etl::detail::gcem::log(v); }
 
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto logf(float v) noexcept -> float
-{
-    return etl::detail::gcem::log(v);
-}
+[[nodiscard]] constexpr auto logf(float v) noexcept -> float { return etl::detail::gcem::log(v); }
 
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto log(double v) noexcept -> double
-{
-    return etl::detail::gcem::log(v);
-}
+[[nodiscard]] constexpr auto log(double v) noexcept -> double { return etl::detail::gcem::log(v); }
 
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto log(long double v) noexcept -> long double
-{
-    return etl::detail::gcem::log(v);
-}
+[[nodiscard]] constexpr auto log(long double v) noexcept -> long double { return etl::detail::gcem::log(v); }
 
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-[[nodiscard]] constexpr auto logl(long double v) noexcept -> long double
-{
-    return etl::detail::gcem::log(v);
-}
+[[nodiscard]] constexpr auto logl(long double v) noexcept -> long double { return etl::detail::gcem::log(v); }
 
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
 template <typename T>
-[[nodiscard]] constexpr auto log(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto log(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::log(static_cast<double>(arg));
 }

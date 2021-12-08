@@ -20,8 +20,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemcmp
 ///
 /// \module Strings
-constexpr auto wmemcmp(
-    wchar_t const* lhs, const wchar_t* rhs, etl::size_t count) noexcept -> int
+constexpr auto wmemcmp(wchar_t const* lhs, const wchar_t* rhs, etl::size_t count) noexcept -> int
 {
     return detail::strncmp_impl<wchar_t, etl::size_t>(lhs, rhs, count);
 }

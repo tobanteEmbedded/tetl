@@ -26,8 +26,7 @@ namespace etl {
 /// The behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_copy_constructible
-    : is_constructible<T, add_lvalue_reference_t<add_const_t<T>>> {
+struct is_copy_constructible : is_constructible<T, add_lvalue_reference_t<add_const_t<T>>> {
 };
 
 template <typename T>

@@ -16,11 +16,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct less_equal {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> bool
-    {
-        return lhs <= rhs;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs <= rhs; }
 };
 
 /// \group less_equal

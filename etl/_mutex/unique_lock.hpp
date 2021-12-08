@@ -44,24 +44,17 @@ public:
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Does not lock the associated mutex.
-    unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept
-        : mutex_ { &m } { }
+    unique_lock(mutex_type& m, defer_lock_t /*tag*/) noexcept : mutex_ { &m } { }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex without blocking by
     /// calling m.try_lock(). The behavior is undefined if the current thread
     /// already owns the mutex except when the mutex is recursive.
-    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : mutex_ { &m }
-    {
-        try_lock();
-    }
+    unique_lock(mutex_type& m, try_to_lock_t /*tag*/) noexcept : mutex_ { &m } { try_lock(); }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Assumes the calling thread already owns m.
-    unique_lock(mutex_type& m, adopt_lock_t /*tag*/)
-        : mutex_ { &m }, owns_ { true }
-    {
-    }
+    unique_lock(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ { &m }, owns_ { true } { }
 
     /// \brief Constructs a unique_lock with m as the associated mutex.
     /// Additionally: Tries to lock the associated mutex by calling
@@ -69,9 +62,7 @@ public:
     /// been reached or the lock is acquired, whichever comes first. May block
     /// for longer than until timeout_time has been reached.
     template <typename Clock, typename Duration>
-    unique_lock(mutex_type& m,
-        chrono::time_point<Clock, Duration> const& absTime) noexcept
-        : mutex_ { &m }
+    unique_lock(mutex_type& m, chrono::time_point<Clock, Duration> const& absTime) noexcept : mutex_ { &m }
     {
         try_lock_until(absTime);
     }
@@ -82,9 +73,7 @@ public:
     /// timeout_duration has elapsed or the lock is acquired, whichever comes
     /// first. May block for longer than timeout_duration.
     template <typename Rep, typename Period>
-    unique_lock(
-        mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept
-        : mutex_ { &m }
+    unique_lock(mutex_type& m, chrono::duration<Rep, Period> const& relTime) noexcept : mutex_ { &m }
     {
         try_lock_for(relTime);
     }
@@ -149,8 +138,7 @@ public:
     /// longer than timeout_duration due to scheduling or resource contention
     /// delays.
     template <typename Rep, typename Period>
-    auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(
-        noexcept(mutex_->try_lock_for(dur))) -> bool
+    auto try_lock_for(chrono::duration<Rep, Period> const& dur) noexcept(noexcept(mutex_->try_lock_for(dur))) -> bool
     {
         if ((mutex_ != nullptr) && !owns_) {
             if (auto success = mutex_->try_lock_for(dur); success) {
@@ -164,8 +152,8 @@ public:
     /// \brief Tries to lock (i.e., takes ownership of) the associated mutex
     /// without blocking.
     template <typename Clock, typename Duration>
-    auto try_lock_until(chrono::time_point<Clock, Duration> const& tp) noexcept(
-        noexcept(mutex_->try_lock_until(tp))) -> bool
+    auto try_lock_until(chrono::time_point<Clock, Duration> const& tp) noexcept(noexcept(mutex_->try_lock_until(tp)))
+        -> bool
     {
         if ((mutex_ != nullptr) && !owns_) {
             if (auto success = mutex_->try_lock_until(tp); success) {
@@ -212,10 +200,7 @@ public:
     [[nodiscard]] auto owns_lock() const noexcept -> bool { return owns_; }
 
     /// \brief Checks whether *this owns a locked mutex or not.
-    [[nodiscard]] explicit operator bool() const noexcept
-    {
-        return owns_lock();
-    }
+    [[nodiscard]] explicit operator bool() const noexcept { return owns_lock(); }
 
     /// \brief Returns a pointer to the associated mutex, or a null pointer if
     /// there is no associated mutex.
@@ -225,8 +210,7 @@ public:
 /// \brief Specializes the swap algorithm for unique_lock. Exchanges the state
 /// of lhs with that of rhs.
 template <typename Mutex>
-void swap(unique_lock<Mutex>& lhs, unique_lock<Mutex>& rhs) noexcept(
-    noexcept(lhs.swap(rhs)))
+void swap(unique_lock<Mutex>& lhs, unique_lock<Mutex>& rhs) noexcept(noexcept(lhs.swap(rhs)))
 {
     lhs.swap(rhs);
 }

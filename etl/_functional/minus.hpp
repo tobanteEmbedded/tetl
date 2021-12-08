@@ -17,11 +17,7 @@ namespace etl {
 template <typename T = void>
 struct minus {
     /// \brief Returns the difference between lhs and rhs.
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> T
-    {
-        return lhs - rhs;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs - rhs; }
 };
 
 /// \group minus

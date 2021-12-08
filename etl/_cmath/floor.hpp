@@ -14,44 +14,28 @@ namespace etl {
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floor(float arg) noexcept -> float
-{
-    return etl::detail::gcem::floor(arg);
-}
+[[nodiscard]] constexpr auto floor(float arg) noexcept -> float { return etl::detail::gcem::floor(arg); }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floorf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::floor(arg);
-}
+[[nodiscard]] constexpr auto floorf(float arg) noexcept -> float { return etl::detail::gcem::floor(arg); }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floor(double arg) noexcept -> double
-{
-    return etl::detail::gcem::floor(arg);
-}
+[[nodiscard]] constexpr auto floor(double arg) noexcept -> double { return etl::detail::gcem::floor(arg); }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::floor(arg);
-}
+[[nodiscard]] constexpr auto floor(long double arg) noexcept -> long double { return etl::detail::gcem::floor(arg); }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
-[[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::floor(arg);
-}
+[[nodiscard]] constexpr auto floorl(long double arg) noexcept -> long double { return etl::detail::gcem::floor(arg); }
 
 /// \brief Computes the largest integer value not greater than arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/floor
 template <typename T>
-[[nodiscard]] constexpr auto floor(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto floor(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::floor(static_cast<double>(arg));
 }

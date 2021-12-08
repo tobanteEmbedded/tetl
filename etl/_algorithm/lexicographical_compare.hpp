@@ -17,8 +17,8 @@ namespace etl {
 /// \group lexicographical_compare
 /// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Compare>
-[[nodiscard]] constexpr auto lexicographical_compare(
-    InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2, Compare comp) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2, Compare comp)
+    -> bool
 {
     for (; (f1 != l1) && (f2 != l2); ++f1, (void)++f2) {
         if (comp(*f1, *f2)) { return true; }
@@ -29,8 +29,7 @@ template <typename InputIt1, typename InputIt2, typename Compare>
 
 /// \group lexicographical_compare
 template <typename InputIt1, typename InputIt2>
-[[nodiscard]] constexpr auto lexicographical_compare(
-    InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2) -> bool
+[[nodiscard]] constexpr auto lexicographical_compare(InputIt1 f1, InputIt1 l1, InputIt2 f2, InputIt2 l2) -> bool
 {
     return lexicographical_compare(f1, l1, f2, l2, less<decltype(*f1)> {});
 }

@@ -22,8 +22,8 @@ struct from_chars_result {
     char const* ptr { nullptr };
     etl::errc ec {};
 
-    [[nodiscard]] friend constexpr auto operator==(
-        from_chars_result const& l, from_chars_result const& r) noexcept -> bool
+    [[nodiscard]] friend constexpr auto operator==(from_chars_result const& l, from_chars_result const& r) noexcept
+        -> bool
     {
         return l.ptr == r.ptr && l.ec == r.ec;
     }
@@ -35,10 +35,9 @@ struct from_chars_result {
 /// value is unmodified, otherwise the characters matching the pattern are
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
-template <typename T,
-    enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
-[[nodiscard]] constexpr auto from_chars(char const* first, char const* last,
-    T& value, int base = 10) -> from_chars_result
+template <typename T, enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
+[[nodiscard]] constexpr auto from_chars(char const* first, char const* last, T& value, int base = 10)
+    -> from_chars_result
 {
     TETL_ASSERT(base == 10);
     ignore_unused(base);

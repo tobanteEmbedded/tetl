@@ -12,8 +12,7 @@
 
 namespace etl {
 template <typename It>
-using diff_t =
-    typename etl::iterator_traits<etl::remove_cvref_t<It>>::difference_type;
+using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<It>>::difference_type;
 
 /// \brief Format args according to the format string fmt, and write the result
 /// to the output iterator out.
@@ -22,8 +21,7 @@ using diff_t =
 ///
 /// \module Strings
 template <typename OutputIt, typename... Args>
-auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
-    -> OutputIt
+auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
     // TODO: Make more generic. What about other string types.
     auto ctx = format_context<etl::static_string<32>> { out };
@@ -52,8 +50,7 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args)
         ...);
 
     // Anything left over after the last argument.
-    if (auto const trailing = detail::split_at_next_argument(rest);
-        !trailing.first.empty()) {
+    if (auto const trailing = detail::split_at_next_argument(rest); !trailing.first.empty()) {
         detail::format_escaped_sequences(trailing.first, ctx);
         TETL_ASSERT(trailing.second.empty());
     }
@@ -80,8 +77,8 @@ struct format_to_n_result {
 ///
 /// \module Strings
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt,
-    Args const&... args) -> format_to_n_result<OutputIter>
+auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args)
+    -> format_to_n_result<OutputIter>
 {
     etl::ignore_unused(n);
 
@@ -123,12 +120,11 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt,
     }
 
     if (indices.size() > 0) {
-        [[maybe_unused]] auto replaceCharAt
-            = [n](auto output, auto pos, char val) {
-                  etl::ignore_unused(n);
-                  // TETL_ASSERT((long)pos < n);
-                  output[pos] = val;
-              };
+        [[maybe_unused]] auto replaceCharAt = [n](auto output, auto pos, char val) {
+            etl::ignore_unused(n);
+            // TETL_ASSERT((long)pos < n);
+            output[pos] = val;
+        };
 
         [[maybe_unused]] typename decltype(indices)::size_type i {};
         (replaceCharAt(out, indices[i++], args), ...);

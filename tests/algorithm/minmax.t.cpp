@@ -32,8 +32,7 @@ constexpr auto test() -> bool
         vec.push_back(T(4));
         vec.push_back(T(-5));
 
-        auto const cmp
-            = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
+        auto const cmp = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
         assert((*etl::max_element(vec.begin(), vec.end()) == T(4)));
         assert((*etl::max_element(vec.begin(), vec.end(), cmp) == T(-5)));
     }
@@ -56,8 +55,7 @@ constexpr auto test() -> bool
         vec.push_back(T { 4 });
         vec.push_back(T { -5 });
 
-        auto const cmp
-            = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
+        auto const cmp = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
         assert((*etl::min_element(vec.begin(), vec.end()) == T { -5 }));
         assert((*etl::min_element(vec.begin(), vec.end(), cmp) == T { 1 }));
     }

@@ -102,8 +102,7 @@ auto test() -> bool
         assert(sp.data() == vec.data());
         assert(sp.size() == vec.size());
         assert(sp.extent == etl::dynamic_extent);
-        assert(etl::all_of(etl::begin(sp), etl::end(sp),
-            [](auto& x) { return x == T { 42 }; }));
+        assert(etl::all_of(etl::begin(sp), etl::end(sp), [](auto& x) { return x == T { 42 }; }));
     }
 
     // empty
@@ -137,8 +136,7 @@ auto test() -> bool
         assert(!(etl::begin(sp) == etl::end(sp)));
 
         auto counter = 0;
-        etl::for_each(etl::begin(sp), etl::end(sp),
-            [&counter](auto /*unused*/) { counter++; });
+        etl::for_each(etl::begin(sp), etl::end(sp), [&counter](auto /*unused*/) { counter++; });
         assert(counter == 4);
     }
 

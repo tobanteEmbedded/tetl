@@ -17,15 +17,12 @@ struct is_constructible_helper : etl::false_type {
 };
 
 template <typename T, typename... Args>
-struct is_constructible_helper<
-    etl::void_t<decltype(T(etl::declval<Args>()...))>, T, Args...>
-    : etl::true_type {
+struct is_constructible_helper<etl::void_t<decltype(T(etl::declval<Args>()...))>, T, Args...> : etl::true_type {
 };
 } // namespace detail
 
 template <typename T, typename... Args>
-using is_constructible
-    = detail::is_constructible_helper<etl::void_t<>, T, Args...>;
+using is_constructible = detail::is_constructible_helper<etl::void_t<>, T, Args...>;
 
 template <typename T, typename... Args>
 inline constexpr bool is_constructible_v = is_constructible<T, Args...>::value;

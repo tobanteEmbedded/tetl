@@ -8,12 +8,9 @@
 namespace etl::detail {
 
 template <typename Float>
-[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept
-    -> Float
+[[nodiscard]] constexpr auto lerp_impl(Float a, Float b, Float t) noexcept -> Float
 {
-    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
-        return t * b + (1 - t) * a;
-    }
+    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
 
     if (t == 1) { return b; }
 

@@ -10,8 +10,7 @@ namespace etl {
 
 /// \group is_sorted_until
 template <typename ForwardIt, typename Compare>
-[[nodiscard]] constexpr auto is_sorted_until(
-    ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
     if (first != last) {
         ForwardIt next = first;
@@ -30,8 +29,7 @@ template <typename ForwardIt, typename Compare>
 /// \group is_sorted_until
 /// \module Algorithm
 template <typename ForwardIt>
-[[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last)
-    -> ForwardIt
+[[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last) -> ForwardIt
 {
     return is_sorted_until(first, last, less<>());
 }

@@ -18,8 +18,7 @@ namespace etl {
 /// \group size
 /// \module Iterator
 template <typename C>
-constexpr auto size(C const& c) noexcept(noexcept(c.size()))
-    -> decltype(c.size())
+constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
 {
     return c.size();
 }
@@ -33,16 +32,14 @@ constexpr auto size(T const (&array)[N]) noexcept -> size_t
 }
 
 template <typename C>
-constexpr auto ssize(C const& c)
-    -> common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>
+constexpr auto ssize(C const& c) -> common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>
 {
     using R = common_type_t<ptrdiff_t, make_signed_t<decltype(c.size())>>;
     return static_cast<R>(c.size());
 }
 
 template <typename T, ptrdiff_t N>
-constexpr auto ssize(T const (&array)[static_cast<size_t>(N)]) noexcept
-    -> ptrdiff_t
+constexpr auto ssize(T const (&array)[static_cast<size_t>(N)]) noexcept -> ptrdiff_t
 {
     // The static_cast<size_t>(N) inside the array parameter is to keep gcc's
     // sign-conversion warnings happy. Array sizes are of type size_t which

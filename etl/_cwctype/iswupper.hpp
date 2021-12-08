@@ -19,10 +19,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswupper
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto iswupper(wint_t ch) noexcept -> int
-{
-    return static_cast<int>(ch >= L'A' && ch <= L'Z');
-}
+[[nodiscard]] constexpr auto iswupper(wint_t ch) noexcept -> int { return static_cast<int>(ch >= L'A' && ch <= L'Z'); }
 
 } // namespace etl
 

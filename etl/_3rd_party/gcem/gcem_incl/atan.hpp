@@ -34,26 +34,19 @@ namespace internal {
 // Series
 
 template <typename T>
-constexpr auto atan_series_order_calc(
-    const T x, const T xPow, const uint_t order) noexcept -> T
+constexpr auto atan_series_order_calc(const T x, const T xPow, const uint_t order) noexcept -> T
 {
-    return (T(1) / (T((order - 1) * 4 - 1) * xPow)
-            - T(1) / (T((order - 1) * 4 + 1) * xPow * x));
+    return (T(1) / (T((order - 1) * 4 - 1) * xPow) - T(1) / (T((order - 1) * 4 + 1) * xPow * x));
 }
 
 template <typename T>
-constexpr auto atan_series_order(const T x, const T xPow, const uint_t order,
-    const uint_t maxOrder) noexcept -> T
+constexpr auto atan_series_order(const T x, const T xPow, const uint_t order, const uint_t maxOrder) noexcept -> T
 {
     return static_cast<T>(
-        order == 1
-            ? GCEM_HALF_PI - T(1) / x
-                  + atan_series_order(x * x, pow(x, 3), order + 1, maxOrder)
-            :
-            // NOTE: x changes to x*x for order > 1
+        order == 1 ? GCEM_HALF_PI - T(1) / x + atan_series_order(x * x, pow(x, 3), order + 1, maxOrder) :
+                   // NOTE: x changes to x*x for order > 1
             order < maxOrder
-            ? atan_series_order_calc(x, xPow, order)
-                  + atan_series_order(x, xPow * x * x, order + 1, maxOrder)
+            ? atan_series_order_calc(x, xPow, order) + atan_series_order(x, xPow * x * x, order + 1, maxOrder)
             :
             // order == max_order
             atan_series_order_calc(x, xPow, order));
@@ -62,8 +55,7 @@ constexpr auto atan_series_order(const T x, const T xPow, const uint_t order,
 template <typename T>
 constexpr auto atan_series_main(const T x) noexcept -> T
 {
-    return static_cast<T>(x < T(3) ? atan_series_order(x, x, 1U, 10U)
-                                   : // O(1/x^39)
+    return static_cast<T>(x < T(3) ? atan_series_order(x, x, 1U, 10U) : // O(1/x^39)
                               x < T(4) ? atan_series_order(x, x, 1U, 9U)
                                        : // O(1/x^35)
                               x < T(5) ? atan_series_order(x, x, 1U, 8U)
@@ -84,16 +76,13 @@ constexpr auto atan_series_main(const T x) noexcept -> T
 // CF
 
 template <typename T>
-constexpr auto atan_cf_recur(
-    const T xx, const uint_t depth, const uint_t maxDepth) noexcept -> T
+constexpr auto atan_cf_recur(const T xx, const uint_t depth, const uint_t maxDepth) noexcept -> T
 {
-    return (
-        depth < maxDepth ? // if
-            T(2 * depth - 1)
-                + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
-                         :
-                         // else
-            T(2 * depth - 1));
+    return (depth < maxDepth ? // if
+                T(2 * depth - 1) + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
+                             :
+                             // else
+                T(2 * depth - 1));
 }
 
 template <typename T>

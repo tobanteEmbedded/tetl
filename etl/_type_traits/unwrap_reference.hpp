@@ -24,8 +24,7 @@ struct unwrap_reference<etl::reference_wrapper<T>> {
 
 template <typename T>
 struct unwrap_ref_decay
-    : etl::conditional_t<!etl::is_same_v<etl::decay_t<T>, T>,
-          unwrap_reference<etl::decay_t<T>>, etl::decay<T>> {
+    : etl::conditional_t<!etl::is_same_v<etl::decay_t<T>, T>, unwrap_reference<etl::decay_t<T>>, etl::decay<T>> {
 };
 
 template <typename T>

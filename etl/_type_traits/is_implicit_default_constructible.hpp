@@ -13,26 +13,22 @@ namespace etl {
 template <typename T>
 void test_implicit_default_constructible(T);
 
-template <typename T, typename = void,
-    typename = typename etl::is_default_constructible<T>::type>
+template <typename T, typename = void, typename = typename etl::is_default_constructible<T>::type>
 struct is_implicit_default_constructible : false_type {
 };
 
 template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), true_type>
+struct is_implicit_default_constructible<T, decltype(test_implicit_default_constructible<T const&>({})), true_type>
     : true_type {
 };
 
 template <typename T>
-struct is_implicit_default_constructible<T,
-    decltype(test_implicit_default_constructible<T const&>({})), false_type>
+struct is_implicit_default_constructible<T, decltype(test_implicit_default_constructible<T const&>({})), false_type>
     : false_type {
 };
 
 template <typename T>
-inline constexpr auto is_implicit_default_constructible_v
-    = is_implicit_default_constructible<T>::value;
+inline constexpr auto is_implicit_default_constructible_v = is_implicit_default_constructible<T>::value;
 
 } // namespace etl
 

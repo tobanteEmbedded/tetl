@@ -19,8 +19,7 @@ constexpr auto data(C& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 
 /// \group data
 template <typename C>
-constexpr auto data(C const& c) noexcept(noexcept(c.data()))
-    -> decltype(c.data())
+constexpr auto data(C const& c) noexcept(noexcept(c.data())) -> decltype(c.data())
 {
     return c.data();
 }

@@ -121,22 +121,13 @@ struct ios_base {
     ios_base(ios_base const&) = delete;
 
     /// \brief Manages format flags. Returns current formatting setting.
-    [[nodiscard]] constexpr auto flags() const noexcept -> fmtflags
-    {
-        return fmtFlags_;
-    }
+    [[nodiscard]] constexpr auto flags() const noexcept -> fmtflags { return fmtFlags_; }
 
     /// \brief Manages format flags. Replaces current settings with given ones.
-    constexpr auto flags(fmtflags flags) noexcept -> fmtflags
-    {
-        return exchange(fmtFlags_, flags);
-    }
+    constexpr auto flags(fmtflags flags) noexcept -> fmtflags { return exchange(fmtFlags_, flags); }
 
     /// \brief Sets the formatting flags identified by flags.
-    constexpr auto setf(fmtflags flags) noexcept -> fmtflags
-    {
-        return exchange(fmtFlags_, fmtFlags_ | flags);
-    }
+    constexpr auto setf(fmtflags flags) noexcept -> fmtflags { return exchange(fmtFlags_, fmtFlags_ | flags); }
 
     /// \brief Clears the formatting flags under mask, and sets the cleared
     /// flags to those specified by flags.
@@ -146,18 +137,12 @@ struct ios_base {
     }
 
     /// \brief Unsets the formatting flags identified by flags.
-    constexpr auto unsetf(fmtflags flags) noexcept -> void
-    {
-        fmtFlags_ &= (~flags);
-    }
+    constexpr auto unsetf(fmtflags flags) noexcept -> void { fmtFlags_ &= (~flags); }
 
     /// \brief Manages the precision (i.e. how many digits are generated) of
     /// floating point output performed by num_put::do_put. Returns the current
     /// precision.
-    [[nodiscard]] constexpr auto precision() const noexcept -> streamsize
-    {
-        return precision_;
-    }
+    [[nodiscard]] constexpr auto precision() const noexcept -> streamsize { return precision_; }
 
     /// \brief Manages the precision (i.e. how many digits are generated) of
     /// floating point output performed by num_put::do_put. Sets the precision
@@ -170,19 +155,13 @@ struct ios_base {
     /// \brief Manages the minimum number of characters to generate on certain
     /// output operations and the maximum number of characters to generate on
     /// certain input operations. Returns the current width.
-    [[nodiscard]] constexpr auto width() const noexcept -> streamsize
-    {
-        return width_;
-    }
+    [[nodiscard]] constexpr auto width() const noexcept -> streamsize { return width_; }
 
     /// \brief Manages the minimum number of characters to generate on certain
     /// output operations and the maximum number of characters to generate on
     /// certain input operations. Sets the width to the given one. Returns the
     /// previous width.
-    constexpr auto width(streamsize newWidth) noexcept -> streamsize
-    {
-        return exchange(width_, newWidth);
-    }
+    constexpr auto width(streamsize newWidth) noexcept -> streamsize { return exchange(width_, newWidth); }
 
 protected:
     ios_base() = default;

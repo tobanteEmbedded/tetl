@@ -12,29 +12,21 @@
 namespace etl::test {
 
 struct assertion_handler {
-    assertion_handler(source_line_info const& src,
-        result_disposition::flags flags, char const* expr, bool result)
+    assertion_handler(source_line_info const& src, result_disposition::flags flags, char const* expr, bool result)
         : src_ { src }
         , flags_ { flags }
         , expr_ { expr }
         , res_ { has_flag(result_disposition::false_test) ? !result : result }
     {
-        if (res_ || has_flag(result_disposition::suppress_fail)) {
-            current_session().pass_assertion(src_, expr_);
-        }
-        if (!res_ && has_flag(result_disposition::normal)) {
-            current_session().fail_assertion(src_, expr_, true);
-        }
+        if (res_ || has_flag(result_disposition::suppress_fail)) { current_session().pass_assertion(src_, expr_); }
+        if (!res_ && has_flag(result_disposition::normal)) { current_session().fail_assertion(src_, expr_, true); }
         if (!res_ && has_flag(result_disposition::continue_on_failure)) {
             current_session().fail_assertion(src_, expr_, false);
         }
     }
 
 private:
-    [[nodiscard]] auto has_flag(result_disposition::flags flag) -> bool
-    {
-        return (flags_ & flag) != 0;
-    }
+    [[nodiscard]] auto has_flag(result_disposition::flags flag) -> bool { return (flags_ & flag) != 0; }
 
     source_line_info src_;
     result_disposition::flags flags_;

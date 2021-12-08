@@ -12,8 +12,7 @@
 
 namespace etl::chrono {
 
-template <typename To, typename Rep, typename Period,
-    TETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Rep, typename Period, TETL_REQUIRES_(detail::is_duration<To>::value)>
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
     is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -26,10 +25,8 @@ template <typename To, typename Rep, typename Period,
     return low.count() & 1 ? high : low;
 }
 
-template <typename To, typename Clock, typename Duration,
-    TETL_REQUIRES_(detail::is_duration<To>::value)>
-[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp)
-    -> time_point<Clock, To>
+template <typename To, typename Clock, typename Duration, TETL_REQUIRES_(detail::is_duration<To>::value)>
+[[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
 {
     return time_point<Clock, To> { round<To>(tp.time_since_epoch()) };
 }

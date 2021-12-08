@@ -43,9 +43,7 @@ constexpr auto erf_cf_large_recur(const T x, const int depth) noexcept -> T
 template <typename T>
 constexpr auto erf_cf_large_main(const T x) noexcept -> T
 {
-    return (T(1)
-            - T(2) * (exp(-x * x) / T(GCEM_SQRT_PI))
-                  / erf_cf_large_recur(T(2) * x, 1));
+    return (T(1) - T(2) * (exp(-x * x) / T(GCEM_SQRT_PI)) / erf_cf_large_recur(T(2) * x, 1));
 }
 
 // see
@@ -55,8 +53,7 @@ template <typename T>
 constexpr auto erf_cf_small_recur(const T xx, const int depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
-                (2 * depth - 1) - 2 * xx
-                    + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)
+                (2 * depth - 1) - 2 * xx + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)
                                       :
                                       // else
                 (2 * depth - 1) - 2 * xx);
@@ -65,8 +62,7 @@ constexpr auto erf_cf_small_recur(const T xx, const int depth) noexcept -> T
 template <typename T>
 constexpr auto erf_cf_small_main(const T x) noexcept -> T
 {
-    return (T(2) * x * (exp(-x * x) / T(GCEM_SQRT_PI))
-            / erf_cf_small_recur(x * x, 1));
+    return (T(2) * x * (exp(-x * x) / T(GCEM_SQRT_PI)) / erf_cf_small_recur(x * x, 1));
 }
 
 //

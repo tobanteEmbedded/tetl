@@ -15,11 +15,9 @@ namespace etl {
 /// \group remove_copy
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename T>
-constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination,
-    T const& value) -> OutputIt
+constexpr auto remove_copy(InputIt first, InputIt last, OutputIt destination, T const& value) -> OutputIt
 {
-    return remove_copy_if(first, last, destination,
-        [&value](auto const& item) { return item == value; });
+    return remove_copy_if(first, last, destination, [&value](auto const& item) { return item == value; });
 }
 
 } // namespace etl

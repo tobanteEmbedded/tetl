@@ -36,8 +36,7 @@ struct is_invocable_impl<Result, Ret, false, etl::void_t<typename Result::type>>
 // clang-format on
 
 template <typename Fn, typename... ArgTypes>
-struct is_invocable
-    : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, void>::type {
+struct is_invocable : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, void>::type {
 };
 
 template <typename Fn, typename... ArgTypes>

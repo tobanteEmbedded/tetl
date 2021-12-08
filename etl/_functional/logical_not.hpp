@@ -16,10 +16,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct logical_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool
-    {
-        return !arg;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
 };
 
 /// \group logical_not
@@ -28,8 +25,7 @@ struct logical_not<void> {
     using is_transparent = void;
 
     template <typename T>
-    [[nodiscard]] constexpr auto operator()(T&& arg) const
-        -> decltype(!etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(!etl::forward<T>(arg))
     {
         return !arg;
     }

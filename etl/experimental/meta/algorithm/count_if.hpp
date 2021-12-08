@@ -19,8 +19,7 @@ namespace detail {
 template <etl::size_t... I, typename... Ts, typename F>
 constexpr auto count_if_impl(index_sequence<I...> /*is*/, tuple<Ts...>& t, F f)
 {
-    constexpr int c
-        = ((type<decltype(f(get<I>(t)))>() == type<true_type>() ? 1 : 0) + ...);
+    constexpr int c = ((type<decltype(f(get<I>(t)))>() == type<true_type>() ? 1 : 0) + ...);
     return meta::integral_constant<int, c> {};
 }
 

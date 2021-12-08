@@ -110,8 +110,7 @@ constexpr auto test_countl_zero() -> bool
 template <typename T>
 constexpr auto test_countl_one() -> bool
 {
-    assert(etl::countl_one(T { etl::numeric_limits<T>::max() })
-           == etl::numeric_limits<T>::digits);
+    assert(etl::countl_one(T { etl::numeric_limits<T>::max() }) == etl::numeric_limits<T>::digits);
 
     assert(etl::countl_one(etl::uint8_t { 0b0000'0000 }) == 0);
     assert(etl::countl_one(etl::uint8_t { 0b1111'1111 }) == 8);
@@ -141,8 +140,7 @@ constexpr auto test_countr_zero() -> bool
 template <typename T>
 constexpr auto test_countr_one() -> bool
 {
-    assert(etl::countr_one(etl::numeric_limits<T>::max())
-           == etl::numeric_limits<T>::digits);
+    assert(etl::countr_one(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
 
     assert(etl::countr_one(T { 0b1111'1111 }) == 8);
     assert(etl::countr_one(T { 0b0111'1111 }) == 7);

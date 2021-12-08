@@ -32,8 +32,7 @@ using session_buffer = etl::array<test_case, Capacity>;
 
 struct session {
     template <etl::size_t Capacity>
-    explicit constexpr session(
-        session_buffer<Capacity>& buffer, etl::string_view name);
+    explicit constexpr session(session_buffer<Capacity>& buffer, etl::string_view name);
 
     [[nodiscard]] constexpr auto name() const noexcept -> etl::string_view;
 
@@ -42,14 +41,12 @@ struct session {
 
     [[nodiscard]] auto run_all() -> int;
 
-    constexpr auto add_test(name_and_tags const& spec, test_func_t func,
-        etl::string_view typeName = {}) -> void;
+    constexpr auto add_test(name_and_tags const& spec, test_func_t func, etl::string_view typeName = {}) -> void;
 
     auto current_test(test_case* tc) -> void;
 
     auto pass_assertion(source_line_info const& src, char const* expr) -> void;
-    auto fail_assertion(
-        source_line_info const& src, char const* expr, bool terminate) -> void;
+    auto fail_assertion(source_line_info const& src, char const* expr, bool terminate) -> void;
 
     [[nodiscard]] auto terminate() const -> bool;
 
@@ -73,26 +70,18 @@ private:
 inline auto current_session() -> session&;
 
 template <etl::size_t Capacity>
-inline constexpr session::session(
-    session_buffer<Capacity>& buffer, etl::string_view name)
+inline constexpr session::session(session_buffer<Capacity>& buffer, etl::string_view name)
     : name_ { name }, first_ { buffer.begin() }, last_ { buffer.end() }
 {
 }
 
-inline constexpr auto session::name() const noexcept -> etl::string_view
-{
-    return name_;
-}
+inline constexpr auto session::name() const noexcept -> etl::string_view { return name_; }
 
 inline constexpr auto session::begin() -> test_case* { return first_; }
 
-inline constexpr auto session::end() -> test_case*
-{
-    return etl::next(first_, static_cast<etl::ptrdiff_t>(count_));
-}
+inline constexpr auto session::end() -> test_case* { return etl::next(first_, static_cast<etl::ptrdiff_t>(count_)); }
 
-inline constexpr auto session::add_test(name_and_tags const& spec,
-    test_func_t func, etl::string_view typeName) -> void
+inline constexpr auto session::add_test(name_and_tags const& spec, test_func_t func, etl::string_view typeName) -> void
 {
     if (first_ + count_ != last_) {
         first_[count_].info.name = spec.name;
@@ -108,14 +97,13 @@ inline auto session::run_all() -> int
 
     for (auto& tc : (*this)) {
         if (terminate()) {
-            ::printf("%-10s %-10s %-10s\n", "Skip:", tc.info.name.data(),
-                tc.type_name.empty() ? "" : tc.type_name.data());
+            ::printf(
+                "%-10s %-10s %-10s\n", "Skip:", tc.info.name.data(), tc.type_name.empty() ? "" : tc.type_name.data());
             continue;
         }
 
         current_test(&tc);
-        ::printf("%-10s %-10s %-10s\n", "Run:", tc.info.name.data(),
-            tc.type_name.empty() ? "" : tc.type_name.data());
+        ::printf("%-10s %-10s %-10s\n", "Run:", tc.info.name.data(), tc.type_name.empty() ? "" : tc.type_name.data());
         tc.func();
 
         if (terminate()) {
@@ -138,15 +126,13 @@ inline auto session::current_test(test_case* tc) -> void
     current_ = tc;
 }
 
-inline auto session::pass_assertion(
-    source_line_info const& src, char const* expr) -> void
+inline auto session::pass_assertion(source_line_info const& src, char const* expr) -> void
 {
     etl::ignore_unused(this, src, expr);
     ++stats_.num_assertions;
 }
 
-inline auto session::fail_assertion(
-    source_line_info const& src, char const* expr, bool terminate) -> void
+inline auto session::fail_assertion(source_line_info const& src, char const* expr, bool terminate) -> void
 {
     constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
     ::printf(fmt, "Fail:", src.file, static_cast<int>(src.line), expr);
@@ -164,10 +150,7 @@ inline auto current_session() -> session&
 }
 
 struct auto_reg {
-    explicit auto_reg(name_and_tags const& sp, test_func_t func)
-    {
-        current_session().add_test(sp, func);
-    }
+    explicit auto_reg(name_and_tags const& sp, test_func_t func) { current_session().add_test(sp, func); }
 };
 
 } // namespace etl::test

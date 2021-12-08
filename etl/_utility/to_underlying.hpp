@@ -13,8 +13,7 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/utility/to_underlying
 template <typename Enum>
-[[nodiscard]] constexpr auto to_underlying(Enum e) noexcept
-    -> underlying_type_t<Enum>
+[[nodiscard]] constexpr auto to_underlying(Enum e) noexcept -> underlying_type_t<Enum>
 {
     return static_cast<underlying_type_t<Enum>>(e);
 }

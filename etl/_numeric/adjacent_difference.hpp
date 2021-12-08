@@ -16,8 +16,7 @@ namespace etl {
 /// \group adjacent_difference
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
-constexpr auto adjacent_difference(InputIt first, InputIt last,
-    OutputIt destination, BinaryOperation op) -> OutputIt
+constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
@@ -37,8 +36,7 @@ constexpr auto adjacent_difference(InputIt first, InputIt last,
 
 /// \group adjacent_difference
 template <typename InputIt, typename OutputIt>
-constexpr auto adjacent_difference(
-    InputIt first, InputIt last, OutputIt destination) -> OutputIt
+constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 

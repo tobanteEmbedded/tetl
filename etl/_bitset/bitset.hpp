@@ -52,16 +52,10 @@ struct bitset {
         }
 
         /// \brief Returns the value of the referenced bit.
-        [[nodiscard]] constexpr operator bool() const noexcept
-        {
-            return (*data_ & (1 << position_)) != 0;
-        }
+        [[nodiscard]] constexpr operator bool() const noexcept { return (*data_ & (1 << position_)) != 0; }
 
         /// \brief Returns the inverse of the referenced bit.
-        [[nodiscard]] constexpr auto operator~() const noexcept -> bool
-        {
-            return !static_cast<bool>(*this);
-        }
+        [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
 
         /// \brief Inverts the referenced bit.
         /// \returns *this
@@ -72,10 +66,7 @@ struct bitset {
         }
 
     private:
-        constexpr explicit reference(uint8_t* data, uint8_t position)
-            : data_ { data }, position_ { position }
-        {
-        }
+        constexpr explicit reference(uint8_t* data, uint8_t position) : data_ { data }, position_ { position } { }
 
         friend bitset;
         uint8_t* data_;
@@ -94,8 +85,7 @@ struct bitset {
     /// zeroes.
     constexpr bitset(unsigned long long val) noexcept
     {
-        auto const n
-            = min<size_t>(numeric_limits<decltype(val)>::digits, size());
+        auto const n = min<size_t>(numeric_limits<decltype(val)>::digits, size());
         for (size_t i = 0; i < n; ++i) {
             if (((val >> i) & 1U) == 1U) { set(i); }
         }
@@ -117,8 +107,7 @@ struct bitset {
     template <typename CharT, typename Traits>
     explicit constexpr bitset(basic_string_view<CharT, Traits> const& str,
         typename basic_string_view<CharT, Traits>::size_type pos = 0,
-        typename basic_string_view<CharT, Traits>::size_type n
-        = basic_string_view<CharT, Traits>::npos,
+        typename basic_string_view<CharT, Traits>::size_type n   = basic_string_view<CharT, Traits>::npos,
         CharT zero = CharT('0'), CharT one = CharT('1'))
         : bitset(0ULL)
     {
@@ -140,12 +129,9 @@ struct bitset {
     /// \param one alternate character for unset bits in str
     template <typename CharT>
     explicit constexpr bitset(CharT const* str,
-        typename basic_string_view<CharT>::size_type n
-        = basic_string_view<CharT>::npos,
-        CharT zero = CharT('0'), CharT one = CharT('1'))
-        : bitset(n == basic_string_view<CharT>::npos
-                     ? basic_string_view<CharT>(str)
-                     : basic_string_view<CharT>(str, n),
+        typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos, CharT zero = CharT('0'),
+        CharT one = CharT('1'))
+        : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str) : basic_string_view<CharT>(str, n),
             0, n, zero, one)
     {
     }
@@ -228,10 +214,7 @@ struct bitset {
     /// bounds checking.
     ///
     /// \param pos Index of the bit.
-    [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool
-    {
-        return test(pos);
-    }
+    [[nodiscard]] constexpr auto operator[](size_t const pos) const -> bool { return test(pos); }
 
     /// \brief Returns the value of the bit at the position pos. Perfoms no
     /// bounds checking.
@@ -245,30 +228,19 @@ struct bitset {
     }
 
     /// \brief Checks if all bits are set to true.
-    [[nodiscard]] constexpr auto all() const noexcept -> bool
-    {
-        return count() == size();
-    }
+    [[nodiscard]] constexpr auto all() const noexcept -> bool { return count() == size(); }
 
     /// \brief Checks if any bits are set to true.
-    [[nodiscard]] constexpr auto any() const noexcept -> bool
-    {
-        return count() > 0;
-    }
+    [[nodiscard]] constexpr auto any() const noexcept -> bool { return count() > 0; }
 
     /// \brief Checks if none bits are set to true.
-    [[nodiscard]] constexpr auto none() const noexcept -> bool
-    {
-        return count() == 0;
-    }
+    [[nodiscard]] constexpr auto none() const noexcept -> bool { return count() == 0; }
 
     /// \brief Returns the number of bits that are set to true.
     [[nodiscard]] constexpr auto count() const noexcept -> size_t
     {
         size_t count = 0;
-        for (size_t i = 0; i < size(); ++i) {
-            count += test(i) ? size_t { 1 } : 0;
-        }
+        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t { 1 } : 0; }
         return count;
     }
 
@@ -276,8 +248,7 @@ struct bitset {
     [[nodiscard]] constexpr auto size() const noexcept -> size_t { return N; }
 
     /// \brief Returns true if all of the bits in *this and rhs are equal.
-    [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept
-        -> bool
+    [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept -> bool
     {
         for (size_t i = 0; i < size(); ++i) {
             if (test(i) != rhs.test(i)) { return false; }
@@ -287,19 +258,13 @@ struct bitset {
     }
 
     /// \brief Returns true if all of the bits in *this and rhs are not equal.
-    [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept
-        -> bool
-    {
-        return !(*this == rhs);
-    }
+    [[nodiscard]] constexpr auto operator!=(bitset<N> const& rhs) const noexcept -> bool { return !(*this == rhs); }
 
     /// \brief Sets the bits to the result of binary AND on corresponding pairs
     /// of bits of *this and other.
     constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) {
-            bits_[i] &= other.bits_[i];
-        }
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] &= other.bits_[i]; }
         return *this;
     }
 
@@ -307,9 +272,7 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) {
-            bits_[i] |= other.bits_[i];
-        }
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] |= other.bits_[i]; }
         return *this;
     }
 
@@ -317,36 +280,27 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) {
-            bits_[i] ^= other.bits_[i];
-        }
+        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] ^= other.bits_[i]; }
         return *this;
     }
 
     /// \brief Returns a temporary copy of *this with all bits flipped (binary
     /// NOT).
-    constexpr auto operator~() const noexcept -> bitset<N>
-    {
-        return bitset<N>(*this).flip();
-    }
+    constexpr auto operator~() const noexcept -> bitset<N> { return bitset<N>(*this).flip(); }
 
     /// \brief Converts the contents of the bitset to a string. Uses zero to
     /// represent bits with value of false and one to represent bits with value
     /// of true. The resulting string contains N characters with the first
     /// character corresponds to the last (N-1th) bit and the last character
     /// corresponding to the first bit.
-    template <size_t Capacity, typename CharT = char,
-        typename Traits = char_traits<CharT>>
-    [[nodiscard]] constexpr auto to_string(
-        CharT zero = CharT('0'), CharT one = CharT('1')) const
+    template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
+    [[nodiscard]] constexpr auto to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const
         -> basic_static_string<CharT, Capacity, Traits>
     {
         // TODO: [tobi] This currently truncates the low bits, if the string is
         // large enough.
         auto str = basic_static_string<CharT, Capacity, Traits> {};
-        for (auto i { size() - 1U }; i != 0; --i) {
-            str.push_back(test(i) ? one : zero);
-        }
+        for (auto i { size() - 1U }; i != 0; --i) { str.push_back(test(i) ? one : zero); }
         str.push_back(test(0) ? one : zero);
         return str;
     }
@@ -362,15 +316,13 @@ struct bitset {
     /// \brief Converts the contents of the bitset to an unsigned long long
     /// integer. The first bit corresponds to the least significant digit of the
     /// number and the last bit corresponds to the most significant digit.
-    [[nodiscard]] constexpr auto to_ullong() const noexcept
-        -> unsigned long long
+    [[nodiscard]] constexpr auto to_ullong() const noexcept -> unsigned long long
     {
         return to_unsigned_type<unsigned long long>();
     }
 
 private:
-    [[nodiscard]] constexpr auto byte_for_position(size_t pos) const
-        -> uint8_t const&
+    [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
     {
         TETL_ASSERT(pos < size());
         return bits_[pos >> 3];
@@ -382,11 +334,7 @@ private:
         return bits_[pos >> 3];
     }
 
-    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept
-        -> uint8_t
-    {
-        return pos & 0x7;
-    }
+    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t { return pos & 0x7; }
 
     template <typename UInt>
     [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
@@ -406,24 +354,21 @@ private:
 
 /// \brief Performs binary AND between two bitsets, lhs and rhs.
 template <etl::size_t N>
-[[nodiscard]] constexpr auto operator&(
-    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+[[nodiscard]] constexpr auto operator&(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) &= rhs;
 }
 
 /// \brief Performs binary OR between two bitsets, lhs and rhs.
 template <etl::size_t N>
-[[nodiscard]] constexpr auto operator|(
-    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+[[nodiscard]] constexpr auto operator|(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) |= rhs;
 }
 
 /// \brief Performs binary XOR between two bitsets, lhs and rhs.
 template <etl::size_t N>
-[[nodiscard]] constexpr auto operator^(
-    bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
+[[nodiscard]] constexpr auto operator^(bitset<N> const& lhs, bitset<N> const& rhs) noexcept -> bitset<N>
 {
     return bitset<N>(lhs) ^= rhs;
 }

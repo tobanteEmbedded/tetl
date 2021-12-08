@@ -35,17 +35,15 @@ constexpr auto log2_check(const T x) noexcept -> T
                 x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
                          :
                          // x ~= 0
-                etl::numeric_limits<T>::epsilon() > x
-                ? -etl::numeric_limits<T>::infinity()
-                :
-                // indistinguishable from 1
+                etl::numeric_limits<T>::epsilon() > x ? -etl::numeric_limits<T>::infinity()
+                                                      :
+                                                      // indistinguishable from 1
                 etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
                                                                   :
                                                                   //
-                x == etl::numeric_limits<T>::infinity()
-                ? etl::numeric_limits<T>::infinity()
-                :
-                // else: log_2(x) = ln(x) / ln(2)
+                x == etl::numeric_limits<T>::infinity() ? etl::numeric_limits<T>::infinity()
+                                                        :
+                                                        // else: log_2(x) = ln(x) / ln(2)
                 T(log(x) / GCEM_LOG_2));
 }
 

@@ -8,11 +8,9 @@
 namespace etl {
 namespace detail {
 
-template <typename ForwardIter1, typename ForwardIter2,
-    typename BinaryPredicate>
-[[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last,
-    ForwardIter2 sFirst, ForwardIter2 sLast, BinaryPredicate pred)
-    -> ForwardIter1
+template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate>
+[[nodiscard]] constexpr auto search_impl(ForwardIter1 first, ForwardIter1 last, ForwardIter2 sFirst, ForwardIter2 sLast,
+    BinaryPredicate pred) -> ForwardIter1
 {
     for (;; ++first) {
         auto it = first;
@@ -40,16 +38,16 @@ template <typename ForwardIter1, typename ForwardIter2,
 /// \group search
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
-[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast, Predicate pred) -> ForwardIt1
+[[nodiscard]] constexpr auto search(
+    ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast, Predicate pred) -> ForwardIt1
 {
     return detail::search_impl(first, last, sFirst, sLast, pred);
 }
 
 /// \group search
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last,
-    ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
+[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
+    -> ForwardIt1
 {
     auto const eq = [](auto const& l, auto const& r) { return l == r; };
     return search(first, last, sFirst, sLast, eq);
@@ -57,8 +55,7 @@ template <typename ForwardIt1, typename ForwardIt2>
 
 /// \group search
 template <typename ForwardIt, typename Searcher>
-[[nodiscard]] constexpr auto search(
-    ForwardIt first, ForwardIt last, Searcher const& searcher) -> ForwardIt
+[[nodiscard]] constexpr auto search(ForwardIt first, ForwardIt last, Searcher const& searcher) -> ForwardIt
 {
     return searcher(first, last).first;
 }

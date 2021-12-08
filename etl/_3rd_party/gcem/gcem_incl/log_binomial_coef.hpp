@@ -30,8 +30,7 @@ constexpr auto log_binomial_coef_compute(const T n, const T k) noexcept -> T
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>
-constexpr auto log_binomial_coef_type_check(const T1 n, const T2 k) noexcept
-    -> TC
+constexpr auto log_binomial_coef_type_check(const T1 n, const T2 k) noexcept -> TC
 {
     return log_binomial_coef_compute(static_cast<TC>(n), static_cast<TC>(k));
 }
@@ -49,8 +48,7 @@ constexpr auto log_binomial_coef_type_check(const T1 n, const T2 k) noexcept
  */
 
 template <typename T1, typename T2>
-constexpr auto log_binomial_coef(const T1 n, const T2 k) noexcept
-    -> common_return_t<T1, T2>
+constexpr auto log_binomial_coef(const T1 n, const T2 k) noexcept -> common_return_t<T1, T2>
 {
     return internal::log_binomial_coef_type_check(n, k);
 }

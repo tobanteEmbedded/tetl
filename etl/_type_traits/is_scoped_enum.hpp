@@ -17,8 +17,7 @@ struct is_scoped_enum : false_type {
 };
 
 template <typename T>
-struct is_scoped_enum<T, true>
-    : bool_constant<!is_convertible_v<T, underlying_type_t<T>>> {
+struct is_scoped_enum<T, true> : bool_constant<!is_convertible_v<T, underlying_type_t<T>>> {
 };
 
 /// \brief Checks whether T is an scoped enumeration type. Provides the member

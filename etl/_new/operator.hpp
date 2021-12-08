@@ -28,8 +28,7 @@
 /// standard library implementation performs no action and returns ptr
 /// unmodified. The behavior is undefined if this function is called through a
 /// placement new expression and ptr is a null pointer.
-[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept
-    -> void*
+[[nodiscard]] auto operator new[](etl::size_t count, void* ptr) noexcept -> void*
 {
     etl::ignore_unused(count);
     return ptr;

@@ -34,15 +34,12 @@ struct is_destructible_impl : try_is_destructible_impl {
     using type = decltype(test<T>(0));
 };
 
-template <typename T,
-    bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>,
-        etl::is_unbounded_array<T>>::value,
+template <typename T, bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>, etl::is_unbounded_array<T>>::value,
     bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
 struct is_destructible_safe;
 
 template <typename T>
-struct is_destructible_safe<T, false, false>
-    : is_destructible_impl<typename etl::remove_all_extents_t<T>>::type {
+struct is_destructible_safe<T, false, false> : is_destructible_impl<typename etl::remove_all_extents_t<T>>::type {
 };
 
 template <typename T>

@@ -16,10 +16,7 @@ namespace etl {
 /// If they are equal to each other, it continues with the following pairs until
 /// the characters differ or until a terminating null-character is reached.
 /// \module Strings
-constexpr auto strcmp(char const* lhs, char const* rhs) -> int
-{
-    return detail::strcmp_impl<char>(lhs, rhs);
-}
+constexpr auto strcmp(char const* lhs, char const* rhs) -> int { return detail::strcmp_impl<char>(lhs, rhs); }
 
 } // namespace etl
 

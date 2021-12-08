@@ -18,8 +18,7 @@ namespace etl {
 /// \details Uses the base address to calculate an offset, which will be stored
 /// internally. If used on micro controllers, the base address should be set to
 /// the start of RAM. See your linker script.
-template <typename Type, intptr_t BaseAddress = 0,
-    typename StorageType = uint16_t>
+template <typename Type, intptr_t BaseAddress = 0, typename StorageType = uint16_t>
 struct small_ptr {
     /// \brief Default construct empty small_ptr. May contain garbage.
     small_ptr() = default;
@@ -31,10 +30,7 @@ struct small_ptr {
     small_ptr(Type* ptr) : value_ { compress(ptr) } { }
 
     /// \brief Returns a raw pointer to Type.
-    [[nodiscard]] auto get() noexcept -> Type*
-    {
-        return reinterpret_cast<Type*>(BaseAddress + value_);
-    }
+    [[nodiscard]] auto get() noexcept -> Type* { return reinterpret_cast<Type*>(BaseAddress + value_); }
 
     /// \brief Returns a raw pointer to const Type.
     [[nodiscard]] auto get() const noexcept -> Type const*
@@ -43,10 +39,7 @@ struct small_ptr {
     }
 
     /// \brief Returns the compressed underlying integer address.
-    [[nodiscard]] auto compressed_value() const noexcept -> StorageType
-    {
-        return value_;
-    }
+    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return value_; }
 
     /// \brief Returns a raw pointer to Type.
     [[nodiscard]] auto operator->() const -> Type* { return get(); }
@@ -96,10 +89,7 @@ struct small_ptr {
     }
 
     /// \brief Returns distance from this to other.
-    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t
-    {
-        return get() - other.get();
-    }
+    [[nodiscard]] auto operator-(small_ptr other) const noexcept -> ptrdiff_t { return get() - other.get(); }
 
     /// \brief Implicit conversion to raw pointer to mutable.
     [[nodiscard]] operator Type*() noexcept { return get(); }

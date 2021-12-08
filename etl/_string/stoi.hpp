@@ -16,8 +16,7 @@ namespace etl {
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
 template <size_t Capacity>
-[[nodiscard]] constexpr auto stoi(static_string<Capacity> const& str,
-    size_t* pos = nullptr, int base = 10) -> int
+[[nodiscard]] constexpr auto stoi(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10) -> int
 {
     ignore_unused(pos, base);
     auto const res = detail::ascii_to_int_base10<int>(str.c_str());
@@ -31,8 +30,7 @@ template <size_t Capacity>
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
 template <size_t Capacity>
-[[nodiscard]] constexpr auto stol(static_string<Capacity> const& str,
-    size_t* pos = nullptr, int base = 10) -> long
+[[nodiscard]] constexpr auto stol(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10) -> long
 {
     ignore_unused(pos, base);
     auto const res = detail::ascii_to_int_base10<long>(str.c_str());
@@ -46,8 +44,8 @@ template <size_t Capacity>
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
 template <size_t Capacity>
-[[nodiscard]] constexpr auto stoll(static_string<Capacity> const& str,
-    size_t* pos = nullptr, int base = 10) -> long long
+[[nodiscard]] constexpr auto stoll(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
+    -> long long
 {
     ignore_unused(pos, base);
     auto const res = detail::ascii_to_int_base10<long long>(str.c_str());
@@ -61,8 +59,8 @@ template <size_t Capacity>
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
 template <size_t Capacity>
-[[nodiscard]] constexpr auto stoul(static_string<Capacity> const& str,
-    size_t* pos = nullptr, int base = 10) -> unsigned long
+[[nodiscard]] constexpr auto stoul(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
+    -> unsigned long
 {
     ignore_unused(pos, base);
     auto const res = detail::ascii_to_int_base10<unsigned long>(str.c_str());
@@ -76,12 +74,11 @@ template <size_t Capacity>
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
 template <size_t Capacity>
-[[nodiscard]] constexpr auto stoull(static_string<Capacity> const& str,
-    size_t* pos = nullptr, int base = 10) -> unsigned long long
+[[nodiscard]] constexpr auto stoull(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
+    -> unsigned long long
 {
     ignore_unused(pos, base);
-    auto const res
-        = detail::ascii_to_int_base10<unsigned long long>(str.c_str());
+    auto const res = detail::ascii_to_int_base10<unsigned long long>(str.c_str());
     return res.value;
 }
 

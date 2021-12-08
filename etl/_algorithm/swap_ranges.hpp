@@ -23,8 +23,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2>
-constexpr auto swap_ranges(
-    ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) -> ForwardIt2
+constexpr auto swap_ranges(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2) -> ForwardIt2
 {
     while (first1 != last1) {
         iter_swap(first1, first2);

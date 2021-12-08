@@ -11,10 +11,7 @@ struct exception {
     constexpr exception() = default;
     constexpr explicit exception(char const* what) : what_ { what } { }
 
-    [[nodiscard]] auto constexpr what() const noexcept -> char const*
-    {
-        return what_;
-    }
+    [[nodiscard]] auto constexpr what() const noexcept -> char const* { return what_; }
 
 private:
     char const* what_ { nullptr };

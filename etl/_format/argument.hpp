@@ -21,8 +21,7 @@ auto format_argument(ValueT const& val, FormatContext& fc) -> decltype(fc.out())
     return f.format(val, fc);
 }
 
-inline auto split_at_next_argument(etl::string_view str)
-    -> etl::pair<etl::string_view, etl::string_view>
+inline auto split_at_next_argument(etl::string_view str) -> etl::pair<etl::string_view, etl::string_view>
 {
     using size_type = etl::string_view::size_type;
 
@@ -55,17 +54,15 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
             detail::format_argument(etl::string_view(first, openFirst), ctx);
 
             // Find sequence }}
-            auto const* closeFirst
-                = etl::find(etl::next(openSec), end(str), token_end);
-            auto const* closeSec = etl::next(closeFirst);
-            auto escapeClose     = closeFirst != end(str) //
-                               && closeSec != end(str)    //
+            auto const* closeFirst = etl::find(etl::next(openSec), end(str), token_end);
+            auto const* closeSec   = etl::next(closeFirst);
+            auto escapeClose       = closeFirst != end(str) //
+                               && closeSec != end(str)      //
                                && *closeSec == token_end;
 
             // Copy everything between {{ ... }}, but only one curly each.
             if (escapeClose) {
-                detail::format_argument(
-                    etl::string_view(openSec, closeFirst + 1), ctx);
+                detail::format_argument(etl::string_view(openSec, closeFirst + 1), ctx);
                 first = closeFirst + 2;
             } else {
                 // No closing "}}" found

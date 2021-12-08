@@ -15,46 +15,22 @@ struct monostate {
 };
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator==(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return true;
-}
+[[nodiscard]] constexpr auto operator==(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return true; }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator!=(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return false;
-}
+[[nodiscard]] constexpr auto operator!=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return false; }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return false;
-}
+[[nodiscard]] constexpr auto operator<(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return false; }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return false;
-}
+[[nodiscard]] constexpr auto operator>(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return false; }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator<=(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return true;
-}
+[[nodiscard]] constexpr auto operator<=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return true; }
 
 /// \brief All instances of etl::monostate compare equal.
-[[nodiscard]] constexpr auto operator>=(
-    monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool
-{
-    return true;
-}
+[[nodiscard]] constexpr auto operator>=(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return true; }
 
 } // namespace etl
 

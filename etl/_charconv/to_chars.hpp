@@ -22,8 +22,7 @@ struct to_chars_result {
     char const* ptr { nullptr };
     etl::errc ec {};
 
-    [[nodiscard]] friend constexpr auto operator==(
-        to_chars_result const& l, to_chars_result const& r) noexcept -> bool
+    [[nodiscard]] friend constexpr auto operator==(to_chars_result const& l, to_chars_result const& r) noexcept -> bool
     {
         return l.ptr == r.ptr && l.ec == r.ec;
     }
@@ -38,21 +37,16 @@ struct to_chars_result {
 /// than zero, the representation starts with a minus sign. The library provides
 /// overloads for all signed and unsigned integer types and for the type char as
 /// the type of the parameter value.
-template <typename T,
-    enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
-[[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10)
-    -> to_chars_result
+template <typename T, enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
+[[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10) -> to_chars_result
 {
     auto const len = static_cast<etl::size_t>(etl::distance(f, l));
     auto const res = detail::int_to_ascii<T>(val, f, base, len);
-    if (res.error == detail::int_to_ascii_error::none) {
-        return to_chars_result { res.end, {} };
-    }
+    if (res.error == detail::int_to_ascii_error::none) { return to_chars_result { res.end, {} }; }
     return to_chars_result { l, errc::value_too_large };
 }
 
-[[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10)
-    -> to_chars_result = delete;
+[[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10) -> to_chars_result = delete;
 
 } // namespace etl
 

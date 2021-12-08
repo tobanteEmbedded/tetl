@@ -12,12 +12,7 @@ namespace etl {
 /// \brief A BitmaskType used to specify floating-point formatting for to_chars
 /// and from_chars.
 /// \module Strings
-enum struct chars_format : etl::uint8_t {
-    scientific = 0x1,
-    fixed      = 0x2,
-    hex        = 0x4,
-    general    = fixed | scientific
-};
+enum struct chars_format : etl::uint8_t { scientific = 0x1, fixed = 0x2, hex = 0x4, general = fixed | scientific };
 
 } // namespace etl
 

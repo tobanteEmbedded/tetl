@@ -23,8 +23,7 @@ constexpr auto test() -> bool
         etl::sort(v2.begin(), v2.end());
 
         etl::static_vector<T, 2> intersection {};
-        etl::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(),
-            etl::back_inserter(intersection));
+        etl::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), etl::back_inserter(intersection));
 
         assert((intersection[0] == T { 5 }));
         assert((intersection[1] == T { 7 }));
@@ -38,8 +37,7 @@ constexpr auto test() -> bool
         etl::sort(v2.begin(), v2.end());
 
         etl::static_vector<T, 8> symDifference {};
-        etl::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(),
-            v2.end(), etl::back_inserter(symDifference));
+        etl::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), etl::back_inserter(symDifference));
 
         assert((symDifference[0] == T { 1 }));
         assert((symDifference[1] == T { 2 }));
@@ -57,8 +55,7 @@ constexpr auto test() -> bool
         etl::array<T, 5> v2 = { T(3), T(4), T(5), T(6), T(7) };
         etl::static_vector<T, 7> dest;
 
-        etl::set_union(
-            begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
+        etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
 
         assert((dest[0] == T { 1 }));
         assert((dest[1] == T { 2 }));
@@ -75,8 +72,7 @@ constexpr auto test() -> bool
         etl::array<T, 5> v2 = { T(3), T(4), T(5), T(6), T(7) };
         etl::static_vector<T, 9> dest;
 
-        etl::set_union(
-            begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
+        etl::set_union(begin(v1), end(v1), begin(v2), end(v2), back_inserter(dest));
 
         assert((dest[0] == T { 1 }));
         assert((dest[1] == T { 2 }));

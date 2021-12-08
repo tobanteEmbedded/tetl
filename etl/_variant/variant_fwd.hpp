@@ -26,17 +26,14 @@ template <etl::size_t I, typename T>
 struct variant_alternative;
 
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept
-    -> etl::add_pointer_t<T>; // NOLINT
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>; // NOLINT
 
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-    -> etl::add_pointer_t<const T>; // NOLINT
+constexpr auto get_if(etl::variant<Types...> const* pv) noexcept -> etl::add_pointer_t<const T>; // NOLINT
 
 template <etl::size_t I, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept
-    -> etl::add_pointer_t<typename etl::variant_alternative<I,
-        etl::variant<Types...>>::type>; // NOLINT
+constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<typename etl::variant_alternative<I,
+    etl::variant<Types...>>::type>; // NOLINT
 
 template <etl::size_t I, typename... Types>
 constexpr auto get_if(etl::variant<Types...> const* pv) noexcept

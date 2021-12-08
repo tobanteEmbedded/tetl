@@ -30,8 +30,7 @@ constexpr auto operator""_h(unsigned long long h) -> etl::chrono::hours
 /// \brief Forms a etl::chrono::duration literal representing hours.
 /// Floating-point literal, returns a floating-point duration equivalent
 /// to etl::chrono::hours.
-constexpr auto operator""_h(long double h)
-    -> etl::chrono::duration<long double, ratio<3600, 1>>
+constexpr auto operator""_h(long double h) -> etl::chrono::duration<long double, ratio<3600, 1>>
 {
     return etl::chrono::duration<long double, etl::ratio<3600, 1>>(h);
 }
@@ -46,8 +45,7 @@ constexpr auto operator""_min(unsigned long long m) -> etl::chrono::minutes
 /// \brief Forms a etl::chrono::duration literal representing minutes.
 /// Floating-point literal, returns a floating-point duration equivalent
 /// to etl::chrono::minutes.
-constexpr auto operator""_min(long double m)
-    -> etl::chrono::duration<long double, etl::ratio<60, 1>>
+constexpr auto operator""_min(long double m) -> etl::chrono::duration<long double, etl::ratio<60, 1>>
 {
     return etl::chrono::duration<long double, ratio<60, 1>>(m);
 }
@@ -72,15 +70,13 @@ constexpr auto operator""_s(long double m) -> etl::chrono::duration<long double>
 /// etl::chrono::milliseconds(mins).
 constexpr auto operator""_ms(unsigned long long m) -> etl::chrono::milliseconds
 {
-    return etl::chrono::milliseconds(
-        static_cast<etl::chrono::milliseconds::rep>(m));
+    return etl::chrono::milliseconds(static_cast<etl::chrono::milliseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing
 /// milliseconds. Floating-point literal, returns a floating-point
 /// duration equivalent to etl::chrono::milliseconds.
-constexpr auto operator""_ms(long double m)
-    -> etl::chrono::duration<long double, etl::milli>
+constexpr auto operator""_ms(long double m) -> etl::chrono::duration<long double, etl::milli>
 {
     return etl::chrono::duration<long double, etl::milli>(m);
 }
@@ -90,15 +86,13 @@ constexpr auto operator""_ms(long double m)
 /// etl::chrono::microseconds(mins).
 constexpr auto operator""_us(unsigned long long m) -> etl::chrono::microseconds
 {
-    return etl::chrono::microseconds(
-        static_cast<etl::chrono::microseconds::rep>(m));
+    return etl::chrono::microseconds(static_cast<etl::chrono::microseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing
 /// microseconds. Floating-point literal, returns a floating-point
 /// duration equivalent to etl::chrono::microseconds.
-constexpr auto operator""_us(long double m)
-    -> etl::chrono::duration<long double, etl::micro>
+constexpr auto operator""_us(long double m) -> etl::chrono::duration<long double, etl::micro>
 {
     return etl::chrono::duration<long double, etl::micro>(m);
 }
@@ -108,15 +102,13 @@ constexpr auto operator""_us(long double m)
 /// etl::chrono::nanoseconds(mins).
 constexpr auto operator""_ns(unsigned long long m) -> etl::chrono::nanoseconds
 {
-    return etl::chrono::nanoseconds(
-        static_cast<etl::chrono::nanoseconds::rep>(m));
+    return etl::chrono::nanoseconds(static_cast<etl::chrono::nanoseconds::rep>(m));
 }
 
 /// \brief Forms a etl::chrono::duration literal representing
 /// nanoseconds. Floating-point literal, returns a floating-point
 /// duration equivalent to etl::chrono::nanoseconds.
-constexpr auto operator""_ns(long double m)
-    -> etl::chrono::duration<long double, etl::nano>
+constexpr auto operator""_ns(long double m) -> etl::chrono::duration<long double, etl::nano>
 {
     return etl::chrono::duration<long double, etl::nano>(m);
 }

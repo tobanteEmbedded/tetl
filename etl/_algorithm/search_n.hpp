@@ -11,10 +11,9 @@ namespace etl {
 /// identical elements, each equal to the given value.
 /// \group search_n
 /// \module Algorithm
-template <typename ForwardIt, typename Size, typename ValueT,
-    typename Predicate>
-[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last,
-    Size count, ValueT const& value, Predicate pred) -> ForwardIt
+template <typename ForwardIt, typename Size, typename ValueT, typename Predicate>
+[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value, Predicate pred)
+    -> ForwardIt
 {
     if (count <= Size {}) { return first; }
 
@@ -37,8 +36,7 @@ template <typename ForwardIt, typename Size, typename ValueT,
 
 /// \group search_n
 template <typename ForwardIt, typename Size, typename ValueT>
-[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last,
-    Size count, ValueT const& value) -> ForwardIt
+[[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value) -> ForwardIt
 {
     auto const eq = [](auto const& l, auto const& r) { return l == r; };
     return search_n(first, last, count, value, eq);

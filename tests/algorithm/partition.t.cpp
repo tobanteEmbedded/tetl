@@ -32,16 +32,15 @@ constexpr auto test() -> bool
         auto dFalse = etl::array<T, 5> {};
         auto pred   = [](auto n) { return n < 10; };
 
-        auto res = etl::partition_copy(
-            begin(src), end(src), begin(dTrue), begin(dFalse), pred);
+        auto res = etl::partition_copy(begin(src), end(src), begin(dTrue), begin(dFalse), pred);
         assert(res.first == begin(dTrue));
         assert(res.second == begin(dFalse));
     }
 
     // range
     {
-        auto src   = etl::array { T(11), T(1), T(12), T(13), T(2), T(3), T(4) };
-        auto dTrue = etl::static_vector<T, 5> {};
+        auto src       = etl::array { T(11), T(1), T(12), T(13), T(2), T(3), T(4) };
+        auto dTrue     = etl::static_vector<T, 5> {};
         auto dFalse    = etl::static_vector<T, 5> {};
         auto predicate = [](auto n) { return n < 10; };
 
@@ -52,8 +51,7 @@ constexpr auto test() -> bool
         assert(dTrue.size() == 4);
         assert(all_of(begin(dTrue), end(dTrue), [](auto v) { return v < 10; }));
         assert(dFalse.size() == 3);
-        assert((all_of(
-            begin(dFalse), end(dFalse), [](auto v) { return v >= 10; })));
+        assert((all_of(begin(dFalse), end(dFalse), [](auto v) { return v >= 10; })));
     }
 
     // empty range
@@ -76,8 +74,7 @@ constexpr auto test() -> bool
     {
         auto arr = etl::array { T(11), T(1), T(12), T(13), T(2), T(3), T(4) };
 
-        etl::stable_partition(
-            begin(arr), end(arr), [](auto n) { return n < 10; });
+        etl::stable_partition(begin(arr), end(arr), [](auto n) { return n < 10; });
         assert(arr[0] == 1);
         assert(arr[1] == 2);
         assert(arr[2] == 3);

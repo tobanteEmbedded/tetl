@@ -14,10 +14,7 @@
 namespace etl::test {
 
 struct section_info {
-    constexpr section_info(source_line_info const& sli, etl::string_view n)
-        : name(n), line_info(sli)
-    {
-    }
+    constexpr section_info(source_line_info const& sli, etl::string_view n) : name(n), line_info(sli) { }
 
     etl::string_view name;
     source_line_info line_info;
@@ -25,14 +22,9 @@ struct section_info {
 
 struct section {
     explicit section(section_info const& info, bool shouldExecute)
-        : info_ { info }, shouldExecute_ { shouldExecute }
-    {
-    }
+        : info_ { info }, shouldExecute_ { shouldExecute } { }
 
-    [[nodiscard]] constexpr auto info() const noexcept -> section_info const&
-    {
-        return info_;
-    }
+    [[nodiscard]] constexpr auto info() const noexcept -> section_info const& { return info_; }
 
     explicit operator bool() const noexcept { return shouldExecute_; }
 

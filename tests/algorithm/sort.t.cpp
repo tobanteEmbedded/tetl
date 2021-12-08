@@ -55,8 +55,7 @@ constexpr auto test() -> bool
         src[2]   = T { 56 };
         src[3]   = T { 42 };
 
-        etl::sort(begin(src), end(src),
-            [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        etl::sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
         assert(src[0] == T { 56 });
         assert(src[1] == T { 42 });
         assert(src[2] == T { 1 });

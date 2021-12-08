@@ -18,9 +18,8 @@ struct is_transparent : etl::false_type {
 /// \group is_transparent
 /// \module Utility
 template <typename T>
-struct is_transparent<T,
-    etl::conditional_t<etl::is_same_v<typename T::is_transparent, void>, void,
-        bool>> : etl::true_type {
+struct is_transparent<T, etl::conditional_t<etl::is_same_v<typename T::is_transparent, void>, void, bool>>
+    : etl::true_type {
 };
 
 /// \group is_transparent

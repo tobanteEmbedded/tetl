@@ -17,10 +17,9 @@ namespace etl {
 ///
 /// \group set_union
 /// \module Algorithm
-template <typename InputIt1, typename InputIt2, typename OutputIt,
-    typename Compare>
-constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
+template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
+constexpr auto set_union(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
 {
     for (; first1 != last1; ++destination) {
         if (first2 == last2) { return copy(first1, last1, destination); }
@@ -38,8 +37,8 @@ constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
 
 /// \group set_union
 template <typename InputIt1, typename InputIt2, typename OutputIt>
-constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2,
-    InputIt2 last2, OutputIt destination) -> OutputIt
+constexpr auto set_union(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination)
+    -> OutputIt
 {
     return set_union(first1, last1, first2, last2, destination, etl::less<> {});
 }

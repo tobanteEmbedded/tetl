@@ -18,64 +18,47 @@ struct partial_ordering {
     static const partial_ordering greater;
     static const partial_ordering unordered;
 
-    friend constexpr auto operator==(partial_ordering v, nullptr_t) noexcept
-        -> bool
+    friend constexpr auto operator==(partial_ordering v, nullptr_t) noexcept -> bool
     {
         return v._is_ordered && v._value == 0;
     }
-    friend constexpr auto operator==(
-        partial_ordering v, partial_ordering w) noexcept -> bool
-        = default;
-    friend constexpr auto operator<(partial_ordering v, nullptr_t) noexcept
-        -> bool
+    friend constexpr auto operator==(partial_ordering v, partial_ordering w) noexcept -> bool = default;
+    friend constexpr auto operator<(partial_ordering v, nullptr_t) noexcept -> bool
     {
         return v._is_ordered && v._value < 0;
     }
-    friend constexpr auto operator>(partial_ordering v, nullptr_t) noexcept
-        -> bool
+    friend constexpr auto operator>(partial_ordering v, nullptr_t) noexcept -> bool
     {
         return v._is_ordered && v._value > 0;
     }
-    friend constexpr auto operator<=(partial_ordering v, nullptr_t) noexcept
-        -> bool
+    friend constexpr auto operator<=(partial_ordering v, nullptr_t) noexcept -> bool
     {
         return v._is_ordered && v._value <= 0;
     }
-    friend constexpr auto operator>=(partial_ordering v, nullptr_t) noexcept
-        -> bool
+    friend constexpr auto operator>=(partial_ordering v, nullptr_t) noexcept -> bool
     {
         return v._is_ordered && v._value >= 0;
     }
-    friend constexpr auto operator<(nullptr_t, partial_ordering v) noexcept
-        -> bool
+    friend constexpr auto operator<(nullptr_t, partial_ordering v) noexcept -> bool
     {
         return v._is_ordered && 0 < v._value;
     }
-    friend constexpr auto operator>(nullptr_t, partial_ordering v) noexcept
-        -> bool
+    friend constexpr auto operator>(nullptr_t, partial_ordering v) noexcept -> bool
     {
         return v._is_ordered && 0 > v._value;
     }
-    friend constexpr auto operator<=(nullptr_t, partial_ordering v) noexcept
-        -> bool
+    friend constexpr auto operator<=(nullptr_t, partial_ordering v) noexcept -> bool
     {
         return v._is_ordered && 0 <= v._value;
     }
-    friend constexpr auto operator>=(nullptr_t, partial_ordering v) noexcept
-        -> bool
+    friend constexpr auto operator>=(nullptr_t, partial_ordering v) noexcept -> bool
     {
         return v._is_ordered && 0 >= v._value;
     }
-    friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept
-        -> partial_ordering
+    friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering { return v; }
+    friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept -> partial_ordering
     {
-        return v;
-    }
-    friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept
-        -> partial_ordering
-    {
-        return v < 0 ? partial_ordering::greater
-                     : (v > 0 ? partial_ordering::less : v);
+        return v < 0 ? partial_ordering::greater : (v > 0 ? partial_ordering::less : v);
     }
 
 private:

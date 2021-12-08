@@ -15,8 +15,7 @@ namespace etl {
 /// \brief Interprets an integer value in a byte string pointed to by str.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
-[[nodiscard]] constexpr auto strtoul(
-    const char* str, char const** last, int base) noexcept -> unsigned long
+[[nodiscard]] constexpr auto strtoul(const char* str, char const** last, int base) noexcept -> unsigned long
 {
     TETL_ASSERT(base == 10);
     etl::ignore_unused(base);
@@ -30,15 +29,13 @@ namespace etl {
 /// \brief Interprets an integer value in a byte string pointed to by str.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
-[[nodiscard]] constexpr auto strtoull(
-    const char* str, char const** last, int base) noexcept -> unsigned long long
+[[nodiscard]] constexpr auto strtoull(const char* str, char const** last, int base) noexcept -> unsigned long long
 {
     TETL_ASSERT(base == 10);
     etl::ignore_unused(base);
 
     auto const len = etl::strlen(str);
-    auto const res
-        = detail::ascii_to_int_base10<unsigned long long, char>(str, len);
+    auto const res = detail::ascii_to_int_base10<unsigned long long, char>(str, len);
     if (last != nullptr) { *last = res.end; }
     return res.value;
 }

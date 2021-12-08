@@ -21,8 +21,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename InputIt, typename Size, typename UnaryFunc>
-constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept
-    -> InputIt
+constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept -> InputIt
 {
     for (Size i = 0; i < n; ++first, (void)++i) { f(*first); }
     return first;

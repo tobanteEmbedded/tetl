@@ -25,10 +25,7 @@ struct integer_sequence {
 
     using value_type = T;
 
-    [[nodiscard]] static constexpr auto size() noexcept -> size_t
-    {
-        return sizeof...(Ints);
-    }
+    [[nodiscard]] static constexpr auto size() noexcept -> size_t { return sizeof...(Ints); }
 
     using to_tuple_indices = typename detail::tuple_indices<Ints...>;
 };

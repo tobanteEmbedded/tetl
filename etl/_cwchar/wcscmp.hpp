@@ -18,8 +18,7 @@ namespace etl {
 /// wide strings.
 ///
 /// \module Strings
-[[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs)
-    -> int
+[[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs) -> int
 {
     return detail::strcmp_impl<wchar_t>(lhs, rhs);
 }

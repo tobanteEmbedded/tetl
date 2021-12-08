@@ -13,8 +13,7 @@ namespace etl {
 
 /// \brief Creates a T object initialized with arguments args... at given
 /// address p.
-template <typename T, typename... Args,
-    typename = decltype(::new (declval<void*>()) T(declval<Args>()...))>
+template <typename T, typename... Args, typename = decltype(::new (declval<void*>()) T(declval<Args>()...))>
 [[nodiscard]] constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
     TETL_ASSERT(p != nullptr);

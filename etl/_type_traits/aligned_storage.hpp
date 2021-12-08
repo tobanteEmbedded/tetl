@@ -48,8 +48,7 @@ union aligned_storage_impl {
 /// default value is not used, Align must be the value of alignof(T) for some
 /// type T, or the behavior is undefined.
 /// \group aligned_storage
-template <etl::size_t Len,
-    etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+template <etl::size_t Len, etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 struct aligned_storage {
     struct type {
         alignas(Align) unsigned char data[Len];
@@ -57,8 +56,7 @@ struct aligned_storage {
 };
 
 /// \group aligned_storage
-template <etl::size_t Len,
-    etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
+template <etl::size_t Len, etl::size_t Align = alignof(detail::aligned_storage_impl<Len>)>
 using aligned_storage_t = typename etl::aligned_storage<Len, Align>::type;
 
 } // namespace etl

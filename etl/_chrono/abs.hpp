@@ -17,10 +17,8 @@ namespace etl::chrono {
 /// d.zero(), return d, otherwise return -d. The function does not participate
 /// in the overload resolution unless etl::numeric_limits<R>::is_signed is
 /// true.
-template <typename R, typename P,
-    enable_if_t<numeric_limits<R>::is_signed, int> = 0>
-constexpr auto abs(duration<R, P> d) noexcept(is_arithmetic_v<R>)
-    -> duration<R, P>
+template <typename R, typename P, enable_if_t<numeric_limits<R>::is_signed, int> = 0>
+constexpr auto abs(duration<R, P> d) noexcept(is_arithmetic_v<R>) -> duration<R, P>
 {
     return d < duration<R, P>::zero() ? duration<R, P>::zero() - d : d;
 }

@@ -41,8 +41,7 @@ constexpr auto begin(T (&array)[N]) noexcept -> T*
 
 /// \group begin
 template <typename C>
-constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c)))
-    -> decltype(begin(c))
+constexpr auto cbegin(C const& c) noexcept(noexcept(begin(c))) -> decltype(begin(c))
 {
     return begin(c);
 }

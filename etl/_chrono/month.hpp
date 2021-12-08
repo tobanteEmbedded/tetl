@@ -13,10 +13,7 @@ namespace etl::chrono {
 struct month {
     month() = default;
 
-    constexpr explicit month(unsigned d) noexcept
-        : count_ { static_cast<uint8_t>(d) }
-    {
-    }
+    constexpr explicit month(unsigned d) noexcept : count_ { static_cast<uint8_t>(d) } { }
 
     constexpr auto operator++() noexcept -> month&
     {
@@ -58,10 +55,7 @@ struct month {
 
     constexpr explicit operator unsigned() const noexcept { return count_; }
 
-    constexpr auto ok() const noexcept -> bool
-    {
-        return (count_ > 0U) && (count_ < 12U);
-    }
+    constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 12U); }
 
 private:
     constexpr auto add(int count) noexcept -> void
@@ -79,8 +73,7 @@ private:
     uint8_t count_;
 };
 
-[[nodiscard]] constexpr auto operator==(
-    month const& lhs, month const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(month const& lhs, month const& rhs) noexcept -> bool
 {
     return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
 }

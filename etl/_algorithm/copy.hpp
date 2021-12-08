@@ -18,12 +18,9 @@ namespace etl {
 /// \group copy
 /// \module Algorithm
 template <typename InputIt, typename OutputIt>
-constexpr auto copy(InputIt first, InputIt last, OutputIt destination)
-    -> OutputIt
+constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
-    for (; first != last; ++first, (void)++destination) {
-        *destination = *first;
-    }
+    for (; first != last; ++first, (void)++destination) { *destination = *first; }
     return destination;
 }
 

@@ -16,11 +16,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct logical_and {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> bool
-    {
-        return lhs && rhs;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs && rhs; }
 };
 
 /// \group logical_and

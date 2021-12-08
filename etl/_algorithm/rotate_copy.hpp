@@ -16,8 +16,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename ForwardIt, typename OutputIt>
-constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last,
-    OutputIt destination) -> OutputIt
+constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last, OutputIt destination) -> OutputIt
 {
     destination = copy(nFirst, last, destination);
     return copy(first, nFirst, destination);

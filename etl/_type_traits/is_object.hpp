@@ -17,9 +17,7 @@ namespace etl {
 /// than function, reference, or void types), provides the member constant value
 /// equal true. For any other type, value is false.
 template <typename T>
-struct is_object
-    : bool_constant<
-          is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T>> {
+struct is_object : bool_constant<is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T>> {
 };
 
 template <typename T>

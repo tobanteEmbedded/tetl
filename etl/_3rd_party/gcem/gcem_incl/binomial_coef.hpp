@@ -34,23 +34,20 @@ constexpr auto binomial_coef_recur(const T n, const T k) noexcept -> T
             binomial_coef_recur(n - 1, k - 1) + binomial_coef_recur(n - 1, k));
 }
 
-template <typename T,
-    typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
+template <typename T, typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
 constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
 {
     return binomial_coef_recur(n, k);
 }
 
-template <typename T,
-    typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
+template <typename T, typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
 constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
 {
     return ( // NaN check; removed due to MSVC problems; template not being
              // ignored in <int> cases (is_nan(n) || is_nan(k)) ?
              // etl::numeric_limits<T>::quiet_NaN() :
              //
-        static_cast<T>(binomial_coef_recur(
-            static_cast<ullint_t>(n), static_cast<ullint_t>(k))));
+        static_cast<T>(binomial_coef_recur(static_cast<ullint_t>(n), static_cast<ullint_t>(k))));
 }
 
 template <typename T1, typename T2, typename TC = common_t<T1, T2>>
@@ -72,8 +69,7 @@ constexpr auto binomial_coef_type_check(const T1 n, const T2 k) noexcept -> TC
  */
 
 template <typename T1, typename T2>
-constexpr auto binomial_coef(const T1 n, const T2 k) noexcept
-    -> common_t<T1, T2>
+constexpr auto binomial_coef(const T1 n, const T2 k) noexcept -> common_t<T1, T2>
 {
     return internal::binomial_coef_type_check(n, k);
 }

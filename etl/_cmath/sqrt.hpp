@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
-[[nodiscard]] constexpr auto sqrt(float arg) noexcept -> float
-{
-    return etl::detail::gcem::sqrt(arg);
-}
+[[nodiscard]] constexpr auto sqrt(float arg) noexcept -> float { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
-[[nodiscard]] constexpr auto sqrtf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::sqrt(arg);
-}
+[[nodiscard]] constexpr auto sqrtf(float arg) noexcept -> float { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
-[[nodiscard]] constexpr auto sqrt(double arg) noexcept -> double
-{
-    return etl::detail::gcem::sqrt(arg);
-}
+[[nodiscard]] constexpr auto sqrt(double arg) noexcept -> double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
-[[nodiscard]] constexpr auto sqrt(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::sqrt(arg);
-}
+[[nodiscard]] constexpr auto sqrt(long double arg) noexcept -> long double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
-[[nodiscard]] constexpr auto sqrtl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::sqrt(arg);
-}
+[[nodiscard]] constexpr auto sqrtl(long double arg) noexcept -> long double { return etl::detail::gcem::sqrt(arg); }
 
 /// \brief Computes the square root of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/sqrt
 template <typename T>
-[[nodiscard]] constexpr auto sqrt(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto sqrt(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::sqrt(static_cast<double>(arg));
 }

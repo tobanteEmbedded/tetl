@@ -30,8 +30,7 @@ namespace etl {
 
 namespace detail {
 template <size_t Size>
-using make_tuple_indices =
-    typename make_integer_sequence<size_t, Size>::to_tuple_indices;
+using make_tuple_indices = typename make_integer_sequence<size_t, Size>::to_tuple_indices;
 
 template <etl::size_t I, typename T>
 struct tuple_leaf {
@@ -42,32 +41,25 @@ struct tuple_leaf {
     {
     }
 
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> /*ignore*/) & noexcept -> T&
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) & noexcept -> T& { return value_; }
+
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const& noexcept -> T const&
     {
         return value_;
     }
 
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> /*ignore*/) const& noexcept -> T const&
-    {
-        return value_;
-    }
-
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> /*ignore*/) && noexcept -> T&&
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) && noexcept -> T&&
     {
         return etl::move(value_);
     }
 
-    [[nodiscard]] constexpr auto get_impl(
-        integral_constant<size_t, I> /*ignore*/) const&& noexcept -> T const&&
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const&& noexcept -> T const&&
     {
         return etl::move(value_);
     }
 
-    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/,
-        T& other) noexcept(is_nothrow_swappable_v<T>) -> void
+    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/, T& other) noexcept(is_nothrow_swappable_v<T>)
+        -> void
     {
         using etl::swap;
         swap(value_, other);
@@ -81,35 +73,27 @@ template <typename... Ts>
 struct tuple_constraints {
     // This overload participates in overload resolution only if
     // is_default_constructible_v<Ts> is true for all i
-    static constexpr auto ctor_1_sfinae
-        = (is_default_constructible_v<Ts> && ...);
+    static constexpr auto ctor_1_sfinae = (is_default_constructible_v<Ts> && ...);
 
     // The ctor is explicit if and only if Ts is not
     // copy-list-initializable from {} for at least one i.
-    static constexpr auto ctor_1_explicit
-        = !(etl::is_implicit_default_constructible_v<Ts> && ...);
+    static constexpr auto ctor_1_explicit = !(etl::is_implicit_default_constructible_v<Ts> && ...);
 
-    static constexpr auto enable_ctor_1_implicit
-        = ctor_1_sfinae && (!ctor_1_explicit);
+    static constexpr auto enable_ctor_1_implicit = ctor_1_sfinae && (!ctor_1_explicit);
 
-    static constexpr auto enable_ctor_1_explicit
-        = (ctor_1_sfinae) && (ctor_1_explicit);
+    static constexpr auto enable_ctor_1_explicit = (ctor_1_sfinae) && (ctor_1_explicit);
 
     // This overload participates in overload resolution only if
     // sizeof...(Ts) >= 1 and is_copy_constructible_v<Ts> is true for all i.
-    static constexpr auto ctor_2_sfinae
-        = (is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0);
+    static constexpr auto ctor_2_sfinae = (is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0);
 
     // This ctor is explicit if and only if is_convertible_v<Ts const&, Ts> is
     // false for at least one i.
-    static constexpr auto ctor_2_explicit
-        = !(is_convertible_v<Ts const&, Ts> && ...);
+    static constexpr auto ctor_2_explicit = !(is_convertible_v<Ts const&, Ts> && ...);
 
-    static constexpr auto enable_ctor_2_implicit
-        = ctor_2_sfinae && (!ctor_2_explicit);
+    static constexpr auto enable_ctor_2_implicit = ctor_2_sfinae && (!ctor_2_explicit);
 
-    static constexpr auto enable_ctor_2_explicit
-        = ctor_2_sfinae && ctor_2_explicit;
+    static constexpr auto enable_ctor_2_explicit = ctor_2_sfinae && ctor_2_explicit;
 
     // This overload participates in overload resolution only if sizeof...(Ts)
     // == sizeof...(Us) and sizeof...(Ts) >= 1 and is_constructible_v<Ts, Us&&>
@@ -124,16 +108,13 @@ struct tuple_constraints {
     // The constructor is explicit if and only if is_convertible_v<Us&&, Ts> is
     // false for at least one type.
     template <typename... Us>
-    static constexpr auto ctor_3_explicit
-        = !(is_convertible_v<Us&&, Ts> && ...);
+    static constexpr auto ctor_3_explicit = !(is_convertible_v<Us&&, Ts> && ...);
 
     template <typename... Us>
-    static constexpr auto enable_ctor_3_implicit
-        = (ctor_3_sfinae<Us...> && (!ctor_3_explicit<Us...>));
+    static constexpr auto enable_ctor_3_implicit = (ctor_3_sfinae<Us...> && (!ctor_3_explicit<Us...>));
 
     template <typename... Us>
-    static constexpr auto enable_ctor_3_explicit
-        = (ctor_3_sfinae<Us...> && ctor_3_explicit<Us...>);
+    static constexpr auto enable_ctor_3_explicit = (ctor_3_sfinae<Us...> && ctor_3_explicit<Us...>);
 };
 
 template <typename... Ts>
@@ -155,15 +136,11 @@ public:
     constexpr tuple_impl(Ts const&... args) : tuple_leaf<Idx, Ts>(args)... { }
 
     TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_2_explicit)
-    explicit constexpr tuple_impl(Ts const&... args)
-        : tuple_leaf<Idx, Ts> { args }...
-    {
-    }
+    explicit constexpr tuple_impl(Ts const&... args) : tuple_leaf<Idx, Ts> { args }... { }
 
     // No. 3
     template <typename... Args>
-    constexpr tuple_impl(Args&&... args)
-        : tuple_leaf<Idx, Ts> { forward<Args>(args) }...
+    constexpr tuple_impl(Args&&... args) : tuple_leaf<Idx, Ts> { forward<Args>(args) }...
     {
     }
 
@@ -173,11 +150,10 @@ public:
     using tuple_leaf<Idx, Ts>::get_type...;
     using tuple_leaf<Idx, Ts>::get_impl...;
 
-    constexpr auto swap(tuple_impl& other) noexcept(
-        (is_nothrow_swappable_v<Ts> && ...)) -> void
+    constexpr auto swap(tuple_impl& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (tuple_leaf<Idx, Ts>::swap_impl(integral_constant<size_t, Idx> {},
-             other.get_impl(integral_constant<size_t, Idx> {})),
+        (tuple_leaf<Idx, Ts>::swap_impl(
+             integral_constant<size_t, Idx> {}, other.get_impl(integral_constant<size_t, Idx> {})),
             ...);
     }
 };
@@ -263,11 +239,7 @@ public:
     constexpr tuple(tuple const&)     = default;
     constexpr tuple(tuple&&) noexcept = default;
 
-    constexpr auto swap(tuple& other) noexcept(
-        (is_nothrow_swappable_v<Ts> && ...)) -> void
-    {
-        impl_.swap(other.impl_);
-    }
+    constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void { impl_.swap(other.impl_); }
 };
 
 template <typename... Ts>
@@ -305,15 +277,13 @@ template <etl::size_t I, typename... Ts>
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(
-        integral_constant<size_t, I> {}));
+    using type = decltype(declval<tuple<Ts...>>().get_type(integral_constant<size_t, I> {}));
 };
 
 namespace detail {
 
 template <size_t... Idx, typename... Ts, typename... Us>
-constexpr auto tuple_equal_impl(index_sequence<Idx...> /*i*/,
-    tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
+constexpr auto tuple_equal_impl(index_sequence<Idx...> /*i*/, tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
 {
     return ((get<Idx>(l) == get<Idx>(r)) && ...);
 }
@@ -328,8 +298,7 @@ constexpr auto tuple_equal(tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
 } // namespace detail
 
 template <typename... Ts, typename... Us>
-constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs)
-    -> bool
+constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
 {
     static_assert(sizeof...(Ts) == sizeof...(Us));
     if constexpr (sizeof...(Ts) == 0) {
@@ -340,8 +309,7 @@ constexpr auto operator==(tuple<Ts...> const& lhs, tuple<Us...> const& rhs)
 }
 
 template <typename... Ts, typename... Us>
-constexpr auto operator!=(tuple<Ts...> const& lhs, tuple<Us...> const& rhs)
-    -> bool
+constexpr auto operator!=(tuple<Ts...> const& lhs, tuple<Us...> const& rhs) -> bool
 {
     static_assert(sizeof...(Ts) == sizeof...(Us));
     return !(lhs == rhs);

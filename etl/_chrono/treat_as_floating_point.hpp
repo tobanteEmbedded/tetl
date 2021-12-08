@@ -24,8 +24,7 @@ struct treat_as_floating_point : etl::is_floating_point<Rep> {
 
 /// \group treat_as_floating_point
 template <typename Rep>
-inline constexpr bool treat_as_floating_point_v
-    = treat_as_floating_point<Rep>::value;
+inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;
 
 } // namespace etl::chrono
 

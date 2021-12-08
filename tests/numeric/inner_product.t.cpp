@@ -20,8 +20,7 @@ constexpr auto test() -> bool
     auto product = etl::inner_product(a.begin(), a.end(), b.begin(), T { 0 });
     assert(product == T { 21 });
 
-    auto p = etl::inner_product(a.begin(), a.end(), b.begin(), T { 0 },
-        etl::plus<T> {}, etl::equal_to<T> {});
+    auto p = etl::inner_product(a.begin(), a.end(), b.begin(), T { 0 }, etl::plus<T> {}, etl::equal_to<T> {});
     assert(p == T { 2 });
     return true;
 }

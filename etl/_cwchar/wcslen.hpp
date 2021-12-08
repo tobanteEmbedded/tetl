@@ -14,10 +14,7 @@ namespace etl {
 /// wide characters that precede the terminating null wide character.
 ///
 /// \module Strings
-constexpr auto wcslen(wchar_t const* str) -> etl::size_t
-{
-    return detail::strlen_impl<wchar_t, etl::size_t>(str);
-}
+constexpr auto wcslen(wchar_t const* str) -> etl::size_t { return detail::strlen_impl<wchar_t, etl::size_t>(str); }
 } // namespace etl
 
 #endif // TETL_CWCHAR_WCSLEN_HPP

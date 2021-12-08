@@ -24,8 +24,7 @@ namespace etl {
 /// \group upper_bound
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto upper_bound(
-    ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
+[[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
 
@@ -51,8 +50,7 @@ template <typename ForwardIt, typename T, typename Compare>
 
 /// \group upper_bound
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto upper_bound(
-    ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
+[[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
     return upper_bound(first, last, value, less<> {});
 }

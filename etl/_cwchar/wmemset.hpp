@@ -19,8 +19,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/wmemset
 ///
 /// \module Strings
-constexpr auto wmemset(wchar_t* dest, wchar_t ch, etl::size_t count) noexcept
-    -> wchar_t*
+constexpr auto wmemset(wchar_t* dest, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
     return detail::memset_impl(dest, ch, count);
 }

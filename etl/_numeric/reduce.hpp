@@ -16,16 +16,14 @@ namespace etl {
 /// \group reduce
 /// \module Algorithm
 template <typename InputIter, typename T, typename BinaryOp>
-[[nodiscard]] constexpr auto reduce(
-    InputIter first, InputIter last, T init, BinaryOp op) -> T
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init, BinaryOp op) -> T
 {
     return accumulate(first, last, init, op);
 }
 
 /// \group reduce
 template <typename InputIter, typename T>
-[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init)
-    -> T
+[[nodiscard]] constexpr auto reduce(InputIter first, InputIter last, T init) -> T
 {
     return reduce(first, last, init, etl::plus<>());
 }

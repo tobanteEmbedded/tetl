@@ -20,9 +20,7 @@ namespace etl {
 ///
 /// \group is_trivial
 template <typename T>
-struct is_trivial
-    : bool_constant<is_trivially_copyable_v<
-                        T> and is_trivially_default_constructible_v<T>> {
+struct is_trivial : bool_constant<is_trivially_copyable_v<T> and is_trivially_default_constructible_v<T>> {
 };
 
 /// \group is_trivial

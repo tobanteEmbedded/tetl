@@ -21,13 +21,11 @@ struct tuple_size<T const> : integral_constant<size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
-struct tuple_size<T volatile>
-    : integral_constant<size_t, tuple_size<T>::value> {
+struct tuple_size<T volatile> : integral_constant<size_t, tuple_size<T>::value> {
 };
 
 template <typename T>
-struct tuple_size<T const volatile>
-    : integral_constant<size_t, tuple_size<T>::value> {
+struct tuple_size<T const volatile> : integral_constant<size_t, tuple_size<T>::value> {
 };
 
 template <typename T>

@@ -17,8 +17,7 @@ namespace etl::experimental::meta {
 namespace detail {
 
 template <etl::size_t... Is, typename... Ts, typename F>
-constexpr auto all_of_impl(
-    etl::index_sequence<Is...> /*is*/, tuple<Ts...>& t, F f)
+constexpr auto all_of_impl(etl::index_sequence<Is...> /*is*/, tuple<Ts...>& t, F f)
 {
     constexpr auto trueT = type<true_type>();
     if constexpr (((type<decltype(f(get<Is>(t)))> {} == trueT) && ...)) {

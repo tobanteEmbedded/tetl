@@ -23,8 +23,7 @@ namespace etl {
 /// \group partial_sum
 /// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
-constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
-    BinaryOperation op) -> OutputIt
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
     if (first == last) { return destination; }
 
@@ -41,8 +40,7 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination,
 
 /// \group partial_sum
 template <typename InputIt, typename OutputIt>
-constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination)
-    -> OutputIt
+constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
     return etl::partial_sum(first, last, destination, etl::plus<>());
 }

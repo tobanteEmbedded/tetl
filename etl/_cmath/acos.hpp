@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acos(float arg) noexcept -> float
-{
-    return etl::detail::gcem::acos(arg);
-}
+[[nodiscard]] constexpr auto acos(float arg) noexcept -> float { return etl::detail::gcem::acos(arg); }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acosf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::acos(arg);
-}
+[[nodiscard]] constexpr auto acosf(float arg) noexcept -> float { return etl::detail::gcem::acos(arg); }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acos(double arg) noexcept -> double
-{
-    return etl::detail::gcem::acos(arg);
-}
+[[nodiscard]] constexpr auto acos(double arg) noexcept -> double { return etl::detail::gcem::acos(arg); }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::acos(arg);
-}
+[[nodiscard]] constexpr auto acos(long double arg) noexcept -> long double { return etl::detail::gcem::acos(arg); }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
-[[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::acos(arg);
-}
+[[nodiscard]] constexpr auto acosl(long double arg) noexcept -> long double { return etl::detail::gcem::acos(arg); }
 
 /// \brief Computes the principal value of the arc cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acos
 template <typename T>
-[[nodiscard]] constexpr auto acos(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto acos(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::acos(static_cast<double>(arg));
 }

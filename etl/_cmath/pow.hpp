@@ -11,37 +11,26 @@ namespace etl {
 
 /// \brief Computes the value of base raised to the power exp
 /// https://en.cppreference.com/w/cpp/numeric/math/pow
-[[nodiscard]] constexpr auto pow(float base, float exp) -> float
+[[nodiscard]] constexpr auto pow(float base, float exp) -> float { return detail::gcem::pow(base, exp); }
+
+/// \brief Computes the value of base raised to the power exp
+/// https://en.cppreference.com/w/cpp/numeric/math/pow
+[[nodiscard]] constexpr auto powf(float base, float exp) -> float { return detail::gcem::pow(base, exp); }
+
+/// \brief Computes the value of base raised to the power exp
+/// https://en.cppreference.com/w/cpp/numeric/math/pow
+[[nodiscard]] constexpr auto pow(double base, double exp) -> double { return detail::gcem::pow(base, exp); }
+
+/// \brief Computes the value of base raised to the power exp
+/// https://en.cppreference.com/w/cpp/numeric/math/pow
+[[nodiscard]] constexpr auto pow(long double base, long double exp) -> long double
 {
     return detail::gcem::pow(base, exp);
 }
 
 /// \brief Computes the value of base raised to the power exp
 /// https://en.cppreference.com/w/cpp/numeric/math/pow
-[[nodiscard]] constexpr auto powf(float base, float exp) -> float
-{
-    return detail::gcem::pow(base, exp);
-}
-
-/// \brief Computes the value of base raised to the power exp
-/// https://en.cppreference.com/w/cpp/numeric/math/pow
-[[nodiscard]] constexpr auto pow(double base, double exp) -> double
-{
-    return detail::gcem::pow(base, exp);
-}
-
-/// \brief Computes the value of base raised to the power exp
-/// https://en.cppreference.com/w/cpp/numeric/math/pow
-[[nodiscard]] constexpr auto pow(long double base, long double exp)
-    -> long double
-{
-    return detail::gcem::pow(base, exp);
-}
-
-/// \brief Computes the value of base raised to the power exp
-/// https://en.cppreference.com/w/cpp/numeric/math/pow
-[[nodiscard]] constexpr auto powl(long double base, long double exp)
-    -> long double
+[[nodiscard]] constexpr auto powl(long double base, long double exp) -> long double
 {
     return detail::gcem::pow(base, exp);
 }

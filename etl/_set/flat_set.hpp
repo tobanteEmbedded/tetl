@@ -82,106 +82,64 @@ struct flat_set {
     {
     }
 
-    explicit constexpr flat_set(Compare const& comp)
-        : container_ {}, compare_(comp)
-    {
-    }
+    explicit constexpr flat_set(Compare const& comp) : container_ {}, compare_(comp) { }
 
     template <typename InputIt>
-    constexpr flat_set(
-        InputIt first, InputIt last, Compare const& comp = Compare())
-        : container_ {}, compare_ { comp }
+    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : container_ {}, compare_ { comp }
     {
         insert(first, last);
     }
 
     template <typename InputIt>
-    constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first,
-        InputIt last, Compare const& comp = Compare())
+    constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last, Compare const& comp = Compare())
         : container_ { first, last }, compare_ { comp }
     {
     }
 
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator
-    {
-        return container_.begin();
-    }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return container_.begin(); }
 
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-    {
-        return container_.begin();
-    }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return container_.begin(); }
 
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
-    {
-        return container_.begin();
-    }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return container_.begin(); }
 
-    [[nodiscard]] constexpr auto end() noexcept -> iterator
-    {
-        return container_.end();
-    }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator { return container_.end(); }
 
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-    {
-        return container_.end();
-    }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return container_.end(); }
 
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
-    {
-        return container_.begin();
-    }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return container_.begin(); }
 
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
-    {
-        return reverse_iterator(end());
-    }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
 
-    [[nodiscard]] constexpr auto rbegin() const noexcept
-        -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
 
-    [[nodiscard]] constexpr auto crbegin() const noexcept
-        -> const_reverse_iterator
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
 
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
-    {
-        return reverse_iterator(begin());
-    }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
 
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(begin());
     }
 
-    [[nodiscard]] constexpr auto crend() const noexcept
-        -> const_reverse_iterator
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(begin());
     }
 
     /// \brief Returns true if the underlying container is empty.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return container_.empty();
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return container_.empty(); }
 
     /// \brief Returns the size of the underlying container.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return container_.size();
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return container_.size(); }
 
     /// \brief Returns the max_size of the underlying container.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
-    {
-        return container_.max_size();
-    }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return container_.max_size(); }
 
     // 21.6.5.3, modifiers
     template <typename... Args>
@@ -199,24 +157,16 @@ struct flat_set {
     }
 
     template <typename... Args>
-    constexpr auto emplace_hint(const_iterator /*position*/, Args&&... args)
-        -> iterator
+    constexpr auto emplace_hint(const_iterator /*position*/, Args&&... args) -> iterator
     {
         return emplace(etl::forward<Args>(args)...).first;
     }
 
-    constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool>
-    {
-        return emplace(x);
-    }
+    constexpr auto insert(value_type const& x) -> etl::pair<iterator, bool> { return emplace(x); }
 
-    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool>
-    {
-        return emplace(etl::move(x));
-    }
+    constexpr auto insert(value_type&& x) -> etl::pair<iterator, bool> { return emplace(etl::move(x)); }
 
-    constexpr auto insert(const_iterator position, value_type const& x)
-        -> iterator
+    constexpr auto insert(const_iterator position, value_type const& x) -> iterator
     {
         return emplace_hint(position, x);
     }
@@ -236,8 +186,7 @@ struct flat_set {
     }
 
     template <typename InputIt>
-    constexpr auto insert(
-        etl::sorted_unique_t /*tag*/, InputIt first, InputIt last) -> void;
+    constexpr auto insert(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last) -> void;
 
     constexpr auto extract() && -> container_type
     {
@@ -246,20 +195,11 @@ struct flat_set {
         return container;
     }
 
-    constexpr auto replace(container_type&& container) -> void
-    {
-        container_ = etl::move(container);
-    }
+    constexpr auto replace(container_type&& container) -> void { container_ = etl::move(container); }
 
-    constexpr auto erase(iterator position) -> iterator
-    {
-        return container_.erase(position);
-    }
+    constexpr auto erase(iterator position) -> iterator { return container_.erase(position); }
 
-    constexpr auto erase(const_iterator position) -> iterator
-    {
-        return container_.erase(position);
-    }
+    constexpr auto erase(const_iterator position) -> iterator { return container_.erase(position); }
 
     constexpr auto erase(key_type const& x) -> size_type;
     constexpr auto erase(const_iterator first, const_iterator last) -> iterator
@@ -268,8 +208,7 @@ struct flat_set {
     }
 
     constexpr auto swap(flat_set& other) noexcept(
-        etl::is_nothrow_swappable_v<Container>&&
-            etl::is_nothrow_swappable_v<Compare>) -> void
+        etl::is_nothrow_swappable_v<Container>&& etl::is_nothrow_swappable_v<Compare>) -> void
     {
         using etl::swap;
         swap(compare_, other.compare_);
@@ -279,15 +218,9 @@ struct flat_set {
     constexpr auto clear() noexcept -> void { container_.clear(); }
 
     // observers
-    [[nodiscard]] constexpr auto key_comp() const -> key_compare
-    {
-        return compare_;
-    }
+    [[nodiscard]] constexpr auto key_comp() const -> key_compare { return compare_; }
 
-    [[nodiscard]] constexpr auto value_comp() const -> value_compare
-    {
-        return compare_;
-    }
+    [[nodiscard]] constexpr auto value_comp() const -> value_compare { return compare_; }
 
     // set operations
     [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
@@ -297,8 +230,7 @@ struct flat_set {
         return it;
     }
 
-    [[nodiscard]] constexpr auto find(key_type const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto find(key_type const& key) const -> const_iterator
     {
         const_iterator it = lower_bound(key);
         if (it == end() || compare_(key, *it)) { return end(); }
@@ -335,8 +267,7 @@ struct flat_set {
         return etl::partition_point(begin(), end(), cmp);
     }
 
-    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const -> const_iterator
     {
         auto cmp = [&](auto const& k) -> bool { return compare_(k, key); };
         return etl::partition_point(begin(), end(), cmp);
@@ -345,28 +276,21 @@ struct flat_set {
     template <typename K>
     [[nodiscard]] constexpr auto lower_bound(K const& x) -> iterator;
     template <typename K>
-    [[nodiscard]] constexpr auto lower_bound(K const& x) const
-        -> const_iterator;
+    [[nodiscard]] constexpr auto lower_bound(K const& x) const -> const_iterator;
 
     [[nodiscard]] constexpr auto upper_bound(key_type const& x) -> iterator;
-    [[nodiscard]] constexpr auto upper_bound(key_type const& x) const
-        -> const_iterator;
+    [[nodiscard]] constexpr auto upper_bound(key_type const& x) const -> const_iterator;
     template <typename K>
     [[nodiscard]] constexpr auto upper_bound(K const& x) -> iterator;
     template <typename K>
-    [[nodiscard]] constexpr auto upper_bound(K const& x) const
-        -> const_iterator;
+    [[nodiscard]] constexpr auto upper_bound(K const& x) const -> const_iterator;
 
-    [[nodiscard]] constexpr auto equal_range(key_type const& x)
-        -> etl::pair<iterator, iterator>;
-    [[nodiscard]] constexpr auto equal_range(key_type const& x) const
-        -> etl::pair<const_iterator, const_iterator>;
+    [[nodiscard]] constexpr auto equal_range(key_type const& x) -> etl::pair<iterator, iterator>;
+    [[nodiscard]] constexpr auto equal_range(key_type const& x) const -> etl::pair<const_iterator, const_iterator>;
     template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& x)
-        -> etl::pair<iterator, iterator>;
+    [[nodiscard]] constexpr auto equal_range(K const& x) -> etl::pair<iterator, iterator>;
     template <typename K>
-    [[nodiscard]] constexpr auto equal_range(K const& x) const
-        -> etl::pair<const_iterator, const_iterator>;
+    [[nodiscard]] constexpr auto equal_range(K const& x) const -> etl::pair<const_iterator, const_iterator>;
 
 private:
     container_type container_;
@@ -375,55 +299,49 @@ private:
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator==(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return etl::equal(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator!=(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(x == y);
 }
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator<(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return etl::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator>(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return y < x;
 }
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator<=(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(y < x);
 }
 
 template <typename Key, typename Container, typename Compare>
 [[nodiscard]] constexpr auto operator>=(
-    flat_set<Key, Container, Compare> const& x,
-    flat_set<Key, Container, Compare> const& y) -> bool
+    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(x < y);
 }
 
 template <typename Key, typename Container, typename Compare>
-constexpr auto swap(flat_set<Key, Container, Compare>& x,
-    flat_set<Key, Container, Compare>& y) noexcept(noexcept(x.swap(y))) -> void
+constexpr auto swap(flat_set<Key, Container, Compare>& x, flat_set<Key, Container, Compare>& y) noexcept(
+    noexcept(x.swap(y))) -> void
 {
     return x.swap(y);
 }

@@ -96,22 +96,19 @@ struct span {
 
     /// \brief Constructs a span. From a c style array.
     template <etl::size_t N>
-    constexpr span(element_type (&arr)[N]) noexcept
-        : data_ { &arr[0] }, size_ { N }
+    constexpr span(element_type (&arr)[N]) noexcept : data_ { &arr[0] }, size_ { N }
     {
     }
 
     /// \brief Constructs a span. From a etl::array<Type,Size>.
     template <typename U, etl::size_t N>
-    constexpr span(etl::array<U, N>& arr) noexcept
-        : data_ { arr.data() }, size_ { arr.size() }
+    constexpr span(etl::array<U, N>& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
     {
     }
 
     /// \brief Constructs a span. From a etl::array<Type,Size> const.
     template <typename U, etl::size_t N>
-    constexpr span(etl::array<U, N> const& arr) noexcept
-        : data_ { arr.data() }, size_ { arr.size() }
+    constexpr span(etl::array<U, N> const& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
     {
     }
 
@@ -134,35 +131,23 @@ struct span {
 
     /// \brief Returns an iterator to the first element of the span. If the span
     /// is empty, the returned iterator will be equal to end().
-    [[nodiscard]] constexpr auto begin() const noexcept -> iterator
-    {
-        return &data_[0];
-    }
+    [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return &data_[0]; }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the span. This element acts as a placeholder; attempting to access it
     /// results in undefined behavior
-    [[nodiscard]] constexpr auto end() const noexcept -> iterator
-    {
-        return begin() + size();
-    }
+    [[nodiscard]] constexpr auto end() const noexcept -> iterator { return begin() + size(); }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// span. It corresponds to the last element of the non-reversed span. If
     /// the span is empty, the returned iterator is equal to rend().
-    [[nodiscard]] auto rbegin() const noexcept -> reverse_iterator
-    {
-        return reverse_iterator(end());
-    }
+    [[nodiscard]] auto rbegin() const noexcept -> reverse_iterator { return reverse_iterator(end()); }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed span. It corresponds to the element preceding
     /// the first element of the non-reversed span. This element acts as a
     /// placeholder, attempting to access it results in undefined behavior.
-    [[nodiscard]] auto rend() const noexcept -> reverse_iterator
-    {
-        return reverse_iterator(begin());
-    }
+    [[nodiscard]] auto rend() const noexcept -> reverse_iterator { return reverse_iterator(begin()); }
 
     /// \brief Returns a reference to the first element in the span. Calling
     /// front on an empty span results in undefined behavior.
@@ -170,42 +155,24 @@ struct span {
 
     /// \brief Returns a reference to the last element in the span. Calling
     /// front on an empty span results in undefined behavior.
-    [[nodiscard]] constexpr auto back() const -> reference
-    {
-        return *(end() - 1);
-    }
+    [[nodiscard]] constexpr auto back() const -> reference { return *(end() - 1); }
 
     /// \brief Returns a reference to the idx-th element of the sequence. The
     /// behavior is undefined if idx is out of range (i.e., if it is greater
     /// than or equal to size()).
-    [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference
-    {
-        return data()[idx];
-    }
+    [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference { return data()[idx]; }
 
     /// \brief Returns a pointer to the beginning of the sequence.
-    [[nodiscard]] constexpr auto data() const noexcept -> pointer
-    {
-        return data_;
-    }
+    [[nodiscard]] constexpr auto data() const noexcept -> pointer { return data_; }
 
     /// \brief Returns the number of elements in the span.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return size_;
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
 
     /// \brief Returns the number of elements in the span.
-    [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type
-    {
-        return size() * sizeof(element_type);
-    }
+    [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type { return size() * sizeof(element_type); }
 
     /// \brief Checks if the span is empty.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return size() == 0;
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
     /// \brief Obtains a span that is a view over the first Count elements of
     /// this span. The program is ill-formed if Count > Extent.
@@ -218,8 +185,7 @@ struct span {
 
     /// \brief Obtains a span that is a view over the first Count elements of
     /// this span. The behavior is undefined if Count > size().
-    [[nodiscard]] constexpr auto first(size_type count) const
-        -> span<element_type, dynamic_extent>
+    [[nodiscard]] constexpr auto first(size_type count) const -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(count > size()));
         return { data(), static_cast<size_type>(count) };
@@ -236,8 +202,7 @@ struct span {
 
     /// \brief Obtains a span that is a view over the last Count elements of
     /// this span. The behavior is undefined if Count > size().
-    [[nodiscard]] constexpr auto last(size_type count) const
-        -> span<element_type, dynamic_extent>
+    [[nodiscard]] constexpr auto last(size_type count) const -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(count > size()));
         return { data() + (size() - count), static_cast<size_type>(count) };
@@ -248,8 +213,7 @@ struct span {
     /// number of elements in the subspan is size() - offset (i.e., it ends at
     /// the end of *this.).
     template <size_t Offset, size_t Count = dynamic_extent>
-    [[nodiscard]] constexpr auto subspan() const
-        -> span<element_type, detail::subspan_extent<Offset, Count, Extent>()>
+    [[nodiscard]] constexpr auto subspan() const -> span<element_type, detail::subspan_extent<Offset, Count, Extent>()>
     {
         static_assert(!(Offset > Extent));
         static_assert(!(Count != dynamic_extent && Count > Extent - Offset));
@@ -261,8 +225,7 @@ struct span {
     /// span starting at offset Offset. If Count is etl::dynamic_extent, the
     /// number of elements in the subspan is size() - offset (i.e., it ends at
     /// the end of *this.).
-    [[nodiscard]] constexpr auto subspan(
-        size_type offset, size_type count = dynamic_extent) const
+    [[nodiscard]] constexpr auto subspan(size_type offset, size_type count = dynamic_extent) const
         -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(offset > size()));
@@ -289,15 +252,12 @@ template <typename Type, etl::size_t Size>
 span(etl::array<Type, Size> const&) -> span<Type const, Size>;
 
 // Deduction Guides. From Container.
-template <typename Container,
-    typename Element
-    = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
+template <typename Container, typename Element = etl::remove_pointer_t<decltype(etl::declval<Container&>().data())>>
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
 template <typename Container,
-    typename Element
-    = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
+    typename Element = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 
 } // namespace etl

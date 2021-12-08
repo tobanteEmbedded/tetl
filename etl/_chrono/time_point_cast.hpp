@@ -13,8 +13,7 @@ namespace etl::chrono {
 
 template <typename ToDuration, typename Clock, typename Duration,
     TETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
-[[nodiscard]] constexpr auto time_point_cast(
-    time_point<Clock, Duration> const& tp) -> ToDuration
+[[nodiscard]] constexpr auto time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
 {
     using time_point_t = time_point<Clock, ToDuration>;
     return time_point_t(duration_cast<ToDuration>(tp.time_since_epoch()));

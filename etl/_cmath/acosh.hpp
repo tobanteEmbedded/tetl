@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acosh(float arg) noexcept -> float
-{
-    return etl::detail::gcem::acosh(arg);
-}
+[[nodiscard]] constexpr auto acosh(float arg) noexcept -> float { return etl::detail::gcem::acosh(arg); }
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acoshf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::acosh(arg);
-}
+[[nodiscard]] constexpr auto acoshf(float arg) noexcept -> float { return etl::detail::gcem::acosh(arg); }
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acosh(double arg) noexcept -> double
-{
-    return etl::detail::gcem::acosh(arg);
-}
+[[nodiscard]] constexpr auto acosh(double arg) noexcept -> double { return etl::detail::gcem::acosh(arg); }
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acosh(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::acosh(arg);
-}
+[[nodiscard]] constexpr auto acosh(long double arg) noexcept -> long double { return etl::detail::gcem::acosh(arg); }
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
-[[nodiscard]] constexpr auto acoshl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::acosh(arg);
-}
+[[nodiscard]] constexpr auto acoshl(long double arg) noexcept -> long double { return etl::detail::gcem::acosh(arg); }
 
 /// \brief Computes the inverse hyperbolic cosine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/acosh
 template <typename T>
-[[nodiscard]] constexpr auto acosh(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto acosh(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::acosh(static_cast<double>(arg));
 }

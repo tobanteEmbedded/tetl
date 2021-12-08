@@ -16,8 +16,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename ForwardIt>
-constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last)
-    -> ForwardIt
+constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> ForwardIt
 {
     if (first == nFirst) { return last; }
     if (nFirst == last) { return first; }

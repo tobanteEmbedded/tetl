@@ -13,8 +13,7 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/algorithm/is_partitioned
 /// \module Algorithm
 template <typename InputIt, typename Predicate>
-[[nodiscard]] constexpr auto is_partitioned(
-    InputIt first, InputIt last, Predicate p) -> bool
+[[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last, Predicate p) -> bool
 {
     for (; first != last; ++first) {
         if (!p(*first)) { break; }

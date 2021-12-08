@@ -13,8 +13,7 @@ namespace etl {
 /// \brief Return the nth predecessor of iterator it.
 /// \module Iterator
 template <typename BidirIt>
-[[nodiscard]] constexpr auto prev(BidirIt it,
-    typename iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
+[[nodiscard]] constexpr auto prev(BidirIt it, typename iterator_traits<BidirIt>::difference_type n = 1) -> BidirIt
 {
     advance(it, -n);
     return it;

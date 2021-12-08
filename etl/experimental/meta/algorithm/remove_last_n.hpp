@@ -27,20 +27,17 @@ private:
     using tuple_t = etl::tuple<Args...>;
 
     template <etl::size_t... N>
-    static auto extract(etl::index_sequence<N...>)
-        -> etl::tuple<etl::tuple_element_t<N, tuple_t>...>;
+    static auto extract(etl::index_sequence<N...>) -> etl::tuple<etl::tuple_element_t<N, tuple_t>...>;
 
 public:
-    using type = decltype(extract(
-        etl::make_index_sequence<sizeof...(Args) - Count>()));
+    using type = decltype(extract(etl::make_index_sequence<sizeof...(Args) - Count>()));
 };
 template <etl::size_t Count, typename Tuple>
 using remove_last_n_t = typename detail::remove_last_n_impl<Count, Tuple>::type;
 } // namespace detail
 
 template <etl::size_t Count, typename... Ts>
-constexpr auto remove_last_n(
-    etl::integral_constant<etl::size_t, Count> /*ic*/, etl::tuple<Ts...> /*t*/)
+constexpr auto remove_last_n(etl::integral_constant<etl::size_t, Count> /*ic*/, etl::tuple<Ts...> /*t*/)
 {
     return detail::remove_last_n_t<Count, etl::tuple<Ts...>>();
 }

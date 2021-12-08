@@ -16,16 +16,13 @@ namespace etl {
 /// \group unique
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred)
-    -> ForwardIt
+constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
     if (first == last) { return last; }
 
     auto result = first;
     while (++first != last) {
-        if (!pred(*result, *first) && ++result != first) {
-            *result = move(*first);
-        }
+        if (!pred(*result, *first) && ++result != first) { *result = move(*first); }
     }
     return ++result;
 }

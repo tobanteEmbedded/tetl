@@ -15,8 +15,7 @@ namespace etl {
 /// \group replace
 /// \module Algorithm
 template <typename ForwardIt, typename T>
-constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue,
-    T const& newValue) -> void
+constexpr auto replace(ForwardIt first, ForwardIt last, T const& oldValue, T const& newValue) -> void
 {
     auto predicate = [&oldValue](auto const& item) { return item == oldValue; };
     replace_if(first, last, predicate, newValue);

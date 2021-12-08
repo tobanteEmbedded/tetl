@@ -16,28 +16,21 @@ namespace etl {
 
 namespace detail {
 
-[[nodiscard]] constexpr auto byteswap_u16_fallback(uint16_t val) noexcept
-    -> uint16_t
+[[nodiscard]] constexpr auto byteswap_u16_fallback(uint16_t val) noexcept -> uint16_t
 {
     return static_cast<uint16_t>((val << 8) | (val >> 8));
 }
 
-[[nodiscard]] constexpr auto byteswap_u32_fallback(uint32_t val) noexcept
-    -> uint32_t
+[[nodiscard]] constexpr auto byteswap_u32_fallback(uint32_t val) noexcept -> uint32_t
 {
-    return (val << 24) | ((val << 8) & 0x00FF'0000) | ((val >> 8) & 0x0000'FF00)
-           | (val >> 24);
+    return (val << 24) | ((val << 8) & 0x00FF'0000) | ((val >> 8) & 0x0000'FF00) | (val >> 24);
 }
 
-[[nodiscard]] constexpr auto byteswap_u64_fallback(uint64_t val) noexcept
-    -> uint64_t
+[[nodiscard]] constexpr auto byteswap_u64_fallback(uint64_t val) noexcept -> uint64_t
 {
-    return (val << 56) | ((val << 40) & 0x00FF'0000'0000'0000)
-           | ((val << 24) & 0x0000'FF00'0000'0000)
-           | ((val << 8) & 0x0000'00FF'0000'0000)
-           | ((val >> 8) & 0x0000'0000'FF00'0000)
-           | ((val >> 24) & 0x0000'0000'00FF'0000)
-           | ((val >> 40) & 0x0000'0000'0000'FF00) | (val >> 56);
+    return (val << 56) | ((val << 40) & 0x00FF'0000'0000'0000) | ((val << 24) & 0x0000'FF00'0000'0000)
+           | ((val << 8) & 0x0000'00FF'0000'0000) | ((val >> 8) & 0x0000'0000'FF00'0000)
+           | ((val >> 24) & 0x0000'0000'00FF'0000) | ((val >> 40) & 0x0000'0000'0000'FF00) | (val >> 56);
 }
 
 [[nodiscard]] constexpr auto byteswap_u16(uint16_t val) noexcept -> uint16_t

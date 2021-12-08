@@ -17,22 +17,13 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/isfinite
 /// \group isfinite
 /// \module Numeric
-[[nodiscard]] constexpr auto isfinite(float arg) -> bool
-{
-    return !etl::isnan(arg) && !etl::isinf(arg);
-}
+[[nodiscard]] constexpr auto isfinite(float arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
 /// \group isfinite
-[[nodiscard]] constexpr auto isfinite(double arg) -> bool
-{
-    return !etl::isnan(arg) && !etl::isinf(arg);
-}
+[[nodiscard]] constexpr auto isfinite(double arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
 /// \group isfinite
-[[nodiscard]] constexpr auto isfinite(long double arg) -> bool
-{
-    return !etl::isnan(arg) && !etl::isinf(arg);
-}
+[[nodiscard]] constexpr auto isfinite(long double arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
 } // namespace etl
 

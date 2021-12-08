@@ -20,16 +20,14 @@ struct is_nothrow_destructible_helper<false, Type> : etl::false_type {
 };
 
 template <typename Type>
-struct is_nothrow_destructible_helper<true, Type>
-    : etl::bool_constant<noexcept(etl::declval<Type>().~Type())> {
+struct is_nothrow_destructible_helper<true, Type> : etl::bool_constant<noexcept(etl::declval<Type>().~Type())> {
 };
 } // namespace detail
 
 /// https://en.cppreference.com/w/cpp/types/is_destructible
 /// \group is_nothrow_destructible
 template <typename Type>
-struct is_nothrow_destructible
-    : detail::is_nothrow_destructible_helper<is_destructible_v<Type>, Type> {
+struct is_nothrow_destructible : detail::is_nothrow_destructible_helper<is_destructible_v<Type>, Type> {
 };
 
 /// \exclude
@@ -49,8 +47,7 @@ struct is_nothrow_destructible<Type&&> : true_type {
 
 /// \group is_nothrow_destructible
 template <typename T>
-inline constexpr bool is_nothrow_destructible_v
-    = is_nothrow_destructible<T>::value;
+inline constexpr bool is_nothrow_destructible_v = is_nothrow_destructible<T>::value;
 
 } // namespace etl
 

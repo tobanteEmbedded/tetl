@@ -19,17 +19,15 @@ namespace etl {
 /// \group equal_range
 /// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
-    T const& value, Compare comp) -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp)
+    -> pair<ForwardIt, ForwardIt>
 {
-    return make_pair(lower_bound(first, last, value, comp),
-        upper_bound(first, last, value, comp));
+    return make_pair(lower_bound(first, last, value, comp), upper_bound(first, last, value, comp));
 }
 
 /// \group equal_range
 template <typename ForwardIt, typename T>
-[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last,
-    T const& value) -> pair<ForwardIt, ForwardIt>
+[[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value) -> pair<ForwardIt, ForwardIt>
 {
     return equal_range(first, last, value, less<> {});
 }

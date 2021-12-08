@@ -11,13 +11,11 @@
 namespace etl {
 
 template <typename R, typename Fn, typename... ArgTypes>
-struct is_invocable_r
-    : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, R>::type {
+struct is_invocable_r : detail::is_invocable_impl<invoke_result<Fn, ArgTypes...>, R>::type {
 };
 
 template <typename R, typename Fn, typename... ArgTypes>
-inline constexpr auto is_invocable_r_v
-    = is_invocable_r<R, Fn, ArgTypes...>::value;
+inline constexpr auto is_invocable_r_v = is_invocable_r<R, Fn, ArgTypes...>::value;
 
 } // namespace etl
 

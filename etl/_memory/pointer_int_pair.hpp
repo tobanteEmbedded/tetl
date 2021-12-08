@@ -38,42 +38,21 @@ struct pointer_int_pair {
 
     constexpr pointer_int_pair() = default;
 
-    pointer_int_pair(pointer_type pointerValue, int_type intValue)
-    {
-        set_ptr_and_int(pointerValue, intValue);
-    }
+    pointer_int_pair(pointer_type pointerValue, int_type intValue) { set_ptr_and_int(pointerValue, intValue); }
 
-    explicit pointer_int_pair(pointer_type pointerValue)
-    {
-        init_with_ptr(pointerValue);
-    }
+    explicit pointer_int_pair(pointer_type pointerValue) { init_with_ptr(pointerValue); }
 
-    void set_pointer(pointer_type pointerValue)
-    {
-        value_ = pointer_info::update_ptr(value_, pointerValue);
-    }
+    void set_pointer(pointer_type pointerValue) { value_ = pointer_info::update_ptr(value_, pointerValue); }
 
-    void set_int(int_type intValue)
-    {
-        value_
-            = pointer_info::update_int(value_, static_cast<intptr_t>(intValue));
-    }
+    void set_int(int_type intValue) { value_ = pointer_info::update_int(value_, static_cast<intptr_t>(intValue)); }
 
-    [[nodiscard]] auto get_pointer() const -> pointer_type
-    {
-        return pointer_info::get_pointer(value_);
-    }
+    [[nodiscard]] auto get_pointer() const -> pointer_type { return pointer_info::get_pointer(value_); }
 
-    [[nodiscard]] auto get_int() const -> int_type
-    {
-        return static_cast<int_type>(pointer_info::get_int(value_));
-    }
+    [[nodiscard]] auto get_int() const -> int_type { return static_cast<int_type>(pointer_info::get_int(value_)); }
 
     void set_ptr_and_int(pointer_type pointerValue, int_type intValue)
     {
-        value_ = pointer_info::update_int(
-            pointer_info::update_ptr(0, pointerValue),
-            static_cast<intptr_t>(intValue));
+        value_ = pointer_info::update_int(pointer_info::update_ptr(0, pointerValue), static_cast<intptr_t>(intValue));
     }
 
     [[nodiscard]] auto get_addr_of_pointer() const -> pointer_type const*
@@ -81,15 +60,9 @@ struct pointer_int_pair {
         return const_cast<pointer_int_pair*>(this)->get_addr_of_pointer();
     }
 
-    auto get_addr_of_pointer() -> pointer_type*
-    {
-        return bit_cast<pointer_type*>(&value_);
-    }
+    auto get_addr_of_pointer() -> pointer_type* { return bit_cast<pointer_type*>(&value_); }
 
-    [[nodiscard]] auto get_opaque_value() const -> void*
-    {
-        return bit_cast<void*>(value_);
-    }
+    [[nodiscard]] auto get_opaque_value() const -> void* { return bit_cast<void*>(value_); }
 
     void set_from_opaque_value(void* val) { value_ = bit_cast<intptr_t>(val); }
 
@@ -108,67 +81,55 @@ struct pointer_int_pair {
         return get_from_opaque_value(const_cast<void*>(v));
     }
 
-    [[nodiscard]] friend auto operator==(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator==(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ == rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator!=(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator!=(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ != rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator<(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator<(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ < rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator>(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator>(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ > rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator<=(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator<=(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ <= rhs.value_;
     }
 
-    [[nodiscard]] friend auto operator>=(
-        pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
+    [[nodiscard]] friend auto operator>=(pointer_int_pair const& lhs, pointer_int_pair const& rhs) -> bool
     {
         return lhs.value_ >= rhs.value_;
     }
 
 private:
-    auto init_with_ptr(pointer_type pointerValue) -> void
-    {
-        value_ = pointer_info::update_ptr(0, pointerValue);
-    }
+    auto init_with_ptr(pointer_type pointerValue) -> void { value_ = pointer_info::update_ptr(0, pointerValue); }
 
     intptr_t value_ = 0;
 };
 
 template <typename PtrT, unsigned IntBits, typename IntT, typename PtrTraits>
 struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>> {
-    static auto get_as_void_pointer(
-        const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
+    static auto get_as_void_pointer(const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
     {
         return p.get_opaque_value();
     }
 
-    static auto get_from_void_pointer(void* p)
-        -> pointer_int_pair<PtrT, IntBits, IntT>
+    static auto get_from_void_pointer(void* p) -> pointer_int_pair<PtrT, IntBits, IntT>
     {
         return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
     }
 
-    static auto get_from_void_pointer(const void* p)
-        -> pointer_int_pair<PtrT, IntBits, IntT>
+    static auto get_from_void_pointer(const void* p) -> pointer_int_pair<PtrT, IntBits, IntT>
     {
         return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
     }

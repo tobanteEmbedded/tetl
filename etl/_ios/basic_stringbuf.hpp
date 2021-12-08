@@ -12,8 +12,7 @@
 namespace etl {
 
 template <typename CharT, size_t Capacity, typename Traits>
-struct basic_stringbuf : basic_streambuf<CharT, Capacity, Traits,
-                             basic_stringbuf<CharT, Capacity, Traits>> {
+struct basic_stringbuf : basic_streambuf<CharT, Capacity, Traits, basic_stringbuf<CharT, Capacity, Traits>> {
 private:
     // The program is ill-formed if Traits::char_type is not CharT.
     static_assert(is_same_v<typename Traits::char_type, CharT>);

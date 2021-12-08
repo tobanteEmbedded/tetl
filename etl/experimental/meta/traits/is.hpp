@@ -10,12 +10,11 @@
 
 namespace etl::experimental::meta::traits {
 
-#define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                              \
-    template <typename T>                                                      \
-        constexpr auto func(type<T>&& /*t*/)                                   \
-            ->meta::bool_constant<etl::TETL_PP_CONCAT(func, _v) < T> >         \
-    {                                                                          \
-        return {};                                                             \
+#define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                                                                      \
+    template <typename T>                                                                                              \
+        constexpr auto func(type<T>&& /*t*/)->meta::bool_constant<etl::TETL_PP_CONCAT(func, _v) < T> >                 \
+    {                                                                                                                  \
+        return {};                                                                                                     \
     }
 
 TETL_META_DEFINE_TRAITS_IS_FUNCTION(is_abstract)
@@ -81,11 +80,11 @@ TETL_META_DEFINE_TRAITS_IS_FUNCTION(is_reference_wrapper)
 
 #undef TETL_META_DEFINE_TRAITS_IS_FUNCTION
 
-#define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                              \
-    template <typename T, typename U>                                          \
-    constexpr auto func(type<T> /*l*/, type<U> /*r*/)->etl::func<T, U>         \
-    {                                                                          \
-        return {};                                                             \
+#define TETL_META_DEFINE_TRAITS_IS_FUNCTION(func)                                                                      \
+    template <typename T, typename U>                                                                                  \
+    constexpr auto func(type<T> /*l*/, type<U> /*r*/)->etl::func<T, U>                                                 \
+    {                                                                                                                  \
+        return {};                                                                                                     \
     }
 
 TETL_META_DEFINE_TRAITS_IS_FUNCTION(is_assignable)

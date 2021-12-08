@@ -25,8 +25,7 @@ namespace etl {
 /// behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_move_assignable
-    : is_assignable<add_lvalue_reference_t<T>, add_rvalue_reference_t<T>> {
+struct is_move_assignable : is_assignable<add_lvalue_reference_t<T>, add_rvalue_reference_t<T>> {
 };
 
 template <typename T>

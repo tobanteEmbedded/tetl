@@ -17,10 +17,7 @@ struct null_clock {
     using time_point     = etl::chrono::time_point<null_clock>;
     bool const is_steady = false;
 
-    [[nodiscard]] constexpr auto now() noexcept -> time_point
-    {
-        return time_point {};
-    }
+    [[nodiscard]] constexpr auto now() noexcept -> time_point { return time_point {}; }
 };
 
 template <typename T>

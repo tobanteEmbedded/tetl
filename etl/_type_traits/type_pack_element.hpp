@@ -41,15 +41,13 @@ namespace detail {
 
 template <etl::size_t I, typename T>
 struct type_pack_element_wrapper {
-    static constexpr auto get_type(
-        etl::integral_constant<etl::size_t, I> /*ic*/) -> T;
+    static constexpr auto get_type(etl::integral_constant<etl::size_t, I> /*ic*/) -> T;
 };
 template <etl::size_t I, typename... Ts>
 struct type_pack_element_impl;
 
 template <etl::size_t I, etl::size_t... Is, typename... Ts>
-struct type_pack_element_impl<I, etl::index_sequence<Is...>, Ts...>
-    : type_pack_element_wrapper<Is, Ts>... {
+struct type_pack_element_impl<I, etl::index_sequence<Is...>, Ts...> : type_pack_element_wrapper<Is, Ts>... {
 private:
     using type_pack_element_wrapper<Is, Ts>::get_type...;
 
@@ -61,8 +59,7 @@ public:
 
 template <etl::size_t I, typename... Ts>
 struct type_pack_element {
-    using type = typename detail::type_pack_element_impl<I,
-        etl::index_sequence_for<Ts...>, Ts...>::type;
+    using type = typename detail::type_pack_element_impl<I, etl::index_sequence_for<Ts...>, Ts...>::type;
 };
 
 template <etl::size_t I, typename... Ts>

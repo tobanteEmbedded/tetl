@@ -39,18 +39,15 @@ constexpr auto cos_check(const T x) noexcept -> T
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   // indistinguishable from 0
-            etl::numeric_limits<T>::epsilon() > abs(x)
-            ? T(1)
-            :
-            // special cases: pi/2 and pi
-            etl::numeric_limits<T>::epsilon() > abs(x - T(GCEM_HALF_PI)) ? T(0)
-        : etl::numeric_limits<T>::epsilon() > abs(x + T(GCEM_HALF_PI))   ? T(0)
-        : etl::numeric_limits<T>::epsilon() > abs(x - T(etl::numbers::pi))
-            ? -T(1)
-        : etl::numeric_limits<T>::epsilon() > abs(x + T(etl::numbers::pi))
-            ? -T(1)
-            :
-            // else
+            etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
+                                                       :
+                                                       // special cases: pi/2 and pi
+            etl::numeric_limits<T>::epsilon() > abs(x - T(GCEM_HALF_PI))   ? T(0)
+        : etl::numeric_limits<T>::epsilon() > abs(x + T(GCEM_HALF_PI))     ? T(0)
+        : etl::numeric_limits<T>::epsilon() > abs(x - T(etl::numbers::pi)) ? -T(1)
+        : etl::numeric_limits<T>::epsilon() > abs(x + T(etl::numbers::pi)) ? -T(1)
+                                                                           :
+                                                                           // else
             cos_compute(tan(x / T(2))));
 }
 

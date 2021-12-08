@@ -20,16 +20,10 @@ public:
     [[nodiscard]] static constexpr auto zero() -> Rep { return Rep {}; }
 
     /// \brief Returns the smallest possible representation.
-    [[nodiscard]] static constexpr auto min() -> Rep
-    {
-        return etl::numeric_limits<Rep>::lowest();
-    }
+    [[nodiscard]] static constexpr auto min() -> Rep { return etl::numeric_limits<Rep>::lowest(); }
 
     /// \brief Returns the special duration value max.
-    [[nodiscard]] static constexpr auto max() -> Rep
-    {
-        return etl::numeric_limits<Rep>::max();
-    }
+    [[nodiscard]] static constexpr auto max() -> Rep { return etl::numeric_limits<Rep>::max(); }
 };
 
 } // namespace etl::chrono

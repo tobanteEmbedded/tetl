@@ -47,11 +47,10 @@ inline auto rtos_task(void* task) -> void
 
 /// \brief Create a rtos task. TaskType needs a `void run()` public method.
 template <typename TaskType>
-inline auto create_task(TaskType& task, char const* const name, uint16_t stack,
-    UBaseType_t prio = 0, TaskHandle_t* const handle = nullptr) -> void
+inline auto create_task(TaskType& task, char const* const name, uint16_t stack, UBaseType_t prio = 0,
+    TaskHandle_t* const handle = nullptr) -> void
 {
-    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task),
-        prio, handle);
+    xTaskCreate(rtos_task<TaskType>, name, stack, static_cast<void*>(&task), prio, handle);
 }
 
 /// \brief Delete a rtos task. If handle is nullptr, the current task will be
@@ -115,10 +114,7 @@ auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void;
 
 inline auto yield() -> void { taskYIELD(); }
 inline auto sleep_for(etl::uint32_t ticks) -> void { vTaskDelay(ticks); }
-inline auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void
-{
-    vTaskDelayUntil(&prev, increment);
-}
+inline auto sleep_until(etl::uint32_t& prev, etl::uint32_t increment) -> void { vTaskDelayUntil(&prev, increment); }
 } // namespace this_task
 
 } // namespace etl::experimental::freertos

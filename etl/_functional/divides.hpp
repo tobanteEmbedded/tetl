@@ -16,11 +16,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct divides {
-    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const
-        -> T
-    {
-        return lhs / rhs;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs / rhs; }
 };
 
 /// \group divides

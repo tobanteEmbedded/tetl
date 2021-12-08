@@ -18,10 +18,7 @@ namespace etl {
 /// \module Utility
 template <typename T = void>
 struct bit_not {
-    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T
-    {
-        return ~arg;
-    }
+    [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }
 };
 
 /// \group bit_not
@@ -30,8 +27,7 @@ struct bit_not<void> {
     using is_transparent = void;
 
     template <typename T>
-    [[nodiscard]] constexpr auto operator()(T&& arg) const
-        -> decltype(~etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(~etl::forward<T>(arg))
     {
         return ~arg;
     }

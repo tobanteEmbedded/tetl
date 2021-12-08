@@ -10,8 +10,8 @@
 namespace etl::test {
 
 struct name_and_tags {
-    name_and_tags(etl::string_view const& n = etl::string_view(),
-        etl::string_view const& t           = etl::string_view()) noexcept
+    name_and_tags(
+        etl::string_view const& n = etl::string_view(), etl::string_view const& t = etl::string_view()) noexcept
         : name(n), tags(t)
     {
     }

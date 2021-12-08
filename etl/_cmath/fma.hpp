@@ -11,7 +11,25 @@ namespace etl {
 /// to fit the result type.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/fma
-[[nodiscard]] constexpr auto fma(float x, float y, float z) noexcept -> float
+[[nodiscard]] constexpr auto fma(float x, float y, float z) noexcept -> float { return (x * y) + z; }
+
+/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
+/// to fit the result type.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/fma
+[[nodiscard]] constexpr auto fmaf(float x, float y, float z) noexcept -> float { return (x * y) + z; }
+
+/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
+/// to fit the result type.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/fma
+[[nodiscard]] constexpr auto fma(double x, double y, double z) noexcept -> double { return (x * y) + z; }
+
+/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
+/// to fit the result type.
+///
+/// https://en.cppreference.com/w/cpp/numeric/math/fma
+[[nodiscard]] constexpr auto fma(long double x, long double y, long double z) noexcept -> long double
 {
     return (x * y) + z;
 }
@@ -20,37 +38,7 @@ namespace etl {
 /// to fit the result type.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/fma
-[[nodiscard]] constexpr auto fmaf(float x, float y, float z) noexcept -> float
-{
-    return (x * y) + z;
-}
-
-/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
-/// to fit the result type.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/fma
-[[nodiscard]] constexpr auto fma(double x, double y, double z) noexcept
-    -> double
-{
-    return (x * y) + z;
-}
-
-/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
-/// to fit the result type.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/fma
-[[nodiscard]] constexpr auto fma(
-    long double x, long double y, long double z) noexcept -> long double
-{
-    return (x * y) + z;
-}
-
-/// \brief Computes (x*y) + z as if to infinite precision and rounded only once
-/// to fit the result type.
-///
-/// https://en.cppreference.com/w/cpp/numeric/math/fma
-[[nodiscard]] constexpr auto fmal(
-    long double x, long double y, long double z) noexcept -> long double
+[[nodiscard]] constexpr auto fmal(long double x, long double y, long double z) noexcept -> long double
 {
     return (x * y) + z;
 }

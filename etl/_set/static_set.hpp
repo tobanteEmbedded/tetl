@@ -75,86 +75,55 @@ public:
     constexpr static_set(static_set const& other) = default;
 
     /// \brief
-    constexpr static_set(static_set&& other) noexcept(
-        noexcept(move(declval<storage_type>())))
-        = default;
+    constexpr static_set(static_set&& other) noexcept(noexcept(move(declval<storage_type>()))) = default;
 
     /// \brief
     constexpr auto operator=(static_set const& other) -> static_set& = default;
 
     /// \brief
-    constexpr auto operator=(static_set&& other) noexcept(
-        noexcept(move(declval<storage_type>()))) -> static_set& = default;
+    constexpr auto operator=(static_set&& other) noexcept(noexcept(move(declval<storage_type>())))
+        -> static_set&     = default;
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator
-    {
-        return memory_.begin();
-    }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return memory_.begin(); }
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator
-    {
-        return memory_.begin();
-    }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return memory_.begin(); }
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator
-    {
-        return begin();
-    }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() noexcept -> iterator
-    {
-        return memory_.end();
-    }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator { return memory_.end(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
-    {
-        return memory_.end();
-    }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return memory_.end(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator
-    {
-        return end();
-    }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
-    {
-        return reverse_iterator(end());
-    }
+    [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto rbegin() const noexcept
-        -> const_reverse_iterator
+    [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
 
     /// \brief Returns a reverse iterator to the first element of the reversed
     /// set. It corresponds to the last element of the non-reversed set.
-    [[nodiscard]] constexpr auto crbegin() const noexcept
-        -> const_reverse_iterator
-    {
-        return rbegin();
-    }
+    [[nodiscard]] constexpr auto crbegin() const noexcept -> const_reverse_iterator { return rbegin(); }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
     /// first element of the non-reversed set.
-    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator
-    {
-        return reverse_iterator(begin());
-    }
+    [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
 
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
@@ -167,38 +136,22 @@ public:
     /// \brief Returns a reverse iterator to the element following the last
     /// element of the reversed set. It corresponds to the element preceding the
     /// first element of the non-reversed set.
-    [[nodiscard]] constexpr auto crend() const noexcept
-        -> const_reverse_iterator
-    {
-        return rend();
-    }
+    [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
 
     /// \brief Checks if the container has no elements, i.e. whether begin() ==
     /// end().
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool
-    {
-        return memory_.empty();
-    }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return memory_.empty(); }
 
     /// \brief Checks if the container full, i.e. whether size() == Capacity.
-    [[nodiscard]] constexpr auto full() const noexcept -> bool
-    {
-        return memory_.full();
-    }
+    [[nodiscard]] constexpr auto full() const noexcept -> bool { return memory_.full(); }
 
     /// \brief Returns the number of elements in the container, i.e.
     /// distance(begin(), end()).
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type
-    {
-        return memory_.size();
-    }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return memory_.size(); }
 
     /// \brief Returns the maximum number of elements the container is able to
     /// hold.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type
-    {
-        return memory_.max_size();
-    }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return memory_.max_size(); }
 
     /// \brief Erases all elements from the container. After this call, size()
     /// returns zero.
@@ -206,14 +159,11 @@ public:
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
-    constexpr auto insert(value_type&& value)
-        -> enable_if_t<is_move_constructible_v<value_type>,
-            pair<iterator, bool>>
+    constexpr auto insert(value_type&& value) -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
     {
         if (!full()) {
             auto cmp = key_compare {};
-            auto* p
-                = etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
+            auto* p  = etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
             if (p == memory_.end() || *(p) != value) {
                 memory_.push_back(move(value));
                 auto* pos = rotate(p, memory_.end() - 1, memory_.end());
@@ -230,8 +180,7 @@ public:
     /// \todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
     /// breaks GCC 9.3 Ubuntu Focal build
     constexpr auto insert(value_type const& value)
-        -> enable_if_t<is_copy_constructible_v<value_type>,
-            pair<iterator, bool>>
+        -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
     {
         value_type tmp = value;
         return insert(move(tmp));
@@ -240,10 +189,8 @@ public:
     /// \brief Inserts elements from range [first, last). If multiple elements
     /// in the range have keys that compare equivalent, it is unspecified which
     /// element is inserted (pending LWG2844).
-    template <typename InputIter,
-        TETL_REQUIRES_(detail::InputIterator<InputIter>)>
-    constexpr auto insert(InputIter first, InputIter last) noexcept(
-        noexcept(insert(declval<key_type>()))) -> void
+    template <typename InputIter, TETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    constexpr auto insert(InputIter first, InputIter last) noexcept(noexcept(insert(declval<key_type>()))) -> void
     {
         for (; first != last; ++first) { insert(*first); }
     }
@@ -251,10 +198,8 @@ public:
     /// \brief Inserts a new element into the container constructed in-place
     /// with the given args if there is no element with the key in the
     /// container.
-    template <typename... Args,
-        TETL_REQUIRES_(is_copy_constructible_v<key_type>)>
-    constexpr auto emplace(Args&&... args) noexcept(
-        noexcept(insert(declval<key_type>()))) -> pair<iterator, bool>
+    template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<key_type>)>
+    constexpr auto emplace(Args&&... args) noexcept(noexcept(insert(declval<key_type>()))) -> pair<iterator, bool>
     {
         return insert(value_type(forward<Args>(args)...));
     }
@@ -264,10 +209,7 @@ public:
     /// https://en.cppreference.com/w/cpp/container/set/erase
     ///
     /// \returns Iterator following the last removed element.
-    constexpr auto erase(iterator pos) noexcept -> iterator
-    {
-        return memory_.erase(pos);
-    }
+    constexpr auto erase(iterator pos) noexcept -> iterator { return memory_.erase(pos); }
 
     /// \brief Removes the elements in the range [first; last), which must be a
     /// valid range in *this.
@@ -298,8 +240,7 @@ public:
     }
 
     /// \brief Exchanges the contents of the container with those of other.
-    constexpr auto swap(static_set& other) noexcept(
-        is_nothrow_swappable_v<key_type>)
+    constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
         -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
     {
         using etl::move;
@@ -312,8 +253,7 @@ public:
     /// \brief Returns the number of elements with key that compares equivalent
     /// to the specified argument, which is either 1 or 0 since this container
     /// does not allow duplicates.
-    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto count(key_type const& key) const noexcept -> size_type
     {
         return contains(key) ? 1 : 0;
     }
@@ -339,8 +279,7 @@ public:
     ///
     /// \returns Iterator to an element with key equivalent to key. If no such
     /// element is found, past-the-end (see end()) iterator is returned.
-    [[nodiscard]] constexpr auto find(key_type const& key) const noexcept
-        -> const_iterator
+    [[nodiscard]] constexpr auto find(key_type const& key) const noexcept -> const_iterator
     {
         return etl::find(begin(), end(), key);
     }
@@ -369,11 +308,7 @@ public:
 
     /// \brief Checks if there is an element with key equivalent to key in the
     /// container.
-    [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept
-        -> bool
-    {
-        return find(key) != end();
-    }
+    [[nodiscard]] constexpr auto contains(key_type const& key) const noexcept -> bool { return find(key) != end(); }
 
     /// \brief Checks if there is an element with key that compares equivalent
     /// to the value x.
@@ -392,8 +327,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is not
     /// less than (i.e. greater or equal to) key.
-    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto lower_bound(key_type const& key) const -> const_iterator
     {
         return etl::lower_bound(begin(), end(), key, key_compare {});
     }
@@ -409,8 +343,7 @@ public:
     /// \brief Returns an iterator pointing to the first element that is not
     /// less than (i.e. greater or equal to) key.
     template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
-    [[nodiscard]] constexpr auto lower_bound(K const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto lower_bound(K const& key) const -> const_iterator
     {
         return etl::lower_bound(begin(), end(), key, key_compare {});
     }
@@ -424,8 +357,7 @@ public:
 
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
-    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto upper_bound(key_type const& key) const -> const_iterator
     {
         return etl::upper_bound(begin(), end(), key, key_compare {});
     }
@@ -441,8 +373,7 @@ public:
     /// \brief Returns an iterator pointing to the first element that is greater
     /// than key.
     template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
-    [[nodiscard]] constexpr auto upper_bound(K const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto upper_bound(K const& key) const -> const_iterator
     {
         return etl::upper_bound(begin(), end(), key, key_compare {});
     }
@@ -462,8 +393,7 @@ public:
     /// first element that is not less than key and another pointing to the
     /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
-    [[nodiscard]] constexpr auto equal_range(key_type const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto equal_range(key_type const& key) const -> const_iterator
     {
         return etl::equal_range(begin(), end(), key, key_compare {});
     }
@@ -485,8 +415,7 @@ public:
     /// first element greater than key. Alternatively, the first iterator may be
     /// obtained with lower_bound(), and the second with upper_bound().
     template <typename K, TETL_REQUIRES_(detail::is_transparent_v<key_compare>)>
-    [[nodiscard]] constexpr auto equal_range(K const& key) const
-        -> const_iterator
+    [[nodiscard]] constexpr auto equal_range(K const& key) const -> const_iterator
     {
         return etl::equal_range(begin(), end(), key, key_compare {});
     }
@@ -496,19 +425,13 @@ public:
     /// value_comp.
     ///
     /// \returns The key comparison function object.
-    [[nodiscard]] auto key_comp() const noexcept -> key_compare
-    {
-        return key_compare();
-    }
+    [[nodiscard]] auto key_comp() const noexcept -> key_compare { return key_compare(); }
 
     /// \brief Returns the function object that compares the values. It is the
     /// same as key_comp.
     ///
     /// \returns The value comparison function object.
-    [[nodiscard]] auto value_comp() const noexcept -> value_compare
-    {
-        return value_compare();
-    }
+    [[nodiscard]] auto value_comp() const noexcept -> value_compare { return value_compare(); }
 };
 
 /// \brief Compares the contents of two sets.
@@ -518,8 +441,7 @@ public:
 /// element in rhs at the same position.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator==(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return lhs.size() == rhs.size() && equal(begin(lhs), end(lhs), begin(rhs));
 }
@@ -531,8 +453,7 @@ template <typename Key, size_t Capacity, typename Comp>
 /// element in rhs at the same position.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator!=(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(lhs == rhs);
 }
@@ -545,8 +466,7 @@ template <typename Key, size_t Capacity, typename Comp>
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator<(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
@@ -559,8 +479,7 @@ template <typename Key, size_t Capacity, typename Comp>
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator<=(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(rhs < lhs);
 }
@@ -573,8 +492,7 @@ template <typename Key, size_t Capacity, typename Comp>
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator>(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return rhs < lhs;
 }
@@ -587,8 +505,7 @@ template <typename Key, size_t Capacity, typename Comp>
 /// Compare.
 template <typename Key, size_t Capacity, typename Comp>
 [[nodiscard]] constexpr auto operator>=(
-    static_set<Key, Capacity, Comp> const& lhs,
-    static_set<Key, Capacity, Comp> const& rhs) -> bool
+    static_set<Key, Capacity, Comp> const& lhs, static_set<Key, Capacity, Comp> const& rhs) -> bool
 {
     return !(lhs < rhs);
 }
@@ -596,9 +513,8 @@ template <typename Key, size_t Capacity, typename Comp>
 /// \brief Specializes the swap algorithm for set. Swaps the contents
 /// of lhs and rhs. Calls lhs.swap(rhs).
 template <typename Key, size_t Capacity, typename Compare>
-constexpr auto swap(static_set<Key, Capacity, Compare>& lhs,
-    static_set<Key, Capacity, Compare>& rhs) noexcept(noexcept(lhs.swap(rhs)))
-    -> void
+constexpr auto swap(static_set<Key, Capacity, Compare>& lhs, static_set<Key, Capacity, Compare>& rhs) noexcept(
+    noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

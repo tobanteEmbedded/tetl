@@ -18,8 +18,7 @@ namespace etl {
 /// \group find
 /// \module Algorithm
 template <typename InputIt, typename T>
-[[nodiscard]] constexpr auto find(
-    InputIt first, InputIt last, T const& value) noexcept -> InputIt
+[[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept -> InputIt
 {
     for (; first != last; ++first) {
         if (*first == value) { return first; }

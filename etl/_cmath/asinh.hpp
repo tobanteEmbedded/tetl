@@ -13,44 +13,28 @@ namespace etl {
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinh(float arg) noexcept -> float
-{
-    return etl::detail::gcem::asinh(arg);
-}
+[[nodiscard]] constexpr auto asinh(float arg) noexcept -> float { return etl::detail::gcem::asinh(arg); }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float
-{
-    return etl::detail::gcem::asinh(arg);
-}
+[[nodiscard]] constexpr auto asinhf(float arg) noexcept -> float { return etl::detail::gcem::asinh(arg); }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinh(double arg) noexcept -> double
-{
-    return etl::detail::gcem::asinh(arg);
-}
+[[nodiscard]] constexpr auto asinh(double arg) noexcept -> double { return etl::detail::gcem::asinh(arg); }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::asinh(arg);
-}
+[[nodiscard]] constexpr auto asinh(long double arg) noexcept -> long double { return etl::detail::gcem::asinh(arg); }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
-[[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double
-{
-    return etl::detail::gcem::asinh(arg);
-}
+[[nodiscard]] constexpr auto asinhl(long double arg) noexcept -> long double { return etl::detail::gcem::asinh(arg); }
 
 /// \brief Computes the inverse hyperbolic sine of arg.
 /// https://en.cppreference.com/w/cpp/numeric/math/asinh
 template <typename T>
-[[nodiscard]] constexpr auto asinh(T arg) noexcept
-    -> etl::enable_if_t<etl::is_integral_v<T>, double>
+[[nodiscard]] constexpr auto asinh(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
 {
     return etl::detail::gcem::asinh(static_cast<double>(arg));
 }

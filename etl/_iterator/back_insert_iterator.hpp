@@ -30,22 +30,17 @@ struct back_insert_iterator {
 
     /// \brief Initializes the underlying pointer to the container to
     /// etl::addressof(c).
-    constexpr explicit back_insert_iterator(Container& container)
-        : container_ { etl::addressof(container) }
-    {
-    }
+    constexpr explicit back_insert_iterator(Container& container) : container_ { etl::addressof(container) } { }
 
     /// \brief Inserts the given value value to the container.
-    constexpr auto operator=(typename Container::value_type const& value)
-        -> back_insert_iterator&
+    constexpr auto operator=(typename Container::value_type const& value) -> back_insert_iterator&
     {
         container_->push_back(value);
         return *this;
     }
 
     /// \brief Inserts the given value value to the container.
-    constexpr auto operator=(typename Container::value_type&& value)
-        -> back_insert_iterator&
+    constexpr auto operator=(typename Container::value_type&& value) -> back_insert_iterator&
     {
         container_->push_back(move(value));
         return *this;
@@ -78,8 +73,7 @@ private:
 /// type of the argument.
 /// \module Iterator
 template <typename Container>
-[[nodiscard]] constexpr auto back_inserter(Container& container)
-    -> back_insert_iterator<Container>
+[[nodiscard]] constexpr auto back_inserter(Container& container) -> back_insert_iterator<Container>
 {
     return back_insert_iterator<Container>(container);
 }

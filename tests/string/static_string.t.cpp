@@ -308,16 +308,14 @@ constexpr auto test() -> bool
     {
         string str { "aaa" };
 
-        etl::for_each(
-            str.begin(), str.end(), [](auto& c) { assert(c == char('a')); });
+        etl::for_each(str.begin(), str.end(), [](auto& c) { assert(c == char('a')); });
         for (auto const& c : str) { assert(c == char('a')); }
     }
 
     {
         string str { "aaa" };
 
-        etl::for_each(str.cbegin(), str.cend(),
-            [](auto const& c) { assert(c == char('a')); });
+        etl::for_each(str.cbegin(), str.cend(), [](auto const& c) { assert(c == char('a')); });
     }
 
     // TODO: Fix constexpr, fails on gcc-9, but passes gcc-11
@@ -782,8 +780,7 @@ constexpr auto test() -> bool
         etl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
         // test
-        etl::for_each(
-            str.cbegin(), str.cend(), [](auto const& c) { assert(c == 'b'); });
+        etl::for_each(str.cbegin(), str.cend(), [](auto const& c) { assert(c == 'b'); });
 
         assert(str.front() == 'b');
         assert(str.back() == 'b');
@@ -870,8 +867,7 @@ constexpr auto test() -> bool
         str.insert(0, str.capacity(), 'a');
         assert((str.full()));
         assert((str.size() == str.capacity() - 1));
-        assert((etl::all_of(
-            begin(str), end(str), [](auto ch) { return ch == 'a'; })));
+        assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
     {
@@ -905,8 +901,7 @@ constexpr auto test() -> bool
 
         assert((str.full()));
         assert((str.size() == str.capacity() - 1));
-        assert((etl::all_of(
-            begin(str), end(str), [](auto ch) { return ch == 'a'; })));
+        assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
     {
@@ -936,14 +931,11 @@ constexpr auto test() -> bool
 
     {
         auto str = string("");
-        for (etl::size_t i = 0; i < str.capacity(); ++i) {
-            str.insert(0, "ab", 1);
-        }
+        for (etl::size_t i = 0; i < str.capacity(); ++i) { str.insert(0, "ab", 1); }
 
         assert((str.full()));
         assert((str.size() == str.capacity() - 1));
-        assert((etl::all_of(
-            begin(str), end(str), [](auto ch) { return ch == 'a'; })));
+        assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
     {
@@ -1056,8 +1048,7 @@ constexpr auto test() -> bool
         auto s = string_t("0123456");
         assert((s.replace(0, 2, string_t("xx")) == "xx23456"_sv));
         assert((s.replace(2, 1, string_t("xx")) == "xxx3456"_sv));
-        assert((s.replace(begin(s) + 3, begin(s) + 4, string_t("x")))
-               == "xxxx456"_sv);
+        assert((s.replace(begin(s) + 3, begin(s) + 4, string_t("x"))) == "xxxx456"_sv);
     }
 
     {

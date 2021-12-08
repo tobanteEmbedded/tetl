@@ -13,8 +13,7 @@ namespace etl {
 ///
 /// \module Algorithm
 template <typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto partition_point(
-    ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
+[[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {
     for (; first != last; ++first) {
         if (!p(*first)) { break; }
