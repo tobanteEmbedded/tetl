@@ -20,4 +20,7 @@
 #include "etl/_concepts/signed_integral.hpp"
 #include "etl/_concepts/unsigned_integral.hpp"
 
+// Non-standard extensions
+#include "etl/_concepts/boolean_testable.hpp"
+
 #endif // TETL_CONCEPTS_HPP
