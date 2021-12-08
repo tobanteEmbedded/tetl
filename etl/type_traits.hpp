@@ -20,6 +20,7 @@
 #include "etl/_type_traits/aligned_union.hpp"
 #include "etl/_type_traits/alignment_of.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
+#include "etl/_type_traits/common_reference.hpp"
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/conjunction.hpp"
