@@ -14,9 +14,12 @@ constexpr auto test() -> bool
     assert(etl::atoi("143") == T(143));
     assert(etl::atoi("999") == T(999));
     assert(etl::atoi("1111") == T(1111));
+
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     assert(etl::atoi("99999") == T(99999));
     assert(etl::atoi("999999") == T(999999));
     assert(etl::atoi("123456789") == T(123456789));
+#endif
 
     return true;
 }

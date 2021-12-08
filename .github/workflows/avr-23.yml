@@ -24,9 +24,38 @@ jobs:
       - name: Build examples project (C++23, Release)
         run: AVR=1 CXXSTD=2b make -C examples clean all
 
-      - name: Build tests
+      - name: Configure CMake
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake -D TETL_BUILD_WERROR=ON
+
+      - name: Build tests -- Debug
         run: |
-          cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake -D CMAKE_CXX_STANDARD=23 -D TETL_BUILD_WERROR=ON
+          cmake --build build --config Debug --target tests/algorithm/all
+          cmake --build build --config Debug --target tests/array/all
+          cmake --build build --config Debug --target tests/bit/all
+          cmake --build build --config Debug --target tests/bitset/all
+          cmake --build build --config Debug --target tests/cctype/all
+          cmake --build build --config Debug --target tests/cfloat/all
+          cmake --build build --config Debug --target tests/charconv/all
+          cmake --build build --config Debug --target tests/chrono/all
+          cmake --build build --config Debug --target tests/cmath/all
+          cmake --build build --config Debug --target tests/complex/all
+          cmake --build build --config Debug --target tests/concepts/all
+          cmake --build build --config Debug --target tests/cstdarg/all
+          cmake --build build --config Debug --target tests/cstddef/all
+          cmake --build build --config Debug --target tests/cstdint/all
+          cmake --build build --config Debug --target tests/cstdlib/all
+          cmake --build build --config Debug --target tests/cstring/all
+          cmake --build build --config Debug --target tests/expected/all
+          cmake --build build --config Debug --target tests/format/all
+          cmake --build build --config Debug --target tests/functional/all
+          cmake --build build --config Debug --target tests/ios/all
+          cmake --build build --config Debug --target tests/iterator/all
+          cmake --build build --config Debug --target tests/mutex/all
+          cmake --build build --config Debug --target tests/numbers/all
+          cmake --build build --config Debug --target tests/numeric/all
+          cmake --build build --config Debug --target tests/ratio/all
+          cmake --build build --config Debug --target tests/scope/all
+          cmake --build build --config Debug --target tests/span/all
           cmake --build build --config Debug --target tests/stack/all
           cmake --build build --config Debug --target tests/stdexcept/all
           cmake --build build --config Debug --target tests/string/all
@@ -35,6 +64,36 @@ jobs:
           cmake --build build --config Debug --target tests/utility/all
           cmake --build build --config Debug --target tests/vector/all
           cmake --build build --config Debug --target tests/version/all
+
+      - name: Build tests -- Release
+        run: |
+          cmake --build build --config Release --target tests/algorithm/all
+          cmake --build build --config Release --target tests/array/all
+          cmake --build build --config Release --target tests/bit/all
+          cmake --build build --config Release --target tests/bitset/all
+          cmake --build build --config Release --target tests/cctype/all
+          cmake --build build --config Release --target tests/cfloat/all
+          cmake --build build --config Release --target tests/charconv/all
+          cmake --build build --config Release --target tests/chrono/all
+          cmake --build build --config Release --target tests/cmath/all
+          cmake --build build --config Release --target tests/complex/all
+          cmake --build build --config Release --target tests/concepts/all
+          cmake --build build --config Release --target tests/cstdarg/all
+          cmake --build build --config Release --target tests/cstddef/all
+          cmake --build build --config Release --target tests/cstdint/all
+          cmake --build build --config Release --target tests/cstdlib/all
+          cmake --build build --config Release --target tests/cstring/all
+          cmake --build build --config Release --target tests/expected/all
+          cmake --build build --config Release --target tests/format/all
+          cmake --build build --config Release --target tests/functional/all
+          cmake --build build --config Release --target tests/ios/all
+          cmake --build build --config Release --target tests/iterator/all
+          cmake --build build --config Release --target tests/mutex/all
+          cmake --build build --config Release --target tests/numbers/all
+          cmake --build build --config Release --target tests/numeric/all
+          cmake --build build --config Release --target tests/ratio/all
+          cmake --build build --config Release --target tests/scope/all
+          cmake --build build --config Release --target tests/span/all
           cmake --build build --config Release --target tests/stack/all
           cmake --build build --config Release --target tests/stdexcept/all
           cmake --build build --config Release --target tests/string/all

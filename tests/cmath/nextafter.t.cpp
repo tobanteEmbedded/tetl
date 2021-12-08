@@ -15,7 +15,6 @@ constexpr auto test() -> bool
     using etl::uint64_t;
 
     assert(bit_cast<uint32_t>(nextafter(0.0F, 1.0F)) == 1U);
-    assert(bit_cast<uint64_t>(nextafter(0.0, 1.0)) == 1U);
 
     assert(bit_cast<uint32_t>(nextafterf(1.0F, 1.0F)) == 1065353216U);
     assert(bit_cast<uint32_t>(nextafterf(1.0F, 0.0F)) == 1065353215U);
@@ -25,9 +24,12 @@ constexpr auto test() -> bool
     assert(bit_cast<uint32_t>(nextafter(1.0F, 0.0F)) == 1065353215U);
     assert(bit_cast<uint32_t>(nextafter(1.0F, 2.0F)) == 1065353217U);
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+    assert(bit_cast<uint64_t>(nextafter(0.0, 1.0)) == 1U);
     assert(bit_cast<uint64_t>(nextafter(1.0, 1.0)) == 4607182418800017408U);
     assert(bit_cast<uint64_t>(nextafter(1.0, 0.0)) == 4607182418800017407U);
     assert(bit_cast<uint64_t>(nextafter(1.0, 2.0)) == 4607182418800017409U);
+#endif
 
     return true;
 }

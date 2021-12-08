@@ -19,13 +19,17 @@ template <typename Exception>
 [[noreturn]] inline auto tetl_exception_handler(Exception const& e) -> void
 {
     ::puts(e.what());
+#if defined(__cpp_exceptions)
     throw e;
+#else
+    ::exit(1); // NOLINT
+#endif
 }
 
 template <typename Assertion>
 [[noreturn]] auto tetl_assert_handler(Assertion const& msg) -> void
 {
-    ::printf("EXCEPTION: %s:%d\n", msg.file, msg.line);
+    ::printf("ASSERTION: %s:%d\n", msg.file, msg.line);
     ::exit(1); // NOLINT
 }
 } // namespace etl
