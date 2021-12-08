@@ -45,6 +45,27 @@ else ()
           # -Wshorten-64-to-32
           -Wunused-private-field
           -Wno-implicit-int-float-conversion # etl/_3rd_party/gcem cause some warnings
+
+          # Internal testing only
+          $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
+            -Weverything
+            -Wno-c++98-compat-pedantic
+            -Wno-documentation-unknown-command
+            -Wno-newline-eof
+            -Wno-float-equal
+            -Wno-global-constructors
+            -Wno-padded
+            -Wno-missing-noreturn
+            -Wno-missing-prototypes
+            -Wno-double-promotion
+            -Wno-documentation
+            -Wno-disabled-macro-expansion
+            -Wno-ctad-maybe-unsupported
+            -Wno-reserved-identifier
+            -Wno-unused-member-function
+            -Wno-implicit-int-float-conversion
+            -Wno-implicit-int-conversion
+          >
       >
 
       $<$<CXX_COMPILER_ID:AppleClang>:
@@ -61,22 +82,5 @@ else ()
         -Wno-sequence-point
         -Wno-stringop-overflow
       >
-
-      # Internal testing only
-      # $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
-      #   -Weverything
-      #   -Wno-c++98-compat-pedantic
-      #   -Wno-documentation-unknown-command
-      #   -Wno-newline-eof
-      #   -Wno-float-equal
-      #   -Wno-global-constructors
-      #   -Wno-padded
-      #   -Wno-missing-noreturn
-      #   -Wno-disabled-macro-expansion
-      #   -Wno-ctad-maybe-unsupported
-      #   -Wno-unused-member-function
-      #   -Wno-old-style-cast
-      #   -Wno-implicit-int-float-conversion
-      # >
   )
 endif (MSVC)

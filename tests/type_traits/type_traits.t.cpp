@@ -360,7 +360,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_pointer, T &&);
 
     TEST_IS_TRAIT_CV(has_virtual_destructor, VirtualDtor);
-    TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, Abstract);
+    TEST_IS_TRAIT_CV(has_virtual_destructor, Abstract);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, EmptyClass);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T*);

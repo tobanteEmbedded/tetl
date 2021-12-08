@@ -11,6 +11,7 @@
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_constant_evaluated.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
 namespace etl {
 
@@ -39,7 +40,13 @@ template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 {
     if (is_constant_evaluated()) { return detail::popcount_fallback(val); }
 #if __has_builtin(__builtin_popcount)
-    return __builtin_popcount(val);
+    if constexpr (sizeof(T) == sizeof(unsigned long long)) {
+        return static_cast<int>(__builtin_popcountll(val));
+    } else if constexpr (sizeof(T) == sizeof(unsigned long)) {
+        return static_cast<int>(__builtin_popcountl(val));
+    } else {
+        return static_cast<int>(__builtin_popcount(val));
+    }
 #else
     return detail::popcount_fallback(val);
 #endif

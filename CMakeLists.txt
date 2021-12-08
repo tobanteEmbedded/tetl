@@ -1,14 +1,15 @@
 cmake_minimum_required(VERSION 3.8)
 project(etl LANGUAGES CXX)
 
-option(TETL_BUILD_EXAMPLES  "Build examples" ON)
-option(TETL_BUILD_TESTS     "Build unit tests" ON)
-option(TETL_BUILD_WERROR    "Build with all warnings as errors" OFF)
-option(TETL_BUILD_ASAN      "Build with address sanitizer enabled" OFF)
-option(TETL_BUILD_UBSAN     "Build with undefined behavior sanitizer enabled" OFF)
-option(TETL_BUILD_MSAN      "Build with memory sanitizer enabled" OFF)
-option(TETL_BUILD_TSAN      "Build with thread sanitizer enabled" OFF)
-option(TETL_BUILD_COVERAGE  "Build with coverage reporting for gcc/clang" OFF)
+option(TETL_BUILD_EXAMPLES    "Build examples" ON)
+option(TETL_BUILD_TESTS       "Build unit tests" ON)
+option(TETL_BUILD_WERROR      "Build with all warnings as errors" OFF)
+option(TETL_BUILD_WEVERYTHING "Build with -Weverything (clang only)" OFF)
+option(TETL_BUILD_ASAN        "Build with address sanitizer enabled" OFF)
+option(TETL_BUILD_UBSAN       "Build with undefined behavior sanitizer enabled" OFF)
+option(TETL_BUILD_MSAN        "Build with memory sanitizer enabled" OFF)
+option(TETL_BUILD_TSAN        "Build with thread sanitizer enabled" OFF)
+option(TETL_BUILD_COVERAGE    "Build with coverage reporting for gcc/clang" OFF)
 
 # Only do these if this is the main project,
 # and not if it is included through add_subdirectory.

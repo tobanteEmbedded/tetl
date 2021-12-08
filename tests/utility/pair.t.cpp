@@ -142,7 +142,7 @@ constexpr auto test() -> bool
         assert(!(is_same_v<decltype(other.second), decltype(p.second)>));
 
         assert(other.first == p.first);
-        assert(other.second == (float)p.second);
+        assert(other.second == static_cast<float>(p.second));
     }
 
     // same types
@@ -163,7 +163,7 @@ constexpr auto test() -> bool
         assert(!(is_same_v<decltype(other.second), decltype(p.second)>));
 
         assert(other.first == p.first);
-        assert(other.second == (float)p.second);
+        assert(other.second == static_cast<float>(p.second));
     }
 
     {

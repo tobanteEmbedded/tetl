@@ -121,7 +121,11 @@ constexpr auto test() -> bool
 
     {
         struct S {
-            S() = default;
+            S()                   = default;
+            S(S const& /*other*/) = default;
+            S(S&& /*other*/)      = default;
+            auto operator=(S const& /*other*/) -> S& = default;
+            auto operator=(S&& /*other*/) -> S& = default;
             ~S() { }
 
             T data {};
@@ -206,6 +210,10 @@ constexpr auto test() -> bool
 
             S(int& c) : counter { c } { }
             ~S() { counter++; }
+            S(S const& /*other*/) = default;
+            S(S&& /*other*/)      = default;
+            auto operator=(S const& /*other*/) -> S& = default;
+            auto operator=(S&& /*other*/) -> S& = default;
         };
 
         auto counter = 0;
@@ -422,6 +430,10 @@ constexpr auto test() -> bool
 
             S(T c) : data { c } { }
             ~S() { }
+            S(S const& /*other*/) = default;
+            S(S&& /*other*/)      = default;
+            auto operator=(S const& /*other*/) -> S& = default;
+            auto operator=(S&& /*other*/) -> S& = default;
         };
 
         etl::optional<S> opt1 { T { 1 } };

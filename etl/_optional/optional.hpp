@@ -149,7 +149,7 @@ struct optional_storage_base : optional_destruct_base<T> {
 
     void construct(Args&&... args)
     {
-        ::new ((void*)etl::addressof(this->internal_value))
+        ::new (static_cast<void*>(etl::addressof(this->internal_value)))
             value_type(etl::forward<Args>(args)...);
         this->internal_has_value = true;
     }

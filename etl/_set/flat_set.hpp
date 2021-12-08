@@ -135,7 +135,6 @@ struct flat_set {
     [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator
     {
         return reverse_iterator(end());
-        ;
     }
 
     [[nodiscard]] constexpr auto rbegin() const noexcept

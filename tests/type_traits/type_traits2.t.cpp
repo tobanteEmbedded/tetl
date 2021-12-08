@@ -32,10 +32,12 @@ struct IsPolymorphic_A {
 };
 
 struct IsPolymorphic_B {
+    virtual ~IsPolymorphic_B() = default;
     virtual void foo();
 };
 
 struct IsPolymorphic_C : IsPolymorphic_B {
+    ~IsPolymorphic_C() override = default;
 };
 
 struct IsPolymorphic_D {
@@ -47,10 +49,12 @@ struct IsFinal_A {
 };
 
 struct IsFinal_B {
+    virtual ~IsFinal_B() = default;
     virtual void foo(); // NOLINT
 };
 
 struct IsFinal_C final : IsFinal_B {
+    ~IsFinal_C() override = default;
 };
 
 struct IsFinal_D {
@@ -67,14 +71,17 @@ struct IsAbstract_A {
 };
 
 struct IsAbstract_B {
+    virtual ~IsAbstract_B() = default;
     virtual void foo() { }
 };
 
 struct IsAbstract_C {
-    virtual void foo() = 0;
+    virtual ~IsAbstract_C() = default;
+    virtual void foo()      = 0;
 };
 
 struct IsAbstract_D : IsAbstract_C {
+    ~IsAbstract_D() override = default;
 };
 
 } // namespace

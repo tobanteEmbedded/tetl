@@ -26,7 +26,7 @@ struct pointer_int_pair_info {
 
     /// \brief The bits that come from the pointer.
     static constexpr auto ptr_mask
-        = ~(uintptr_t)(((intptr_t)1 << free_bits) - 1);
+        = ~static_cast<uintptr_t>((static_cast<intptr_t>(1) << free_bits) - 1);
 
     /// \brief The number of low bits that we reserve for other uses; and keep
     /// zero.
@@ -34,10 +34,12 @@ struct pointer_int_pair_info {
 
     /// \brief This is the unshifted mask for valid bits of the int
     /// type.
-    static constexpr auto int_mask = (uintptr_t)(((intptr_t)1 << int_bits) - 1);
+    static constexpr auto int_mask
+        = static_cast<uintptr_t>((static_cast<intptr_t>(1) << int_bits) - 1);
 
     /// \brief This is the bits for the integer shifted in place.
-    static constexpr auto shifted_int_mask = (uintptr_t)(int_mask << int_shift);
+    static constexpr auto shifted_int_mask
+        = static_cast<uintptr_t>(int_mask << int_shift);
 
     [[nodiscard]] static auto get_pointer(intptr_t value) -> pointer_type
     {

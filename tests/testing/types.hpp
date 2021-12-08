@@ -28,6 +28,7 @@ union DummyUnion {
 };
 
 struct Abstract {
+    virtual ~Abstract()        = default;
     virtual auto foo() -> void = 0;
 };
 
@@ -117,31 +118,31 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
 
 #define TEST_IS_TRAIT_C(trait, type)                                           \
     TEST_IS_TRAIT(trait, type);                                                \
-    TEST_IS_TRAIT(trait, const type);
+    TEST_IS_TRAIT(trait, const type)
 
 #define TEST_IS_TRAIT_C_FALSE(trait, type)                                     \
     TEST_IS_TRAIT_FALSE(trait, type);                                          \
-    TEST_IS_TRAIT_FALSE(trait, const type);
+    TEST_IS_TRAIT_FALSE(trait, const type)
 
 #define TEST_IS_TRAIT_V(trait, type)                                           \
     TEST_IS_TRAIT(trait, type);                                                \
-    TEST_IS_TRAIT(trait, volatile type);
+    TEST_IS_TRAIT(trait, volatile type)
 
 #define TEST_IS_TRAIT_V_FALSE(trait, type)                                     \
     TEST_IS_TRAIT_FALSE(trait, type);                                          \
-    TEST_IS_TRAIT_FALSE(trait, volatile type);
+    TEST_IS_TRAIT_FALSE(trait, volatile type)
 
 #define TEST_IS_TRAIT_CV(trait, type)                                          \
     TEST_IS_TRAIT(trait, type);                                                \
     TEST_IS_TRAIT(trait, const type);                                          \
     TEST_IS_TRAIT(trait, volatile type);                                       \
-    TEST_IS_TRAIT(trait, const volatile type);
+    TEST_IS_TRAIT(trait, const volatile type)
 
 #define TEST_IS_TRAIT_CV_FALSE(trait, type)                                    \
     TEST_IS_TRAIT_FALSE(trait, type);                                          \
     TEST_IS_TRAIT_FALSE(trait, const type);                                    \
     TEST_IS_TRAIT_FALSE(trait, volatile type);                                 \
-    TEST_IS_TRAIT_FALSE(trait, const volatile type);
+    TEST_IS_TRAIT_FALSE(trait, const volatile type)
 
 #define TEST_TRAIT_VALUE(trait, type, expected)                                \
     do {                                                                       \
@@ -153,7 +154,7 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
     TEST_TRAIT_VALUE(trait, type, expected);                                   \
     TEST_TRAIT_VALUE(trait, const type, expected);                             \
     TEST_TRAIT_VALUE(trait, volatile type, expected);                          \
-    TEST_TRAIT_VALUE(trait, const volatile type, expected);
+    TEST_TRAIT_VALUE(trait, const volatile type, expected)
 
 #define TEST_TRAIT_TYPE(trait, T, e)                                           \
     do {                                                                       \
@@ -165,6 +166,6 @@ using PointerToCVMemberFunc       = void (VirtualDtor::*)() const volatile;
     TEST_TRAIT_TYPE(trait, type, expected);                                    \
     TEST_TRAIT_TYPE(trait, const type, expected);                              \
     TEST_TRAIT_TYPE(trait, volatile type, expected);                           \
-    TEST_TRAIT_TYPE(trait, const volatile type, expected);
+    TEST_TRAIT_TYPE(trait, const volatile type, expected)
 
 #endif // TETL_TEST_TYPE_TRAITS_TYPES_HPP

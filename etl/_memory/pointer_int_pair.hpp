@@ -66,7 +66,7 @@ struct pointer_int_pair {
 
     [[nodiscard]] auto get_int() const -> int_type
     {
-        return (int_type)pointer_info::get_int(value_);
+        return static_cast<int_type>(pointer_info::get_int(value_));
     }
 
     void set_ptr_and_int(pointer_type pointerValue, int_type intValue)

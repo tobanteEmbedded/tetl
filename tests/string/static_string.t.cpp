@@ -310,7 +310,7 @@ constexpr auto test() -> bool
 
         etl::for_each(
             str.begin(), str.end(), [](auto& c) { assert(c == char('a')); });
-        for (auto const& c : str) { assert(c == char('a')); };
+        for (auto const& c : str) { assert(c == char('a')); }
     }
 
     {

@@ -36,12 +36,12 @@ template <typename T>
     return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
 }
 
-template <typename T>
-[[nodiscard]] constexpr auto operator!=(
-    Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
-{
-    return !(lhs == rhs);
-}
+// template <typename T>
+// [[nodiscard]] constexpr auto operator!=(
+//     Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
+// {
+//     return !(lhs == rhs);
+// }
 
 } // namespace
 
