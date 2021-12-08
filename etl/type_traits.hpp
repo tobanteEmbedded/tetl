@@ -65,6 +65,7 @@
 #include "etl/_type_traits/is_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_assignable.hpp"
 #include "etl/_type_traits/is_nothrow_constructible.hpp"
+#include "etl/_type_traits/is_nothrow_convertible.hpp"
 #include "etl/_type_traits/is_nothrow_copy_assignable.hpp"
 #include "etl/_type_traits/is_nothrow_copy_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_default_constructible.hpp"
