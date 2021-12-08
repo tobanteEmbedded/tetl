@@ -7,6 +7,8 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_compare/common_comparison_category.hpp"
+#include "etl/_compare/compare_three_way_result.hpp"
 #include "etl/_compare/named_functions.hpp"
 #include "etl/_compare/partial_ordering.hpp"
 #include "etl/_compare/strong_ordering.hpp"
