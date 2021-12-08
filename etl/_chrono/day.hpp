@@ -53,7 +53,7 @@ struct day {
     constexpr auto ok() const noexcept -> bool
     {
         return (count_ > 0U) && (count_ < 32U);
-    };
+    }
 
 private:
     uint8_t count_;

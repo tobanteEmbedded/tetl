@@ -61,7 +61,7 @@ struct month {
     constexpr auto ok() const noexcept -> bool
     {
         return (count_ > 0U) && (count_ < 12U);
-    };
+    }
 
 private:
     constexpr auto add(int count) noexcept -> void
