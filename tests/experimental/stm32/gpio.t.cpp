@@ -10,7 +10,7 @@
 using namespace etl::experimental::hardware;
 using register_bits = etl::bitset<32>;
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     auto memory          = stm32::gpio_memory_layout {};
     memory.bit_set_reset = 0x0;

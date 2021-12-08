@@ -38,11 +38,11 @@ else ()
           # -Wconversion
           -Wextra-semi
           -Winconsistent-missing-destructor-override
-          # -Wint-conversion
+          -Wint-conversion
           -Wnullable-to-nonnull-conversion
           -Wshadow-all
           -Wshift-sign-overflow
-          # -Wshorten-64-to-32
+          -Wshorten-64-to-32
           -Wunused-private-field
           -Wno-implicit-int-float-conversion # etl/_3rd_party/gcem cause some warnings
 
@@ -55,15 +55,12 @@ else ()
             -Wno-float-equal
             -Wno-global-constructors
             -Wno-padded
-            -Wno-missing-noreturn
-            -Wno-missing-prototypes
             -Wno-double-promotion
             -Wno-documentation
             -Wno-disabled-macro-expansion
             -Wno-ctad-maybe-unsupported
             -Wno-reserved-identifier
             -Wno-unused-member-function
-            -Wno-implicit-int-float-conversion
             -Wno-implicit-int-conversion
           >
       >

@@ -19,7 +19,7 @@ struct example_task {
     }
 };
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
 
     auto task = example_task<rtos::once> {};

@@ -62,7 +62,7 @@ auto test() -> bool
     return true;
 }
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     // assert(test<etl::int8_t>());
     // assert(test<etl::int16_t>());

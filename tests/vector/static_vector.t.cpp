@@ -523,7 +523,7 @@ constexpr auto test_all_cx() -> bool
     return true;
 }
 
-auto test_all_runtime() -> bool
+static auto test_all_runtime() -> bool
 {
     assert(test_runtime<etl::int8_t>());
     assert(test_runtime<etl::int16_t>());

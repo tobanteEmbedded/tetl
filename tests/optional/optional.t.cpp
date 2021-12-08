@@ -502,7 +502,7 @@ constexpr auto test() -> bool
     return true;
 }
 
-auto test_opional_2() -> bool
+static auto test_opional_2() -> bool
 {
     struct SNT {
         SNT() = default;
@@ -535,7 +535,7 @@ auto test_opional_2() -> bool
     return true;
 }
 
-auto test_opional_3() -> bool
+static auto test_opional_3() -> bool
 {
     etl::optional<int> opt1 { 42 };
 
@@ -562,7 +562,7 @@ auto test_opional_3() -> bool
     return true;
 }
 
-auto test_opional_4() -> bool
+static auto test_opional_4() -> bool
 {
     struct S {
         S() = default;
@@ -598,7 +598,7 @@ auto test_opional_4() -> bool
     return true;
 }
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     assert(test<etl::uint8_t>());
     assert(test<etl::int8_t>());

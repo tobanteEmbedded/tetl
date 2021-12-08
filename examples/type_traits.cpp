@@ -13,7 +13,7 @@ auto func(T val) -> etl::enable_if_t<etl::is_integral_v<T>, int>
     return static_cast<int>(val);
 }
 
-auto func(float val) -> float { return val; }
+static auto func(float val) -> float { return val; }
 
 auto main() -> int
 {

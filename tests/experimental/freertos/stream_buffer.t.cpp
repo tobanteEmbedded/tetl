@@ -9,7 +9,7 @@
 namespace rtos = etl::experimental::freertos;
 namespace net  = etl::experimental::net;
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     auto sb = rtos::stream_buffer { 128, 1 };
     assert((sb.empty() == false));

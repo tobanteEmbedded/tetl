@@ -8,7 +8,7 @@
 #include "test_mutex.hpp"
 #include "testing/testing.hpp"
 
-auto test() -> bool
+static auto test() -> bool
 {
 
     // "default construction"

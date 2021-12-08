@@ -33,7 +33,7 @@ struct IsPolymorphic_A {
 
 struct IsPolymorphic_B {
     virtual ~IsPolymorphic_B() = default;
-    virtual void foo();
+    virtual void foo() { }
 };
 
 struct IsPolymorphic_C : IsPolymorphic_B {
@@ -50,7 +50,7 @@ struct IsFinal_A {
 
 struct IsFinal_B {
     virtual ~IsFinal_B() = default;
-    virtual void foo(); // NOLINT
+    virtual void foo() { } // NOLINT
 };
 
 struct IsFinal_C final : IsFinal_B {

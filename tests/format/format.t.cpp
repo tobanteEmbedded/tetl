@@ -45,7 +45,7 @@ auto test_ints() -> bool
     return true;
 }
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
 
     assert(test_ints<short>());

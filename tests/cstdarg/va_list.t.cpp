@@ -33,7 +33,7 @@ auto test() -> bool
     return true;
 }
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     // Smaller types get promoted when used with va_list
     assert(test<etl::int32_t>());

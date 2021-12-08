@@ -10,7 +10,7 @@
 
 #include "testing/testing.hpp"
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     {
         auto const buffer = etl::experimental::net::mutable_buffer {};

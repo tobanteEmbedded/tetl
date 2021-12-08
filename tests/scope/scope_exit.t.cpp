@@ -6,7 +6,7 @@
 
 #include "testing/testing.hpp"
 
-auto test() -> bool
+static auto test() -> bool
 {
     {
         auto counter = 0;
@@ -54,5 +54,6 @@ auto test() -> bool
 auto main() -> int
 {
     assert(test());
+    // static_assert(test());
     return 0;
 }

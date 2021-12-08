@@ -48,37 +48,35 @@ auto test() -> bool // NOLINT(readability-function-size)
         assert(!(etl::is_trivially_destructible_v<non_trivial_set_t>));
     }
 
+    // "capacity = 0"
     {
-        // "capacity = 0"
-        {
-            auto set = etl::static_set<T, 0>();
-            assert(set.size() == 0);
-            assert(set.max_size() == 0);
-            assert(set.empty());
-            assert(set.full());
-            assert(set.begin() == nullptr);
-            assert(etl::as_const(set).begin() == nullptr);
-            assert(set.end() == nullptr);
-            assert(etl::as_const(set).end() == nullptr);
-        }
+        auto set = etl::static_set<T, 0>();
+        assert(set.size() == 0);
+        assert(set.max_size() == 0);
+        assert(set.empty());
+        assert(set.full());
+        assert(set.begin() == nullptr);
+        assert(etl::as_const(set).begin() == nullptr);
+        assert(set.end() == nullptr);
+        assert(etl::as_const(set).end() == nullptr);
+    }
 
-        // "capacity = 4"
-        {
-            auto set = etl::static_set<T, 4>();
-            assert(set.size() == 0);
-            assert(set.max_size() == 4);
-            assert(set.empty());
-            assert(!(set.full()));
-        }
+    // "capacity = 4"
+    {
+        auto set = etl::static_set<T, 4>();
+        assert(set.size() == 0);
+        assert(set.max_size() == 4);
+        assert(set.empty());
+        assert(!(set.full()));
+    }
 
-        // "capacity = 16"
-        {
-            auto set = etl::static_set<T, 16>();
-            assert(set.size() == 0);
-            assert(set.max_size() == 16);
-            assert(set.empty());
-            assert(!(set.full()));
-        }
+    // "capacity = 16"
+    {
+        auto set = etl::static_set<T, 16>();
+        assert(set.size() == 0);
+        assert(set.max_size() == 16);
+        assert(set.empty());
+        assert(!(set.full()));
     }
 
     {
@@ -323,87 +321,86 @@ auto test() -> bool // NOLINT(readability-function-size)
     {
 
         // "empty"
-        {
-            auto set = etl::static_set<T, 4> {};
-            assert(set.lower_bound(T {}) == set.end());
-            assert(set.upper_bound(T {}) == set.end());
-        }
-
-        // "full"
-        {
-            auto data = etl::array { T(1), T(2), T(3), T(4) };
-            auto set  = etl::static_set<T, 4> { begin(data), end(data) };
-            assert(set.lower_bound(T { 1 }) == set.begin());
-            assert((set.upper_bound(T { 1 }) == etl::next(set.begin(), 1)));
-        }
-    }
-
-    {
-        using namespace etl::literals::string_view_literals;
-        using str_t = etl::static_string<32>;
-
-        auto data = etl::array { str_t { "test" }, str_t { "test" },
-            str_t { "test" } };
-        auto set  = etl::static_set<str_t, 4> { begin(data), end(data) };
-        assert(set.lower_bound("test") == set.begin());
-        assert(set.upper_bound("test") == etl::next(set.begin(), 1));
-    }
-
-    {
-        // "empty"
-        {
-            auto lhs = etl::static_set<T, 4>();
-            auto rhs = etl::static_set<T, 4>();
-            assert(lhs == rhs);
-            assert(rhs == lhs);
-            assert(etl::as_const(lhs) == etl::as_const(rhs));
-            assert(etl::as_const(rhs) == etl::as_const(lhs));
-
-            assert(!(lhs != rhs));
-            assert(!(rhs != lhs));
-            assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
-        }
-
-        // "equal"
-        {
-            auto data = etl::array { T(1), T(2), T(3) };
-            auto lhs  = etl::static_set<T, 4>(begin(data), end(data));
-            auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
-
-            assert(lhs == rhs);
-            assert(rhs == lhs);
-            assert(etl::as_const(lhs) == etl::as_const(rhs));
-            assert(etl::as_const(rhs) == etl::as_const(lhs));
-
-            assert(!(lhs != rhs));
-            assert(!(rhs != lhs));
-            assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
-        }
-
-        // "not equal"
-        {
-            auto data = etl::array { T(1), T(2), T(3) };
-            auto lhs  = etl::static_set<T, 4>(begin(data), end(data) - 1);
-            auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
-
-            assert(lhs != rhs);
-            assert(rhs != lhs);
-            assert(etl::as_const(lhs) != etl::as_const(rhs));
-            assert(etl::as_const(rhs) != etl::as_const(lhs));
-
-            assert(!(lhs == rhs));
-            assert(!(rhs == lhs));
-            assert(!(etl::as_const(lhs) == etl::as_const(rhs)));
-            assert(!(etl::as_const(rhs) == etl::as_const(lhs)));
-        }
-    }
-
-    return true;
+        { auto set = etl::static_set<T, 4> {};
+    assert(set.lower_bound(T {}) == set.end());
+    assert(set.upper_bound(T {}) == set.end());
 }
 
-auto test_all() -> bool
+// "full"
+{
+    auto data = etl::array { T(1), T(2), T(3), T(4) };
+    auto set  = etl::static_set<T, 4> { begin(data), end(data) };
+    assert(set.lower_bound(T { 1 }) == set.begin());
+    assert((set.upper_bound(T { 1 }) == etl::next(set.begin(), 1)));
+}
+}
+
+{
+    using namespace etl::literals::string_view_literals;
+    using str_t = etl::static_string<32>;
+
+    auto data
+        = etl::array { str_t { "test" }, str_t { "test" }, str_t { "test" } };
+    auto set = etl::static_set<str_t, 4> { begin(data), end(data) };
+    assert(set.lower_bound("test") == set.begin());
+    assert(set.upper_bound("test") == etl::next(set.begin(), 1));
+}
+
+{
+    // "empty"
+    {
+        auto lhs = etl::static_set<T, 4>();
+        auto rhs = etl::static_set<T, 4>();
+        assert(lhs == rhs);
+        assert(rhs == lhs);
+        assert(etl::as_const(lhs) == etl::as_const(rhs));
+        assert(etl::as_const(rhs) == etl::as_const(lhs));
+
+        assert(!(lhs != rhs));
+        assert(!(rhs != lhs));
+        assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
+        assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
+    }
+
+    // "equal"
+    {
+        auto data = etl::array { T(1), T(2), T(3) };
+        auto lhs  = etl::static_set<T, 4>(begin(data), end(data));
+        auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
+
+        assert(lhs == rhs);
+        assert(rhs == lhs);
+        assert(etl::as_const(lhs) == etl::as_const(rhs));
+        assert(etl::as_const(rhs) == etl::as_const(lhs));
+
+        assert(!(lhs != rhs));
+        assert(!(rhs != lhs));
+        assert(!(etl::as_const(lhs) != etl::as_const(rhs)));
+        assert(!(etl::as_const(rhs) != etl::as_const(lhs)));
+    }
+
+    // "not equal"
+    {
+        auto data = etl::array { T(1), T(2), T(3) };
+        auto lhs  = etl::static_set<T, 4>(begin(data), end(data) - 1);
+        auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
+
+        assert(lhs != rhs);
+        assert(rhs != lhs);
+        assert(etl::as_const(lhs) != etl::as_const(rhs));
+        assert(etl::as_const(rhs) != etl::as_const(lhs));
+
+        assert(!(lhs == rhs));
+        assert(!(rhs == lhs));
+        assert(!(etl::as_const(lhs) == etl::as_const(rhs)));
+        assert(!(etl::as_const(rhs) == etl::as_const(lhs)));
+    }
+}
+
+return true;
+}
+
+static auto test_all() -> bool
 {
     assert(test<etl::int8_t>());
     assert(test<etl::int16_t>());

@@ -8,7 +8,7 @@
 
 namespace rtos = etl::experimental::freertos;
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     {
         rtos::queue<float, 100> q1 {};

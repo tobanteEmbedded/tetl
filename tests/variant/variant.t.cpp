@@ -18,7 +18,7 @@ using etl::uint64_t;
 using etl::uint8_t;
 using etl::variant;
 
-auto test() -> bool
+static auto test() -> bool
 {
     TEST_EXCEPTION(etl::bad_variant_access, etl::exception);
 
