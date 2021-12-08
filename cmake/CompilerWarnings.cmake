@@ -62,6 +62,7 @@ else ()
             -Wno-reserved-identifier
             -Wno-unused-member-function
             -Wno-implicit-int-conversion
+            -Wno-weak-vtables
           >
       >
 
