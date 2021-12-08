@@ -7,6 +7,8 @@
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+
 template <typename T>
 constexpr auto test() -> bool
 {
@@ -258,3 +260,6 @@ auto main() -> int
     static_assert(test_all());
     return 0;
 }
+#else
+auto main() -> int { return 0; }
+#endif

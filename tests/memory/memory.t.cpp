@@ -11,6 +11,8 @@
 
 #include "testing/testing.hpp"
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+
 namespace {
 struct Counter {
     int& value;
@@ -109,3 +111,7 @@ auto main() -> int
     assert(test_all());
     return 0;
 }
+
+#else
+auto main() -> int { return 0; }
+#endif

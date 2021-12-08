@@ -18,7 +18,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 set(CPU_FLAGS "-mmcu=atmega328p")
-set(COMPILER_FLAGS "-ffreestanding")
+set(COMPILER_FLAGS "-ffreestanding -fno-threadsafe-statics")
 
 # general
 set(CMAKE_EXECUTABLE_SUFFIX ".elf"                                            CACHE INTERNAL "")

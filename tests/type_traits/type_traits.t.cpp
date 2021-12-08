@@ -9,6 +9,8 @@
 #include "testing/testing.hpp"
 #include "testing/types.hpp"
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+
 namespace {
 template <typename T>
 struct Foo {
@@ -249,7 +251,7 @@ constexpr auto test() -> bool
 
     // TODO: [tobi] The assertions below trigger an internal compiler error on
     // MSVC
-#if not defined(TETL_MSVC)
+    #if not defined(TETL_MSVC)
 
     assert(!(is_convertible_v<int, void>));
     assert(!(is_convertible_v<int, const void>));
@@ -258,7 +260,7 @@ constexpr auto test() -> bool
     assert((is_convertible_v<void const, void>));
     assert((is_convertible_v<void const, void const>));
 
-    #if TETL_CPP_STANDARD < 20
+        #if TETL_CPP_STANDARD < 20
     assert(!(is_convertible_v<int, volatile void>));
     assert(!(is_convertible_v<int, const volatile void>));
     assert((is_convertible_v<void, void volatile>));
@@ -273,9 +275,9 @@ constexpr auto test() -> bool
     assert((is_convertible_v<void const volatile, void const>));
     assert((is_convertible_v<void const volatile, void volatile>));
     assert((is_convertible_v<void const volatile, void const volatile>));
-    #endif
+        #endif
 
-#endif
+    #endif
 
     TEST_IS_TRAIT_CV(is_arithmetic, bool);
     TEST_IS_TRAIT_CV(is_arithmetic, T);
@@ -599,3 +601,6 @@ auto main() -> int
     static_assert(test_all());
     return 0;
 }
+#else
+auto main() -> int { return 0; }
+#endif
