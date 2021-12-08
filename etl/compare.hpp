@@ -12,6 +12,7 @@
 #include "etl/_compare/named_functions.hpp"
 #include "etl/_compare/partial_ordering.hpp"
 #include "etl/_compare/strong_ordering.hpp"
+#include "etl/_compare/synth_three_way.hpp"
 #include "etl/_compare/weak_ordering.hpp"
 
 #endif // TETL_COMPARE_HPP
