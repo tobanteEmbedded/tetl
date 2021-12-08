@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 project(etl LANGUAGES CXX)
 
-option(TETL_BUILD_CPP20     "Build with C++20. Default is C++17" OFF)
-option(TETL_BUILD_CPP23     "Build with C++23. Default is C++17" OFF)
 option(TETL_BUILD_EXAMPLES  "Build examples" ON)
 option(TETL_BUILD_TESTS     "Build unit tests" ON)
 option(TETL_BUILD_WERROR    "Build with all warnings as errors" OFF)
@@ -20,12 +18,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
         set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
     endif()
 
-    if(TETL_BUILD_CPP23)
-      set(CMAKE_CXX_STANDARD 23 CACHE STRING "C++ standard to conform to")
-    elseif(TETL_BUILD_CPP20)
-      set(CMAKE_CXX_STANDARD 20 CACHE STRING "C++ standard to conform to")
-    else()
-      set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard to conform to")
+    if(NOT ${CMAKE_CXX_STANDARD})
+      set(CMAKE_CXX_STANDARD 17)
     endif()
 
     set(CMAKE_CXX_STANDARD_REQUIRED YES)

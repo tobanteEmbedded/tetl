@@ -27,7 +27,7 @@ jobs:
           platform: x64
 
       - name: CMake configure -- Debug
-        run: cmake -S . -G Ninja -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug -DTETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -G Ninja -B cmake-build-debug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build cmake-build-debug
@@ -36,7 +36,7 @@ jobs:
         run: cd cmake-build-debug; ctest -VV; cd -
 
       - name: CMake configure -- Release
-        run: cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DTETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -G Ninja -B cmake-build-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Release
         run: cmake --build cmake-build-release

@@ -19,7 +19,7 @@ jobs:
           arch: x64
 
       - name: CMake configure
-        run: cmake -S . -B build -G "Ninja Multi-Config" -D TETL_BUILD_CPP20=ON -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config "Debug"

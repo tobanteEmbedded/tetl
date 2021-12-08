@@ -21,7 +21,7 @@ all: config build test
 
 .PHONY: config
 config:
-	cmake -S. -B$(BUILD_DIR) -D CMAKE_BUILD_TYPE:STRING=$(CONFIG) -D TETL_BUILD_CPP20=ON
+	cmake -S. -B$(BUILD_DIR) -D CMAKE_BUILD_TYPE:STRING=$(CONFIG) -D CMAKE_CXX_STANDARD=20
 
 .PHONY: build
 build:
@@ -34,7 +34,7 @@ test:
 
 .PHONY: coverage
 coverage:
-	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE -D TETL_BUILD_CPP20=ON
+	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE -D CMAKE_CXX_STANDARD=20
 	cmake --build cmake-build-coverage --parallel 6
 	cd cmake-build-coverage && ctest
 
