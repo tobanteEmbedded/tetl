@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_CONCEPTS_BOOLEAN_TESTABLE_HPP
-#define TETL_CONCEPTS_BOOLEAN_TESTABLE_HPP
+#ifndef TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP
+#define TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP
 
 #include "etl/_concepts/convertible_to.hpp"
 #include "etl/_concepts/same_as.hpp"
@@ -23,4 +23,4 @@ concept common_reference_with =
 } // namespace etl
 #endif
 
-#endif // TETL_CONCEPTS_BOOLEAN_TESTABLE_HPP
+#endif // TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP

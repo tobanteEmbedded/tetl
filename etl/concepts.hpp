@@ -7,6 +7,9 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_concepts/assignable_from.hpp"
+#include "etl/_concepts/common_reference_with.hpp"
+#include "etl/_concepts/common_with.hpp"
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_concepts/convertible_to.hpp"
 #include "etl/_concepts/copy_constructible.hpp"
