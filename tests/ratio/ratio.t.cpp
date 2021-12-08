@@ -33,84 +33,76 @@ constexpr auto test() -> bool
         assert((etl::ratio<2, 8>::type::den == 4));
     }
 
+    // "1/4 + 1/6 = 5/12"
     {
-        // "1/4 + 1/6 = 5/12"
-        {
-            using one_fourth = etl::ratio<1, 4>;
-            using one_sixth  = etl::ratio<1, 6>;
-            using sum        = etl::ratio_add<one_fourth, one_sixth>;
-            assert((sum::num == 5));
-            assert((sum::den == 12));
-        }
-
-        // "2/3 + 1/6 = 5/6"
-        {
-            using two_third = etl::ratio<2, 3>;
-            using one_sixth = etl::ratio<1, 6>;
-            using sum       = etl::ratio_add<two_third, one_sixth>;
-            assert((sum::num == 5));
-            assert((sum::den == 6));
-        }
+        using one_fourth = etl::ratio<1, 4>;
+        using one_sixth  = etl::ratio<1, 6>;
+        using sum        = etl::ratio_add<one_fourth, one_sixth>;
+        assert((sum::num == 5));
+        assert((sum::den == 12));
     }
 
+    // "2/3 + 1/6 = 5/6"
     {
-        // "1/4 - 1/6 = 1/12"
-        {
-            using one_fourth = etl::ratio<1, 4>;
-            using one_sixth  = etl::ratio<1, 6>;
-            using sum        = etl::ratio_subtract<one_fourth, one_sixth>;
-            assert((sum::num == 1));
-            assert((sum::den == 12));
-        }
-
-        // "2/3 - 1/6 = 3/6 = 1/2"
-        {
-            using two_third = etl::ratio<2, 3>;
-            using one_sixth = etl::ratio<1, 6>;
-            using sum       = etl::ratio_subtract<two_third, one_sixth>;
-            assert((sum::num == 1));
-            assert((sum::den == 2));
-        }
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using sum       = etl::ratio_add<two_third, one_sixth>;
+        assert((sum::num == 5));
+        assert((sum::den == 6));
     }
 
+    // "1/4 - 1/6 = 1/12"
     {
-        // "1/12 * 1/2 = 1/2"
-        {
-            using one_twelfth = etl::ratio<1, 12>;
-            using one_half    = etl::ratio<1, 2>;
-            using res         = etl::ratio_multiply<one_twelfth, one_half>;
-            assert((res::num == 1));
-            assert((res::den == 24));
-        }
-
-        // "2/3 * 1/6 = 1/9"
-        {
-            using two_third = etl::ratio<2, 3>;
-            using one_sixth = etl::ratio<1, 6>;
-            using res       = etl::ratio_multiply<two_third, one_sixth>;
-            assert((res::num == 1));
-            assert((res::den == 9));
-        }
+        using one_fourth = etl::ratio<1, 4>;
+        using one_sixth  = etl::ratio<1, 6>;
+        using sum        = etl::ratio_subtract<one_fourth, one_sixth>;
+        assert((sum::num == 1));
+        assert((sum::den == 12));
     }
 
+    // "2/3 - 1/6 = 3/6 = 1/2"
     {
-        // "1/12 / 1/6 = 1/2"
-        {
-            using one_twelfth = etl::ratio<1, 12>;
-            using one_sixth   = etl::ratio<1, 6>;
-            using res         = etl::ratio_divide<one_twelfth, one_sixth>;
-            assert((res::num == 1));
-            assert((res::den == 2));
-        }
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using sum       = etl::ratio_subtract<two_third, one_sixth>;
+        assert((sum::num == 1));
+        assert((sum::den == 2));
+    }
 
-        // "2/3 / 1/6 = 4/1"
-        {
-            using two_third = etl::ratio<2, 3>;
-            using one_sixth = etl::ratio<1, 6>;
-            using res       = etl::ratio_divide<two_third, one_sixth>;
-            assert((res::num == 4));
-            assert((res::den == 1));
-        }
+    // "1/12 * 1/2 = 1/2"
+    {
+        using one_twelfth = etl::ratio<1, 12>;
+        using one_half    = etl::ratio<1, 2>;
+        using res         = etl::ratio_multiply<one_twelfth, one_half>;
+        assert((res::num == 1));
+        assert((res::den == 24));
+    }
+
+    // "2/3 * 1/6 = 1/9"
+    {
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using res       = etl::ratio_multiply<two_third, one_sixth>;
+        assert((res::num == 1));
+        assert((res::den == 9));
+    }
+
+    // "1/12 / 1/6 = 1/2"
+    {
+        using one_twelfth = etl::ratio<1, 12>;
+        using one_sixth   = etl::ratio<1, 6>;
+        using res         = etl::ratio_divide<one_twelfth, one_sixth>;
+        assert((res::num == 1));
+        assert((res::den == 2));
+    }
+
+    // "2/3 / 1/6 = 4/1"
+    {
+        using two_third = etl::ratio<2, 3>;
+        using one_sixth = etl::ratio<1, 6>;
+        using res       = etl::ratio_divide<two_third, one_sixth>;
+        assert((res::num == 4));
+        assert((res::den == 1));
     }
 
     {

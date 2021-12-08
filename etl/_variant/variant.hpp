@@ -40,7 +40,6 @@
 #include "etl/_variant/variant_size.hpp"
 #include "etl/_warning/ignore_unused.hpp"
 
-
 namespace etl {
 
 namespace detail {
