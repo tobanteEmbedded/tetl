@@ -40,6 +40,7 @@
 #include "etl/numbers.hpp"
 #include "etl/numeric.hpp"
 #include "etl/optional.hpp"
+#include "etl/ranges.hpp"
 #include "etl/ratio.hpp"
 #include "etl/scope.hpp"
 #include "etl/set.hpp"
@@ -57,7 +58,6 @@
 #include "etl/vector.hpp"
 #include "etl/version.hpp"
 #include "etl/warning.hpp"
-
 
 auto main(int const argc, char const** argv) -> int
 {
