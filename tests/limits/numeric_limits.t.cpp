@@ -186,8 +186,6 @@ auto main() -> int
     static_assert(test_signed<signed int>());
     assert(test_signed<signed long>());
     static_assert(test_signed<signed long>());
-    assert(test_signed<signed long long>());
-    static_assert(test_signed<signed long long>());
 
     assert(test_unsigned<unsigned char>());
     static_assert(test_unsigned<unsigned char>());
@@ -197,8 +195,6 @@ auto main() -> int
     static_assert(test_unsigned<unsigned int>());
     assert(test_unsigned<unsigned long>());
     static_assert(test_unsigned<unsigned long>());
-    assert(test_unsigned<unsigned long long>());
-    static_assert(test_unsigned<unsigned long long>());
 
     assert(test_float_round_style());
     static_assert(test_float_round_style());
@@ -206,7 +202,14 @@ auto main() -> int
     assert(test_float());
     static_assert(test_float());
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+    assert(test_signed<signed long long>());
+    static_assert(test_signed<signed long long>());
+    assert(test_unsigned<unsigned long long>());
+    static_assert(test_unsigned<unsigned long long>());
     assert(test_double());
     static_assert(test_double());
+#endif
+
     return 0;
 }
