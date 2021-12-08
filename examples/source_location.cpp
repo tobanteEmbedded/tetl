@@ -9,7 +9,8 @@
 
 #if TETL_CPP_STANDARD >= 20
 
-auto log(etl::string_view const message, etl::source_location const location = etl::source_location::current()) -> void
+static auto log(etl::string_view const message, etl::source_location const location = etl::source_location::current())
+    -> void
 {
     ::printf(                                     //
         "file: %s(%u:%u) `%s`: %s\n",             //
