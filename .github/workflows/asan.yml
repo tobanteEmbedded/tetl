@@ -17,7 +17,7 @@ jobs:
           platform: x64
 
       - name: cmake configure
-        run: cmake -S . -B cmake-build-asan -D TETL_BUILD_ASAN=ON
+        run: cmake -S . -B cmake-build-asan -D TETL_BUILD_ASAN=ON -D CMAKE_CXX_STANDARD=20
 
       - name: dump config
         run: cat cmake-build-asan/compile_commands.json

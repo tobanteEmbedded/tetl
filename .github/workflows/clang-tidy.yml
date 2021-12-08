@@ -23,7 +23,7 @@ jobs:
         run: sudo apt install -y clang-13 clang-tidy-13 ninja-build
 
       - name: cmake configure
-        run: CC=clang-13 CXX=clang++-13 cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D TETL_BUILD_WERROR=ON
+        run: CC=clang-13 CXX=clang++-13 cmake -S . -G Ninja -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
 
       - name: clang-tidy check
         run: BUILD_DIR=cmake-build-tidy make tidy-check
