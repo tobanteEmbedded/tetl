@@ -7,9 +7,13 @@
 
 #include "etl/_config/all.hpp"
 
+#include "etl/_complex/abs.hpp"
+#include "etl/_complex/args.hpp"
 #include "etl/_complex/complex.hpp"
+#include "etl/_complex/conj.hpp"
 #include "etl/_complex/imag.hpp"
 #include "etl/_complex/literals.hpp"
+#include "etl/_complex/norm.hpp"
 #include "etl/_complex/real.hpp"
 
 #endif // TETL_COMPLEX_HPP

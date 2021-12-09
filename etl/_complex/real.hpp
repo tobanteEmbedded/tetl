@@ -6,6 +6,8 @@
 #define TETL_COMPLEX_REAL_HPP
 
 #include "etl/_complex/complex.hpp"
+#include "etl/_complex/double_or_int.hpp"
+#include "etl/_type_traits/enable_if.hpp"
 
 namespace etl {
 
@@ -15,8 +17,8 @@ template <typename T>
     return z.real();
 }
 
-template <typename DoubleOrInteger>
-[[nodiscard]] constexpr auto real(DoubleOrInteger z) -> double
+template <typename T, enable_if_t<detail::double_or_int<T>, int> = 0>
+[[nodiscard]] constexpr auto real(T z) -> double
 {
     return static_cast<double>(z);
 }
