@@ -25,9 +25,10 @@ struct negate<void> {
     using is_transparent = void;
 
     template <typename T>
-    [[nodiscard]] constexpr auto operator()(T&& arg) const -> decltype(-etl::forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const noexcept(noexcept(-forward<T>(arg)))
+        -> decltype(-forward<T>(arg))
     {
-        return -arg;
+        return -forward<T>(arg);
     }
 };
 

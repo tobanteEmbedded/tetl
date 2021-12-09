@@ -27,9 +27,10 @@ struct plus<void> {
 
     /// \brief Returns the sum of lhs and rhs.
     template <typename T, typename U>
-    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const -> decltype(forward<T>(lhs) + forward<U>(rhs))
+    [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
+        noexcept(noexcept(forward<T>(lhs) + forward<U>(rhs))) -> decltype(forward<T>(lhs) + forward<U>(rhs))
     {
-        return lhs + rhs;
+        return forward<T>(lhs) + forward<U>(rhs);
     }
 };
 

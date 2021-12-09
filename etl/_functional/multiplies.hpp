@@ -28,9 +28,9 @@ struct multiplies<void> {
     /// \brief Returns the product between lhs and rhs.
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        -> decltype(etl::forward<T>(lhs) * etl::forward<U>(rhs))
+        noexcept(noexcept(forward<T>(lhs) * forward<U>(rhs))) -> decltype(forward<T>(lhs) * forward<U>(rhs))
     {
-        return lhs * rhs;
+        return forward<T>(lhs) * forward<U>(rhs);
     }
 };
 
