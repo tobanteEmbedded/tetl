@@ -19,5 +19,7 @@
 #include "etl/_complex/real.hpp"
 #include "etl/_complex/sin.hpp"
 #include "etl/_complex/sinh.hpp"
+#include "etl/_complex/tan.hpp"
+#include "etl/_complex/tanh.hpp"
 
 #endif // TETL_COMPLEX_HPP
