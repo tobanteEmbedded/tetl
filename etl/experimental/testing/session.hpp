@@ -114,9 +114,8 @@ inline auto session::run_all() -> int
         ::printf("%-10s %-10s\n", "Pass:", tc.info.name.data());
     }
 
-    auto const& s   = stats();
-    auto const* txt = "\nAll tests passed (%d assertions in %d test cases)\n";
-    ::printf(txt, s.num_assertions, s.num_test_cases);
+    auto const& s = stats();
+    ::printf("\nAll tests passed (%d assertions in %d test cases)\n", s.num_assertions, s.num_test_cases);
     return 0;
 }
 
