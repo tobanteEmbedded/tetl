@@ -6,25 +6,24 @@
 #define TETL_FUNCTIONAL_IS_TRANSPARENT_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/conditional.hpp"
 #include "etl/_type_traits/is_same.hpp"
+#include "etl/_type_traits/void_t.hpp"
 
 namespace etl::detail {
-template <typename T, typename = void>
-struct is_transparent : etl::false_type {
-};
 
-/// \brief is_transparent
+/// \group is_transparent
+template <typename T, typename = void>
+inline constexpr bool is_transparent_v = false;
+
+/// \group is_transparent
+template <typename T>
+inline constexpr bool is_transparent_v<T, void_t<typename T::is_transparent>> = true;
+
 /// \group is_transparent
 /// \module Utility
 template <typename T>
-struct is_transparent<T, etl::conditional_t<etl::is_same_v<typename T::is_transparent, void>, void, bool>>
-    : etl::true_type {
+struct is_transparent : bool_constant<is_transparent_v<T>> {
 };
-
-/// \group is_transparent
-template <typename T>
-inline constexpr auto is_transparent_v = is_transparent<T>::value;
 
 } // namespace etl::detail
 
