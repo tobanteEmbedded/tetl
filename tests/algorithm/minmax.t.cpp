@@ -5,6 +5,7 @@
 #include "etl/algorithm.hpp"
 
 #include "etl/array.hpp"
+#include "etl/cmath.hpp"
 #include "etl/cstdint.hpp"
 #include "etl/iterator.hpp"
 #include "etl/vector.hpp"

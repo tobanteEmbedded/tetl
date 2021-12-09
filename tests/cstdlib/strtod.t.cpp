@@ -3,6 +3,7 @@
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 #include "etl/cstdlib.hpp"
 
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
 template <typename T, typename F>

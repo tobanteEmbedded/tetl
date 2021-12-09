@@ -6,6 +6,7 @@
 
 #include "etl/cassert.hpp"
 
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>

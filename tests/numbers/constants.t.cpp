@@ -4,6 +4,7 @@
 
 #include "etl/numbers.hpp"
 
+#include "testing/approx.hpp"
 #include "testing/testing.hpp"
 
 template <typename T>
