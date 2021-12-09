@@ -132,6 +132,51 @@ constexpr auto complex<T>::operator/=(T const& val) -> complex<T>&
 }
 
 template <typename T>
+template <typename X>
+constexpr auto complex<T>::operator+=(complex<X> const& val) -> complex<T>&
+{
+    real_ += val.real();
+    imag_ += val.imag();
+    return *this;
+}
+
+template <typename T>
+template <typename X>
+constexpr auto complex<T>::operator-=(complex<X> const& val) -> complex<T>&
+{
+    real_ -= val.real();
+    imag_ -= val.imag();
+    return *this;
+}
+
+template <typename T>
+template <typename X>
+constexpr auto complex<T>::operator*=(complex<X> const& val) -> complex<T>&
+{
+    auto const r = real_ * val.real() - imag_ * val.imag();
+    imag_        = real_ * val.imag() + imag_ * val.real();
+    real_        = r;
+    return *this;
+}
+
+template <typename T>
+template <typename X>
+constexpr auto complex<T>::operator/=(complex<X> const& val) -> complex<T>&
+{
+    auto const norm = [](auto const& c) {
+        auto const x = c.real();
+        auto const y = c.imag();
+        return x * x + y * y;
+    };
+
+    auto const r = real_ * val.real() + imag_ * val.imag();
+    auto const n = norm(val);
+    imag_        = (imag_ * val.real() - real_ * val.imag()) / n;
+    real_        = r / n;
+    return *this;
+}
+
+template <typename T>
 constexpr auto operator+(complex<T> const& val) -> complex<T>
 {
     return val;
@@ -141,6 +186,78 @@ template <typename T>
 constexpr auto operator-(complex<T> const& val) -> complex<T>
 {
     return { static_cast<T>(-val.real()), static_cast<T>(-val.imag()) };
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator+(complex<T> const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) += rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator+(complex<T> const& lhs, T const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) += rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator+(T const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) += rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator-(complex<T> const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) -= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator-(complex<T> const& lhs, T const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) -= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator-(T const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) -= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator*(complex<T> const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) *= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator*(complex<T> const& lhs, T const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) *= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator*(T const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) *= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator/(complex<T> const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) /= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator/(complex<T> const& lhs, T const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) /= rhs;
+}
+
+template <typename T>
+[[nodiscard]] constexpr auto operator/(T const& lhs, complex<T> const& rhs) -> complex<T>
+{
+    return complex<T>(lhs) /= rhs;
 }
 
 } // namespace etl
