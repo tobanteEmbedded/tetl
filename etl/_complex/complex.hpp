@@ -264,37 +264,37 @@ template <typename T>
 [[nodiscard]] constexpr auto operator==(complex<T> const& lhs, complex<T> const& rhs) -> bool
 {
     return lhs.real() == rhs.real() && lhs.imag() == rhs.imag();
-};
+}
 
 template <typename T>
 [[nodiscard]] constexpr auto operator==(complex<T> const& lhs, T const& rhs) -> bool
 {
     return lhs == complex<T>(rhs);
-};
+}
 
 template <typename T>
 [[nodiscard]] constexpr auto operator==(T const& lhs, complex<T> const& rhs) -> bool
 {
     return complex<T>(lhs) == rhs;
-};
+}
 
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(complex<T> const& lhs, complex<T> const& rhs) -> bool
 {
     return !(lhs == rhs);
-};
+}
 
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(complex<T> const& lhs, T const& rhs) -> bool
 {
     return !(lhs == rhs);
-};
+}
 
 template <typename T>
 [[nodiscard]] constexpr auto operator!=(T const& lhs, complex<T> const& rhs) -> bool
 {
     return !(lhs == rhs);
-};
+}
 
 } // namespace etl
 
