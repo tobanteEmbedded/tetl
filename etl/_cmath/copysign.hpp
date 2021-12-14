@@ -8,6 +8,7 @@
 #include "etl/_config/all.hpp"
 
 #include "etl/_type_traits/is_constant_evaluated.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
 namespace etl {
 
@@ -18,6 +19,30 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
     if ((x < 0 && y > 0) || (x > 0 && y < 0)) { return -x; }
     return x;
 }
+
+template <typename T>
+[[nodiscard]] constexpr auto copysign_impl(T x, T y) noexcept -> T
+{
+    if (!is_constant_evaluated()) {
+        if constexpr (is_same_v<T, float>) {
+#if __has_builtin(__builtin_copysignf)
+            return __builtin_copysignf(x, y);
+#endif
+        }
+        if constexpr (is_same_v<T, double>) {
+#if __has_builtin(__builtin_copysign)
+            return __builtin_copysign(x, y);
+#endif
+        }
+        if constexpr (is_same_v<T, long double>) {
+#if __has_builtin(__builtin_copysignl)
+            return __builtin_copysignl(x, y);
+#endif
+        }
+    }
+    return copysign_fallback<long>(x, y);
+}
+
 } // namespace detail
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -33,15 +58,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float
-{
-    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
-#if __has_builtin(__builtin_copysignf)
-    return __builtin_copysignf(mag, sgn);
-#else
-    return detail::copysign_fallback(mag, sgn);
-#endif
-}
+[[nodiscard]] constexpr auto copysign(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
 /// sign of sgn.
@@ -56,15 +73,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float
-{
-    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
-#if __has_builtin(__builtin_copysignf)
-    return __builtin_copysignf(mag, sgn);
-#else
-    return detail::copysign_fallback(mag, sgn);
-#endif
-}
+[[nodiscard]] constexpr auto copysignf(float mag, float sgn) -> float { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
 /// sign of sgn.
@@ -79,15 +88,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// of sgn is returned. If sgn is -0, the result is only negative if the
 /// implementation supports the signed zero consistently in arithmetic
 /// operations.
-[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double
-{
-    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
-#if __has_builtin(__builtin_copysign)
-    return __builtin_copysign(mag, sgn);
-#else
-    return detail::copysign_fallback(mag, sgn);
-#endif
-}
+[[nodiscard]] constexpr auto copysign(double mag, double sgn) -> double { return detail::copysign_impl(mag, sgn); }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
 /// sign of sgn.
@@ -104,12 +105,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// operations.
 [[nodiscard]] constexpr auto copysign(long double mag, long double sgn) -> long double
 {
-    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
-#if __has_builtin(__builtin_copysignl)
-    return __builtin_copysignl(mag, sgn);
-#else
-    return detail::copysign_fallback(mag, sgn);
-#endif
+    return detail::copysign_impl(mag, sgn);
 }
 
 /// \brief Composes a floating point value with the magnitude of mag and the
@@ -127,12 +123,7 @@ constexpr auto copysign_fallback(T x, T y) noexcept -> T
 /// operations.
 [[nodiscard]] constexpr auto copysignl(long double mag, long double sgn) -> long double
 {
-    if (is_constant_evaluated()) { return detail::copysign_fallback(mag, sgn); }
-#if __has_builtin(__builtin_copysignl)
-    return __builtin_copysignl(mag, sgn);
-#else
-    return detail::copysign_fallback(mag, sgn);
-#endif
+    return detail::copysign_impl(mag, sgn);
 }
 
 } // namespace etl
