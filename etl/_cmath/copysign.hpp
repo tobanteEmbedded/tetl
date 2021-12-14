@@ -40,7 +40,7 @@ template <typename T>
 #endif
         }
     }
-    return copysign_fallback<long>(x, y);
+    return copysign_fallback(x, y);
 }
 
 } // namespace detail
