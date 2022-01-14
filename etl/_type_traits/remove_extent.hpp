@@ -13,7 +13,6 @@ namespace etl {
 /// equal to X, otherwise type is T. Note that if T is a multidimensional array,
 /// only the first dimension is removed. The behavior of a program that adds
 /// specializations for remove_extent is undefined.
-/// \group remove_extent
 template <typename T>
 struct remove_extent {
     using type = T;
@@ -31,7 +30,6 @@ struct remove_extent<T[N]> {
     using type = T;
 };
 
-/// \group remove_extent
 template <typename T>
 using remove_extent_t = typename etl::remove_extent<T>::type;
 

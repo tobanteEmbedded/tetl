@@ -17,7 +17,6 @@
 namespace etl {
 
 /// \brief Primitive numerical output conversion.
-/// \module Strings
 struct to_chars_result {
     char const* ptr { nullptr };
     etl::errc ec {};

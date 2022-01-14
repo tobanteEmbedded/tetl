@@ -45,14 +45,10 @@ struct iterator_traits_impl<Iter,
 /// not provide the usual typedefs.
 ///
 /// https://en.cppreference.com/w/cpp/iterator/iterator_traits
-///
-/// \group iterator_traits
-/// \module Iterator
 template <typename Iter>
 struct iterator_traits : detail::iterator_traits_impl<Iter> {
 };
 
-/// \group iterator_traits
 template <typename T>
 struct iterator_traits<T*> {
     using iterator_concept  = contiguous_iterator_tag;

@@ -16,8 +16,6 @@ namespace etl {
 /// \param g Generator function object that will be called.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/generate_n
-///
-/// \module Algorithm
 template <typename OutputIt, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 {

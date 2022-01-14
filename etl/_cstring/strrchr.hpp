@@ -17,8 +17,6 @@ namespace etl {
 /// string and can be found if searching for '\0'.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strrchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto strrchr(char const* str, int ch) -> char const*
 {
     return detail::strrchr_impl<char const, etl::size_t>(str, ch);
@@ -31,8 +29,6 @@ namespace etl {
 /// string and can be found if searching for '\0'.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strrchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto strrchr(char* str, int ch) -> char*
 {
     return detail::strrchr_impl<char, etl::size_t>(str, ch);

@@ -18,7 +18,6 @@ namespace etl {
     #pragma warning(disable : 4180)
 #endif
 
-/// \group is_function
 template <typename T>
 struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>> {
 };
@@ -35,7 +34,6 @@ struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>> {
 ///
 /// \details The behavior of a program that adds specializations for is_function
 /// or is_function_v is undefined.
-/// \group is_function
 template <typename T>
 inline constexpr bool is_function_v = is_function<T>::value;
 

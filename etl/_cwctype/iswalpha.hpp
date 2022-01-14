@@ -17,8 +17,6 @@ namespace etl {
 /// value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswalpha
-///
-/// \module Strings
 [[nodiscard]] constexpr auto iswalpha(wint_t ch) noexcept -> int
 {
     auto isLower = ch >= L'a' && ch <= L'z';

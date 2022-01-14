@@ -16,8 +16,6 @@ namespace etl {
 ///
 /// \returns Iterator in the destination range, pointing past the last element
 /// copied if count>0 or result otherwise.
-///
-/// \module Algorithm
 template <typename InputIt, typename Size, typename OutputIt>
 constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
 {

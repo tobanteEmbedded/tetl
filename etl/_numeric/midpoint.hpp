@@ -24,8 +24,6 @@ namespace etl {
 ///
 /// https://www.youtube.com/watch?v=sBtAGxBh-XI)
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
-///
-/// \group midpoint
 template <typename Int, TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
@@ -44,7 +42,6 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
     return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
-/// \group midpoint
 template <typename Float, TETL_REQUIRES_(is_floating_point_v<Float>)>
 constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
@@ -58,7 +55,6 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
     return a / 2 + b / 2;
 }
 
-/// \group midpoint
 /// \synopsis_return Ptr
 template <typename Ptr, enable_if_t<is_pointer_v<Ptr>, int> = 0>
 constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr

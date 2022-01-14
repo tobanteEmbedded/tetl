@@ -11,7 +11,6 @@ namespace etl {
 /// its topmost cv-qualifiers are removed. Removes the topmost volatile.
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
-/// \group remove_volatile
 template <typename Type>
 struct remove_volatile {
     using type = Type;
@@ -23,7 +22,6 @@ struct remove_volatile<Type volatile> {
     using type = Type;
 };
 
-/// \group remove_volatile
 template <typename T>
 using remove_volatile_t = typename etl::remove_volatile<T>::type;
 

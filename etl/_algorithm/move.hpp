@@ -22,8 +22,6 @@ namespace etl {
 /// \returns Output iterator to the element past the last element moved.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/move
-///
-/// \module Algorithm
 template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

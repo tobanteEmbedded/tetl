@@ -13,8 +13,6 @@ namespace etl {
 /// beginning at destination in such a way, that the element `nFirst` becomes
 /// the first element of the new range and `nFirst - 1` becomes the last
 /// element.
-///
-/// \module Algorithm
 template <typename ForwardIt, typename OutputIt>
 constexpr auto rotate_copy(ForwardIt first, ForwardIt nFirst, ForwardIt last, OutputIt destination) -> OutputIt
 {

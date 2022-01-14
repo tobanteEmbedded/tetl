@@ -16,8 +16,6 @@ namespace etl {
 /// at destination_false.
 /// \details The behavior is undefined if the input range overlaps either of the
 /// output ranges.
-///
-/// \module Algorithm
 template <typename InputIt, typename OutputIt1, typename OutputIt2, typename Predicate>
 constexpr auto partition_copy(InputIt first, InputIt last, OutputIt1 destinationTrue, OutputIt2 destinationFalse,
     Predicate p) -> pair<OutputIt1, OutputIt2>

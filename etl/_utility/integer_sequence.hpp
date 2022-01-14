@@ -18,7 +18,6 @@ struct tuple_indices {
 };
 } // namespace detail
 
-/// \group integer_sequence
 template <typename T, T... Ints>
 struct integer_sequence {
     static_assert(is_integral_v<T>, "T must be an integral type.");
@@ -30,7 +29,6 @@ struct integer_sequence {
     using to_tuple_indices = typename detail::tuple_indices<Ints...>;
 };
 
-/// \group integer_sequence
 template <typename T, T Size>
 using make_integer_sequence = TETL_BUILTIN_INT_SEQ(T, Size);
 

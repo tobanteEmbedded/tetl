@@ -13,8 +13,6 @@ namespace etl {
 /// \brief Eliminates all except the first element from every consecutive group
 /// of equivalent elements from the range `[first, last)` and returns a
 /// past-the-end iterator for the new logical end of the range.
-/// \group unique
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
@@ -30,8 +28,6 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> Forwar
 /// \brief Eliminates all except the first element from every consecutive group
 /// of equivalent elements from the range `[first, last)` and returns a
 /// past-the-end iterator for the new logical end of the range.
-/// \group unique
-/// \module Algorithm
 template <typename ForwardIt>
 constexpr auto unique(ForwardIt first, ForwardIt last) -> ForwardIt
 {

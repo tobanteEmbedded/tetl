@@ -17,8 +17,6 @@ namespace etl {
 /// copy must be used instead of copy_backward in that case.
 ///
 /// \returns Iterator to the last element copied.
-///
-/// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast) -> BidirIt2
 {

@@ -18,8 +18,6 @@ namespace etl {
 /// \complexity Exactly n applications of f.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/for_each_n
-///
-/// \module Algorithm
 template <typename InputIt, typename Size, typename UnaryFunc>
 constexpr auto for_each_n(InputIt first, Size n, UnaryFunc f) noexcept -> InputIt
 {

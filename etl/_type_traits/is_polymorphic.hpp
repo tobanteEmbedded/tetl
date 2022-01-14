@@ -11,12 +11,10 @@
 
 namespace etl {
 
-/// \group is_polymorphic
 template <typename T>
 struct is_polymorphic : bool_constant<__is_polymorphic(T)> {
 };
 
-/// \group is_polymorphic
 template <typename T>
 inline constexpr bool is_polymorphic_v = __is_polymorphic(T);
 

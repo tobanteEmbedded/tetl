@@ -34,9 +34,6 @@ template <typename ForwardIter1, typename ForwardIter2, typename BinaryPredicate
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/search
-///
-/// \group search
-/// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 [[nodiscard]] constexpr auto search(
     ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast, Predicate pred) -> ForwardIt1
@@ -44,7 +41,6 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
     return detail::search_impl(first, last, sFirst, sLast, pred);
 }
 
-/// \group search
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
     -> ForwardIt1
@@ -53,7 +49,6 @@ template <typename ForwardIt1, typename ForwardIt2>
     return search(first, last, sFirst, sLast, eq);
 }
 
-/// \group search
 template <typename ForwardIt, typename Searcher>
 [[nodiscard]] constexpr auto search(ForwardIt first, ForwardIt last, Searcher const& searcher) -> ForwardIt
 {

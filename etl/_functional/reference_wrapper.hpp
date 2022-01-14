@@ -116,7 +116,6 @@ template <typename T>
 /// \brief Function templates ref and cref are helper functions that generate an
 /// object of type reference_wrapper, using template argument deduction to
 /// determine the template argument of the result.
-/// \group cref
 /// module Utility
 template <typename T>
 [[nodiscard]] constexpr auto cref(T const& t) noexcept -> reference_wrapper<T const>
@@ -124,14 +123,12 @@ template <typename T>
     return reference_wrapper<T const>(t);
 }
 
-/// \group cref
 template <typename T>
 [[nodiscard]] constexpr auto cref(reference_wrapper<T> t) noexcept -> reference_wrapper<T const>
 {
     return cref(t.get());
 }
 
-/// \group cref
 template <typename T>
 void cref(T const&&) = delete;
 

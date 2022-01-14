@@ -18,8 +18,6 @@ namespace etl {
 /// \complexity Exactly `last - first` applications of f.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/for_each
-///
-/// \module Algorithm
 template <typename InputIt, typename UnaryFunc>
 constexpr auto for_each(InputIt first, InputIt last, UnaryFunc f) noexcept -> UnaryFunc
 {

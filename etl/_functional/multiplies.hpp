@@ -12,15 +12,12 @@ namespace etl {
 /// \brief Function object for performing multiplication. Effectively calls
 /// operator* on two instances of type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/multiplies
-/// \group multiplies
-/// \module Utility
 template <typename T = void>
 struct multiplies {
     /// \brief Returns the product between lhs and rhs.
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs * rhs; }
 };
 
-/// \group multiplies
 template <>
 struct multiplies<void> {
     using is_transparent = void;

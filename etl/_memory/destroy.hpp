@@ -11,7 +11,6 @@
 namespace etl {
 
 /// \brief Destroys the objects in the range [first, last).
-/// \group destroy
 template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {

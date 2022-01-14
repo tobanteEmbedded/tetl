@@ -10,8 +10,6 @@ namespace etl {
 /// \brief Replaces all elements satisfying specific criteria with new_value in
 /// the range [first, last). Replaces all elements for which predicate p
 /// returns true.
-/// \group replace
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate, typename T>
 constexpr auto replace_if(ForwardIt first, ForwardIt last, Predicate p, T const& newValue) -> void
 {

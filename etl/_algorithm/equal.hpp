@@ -12,9 +12,6 @@ namespace etl {
 
 /// \brief Returns true if the range `[first1, last1)` is equal to the range
 /// `[first2, first2 + (last1 - first1))`, and false otherwise.
-///
-/// \group equal
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate p) -> bool
 {
@@ -24,14 +21,12 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
     return true;
 }
 
-/// \group equal
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2) -> bool
 {
     return equal(first1, last1, first2, equal_to<> {});
 }
 
-/// \group equal
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p)
     -> bool
@@ -40,7 +35,6 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
     return equal(first1, last1, first2, p);
 }
 
-/// \group equal
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2) -> bool
 {

@@ -313,7 +313,6 @@ using static_vector_storage_type = conditional_t<Capacity == 0, static_vector_ze
 
 /// \brief Dynamically-resizable fixed-capacity vector.
 /// \include vector.cpp
-/// \module Containers
 template <typename T, size_t Capacity>
 struct static_vector : detail::static_vector_storage_type<T, Capacity> {
 private:
@@ -558,25 +557,19 @@ public:
     }
 
     /// \brief Is the storage empty/full?
-    /// \group empty
     using base_type::empty;
 
-    /// \group empty
     using base_type::full;
 
     /// \brief Number of elements in the vector
-    /// \group size
     [[nodiscard]] constexpr auto size() const noexcept -> size_type { return base_type::size(); }
 
     /// \brief Maximum number of elements that can be allocated in the vector
-    /// \group capacity
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return base_type::capacity(); }
 
-    /// \group capacity
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return capacity(); }
 
     /// \brief assign
-    /// \group assign
     template <typename InputIter>
     constexpr auto assign(InputIter first, InputIter last) noexcept(noexcept(clear()) and noexcept(
         insert(begin(), first, last))) -> enable_if_t<detail::InputIterator<InputIter>, void>
@@ -589,7 +582,6 @@ public:
         insert(begin(), first, last);
     }
 
-    /// \group assign
     constexpr auto assign(size_type n, T const& u) -> enable_if_t<is_copy_constructible_v<T>, void>
     {
         TETL_ASSERT(n <= capacity());
@@ -598,32 +590,26 @@ public:
     }
 
     /// \brief Unchecked access to element at index pos (UB if index not in
-    /// range) \group operator[]
     [[nodiscard]] constexpr auto operator[](size_type pos) noexcept -> reference { return detail::index(*this, pos); }
 
     /// \brief Unchecked access to element at index pos (UB if index not in
-    /// range) \group operator[]
     [[nodiscard]] constexpr auto operator[](size_type pos) const noexcept -> const_reference
     {
         return detail::index(*this, pos);
     }
 
     /// \brief front
-    /// \group front
     [[nodiscard]] constexpr auto front() noexcept -> reference { return detail::index(*this, 0); }
 
-    /// \group front
     [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return detail::index(*this, 0); }
 
     /// \brief back
-    /// \group back
     [[nodiscard]] constexpr auto back() noexcept -> reference
     {
         TETL_ASSERT(!empty());
         return detail::index(*this, static_cast<size_type>(size() - 1));
     }
 
-    /// \group back
     [[nodiscard]] constexpr auto back() const noexcept -> const_reference
     {
         TETL_ASSERT(!empty());
@@ -631,14 +617,12 @@ public:
     }
 
     /// \brief erase
-    /// \group erase
     constexpr auto erase(const_iterator position) noexcept -> enable_if_t<detail::is_movable_v<value_type>, iterator>
     {
         assert_iterator_in_range(position);
         return erase(position, position + 1);
     }
 
-    /// \group erase
     constexpr auto erase(const_iterator first, const_iterator last) noexcept
         -> enable_if_t<detail::is_movable_v<value_type>, iterator>
     {
@@ -653,7 +637,6 @@ public:
     }
 
     /// \brief Exchanges the contents of the container with those of other.
-    /// \group swap
     constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>)
         -> enable_if_t<is_assignable_v<T&, T&&>, void>
     {
@@ -666,7 +649,6 @@ public:
 
     /// \brief Resizes the container to contain sz elements. If elements need to
     /// be appended, these are move-constructed from `T{}` (or copy-constructed
-    /// if `T` is not `is_move_constructible_v`). \group resize
     constexpr auto resize(size_type sz) noexcept((is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
                                                  || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
         -> enable_if_t<detail::is_movable_v<value_type>, void>
@@ -681,7 +663,6 @@ public:
         erase(end() - (size() - sz), end());
     }
 
-    /// \group resize
     constexpr auto resize(size_type sz, T const& value) noexcept(is_nothrow_copy_constructible_v<T>)
         -> enable_if_t<is_copy_constructible_v<T>, void>
     {
@@ -733,7 +714,6 @@ constexpr auto swap(static_vector<T, Capacity>& lhs, static_vector<T, Capacity>&
 /// \details Checks if the contents of lhs and rhs are equal, that is, they have
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
-/// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -742,7 +722,6 @@ constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T
     return false;
 }
 
-/// \group static_vector_equality
 template <typename T, size_t Capacity>
 constexpr auto operator!=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -754,28 +733,24 @@ constexpr auto operator!=(static_vector<T, Capacity> const& lhs, static_vector<T
 /// \details Compares the contents of lhs and rhs lexicographically. The
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
-/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator<(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return lexicographical_compare(begin(lhs), end(lhs), begin(rhs), end(rhs));
 }
 
-/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator<=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return !(rhs < lhs);
 }
 
-/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator>(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
     return rhs < lhs;
 }
 
-/// \group static_vector_lexicographical_compare
 template <typename T, size_t Capacity>
 constexpr auto operator>=(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
@@ -787,8 +762,6 @@ constexpr auto operator>=(static_vector<T, Capacity> const& lhs, static_vector<T
 /// \returns The number of erased elements.
 ///
 /// https://en.cppreference.com/w/cpp/container/vector/erase2
-///
-/// \group static_vector_erase
 template <typename T, size_t Capacity, typename Predicate>
 constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) -> typename static_vector<T, Capacity>::size_type
 {
@@ -798,7 +771,6 @@ constexpr auto erase_if(static_vector<T, Capacity>& c, Predicate pred) -> typena
     return static_cast<typename static_vector<T, Capacity>::size_type>(r);
 }
 
-/// \group static_vector_erase
 template <typename T, size_t Capacity, typename U>
 constexpr auto erase(static_vector<T, Capacity>& c, U const& value) -> typename static_vector<T, Capacity>::size_type
 {

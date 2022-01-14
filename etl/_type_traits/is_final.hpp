@@ -15,12 +15,10 @@ namespace etl {
 /// specifier), provides the member constant value equal true. For any other
 /// type, value is false. If T is a class type, T shall be a complete type;
 /// otherwise, the behavior is undefined.
-/// \group is_final
 template <typename T>
 struct is_final : bool_constant<__is_final(T)> {
 };
 
-/// \group is_final
 template <typename T>
 inline constexpr bool is_final_v = __is_final(T);
 

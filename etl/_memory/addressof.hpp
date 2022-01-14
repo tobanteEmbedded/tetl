@@ -14,21 +14,18 @@ namespace etl {
 
 /// \brief Obtains the actual address of the object or function arg, even in
 /// presence of overloaded operator&.
-/// \group addressof
 template <typename T, enable_if_t<is_object_v<T>, int> = 0>
 constexpr auto addressof(T& arg) noexcept -> T*
 {
     return __builtin_addressof(arg);
 }
 
-/// \group addressof
 template <typename T, enable_if_t<!is_object_v<T>, int> = 0>
 constexpr auto addressof(T& arg) noexcept -> T*
 {
     return &arg;
 }
 
-/// \group addressof
 template <typename T>
 auto addressof(T const&& /*ignore*/) = delete;
 

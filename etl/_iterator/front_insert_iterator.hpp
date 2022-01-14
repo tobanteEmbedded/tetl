@@ -17,7 +17,6 @@ namespace etl {
 /// front_insert_iterator is a no-op.
 ///
 /// \todo Add tests when a container with push_front has been implemented.
-/// \module Iterator
 template <typename Container>
 struct front_insert_iterator {
 protected:
@@ -74,7 +73,6 @@ public:
 /// \brief front_inserter is a convenience function template that constructs a
 /// front_insert_iterator for the container c with the type deduced from
 /// the type of the argument.
-/// \module Iterator
 template <typename Container>
 [[nodiscard]] constexpr auto front_inserter(Container& c) -> front_insert_iterator<Container>
 {

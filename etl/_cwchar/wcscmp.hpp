@@ -16,8 +16,6 @@ namespace etl {
 ///
 /// The behavior is undefined if lhs or rhs are not pointers to null-terminated
 /// wide strings.
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wcscmp(wchar_t const* lhs, wchar_t const* rhs) -> int
 {
     return detail::strcmp_impl<wchar_t>(lhs, rhs);

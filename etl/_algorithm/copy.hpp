@@ -18,8 +18,6 @@ namespace etl {
 /// instead.
 /// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
-/// \group copy
-/// \module Algorithm
 template <typename InputIt, typename OutputIt>
 constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

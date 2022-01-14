@@ -13,29 +13,24 @@ template <typename Iter>
 struct reverse_iterator;
 
 /// \brief Returns an iterator to the reverse-beginning of the given container.
-/// \group rbegin
-/// \module Iterator
 template <typename Container>
 constexpr auto rbegin(Container& c) -> decltype(c.rbegin())
 {
     return c.rbegin();
 }
 
-/// \group rbegin
 template <typename Container>
 constexpr auto rbegin(Container const& c) -> decltype(c.rbegin())
 {
     return c.rbegin();
 }
 
-/// \group rbegin
 template <typename T, size_t N>
 constexpr auto rbegin(T (&array)[N]) -> reverse_iterator<T*>
 {
     return reverse_iterator<T*>(end(array));
 }
 
-/// \group rbegin
 template <typename Container>
 constexpr auto crbegin(Container const& c) -> decltype(rbegin(c))
 {

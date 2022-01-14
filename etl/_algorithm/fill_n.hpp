@@ -12,8 +12,6 @@ namespace etl {
 ///
 /// \returns Iterator one past the last element assigned if `count > 0`, `first`
 /// otherwise.
-///
-/// \module Algorithm
 template <typename OutputIt, typename Size, typename T>
 constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 {

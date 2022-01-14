@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing negation. Effectively calls operator-
 /// on an instance of type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/negate
-/// \group negate
-/// \module Utility
 template <typename T = void>
 struct negate {
     [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return -arg; }
 };
 
-/// \group negate
 template <>
 struct negate<void> {
     using is_transparent = void;

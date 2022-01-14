@@ -12,7 +12,6 @@ namespace etl {
 /// \brief If T is a const-qualified type (that is, const, or const volatile),
 /// provides the member constant value equal to true. For any other type, value
 /// is false.
-/// \group is_const
 template <typename T>
 struct is_const : etl::false_type {
 };
@@ -22,7 +21,6 @@ template <typename T>
 struct is_const<T const> : etl::true_type {
 };
 
-/// \group is_const
 template <typename T>
 inline constexpr bool is_const_v = etl::is_const<T>::value;
 

@@ -18,7 +18,6 @@ namespace etl {
 ///
 /// \details The behavior of a program that adds specializations for
 /// is_floating_point or is_floating_point_v is undefined.
-/// \group is_floating_point
 template <typename T>
 struct is_floating_point
     : bool_constant<
@@ -26,7 +25,6 @@ struct is_floating_point
               remove_cv_t<T>> || is_same_v<double, remove_cv_t<T>> || is_same_v<long double, remove_cv_t<T>>> {
 };
 
-/// \group is_floating_point
 template <typename T>
 inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
 

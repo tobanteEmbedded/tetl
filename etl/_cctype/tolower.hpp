@@ -24,8 +24,6 @@ namespace etl {
 /// listed in the current C locale.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/tolower
-///
-/// \module Strings
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

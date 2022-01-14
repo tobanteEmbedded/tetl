@@ -21,8 +21,6 @@ namespace etl {
 /// moved.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/move_backward
-///
-/// \module Algorithm
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto move_backward(BidirIt1 first, BidirIt1 last, BidirIt2 destination) -> BidirIt2
 {

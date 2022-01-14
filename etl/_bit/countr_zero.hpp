@@ -20,8 +20,6 @@ namespace etl {
 ///
 /// \returns The number of consecutive 0 bits in the value of x, starting from
 /// the least significant bit.
-///
-/// \module Numeric
 template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto countr_zero(T x) noexcept -> int
 {

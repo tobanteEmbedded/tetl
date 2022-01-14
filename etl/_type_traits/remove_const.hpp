@@ -11,7 +11,6 @@ namespace etl {
 /// its topmost cv-qualifiers are removed. Removes the topmost const.
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
-/// \group remove_const
 template <typename Type>
 struct remove_const {
     using type = Type;
@@ -23,7 +22,6 @@ struct remove_const<Type const> {
     using type = Type;
 };
 
-/// \group remove_const
 template <typename T>
 using remove_const_t = typename etl::remove_const<T>::type;
 

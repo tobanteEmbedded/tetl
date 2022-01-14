@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing logical NOT (logical negation).
 /// Effectively calls operator! for type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/logical_not
-/// \group logical_not
-/// \module Utility
 template <typename T = void>
 struct logical_not {
     [[nodiscard]] constexpr auto operator()(T const& arg) const -> bool { return !arg; }
 };
 
-/// \group logical_not
 template <>
 struct logical_not<void> {
     using is_transparent = void;

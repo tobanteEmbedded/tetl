@@ -21,8 +21,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/ispunct
-///
-/// \module Strings
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

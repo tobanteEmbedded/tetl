@@ -12,7 +12,6 @@ namespace etl {
 /// are big-endian, `endian::native` equals `endian::big`.
 ///
 /// https://en.cppreference.com/w/cpp/types/endian
-/// \module Numeric
 enum struct endian {
 #if defined(DOXYGEN)
     little = implementation defined,

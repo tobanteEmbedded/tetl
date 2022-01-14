@@ -17,7 +17,6 @@ namespace etl {
 /// \details The behavior is undefined when access occurs past the end of either
 /// array lhs or rhs. The behavior is undefined when either lhs or rhs is the
 /// null pointer.
-/// \module Strings
 constexpr auto strncmp(char const* lhs, char const* rhs, etl::size_t const count) -> int
 {
     return detail::strncmp_impl<char, etl::size_t>(lhs, rhs, count);

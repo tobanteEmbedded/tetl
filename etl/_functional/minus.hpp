@@ -12,15 +12,12 @@ namespace etl {
 /// \brief Function object for performing subtraction. Effectively calls
 /// operator- on two instances of type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/minus
-/// \group minus
-/// \module Utility
 template <typename T = void>
 struct minus {
     /// \brief Returns the difference between lhs and rhs.
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs - rhs; }
 };
 
-/// \group minus
 template <>
 struct minus<void> {
     using is_transparent = void;

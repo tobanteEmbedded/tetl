@@ -13,15 +13,11 @@ namespace etl {
 /// operator| on type T.
 ///
 /// https://en.cppreference.com/w/cpp/utility/functional/bit_or
-///
-/// \group bit_or
-/// \module Utility
 template <typename T = void>
 struct bit_or {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs | rhs; }
 };
 
-/// \group bit_or
 template <>
 struct bit_or<void> {
     using is_transparent = void;

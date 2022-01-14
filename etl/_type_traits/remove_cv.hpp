@@ -15,13 +15,11 @@ namespace etl {
 /// topmost volatile, or both, if present.
 /// \details The behavior of a program that adds specializations for any of the
 /// templates described on this page is undefined.
-/// \group remove_cv
 template <typename T>
 struct remove_cv {
     using type = etl::remove_const_t<etl::remove_volatile_t<T>>;
 };
 
-/// \group remove_cv
 template <typename T>
 using remove_cv_t = etl::remove_const_t<etl::remove_volatile_t<T>>;
 

@@ -16,15 +16,12 @@ namespace etl {
 /// it had when passed to the calling function.
 ///
 /// https://en.cppreference.com/w/cpp/utility/forward
-///
-/// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>& param) noexcept -> T&&
 {
     return static_cast<T&&>(param);
 }
 
-/// \group forward
 template <typename T>
 constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 {

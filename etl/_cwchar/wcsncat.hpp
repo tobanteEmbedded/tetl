@@ -22,8 +22,6 @@ namespace etl {
 /// of both dest and src plus the terminating null character, except that the
 /// size of src is limited to count. The behavior is undefined if the strings
 /// overlap.
-///
-/// \module Strings
 constexpr auto wcsncat(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
     return detail::strncat_impl<wchar_t, etl::size_t>(dest, src, count);

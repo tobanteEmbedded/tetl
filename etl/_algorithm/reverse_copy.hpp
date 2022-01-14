@@ -13,8 +13,6 @@ namespace etl {
 /// \details If the source and destination ranges (that is, `[first, last)` and
 /// [d_first, d_first+(last-first)) respectively) overlap, the behavior is
 /// undefined.
-///
-/// \module Algorithm
 template <typename BidirIt, typename OutputIt>
 constexpr auto reverse_copy(BidirIt first, BidirIt last, OutputIt destination) -> OutputIt
 {

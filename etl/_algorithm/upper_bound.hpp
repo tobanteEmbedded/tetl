@@ -20,9 +20,6 @@ namespace etl {
 /// expression `!(value < element)` or `!comp(value, element)`, i.e., all
 /// elements for which the expression is true must precede all elements for
 /// which the expression is false. A fully-sorted range meets this criterion.
-///
-/// \group upper_bound
-/// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> ForwardIt
 {
@@ -48,7 +45,6 @@ template <typename ForwardIt, typename T, typename Compare>
     return first;
 }
 
-/// \group upper_bound
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {

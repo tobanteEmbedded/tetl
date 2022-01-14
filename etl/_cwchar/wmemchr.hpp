@@ -16,8 +16,6 @@ namespace etl {
 /// \details If count is zero, the function returns a null pointer.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wmemchr(wchar_t* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t*
 {
     return detail::memchr_impl<wchar_t>(ptr, ch, count);
@@ -29,8 +27,6 @@ namespace etl {
 /// \details If count is zero, the function returns a null pointer.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wmemchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wmemchr(wchar_t const* ptr, wchar_t ch, etl::size_t count) noexcept -> wchar_t const*
 {
     return detail::memchr_impl<wchar_t const>(ptr, ch, count);

@@ -10,8 +10,6 @@ namespace etl {
 /// \brief Examines the partitioned (as if by partition) range [first,
 /// last) and locates the end of the first partition, that is, the first
 /// element that does not satisfy p or last if all elements satisfy p.
-///
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto partition_point(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {

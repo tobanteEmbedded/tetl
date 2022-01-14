@@ -31,8 +31,6 @@ template <typename T>
 /// \details This overload only participates in overload resolution if T is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
-///
-/// \module Numeric
 template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 [[nodiscard]] constexpr auto popcount(T val) noexcept -> int
 {

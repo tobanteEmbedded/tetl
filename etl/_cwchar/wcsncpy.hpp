@@ -22,8 +22,6 @@ namespace etl {
 /// been written. If the strings overlap, the behavior is undefined.
 ///
 /// \returns dest
-///
-/// \module Strings
 constexpr auto wcsncpy(wchar_t* dest, wchar_t const* src, etl::size_t const count) -> wchar_t*
 {
     TETL_ASSERT(dest != nullptr && src != nullptr);

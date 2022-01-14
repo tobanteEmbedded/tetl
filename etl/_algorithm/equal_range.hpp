@@ -15,9 +15,6 @@ namespace etl {
 /// range `[first, last)`.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/equal_range
-///
-/// \group equal_range
-/// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value, Compare comp)
     -> pair<ForwardIt, ForwardIt>
@@ -25,7 +22,6 @@ template <typename ForwardIt, typename T, typename Compare>
     return make_pair(lower_bound(first, last, value, comp), upper_bound(first, last, value, comp));
 }
 
-/// \group equal_range
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value) -> pair<ForwardIt, ForwardIt>
 {

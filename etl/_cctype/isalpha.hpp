@@ -17,8 +17,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isalpha
-///
-/// \module Strings
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

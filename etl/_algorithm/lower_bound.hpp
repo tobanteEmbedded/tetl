@@ -17,9 +17,6 @@ namespace etl {
 /// last if no such element is found.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/lower_bound
-///
-/// \group lower_bound
-/// \module Algorithm
 template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept
     -> ForwardIt
@@ -45,7 +42,6 @@ template <typename ForwardIt, typename T, typename Compare>
     return first;
 }
 
-/// \group lower_bound
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {

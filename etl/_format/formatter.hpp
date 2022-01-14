@@ -17,13 +17,10 @@ namespace etl {
 /// a given type. Enabled specializations meet the Formatter requirements.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/formatter
-///
-/// \group formatter
 template <typename T, typename CharT = char>
 struct formatter;
 
 /// \brief Standard specializations for basic type char.
-/// \group formatter_specialization
 template <>
 struct formatter<char, char> {
     template <typename FormatContext>
@@ -35,7 +32,6 @@ struct formatter<char, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<char const*, char> {
     template <typename FormatContext>
@@ -45,7 +41,6 @@ struct formatter<char const*, char> {
     }
 };
 
-/// \group formatter_specialization
 template <etl::size_t N>
 struct formatter<char[N], char> {
     template <typename FormatContext>
@@ -55,7 +50,6 @@ struct formatter<char[N], char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<etl::string_view, char> {
     template <typename FormatContext>
@@ -65,7 +59,6 @@ struct formatter<etl::string_view, char> {
     }
 };
 
-/// \group formatter_specialization
 template <etl::size_t Capacity>
 struct formatter<etl::static_string<Capacity>, char> {
     template <typename FormatContext>
@@ -88,7 +81,6 @@ constexpr auto integer_format(Integer v, FormatContext& fc) -> decltype(fc.out()
     return formatter<string_view>().format("", fc);
 }
 } // namespace detail
-/// \group formatter_specialization
 template <>
 struct formatter<short, char> {
     template <typename FormatContext>
@@ -98,7 +90,6 @@ struct formatter<short, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<int, char> {
     template <typename FormatContext>
@@ -108,7 +99,6 @@ struct formatter<int, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<long, char> {
     template <typename FormatContext>
@@ -118,7 +108,6 @@ struct formatter<long, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<long long, char> {
     template <typename FormatContext>
@@ -128,7 +117,6 @@ struct formatter<long long, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<unsigned short, char> {
     template <typename FormatContext>
@@ -138,7 +126,6 @@ struct formatter<unsigned short, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<unsigned, char> {
     template <typename FormatContext>
@@ -148,7 +135,6 @@ struct formatter<unsigned, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<unsigned long, char> {
     template <typename FormatContext>
@@ -158,7 +144,6 @@ struct formatter<unsigned long, char> {
     }
 };
 
-/// \group formatter_specialization
 template <>
 struct formatter<unsigned long long, char> {
     template <typename FormatContext>

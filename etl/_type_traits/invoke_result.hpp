@@ -65,13 +65,10 @@ struct invoke_result<decltype(void(detail::INVOKE(etl::declval<F>(), etl::declva
 /// undefined. This implementation is copied from **cppreference.com**.
 ///
 /// https://en.cppreference.com/w/cpp/types/result_of
-///
-/// \group invoke_result
 template <typename F, typename... ArgTypes>
 struct invoke_result : detail::invoke_result<void, F, ArgTypes...> {
 };
 
-/// \group invoke_result
 template <typename F, typename... ArgTypes>
 using invoke_result_t = typename etl::invoke_result<F, ArgTypes...>::type;
 

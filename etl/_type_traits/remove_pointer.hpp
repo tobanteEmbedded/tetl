@@ -10,7 +10,6 @@ namespace etl {
 /// \brief Provides the member typedef type which is the type pointed to by T,
 /// or, if T is not a pointer, then type is the same as T. The behavior of a
 /// program that adds specializations for remove_pointer is undefined.
-/// \group remove_pointer
 template <typename T>
 struct remove_pointer {
     using type = T;
@@ -40,7 +39,6 @@ struct remove_pointer<T* const volatile> {
     using type = T;
 };
 
-/// \group remove_pointer
 template <typename T>
 using remove_pointer_t = typename etl::remove_pointer<T>::type;
 

@@ -12,9 +12,6 @@ namespace etl {
 
 /// \brief Merges two sorted ranges `[first1, last1)` and `[first2, last2)` into
 /// one sorted range beginning at `destination`.
-///
-/// \group merge
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
 constexpr auto merge(
     InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
@@ -32,7 +29,6 @@ constexpr auto merge(
     return copy(first2, last2, destination);
 }
 
-/// \group merge
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination) -> OutputIt
 {

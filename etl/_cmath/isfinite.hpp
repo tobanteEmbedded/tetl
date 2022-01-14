@@ -15,14 +15,10 @@ namespace etl {
 /// \brief Determines if the given floating point number arg has finite value
 /// i.e. it is normal, subnormal or zero, but not infinite or NaN.
 /// https://en.cppreference.com/w/cpp/numeric/math/isfinite
-/// \group isfinite
-/// \module Numeric
 [[nodiscard]] constexpr auto isfinite(float arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
-/// \group isfinite
 [[nodiscard]] constexpr auto isfinite(double arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
-/// \group isfinite
 [[nodiscard]] constexpr auto isfinite(long double arg) -> bool { return !etl::isnan(arg) && !etl::isinf(arg); }
 
 } // namespace etl

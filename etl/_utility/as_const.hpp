@@ -9,14 +9,12 @@
 
 namespace etl {
 /// \brief Forms lvalue reference to const type of t.
-/// \group as_const
 template <typename T>
 [[nodiscard]] constexpr auto as_const(T& t) noexcept -> add_const_t<T>&
 {
     return t;
 }
 
-/// \group as_const
 template <typename T>
 constexpr auto as_const(T const&&) -> void
     = delete;

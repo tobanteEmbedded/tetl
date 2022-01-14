@@ -24,8 +24,6 @@ namespace etl {
 /// current C locale.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/toupper
-///
-/// \module Strings
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

@@ -14,9 +14,6 @@ namespace etl {
 /// (NaN) value.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/isnan
-///
-/// \group isnan
-/// \module Numeric
 [[nodiscard]] constexpr auto isnan(float arg) -> bool
 {
 #if __has_builtin(__builtin_isnanf) or defined(TETL_GCC)
@@ -26,7 +23,6 @@ namespace etl {
 #endif
 }
 
-/// \group isnan
 [[nodiscard]] constexpr auto isnan(double arg) -> bool
 {
 #if __has_builtin(__builtin_isnan) or defined(TETL_GCC)
@@ -36,7 +32,6 @@ namespace etl {
 #endif
 }
 
-/// \group isnan
 [[nodiscard]] constexpr auto isnan(long double arg) -> bool
 {
 #if __has_builtin(__builtin_isnanl) or defined(TETL_GCC)

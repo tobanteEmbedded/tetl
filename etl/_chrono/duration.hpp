@@ -205,7 +205,6 @@ private:
 /// duration whose tick count is the sum of the tick counts after conversion.
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
-///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator+(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
     -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
@@ -222,7 +221,6 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// number of ticks after conversion.
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
-///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator-(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
     -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
@@ -239,7 +237,6 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// number of ticks after conversion.
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
-///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator/(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
     -> common_type_t<Rep1, Rep2>
@@ -256,7 +253,6 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 /// conversion.
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
-///
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 [[nodiscard]] constexpr auto operator%(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
     -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
@@ -317,43 +313,33 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /// \brief Signed integer type of at least 64 bits.
-/// \group duration_typedefs
 using nanoseconds = duration<long long, nano>;
 
 /// \brief Signed integer type of at least 55 bits.
-/// \group duration_typedefs
 using microseconds = duration<long long, micro>;
 
 /// \brief Signed integer type of at least 45 bits.
-/// \group duration_typedefs
 using milliseconds = duration<long long, milli>;
 
 /// \brief Signed integer type of at least 35 bits.
-/// \group duration_typedefs
 using seconds = duration<long long>;
 
 /// \brief Signed integer type of at least 29 bits.
-/// \group duration_typedefs
 using minutes = duration<int, ratio<60>>;
 
 /// \brief Signed integer type of at least 23 bits.
-/// \group duration_typedefs
 using hours = duration<int, ratio<3600>>;
 
 /// \brief Signed integer type of at least 25 bits.
-/// \group duration_typedefs
 using days = duration<int, ratio<86400>>;
 
 /// \brief Signed integer type of at least 22 bits.
-/// \group duration_typedefs
 using weeks = duration<int, ratio<604800>>;
 
 /// \brief Signed integer type of at least 17 bits.
-/// \group duration_typedefs
 using years = duration<int, ratio<2629746>>;
 
 /// \brief Signed integer type of at least 20 bits.
-/// \group duration_typedefs
 using months = duration<int, ratio<31556952>>;
 
 } // namespace etl::chrono

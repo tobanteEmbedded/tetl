@@ -16,8 +16,6 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/towupper
-///
-/// \module Strings
 [[nodiscard]] constexpr auto towupper(wint_t ch) noexcept -> wint_t
 {
     if (iswlower(ch) != 0) { return ch - wint_t(32); }

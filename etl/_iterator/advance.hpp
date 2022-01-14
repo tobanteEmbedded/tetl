@@ -16,8 +16,6 @@ namespace etl {
 /// LegacyBidirectionalIterator, otherwise the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/iterator/advance
-///
-/// \module Iterator
 template <typename It, typename Distance>
 constexpr auto advance(It& it, Distance n) -> void
 {

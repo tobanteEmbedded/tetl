@@ -17,8 +17,6 @@ namespace etl {
 /// negative infinity.
 /// \returns true if arg is infinite, false otherwise
 /// https://en.cppreference.com/w/cpp/numeric/math/isinf
-/// \group isinf
-/// \module Numeric
 [[nodiscard]] constexpr auto isinf(float arg) -> bool
 {
     if (!is_constant_evaluated()) {
@@ -29,7 +27,6 @@ namespace etl {
     return arg == TETL_BUILTIN_HUGE_VALF;
 }
 
-/// \group isinf
 [[nodiscard]] constexpr auto isinf(double arg) -> bool
 {
     if (!is_constant_evaluated()) {
@@ -40,7 +37,6 @@ namespace etl {
     return arg == TETL_BUILTIN_HUGE_VAL;
 }
 
-/// \group isinf
 [[nodiscard]] constexpr auto isinf(long double arg) -> bool
 {
     if (!is_constant_evaluated()) {
@@ -51,7 +47,6 @@ namespace etl {
     return arg == TETL_BUILTIN_HUGE_VALL;
 }
 
-/// \group isinf
 template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
 [[nodiscard]] constexpr auto isinf(Int arg) -> bool
 {

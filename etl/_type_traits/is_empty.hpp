@@ -33,12 +33,10 @@ struct is_empty_helper<T, false> : etl::false_type {
 /// non-static data members other than bit-fields of size 0, no virtual
 /// functions, no virtual base classes, and no non-empty base classes), provides
 /// the member constant value equal to true. For any other type, value is false.
-/// \group is_empty
 template <typename T>
 struct is_empty : detail::is_empty_helper<T> {
 };
 
-/// \group is_empty
 template <typename T>
 inline constexpr bool is_empty_v = is_empty<T>::value;
 

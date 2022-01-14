@@ -9,8 +9,6 @@ namespace etl {
 
 /// \brief Searches the range `[first, last)` for the first sequence of count
 /// identical elements, each equal to the given value.
-/// \group search_n
-/// \module Algorithm
 template <typename ForwardIt, typename Size, typename ValueT, typename Predicate>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value, Predicate pred)
     -> ForwardIt
@@ -34,7 +32,6 @@ template <typename ForwardIt, typename Size, typename ValueT, typename Predicate
     return last;
 }
 
-/// \group search_n
 template <typename ForwardIt, typename Size, typename ValueT>
 [[nodiscard]] constexpr auto search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value) -> ForwardIt
 {

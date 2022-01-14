@@ -19,9 +19,6 @@ namespace etl {
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find_first_of
-///
-/// \group find_first_of
-/// \module Algorithm
 template <typename InputIt, typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto find_first_of(
     InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
@@ -44,9 +41,6 @@ template <typename InputIt, typename ForwardIt, typename Predicate>
 /// \param sLast The range of elements to search for.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find_first_of
-///
-/// \group find_first_of
-/// \module Algorithm
 template <typename InputIt, typename ForwardIt>
 [[nodiscard]] constexpr auto find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast) -> InputIt
 {

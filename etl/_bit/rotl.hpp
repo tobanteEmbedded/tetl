@@ -13,7 +13,6 @@ namespace etl {
 
 /// \brief Computes the result of bitwise left-rotating the value of x by s
 /// positions. This operation is also known as a left circular shift.
-/// \module Numeric
 template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
 constexpr auto rotl(T t, int s) noexcept -> T
 {

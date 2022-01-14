@@ -16,8 +16,6 @@ namespace etl {
 /// access certain properties of pointer-like types.
 ///
 /// https://en.cppreference.com/w/cpp/memory/pointer_traits
-///
-/// \group pointer_traits
 template <typename Ptr>
 struct pointer_traits {
     using pointer         = Ptr;
@@ -39,7 +37,6 @@ struct pointer_traits {
 /// access certain properties of pointer-like types.
 /// https://en.cppreference.com/w/cpp/memory/pointer_traits
 /// \tparam T A raw pointer
-/// \group pointer_traits
 template <typename T>
 struct pointer_traits<T*> {
     using pointer         = T*;

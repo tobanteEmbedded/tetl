@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator!= on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/not_equal_to
-/// \group not_equal_to
-/// \module Utility
 template <typename T = void>
 struct not_equal_to {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs != rhs; }
 };
 
-/// \group not_equal_to
 template <>
 struct not_equal_to<void> {
     using is_transparent = void;

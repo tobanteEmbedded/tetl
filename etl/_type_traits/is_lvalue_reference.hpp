@@ -12,7 +12,6 @@ namespace etl {
 /// \brief Checks whether T is a lvalue reference type. Provides the member
 /// constant value which is equal to true, if T is a lvalue reference type.
 /// Otherwise, value is equal to false.
-/// \group is_lvalue_reference
 template <typename T>
 struct is_lvalue_reference : false_type {
 };
@@ -22,7 +21,6 @@ template <typename T>
 struct is_lvalue_reference<T&> : true_type {
 };
 
-/// \group is_lvalue_reference
 template <typename T>
 inline constexpr bool is_lvalue_reference_v = is_lvalue_reference<T>::value;
 

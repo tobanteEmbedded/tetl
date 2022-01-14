@@ -16,7 +16,6 @@ namespace etl {
 /// type names that type. Otherwise, there is no member type.
 ///
 /// https://en.cppreference.com/w/cpp/types/common_type
-/// \group common_type
 template <typename... T>
 struct common_type;
 
@@ -58,7 +57,6 @@ template <typename T1, typename T2, typename... R>
 struct common_type<T1, T2, R...> : detail::common_type_multi_impl<void, T1, T2, R...> {
 };
 
-/// \group common_type
 template <typename... T>
 using common_type_t = typename etl::common_type<T...>::type;
 

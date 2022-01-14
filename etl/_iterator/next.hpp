@@ -11,7 +11,6 @@
 namespace etl {
 
 /// \brief Return the nth successor of iterator it.
-/// \module Iterator
 template <typename InputIt>
 [[nodiscard]] constexpr auto next(InputIt it, typename iterator_traits<InputIt>::difference_type n = 1) -> InputIt
 {

@@ -16,9 +16,6 @@ namespace etl {
 /// first range to the destination range. The order of equivalent elements is
 /// preserved. The resulting range cannot overlap with either of the input
 /// ranges.
-///
-/// \group set_intersection
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
 constexpr auto set_intersection(
     InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest, Compare comp) -> OutputIt
@@ -34,7 +31,6 @@ constexpr auto set_intersection(
     return dest;
 }
 
-/// \group set_intersection
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest)
     -> OutputIt

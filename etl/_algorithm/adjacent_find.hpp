@@ -20,7 +20,6 @@ namespace etl {
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/adjacent_find
-///
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
@@ -36,7 +35,6 @@ template <typename ForwardIt, typename Predicate>
     return last;
 }
 
-/// \group adjacent_find
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
 {

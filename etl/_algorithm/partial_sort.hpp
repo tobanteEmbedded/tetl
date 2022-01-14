@@ -16,9 +16,6 @@ namespace etl {
 /// the remaining elements in the range `[middle, last)` is unspecified.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sort
-///
-/// \group partial_sort
-/// \module Algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last, Compare comp) -> void
 {
@@ -27,7 +24,6 @@ constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last, Comp
     etl::sort(first, last, comp);
 }
 
-/// \group partial_sort
 template <typename RandomIt>
 constexpr auto partial_sort(RandomIt first, RandomIt middle, RandomIt last) -> void
 {

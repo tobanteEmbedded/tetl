@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator<= on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/less_equal
-/// \group less_equal
-/// \module Utility
 template <typename T = void>
 struct less_equal {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs <= rhs; }
 };
 
-/// \group less_equal
 template <>
 struct less_equal<void> {
     using is_transparent = void;

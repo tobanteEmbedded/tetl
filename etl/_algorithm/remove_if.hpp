@@ -13,8 +13,6 @@ namespace etl {
 /// \brief Removes all elements satisfying specific criteria from the range
 /// `[first, last)` and returns a past-the-end iterator for the new end of the
 /// range.
-/// \group remove_if
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto remove_if(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {

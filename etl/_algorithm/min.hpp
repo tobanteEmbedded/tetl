@@ -8,8 +8,6 @@
 namespace etl {
 
 /// \brief Returns the smaller of a and b.
-/// \group min
-/// \module Algorithm
 template <typename Type>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b) noexcept -> Type const&
 {
@@ -17,8 +15,6 @@ template <typename Type>
 }
 
 /// \brief Returns the smaller of a and b, using a compare function.
-/// \group min
-/// \module Algorithm
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto min(Type const& a, Type const& b, Compare comp) noexcept -> Type const&
 {

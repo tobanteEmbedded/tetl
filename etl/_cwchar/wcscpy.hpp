@@ -18,8 +18,6 @@ namespace etl {
 /// The behavior is undefined if the strings overlap.
 ///
 /// \returns dest
-///
-/// \module Strings
 constexpr auto wcscpy(wchar_t* dest, wchar_t const* src) -> wchar_t*
 {
     TETL_ASSERT(dest != nullptr && src != nullptr);

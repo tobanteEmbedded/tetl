@@ -59,8 +59,6 @@ struct is_destructible_safe<T, false, true> : etl::true_type {
 /// non-throwing.
 ///
 /// https://en.cppreference.com/w/cpp/types/is_destructible
-///
-/// \group is_destructible
 template <typename T>
 struct is_destructible : detail::is_destructible_safe<T> {
 };
@@ -75,7 +73,6 @@ template <>
 struct is_destructible<void> : false_type {
 };
 
-/// \group is_destructible
 template <typename T>
 inline constexpr auto is_destructible_v = is_destructible<T>::value;
 

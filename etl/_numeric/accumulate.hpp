@@ -11,8 +11,6 @@ namespace etl {
 /// \brief Computes the sum of the given value init and the elements in the
 /// range `[first, last)`.
 /// https://en.cppreference.com/w/cpp/algorithm/accumulate
-/// \group accumulate
-/// \module Algorithm
 template <typename InputIt, typename Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init) noexcept -> Type
 {
@@ -20,7 +18,6 @@ template <typename InputIt, typename Type>
     return init;
 }
 
-/// \group accumulate
 template <typename InputIt, typename Type, typename BinaryOperation>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init, BinaryOperation op) noexcept -> Type
 {

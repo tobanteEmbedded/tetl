@@ -69,12 +69,10 @@ struct make_unsigned_helper<unsigned long long> {
 /// long, long long; the unsigned type from this list corresponding to T is
 /// provided. The behavior of a program that adds specializations for
 /// make_unsigned is undefined.
-/// \group make_unsigned
 template <typename Type>
 struct make_unsigned : detail::make_unsigned_helper<Type> {
 };
 
-/// \group make_unsigned
 template <typename T>
 using make_unsigned_t = typename make_unsigned<T>::type;
 

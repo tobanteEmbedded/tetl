@@ -15,8 +15,6 @@ namespace etl {
 /// returns a pointer to that character.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strpbrk
-///
-/// \module Strings
 [[nodiscard]] constexpr auto strpbrk(char const* dest, char const* breakset) noexcept -> char const*
 {
     return detail::strpbrk_impl<char const, etl::size_t>(dest, breakset);
@@ -27,8 +25,6 @@ namespace etl {
 /// returns a pointer to that character.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/strpbrk
-///
-/// \module Strings
 [[nodiscard]] constexpr auto strpbrk(char* dest, char* breakset) noexcept -> char*
 {
     return detail::strpbrk_impl<char, etl::size_t>(dest, breakset);

@@ -23,8 +23,6 @@ namespace etl {
 ///
 /// \returns Pointer to the location of the character, or a null pointer if no
 /// such character is found.
-///
-/// \module Strings
 [[nodiscard]] constexpr auto memchr(void* ptr, int ch, etl::size_t n) -> void*
 {
     auto* p = static_cast<unsigned char*>(ptr);
@@ -44,8 +42,6 @@ namespace etl {
 ///
 /// \returns Pointer to the location of the character, or a null pointer if no
 /// such character is found.
-///
-/// \module Strings
 [[nodiscard]] constexpr auto memchr(void const* ptr, int ch, etl::size_t n) -> void const*
 {
     auto const* const p = static_cast<unsigned char const*>(ptr);

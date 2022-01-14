@@ -13,8 +13,6 @@ namespace etl {
 /// adjacent pair of elements of the range [first, last) and writes them to the
 /// range beginning at destination + 1. An unmodified copy of *first is written
 /// to *destination.
-/// \group adjacent_difference
-/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
@@ -34,7 +32,6 @@ constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destina
     return ++destination;
 }
 
-/// \group adjacent_difference
 template <typename InputIt, typename OutputIt>
 constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

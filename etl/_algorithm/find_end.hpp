@@ -21,8 +21,6 @@ namespace etl {
 /// \returns Iterator to the beginning of last occurrence of the sequence
 /// [sFirst, sLast) in range `[first, last)`. If [sFirst, sLast) is empty or if
 /// no such sequence is found, last is returned.
-/// \group find_end
-/// \module Algorithm
 template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 [[nodiscard]] constexpr auto find_end(
     ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast, Predicate p) -> ForwardIt1
@@ -39,7 +37,6 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
     return result;
 }
 
-/// \group find_end
 template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
     -> ForwardIt1

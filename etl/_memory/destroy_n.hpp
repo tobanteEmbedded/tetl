@@ -11,7 +11,6 @@
 namespace etl {
 
 /// \brief Destroys the n objects in the range starting at first.
-/// \group destroy
 template <typename ForwardIt, typename Size>
 constexpr auto destroy_n(ForwardIt first, Size n) -> ForwardIt
 {

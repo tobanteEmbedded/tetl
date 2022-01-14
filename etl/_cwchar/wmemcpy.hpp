@@ -16,8 +16,6 @@ namespace etl {
 /// the function does nothing.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wmemcpy
-///
-/// \module Strings
 constexpr auto wmemcpy(wchar_t* dest, const wchar_t* src, etl::size_t count) noexcept -> wchar_t*
 {
     return detail::strncpy_impl(dest, src, count);

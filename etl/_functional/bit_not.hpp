@@ -13,15 +13,11 @@ namespace etl {
 /// Effectively calls operator~ on type T.
 ///
 /// https://en.cppreference.com/w/cpp/utility/functional/bit_not
-///
-/// \group bit_not
-/// \module Utility
 template <typename T = void>
 struct bit_not {
     [[nodiscard]] constexpr auto operator()(T const& arg) const -> T { return ~arg; }
 };
 
-/// \group bit_not
 template <>
 struct bit_not<void> {
     using is_transparent = void;

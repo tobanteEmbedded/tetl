@@ -21,9 +21,6 @@ namespace etl {
 /// treated as equal.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/mismatch
-///
-/// \group mismatch
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, Predicate pred)
     -> pair<InputIt1, InputIt2>
@@ -35,14 +32,12 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
     return pair<InputIt1, InputIt2>(first1, first2);
 }
 
-/// \group mismatch
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2) -> pair<InputIt1, InputIt2>
 {
     return mismatch(first1, last1, first2, equal_to<> {});
 }
 
-/// \group mismatch
 template <typename InputIt1, typename InputIt2, typename Predicate>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate pred)
     -> pair<InputIt1, InputIt2>
@@ -54,7 +49,6 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
     return pair<InputIt1, InputIt2>(first1, first2);
 }
 
-/// \group mismatch
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
     -> pair<InputIt1, InputIt2>

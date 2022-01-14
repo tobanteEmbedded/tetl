@@ -19,8 +19,6 @@ namespace etl {
 /// to the value of the macro WEOF, the behavior is undefined.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/iswalnum
-///
-/// \module Strings
 [[nodiscard]] constexpr auto iswalnum(wint_t ch) noexcept -> int
 {
     auto isDigit = ch >= L'0' && ch <= L'9';

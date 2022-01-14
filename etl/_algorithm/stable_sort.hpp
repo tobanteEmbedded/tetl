@@ -16,9 +16,6 @@ namespace etl {
 /// Elements are compared using the given comparison function comp.
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/stable_sort
-///
-/// \group stable_sort
-/// \module Algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto stable_sort(RandomIt first, RandomIt last, Compare cmp) -> void
 {
@@ -38,7 +35,6 @@ constexpr auto stable_sort(RandomIt first, RandomIt last, Compare cmp) -> void
     }
 }
 
-/// \group stable_sort
 template <typename RandomIt>
 constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
 {

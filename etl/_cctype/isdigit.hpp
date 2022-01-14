@@ -17,8 +17,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isdigit
-///
-/// \module Strings
 [[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

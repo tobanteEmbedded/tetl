@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator== on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/equal_to
-/// \group equal_to
-/// \module Utility
 template <typename T = void>
 struct equal_to {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs == rhs; }
 };
 
-/// \group equal_to
 template <>
 struct equal_to<void> {
     using is_transparent = void;

@@ -30,14 +30,12 @@ template <typename T, size_t N, size_t... I>
 /// \brief Creates a array from the one dimensional built-in array a. The
 /// elements of the array are copy-initialized from the corresponding element of
 /// a. Copying or moving multidimensional built-in array is not supported.
-/// \group to_array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&a)[N]) -> array<remove_cv_t<T>, N>
 {
     return detail::to_array_impl(a, make_index_sequence<N> {});
 }
 
-/// \group to_array
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T(&&a)[N])
 {

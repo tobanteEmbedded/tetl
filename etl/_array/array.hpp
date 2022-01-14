@@ -31,7 +31,6 @@ namespace etl {
 /// most N initializers that are convertible to
 /// Type: `array<int, 3> a = {1,2,3};`
 ///
-/// \module Containers
 /// \include array.cpp
 template <typename Type, size_t Size>
 struct array {
@@ -200,7 +199,6 @@ array(T, U...) -> array<T, 1 + sizeof...(U)>;
 
 /// \brief Specializes the swap algorithm for array. Swaps the contents
 /// of lhs and rhs.
-/// \group swap
 template <typename T, size_t N>
 constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
@@ -209,18 +207,15 @@ constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(noexcept(lhs.sw
 
 /// \brief Provides access to the number of elements in an array as a
 /// compile-time constant expression.
-/// \group tuple_size
 template <typename T, size_t N>
 struct tuple_size<array<T, N>> : integral_constant<size_t, N> {
 };
 
 /// \brief Provides compile-time indexed access to the type of the elements of
 /// the array using tuple-like interface.
-/// \group tuple_element
 template <size_t I, typename T>
 struct tuple_element;
 
-/// \group tuple_element
 template <size_t I, typename T, size_t N>
 struct tuple_element<I, array<T, N>> {
     using type = T;
@@ -229,14 +224,12 @@ struct tuple_element<I, array<T, N>> {
 /// \brief Checks if the contents of lhs and rhs are equal, that is, they have
 /// the same number of elements and each element in lhs compares equal with the
 /// element in rhs at the same position.
-/// \group array_eqaulity
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator==(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
-/// \group array_eqaulity
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator!=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
@@ -245,28 +238,24 @@ template <typename T, size_t N>
 
 /// \brief Compares the contents of lhs and rhs lexicographically. The
 /// comparison is performed by a function equivalent to lexicographical_compare.
-/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator<(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
-/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator<=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return !(rhs < lhs);
 }
 
-/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator>(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
     return rhs < lhs;
 }
 
-/// \group array_compare
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto operator>=(array<T, N> const& lhs, array<T, N> const& rhs) -> bool
 {
@@ -276,7 +265,6 @@ template <typename T, size_t N>
 /// \brief Extracts the Ith element element from the array. I must be an integer
 /// value in range [0, N). This is enforced at compile time as opposed to at()
 /// or operator[].
-/// \group get
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>& array) noexcept -> T&
 {
@@ -284,7 +272,6 @@ template <size_t Index, typename T, size_t Size>
     return array[Index];
 }
 
-/// \group get
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const& array) noexcept -> const T&
 {
@@ -292,7 +279,6 @@ template <size_t Index, typename T, size_t Size>
     return array[Index];
 }
 
-/// \group get
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>&& array) noexcept -> T&&
 {
@@ -300,7 +286,6 @@ template <size_t Index, typename T, size_t Size>
     return move(array[Index]);
 }
 
-/// \group get
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> const T&&
 {

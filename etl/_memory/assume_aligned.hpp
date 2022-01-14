@@ -24,7 +24,6 @@ namespace etl {
 /// least N.
 ///
 /// https://en.cppreference.com/w/cpp/memory/assume_aligned
-///
 template <etl::size_t N, typename T>
 [[nodiscard]] constexpr auto assume_aligned(T* ptr) -> T*
 {

@@ -11,16 +11,12 @@
 
 namespace etl::detail {
 
-/// \group is_transparent
 template <typename T, typename = void>
 inline constexpr bool is_transparent_v = false;
 
-/// \group is_transparent
 template <typename T>
 inline constexpr bool is_transparent_v<T, void_t<typename T::is_transparent>> = true;
 
-/// \group is_transparent
-/// \module Utility
 template <typename T>
 struct is_transparent : bool_constant<is_transparent_v<T>> {
 };

@@ -12,12 +12,10 @@
 
 namespace etl {
 
-/// \group is_aggregate
 template <typename T>
 struct is_aggregate : bool_constant<__is_aggregate(remove_cv_t<T>)> {
 };
 
-/// \group is_aggregate
 template <typename T>
 inline constexpr bool is_aggregate_v = __is_aggregate(remove_cv_t<T>);
 

@@ -14,7 +14,6 @@ namespace etl {
 /// the number of elements along the Nth dimension of the array, if N is in [0,
 /// rank_v<T>). For any other type, or if T is an array of unknown bound along
 /// its first dimension and N is 0, value is 0.
-/// \group extent
 template <typename T, unsigned N = 0>
 struct extent : etl::integral_constant<etl::size_t, 0> {
 };
@@ -39,7 +38,6 @@ template <typename T, etl::size_t I, unsigned N>
 struct extent<T[I], N> : extent<T, N - 1> {
 };
 
-/// \group extent
 template <typename T>
 using extent_v = typename etl::extent<T>::value;
 

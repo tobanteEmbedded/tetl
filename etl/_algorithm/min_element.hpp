@@ -9,8 +9,6 @@ namespace etl {
 
 /// \brief Finds the smallest element in the range `[first, last)`. Elements are
 /// compared using operator<.
-/// \group min_element
-/// \module Algorithm
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
@@ -26,8 +24,6 @@ template <typename ForwardIt>
 
 /// \brief Finds the smallest element in the range `[first, last)`. Elements are
 /// compared using the given binary comparison function comp.
-/// \group min_element
-/// \module Algorithm
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {

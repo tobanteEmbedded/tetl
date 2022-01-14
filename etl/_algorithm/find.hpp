@@ -14,9 +14,6 @@ namespace etl {
 /// \param value Value to compare the elements to.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find
-///
-/// \group find
-/// \module Algorithm
 template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept -> InputIt
 {

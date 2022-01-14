@@ -12,8 +12,6 @@ namespace etl {
 /// \brief Removes all elements satisfying specific criteria from the range
 /// `[first, last)` and returns a past-the-end iterator for the new end of the
 /// range.
-/// \group remove
-/// \module Algorithm
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto remove(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {

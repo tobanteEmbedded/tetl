@@ -20,8 +20,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/algorithm/partial_sum
 ///
 /// \returns Iterator to the element past the last element written.
-/// \group partial_sum
-/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
@@ -38,7 +36,6 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, Bi
     return ++destination;
 }
 
-/// \group partial_sum
 template <typename InputIt, typename OutputIt>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

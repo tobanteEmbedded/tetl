@@ -11,12 +11,10 @@
 namespace etl {
 
 /// \brief Define a member typedef only if a boolean constant is true.
-/// \group is_void
 template <typename T>
 struct is_void : etl::is_same<void, etl::remove_cv_t<T>> {
 };
 
-/// \group is_void
 template <typename T>
 inline constexpr bool is_void_v = etl::is_same_v<void, etl::remove_cv_t<T>>;
 

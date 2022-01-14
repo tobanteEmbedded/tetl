@@ -14,7 +14,6 @@ namespace etl {
 /// to by p, as if by p->~T(). If T is an array type, recursively destroys
 /// elements of *p in order, as if by calling destroy(begin(*p),
 /// end(*p)).
-/// \group destroy
 template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {

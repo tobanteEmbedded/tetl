@@ -11,15 +11,12 @@
 namespace etl {
 
 /// \brief Returns whether the given container is full.
-/// \group full
-/// \module Iterator
 template <typename C>
 constexpr auto full(C const& c) noexcept(noexcept(c.full())) -> decltype(c.full())
 {
     return c.full();
 }
 
-/// \group full
 template <typename T, size_t N>
 constexpr auto full(T (&array)[N]) noexcept -> bool
 {

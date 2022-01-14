@@ -13,8 +13,6 @@ namespace etl {
 /// last) in such a way that the element n_first becomes the first element of
 /// the new range and n_first - 1 becomes the last element. A precondition of
 /// this function is that [first, n_first) and [n_first, last) are valid ranges.
-///
-/// \module Algorithm
 template <typename ForwardIt>
 constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> ForwardIt
 {

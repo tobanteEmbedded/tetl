@@ -8,7 +8,6 @@
 
 namespace etl {
 
-/// \group is_sorted_until
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
@@ -25,9 +24,6 @@ template <typename ForwardIt, typename Compare>
 /// \brief Examines the range `[first, last)` and finds the largest range
 /// beginning at `first` in which the elements are sorted in non-descending
 /// order.
-///
-/// \group is_sorted_until
-/// \module Algorithm
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto is_sorted_until(ForwardIt first, ForwardIt last) -> ForwardIt
 {

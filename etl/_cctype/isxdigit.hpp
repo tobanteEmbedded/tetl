@@ -17,8 +17,6 @@ namespace etl {
 /// zero otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isxdigit
-///
-/// \module Strings
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

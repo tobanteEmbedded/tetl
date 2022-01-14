@@ -12,8 +12,6 @@ namespace etl {
 /// \brief Reverses the order of the elements in the range `[first, last)`.
 /// Behaves as if applying iter_swap to every pair of iterators `first + i`,
 /// `(last-i) - 1` for each non-negative `i < (last - first) / 2`.
-///
-/// \module Algorithm
 template <typename BidirIt>
 constexpr auto reverse(BidirIt first, BidirIt last) -> void
 {

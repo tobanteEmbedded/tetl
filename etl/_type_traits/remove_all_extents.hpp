@@ -12,7 +12,6 @@ namespace etl {
 /// \brief If T is a multidimensional array of some type X, provides the member
 /// typedef type equal to X, otherwise type is T. The behavior of a program that
 /// adds specializations for remove_all_extents is undefined.
-/// \group remove_all_extents
 template <typename T>
 struct remove_all_extents {
     using type = T;
@@ -30,7 +29,6 @@ struct remove_all_extents<T[N]> {
     using type = typename remove_all_extents<T>::type;
 };
 
-/// \group remove_all_extents
 template <typename T>
 using remove_all_extents_t = typename remove_all_extents<T>::type;
 

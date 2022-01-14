@@ -12,8 +12,6 @@
 namespace etl {
 /// \brief Returns the length of a wide string, that is the number of non-null
 /// wide characters that precede the terminating null wide character.
-///
-/// \module Strings
 constexpr auto wcslen(wchar_t const* str) -> etl::size_t { return detail::strlen_impl<wchar_t, etl::size_t>(str); }
 } // namespace etl
 

@@ -16,13 +16,11 @@ namespace etl {
 ///
 /// \details The behavior of a program that adds specializations for
 /// remove_cvref is undefined.
-/// \group remove_cvref
 template <typename T>
 struct remove_cvref {
     using type = etl::remove_cv_t<etl::remove_reference_t<T>>;
 };
 
-/// \group remove_cvref
 template <typename T>
 using remove_cvref_t = etl::remove_cv_t<etl::remove_reference_t<T>>;
 

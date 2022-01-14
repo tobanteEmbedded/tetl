@@ -14,8 +14,6 @@ namespace etl {
 /// elements. Only the first element of each group of equal elements is copied.
 /// \details Elements are compared using the given binary predicate pred. The
 /// behavior is undefined if it is not an equivalence relation.
-/// \group unique_copy
-/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename Predicate>
 constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination, Predicate pred) -> OutputIt
 {
@@ -37,8 +35,6 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination, Pr
 /// elements. Only the first element of each group of equal elements is copied.
 /// \details Elements are compared using operator==. The behavior is undefined
 /// if it is not an equivalence relation.
-/// \group unique_copy
-/// \module Algorithm
 template <typename InputIt, typename OutputIt>
 constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {

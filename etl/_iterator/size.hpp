@@ -15,15 +15,12 @@ namespace etl {
 
 /// \brief Returns the size of the given container c or array array. Returns
 /// c.size(), converted to the return type if necessary.
-/// \group size
-/// \module Iterator
 template <typename C>
 constexpr auto size(C const& c) noexcept(noexcept(c.size())) -> decltype(c.size())
 {
     return c.size();
 }
 
-/// \group size
 template <typename T, size_t N>
 constexpr auto size(T const (&array)[N]) noexcept -> size_t
 {

@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator>= on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/greater_equal
-/// \group greater_equal
-/// \module Utility
 template <typename T = void>
 struct greater_equal {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs >= rhs; }
 };
 
-/// \group greater_equal
 template <>
 struct greater_equal<void> {
     using is_transparent = void;

@@ -17,8 +17,6 @@ namespace etl {
 /// behavior is undefined if the source and the destination ranges overlap.
 /// \returns Output iterator to the element in the destination range, one past
 /// the last element copied.
-/// \group copy
-/// \module Algorithm
 template <typename InIt, typename OutIt, typename Pred>
 constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
 {

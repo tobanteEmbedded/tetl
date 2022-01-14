@@ -15,7 +15,6 @@ namespace etl {
 /// false.
 /// \details The behavior of a program that adds specializations for is_array or
 /// is_array_v is undefined.
-/// \group is_array
 template <typename T>
 struct is_array : etl::false_type {
 };
@@ -30,7 +29,6 @@ template <typename T, etl::size_t N>
 struct is_array<T[N]> : etl::true_type {
 };
 
-/// \group is_array
 template <typename T>
 inline constexpr bool is_array_v = etl::is_array<T>::value;
 

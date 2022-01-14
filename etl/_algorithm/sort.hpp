@@ -14,9 +14,6 @@ namespace etl {
 /// order. The order of equal elements is not guaranteed to be preserved.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/sort
-///
-/// \group sort
-/// \module Algorithm
 template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
@@ -27,7 +24,6 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
     }
 }
 
-/// \group sort
 template <typename RandomIt>
 constexpr auto sort(RandomIt first, RandomIt last) -> void
 {

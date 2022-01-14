@@ -8,8 +8,6 @@
 namespace etl {
 
 /// \brief Assigns the given value to the elements in the range `[first, last)`.
-///
-/// \module Algorithm
 template <typename ForwardIt, typename T>
 constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {

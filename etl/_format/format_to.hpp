@@ -18,8 +18,6 @@ using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<It>>::differenc
 /// to the output iterator out.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/format_to
-///
-/// \module Strings
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
@@ -62,8 +60,6 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
 /// out, size and implicitly declared special member functions.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/format_to_n
-///
-/// \module Strings
 template <typename Out>
 struct format_to_n_result {
     Out out;
@@ -74,8 +70,6 @@ struct format_to_n_result {
 /// to the output iterator out. At most n characters are written.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/format_to_n
-///
-/// \module Strings
 template <typename OutputIter, typename... Args>
 auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args)
     -> format_to_n_result<OutputIter>

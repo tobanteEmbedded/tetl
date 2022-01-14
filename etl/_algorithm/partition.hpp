@@ -15,8 +15,6 @@ namespace etl {
 /// all elements for which the predicate p returns true precede the elements for
 /// which predicate p returns false. Relative order of the elements is not
 /// preserved.
-///
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {

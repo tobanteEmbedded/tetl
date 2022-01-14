@@ -12,15 +12,12 @@ namespace etl {
 /// \brief Function object for performing addition. Effectively calls operator+
 /// on two instances of type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/plus
-/// \group plus
-/// \module Utility
 template <typename T = void>
 struct plus {
     /// \brief Returns the sum of lhs and rhs.
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs + rhs; }
 };
 
-/// \group plus
 template <>
 struct plus<void> {
     using is_transparent = void;

@@ -73,8 +73,6 @@ for header in headers:
     bad_words = [
         '#include',
         '_HPP',
-        '\\module',
-        '\\group',
         '\\exclude',
         '\\complexity',
         '\\requires',

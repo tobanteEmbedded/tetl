@@ -23,8 +23,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isgraph
-///
-/// \module Strings
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

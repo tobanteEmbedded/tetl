@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing logical AND (logical conjunction).
 /// Effectively calls operator&& on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/logical_and
-/// \group logical_and
-/// \module Utility
 template <typename T = void>
 struct logical_and {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> bool { return lhs && rhs; }
 };
 
-/// \group logical_and
 template <>
 struct logical_and<void> {
     using is_transparent = void;

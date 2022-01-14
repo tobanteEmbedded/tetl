@@ -20,8 +20,6 @@ namespace etl {
 ///
 /// The behavior is undefined if lhs or rhs are not pointers to null-terminated
 /// strings.
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wcsncmp(wchar_t const* lhs, wchar_t const* rhs, etl::size_t count) -> int
 {
     return detail::strncmp_impl<wchar_t, etl::size_t>(lhs, rhs, count);

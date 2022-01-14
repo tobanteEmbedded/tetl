@@ -18,8 +18,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/islower
-///
-/// \module Strings
 [[nodiscard]] constexpr auto islower(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

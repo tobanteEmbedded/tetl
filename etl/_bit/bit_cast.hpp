@@ -37,8 +37,6 @@ inline constexpr auto bit_castable_types
 /// To and From are TriviallyCopyable types.
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/bit_cast
-///
-/// \module Numeric
 template <typename To, typename From, enable_if_t<detail::bit_castable_types<To, From>, int> = 0>
 constexpr auto bit_cast(From const& src) noexcept -> To
 {

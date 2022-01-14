@@ -19,7 +19,6 @@ namespace etl {
 /// The behavior is undefined if the strings overlap.
 ///
 /// \returns dest
-/// \module Strings
 constexpr auto strcpy(char* dest, char const* src) -> char*
 {
     TETL_ASSERT(dest != nullptr && src != nullptr);

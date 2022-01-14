@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for computing remainders of divisions. Implements
 /// operator% for type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/modulus
-/// \group modulus
-/// \module Utility
 template <typename T = void>
 struct modulus {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs % rhs; }
 };
 
-/// \group modulus
 template <>
 struct modulus<void> {
     using is_transparent = void;

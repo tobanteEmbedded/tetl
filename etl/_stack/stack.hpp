@@ -27,7 +27,6 @@ namespace etl {
 /// only a specific set of functions is provided. The stack pushes and pops the
 /// element from the back of the underlying container, known as the top of the
 /// stack.
-/// \module Containers
 template <typename T, typename Container>
 struct stack {
     using value_type      = typename Container::value_type;

@@ -17,7 +17,6 @@ namespace etl {
 /// \brief Default searcher. A class suitable for use with Searcher overload of
 /// etl::search that delegates the search operation to the pre-C++17 standard
 /// library's etl::search.
-/// \module Utility
 template <typename ForwardIter, typename Predicate = equal_to<>>
 struct default_searcher {
     constexpr default_searcher(ForwardIter f, ForwardIter l, Predicate p = Predicate())

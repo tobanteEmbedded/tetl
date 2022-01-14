@@ -24,9 +24,6 @@ namespace etl {
 /// predicate.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/count
-///
-/// \group count
-/// \module Algorithm
 template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto count_if(InputIt first, InputIt last, Predicate p) ->
     typename iterator_traits<InputIt>::difference_type

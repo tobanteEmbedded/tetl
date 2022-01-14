@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing bitwise XOR. Effectively calls
 /// operator^ on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/bit_xor
-/// \group bit_xor
-/// \module Utility
 template <typename T = void>
 struct bit_xor {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs ^ rhs; }
 };
 
-/// \group bit_xor
 template <>
 struct bit_xor<void> {
     using is_transparent = void;

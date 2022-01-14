@@ -18,8 +18,6 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isupper
-///
-/// \module Strings
 [[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
 {
     // ch must de representable as a unsigned char

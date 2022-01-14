@@ -14,8 +14,6 @@ namespace etl {
 /// pointed to by str.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wcsrchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wcsrchr(wchar_t* str, int ch) -> wchar_t*
 {
     return detail::strrchr_impl<wchar_t, etl::size_t>(str, ch);
@@ -25,8 +23,6 @@ namespace etl {
 /// pointed to by str.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wcsrchr
-///
-/// \module Strings
 [[nodiscard]] constexpr auto wcsrchr(wchar_t const* str, int ch) -> wchar_t const*
 {
     return detail::strrchr_impl<wchar_t const, etl::size_t>(str, ch);

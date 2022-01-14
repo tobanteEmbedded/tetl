@@ -17,9 +17,6 @@ namespace etl {
 /// \param op Unary operation function object that will be applied.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/transform
-///
-/// \group transform
-/// \module Algorithm
 template <typename InputIt, typename OutputIt, typename UnaryOp>
 constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op) -> OutputIt
 {
@@ -27,7 +24,6 @@ constexpr auto transform(InputIt first, InputIt last, OutputIt dest, UnaryOp op)
     return dest;
 }
 
-/// \group transform
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename BinaryOp>
 constexpr auto transform(InputIt1 first1, InputIt1 last1, InputIt2 first2, OutputIt dest, BinaryOp op) -> OutputIt
 {

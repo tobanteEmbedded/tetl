@@ -12,14 +12,11 @@ namespace etl {
 /// \brief Function object for performing comparisons. Unless specialised,
 /// invokes operator> on type T.
 /// https://en.cppreference.com/w/cpp/utility/functional/greater
-/// \group greater
-/// \module Utility
 template <typename T = void>
 struct greater {
     [[nodiscard]] constexpr auto operator()(T const& lhs, T const& rhs) const -> T { return lhs > rhs; }
 };
 
-/// \group greater
 template <>
 struct greater<void> {
     using is_transparent = void;

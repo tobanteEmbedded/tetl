@@ -7,7 +7,6 @@
 
 namespace etl {
 
-/// \group remove_reference
 template <typename T>
 struct remove_reference {
     using type = T;
@@ -25,7 +24,6 @@ struct remove_reference<T&&> {
     using type = T;
 };
 
-/// \group remove_reference
 template <typename T>
 using remove_reference_t = typename etl::remove_reference<T>::type;
 

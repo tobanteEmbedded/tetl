@@ -12,7 +12,6 @@ namespace etl {
 /// \brief Checks whether T is a rvalue reference type. Provides the member
 /// constant value which is equal to true, if T is a rvalue reference type.
 /// Otherwise, value is equal to false.
-/// \group is_rvalue_reference
 template <typename T>
 struct is_rvalue_reference : false_type {
 };
@@ -22,7 +21,6 @@ template <typename T>
 struct is_rvalue_reference<T&&> : true_type {
 };
 
-/// \group is_rvalue_reference
 template <typename T>
 inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;
 

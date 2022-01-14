@@ -9,7 +9,6 @@ namespace etl {
 
 /// \brief Provides member typedef type, which is defined as T if B is true at
 /// compile time, or as F if B is false.
-/// \group conditional
 template <bool B, typename T, typename F>
 struct conditional {
     using type = T;
@@ -21,7 +20,6 @@ struct conditional<false, T, F> {
     using type = F;
 };
 
-/// \group conditional
 template <bool B, typename T, typename F>
 using conditional_t = typename etl::conditional<B, T, F>::type;
 

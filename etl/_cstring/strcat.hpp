@@ -18,7 +18,6 @@ namespace etl {
 /// \details The behavior is undefined if the destination array is not large
 /// enough for the contents of both src and dest and the terminating null
 /// character. The behavior is undefined if the strings overlap.
-/// \module Strings
 constexpr auto strcat(char* dest, char const* src) -> char*
 {
     return detail::strcat_impl<char, etl::size_t>(dest, src);

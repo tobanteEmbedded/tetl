@@ -13,9 +13,6 @@ namespace etl {
 /// \brief Computes symmetric difference of two sorted ranges: the elements that
 /// are found in either of the ranges, but not in both of them are copied to the
 /// range beginning at destination. The resulting range is also sorted.
-///
-/// \group set_symmetric_difference
-/// \module Algorithm
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
 constexpr auto set_symmetric_difference(
     InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
@@ -37,7 +34,6 @@ constexpr auto set_symmetric_difference(
     return copy(first2, last2, destination);
 }
 
-/// \group set_symmetric_difference
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_symmetric_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest)
     -> OutputIt

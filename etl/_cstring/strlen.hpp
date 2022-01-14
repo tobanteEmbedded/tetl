@@ -11,7 +11,6 @@
 namespace etl {
 
 /// \brief Returns the length of the C string str.
-/// \module Strings
 constexpr auto strlen(char const* str) -> etl::size_t { return detail::strlen_impl<char, etl::size_t>(str); }
 
 } // namespace etl
