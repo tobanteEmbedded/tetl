@@ -108,15 +108,6 @@ constexpr auto test() -> bool
         assert(!etl::is_permutation(begin(a), end(a), begin(c), end(c)));
     }
 
-    {
-        auto d = etl::array { T(1), T(2), T(3), T(4), T(5), T(6) };
-        etl::shift_left(begin(d), end(d), 2);
-        assert(d[0] == T(3));
-        assert(d[1] == T(4));
-        assert(d[2] == T(5));
-        assert(d[3] == T(6));
-    }
-
     return true;
 }
 

@@ -79,6 +79,7 @@
 #include "etl/_algorithm/set_symmetric_difference.hpp"
 #include "etl/_algorithm/set_union.hpp"
 #include "etl/_algorithm/shift_left.hpp"
+#include "etl/_algorithm/shift_right.hpp"
 #include "etl/_algorithm/sort.hpp"
 #include "etl/_algorithm/stable_partition.hpp"
 #include "etl/_algorithm/stable_sort.hpp"
