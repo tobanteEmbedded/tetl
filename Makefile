@@ -63,6 +63,11 @@ standardese:
 	cd cmake-build-standardese && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./etl)
 	./scripts/standardese-md.py
 
+.PHONY: docs
+docs:
+	rm -rf build-doxygen
+	doxygen Doxyfile
+
 .PHONY: tidy-check
 tidy-check:
 	 ./scripts/run-clang-tidy.py ${CLANG_TIDY_ARGS} $(shell realpath ./examples)

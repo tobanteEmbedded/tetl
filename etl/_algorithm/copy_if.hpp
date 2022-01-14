@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Copies the elements in the range, defined by `[first, last)`, to
 /// another range beginning at destination.
 /// \details Only copies the elements for which the predicate pred returns true.
@@ -25,6 +28,8 @@ constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
     }
     return dFirst;
 }
+
+/// @}
 
 } // namespace etl
 

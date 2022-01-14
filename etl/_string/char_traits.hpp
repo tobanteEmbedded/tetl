@@ -28,7 +28,7 @@ namespace etl {
 /// custom character types. Several specializations are defined for the standard
 /// character types. If an operation on traits emits an exception, the behavior
 /// is undefined.
-/// \headerfile string.hpp "etl/string.hpp"
+/// \headerfile etl/string.hpp
 template <typename CharT>
 struct char_traits;
 

@@ -6,6 +6,10 @@
 #define TETL_ALGORITHM_HPP
 
 /// \file This header is part of the algorithm library.
+/// \defgroup algorithm-header algorithm.hpp
+/// \code
+/// #include "etl/algorithm.hpp"
+/// \endcode
 /// \example algorithm.cpp
 
 #include "etl/_config/all.hpp"

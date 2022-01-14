@@ -8,6 +8,8 @@
 #include "etl/_functional/equal_to.hpp"
 
 namespace etl {
+/// \ingroup algorithm-header
+/// @{
 
 /// \brief Searches the range `[first, last)` for two consecutive equal
 /// elements. Elements are compared using the given binary predicate p.
@@ -19,8 +21,6 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/adjacent_find
 ///
-/// \group adjacent_find
-/// \module Algorithm
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
@@ -42,6 +42,8 @@ template <typename ForwardIt>
 {
     return adjacent_find(first, last, equal_to<> {});
 }
+
+/// @}
 
 } // namespace etl
 

@@ -311,7 +311,7 @@ using optional_sfinae_assign_base_t
 /// must meet the requirements of Destructible (in particular, array types are
 /// not allowed).
 ///
-/// \headerfile optional.hpp "etl/optional.hpp"
+/// \headerfile etl/optional.hpp
 /// \include optional.cpp
 template <typename T>
 struct optional : private detail::optional_move_assign_base<T>,
@@ -1099,7 +1099,7 @@ template <typename T, typename U>
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/hash
 ///
-/// \headerfile optional.hpp "etl/optional.hpp"
+/// \headerfile etl/optional.hpp
 template <typename T>
 struct hash<etl::optional<T>> {
     [[nodiscard]] constexpr auto operator()(etl::optional<T> const& opt) const -> etl::size_t

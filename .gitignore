@@ -10,6 +10,8 @@
 /build_*/
 /cmake-build-*
 /out
+/docs/_build*
+3rd_party
 
 # C++
 # Prerequisites

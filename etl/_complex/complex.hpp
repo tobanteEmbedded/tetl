@@ -5,10 +5,10 @@
 #ifndef TETL_COMPLEX_COMPLEX_HPP
 #define TETL_COMPLEX_COMPLEX_HPP
 
-#include "etl/_complex/complex.hpp"
-
 namespace etl {
 
+/// \brief A complex number
+/// \headerfile etl/complex.hpp
 template <typename T>
 struct complex {
     using value_type = T;

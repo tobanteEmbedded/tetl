@@ -6,6 +6,8 @@
 #define TETL_ALGORITHM_COPY_N_HPP
 
 namespace etl {
+/// \ingroup algorithm-header
+/// @{
 
 /// \brief Copies exactly count values from the range beginning at first to the
 /// range beginning at result. Formally, for each integer `0 <= i < count`,
@@ -25,6 +27,8 @@ constexpr auto copy_n(InputIt first, Size count, OutputIt result) -> OutputIt
     }
     return result;
 }
+
+/// @}
 
 } // namespace etl
 

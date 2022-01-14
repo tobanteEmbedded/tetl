@@ -7,6 +7,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Copies the elements in the range, defined by `[first, last)`, to
 /// another range beginning at destination.
 /// \details Copies all elements in the range `[first, last)` starting from
@@ -23,6 +26,8 @@ constexpr auto copy(InputIt first, InputIt last, OutputIt destination) -> Output
     for (; first != last; ++first, (void)++destination) { *destination = *first; }
     return destination;
 }
+
+/// @}
 
 } // namespace etl
 

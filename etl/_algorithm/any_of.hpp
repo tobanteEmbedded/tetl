@@ -9,6 +9,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Checks if unary predicate p returns true for at least one element in
 /// the range `[first, last)`.
 /// \complexity At most `last - first` applications of the predicate.
@@ -19,6 +22,8 @@ template <typename InputIt, typename Predicate>
 {
     return find_if(first, last, p) != last;
 }
+
+/// @}
 
 } // namespace etl
 

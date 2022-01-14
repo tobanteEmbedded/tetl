@@ -8,6 +8,9 @@
 #include "etl/_algorithm/find_if_not.hpp"
 
 namespace etl {
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Checks if unary predicate p returns true for all elements in the
 /// range `[first, last)`.
 /// \complexity At most `last - first` applications of the predicate.
@@ -18,6 +21,8 @@ template <typename InputIt, typename Predicate>
 {
     return find_if_not(first, last, p) == last;
 }
+
+/// @}
 
 } // namespace etl
 

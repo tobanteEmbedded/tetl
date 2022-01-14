@@ -10,6 +10,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Checks if an element equivalent to value appears within the range
 /// `[first, last)`. For binary_search to succeed, the range `[first, last)`
 /// must be at least partially ordered with respect to `value`.
@@ -31,6 +34,8 @@ template <typename ForwardIt, typename T>
 {
     return binary_search(first, last, value, less<> {});
 }
+
+/// @}
 
 } // namespace etl
 

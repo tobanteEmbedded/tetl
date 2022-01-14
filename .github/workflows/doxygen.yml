@@ -1,0 +1,17 @@
+name: Doxygen
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install doxygen
+        run: sudo apt install -y doxygen
+
+      - name: Generate HTML documentation
+        run: doxygen Doxyfile

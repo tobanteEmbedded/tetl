@@ -6,6 +6,8 @@
 #define TETL_ALGORITHM_COPY_BACKWARD_HPP
 
 namespace etl {
+/// \ingroup algorithm-header
+/// @{
 
 /// \brief Copies the elements from the range, defined by `[first, last)`, to
 /// another range ending at `dLast`. The elements are copied in reverse order
@@ -23,6 +25,8 @@ constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast) -> B
     while (first != last) { *(--dLast) = *(--last); }
     return dLast;
 }
+
+/// @}
 
 } // namespace etl
 

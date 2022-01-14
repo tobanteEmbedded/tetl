@@ -9,6 +9,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief Returns the number of elements in the range `[first, last)`
 /// satisfying specific criteria. Counts elements for which predicate p returns
 /// true.
@@ -34,6 +37,8 @@ template <typename InputIt, typename Predicate>
     }
     return result;
 }
+
+/// @}
 
 } // namespace etl
 

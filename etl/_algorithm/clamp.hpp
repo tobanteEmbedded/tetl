@@ -10,6 +10,9 @@
 
 namespace etl {
 
+/// \ingroup algorithm-header
+/// @{
+
 /// \brief If v compares less than lo, returns lo; otherwise if hi compares less
 /// than v, returns hi; otherwise returns v. Uses operator< to compare the
 /// values.
@@ -29,6 +32,8 @@ template <typename Type, typename Compare>
     TETL_ASSERT(!comp(hi, lo));
     return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
+
+/// @}
 
 } // namespace etl
 
