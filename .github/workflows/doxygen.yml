@@ -16,6 +16,12 @@ jobs:
       - name: Generate HTML documentation
         run: doxygen Doxyfile
 
+      - name: Download doxygen theme
+        run: git clone https://github.com/jothepro/doxygen-awesome-css.git 3rd_party/doxygen-awesome-css
+
+      - name: Dosable Jekyll processing
+        run: touch build-doxygen/html/.nojekyll
+
       - name: Pushes to documentation repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
