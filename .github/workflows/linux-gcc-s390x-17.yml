@@ -15,7 +15,7 @@ jobs:
         id: runcmd
         with:
           arch: s390x
-          distro: ubuntu20.04
+          distro: ubuntu22.04
           githubToken: ${{ github.token }}
           run: |
             uname -a
