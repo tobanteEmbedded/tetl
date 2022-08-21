@@ -191,9 +191,8 @@ constexpr auto test() -> bool
     assert(microseconds { 144 } >= microseconds { 143 });
     assert(seconds { 1 } >= milliseconds { 1'000 });
 
-    // TODO(tobi): Fix on AVR
-    // assert(etl::chrono::abs(microseconds { -10 }) == microseconds { 10 });
-    // assert(etl::chrono::abs(milliseconds { -143 }) == milliseconds { 143 });
+    assert(etl::chrono::abs(minutes { -10 }) == minutes { 10 });
+    assert(etl::chrono::abs(minutes { -143 }) == minutes { 143 });
 
     using etl::chrono::duration_cast;
     assert(duration_cast<microseconds>(milliseconds { 1 }).count() == 1'000);
@@ -230,18 +229,19 @@ constexpr auto test_all() -> bool
     assert(test<etl::int8_t>());
     assert(test<etl::int16_t>());
     assert(test<etl::int32_t>());
-    assert(test<etl::int64_t>());
     assert(test<float>());
+
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+    assert(test<etl::int64_t>());
     assert(test<double>());
+#endif
+
     return true;
 }
 
 auto main() -> int
 {
     assert(test_all());
-
-    // TODO(tobi): Fix on AVR
-    // static_assert(test_all());
-
+    static_assert(test_all());
     return 0;
 }
