@@ -47,7 +47,7 @@ struct day {
 
     constexpr explicit operator unsigned() const noexcept { return count_; }
 
-    constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 32U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 32U); }
 
 private:
     uint8_t count_;

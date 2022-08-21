@@ -55,7 +55,7 @@ struct month {
 
     constexpr explicit operator unsigned() const noexcept { return count_; }
 
-    constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 12U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 12U); }
 
 private:
     constexpr auto add(int count) noexcept -> void

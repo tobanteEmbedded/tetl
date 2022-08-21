@@ -9,13 +9,19 @@
     #include <version>
 #endif
 
-/// The major release version
+/// \brief The major release version
+// NOLINTNEXTLINE(modernize-macro-to-enum)
 #define TETL_VERSION_MAJOR 0
-/// The minor release version
+
+/// \brief The minor release version
+// NOLINTNEXTLINE(modernize-macro-to-enum)
 #define TETL_VERSION_MINOR 4
-/// The patch release version
+
+/// \brief The patch release version
+// NOLINTNEXTLINE(modernize-macro-to-enum)
 #define TETL_VERSION_PATCH 0
-/// The library version as a string literal
+
+/// \brief The library version as a string literal
 #define TETL_VERSION_STRING "0.4.0"
 
 #if defined(__STDC_HOSTED__)

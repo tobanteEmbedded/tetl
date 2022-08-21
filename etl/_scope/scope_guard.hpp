@@ -35,7 +35,7 @@ public:
 
 private:
     FuncT func_;
-    PolicyT policy_;
+    PolicyT policy_ {};
 };
 
 struct scope_exit_impl {

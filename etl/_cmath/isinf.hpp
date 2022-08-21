@@ -21,7 +21,7 @@ namespace etl {
 {
     if (!is_constant_evaluated()) {
 #if __has_builtin(__builtin_isinf)
-        return __builtin_isinf(arg);
+        return __builtin_isinf(arg) != 0;
 #endif
     }
     return arg == TETL_BUILTIN_HUGE_VALF;
@@ -31,7 +31,7 @@ namespace etl {
 {
     if (!is_constant_evaluated()) {
 #if __has_builtin(__builtin_isinf)
-        return __builtin_isinf(arg);
+        return __builtin_isinf(arg) != 0;
 #endif
     }
     return arg == TETL_BUILTIN_HUGE_VAL;
@@ -41,7 +41,7 @@ namespace etl {
 {
     if (!is_constant_evaluated()) {
 #if __has_builtin(__builtin_isinf)
-        return __builtin_isinf(arg);
+        return __builtin_isinf(arg) != 0;
 #endif
     }
     return arg == TETL_BUILTIN_HUGE_VALL;
@@ -52,7 +52,7 @@ template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
 {
     if (!is_constant_evaluated()) {
 #if __has_builtin(__builtin_isinf)
-        return __builtin_isinf(static_cast<double>(arg));
+        return __builtin_isinf(static_cast<double>(arg)) != 0;
 #endif
     }
     return isinf(static_cast<double>(arg));

@@ -2,11 +2,12 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_CHRONO_MONTH_HPP
-#define TETL_CHRONO_MONTH_HPP
+#ifndef TETL_CHRONO_YEAR_HPP
+#define TETL_CHRONO_YEAR_HPP
 
 #include "etl/_chrono/duration.hpp"
 #include "etl/_cstdint/uint_t.hpp"
+#include "etl/_limits/numeric_limits.hpp"
 
 namespace etl::chrono {
 
@@ -55,16 +56,14 @@ struct year {
 
     [[nodiscard]] constexpr explicit operator int() const noexcept { return count_; }
 
-    [[nodiscard]] constexpr bool ok() const noexcept { return min_ <= count_ && count_ <= max_; }
+    [[nodiscard]] constexpr bool ok() const noexcept { return count_ != numeric_limits<short>::min(); }
 
-    [[nodiscard]] static constexpr auto min() noexcept -> year { return year { min_ }; }
+    [[nodiscard]] static constexpr auto min() noexcept -> year { return year { -32767 }; }
 
-    [[nodiscard]] static constexpr auto max() noexcept -> year { return year { max_ }; }
+    [[nodiscard]] static constexpr auto max() noexcept -> year { return year { 32767 }; }
 
 private:
     short count_;
-    static constexpr int min_ = -32767;
-    static constexpr int max_ = 32767;
 };
 
 [[nodiscard]] constexpr auto operator==(year const& lhs, year const& rhs) noexcept -> bool
@@ -88,4 +87,4 @@ private:
 
 } // namespace etl::chrono
 
-#endif // TETL_CHRONO_MONTH_HPP
+#endif // TETL_CHRONO_YEAR_HPP

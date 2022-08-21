@@ -8,13 +8,11 @@
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
-namespace etl {
+namespace etl::detail {
 
-namespace detail {
 template <typename T>
 inline constexpr bool double_or_int = is_integral_v<T> || is_same_v<T, double>;
-} // namespace detail
 
-} // namespace etl
+} // namespace etl::detail
 
 #endif // TETL_COMPLEX_DOUBLE_OR_INT_HPP

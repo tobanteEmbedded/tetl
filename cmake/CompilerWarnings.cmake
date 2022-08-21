@@ -59,7 +59,6 @@ else ()
             -Wno-documentation
             -Wno-disabled-macro-expansion
             -Wno-ctad-maybe-unsupported
-            -Wno-reserved-identifier
             -Wno-unused-member-function
             -Wno-implicit-int-conversion
             -Wno-weak-vtables

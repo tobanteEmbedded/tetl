@@ -9,8 +9,8 @@ namespace etl {
 
 template <typename M, typename T>
 struct const_where_expression {
-    const_where_expression(const_where_expression const&)            = delete;
-    const_where_expression& operator=(const_where_expression const&) = delete;
+    const_where_expression(const_where_expression const&)                    = delete;
+    auto operator=(const_where_expression const&) -> const_where_expression& = delete;
 
     auto operator-() const&& noexcept -> T;
     auto operator+() const&& noexcept -> T;

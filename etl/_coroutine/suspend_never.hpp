@@ -12,9 +12,13 @@
 namespace etl {
 
 struct suspend_never {
-    constexpr auto await_ready() const noexcept -> bool { return true; }
-    constexpr auto await_suspend(coroutine_handle<>) const noexcept -> void { }
-    constexpr auto await_resume() const noexcept -> void { }
+    [[nodiscard]] constexpr auto await_ready() const noexcept -> bool
+    {
+        (void)this;
+        return false;
+    }
+    constexpr auto await_suspend(coroutine_handle<> /*unused*/) const noexcept -> void { (void)this; }
+    constexpr auto await_resume() const noexcept -> void { (void)this; }
 };
 
 } // namespace etl

@@ -215,7 +215,7 @@ struct span {
     [[nodiscard]] constexpr auto subspan() const -> span<element_type, detail::subspan_extent<Offset, Count, Extent>()>
     {
         static_assert(!(Offset > Extent));
-        static_assert(!(Count != dynamic_extent && Count > Extent - Offset));
+        static_assert(!(Count == dynamic_extent || Count <= Extent - Offset));
         auto const sz = Count == dynamic_extent ? size() - Offset : Count;
         return { data() + Offset, static_cast<size_type>(sz) };
     }
