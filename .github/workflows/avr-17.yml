@@ -21,8 +21,5 @@ jobs:
       - name: Configure CMake
         run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake -D CMAKE_CXX_STANDARD=17 -D TETL_BUILD_WERROR=ON
 
-      - name: Build tests -- Debug
-        run: cmake --build build --config Debug
-
       - name: Build tests -- Release
         run: cmake --build build --config Release
