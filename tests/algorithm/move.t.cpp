@@ -12,28 +12,28 @@
 
 template <typename T>
 struct S {
-    S(T d = T(0)) : data { d } { }
+    constexpr S(T d = T(0)) : data { d } { }
 
-    S(S const& s)
+    constexpr S(S const& s)
     {
         data = s.data;
         copy = true;
     }
 
-    S(S&& s) noexcept
+    constexpr S(S&& s) noexcept
     {
         data = s.data;
         move = true;
     }
 
-    auto operator=(S const& s) noexcept -> S&
+    constexpr auto operator=(S const& s) noexcept -> S&
     {
         data = s.data;
         copy = true;
         return *this;
     }
 
-    auto operator=(S&& s) noexcept -> S&
+    constexpr auto operator=(S&& s) noexcept -> S&
     {
         data = s.data;
         move = true;
@@ -59,11 +59,9 @@ constexpr auto test() -> bool
         // assert
         using etl::all_of;
 
-        // clang-format off
-        assert((all_of(begin(d), end(d), [](auto const&s) { return s.move; })));
-        assert((all_of(begin(d), end(d), [](auto const&s) { return !s.copy; })));
-        assert((all_of(begin(d), end(d), [](auto const&s) { return s.data == 1; })));
-        // clang-format on
+        assert((all_of(begin(d), end(d), [](auto const& s) { return s.move; })));
+        assert((all_of(begin(d), end(d), [](auto const& s) { return !s.copy; })));
+        assert((all_of(begin(d), end(d), [](auto const& s) { return s.data == 1; })));
     }
 
     // move backward
@@ -76,11 +74,9 @@ constexpr auto test() -> bool
         // assert
         using etl::all_of;
 
-        // clang-format off
-        assert(all_of(begin(d), end(d), [](auto const&s) { return s.move; }));
-        assert(all_of(begin(d), end(d), [](auto const&s) { return !s.copy; }));
-        assert(all_of(begin(d), end(d), [](auto const&s) { return s.data != 0; }));
-        // clang-format on
+        assert(all_of(begin(d), end(d), [](auto const& s) { return s.move; }));
+        assert(all_of(begin(d), end(d), [](auto const& s) { return !s.copy; }));
+        assert(all_of(begin(d), end(d), [](auto const& s) { return s.data != 0; }));
         assert(d[0].data == T(1));
         assert(d[1].data == T(2));
         assert(d[2].data == T(3));
@@ -108,6 +104,6 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-    // static_assert(test_all());
+    static_assert(test_all());
     return 0;
 }
