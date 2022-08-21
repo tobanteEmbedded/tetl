@@ -50,15 +50,16 @@ else ()
           $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
             -Weverything
             -Wno-c++98-compat-pedantic
+            -Wno-ctad-maybe-unsupported
+            -Wno-documentation
             -Wno-documentation-unknown-command
+            -Wno-double-promotion
             -Wno-float-equal
             -Wno-global-constructors
-            -Wno-padded
-            -Wno-double-promotion
-            -Wno-documentation
-            -Wno-ctad-maybe-unsupported
-            -Wno-unused-member-function
             -Wno-implicit-int-conversion
+            -Wno-padded
+            -Wno-unused-member-function
+            -Wno-weak-vtables
           >
       >
 
