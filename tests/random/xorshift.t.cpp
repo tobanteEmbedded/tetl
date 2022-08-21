@@ -21,6 +21,7 @@ constexpr auto test_xorshift32() -> bool
 
 constexpr auto test_xorshift64() -> bool
 {
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     using etl::xorshift64;
 
     assert(xorshift64::min() == 0);
@@ -29,6 +30,7 @@ constexpr auto test_xorshift64() -> bool
     assert(xorshift64() == xorshift64());
     assert(xorshift64() != xorshift64(1));
 
+#endif
     return true;
 }
 
