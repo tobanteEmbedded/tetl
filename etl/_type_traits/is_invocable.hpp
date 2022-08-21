@@ -15,7 +15,7 @@ namespace etl {
 
 // clang-format off
 namespace detail {
-    
+
 template <typename Result, typename Ret, bool = etl::is_void_v<Ret>, typename = void>
 struct is_invocable_impl : etl::false_type { };
 

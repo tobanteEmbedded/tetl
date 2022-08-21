@@ -127,13 +127,12 @@ template <typename IntType>
     return 0;
 }
 
-#define RUN(func)                                                              \
-    do {                                                                       \
-        if (auto rc = func; rc != 0) { throw rc; }                             \
+#define RUN(func)                                                                                                      \
+    do {                                                                                                               \
+        if (auto rc = func; rc != 0) { throw rc; }                                                                     \
     } while (false)
 
-extern "C" auto LLVMFuzzerTestOneInput(
-    etl::uint8_t const* data, etl::size_t size) -> int
+extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
     if (size == 0) { return 0; }
     auto p = FuzzedDataProvider { data, size };
