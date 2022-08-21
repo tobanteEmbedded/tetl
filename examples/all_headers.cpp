@@ -40,6 +40,7 @@
 #include "etl/numbers.hpp"
 #include "etl/numeric.hpp"
 #include "etl/optional.hpp"
+#include "etl/random.hpp"
 #include "etl/ranges.hpp"
 #include "etl/ratio.hpp"
 #include "etl/scope.hpp"
