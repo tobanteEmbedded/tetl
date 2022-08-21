@@ -6,6 +6,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -23,7 +27,13 @@ jobs:
         run: sudo apt install -y clang-15 clang-tidy-15 ninja-build
 
       - name: CMake configure
-        run: CC=clang-15 CXX=clang++-15 cmake -S . -G "Ninja Multi-Config" -B build -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON -D TETL_BUILD_WEVERYTHING=ON
+        run: >
+          cmake -S . -G "Ninja Multi-Config" -B build
+          -D CMAKE_C_COMPILER="clang-15"
+          -D CMAKE_CXX_COMPILER="clang++-15"
+          -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
+          -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

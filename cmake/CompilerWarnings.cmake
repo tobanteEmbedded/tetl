@@ -51,17 +51,13 @@ else ()
             -Weverything
             -Wno-c++98-compat-pedantic
             -Wno-documentation-unknown-command
-            -Wno-newline-eof
             -Wno-float-equal
             -Wno-global-constructors
-            -Wno-padded
             -Wno-double-promotion
             -Wno-documentation
-            -Wno-disabled-macro-expansion
             -Wno-ctad-maybe-unsupported
             -Wno-unused-member-function
             -Wno-implicit-int-conversion
-            -Wno-weak-vtables
           >
       >
 
