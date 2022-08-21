@@ -21,8 +21,6 @@ function(tetl_add_test _header _target)
   set_tests_properties("test_${_header}_${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
 
-
-
 add_subdirectory("algorithm")
 add_subdirectory("array")
 add_subdirectory("bit")

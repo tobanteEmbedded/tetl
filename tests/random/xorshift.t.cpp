@@ -4,15 +4,12 @@
 
 #include "etl/random.hpp"
 
-#include "etl/warning.hpp"
-
 #include "testing/testing.hpp"
 
 constexpr auto test_xorshift32() -> bool
 {
     using etl::xorshift32;
 
-    auto rng = xorshift32 {};
     assert(xorshift32::min() == 0);
     assert(xorshift32::max() == etl::uint32_t(-1));
     assert(xorshift32::default_seed == 42);
@@ -26,7 +23,6 @@ constexpr auto test_xorshift64() -> bool
 {
     using etl::xorshift64;
 
-    auto rng = xorshift64 {};
     assert(xorshift64::min() == 0);
     assert(xorshift64::max() == etl::uint64_t(-1));
     assert(xorshift64::default_seed == 42);
