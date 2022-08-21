@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -14,16 +14,16 @@ jobs:
         run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 
       - name: add LLVM Repo
-        run: sudo add-apt-repository 'deb http://apt.llvm.org/focal/   llvm-toolchain-focal-13  main'
+        run: sudo add-apt-repository 'deb http://apt.llvm.org/jammy/   llvm-toolchain-jammy-15  main'
 
       - name: update
         run: sudo apt update -y
 
       - name: install clang-tidy
-        run: sudo apt install -y clang-13 clang-tidy-13 ninja-build
+        run: sudo apt install -y clang-15 clang-tidy-15 ninja-build
 
       - name: CMake configure
-        run: CC=clang-13 CXX=clang++-13 cmake -S . -G "Ninja Multi-Config" -B build -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON -D TETL_BUILD_WEVERYTHING=ON
+        run: CC=clang-15 CXX=clang++-15 cmake -S . -G "Ninja Multi-Config" -B build -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug

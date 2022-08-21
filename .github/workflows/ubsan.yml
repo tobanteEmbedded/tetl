@@ -14,22 +14,22 @@ jobs:
         run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 
       - name: add LLVM Repo
-        run: sudo add-apt-repository 'deb http://apt.llvm.org/focal/   llvm-toolchain-focal-13  main'
+        run: sudo add-apt-repository 'deb http://apt.llvm.org/focal/   llvm-toolchain-focal-15  main'
 
       - name: update
         run: sudo apt update -y
 
       - name: install clang-tidy
-        run: sudo apt install -y clang-13 clang-tidy-13 ninja-build
+        run: sudo apt install -y clang-15 clang-tidy-15 ninja-build
 
       - name: cmake configure
-        run: CC=clang-13 CXX=clang++-13 cmake -S . -B cmake-build-ubsan -D TETL_BUILD_UBSAN=ON -D CMAKE_CXX_STANDARD=20
+        run: CC=clang-15 CXX=clang++-15 cmake -S . -B cmake-build-ubsan -D TETL_BUILD_UBSAN=ON -D CMAKE_CXX_STANDARD=20
 
       - name: dump config
         run: cat cmake-build-ubsan/compile_commands.json
 
       - name: cmake build
-        run: CC=clang-13 CXX=clang++-13 cmake --build cmake-build-ubsan -- -j
+        run: CC=clang-15 CXX=clang++-15 cmake --build cmake-build-ubsan -- -j
 
       - name: run tests
         run: export CTEST_OUTPUT_ON_FAILURE=1; cd cmake-build-ubsan; ctest -VV; cd -
