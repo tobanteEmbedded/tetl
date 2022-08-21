@@ -47,7 +47,7 @@ struct inplace_func_vtable {
     const process_ptr_t relocate_ptr;
     const destructor_ptr_t destructor_ptr;
 
-    explicit constexpr inplace_func_vtable() noexcept
+    explicit constexpr inplace_func_vtable()
         : invoke_ptr { [](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
             etl::raise<etl::bad_function_call>("empty inplace_func_vtable");
         } }
@@ -58,7 +58,7 @@ struct inplace_func_vtable {
     }
 
     template <typename C>
-    explicit constexpr inplace_func_vtable(wrapper<C> /*ignore*/) noexcept
+    explicit constexpr inplace_func_vtable(wrapper<C> /*ignore*/)
         : invoke_ptr { [](storage_ptr_t storagePtr, Args&&... args) -> R {
             return (*static_cast<C*>(storagePtr))(static_cast<Args&&>(args)...);
         } }

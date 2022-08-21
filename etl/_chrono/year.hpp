@@ -16,7 +16,7 @@ struct year {
 
     constexpr explicit year(int y) noexcept : count_ { static_cast<short>(y) } { }
 
-    constexpr year& operator++() noexcept
+    constexpr auto operator++() noexcept -> year&
     {
         ++count_;
         return *this;
@@ -35,28 +35,28 @@ struct year {
     constexpr auto operator+=(years const& count_s) noexcept -> year&
     {
 
-        count_ += static_cast<short>(count_s.count());
+        count_ = static_cast<short>(count_ + count_s.count());
         return *this;
     }
 
     constexpr auto operator-=(years const& count_s) noexcept -> year&
     {
-        count_ -= static_cast<short>(count_s.count());
+        count_ = static_cast<short>(count_ - count_s.count());
         return *this;
     }
 
-    [[nodiscard]] constexpr year operator+() const noexcept { return *this; }
+    [[nodiscard]] constexpr auto operator+() const noexcept -> year { return *this; }
 
-    [[nodiscard]] constexpr year operator-() const noexcept { return year { -count_ }; }
+    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year { -count_ }; }
 
-    [[nodiscard]] constexpr bool is_leap() const noexcept
+    [[nodiscard]] constexpr auto is_leap() const noexcept -> bool
     {
         return (count_ % 4 == 0) && (count_ % 100 != 0 || count_ % 400 == 0);
     }
 
     [[nodiscard]] constexpr explicit operator int() const noexcept { return count_; }
 
-    [[nodiscard]] constexpr bool ok() const noexcept { return count_ != numeric_limits<short>::min(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return count_ != numeric_limits<short>::min(); }
 
     [[nodiscard]] static constexpr auto min() noexcept -> year { return year { -32767 }; }
 

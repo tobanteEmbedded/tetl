@@ -68,7 +68,7 @@ constexpr auto isnormal(half arg) noexcept -> bool
     using uint_t    = half::storage_type;
     auto const mask = detail::exp_mask;
     auto const bits = etl::bit_cast<uint_t>(arg);
-    return ((bits & mask) != 0) & ((bits & mask) != mask);
+    return ((bits & mask) != 0) & ((bits & mask) != mask); // NOLINT
 }
 
 constexpr auto signbit(half arg) noexcept -> bool

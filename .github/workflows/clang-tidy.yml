@@ -23,7 +23,7 @@ jobs:
         run: sudo apt install -y clang-15 clang-tidy-15
 
       - name: cmake configure
-        run: CC=clang-15 CXX=clang++-15 cmake -S . -G "Unix Makefiles" -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
+        run: CC=clang-15 CXX=clang++-15 cmake -S . -G "Unix Makefiles" -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=17 -D TETL_BUILD_WERROR=ON
 
       - name: clang-tidy check
         run: CLANG_VERSION="-15" BUILD_DIR=cmake-build-tidy make tidy-check

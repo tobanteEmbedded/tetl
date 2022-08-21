@@ -26,7 +26,7 @@ namespace etl {
 [[nodiscard]] constexpr auto isnan(double arg) -> bool
 {
 #if __has_builtin(__builtin_isnan) or defined(TETL_GCC)
-    return __builtin_isnan(arg);
+    return __builtin_isnan(arg) != 0;
 #else
     return arg != arg;
 #endif
