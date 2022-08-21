@@ -7,13 +7,14 @@
 #include "etl/array.hpp"
 #include "etl/string.hpp"
 #include "etl/string_view.hpp"
+#include "etl/type_traits.hpp"
 
 #include "testing/testing.hpp"
 
 using namespace etl::literals;
 using etl::string_view;
 
-constexpr auto test() -> bool
+constexpr auto test_str() -> bool
 {
     // "cstring: strcpy"
     {
@@ -125,6 +126,19 @@ constexpr auto test() -> bool
         assert(etl::strcspn(str.c_str(), invalid) == 8);
     }
 
+    // "cstring: strlen"
+    {
+        assert(etl::strlen("") == 0);
+        assert(etl::strlen("a") == 1);
+        assert(etl::strlen("to") == 2);
+        assert(etl::strlen("xxxxxxxxxx") == 10);
+    }
+
+    return true;
+}
+
+static auto test_mem() -> bool
+{
     // "cstring: memcpy"
     {
         auto source = etl::array<etl::uint8_t, 2> {};
@@ -155,22 +169,14 @@ constexpr auto test() -> bool
         assert(buffer.at(1) == 1);
     }
 
-    // "cstring: strlen"
-    {
-        assert(etl::strlen("") == 0);
-        assert(etl::strlen("a") == 1);
-        assert(etl::strlen("to") == 2);
-        assert(etl::strlen("xxxxxxxxxx") == 10);
-    }
-
     return true;
 }
 
 auto main() -> int
 {
-    assert(test());
-    // static_assert(test());
+    assert(test_str());
+    static_assert(test_str());
 
-    // TODO: [tobi] Add constexpr tests
+    assert(test_mem());
     return 0;
 }
