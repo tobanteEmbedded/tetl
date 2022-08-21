@@ -240,8 +240,8 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 |        [optional](#optional)        |         Utility          | :heavy_check_mark: |  [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)   |
 |               ostream               |       Input/Output       |        :x:         |                                                                                                                        |
 |                queue                |        Containers        |        :x:         |                                                          TODO                                                          |
-|               random                |         Numeric          |        :x:         |                                                                                                                        |
-|               ranges                |          Ranges          |        :x:         |                                                          TODO                                                          |
+|          [random](#random)          |         Numeric          | :heavy_check_mark: |   [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)    |
+|          [ranges](#ranges)          |          Ranges          | :heavy_check_mark: |                                                          TODO                                                          |
 |                regex                |   Regular Expressions    |        :x:         |                                                                                                                        |
 |           [ratio](#ratio)           |         Numeric          | :heavy_check_mark: |    [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)    |
 |          scoped_allocator           | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
@@ -594,6 +594,15 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Implementation Progress:** [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)
 - **Changes:**
   - TODO
+
+### random
+
+- **Library:** Random Number
+- **Include:** [`etl/random.hpp`](./etl/random.hpp)
+- **Example:** [random.cpp](./examples/random.cpp)
+- **Implementation Progress:** [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)
+- **Changes:**
+  - Added `basic_xorshift32` and `basic_xorshift64` (Non-standard)
 
 ### ratio
 
