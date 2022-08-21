@@ -53,6 +53,7 @@ else ()
             -Wno-documentation-unknown-command
             -Wno-float-equal
             -Wno-global-constructors
+            -Wno-padded
             -Wno-double-promotion
             -Wno-documentation
             -Wno-ctad-maybe-unsupported
