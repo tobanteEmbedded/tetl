@@ -74,9 +74,6 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-
-    // TODO: Add constexpr tests
-    // static_assert(test_all());
-
+    static_assert(test_all());
     return 0;
 }

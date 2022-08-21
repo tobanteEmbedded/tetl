@@ -35,9 +35,6 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-
-    // TODO: [tobi] Enable constexpr tests. Fails gcc-9,
-    // but passes gcc-11 & clang-13
-    // static_assert(test_all());
+    static_assert(test_all());
     return 0;
 }

@@ -61,8 +61,6 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-
-    // TODO: Fails on gcc-9, but passes on gcc-11 and clang-13
-    // static_assert(test_all());
+    static_assert(test_all());
     return 0;
 }

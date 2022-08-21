@@ -169,8 +169,8 @@ constexpr auto test() -> bool
 auto main() -> int
 {
     assert(test());
+    // static_assert(test());
 
     // TODO: [tobi] Add constexpr tests
-    // static_assert(test());
     return 0;
 }

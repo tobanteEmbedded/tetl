@@ -13,7 +13,7 @@ template <typename FuncT, typename PolicyT>
 struct scope_guard {
 public:
     template <typename Functor>
-    explicit constexpr scope_guard(Functor f) : func_ { etl::forward<Functor>(f) }, policy_ {}
+    explicit constexpr scope_guard(Functor&& f) : func_ { etl::forward<Functor>(f) }, policy_ {}
     {
     }
 

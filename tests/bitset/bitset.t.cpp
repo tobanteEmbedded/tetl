@@ -283,7 +283,8 @@ constexpr auto test_all() -> bool
 auto main() -> int
 {
     assert(test_all());
-    // TODO(tobi): Fix on AVR
-    // static_assert(test_all());
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
+    static_assert(test_all());
+#endif
     return 0;
 }
