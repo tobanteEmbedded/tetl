@@ -23,7 +23,8 @@ Checks: >
   -readability-function-cognitive-complexity,
   -readability-suspicious-call-argument,
   -readability-function-size,
-  -readability-identifier-naming
+  -readability-identifier-naming,
+  -readability-identifier-length
 WarningsAsErrors: "*"
 FormatStyle: none
 CheckOptions:

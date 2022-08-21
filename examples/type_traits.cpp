@@ -2,10 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#include "etl/type_traits.hpp"
-
-#include "etl/cstdint.hpp"     // for uint16_t
 #include "etl/type_traits.hpp" // for enable_if
+#include "etl/cstdint.hpp"     // for uint16_t
 
 template <typename T>
 auto func(T val) -> etl::enable_if_t<etl::is_integral_v<T>, int>

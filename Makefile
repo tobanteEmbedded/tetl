@@ -9,10 +9,11 @@ else
 endif
 COVERAGE_DIR=$(BUILD_DIR_BASE)-coverage
 
-CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy-13
-CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements-13
+CLANG_VERSION ?=
+CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy${CLANG_VERSION}
+CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements${CLANG_VERSION}
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
-CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./tests)
+CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
 
 STANDARDESE_BIN ?= standardese
 
@@ -86,7 +87,7 @@ clean:
 
 .PHONY: stats
 stats:
-	cloc --by-file cmake etl fuzzing tests README.md
+	cloc --by-file --vcs=git .
 
 .PHONY: format
 format:
