@@ -22,4 +22,3 @@ tetl_add_test(${PROJECT_NAME} isnan)
 tetl_add_test(${PROJECT_NAME} lerp)
 tetl_add_test(${PROJECT_NAME} nextafter)
 tetl_add_test(${PROJECT_NAME} sin)
-

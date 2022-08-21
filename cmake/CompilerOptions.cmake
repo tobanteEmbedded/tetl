@@ -21,4 +21,3 @@ target_compile_options(compiler_options
       $<$<BOOL:${TETL_BUILD_TIMETRACE}>: -ftime-trace>
     >
 )
-

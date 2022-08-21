@@ -9,7 +9,7 @@ repos:
       - id: check-json
       - id: check-xml
       - id: trailing-whitespace
-      # - id: end-of-file-fixer
+      - id: end-of-file-fixer
       - id: detect-private-key
       - id: requirements-txt-fixer
       - id: check-case-conflict

@@ -67,4 +67,3 @@ CXXFLAGS += -fno-use-cxa-atexit
 CXXFLAGS += -fno-threadsafe-statics
 CXXFLAGS += -ftemplate-backtrace-limit=0
 CXXFLAGS += $(INCLUDES)
-
