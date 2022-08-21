@@ -38,11 +38,11 @@ struct array {
     using size_type              = size_t;
     using difference_type        = ptrdiff_t;
     using pointer                = Type*;
-    using const_pointer          = const Type*;
+    using const_pointer          = Type const*;
     using reference              = Type&;
-    using const_reference        = const Type&;
+    using const_reference        = Type const&;
     using iterator               = Type*;
-    using const_iterator         = const Type*;
+    using const_iterator         = Type const*;
     using reverse_iterator       = typename etl::reverse_iterator<iterator>;
     using const_reverse_iterator = typename etl::reverse_iterator<const_iterator>;
 

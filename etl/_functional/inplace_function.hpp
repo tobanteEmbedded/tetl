@@ -77,7 +77,7 @@ struct inplace_func_vtable {
     inplace_func_vtable(inplace_func_vtable&&)      = delete;
 
     auto operator=(inplace_func_vtable const&) -> inplace_func_vtable& = delete;
-    auto operator=(inplace_func_vtable&&) -> inplace_func_vtable& = delete;
+    auto operator=(inplace_func_vtable&&) -> inplace_func_vtable&      = delete;
 
     ~inplace_func_vtable() = default;
 };

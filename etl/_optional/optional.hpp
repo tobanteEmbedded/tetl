@@ -178,7 +178,7 @@ struct optional_copy_base<T, false> : optional_storage_base<T> {
 
     optional_copy_base(optional_copy_base&&) noexcept = default;
 
-    auto operator=(optional_copy_base const&) -> optional_copy_base& = default;
+    auto operator=(optional_copy_base const&) -> optional_copy_base&     = default;
     auto operator=(optional_copy_base&&) noexcept -> optional_copy_base& = default;
 };
 

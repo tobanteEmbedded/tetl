@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto exp_cf_recur(const T x, const int depth) noexcept -> T
+constexpr auto exp_cf_recur(const T x, int const depth) noexcept -> T
 {
     return (depth < GCEM_EXP_MAX_ITER_SMALL ? // if
                 depth == 1 ? T(1) - x / exp_cf_recur(x, depth + 1)

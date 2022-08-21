@@ -31,7 +31,7 @@ namespace internal {
 // see http://functions.wolfram.com/ElementaryFunctions/Log/10/0005/
 
 template <typename T>
-constexpr auto log_cf_main(const T xx, const int depth) noexcept -> T
+constexpr auto log_cf_main(const T xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_LOG_MAX_ITER_SMALL ? // if
                 T(2 * depth - 1) - T(depth * depth) * xx / log_cf_main(xx, depth + 1)
@@ -52,7 +52,7 @@ constexpr auto log_main(const T x) noexcept -> T
     return (log_cf_begin((x - T(1)) / (x + T(1))));
 }
 
-constexpr auto log_mantissa_integer(const int x) noexcept -> long double
+constexpr auto log_mantissa_integer(int const x) noexcept -> long double
 {
     return (x == 2    ? 0.6931471805599453094172321214581765680755L
             : x == 3  ? 1.0986122886681096913952452369225257046475L

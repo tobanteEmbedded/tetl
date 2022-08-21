@@ -43,10 +43,10 @@ struct stream_buffer {
     /// https://www.freertos.org/vStreamBufferDelete.html
     ~stream_buffer() noexcept;
 
-    stream_buffer(stream_buffer const& other) = delete;
+    stream_buffer(stream_buffer const& other)                    = delete;
     auto operator=(stream_buffer const& other) -> stream_buffer& = delete;
 
-    stream_buffer(stream_buffer&& other) = delete;
+    stream_buffer(stream_buffer&& other)                    = delete;
     auto operator=(stream_buffer&& other) -> stream_buffer& = delete;
 
     /// \brief Sends bytes to a stream buffer. The bytes are copied into the

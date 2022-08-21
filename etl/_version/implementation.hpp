@@ -18,9 +18,9 @@ inline constexpr auto current_implementation = implementation::hosted;
 inline constexpr auto current_implementation = implementation::freestanding;
 #endif
 
-[[nodiscard]] auto constexpr is_hosted() noexcept -> bool { return current_implementation == implementation::hosted; }
+[[nodiscard]] constexpr auto is_hosted() noexcept -> bool { return current_implementation == implementation::hosted; }
 
-[[nodiscard]] auto constexpr is_freestanding() noexcept -> bool
+[[nodiscard]] constexpr auto is_freestanding() noexcept -> bool
 {
     return current_implementation == implementation::freestanding;
 }

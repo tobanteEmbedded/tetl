@@ -81,7 +81,7 @@ public:
 
     /// \brief
     constexpr auto operator=(static_set&& other) noexcept(noexcept(move(declval<storage_type>())))
-        -> static_set&     = default;
+        -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return memory_.begin(); }

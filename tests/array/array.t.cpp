@@ -187,10 +187,10 @@ constexpr auto test_builtin_types() -> bool
             T val;
 
             constexpr non_copy(T init) : val { init } { }
-            non_copy(non_copy&&) noexcept = default;
-            non_copy(non_copy const&)     = delete;
+            non_copy(non_copy&&) noexcept                    = default;
+            non_copy(non_copy const&)                        = delete;
             auto operator=(non_copy&&) noexcept -> non_copy& = default;
-            auto operator=(non_copy const&) -> non_copy& = delete;
+            auto operator=(non_copy const&) -> non_copy&     = delete;
         };
 
         // creates a non-copyable etl::array

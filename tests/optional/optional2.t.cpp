@@ -109,9 +109,9 @@ static auto test_opional_4() -> bool
 
             SX(int c) : data { c } { }
             ~SX() { }
-            SX(SX const& /*other*/)     = default;
-            SX(SX&& /*other*/) noexcept = default;
-            auto operator=(SX const& /*other*/) -> SX& = default;
+            SX(SX const& /*other*/)                        = default;
+            SX(SX&& /*other*/) noexcept                    = default;
+            auto operator=(SX const& /*other*/) -> SX&     = default;
             auto operator=(SX&& /*other*/) noexcept -> SX& = default;
         };
 

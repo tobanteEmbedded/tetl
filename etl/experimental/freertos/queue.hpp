@@ -40,10 +40,10 @@ struct queue {
     /// https://www.freertos.org/a00018.html#vQueueDelete
     ~queue();
 
-    queue(queue const&) = delete;
+    queue(queue const&)                    = delete;
     auto operator=(queue const&) -> queue& = delete;
 
-    queue(queue&&) = delete;
+    queue(queue&&)                    = delete;
     auto operator=(queue&&) -> queue& = delete;
 
     /// Returns the capacity of the internal buffer
@@ -85,7 +85,7 @@ inline auto queue<T, Size>::capacity() const -> size_type
 template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::send(T const& data, TickType_t ticksToWait) const -> bool
 {
-    const auto* const rawData = static_cast<const void*>(&data);
+    auto const* const rawData = static_cast<void const*>(&data);
     auto const success        = xQueueSend(handle_, rawData, ticksToWait);
     return static_cast<bool>(success);
 }

@@ -103,11 +103,11 @@ enum struct pull_up_resistor : etl::uint8_t {
 template <typename Driver>
 struct device {
 public:
-    explicit device()     = default;
-    ~device()             = default;
-    device(device&&)      = delete;
-    device(device const&) = delete;
-    auto operator=(device&&) -> device& = delete;
+    explicit device()                        = default;
+    ~device()                                = default;
+    device(device&&)                         = delete;
+    device(device const&)                    = delete;
+    auto operator=(device&&) -> device&      = delete;
     auto operator=(device const&) -> device& = delete;
 
     auto init() -> bool { return true; }

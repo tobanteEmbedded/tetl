@@ -29,7 +29,7 @@ struct coroutine_handle<void> {
 
     [[nodiscard]] constexpr auto address() const noexcept -> void* { return handle_; }
 
-    [[nodiscard]] constexpr static auto from_address(void* addr) noexcept -> coroutine_handle
+    [[nodiscard]] static constexpr auto from_address(void* addr) noexcept -> coroutine_handle
     {
         auto self    = coroutine_handle {};
         self.handle_ = addr;

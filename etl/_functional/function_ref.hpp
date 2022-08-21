@@ -48,7 +48,7 @@ public:
     /// \brief Constructs a function_ref referring to f.
     template <typename F, enable_if_invocable_and_not_function_ref<F> = 0>
     function_ref(F&& f) noexcept
-        : obj_(const_cast<void*>(reinterpret_cast<const void*>(addressof(f))))
+        : obj_(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
         , callable_ {
             +[](void* obj, Args... args) -> R {
                 auto* func = reinterpret_cast<add_pointer_t<F>>(obj);

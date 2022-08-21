@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto tanh_cf(const T xx, const int depth) noexcept -> T
+constexpr auto tanh_cf(const T xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_TANH_MAX_ITER ? // if
                 (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)

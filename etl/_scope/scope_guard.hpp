@@ -29,9 +29,9 @@ public:
 
     constexpr auto release() noexcept -> void { policy_.release(); }
 
-    scope_guard(scope_guard const&) = delete;
+    scope_guard(scope_guard const&)                    = delete;
     auto operator=(scope_guard const&) -> scope_guard& = delete;
-    auto operator=(scope_guard&&) -> scope_guard& = delete;
+    auto operator=(scope_guard&&) -> scope_guard&      = delete;
 
 private:
     FuncT func_;

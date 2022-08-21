@@ -10,8 +10,7 @@
 
 namespace etl {
 
-struct binary_t {
-};
+struct binary_t { };
 inline constexpr auto binary = binary_t {};
 
 struct half {

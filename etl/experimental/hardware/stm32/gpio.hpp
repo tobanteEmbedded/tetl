@@ -51,10 +51,10 @@ struct gpio_memory_layout {
 struct port {
     ~port() = default;
 
-    port(port const&) = delete;
+    port(port const&)                    = delete;
     auto operator=(port const&) -> port& = delete;
 
-    port(port&&) = delete;
+    port(port&&)                    = delete;
     auto operator=(port&&) -> port& = delete;
 
     auto toggle_pin(pin_number pin) noexcept -> void;

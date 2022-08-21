@@ -28,7 +28,7 @@ struct const_buffer {
     auto operator+=(etl::size_t n) noexcept -> const_buffer&
     {
         auto const offset = n < size_ ? n : size_;
-        data_             = static_cast<const char*>(data_) + offset;
+        data_             = static_cast<char const*>(data_) + offset;
         size_ -= offset;
         return *this;
     }
@@ -44,7 +44,7 @@ private:
 inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept -> const_buffer
 {
     auto offset      = n < b.size() ? n : b.size();
-    const auto* data = static_cast<char const*>(b.data()) + offset;
+    auto const* data = static_cast<char const*>(b.data()) + offset;
     auto size        = b.size() - offset;
     return const_buffer { data, size };
 }

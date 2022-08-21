@@ -10,8 +10,7 @@
 namespace etl::simd_abi {
 
 namespace detail {
-struct simd_abi_scaler_tag {
-};
+struct simd_abi_scaler_tag { };
 template <int N>
 struct simd_abi_fixed_size_tag {
 };

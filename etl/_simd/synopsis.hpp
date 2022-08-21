@@ -21,10 +21,8 @@ template <typename T, size_t N, typename... Abis>
 using deduce_t = typename deduce<T, N, Abis...>::type;
 } // namespace simd_abi
 
-struct element_aligned_tag {
-};
-struct vector_aligned_tag {
-};
+struct element_aligned_tag { };
+struct vector_aligned_tag { };
 template <size_t>
 struct overaligned_tag {
 };
@@ -129,21 +127,21 @@ auto split(simd<T, Abi> const&) noexcept -> tuple<simd<T, simd_abi::deduce_t<T, 
 template <size_t... Sizes, typename T, typename Abi>
 auto split(simd_mask<T, Abi> const&) noexcept -> tuple<simd_mask<T, simd_mask_abi::deduce_t<T, Sizes>>...>;
 template <typename V, typename Abi>
-auto split(const simd<typename V::value_type, Abi>&) noexcept
+auto split(simd<typename V::value_type, Abi> const&) noexcept
     -> array<V, simd_size_v<typename V::value_type, Abi> / V::size()>;
 template <typename V, typename Abi>
 auto split(simd_mask<typename V::simd_type::value_type, Abi> const&) noexcept
     -> array<V, simd_size_v<typename V::simd_type::value_type, Abi> / V::size()>;
 
 template <size_t N, typename T, typename A>
-auto split_by(const simd<T, A>& x) noexcept -> array<resize_simd<simd_size_v<T, A> / N, simd<T, A>>, N>;
+auto split_by(simd<T, A> const& x) noexcept -> array<resize_simd<simd_size_v<T, A> / N, simd<T, A>>, N>;
 template <size_t N, typename T, typename A>
-auto split_by(const simd_mask<T, A>& x) noexcept -> array<resize_simd<simd_size_v<T, A> / N, simd_mask<T, A>>, N>;
+auto split_by(simd_mask<T, A> const& x) noexcept -> array<resize_simd<simd_size_v<T, A> / N, simd_mask<T, A>>, N>;
 
 template <typename T, typename... Abis>
-auto concat(const simd<T, Abis>&...) noexcept -> simd<T, simd_abi::deduce_t<T, (simd_size_v<T, Abis> + ...)>>;
+auto concat(simd<T, Abis> const&...) noexcept -> simd<T, simd_abi::deduce_t<T, (simd_size_v<T, Abis> + ...)>>;
 template <typename T, typename... Abis>
-auto concat(const simd_mask<T, Abis>&...) noexcept -> simd_mask<T, simd_abi::deduce_t<T, (simd_size_v<T, Abis> + ...)>>;
+auto concat(simd_mask<T, Abis> const&...) noexcept -> simd_mask<T, simd_abi::deduce_t<T, (simd_size_v<T, Abis> + ...)>>;
 template <typename T, typename Abi, size_t N>
 auto concat(array<simd<T, Abi>, N> const& arr) noexcept -> resize_simd<simd_size_v<T, Abi> * N, simd<T, Abi>>;
 template <typename T, typename Abi, size_t N>

@@ -17,8 +17,7 @@ struct Foo {
     T i {};
 };
 
-struct IDS {
-};
+struct IDS { };
 template <typename T>
 struct test_is_specialized;
 
@@ -26,8 +25,7 @@ template <>
 struct test_is_specialized<Foo<float>> {
 };
 
-struct not_specialized {
-};
+struct not_specialized { };
 
 template <typename T>
 constexpr auto test_identity() -> bool
@@ -254,15 +252,15 @@ constexpr auto test() -> bool
     #if not defined(TETL_MSVC)
 
     assert(!(is_convertible_v<int, void>));
-    assert(!(is_convertible_v<int, const void>));
+    assert(!(is_convertible_v<int, void const>));
 
     assert((is_convertible_v<void, void const>));
     assert((is_convertible_v<void const, void>));
     assert((is_convertible_v<void const, void const>));
 
         #if TETL_CPP_STANDARD < 20
-    assert(!(is_convertible_v<int, volatile void>));
-    assert(!(is_convertible_v<int, const volatile void>));
+    assert(!(is_convertible_v<int, void volatile>));
+    assert(!(is_convertible_v<int, void const volatile>));
     assert((is_convertible_v<void, void volatile>));
     assert((is_convertible_v<void, void const volatile>));
     assert((is_convertible_v<void const, void volatile>));

@@ -9,12 +9,10 @@
 
 namespace etl {
 
-struct element_aligned_tag {
-};
+struct element_aligned_tag { };
 inline constexpr element_aligned_tag element_aligned {};
 
-struct vector_aligned_tag {
-};
+struct vector_aligned_tag { };
 inline constexpr vector_aligned_tag vector_aligned {};
 
 template <size_t>

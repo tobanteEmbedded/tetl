@@ -47,7 +47,7 @@ constexpr auto tan_series_exp(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tan_cf_recur(const T xx, const int depth, const int maxDepth) noexcept -> T
+constexpr auto tan_cf_recur(const T xx, int const depth, int const maxDepth) noexcept -> T
 {
     return (depth < maxDepth ? // if
                 T(2 * depth - 1) - xx / tan_cf_recur(xx, depth + 1, maxDepth)
@@ -69,7 +69,7 @@ constexpr auto tan_cf_main(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tan_begin(const T x, const int count = 0) noexcept -> T
+constexpr auto tan_begin(const T x, int const count = 0) noexcept -> T
 {                                                                 // tan(x) = tan(x + pi)
     return (x > T(etl::numbers::pi) ?                             // if
                 count > 1 ? etl::numeric_limits<T>::quiet_NaN() : // protect against undefined behavior

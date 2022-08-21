@@ -75,7 +75,7 @@ struct pointer_int_pair {
 
     /// \brief Allow pointer_int_pairs to be created from const void * if and
     /// only if the pointer type could be created from a const void *.
-    static auto get_from_opaque_value(const void* v) -> pointer_int_pair
+    static auto get_from_opaque_value(void const* v) -> pointer_int_pair
     {
         (void)pointer_traits::get_from_void_pointer(v);
         return get_from_opaque_value(const_cast<void*>(v));
@@ -119,7 +119,7 @@ private:
 
 template <typename PtrT, unsigned IntBits, typename IntT, typename PtrTraits>
 struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>> {
-    static auto get_as_void_pointer(const pointer_int_pair<PtrT, IntBits, IntT>& p) -> void*
+    static auto get_as_void_pointer(pointer_int_pair<PtrT, IntBits, IntT> const& p) -> void*
     {
         return p.get_opaque_value();
     }
@@ -129,7 +129,7 @@ struct pointer_like_traits<pointer_int_pair<PtrT, IntBits, IntT, PtrTraits>> {
         return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
     }
 
-    static auto get_from_void_pointer(const void* p) -> pointer_int_pair<PtrT, IntBits, IntT>
+    static auto get_from_void_pointer(void const* p) -> pointer_int_pair<PtrT, IntBits, IntT>
     {
         return pointer_int_pair<PtrT, IntBits, IntT>::get_from_opaque_value(p);
     }

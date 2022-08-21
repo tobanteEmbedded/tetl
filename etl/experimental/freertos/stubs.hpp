@@ -101,14 +101,14 @@ using StreamBufferHandle_t = StreamBufferDef_t*;
 }
 
 [[nodiscard]] inline auto xStreamBufferSend(
-    StreamBufferHandle_t handle, const void* data, etl::size_t size, TickType_t ticksToWait) -> etl::size_t
+    StreamBufferHandle_t handle, void const* data, etl::size_t size, TickType_t ticksToWait) -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, ticksToWait);
     return 0;
 }
 
 [[nodiscard]] inline auto xStreamBufferSendFromISR(
-    StreamBufferHandle_t handle, const void* data, etl::size_t size, BaseType_t* prio) -> etl::size_t
+    StreamBufferHandle_t handle, void const* data, etl::size_t size, BaseType_t* prio) -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, prio);
     return 0;

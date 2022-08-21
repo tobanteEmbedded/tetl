@@ -18,8 +18,7 @@ namespace etl {
 /// requirement is at least as strict (as large) as that of every scalar type.
 ///
 /// https://en.cppreference.com/w/cpp/types/max_align_t
-struct alignas(long double) max_align_t {
-};
+struct alignas(long double) max_align_t { };
 
 #if defined(TETL_MSVC)
     // Padding was added at the end of a structure

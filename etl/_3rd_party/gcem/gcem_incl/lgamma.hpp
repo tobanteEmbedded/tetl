@@ -48,7 +48,7 @@ namespace internal {
 //   -.26190838401581408670e-4
 //    .36899182659531622704e-5
 
-constexpr auto lgamma_coef_term(const long double x) noexcept -> long double
+constexpr auto lgamma_coef_term(long double const x) noexcept -> long double
 {
     return (0.99999999999999709182L + 57.156235665862923517L / (x + 1) - 59.597960355475491248L / (x + 2)
             + 14.136097974741747174L / (x + 3) - 0.49191381609762019978L / (x + 4) + .33994649984811888699e-4L / (x + 5)

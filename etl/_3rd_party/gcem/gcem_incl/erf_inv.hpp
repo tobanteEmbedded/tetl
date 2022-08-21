@@ -39,7 +39,7 @@ constexpr auto erf_inv_decision(T value, T p, T direc, int iterCount) noexcept -
 // two cases: (1) a < 5; and (2) otherwise
 
 template <typename T>
-constexpr auto erf_inv_initial_val_coef_2(const T a, const T pTerm, const int order) noexcept -> T
+constexpr auto erf_inv_initial_val_coef_2(const T a, const T pTerm, int const order) noexcept -> T
 {
     return (order == 1   ? T(-0.000200214257L)
             : order == 2 ? T(0.000100950558L) + a * pTerm
@@ -54,7 +54,7 @@ constexpr auto erf_inv_initial_val_coef_2(const T a, const T pTerm, const int or
 }
 
 template <typename T>
-constexpr auto erf_inv_initial_val_case_2(const T a, const T pTerm, const int order) noexcept -> T
+constexpr auto erf_inv_initial_val_case_2(const T a, const T pTerm, int const order) noexcept -> T
 {
     return (order == 9 ? // if
                 erf_inv_initial_val_coef_2(a, pTerm, order)
@@ -64,7 +64,7 @@ constexpr auto erf_inv_initial_val_case_2(const T a, const T pTerm, const int or
 }
 
 template <typename T>
-constexpr auto erf_inv_initial_val_coef_1(const T a, const T pTerm, const int order) noexcept -> T
+constexpr auto erf_inv_initial_val_coef_1(const T a, const T pTerm, int const order) noexcept -> T
 {
     return (order == 1   ? T(2.81022636e-08L)
             : order == 2 ? T(3.43273939e-07L) + a * pTerm
@@ -79,7 +79,7 @@ constexpr auto erf_inv_initial_val_coef_1(const T a, const T pTerm, const int or
 }
 
 template <typename T>
-constexpr auto erf_inv_initial_val_case_1(const T a, const T pTerm, const int order) noexcept -> T
+constexpr auto erf_inv_initial_val_case_1(const T a, const T pTerm, int const order) noexcept -> T
 {
     return (order == 9 ? // if
                 erf_inv_initial_val_coef_1(a, pTerm, order)
@@ -144,14 +144,14 @@ constexpr auto erf_inv_halley(const T ratioVal1, const T ratioVal2) noexcept -> 
 }
 
 template <typename T>
-constexpr auto erf_inv_recur(const T value, const T p, const T deriv1, const int iterCount) noexcept -> T
+constexpr auto erf_inv_recur(const T value, const T p, const T deriv1, int const iterCount) noexcept -> T
 {
     return erf_inv_decision(
         value, p, erf_inv_halley(erf_inv_ratio_val_1(value, p, deriv1), erf_inv_ratio_val_2(value, deriv1)), iterCount);
 }
 
 template <typename T>
-constexpr auto erf_inv_decision(const T value, const T p, const T direc, const int iterCount) noexcept -> T
+constexpr auto erf_inv_decision(const T value, const T p, const T direc, int const iterCount) noexcept -> T
 {
     return (iterCount < GCEM_ERF_INV_MAX_ITER ? // if
                 erf_inv_recur(value - direc, p, erf_inv_deriv_1(value), iterCount + 1)

@@ -371,7 +371,7 @@ constexpr auto test() -> bool
         string str {};
 
         // APPEND 4 CHARACTERS
-        const char* cptr = "C-string";
+        char const* cptr = "C-string";
         str.append(cptr, 4);
 
         assert(str.empty() == false);
@@ -386,7 +386,7 @@ constexpr auto test() -> bool
 
     {
         string str {};
-        const char* cptr = "C-string";
+        char const* cptr = "C-string";
         str.append(cptr);
 
         assert(str[0] == 'C');

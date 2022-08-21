@@ -195,7 +195,7 @@ constexpr auto incomplete_beta_inv_halley(const T ratioVal1, const T ratioVal2) 
 
 template <typename T>
 constexpr auto incomplete_beta_inv_recur(const T value, const T alphaPar, const T betaPar, const T p, const T deriv1,
-    const T lbVal, const int iterCount) noexcept -> T
+    const T lbVal, int const iterCount) noexcept -> T
 {
     return ( // derivative = 0
         etl::numeric_limits<T>::epsilon() > abs(deriv1)
@@ -210,7 +210,7 @@ constexpr auto incomplete_beta_inv_recur(const T value, const T alphaPar, const 
 
 template <typename T>
 constexpr auto incomplete_beta_inv_decision(const T value, const T alphaPar, const T betaPar, const T p, const T direc,
-    const T lbVal, const int iterCount) noexcept -> T
+    const T lbVal, int const iterCount) noexcept -> T
 {
     return (iterCount <= GCEM_INCML_BETA_INV_MAX_ITER ?
                                                       // if

@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto sqrt_recur(const T x, const T xn, const int count) noexcept -> T
+constexpr auto sqrt_recur(const T x, const T xn, int const count) noexcept -> T
 {
     return (abs(xn - x / xn) / (T(1) + xn) < etl::numeric_limits<T>::epsilon()
                 ? // if

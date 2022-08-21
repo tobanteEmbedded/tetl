@@ -16,7 +16,7 @@ namespace etl {
 /// success. If the converted value falls out of range of corresponding return
 /// type, range error occurs and HUGE_VAL, HUGE_VALF or HUGE_VALL is returned.
 /// If no conversion can be performed, `0` is returned and *last is set to str.
-[[nodiscard]] constexpr auto strtod(const char* str, char const** last = nullptr) noexcept -> double
+[[nodiscard]] constexpr auto strtod(char const* str, char const** last = nullptr) noexcept -> double
 {
     return detail::ascii_to_floating_point<double>(str, last);
 }

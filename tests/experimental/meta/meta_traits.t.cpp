@@ -16,8 +16,7 @@ constexpr auto test() -> bool
     {
         using meta::traits::add_pointer;
         using meta::traits::is_same;
-        struct S {
-        };
+        struct S { };
 
         assert((is_same(meta::type_c<T>, meta::type_c<T>)));
         assert((is_same(meta::type_c<T const>, meta::type_c<T const>)));

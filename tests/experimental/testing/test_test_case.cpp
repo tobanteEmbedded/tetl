@@ -46,8 +46,7 @@ TEST_CASE("C", "")
 
 #if not defined(TETL_MSVC)
 namespace {
-struct TestStruct {
-};
+struct TestStruct { };
 } // namespace
 
 TEMPLATE_TEST_CASE("template test", "", int, char, float, TestStruct)

@@ -158,7 +158,7 @@ struct variant_storage<Index, Head, Tail...> {
 
     constexpr auto construct(Head& head, etl::size_t& index) -> void
     {
-        const auto& headCref = head;
+        auto const& headCref = head;
         construct(headCref, index);
     }
 

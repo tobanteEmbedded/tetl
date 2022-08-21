@@ -11,8 +11,7 @@ enum EnumWithType : long { ewt1, ewt2 };
 enum struct ScopedEnum { foo, bar, baz };
 enum struct ScopedEnumWithType : long { v1, v2 };
 
-struct EmptyClass {
-};
+struct EmptyClass { };
 
 struct DummyClass {
     int i;   // NOLINT
@@ -36,8 +35,7 @@ struct VirtualDtor {
     virtual ~VirtualDtor() noexcept { } // NOLINT
 };
 
-struct DerivedFromVirtualDtor : VirtualDtor {
-};
+struct DerivedFromVirtualDtor : VirtualDtor { };
 
 struct CopyAndMovable {
     CopyAndMovable();
@@ -52,7 +50,7 @@ struct CopyAndMovable {
 struct MovableOnly {
     MovableOnly();
 
-    MovableOnly(MovableOnly const&) = delete;
+    MovableOnly(MovableOnly const&)                    = delete;
     auto operator=(MovableOnly const&) -> MovableOnly& = delete;
 
     MovableOnly(MovableOnly&&);                    // NOLINT
@@ -77,8 +75,7 @@ struct NonTriviallyConstructable {
     int& ref;
 };
 
-struct TrivialDtor {
-};
+struct TrivialDtor { };
 
 struct TrivialDtorDefaulted {
     ~TrivialDtorDefaulted() = default;
@@ -93,8 +90,8 @@ struct NonTrivialDtorMember {
 };
 
 using PointerToMemberObj         = int VirtualDtor::*;
-using PointerToConstMemberObj    = int const VirtualDtor::*;
-using PointerToVolatileMemberObj = int volatile VirtualDtor::*;
+using PointerToConstMemberObj    = int VirtualDtor::*const;
+using PointerToVolatileMemberObj = int VirtualDtor::*volatile;
 using PointerToCVMemberObj       = int const volatile VirtualDtor::*;
 
 using PointerToMemberFunc         = void (VirtualDtor::*)();

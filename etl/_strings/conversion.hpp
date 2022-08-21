@@ -137,7 +137,7 @@ template <typename Int, bool TerminateWithNull = true>
 /// \returns Floating point value corresponding to the contents of str on
 /// success.
 template <typename FloatT>
-[[nodiscard]] constexpr auto ascii_to_floating_point(const char* str, char const** last = nullptr) noexcept -> FloatT
+[[nodiscard]] constexpr auto ascii_to_floating_point(char const* str, char const** last = nullptr) noexcept -> FloatT
 {
     auto res               = FloatT { 0 };
     auto div               = FloatT { 1 };

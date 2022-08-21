@@ -9,8 +9,7 @@
 
 namespace {
 
-struct A {
-};
+struct A { };
 
 struct B {
     int m;

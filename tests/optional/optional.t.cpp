@@ -121,10 +121,10 @@ constexpr auto test() -> bool
 
     {
         struct S {
-            S()                       = default;
-            S(S const& /*other*/)     = default;
-            S(S&& /*other*/) noexcept = default;
-            auto operator=(S const& /*other*/) -> S& = default;
+            S()                                          = default;
+            S(S const& /*other*/)                        = default;
+            S(S&& /*other*/) noexcept                    = default;
+            auto operator=(S const& /*other*/) -> S&     = default;
             auto operator=(S&& /*other*/) noexcept -> S& = default;
             ~S() { }
 
@@ -210,9 +210,9 @@ constexpr auto test() -> bool
 
             S(int& c) : counter { c } { }
             ~S() { counter++; }
-            S(S const& /*other*/)     = default;
-            S(S&& /*other*/) noexcept = default;
-            auto operator=(S const& /*other*/) -> S& = default;
+            S(S const& /*other*/)                        = default;
+            S(S&& /*other*/) noexcept                    = default;
+            auto operator=(S const& /*other*/) -> S&     = default;
             auto operator=(S&& /*other*/) noexcept -> S& = default;
         };
 

@@ -130,7 +130,7 @@ constexpr auto incomplete_gamma_inv_halley(const T ratioVal1, const T ratioVal2)
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_recur(
-    const T value, const T a, const T p, const T deriv1, const T lgVal, const int iterCount) noexcept -> T
+    const T value, const T a, const T p, const T deriv1, const T lgVal, int const iterCount) noexcept -> T
 {
     return incomplete_gamma_inv_decision(value, a, p,
         incomplete_gamma_inv_halley(
@@ -140,7 +140,7 @@ constexpr auto incomplete_gamma_inv_recur(
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_decision(
-    const T value, const T a, const T p, const T direc, const T lgVal, const int iterCount) noexcept -> T
+    const T value, const T a, const T p, const T direc, const T lgVal, int const iterCount) noexcept -> T
 {
     // return( abs(direc) > GCEM_INCML_GAMMA_INV_TOL ?
     // incomplete_gamma_inv_recur(value - direc, a, p,

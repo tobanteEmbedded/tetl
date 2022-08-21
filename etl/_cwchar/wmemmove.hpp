@@ -22,7 +22,7 @@ namespace etl {
 /// are copied too.
 ///
 /// https://en.cppreference.com/w/cpp/string/wide/wmemmove
-constexpr auto wmemmove(wchar_t* dest, const wchar_t* src, etl::size_t count) noexcept -> wchar_t*
+constexpr auto wmemmove(wchar_t* dest, wchar_t const* src, etl::size_t count) noexcept -> wchar_t*
 {
     return detail::memmove_impl<wchar_t, etl::size_t>(dest, src, count);
 }

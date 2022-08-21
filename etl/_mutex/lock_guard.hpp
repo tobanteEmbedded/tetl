@@ -23,7 +23,7 @@ struct lock_guard {
     lock_guard(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ { m } { }
     ~lock_guard() { mutex_.unlock(); }
 
-    lock_guard(lock_guard const&) = delete;
+    lock_guard(lock_guard const&)                    = delete;
     auto operator=(lock_guard const&) -> lock_guard& = delete;
 
 private:

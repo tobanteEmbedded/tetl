@@ -757,7 +757,7 @@ public:
 
     /// \brief Replaces the part of the string indicated [pos, pos + count) with
     /// a new string.
-    constexpr auto replace(size_type pos, size_type count, const basic_static_string& str) -> basic_static_string&
+    constexpr auto replace(size_type pos, size_type count, basic_static_string const& str) -> basic_static_string&
     {
         TETL_ASSERT(pos < size());
         TETL_ASSERT(pos + count < size());
@@ -1247,7 +1247,7 @@ public:
     /// generally used either as end of string indicator by the functions that
     /// expect a string index or as the error indicator by the functions that
     /// return a string index.
-    constexpr static size_type npos = numeric_limits<size_type>::max();
+    static constexpr size_type npos = numeric_limits<size_type>::max();
 
 private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void

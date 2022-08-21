@@ -127,10 +127,10 @@ struct static_vector_trivial_storage {
 
     constexpr static_vector_trivial_storage() noexcept = default;
 
-    constexpr static_vector_trivial_storage(static_vector_trivial_storage const&) noexcept = default;
+    constexpr static_vector_trivial_storage(static_vector_trivial_storage const&) noexcept                    = default;
     constexpr auto operator=(static_vector_trivial_storage const&) noexcept -> static_vector_trivial_storage& = default;
 
-    constexpr static_vector_trivial_storage(static_vector_trivial_storage&&) noexcept = default;
+    constexpr static_vector_trivial_storage(static_vector_trivial_storage&&) noexcept                    = default;
     constexpr auto operator=(static_vector_trivial_storage&&) noexcept -> static_vector_trivial_storage& = default;
 
     ~static_vector_trivial_storage() = default;
@@ -196,7 +196,7 @@ protected:
 private:
     // If the value_type is const, make a const array of
     // non-const elements:
-    using data_t = conditional_t<!is_const_v<T>, array<T, Capacity>, const array<remove_const_t<T>, Capacity>>;
+    using data_t = conditional_t<!is_const_v<T>, array<T, Capacity>, array<remove_const_t<T>, Capacity> const>;
     alignas(alignof(T)) data_t data_ {};
 
     size_type size_ = 0;
@@ -216,10 +216,10 @@ struct static_vector_non_trivial_storage {
 
     static_vector_non_trivial_storage() = default;
 
-    static_vector_non_trivial_storage(static_vector_non_trivial_storage const&) = default;
+    static_vector_non_trivial_storage(static_vector_non_trivial_storage const&)                    = default;
     auto operator=(static_vector_non_trivial_storage const&) -> static_vector_non_trivial_storage& = default;
 
-    static_vector_non_trivial_storage(static_vector_non_trivial_storage&&) noexcept = default;
+    static_vector_non_trivial_storage(static_vector_non_trivial_storage&&) noexcept                    = default;
     auto operator=(static_vector_non_trivial_storage&&) noexcept -> static_vector_non_trivial_storage& = default;
 
     ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>) { unsafe_destroy_all(); }

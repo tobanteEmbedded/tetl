@@ -11,8 +11,7 @@ namespace etl {
 /// etl::variant. In particular, a variant of non-default-constructible types
 /// may list etl::monostate as its first alternative: this makes the variant
 /// itself default-constructible
-struct monostate {
-};
+struct monostate { };
 
 /// \brief All instances of etl::monostate compare equal.
 [[nodiscard]] constexpr auto operator==(monostate /*lhs*/, monostate /*rhs*/) noexcept -> bool { return true; }

@@ -21,7 +21,7 @@ struct InIter {
     explicit constexpr InIter(It it) : iter_(it) { }
 
     template <typename U>
-    constexpr InIter(const InIter<U>& u) : iter_(u.iter_)
+    constexpr InIter(InIter<U> const& u) : iter_(u.iter_)
     {
     }
 

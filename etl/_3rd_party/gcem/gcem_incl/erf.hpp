@@ -31,7 +31,7 @@ namespace internal {
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0007/
 
 template <typename T>
-constexpr auto erf_cf_large_recur(const T x, const int depth) noexcept -> T
+constexpr auto erf_cf_large_recur(const T x, int const depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 x + 2 * depth / erf_cf_large_recur(x, depth + 1)
@@ -50,7 +50,7 @@ constexpr auto erf_cf_large_main(const T x) noexcept -> T
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0005/
 
 template <typename T>
-constexpr auto erf_cf_small_recur(const T xx, const int depth) noexcept -> T
+constexpr auto erf_cf_small_recur(const T xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 (2 * depth - 1) - 2 * xx + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)

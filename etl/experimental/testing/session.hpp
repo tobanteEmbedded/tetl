@@ -133,7 +133,7 @@ inline auto session::pass_assertion(source_line_info const& src, char const* exp
 
 inline auto session::fail_assertion(source_line_info const& src, char const* expr, bool terminate) -> void
 {
-    constexpr static auto const* fmt = "%-10s %s:%d - %s\n";
+    static constexpr auto const* fmt = "%-10s %s:%d - %s\n";
     ::printf(fmt, "Fail:", src.file, static_cast<int>(src.line), expr);
     ++stats_.num_assertions_failed;
     shouldTerminate_ = terminate;

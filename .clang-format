@@ -19,3 +19,5 @@ NamespaceIndentation: None
 ReflowComments: true
 Standard: Auto
 UseTab: Never
+QualifierAlignment: Custom
+QualifierOrder: ["inline", "static", "constexpr", "type", "const", "volatile"]

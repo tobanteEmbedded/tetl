@@ -43,8 +43,8 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
     auto const* first = begin(str);
     while (true) {
         // Find open sequence {{
-        const auto* const openFirst = etl::find(first, end(str), token_begin);
-        const auto* const openSec   = etl::next(openFirst);
+        auto const* const openFirst = etl::find(first, end(str), token_begin);
+        auto const* const openSec   = etl::next(openFirst);
         auto const escapeStart      = openFirst != end(str) //
                                  && openSec != end(str)     //
                                  && *openSec == token_begin;

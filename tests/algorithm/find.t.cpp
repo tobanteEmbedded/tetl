@@ -21,7 +21,7 @@ constexpr auto test() -> bool
         vec.push_back(T(3));
         vec.push_back(T(4));
 
-        const auto* result1 = etl::find(vec.cbegin(), vec.cend(), T(3));
+        auto const* result1 = etl::find(vec.cbegin(), vec.cend(), T(3));
         assert(!(result1 == vec.cend()));
 
         auto* result2 = etl::find(vec.begin(), vec.end(), T(5));
