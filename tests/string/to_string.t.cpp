@@ -8,7 +8,7 @@
 
 #include "testing/testing.hpp"
 
-using namespace etl::literals;
+using namespace etl::string_view_literals;
 
 template <typename T>
 constexpr auto test() -> bool
