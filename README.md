@@ -56,13 +56,6 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 |  **macOS**   |    [![macOS](https://github.com/tobanteEmbedded/tetl/workflows/macOS%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22macOS+C%2B%2B17%22)    |    [![macOS](https://github.com/tobanteEmbedded/tetl/workflows/macOS%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22macOS+C%2B%2B20%22)    |                                                                                                                                                                                        |
 | **Windows**  | [![Windows](https://github.com/tobanteEmbedded/tetl/workflows/Windows%20C++17/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Windows+C%2B%2B17%22) | [![Windows](https://github.com/tobanteEmbedded/tetl/workflows/Windows%20C++20/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions?query=workflow%3A%22Windows+C%2B%2B20%22) |    [![Windows C++23](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-23.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-23.yml)    |
 
-#### Other
-
-|  **Compiler**   |                                                                                           **C++17**                                                                                            |
-| :-------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **GCC aarch64** | [![aarch64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-gcc-aarch64-17.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-gcc-aarch64-17.yml) |
-|  **GCC s390x**  |    [![s390x](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-gcc-s390x-17.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-gcc-s390x-17.yml)    |
-
 ### Freestanding
 
 |  **Compiler**  |                                                                                   **C++17**                                                                                   |                                                                                   **C++20**                                                                                   |                                                                                   **C++23**                                                                                   |
