@@ -11,13 +11,9 @@
 #include "etl/_warning/ignore_unused.hpp"
 
 #if __has_include(<stdlib.h>)
-extern "C" {
-    #if defined(_WIN32)
-__declspec(dllimport) __declspec(noreturn) void exit(int /*ignore*/);
-    #else
-[[noreturn]] void exit(int /*ignore*/);
-    #endif
-}
+    #include <stdlib.h>
+
+    #include "etl/_config/_workarounds/001_avr_macros.hpp" // For AVR macros
 #else
 inline auto exit(int /*ignore*/) -> void { }
 #endif
