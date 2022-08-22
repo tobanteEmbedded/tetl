@@ -16,6 +16,7 @@
 #include "etl/_cassert/macro.hpp"
 #include "etl/_container/index.hpp"
 #include "etl/_container/smallest_size_t.hpp"
+#include "etl/_cstdint/uint_t.hpp"
 #include "etl/_functional/is_transparent.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
