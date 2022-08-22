@@ -1,24 +1,16 @@
 project(etl-tests)
 
-add_library(tetl_testing INTERFACE)
-add_library(tetl::testing ALIAS tetl_testing)
-target_compile_definitions(tetl_testing INTERFACE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-target_include_directories(tetl_testing INTERFACE ${PROJECT_SOURCE_DIR})
-target_link_libraries(tetl_testing
-    INTERFACE
-        tetl::etl
-        tetl::compiler_options
-        tetl::compiler_warnings
-        tetl::code_coverage
-)
-
 function(tetl_add_test _header _target)
   set(options OPTIONAL WILL_FAIL)
   cmake_parse_arguments(TETL_ADD_TEST_PREFIX "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
   add_executable("test_${_header}_${_target}" "${_target}.t.cpp")
-  add_test(NAME "test_${_header}_${_target}" COMMAND "test_${_header}_${_target}")
-  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::testing)
-  set_tests_properties("test_${_header}_${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
+  target_include_directories("test_${_header}_${_target}" PRIVATE "${CMAKE_SOURCE_DIR}/tests")
+  target_compile_definitions("test_${_header}_${_target}" PRIVATE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
+
+  add_test(NAME "${_header}.hpp: ${_target}" COMMAND "test_${_header}_${_target}")
+  set_tests_properties("${_header}.hpp: ${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
 
 add_subdirectory("algorithm")

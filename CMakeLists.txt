@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.19)
 project(etl LANGUAGES CXX)
 
 option(TETL_BUILD_EXAMPLES    "Build examples" ON)

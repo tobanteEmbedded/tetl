@@ -3,11 +3,13 @@ project(examples)
 function(tetl_add_example _target)
   set(options OPTIONAL WILL_FAIL)
   cmake_parse_arguments(tetl_add_example "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
   add_executable("example_${_target}" "${_target}.cpp")
-  add_test(NAME "example_${_target}" COMMAND "example_${_target}")
   target_compile_definitions("example_${_target}" PRIVATE TETL_DEBUG=1)
   target_link_libraries("example_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
-  set_tests_properties("example_${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})
+
+  add_test(NAME "example: ${_target}" COMMAND "example_${_target}")
+  set_tests_properties("example: ${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})
 endfunction()
 
 tetl_add_example("algorithm")
