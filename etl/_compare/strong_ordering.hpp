@@ -85,7 +85,7 @@ struct strong_ordering {
 
     [[nodiscard]] friend constexpr auto operator<=>(nullptr_t, strong_ordering v) noexcept -> strong_ordering
     {
-        return v < 0 ? strong_ordering::greater : (v > 0 ? strong_ordering::less : v);
+        return v < nullptr ? strong_ordering::greater : (v > nullptr ? strong_ordering::less : v);
     }
 
 private:

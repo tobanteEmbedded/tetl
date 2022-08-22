@@ -58,7 +58,7 @@ struct partial_ordering {
     friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering { return v; }
     friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept -> partial_ordering
     {
-        return v < 0 ? partial_ordering::greater : (v > 0 ? partial_ordering::less : v);
+        return v < nullptr ? partial_ordering::greater : (v > nullptr ? partial_ordering::less : v);
     }
 
 private:

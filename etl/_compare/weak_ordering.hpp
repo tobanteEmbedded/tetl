@@ -64,7 +64,7 @@ struct weak_ordering {
 
     [[nodiscard]] friend constexpr auto operator<=>(nullptr_t, weak_ordering v) noexcept -> weak_ordering
     {
-        return v < 0 ? weak_ordering::greater : (v > 0 ? weak_ordering::less : v);
+        return v < nullptr ? weak_ordering::greater : (v > nullptr ? weak_ordering::less : v);
     }
 
 private:
