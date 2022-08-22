@@ -6,28 +6,17 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
+    container:
+      image: alpine:edge
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Install ninja-build
-        run: sudo apt install -y ninja-build
+      - name: Install dependencies
+        run: apk add git build-base cmake ninja --no-cache
 
-      - name: Install CMake
-        run: |
-          sudo apt remove --purge cmake
-          hash -r
-          sudo snap install cmake --classic
-          cmake --version
-
-      - name: Set up GCC
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 11
-          platform: x64
-
-      - name: CMake configure
-        run: cmake -S . -G "Ninja Multi-Config" -B build -D CMAKE_CXX_STANDARD=23 -D TETL_BUILD_WERROR=ON
+      - name: Configure CMake
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_CXX_STANDARD=23 -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug
