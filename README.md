@@ -90,11 +90,11 @@ RTTI migth be disabled. This results in the problem that not all members of a co
 
 Unlike LLVMs `SmallVector`, `etl::static_vector` & friends do not have a base class which they can slice to. My plan is to add mutable view-like non-owning types for each container. A `etl::static_vector` we would have a `vector_ref` which would work mostly like a `span`, but would also provide the vector interface. I don't want to name the types `*_view`, since the word `view` implies non-mutable in standard containers like `string_view`. None of the container_ref types have been implemented yet.
 
-The headers [etl/algorithm.hpp](./etl/algorithm.hpp) and [etl/numeric.hpp](./etl/numeric.hpp) provide all algorithms from the standard. Unlike implementations found in libstdc++ or libc++, mine are primarily optimized for code size and not runtime performance. Overloads with an `ExecutionPolicy` are not implemented.
+The headers [etl/algorithm.hpp](./include/etl/algorithm.hpp) and [etl/numeric.hpp](./include/etl/numeric.hpp) provide all algorithms from the standard. Unlike implementations found in libstdc++ or libc++, mine are primarily optimized for code size and not runtime performance. Overloads with an `ExecutionPolicy` are not implemented.
 
-Headers like [etl/chrono.hpp](./etl/chrono.hpp) and [etl/mutex.hpp](./etl/mutex.hpp) only provide classes & functions that can be implemented in a portable way. Platform specific functionality like `steady_clock` or `mutex` can be provided by the user. The user provided types should meet the requirements listed in [Named Requirements](https://en.cppreference.com/w/cpp/named_req) to work seamlessly with the types provided in the `etl` namespace.
+Headers like [etl/chrono.hpp](./include/etl/chrono.hpp) and [etl/mutex.hpp](./include/etl/mutex.hpp) only provide classes & functions that can be implemented in a portable way. Platform specific functionality like `steady_clock` or `mutex` can be provided by the user. The user provided types should meet the requirements listed in [Named Requirements](https://en.cppreference.com/w/cpp/named_req) to work seamlessly with the types provided in the `etl` namespace.
 
-The [etl/experimental](./etl/experimental) subdirectory includes libraries that use `etl` as their foundation. It can be thought of as a mini boost-like library collection. Everything is work in progress.
+The [etl/experimental](./include/etl/experimental) subdirectory includes libraries that use `etl` as their foundation. It can be thought of as a mini boost-like library collection. Everything is work in progress.
 
 - Networking (buffers, ntoh, ...)
 - Strong types
@@ -280,7 +280,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### algorithm
 
 - **Library:** Algorithms
-- **Include:** [`etl/algorithm.hpp`](./etl/algorithm.hpp)
+- **Include:** [`etl/algorithm.hpp`](./include/etl/algorithm.hpp)
 - **Example:** [algorithm.cpp](./examples/algorithm.cpp)
 - **Implementation Progress:** [algorithm](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1451123716)
 - **Changes:**
@@ -290,7 +290,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### array
 
 - **Library:** Containers
-- **Include:** [`etl/array.hpp`](./etl/array.hpp)
+- **Include:** [`etl/array.hpp`](./include/etl/array.hpp)
 - **Example:** [array.cpp](./examples/array.cpp)
 - **Implementation Progress:** [array](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1320059600)
 - **Changes:**
@@ -299,7 +299,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### bit
 
 - **Library:** Numeric
-- **Include:** [`etl/bit.hpp`](./etl/bit.hpp)
+- **Include:** [`etl/bit.hpp`](./include/etl/bit.hpp)
 - **Example:** [bit.cpp](./examples/bit.cpp)
 - **Implementation Progress:** [bit](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1927645890)
 - **Changes:**
@@ -308,7 +308,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### bitset
 
 - **Library:** Utility
-- **Include:** [`etl/bitset.hpp`](./etl/bitset.hpp)
+- **Include:** [`etl/bitset.hpp`](./include/etl/bitset.hpp)
 - **Example:** [bitset.cpp](./examples/bitset.cpp)
 - **Implementation Progress:** [bitset](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=692946382)
 - **Changes:**
@@ -317,7 +317,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cassert
 
 - **Library:** Utility / Error Handling
-- **Include:** [`etl/cassert.hpp`](./etl/cassert.hpp)
+- **Include:** [`etl/cassert.hpp`](./include/etl/cassert.hpp)
 - **Example:** [cassert.cpp](./examples/cassert.cpp)
 - **Implementation Progress:** [cassert](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=460740183)
 - **Changes:**
@@ -326,7 +326,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cctype
 
 - **Library:** Strings
-- **Include:** [`etl/cctype.hpp`](./etl/cctype.hpp)
+- **Include:** [`etl/cctype.hpp`](./include/etl/cctype.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=522168028)
 - **Changes:**
@@ -335,7 +335,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cfloat
 
 - **Library:** Utility / Numeric Limits
-- **Include:** [`etl/cfloat.hpp`](./etl/cfloat.hpp)
+- **Include:** [`etl/cfloat.hpp`](./include/etl/cfloat.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cfloat](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1012838019)
 - **Changes:**
@@ -344,7 +344,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### charconv
 
 - **Library:** Strings
-- **Include:** [`etl/charconv.hpp`](./etl/charconv.hpp)
+- **Include:** [`etl/charconv.hpp`](./include/etl/charconv.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [charconv](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=345887816)
 - **Changes:**
@@ -353,7 +353,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### chrono
 
 - **Library:** Utility
-- **Include:** [`etl/chrono.hpp`](./etl/chrono.hpp)
+- **Include:** [`etl/chrono.hpp`](./include/etl/chrono.hpp)
 - **Example:** [chrono.cpp](./examples/chrono.cpp)
 - **Implementation Progress:** [chrono](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1279150724)
 - **Changes:**
@@ -362,7 +362,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### climits
 
 - **Library:** Utility / Numeric Limits
-- **Include:** [`etl/climits.hpp`](./etl/climits.hpp)
+- **Include:** [`etl/climits.hpp`](./include/etl/climits.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)
 - **Changes:**
@@ -371,7 +371,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cmath
 
 - **Library:** Numeric
-- **Include:** [`etl/cmath.hpp`](./etl/cmath.hpp)
+- **Include:** [`etl/cmath.hpp`](./include/etl/cmath.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)
 - **Changes:**
@@ -380,7 +380,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### complex
 
 - **Library:** Numeric
-- **Include:** [`etl/complex.hpp`](./etl/complex.hpp)
+- **Include:** [`etl/complex.hpp`](./include/etl/complex.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [complex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1768885550)
 - **Changes:**
@@ -389,7 +389,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### concepts
 
 - **Library:** Concepts
-- **Include:** [`etl/concepts.hpp`](./etl/concepts.hpp)
+- **Include:** [`etl/concepts.hpp`](./include/etl/concepts.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)
 - **Changes:**
@@ -398,7 +398,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstdarg
 
 - **Library:** Utility
-- **Include:** [`etl/cstdarg.hpp`](./etl/cstdarg.hpp)
+- **Include:** [`etl/cstdarg.hpp`](./include/etl/cstdarg.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstdarg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1280782172)
 - **Changes:**
@@ -407,7 +407,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstddef
 
 - **Library:** Utility
-- **Include:** [`etl/cstddef.hpp`](./etl/cstddef.hpp)
+- **Include:** [`etl/cstddef.hpp`](./include/etl/cstddef.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)
 - **Changes:**
@@ -416,7 +416,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstdint
 
 - **Library:** Utility / Numeric Limits
-- **Include:** [`etl/cstdint.hpp`](./etl/cstdint.hpp)
+- **Include:** [`etl/cstdint.hpp`](./include/etl/cstdint.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)
 - **Changes:**
@@ -425,7 +425,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstdio
 
 - **Library:** Input/Output
-- **Include:** [`etl/cstdio.hpp`](./etl/cstdio.hpp)
+- **Include:** [`etl/cstdio.hpp`](./include/etl/cstdio.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)
 - **Changes:**
@@ -434,7 +434,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstdlib
 
 - **Library:** Utility
-- **Include:** [`etl/cstdlib.hpp`](./etl/cstdlib.hpp)
+- **Include:** [`etl/cstdlib.hpp`](./include/etl/cstdlib.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstdlib](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1705155517)
 - **Changes:**
@@ -443,7 +443,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cstring
 
 - **Library:** Strings
-- **Include:** [`etl/cstring.hpp`](./etl/cstring.hpp)
+- **Include:** [`etl/cstring.hpp`](./include/etl/cstring.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cstring](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1824871501)
 - **Changes:**
@@ -452,7 +452,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### ctime
 
 - **Library:** Utility
-- **Include:** [`etl/ctime.hpp`](./etl/ctime.hpp)
+- **Include:** [`etl/ctime.hpp`](./include/etl/ctime.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)
 - **Changes:**
@@ -461,7 +461,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### cwchar
 
 - **Library:** Strings
-- **Include:** [`etl/cwchar.hpp`](./etl/cwchar.hpp)
+- **Include:** [`etl/cwchar.hpp`](./include/etl/cwchar.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [cwchar](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1105944467)
 - **Changes:**
@@ -470,7 +470,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### exception
 
 - **Library:** Error handling
-- **Include:** [`etl/exception.hpp`](./etl/exception.hpp)
+- **Include:** [`etl/exception.hpp`](./include/etl/exception.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [exception](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
 - **Changes:**
@@ -479,7 +479,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### expected
 
 - **Library:** Utility / Error Handling
-- **Include:** [`etl/expected.hpp`](./etl/expected.hpp)
+- **Include:** [`etl/expected.hpp`](./include/etl/expected.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)
 - **Changes:**
@@ -488,7 +488,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### format
 
 - **Library:** Strings
-- **Include:** [`etl/format.hpp`](./etl/format.hpp)
+- **Include:** [`etl/format.hpp`](./include/etl/format.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)
 - **Changes:**
@@ -497,7 +497,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### functional
 
 - **Library:** Utility
-- **Include:** [`etl/functional.hpp`](./etl/functional.hpp)
+- **Include:** [`etl/functional.hpp`](./include/etl/functional.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [functional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291953395)
 - **Changes:**
@@ -506,7 +506,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### ios
 
 - **Library:** Input/Output
-- **Include:** [`etl/ios.hpp`](./etl/ios.hpp)
+- **Include:** [`etl/ios.hpp`](./include/etl/ios.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [ios](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)
 - **Changes:**
@@ -515,7 +515,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### iterator
 
 - **Library:** Iterator
-- **Include:** [`etl/iterator.hpp`](./etl/iterator.hpp)
+- **Include:** [`etl/iterator.hpp`](./include/etl/iterator.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [iterator](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1722716093)
 - **Changes:**
@@ -524,7 +524,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### limits
 
 - **Library:** Utility / Numeric Limits
-- **Include:** [`etl/limits.hpp`](./etl/limits.hpp)
+- **Include:** [`etl/limits.hpp`](./include/etl/limits.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1966217100)
 - **Changes:**
@@ -533,7 +533,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### map
 
 - **Library:** Containers
-- **Include:** [`etl/map.hpp`](./etl/map.hpp)
+- **Include:** [`etl/map.hpp`](./include/etl/map.hpp)
 - **Example:** [map.cpp](./examples/map.cpp)
 - **Implementation Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1845210258)
 - **Changes:**
@@ -542,7 +542,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### memory
 
 - **Library:** Utility / Dynamic Memory
-- **Include:** [`etl/memory.hpp`](./etl/memory.hpp)
+- **Include:** [`etl/memory.hpp`](./include/etl/memory.hpp)
 - **Example:** [memory.cpp](./examples/memory.cpp)
 - **Implementation Progress:** [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1321444012)
 - **Changes:**
@@ -551,7 +551,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### mutex
 
 - **Library:** Thread
-- **Include:** [`etl/mutex.hpp`](./etl/mutex.hpp)
+- **Include:** [`etl/mutex.hpp`](./include/etl/mutex.hpp)
 - **Example:** [mutex.cpp](./examples/mutex.cpp)
 - **Implementation Progress:** [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=965791558)
 - **Changes:**
@@ -560,7 +560,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### new
 
 - **Library:** Utility / Dynamic Memory
-- **Include:** [`etl/new.hpp`](./etl/new.hpp)
+- **Include:** [`etl/new.hpp`](./include/etl/new.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [new](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1146466573)
 - **Changes:**
@@ -570,7 +570,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### numbers
 
 - **Library:** Numeric
-- **Include:** [`etl/numbers.hpp`](./etl/numbers.hpp)
+- **Include:** [`etl/numbers.hpp`](./include/etl/numbers.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [numbers](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=641824361)
 - **Changes:**
@@ -579,7 +579,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### numeric
 
 - **Library:** Numeric
-- **Include:** [`etl/numeric.hpp`](./etl/numeric.hpp)
+- **Include:** [`etl/numeric.hpp`](./include/etl/numeric.hpp)
 - **Example:** [numeric.cpp](./examples/numeric.cpp)
 - **Implementation Progress:** [numeric](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1599843301)
 - **Changes:**
@@ -589,7 +589,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### optional
 
 - **Library:** Utility
-- **Include:** [`etl/optional.hpp`](./etl/optional.hpp)
+- **Include:** [`etl/optional.hpp`](./include/etl/optional.hpp)
 - **Example:** [optional.cpp](./examples/optional.cpp)
 - **Implementation Progress:** [optional](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1965816070)
 - **Changes:**
@@ -598,7 +598,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### random
 
 - **Library:** Random Number
-- **Include:** [`etl/random.hpp`](./etl/random.hpp)
+- **Include:** [`etl/random.hpp`](./include/etl/random.hpp)
 - **Example:** [random.cpp](./examples/random.cpp)
 - **Implementation Progress:** [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)
 - **Changes:**
@@ -607,7 +607,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### ratio
 
 - **Library:** Numeric
-- **Include:** [`etl/ratio.hpp`](./etl/ratio.hpp)
+- **Include:** [`etl/ratio.hpp`](./include/etl/ratio.hpp)
 - **Example:** [ratio.cpp](./examples/ratio.cpp)
 - **Implementation Progress:** [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)
 - **Changes:**
@@ -616,7 +616,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### scope
 
 - **Library:** Utility
-- **Include:** [`etl/scope.hpp`](./etl/scope.hpp)
+- **Include:** [`etl/scope.hpp`](./include/etl/scope.hpp)
 - **Example:** TODO
 - **Implementation Progress:** TODO
 - **Reference:** [en.cppreference.com/w/cpp/experimental/scope_exit](https://en.cppreference.com/w/cpp/experimental/scope_exit)
@@ -627,7 +627,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### source_location
 
 - **Library:** Utility
-- **Include:** [`etl/source_location.hpp`](./etl/source_location.hpp)
+- **Include:** [`etl/source_location.hpp`](./include/etl/source_location.hpp)
 - **Example:** [source_location.cpp](./examples/source_location.cpp)
 - **Implementation Progress:** TODO
 - **Changes:**
@@ -636,7 +636,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### set
 
 - **Library:** Containers
-- **Include:** [`etl/set.hpp`](./etl/set.hpp)
+- **Include:** [`etl/set.hpp`](./include/etl/set.hpp)
 - **Example:** [set.cpp](./examples/set.cpp)
 - **Implementation Progress:** [set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=930086747)
 - **Changes:**
@@ -647,7 +647,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### span
 
 - **Library:** Containers
-- **Include:** [`etl/span.hpp`](./etl/span.hpp)
+- **Include:** [`etl/span.hpp`](./include/etl/span.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)
 - **Changes:**
@@ -656,7 +656,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### stack
 
 - **Library:** Containers
-- **Include:** [`etl/stack.hpp`](./etl/stack.hpp)
+- **Include:** [`etl/stack.hpp`](./include/etl/stack.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [stack](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=385809287)
 - **Changes:**
@@ -665,7 +665,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### stdexcept
 
 - **Library:** Error handling
-- **Include:** [`etl/stdexcept.hpp`](./etl/stdexcept.hpp)
+- **Include:** [`etl/stdexcept.hpp`](./include/etl/stdexcept.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [stdexcept](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)
 - **Changes:**
@@ -674,7 +674,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### string
 
 - **Library:** Strings
-- **Include:** [`etl/string.hpp`](./etl/string.hpp)
+- **Include:** [`etl/string.hpp`](./include/etl/string.hpp)
 - **Example:** [string.cpp](./examples/string.cpp)
 - **Implementation Progress:** [string](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=43463000)
 - **Changes:**
@@ -684,7 +684,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### string_view
 
 - **Library:** Strings
-- **Include:** [`etl/string_view.hpp`](./etl/string_view.hpp)
+- **Include:** [`etl/string_view.hpp`](./include/etl/string_view.hpp)
 - **Example:** [string_view.cpp](./examples/string_view.cpp)
 - **Implementation Progress:** [string_view](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1803550736)
 - **Changes:**
@@ -694,7 +694,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### system_error
 
 - **Library:** Utility / Error Handling
-- **Include:** [`etl/system_error.hpp`](./etl/system_error.hpp)
+- **Include:** [`etl/system_error.hpp`](./include/etl/system_error.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [system_error](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=635426347)
 - **Changes:**
@@ -703,7 +703,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### tuple
 
 - **Library:** Utility
-- **Include:** [`etl/tuple.hpp`](./etl/tuple.hpp)
+- **Include:** [`etl/tuple.hpp`](./include/etl/tuple.hpp)
 - **Example:** [tuple.cpp](./examples/tuple.cpp)
 - **Implementation Progress:** [tuple](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=857929646)
 - **Changes:**
@@ -712,7 +712,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### type_traits
 
 - **Library:** Utility
-- **Include:** [`etl/type_traits.hpp`](./etl/type_traits.hpp)
+- **Include:** [`etl/type_traits.hpp`](./include/etl/type_traits.hpp)
 - **Example:** [type_traits.cpp](./examples/type_traits.cpp)
 - **Implementation Progress:** [type_traits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1691010448)
 - **Changes:**
@@ -721,7 +721,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### utility
 
 - **Library:** Utility
-- **Include:** [`etl/utility.hpp`](./etl/utility.hpp)
+- **Include:** [`etl/utility.hpp`](./include/etl/utility.hpp)
 - **Example:** [utility.cpp](./examples/utility.cpp)
 - **Implementation Progress:** [utility](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1484976254)
 - **Changes:**
@@ -730,7 +730,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### variant
 
 - **Library:** Utility
-- **Include:** [`etl/variant.hpp`](./etl/variant.hpp)
+- **Include:** [`etl/variant.hpp`](./include/etl/variant.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)
 - **Changes:**
@@ -739,7 +739,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### vector
 
 - **Library:** Containers
-- **Include:** [`etl/vector.hpp`](./etl/vector.hpp)
+- **Include:** [`etl/vector.hpp`](./include/etl/vector.hpp)
 - **Example:** [vector.cpp](./examples/vector.cpp)
 - **Implementation Progress:** [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)
 - **Changes:**
@@ -751,7 +751,7 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 ### version
 
 - **Library:** Utility
-- **Include:** [`etl/version.hpp`](./etl/version.hpp)
+- **Include:** [`etl/version.hpp`](./include/etl/version.hpp)
 
 Get access to all intrinsic macros & library version macro and constants. This header also include `<version>` from C++20 if it is available.
 
@@ -787,7 +787,7 @@ auto main() -> int
 ### warning
 
 - **Library:** Utility
-- **Include:** [`etl/warning.hpp`](./etl/warning.hpp)
+- **Include:** [`etl/warning.hpp`](./include/etl/warning.hpp)
 
 ```cpp
 #include "etl/warning.hpp"

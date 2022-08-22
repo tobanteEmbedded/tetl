@@ -15,7 +15,7 @@ CLANG_VERSION ?=
 CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy${CLANG_VERSION}
 CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements${CLANG_VERSION}
 CLANG_TIDY_ARGS += -j $(shell nproc) -quiet
-CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./etl)
+CLANG_TIDY_ARGS += -p $(BUILD_DIR) -header-filter $(shell realpath ./include)
 
 STANDARDESE_BIN ?= standardese
 
@@ -42,11 +42,11 @@ coverage:
 
 .PHONY: coverage-html
 coverage-html: coverage
-	cd cmake-build-coverage && gcovr --html --html-details --exclude-unreachable-branches -o coverage.html -r ../etl -j ${shell nproc} -s .
+	cd cmake-build-coverage && gcovr --html --html-details --exclude-unreachable-branches -o coverage.html -r ../include -j ${shell nproc} -s .
 
 .PHONY: coverage-xml
 coverage-xml: coverage
-	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../etl -j ${shell nproc} -s .
+	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../include -j ${shell nproc} -s .
 
 .PHONY: doxygen
 doxygen:
@@ -62,7 +62,7 @@ doxygen:
 standardese:
 	rm -rf cmake-build-standardese
 	mkdir cmake-build-standardese
-	cd cmake-build-standardese && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./etl)
+	cd cmake-build-standardese && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./include)
 	./scripts/standardese-md.py
 
 .PHONY: docs
@@ -92,6 +92,6 @@ stats:
 
 .PHONY: format
 format:
-	find etl -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+	find include -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
 	find examples -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
 	find tests -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i

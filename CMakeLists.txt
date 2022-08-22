@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(etl LANGUAGES CXX)
+project(tetl-dev LANGUAGES CXX)
 
 option(TETL_BUILD_EXAMPLES    "Build examples" ON)
 option(TETL_BUILD_TESTS       "Build unit tests" ON)
@@ -40,9 +40,7 @@ include(code_coverage)
 include(compiler_options)
 include(compiler_warnings)
 
-add_library(${PROJECT_NAME} INTERFACE)
-add_library(tetl::etl ALIAS ${PROJECT_NAME})
-target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
+add_subdirectory(include)
 
 if(TETL_BUILD_TESTS)
     include(CTest)

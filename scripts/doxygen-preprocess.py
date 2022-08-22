@@ -56,9 +56,9 @@ headers = [
 
 for header in headers:
     filenames = []
-    for file in os.listdir(f'./etl/_{header}'):
+    for file in os.listdir(f'./include/etl/_{header}'):
         if file.endswith('.hpp'):
-            filenames.append(os.path.join(f'./etl/_{header}', file))
+            filenames.append(os.path.join(f'./include/etl/_{header}', file))
 
     header_content = ''
 

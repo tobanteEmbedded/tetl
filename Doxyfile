@@ -2,7 +2,7 @@ PROJECT_NAME           = tetl
 PROJECT_NUMBER         = 0.4.0
 
 USE_MDFILE_AS_MAINPAGE = README.md
-INPUT                  = ./README.md ./etl
+INPUT                  = ./README.md ./include
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.hpp *.md
 RECURSIVE              = YES
