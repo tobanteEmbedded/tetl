@@ -27,5 +27,5 @@ jobs:
 
       - name: Run benchmark build
         run: |
-          cd benchmark/compile-time
+          cd benchmarks/compile
           python3 run.py
