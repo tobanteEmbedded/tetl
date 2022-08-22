@@ -1,35 +1,31 @@
 project(examples)
 
-foreach(_target
-  "algorithm"
-  "all_headers"
-  "array"
-  "bitset"
-  "cassert"
-  "chrono"
-  "cmath"
-  "memory"
-  "numeric"
-  "optional"
-  "set"
-  "source_location"
-  "string"
-  "tuple"
-  "type_traits"
-  "utility"
-  "vector"
-)
-  add_executable(${_target} "${_target}.cpp")
-  target_link_libraries(${_target}
-    PRIVATE
-      tetl::etl
-      tetl::compiler_options
-      tetl::compiler_warnings
-      tetl::code_coverage
-  )
-  add_test(NAME "example_${_target}" COMMAND ${_target})
-endforeach()
+function(tetl_add_example _target)
+  set(options OPTIONAL WILL_FAIL)
+  cmake_parse_arguments(tetl_add_example "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  add_executable("example_${_target}" "${_target}.cpp")
+  add_test(NAME "example_${_target}" COMMAND "example_${_target}")
+  target_compile_definitions("example_${_target}" PRIVATE TETL_DEBUG=1)
+  target_link_libraries("example_${_target}" PRIVATE tetl::etl tetl::compiler_options tetl::compiler_warnings tetl::code_coverage)
+  set_tests_properties("example_${_target}" PROPERTIES WILL_FAIL ${tetl_add_example_WILL_FAIL})
+endfunction()
 
-set_tests_properties(example_cassert PROPERTIES WILL_FAIL TRUE)
+tetl_add_example("algorithm")
+tetl_add_example("all_headers")
+tetl_add_example("array")
+tetl_add_example("bitset")
+tetl_add_example("cassert" WILL_FAIL TRUE)
+tetl_add_example("chrono")
+tetl_add_example("cmath")
+tetl_add_example("memory")
+tetl_add_example("numeric")
+tetl_add_example("optional")
+tetl_add_example("set")
+tetl_add_example("source_location")
+tetl_add_example("string")
+tetl_add_example("tuple")
+tetl_add_example("type_traits")
+tetl_add_example("utility")
+tetl_add_example("vector")
 
 add_subdirectory(experimental)
