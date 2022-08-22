@@ -6,24 +6,36 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
     steps:
-      - name: check out code
+      - name: Check out code
         uses: actions/checkout@v3
 
-      - name: add LLVM Key
+      - name: Add LLVM Key
         run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 
-      - name: add LLVM Repo
+      - name: Add LLVM Repo
         run: sudo add-apt-repository 'deb http://apt.llvm.org/jammy/   llvm-toolchain-jammy-15  main'
 
-      - name: update
+      - name: Update
         run: sudo apt update -y
 
-      - name: install clang-tidy
+      - name: Install clang-tidy
         run: sudo apt install -y clang-15 clang-tidy-15
 
-      - name: cmake configure
-        run: CC=clang-15 CXX=clang++-15 cmake -S . -G "Unix Makefiles" -B cmake-build-tidy -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_STANDARD=17 -D TETL_BUILD_WERROR=ON
+      - name: CMake configure
+        run: >
+          cmake -S .
+          -G "Unix Makefiles"
+          -B cmake-build-tidy
+          -D CMAKE_BUILD_TYPE=Debug
+          -D CMAKE_C_COMPILER="clang-15"
+          -D CMAKE_CXX_COMPILER="clang++-15"
+          -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
+          -D TETL_BUILD_WERROR=ON
 
-      - name: clang-tidy check
+      - name: Clang-Tidy check
         run: CLANG_VERSION="-15" BUILD_DIR=cmake-build-tidy make tidy-check
