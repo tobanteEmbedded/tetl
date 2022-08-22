@@ -58,7 +58,7 @@ cxx20_headers = [
     'compare',
     'concepts',
     'coroutine',
-    'format',
+    # 'format',
     'ranges',
     'source_location',
 ]
