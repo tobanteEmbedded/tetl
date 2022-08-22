@@ -55,7 +55,7 @@ template <typename Real, size_t Bits, typename RNG>
     }
 
     return result / factor;
-};
+}
 
 } // namespace etl
 
