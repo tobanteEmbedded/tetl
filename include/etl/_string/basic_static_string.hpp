@@ -79,7 +79,7 @@ public:
     /// \details Fails silently if input len is greater then capacity.
     constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
-        TETL_ASSERT(len + 1 <= Capacity);
+        // TETL_ASSERT(len + 1 <= Capacity);
 
         if (str != nullptr && len + 1 < Capacity) {
             clear_storage();
@@ -100,7 +100,7 @@ public:
     /// \details Fails silently if input length is greater then capacity.
     constexpr basic_static_string(size_type count, value_type ch) noexcept
     {
-        TETL_ASSERT(count + 1 <= Capacity);
+        // TETL_ASSERT(count + 1 <= Capacity);
         if (count + 1 <= Capacity) {
             clear_storage();
             fill(begin(), begin() + count, ch);
@@ -418,7 +418,7 @@ public:
     {
         auto const start    = static_cast<size_type>(etl::distance(cbegin(), first));
         auto const distance = static_cast<size_type>(etl::distance(first, last));
-        TETL_ASSERT(size() > distance);
+        // TETL_ASSERT(size() > distance);
         etl::rotate(begin() + start, begin() + start + distance, end());
         unsafe_set_size(size() - distance);
         return begin() + start;
@@ -428,7 +428,7 @@ public:
     /// nothing if the string is full.
     constexpr auto push_back(value_type ch) noexcept -> void
     {
-        TETL_ASSERT(size() < capacity());
+        // TETL_ASSERT(size() < capacity());
         if (size() < capacity()) { append(1, ch); }
     }
 
@@ -759,8 +759,8 @@ public:
     /// a new string.
     constexpr auto replace(size_type pos, size_type count, basic_static_string const& str) -> basic_static_string&
     {
-        TETL_ASSERT(pos < size());
-        TETL_ASSERT(pos + count < size());
+        // TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos + count < size());
 
         auto* f = data() + pos;
         auto* l = data() + pos + count;
@@ -782,11 +782,11 @@ public:
     constexpr auto replace(size_type pos, size_type count, basic_static_string const& str, size_type pos2,
         size_type count2 = npos) -> basic_static_string&
     {
-        TETL_ASSERT(pos < size());
-        TETL_ASSERT(pos + count < size());
+        // TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos + count < size());
 
-        TETL_ASSERT(pos2 < str.size());
-        TETL_ASSERT(pos2 + count2 < str.size());
+        // TETL_ASSERT(pos2 < str.size());
+        // TETL_ASSERT(pos2 + count2 < str.size());
 
         auto* f        = data() + min(pos, size());
         auto* l        = data() + min(pos + count, size());
@@ -798,8 +798,8 @@ public:
 
     constexpr auto replace(size_type pos, size_type count, CharT const* str, size_type count2) -> basic_static_string&
     {
-        TETL_ASSERT(pos < size());
-        TETL_ASSERT(pos + count < size());
+        // TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos + count < size());
 
         auto* f = next(data(), min(pos, size()));
         auto* l = next(data(), min(pos + count, size()));
@@ -818,8 +818,8 @@ public:
 
     constexpr auto replace(size_type pos, size_type count, CharT const* str) -> basic_static_string&
     {
-        TETL_ASSERT(pos < size());
-        TETL_ASSERT(pos + count < size());
+        // TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos + count < size());
 
         auto* f = next(data(), min(pos, size()));
         auto* l = next(data(), min(pos + count, size()));
@@ -1098,7 +1098,7 @@ public:
     [[nodiscard]] constexpr auto find_first_not_of(basic_static_string const& str, size_type pos = 0) const noexcept
         -> size_type
     {
-        TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
             begin(), size(), str.begin(), pos, str.size());
     }
@@ -1110,7 +1110,7 @@ public:
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(value_type ch, size_type pos = 0) const noexcept -> size_type
     {
-        TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), ch, pos);
     }
 
@@ -1121,7 +1121,7 @@ public:
     /// characters in the given string, or npos if no such character is found.
     [[nodiscard]] constexpr auto find_first_not_of(value_type const* s, size_type pos) const -> size_type
     {
-        TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
             begin(), size(), s, pos, traits_type::length(s));
     }
@@ -1134,7 +1134,7 @@ public:
     [[nodiscard]] constexpr auto find_first_not_of(value_type const* s, size_type pos, size_type count) const
         -> size_type
     {
-        TETL_ASSERT(pos < size());
+        // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), s, pos, count);
     }
 
@@ -1252,20 +1252,20 @@ public:
 private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
-        TETL_ASSERT(newSize <= Capacity - 1);
+        // TETL_ASSERT(newSize <= Capacity - 1);
         size_        = static_cast<internal_size_t>(newSize);
         data_[size_] = '\0';
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
     {
-        TETL_ASSERT(index < size_);
+        // TETL_ASSERT(index < size_);
         return data_[index];
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept -> const_reference
     {
-        TETL_ASSERT(index < size_);
+        // TETL_ASSERT(index < size_);
         return data_[index];
     }
 

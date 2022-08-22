@@ -5,7 +5,6 @@
 #ifndef TETL_ALGORITHM_CLAMP_HPP
 #define TETL_ALGORITHM_CLAMP_HPP
 
-#include "etl/_cassert/macro.hpp"
 #include "etl/_functional/less.hpp"
 
 namespace etl {
@@ -24,7 +23,6 @@ template <typename Type>
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi, Compare comp) -> Type const&
 {
-    TETL_ASSERT(!comp(hi, lo));
     return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
 }
 

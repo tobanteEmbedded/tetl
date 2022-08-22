@@ -5,14 +5,13 @@
 #ifndef TETL_CWCHAR_WCSLEN_HPP
 #define TETL_CWCHAR_WCSLEN_HPP
 
-#include "etl/_cassert/macro.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
 
 namespace etl {
 /// \brief Returns the length of a wide string, that is the number of non-null
 /// wide characters that precede the terminating null wide character.
-constexpr auto wcslen(wchar_t const* str) -> etl::size_t { return detail::strlen_impl<wchar_t, etl::size_t>(str); }
+constexpr auto wcslen(wchar_t const* str) -> size_t { return detail::strlen_impl<wchar_t, size_t>(str); }
 } // namespace etl
 
 #endif // TETL_CWCHAR_WCSLEN_HPP

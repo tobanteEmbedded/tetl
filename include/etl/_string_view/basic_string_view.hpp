@@ -8,7 +8,6 @@
 #include "etl/_algorithm/lexicographical_compare.hpp"
 #include "etl/_algorithm/min.hpp"
 #include "etl/_algorithm/none_of.hpp"
-#include "etl/_cassert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"
@@ -636,11 +635,7 @@ struct basic_string_view {
     static constexpr size_type npos = size_type(-1);
 
 private:
-    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference
-    {
-        TETL_ASSERT(pos < size());
-        return begin_[pos];
-    }
+    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference { return begin_[pos]; }
 
     const_pointer begin_ = nullptr;
     size_type size_      = 0;
