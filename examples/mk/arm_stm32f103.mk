@@ -15,7 +15,7 @@ SIZE		= $(TOOLCHAIN_BIN)/$(TOOLCHAIN)size
 
 DEFINES += -DSTM32F103xB
 
-INCLUDES += -I../
+INCLUDES += -I ../include
 
 ifdef DEBUG
 DEBUGFLAGS = -Og -g

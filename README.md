@@ -34,7 +34,7 @@ auto main() -> int
 ```
 
 ```sh
-g++ -Wall -Wextra -Wpedantic -std=c++17 -I path/to/tetl main.cpp
+g++ -Wall -Wextra -Wpedantic -std=c++17 -I path/to/tetl/include main.cpp
 ```
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests). The [API reference](https://tobanteembedded.github.io/tetl-docs/) is currently work in progress. I'm switching from doxygen to standardese, which still has some bugs, so some parts of the docs may still be missing.
@@ -154,7 +154,7 @@ Add `tetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 # have a custom toolchain in your CMake configuration. The target only sets the
 # include path. No static library is created.
 
-add_subdirectory(3rd_party/tetl EXCLUDE_FROM_ALL)
+add_subdirectory(3rd_party/tetl/include EXCLUDE_FROM_ALL)
 target_link_libraries(${YOUR_TARGET} tetl::etl)
 ```
 

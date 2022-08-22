@@ -28,4 +28,4 @@ WARNINGFLAGS += -Wduplicated-cond
 # WARNINGFLAGS += -Wsign-conversion
 
 MCU ?= atmega328p
-CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} -ffreestanding ${DEBUGFLAGS} -I../ ${WARNINGFLAGS}
+CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} -ffreestanding ${DEBUGFLAGS} -I ../include ${WARNINGFLAGS}

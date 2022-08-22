@@ -1,7 +1,7 @@
 CXXFLAGS ?= -std=c++2a -g -O1 -fsanitize=fuzzer,address -ftest-coverage -fcoverage-mapping -fprofile-arcs -fprofile-instr-generate
 CXXWARNINGS = -Wall -Wextra -Wpedantic
 
-INCLUDES = -I../
+INCLUDES = -I ../include
 
 .PHONY: build
 build:

@@ -18,4 +18,4 @@ WARNINGFLAGS += -Wduplicated-branches
 WARNINGFLAGS += -Wduplicated-cond
 WARNINGFLAGS += -Wsign-conversion
 
-CXXFLAGS = -std=c++${CXXSTD} ${DEBUGFLAGS} -I../ ${WARNINGFLAGS}
+CXXFLAGS = -std=c++${CXXSTD} ${DEBUGFLAGS} -I ../include ${WARNINGFLAGS}

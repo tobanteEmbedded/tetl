@@ -31,4 +31,4 @@ WARNINGFLAGS += -Wduplicated-cond
 WARNINGFLAGS += -Wsign-conversion
 
 MCU ?= msp430fr5969
-CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} ${DEBUGFLAGS} -I../ ${WARNINGFLAGS}
+CXXFLAGS = -mmcu=${MCU} -std=c++${CXXSTD} ${DEBUGFLAGS} -I ../include ${WARNINGFLAGS}
