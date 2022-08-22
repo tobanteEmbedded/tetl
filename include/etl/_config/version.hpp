@@ -5,10 +5,6 @@
 #ifndef TETL_CONFIG_VERSION_HPP
 #define TETL_CONFIG_VERSION_HPP
 
-#if (__has_include(<version>))
-    #include <version>
-#endif
-
 /// \brief The major release version
 // NOLINTNEXTLINE(modernize-macro-to-enum)
 #define TETL_VERSION_MAJOR 0
