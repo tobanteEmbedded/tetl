@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -19,12 +19,6 @@ jobs:
           hash -r
           sudo snap install cmake --classic
           cmake --version
-
-      - name: Set up GCC
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 11
-          platform: x64
 
       - name: CMake configure
         run: cmake -S . -G "Ninja Multi-Config" -B build -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON

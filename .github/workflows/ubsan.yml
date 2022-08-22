@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: check out code
         uses: actions/checkout@v3
@@ -14,7 +14,7 @@ jobs:
         run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 
       - name: add LLVM Repo
-        run: sudo add-apt-repository 'deb http://apt.llvm.org/focal/   llvm-toolchain-focal-15  main'
+        run: sudo add-apt-repository 'deb http://apt.llvm.org/jammy/   llvm-toolchain-jammy-15  main'
 
       - name: update
         run: sudo apt update -y
