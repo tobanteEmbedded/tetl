@@ -41,8 +41,8 @@ struct basic_rng {
     }
 
 private:
-    auto self() -> Derived& { return static_cast<Derived&>(*this); }
-    auto self() const -> Derived const& { return static_cast<Derived const&>(*this); }
+    [[nodiscard]] auto self() -> Derived& { return static_cast<Derived&>(*this); }
+    [[nodiscard]] auto self() const -> Derived const& { return static_cast<Derived const&>(*this); }
 
     result_type _state { default_seed };
 };
