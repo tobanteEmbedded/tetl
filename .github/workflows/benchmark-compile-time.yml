@@ -28,4 +28,4 @@ jobs:
       - name: Run benchmark build
         run: |
           cd benchmarks/compile
-          python3 run.py
+          python3 run.py "${{ matrix.cxx }}"
