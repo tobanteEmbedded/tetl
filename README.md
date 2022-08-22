@@ -70,7 +70,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml) | [![ASAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/asan.yml) | [![UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/ubsan.yml) | [![Clang -Weverything](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml) | [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl) |
 
-> **_NOTE:_** All test are compiled in debug and release mode with at least `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. The full list of warning flags can be found in the CMake configuration: [cmake/CompilerWarnings.cmake](./cmake/CompilerWarnings.cmake). Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
+> **_NOTE:_** All test are compiled in debug and release mode with at least `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. The full list of warning flags can be found in the CMake configuration: [cmake/compiler_warnings.cmake](./cmake/compiler_warnings.cmake). Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
 
 ## Design Goals
 
@@ -150,12 +150,12 @@ CXXFLAGS += -std=c++17 -I3rd_party/tetl
 Add `tetl` as a git submodule, then add these lines to your `CMakeLists.txt`:
 
 ```cmake
-# tobanteEmbedded::etl is an interface target, so you can use it even if you
+# tetl::etl is an interface target, so you can use it even if you
 # have a custom toolchain in your CMake configuration. The target only sets the
 # include path. No static library is created.
 
 add_subdirectory(3rd_party/tetl EXCLUDE_FROM_ALL)
-target_link_libraries(${YOUR_TARGET} tobanteEmbedded::etl)
+target_link_libraries(${YOUR_TARGET} tetl::etl)
 ```
 
 ### PlatformIO

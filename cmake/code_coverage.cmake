@@ -1,5 +1,5 @@
 add_library(coverage_config INTERFACE)
-add_library(tobanteEmbedded::CodeCoverage ALIAS coverage_config)
+add_library(tetl::code_coverage ALIAS coverage_config)
 
 if(TETL_BUILD_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(coverage_config INTERFACE -O0 -g --coverage)

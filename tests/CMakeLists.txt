@@ -1,14 +1,15 @@
 project(etl-tests)
 
-add_library(testing_defs INTERFACE)
-target_compile_definitions(testing_defs INTERFACE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
-target_include_directories(testing_defs INTERFACE ${PROJECT_SOURCE_DIR})
-target_link_libraries(testing_defs
+add_library(tetl_testing INTERFACE)
+add_library(tetl::testing ALIAS tetl_testing)
+target_compile_definitions(tetl_testing INTERFACE TETL_DEBUG=1 TETL_ENABLE_USER_CONFIG_HEADER_INCLUDE=1)
+target_include_directories(tetl_testing INTERFACE ${PROJECT_SOURCE_DIR})
+target_link_libraries(tetl_testing
     INTERFACE
-        tobanteEmbedded::etl
-        tobanteEmbedded::CompilerOptions
-        tobanteEmbedded::CompilerWarnings
-        tobanteEmbedded::CodeCoverage
+        tetl::etl
+        tetl::compiler_options
+        tetl::compiler_warnings
+        tetl::code_coverage
 )
 
 function(tetl_add_test _header _target)
@@ -16,8 +17,7 @@ function(tetl_add_test _header _target)
   cmake_parse_arguments(TETL_ADD_TEST_PREFIX "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   add_executable("test_${_header}_${_target}" "${_target}.t.cpp")
   add_test(NAME "test_${_header}_${_target}" COMMAND "test_${_header}_${_target}")
-  target_include_directories(test_${_header}_${_target} PRIVATE ${PROJECT_SOURCE_DIR}/..)
-  target_link_libraries("test_${_header}_${_target}" PRIVATE testing_defs)
+  target_link_libraries("test_${_header}_${_target}" PRIVATE tetl::testing)
   set_tests_properties("test_${_header}_${_target}" PROPERTIES WILL_FAIL ${TETL_ADD_TEST_PREFIX_WILL_FAIL})
 endfunction()
 

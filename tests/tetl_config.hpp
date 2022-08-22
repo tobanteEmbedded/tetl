@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_CONFIG_FOR_CATCH2_BASED_TESTS_HPP
-#define TETL_CONFIG_FOR_CATCH2_BASED_TESTS_HPP
+#ifndef TETL_CONFIG_FOR_UNIT_TESTS_HPP
+#define TETL_CONFIG_FOR_UNIT_TESTS_HPP
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,4 +34,4 @@ template <typename Assertion>
 }
 } // namespace etl
 
-#endif // TETL_CONFIG_FOR_CATCH2_BASED_TESTS_HPP
+#endif // TETL_CONFIG_FOR_UNIT_TESTS_HPP

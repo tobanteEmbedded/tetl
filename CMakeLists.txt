@@ -36,12 +36,12 @@ endif()
 
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(CodeCoverage)
-include(CompilerOptions)
-include(CompilerWarnings)
+include(code_coverage)
+include(compiler_options)
+include(compiler_warnings)
 
 add_library(${PROJECT_NAME} INTERFACE)
-add_library(tobanteEmbedded::etl ALIAS ${PROJECT_NAME})
+add_library(tetl::etl ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR})
 
 if(TETL_BUILD_TESTS)

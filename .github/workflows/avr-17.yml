@@ -19,7 +19,7 @@ jobs:
           avr-g++ --version
 
       - name: Configure CMake
-        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/Toolchain-atmega328p.cmake -D CMAKE_CXX_STANDARD=17 -D TETL_BUILD_WERROR=ON
+        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega328p.cmake -D CMAKE_CXX_STANDARD=17 -D TETL_BUILD_WERROR=ON
 
       - name: Build tests -- Release
         run: cmake --build build --config Release

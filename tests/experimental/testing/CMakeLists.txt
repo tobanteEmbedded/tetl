@@ -8,9 +8,9 @@ if(NOT ${CMAKE_CROSSCOMPILING})
     add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
     target_link_libraries(${PROJECT_NAME}
         PRIVATE
-            tobanteEmbedded::etl
-            tobanteEmbedded::CompilerOptions
-            tobanteEmbedded::CompilerWarnings
-            tobanteEmbedded::CodeCoverage
+            tetl::etl
+            tetl::compiler_options
+            tetl::compiler_warnings
+            tetl::code_coverage
     )
 endif()

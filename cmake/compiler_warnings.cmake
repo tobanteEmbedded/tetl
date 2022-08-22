@@ -1,5 +1,5 @@
 add_library(compiler_warnings INTERFACE)
-add_library(tobanteEmbedded::CompilerWarnings ALIAS compiler_warnings)
+add_library(tetl::compiler_warnings ALIAS compiler_warnings)
 
 if (MSVC)
   target_compile_options(compiler_warnings
