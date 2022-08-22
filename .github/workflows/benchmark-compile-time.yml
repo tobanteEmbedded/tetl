@@ -1,0 +1,31 @@
+name: Benchmark Compile Time
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install Clang
+        run: |
+          sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo add-apt-repository 'deb http://apt.llvm.org/jammy/   llvm-toolchain-jammy-15  main'
+          sudo apt update -y
+          sudo apt install -y clang-15 ninja-build
+
+      - name: Run benchmark build
+        run: |
+          cd benchmark/compile-time
+          python3 run.py
