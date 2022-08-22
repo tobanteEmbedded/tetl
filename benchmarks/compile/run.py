@@ -97,7 +97,7 @@ def execute_compiler(file: str, options, define=None):
         compiler,
         '-c',
         '-I',
-        'C:/Developer/tobanteEmbedded/tetl/include',
+        '../../include',
         f"-std={options['cxx_version']}",
         f"-{options['optimization']}",
         '-ftime-trace',
@@ -124,7 +124,7 @@ def run_file(name: str, options, define=None):
         results.append(milliseconds)
 
     delete_file(f'{name}.o')
-    # delete_file(f'{name}.json')
+    delete_file(f'{name}.json')
 
     return sum(results) / len(results)
 
