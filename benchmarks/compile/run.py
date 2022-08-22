@@ -143,13 +143,16 @@ def run_generated(name: str, content: str, options):
 
 
 def print_header_result(name, result):
-    factor = result['std'] / result['etl']
-    millis = result['std'] - result['etl']
-    print(f'{name}: {factor:.2f} x faster ({millis:.0f} ms)')
+    try:
+        factor = result['std'] / result['etl']
+        millis = result['std'] - result['etl']
+        print(f'{name}: {factor:.2f} x faster ({millis:.0f} ms)')
+    except Exception as e:
+        print(f'{name}: failed with: {e}')
 
 
 def run_all_benchmarks(cpp_std, o):
-    print(f'Running benchmarks with C++{cpp_std} and {o}')
+    print(f'\nRunning benchmarks with C++{cpp_std} and {o}')
     results = {}
     opt = {'cxx_version': f'c++{cpp_std}', 'optimization': o}
 
