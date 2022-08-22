@@ -80,7 +80,7 @@ def write_benchmark_file(name: str, content: str):
         f.write(content)
 
 
-def make_include(name: str, use_std: bool):
+def make_hpp(name: str, use_std: bool):
     include = f'<{name}>' if use_std else f'<etl/{name}.hpp>'
     return f'#include {include}'
 
@@ -148,10 +148,10 @@ def print_header_result(name, result):
     print(f'{name}: {factor:.2f} x faster ({millis:.0f} ms)')
 
 
-def run_all_benchmarks(cpp_std):
-    print(f'Running benchmarks with C++{cpp_std}')
+def run_all_benchmarks(cpp_std, o):
+    print(f'Running benchmarks with C++{cpp_std} and {o}')
     results = {}
-    opt = {'cxx_version': f'c++{cpp_std}', 'optimization': 'Oz'}
+    opt = {'cxx_version': f'c++{cpp_std}', 'optimization': o}
 
     for cpp in ['all_headers.bench', 'array.bench', 'tuple.bench']:
         std = run_file(f"{cpp}", opt, define='TETL_BENCH_USE_STD=1')
@@ -160,17 +160,32 @@ def run_all_benchmarks(cpp_std):
         print_header_result(cpp, results[cpp])
 
     for hpp in cxx17_headers:
-        std = run_generated(f"std_{hpp}", make_include(f"{hpp}", True), opt)
-        etl = run_generated(f"etl_{hpp}", make_include(f"{hpp}", False), opt)
+        std = run_generated(f"std_{hpp}", make_hpp(f"{hpp}", True), opt)
+        etl = run_generated(f"etl_{hpp}", make_hpp(f"{hpp}", False), opt)
         results[hpp] = {'std': std, 'etl': etl}
         print_header_result(hpp, results[hpp])
+
+    if cpp_std in ['20', '2b']:
+        for hpp in cxx20_headers:
+            std = run_generated(f"std_{hpp}", make_hpp(f"{hpp}", True), opt)
+            etl = run_generated(f"etl_{hpp}", make_hpp(f"{hpp}", False), opt)
+            results[hpp] = {'std': std, 'etl': etl}
+            print_header_result(hpp, results[hpp])
 
 
 def main():
     if len(sys.argv) != 2:
         print(f'Usage: {sys.argv[0]} [17,20,2b]')
         exit(-1)
-    run_all_benchmarks(sys.argv[1])
+
+    valid_cxx_std = ['17', '20', '2b']
+    if sys.argv[1] not in valid_cxx_std:
+        print(f'Usage: {sys.argv[0]} [17,20,2b]')
+        exit(-1)
+
+    run_all_benchmarks(sys.argv[1], 'O0')
+    run_all_benchmarks(sys.argv[1], 'O3')
+    run_all_benchmarks(sys.argv[1], 'Oz')
 
 
 main()
