@@ -156,7 +156,12 @@ def run_all_benchmarks(cpp_std, o):
     results = {}
     opt = {'cxx_version': f'c++{cpp_std}', 'optimization': o}
 
-    for cpp in ['all_headers.bench', 'array.bench', 'tuple.bench']:
+    for cpp in [
+        'all_headers.bench',
+        'array.bench',
+        'string.bench',
+        'tuple.bench'
+    ]:
         std = run_file(f"{cpp}", opt, define='TETL_BENCH_USE_STD=1')
         etl = run_file(f"{cpp}", opt)
         results[cpp] = {'std': std, 'etl': etl}
