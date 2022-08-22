@@ -9,6 +9,8 @@ else
 endif
 COVERAGE_DIR=$(BUILD_DIR_BASE)-coverage
 
+CXX_STD ?= 20
+
 CLANG_VERSION ?=
 CLANG_TIDY_ARGS += -clang-tidy-binary clang-tidy${CLANG_VERSION}
 CLANG_TIDY_ARGS += -clang-apply-replacements-binary clang-apply-replacements${CLANG_VERSION}
@@ -32,12 +34,11 @@ build:
 test:
 	cd $(BUILD_DIR) && ctest -C $(CONFIG)
 
-
 .PHONY: coverage
 coverage:
-	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE -D CMAKE_CXX_STANDARD=20
+	cmake -S . -G Ninja -B cmake-build-coverage -D CMAKE_BUILD_TYPE=Debug -D TETL_BUILD_COVERAGE=TRUE -D CMAKE_CXX_STANDARD=${CXX_STD}
 	cmake --build cmake-build-coverage --parallel 6
-	cd cmake-build-coverage && ctest
+	ctest --test-dir cmake-build-coverage -C Debug
 
 .PHONY: coverage-html
 coverage-html: coverage
