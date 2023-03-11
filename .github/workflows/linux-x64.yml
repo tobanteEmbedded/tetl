@@ -1,0 +1,60 @@
+name: Linux X64
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        compiler: ["gcc", "clang"]
+        cxx_std: [17, 20, 23]
+      fail-fast: false
+    name: C++${{ matrix.cxx_std }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Update APT
+        run: |
+          sudo apt update -y
+          sudo apt install -y ninja-build
+
+      - name: Install LLVM
+        if: matrix.compiler == 'clang'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 15 all
+
+      - name: CMake configure (clang)
+        if: matrix.compiler == 'clang'
+        run: >
+          cmake -S .
+          -B build
+          -G "Ninja Multi-Config"
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
+          -D CMAKE_C_COMPILER=clang-15
+          -D CMAKE_CXX_COMPILER=clang++-15
+          -D TETL_BUILD_WERROR=ON
+
+      - name: CMake configure (gcc)
+        if: matrix.compiler != 'clang'
+        run: >
+          cmake -S .
+          -B build
+          -G "Ninja Multi-Config"
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
+          -D TETL_BUILD_WERROR=ON
+
+      - name: CMake build -- Debug
+        run: cmake --build build --config Debug
+
+      - name: Run all tests -- Debug
+        run: ctest --test-dir build -C Debug
+
+      - name: CMake build -- Release
+        run: cmake --build build --config Release
+
+      - name: Run all tests -- Release
+        run: ctest --test-dir build -C Release
