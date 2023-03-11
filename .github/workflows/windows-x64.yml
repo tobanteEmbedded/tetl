@@ -38,7 +38,17 @@ jobs:
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake configure
-        if: matrix.compiler == 'ClangCL'
+        if: (matrix.compiler == 'ClangCL') && (matrix.image == 'windows-2019')
+        run: >
+          cmake -S .
+          -B build
+          -G "Visual Studio 16 2019"
+          -T ClangCL
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D TETL_BUILD_WERROR=ON
+
+      - name: CMake configure
+        if: (matrix.compiler == 'ClangCL') && (matrix.image == 'windows-2022')
         run: >
           cmake -S .
           -B build
