@@ -15,10 +15,11 @@ option(TETL_BUILD_TIMETRACE   "Build with -ftime-trace (clang only)" OFF)
 # Only do these if this is the main project,
 # and not if it is included through add_subdirectory.
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    # find_program(CCACHE ccache)
-    # if(CCACHE)
-    #     set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
-    # endif()
+    find_program(CCACHE ccache)
+    if(CCACHE)
+      set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
+      set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+    endif()
 
     if(NOT "${CMAKE_CXX_STANDARD}")
       set(CMAKE_CXX_STANDARD 17)
