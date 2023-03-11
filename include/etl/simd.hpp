@@ -13,4 +13,6 @@
 #include "etl/_simd/simd_abi.hpp"
 #include "etl/_simd/where_expression.hpp"
 
+#include "etl/_simd/tinysimd.hpp"
+
 #endif // TETL_SIMD_HPP
