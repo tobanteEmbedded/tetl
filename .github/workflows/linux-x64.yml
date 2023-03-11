@@ -4,13 +4,23 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
     strategy:
       matrix:
-        compiler: ["gcc", "clang"]
+        config:
+          [
+            { cc: gcc-10, cxx: g++10 },
+            { cc: gcc-11, cxx: g++11 },
+            { cc: gcc-12, cxx: g++12 },
+            { cc: clang-12, cxx: clang++12 },
+            { cc: clang-13, cxx: clang++13 },
+            { cc: clang-14, cxx: clang++14 },
+            { cc: clang-15, cxx: clang++15 },
+            { cc: clang-16, cxx: clang++16 },
+          ]
         cxx_std: [17, 20, 23]
       fail-fast: false
-    name: Linux x64 ${{ matrix.compiler }} c++${{ matrix.cxx_std }}
+    runs-on: ubuntu-22.04
+    name: Linux x64 ${{ matrix.config.cc }} c++${{ matrix.cxx_std }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -21,29 +31,19 @@ jobs:
           sudo apt install -y ninja-build
 
       - name: Install LLVM
-        if: matrix.compiler == 'clang'
         run: |
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 15 all
+          sudo ./llvm.sh 16 all
 
       - name: CMake configure (clang)
-        if: matrix.compiler == 'clang'
         run: >
           cmake -S .
           -B build
           -G "Ninja Multi-Config"
-          -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
-          -D CMAKE_C_COMPILER=clang-15
-          -D CMAKE_CXX_COMPILER=clang++-15
-          -D TETL_BUILD_WERROR=ON
-
-      - name: CMake configure (gcc)
-        if: matrix.compiler != 'clang'
-        run: >
-          cmake -S .
-          -B build
-          -G "Ninja Multi-Config"
+          -D CMAKE_C_COMPILER=${{ matrix.config.cc }}
+          -D CMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
           -D TETL_BUILD_WERROR=ON
 
