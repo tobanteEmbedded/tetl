@@ -41,19 +41,19 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 ## Status
 
-| **License**                                                                                                                                 | **Lines of Code**                                 | **Progress**                                                                                                        | **Documentation**                                             |
-| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://github.com/tobanteEmbedded/tetl/blob/main/LICENSE.txt) | ![](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) | [API Reference](https://tobanteembedded.github.io/tetl-docs/) |
+| **License**                                                                                                                                 | **Lines of Code**                                    | **Progress**                                                                                                        | **Documentation**                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://github.com/tobanteEmbedded/tetl/blob/main/LICENSE.txt) | ![LOC](https://sloc.xyz/github/tobanteEmbedded/tetl) | [Spreadsheet](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing) | [API Reference](https://tobanteembedded.github.io/tetl-docs/) |
 
 ### Hosted
 
 #### x64
 
-| **Platform** |                                                                                    **Status**                                                                                    |     **Notes**      |
-| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------: |
-|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    | GCC 11 & Clang 15  |
-|  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |   AppleClang 14    |
-| **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) | Visual Studio 2022 |
+| **Platform** |                                                                                    **Status**                                                                                    |            **Notes**             |
+| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------: |
+|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    | GCC 11/12 & Clang 12/13/14/15/16 |
+|  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |          AppleClang 14           |
+| **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) |        Visual Studio 2022        |
 
 ### Freestanding
 

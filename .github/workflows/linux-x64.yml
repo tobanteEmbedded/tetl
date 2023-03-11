@@ -8,12 +8,13 @@ jobs:
       matrix:
         config:
           [
-            { cc: gcc-10, cxx: g++-10 },
             { cc: gcc-11, cxx: g++-11 },
             { cc: gcc-12, cxx: g++-12 },
             { cc: clang-12, cxx: clang++-12 },
             { cc: clang-13, cxx: clang++-13 },
             { cc: clang-14, cxx: clang++-14 },
+            { cc: clang-15, cxx: clang++-15 },
+            { cc: clang-16, cxx: clang++-16 },
           ]
         cxx_std: [17, 20, 23]
       fail-fast: false
@@ -27,10 +28,20 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt install -y ninja-build
-          which ${{ matrix.config.cc }}
 
-      - name: Install ${{ matrix.config.cc }}
-        run: sudo apt install -y ${{ matrix.config.cc }}
+      - name: Install clang-15
+        if: matrix.config.cc == 'clang-15'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 15 all
+
+      - name: Install clang-16
+        if: matrix.config.cc == 'clang-16'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 16 all
 
       - name: CMake configure (clang)
         run: >
