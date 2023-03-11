@@ -65,11 +65,12 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 ### Analysis
 
-|    **Type**    |                                                                                                   **Status**                                                                                                   | **Notes** |
-| :------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|  **Coverage**  |                               [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                                |  GCC 11   |
-| **Sanitizers** | [![Sanitizers (ASAN/UBSAN)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml) | Clang 16  |
-| **Clang-Tidy** |                 [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml)                  | Clang 16  |
+|        **Type**        |                                                                                                   **Status**                                                                                                   | **Notes** |
+| :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|      **Coverage**      |                               [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                                |  GCC 11   |
+|     **Sanitizers**     | [![Sanitizers (ASAN/UBSAN)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml) | Clang 16  |
+|     **Clang-Tidy**     |                 [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml)                  | Clang 16  |
+| **Clang -Weverything** |      [![Clang -Weverything](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml)       | Clang 16  |
 
 > **_NOTE:_** All test are compiled in debug and release mode with at least `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. The full list of warning flags can be found in the CMake configuration: [cmake/compiler_warnings.cmake](./cmake/compiler_warnings.cmake). Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
 

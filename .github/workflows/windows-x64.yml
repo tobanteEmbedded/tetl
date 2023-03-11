@@ -13,7 +13,7 @@ jobs:
           - image: windows-2019
             cxx: 23
       fail-fast: false
-    name: ${{ matrix.compiler }} - C++${{ matrix.cxx }}
+    name: "${{ matrix.image }}: ${{ matrix.compiler }} (C++${{ matrix.cxx }})"
     runs-on: ${{ matrix.image }}
     steps:
       - name: Check out code
