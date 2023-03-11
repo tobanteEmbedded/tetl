@@ -59,6 +59,7 @@ else ()
             -Wno-implicit-int-conversion
             -Wno-padded
             -Wno-unused-member-function
+            -Wno-unsafe-buffer-usage # clang-16
             -Wno-weak-vtables
           >
       >
