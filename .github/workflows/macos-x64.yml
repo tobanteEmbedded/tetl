@@ -29,10 +29,10 @@ jobs:
         run: cmake --build build --config Debug
 
       - name: Run tests -- Debug
-        run: cd build; ctest -VV -C Debug; cd -
+        run: ctest --test-dir build -C Debug --output-on-failure
 
       - name: CMake build -- Release
         run: cmake --build build --config Release
 
       - name: Run tests -- Release
-        run: cd build; ctest -VV -C Release; cd -
+        run: ctest --test-dir build -C Release --output-on-failure
