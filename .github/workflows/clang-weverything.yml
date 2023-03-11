@@ -14,17 +14,16 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: add LLVM Key
-        run: sudo wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+      - name: Update APT
+        run: |
+          sudo apt update -y
+          sudo apt install -y ninja-build
 
-      - name: add LLVM Repo
-        run: sudo add-apt-repository 'deb http://apt.llvm.org/jammy/   llvm-toolchain-jammy-15  main'
-
-      - name: update
-        run: sudo apt update -y
-
-      - name: install clang-tidy
-        run: sudo apt install -y clang-15 clang-tidy-15 ninja-build
+      - name: Install LLVM
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 15 all
 
       - name: CMake configure
         run: >
