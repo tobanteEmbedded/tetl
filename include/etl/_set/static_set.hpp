@@ -175,10 +175,7 @@ public:
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
-    ///
-    /// \todo noexcept(noexcept(base_type::insert(move(declval<key_type>()))))
-    /// breaks GCC 9.3 Ubuntu Focal build
-    constexpr auto insert(value_type const& value)
+    constexpr auto insert(value_type const& value) noexcept(noexcept(insert(move(declval<key_type>()))))
         -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
     {
         value_type tmp = value;

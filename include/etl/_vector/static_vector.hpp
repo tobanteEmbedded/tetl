@@ -385,11 +385,8 @@ public:
     using base_type::pop_back;
 
     /// \brief Appends value at the end of the vector.
-    ///
-    /// \todo Add noexcept(noexcept(emplace_back(forward<U>(value)))) breaks
-    /// AVR build GCC8.2 currently.
     template <typename U>
-    constexpr auto push_back(U&& value) noexcept(false)
+    constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(forward<U>(value))))
         -> enable_if_t<is_constructible_v<T, U> && is_assignable_v<reference, U&&>, void>
     {
         TETL_ASSERT(!full());
