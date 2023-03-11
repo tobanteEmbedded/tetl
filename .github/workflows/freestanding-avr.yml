@@ -1,13 +1,17 @@
-name: AVR C++20
+name: AVR Freestanding
 
 on: [push, pull_request]
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-22.04
     container:
       image: alpine:edge
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
+    name: C++${{ matrix.cxx }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -19,7 +23,13 @@ jobs:
           avr-g++ --version
 
       - name: Configure CMake
-        run: cmake -S . -B build -G "Ninja Multi-Config" -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega328p.cmake -D CMAKE_CXX_STANDARD=20 -D TETL_BUILD_WERROR=ON
+        run: >
+          cmake -S .
+          -B build
+          -G "Ninja Multi-Config"
+          -D CMAKE_TOOLCHAIN_FILE=cmake/toolchain/atmega328p.cmake
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D TETL_BUILD_WERROR=ON
 
       - name: Build tests -- Release
         run: cmake --build build --config Release

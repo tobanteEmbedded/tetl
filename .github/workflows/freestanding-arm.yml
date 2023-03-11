@@ -1,13 +1,17 @@
-name: ARM C++17
+name: ARM Freestanding
 
 on: [push, pull_request]
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-22.04
     container:
       image: alpine:edge
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
+    name: C++${{ matrix.cxx }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -19,8 +23,8 @@ jobs:
           grep --version
           arm-none-eabi-g++ --version
 
-      - name: Build examples project (C++17, Debug)
-        run: ARM=1 CXXSTD=17 DEBUG=1 make -C examples clean all
+      - name: Build examples projects (Debug)
+        run: ARM=1 CXXSTD=${{ matrix.cxx }} DEBUG=1 make -C examples clean all
 
-      - name: Build examples project (C++17, Release)
-        run: ARM=1 CXXSTD=17 make -C examples clean all
+      - name: Build examples projects (Release)
+        run: ARM=1 CXXSTD=${{ matrix.cxx }} make -C examples clean all

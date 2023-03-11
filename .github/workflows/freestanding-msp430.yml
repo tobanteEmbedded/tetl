@@ -1,13 +1,17 @@
-name: MSP430 C++20
+name: MSP430 Freestanding
 
 on: [push, pull_request]
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-22.04
     container:
       image: alpine:edge
+    strategy:
+      matrix:
+        cxx: [17, 20, 23]
+      fail-fast: false
+    name: C++${{ matrix.cxx }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -19,8 +23,8 @@ jobs:
           grep --version
           msp430-elf-g++ --version
 
-      - name: Build examples project (C++20, Debug)
-        run: MSP430=1 CXXSTD=20 DEBUG=1 make -C examples clean all
+      - name: Build examples project (Debug)
+        run: MSP430=1 CXXSTD=${{ matrix.cxx }} DEBUG=1 make -C examples clean all
 
-      - name: Build examples project (C++20, Release)
-        run: MSP430=1 CXXSTD=20 make -C examples clean all
+      - name: Build examples project (Release)
+        run: MSP430=1 CXXSTD=${{ matrix.cxx }} make -C examples clean all
