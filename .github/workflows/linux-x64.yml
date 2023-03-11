@@ -43,7 +43,7 @@ jobs:
           chmod +x llvm.sh
           sudo ./llvm.sh 16 all
 
-      - name: CMake configure (clang)
+      - name: CMake configure
         run: >
           cmake -S .
           -B build
@@ -52,6 +52,7 @@ jobs:
           -D CMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx_std }}
           -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_WEVERYTHING=ON
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug
