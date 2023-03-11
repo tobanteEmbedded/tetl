@@ -22,18 +22,21 @@ struct fixed_audio_buffer {
 
     fixed_audio_buffer() = default;
 
-    auto size_channels() const -> size_type { return Channels; }
-    auto size_frames() const -> size_type { return Frames; }
-    auto size_samples() const -> size_type { return size_channels() * size_frames(); }
+    [[nodiscard]] auto size_channels() const -> size_type { return Channels; }
+    [[nodiscard]] auto size_frames() const -> size_type { return Frames; }
+    [[nodiscard]] auto size_samples() const -> size_type { return size_channels() * size_frames(); }
 
-    auto frame(size_type index) { return make_frame(index); }
-    auto frame(size_type index) const { return make_frame(index); }
+    [[nodiscard]] auto frame(size_type index) { return make_frame(index); }
+    [[nodiscard]] auto frame(size_type index) const { return make_frame(index); }
 
-    auto channel(size_type ch) { return channel_type(etl::next(data(_buffer), ch * Frames), Frames); }
-    auto channel(size_type ch) const { return const_channel_type(etl::next(data(_buffer), ch * Frames), Frames); }
+    [[nodiscard]] auto channel(size_type ch) { return channel_type(etl::next(data(_buffer), ch * Frames), Frames); }
+    [[nodiscard]] auto channel(size_type ch) const
+    {
+        return const_channel_type(etl::next(data(_buffer), ch * Frames), Frames);
+    }
 
-    auto operator()(size_type ch, size_type s) -> value_type& { return channel(ch)[s]; }
-    auto operator()(size_type ch, size_type s) const -> value_type const& { return channel(ch)[s]; }
+    [[nodiscard]] auto operator()(size_type ch, size_type s) -> value_type& { return channel(ch)[s]; }
+    [[nodiscard]] auto operator()(size_type ch, size_type s) const -> value_type const& { return channel(ch)[s]; }
 
 private:
     auto make_frame(size_type s) const
@@ -43,7 +46,7 @@ private:
         return frame;
     }
 
-    etl::array<value_type, Channels * Frames> _buffer {};
+    etl::array<value_type, static_cast<etl::size_t>(Channels* Frames)> _buffer {};
 };
 
 auto main() -> int
