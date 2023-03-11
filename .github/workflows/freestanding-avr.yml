@@ -1,4 +1,4 @@
-name: AVR Freestanding
+name: Freestanding AVR
 
 on: [push, pull_request]
 

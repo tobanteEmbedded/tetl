@@ -1,4 +1,4 @@
-name: ARM Freestanding
+name: Freestanding ARM
 
 on: [push, pull_request]
 
