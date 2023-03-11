@@ -14,8 +14,6 @@ jobs:
             { cc: clang-12, cxx: clang++12 },
             { cc: clang-13, cxx: clang++13 },
             { cc: clang-14, cxx: clang++14 },
-            { cc: clang-15, cxx: clang++15 },
-            { cc: clang-16, cxx: clang++16 },
           ]
         cxx_std: [17, 20, 23]
       fail-fast: false
@@ -30,12 +28,8 @@ jobs:
           sudo apt update -y
           sudo apt install -y ninja-build
 
-      - name: Install LLVM
-        run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 15 all
-          sudo ./llvm.sh 16 all
+      - name: Install ${{ matrix.config.cc }}
+        run: sudo apt install -y ${{ matrix.config.cc }}
 
       - name: CMake configure (clang)
         run: >
