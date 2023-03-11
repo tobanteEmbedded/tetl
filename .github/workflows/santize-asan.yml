@@ -1,4 +1,4 @@
-name: ASAN
+name: Sanitize ASAN
 
 on: [push, pull_request]
 
@@ -40,7 +40,7 @@ jobs:
         run: cat build/compile_commands.json
 
       - name: cmake build
-        run: cmake --build build -- -j
+        run: cmake --build build
 
       - name: run tests
         run: ctest -VV --test-dir build -C Debug --output-on-failure
