@@ -11,8 +11,7 @@
 namespace etl {
 
 template <typename T>
-struct is_integral : bool_constant<__is_integral(T)> {
-};
+struct is_integral : bool_constant<__is_integral(T)> { };
 
 template <typename T>
 
@@ -51,8 +50,7 @@ inline constexpr bool is_integral_v = is_any_of_v<remove_cv_t<T>,
 // clang-format on
 
 template <typename T>
-struct is_integral : bool_constant<is_integral_v<T> > {
-};
+struct is_integral : bool_constant<is_integral_v<T> > { };
 
 } // namespace etl
 

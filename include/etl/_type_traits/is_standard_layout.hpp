@@ -16,8 +16,7 @@ namespace etl {
 /// cv-qualified), provides the member constant value equal to true. For any
 /// other type, value is false.
 template <typename T>
-struct is_standard_layout : bool_constant<__is_standard_layout(T)> {
-};
+struct is_standard_layout : bool_constant<__is_standard_layout(T)> { };
 
 template <typename T>
 inline constexpr bool is_standard_layout_v = is_standard_layout<T>::value;

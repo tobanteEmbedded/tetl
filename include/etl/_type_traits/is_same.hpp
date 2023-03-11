@@ -19,8 +19,7 @@ inline constexpr bool is_same_v<T, T> = true;
 /// qualifications), provides the member constant value equal to true. Otherwise
 /// value is false.
 template <typename T, typename U>
-struct is_same : bool_constant<is_same_v<T, U>> {
-};
+struct is_same : bool_constant<is_same_v<T, U>> { };
 
 } // namespace etl
 

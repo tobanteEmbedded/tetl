@@ -12,11 +12,9 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-struct is_pointer_helper : etl::false_type {
-};
+struct is_pointer_helper : etl::false_type { };
 template <typename T>
-struct is_pointer_helper<T*> : etl::true_type {
-};
+struct is_pointer_helper<T*> : etl::true_type { };
 } // namespace detail
 
 /// \brief Checks whether T is a pointer to object or a pointer to function (but
@@ -27,8 +25,7 @@ struct is_pointer_helper<T*> : etl::true_type {
 /// \details The behavior of a program that adds specializations for is_pointer
 /// or is_pointer_v is undefined.
 template <typename T>
-struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type> {
-};
+struct is_pointer : detail::is_pointer_helper<typename remove_cv<T>::type> { };
 
 template <typename T>
 inline constexpr bool is_pointer_v = is_pointer<T>::value;

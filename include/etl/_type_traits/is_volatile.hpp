@@ -10,13 +10,11 @@
 namespace etl {
 
 template <typename T>
-struct is_volatile : etl::false_type {
-};
+struct is_volatile : etl::false_type { };
 
 /// \exclude
 template <typename T>
-struct is_volatile<T volatile> : etl::true_type {
-};
+struct is_volatile<T volatile> : etl::true_type { };
 
 template <typename T>
 inline constexpr bool is_volatile_v = etl::is_volatile<T>::value;

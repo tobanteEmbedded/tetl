@@ -31,12 +31,10 @@ template <typename T>
 using variant_access_t = decltype(variant_access(static_cast<etl::decay_t<T>*>(nullptr)));
 
 template <template <typename...> typename, typename = void, typename...>
-struct is_detected_impl : etl::false_type {
-};
+struct is_detected_impl : etl::false_type { };
 
 template <template <typename...> typename D, typename... Ts>
-struct is_detected_impl<D, etl::void_t<D<Ts...>>, Ts...> : etl::true_type {
-};
+struct is_detected_impl<D, etl::void_t<D<Ts...>>, Ts...> : etl::true_type { };
 
 template <template <typename...> typename D, typename... Ts>
 using is_detected = typename is_detected_impl<D, void, Ts...>::type;

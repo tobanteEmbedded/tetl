@@ -12,8 +12,7 @@ namespace etl {
 
 /// \brief alignment_of
 template <typename T>
-struct alignment_of : integral_constant<etl::size_t, alignof(T)> {
-};
+struct alignment_of : integral_constant<etl::size_t, alignof(T)> { };
 
 template <typename T>
 inline constexpr etl::size_t alignment_of_v = etl::alignment_of<T>::value;

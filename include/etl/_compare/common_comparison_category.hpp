@@ -48,8 +48,7 @@ struct common_comparison_category :
          is_same_v<Ts, partial_ordering> ? 2U : 1U)
     )>
 // clang-format on
-{
-};
+{ };
 
 template <typename... Ts>
 using common_comparison_category_t = typename common_comparison_category<Ts...>::type;

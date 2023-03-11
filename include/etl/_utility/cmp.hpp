@@ -34,7 +34,7 @@ template <typename T>
 inline constexpr auto int_and_not_char_v = is_integer_and_not_char<T>::value;
 
 template <typename T, typename U>
-inline constexpr auto cmp_int_v = int_and_not_char_v<T>&& int_and_not_char_v<U>;
+inline constexpr auto cmp_int_v = int_and_not_char_v<T> && int_and_not_char_v<U>;
 
 } // namespace detail
 

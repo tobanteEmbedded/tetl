@@ -69,14 +69,11 @@ enum struct iostate_type : etl::uint16_t {
 } // namespace detail
 
 template <>
-struct is_bitmask_type<detail::openmode_type> : true_type {
-};
+struct is_bitmask_type<detail::openmode_type> : true_type { };
 template <>
-struct is_bitmask_type<detail::fmtflags_type> : true_type {
-};
+struct is_bitmask_type<detail::fmtflags_type> : true_type { };
 template <>
-struct is_bitmask_type<detail::iostate_type> : true_type {
-};
+struct is_bitmask_type<detail::iostate_type> : true_type { };
 
 struct ios_base {
     using seekdir             = detail::seekdir_type;

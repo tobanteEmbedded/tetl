@@ -243,8 +243,7 @@ public:
 };
 
 template <typename... Ts>
-struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> {
-};
+struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> { };
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&

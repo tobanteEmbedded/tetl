@@ -22,8 +22,7 @@ template <typename T>
 struct test_is_specialized;
 
 template <>
-struct test_is_specialized<Foo<float>> {
-};
+struct test_is_specialized<Foo<float>> { };
 
 struct not_specialized { };
 

@@ -14,8 +14,7 @@ namespace etl {
 
 namespace detail {
 template <typename Iter, typename = etl::void_t<>>
-struct iterator_traits_impl {
-};
+struct iterator_traits_impl { };
 
 template <typename Iter>
 struct iterator_traits_impl<Iter,
@@ -46,8 +45,7 @@ struct iterator_traits_impl<Iter,
 ///
 /// https://en.cppreference.com/w/cpp/iterator/iterator_traits
 template <typename Iter>
-struct iterator_traits : detail::iterator_traits_impl<Iter> {
-};
+struct iterator_traits : detail::iterator_traits_impl<Iter> { };
 
 template <typename T>
 struct iterator_traits<T*> {

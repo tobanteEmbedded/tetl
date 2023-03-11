@@ -13,8 +13,7 @@ namespace etl {
 
 /// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
 template <typename T>
-struct has_virtual_destructor : bool_constant<__has_virtual_destructor(T)> {
-};
+struct has_virtual_destructor : bool_constant<__has_virtual_destructor(T)> { };
 
 /// https://en.cppreference.com/w/cpp/types/has_virtual_destructor
 template <typename T>

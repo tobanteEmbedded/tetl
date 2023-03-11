@@ -50,7 +50,7 @@ struct pair_constraints {
     template <typename U1, typename U2>
     static constexpr bool ctor_3_sfinae = //
         etl::is_constructible_v<T1, U1&&> //
-            && etl::is_constructible_v<T2, U2&&>;
+        && etl::is_constructible_v<T2, U2&&>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_3_explicit = //
@@ -61,7 +61,7 @@ struct pair_constraints {
     template <typename U1, typename U2>
     static constexpr bool ctor_4_sfinae =      //
         etl::is_constructible_v<T1, U1 const&> //
-            && etl::is_constructible_v<T2, U2 const&>;
+        && etl::is_constructible_v<T2, U2 const&>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_4_explicit =     //
@@ -72,7 +72,7 @@ struct pair_constraints {
     template <typename U1, typename U2>
     static constexpr bool ctor_5_sfinae = //
         etl::is_constructible_v<T1, U1&&> //
-            && etl::is_constructible_v<T2, U2&&>;
+        && etl::is_constructible_v<T2, U2&&>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_5_explicit = //
@@ -110,7 +110,7 @@ private:
 
     template <typename U1, typename U2>
     static constexpr bool ctor_3_explicit
-        = constraints::template ctor_3_sfinae<U1, U2>&& constraints::template ctor_3_explicit<U1, U2>;
+        = constraints::template ctor_3_sfinae<U1, U2> && constraints::template ctor_3_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_4_implicit
@@ -118,7 +118,7 @@ private:
 
     template <typename U1, typename U2>
     static constexpr bool ctor_4_explicit
-        = constraints::template ctor_4_sfinae<U1, U2>&& constraints::template ctor_4_explicit<U1, U2>;
+        = constraints::template ctor_4_sfinae<U1, U2> && constraints::template ctor_4_explicit<U1, U2>;
 
     template <typename U1, typename U2>
     static constexpr bool ctor_5_implicit
@@ -126,7 +126,7 @@ private:
 
     template <typename U1, typename U2>
     static constexpr bool ctor_5_explicit
-        = constraints::template ctor_5_sfinae<U1, U2>&& constraints::template ctor_5_explicit<U1, U2>;
+        = constraints::template ctor_5_sfinae<U1, U2> && constraints::template ctor_5_explicit<U1, U2>;
 
 public:
     using first_type  = T1;
@@ -332,8 +332,7 @@ constexpr auto operator>=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> b
 /// compile-time way to obtain the number of elements in a pair, which is always
 /// 2, using tuple-like syntax.
 template <typename T1, typename T2>
-struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2> {
-};
+struct tuple_size<pair<T1, T2>> : integral_constant<size_t, 2> { };
 
 /// \brief The partial specializations of tuple_element for pairs provide
 /// compile-time access to the types of the pair's elements, using tuple-like

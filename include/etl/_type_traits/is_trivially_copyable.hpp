@@ -17,8 +17,7 @@ namespace etl {
 /// such types/classes (possibly cv-qualified).
 /// group is_trivial_copyable
 template <typename T>
-struct is_trivially_copyable : etl::bool_constant<__is_trivially_copyable(T)> {
-};
+struct is_trivially_copyable : etl::bool_constant<__is_trivially_copyable(T)> { };
 
 template <typename T>
 inline constexpr bool is_trivially_copyable_v = __is_trivially_copyable(T);

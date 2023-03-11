@@ -13,13 +13,11 @@ namespace etl {
 /// provides the member constant value equal to true. For any other type, value
 /// is false.
 template <typename T>
-struct is_const : etl::false_type {
-};
+struct is_const : etl::false_type { };
 
 /// \exclude
 template <typename T>
-struct is_const<T const> : etl::true_type {
-};
+struct is_const<T const> : etl::true_type { };
 
 template <typename T>
 inline constexpr bool is_const_v = etl::is_const<T>::value;

@@ -98,11 +98,9 @@ struct inplace_function;
 
 namespace detail {
 template <typename>
-struct is_inplace_function : false_type {
-};
+struct is_inplace_function : false_type { };
 template <typename Sig, size_t Cap, size_t Align>
-struct is_inplace_function<inplace_function<Sig, Cap, Align>> : etl::true_type {
-};
+struct is_inplace_function<inplace_function<Sig, Cap, Align>> : etl::true_type { };
 } // namespace detail
 
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>

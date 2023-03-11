@@ -10,8 +10,7 @@
 namespace etl {
 
 template <typename T>
-struct is_error_condition_enum : false_type {
-};
+struct is_error_condition_enum : false_type { };
 
 } // namespace etl
 

@@ -19,19 +19,16 @@ template <typename T>
 inline constexpr bool is_member_function_pointer_v = __is_member_function_pointer(T);
 
 template <typename T>
-struct is_member_function_pointer : bool_constant<__is_member_function_pointer(T)> {
-};
+struct is_member_function_pointer : bool_constant<__is_member_function_pointer(T)> { };
 
 #else
 
 namespace detail {
 template <typename T>
-struct is_member_function_pointer_helper : etl::false_type {
-};
+struct is_member_function_pointer_helper : etl::false_type { };
 
 template <typename T, typename U>
-struct is_member_function_pointer_helper<T U::*> : etl::is_function<T> {
-};
+struct is_member_function_pointer_helper<T U::*> : etl::is_function<T> { };
 
 } // namespace detail
 
@@ -39,8 +36,7 @@ struct is_member_function_pointer_helper<T U::*> : etl::is_function<T> {
 /// the member constant value which is equal to true, if T is a non-static
 /// member function pointer type. Otherwise, value is equal to false.
 template <typename T>
-struct is_member_function_pointer : detail::is_member_function_pointer_helper<remove_cv_t<T> > {
-};
+struct is_member_function_pointer : detail::is_member_function_pointer_helper<remove_cv_t<T> > { };
 
 template <typename T>
 inline constexpr bool is_member_function_pointer_v = is_member_function_pointer<T>::value;

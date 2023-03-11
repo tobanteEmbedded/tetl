@@ -17,8 +17,7 @@ namespace etl {
 /// of a program that adds specializations for is_arithmetic or is_arithmetic_v
 /// (since C++17) is undefined.
 template <typename T>
-struct is_arithmetic : bool_constant<is_integral_v<T> || is_floating_point_v<T>> {
-};
+struct is_arithmetic : bool_constant<is_integral_v<T> || is_floating_point_v<T>> { };
 
 template <typename T>
 inline constexpr bool is_arithmetic_v = is_integral_v<T> || is_floating_point_v<T>;

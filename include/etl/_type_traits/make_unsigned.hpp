@@ -70,8 +70,7 @@ struct make_unsigned_helper<unsigned long long> {
 /// provided. The behavior of a program that adds specializations for
 /// make_unsigned is undefined.
 template <typename Type>
-struct make_unsigned : detail::make_unsigned_helper<Type> {
-};
+struct make_unsigned : detail::make_unsigned_helper<Type> { };
 
 template <typename T>
 using make_unsigned_t = typename make_unsigned<T>::type;

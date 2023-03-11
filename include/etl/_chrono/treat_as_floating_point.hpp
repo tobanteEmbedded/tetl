@@ -18,8 +18,7 @@ namespace etl::chrono {
 /// \note etl::chrono::treat_as_floating_point may be specialized for
 /// program-defined types.
 template <typename Rep>
-struct treat_as_floating_point : etl::is_floating_point<Rep> {
-};
+struct treat_as_floating_point : etl::is_floating_point<Rep> { };
 
 template <typename Rep>
 inline constexpr bool treat_as_floating_point_v = treat_as_floating_point<Rep>::value;

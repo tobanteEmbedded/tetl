@@ -16,8 +16,7 @@ namespace etl {
 /// member constant value equal to false. Otherwise, provides a member constant
 /// value equal to etl::is_nothrow_constructible<T, T&&>::value.
 template <typename T>
-struct is_nothrow_move_constructible : is_nothrow_constructible<T, add_rvalue_reference_t<T>> {
-};
+struct is_nothrow_move_constructible : is_nothrow_constructible<T, add_rvalue_reference_t<T>> { };
 
 template <typename T>
 inline constexpr bool is_nothrow_move_constructible_v = is_nothrow_move_constructible<T>::value;

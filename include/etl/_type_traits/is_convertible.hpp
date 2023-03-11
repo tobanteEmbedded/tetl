@@ -40,8 +40,7 @@ auto test_nonvoid_convertible(...) -> etl::false_type;
 template <typename From, typename To>
 struct is_convertible : bool_constant<(decltype(detail::test_returnable<To>(0))::value
                                           && decltype(detail::test_nonvoid_convertible<From, To>(0))::value)
-                                      || (is_void_v<From> && is_void_v<To>)> {
-};
+                                      || (is_void_v<From> && is_void_v<To>)> { };
 
 template <typename From, typename To>
 inline constexpr bool is_convertible_v = is_convertible<From, To>::value;

@@ -13,13 +13,11 @@ namespace etl {
 /// constant value which is equal to true, if T is a rvalue reference type.
 /// Otherwise, value is equal to false.
 template <typename T>
-struct is_rvalue_reference : false_type {
-};
+struct is_rvalue_reference : false_type { };
 
 /// \exclude
 template <typename T>
-struct is_rvalue_reference<T&&> : true_type {
-};
+struct is_rvalue_reference<T&&> : true_type { };
 
 template <typename T>
 inline constexpr bool is_rvalue_reference_v = is_rvalue_reference<T>::value;

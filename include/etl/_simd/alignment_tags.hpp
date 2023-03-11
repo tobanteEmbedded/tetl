@@ -16,8 +16,7 @@ struct vector_aligned_tag { };
 inline constexpr vector_aligned_tag vector_aligned {};
 
 template <size_t>
-struct overaligned_tag {
-};
+struct overaligned_tag { };
 template <size_t N>
 inline constexpr overaligned_tag<N> overaligned {};
 

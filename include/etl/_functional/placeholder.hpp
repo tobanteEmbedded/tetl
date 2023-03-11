@@ -12,8 +12,7 @@
 namespace etl {
 
 template <typename T>
-struct is_placeholder : integral_constant<int, 0> {
-};
+struct is_placeholder : integral_constant<int, 0> { };
 
 namespace detail {
 template <int N>
@@ -24,18 +23,14 @@ struct placeholder_type {
 } // namespace detail
 
 template <int N>
-struct is_placeholder<detail::placeholder_type<N>> : integral_constant<int, N> {
-};
+struct is_placeholder<detail::placeholder_type<N>> : integral_constant<int, N> { };
 
 template <typename T>
-struct is_placeholder<T const> : is_placeholder<T>::type {
-};
+struct is_placeholder<T const> : is_placeholder<T>::type { };
 template <typename T>
-struct is_placeholder<T volatile> : is_placeholder<T>::type {
-};
+struct is_placeholder<T volatile> : is_placeholder<T>::type { };
 template <typename T>
-struct is_placeholder<T const volatile> : is_placeholder<T>::type {
-};
+struct is_placeholder<T const volatile> : is_placeholder<T>::type { };
 
 template <typename T>
 inline constexpr int is_placeholder_v = is_placeholder<T>::value;

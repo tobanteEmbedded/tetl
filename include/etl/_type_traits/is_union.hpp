@@ -12,8 +12,7 @@
 namespace etl {
 
 template <typename T>
-struct is_union : bool_constant<__is_union(T)> {
-};
+struct is_union : bool_constant<__is_union(T)> { };
 
 template <typename T>
 inline constexpr bool is_union_v = __is_union(T);

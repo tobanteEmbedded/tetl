@@ -12,8 +12,7 @@
 namespace etl {
 
 template <typename T>
-struct is_abstract : bool_constant<__is_abstract(T)> {
-};
+struct is_abstract : bool_constant<__is_abstract(T)> { };
 
 template <typename T>
 inline constexpr bool is_abstract_v = __is_abstract(T);

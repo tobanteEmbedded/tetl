@@ -13,11 +13,9 @@ template <typename T>
 struct reference_wrapper;
 
 template <typename T>
-struct is_reference_wrapper : false_type {
-};
+struct is_reference_wrapper : false_type { };
 template <typename U>
-struct is_reference_wrapper<reference_wrapper<U>> : true_type {
-};
+struct is_reference_wrapper<reference_wrapper<U>> : true_type { };
 
 template <typename T>
 inline constexpr bool is_reference_wrapper_v = is_reference_wrapper<T>::value;

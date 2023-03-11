@@ -17,8 +17,7 @@ namespace etl {
 #if defined(__cpp_concepts)
 
 template <typename From, typename To>
-struct is_nothrow_convertible : bool_constant<is_void_v<From> && is_void_v<To>> {
-};
+struct is_nothrow_convertible : bool_constant<is_void_v<From> && is_void_v<To>> { };
 
 template <typename From, typename To>
 // clang-format off

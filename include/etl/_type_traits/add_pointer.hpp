@@ -26,8 +26,7 @@ auto try_add_pointer(...) -> etl::type_identity<T>;
 /// type which is the type T. The behavior of a program that adds
 /// specializations for add_pointer is undefined.
 template <typename T>
-struct add_pointer : decltype(detail::try_add_pointer<T>(0)) {
-};
+struct add_pointer : decltype(detail::try_add_pointer<T>(0)) { };
 
 template <typename T>
 using add_pointer_t = typename etl::add_pointer<T>::type;

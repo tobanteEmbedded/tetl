@@ -15,8 +15,7 @@ template <typename T, typename... Types>
 inline constexpr bool is_any_of_v = disjunction_v<is_same<T, Types>...>;
 
 template <typename T, typename... Types>
-struct is_any_of : bool_constant<is_any_of_v<T, Types...>> {
-};
+struct is_any_of : bool_constant<is_any_of_v<T, Types...>> { };
 
 } // namespace etl
 

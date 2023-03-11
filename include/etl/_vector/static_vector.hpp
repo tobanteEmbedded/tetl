@@ -253,7 +253,7 @@ struct static_vector_non_trivial_storage {
     /// \brief Constructs an element in-place at the end of the embedded
     /// storage.
     template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<T>)>
-    auto emplace_back(Args&&... args) noexcept(noexcept(new (end()) T(forward<Args>(args)...))) -> void
+    auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(forward<Args>(args)...))) -> void
     {
         TETL_ASSERT(!full());
         new (end()) T(forward<Args>(args)...);
@@ -298,7 +298,7 @@ protected:
 private:
     using raw_type     = remove_const_t<T>;
     using aligned      = aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
-    using storage_type = conditional_t<!is_const_v<T>, aligned, const aligned>;
+    using storage_type = conditional_t<!is_const_v<T>, aligned, aligned const>;
 
     alignas(alignof(T)) storage_type data_[Capacity];
     size_type size_ = 0;
@@ -435,7 +435,7 @@ public:
         return move_insert(position, &x, &x + 1);
     }
 
-    constexpr auto insert(const_iterator position, size_type n, const T& x) noexcept(noexcept(push_back(x)))
+    constexpr auto insert(const_iterator position, size_type n, T const& x) noexcept(noexcept(push_back(x)))
         -> enable_if_t<is_copy_constructible_v<T>, iterator>
     {
         assert_iterator_in_range(position);
@@ -461,8 +461,8 @@ public:
 
     template <typename InputIt>
     constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
-        -> enable_if_t<
-            detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>,
+        -> enable_if_t<detail::InputIterator<InputIt>
+                           && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>,
             iterator>
     {
         assert_iterator_in_range(position);

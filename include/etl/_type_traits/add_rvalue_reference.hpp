@@ -18,8 +18,7 @@ auto try_add_rvalue_reference(...) -> etl::type_identity<T>;
 
 /// \brief Creates a rvalue reference type of T.
 template <typename T>
-struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0)) {
-};
+struct add_rvalue_reference : decltype(detail::try_add_rvalue_reference<T>(0)) { };
 
 template <typename T>
 using add_rvalue_reference_t = typename etl::add_rvalue_reference<T>::type;

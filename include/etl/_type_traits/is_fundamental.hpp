@@ -16,8 +16,7 @@ namespace etl {
 /// nullptr_t), provides the member constant value equal true. For any other
 /// type, value is false.
 template <typename T>
-struct is_fundamental : bool_constant<is_arithmetic_v<T> || is_void_v<T> || is_null_pointer_v<T>> {
-};
+struct is_fundamental : bool_constant<is_arithmetic_v<T> || is_void_v<T> || is_null_pointer_v<T>> { };
 
 template <typename T>
 inline constexpr bool is_fundamental_v = is_fundamental<T>::value;

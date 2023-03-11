@@ -339,7 +339,7 @@ static auto test() -> bool
             auto calledFloat = false;
             auto funcs       = etl::overload {
                 [&calledFloat](float /*val*/) -> void { calledFloat = true; },
-                [&calledT](T /*val*/) -> void { calledT= true; },
+                [&calledT](T /*val*/) -> void { calledT = true; },
             };
 
             auto v3 = variant_t { T { 1 } };

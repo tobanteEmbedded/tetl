@@ -16,7 +16,7 @@ namespace etl {
 
 namespace detail {
 template <typename T>
-inline constexpr auto move_if_noexcept_cond = is_nothrow_move_constructible_v<T>&& is_copy_constructible_v<T>;
+inline constexpr auto move_if_noexcept_cond = is_nothrow_move_constructible_v<T> && is_copy_constructible_v<T>;
 } // namespace detail
 
 /// \brief  Conditionally convert a value to an rvalue.

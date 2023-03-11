@@ -13,8 +13,7 @@ namespace etl {
 
 namespace detail {
 template <typename R, typename = void>
-struct coro_traits {
-};
+struct coro_traits { };
 
 template <typename R>
 struct coro_traits<R, void_t<typename R::promise_type>> {
@@ -23,8 +22,7 @@ struct coro_traits<R, void_t<typename R::promise_type>> {
 } // namespace detail
 
 template <typename R, typename... Args>
-struct coroutine_traits : detail::coro_traits<R> {
-};
+struct coroutine_traits : detail::coro_traits<R> { };
 
 } // namespace etl
 

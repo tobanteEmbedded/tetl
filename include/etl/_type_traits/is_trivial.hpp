@@ -18,8 +18,7 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/types/is_trivial
 template <typename T>
-struct is_trivial : bool_constant<is_trivially_copyable_v<T> and is_trivially_default_constructible_v<T>> {
-};
+struct is_trivial : bool_constant<is_trivially_copyable_v<T> and is_trivially_default_constructible_v<T>> { };
 
 template <typename T>
 inline constexpr bool is_trivial_v = is_trivial<T>::value;

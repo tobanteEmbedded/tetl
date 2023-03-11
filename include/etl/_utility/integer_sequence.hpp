@@ -14,8 +14,7 @@ namespace etl {
 
 namespace detail {
 template <size_t...>
-struct tuple_indices {
-};
+struct tuple_indices { };
 } // namespace detail
 
 template <typename T, T... Ints>

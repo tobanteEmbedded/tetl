@@ -13,8 +13,7 @@ namespace etl {
 /// that allows users to influence the result of common_reference for user-defined
 /// types (typically proxy references). The primary template is empty.
 template <typename T, typename U, template <typename> typename TQ, template <typename> typename UQ>
-struct basic_common_reference {
-};
+struct basic_common_reference { };
 
 /// \brief Determines the common reference type of the types T..., that is, the type to which all the types in T... can
 /// be converted or bound. If such a type exists (as determined according to the rules below), the member type names
@@ -25,8 +24,7 @@ struct common_reference;
 
 // if sizeof...(T) is zero
 template <>
-struct common_reference<> {
-};
+struct common_reference<> { };
 
 // if sizeof...(T) is one
 template <typename T>

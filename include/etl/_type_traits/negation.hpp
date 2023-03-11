@@ -11,8 +11,7 @@ namespace etl {
 
 /// \brief Forms the logical negation of the type trait B.
 template <typename B>
-struct negation : etl::bool_constant<!bool(B::value)> {
-};
+struct negation : etl::bool_constant<!bool(B::value)> { };
 
 template <typename B>
 inline constexpr bool negation_v = !bool(B::value);

@@ -13,8 +13,7 @@
 
 namespace etl {
 template <typename T>
-struct is_bitmask_type : false_type {
-};
+struct is_bitmask_type : false_type { };
 
 template <typename T>
 inline constexpr auto is_bitmask_type_v = is_bitmask_type<T>::value;

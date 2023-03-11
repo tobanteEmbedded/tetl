@@ -23,8 +23,7 @@ struct is_object;
 
 #if __has_builtin(__is_object)
 template <typename T>
-struct is_object : bool_constant<__is_object(T)> {
-};
+struct is_object : bool_constant<__is_object(T)> { };
 
 template <typename T>
 inline constexpr bool is_object_v = __is_object(T);
@@ -32,8 +31,7 @@ inline constexpr bool is_object_v = __is_object(T);
 #else
 
 template <typename T>
-struct is_object : bool_constant<is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T> > {
-};
+struct is_object : bool_constant<is_scalar_v<T> || is_array_v<T> || is_union_v<T> || is_class_v<T> > { };
 
 template <typename T>
 inline constexpr bool is_object_v = is_object<T>::value;

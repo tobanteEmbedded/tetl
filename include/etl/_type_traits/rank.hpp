@@ -15,16 +15,13 @@ namespace etl {
 /// behavior of a program that adds specializations for rank or rank_v is
 /// undefined.
 template <typename T>
-struct rank : integral_constant<size_t, 0> {
-};
+struct rank : integral_constant<size_t, 0> { };
 
 template <typename T>
-struct rank<T[]> : integral_constant<size_t, rank<T>::value + 1> {
-};
+struct rank<T[]> : integral_constant<size_t, rank<T>::value + 1> { };
 
 template <typename T, size_t N>
-struct rank<T[N]> : integral_constant<size_t, rank<T>::value + 1> {
-};
+struct rank<T[N]> : integral_constant<size_t, rank<T>::value + 1> { };
 
 template <typename Type>
 inline constexpr size_t rank_v = rank<Type>::value;

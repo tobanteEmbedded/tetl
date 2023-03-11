@@ -14,8 +14,7 @@ namespace etl {
 /// R1 is greater than or equal to the ratio R2, provides the member constant
 /// value equal true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_greater_equal : bool_constant<(R1::num * R2::den >= R2::num * R1::den)> {
-};
+struct ratio_greater_equal : bool_constant<(R1::num * R2::den >= R2::num * R1::den)> { };
 
 template <typename R1, typename R2>
 inline constexpr bool ratio_greater_equal_v = ratio_greater_equal<R1, R2>::value;

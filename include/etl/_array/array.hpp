@@ -208,8 +208,7 @@ constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(noexcept(lhs.sw
 /// \brief Provides access to the number of elements in an array as a
 /// compile-time constant expression.
 template <typename T, size_t N>
-struct tuple_size<array<T, N>> : integral_constant<size_t, N> {
-};
+struct tuple_size<array<T, N>> : integral_constant<size_t, N> { };
 
 /// \brief Provides compile-time indexed access to the type of the elements of
 /// the array using tuple-like interface.
@@ -273,7 +272,7 @@ template <size_t Index, typename T, size_t Size>
 }
 
 template <size_t Index, typename T, size_t Size>
-[[nodiscard]] constexpr auto get(array<T, Size> const& array) noexcept -> const T&
+[[nodiscard]] constexpr auto get(array<T, Size> const& array) noexcept -> T const&
 {
     static_assert(Index < Size, "array index out of range");
     return array[Index];
@@ -287,7 +286,7 @@ template <size_t Index, typename T, size_t Size>
 }
 
 template <size_t Index, typename T, size_t Size>
-[[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> const T&&
+[[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> T const&&
 {
     static_assert(Index < Size, "array index out of range");
     return move(array[Index]);

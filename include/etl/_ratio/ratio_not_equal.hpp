@@ -14,8 +14,7 @@ namespace etl {
 /// ratios R1 and R2 are not equal, provides the member constant value equal
 /// true. Otherwise, value is false.
 template <typename R1, typename R2>
-struct ratio_not_equal : bool_constant<!ratio_equal_v<R1, R2>> {
-};
+struct ratio_not_equal : bool_constant<!ratio_equal_v<R1, R2>> { };
 
 template <typename R1, typename R2>
 inline constexpr bool ratio_not_equal_v = ratio_not_equal<R1, R2>::value;

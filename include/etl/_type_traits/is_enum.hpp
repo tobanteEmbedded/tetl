@@ -12,8 +12,7 @@
 namespace etl {
 
 template <typename T>
-struct is_enum : bool_constant<__is_enum(T)> {
-};
+struct is_enum : bool_constant<__is_enum(T)> { };
 
 template <typename T>
 inline constexpr bool is_enum_v = __is_enum(T);

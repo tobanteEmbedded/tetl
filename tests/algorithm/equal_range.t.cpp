@@ -19,7 +19,7 @@ constexpr auto test() -> bool
     struct S {
         constexpr S(T n, char na) : number { n }, name { na } { }
 
-        constexpr auto operator<(const S& s) const -> bool { return number < s.number; }
+        constexpr auto operator<(S const& s) const -> bool { return number < s.number; }
 
         T number;
         char name;

@@ -21,8 +21,7 @@ struct is_trivially_destructible;
 #if __has_builtin(__is_trivially_destructible)
 
 template <typename T>
-struct is_trivially_destructible : bool_constant<__is_trivially_destructible(T)> {
-};
+struct is_trivially_destructible : bool_constant<__is_trivially_destructible(T)> { };
 
 template <typename T>
 inline constexpr bool is_trivially_destructible_v = __is_trivially_destructible(T);
@@ -30,8 +29,7 @@ inline constexpr bool is_trivially_destructible_v = __is_trivially_destructible(
 #else
 
 template <typename T>
-struct is_trivially_destructible : bool_constant<__has_trivial_destructor(T)> {
-};
+struct is_trivially_destructible : bool_constant<__has_trivial_destructor(T)> { };
 
 template <typename T>
 inline constexpr bool is_trivially_destructible_v = __has_trivial_destructor(T);

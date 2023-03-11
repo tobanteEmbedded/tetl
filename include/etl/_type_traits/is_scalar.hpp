@@ -25,8 +25,7 @@ struct is_scalar;
 #if __has_builtin(__is_scalar)
 
 template <typename T>
-struct is_scalar : bool_constant<__is_scalar(T)> {
-};
+struct is_scalar : bool_constant<__is_scalar(T)> { };
 
 template <typename T>
 
@@ -34,10 +33,8 @@ inline constexpr bool is_scalar_v = __is_scalar(T);
 #else
 
 template <typename T>
-struct is_scalar
-    : bool_constant<
-          is_arithmetic_v<T> || is_enum_v<T> || is_pointer_v<T> || is_member_pointer_v<T> || is_null_pointer_v<T> > {
-};
+struct is_scalar : bool_constant<is_arithmetic_v<T> || is_enum_v<T> || is_pointer_v<T> || is_member_pointer_v<T>
+                                 || is_null_pointer_v<T> > { };
 
 template <typename T>
 

@@ -7,8 +7,7 @@
 
 namespace etl::detail {
 template <bool CanCopy, bool CanMove>
-struct sfinae_ctor_base {
-};
+struct sfinae_ctor_base { };
 template <>
 struct sfinae_ctor_base<false, false> {
     sfinae_ctor_base()                                           = default;
@@ -35,8 +34,7 @@ struct sfinae_ctor_base<false, true> {
 };
 
 template <bool CanCopy, bool CanMove>
-struct sfinae_assign_base {
-};
+struct sfinae_assign_base { };
 template <>
 struct sfinae_assign_base<false, false> {
     sfinae_assign_base()                                             = default;

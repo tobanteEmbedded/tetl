@@ -16,8 +16,7 @@ namespace etl {
 /// true. Otherwise, value is false. Access checks are performed as if from a
 /// context unrelated to either type.
 template <typename T, typename U>
-struct is_trivially_assignable : bool_constant<__is_trivially_assignable(T, U)> {
-};
+struct is_trivially_assignable : bool_constant<__is_trivially_assignable(T, U)> { };
 
 template <typename T, typename U>
 inline constexpr bool is_trivially_assignable_v = is_trivially_assignable<T, U>::value;

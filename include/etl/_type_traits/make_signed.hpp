@@ -75,8 +75,7 @@ struct make_signed_helper<unsigned long long> {
 /// static_assert(is_same_v<make_signed_t<unsigned>, int>);
 /// ```
 template <typename Type>
-struct make_signed : detail::make_signed_helper<Type> {
-};
+struct make_signed : detail::make_signed_helper<Type> { };
 
 template <typename T>
 using make_signed_t = typename make_signed<T>::type;

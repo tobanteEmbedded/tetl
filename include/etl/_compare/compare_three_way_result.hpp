@@ -23,11 +23,10 @@ using compare_three_way_result_t = decltype(
 // clang-format on
 
 template <typename T, typename U = T>
-struct compare_three_way_result {
-};
+struct compare_three_way_result { };
 
 template <typename T, typename U>
-requires requires { typename compare_three_way_result_t<T, U>; }
+    requires requires { typename compare_three_way_result_t<T, U>; }
 struct compare_three_way_result<T, U> {
     using type = compare_three_way_result_t<T, U>;
 };

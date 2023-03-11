@@ -111,14 +111,14 @@ struct generic : fallback<generic<T, N>> {
     using array = array<T, N>;
 
     static void copy_to(array v, T* p) { copy(begin(v), end(v), p); }
-    static array copy_from(const T* p)
+    static array copy_from(T const* p)
     {
         array v;
         copy(p, p + N, v.data());
         return v;
     }
     static T element(array v, unsigned i) { return v[i]; }
-    static void set_element(array& v, unsigned i, const T& x) { v[i] = x; }
+    static void set_element(array& v, unsigned i, T const& x) { v[i] = x; }
 };
 
 namespace abi {

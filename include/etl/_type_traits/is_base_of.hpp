@@ -40,8 +40,7 @@ struct is_base_of
           && decltype(detail::test_pre_is_base_of<Base, Derived>(0))::value
     >
 // clang-format on
-{
-};
+{ };
 
 template <typename Base, typename Derived>
 inline constexpr bool is_base_of_v = is_base_of<Base, Derived>::value;

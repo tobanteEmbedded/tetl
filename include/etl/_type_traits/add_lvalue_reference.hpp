@@ -19,8 +19,7 @@ auto try_add_lvalue_reference(...) -> etl::type_identity<T>;
 
 /// \brief Creates a lvalue reference type of T.
 template <typename T>
-struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0)) {
-};
+struct add_lvalue_reference : decltype(detail::try_add_lvalue_reference<T>(0)) { };
 
 template <typename T>
 using add_lvalue_reference_t = typename etl::add_lvalue_reference<T>::type;

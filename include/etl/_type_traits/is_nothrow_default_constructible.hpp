@@ -22,8 +22,7 @@ namespace etl {
 /// The behavior of a program that adds specializations for any of the templates
 /// described on this page is undefined.
 template <typename T>
-struct is_nothrow_default_constructible : is_nothrow_constructible<T> {
-};
+struct is_nothrow_default_constructible : is_nothrow_constructible<T> { };
 
 template <typename T>
 inline constexpr bool is_nothrow_default_constructible_v = is_nothrow_default_constructible<T>::value;

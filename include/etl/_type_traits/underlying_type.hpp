@@ -18,15 +18,13 @@ struct underlying_type_impl {
 };
 
 template <typename T>
-struct underlying_type_impl<T, false> {
-};
+struct underlying_type_impl<T, false> { };
 
 } // namespace detail
 
 /// \brief The underlying type of an enum.
 template <typename T>
-struct underlying_type : detail::underlying_type_impl<T> {
-};
+struct underlying_type : detail::underlying_type_impl<T> { };
 
 template <typename T>
 using underlying_type_t = typename etl::underlying_type<T>::type;

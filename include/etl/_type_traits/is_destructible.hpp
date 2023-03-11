@@ -39,16 +39,13 @@ template <typename T, bool = etl::disjunction<etl::is_void<T>, etl::is_function<
 struct is_destructible_safe;
 
 template <typename T>
-struct is_destructible_safe<T, false, false> : is_destructible_impl<typename etl::remove_all_extents_t<T>>::type {
-};
+struct is_destructible_safe<T, false, false> : is_destructible_impl<typename etl::remove_all_extents_t<T>>::type { };
 
 template <typename T>
-struct is_destructible_safe<T, true, false> : etl::false_type {
-};
+struct is_destructible_safe<T, true, false> : etl::false_type { };
 
 template <typename T>
-struct is_destructible_safe<T, false, true> : etl::true_type {
-};
+struct is_destructible_safe<T, false, true> : etl::true_type { };
 
 } // namespace detail
 
@@ -60,18 +57,15 @@ struct is_destructible_safe<T, false, true> : etl::true_type {
 ///
 /// https://en.cppreference.com/w/cpp/types/is_destructible
 template <typename T>
-struct is_destructible : detail::is_destructible_safe<T> {
-};
+struct is_destructible : detail::is_destructible_safe<T> { };
 
 /// \exclude
 template <typename Type>
-struct is_destructible<Type[]> : false_type {
-};
+struct is_destructible<Type[]> : false_type { };
 
 /// \exclude
 template <>
-struct is_destructible<void> : false_type {
-};
+struct is_destructible<void> : false_type { };
 
 template <typename T>
 inline constexpr auto is_destructible_v = is_destructible<T>::value;

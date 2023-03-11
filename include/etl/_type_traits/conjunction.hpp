@@ -16,8 +16,7 @@ inline constexpr bool conjunction_v = (B::value && ...);
 /// \brief Forms the logical conjunction of the type traits B..., effectively
 /// performing a logical AND on the sequence of traits.
 template <typename... B>
-struct conjunction : bool_constant<conjunction_v<B...>> {
-};
+struct conjunction : bool_constant<conjunction_v<B...>> { };
 
 } // namespace etl
 

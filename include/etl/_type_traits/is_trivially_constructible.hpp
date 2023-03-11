@@ -15,8 +15,7 @@ namespace etl {
 /// trivial. For the purposes of this check, the call to etl::declval is
 /// considered trivial.
 template <typename T, typename... Args>
-struct is_trivially_constructible : bool_constant<__is_trivially_constructible(T)> {
-};
+struct is_trivially_constructible : bool_constant<__is_trivially_constructible(T)> { };
 
 template <typename T, typename... Args>
 inline constexpr bool is_trivially_constructible_v = is_trivially_constructible<T, Args...>::value;

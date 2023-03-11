@@ -16,8 +16,7 @@ inline constexpr bool disjunction_v = (B::value || ...);
 /// \brief Forms the logical disjunction of the type traits B..., effectively
 /// performing a logical OR on the sequence of traits.
 template <typename... B>
-struct disjunction : bool_constant<disjunction_v<B...>> {
-};
+struct disjunction : bool_constant<disjunction_v<B...>> { };
 
 } // namespace etl
 

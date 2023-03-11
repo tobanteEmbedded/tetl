@@ -16,8 +16,7 @@ namespace etl {
 /// member constant value equal to false. Otherwise, provides a member constant
 /// value equal to etl::is_trivially_constructible<T, T&&>::value.
 template <typename T>
-struct is_trivially_move_constructible : etl::is_trivially_constructible<T, etl::add_rvalue_reference_t<T>> {
-};
+struct is_trivially_move_constructible : etl::is_trivially_constructible<T, etl::add_rvalue_reference_t<T>> { };
 
 template <typename T>
 inline constexpr auto is_trivially_move_constructible_v = etl::is_trivially_move_constructible<T>::value;

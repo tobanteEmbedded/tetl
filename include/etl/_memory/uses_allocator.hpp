@@ -13,20 +13,17 @@ namespace etl {
 
 namespace detail {
 template <typename Type, typename Alloc, typename = void>
-struct uses_allocator_impl : false_type {
-};
+struct uses_allocator_impl : false_type { };
 
 template <typename Type, typename Alloc>
 struct uses_allocator_impl<Type, Alloc, void_t<typename Type::allocator_type>>
-    : is_convertible<Alloc, typename Type::allocator_type>::type {
-};
+    : is_convertible<Alloc, typename Type::allocator_type>::type { };
 } // namespace detail
 
 /// \brief If T has a member typedef allocator_type which is convertible from
 /// Alloc, the member constant value is true. Otherwise value is false.
 template <typename Type, typename Alloc>
-struct uses_allocator : detail::uses_allocator_impl<Type, Alloc>::type {
-};
+struct uses_allocator : detail::uses_allocator_impl<Type, Alloc>::type { };
 
 /// \brief If T has a member typedef allocator_type which is convertible from
 /// Alloc, the member constant value is true. Otherwise value is false.

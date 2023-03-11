@@ -18,8 +18,7 @@ template <typename T>
 inline constexpr bool is_transparent_v<T, void_t<typename T::is_transparent>> = true;
 
 template <typename T>
-struct is_transparent : bool_constant<is_transparent_v<T>> {
-};
+struct is_transparent : bool_constant<is_transparent_v<T>> { };
 
 } // namespace etl::detail
 

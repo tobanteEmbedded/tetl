@@ -16,8 +16,7 @@ namespace etl {
 /// type, value is false. If T is a class type, T shall be a complete type;
 /// otherwise, the behavior is undefined.
 template <typename T>
-struct is_final : bool_constant<__is_final(T)> {
-};
+struct is_final : bool_constant<__is_final(T)> { };
 
 template <typename T>
 inline constexpr bool is_final_v = __is_final(T);
