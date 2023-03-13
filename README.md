@@ -34,7 +34,7 @@ auto main() -> int
 ```
 
 ```sh
-g++ -Wall -Wextra -Wpedantic -std=c++17 -I path/to/tetl/include main.cpp
+g++ -Wall -Wextra -Wpedantic -std=c++20 -I path/to/tetl/include main.cpp
 ```
 
 For examples look at the [examples](./examples) subdirectory or the test files in [tests](./tests). The [API reference](https://tobanteembedded.github.io/tetl-docs/) is currently work in progress. I'm switching from doxygen to standardese, which still has some bugs, so some parts of the docs may still be missing.
@@ -78,7 +78,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 - 100% portable (no STL headers required, minimum of C headers)
 - Header only
-- C++17 and beyond (freestanding or hosted)
+- C++20 and beyond (freestanding or hosted)
 - Similar API to the STL
 - No dynamic memory
 - `constexpr` all the things
@@ -144,7 +144,7 @@ git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/tetl
 ### Command Line / Makefile
 
 ```make
-CXXFLAGS += -std=c++17 -I3rd_party/tetl
+CXXFLAGS += -std=c++20 -I3rd_party/tetl
 ```
 
 ### CMake
@@ -168,7 +168,7 @@ Add `tetl` as a git submodule, then add these lines to your `platformio.ini`:
 ; Most Arduino code does not compile unless you have GNU extensions enabled.
 [env:yourenv]
 build_unflags = -std=gnu++11
-build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
+build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 ```
 
 ## Header Overview
@@ -652,8 +652,6 @@ build_flags = -std=gnu++17 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/span.hpp`](./include/etl/span.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [span](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1750377555)
-- **Changes:**
-  - None. Available in C++17.
 
 ### stack
 
@@ -778,7 +776,6 @@ auto main() -> int
 #endif
 
   // Detect C++ standard
-  if (etl::current_standard == language_standard::cpp_17) { puts("using C++17"); }
   if (etl::current_standard == language_standard::cpp_20) { puts("using C++20"); }
   if (etl::current_standard == language_standard::cpp_23) { puts("using C++23"); }
 

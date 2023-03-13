@@ -183,12 +183,12 @@ def run_all_benchmarks(cpp_std, o):
 
 def main():
     if len(sys.argv) != 2:
-        print(f'Usage: {sys.argv[0]} [17,20,2b]')
+        print(f'Usage: {sys.argv[0]} [20,2b]')
         exit(-1)
 
-    valid_cxx_std = ['17', '20', '2b']
+    valid_cxx_std = ['20', '2b']
     if sys.argv[1] not in valid_cxx_std:
-        print(f'Usage: {sys.argv[0]} [17,20,2b]')
+        print(f'Usage: {sys.argv[0]} [20,2b]')
         exit(-1)
 
     run_all_benchmarks(sys.argv[1], 'O0')

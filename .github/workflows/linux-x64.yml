@@ -16,7 +16,7 @@ jobs:
             { cc: clang-15, cxx: clang++-15 },
             { cc: clang-16, cxx: clang++-16 },
           ]
-        cxx_std: [17, 20, 23]
+        cxx_std: [20, 23]
       fail-fast: false
     runs-on: ubuntu-22.04
     name: Linux x64 ${{ matrix.config.cc }} c++${{ matrix.cxx_std }}

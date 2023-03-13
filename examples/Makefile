@@ -1,5 +1,5 @@
 ifndef CXXSTD
-	CXXSTD := 17
+	CXXSTD := 20
 endif
 
 ifdef ARM

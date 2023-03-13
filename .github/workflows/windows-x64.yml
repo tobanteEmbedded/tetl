@@ -8,7 +8,7 @@ jobs:
       matrix:
         image: [windows-2019, windows-2022]
         compiler: ["Visual Studio", "ClangCL", "clang"]
-        cxx: [17, 20, 23]
+        cxx: [20, 23]
         exclude:
           - image: windows-2019
             cxx: 23
