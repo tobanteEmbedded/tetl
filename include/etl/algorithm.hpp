@@ -18,7 +18,6 @@
 #include "etl/_algorithm/all_of.hpp"
 #include "etl/_algorithm/any_of.hpp"
 #include "etl/_algorithm/binary_search.hpp"
-#include "etl/_algorithm/bubble_sort.hpp"
 #include "etl/_algorithm/clamp.hpp"
 #include "etl/_algorithm/copy.hpp"
 #include "etl/_algorithm/copy_backward.hpp"
@@ -40,7 +39,7 @@
 #include "etl/_algorithm/generate.hpp"
 #include "etl/_algorithm/generate_n.hpp"
 #include "etl/_algorithm/includes.hpp"
-#include "etl/_algorithm/insertion_sort.hpp"
+#include "etl/_algorithm/inplace_merge.hpp"
 #include "etl/_algorithm/is_partitioned.hpp"
 #include "etl/_algorithm/is_permutation.hpp"
 #include "etl/_algorithm/is_sorted.hpp"
@@ -90,5 +89,10 @@
 #include "etl/_algorithm/unique.hpp"
 #include "etl/_algorithm/unique_copy.hpp"
 #include "etl/_algorithm/upper_bound.hpp"
+
+// extra sort algorithms
+#include "etl/_algorithm/bubble_sort.hpp"
+#include "etl/_algorithm/insertion_sort.hpp"
+#include "etl/_algorithm/merge_sort.hpp"
 
 #endif // TETL_ALGORITHM_HPP

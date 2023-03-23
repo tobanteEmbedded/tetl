@@ -312,6 +312,58 @@ constexpr auto test_insertion_sort() -> bool
     return true;
 }
 
+template <typename T>
+constexpr auto test_merge_sort() -> bool
+{
+
+    // already merge_sorted
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 2 };
+        src[2]   = T { 3 };
+        src[3]   = T { 4 };
+
+        etl::merge_sort(begin(src), end(src), etl::less<T> {});
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // reversed
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 4 };
+        src[1]   = T { 3 };
+        src[2]   = T { 2 };
+        src[3]   = T { 1 };
+
+        etl::merge_sort(begin(src), end(src));
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // custom compare
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 1 };
+        src[2]   = T { 56 };
+        src[3]   = T { 42 };
+
+        etl::merge_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        assert(src[0] == T { 56 });
+        assert(src[1] == T { 42 });
+        assert(src[2] == T { 1 });
+        assert(src[3] == T { 1 });
+    }
+
+    return true;
+}
+
 constexpr auto test_all() -> bool
 {
     assert(test_sort<etl::uint8_t>());
@@ -346,6 +398,17 @@ constexpr auto test_all() -> bool
     assert(test_insertion_sort<etl::int64_t>());
     assert(test_insertion_sort<float>());
     assert(test_insertion_sort<double>());
+
+    assert(test_merge_sort<etl::uint8_t>());
+    assert(test_merge_sort<etl::int8_t>());
+    assert(test_merge_sort<etl::uint16_t>());
+    assert(test_merge_sort<etl::int16_t>());
+    assert(test_merge_sort<etl::uint32_t>());
+    assert(test_merge_sort<etl::int32_t>());
+    assert(test_merge_sort<etl::uint64_t>());
+    assert(test_merge_sort<etl::int64_t>());
+    assert(test_merge_sort<float>());
+    assert(test_merge_sort<double>());
 
     return true;
 }
