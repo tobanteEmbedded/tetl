@@ -5,7 +5,7 @@
 #ifndef TETL_ALGORITHM_SORT_HPP
 #define TETL_ALGORITHM_SORT_HPP
 
-#include "etl/_algorithm/bubble_sort.hpp"
+#include "etl/_algorithm/gnome_sort.hpp"
 
 namespace etl {
 
@@ -16,7 +16,7 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    bubble_sort(first, last, comp);
+    gnome_sort(first, last, comp);
 }
 
 template <typename RandomIt>

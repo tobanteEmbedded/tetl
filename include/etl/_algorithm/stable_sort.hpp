@@ -5,9 +5,8 @@
 #ifndef TETL_ALGORITHM_STABLE_SORT_HPP
 #define TETL_ALGORITHM_STABLE_SORT_HPP
 
+#include "etl/_algorithm/insertion_sort.hpp"
 #include "etl/_functional/less.hpp"
-#include "etl/_iterator/next.hpp"
-#include "etl/_iterator/prev.hpp"
 
 namespace etl {
 
@@ -17,22 +16,9 @@ namespace etl {
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/stable_sort
 template <typename RandomIt, typename Compare>
-constexpr auto stable_sort(RandomIt first, RandomIt last, Compare cmp) -> void
+constexpr auto stable_sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    for (; first != last; ++first) {
-        auto min = first;
-        for (auto j = next(first, 1); j != last; ++j) {
-            if (cmp(*j, *min)) { min = j; }
-        }
-
-        auto key = *min;
-        while (min != first) {
-            *min = *prev(min, 1);
-            --min;
-        }
-
-        *first = key;
-    }
+    insertion_sort(first, last, comp);
 }
 
 template <typename RandomIt>
