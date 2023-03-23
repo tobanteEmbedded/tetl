@@ -24,7 +24,8 @@ namespace etl {
 template <typename BidirIt, typename Compare>
 constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare comp) -> void
 {
-    auto left = begin, right = mid;
+    auto left  = begin;
+    auto right = mid;
     while (left != mid && right != end) {
         if (comp(*right, *left)) {
             auto value = move(*right);
