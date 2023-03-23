@@ -5,8 +5,7 @@
 #ifndef TETL_ALGORITHM_SORT_HPP
 #define TETL_ALGORITHM_SORT_HPP
 
-#include "etl/_algorithm/iter_swap.hpp"
-#include "etl/_functional/less.hpp"
+#include "etl/_algorithm/bubble_sort.hpp"
 
 namespace etl {
 
@@ -17,11 +16,7 @@ namespace etl {
 template <typename RandomIt, typename Compare>
 constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 {
-    for (auto i = first; i != last; ++i) {
-        for (auto j = first; j < i; ++j) {
-            if (comp(*i, *j)) { iter_swap(i, j); }
-        }
-    }
+    bubble_sort(first, last, comp);
 }
 
 template <typename RandomIt>

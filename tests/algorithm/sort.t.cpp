@@ -14,7 +14,7 @@
 #include "testing/testing.hpp"
 
 template <typename T>
-constexpr auto test() -> bool
+constexpr auto test_sort() -> bool
 {
 
     // already sorted
@@ -208,18 +208,144 @@ constexpr auto test() -> bool
     return true;
 }
 
+template <typename T>
+constexpr auto test_bubble_sort() -> bool
+{
+
+    // already bubble_sorted
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 2 };
+        src[2]   = T { 3 };
+        src[3]   = T { 4 };
+
+        etl::bubble_sort(begin(src), end(src), etl::less<T> {});
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // reversed
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 4 };
+        src[1]   = T { 3 };
+        src[2]   = T { 2 };
+        src[3]   = T { 1 };
+
+        etl::bubble_sort(begin(src), end(src));
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // custom compare
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 1 };
+        src[2]   = T { 56 };
+        src[3]   = T { 42 };
+
+        etl::bubble_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        assert(src[0] == T { 56 });
+        assert(src[1] == T { 42 });
+        assert(src[2] == T { 1 });
+        assert(src[3] == T { 1 });
+    }
+
+    return true;
+}
+
+template <typename T>
+constexpr auto test_insertion_sort() -> bool
+{
+
+    // already insertion_sorted
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 2 };
+        src[2]   = T { 3 };
+        src[3]   = T { 4 };
+
+        etl::insertion_sort(begin(src), end(src), etl::less<T> {});
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // reversed
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 4 };
+        src[1]   = T { 3 };
+        src[2]   = T { 2 };
+        src[3]   = T { 1 };
+
+        etl::insertion_sort(begin(src), end(src));
+        assert(src[0] == T { 1 });
+        assert(src[1] == T { 2 });
+        assert(src[2] == T { 3 });
+        assert(src[3] == T { 4 });
+    }
+
+    // custom compare
+    {
+        auto src = etl::array<T, 4> {};
+        src[0]   = T { 1 };
+        src[1]   = T { 1 };
+        src[2]   = T { 56 };
+        src[3]   = T { 42 };
+
+        etl::insertion_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
+        assert(src[0] == T { 56 });
+        assert(src[1] == T { 42 });
+        assert(src[2] == T { 1 });
+        assert(src[3] == T { 1 });
+    }
+
+    return true;
+}
+
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    assert(test_sort<etl::uint8_t>());
+    assert(test_sort<etl::int8_t>());
+    assert(test_sort<etl::uint16_t>());
+    assert(test_sort<etl::int16_t>());
+    assert(test_sort<etl::uint32_t>());
+    assert(test_sort<etl::int32_t>());
+    assert(test_sort<etl::uint64_t>());
+    assert(test_sort<etl::int64_t>());
+    assert(test_sort<float>());
+    assert(test_sort<double>());
+
+    assert(test_bubble_sort<etl::uint8_t>());
+    assert(test_bubble_sort<etl::int8_t>());
+    assert(test_bubble_sort<etl::uint16_t>());
+    assert(test_bubble_sort<etl::int16_t>());
+    assert(test_bubble_sort<etl::uint32_t>());
+    assert(test_bubble_sort<etl::int32_t>());
+    assert(test_bubble_sort<etl::uint64_t>());
+    assert(test_bubble_sort<etl::int64_t>());
+    assert(test_bubble_sort<float>());
+    assert(test_bubble_sort<double>());
+
+    assert(test_insertion_sort<etl::uint8_t>());
+    assert(test_insertion_sort<etl::int8_t>());
+    assert(test_insertion_sort<etl::uint16_t>());
+    assert(test_insertion_sort<etl::int16_t>());
+    assert(test_insertion_sort<etl::uint32_t>());
+    assert(test_insertion_sort<etl::int32_t>());
+    assert(test_insertion_sort<etl::uint64_t>());
+    assert(test_insertion_sort<etl::int64_t>());
+    assert(test_insertion_sort<float>());
+    assert(test_insertion_sort<double>());
 
     return true;
 }
