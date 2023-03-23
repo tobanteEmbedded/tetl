@@ -2,14 +2,14 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
-#define ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
+#ifndef ETL_EXPERIMENTAL_MPL_ALGORITHM_FOR_EACH_HPP
+#define ETL_EXPERIMENTAL_MPL_ALGORITHM_FOR_EACH_HPP
 
 #include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
-namespace etl::experimental::meta {
+namespace etl::experimental::mpl {
 
 namespace detail {
 
@@ -38,6 +38,6 @@ constexpr auto for_each_indexed(etl::tuple<Ts...>& t, Func f) -> void
     detail::for_each_impl<true>(indices, t, f);
 }
 
-} // namespace etl::experimental::meta
+} // namespace etl::experimental::mpl
 
-#endif // ETL_EXPERIMENTAL_META_ALGORITHM_FOR_EACH_HPP
+#endif // ETL_EXPERIMENTAL_MPL_ALGORITHM_FOR_EACH_HPP

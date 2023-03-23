@@ -2,15 +2,15 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
-#define ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
+#ifndef ETL_EXPERIMENTAL_MPL_TYPES_TYPE_HPP
+#define ETL_EXPERIMENTAL_MPL_TYPES_TYPE_HPP
 
-#include "etl/experimental/meta/types/integral_constant.hpp"
+#include "etl/experimental/mpl/types/integral_constant.hpp"
 
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
-namespace etl::experimental::meta {
+namespace etl::experimental::mpl {
 
 template <typename T>
 struct type {
@@ -66,6 +66,6 @@ template <typename... Types>
     return etl::tuple<type<etl::decay_t<Types>>...>();
 }
 
-} // namespace etl::experimental::meta
+} // namespace etl::experimental::mpl
 
-#endif // ETL_EXPERIMENTAL_META_TYPES_TYPE_HPP
+#endif // ETL_EXPERIMENTAL_MPL_TYPES_TYPE_HPP

@@ -1,38 +1,38 @@
 /// \copyright Tobias Hienzsch 2019-2021
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
-#include "etl/experimental/meta/meta.hpp"
+#include "etl/experimental/mpl/mpl.hpp"
 
 #include "etl/cstdint.hpp"
 #include "etl/type_traits.hpp"
 
 #include "testing/testing.hpp"
 
-namespace meta = etl::experimental::meta;
+namespace mpl = etl::experimental::mpl;
 
 template <typename T>
 constexpr auto test() -> bool
 {
     {
-        using meta::traits::add_pointer;
-        using meta::traits::is_same;
+        using mpl::traits::add_pointer;
+        using mpl::traits::is_same;
         struct S { };
 
-        assert((is_same(meta::type_c<T>, meta::type_c<T>)));
-        assert((is_same(meta::type_c<T const>, meta::type_c<T const>)));
-        assert((is_same(meta::type_c<T volatile>, meta::type_c<T volatile>)));
+        assert((is_same(mpl::type_c<T>, mpl::type_c<T>)));
+        assert((is_same(mpl::type_c<T const>, mpl::type_c<T const>)));
+        assert((is_same(mpl::type_c<T volatile>, mpl::type_c<T volatile>)));
 
-        assert((!is_same(meta::type_c<T>, meta::type_c<S>)));
-        assert((!is_same(meta::type_c<T const>, meta::type_c<S const>)));
+        assert((!is_same(mpl::type_c<T>, mpl::type_c<S>)));
+        assert((!is_same(mpl::type_c<T const>, mpl::type_c<S const>)));
     }
 
     {
-        using meta::traits::add_pointer;
-        using meta::traits::is_pointer;
+        using mpl::traits::add_pointer;
+        using mpl::traits::is_pointer;
 
-        assert((!is_pointer(meta::type<T> {})));
-        assert((is_pointer(meta::type<T*> {})));
-        assert((is_pointer(add_pointer(meta::type<T> {}))));
+        assert((!is_pointer(mpl::type<T> {})));
+        assert((is_pointer(mpl::type<T*> {})));
+        assert((is_pointer(add_pointer(mpl::type<T> {}))));
     }
 
     return true;

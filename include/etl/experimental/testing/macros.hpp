@@ -13,9 +13,9 @@
 #include "etl/experimental/testing/session.hpp"
 #include "etl/experimental/testing/source_line_info.hpp"
 
-#include "etl/experimental/meta/meta.hpp"
+#include "etl/experimental/mpl/mpl.hpp"
 
-namespace meta = etl::experimental::meta;
+namespace mpl = etl::experimental::mpl;
 
 // The goal of this macro is to avoid evaluation of the arguments, but
 // still have the compiler warn on problems inside...
@@ -29,8 +29,8 @@ namespace meta = etl::experimental::meta;
     static auto template_test_case_function() -> void;                                                                 \
     TETL_PP_STRING_VIEW_ARRAY(type_names, __VA_ARGS__);                                                                \
     static auto runner = []() {                                                                                        \
-        auto types = ::meta::make_type_tuple<TETL_PP_EXPAND(__VA_ARGS__)>();                                           \
-        ::meta::for_each_indexed(types, [](auto idx, auto const& t) {                                                  \
+        auto types = ::mpl::make_type_tuple<TETL_PP_EXPAND(__VA_ARGS__)>();                                            \
+        ::mpl::for_each_indexed(types, [](auto idx, auto const& t) {                                                   \
             using type_t = typename etl::decay_t<decltype(t)>::name;                                                   \
             etl::test::current_session().add_test(                                                                     \
                 etl::test::name_and_tags {                                                                             \

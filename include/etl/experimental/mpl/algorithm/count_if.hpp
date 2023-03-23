@@ -2,17 +2,17 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
-#define ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
+#ifndef ETL_EXPERIMENTAL_MPL_ALGORITHM_COUNT_IF_HPP
+#define ETL_EXPERIMENTAL_MPL_ALGORITHM_COUNT_IF_HPP
 
-#include "etl/experimental/meta/types/integral_constant.hpp"
-#include "etl/experimental/meta/types/type.hpp"
+#include "etl/experimental/mpl/types/integral_constant.hpp"
+#include "etl/experimental/mpl/types/type.hpp"
 
 #include "etl/cstddef.hpp"
 #include "etl/tuple.hpp"
 #include "etl/type_traits.hpp"
 
-namespace etl::experimental::meta {
+namespace etl::experimental::mpl {
 
 namespace detail {
 
@@ -20,7 +20,7 @@ template <etl::size_t... I, typename... Ts, typename F>
 constexpr auto count_if_impl(index_sequence<I...> /*is*/, tuple<Ts...>& t, F f)
 {
     constexpr int c = ((type<decltype(f(get<I>(t)))>() == type<true_type>() ? 1 : 0) + ...);
-    return meta::integral_constant<int, c> {};
+    return mpl::integral_constant<int, c> {};
 }
 
 } // namespace detail
@@ -32,6 +32,6 @@ constexpr auto count_if(tuple<Ts...>& t, F f)
     return detail::count_if_impl(indices, t, f);
 }
 
-} // namespace etl::experimental::meta
+} // namespace etl::experimental::mpl
 
-#endif // ETL_EXPERIMENTAL_META_ALGORITHM_COUNT_IF_HPP
+#endif // ETL_EXPERIMENTAL_MPL_ALGORITHM_COUNT_IF_HPP
