@@ -73,9 +73,34 @@ private:
     uint8_t count_;
 };
 
-[[nodiscard]] constexpr auto operator==(month const& lhs, month const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(month lhs, month rhs) noexcept -> bool
 {
     return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator!=(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) != static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<=(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>=(month lhs, month rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
 }
 
 inline constexpr auto January   = etl::chrono::month { 1 };

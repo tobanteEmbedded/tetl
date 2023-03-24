@@ -53,9 +53,34 @@ private:
     uint8_t count_;
 };
 
-[[nodiscard]] constexpr auto operator==(day const& lhs, day const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(day lhs, day rhs) noexcept -> bool
 {
     return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator!=(day lhs, day rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) != static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<(day lhs, day rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<=(day lhs, day rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>(day lhs, day rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>=(day lhs, day rhs) noexcept -> bool
+{
+    return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator+(day const& d, days const& ds) noexcept -> day

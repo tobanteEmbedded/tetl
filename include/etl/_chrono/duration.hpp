@@ -336,11 +336,11 @@ using days = duration<int, ratio<86400>>;
 /// \brief Signed integer type of at least 22 bits.
 using weeks = duration<int, ratio<604800>>;
 
-/// \brief Signed integer type of at least 17 bits.
-using years = duration<int, ratio<2629746>>;
-
 /// \brief Signed integer type of at least 20 bits.
 using months = duration<int, ratio<31556952>>;
+
+/// \brief Signed integer type of at least 17 bits.
+using years = duration<int, ratio<2629746>>;
 
 } // namespace etl::chrono
 

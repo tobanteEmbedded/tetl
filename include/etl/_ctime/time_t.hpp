@@ -9,6 +9,10 @@
 
 namespace etl {
 
+/// \brief Arithmetic type capable of representing times.
+/// \details Although not defined, this is almost always an integral value
+///          holding the number of seconds (not counting leap seconds)
+///          since 00:00, Jan 1 1970 UTC, corresponding to POSIX time.
 using time_t = etl::size_t;
 
 } // namespace etl

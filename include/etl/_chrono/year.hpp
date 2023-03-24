@@ -51,7 +51,7 @@ struct year {
 
     [[nodiscard]] constexpr auto is_leap() const noexcept -> bool
     {
-        return (count_ % 4 == 0) && (count_ % 100 != 0 || count_ % 400 == 0);
+        return (count_ % 4 == 0) and (count_ % 100 != 0 or count_ % 400 == 0);
     }
 
     [[nodiscard]] constexpr explicit operator int() const noexcept { return count_; }
@@ -66,9 +66,34 @@ private:
     short count_;
 };
 
-[[nodiscard]] constexpr auto operator==(year const& lhs, year const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(year lhs, year rhs) noexcept -> bool
 {
     return static_cast<int>(lhs) == static_cast<int>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator!=(year lhs, year rhs) noexcept -> bool
+{
+    return static_cast<int>(lhs) != static_cast<int>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<(year lhs, year rhs) noexcept -> bool
+{
+    return static_cast<int>(lhs) < static_cast<int>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator<=(year lhs, year rhs) noexcept -> bool
+{
+    return static_cast<int>(lhs) <= static_cast<int>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>(year lhs, year rhs) noexcept -> bool
+{
+    return static_cast<int>(lhs) > static_cast<int>(rhs);
+}
+
+[[nodiscard]] constexpr auto operator>=(year lhs, year rhs) noexcept -> bool
+{
+    return static_cast<int>(lhs) >= static_cast<int>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator+(year const& lhs, years const& rhs) noexcept -> year
