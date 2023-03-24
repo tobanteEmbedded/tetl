@@ -8,6 +8,7 @@
 #include "etl/_chrono/duration_values.hpp"
 #include "etl/_chrono/treat_as_floating_point.hpp"
 #include "etl/_concepts/requires.hpp"
+#include "etl/_cstdint/int_least_t.hpp"
 #include "etl/_numeric/gcd.hpp"
 #include "etl/_numeric/lcm.hpp"
 #include "etl/_ratio/ratio.hpp"
@@ -313,34 +314,34 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 }
 
 /// \brief Signed integer type of at least 64 bits.
-using nanoseconds = duration<long long, nano>;
+using nanoseconds = duration<int_least64_t, nano>;
 
 /// \brief Signed integer type of at least 55 bits.
-using microseconds = duration<long long, micro>;
+using microseconds = duration<int_least64_t, micro>;
 
 /// \brief Signed integer type of at least 45 bits.
-using milliseconds = duration<long long, milli>;
+using milliseconds = duration<int_least64_t, milli>;
 
 /// \brief Signed integer type of at least 35 bits.
-using seconds = duration<long long>;
+using seconds = duration<int_least64_t>;
 
 /// \brief Signed integer type of at least 29 bits.
-using minutes = duration<int, ratio<60>>;
+using minutes = duration<int_least32_t, ratio<60>>;
 
 /// \brief Signed integer type of at least 23 bits.
-using hours = duration<int, ratio<3600>>;
+using hours = duration<int_least32_t, ratio<3600>>;
 
 /// \brief Signed integer type of at least 25 bits.
-using days = duration<int, ratio<86400>>;
+using days = duration<int_least32_t, ratio<86400>>;
 
 /// \brief Signed integer type of at least 22 bits.
-using weeks = duration<int, ratio<604800>>;
+using weeks = duration<int_least32_t, ratio<604800>>;
 
 /// \brief Signed integer type of at least 20 bits.
-using months = duration<int, ratio<31556952>>;
+using months = duration<int_least32_t, ratio<31556952>>;
 
 /// \brief Signed integer type of at least 17 bits.
-using years = duration<int, ratio<2629746>>;
+using years = duration<int_least32_t, ratio<2629746>>;
 
 } // namespace etl::chrono
 
