@@ -7,6 +7,7 @@
 
 #include <etl/_array/array.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
 
 namespace etl {
@@ -15,6 +16,15 @@ template <typename SizeType, size_t... Extents>
 struct extents {
     using size_type = SizeType;
     using rank_type = size_t;
+
+    // [mdspan.extents.obs], Observers of the multidimensional index space
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
+    {
+        return ((rank_type(Extents == dynamic_extent)) + ... + 0);
+    }
+    [[nodiscard]] static constexpr auto static_extent(rank_type) noexcept -> size_t;
+    [[nodiscard]] constexpr auto extent(rank_type) const noexcept -> size_type;
 
     // [mdspan.extents.ctor], Constructors
     constexpr extents() noexcept = default;
@@ -31,12 +41,6 @@ struct extents {
     template <typename OtherSizeType, size_t N>
     explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const&) noexcept;
 
-    // [mdspan.extents.obs], Observers of the multidimensional index space
-    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
-    // [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return _dynamic_index(rank()); }
-    [[nodiscard]] static constexpr auto static_extent(rank_type) noexcept -> size_t;
-    [[nodiscard]] constexpr auto extent(rank_type) const noexcept -> size_type;
-
     // [mdspan.extents.cmp], extents comparison operators
     template <typename OtherSizeType, size_t... OtherExtents>
     friend constexpr bool operator==(extents const&, extents<OtherSizeType, OtherExtents...> const&) noexcept;
@@ -48,10 +52,12 @@ struct extents {
     //     static constexpr auto index - cast(OtherSizeType&&) noexcept; // exposition only
 
 private:
+    using dextents_storage_t = conditional_t<rank_dynamic() == 0, char, array<size_type, rank_dynamic()>>;
+
     // static constexpr rank_type _dynamic_index(rank_type) noexcept;     // exposition only
     // static constexpr rank_type _dynamic_index_inv(rank_type) noexcept; // exposition only
 
-    array<size_type, rank_dynamic()> dynamicExtents_ {}; // exposition only
+    dextents_storage_t dextents_ {}; // exposition only
 };
 
 // template <typename... Integrals>
