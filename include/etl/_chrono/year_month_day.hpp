@@ -26,7 +26,7 @@ private:
 
         z += 719468;
         Int const era      = (z >= 0 ? z : z - 146096) / 146097;
-        uint32_t const doe = static_cast<uint32_t>(z - era * 146097);
+        auto const doe     = static_cast<uint32_t>(z - era * 146097);
         uint32_t const yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
         Int const y        = static_cast<Int>(yoe) + era * 400;
         uint32_t const doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
@@ -49,7 +49,7 @@ private:
         static_assert(etl::numeric_limits<Int>::digits >= 20, "Not yet ported to a 16 bit signed integer");
         y -= m <= 2;
         const Int era      = (y >= 0 ? y : y - 399) / 400;
-        uint32_t const yoe = static_cast<uint32_t>(y - era * 400);            // [0, 399]
+        auto const yoe     = static_cast<uint32_t>(y - era * 400);            // [0, 399]
         uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
         uint32_t const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]
         return days { era * 146097 + static_cast<Int>(doe) - 719468 };

@@ -21,7 +21,7 @@ struct default_accessor {
 
     template <typename OtherElementType>
         requires is_convertible_v<OtherElementType (*)[], element_type (*)[]>
-    constexpr default_accessor(default_accessor<OtherElementType>) noexcept
+    constexpr default_accessor(default_accessor<OtherElementType> /*unused*/) noexcept
     {
     }
 

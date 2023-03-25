@@ -36,26 +36,27 @@ struct extents {
         return impl(i, make_integer_sequence<size_t, rank()> {});
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type) const noexcept -> size_type;
+    [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> size_type;
 
     // [mdspan.extents.ctor], Constructors
     constexpr extents() noexcept = default;
 
     template <typename OtherSizeType, size_t... OtherExtents>
-    explicit(/*see below*/ true) constexpr extents(extents<OtherSizeType, OtherExtents...> const&) noexcept;
+    explicit(/*see below*/ true) constexpr extents(extents<OtherSizeType, OtherExtents...> const& e) noexcept;
 
     template <typename... OtherSizeTypes>
-    explicit constexpr extents(OtherSizeTypes...) noexcept;
+    explicit constexpr extents(OtherSizeTypes... es) noexcept;
 
     template <typename OtherSizeType, size_t N>
-    explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N>) noexcept;
+    explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N> e) noexcept;
 
     template <typename OtherSizeType, size_t N>
-    explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const&) noexcept;
+    explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const& e) noexcept;
 
     // [mdspan.extents.cmp], extents comparison operators
     template <typename OtherSizeType, size_t... OtherExtents>
-    friend constexpr bool operator==(extents const&, extents<OtherSizeType, OtherExtents...> const&) noexcept;
+    friend constexpr auto operator==(extents const& lhs, extents<OtherSizeType, OtherExtents...> const& rhs) noexcept
+        -> bool;
 
     // // [mdspan.extents.helpers], exposition only helpers
     // constexpr size_t fwd - prod - of - extents(rank_type) const noexcept; // exposition only
