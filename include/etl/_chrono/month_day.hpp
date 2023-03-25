@@ -19,10 +19,10 @@ struct month_day {
     constexpr auto day() const noexcept -> chrono::day { return d_; }
     constexpr auto ok() const noexcept -> bool
     {
-        constexpr auto maxDaysInMonth = array<unsigned char, 12> { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        constexpr auto maxDaysInMonth = array<uint8_t, 12> { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         if (not month().ok()) { return false; }
-        if (static_cast<unsigned>(day()) < 1) { return false; }
-        return static_cast<unsigned>(day()) <= maxDaysInMonth[unsigned { month() }];
+        if (static_cast<uint32_t>(day()) < 1) { return false; }
+        return static_cast<uint32_t>(day()) <= maxDaysInMonth[uint32_t { month() }];
     }
 
 private:

@@ -13,7 +13,7 @@ namespace etl::chrono {
 struct day {
     day() = default;
 
-    constexpr explicit day(unsigned d) noexcept : count_ { static_cast<uint8_t>(d) } { }
+    constexpr explicit day(uint32_t d) noexcept : count_ { static_cast<uint8_t>(d) } { }
 
     constexpr auto operator++() noexcept -> day& { return *this += days { 1 }; }
 
@@ -45,7 +45,7 @@ struct day {
         return *this;
     }
 
-    constexpr explicit operator unsigned() const noexcept { return count_; }
+    constexpr explicit operator uint32_t() const noexcept { return count_; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 32U); }
 
@@ -55,52 +55,52 @@ private:
 
 [[nodiscard]] constexpr auto operator==(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) == static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator!=(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) != static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) != static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator<(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) < static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator<=(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) <= static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator>(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) > static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator>=(day lhs, day rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) >= static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator+(day const& d, days const& ds) noexcept -> day
 {
-    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
+    return day(static_cast<uint32_t>(d) + static_cast<uint32_t>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator+(days const& ds, day const& d) noexcept -> day
 {
-    return day(static_cast<unsigned>(d) + static_cast<unsigned>(ds.count()));
+    return day(static_cast<uint32_t>(d) + static_cast<uint32_t>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& d, days const& ds) noexcept -> day
 {
-    return day(static_cast<unsigned>(d) - static_cast<unsigned>(ds.count()));
+    return day(static_cast<uint32_t>(d) - static_cast<uint32_t>(ds.count()));
 }
 
 [[nodiscard]] constexpr auto operator-(day const& x, day const& y) noexcept -> days
 {
-    return days(int(unsigned(x)) - int(unsigned(y)));
+    return days(int(uint32_t(x)) - int(uint32_t(y)));
 }
 
 } // namespace etl::chrono

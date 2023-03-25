@@ -21,18 +21,18 @@ private:
     template <typename Int>
     [[nodiscard]] static constexpr auto civil_from_days(Int z) noexcept -> year_month_day
     {
-        static_assert(etl::numeric_limits<unsigned>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
+        static_assert(etl::numeric_limits<uint32_t>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
         static_assert(etl::numeric_limits<Int>::digits >= 20, "Not yet ported to a 16 bit signed integer");
 
         z += 719468;
         Int const era      = (z >= 0 ? z : z - 146096) / 146097;
-        unsigned const doe = static_cast<unsigned>(z - era * 146097);
-        unsigned const yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+        uint32_t const doe = static_cast<uint32_t>(z - era * 146097);
+        uint32_t const yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
         Int const y        = static_cast<Int>(yoe) + era * 400;
-        unsigned const doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-        unsigned const mp  = (5 * doy + 2) / 153;
-        unsigned const d   = doy - (153 * mp + 2) / 5 + 1;
-        unsigned const m   = mp < 10 ? mp + 3 : mp - 9;
+        uint32_t const doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+        uint32_t const mp  = (5 * doy + 2) / 153;
+        uint32_t const d   = doy - (153 * mp + 2) / 5 + 1;
+        uint32_t const m   = mp < 10 ? mp + 3 : mp - 9;
 
         return {
             chrono::year { y + (m <= 2) },
@@ -43,15 +43,15 @@ private:
 
     // https://howardhinnant.github.io/date_algorithms.html#days_from_civil
     template <typename Int>
-    [[nodiscard]] static constexpr auto days_from_civil(Int y, unsigned m, unsigned d) noexcept -> days
+    [[nodiscard]] static constexpr auto days_from_civil(Int y, uint32_t m, uint32_t d) noexcept -> days
     {
-        static_assert(etl::numeric_limits<unsigned>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
+        static_assert(etl::numeric_limits<uint32_t>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
         static_assert(etl::numeric_limits<Int>::digits >= 20, "Not yet ported to a 16 bit signed integer");
         y -= m <= 2;
         const Int era      = (y >= 0 ? y : y - 399) / 400;
-        unsigned const yoe = static_cast<unsigned>(y - era * 400);            // [0, 399]
-        unsigned const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
-        unsigned const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]
+        uint32_t const yoe = static_cast<uint32_t>(y - era * 400);            // [0, 399]
+        uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
+        uint32_t const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]
         return days { era * 146097 + static_cast<Int>(doe) - 719468 };
     }
 
@@ -87,7 +87,7 @@ public:
 
     [[nodiscard]] constexpr operator sys_days() const noexcept
     {
-        return sys_days { days_from_civil(int { year() }, unsigned { month() }, unsigned { day() }) };
+        return sys_days { days_from_civil(int32_t { year() }, uint32_t { month() }, uint32_t { day() }) };
     }
 
     [[nodiscard]] constexpr explicit operator local_days() const noexcept

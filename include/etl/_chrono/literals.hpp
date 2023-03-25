@@ -17,7 +17,7 @@ inline namespace chrono_literals {
 /// the calendar.
 constexpr auto operator""_d(unsigned long long d) noexcept -> etl::chrono::day
 {
-    return etl::chrono::day { static_cast<unsigned>(d) };
+    return etl::chrono::day { static_cast<uint32_t>(d) };
 }
 
 /// \brief Forms a etl::chrono::duration literal representing hours.

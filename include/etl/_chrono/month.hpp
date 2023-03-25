@@ -13,7 +13,7 @@ namespace etl::chrono {
 struct month {
     month() = default;
 
-    constexpr explicit month(unsigned d) noexcept : count_ { static_cast<uint8_t>(d) } { }
+    constexpr explicit month(uint32_t d) noexcept : count_ { static_cast<uint8_t>(d) } { }
 
     constexpr auto operator++() noexcept -> month&
     {
@@ -53,7 +53,7 @@ struct month {
         return *this;
     }
 
-    constexpr explicit operator unsigned() const noexcept { return count_; }
+    constexpr explicit operator uint32_t() const noexcept { return count_; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 12U); }
 
@@ -75,32 +75,32 @@ private:
 
 [[nodiscard]] constexpr auto operator==(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) == static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) == static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator!=(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) != static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) != static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator<(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) < static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) < static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator<=(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) <= static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) <= static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator>(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) > static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) > static_cast<uint32_t>(rhs);
 }
 
 [[nodiscard]] constexpr auto operator>=(month lhs, month rhs) noexcept -> bool
 {
-    return static_cast<unsigned>(lhs) >= static_cast<unsigned>(rhs);
+    return static_cast<uint32_t>(lhs) >= static_cast<uint32_t>(rhs);
 }
 
 inline constexpr auto January   = etl::chrono::month { 1 };

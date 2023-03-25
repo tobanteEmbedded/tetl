@@ -29,7 +29,7 @@ struct year_month_weekday {
     constexpr chrono::year year() const noexcept;
     constexpr chrono::month month() const noexcept;
     constexpr chrono::weekday weekday() const noexcept;
-    constexpr unsigned index() const noexcept;
+    constexpr uint32_t index() const noexcept;
     constexpr chrono::weekday_indexed weekday_indexed() const noexcept;
 
     constexpr operator sys_days() const noexcept;
