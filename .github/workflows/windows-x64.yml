@@ -6,12 +6,9 @@ jobs:
   build:
     strategy:
       matrix:
-        image: [windows-2019, windows-2022]
+        image: [windows-2022]
         compiler: ["Visual Studio", "ClangCL", "clang"]
         cxx: [20, 23]
-        exclude:
-          - image: windows-2019
-            cxx: 23
       fail-fast: false
     name: "${{ matrix.image }}: ${{ matrix.compiler }} (C++${{ matrix.cxx }})"
     runs-on: ${{ matrix.image }}
