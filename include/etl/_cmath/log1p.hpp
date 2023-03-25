@@ -6,8 +6,7 @@
 #define TETL_CMATH_LOG1P_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -45,8 +44,8 @@ namespace etl {
 /// more precise than the expression etl::log(1+arg) if arg is close to zero.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log1p
-template <typename T>
-[[nodiscard]] constexpr auto log1p(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
+template <integral T>
+[[nodiscard]] constexpr auto log1p(T arg) noexcept -> double
 {
     return etl::detail::gcem::log1p(static_cast<double>(arg));
 }

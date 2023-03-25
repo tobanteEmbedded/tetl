@@ -6,8 +6,7 @@
 #define TETL_CMATH_LOG_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -39,8 +38,8 @@ namespace etl {
 /// \brief Computes the natural (base e) logarithm of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/log
-template <typename T>
-[[nodiscard]] constexpr auto log(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
+template <integral T>
+[[nodiscard]] constexpr auto log(T arg) noexcept -> double
 {
     return etl::detail::gcem::log(static_cast<double>(arg));
 }

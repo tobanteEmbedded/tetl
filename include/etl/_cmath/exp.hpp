@@ -6,8 +6,7 @@
 #define TETL_CMATH_EXP_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -33,8 +32,8 @@ namespace etl {
 
 /// \brief Computes e (Euler's number, 2.7182...) raised to the given power v
 /// https://en.cppreference.com/w/cpp/numeric/math/exp
-template <typename T>
-[[nodiscard]] constexpr auto exp(T v) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
+template <integral T>
+[[nodiscard]] constexpr auto exp(T v) noexcept -> double
 {
     return etl::detail::gcem::exp(static_cast<double>(v));
 }

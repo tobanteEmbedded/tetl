@@ -6,8 +6,7 @@
 #define TETL_CMATH_LGAMMA_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -45,8 +44,8 @@ namespace etl {
 /// function of arg.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/lgamma
-template <typename T>
-[[nodiscard]] constexpr auto lgamma(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
+template <integral T>
+[[nodiscard]] constexpr auto lgamma(T arg) noexcept -> double
 {
     return etl::detail::gcem::lgamma(static_cast<double>(arg));
 }

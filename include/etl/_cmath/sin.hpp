@@ -6,8 +6,7 @@
 #define TETL_CMATH_SIN_HPP
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -33,8 +32,8 @@ namespace etl {
 
 /// \brief Computes the sine of arg (measured in radians).
 /// https://en.cppreference.com/w/cpp/numeric/math/sin
-template <typename T>
-[[nodiscard]] constexpr auto sin(T arg) noexcept -> etl::enable_if_t<etl::is_integral_v<T>, double>
+template <integral T>
+[[nodiscard]] constexpr auto sin(T arg) noexcept -> double
 {
     return etl::detail::gcem::sin(static_cast<double>(arg));
 }
