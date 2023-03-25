@@ -9,6 +9,7 @@
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
+#include <etl/_utility/integer_sequence.hpp>
 
 namespace etl {
 
@@ -19,11 +20,22 @@ struct extents {
 
     // [mdspan.extents.obs], Observers of the multidimensional index space
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
+
     [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type
     {
         return ((rank_type(Extents == dynamic_extent)) + ... + 0);
     }
-    [[nodiscard]] static constexpr auto static_extent(rank_type) noexcept -> size_t;
+
+    [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> size_t
+    {
+        auto const impl = []<size_t... Idxs>(size_t idx, integer_sequence<size_t, Idxs...>)
+        {
+            return (((Idxs == idx) ? Extents : 0) + ... + 0);
+        };
+
+        return impl(i, make_integer_sequence<size_t, rank()> {});
+    }
+
     [[nodiscard]] constexpr auto extent(rank_type) const noexcept -> size_type;
 
     // [mdspan.extents.ctor], Constructors
