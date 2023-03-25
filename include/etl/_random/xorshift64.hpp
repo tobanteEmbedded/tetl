@@ -52,4 +52,4 @@ private:
 
 } // namespace etl
 
-#endif // TETL_RANDOM_XORSHIFT_HPP
+#endif // TETL_RANDOM_XORSHIFT64_HPP

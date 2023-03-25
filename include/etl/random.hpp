@@ -10,5 +10,8 @@
 #include <etl/_random/generate_canonical.hpp>
 #include <etl/_random/xorshift32.hpp>
 #include <etl/_random/xorshift64.hpp>
+#include <etl/_random/xoshiro128plus.hpp>
+#include <etl/_random/xoshiro128plusplus.hpp>
+#include <etl/_random/xoshiro128starstar.hpp>
 
 #endif // TETL_RANDOM_HPP
