@@ -53,8 +53,8 @@ private:
 
 [[nodiscard]] constexpr auto operator+(year_month_weekday const& lhs, months const& rhs) noexcept -> year_month_weekday
 {
-    auto const _Ym = year_month { lhs.year(), lhs.month() } + rhs;
-    return { _Ym.year(), _Ym.month(), lhs.weekday_indexed() };
+    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
+    return { ym.year(), ym.month(), lhs.weekday_indexed() };
 }
 
 [[nodiscard]] constexpr auto operator+(months const& lhs, year_month_weekday const& rhs) noexcept -> year_month_weekday
