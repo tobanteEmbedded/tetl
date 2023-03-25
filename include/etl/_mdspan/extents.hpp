@@ -7,6 +7,7 @@
 
 #include <etl/_array/array.hpp>
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
 #include <etl/_utility/integer_sequence.hpp>
@@ -36,16 +37,37 @@ struct extents {
         return impl(i, make_integer_sequence<size_t, rank()> {});
     }
 
-    [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> size_type;
+    [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> size_type
+    {
+        return extents_[static_cast<size_t>(i)];
+    }
 
     // [mdspan.extents.ctor], Constructors
     constexpr extents() noexcept = default;
 
     template <typename OtherSizeType, size_t... OtherExtents>
-    explicit(/*see below*/ true) constexpr extents(extents<OtherSizeType, OtherExtents...> const& e) noexcept;
+        requires requires {
+                     sizeof...(OtherExtents) == rank();
+                     ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
+                 }
+    explicit((((Extents != dynamic_extent) && (OtherExtents == dynamic_extent)) || ...)
+             || (numeric_limits<size_type>::max()
+                 < numeric_limits<OtherSizeType>::max())) constexpr extents(extents<OtherSizeType,
+        OtherExtents...> const& e) noexcept
+    {
+        for (rank_type i { 0 }; i < rank(); ++i) { extents_[static_cast<size_t>(i)] = e.extents(i); }
+    }
 
     template <typename... OtherSizeTypes>
-    explicit constexpr extents(OtherSizeTypes... es) noexcept;
+        requires requires {
+                     (is_convertible_v<OtherSizeTypes, size_type> && ...);
+                     (is_nothrow_constructible_v<size_type, OtherSizeTypes> && ...)
+                         and (sizeof...(OtherSizeTypes) == rank_dynamic() || sizeof...(OtherSizeTypes) == rank());
+                 }
+    explicit constexpr extents(OtherSizeTypes... es) noexcept
+    {
+        array<size_type, sizeof...(OtherSizeTypes)> { static_cast<size_type>(move(es))... };
+    }
 
     template <typename OtherSizeType, size_t N>
     explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N> e) noexcept;
@@ -65,12 +87,13 @@ struct extents {
     //     static constexpr auto index - cast(OtherSizeType&&) noexcept; // exposition only
 
 private:
-    using dextents_storage_t = conditional_t<rank_dynamic() == 0, char, array<size_type, rank_dynamic()>>;
+    struct empty_dextents_t { };
+    using extents_storage_t = conditional_t<rank_dynamic() == 0, empty_dextents_t, array<size_type, rank_dynamic()>>;
 
     // static constexpr rank_type _dynamic_index(rank_type) noexcept;     // exposition only
     // static constexpr rank_type _dynamic_index_inv(rank_type) noexcept; // exposition only
 
-    dextents_storage_t dextents_ {}; // exposition only
+    extents_storage_t extents_ {};
 };
 
 // template <typename... Integrals>
