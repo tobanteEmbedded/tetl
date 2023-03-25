@@ -5,9 +5,10 @@
 #ifndef TETL_RANDOM_HPP
 #define TETL_RANDOM_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_random/generate_canonical.hpp"
-#include "etl/_random/xorshift.hpp"
+#include <etl/_random/generate_canonical.hpp>
+#include <etl/_random/xorshift32.hpp>
+#include <etl/_random/xorshift64.hpp>
 
 #endif // TETL_RANDOM_HPP

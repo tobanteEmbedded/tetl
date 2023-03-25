@@ -11,8 +11,8 @@ constexpr auto test_xorshift32() -> bool
     using etl::xorshift32;
 
     assert(xorshift32::min() == 0);
-    assert(xorshift32::max() == etl::uint32_t(-1));
-    assert(xorshift32::default_seed == 42);
+    assert(xorshift32::max() == etl::uint32_t(-2));
+    assert(xorshift32::default_seed == 5489U);
     assert(xorshift32() == xorshift32());
     assert(xorshift32() != xorshift32(1));
 
@@ -25,8 +25,8 @@ constexpr auto test_xorshift64() -> bool
     using etl::xorshift64;
 
     assert(xorshift64::min() == 0);
-    assert(xorshift64::max() == etl::uint64_t(-1));
-    assert(xorshift64::default_seed == 42);
+    assert(xorshift64::max() == etl::uint64_t(-2));
+    assert(xorshift64::default_seed == 5489U);
     assert(xorshift64() == xorshift64());
     assert(xorshift64() != xorshift64(1));
 
