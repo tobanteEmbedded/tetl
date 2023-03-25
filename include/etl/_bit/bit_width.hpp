@@ -18,7 +18,7 @@ namespace etl {
 /// \details This overload only participates in overload resolution if T is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto bit_width(T x) noexcept -> int
 {
     return etl::numeric_limits<T>::digits - etl::countl_zero(x);

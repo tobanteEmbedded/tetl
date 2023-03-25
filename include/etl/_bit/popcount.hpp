@@ -31,7 +31,7 @@ template <typename T>
 /// \details This overload only participates in overload resolution if T is an
 /// unsigned integer type (that is, unsigned char, unsigned short, unsigned int,
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto popcount(T val) noexcept -> int
 {
     if (is_constant_evaluated()) { return detail::popcount_fallback(val); }

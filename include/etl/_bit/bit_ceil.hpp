@@ -22,7 +22,7 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns The smallest integral power of two that is not smaller than x.
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
     if (x <= 1U) { return T { 1 }; }

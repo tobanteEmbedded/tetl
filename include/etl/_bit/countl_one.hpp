@@ -20,7 +20,7 @@ namespace etl {
 ///
 /// \returns The number of consecutive 1 bits in the value of x, starting from
 /// the most significant bit.
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto countl_one(T x) noexcept -> int
 {
     auto const totalBits = etl::numeric_limits<T>::digits;

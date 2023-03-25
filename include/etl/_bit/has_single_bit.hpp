@@ -19,7 +19,7 @@ namespace etl {
 /// unsigned long, unsigned long long, or an extended unsigned integer type).
 ///
 /// \returns true if x is an integral power of two; otherwise false.
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto has_single_bit(T x) noexcept -> bool
 {
     return popcount(x) == 1;

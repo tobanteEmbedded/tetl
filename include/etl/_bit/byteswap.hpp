@@ -5,12 +5,11 @@
 #ifndef TETL_BIT_BYTESWAP_HPP
 #define TETL_BIT_BYTESWAP_HPP
 
-#include "etl/_config/all.hpp"
-#include "etl/_cstdint/uint_t.hpp"
-#include "etl/_type_traits/always_false.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_constant_evaluated.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include <etl/_concepts/unsigned_integral.hpp>
+#include <etl/_config/all.hpp>
+#include <etl/_cstdint/uint_t.hpp>
+#include <etl/_type_traits/always_false.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
@@ -72,7 +71,7 @@ namespace detail {
 /// T has padding bits.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/byteswap
-template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
+template <integral T>
 [[nodiscard]] constexpr auto byteswap(T val) noexcept -> T
 {
     if constexpr (sizeof(T) == 1) {

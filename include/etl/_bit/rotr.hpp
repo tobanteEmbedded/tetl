@@ -13,7 +13,7 @@ namespace etl {
 
 /// \brief Computes the result of bitwise right-rotating the value of x by s
 /// positions. This operation is also known as a right circular shift.
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 constexpr auto rotr(T t, int s) noexcept -> T
 {
     auto const cnt    = static_cast<unsigned>(s);

@@ -5,12 +5,11 @@
 #ifndef TETL_BIT_SET_BIT_HPP
 #define TETL_BIT_SET_BIT_HPP
 
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_unsigned.hpp"
+#include <etl/_concepts/unsigned_integral.hpp>
 
 namespace etl {
 
-template <typename T, enable_if_t<is_unsigned_v<T>, int> = 0>
+template <unsigned_integral T>
 [[nodiscard]] constexpr auto set_bit(T val, T bit) noexcept -> T
 {
     return val | (T { 1 } << bit);

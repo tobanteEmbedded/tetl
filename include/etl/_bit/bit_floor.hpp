@@ -20,7 +20,7 @@ namespace etl {
 ///
 /// \returns Zero if x is zero; otherwise, the largest integral power of two
 /// that is not greater than x.
-template <typename T, enable_if_t<detail::bit_uint_v<T>, int> = 0>
+template <detail::bit_uint T>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
 {
     if (x != 0) { return T { 1U } << (bit_width(x) - 1U); }
