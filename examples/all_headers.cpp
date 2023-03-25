@@ -34,6 +34,7 @@
 #include "etl/iterator.hpp"
 #include "etl/limits.hpp"
 #include "etl/map.hpp"
+#include "etl/mdspan.hpp"
 #include "etl/memory.hpp"
 #include "etl/mutex.hpp"
 #include "etl/new.hpp"

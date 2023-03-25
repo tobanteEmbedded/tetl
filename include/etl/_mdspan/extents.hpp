@@ -1,0 +1,62 @@
+/// \copyright Tobias Hienzsch 2019-2021
+/// Distributed under the Boost Software License, Version 1.0.
+/// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
+
+#ifndef TETL_MDSPAN_EXTENTS_HPP
+#define TETL_MDSPAN_EXTENTS_HPP
+
+#include <etl/_array/array.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_span/span.hpp>
+
+namespace etl {
+
+template <typename SizeType, size_t... Extents>
+struct extents {
+    using size_type = SizeType;
+    using rank_type = size_t;
+
+    // [mdspan.extents.ctor], Constructors
+    constexpr extents() noexcept = default;
+
+    template <typename OtherSizeType, size_t... OtherExtents>
+    explicit(/*see below*/ true) constexpr extents(extents<OtherSizeType, OtherExtents...> const&) noexcept;
+
+    template <typename... OtherSizeTypes>
+    explicit constexpr extents(OtherSizeTypes...) noexcept;
+
+    template <typename OtherSizeType, size_t N>
+    explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N>) noexcept;
+
+    template <typename OtherSizeType, size_t N>
+    explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const&) noexcept;
+
+    // [mdspan.extents.obs], Observers of the multidimensional index space
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
+    // [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return _dynamic_index(rank()); }
+    [[nodiscard]] static constexpr auto static_extent(rank_type) noexcept -> size_t;
+    [[nodiscard]] constexpr auto extent(rank_type) const noexcept -> size_type;
+
+    // [mdspan.extents.cmp], extents comparison operators
+    template <typename OtherSizeType, size_t... OtherExtents>
+    friend constexpr bool operator==(extents const&, extents<OtherSizeType, OtherExtents...> const&) noexcept;
+
+    // // [mdspan.extents.helpers], exposition only helpers
+    // constexpr size_t fwd - prod - of - extents(rank_type) const noexcept; // exposition only
+    // constexpr size_t rev - prod - of - extents(rank_type) const noexcept; // exposition only
+    // template <typename OtherSizeType>
+    //     static constexpr auto index - cast(OtherSizeType&&) noexcept; // exposition only
+
+private:
+    // static constexpr rank_type _dynamic_index(rank_type) noexcept;     // exposition only
+    // static constexpr rank_type _dynamic_index_inv(rank_type) noexcept; // exposition only
+
+    array<size_type, rank_dynamic()> dynamicExtents_ {}; // exposition only
+};
+
+// template <typename... Integrals>
+// explicit extents(Integrals...)->see below;
+
+} // namespace etl
+
+#endif // TETL_MDSPAN_EXTENTS_HPP
