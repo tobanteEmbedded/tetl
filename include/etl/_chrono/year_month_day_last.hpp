@@ -65,6 +65,67 @@ public:
     chrono::month_day_last mdl_;
 };
 
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
+    return { ym.year(), month_day_last { ym.month() } };
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day_last const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    return rhs + lhs;
+}
+
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    return lhs + -rhs;
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    return { lhs.year() + rhs, lhs.month_day_last() };
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day_last const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    return rhs + lhs;
+}
+
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day_last
+{
+    return lhs + -rhs;
+}
+
+constexpr auto year_month_day_last::operator+=(months const& m) noexcept -> year_month_day_last&
+{
+    *this = *this + m;
+    return *this;
+}
+
+constexpr auto year_month_day_last::operator-=(months const& m) noexcept -> year_month_day_last&
+{
+    *this = *this - m;
+    return *this;
+}
+
+constexpr auto year_month_day_last::operator+=(years const& y) noexcept -> year_month_day_last&
+{
+    *this = *this + y;
+    return *this;
+}
+
+constexpr auto year_month_day_last::operator-=(years const& y) noexcept -> year_month_day_last&
+{
+    *this = *this - y;
+    return *this;
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_YEAR_MONTH_DAY_LAST_HPP

@@ -28,6 +28,11 @@ private:
     uint8_t index_;
 };
 
+[[nodiscard]] constexpr auto operator==(weekday_indexed const& lhs, weekday_indexed const& rhs) noexcept -> bool
+{
+    return lhs.weekday() == rhs.weekday() && lhs.index() == rhs.index();
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_WEEKDAY_INDEXED_HPP

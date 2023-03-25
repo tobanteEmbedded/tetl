@@ -107,6 +107,72 @@ private:
     chrono::day d_;
 };
 
+[[nodiscard]] constexpr auto operator==(year_month_day const& lhs, year_month_day const& rhs) noexcept -> bool
+{
+    return lhs.year() == rhs.year() and lhs.month() == rhs.month() and lhs.day() == rhs.day();
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
+    return { ym.year(), ym.month(), lhs.day() };
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    return rhs + lhs;
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    return { lhs.year() + rhs, lhs.month(), lhs.day() };
+}
+
+[[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    return rhs + lhs;
+}
+
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    return lhs + -rhs;
+}
+
+[[nodiscard]] constexpr auto operator-(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept
+    -> chrono::year_month_day
+{
+    return lhs + -rhs;
+}
+
+constexpr auto year_month_day::operator+=(months const& m) noexcept -> year_month_day&
+{
+    *this = *this + m;
+    return *this;
+}
+
+constexpr auto year_month_day::operator-=(months const& m) noexcept -> year_month_day&
+{
+    *this = *this - m;
+    return *this;
+}
+
+constexpr auto year_month_day::operator+=(years const& y) noexcept -> year_month_day&
+{
+    *this = *this + y;
+    return *this;
+}
+
+constexpr auto year_month_day::operator-=(years const& y) noexcept -> year_month_day&
+{
+    *this = *this - y;
+    return *this;
+}
+
 } // namespace etl::chrono
 
 #endif // TETL_CHRONO_YEAR_MONTH_DAY_HPP

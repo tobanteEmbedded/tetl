@@ -63,11 +63,6 @@ private:
     return lhs.c_encoding() == rhs.c_encoding();
 }
 
-[[nodiscard]] constexpr auto operator!=(weekday const& lhs, weekday const& rhs) noexcept -> bool
-{
-    return lhs.c_encoding() != rhs.c_encoding();
-}
-
 [[nodiscard]] constexpr auto operator+(weekday const& lhs, days const& rhs) noexcept -> weekday
 {
     return weekday { static_cast<uint32_t>((static_cast<int32_t>(lhs.c_encoding()) + rhs.count()) % 7) };
