@@ -43,7 +43,7 @@ struct weekday {
     }
 
     [[nodiscard]] constexpr auto c_encoding() const noexcept -> uint32_t { return wd_; }
-    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> uint32_t { return wd_ == 0u ? 7u : wd_; }
+    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> uint32_t { return wd_ == 0U ? 7U : wd_; }
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return wd_ < 7U; }
 
     // [[nodiscard]] constexpr auto operator[](uint32_t index) const noexcept -> weekday_indexed { }

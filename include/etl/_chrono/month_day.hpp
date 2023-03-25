@@ -15,9 +15,9 @@ struct month_day {
     month_day() = default;
     constexpr month_day(chrono::month const& m, chrono::day const& d) noexcept : m_ { m }, d_ { d } { }
 
-    constexpr auto month() const noexcept -> chrono::month { return m_; }
-    constexpr auto day() const noexcept -> chrono::day { return d_; }
-    constexpr auto ok() const noexcept -> bool
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
+    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return d_; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
         constexpr auto maxDaysInMonth = array<uint8_t, 12> { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         if (not month().ok()) { return false; }

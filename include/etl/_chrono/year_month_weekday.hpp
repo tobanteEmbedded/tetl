@@ -21,20 +21,20 @@ struct year_month_weekday {
     constexpr year_month_weekday(sys_days const& dp) noexcept;
     constexpr explicit year_month_weekday(local_days const& dp) noexcept;
 
-    constexpr year_month_weekday& operator+=(months const& m) noexcept;
-    constexpr year_month_weekday& operator-=(months const& m) noexcept;
-    constexpr year_month_weekday& operator+=(years const& y) noexcept;
-    constexpr year_month_weekday& operator-=(years const& y) noexcept;
+    constexpr auto operator+=(months const& m) noexcept -> year_month_weekday&;
+    constexpr auto operator-=(months const& m) noexcept -> year_month_weekday&;
+    constexpr auto operator+=(years const& y) noexcept -> year_month_weekday&;
+    constexpr auto operator-=(years const& y) noexcept -> year_month_weekday&;
 
-    constexpr chrono::year year() const noexcept;
-    constexpr chrono::month month() const noexcept;
-    constexpr chrono::weekday weekday() const noexcept;
-    constexpr uint32_t index() const noexcept;
-    constexpr chrono::weekday_indexed weekday_indexed() const noexcept;
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year;
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month;
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday;
+    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t;
+    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed;
 
-    constexpr operator sys_days() const noexcept;
-    constexpr explicit operator local_days() const noexcept;
-    constexpr bool ok() const noexcept;
+    [[nodiscard]] constexpr operator sys_days() const noexcept;
+    [[nodiscard]] constexpr explicit operator local_days() const noexcept;
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool;
 
 private:
     chrono::year y_;

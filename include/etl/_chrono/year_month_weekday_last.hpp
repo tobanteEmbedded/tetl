@@ -18,19 +18,19 @@ struct year_month_weekday_last {
     constexpr year_month_weekday_last(
         chrono::year const& y, chrono::month const& m, chrono::weekday_last const& wdl) noexcept;
 
-    constexpr year_month_weekday_last& operator+=(months const& m) noexcept;
-    constexpr year_month_weekday_last& operator-=(months const& m) noexcept;
-    constexpr year_month_weekday_last& operator+=(years const& y) noexcept;
-    constexpr year_month_weekday_last& operator-=(years const& y) noexcept;
+    constexpr auto operator+=(months const& m) noexcept -> year_month_weekday_last&;
+    constexpr auto operator-=(months const& m) noexcept -> year_month_weekday_last&;
+    constexpr auto operator+=(years const& y) noexcept -> year_month_weekday_last&;
+    constexpr auto operator-=(years const& y) noexcept -> year_month_weekday_last&;
 
-    constexpr chrono::year year() const noexcept;
-    constexpr chrono::month month() const noexcept;
-    constexpr chrono::weekday weekday() const noexcept;
-    constexpr chrono::weekday_last weekday_last() const noexcept;
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year;
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month;
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday;
+    [[nodiscard]] constexpr auto weekday_last() const noexcept -> chrono::weekday_last;
 
-    constexpr operator sys_days() const noexcept;
-    constexpr explicit operator local_days() const noexcept;
-    constexpr bool ok() const noexcept;
+    [[nodiscard]] constexpr operator sys_days() const noexcept;
+    [[nodiscard]] constexpr explicit operator local_days() const noexcept;
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool;
 
 public:
     chrono::year y_;
