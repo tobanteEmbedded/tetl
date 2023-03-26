@@ -31,7 +31,9 @@ constexpr auto test() -> bool
     assert(test_uniform_real_distribution<etl::xoshiro128plusplus, float>());
     assert(test_uniform_real_distribution<etl::xoshiro128starstar, float>());
 
+#if not defined(TETL_WORKAROUND_AVR_BROKEN_TESTS)
     assert(test_uniform_real_distribution<etl::xorshift64, double>());
+#endif
     return true;
 }
 
