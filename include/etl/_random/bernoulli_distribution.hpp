@@ -34,7 +34,7 @@ struct bernoulli_distribution {
     explicit constexpr bernoulli_distribution(double p) noexcept : bernoulli_distribution { param_type { p } } { }
     explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : param_ { parm } { }
 
-    [[nodiscard]] constexpr auto p() const noexcept -> result_type { return param_.p(); }
+    [[nodiscard]] constexpr auto p() const noexcept -> double { return param_.p(); }
 
     constexpr auto param(param_type const& parm) noexcept -> void { param_ = parm; }
     [[nodiscard]] constexpr auto param() const noexcept -> param_type { return param_; }
