@@ -7,6 +7,7 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_random/bernoulli_distribution.hpp>
 #include <etl/_random/generate_canonical.hpp>
 #include <etl/_random/uniform_real_distribution.hpp>
 #include <etl/_random/xorshift.hpp>
