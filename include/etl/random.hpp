@@ -8,6 +8,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_random/generate_canonical.hpp>
+#include <etl/_random/uniform_real_distribution.hpp>
 #include <etl/_random/xorshift.hpp>
 #include <etl/_random/xoshiro128plus.hpp>
 #include <etl/_random/xoshiro128plusplus.hpp>
