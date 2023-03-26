@@ -24,8 +24,8 @@ struct uniform_real_distribution {
         {
         }
 
-        [[nodiscard]] constexpr auto a() const noexcept -> double { return _min; }
-        [[nodiscard]] constexpr auto b() const noexcept -> double { return _max; }
+        [[nodiscard]] constexpr auto a() const noexcept -> result_type { return _min; }
+        [[nodiscard]] constexpr auto b() const noexcept -> result_type { return _max; }
 
         [[nodiscard]] friend constexpr auto operator==(param_type const& lhs, param_type const& rhs) noexcept -> bool
         {
