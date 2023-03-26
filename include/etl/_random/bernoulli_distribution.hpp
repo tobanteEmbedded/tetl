@@ -39,8 +39,16 @@ struct bernoulli_distribution {
     constexpr auto param(param_type const& parm) noexcept -> void { param_ = parm; }
     [[nodiscard]] constexpr auto param() const noexcept -> param_type { return param_; }
 
-    [[nodiscard]] constexpr auto min() const noexcept -> result_type { return false; }
-    [[nodiscard]] constexpr auto max() const noexcept -> result_type { return true; }
+    [[nodiscard]] constexpr auto min() const noexcept -> result_type
+    {
+        (void)this;
+        return false;
+    }
+    [[nodiscard]] constexpr auto max() const noexcept -> result_type
+    {
+        (void)this;
+        return true;
+    }
 
     constexpr auto reset() noexcept -> void { (void)this; }
 
