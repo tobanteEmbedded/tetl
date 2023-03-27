@@ -16,6 +16,10 @@ constexpr auto test() -> bool
     assert(approx(etl::copysign(T(0), T(1)), T(0)));
     assert(approx(etl::copysign(T(1), T(1)), T(1)));
     assert(approx(etl::copysign(T(1), T(-1)), T(-1)));
+
+    assert(approx(etl::detail::copysign_fallback(T(0), T(1)), T(0)));
+    assert(approx(etl::detail::copysign_fallback(T(1), T(1)), T(1)));
+    assert(approx(etl::detail::copysign_fallback(T(1), T(-1)), T(-1)));
     return true;
 }
 

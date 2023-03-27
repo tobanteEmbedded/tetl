@@ -58,6 +58,12 @@ constexpr auto test_popcount() -> bool
     assert(etl::popcount(T { 1 }) == 1);
     assert(etl::popcount(T { 2 }) == 1);
     assert(etl::popcount(T { 3 }) == 2);
+    assert(etl::popcount(T { 0b11111111 }) == 8);
+
+    assert(etl::detail::popcount_fallback(T { 1 }) == 1);
+    assert(etl::detail::popcount_fallback(T { 2 }) == 1);
+    assert(etl::detail::popcount_fallback(T { 3 }) == 2);
+    assert(etl::detail::popcount_fallback(T { 0b11111111 }) == 8);
     return true;
 }
 
