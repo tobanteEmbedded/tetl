@@ -5,14 +5,13 @@
 #ifndef TETL_CHARCONV_FROM_CHARS_HPP
 #define TETL_CHARCONV_FROM_CHARS_HPP
 
-#include "etl/_cassert/macro.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_iterator/distance.hpp"
-#include "etl/_strings/conversion.hpp"
-#include "etl/_system_error/errc.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_concepts/integral.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_iterator/distance.hpp>
+#include <etl/_strings/conversion.hpp>
+#include <etl/_system_error/errc.hpp>
+#include <etl/_type_traits/enable_if.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 
@@ -34,25 +33,26 @@ struct from_chars_result {
 /// value is unmodified, otherwise the characters matching the pattern are
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
-template <typename T, enable_if_t<is_integral_v<T> && !is_same_v<T, bool>, int> = 0>
+template <integral T>
+    requires requires { not is_same_v<T, bool>; }
 [[nodiscard]] constexpr auto from_chars(char const* first, char const* last, T& value, int base = 10)
     -> from_chars_result
 {
-    TETL_ASSERT(base == 10);
-    ignore_unused(base);
+    // TODO(tobi): Implement other bases
+    if (base != 10) { return from_chars_result { first, errc::invalid_argument }; }
 
-    auto len = static_cast<etl::size_t>(etl::distance(first, last));
-    auto res = detail::ascii_to_int_base10<T>(first, len);
-    if (res.error == detail::ascii_to_int_error::none) {
-        value = res.value;
-        return from_chars_result { res.end };
+    auto const len               = static_cast<etl::size_t>(etl::distance(first, last));
+    auto const [val, error, end] = detail::ascii_to_int_base10<T>(first, len);
+
+    if (error == detail::ascii_to_int_error::overflow) {
+        return from_chars_result { first, errc::result_out_of_range };
     }
-    if (res.error == detail::ascii_to_int_error::invalid_input) {
+    if (error == detail::ascii_to_int_error::invalid_input) {
         return from_chars_result { first, errc::invalid_argument };
     }
 
-    TETL_ASSERT(res.error == detail::ascii_to_int_error::overflow);
-    return from_chars_result { first, errc::result_out_of_range };
+    value = val;
+    return from_chars_result { end };
 }
 
 } // namespace etl
