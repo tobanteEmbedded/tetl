@@ -55,7 +55,7 @@ struct month {
 
     constexpr explicit operator uint32_t() const noexcept { return count_; }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 12U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) and (count_ <= 12U); }
 
 private:
     constexpr auto add(int count) noexcept -> void
@@ -70,7 +70,7 @@ private:
         count_ %= 12;
     }
 
-    uint8_t count_;
+    uint8_t count_ {};
 };
 
 [[nodiscard]] constexpr auto operator==(month lhs, month rhs) noexcept -> bool

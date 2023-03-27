@@ -50,7 +50,7 @@ struct day {
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (count_ > 0U) && (count_ < 32U); }
 
 private:
-    uint8_t count_;
+    uint8_t count_ {};
 };
 
 [[nodiscard]] constexpr auto operator==(day lhs, day rhs) noexcept -> bool

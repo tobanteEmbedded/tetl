@@ -64,7 +64,7 @@ struct year {
     [[nodiscard]] static constexpr auto max() noexcept -> year { return year { 32767 }; }
 
 private:
-    int16_t count_;
+    int16_t count_ {};
 };
 
 [[nodiscard]] constexpr auto operator==(year lhs, year rhs) noexcept -> bool
