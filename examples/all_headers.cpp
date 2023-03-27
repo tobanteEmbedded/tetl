@@ -28,6 +28,7 @@
 #include "etl/cwctype.hpp"
 #include "etl/exception.hpp"
 #include "etl/expected.hpp"
+#include "etl/flat_set.hpp"
 #include "etl/format.hpp"
 #include "etl/functional.hpp"
 #include "etl/ios.hpp"

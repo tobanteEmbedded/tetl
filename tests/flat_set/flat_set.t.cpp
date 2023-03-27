@@ -2,7 +2,7 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#include <etl/set.hpp>
+#include <etl/flat_set.hpp>
 
 #include <etl/cstdint.hpp>
 #include <etl/utility.hpp>

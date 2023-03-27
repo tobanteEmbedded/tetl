@@ -2,8 +2,8 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_MAP_FLAT_MAP_HPP
-#define TETL_MAP_FLAT_MAP_HPP
+#ifndef TETL_FLAT_SET_FLAT_SET_HPP
+#define TETL_FLAT_SET_FLAT_SET_HPP
 
 #include "etl/_algorithm/equal.hpp"
 #include "etl/_algorithm/lexicographical_compare.hpp"
@@ -11,6 +11,7 @@
 #include "etl/_concepts/emulation.hpp"
 #include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/size_t.hpp"
+#include "etl/_flat_set/sorted_unique.hpp"
 #include "etl/_functional/is_transparent.hpp"
 #include "etl/_functional/less.hpp"
 #include "etl/_iterator/begin.hpp"
@@ -20,7 +21,6 @@
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/reverse_iterator.hpp"
 #include "etl/_iterator/size.hpp"
-#include "etl/_set/sorted_unique.hpp"
 #include "etl/_type_traits/is_nothrow_swappable.hpp"
 #include "etl/_utility/forward.hpp"
 #include "etl/_utility/move.hpp"
@@ -348,4 +348,4 @@ constexpr auto swap(flat_set<Key, Container, Compare>& x, flat_set<Key, Containe
 
 } // namespace etl
 
-#endif // TETL_MAP_FLAT_MAP_HPP
+#endif // TETL_FLAT_SET_FLAT_SET_HPP
