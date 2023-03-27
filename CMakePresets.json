@@ -1,0 +1,57 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja-base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+      "generator": "Ninja Multi-Config",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": {
+          "type": "BOOL",
+          "value": true
+        }
+      }
+    },
+    {
+      "name": "desktop",
+      "description": "Configure with hosted system toolchain",
+      "inherits": ["ninja-base"]
+    },
+    {
+      "name": "avr-gcc",
+      "description": "Configure with avr-gcc toolchain",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/atmega328p.cmake",
+      "inherits": ["ninja-base"]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "desktop",
+      "description": "Build using ninja and hosted system toolchain",
+      "configurePreset": "desktop",
+      "configuration": "Release"
+    },
+    {
+      "name": "avr-gcc",
+      "description": "Build using ninja and avr-gcc toolchain",
+      "configurePreset": "avr-gcc",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "desktop",
+      "description": "Test using ninja and system toolchain",
+      "configurePreset": "desktop",
+      "configuration": "Release",
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error", "stopOnFailure": true }
+    }
+  ]
+}
