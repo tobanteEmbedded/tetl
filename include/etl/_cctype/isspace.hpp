@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISSPACE_HPP
 #define TETL_CCTYPE_ISSPACE_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 
 /// \brief Checks if the given character is whitespace character as classified
@@ -20,9 +18,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isspace
 [[nodiscard]] constexpr auto isspace(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     auto const sp       = ch == ' ';
     auto const form     = ch == '\f';
     auto const line     = ch == '\n';

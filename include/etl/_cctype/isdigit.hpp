@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISDIGIT_HPP
 #define TETL_CCTYPE_ISDIGIT_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 /// \brief Checks if the given character is one of the 10 decimal digits:
 /// 0123456789.
@@ -17,12 +15,7 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isdigit
-[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int
-{
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch >= '0' && ch <= '9');
-}
+[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int { return static_cast<int>(ch >= '0' && ch <= '9'); }
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISDIGIT_HPP

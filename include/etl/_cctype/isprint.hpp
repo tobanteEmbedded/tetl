@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISPRINT_HPP
 #define TETL_CCTYPE_ISPRINT_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 #include "etl/_cctype/isgraph.hpp"
 
 namespace etl {
@@ -21,9 +19,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isprint
 [[nodiscard]] constexpr auto isprint(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     return static_cast<int>(etl::isgraph(ch) != 0 || ch == ' ');
 }
 } // namespace etl

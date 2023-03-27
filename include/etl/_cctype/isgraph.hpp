@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISGRAPH_HPP
 #define TETL_CCTYPE_ISGRAPH_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 #include "etl/_cctype/isdigit.hpp"
 #include "etl/_cctype/islower.hpp"
 #include "etl/_cctype/ispunct.hpp"
@@ -25,9 +23,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isgraph
 [[nodiscard]] constexpr auto isgraph(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     auto const isDigit = etl::isdigit(ch) != 0;
     auto const isUpper = etl::isupper(ch) != 0;
     auto const isLower = etl::islower(ch) != 0;

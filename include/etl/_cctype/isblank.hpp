@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISBLANK_HPP
 #define TETL_CCTYPE_ISBLANK_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 /// \brief Checks if the given character is a blank character as classified by
 /// the currently installed C locale. Blank characters are whitespace characters
@@ -19,12 +17,7 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isblank
-[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int
-{
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch == ' ' || ch == '\t');
-}
+[[nodiscard]] constexpr auto isblank(int ch) noexcept -> int { return static_cast<int>(ch == ' ' || ch == '\t'); }
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISBLANK_HPP

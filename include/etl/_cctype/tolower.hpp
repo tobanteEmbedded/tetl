@@ -5,7 +5,6 @@
 #ifndef TETL_CCTYPE_TOLOWER_HPP
 #define TETL_CCTYPE_TOLOWER_HPP
 
-#include "etl/_cassert/macro.hpp"
 #include "etl/_cctype/isupper.hpp"
 
 namespace etl {
@@ -26,9 +25,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/tolower
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
     return static_cast<int>(ch);
 }

@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISPUNCT_HPP
 #define TETL_CCTYPE_ISPUNCT_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 
 /// \brief Checks if the given character is a punctuation character as
@@ -23,9 +21,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/ispunct
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     auto const sec1 = ch >= '!' && ch <= '/';
     auto const sec2 = ch >= ':' && ch <= '@';
     auto const sec3 = ch >= '[' && ch <= '`';

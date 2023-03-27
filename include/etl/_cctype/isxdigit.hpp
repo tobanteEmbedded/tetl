@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISXDIGIT_HPP
 #define TETL_CCTYPE_ISXDIGIT_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 /// \brief Checks if the given character is a hexadecimal numeric character
 /// (0123456789abcdefABCDEF).
@@ -19,9 +17,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isxdigit
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     auto const isDigit    = ch >= '0' && ch <= '9';
     auto const isHexLower = ch >= 'a' && ch <= 'f';
     auto const isHexUpper = ch >= 'A' && ch <= 'F';

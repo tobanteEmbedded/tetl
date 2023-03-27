@@ -4,6 +4,7 @@
 #ifndef TETL_STRING_TO_STRING_HPP
 #define TETL_STRING_TO_STRING_HPP
 
+#include "etl/_cassert/macro.hpp"
 #include "etl/_string/static_string.hpp"
 #include "etl/_strings/conversion.hpp"
 

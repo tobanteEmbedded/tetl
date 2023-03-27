@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISUPPER_HPP
 #define TETL_CCTYPE_ISUPPER_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 
 /// \brief Checks if the given character is classified as a uppercase character
@@ -18,12 +16,7 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isupper
-[[nodiscard]] constexpr auto isupper(int ch) noexcept -> int
-{
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-    return static_cast<int>(ch >= 'A' && ch <= 'Z');
-}
+[[nodiscard]] constexpr auto isupper(int ch) noexcept -> int { return static_cast<int>(ch >= 'A' && ch <= 'Z'); }
 
 } // namespace etl
 

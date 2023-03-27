@@ -5,8 +5,6 @@
 #ifndef TETL_CCTYPE_ISALNUM_HPP
 #define TETL_CCTYPE_ISALNUM_HPP
 
-#include "etl/_cassert/macro.hpp"
-
 namespace etl {
 /// \brief Checks if the given character is an alphanumeric character as
 /// classified by the default C locale.
@@ -19,9 +17,6 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isalnum
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
-    // ch must de representable as a unsigned char
-    TETL_ASSERT(static_cast<unsigned char>(ch) == ch);
-
     auto isDigit = ch >= '0' && ch <= '9';
     auto isLower = ch >= 'a' && ch <= 'z';
     auto isUpper = ch >= 'A' && ch <= 'Z';
