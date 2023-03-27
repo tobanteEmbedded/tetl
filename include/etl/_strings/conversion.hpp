@@ -19,29 +19,29 @@ enum struct ascii_to_int_error : etl::uint8_t {
 
 template <typename T, typename CharT>
 struct ascii_to_int_result {
-    T value;
-    ascii_to_int_error error { ascii_to_int_error::none };
     CharT const* end { nullptr };
+    ascii_to_int_error error { ascii_to_int_error::none };
+    T value;
 };
 
-template <typename T, typename CharT>
+template <typename T, typename CharT, bool SkipLeadingWhiteSpace = true>
 [[nodiscard]] constexpr auto ascii_to_int_base10(CharT const* str, size_t len = numeric_limits<size_t>::max()) noexcept
     -> ascii_to_int_result<T, CharT>
 {
     if (*str == CharT(0)) {
-        return ascii_to_int_result<T, CharT> {
-            T {},
-            ascii_to_int_error::invalid_input,
-            str,
+        return {
+            .end   = str,
+            .error = ascii_to_int_error::invalid_input,
+            .value = T {},
         };
     }
 
-    etl::size_t i = 0;
-
-    // skip leading whitespace
-    while (etl::isspace(static_cast<int>(str[i])) && (len != 0) && (str[i] != CharT(0))) {
-        ++i;
-        --len;
+    auto i = etl::size_t {};
+    if constexpr (SkipLeadingWhiteSpace) {
+        while (etl::isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != CharT(0))) {
+            ++i;
+            --len;
+        }
     }
 
     // optional minus for signed types
@@ -55,16 +55,27 @@ template <typename T, typename CharT>
     }
 
     // loop over digits
-    T value = 0;
-    for (; (str[i] != CharT(0)) && (len != 0); ++i, --len) {
-        if (!etl::isdigit(static_cast<int>(str[i]))) { break; }
+    auto value = T {};
+    for (; (str[i] != CharT(0)) and (len != 0); ++i, --len) {
+        if (not etl::isdigit(static_cast<int>(str[i]))) {
+            return {
+                .end   = str,
+                .error = ascii_to_int_error::invalid_input,
+                .value = T {},
+            };
+        }
+
+        // TODO(tobi): Check overflow
         value = value * T(10) + static_cast<T>(str[i] - CharT('0'));
     }
 
-    // one past the last element used for conversion
-    auto result = ascii_to_int_result<T, CharT> { value, {}, &str[i] };
-    if constexpr (is_signed_v<T>) { result.value *= sign; }
-    return result;
+    if constexpr (is_signed_v<T>) { value *= sign; }
+
+    return {
+        .end   = &str[i],
+        .error = ascii_to_int_error::none,
+        .value = value,
+    };
 }
 
 enum struct int_to_ascii_error : etl::uint8_t {

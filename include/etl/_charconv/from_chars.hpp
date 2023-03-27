@@ -42,17 +42,17 @@ template <integral T>
     if (base != 10) { return from_chars_result { first, errc::invalid_argument }; }
 
     auto const len               = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const [val, error, end] = detail::ascii_to_int_base10<T>(first, len);
+    auto const [end, error, val] = detail::ascii_to_int_base10<T, char, false>(first, len);
 
     if (error == detail::ascii_to_int_error::overflow) {
-        return from_chars_result { first, errc::result_out_of_range };
+        return from_chars_result { .ptr = first, .ec = errc::result_out_of_range };
     }
     if (error == detail::ascii_to_int_error::invalid_input) {
-        return from_chars_result { first, errc::invalid_argument };
+        return from_chars_result { .ptr = first, .ec = errc::invalid_argument };
     }
 
     value = val;
-    return from_chars_result { end };
+    return from_chars_result { .ptr = end, .ec = {} };
 }
 
 } // namespace etl

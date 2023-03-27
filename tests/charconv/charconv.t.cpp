@@ -81,11 +81,6 @@ constexpr auto test_from_chars() -> bool
     };
 
     test("1", 1);
-    test(" 1", 1);
-    test("  1", 1);
-    test("   1", 1);
-    test("    1", 1);
-
     test("2", 2);
     test("10", 10);
     test("42", 42);

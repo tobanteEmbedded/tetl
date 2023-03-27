@@ -20,8 +20,7 @@ namespace etl {
     TETL_ASSERT(base == 10);
     etl::ignore_unused(base);
 
-    auto const len = etl::strlen(str);
-    auto const res = detail::ascii_to_int_base10<unsigned long, char>(str, len);
+    auto const res = detail::ascii_to_int_base10<unsigned long, char, true>(str, etl::strlen(str));
     if (last != nullptr) { *last = res.end; }
     return res.value;
 }
@@ -34,8 +33,7 @@ namespace etl {
     TETL_ASSERT(base == 10);
     etl::ignore_unused(base);
 
-    auto const len = etl::strlen(str);
-    auto const res = detail::ascii_to_int_base10<unsigned long long, char>(str, len);
+    auto const res = detail::ascii_to_int_base10<unsigned long long, char, true>(str, etl::strlen(str));
     if (last != nullptr) { *last = res.end; }
     return res.value;
 }
