@@ -73,9 +73,9 @@ constexpr auto test_from_chars() -> bool
 {
     using namespace etl::string_view_literals;
 
-    auto test = [](auto tc, T expected) -> void {
+    auto test = [](auto tc, T expected, int base) -> void {
         auto val          = T {};
-        auto const result = etl::from_chars(tc.begin(), tc.end(), val);
+        auto const result = etl::from_chars(tc.begin(), tc.end(), val, base);
         assert(result.ptr == tc.end());
         assert(val == expected);
     };
@@ -87,34 +87,39 @@ constexpr auto test_from_chars() -> bool
         assert(etl::from_chars(foo.begin(), foo.end(), val).ptr == foo.data());
         assert(etl::from_chars(foo.begin(), foo.end(), val).ec == etl::errc::invalid_argument);
 
-        auto fourfoo = "4foo"_sv;
-        assert(etl::from_chars(fourfoo.begin(), fourfoo.end(), val).ptr == fourfoo.data());
-        assert(etl::from_chars(fourfoo.begin(), fourfoo.end(), val).ec == etl::errc::invalid_argument);
+        auto fourfoo      = "4foo"_sv;
+        auto const result = etl::from_chars(fourfoo.begin(), fourfoo.end(), val);
+        assert(result.ptr == etl::next(fourfoo.data()));
+        assert(result.ec == etl::errc {});
+        assert(val == T(4));
     }
 
-    test("1"_sv, 1);
-    test("2"_sv, 2);
-    test("10"_sv, 10);
-    test("42"_sv, 42);
-    test("99"_sv, 99);
-    test("126"_sv, 126);
+    test("1"_sv, 1, 2);
+    test("1"_sv, 1, 10);
+    test("1"_sv, 1, 16);
+
+    test("2"_sv, 2, 10);
+    test("10"_sv, 10, 10);
+    test("42"_sv, 42, 10);
+    test("99"_sv, 99, 10);
+    test("126"_sv, 126, 10);
 
     if constexpr (sizeof(T) > 1) {
-        test("1000"_sv, 1000);
-        test("9999"_sv, 9999);
+        test("1000"_sv, 1000, 10);
+        test("9999"_sv, 9999, 10);
     }
 
     if constexpr (etl::is_signed_v<T>) {
-        test("-1"_sv, -1);
-        test("-2"_sv, -2);
-        test("-10"_sv, -10);
-        test("-42"_sv, -42);
-        test("-99"_sv, -99);
-        test("-126"_sv, -126);
+        test("-1"_sv, -1, 10);
+        test("-2"_sv, -2, 10);
+        test("-10"_sv, -10, 10);
+        test("-42"_sv, -42, 10);
+        test("-99"_sv, -99, 10);
+        test("-126"_sv, -126, 10);
 
         if constexpr (sizeof(T) > 1) {
-            test("-1000"_sv, -1000);
-            test("-9999"_sv, -9999);
+            test("-1000"_sv, -1000, 10);
+            test("-9999"_sv, -9999, 10);
         }
     }
     return true;

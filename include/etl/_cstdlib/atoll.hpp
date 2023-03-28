@@ -5,7 +5,8 @@
 #ifndef TETL_CSTDLIB_ATOLL_HPP
 #define TETL_CSTDLIB_ATOLL_HPP
 
-#include "etl/_strings/conversion.hpp"
+#include <etl/_cstring/strlen.hpp>
+#include <etl/_strings/conversion.hpp>
 
 namespace etl {
 
@@ -15,7 +16,7 @@ namespace etl {
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoll(char const* string) noexcept -> long long
 {
-    auto const result = detail::ascii_to_int_base10<long long, char, true>(string);
+    auto const result = detail::ascii_to_integer<long long, char, true>(string, strlen(string));
     return result.value;
 }
 

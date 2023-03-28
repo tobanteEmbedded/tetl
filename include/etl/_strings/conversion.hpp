@@ -1,118 +1,99 @@
-#ifndef ETL_STRING_CONVERSION_HPP
-#define ETL_STRING_CONVERSION_HPP
+#ifndef TETL_STRINGS_CONVERSION_HPP
+#define TETL_STRINGS_CONVERSION_HPP
 
-#include "etl/_cctype/isdigit.hpp"
-#include "etl/_cctype/isspace.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/uint_t.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/is_signed.hpp"
-#include "etl/_warning/ignore_unused.hpp"
+#include <etl/_cctype/isalpha.hpp>
+#include <etl/_cctype/isdigit.hpp>
+#include <etl/_cctype/isspace.hpp>
+#include <etl/_cctype/tolower.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_cstdint/uint_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
+#include <etl/_type_traits/is_signed.hpp>
+#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl::detail {
 
-enum struct ascii_to_int_error : etl::uint8_t {
+enum struct ascii_to_integer_error : etl::uint8_t {
     none,
     invalid_input,
     overflow,
 };
 
-template <typename T, typename CharT>
-struct ascii_to_int_result {
-    CharT const* end { nullptr };
-    ascii_to_int_error error { ascii_to_int_error::none };
-    T value;
+template <typename IntegerType, typename CharType>
+struct ascii_to_integer_result {
+    CharType const* end { nullptr };
+    ascii_to_integer_error error { ascii_to_integer_error::none };
+    IntegerType value;
 };
 
-template <typename T, typename CharT, bool SkipLeadingWhiteSpace = true>
-[[nodiscard]] constexpr auto ascii_to_int_base10(CharT const* str, size_t len = numeric_limits<size_t>::max()) noexcept
-    -> ascii_to_int_result<T, CharT>
+template <typename IntegerType, typename CharType, bool SkipLeadingWhiteSpace = true>
+[[nodiscard]] constexpr auto ascii_to_integer(CharType const* str, size_t len,
+    IntegerType base = IntegerType(10)) noexcept -> ascii_to_integer_result<IntegerType, CharType>
 {
-    if (*str == CharT(0)) {
+    if (*str == CharType(0)) {
         return {
             .end   = str,
-            .error = ascii_to_int_error::invalid_input,
-            .value = T {},
+            .error = ascii_to_integer_error::invalid_input,
+            .value = IntegerType {},
         };
     }
 
-    auto i = etl::size_t {};
+    auto i = size_t {};
     if constexpr (SkipLeadingWhiteSpace) {
-        while (etl::isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != CharT(0))) {
+        while (isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != CharType(0))) {
             ++i;
             --len;
         }
     }
 
     // optional minus for signed types
-    [[maybe_unused]] T sign = 1;
-    if constexpr (is_signed_v<T>) {
-        if (str[i] == CharT('-')) {
-            sign = -1;
+    [[maybe_unused]] auto sign = IntegerType(1);
+    if constexpr (is_signed_v<IntegerType>) {
+        if (((len != 0) and (str[i] != CharType(0))) and (str[i] == CharType('-'))) {
+            sign = IntegerType(-1);
             ++i;
             --len;
         }
     }
 
+    auto const firstDigit = i;
+
     // loop over digits
-    auto value = T {};
-    for (; (str[i] != CharT(0)) and (len != 0); ++i, --len) {
-        if (not etl::isdigit(static_cast<int>(str[i]))) {
-            return {
-                .end   = str,
-                .error = ascii_to_int_error::invalid_input,
-                .value = T {},
-            };
+    auto value = IntegerType {};
+    for (; (str[i] != CharType(0)) and (len != 0); ++i, --len) {
+
+        auto digit = IntegerType {};
+        if (isdigit(static_cast<int>(str[i]))) {
+            digit = static_cast<IntegerType>(str[i] - CharType('0'));
+        } else if (isalpha(static_cast<int>(str[i]))) {
+            digit = static_cast<IntegerType>(tolower(static_cast<int>(str[i])) - CharType('a') + 10);
+        } else {
+            break;
+        }
+
+        if (digit >= base) {
+            if (i == firstDigit) {
+                return {
+                    .end   = str,
+                    .error = ascii_to_integer_error::invalid_input,
+                    .value = IntegerType {},
+                };
+            } else {
+                break;
+            }
         }
 
         // TODO(tobi): Check overflow
-        value = value * T(10) + static_cast<T>(str[i] - CharT('0'));
+        value = static_cast<IntegerType>(value * base + digit);
     }
 
-    if constexpr (is_signed_v<T>) { value *= sign; }
+    if constexpr (is_signed_v<IntegerType>) { value *= sign; }
 
     return {
         .end   = &str[i],
-        .error = ascii_to_int_error::none,
+        .error = ascii_to_integer_error::none,
         .value = value,
     };
-}
-
-template <typename T, typename CharT, bool SkipLeadingWhiteSpace = true>
-[[nodiscard]] constexpr auto ascii_to_int(CharT const* str, T base) noexcept -> ascii_to_int_result<T, CharT>
-{
-    auto value = T { 0 };
-    auto sign  = T { 1 };
-
-    if (*str == '-') {
-        sign = -1;
-        ++str;
-    }
-
-    // Handle prefix for hex and octal
-    if (*str == '0') {
-        ++str;
-        base = tolower(*str) == 'x' ? 16 : 8;
-        ++str;
-    }
-
-    while (*str != '\0') {
-        int digit;
-        if (isdigit(*str)) {
-            digit = *str - '0';
-        } else if (isalpha(*str)) {
-            digit = tolower(*str) - 'a' + 10;
-        } else {
-            break; // Invalid character
-        }
-        if (digit >= base) {
-            break; // Invalid digit for base
-        }
-        value = value * base + digit;
-        ++str;
-    }
-
-    return sign * value;
 }
 
 enum struct int_to_ascii_error : etl::uint8_t {
@@ -219,4 +200,4 @@ template <typename FloatT>
 
 } // namespace etl::detail
 
-#endif // ETL_STRING_CONVERSION_HPP
+#endif // TETL_STRINGS_CONVERSION_HPP

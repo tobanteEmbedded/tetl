@@ -5,7 +5,8 @@
 #ifndef TETL_CSTDLIB_ATOI_HPP
 #define TETL_CSTDLIB_ATOI_HPP
 
-#include "etl/_strings/conversion.hpp"
+#include <etl/_cstring/strlen.hpp>
+#include <etl/_strings/conversion.hpp>
 
 namespace etl {
 
@@ -15,7 +16,7 @@ namespace etl {
 /// number representation and converts them to an integer value.
 [[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
 {
-    auto const result = detail::ascii_to_int_base10<int, char, true>(string);
+    auto const result = detail::ascii_to_integer<int, char, true>(string, strlen(string));
     return result.value;
 }
 

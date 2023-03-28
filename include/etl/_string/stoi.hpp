@@ -18,8 +18,8 @@ namespace etl {
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stoi(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10) -> int
 {
-    ignore_unused(pos, base);
-    auto const res = detail::ascii_to_int_base10<int>(str.c_str());
+    ignore_unused(pos);
+    auto const res = detail::ascii_to_integer<int>(str.c_str(), str.size(), base);
     return res.value;
 }
 
@@ -32,8 +32,8 @@ template <size_t Capacity>
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stol(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10) -> long
 {
-    ignore_unused(pos, base);
-    auto const res = detail::ascii_to_int_base10<long>(str.c_str());
+    ignore_unused(pos);
+    auto const res = detail::ascii_to_integer<long>(str.c_str(), str.size(), base);
     return res.value;
 }
 
@@ -47,8 +47,8 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto stoll(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
     -> long long
 {
-    ignore_unused(pos, base);
-    auto const res = detail::ascii_to_int_base10<long long>(str.c_str());
+    ignore_unused(pos);
+    auto const res = detail::ascii_to_integer<long long>(str.c_str(), str.size(), base);
     return res.value;
 }
 
@@ -62,8 +62,8 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto stoul(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
     -> unsigned long
 {
-    ignore_unused(pos, base);
-    auto const res = detail::ascii_to_int_base10<unsigned long>(str.c_str());
+    ignore_unused(pos);
+    auto const res = detail::ascii_to_integer<unsigned long>(str.c_str(), str.size(), base);
     return res.value;
 }
 
@@ -77,8 +77,8 @@ template <size_t Capacity>
 [[nodiscard]] constexpr auto stoull(static_string<Capacity> const& str, size_t* pos = nullptr, int base = 10)
     -> unsigned long long
 {
-    ignore_unused(pos, base);
-    auto const res = detail::ascii_to_int_base10<unsigned long long>(str.c_str());
+    ignore_unused(pos);
+    auto const res = detail::ascii_to_integer<unsigned long long>(str.c_str(), str.size(), base);
     return res.value;
 }
 

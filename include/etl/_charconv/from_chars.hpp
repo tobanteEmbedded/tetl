@@ -38,16 +38,13 @@ template <integral T>
 [[nodiscard]] constexpr auto from_chars(char const* first, char const* last, T& value, int base = 10)
     -> from_chars_result
 {
-    // TODO(tobi): Implement other bases
-    if (base != 10) { return from_chars_result { first, errc::invalid_argument }; }
-
     auto const len               = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const [end, error, val] = detail::ascii_to_int_base10<T, char, false>(first, len);
+    auto const [end, error, val] = detail::ascii_to_integer<T, char, false>(first, len, base);
 
-    if (error == detail::ascii_to_int_error::overflow) {
+    if (error == detail::ascii_to_integer_error::overflow) {
         return from_chars_result { .ptr = first, .ec = errc::result_out_of_range };
     }
-    if (error == detail::ascii_to_int_error::invalid_input) {
+    if (error == detail::ascii_to_integer_error::invalid_input) {
         return from_chars_result { .ptr = first, .ec = errc::invalid_argument };
     }
 
