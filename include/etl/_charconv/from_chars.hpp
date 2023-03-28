@@ -39,7 +39,7 @@ template <integral T>
     -> from_chars_result
 {
     auto const len               = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const [end, error, val] = detail::ascii_to_integer<T, char, false>(first, len, base);
+    auto const [end, error, val] = detail::ascii_to_integer<T, false>(first, len, base);
 
     if (error == detail::ascii_to_integer_error::overflow) {
         return from_chars_result { .ptr = first, .ec = errc::result_out_of_range };

@@ -19,18 +19,18 @@ enum struct ascii_to_integer_error : etl::uint8_t {
     overflow,
 };
 
-template <typename IntegerType, typename CharType>
+template <typename IntegerType>
 struct ascii_to_integer_result {
-    CharType const* end { nullptr };
+    char const* end { nullptr };
     ascii_to_integer_error error { ascii_to_integer_error::none };
     IntegerType value;
 };
 
-template <typename IntegerType, typename CharType, bool SkipLeadingWhiteSpace = true>
-[[nodiscard]] constexpr auto ascii_to_integer(CharType const* str, size_t len,
-    IntegerType base = IntegerType(10)) noexcept -> ascii_to_integer_result<IntegerType, CharType>
+template <typename IntegerType, bool SkipLeadingWhiteSpace = true>
+[[nodiscard]] constexpr auto ascii_to_integer(char const* str, size_t len, IntegerType base = IntegerType(10)) noexcept
+    -> ascii_to_integer_result<IntegerType>
 {
-    if (*str == CharType(0)) {
+    if (*str == char(0)) {
         return {
             .end   = str,
             .error = ascii_to_integer_error::invalid_input,
@@ -40,7 +40,7 @@ template <typename IntegerType, typename CharType, bool SkipLeadingWhiteSpace = 
 
     auto i = size_t {};
     if constexpr (SkipLeadingWhiteSpace) {
-        while (isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != CharType(0))) {
+        while (isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != char(0))) {
             ++i;
             --len;
         }
@@ -49,7 +49,7 @@ template <typename IntegerType, typename CharType, bool SkipLeadingWhiteSpace = 
     // optional minus for signed types
     [[maybe_unused]] auto sign = IntegerType(1);
     if constexpr (is_signed_v<IntegerType>) {
-        if (((len != 0) and (str[i] != CharType(0))) and (str[i] == CharType('-'))) {
+        if (((len != 0) and (str[i] != char(0))) and (str[i] == '-')) {
             sign = IntegerType(-1);
             ++i;
             --len;
@@ -60,27 +60,25 @@ template <typename IntegerType, typename CharType, bool SkipLeadingWhiteSpace = 
 
     // loop over digits
     auto value = IntegerType {};
-    for (; (str[i] != CharType(0)) and (len != 0); ++i, --len) {
+    for (; (str[i] != char(0)) and (len != 0); ++i, --len) {
 
         auto digit = IntegerType {};
         if (isdigit(static_cast<int>(str[i]))) {
-            digit = static_cast<IntegerType>(str[i] - CharType('0'));
+            digit = static_cast<IntegerType>(str[i] - '0');
         } else if (isalpha(static_cast<int>(str[i]))) {
-            digit = static_cast<IntegerType>(tolower(static_cast<int>(str[i])) - CharType('a') + 10);
+            auto const x = static_cast<char>(tolower(static_cast<int>(str[i])));
+            digit        = static_cast<IntegerType>(x - 'a' + char(10));
         } else {
             break;
         }
 
         if (digit >= base) {
-            if (i == firstDigit) {
-                return {
-                    .end   = str,
-                    .error = ascii_to_integer_error::invalid_input,
-                    .value = IntegerType {},
-                };
-            } else {
-                break;
-            }
+            if (i != firstDigit) { break; }
+            return {
+                .end   = str,
+                .error = ascii_to_integer_error::invalid_input,
+                .value = IntegerType {},
+            };
         }
 
         // TODO(tobi): Check overflow
