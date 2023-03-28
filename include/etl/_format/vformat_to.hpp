@@ -16,9 +16,9 @@ namespace etl {
 template <typename OutputIt>
 auto vformat_to(OutputIt out, string_view fmt, format_args args) -> OutputIt
 {
-    ignore_unused(fmt, args);
     auto buffer = detail::fmt_buffer<char> { out };
     auto it     = back_inserter(buffer);
+    ignore_unused(fmt, args, it);
     return out;
 }
 
