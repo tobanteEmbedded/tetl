@@ -5,10 +5,10 @@
 #ifndef TETL_FORMAT_FORMAT_TO_HPP
 #define TETL_FORMAT_FORMAT_TO_HPP
 
-#include "etl/_format/argument.hpp"
-#include "etl/_format/context.hpp"
-#include "etl/_type_traits/remove_cvref.hpp"
-#include "etl/_vector/static_vector.hpp"
+#include <etl/_format/argument.hpp>
+#include <etl/_format/basic_format_context.hpp>
+#include <etl/_type_traits/remove_cvref.hpp>
+#include <etl/_vector/static_vector.hpp>
 
 namespace etl {
 template <typename It>
@@ -22,7 +22,7 @@ template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
     // TODO: Make more generic. What about other string types.
-    auto ctx = format_context<etl::static_string<32>> { out };
+    auto ctx = format_context { out };
 
     // Format leading text before the first argument.
     auto const slices = detail::split_at_next_argument(fmt);

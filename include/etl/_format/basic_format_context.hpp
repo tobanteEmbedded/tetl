@@ -2,11 +2,12 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_FORMAT_CONTEXT_HPP
-#define TETL_FORMAT_CONTEXT_HPP
+#ifndef TETL_FORMAT_BASIC_FORMAT_CONTEXT_HPP
+#define TETL_FORMAT_BASIC_FORMAT_CONTEXT_HPP
 
-#include "etl/_iterator/back_insert_iterator.hpp"
-#include "etl/_warning/ignore_unused.hpp"
+#include <etl/_format/fmt_buffer.hpp>
+#include <etl/_iterator/back_insert_iterator.hpp>
+#include <etl/_warning/ignore_unused.hpp>
 
 namespace etl {
 template <typename T, typename CharT>
@@ -52,9 +53,9 @@ private:
 /// CharT&>.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/basic_format_context
-template <typename ContainerT>
-using format_context = basic_format_context<etl::back_insert_iterator<ContainerT>, char>;
+using format_context  = basic_format_context<back_insert_iterator<detail::fmt_buffer<char>>, char>;
+using wformat_context = basic_format_context<back_insert_iterator<detail::fmt_buffer<wchar_t>>, wchar_t>;
 
 } // namespace etl
 
-#endif // TETL_FORMAT_CONTEXT_HPP
+#endif // TETL_FORMAT_BASIC_FORMAT_CONTEXT_HPP
