@@ -78,6 +78,43 @@ template <typename T, typename CharT, bool SkipLeadingWhiteSpace = true>
     };
 }
 
+template <typename T, typename CharT, bool SkipLeadingWhiteSpace = true>
+[[nodiscard]] constexpr auto ascii_to_int(CharT const* str, T base) noexcept -> ascii_to_int_result<T, CharT>
+{
+    auto value = T { 0 };
+    auto sign  = T { 1 };
+
+    if (*str == '-') {
+        sign = -1;
+        ++str;
+    }
+
+    // Handle prefix for hex and octal
+    if (*str == '0') {
+        ++str;
+        base = tolower(*str) == 'x' ? 16 : 8;
+        ++str;
+    }
+
+    while (*str != '\0') {
+        int digit;
+        if (isdigit(*str)) {
+            digit = *str - '0';
+        } else if (isalpha(*str)) {
+            digit = tolower(*str) - 'a' + 10;
+        } else {
+            break; // Invalid character
+        }
+        if (digit >= base) {
+            break; // Invalid digit for base
+        }
+        value = value * base + digit;
+        ++str;
+    }
+
+    return sign * value;
+}
+
 enum struct int_to_ascii_error : etl::uint8_t {
     none,
     buffer_overflow,

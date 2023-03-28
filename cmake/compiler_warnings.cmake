@@ -50,6 +50,7 @@ else ()
           $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
             -Weverything
             -Wno-c++98-compat-pedantic
+            -Wbo-c++20-compat
             -Wno-ctad-maybe-unsupported
             -Wno-documentation
             -Wno-documentation-unknown-command
