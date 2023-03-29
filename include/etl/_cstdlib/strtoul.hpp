@@ -17,7 +17,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
 [[nodiscard]] constexpr auto strtoul(char const* str, char const** last, int base) noexcept -> unsigned long
 {
-    auto const res = detail::ascii_to_integer<unsigned long, true>(str, strlen(str), base);
+    auto const len = strlen(str);
+    auto const res = detail::ascii_to_integer<unsigned long>(str, len, static_cast<unsigned long>(base));
     if (last != nullptr) { *last = res.end; }
     return res.value;
 }
@@ -27,7 +28,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/strtoul
 [[nodiscard]] constexpr auto strtoull(char const* str, char const** last, int base) noexcept -> unsigned long long
 {
-    auto const res = detail::ascii_to_integer<unsigned long long, true>(str, strlen(str), base);
+    auto const len = strlen(str);
+    auto const res = detail::ascii_to_integer<unsigned long long>(str, len, static_cast<unsigned long long>(base));
     if (last != nullptr) { *last = res.end; }
     return res.value;
 }

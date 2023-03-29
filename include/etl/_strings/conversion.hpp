@@ -67,7 +67,7 @@ template <typename IntegerType, bool SkipLeadingWhiteSpace = true>
             digit = static_cast<IntegerType>(str[i] - '0');
         } else if (isalpha(static_cast<int>(str[i]))) {
             auto const x = static_cast<char>(tolower(static_cast<int>(str[i])));
-            digit        = static_cast<IntegerType>(x - 'a' + char(10));
+            digit        = static_cast<IntegerType>(static_cast<IntegerType>(x) - static_cast<IntegerType>('a') + 10);
         } else {
             break;
         }
