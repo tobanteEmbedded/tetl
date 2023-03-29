@@ -2,20 +2,19 @@
 /// Distributed under the Boost Software License, Version 1.0.
 /// See accompanying file LICENSE or copy at http://boost.org/LICENSE_1_0.txt
 
-#ifndef TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
-#define TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
+#ifndef TETL_RANDOM_UNIFORM_INT_DISTRIBUTION_HPP
+#define TETL_RANDOM_UNIFORM_INT_DISTRIBUTION_HPP
 
 #include <etl/_limits/numeric_limits.hpp>
-#include <etl/_random/generate_canonical.hpp>
 
 namespace etl {
 
-template <typename RealType = double>
-struct uniform_real_distribution {
-    using result_type = RealType;
+template <typename IntType = int>
+struct uniform_int_distribution {
+    using result_type = IntType;
 
     struct param_type {
-        using distribution_type = uniform_real_distribution;
+        using distribution_type = uniform_int_distribution;
 
         constexpr param_type() noexcept = default;
         explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept
@@ -33,15 +32,15 @@ struct uniform_real_distribution {
 
     private:
         result_type _min { 0 };
-        result_type _max { 1 };
+        result_type _max { numeric_limits<result_type>::max() };
     };
 
-    constexpr uniform_real_distribution() : uniform_real_distribution { static_cast<RealType>(0) } { }
+    constexpr uniform_int_distribution() : uniform_int_distribution { 0 } { }
 
-    explicit constexpr uniform_real_distribution(param_type const& parm) : param_ { parm } { }
+    explicit constexpr uniform_int_distribution(param_type const& parm) : param_ { parm } { }
 
-    explicit constexpr uniform_real_distribution(RealType a, RealType b = RealType(1))
-        : uniform_real_distribution { param_type { a, b } }
+    explicit constexpr uniform_int_distribution(IntType a, IntType b = numeric_limits<IntType>::max())
+        : uniform_int_distribution { param_type { a, b } }
     {
     }
 
@@ -65,19 +64,11 @@ struct uniform_real_distribution {
     template <typename URBG>
     [[nodiscard]] constexpr auto operator()(URBG& g, param_type const& parm) noexcept(noexcept(g())) -> result_type
     {
-        constexpr auto digits  = static_cast<size_t>(numeric_limits<RealType>::digits);
-        constexpr auto bits    = ~size_t { 0 };
-        constexpr auto minBits = digits < bits ? digits : bits;
-        static_assert(minBits <= 64);
-
-        // x = a + u * (b - a)
-        auto const a = parm.a();
-        auto const b = parm.b();
-        auto const u = generate_canonical<RealType, minBits>(g);
-        return a + u * (b - a);
+        auto const range = static_cast<result_type>(parm.b() - parm.a());
+        return static_cast<result_type>(parm.a() + (g() % range));
     }
 
-    friend constexpr auto operator==(uniform_real_distribution const& x, uniform_real_distribution const& y) -> bool
+    friend constexpr auto operator==(uniform_int_distribution const& x, uniform_int_distribution const& y) -> bool
     {
         return x.param() == y.param();
     }
@@ -88,4 +79,4 @@ private:
 
 } // namespace etl
 
-#endif // TETL_RANDOM_UNIFORM_REAL_DISTRIBUTION_HPP
+#endif // TETL_RANDOM_UNIFORM_INT_DISTRIBUTION_HPP
