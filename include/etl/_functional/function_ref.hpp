@@ -9,7 +9,6 @@
 #include "etl/_memory/addressof.hpp"
 #include "etl/_type_traits/add_pointer.hpp"
 #include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_invocable_r.hpp"
 #include "etl/_type_traits/is_same.hpp"
 #include "etl/_utility/forward.hpp"

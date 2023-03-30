@@ -6,7 +6,6 @@
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
 #include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/integral_constant.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
 #include "etl/_type_traits/is_constructible.hpp"

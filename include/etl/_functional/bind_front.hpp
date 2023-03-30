@@ -7,7 +7,6 @@
 #include "etl/_tuple/apply.hpp"
 #include "etl/_tuple/tuple.hpp"
 #include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/invoke_result.hpp"
 #include "etl/_type_traits/is_base_of.hpp"
 #include "etl/_type_traits/unwrap_reference.hpp"
@@ -32,8 +31,8 @@ constexpr auto bind_front_caller(Func&& func, BoundArgsTuple&& boundArgsTuple, C
 template <typename Func, typename... BoundArgs>
 class bind_front_t {
 public:
-    template <typename F, typename... BA,
-        enable_if_t<!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>), bool> = true>
+    template <typename F, typename... BA>
+        requires(!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>))
     explicit bind_front_t(F&& f, BA&&... ba) : func_(forward<F>(f)), boundArgs_(forward<BA>(ba)...)
     {
     }

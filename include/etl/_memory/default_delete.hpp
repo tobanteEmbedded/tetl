@@ -5,7 +5,6 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_function.hpp"
 #include "etl/_type_traits/is_void.hpp"

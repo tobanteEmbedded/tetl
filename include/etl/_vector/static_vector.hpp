@@ -83,7 +83,8 @@ struct static_vector_zero_storage {
     /// \brief Constructs a new element at the end of the storagein-place.
     /// Increases size of the storage by one. Always fails for empty
     /// storage.
-    template <typename... Args, enable_if_t<is_constructible_v<T, Args...>, int> = 0>
+    template <typename... Args>
+        requires(is_constructible_v<T, Args...>)
     static constexpr auto emplace_back(Args&&... /*unused*/) noexcept -> void
     {
         TETL_ASSERT(false);
@@ -154,7 +155,8 @@ struct static_vector_trivial_storage {
     [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == Capacity; }
 
     /// \brief Constructs an element in-place at the end of the storage.
-    template <typename... Args, enable_if_t<is_constructible_v<T, Args...> && is_assignable_v<value_type&, T>, int> = 0>
+    template <typename... Args>
+        requires(is_constructible_v<T, Args...> && is_assignable_v<value_type&, T>)
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
         TETL_ASSERT(!full());
@@ -384,14 +386,15 @@ public:
 
     /// \brief Appends value at the end of the vector.
     template <typename U>
-    constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(forward<U>(value))))
-        -> enable_if_t<is_constructible_v<T, U> && is_assignable_v<reference, U&&>, void>
+        requires(is_constructible_v<T, U> && is_assignable_v<reference, U &&>)
+    constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(forward<U>(value)))) -> void
     {
         TETL_ASSERT(!full());
         emplace_back(forward<U>(value));
     }
 
-    template <typename InIt, enable_if_t<detail::InputIterator<InIt>, int> = 0>
+    template <typename InIt>
+        requires(detail::InputIterator<InIt>)
     constexpr auto move_insert(const_iterator position, InIt first, InIt last) noexcept(
         noexcept(emplace_back(move(*first)))) -> iterator
     {
@@ -424,15 +427,16 @@ public:
     using base_type::data;
 
     constexpr auto insert(const_iterator position, value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
-        -> enable_if_t<is_move_constructible_v<T>, iterator>
+        -> iterator
+        requires(is_move_constructible_v<T>)
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);
         return move_insert(position, &x, &x + 1);
     }
 
-    constexpr auto insert(const_iterator position, size_type n, T const& x) noexcept(noexcept(push_back(x)))
-        -> enable_if_t<is_copy_constructible_v<T>, iterator>
+    constexpr auto insert(const_iterator position, size_type n, T const& x) noexcept(noexcept(push_back(x))) -> iterator
+        requires(is_copy_constructible_v<T>)
     {
         assert_iterator_in_range(position);
         TETL_ASSERT(size() + n <= capacity());
@@ -448,7 +452,8 @@ public:
     }
 
     constexpr auto insert(const_iterator position, const_reference x) noexcept(
-        noexcept(insert(position, size_type(1), x))) -> enable_if_t<is_copy_constructible_v<T>, iterator>
+        noexcept(insert(position, size_type(1), x))) -> iterator
+        requires(is_copy_constructible_v<T>)
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);
@@ -457,9 +462,9 @@ public:
 
     template <typename InputIt>
     constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
-        -> enable_if_t<detail::InputIterator<InputIt>
-                           && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>,
-            iterator>
+        -> iterator
+        requires(
+            detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -505,26 +510,25 @@ public:
     /// \brief Copy assignment.
     constexpr auto operator=(static_vector const& other) noexcept(
         noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
-        -> enable_if_t<is_assignable_v<reference, const_reference>, static_vector&>
-    {
-        // Nothing to assert: size of other cannot exceed capacity because both
-        // vectors have the same type
-        clear();
-        insert(begin(), other.begin(), other.end());
-        return *this;
-    }
+        -> static_vector& requires(is_assignable_v<reference, const_reference>) {
+                              // Nothing to assert: size of other cannot exceed capacity because both
+                              // vectors have the same type
+                              clear();
+                              insert(begin(), other.begin(), other.end());
+                              return *this;
+                          }
 
     /// \brief Move assignment.
-    constexpr auto operator=(static_vector&& other) noexcept(
+    constexpr auto
+    operator=(static_vector&& other) noexcept(
         noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
-        -> enable_if_t<is_assignable_v<reference, reference>, static_vector&>
-    {
-        // Nothing to assert: size of other cannot exceed capacity because both
-        // vectors have the same type
-        clear();
-        move_insert(begin(), other.begin(), other.end());
-        return *this;
-    }
+        -> static_vector& requires(is_assignable_v<reference, reference>) {
+                              // Nothing to assert: size of other cannot exceed capacity because both
+                              // vectors have the same type
+                              clear();
+                              move_insert(begin(), other.begin(), other.end());
+                              return *this;
+                          }
 
     /// \brief Initializes vector with n default-constructed elements.
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
@@ -569,8 +573,9 @@ public:
 
     /// \brief assign
     template <typename InputIter>
-    constexpr auto assign(InputIter first, InputIter last) noexcept(noexcept(clear()) and noexcept(
-        insert(begin(), first, last))) -> enable_if_t<detail::InputIterator<InputIter>, void>
+        requires(detail::InputIterator<InputIter>)
+    constexpr auto assign(InputIter first, InputIter last) noexcept(
+        noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
             TETL_ASSERT(last - first >= 0);
@@ -580,7 +585,8 @@ public:
         insert(begin(), first, last);
     }
 
-    constexpr auto assign(size_type n, T const& u) -> enable_if_t<is_copy_constructible_v<T>, void>
+    constexpr auto assign(size_type n, T const& u) -> void
+        requires(is_copy_constructible_v<T>)
     {
         TETL_ASSERT(n <= capacity());
         clear();
@@ -615,14 +621,15 @@ public:
     }
 
     /// \brief erase
-    constexpr auto erase(const_iterator position) noexcept -> enable_if_t<detail::is_movable_v<value_type>, iterator>
+    constexpr auto erase(const_iterator position) noexcept -> iterator
+        requires(detail::is_movable_v<value_type>)
     {
         assert_iterator_in_range(position);
         return erase(position, position + 1);
     }
 
-    constexpr auto erase(const_iterator first, const_iterator last) noexcept
-        -> enable_if_t<detail::is_movable_v<value_type>, iterator>
+    constexpr auto erase(const_iterator first, const_iterator last) noexcept -> iterator
+        requires(detail::is_movable_v<value_type>)
     {
         assert_iterator_pair_in_range(first, last);
         iterator p = begin() + (first - begin());
@@ -635,8 +642,8 @@ public:
     }
 
     /// \brief Exchanges the contents of the container with those of other.
-    constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>)
-        -> enable_if_t<is_assignable_v<T&, T&&>, void>
+    constexpr auto swap(static_vector& other) noexcept(is_nothrow_swappable_v<T>) -> void
+        requires(is_assignable_v<T&, T &&>)
     {
         using etl::move;
 
@@ -649,7 +656,8 @@ public:
     /// be appended, these are move-constructed from `T{}` (or copy-constructed
     constexpr auto resize(size_type sz) noexcept((is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
                                                  || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
-        -> enable_if_t<detail::is_movable_v<value_type>, void>
+        -> void
+        requires(detail::is_movable_v<value_type>)
     {
         if (sz == size()) { return; }
 
@@ -661,8 +669,8 @@ public:
         erase(end() - (size() - sz), end());
     }
 
-    constexpr auto resize(size_type sz, T const& value) noexcept(is_nothrow_copy_constructible_v<T>)
-        -> enable_if_t<is_copy_constructible_v<T>, void>
+    constexpr auto resize(size_type sz, T const& value) noexcept(is_nothrow_copy_constructible_v<T>) -> void
+        requires(is_copy_constructible_v<T>)
     {
         if (sz == size()) { return; }
         if (sz > size()) {

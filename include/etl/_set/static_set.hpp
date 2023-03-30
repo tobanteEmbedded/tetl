@@ -156,7 +156,8 @@ public:
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
-    constexpr auto insert(value_type&& value) -> enable_if_t<is_move_constructible_v<value_type>, pair<iterator, bool>>
+    constexpr auto insert(value_type&& value) -> pair<iterator, bool>
+        requires(is_move_constructible_v<value_type>)
     {
         if (!full()) {
             auto cmp = key_compare {};
@@ -174,7 +175,8 @@ public:
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
     constexpr auto insert(value_type const& value) noexcept(noexcept(insert(move(declval<key_type>()))))
-        -> enable_if_t<is_copy_constructible_v<value_type>, pair<iterator, bool>>
+        -> pair<iterator, bool>
+        requires(is_copy_constructible_v<value_type>)
     {
         value_type tmp = value;
         return insert(move(tmp));
@@ -236,8 +238,8 @@ public:
     }
 
     /// \brief Exchanges the contents of the container with those of other.
-    constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>)
-        -> enable_if_t<is_assignable_v<key_type&, key_type&&>, void>
+    constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>) -> void
+        requires(is_assignable_v<key_type&, key_type &&>)
     {
         using etl::move;
 

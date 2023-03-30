@@ -767,8 +767,8 @@ optional(T) -> optional<T>;
 ///
 /// https://en.cppreference.com/w/cpp/utility/optional/swap2
 template <typename T>
-constexpr auto swap(etl::optional<T>& lhs, etl::optional<T>& rhs) noexcept(noexcept(lhs.swap(rhs)))
-    -> etl::enable_if_t<etl::is_move_constructible_v<T> && etl::is_swappable_v<T>>
+    requires(is_move_constructible_v<T> && is_swappable_v<T>)
+constexpr auto swap(optional<T>& lhs, optional<T>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

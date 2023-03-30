@@ -4,7 +4,6 @@
 #define TETL_UTILITY_SWAP_HPP
 
 #include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_move_assignable.hpp"
 #include "etl/_type_traits/is_move_constructible.hpp"
 #include "etl/_type_traits/is_nothrow_move_assignable.hpp"

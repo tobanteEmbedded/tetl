@@ -5,7 +5,6 @@
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_numeric/abs.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_floating_point.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_pointer.hpp"

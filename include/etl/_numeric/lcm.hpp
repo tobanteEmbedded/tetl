@@ -4,7 +4,6 @@
 
 #include "etl/_numeric/gcd.hpp"
 #include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_integral.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
@@ -14,19 +13,13 @@ namespace etl {
 ///
 /// \returns If either m or n is zero, returns zero. Otherwise, returns the
 /// least common multiple of |m| and |n|.
-// clang-format off
-template <typename M, typename N,
-    enable_if_t<
-        is_integral_v<M>
-        && !is_same_v<M, bool>
-        && is_integral_v<N>
-        && !is_same_v<N, bool>,
-    int> = 0>
-// clang-format on
+template <typename M, typename N>
+    requires(is_integral_v<M> and not is_same_v<M, bool> and is_integral_v<N> and not is_same_v<N, bool>)
 [[nodiscard]] constexpr auto lcm(M m, N n) -> common_type_t<M, N>
 {
     return (m * n) / gcd(m, n);
 }
+
 } // namespace etl
 
 #endif // TETL_NUMERIC_LCM_HPP

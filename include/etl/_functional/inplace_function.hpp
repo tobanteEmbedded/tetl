@@ -11,7 +11,6 @@
 #include "etl/_new/operator.hpp"
 #include "etl/_type_traits/aligned_storage.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_copy_constructible.hpp"
 #include "etl/_type_traits/is_invocable_r.hpp"
 #include "etl/_utility/exchange.hpp"
@@ -118,13 +117,15 @@ public:
     /// \brief Creates an empty function.
     inplace_function() noexcept : vtable_ { addressof(detail::empty_vtable<R, Args...>) } { }
 
-    // clang-format off
-    template <typename T, typename C = decay_t<T>, typename = enable_if_t<!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>>>
+    template <typename T, typename C = decay_t<T>>
+        requires(!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>)
     inplace_function(T&& closure)
     {
         static_assert(is_copy_constructible_v<C>, "inplace_function cannot be constructed from non-copyable type");
-        static_assert(sizeof(C) <= Capacity, "inplace_function cannot be constructed from object with this (large) size");
-        static_assert(Alignment % alignof(C) == 0, "inplace_function cannot be constructed from object with this (large) alignment");
+        static_assert(
+            sizeof(C) <= Capacity, "inplace_function cannot be constructed from object with this (large) size");
+        static_assert(Alignment % alignof(C) == 0,
+            "inplace_function cannot be constructed from object with this (large) alignment");
 
         static constexpr vtable_t const vt { detail::wrapper<C> {} };
         vtable_ = addressof(vt);
@@ -136,22 +137,21 @@ public:
     inplace_function(inplace_function<R(Args...), Cap, Align> const& other)
         : inplace_function { other.vtable_, other.vtable_->copy_ptr, addressof(other.storage_) }
     {
-        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
+        static_assert(
+            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align>&& other) noexcept
         : inplace_function { other.vtable_, other.vtable_->relocate_ptr, addressof(other.storage_) }
     {
-        static_assert(detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
+        static_assert(
+            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
         other.vtable_ = addressof(detail::empty_vtable<R, Args...>);
     }
 
     /// \brief Creates an empty function.
-    inplace_function(nullptr_t /*ignore*/) noexcept
-        : vtable_ { addressof(detail::empty_vtable<R, Args...>) }
-    {
-    }
+    inplace_function(nullptr_t /*ignore*/) noexcept : vtable_ { addressof(detail::empty_vtable<R, Args...>) } { }
 
     inplace_function(inplace_function const& other) : vtable_ { other.vtable_ }
     {
@@ -179,7 +179,6 @@ public:
         vtable_->relocate_ptr(addressof(storage_), addressof(other.storage_));
         return *this;
     }
-
 
     /// \brief Destroys the etl::inplace_function instance.
     /// If the etl::inplace_function is not empty, its target is destroyed also.
@@ -209,8 +208,6 @@ public:
 
         etl::swap(vtable_, other.vtable_);
     }
-
-    // clang-format on
 
 private:
     inplace_function(
