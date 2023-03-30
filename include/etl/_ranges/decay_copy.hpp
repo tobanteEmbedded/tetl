@@ -11,7 +11,6 @@
 
 namespace etl {
 
-/// \todo Add noexcept
 template <typename T>
 constexpr auto decay_copy(T&& t) noexcept(is_nothrow_convertible_v<T, decay_t<T>>) -> decay_t<T>
 {

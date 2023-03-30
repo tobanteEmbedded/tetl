@@ -64,9 +64,9 @@ struct span {
     ///
     /// \details This overload only participates in overload resolution
     /// if extent == 0 || extent == etl::dynamic_extent.
-    ///
-    /// \todo Remove from overload with concepts once available.
-    constexpr span() noexcept = default;
+    constexpr span() noexcept
+        requires(extent == 0 or extent == dynamic_extent)
+    = default;
 
     /// \brief Constructs a span.
     ///
@@ -79,41 +79,36 @@ struct span {
     /// participates in overload resolution if, It satisfies contiguous_iterator
     /// and the conversion from etl::iter_reference_t<It> to element_type is at
     /// most a qualification conversion.
-    ///
-    /// \todo Add explicit(extent != etl::dynamic_extent).
     template <typename It>
-    constexpr span(It first, size_type count) : data_ { first }, size_ { count }
+    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : data_ { first }, size_ { count }
     {
     }
 
     // /// \brief Constructs a span.
-    // /// \todo Add explicit(extent != etl::dynamic_extent).
     // template <typename It, typename End>
-    // constexpr span(It first, End last);
+    // explicit(extent != etl::dynamic_extent) constexpr span(It first, End last);
 
     /// \brief Constructs a span. From a c style array.
-    template <etl::size_t N>
+    template <size_t N>
     constexpr span(element_type (&arr)[N]) noexcept : data_ { &arr[0] }, size_ { N }
     {
     }
 
-    /// \brief Constructs a span. From a etl::array<Type,Size>.
-    template <typename U, etl::size_t N>
-    constexpr span(etl::array<U, N>& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
+    /// \brief Constructs a span. From a array<Type,Size>.
+    template <typename U, size_t N>
+    constexpr span(array<U, N>& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
     {
     }
 
-    /// \brief Constructs a span. From a etl::array<Type,Size> const.
-    template <typename U, etl::size_t N>
-    constexpr span(etl::array<U, N> const& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
+    /// \brief Constructs a span. From a array<Type,Size> const.
+    template <typename U, size_t N>
+    constexpr span(array<U, N> const& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
     {
     }
 
     /// \brief Constructs a span.
-    ///
-    /// \todo Add explicit(extent != etl::dynamic_extent)
     template <typename R>
-    constexpr span(R&& r) : data_ { r.data() }, size_ { r.size() }
+    explicit(extent != dynamic_extent) constexpr span(R&& r) : data_ { r.data() }, size_ { r.size() }
     {
     }
 
@@ -177,7 +172,7 @@ struct span {
     [[nodiscard]] constexpr auto first() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return { data(), static_cast<size_type>(Count) };
+        return span<element_type, Count> { data(), static_cast<size_type>(Count) };
     }
 
     /// \brief Obtains a span that is a view over the first Count elements of
@@ -194,7 +189,7 @@ struct span {
     [[nodiscard]] constexpr auto last() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return { data() + (size() - Count), static_cast<size_type>(Count) };
+        return span<element_type, Count> { data() + (size() - Count), static_cast<size_type>(Count) };
     }
 
     /// \brief Obtains a span that is a view over the last Count elements of

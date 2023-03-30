@@ -3,8 +3,8 @@
 #ifndef TETL_MEMORY_DESTROY_AT_HPP
 #define TETL_MEMORY_DESTROY_AT_HPP
 
-#include "etl/_memory/addressof.hpp"
-#include "etl/_type_traits/is_array.hpp"
+#include <etl/_memory/addressof.hpp>
+#include <etl/_type_traits/is_array.hpp>
 
 namespace etl {
 
@@ -15,8 +15,8 @@ namespace etl {
 template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
-    if constexpr (etl::is_array_v<T>) {
-        for (auto& elem : *p) { etl::destroy_at(etl::addressof(elem)); }
+    if constexpr (is_array_v<T>) {
+        for (auto& elem : *p) { destroy_at(addressof(elem)); }
     } else {
         p->~T();
     }

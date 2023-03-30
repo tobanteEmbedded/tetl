@@ -19,15 +19,15 @@ template <typename RandomIt, typename Compare>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last, Compare comp) -> void
 {
     // TODO: Improve. Currently forwards to regular sort.
-    etl::ignore_unused(nth);
-    etl::sort(first, last, comp);
+    ignore_unused(nth);
+    sort(first, last, comp);
 }
 
 template <typename RandomIt>
 constexpr auto nth_element(RandomIt first, RandomIt nth, RandomIt last) -> void
 {
-    etl::ignore_unused(nth);
-    etl::sort(first, last);
+    ignore_unused(nth);
+    sort(first, last);
 }
 
 } // namespace etl

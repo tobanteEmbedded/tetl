@@ -20,23 +20,22 @@ struct variant_size;
 /// \brief Provides compile-time indexed access to the types of the alternatives
 /// of the possibly cv-qualified variant, combining cv-qualifications of the
 /// variant (if any) with the cv-qualifications of the alternative.
-template <etl::size_t I, typename T>
+template <size_t I, typename T>
 struct variant_alternative;
 
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<T>; // NOLINT
+constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<T>; // NOLINT
 
 template <typename T, typename... Types>
-constexpr auto get_if(etl::variant<Types...> const* pv) noexcept -> etl::add_pointer_t<T const>; // NOLINT
+constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<T const>; // NOLINT
 
-template <etl::size_t I, typename... Types>
-constexpr auto get_if(etl::variant<Types...>* pv) noexcept -> etl::add_pointer_t<typename etl::variant_alternative<I,
-    etl::variant<Types...>>::type>; // NOLINT
+template <size_t I, typename... Types>
+constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<typename variant_alternative<I,
+    variant<Types...>>::type>; // NOLINT
 
-template <etl::size_t I, typename... Types>
-constexpr auto get_if(etl::variant<Types...> const* pv) noexcept
-    -> etl::add_pointer_t<typename etl::variant_alternative<I,
-        etl::variant<Types...>>::type const>; // NOLINT
+template <size_t I, typename... Types>
+constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<I,
+    variant<Types...>>::type const>; // NOLINT
 
 } // namespace etl
 

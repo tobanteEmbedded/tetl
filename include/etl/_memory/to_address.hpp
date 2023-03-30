@@ -8,27 +8,6 @@
 
 namespace etl {
 
-namespace detail {
-template <typename T>
-constexpr auto to_address_impl(T* ptr) noexcept -> T*
-{
-    static_assert(!is_function_v<T>);
-    return ptr;
-}
-
-template <typename Ptr>
-constexpr auto to_address_impl(Ptr const& ptr) noexcept -> decltype(pointer_traits<Ptr>::to_address(ptr))
-{
-    return pointer_traits<Ptr>::to_address(ptr);
-}
-
-template <typename Ptr, typename... Ignore>
-constexpr auto to_address_impl(Ptr const& ptr, Ignore... /*ignore*/) noexcept
-{
-    return to_address_impl(ptr.operator->());
-}
-} // namespace detail
-
 /// \brief Obtain the address represented by p without forming a reference to
 /// the object pointed to by p.
 ///
@@ -38,7 +17,11 @@ constexpr auto to_address_impl(Ptr const& ptr, Ignore... /*ignore*/) noexcept
 template <typename Ptr>
 constexpr auto to_address(Ptr const& ptr) noexcept
 {
-    return detail::to_address_impl(ptr);
+    if constexpr (requires { pointer_traits<Ptr>::to_address(ptr); }) {
+        return pointer_traits<Ptr>::to_address(ptr);
+    } else {
+        return to_address(ptr.operator->());
+    }
 }
 
 /// \brief Obtain the address represented by p without forming a reference to
@@ -47,9 +30,10 @@ constexpr auto to_address(Ptr const& ptr) noexcept
 /// \details Raw pointer overload: If T is a function type, the program is
 /// ill-formed. Otherwise, returns p unmodified.
 template <typename T>
+    requires(not is_function_v<T>)
 constexpr auto to_address(T* ptr) noexcept -> T*
 {
-    return detail::to_address_impl(ptr);
+    return ptr;
 }
 
 } // namespace etl

@@ -19,7 +19,6 @@ using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<It>>::differenc
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
-    // TODO: Make more generic. What about other string types.
     auto ctx = format_context { out };
 
     // Format leading text before the first argument.

@@ -18,28 +18,28 @@ namespace detail {
 template <typename C, typename Pointed, typename T1, typename... Args>
 constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args) -> decltype(auto)
 {
-    if constexpr (etl::is_function_v<Pointed>) {
-        if constexpr (etl::is_base_of_v<C, etl::decay_t<T1>>) {
-            return (etl::forward<T1>(t1).*f)(etl::forward<Args>(args)...);
-        } else if constexpr (is_reference_wrapper_v<etl::decay_t<T1>>) {
-            return (t1.get().*f)(etl::forward<Args>(args)...);
+    if constexpr (is_function_v<Pointed>) {
+        if constexpr (is_base_of_v<C, decay_t<T1>>) {
+            return (forward<T1>(t1).*f)(forward<Args>(args)...);
+        } else if constexpr (is_reference_wrapper_v<decay_t<T1>>) {
+            return (t1.get().*f)(forward<Args>(args)...);
         } else {
-            return ((*etl::forward<T1>(t1)).*f)(etl::forward<Args>(args)...);
+            return ((*forward<T1>(t1)).*f)(forward<Args>(args)...);
         }
     } else {
-        static_assert(etl::is_object_v<Pointed> && sizeof...(args) == 0);
-        if constexpr (etl::is_base_of_v<C, etl::decay_t<T1>>) {
-            return etl::forward<T1>(t1).*f;
-        } else if constexpr (is_reference_wrapper_v<etl::decay_t<T1>>) {
+        static_assert(is_object_v<Pointed> && sizeof...(args) == 0);
+        if constexpr (is_base_of_v<C, decay_t<T1>>) {
+            return forward<T1>(t1).*f;
+        } else if constexpr (is_reference_wrapper_v<decay_t<T1>>) {
             return t1.get().*f;
         } else {
-            return (*etl::forward<T1>(t1)).*f;
+            return (*forward<T1>(t1)).*f;
         }
     }
 }
 } // namespace detail
 
-// todo Add noexcept(is_nothrow_invocable_v<F, Args...>)
+/// \todo Add noexcept(is_nothrow_invocable_v<F, Args...>)
 template <typename F, typename... Args>
 constexpr auto invoke(F&& f, Args&&... args) -> invoke_result_t<F, Args...>
 {

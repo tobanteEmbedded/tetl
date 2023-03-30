@@ -3,7 +3,7 @@
 #ifndef TETL_CMATH_LERP_HPP
 #define TETL_CMATH_LERP_HPP
 
-#include "etl/_math/lerp.hpp"
+#include <etl/_concepts/floating_point.hpp>
 
 namespace etl {
 
@@ -11,20 +11,18 @@ namespace etl {
 /// the parameter t (or extrapolation, when t is outside the range [0,1]).
 ///
 /// https://en.cppreference.com/w/cpp/numeric/lerp
-[[nodiscard]] constexpr auto lerp(float a, float b, float t) noexcept -> float
+template <floating_point Float>
+[[nodiscard]] constexpr auto lerp(Float a, Float b, Float t) noexcept -> Float
 {
-    return detail::lerp_impl<float>(a, b, t);
+    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
+
+    if (t == 1) { return b; }
+
+    auto const x = a + t * (b - a);
+    if ((t > 1) == (b > a)) { return b < x ? x : b; }
+    return x < b ? x : b;
 }
 
-[[nodiscard]] constexpr auto lerp(double a, double b, double t) noexcept -> double
-{
-    return detail::lerp_impl<double>(a, b, t);
-}
-
-[[nodiscard]] constexpr auto lerp(long double a, long double b, long double t) noexcept -> long double
-{
-    return detail::lerp_impl<long double>(a, b, t);
-}
 } // namespace etl
 
 #endif // TETL_CMATH_LERP_HPP

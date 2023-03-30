@@ -19,7 +19,7 @@ constexpr auto test() -> bool
     assert(approx(etl::acos(T(1)), T(0)));
 
     // TODO: Fix long double tests
-    if constexpr (!etl::is_same_v<T, long double>) {
+    if constexpr (not etl::is_same_v<T, long double>) {
         assert(approx(etl::acos(T(0)), T(1.570796327)));
         assert(etl::isnan(etl::acos(T(2))));
     }
