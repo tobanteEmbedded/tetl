@@ -4,12 +4,11 @@
 #ifndef TETL_CMATH_LRINT_HPP
 #define TETL_CMATH_LRINT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_constant_evaluated.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_concepts/integral.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 
@@ -84,7 +83,7 @@ template <typename T>
 [[nodiscard]] constexpr auto lrintl(long double arg) noexcept -> long { return detail::lrint_impl(arg); }
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
-template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
+template <integral T>
 [[nodiscard]] constexpr auto lrint(T arg) noexcept -> long
 {
     return lrint(static_cast<double>(arg));
@@ -106,7 +105,7 @@ template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
 [[nodiscard]] constexpr auto llrintl(long double arg) noexcept -> long long { return detail::llrint_impl(arg); }
 
 /// Rounds the floating-point argument arg to an integer value, using the current rounding mode.
-template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
+template <integral T>
 [[nodiscard]] constexpr auto llrint(T arg) noexcept -> long long
 {
     return llrint(static_cast<double>(arg));

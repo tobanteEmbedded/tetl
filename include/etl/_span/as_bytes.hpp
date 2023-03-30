@@ -35,7 +35,8 @@ template <typename T, size_t N>
 /// \details If N is dynamic_extent, the extent of the returned span S is also
 /// dynamic_extent; otherwise it is sizeof(T) * N. Only participates in overload
 /// resolution if is_const_v<T> is false.
-template <typename T, size_t N, enable_if_t<!is_const_v<T>, int> = 0>
+template <typename T, size_t N>
+    requires(not is_const_v<T>)
 [[nodiscard]] auto as_writable_bytes(span<T, N> s) noexcept -> span<byte, detail::span_as_bytes_size<T, N>>
 {
     return { reinterpret_cast<byte*>(s.data()), s.size_bytes() };

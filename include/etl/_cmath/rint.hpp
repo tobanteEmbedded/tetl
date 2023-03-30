@@ -4,12 +4,11 @@
 #ifndef TETL_CMATH_RINT_HPP
 #define TETL_CMATH_RINT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_constant_evaluated.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_concepts/integral.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 
@@ -71,7 +70,7 @@ template <typename T>
 
 /// Rounds the floating-point argument arg to an integer value
 // (in floating-point format), using the current rounding mode.
-template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
+template <integral T>
 [[nodiscard]] constexpr auto rint(T arg) noexcept -> double
 {
     return rint(static_cast<double>(arg));

@@ -23,67 +23,66 @@ namespace detail {
 template <typename Func, typename BoundArgsTuple, typename... CallArgs>
 constexpr auto bind_front_caller(Func&& func, BoundArgsTuple&& boundArgsTuple, CallArgs&&... callArgs) -> decltype(auto)
 {
-    return etl::apply(
+    return apply(
         [&func, &callArgs...](auto&&... boundArgs) -> decltype(auto) {
-            return etl::invoke(etl::forward<Func>(func), etl::forward<decltype(boundArgs)>(boundArgs)...,
-                etl::forward<CallArgs>(callArgs)...);
+            return invoke(
+                forward<Func>(func), forward<decltype(boundArgs)>(boundArgs)..., forward<CallArgs>(callArgs)...);
         },
-        etl::forward<BoundArgsTuple>(boundArgsTuple));
+        forward<BoundArgsTuple>(boundArgsTuple));
 }
 
 template <typename Func, typename... BoundArgs>
 class bind_front_t {
 public:
     template <typename F, typename... BA,
-        etl::enable_if_t<!(sizeof...(BA) == 0 && etl::is_base_of_v<bind_front_t, etl::decay_t<F>>), bool> = true>
-    explicit bind_front_t(F&& f, BA&&... ba) : func_(etl::forward<F>(f)), boundArgs_(etl::forward<BA>(ba)...)
+        enable_if_t<!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>), bool> = true>
+    explicit bind_front_t(F&& f, BA&&... ba) : func_(forward<F>(f)), boundArgs_(forward<BA>(ba)...)
     {
     }
 
-    // TODO: Add noexcept(etl::is_nothrow_invocable_v<Func&, BoundArgs&...,
+    // TODO: Add noexcept(is_nothrow_invocable_v<Func&, BoundArgs&...,
     // CallArgs...>)
     template <typename... CallArgs>
-    auto operator()(CallArgs&&... callArgs) & -> etl::invoke_result_t<Func&, BoundArgs&..., CallArgs...>
+    auto operator()(CallArgs&&... callArgs) & -> invoke_result_t<Func&, BoundArgs&..., CallArgs...>
     {
-        return bind_front_caller(func_, boundArgs_, etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(func_, boundArgs_, forward<CallArgs>(callArgs)...);
     }
 
-    // TODO: Add noexcept(etl::is_nothrow_invocable_v<Func const&, BoundArgs
+    // TODO: Add noexcept(is_nothrow_invocable_v<Func const&, BoundArgs
     // const&...,CallArgs...>)
     template <typename... CallArgs>
-    auto operator()(
-        CallArgs&&... callArgs) const& -> etl::invoke_result_t<Func const&, BoundArgs const&..., CallArgs...>
+    auto operator()(CallArgs&&... callArgs) const& -> invoke_result_t<Func const&, BoundArgs const&..., CallArgs...>
     {
-        return bind_front_caller(func_, boundArgs_, etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(func_, boundArgs_, forward<CallArgs>(callArgs)...);
     }
 
-    // TODO: Add  noexcept(etl::is_nothrow_invocable_v<Func, BoundArgs...,
+    // TODO: Add  noexcept(is_nothrow_invocable_v<Func, BoundArgs...,
     // CallArgs...>)
     template <typename... CallArgs>
-    auto operator()(CallArgs&&... callArgs) && -> etl::invoke_result_t<Func, BoundArgs..., CallArgs...>
+    auto operator()(CallArgs&&... callArgs) && -> invoke_result_t<Func, BoundArgs..., CallArgs...>
     {
-        return bind_front_caller(etl::move(func_), etl::move(boundArgs_), etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(move(func_), move(boundArgs_), forward<CallArgs>(callArgs)...);
     }
 
-    // TODO: noexcept(etl::is_nothrow_invocable_v<Func const, BoundArgs
+    // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs
     // const...,CallArgs...>)
     template <typename... CallArgs>
-    auto operator()(CallArgs&&... callArgs) const&& -> etl::invoke_result_t<Func const, BoundArgs const..., CallArgs...>
+    auto operator()(CallArgs&&... callArgs) const&& -> invoke_result_t<Func const, BoundArgs const..., CallArgs...>
     {
-        return bind_front_caller(etl::move(func_), etl::move(boundArgs_), etl::forward<CallArgs>(callArgs)...);
+        return bind_front_caller(move(func_), move(boundArgs_), forward<CallArgs>(callArgs)...);
     }
 
 private:
     Func func_;
-    etl::tuple<BoundArgs...> boundArgs_;
+    tuple<BoundArgs...> boundArgs_;
 };
 
 } // namespace detail
 
 /// \brief The function template bind_front generates a forwarding call wrapper
 /// for f. Calling this wrapper is equivalent to invoking f with its first
-/// sizeof...(Args) parameters bound to args. In other words, etl::bind_front(f,
-/// bound_args...)(call_args...) is equivalent to etl::invoke(f, bound_args...,
+/// sizeof...(Args) parameters bound to args. In other words, bind_front(f,
+/// bound_args...)(call_args...) is equivalent to invoke(f, bound_args...,
 /// call_args....).
 ///
 /// \details Copied implementation from paper:
@@ -91,8 +90,8 @@ private:
 template <typename Func, typename... BoundArgs>
 constexpr auto bind_front(Func&& func, BoundArgs&&... boundArgs)
 {
-    return detail::bind_front_t<etl::decay_t<Func>, etl::unwrap_ref_decay_t<BoundArgs>...> { etl::forward<Func>(func),
-        etl::forward<BoundArgs>(boundArgs)... };
+    return detail::bind_front_t<decay_t<Func>, unwrap_ref_decay_t<BoundArgs>...> { forward<Func>(func),
+        forward<BoundArgs>(boundArgs)... };
 }
 
 } // namespace etl

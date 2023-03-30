@@ -23,8 +23,8 @@ namespace etl {
 ///
 /// \details https://en.cppreference.com/w/cpp/algorithm/swap
 template <typename T>
-constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T>&& is_nothrow_move_assignable_v<T>)
-    -> enable_if_t<is_move_constructible_v<T> && is_move_assignable_v<T>, void>
+    requires(is_move_constructible_v<T> and is_move_assignable_v<T>)
+constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T>&& is_nothrow_move_assignable_v<T>) -> void
 {
     T temp(move(a));
     a = move(b);
@@ -32,8 +32,8 @@ constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T>&& is
 }
 
 template <typename T, size_t N>
-constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value)
-    -> enable_if_t<is_swappable<T>::value, void>
+    requires(is_swappable_v<T>)
+constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value) -> void
 {
     for (size_t i = 0; i < N; ++i) { swap(a[i], b[i]); }
 }

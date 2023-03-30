@@ -34,19 +34,10 @@ private:
     void* obj_ { nullptr };
     internal_signature_t callable_ { nullptr };
 
-    template <typename F>
-    inline static constexpr bool invocable_ = is_invocable_r_v<R, F&&, Args...>;
-
-    template <typename F>
-    using enable_if_invocable = enable_if_t<invocable_<F>, int>;
-
-    template <typename F>
-    using enable_if_invocable_and_not_function_ref
-        = enable_if_t<!is_same_v<decay_t<F>, function_ref> && invocable_<F>, int>;
-
 public:
     /// \brief Constructs a function_ref referring to f.
-    template <typename F, enable_if_invocable_and_not_function_ref<F> = 0>
+    template <typename F>
+        requires(not is_same_v<decay_t<F>, function_ref> and is_invocable_r_v<R, F &&, Args...>)
     function_ref(F&& f) noexcept
         : obj_(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
         , callable_ {
@@ -59,7 +50,8 @@ public:
     }
 
     /// \brief Reassigns this function_ref to refer to f.
-    template <typename F, enable_if_invocable<F> = 0>
+    template <typename F>
+        requires(is_invocable_r_v<R, F &&, Args...>)
     auto operator=(F&& f) noexcept -> function_ref&
     {
         obj_      = reinterpret_cast<void*>(addressof(f));

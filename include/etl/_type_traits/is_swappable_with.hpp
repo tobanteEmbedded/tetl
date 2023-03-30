@@ -27,10 +27,12 @@ struct is_nothrow_swappable;
 
 // clang-format off
 template <typename T>
-constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>) -> enable_if_t<is_move_constructible_v<T> && is_move_assignable_v<T>, void>;
+requires(is_move_constructible_v<T> && is_move_assignable_v<T>)
+constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>) -> void;
 
 template<typename T, size_t N>
-constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value) -> enable_if_t<is_swappable<T>::value, void>;
+requires(is_swappable<T>::value)
+constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value) -> void;
 
 // swap(declval<T>(), declval<U>()) is not valid
 template <typename T, typename U, typename = void>

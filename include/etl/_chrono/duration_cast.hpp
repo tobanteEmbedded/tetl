@@ -10,7 +10,6 @@
 #include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
 
 namespace etl::chrono {

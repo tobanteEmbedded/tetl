@@ -9,7 +9,6 @@
 
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_strings/cstr_algorithm.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_trivially_constructible.hpp"
 #include "etl/_type_traits/is_trivially_copyable.hpp"
 
@@ -38,7 +37,7 @@ inline constexpr auto bit_castable_types
 ///
 /// \details https://en.cppreference.com/w/cpp/numeric/bit_cast
 template <typename To, typename From>
-    requires requires { detail::bit_castable_types<To, From>; }
+    requires(detail::bit_castable_types<To, From>)
 constexpr auto bit_cast(From const& src) noexcept -> To
 {
 #if __has_builtin(__builtin_bit_cast)

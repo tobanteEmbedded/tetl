@@ -10,7 +10,6 @@
 #include <etl/_iterator/distance.hpp>
 #include <etl/_strings/conversion.hpp>
 #include <etl/_system_error/errc.hpp>
-#include <etl/_type_traits/enable_if.hpp>
 #include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
@@ -34,7 +33,7 @@ struct from_chars_result {
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
 template <integral T>
-    requires requires { not is_same_v<T, bool>; }
+    requires(not is_same_v<T, bool>)
 [[nodiscard]] constexpr auto from_chars(char const* first, char const* last, T& value, int base = 10)
     -> from_chars_result
 {

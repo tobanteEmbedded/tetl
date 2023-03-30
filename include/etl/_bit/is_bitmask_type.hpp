@@ -8,7 +8,6 @@
 #define TETL_BIT_IS_BITMASK_TYPE_HPP
 
 #include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/underlying_type.hpp"
 
 namespace etl {

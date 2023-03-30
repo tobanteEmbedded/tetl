@@ -5,13 +5,12 @@
 #ifndef TETL_CMATH_ROUND_HPP
 #define TETL_CMATH_ROUND_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_3rd_party/gcem/gcem.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_constant_evaluated.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_3rd_party/gcem/gcem.hpp>
+#include <etl/_concepts/integral.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 
@@ -80,7 +79,7 @@ template <typename T>
 /// mode.
 ///
 /// https://en.cppreference.com/w/cpp/numeric/math/round
-template <typename T, enable_if_t<is_integral_v<T>, int> = 0>
+template <integral T>
 [[nodiscard]] constexpr auto round(T arg) noexcept -> double
 {
     return detail::round_impl(static_cast<double>(arg));

@@ -8,7 +8,6 @@
 #include "etl/_chrono/duration_cast.hpp"
 #include "etl/_chrono/time_point_cast.hpp"
 #include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
 
 namespace etl::chrono {
@@ -18,7 +17,7 @@ namespace etl::chrono {
 /// in the overload resolution unless etl::numeric_limits<R>::is_signed is
 /// true.
 template <typename R, typename P>
-    requires requires { numeric_limits<R>::is_signed; }
+    requires(numeric_limits<R>::is_signed)
 constexpr auto abs(duration<R, P> d) noexcept(is_arithmetic_v<R>) -> duration<R, P>
 {
     return d < duration<R, P>::zero() ? duration<R, P>::zero() - d : d;

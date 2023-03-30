@@ -411,7 +411,8 @@ public:
         return writablePosition;
     }
 
-    template <typename... Args, enable_if_t<is_constructible_v<T, Args...>, int> = 0>
+    template <typename... Args>
+        requires(is_constructible_v<T, Args...>)
     constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
         noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
     {

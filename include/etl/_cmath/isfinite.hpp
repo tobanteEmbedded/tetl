@@ -7,8 +7,6 @@
 
 #include "etl/_cmath/isinf.hpp"
 #include "etl/_cmath/isnan.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 

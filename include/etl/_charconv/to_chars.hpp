@@ -10,7 +10,6 @@
 #include <etl/_iterator/distance.hpp>
 #include <etl/_strings/conversion.hpp>
 #include <etl/_system_error/errc.hpp>
-#include <etl/_type_traits/enable_if.hpp>
 #include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
@@ -36,7 +35,7 @@ struct to_chars_result {
 /// overloads for all signed and unsigned integer types and for the type char as
 /// the type of the parameter value.
 template <integral T>
-    requires requires { not is_same_v<T, bool>; }
+    requires(not is_same_v<T, bool>)
 [[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10) -> to_chars_result
 {
     auto const len = static_cast<etl::size_t>(etl::distance(f, l));

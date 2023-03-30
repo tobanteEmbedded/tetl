@@ -110,7 +110,8 @@ public:
 
     /// Constructs the string with the contents of the range [ first,
     /// last). Fails silently if input length is greater then capacity.
-    template <typename InputIt, enable_if_t<detail::InputIterator<InputIt>, bool> = true>
+    template <typename InputIt>
+        requires(detail::InputIterator<InputIt>)
     constexpr basic_static_string(InputIt first, InputIt last) noexcept
         : basic_static_string(first, static_cast<size_type>(distance(first, last)))
     {
@@ -130,7 +131,8 @@ public:
 
     /// Implicitly converts t to a string view sv, then initializes the
     /// string with the contents of sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, bool> = true>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     explicit constexpr basic_static_string(T const& t) noexcept
 
     {
@@ -140,7 +142,8 @@ public:
 
     /// Implicitly converts t to a string view sv, then initializes the
     /// string with the subrange [ pos, pos + n ) of sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, bool> = true>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
         : basic_static_string { basic_string_view<value_type, traits_type> { t }.substr(pos, n) }
     {
@@ -177,7 +180,8 @@ public:
 
     /// Implicitly converts t to a string view sv, then replaces the
     /// contents with those of the sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto operator=(T const& t) noexcept -> basic_static_string&
     {
         assign(t);
@@ -232,8 +236,9 @@ public:
 
     /// \brief Replaces the contents with copies of the characters in the
     /// range [ first , last ).
-    template <typename InIt, enable_if_t<detail::InputIterator<InIt>, int> = 0>
-    constexpr auto assign(InIt first, InIt last) noexcept -> basic_static_string&
+    template <typename InputIt>
+        requires(detail::InputIterator<InputIt>)
+    constexpr auto assign(InputIt first, InputIt last) noexcept -> basic_static_string&
     {
         *this = basic_static_string { first, last };
         return *this;
@@ -241,7 +246,8 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then replaces the
     /// contents with the characters from sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t) noexcept -> basic_static_string&
     {
         auto tmp = basic_static_string { basic_static_string { t } };
@@ -252,7 +258,8 @@ public:
     /// \brief Implicitly converts t to a string view sv, then replaces the
     /// contents with the characters from the subview [ pos, pos + count ) of
     /// sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
         auto tmp = basic_static_string { basic_static_string { t, pos, count } };
@@ -467,8 +474,9 @@ public:
     }
 
     /// \brief Appends characters in the range [ first , last ).
-    template <typename InIt, enable_if_t<detail::InputIterator<InIt>, int> = 0>
-    constexpr auto append(InIt first, InIt last) noexcept -> basic_static_string&
+    template <typename InputIt>
+        requires(detail::InputIterator<InputIt>)
+    constexpr auto append(InputIt first, InputIt last) noexcept -> basic_static_string&
     {
         for (; first != last; ++first) { push_back(*first); }
         return *this;
@@ -489,7 +497,8 @@ public:
 
     /// \brief Implicitly converts t to a string_view sv, then appends all
     /// characters from sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto append(T const& t) -> basic_static_string&
     {
         etl::basic_string_view<value_type, traits_type> sv = t;
@@ -498,7 +507,8 @@ public:
 
     /// \brief Implicitly converts t to a string_view sv then appends the
     /// characters from the subview [ pos, pos + count ) of sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto append(T const& t, size_type pos, size_type count = npos) -> basic_static_string&
     {
         etl::basic_string_view<value_type, traits_type> sv = t;
@@ -516,7 +526,8 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then appends
     /// characters in the string view sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto operator+=(T const& t) noexcept -> basic_static_string&
     {
         return append(t);
@@ -594,7 +605,8 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then inserts the
     /// elements from sv before the element (if any) pointed by pos.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto insert(size_type const pos, T const& t) noexcept -> basic_static_string&
     {
         basic_string_view<value_type, traits_type> sv = t;
@@ -605,7 +617,8 @@ public:
     /// \brief Implicitly converts t to a string view sv, then inserts, before
     /// the element (if any) pointed by pos, the characters from the subview
     /// [index_str, index_str+count) of sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     constexpr auto insert(size_type const index, T const& t, size_type const indexStr,
         size_type const count = npos) noexcept -> basic_static_string&
     {
@@ -689,7 +702,8 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then compares the
     /// content of this string to sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     [[nodiscard]] constexpr auto compare(T const& t) const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
@@ -699,7 +713,8 @@ public:
 
     /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, T const& t) const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
@@ -710,7 +725,8 @@ public:
     /// \brief Implicitly converts t to a string view sv, then compares a [pos1,
     /// pos1+count1) substring of this string to a substring [pos2, pos2+count2)
     /// of sv.
-    template <typename T, enable_if_t<view_and_not_char_ptr<T>, int> = 0>
+    template <typename T>
+        requires(view_and_not_char_ptr<T>)
     [[nodiscard]] constexpr auto compare(
         size_type pos1, size_type count1, T const& t, size_type pos2, size_type count2 = npos) const noexcept -> int
     {

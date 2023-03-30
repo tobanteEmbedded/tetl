@@ -5,8 +5,10 @@
 #ifndef TETL_CMATH_ISNAN_HPP
 #define TETL_CMATH_ISNAN_HPP
 
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_integral.hpp"
+#include <etl/_config/all.hpp>
+
+#include <etl/_concepts/integral.hpp>
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
@@ -44,7 +46,7 @@ namespace etl {
 /// \brief Determines if the given floating point number arg is a not-a-number
 /// (NaN) value.
 /// https://en.cppreference.com/w/cpp/numeric/math/isnan
-template <typename Int, enable_if_t<is_integral_v<Int>, int> = 0>
+template <integral Int>
 [[nodiscard]] constexpr auto isnan(Int arg) -> bool
 {
     return isnan(static_cast<double>(arg));

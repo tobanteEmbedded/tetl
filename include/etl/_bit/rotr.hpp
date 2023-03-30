@@ -7,7 +7,6 @@
 
 #include "etl/_bit/bit_uint.hpp"
 #include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 
 namespace etl {
 

@@ -7,7 +7,6 @@
 
 #include "etl/_bit/bit_uint.hpp"
 #include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/enable_if.hpp"
 
 namespace etl {
 
@@ -17,7 +16,7 @@ template <detail::bit_uint T>
 constexpr auto rotl(T t, int s) noexcept -> T
 {
     auto const c = static_cast<unsigned>(s);
-    auto const d = static_cast<unsigned>(etl::numeric_limits<T>::digits);
+    auto const d = static_cast<unsigned>(numeric_limits<T>::digits);
     if ((c % d) == 0U) { return t; }
     return static_cast<T>((t << (c % d)) | (t >> (d - (c % d))));
 }
