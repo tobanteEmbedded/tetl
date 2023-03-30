@@ -2,7 +2,6 @@
 #ifndef TETL_NUMERIC_MIDPOINT_HPP
 #define TETL_NUMERIC_MIDPOINT_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_limits/numeric_limits.hpp"
 #include "etl/_numeric/abs.hpp"
@@ -22,7 +21,8 @@ namespace etl {
 ///
 /// https://www.youtube.com/watch?v=sBtAGxBh-XI)
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
-template <typename Int, TETL_REQUIRES_((is_integral_v<Int> && !is_same_v<Int, bool>))>
+template <typename Int>
+    requires(is_integral_v<Int> and not is_same_v<Int, bool>)
 constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
     using U = make_unsigned_t<Int>;
@@ -40,7 +40,8 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
     return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(U(n - m) >> 1)));
 }
 
-template <typename Float, TETL_REQUIRES_(is_floating_point_v<Float>)>
+template <typename Float>
+    requires(is_floating_point_v<Float>)
 constexpr auto midpoint(Float a, Float b) noexcept -> Float
 {
     auto const lo = numeric_limits<Float>::min() * 2;
@@ -54,7 +55,8 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
 }
 
 /// \synopsis_return Ptr
-template <typename Ptr, enable_if_t<is_pointer_v<Ptr>, int> = 0>
+template <typename Ptr>
+    requires(is_pointer_v<Ptr>)
 constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr
 {
     return a + midpoint(ptrdiff_t { 0 }, b - a);

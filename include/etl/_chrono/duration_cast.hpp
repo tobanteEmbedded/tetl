@@ -5,7 +5,6 @@
 
 #include "etl/_chrono/duration.hpp"
 #include "etl/_chrono/treat_as_floating_point.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/bool_constant.hpp"
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
@@ -70,7 +69,8 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true> {
 } // namespace detail
 
 /// \brief Converts a duration to a duration of different type ToDur.
-template <typename ToDur, typename Rep, typename Period, TETL_REQUIRES_(detail::is_duration_v<ToDur>)>
+template <typename ToDur, typename Rep, typename Period>
+    requires(detail::is_duration_v<ToDur>)
 [[nodiscard]] constexpr auto duration_cast(duration<Rep, Period> const& duration) noexcept(
     is_arithmetic_v<Rep>&& is_arithmetic_v<typename ToDur::rep>) -> ToDur
 {

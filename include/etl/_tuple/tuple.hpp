@@ -3,7 +3,6 @@
 #ifndef TETL_TUPLE_TUPLE_HPP
 #define TETL_TUPLE_TUPLE_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_tuple/ignore.hpp"
 #include "etl/_tuple/tuple_element.hpp"
 #include "etl/_tuple/tuple_size.hpp"
@@ -68,77 +67,30 @@ private:
 };
 
 template <typename... Ts>
-struct tuple_constraints {
-    // This overload participates in overload resolution only if
-    // is_default_constructible_v<Ts> is true for all i
-    static constexpr auto ctor_1_sfinae = (is_default_constructible_v<Ts> && ...);
-
-    // The ctor is explicit if and only if Ts is not
-    // copy-list-initializable from {} for at least one i.
-    static constexpr auto ctor_1_explicit = !(etl::is_implicit_default_constructible_v<Ts> && ...);
-
-    static constexpr auto enable_ctor_1_implicit = ctor_1_sfinae && (!ctor_1_explicit);
-
-    static constexpr auto enable_ctor_1_explicit = (ctor_1_sfinae) && (ctor_1_explicit);
-
-    // This overload participates in overload resolution only if
-    // sizeof...(Ts) >= 1 and is_copy_constructible_v<Ts> is true for all i.
-    static constexpr auto ctor_2_sfinae = (is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0);
-
-    // This ctor is explicit if and only if is_convertible_v<Ts const&, Ts> is
-    // false for at least one i.
-    static constexpr auto ctor_2_explicit = !(is_convertible_v<Ts const&, Ts> && ...);
-
-    static constexpr auto enable_ctor_2_implicit = ctor_2_sfinae && (!ctor_2_explicit);
-
-    static constexpr auto enable_ctor_2_explicit = ctor_2_sfinae && ctor_2_explicit;
-
-    // This overload participates in overload resolution only if sizeof...(Ts)
-    // == sizeof...(Us) and sizeof...(Ts) >= 1 and is_constructible_v<Ts, Us&&>
-    // is true for all i.
-    template <typename... Us>
-    static constexpr auto ctor_3_sfinae         //
-        = (is_constructible_v<Ts, Us&&> && ...) //
-          && (sizeof...(Ts) > 0)                //
-          && (sizeof...(Ts) == sizeof...(Us))   //
-        ;
-
-    // The constructor is explicit if and only if is_convertible_v<Us&&, Ts> is
-    // false for at least one type.
-    template <typename... Us>
-    static constexpr auto ctor_3_explicit = !(is_convertible_v<Us&&, Ts> && ...);
-
-    template <typename... Us>
-    static constexpr auto enable_ctor_3_implicit = (ctor_3_sfinae<Us...> && (!ctor_3_explicit<Us...>));
-
-    template <typename... Us>
-    static constexpr auto enable_ctor_3_explicit = (ctor_3_sfinae<Us...> && ctor_3_explicit<Us...>);
-};
-
-template <typename... Ts>
 struct tuple_impl;
 
 template <size_t... Idx, typename... Ts>
 struct tuple_impl<tuple_indices<Idx...>, Ts...> : tuple_leaf<Idx, Ts>... {
 private:
 public:
-    // No. 1
-    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_1_implicit)
-    constexpr tuple_impl() : tuple_leaf<Idx, Ts> {}... { }
-
-    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_1_explicit)
-    explicit constexpr tuple_impl() : tuple_leaf<Idx, Ts> {}... { }
+    explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple_impl()
+        requires((is_default_constructible_v<Ts> and ...))
+        : tuple_leaf<Idx, Ts> {}...
+    {
+    }
 
     // No. 2
-    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_2_implicit)
-    constexpr tuple_impl(Ts const&... args) : tuple_leaf<Idx, Ts>(args)... { }
-
-    TETL_REQUIRES(tuple_constraints<Ts...>::enable_ctor_2_explicit)
-    explicit constexpr tuple_impl(Ts const&... args) : tuple_leaf<Idx, Ts> { args }... { }
+    explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple_impl(Ts const&... args)
+        requires((is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0))
+        : tuple_leaf<Idx, Ts>(args)...
+    {
+    }
 
     // No. 3
     template <typename... Args>
-    constexpr tuple_impl(Args&&... args) : tuple_leaf<Idx, Ts> { forward<Args>(args) }...
+        requires((is_constructible_v<Ts, Args&&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
+    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple_impl(Args&&... args)
+        : tuple_leaf<Idx, Ts> { forward<Args>(args) }...
     {
     }
 
@@ -161,7 +113,7 @@ public:
 template <typename... Ts>
 struct tuple {
 private:
-    template <etl::size_t I, typename T>
+    template <size_t I, typename T>
     friend struct tuple_element;
     template <size_t N, typename... Us>
     friend constexpr auto get(tuple<Us...>& t) -> auto&; // NOLINT
@@ -185,54 +137,54 @@ private:
     using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
     impl_t impl_; // NOLINT(modernize-use-default-member-init)
 
-    template <etl::size_t I>
+    template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) &  noexcept -> auto&
     {
         return impl_.get_impl(ic);
     }
 
-    template <etl::size_t I>
+    template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&  noexcept -> auto const&
     {
         return impl_.get_impl(ic);
     }
 
-    template <etl::size_t I>
+    template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) && noexcept -> auto&&
     {
-        return etl::move(impl_).get_impl(ic);
+        return move(impl_).get_impl(ic);
     }
 
-    template <etl::size_t I>
+    template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&&  noexcept -> auto const&&
     {
-        return etl::move(impl_).get_impl(ic);
+        return move(impl_).get_impl(ic);
     }
 
-    template <etl::size_t I>
+    template <size_t I>
     auto get_type(integral_constant<size_t, I> ic) -> decltype(impl_.get_type(ic));
     // clang-format on
 
 public:
     // No. 1
-    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_1_implicit)
-    constexpr tuple() : impl_() { }
+    explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple()
+        requires((is_default_constructible_v<Ts> and ...))
+        : impl_()
+    {
+    }
 
-    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_1_explicit)
-    explicit constexpr tuple() : impl_ {} { }
+    explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple(Ts const&... args)
+        requires((is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0))
+        : impl_(args...)
+    {
+    }
 
-    // No. 2
-    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_2_implicit)
-    constexpr tuple(Ts const&... args) : impl_(args...) { }
-
-    TETL_REQUIRES(detail::tuple_constraints<Ts...>::enable_ctor_2_explicit)
-    explicit constexpr tuple(Ts const&... args) : impl_ { args... } { }
-
-    //// No. 3
-    // template <typename... Args>
-    // constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
-    //{
-    //}
+    // No. 3
+    template <typename... Args>
+        requires((is_constructible_v<Ts, Args&&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
+    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
+    {
+    }
 
     constexpr tuple(tuple const&)     = default;
     constexpr tuple(tuple&&) noexcept = default;

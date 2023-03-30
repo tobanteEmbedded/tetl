@@ -5,12 +5,11 @@
 
 #include "etl/_chrono/duration_cast.hpp"
 #include "etl/_chrono/time_point.hpp"
-#include "etl/_concepts/requires.hpp"
 
 namespace etl::chrono {
 
-template <typename ToDuration, typename Clock, typename Duration,
-    TETL_REQUIRES_(detail::is_duration<ToDuration>::value)>
+template <typename ToDuration, typename Clock, typename Duration>
+    requires(detail::is_duration_v<ToDuration>)
 [[nodiscard]] constexpr auto time_point_cast(time_point<Clock, Duration> const& tp) -> ToDuration
 {
     using time_point_t = time_point<Clock, ToDuration>;

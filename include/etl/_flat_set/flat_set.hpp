@@ -7,7 +7,6 @@
 #include <etl/_algorithm/lexicographical_compare.hpp>
 #include <etl/_algorithm/partition_point.hpp>
 #include <etl/_concepts/emulation.hpp>
-#include <etl/_concepts/requires.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_flat_set/sorted_unique.hpp>
 #include <etl/_functional/is_transparent.hpp>
@@ -69,8 +68,8 @@ struct flat_set {
     ///
     /// Complexity: Linear in N if cont is sorted with respect to compare and
     /// otherwise N log N, where N is cont.size().
-    TETL_REQUIRES(detail::RandomAccessRange<container_type>)
     explicit constexpr flat_set(container_type const& container)
+        requires(detail::RandomAccessRange<container_type>)
         : flat_set { etl::begin(container), etl::end(container), Compare() }
     {
     }
@@ -235,7 +234,8 @@ struct flat_set {
         return it;
     }
 
-    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
+    template <typename K>
+        requires(detail::is_transparent_v<Compare>)
     [[nodiscard]] constexpr auto find(K const& key) -> iterator
     {
         iterator it = lower_bound(key);
@@ -243,7 +243,8 @@ struct flat_set {
         return it;
     }
 
-    template <typename K, TETL_REQUIRES_(detail::is_transparent_v<Compare>)>
+    template <typename K>
+        requires(detail::is_transparent_v<Compare>)
     [[nodiscard]] constexpr auto find(K const& key) const -> const_iterator
     {
         const_iterator it = lower_bound(key);

@@ -5,7 +5,6 @@
 
 #include "etl/_config/all.hpp"
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/enable_if.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 #include "etl/_type_traits/is_function.hpp"
@@ -17,7 +16,8 @@ template <typename T>
 struct default_delete {
     constexpr default_delete() noexcept = default;
 
-    template <typename U, TETL_REQUIRES_((etl::is_convertible_v<U*, T*>))>
+    template <typename U>
+        requires(is_convertible_v<U*, T*>)
     default_delete(default_delete<U> const& /*unused*/) noexcept
     {
     }

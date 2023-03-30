@@ -4,7 +4,6 @@
 #define TETL_VARIANT_VARIANT_HPP
 
 #include "etl/_array/array.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_container/smallest_size_t.hpp"
 #include "etl/_cstddef/size_t.hpp"
 #include "etl/_exception/raise.hpp"
@@ -280,22 +279,15 @@ inline constexpr auto variant_npos = numeric_limits<etl::size_t>::max();
 template <typename... Types>
 struct variant {
 private:
-    using internal_size_t = etl::smallest_size_t<sizeof...(Types)>;
-    using first_type      = etl::type_pack_element_t<0, Types...>;
-
-    template <etl::size_t I, typename... Args>
-    static constexpr bool _ctor_7 = (I < sizeof...(Types))
-                                    && (etl::is_constructible_v<etl::variant_alternative_t<I, variant>,
-                                        Args...>); // NOLINT
-    static constexpr auto is_swap_noexcept
-        = ((etl::is_nothrow_move_constructible_v<Types> && etl::is_nothrow_swappable_v<Types>)&&...);
+    using internal_size_t = smallest_size_t<sizeof...(Types)>;
+    using first_type      = type_pack_element_t<0, Types...>;
 
 public:
-    TETL_REQUIRES(etl::is_default_constructible_v<first_type>)
-    constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))
+    constexpr variant() noexcept(noexcept(is_nothrow_default_constructible_v<first_type>))
+        requires(is_default_constructible_v<first_type>)
     {
-        auto tmpIndex = etl::size_t { index_ };
-        data_.construct(etl::in_place_type<first_type>, tmpIndex);
+        auto tmpIndex = size_t { index_ };
+        data_.construct(in_place_type<first_type>, tmpIndex);
         index_ = static_cast<internal_size_t>(tmpIndex);
     }
 
@@ -322,7 +314,8 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
     ///
     /// \bug Improve sfinae (single unique type in variant)
-    template <typename T, typename... Args, TETL_REQUIRES_(etl::is_constructible_v<T, Args...>)>
+    template <typename T, typename... Args>
+        requires(is_constructible_v<T, Args...>)
     constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
     {
         auto tmpIndex = etl::size_t { index_ };
@@ -338,7 +331,8 @@ public:
     /// sizeof...(Types) and etl::is_constructible_v<T_i, Args...> is true.
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
-    template <etl::size_t I, typename... Args, TETL_REQUIRES_((_ctor_7<I, Args...>))>
+    template <etl::size_t I, typename... Args>
+        requires(I < sizeof...(Types)) && (is_constructible_v<variant_alternative_t<I, variant>, Args...>)
     constexpr explicit variant(etl::in_place_index_t<I> /*tag*/, Args&&... args)
         : variant(etl::in_place_type<etl::variant_alternative_t<I, variant>>, etl::forward<Args>(args)...)
     {
@@ -386,7 +380,8 @@ public:
     [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool { return false; }
 
     /// \brief Swaps two variant objects.
-    constexpr auto swap(variant& rhs) noexcept(is_swap_noexcept) -> void
+    constexpr auto swap(variant& rhs) noexcept(
+        ((is_nothrow_move_constructible_v<Types> && is_nothrow_swappable_v<Types>)&&...)) -> void
     {
         if (index() == rhs.index()) { detail::variant_swap_table<variant, Types...>[index()](*this, rhs); }
     }
@@ -406,7 +401,8 @@ private:
 /// \details This overload participates in overload resolution only if
 /// is_move_constructible_v<T_i> and is_swappable_v<T_i> are both true for all
 /// T_i in Types...
-template <typename... Ts, TETL_REQUIRES_(detail::enable_variant_swap<Ts...>)>
+template <typename... Ts>
+    requires(detail::enable_variant_swap<Ts...>)
 constexpr auto swap(etl::variant<Ts...>& lhs, etl::variant<Ts...>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);

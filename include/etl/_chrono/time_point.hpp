@@ -3,7 +3,6 @@
 #ifndef TETL_CHRONO_TIME_POINT_HPP
 #define TETL_CHRONO_TIME_POINT_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 
@@ -45,7 +44,8 @@ struct time_point {
     /// sources. Constructs a time_point by converting t to duration. This
     /// constructor only participates in overload resolution if Duration2 is
     /// implicitly convertible to duration.
-    template <typename Dur2, TETL_REQUIRES_(is_convertible_v<Dur2, duration>)>
+    template <typename Dur2>
+        requires(is_convertible_v<Dur2, duration>)
     constexpr time_point(time_point<clock, Dur2> const& t) : d_ { t.time_since_epch() }
     {
     }

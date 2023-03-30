@@ -5,7 +5,6 @@
 
 #include "etl/_cassert/macro.hpp"
 #include "etl/_concepts/emulation.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_cstddef/ptrdiff_t.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/end.hpp"
@@ -15,7 +14,8 @@ namespace etl::detail {
 
 /// \brief Index a range doing bound checks in debug builds
 /// Copied from https://github.com/gnzlbg/static_vector
-template <typename Rng, typename Index, TETL_REQUIRES_(RandomAccessRange<Rng>)>
+template <typename Rng, typename Index>
+    requires(RandomAccessRange<Rng>)
 constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
     using etl::begin;

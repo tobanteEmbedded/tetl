@@ -250,7 +250,7 @@ struct static_vector_non_trivial_storage {
 
     /// \brief Constructs an element in-place at the end of the embedded
     /// storage.
-    template <typename... Args, TETL_REQUIRES_(is_copy_constructible_v<T>)>
+    template <typename... Args>
     auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(forward<Args>(args)...))) -> void
     {
         TETL_ASSERT(!full());
@@ -527,23 +527,24 @@ public:
     }
 
     /// \brief Initializes vector with n default-constructed elements.
-    TETL_REQUIRES(is_copy_constructible_v<T> || is_move_constructible_v<T>)
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
+        requires(is_copy_constructible_v<T> || is_move_constructible_v<T>)
     {
         TETL_ASSERT(n <= capacity());
         emplace_n(n);
     }
 
     /// \brief Initializes vector with n with value.
-    TETL_REQUIRES(is_copy_constructible_v<T>)
     constexpr static_vector(size_type n, T const& value) noexcept(noexcept(insert(begin(), n, value)))
+        requires(is_copy_constructible_v<T>)
     {
         TETL_ASSERT(n <= capacity());
         insert(begin(), n, value);
     }
 
     /// \brief Initialize vector from range [first, last).
-    template <typename InputIter, TETL_REQUIRES_(detail::InputIterator<InputIter>)>
+    template <typename InputIter>
+        requires(detail::InputIterator<InputIter>)
     constexpr static_vector(InputIter first, InputIter last)
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {

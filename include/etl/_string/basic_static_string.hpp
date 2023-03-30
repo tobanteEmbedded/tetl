@@ -594,7 +594,8 @@ public:
     //  * \brief Inserts characters from the range [first, last) before the
     //  element (if any)
     //  * pointed by pos.
-    // template <typename InputIter, TETL_REQUIRES_(detail::InputIterator<T>)>
+    // template <typename InputIter>
+    // requires(detail::InputIterator<T>)
     // constexpr auto insert(const_iterator pos, InputIter first, InputIter
     // last) noexcept
     //     -> iterator

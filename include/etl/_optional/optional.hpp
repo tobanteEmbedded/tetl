@@ -3,7 +3,6 @@
 #ifndef TETL_OPTIONAL_OPTIONAL_HPP
 #define TETL_OPTIONAL_OPTIONAL_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_config/all.hpp"
 #include "etl/_exception/raise.hpp"
 #include "etl/_functional/hash.hpp"

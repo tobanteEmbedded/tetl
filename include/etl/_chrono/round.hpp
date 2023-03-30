@@ -5,12 +5,12 @@
 
 #include "etl/_chrono/duration_cast.hpp"
 #include "etl/_chrono/time_point_cast.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_type_traits/is_arithmetic.hpp"
 
 namespace etl::chrono {
 
-template <typename To, typename Rep, typename Period, TETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Rep, typename Period>
+    requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto round(duration<Rep, Period> const& dur) noexcept(
     is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
@@ -23,7 +23,8 @@ template <typename To, typename Rep, typename Period, TETL_REQUIRES_(detail::is_
     return low.count() & 1 ? high : low;
 }
 
-template <typename To, typename Clock, typename Duration, TETL_REQUIRES_(detail::is_duration<To>::value)>
+template <typename To, typename Clock, typename Duration>
+    requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
 {
     return time_point<Clock, To> { round<To>(tp.time_since_epoch()) };

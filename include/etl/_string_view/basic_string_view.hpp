@@ -7,7 +7,6 @@
 #include "etl/_algorithm/min.hpp"
 #include "etl/_algorithm/none_of.hpp"
 #include "etl/_concepts/emulation.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"
@@ -84,7 +83,8 @@ struct basic_string_view {
     /// behavior is undefined if [first, last) is not a valid range.
     ///
     /// \bug Improve SFINAE protection. See C++20 standard.
-    template <typename Iter, TETL_REQUIRES_(detail::RandomAccessIterator<Iter>)>
+    template <typename Iter>
+        requires(detail::RandomAccessIterator<Iter>)
     constexpr basic_string_view(Iter first, Iter last)
         : basic_string_view { first, static_cast<size_type>(last - first) }
     {

@@ -3,7 +3,6 @@
 #ifndef TETL_STACK_STACK_HPP
 #define TETL_STACK_STACK_HPP
 
-#include "etl/_concepts/requires.hpp"
 #include "etl/_iterator/begin.hpp"
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/end.hpp"

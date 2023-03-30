@@ -5,7 +5,6 @@
 
 #include "etl/_chrono/duration_values.hpp"
 #include "etl/_chrono/treat_as_floating_point.hpp"
-#include "etl/_concepts/requires.hpp"
 #include "etl/_cstdint/int_least_t.hpp"
 #include "etl/_numeric/gcd.hpp"
 #include "etl/_numeric/lcm.hpp"
@@ -54,8 +53,8 @@ struct duration {
     /// That is, a duration with an integer tick count cannot be constructed
     /// from a floating-point value, but a duration with a floating-point tick
     /// count can be constructed from an integer value
-    template <typename Rep2, TETL_REQUIRES_((is_convertible_v<Rep2, rep>)&&(
-                                 treat_as_floating_point_v<rep> || !treat_as_floating_point_v<Rep2>))>
+    template <typename Rep2>
+        requires(is_convertible_v<Rep2, rep> and (treat_as_floating_point_v<rep> or !treat_as_floating_point_v<Rep2>))
     constexpr explicit duration(Rep2 const& r) noexcept : rep_(r)
     {
     }
@@ -77,9 +76,9 @@ struct duration {
     ///
     /// That is, either the duration uses floating-point ticks, or Period2 is
     /// exactly divisible by period
-    template <typename Rep2, typename Period2,
-        TETL_REQUIRES_((treat_as_floating_point_v<rep>)
-                       || (ratio_divide<Period2, period>::den == 1 && !treat_as_floating_point_v<Rep2>))>
+    template <typename Rep2, typename Period2>
+        requires(treat_as_floating_point_v<rep>
+                 or (ratio_divide<Period2, period>::den == 1 and not treat_as_floating_point_v<Rep2>))
     constexpr duration(duration<Rep2, Period2> const& other) noexcept
         : rep_(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
     {
