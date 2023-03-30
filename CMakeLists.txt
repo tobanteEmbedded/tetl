@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(tetl-dev LANGUAGES CXX)
 
+option(TETL_BUILD_MODULE      "Build as C++20 module (eperimental)" OFF)
 option(TETL_BUILD_WERROR      "Build with all warnings as errors" OFF)
 option(TETL_BUILD_ASAN        "Build with address sanitizer enabled" OFF)
 option(TETL_BUILD_UBSAN       "Build with undefined behavior sanitizer enabled" OFF)
@@ -26,6 +27,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(include)
+add_subdirectory(src)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(code_coverage)

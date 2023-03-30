@@ -56,12 +56,8 @@ inline constexpr auto current_standard = language_standard::cpp_23;
     #define TETL_CPP_STANDARD 20
 /// The currently configured C++ standard.
 inline constexpr auto current_standard = language_standard::cpp_20;
-#elif __cplusplus == 201703L
-    #define TETL_CPP_STANDARD 17
-/// The currently configured C++ standard.
-inline constexpr auto current_standard = language_standard::cpp_17;
 #else
-    #error "Unsupported C++ language standard. TETL requires at least C++17"
+    #error "Unsupported C++ language standard. TETL requires at least C++20"
 #endif
 
 } // namespace etl
