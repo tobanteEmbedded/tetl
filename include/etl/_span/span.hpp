@@ -52,7 +52,7 @@ struct span {
     using const_pointer    = ElementType const*;
     using reference        = ElementType&;
     using const_reference  = ElementType const&;
-    using iterator         = ElementType const*;
+    using iterator         = ElementType*;
     using reverse_iterator = etl::reverse_iterator<iterator>;
 
     /// \brief The number of elements in the sequence, or etl::dynamic_extent
