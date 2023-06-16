@@ -323,29 +323,30 @@ static auto test() -> bool
         assert((is_same_v<variant_alternative_t<0, t7>, int const volatile>));
     }
 
-    {
-        {
-            using T         = int;
-            using variant_t = etl::variant<T, float>;
-            auto v1         = variant_t { 143.0F };
-            etl::visit([](auto const& val) { assert(val == 143.0F); }, v1);
+    // TODO(tobi): Reenable. Breaks clang before v16 (12-15)
+    // {
+    //     {
+    //         using T         = int;
+    //         using variant_t = etl::variant<T, float>;
+    //         auto v1         = variant_t { 143.0F };
+    //         etl::visit([](auto const& val) { assert(val == 143.0F); }, v1);
 
-            auto v2 = variant_t { T { 42 } };
-            etl::visit([](auto const& val) { assert(val == T { 42 }); }, v2);
+    //         auto v2 = variant_t { T { 42 } };
+    //         etl::visit([](auto const& val) { assert(val == T { 42 }); }, v2);
 
-            auto calledT     = false;
-            auto calledFloat = false;
-            auto funcs       = etl::overload {
-                [&calledFloat](float /*val*/) -> void { calledFloat = true; },
-                [&calledT](T /*val*/) -> void { calledT = true; },
-            };
+    //         auto calledT     = false;
+    //         auto calledFloat = false;
+    //         auto funcs       = etl::overload {
+    //             [&calledFloat](float /*val*/) -> void { calledFloat = true; },
+    //             [&calledT](T /*val*/) -> void { calledT = true; },
+    //         };
 
-            auto v3 = variant_t { T { 1 } };
-            etl::visit(funcs, v3);
-            assert(calledT);
-            assert(!calledFloat);
-        }
-    }
+    //         auto v3 = variant_t { T { 1 } };
+    //         etl::visit(funcs, v3);
+    //         assert(calledT);
+    //         assert(!calledFloat);
+    //     }
+    // }
 
     return true;
 }

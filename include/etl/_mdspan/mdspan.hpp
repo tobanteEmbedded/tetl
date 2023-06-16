@@ -28,10 +28,13 @@ struct mdspan {
     using data_handle_type = typename accessor_type::data_handle_type;
     using reference        = typename accessor_type::reference;
 
-    static constexpr auto rank() noexcept -> rank_type { return extents_type::rank(); }
-    static constexpr auto rank_dynamic() noexcept -> rank_type { return extents_type::rank_dynamic(); }
-    static constexpr auto static_extent(rank_type r) noexcept -> size_t { return extents_type::static_extent(r); }
-    constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
+    [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return extents_type::rank(); }
+    [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return extents_type::rank_dynamic(); }
+    [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
+    {
+        return extents_type::static_extent(r);
+    }
+    [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
     // constructors
     constexpr mdspan()
