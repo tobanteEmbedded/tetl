@@ -42,7 +42,7 @@ struct mdspan {
     }
 
     constexpr mdspan(mdspan const& rhs) = default;
-    constexpr mdspan(mdspan&& rhs)      = default;
+    constexpr mdspan(mdspan&& rhs)      = default; // NOLINT(performance-noexcept-move-constructor)
 
     [[nodiscard]] constexpr auto size() const noexcept -> size_type;
     [[nodiscard]] constexpr auto empty() const noexcept -> bool;
@@ -62,9 +62,9 @@ struct mdspan {
     [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return map_.stride(r); }
 
 private:
-    accessor_type acc_;
-    mapping_type map_;
-    data_handle_type ptr_;
+    accessor_type acc_;    // NOLINT(modernize-use-default-member-init)
+    mapping_type map_;     // NOLINT(modernize-use-default-member-init)
+    data_handle_type ptr_; // NOLINT(modernize-use-default-member-init)
 };
 
 } // namespace etl

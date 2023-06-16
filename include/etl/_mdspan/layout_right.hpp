@@ -30,7 +30,7 @@ struct layout_right::mapping {
     template <typename OtherExtents>
     constexpr explicit(extents_type::rank() > 0) mapping(layout_stride::mapping<OtherExtents> const&) noexcept;
 
-    constexpr mapping& operator=(mapping const&) noexcept = default;
+    constexpr auto operator=(mapping const&) noexcept -> mapping& = default;
 
     // observers
     [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return extents_; }

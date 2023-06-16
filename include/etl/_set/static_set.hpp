@@ -287,7 +287,7 @@ public:
     /// x.
     template <typename K>
         requires(detail::is_transparent_v<key_compare>)
-    constexpr auto find(K const& x) -> iterator
+    [[nodiscard]] constexpr auto find(K const& x) -> iterator
     {
         return find_if(begin(), end(), [&x](auto const& val) {
             auto comp = key_compare();
@@ -299,7 +299,7 @@ public:
     /// x.
     template <typename K>
         requires(detail::is_transparent_v<key_compare>)
-    constexpr auto find(K const& x) const -> const_iterator
+    [[nodiscard]] constexpr auto find(K const& x) const -> const_iterator
     {
         return find_if(cbegin(), cend(), [&x](auto const& val) {
             auto comp = key_compare();
