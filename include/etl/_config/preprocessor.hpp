@@ -19,6 +19,10 @@
     #define __has_builtin(x) 0
 #endif
 
+#ifndef __has_constexpr_builtin
+    #define __has_constexpr_builtin(x) 0
+#endif
+
 #define TETL_PP_EMPTY()
 #define TETL_PP_DEFER(id) id TETL_PP_EMPTY()
 #define TETL_PP_EXPAND(...) __VA_ARGS__
