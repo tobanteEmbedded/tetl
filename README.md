@@ -12,7 +12,7 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
   - [Near Future](#near-future)
   - [Far Future](#far-future)
 - [Project Integration](#project-integration)
-  - [Command Line / Makefile](#command-line---makefile)
+  - [Command Line](#command-line)
   - [CMake](#cmake)
   - [PlatformIO](#platformio)
 - [Header Overview](#header-overview)
@@ -21,12 +21,10 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
 ## Quick Start
 
 ```cpp
-// main.cpp
-#include "etl/algorithm.hpp"  // for count_if
-#include "etl/array.hpp"      // for array
+#include <etl/algorithm.hpp>  // for count_if
+#include <etl/array.hpp>      // for array
 
-auto main() -> int
-{
+auto main() -> int {
   auto const numbers = etl::array{1, 2, 3, 4, 5};
   auto const greater_two = [] (auto const v) { return v > 2; };
   return etl::count_if(begin(numbers), end(numbers), greater_two);
@@ -49,11 +47,11 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 #### x64
 
-| **Platform** |                                                                                    **Status**                                                                                    |            **Notes**             |
-| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------: |
-|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    | GCC 11/12 & Clang 12/13/14/15/16 |
-|  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |          AppleClang 14           |
-| **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) |        Visual Studio 2022        |
+| **Platform** |                                                                                    **Status**                                                                                    |              **Notes**              |
+| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
+|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    |    GCC 11/12 & Clang 12/13/14/16    |
+|  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |            AppleClang 14            |
+| **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) | Visual Studio 2022, ClangCL & Clang |
 
 ### Freestanding
 
@@ -109,7 +107,7 @@ The [etl/experimental](./include/etl/experimental) subdirectory includes librari
 
 Since I assume that you might have exceptions disabled, I need a different way of reporting exceptional cases to you which occured deep inside the library. To keep the behavior of my library and actual STL implementations as close as possible, I've chosen to add a global assert/exception handler functions, which can be overriden by enabling the `TETL_ENABLE_CUSTOM_ASSERT_HANDLER` macro.
 
-**TODO**
+#### TODO
 
 - ASSERT macro for debug checks
 - EXCEPTION macro for debug & release checks
@@ -141,7 +139,7 @@ mkdir 3rd_party
 git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/tetl
 ```
 
-### Command Line / Makefile
+### Command Line
 
 ```make
 CXXFLAGS += -std=c++20 -I3rd_party/tetl
@@ -243,7 +241,7 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |               ostream               |       Input/Output       |        :x:         |                                                                                                                        |
 |                queue                |        Containers        |        :x:         |                                                          TODO                                                          |
 |          [random](#random)          |         Numeric          | :heavy_check_mark: |   [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)    |
-|          [ranges](#ranges)          |          Ranges          | :heavy_check_mark: |                                                          TODO                                                          |
+|          [ranges](#ranges)          |          Ranges          | :heavy_check_mark: |   [ranges](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1838971204)    |
 |                regex                |   Regular Expressions    |        :x:         |                                                                                                                        |
 |           [ratio](#ratio)           |         Numeric          | :heavy_check_mark: |    [ratio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1383686309)    |
 |          scoped_allocator           | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
@@ -605,6 +603,15 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Implementation Progress:** [random](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1617592580)
 - **Changes:**
   - Added `basic_xorshift32` and `basic_xorshift64` (Non-standard)
+
+### ranges
+
+- **Library:** Ranges
+- **Include:** [`etl/ranges.hpp`](./include/etl/ranges.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [ranges](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1838971204)
+- **Changes:**
+  - TODO
 
 ### ratio
 
