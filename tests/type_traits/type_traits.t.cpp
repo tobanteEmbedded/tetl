@@ -104,10 +104,10 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(remove_extent, TC&, TC&);
     TEST_TRAIT_TYPE(remove_extent, TV&, TV&);
     TEST_TRAIT_TYPE(remove_extent, TCV&, TCV&);
-    TEST_TRAIT_TYPE(remove_extent, T&&, T &&);
-    TEST_TRAIT_TYPE(remove_extent, TC&&, TC &&);
-    TEST_TRAIT_TYPE(remove_extent, TV&&, TV &&);
-    TEST_TRAIT_TYPE(remove_extent, TCV&&, TCV &&);
+    TEST_TRAIT_TYPE(remove_extent, T&&, T&&);
+    TEST_TRAIT_TYPE(remove_extent, TC&&, TC&&);
+    TEST_TRAIT_TYPE(remove_extent, TV&&, TV&&);
+    TEST_TRAIT_TYPE(remove_extent, TCV&&, TCV&&);
     TEST_TRAIT_TYPE(remove_extent, T[], T);
     TEST_TRAIT_TYPE(remove_extent, TC[], TC);
     TEST_TRAIT_TYPE(remove_extent, TV[], TV);
@@ -137,10 +137,10 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(remove_all_extents, TC&, TC&);
     TEST_TRAIT_TYPE(remove_all_extents, TV&, TV&);
     TEST_TRAIT_TYPE(remove_all_extents, TCV&, TCV&);
-    TEST_TRAIT_TYPE(remove_all_extents, T&&, T &&);
-    TEST_TRAIT_TYPE(remove_all_extents, TC&&, TC &&);
-    TEST_TRAIT_TYPE(remove_all_extents, TV&&, TV &&);
-    TEST_TRAIT_TYPE(remove_all_extents, TCV&&, TCV &&);
+    TEST_TRAIT_TYPE(remove_all_extents, T&&, T&&);
+    TEST_TRAIT_TYPE(remove_all_extents, TC&&, TC&&);
+    TEST_TRAIT_TYPE(remove_all_extents, TV&&, TV&&);
+    TEST_TRAIT_TYPE(remove_all_extents, TCV&&, TCV&&);
     TEST_TRAIT_TYPE(remove_all_extents, T[], T);
     TEST_TRAIT_TYPE(remove_all_extents, TC[], TC);
     TEST_TRAIT_TYPE(remove_all_extents, TV[], TV);
@@ -220,7 +220,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_void, T);
     TEST_IS_TRAIT_CV_FALSE(is_void, T*);
     TEST_IS_TRAIT_CV_FALSE(is_void, T&);
-    TEST_IS_TRAIT_CV_FALSE(is_void, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_void, T&&);
 
     TEST_IS_TRAIT(is_const, TC);
     TEST_IS_TRAIT(is_const, TCV);
@@ -295,16 +295,16 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_object, T&);
 
     TEST_IS_TRAIT_CV(is_reference, T&);
-    TEST_IS_TRAIT_CV(is_reference, T &&);
+    TEST_IS_TRAIT_CV(is_reference, T&&);
     TEST_IS_TRAIT_CV_FALSE(is_reference, T*);
     TEST_IS_TRAIT_CV_FALSE(is_reference, T);
 
     TEST_IS_TRAIT_CV(is_lvalue_reference, T&);
     TEST_IS_TRAIT_CV_FALSE(is_lvalue_reference, T);
     TEST_IS_TRAIT_CV_FALSE(is_lvalue_reference, T*);
-    TEST_IS_TRAIT_CV_FALSE(is_lvalue_reference, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_lvalue_reference, T&&);
 
-    TEST_IS_TRAIT_CV(is_rvalue_reference, T &&);
+    TEST_IS_TRAIT_CV(is_rvalue_reference, T&&);
     TEST_IS_TRAIT_CV_FALSE(is_rvalue_reference, T);
     TEST_IS_TRAIT_CV_FALSE(is_rvalue_reference, T*);
     TEST_IS_TRAIT_CV_FALSE(is_rvalue_reference, T&);
@@ -315,7 +315,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV(is_fundamental, T);
     TEST_IS_TRAIT_CV_FALSE(is_fundamental, T*);
     TEST_IS_TRAIT_CV_FALSE(is_fundamental, T&);
-    TEST_IS_TRAIT_CV_FALSE(is_fundamental, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_fundamental, T&&);
 
     TEST_IS_TRAIT_CV(is_bounded_array, T[1]);
     TEST_IS_TRAIT_CV(is_bounded_array, T[2]);
@@ -324,7 +324,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T);
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T*);
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T&);
-    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T&&);
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T[]);
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&)[3]);
     TEST_IS_TRAIT_CV_FALSE(is_bounded_array, T(&)[]);
@@ -336,7 +336,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T);
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T*);
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T&);
-    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T&&);
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&)[3]);
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&)[]);
     TEST_IS_TRAIT_CV_FALSE(is_unbounded_array, T(&&)[3]);
@@ -354,7 +354,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV(is_pointer, T*);
     TEST_IS_TRAIT_CV_FALSE(is_pointer, T);
     TEST_IS_TRAIT_CV_FALSE(is_pointer, T&);
-    TEST_IS_TRAIT_CV_FALSE(is_pointer, T &&);
+    TEST_IS_TRAIT_CV_FALSE(is_pointer, T&&);
 
     TEST_IS_TRAIT_CV(has_virtual_destructor, VirtualDtor);
     TEST_IS_TRAIT_CV(has_virtual_destructor, Abstract);
@@ -362,7 +362,7 @@ constexpr auto test() -> bool
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T*);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T&);
-    TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T &&);
+    TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, T&&);
     TEST_IS_TRAIT_CV_FALSE(has_virtual_destructor, etl::nullptr_t);
 
     TEST_TRAIT_TYPE(remove_volatile, TV, T);
@@ -391,10 +391,10 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(remove_const, TC&, TC&);
     TEST_TRAIT_TYPE(remove_const, TV&, TV&);
     TEST_TRAIT_TYPE(remove_const, TCV&, TCV&);
-    TEST_TRAIT_TYPE(remove_const, T&&, T &&);
-    TEST_TRAIT_TYPE(remove_const, TC&&, TC &&);
-    TEST_TRAIT_TYPE(remove_const, TV&&, TV &&);
-    TEST_TRAIT_TYPE(remove_const, TCV&&, TCV &&);
+    TEST_TRAIT_TYPE(remove_const, T&&, T&&);
+    TEST_TRAIT_TYPE(remove_const, TC&&, TC&&);
+    TEST_TRAIT_TYPE(remove_const, TV&&, TV&&);
+    TEST_TRAIT_TYPE(remove_const, TCV&&, TCV&&);
     TEST_TRAIT_TYPE(remove_const, T[42], T[42]);
     TEST_TRAIT_TYPE(remove_const, TC[42], T[42]);
     TEST_TRAIT_TYPE(remove_const, TV[42], TV[42]);
@@ -433,10 +433,10 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(remove_cv, TC&, TC&);
     TEST_TRAIT_TYPE(remove_cv, TV&, TV&);
     TEST_TRAIT_TYPE(remove_cv, TCV&, TCV&);
-    TEST_TRAIT_TYPE(remove_cv, T&&, T &&);
-    TEST_TRAIT_TYPE(remove_cv, TC&&, TC &&);
-    TEST_TRAIT_TYPE(remove_cv, TV&&, TV &&);
-    TEST_TRAIT_TYPE(remove_cv, TCV&&, TCV &&);
+    TEST_TRAIT_TYPE(remove_cv, T&&, T&&);
+    TEST_TRAIT_TYPE(remove_cv, TC&&, TC&&);
+    TEST_TRAIT_TYPE(remove_cv, TV&&, TV&&);
+    TEST_TRAIT_TYPE(remove_cv, TCV&&, TCV&&);
 
     TEST_TRAIT_TYPE(add_cv, T, TCV);
     TEST_TRAIT_TYPE(add_cv, TV, TCV);
@@ -503,10 +503,10 @@ constexpr auto test() -> bool
     TEST_TRAIT_TYPE(add_lvalue_reference, void const volatile, void const volatile);
     // clang-format on
 
-    TEST_TRAIT_TYPE(add_rvalue_reference, T, T &&);
-    TEST_TRAIT_TYPE(add_rvalue_reference, TC, TC &&);
-    TEST_TRAIT_TYPE(add_rvalue_reference, TV, TV &&);
-    TEST_TRAIT_TYPE(add_rvalue_reference, TCV, TCV &&);
+    TEST_TRAIT_TYPE(add_rvalue_reference, T, T&&);
+    TEST_TRAIT_TYPE(add_rvalue_reference, TC, TC&&);
+    TEST_TRAIT_TYPE(add_rvalue_reference, TV, TV&&);
+    TEST_TRAIT_TYPE(add_rvalue_reference, TCV, TCV&&);
 
     TEST_IS_TRAIT_CV(is_trivial, T*);
     TEST_IS_TRAIT_CV_FALSE(is_trivial, T&);

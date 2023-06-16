@@ -96,18 +96,18 @@ struct pair {
     template <typename U1, typename U2>
     constexpr auto operator=(pair<U1, U2> const& p)
         -> pair& requires(is_assignable_v<first_type&, U1 const&>and is_assignable_v<second_type&, U2 const&>) {
-                     first  = p.first;
-                     second = p.second;
-                     return *this;
-                 }
+            first  = p.first;
+            second = p.second;
+            return *this;
+        }
 
     constexpr auto
     operator=(pair&& p) noexcept
         -> pair& requires(is_move_assignable_v<first_type>and is_move_assignable_v<second_type>) {
-                     first  = etl::move(p.first);
-                     second = etl::move(p.second);
-                     return *this;
-                 }
+            first  = etl::move(p.first);
+            second = etl::move(p.second);
+            return *this;
+        }
 
     template <typename U1, typename U2>
         requires(is_assignable_v<first_type&, U1> and is_assignable_v<second_type&, U2>)

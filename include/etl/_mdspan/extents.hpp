@@ -29,8 +29,7 @@ struct extents {
 
     [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> size_t
     {
-        auto const impl = []<size_t... Idxs>(size_t idx, integer_sequence<size_t, Idxs...>)
-        {
+        auto const impl = []<size_t... Idxs>(size_t idx, integer_sequence<size_t, Idxs...>) {
             return (((Idxs == idx) ? Extents : 0) + ... + 0);
         };
 
@@ -47,9 +46,9 @@ struct extents {
 
     template <typename OtherSizeType, size_t... OtherExtents>
         requires requires {
-                     sizeof...(OtherExtents) == rank();
-                     ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
-                 }
+            sizeof...(OtherExtents) == rank();
+            ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
+        }
     explicit((((Extents != dynamic_extent) && (OtherExtents == dynamic_extent)) || ...)
              || (numeric_limits<size_type>::max()
                  < numeric_limits<OtherSizeType>::max())) constexpr extents(extents<OtherSizeType,
@@ -60,10 +59,10 @@ struct extents {
 
     template <typename... OtherSizeTypes>
         requires requires {
-                     (is_convertible_v<OtherSizeTypes, size_type> && ...);
-                     (is_nothrow_constructible_v<size_type, OtherSizeTypes> && ...)
-                         and (sizeof...(OtherSizeTypes) == rank_dynamic() || sizeof...(OtherSizeTypes) == rank());
-                 }
+            (is_convertible_v<OtherSizeTypes, size_type> && ...);
+            (is_nothrow_constructible_v<size_type, OtherSizeTypes> && ...)
+                and (sizeof...(OtherSizeTypes) == rank_dynamic() || sizeof...(OtherSizeTypes) == rank());
+        }
     explicit constexpr extents(OtherSizeTypes... es) noexcept
     {
         array<size_type, sizeof...(OtherSizeTypes)> { static_cast<size_type>(move(es))... };

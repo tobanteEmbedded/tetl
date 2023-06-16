@@ -14,8 +14,7 @@ template <typename T>
 }
 
 template <typename T>
-constexpr auto as_const(T const&&) -> void
-    = delete;
+constexpr auto as_const(T const&&) -> void = delete;
 
 } // namespace etl
 
