@@ -8,14 +8,16 @@
 #include <etl/_limits/numeric_limits.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
+#include <etl/_type_traits/make_unsigned.hpp>
 #include <etl/_utility/integer_sequence.hpp>
 
 namespace etl {
 
-template <typename SizeType, size_t... Extents>
+template <typename IndexType, size_t... Extents>
 struct extents {
-    using size_type = SizeType;
-    using rank_type = size_t;
+    using index_type = IndexType;
+    using size_type  = make_unsigned_t<IndexType>;
+    using rank_type  = size_t;
 
     // [mdspan.extents.obs], Observers of the multidimensional index space
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }

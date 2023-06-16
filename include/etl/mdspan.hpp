@@ -11,6 +11,7 @@
 #include <etl/_mdspan/layout.hpp>
 #include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_mapping_alike.hpp>
+#include <etl/_mdspan/layout_right.hpp>
 #include <etl/_mdspan/mdspan.hpp>
 
 #endif // TETL_MDSPAN_HPP
