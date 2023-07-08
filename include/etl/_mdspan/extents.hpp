@@ -80,10 +80,10 @@ struct extents {
         -> bool;
 
     // // [mdspan.extents.helpers], exposition only helpers
-    // constexpr size_t fwd - prod - of - extents(rank_type) const noexcept; // exposition only
-    // constexpr size_t rev - prod - of - extents(rank_type) const noexcept; // exposition only
-    // template <typename OtherSizeType>
-    //     static constexpr auto index - cast(OtherSizeType&&) noexcept; // exposition only
+    constexpr auto _fwd_prod_of_extents(rank_type i) const noexcept -> size_t;
+    constexpr auto _rev_prod_of_extents(rank_type i) const noexcept -> size_t;
+    template <typename OtherSizeType>
+    static constexpr auto _index_cast(OtherSizeType&&) noexcept;
 
 private:
     struct empty_dextents_t { };
