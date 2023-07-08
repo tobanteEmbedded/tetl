@@ -19,39 +19,101 @@ constexpr auto test_one() -> bool
     static_assert(etl::is_nothrow_move_assignable_v<extents_t>);
     static_assert(etl::is_nothrow_swappable_v<extents_t>);
 
-    assert(etl::same_as<typename extents_t::index_type, IndexType>);
-    assert(etl::same_as<typename extents_t::size_type, unsigned_t>);
-    assert(etl::same_as<typename extents_t::rank_type, etl::size_t>);
+    static_assert(etl::same_as<typename extents_t::index_type, IndexType>);
+    static_assert(etl::same_as<typename extents_t::size_type, unsigned_t>);
+    static_assert(etl::same_as<typename extents_t::rank_type, etl::size_t>);
 
-    auto ed1 = etl::extents<IndexType, etl::dynamic_extent> {};
-    assert(ed1.rank() == 1);
-    assert(ed1.rank_dynamic() == 1);
-    assert(ed1.static_extent(0) == etl::dynamic_extent);
+    {
+        // rank 1, all dynamic
+        auto e = etl::extents<IndexType, etl::dynamic_extent>(42);
+        assert(e.rank() == 1);
+        assert(e.rank_dynamic() == 1);
+        assert(e.static_extent(0) == etl::dynamic_extent);
+        assert(e.extent(0) == 42);
 
-    auto ed2 = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent> {};
-    assert(ed2.rank() == 2);
-    assert(ed2.rank_dynamic() == 2);
-    assert(ed2.static_extent(0) == etl::dynamic_extent);
-    assert(ed2.static_extent(1) == etl::dynamic_extent);
+        auto other = etl::extents<unsigned_t, etl::dynamic_extent> { e };
+        assert(other.rank() == 1);
+        assert(other.rank_dynamic() == 1);
+        assert(other.static_extent(0) == etl::dynamic_extent);
+        assert(other.extent(0) == 42);
+    }
 
-    auto es1 = etl::extents<IndexType, 2> {};
-    assert(es1.rank() == 1);
-    assert(es1.rank_dynamic() == 0);
-    assert(es1.static_extent(0) == 2);
+    {
+        // rank 2, all dynamic
+        auto e = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent> { 42, 43 };
+        assert(e.rank() == 2);
+        assert(e.rank_dynamic() == 2);
+        assert(e.static_extent(0) == etl::dynamic_extent);
+        assert(e.static_extent(1) == etl::dynamic_extent);
+        assert(e.extent(0) == 42);
+        assert(e.extent(1) == 43);
 
-    auto es2 = etl::extents<IndexType, 2, 4> {};
-    assert(es2.rank() == 2);
-    assert(es2.rank_dynamic() == 0);
-    assert(es2.static_extent(0) == 2);
-    assert(es2.static_extent(1) == 4);
+        auto other = etl::extents<unsigned_t, etl::dynamic_extent, etl::dynamic_extent> { e };
+        assert(other.rank() == 2);
+        assert(other.rank_dynamic() == 2);
+        assert(other.static_extent(0) == etl::dynamic_extent);
+        assert(other.static_extent(1) == etl::dynamic_extent);
+        assert(other.extent(0) == 42);
+        assert(other.extent(1) == 43);
+    }
 
-    auto es3 = etl::extents<IndexType, 2, 2, 2> {};
-    assert(es3.rank() == 3);
-    assert(es3.rank_dynamic() == 0);
+    {
+        // rank 1, all static
+        auto e = etl::extents<IndexType, 2> {};
+        assert(e.rank() == 1);
+        assert(e.rank_dynamic() == 0);
+        assert(e.static_extent(0) == 2);
+        assert(e.extent(0) == 2);
 
-    auto eds2 = etl::extents<IndexType, 2, etl::dynamic_extent> {};
-    assert(eds2.rank() == 2);
-    assert(eds2.rank_dynamic() == 1);
+        auto other = etl::extents<unsigned_t, 2>(e);
+        assert(other.rank() == 1);
+        assert(other.rank_dynamic() == 0);
+        assert(other.static_extent(0) == 2);
+        assert(other.extent(0) == 2);
+    }
+
+    {
+        // rank 2, all static
+        auto e = etl::extents<IndexType, 2, 4> {};
+        assert(e.rank() == 2);
+        assert(e.rank_dynamic() == 0);
+        assert(e.static_extent(0) == 2);
+        assert(e.static_extent(1) == 4);
+        assert(e.extent(0) == 2);
+        assert(e.extent(1) == 4);
+    }
+
+    {
+        // rank 3, all static
+        auto e = etl::extents<IndexType, 1, 2, 3> {};
+        assert(e.rank() == 3);
+        assert(e.rank_dynamic() == 0);
+        assert(e.static_extent(0) == 1);
+        assert(e.static_extent(1) == 2);
+        assert(e.static_extent(2) == 3);
+        assert(e.extent(0) == 1);
+        assert(e.extent(1) == 2);
+        assert(e.extent(2) == 3);
+    }
+
+    {
+        // rank 2, mixed
+        auto e = etl::extents<IndexType, 2, etl::dynamic_extent>(42);
+        assert(e.rank() == 2);
+        assert(e.rank_dynamic() == 1);
+        assert(e.static_extent(0) == 2);
+        assert(e.static_extent(1) == etl::dynamic_extent);
+        assert(e.extent(0) == 2);
+        assert(e.extent(1) == 42);
+
+        auto other = etl::extents<unsigned_t, 2, etl::dynamic_extent>(e);
+        assert(other.rank() == 2);
+        assert(other.rank_dynamic() == 1);
+        assert(other.static_extent(0) == 2);
+        assert(other.static_extent(1) == etl::dynamic_extent);
+        assert(other.extent(0) == 2);
+        assert(other.extent(1) == 42);
+    }
 
     return true;
 }

@@ -2,6 +2,7 @@
 
 #include <etl/mdspan.hpp>
 
+#include <etl/concepts.hpp>
 #include <etl/cstdint.hpp>
 
 #include "testing/testing.hpp"
@@ -12,13 +13,12 @@ template <typename ElementType>
     using extents_t = etl::extents<etl::size_t, etl::dynamic_extent>;
     using mdspan_t  = etl::mdspan<ElementType, extents_t>;
 
-    assert(etl::is_same_v<typename mdspan_t::element_type, ElementType>);
-    assert(etl::is_same_v<typename mdspan_t::value_type, ElementType>);
-    assert(etl::is_same_v<typename mdspan_t::size_type, etl::size_t>);
-    assert(etl::is_same_v<typename mdspan_t::index_type, etl::size_t>);
+    static_assert(etl::same_as<typename mdspan_t::element_type, ElementType>);
+    static_assert(etl::same_as<typename mdspan_t::value_type, ElementType>);
+    static_assert(etl::same_as<typename mdspan_t::size_type, etl::size_t>);
+    static_assert(etl::same_as<typename mdspan_t::index_type, etl::size_t>);
 
-    auto tc = etl::mdspan<ElementType, etl::extents<etl::size_t, etl::dynamic_extent>> {};
-    (void)tc;
+    [[maybe_unused]] auto m = etl::mdspan<ElementType, etl::extents<etl::size_t, etl::dynamic_extent>> {};
     return true;
 }
 
