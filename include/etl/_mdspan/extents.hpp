@@ -147,14 +147,11 @@ template <typename Extents>
     return result;
 }
 
-template <typename>
-inline constexpr auto repeat_dynamic_extent = dynamic_extent;
-
 } // namespace detail
 
 template <typename... Integrals>
     requires(is_convertible_v<Integrals, size_t> && ...)
-extents(Integrals...) -> extents<size_t, detail::repeat_dynamic_extent<Integrals>...>;
+extents(Integrals...) -> extents<size_t, size_t((Integrals(), dynamic_extent))...>;
 
 } // namespace etl
 
