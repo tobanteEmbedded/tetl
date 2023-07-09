@@ -36,6 +36,8 @@ constexpr auto test_one() -> bool
         assert(other.rank_dynamic() == 1);
         assert(other.static_extent(0) == etl::dynamic_extent);
         assert(other.extent(0) == 42);
+
+        assert(e == other);
     }
 
     {
@@ -55,6 +57,8 @@ constexpr auto test_one() -> bool
         assert(other.static_extent(1) == etl::dynamic_extent);
         assert(other.extent(0) == 42);
         assert(other.extent(1) == 43);
+
+        assert(e == other);
     }
 
     {
@@ -70,6 +74,8 @@ constexpr auto test_one() -> bool
         assert(other.rank_dynamic() == 0);
         assert(other.static_extent(0) == 2);
         assert(other.extent(0) == 2);
+
+        assert(e == other);
     }
 
     {
@@ -113,6 +119,8 @@ constexpr auto test_one() -> bool
         assert(other.static_extent(1) == etl::dynamic_extent);
         assert(other.extent(0) == 2);
         assert(other.extent(1) == 42);
+
+        assert(e == other);
     }
 
     return true;
