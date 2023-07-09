@@ -3,7 +3,10 @@
 #ifndef TETL_MDSPAN_LAYOUT_LEFT_HPP
 #define TETL_MDSPAN_LAYOUT_LEFT_HPP
 
+#include "etl/_mdspan/extents.hpp"
+#include "etl/_mdspan/is_extents.hpp"
 #include "etl/_mdspan/layout.hpp"
+#include "etl/_type_traits/is_convertible.hpp"
 
 namespace etl {
 
@@ -15,16 +18,26 @@ struct layout_left::mapping {
     using rank_type    = typename extents_type::rank_type;
     using layout_type  = layout_left;
 
-    // constructors
     constexpr mapping() noexcept               = default;
     constexpr mapping(mapping const&) noexcept = default;
-    constexpr mapping(extents_type const&) noexcept;
+
+    constexpr mapping(extents_type const& ext) noexcept : extents_ { ext } { }
 
     template <typename OtherExtents>
-    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>) mapping(mapping<OtherExtents> const&) noexcept;
+        requires is_constructible_v<extents_type, OtherExtents>
+    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
+        mapping(mapping<OtherExtents> const& other) noexcept
+        : extents_ { other.extents() }
+    {
+    }
 
     template <typename OtherExtents>
-    constexpr explicit(false /* see description */) mapping(layout_right::mapping<OtherExtents> const&) noexcept;
+        requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
+    constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
+        mapping(layout_right::mapping<OtherExtents> const& other) noexcept
+        : extents_ { other.extents() }
+    {
+    }
 
     template <typename OtherExtents>
     explicit(extents_type::rank() > 0) constexpr mapping(layout_stride::mapping<OtherExtents> const&);
@@ -33,7 +46,10 @@ struct layout_left::mapping {
 
     [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return extents_; }
 
-    [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type;
+    [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type
+    {
+        return static_cast<index_type>(detail::fwd_prod_of_extents(extents(), extents_type::rank()));
+    }
 
     template <typename... Indices>
     [[nodiscard]] constexpr auto operator()(Indices...) const noexcept -> index_type;
@@ -49,7 +65,10 @@ struct layout_left::mapping {
     [[nodiscard]] constexpr auto stride(rank_type) const noexcept -> index_type;
 
     template <typename OtherExtents>
-    friend constexpr auto operator==(mapping const&, mapping<OtherExtents> const&) noexcept -> bool;
+    friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool
+    {
+        return lhs.extents() == rhs.extents();
+    }
 
 private:
     extents_type extents_ {};

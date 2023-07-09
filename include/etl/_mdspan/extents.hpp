@@ -7,6 +7,7 @@
 #include <etl/_array/array.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_limits/numeric_limits.hpp>
+#include <etl/_mdspan/is_extents.hpp>
 #include <etl/_span/dynamic_extent.hpp>
 #include <etl/_span/span.hpp>
 #include <etl/_type_traits/make_unsigned.hpp>
@@ -45,9 +46,6 @@ private:
 
     template <typename OtherSizeType>
     [[nodiscard]] static constexpr auto _index_cast(OtherSizeType&&) noexcept;
-
-    [[nodiscard]] constexpr auto _fwd_prod_of_extents(rank_type i) const noexcept -> size_t;
-    [[nodiscard]] constexpr auto _rev_prod_of_extents(rank_type i) const noexcept -> size_t;
 
 public:
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
@@ -127,10 +125,32 @@ private:
 
 namespace detail {
 
+template <typename Extents>
+    requires is_extents<Extents>
+[[nodiscard]] constexpr auto fwd_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept -> size_t
+{
+    if constexpr (Extents::rank() == 0) {
+        return 1;
+    } else {
+        auto result = typename Extents::index_type(1);
+        for (auto e = size_t(0); e < i; ++e) { result *= exts.extent(e); }
+        return result;
+    }
+}
+
+template <typename Extents>
+    requires is_extents<Extents>
+[[nodiscard]] constexpr auto rev_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept -> size_t
+{
+    auto result = typename Extents::index_type(1);
+    for (auto e = i + 1; e < Extents::rank(); ++e) { result *= exts.extent(e); }
+    return result;
+}
+
 template <typename>
 inline constexpr auto repeat_dynamic_extent = dynamic_extent;
 
-}
+} // namespace detail
 
 template <typename... Integrals>
     requires(is_convertible_v<Integrals, size_t> && ...)
