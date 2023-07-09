@@ -7,6 +7,8 @@
 #include "etl/_mdspan/is_extents.hpp"
 #include "etl/_mdspan/layout.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
+#include "etl/_type_traits/is_nothrow_constructible.hpp"
+#include "etl/_utility/index_sequence.hpp"
 
 namespace etl {
 
@@ -52,7 +54,19 @@ struct layout_left::mapping {
     }
 
     template <typename... Indices>
-    [[nodiscard]] constexpr auto operator()(Indices...) const noexcept -> index_type;
+        requires(sizeof...(Indices) == extents_type::rank()) && (is_convertible_v<Indices, index_type> && ...)
+                && (is_nothrow_constructible_v<index_type, Indices> && ...)
+    [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
+    {
+        auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
+            auto currentStride = index_type(1);
+            auto result        = index_type(0);
+            (((result += is * currentStride), (currentStride *= extents_.extent(Is))), ...);
+            return result;
+        };
+
+        return impl(make_index_sequence<extents_type::rank()> {}, static_cast<index_type>(indices)...);
+    }
 
     [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
     [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }

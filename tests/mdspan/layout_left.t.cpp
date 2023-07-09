@@ -53,8 +53,14 @@ constexpr auto test_one() -> bool
         assert(mapping_2d_t::is_strided());
 
         assert(mapping_2d_t(extents_2d_t(1)).required_span_size() == 2);
+        assert(mapping_2d_t(extents_2d_t(1))(0, 0) == 0);
+        assert(mapping_2d_t(extents_2d_t(1))(1, 0) == 1);
+
         assert(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
-        assert(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
+        assert(mapping_2d_t(extents_2d_t(42))(0, 0) == 0);
+        assert(mapping_2d_t(extents_2d_t(42))(1, 0) == 1);
+        assert(mapping_2d_t(extents_2d_t(42))(0, 1) == 2);
+        assert(mapping_2d_t(extents_2d_t(42))(1, 1) == 3);
     }
 
     {

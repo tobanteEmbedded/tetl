@@ -53,8 +53,14 @@ constexpr auto test_layout_right() -> bool
         assert(mapping_2d_t::is_strided());
 
         assert(mapping_2d_t(extents_2d_t(1)).required_span_size() == 2);
+        assert(mapping_2d_t(extents_2d_t(1))(0, 0) == 0);
+        assert(mapping_2d_t(extents_2d_t(1))(1, 0) == 1);
+
         assert(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
-        assert(mapping_2d_t(extents_2d_t(42)).required_span_size() == 84);
+        assert(mapping_2d_t(extents_2d_t(42))(0, 0) == 0);
+        assert(mapping_2d_t(extents_2d_t(42))(0, 1) == 1);
+        assert(mapping_2d_t(extents_2d_t(42))(1, 0) == 42);
+        assert(mapping_2d_t(extents_2d_t(42))(1, 1) == 43);
     }
 
     {
@@ -69,8 +75,20 @@ constexpr auto test_layout_right() -> bool
         assert(mapping_3d_t::is_strided());
 
         assert(mapping_3d_t(extents_3d_t(1, 1)).required_span_size() == 2);
+        assert(mapping_3d_t(extents_3d_t(1, 1))(0, 0, 0) == 0);
+        assert(mapping_3d_t(extents_3d_t(1, 1))(0, 1, 0) == 1);
+
         assert(mapping_3d_t(extents_3d_t(1, 2)).required_span_size() == 4);
+        assert(mapping_3d_t(extents_3d_t(1, 2))(0, 0, 0) == 0);
+        assert(mapping_3d_t(extents_3d_t(1, 2))(0, 0, 1) == 1);
+        assert(mapping_3d_t(extents_3d_t(1, 2))(0, 1, 0) == 2);
+        assert(mapping_3d_t(extents_3d_t(1, 2))(0, 1, 1) == 3);
+
         assert(mapping_3d_t(extents_3d_t(2, 2)).required_span_size() == 8);
+        assert(mapping_3d_t(extents_3d_t(2, 2))(0, 0, 0) == 0);
+        assert(mapping_3d_t(extents_3d_t(2, 2))(0, 0, 1) == 1);
+        assert(mapping_3d_t(extents_3d_t(2, 2))(1, 1, 0) == 6);
+        assert(mapping_3d_t(extents_3d_t(2, 2))(1, 1, 1) == 7);
     }
 
     {
