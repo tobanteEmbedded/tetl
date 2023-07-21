@@ -162,7 +162,7 @@ template <typename... Integrals>
 extents(Integrals...) -> extents<size_t, size_t((Integrals(), dynamic_extent))...>;
 
 template <typename IndexType, size_t Rank>
-using dextents = detail::dextents_impl<IndexType, make_index_sequence<Rank>>::type;
+using dextents = typename detail::dextents_impl<IndexType, make_index_sequence<Rank>>::type;
 
 } // namespace etl
 
