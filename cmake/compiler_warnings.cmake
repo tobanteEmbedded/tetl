@@ -45,6 +45,7 @@ else ()
           -Wshorten-64-to-32
           -Wunused-private-field
           -Wno-implicit-int-float-conversion # etl/_3rd_party/gcem cause some warnings
+          -Wno-pre-c++2b-compat
 
           # Internal testing only
           $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
