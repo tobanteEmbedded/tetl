@@ -161,8 +161,8 @@ template <typename... Integrals>
     requires(is_convertible_v<Integrals, size_t> && ...)
 extents(Integrals...) -> extents<size_t, size_t((Integrals(), dynamic_extent))...>;
 
-template <typename IndexType, size_t _Rank>
-using dextents = detail::dextents_impl<IndexType, make_index_sequence<_Rank>>::type;
+template <typename IndexType, size_t Rank>
+using dextents = detail::dextents_impl<IndexType, make_index_sequence<Rank>>::type;
 
 } // namespace etl
 
