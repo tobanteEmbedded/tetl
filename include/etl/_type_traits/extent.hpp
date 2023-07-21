@@ -31,8 +31,8 @@ struct extent<T[I], 0> : integral_constant<etl::size_t, I> { };
 template <typename T, etl::size_t I, unsigned N>
 struct extent<T[I], N> : extent<T, N - 1> { };
 
-template <typename T>
-using extent_v = typename etl::extent<T>::value;
+template <typename T, unsigned N = 0>
+inline constexpr auto extent_v = static_cast<size_t>(extent<T, N>::value);
 
 } // namespace etl
 

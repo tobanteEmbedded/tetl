@@ -12,7 +12,7 @@
 #include <etl/_span/span.hpp>
 #include <etl/_type_traits/make_unsigned.hpp>
 #include <etl/_utility/cmp.hpp>
-#include <etl/_utility/integer_sequence.hpp>
+#include <etl/_utility/index_sequence.hpp>
 
 namespace etl {
 
@@ -127,7 +127,7 @@ namespace detail {
 
 template <typename Extents>
     requires is_extents<Extents>
-[[nodiscard]] constexpr auto fwd_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept -> size_t
+[[nodiscard]] constexpr auto fwd_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept
 {
     if constexpr (Extents::rank() == 0) {
         return 1;
@@ -140,18 +140,29 @@ template <typename Extents>
 
 template <typename Extents>
     requires is_extents<Extents>
-[[nodiscard]] constexpr auto rev_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept -> size_t
+[[nodiscard]] constexpr auto rev_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept
 {
     auto result = typename Extents::index_type(1);
     for (auto e = i + 1; e < Extents::rank(); ++e) { result *= exts.extent(e); }
     return result;
 }
 
+template <typename IndexType, typename Integrals>
+struct dextents_impl;
+
+template <typename IndexType, size_t... Integrals>
+struct dextents_impl<IndexType, index_sequence<Integrals...>> {
+    using type = extents<IndexType, ((void)Integrals, dynamic_extent)...>;
+};
+
 } // namespace detail
 
 template <typename... Integrals>
     requires(is_convertible_v<Integrals, size_t> && ...)
 extents(Integrals...) -> extents<size_t, size_t((Integrals(), dynamic_extent))...>;
+
+template <typename IndexType, size_t _Rank>
+using dextents = detail::dextents_impl<IndexType, make_index_sequence<_Rank>>::type;
 
 } // namespace etl
 
