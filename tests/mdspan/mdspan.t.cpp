@@ -31,7 +31,7 @@ template <typename ElementType, typename IndexType>
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> {};
+        auto buffer = etl::array<ElementType, 16> { ElementType(1) };
         auto m      = etl::mdspan<ElementType, extents_t> { buffer.data(), buffer.size() };
         assert(m.rank() == 1);
         assert(m.rank_dynamic() == 1);
@@ -40,10 +40,17 @@ template <typename ElementType, typename IndexType>
 
         assert(not m.empty());
         assert(m.size() == buffer.size());
+
+        assert(m(0) == ElementType(1));
+        assert(m(1) == ElementType(0));
+#if defined(__cpp_multidimensional_subscript)
+        assert(m[0] == ElementType(1));
+        assert(m[1] == ElementType(0));
+#endif
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> {};
+        auto buffer = etl::array<ElementType, 16> { ElementType(1) };
         auto m      = etl::mdspan(buffer.data(), 2, 8);
         assert(m.rank() == 2);
         assert(m.rank_dynamic() == 2);
@@ -54,6 +61,13 @@ template <typename ElementType, typename IndexType>
 
         assert(not m.empty());
         assert(m.size() == buffer.size());
+
+        assert(m(0, 0) == ElementType(1));
+        assert(m(0, 1) == ElementType(0));
+#if defined(__cpp_multidimensional_subscript)
+        assert(m[0, 0] == ElementType(1));
+        assert(m[0, 1] == ElementType(0));
+#endif
     }
 
     return true;

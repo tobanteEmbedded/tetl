@@ -100,6 +100,32 @@ struct mdspan {
     constexpr mdspan(mdspan const& rhs) = default;
     constexpr mdspan(mdspan&& rhs)      = default; // NOLINT(performance-noexcept-move-constructor)
 
+    // clang-format off
+    template <typename... OtherIndexTypes>
+        requires(
+                (is_convertible_v<OtherIndexTypes, index_type> && ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+            and sizeof...(OtherIndexTypes) == rank()
+        )
+    [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
+    {
+        return acc_.access(ptr_, map_(static_cast<index_type>(move(indices))...));
+    }
+
+#if defined(__cpp_multidimensional_subscript)
+    template <typename... OtherIndexTypes>
+        requires(
+                (is_convertible_v<OtherIndexTypes, index_type> && ...)
+            and (is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)
+            and sizeof...(OtherIndexTypes) == rank()
+        )
+    [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
+    {
+        return acc_.access(ptr_, map_(static_cast<index_type>(move(indices))...));
+    }
+#endif
+    // clang-format on
+
     [[nodiscard]] constexpr auto size() const noexcept -> size_type
     {
         return detail::fwd_prod_of_extents(extents(), rank());
