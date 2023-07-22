@@ -8,6 +8,7 @@
 #include <etl/_linalg/blas1_add.hpp>
 #include <etl/_linalg/blas1_copy.hpp>
 #include <etl/_linalg/blas1_scale.hpp>
+#include <etl/_linalg/blas1_scaled.hpp>
 #include <etl/_linalg/blas1_swap_elements.hpp>
 #include <etl/_linalg/blas1_vector_abs_sum.hpp>
 #include <etl/_linalg/tags.hpp>
