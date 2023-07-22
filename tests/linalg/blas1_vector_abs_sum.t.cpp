@@ -18,6 +18,7 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(2), vec), T(0)) == T(12));
     }
 
     {
@@ -27,6 +28,7 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(4), vec), T(0)) == T(24));
     }
 
     if constexpr (etl::signed_integral<T>) {
@@ -35,6 +37,7 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(2), vec), T(0)) == T(12));
     }
     return true;
 }
@@ -49,6 +52,7 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(2), vec), T(0)) == T(12));
     }
 
     {
@@ -58,6 +62,7 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(2), vec), T(0)) == T(12));
     }
 
     {
@@ -67,7 +72,9 @@ template <typename T, typename IndexType>
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
+        assert(etl::linalg::vector_abs_sum(etl::linalg::scaled(T(2), vec), T(0)) == T(12));
     }
+
     return true;
 }
 

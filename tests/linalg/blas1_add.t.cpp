@@ -25,6 +25,13 @@ template <typename T, typename IndexType>
         assert(out(1) == T(2));
         assert(out(2) == T(3));
         assert(out(3) == T(4));
+
+        out_data.fill(T(0));
+        etl::linalg::add(lhs, etl::linalg::scaled(T(2), rhs), out);
+        assert(out(0) == T(2));
+        assert(out(1) == T(4));
+        assert(out(2) == T(6));
+        assert(out(3) == T(8));
     }
 
     {
