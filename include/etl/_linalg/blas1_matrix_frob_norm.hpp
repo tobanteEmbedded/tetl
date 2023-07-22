@@ -20,7 +20,7 @@ template <detail::in_matrix InMat, typename Scalar>
         }
     }
 
-    using ::etl::sqrt;
+    using etl::sqrt;
     return static_cast<Scalar>(sqrt(result));
 }
 
