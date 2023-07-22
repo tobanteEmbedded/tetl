@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_LINALG_SCALE_HPP
-#define TETL_LINALG_SCALE_HPP
+#ifndef TETL_LINALG_BLAS1_SCALE_HPP
+#define TETL_LINALG_BLAS1_SCALE_HPP
 
 #include <etl/_linalg/concepts.hpp>
 #include <etl/_utility/cmp.hpp>
@@ -25,4 +25,4 @@ constexpr auto scale(Scalar alpha, InOutObj x) -> void
 
 } // namespace etl::linalg
 
-#endif // TETL_LINALG_SCALE_HPP
+#endif // TETL_LINALG_BLAS1_SCALE_HPP

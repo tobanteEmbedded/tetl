@@ -5,8 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
-#include <etl/_linalg/concepts.hpp>
-#include <etl/_linalg/scale.hpp>
+#include <etl/_linalg/blas1_scale.hpp>
 #include <etl/_linalg/tags.hpp>
 
 #endif // TETL_LINALG_HPP
