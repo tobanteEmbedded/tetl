@@ -122,13 +122,11 @@ template <typename T>
 concept has_adl_imag = linalg_adl_checks::has_imag<T>;
 
 inline constexpr auto abs_if_needed = []<typename T>(T const& val) {
-    if constexpr (unsigned_integral<T>) {
-        return val;
-    } else if constexpr (has_adl_abs<T>) {
+    if constexpr (has_adl_abs<T>) {
         using ::etl::abs;
         return abs(val);
     } else {
-        static_assert(always_false<T>);
+        return val;
     }
 };
 
