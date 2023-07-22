@@ -4,7 +4,8 @@
 #define TETL_COMPLEX_IMAG_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/double_or_int.hpp"
+#include "etl/_concepts/floating_point.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -14,15 +15,17 @@ template <typename T>
     return z.imag();
 }
 
-template <typename T>
-    requires(detail::double_or_int<T>)
-[[nodiscard]] constexpr auto imag(T z) -> double
+template <floating_point Float>
+[[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> Float
 {
-    return static_cast<double>(z);
+    return Float {};
 }
 
-[[nodiscard]] constexpr auto imag(float z) -> float { return z; }
-[[nodiscard]] constexpr auto imag(long double z) -> long double { return z; }
+template <integral Integer>
+[[nodiscard]] constexpr auto imag(Integer /*i*/) noexcept -> double
+{
+    return 0.0;
+}
 
 } // namespace etl
 

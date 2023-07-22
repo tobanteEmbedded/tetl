@@ -4,7 +4,8 @@
 #define TETL_COMPLEX_REAL_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/double_or_int.hpp"
+#include "etl/_concepts/floating_point.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -14,16 +15,17 @@ template <typename T>
     return z.real();
 }
 
-template <typename T>
-    requires(detail::double_or_int<T>)
-[[nodiscard]] constexpr auto real(T z) -> double
+template <floating_point Float>
+[[nodiscard]] constexpr auto real(Float f) noexcept -> Float
 {
-    return static_cast<double>(z);
+    return f;
 }
 
-[[nodiscard]] constexpr auto real(float z) -> float { return z; }
-
-[[nodiscard]] constexpr auto real(long double z) -> long double { return z; }
+template <integral Integer>
+[[nodiscard]] constexpr auto real(Integer i) noexcept -> double
+{
+    return static_cast<double>(i);
+}
 
 } // namespace etl
 

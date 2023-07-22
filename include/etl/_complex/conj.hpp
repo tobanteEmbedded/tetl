@@ -4,7 +4,8 @@
 #define TETL_COMPLEX_CONJ_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/double_or_int.hpp"
+#include "etl/_concepts/floating_point.hpp"
+#include "etl/_concepts/integral.hpp"
 
 namespace etl {
 
@@ -14,24 +15,16 @@ template <typename T>
     return complex<T>(z.real(), -z.imag());
 }
 
-template <typename T>
-    requires(detail::double_or_int<T>)
-[[nodiscard]] constexpr auto conj(T z) noexcept -> complex<double>
+template <floating_point Float>
+[[nodiscard]] constexpr auto conj(Float f) noexcept -> complex<Float>
 {
-    auto const c = complex<double>(z);
-    return conj(c);
+    return complex<Float>(f);
 }
 
-[[nodiscard]] constexpr auto conj(float z) noexcept -> complex<float>
+template <integral Integer>
+[[nodiscard]] constexpr auto conj(Integer i) noexcept -> complex<double>
 {
-    auto const c = complex<float>(z);
-    return conj(c);
-}
-
-[[nodiscard]] constexpr auto conj(long double z) noexcept -> complex<long double>
-{
-    auto const c = complex<long double>(z);
-    return conj(c);
+    return complex<double>(i);
 }
 
 } // namespace etl
