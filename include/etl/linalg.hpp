@@ -6,6 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_linalg/blas1_add.hpp>
+#include <etl/_linalg/blas1_copy.hpp>
 #include <etl/_linalg/blas1_scale.hpp>
 #include <etl/_linalg/tags.hpp>
 
