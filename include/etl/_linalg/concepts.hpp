@@ -133,9 +133,7 @@ inline constexpr auto abs_if_needed = []<typename T>(T const& val) {
 };
 
 inline constexpr auto conj_if_needed = []<typename T>(T const& val) {
-    if constexpr (is_arithmetic_v<T>) {
-        return val;
-    } else if constexpr (has_adl_conj<T>) {
+    if constexpr (has_adl_conj<T>) {
         using ::etl::conj;
         return conj(val);
     } else {
@@ -144,9 +142,7 @@ inline constexpr auto conj_if_needed = []<typename T>(T const& val) {
 };
 
 inline constexpr auto real_if_needed = []<typename T>(T const& val) {
-    if constexpr (is_arithmetic_v<T>) {
-        return val;
-    } else if constexpr (has_adl_real<T>) {
+    if constexpr (has_adl_real<T>) {
         using ::etl::real;
         return real(val);
     } else {

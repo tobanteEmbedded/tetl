@@ -30,6 +30,8 @@ static constexpr auto test_abs() -> bool
     assert(not detail::has_adl_abs<unsigned long>);
     assert(not detail::has_adl_abs<unsigned long long>);
 
+    // assert(detail::has_adl_abs<signed char>);
+    // assert(detail::has_adl_abs<signed short>);
     assert(detail::has_adl_abs<signed int>);
     assert(detail::has_adl_abs<signed long>);
     assert(detail::has_adl_abs<signed long long>);
@@ -54,7 +56,7 @@ static constexpr auto test_real() -> bool
     assert(not detail::has_adl_real<long>);
     assert(not detail::has_adl_real<long long>);
 
-    assert(not detail::has_adl_real<signed char>);
+    assert(not detail::has_adl_real<unsigned char>);
     assert(not detail::has_adl_real<unsigned short>);
     assert(not detail::has_adl_real<unsigned int>);
     assert(not detail::has_adl_real<unsigned long>);
@@ -81,7 +83,7 @@ static constexpr auto test_imag() -> bool
     assert(not detail::has_adl_imag<long>);
     assert(not detail::has_adl_imag<long long>);
 
-    assert(not detail::has_adl_imag<signed char>);
+    assert(not detail::has_adl_imag<unsigned char>);
     assert(not detail::has_adl_imag<unsigned short>);
     assert(not detail::has_adl_imag<unsigned int>);
     assert(not detail::has_adl_imag<unsigned long>);
@@ -108,7 +110,7 @@ static constexpr auto test_conj() -> bool
     assert(not detail::has_adl_conj<long>);
     assert(not detail::has_adl_conj<long long>);
 
-    assert(not detail::has_adl_conj<signed char>);
+    assert(not detail::has_adl_conj<unsigned char>);
     assert(not detail::has_adl_conj<unsigned short>);
     assert(not detail::has_adl_conj<unsigned int>);
     assert(not detail::has_adl_conj<unsigned long>);
