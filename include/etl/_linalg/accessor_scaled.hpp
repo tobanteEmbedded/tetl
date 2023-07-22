@@ -15,7 +15,7 @@ struct accessor_scaled {
     using reference
         = detail::scaled_scalar<ScalingFactor, typename Accessor::reference, typename Accessor::element_type>;
     using element_type     = add_const_t<typename reference::value_type>;
-    using data_handle_type = Accessor::data_handle_type;
+    using data_handle_type = typename Accessor::data_handle_type;
     using offset_policy    = accessor_scaled<ScalingFactor, typename Accessor::offset_policy>;
 
     constexpr accessor_scaled(ScalingFactor const& s, Accessor const& a) : scaling_factor_ { s }, nested_accessor_ { a }
@@ -27,7 +27,8 @@ struct accessor_scaled {
         return reference(scaling_factor_, nested_accessor_.access(p, i));
     }
 
-    [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const noexcept -> offset_policy::data_handle_type
+    [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const noexcept ->
+        typename offset_policy::data_handle_type
     {
         return nested_accessor_.offset(p, i);
     }

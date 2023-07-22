@@ -61,32 +61,6 @@ template <typename T, typename IndexType>
     return true;
 }
 
-template <typename T, typename IndexType>
-[[nodiscard]] static constexpr auto test_linalg_scale_complex() -> bool
-{
-    using complex_t = etl::complex<T>;
-
-    {
-        // 1D static extents
-        auto const data = etl::array<complex_t, 4> {
-            complex_t { T(0), T(0) },
-            complex_t { T(1), T(1) },
-            complex_t { T(2), T(2) },
-            complex_t { T(3), T(3) },
-        };
-
-        auto vec    = etl::mdspan<complex_t const, etl::extents<IndexType, 4>> { data.data() };
-        auto scaled = etl::linalg::scaled(T(2), vec);
-
-        assert(complex_t(scaled(0)) == vec[0] * T(2));
-        assert(complex_t(scaled(1)) == vec[1] * T(2));
-        assert(complex_t(scaled(2)) == vec[2] * T(2));
-        assert(complex_t(scaled(3)) == vec[3] * T(2));
-    }
-
-    return true;
-}
-
 template <typename IndexType>
 [[nodiscard]] static constexpr auto test_index_type() -> bool
 {
@@ -104,9 +78,6 @@ template <typename IndexType>
 
     assert(test_linalg_scale_real<float, IndexType>());
     assert(test_linalg_scale_real<double, IndexType>());
-
-    // assert(test_linalg_scale_complex<float, IndexType>());
-    // assert(test_linalg_scale_complex<double, IndexType>());
 
     return true;
 }
