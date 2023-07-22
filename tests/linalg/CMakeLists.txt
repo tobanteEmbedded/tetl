@@ -2,6 +2,7 @@ project(linalg)
 
 tetl_add_test(${PROJECT_NAME} blas1_add)
 tetl_add_test(${PROJECT_NAME} blas1_copy)
+tetl_add_test(${PROJECT_NAME} blas1_matrix_frob_norm)
 tetl_add_test(${PROJECT_NAME} blas1_scale)
 tetl_add_test(${PROJECT_NAME} blas1_scaled)
 tetl_add_test(${PROJECT_NAME} blas1_swap_elements)
