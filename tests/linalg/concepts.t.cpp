@@ -18,6 +18,8 @@ struct my_complex {
 
 [[maybe_unused]] static auto conj(my_complex const& cplx) -> my_complex { return { cplx.real, -cplx.imag }; }
 
+struct my_string { };
+
 } // namespace ns
 
 namespace detail = etl::linalg::detail;
@@ -44,6 +46,8 @@ static constexpr auto test_abs() -> bool
     assert(detail::has_adl_abs<etl::complex<float>>);
     assert(detail::has_adl_abs<etl::complex<double>>);
     assert(detail::has_adl_abs<etl::complex<long double>>);
+
+    assert(not detail::has_adl_abs<ns::my_string>);
 
     return true;
 }
@@ -72,6 +76,8 @@ static constexpr auto test_real() -> bool
     assert(detail::has_adl_real<etl::complex<double>>);
     assert(detail::has_adl_real<etl::complex<long double>>);
 
+    assert(not detail::has_adl_real<ns::my_string>);
+
     return true;
 }
 
@@ -99,6 +105,8 @@ static constexpr auto test_imag() -> bool
     assert(detail::has_adl_imag<etl::complex<double>>);
     assert(detail::has_adl_imag<etl::complex<long double>>);
 
+    assert(not detail::has_adl_imag<ns::my_string>);
+
     return true;
 }
 
@@ -125,6 +133,8 @@ static constexpr auto test_conj() -> bool
     assert(detail::has_adl_conj<etl::complex<float>>);
     assert(detail::has_adl_conj<etl::complex<double>>);
     assert(detail::has_adl_conj<etl::complex<long double>>);
+
+    assert(not detail::has_adl_imag<ns::my_string>);
 
     return true;
 }
