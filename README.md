@@ -49,7 +49,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 | **Platform** |                                                                                    **Status**                                                                                    |              **Notes**              |
 | :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
-|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    |    GCC 11/12 & Clang 12/13/14/16    |
+|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    |     GCC 11/12 & Clang 13/14/16      |
 |  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |            AppleClang 14            |
 | **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) | Visual Studio 2022, ClangCL & Clang |
 
