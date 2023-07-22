@@ -32,6 +32,7 @@
 #include <etl/ios.hpp>
 #include <etl/iterator.hpp>
 #include <etl/limits.hpp>
+#include <etl/linalg.hpp>
 #include <etl/map.hpp>
 #include <etl/mdspan.hpp>
 #include <etl/memory.hpp>
