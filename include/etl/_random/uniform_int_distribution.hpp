@@ -62,8 +62,9 @@ struct uniform_int_distribution {
     template <typename URBG>
     [[nodiscard]] constexpr auto operator()(URBG& g, param_type const& parm) noexcept(noexcept(g())) -> result_type
     {
-        auto const range = static_cast<result_type>(parm.b() - parm.a());
-        return static_cast<result_type>(parm.a() + (g() % range));
+        auto const random = g();
+        auto const range  = static_cast<decltype(g())>(parm.b() - parm.a());
+        return static_cast<result_type>(parm.a() + static_cast<result_type>((random % range)));
     }
 
     friend constexpr auto operator==(uniform_int_distribution const& x, uniform_int_distribution const& y) -> bool
