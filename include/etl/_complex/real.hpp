@@ -4,8 +4,9 @@
 #define TETL_COMPLEX_REAL_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_concepts/floating_point.hpp"
-#include "etl/_concepts/integral.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_floating_point.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 
@@ -15,14 +16,14 @@ template <typename T>
     return z.real();
 }
 
-template <floating_point Float>
-[[nodiscard]] constexpr auto real(Float f) noexcept -> Float
+template <typename Float>
+[[nodiscard]] constexpr auto real(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, Float>
 {
     return f;
 }
 
-template <integral Integer>
-[[nodiscard]] constexpr auto real(Integer i) noexcept -> double
+template <typename Integer>
+[[nodiscard]] constexpr auto real(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, double>
 {
     return static_cast<double>(i);
 }

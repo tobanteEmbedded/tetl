@@ -4,8 +4,9 @@
 #define TETL_COMPLEX_IMAG_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_concepts/floating_point.hpp"
-#include "etl/_concepts/integral.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_floating_point.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 
@@ -15,14 +16,14 @@ template <typename T>
     return z.imag();
 }
 
-template <floating_point Float>
-[[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> Float
+template <typename Float>
+[[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> enable_if_t<is_floating_point_v<Float>, Float>
 {
     return Float {};
 }
 
-template <integral Integer>
-[[nodiscard]] constexpr auto imag(Integer /*i*/) noexcept -> double
+template <typename Integer>
+[[nodiscard]] constexpr auto imag(Integer /*i*/) noexcept -> enable_if_t<is_integral_v<Integer>, double>
 {
     return 0.0;
 }
