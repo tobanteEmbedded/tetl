@@ -276,7 +276,7 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |         [variant](#variant)         |         Utility          | :heavy_check_mark: |   [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)    |
 |          [vector](#vector)          |        Containers        | :heavy_check_mark: |   [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)    |
 |         [version](#version)         |         Utility          | :heavy_check_mark: |                                                                                                                        |
-|         [warning](#warning)         |         Utility          | :heavy_check_mark: |                                               Non-standard Not standard.                                               |
+|         [warning](#warning)         |         Utility          | :heavy_check_mark: |                                                      Non-standard                                                      |
 
 ## Header Detail
 

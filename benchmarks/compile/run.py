@@ -29,7 +29,6 @@ cxx17_headers = [
     'ios',
     'iterator',
     'limits',
-    'map',
     'memory',
     'mutex',
     'new',
