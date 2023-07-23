@@ -5,7 +5,9 @@
 
 #include "etl/_cmath/atan2.hpp"
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/double_or_int.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_floating_point.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 
@@ -15,24 +17,16 @@ template <typename T>
     return atan2(z.real(), z.imag());
 }
 
-template <typename T>
-    requires(detail::double_or_int<T>)
-[[nodiscard]] constexpr auto arg(T z) noexcept -> double
+template <typename Float>
+[[nodiscard]] constexpr auto arg(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
 {
-    auto const c = complex<double>(z);
-    return arg(c);
+    return arg(complex<Float>(f));
 }
 
-[[nodiscard]] constexpr auto arg(float z) noexcept -> float
+template <typename Integer>
+[[nodiscard]] constexpr auto arg(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
 {
-    auto const c = complex<float>(z);
-    return arg(c);
-}
-
-[[nodiscard]] constexpr auto arg(long double z) noexcept -> long double
-{
-    auto const c = complex<long double>(z);
-    return arg(c);
+    return arg(complex<double>(i));
 }
 
 } // namespace etl
