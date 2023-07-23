@@ -11,6 +11,9 @@
 #include <etl/_concepts/same_as.hpp>
 #include <etl/_concepts/unsigned_integral.hpp>
 #include <etl/_math/abs.hpp>
+#include <etl/_mdspan/layout.hpp>
+#include <etl/_mdspan/layout_left.hpp>
+#include <etl/_mdspan/layout_right.hpp>
 #include <etl/_mdspan/mdspan.hpp>
 #include <etl/_numeric/abs.hpp>
 #include <etl/_type_traits/always_false.hpp>

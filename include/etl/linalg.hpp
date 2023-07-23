@@ -18,6 +18,7 @@
 #include <etl/_linalg/blas1_vector_two_norm.hpp>
 #include <etl/_linalg/blas2_matrix_vector_product.hpp>
 #include <etl/_linalg/conjugated.hpp>
+#include <etl/_linalg/layout_transpose.hpp>
 #include <etl/_linalg/tags.hpp>
 
 #endif // TETL_LINALG_HPP
