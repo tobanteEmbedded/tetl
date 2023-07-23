@@ -13,6 +13,8 @@
 #include <etl/_complex/cosh.hpp>
 #include <etl/_complex/imag.hpp>
 #include <etl/_complex/literals.hpp>
+#include <etl/_complex/log.hpp>
+#include <etl/_complex/log10.hpp>
 #include <etl/_complex/norm.hpp>
 #include <etl/_complex/polar.hpp>
 #include <etl/_complex/real.hpp>
