@@ -103,11 +103,8 @@ struct layout_transpose {
         [[nodiscard]] constexpr auto stride(size_t r) const noexcept(noexcept(nested_mapping_.stride(r))) -> size_type
             requires(is_always_strided())
         {
-            if (r == Extents::rank() - 1) {
-                return nested_mapping_.stride(r - 2);
-            } else if (r == Extents::rank() - 2) {
-                return nested_mapping_.stride(r - 1);
-            }
+            if (r == Extents::rank() - 1) { return nested_mapping_.stride(r - 2); }
+            if (r == Extents::rank() - 2) { return nested_mapping_.stride(r - 1); }
             return nested_mapping_.stride(r);
         }
 
