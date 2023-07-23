@@ -7,14 +7,17 @@
 template <typename IndexType>
 [[nodiscard]] static constexpr auto test_layout_transpose() -> bool
 {
-    using extents_type                    = etl::extents<IndexType, 2, 3>;
-    using expected_transpose_extents_type = etl::extents<IndexType, 3, 2>;
-    using transpose_extents_type          = etl::linalg::detail::transpose_extents_t<extents_type>;
-    static_assert(etl::same_as<expected_transpose_extents_type, transpose_extents_type>);
+    {
+        using extents_t   = etl::extents<IndexType, 2, 3>;
+        using expected_t  = etl::extents<IndexType, 3, 2>;
+        using transpose_t = etl::linalg::detail::transpose_extents_t<extents_t>;
+        static_assert(etl::same_as<expected_t, transpose_t>);
+    }
 
     {
         // static extents
-        auto const ext        = etl::extents<IndexType, 2, 3> {};
+        using extents_t       = etl::extents<IndexType, 2, 3>;
+        auto const ext        = extents_t {};
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
         assert(transposed.static_extent(0) == ext.static_extent(1));
         assert(transposed.static_extent(1) == ext.static_extent(0));
@@ -26,7 +29,8 @@ template <typename IndexType>
 
     {
         // dynamic extents
-        auto const ext        = etl::dextents<IndexType, 2> { IndexType(2), IndexType(3) };
+        using extents_t       = etl::dextents<IndexType, 2>;
+        auto const ext        = extents_t { IndexType(2), IndexType(3) };
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
         assert(transposed.static_extent(0) == etl::dynamic_extent);
         assert(transposed.static_extent(1) == etl::dynamic_extent);
@@ -36,11 +40,21 @@ template <typename IndexType>
         assert(transposed.extent(1) == ext.extent(0));
         assert(transposed.extent(0) != transposed.static_extent(0));
         assert(transposed.extent(1) != transposed.static_extent(1));
+
+        auto const mapping = etl::linalg::layout_transpose<etl::layout_right>::mapping<extents_t> { ext };
+        assert(mapping.extents().extent(0) == IndexType(3));
+        assert(mapping.extents().extent(1) == IndexType(2));
+        assert(mapping.required_span_size() == 6);
+        assert(mapping.is_always_unique());
+        assert(mapping.is_always_strided());
+        assert(mapping.is_unique());
+        assert(mapping.is_strided());
     }
 
     {
         // mixed extents
-        auto const ext        = etl::extents<IndexType, 2, etl::dynamic_extent> { IndexType(3) };
+        using extents_t       = etl::extents<IndexType, 2, etl::dynamic_extent>;
+        auto const ext        = extents_t { IndexType(3) };
         auto const transposed = etl::linalg::detail::transpose_extents(ext);
         assert(transposed.static_extent(0) == etl::dynamic_extent);
         assert(transposed.static_extent(1) != etl::dynamic_extent);
