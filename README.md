@@ -191,7 +191,7 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |         [climits](#climits)         | Utility / Numeric Limits | :heavy_check_mark: |   [climits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1904156895)   |
 |               clocale               |       Localization       |        :x:         |                                                                                                                        |
 |           [cmath](#cmath)           |         Numeric          | :heavy_check_mark: |    [cmath](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=868070087)     |
-|               compare               |         Utility          |        :x:         |                                                          TODO                                                          |
+|         [compare](#compare)         |         Utility          | :heavy_check_mark: |   [compare](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1676133546)   |
 |         [complex](#complex)         |         Numeric          | :heavy_check_mark: |   [complex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1768885550)   |
 |        [concepts](#concepts)        |         Concepts         | :heavy_check_mark: |   [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)    |
 |         condition_variable          |          Thread          |        :x:         |                                                                                                                        |
@@ -207,11 +207,13 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |           [ctime](#ctime)           |         Utility          | :heavy_check_mark: |    [ctime](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1082109762)    |
 |               cuchar                |         Strings          |        :x:         |                                                                                                                        |
 |          [cwchar](#cwchar)          |         Strings          | :heavy_check_mark: |   [cwchar](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1105944467)    |
-|               cwctype               |         Strings          |        :x:         |                                                                                                                        |
+|         [cwctype](#cwctype)         |         Strings          | :heavy_check_mark: |   [cwctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1740196036)   |
 |                deque                |        Containers        |        :x:         |                                                          TODO                                                          |
 |       [exception](#exception)       | Utility / Error Handling | :heavy_check_mark: |   [exception](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit?usp=sharing)    |
 |              execution              |        Algorithms        |        :x:         |                                                                                                                        |
 |        [expected](#expected)        | Utility / Error Handling | :heavy_check_mark: |  [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)   |
+|        [flat_set](#flat_set)        |        Conatiners        | :heavy_check_mark: |   [flat_set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291280131)   |
+|        [flat_map](#flat_map)        |        Conatiners        | :heavy_check_mark: |  [flat_map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1047136935)   |
 |             filesystem              |        Filesystem        |        :x:         |                                                                                                                        |
 |          [format](#format)          |         Strings          | :heavy_check_mark: |    [format](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=159875067)    |
 |            forward_list             |        Containers        |        :x:         |                                                                                                                        |
@@ -230,7 +232,8 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |          [limits](#limits)          | Utility / Numeric Limits | :heavy_check_mark: |   [limits](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
 |                list                 |        Containers        |        :x:         |                                                                                                                        |
 |               locale                |       Localization       |        :x:         |                                                                                                                        |
-|             [map](#map)             |        Containers        | :heavy_check_mark: |     [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)     |
+|          [linalg](#linalg)          |         Numeric          | :heavy_check_mark: |   [linalg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1038174926)    |
+|          [mdspan](#mdspan)          |        Containers        | :heavy_check_mark: |    [mdspan](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=713673184)    |
 |          [memory](#memory)          | Utility / Dynamic Memory | :heavy_check_mark: |   [memory](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
 |           memory_resource           | Utility / Dynamic Memory |        :x:         |                                                                                                                        |
 |           [mutex](#mutex)           |          Thread          | :heavy_check_mark: |    [mutex](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2084657878)    |
@@ -273,7 +276,7 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |         [variant](#variant)         |         Utility          | :heavy_check_mark: |   [variant](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=503059518)    |
 |          [vector](#vector)          |        Containers        | :heavy_check_mark: |   [vector](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1613833122)    |
 |         [version](#version)         |         Utility          | :heavy_check_mark: |                                                                                                                        |
-|         [warning](#warning)         |         Utility          | :heavy_check_mark: |                                                     Not standard.                                                      |
+|         [warning](#warning)         |         Utility          | :heavy_check_mark: |                                               Non-standard Not standard.                                               |
 
 ## Header Detail
 
@@ -377,6 +380,15 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Changes:**
   - None
 
+### compare
+
+- **Library:** Utility
+- **Include:** [`etl/compare.hpp`](./include/etl/compare.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [compare](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1676133546)
+- **Changes:**
+  - None
+
 ### complex
 
 - **Library:** Numeric
@@ -465,7 +477,16 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Example:** TODO
 - **Implementation Progress:** [cwchar](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1105944467)
 - **Changes:**
-  - TODO
+  - None
+
+### cwctype
+
+- **Library:** Strings
+- **Include:** [`etl/cwctype.hpp`](./include/etl/cwctype.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [cwctype](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1740196036)
+- **Changes:**
+  - None
 
 ### exception
 
@@ -482,6 +503,24 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/expected.hpp`](./include/etl/expected.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [expected](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1624993362)
+- **Changes:**
+  - TODO
+
+### flat_set
+
+- **Library:** Container
+- **Include:** [`etl/flat_set.hpp`](./include/etl/flat_set.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [flat_set](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=291280131)
+- **Changes:**
+  - TODO
+
+### flat_map
+
+- **Library:** Container
+- **Include:** [`etl/flat_map.hpp`](./include/etl/flat_map.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [flat_map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1047136935)
 - **Changes:**
   - TODO
 
@@ -530,14 +569,23 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Changes:**
   - None
 
-### map
+### linalg
+
+- **Library:** Numeric
+- **Include:** [`etl/linalg.hpp`](./include/etl/linalg.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [linalg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1038174926)
+- **Changes:**
+  - None
+
+### mdspan
 
 - **Library:** Containers
-- **Include:** [`etl/map.hpp`](./include/etl/map.hpp)
-- **Example:** [map.cpp](./examples/map.cpp)
-- **Implementation Progress:** [map](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1845210258)
+- **Include:** [`etl/mdspan.hpp`](./include/etl/mdspan.hpp)
+- **Example:** TODO
+- **Implementation Progress:** [mdspan](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=713673184)
 - **Changes:**
-  - Renamed `map` to `static_map`. Fixed compile-time capacity.
+  - None
 
 ### memory
 
