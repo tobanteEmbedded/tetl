@@ -61,8 +61,5 @@ add_subdirectory("vector")
 add_subdirectory("version")
 
 add_subdirectory("experimental/freertos")
-add_subdirectory("experimental/meta")
 add_subdirectory("experimental/net")
 add_subdirectory("experimental/stm32")
-add_subdirectory("experimental/strong_type")
-add_subdirectory("experimental/testing")
