@@ -4,7 +4,9 @@
 #define TETL_COMPLEX_NORM_HPP
 
 #include "etl/_complex/complex.hpp"
-#include "etl/_complex/double_or_int.hpp"
+#include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/is_floating_point.hpp"
+#include "etl/_type_traits/is_integral.hpp"
 
 namespace etl {
 
@@ -16,24 +18,16 @@ template <typename T>
     return x * x + y * y;
 }
 
-template <typename T>
-    requires(detail::double_or_int<T>)
-[[nodiscard]] constexpr auto norm(T z) noexcept -> double
+template <typename Float>
+[[nodiscard]] constexpr auto norm(Float f) noexcept -> enable_if_t<is_floating_point_v<Float>, complex<Float>>
 {
-    auto const c = complex<double>(z);
-    return norm(c);
+    return norm(complex<Float>(f));
 }
 
-[[nodiscard]] constexpr auto norm(float z) noexcept -> float
+template <typename Integer>
+[[nodiscard]] constexpr auto norm(Integer i) noexcept -> enable_if_t<is_integral_v<Integer>, complex<double>>
 {
-    auto const c = complex<float>(z);
-    return norm(c);
-}
-
-[[nodiscard]] constexpr auto norm(long double z) noexcept -> long double
-{
-    auto const c = complex<long double>(z);
-    return norm(c);
+    return norm(complex<double>(i));
 }
 
 } // namespace etl
