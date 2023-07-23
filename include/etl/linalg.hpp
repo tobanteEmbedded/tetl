@@ -5,6 +5,8 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_linalg/accessor_conjugate.hpp>
+#include <etl/_linalg/accessor_scaled.hpp>
 #include <etl/_linalg/blas1_add.hpp>
 #include <etl/_linalg/blas1_copy.hpp>
 #include <etl/_linalg/blas1_matrix_frob_norm.hpp>
@@ -14,6 +16,7 @@
 #include <etl/_linalg/blas1_vector_abs_sum.hpp>
 #include <etl/_linalg/blas1_vector_idx_abs_max.hpp>
 #include <etl/_linalg/blas1_vector_two_norm.hpp>
+#include <etl/_linalg/conjugated.hpp>
 #include <etl/_linalg/tags.hpp>
 
 #endif // TETL_LINALG_HPP
