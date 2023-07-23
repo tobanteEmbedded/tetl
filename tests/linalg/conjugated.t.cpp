@@ -15,12 +15,19 @@ template <typename T, typename IndexType>
 
     {
         // 1D static extents
-        auto const vec        = etl::mdspan<T const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec = etl::mdspan<T const, etl::extents<IndexType, 4>> { data.data() };
+
         auto const conjugated = etl::linalg::conjugated(vec);
         assert(conjugated(0) == data[0]);
         assert(conjugated(1) == data[1]);
         assert(conjugated(2) == data[2]);
         assert(conjugated(3) == data[3]);
+
+        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaled_conjugated(0) == data[0] * T(2));
+        assert(scaled_conjugated(1) == data[1] * T(2));
+        assert(scaled_conjugated(2) == data[2] * T(2));
+        assert(scaled_conjugated(3) == data[3] * T(2));
     }
 
     {
@@ -31,6 +38,12 @@ template <typename T, typename IndexType>
         assert(conjugated(1) == data[1]);
         assert(conjugated(2) == data[2]);
         assert(conjugated(3) == data[3]);
+
+        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaled_conjugated(0) == data[0] * T(2));
+        assert(scaled_conjugated(1) == data[1] * T(2));
+        assert(scaled_conjugated(2) == data[2] * T(2));
+        assert(scaled_conjugated(3) == data[3] * T(2));
     }
 
     {
@@ -41,6 +54,12 @@ template <typename T, typename IndexType>
         assert(conjugated(0, 1) == data[1]);
         assert(conjugated(1, 0) == data[2]);
         assert(conjugated(1, 1) == data[3]);
+
+        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaled_conjugated(0, 0) == data[0] * T(2));
+        assert(scaled_conjugated(0, 1) == data[1] * T(2));
+        assert(scaled_conjugated(1, 0) == data[2] * T(2));
+        assert(scaled_conjugated(1, 1) == data[3] * T(2));
     }
 
     return true;
