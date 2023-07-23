@@ -6,7 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_complex/abs.hpp>
-#include <etl/_complex/args.hpp>
+#include <etl/_complex/arg.hpp>
 #include <etl/_complex/complex.hpp>
 #include <etl/_complex/conj.hpp>
 #include <etl/_complex/cos.hpp>

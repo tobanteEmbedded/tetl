@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#ifndef TETL_COMPLEX_ARGS_HPP
-#define TETL_COMPLEX_ARGS_HPP
+#ifndef TETL_COMPLEX_ARG_HPP
+#define TETL_COMPLEX_ARG_HPP
 
 #include "etl/_cmath/atan2.hpp"
 #include "etl/_complex/complex.hpp"
@@ -31,4 +31,4 @@ template <typename Integer>
 
 } // namespace etl
 
-#endif // TETL_COMPLEX_ARGS_HPP
+#endif // TETL_COMPLEX_ARG_HPP
