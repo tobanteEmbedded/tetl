@@ -118,14 +118,14 @@ constexpr auto complex<T>::operator-=(T const& val) -> complex<T>&
 template <typename T>
 constexpr auto complex<T>::operator*=(T const& val) -> complex<T>&
 {
-    real_ *= val;
+    (*this) *= complex<T> { val };
     return *this;
 }
 
 template <typename T>
 constexpr auto complex<T>::operator/=(T const& val) -> complex<T>&
 {
-    real_ /= val;
+    (*this) /= complex<T> { val };
     return *this;
 }
 

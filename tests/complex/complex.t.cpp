@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/complex.hpp"
+#include <etl/complex.hpp>
 
-#include "etl/cstdint.hpp"
+#include <etl/concepts.hpp>
+#include <etl/cstdint.hpp>
 
 #include "testing/testing.hpp"
 
@@ -10,43 +11,68 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto tc = etl::complex<T> {};
-    assert(tc.real() == T { 0 });
-    assert(tc.imag() == T { 0 });
+    assert(tc.real() == T(0));
+    assert(tc.imag() == T(0));
 
-    auto re = etl::complex<T> { T { 1 } };
-    assert(re.real() == T { 1 });
-    assert(re.imag() == T { 0 });
+    auto re = etl::complex<T> { T(1) };
+    assert(re.real() == T(1));
+    assert(re.imag() == T(0));
 
-    auto im = etl::complex<T> { T { 1 }, T { 2 } };
-    assert(im.real() == T { 1 });
-    assert(im.imag() == T { 2 });
+    auto im = etl::complex<T> { T(1), T(2) };
+    assert(im.real() == T(1));
+    assert(im.imag() == T(2));
 
     tc = re;
-    assert(tc.real() == T { 1 });
-    assert(tc.imag() == T { 0 });
-    assert(etl::real(tc) == T { 1 });
-    assert(etl::imag(tc) == T { 0 });
-    assert(real(tc) == T { 1 }); // ADL
-    assert(imag(tc) == T { 0 }); // ADL
+    assert(tc.real() == T(1));
+    assert(tc.imag() == T(0));
+    assert(etl::real(tc) == T(1));
+    assert(etl::imag(tc) == T(0));
+    assert(real(tc) == T(1)); // ADL
+    assert(imag(tc) == T(0)); // ADL
 
-    tc *= T { 2 };
-    assert(tc.real() == T { 2 });
-    assert(tc.imag() == T { 0 });
+    tc *= T(2);
+    assert(tc.real() == T(2));
+    assert(tc.imag() == T(0));
 
-    tc.real(T { 1 });
-    tc.imag(T { 2 });
-    assert(tc.real() == T { 1 });
-    assert(tc.imag() == T { 2 });
+    tc.real(T(1));
+    tc.imag(T(2));
+    assert(tc.real() == T(1));
+    assert(tc.imag() == T(2));
 
     // unary +
     tc = +tc;
-    assert(tc.real() == T { 1 });
-    assert(tc.imag() == T { 2 });
+    assert(tc.real() == T(1));
+    assert(tc.imag() == T(2));
 
     // unary -
     tc = -tc;
-    assert(tc.real() == T { -1 });
-    assert(tc.imag() == T { -2 });
+    assert(tc.real() == T(-1));
+    assert(tc.imag() == T(-2));
+
+    // unary -
+    tc = -tc;
+    assert(tc.real() == T(1));
+    assert(tc.imag() == T(2));
+
+    // operator+
+    auto sum = tc + tc;
+    assert(sum.real() == T(2));
+    assert(sum.imag() == T(4));
+
+    // operator-
+    auto diff = tc - sum;
+    assert(diff.real() == T(-1));
+    assert(diff.imag() == T(-2));
+
+    // scaled_mul
+    auto scaled_mul = diff * T(2);
+    assert(scaled_mul.real() == T(-2));
+    assert(scaled_mul.imag() == T(-4));
+
+    // scaled_div
+    auto scaled_div = scaled_mul / T(2);
+    assert(scaled_div.real() == T(-1));
+    assert(scaled_div.imag() == T(-2));
 
     {
         using namespace etl::complex_literals;
@@ -63,6 +89,7 @@ constexpr auto test() -> bool
         assert(ld.real() == 0.0L);
         assert(ld.imag() == 2.0L);
     }
+
     return true;
 }
 
