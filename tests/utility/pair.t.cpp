@@ -332,11 +332,8 @@ constexpr auto test() -> bool
 
         // mutable rvalue ref
         {
-            auto&& first = etl::get<0>(pair { T { 42 }, 143.0F });
-            assert((is_same_v<decltype(first), T&&>));
-
-            auto&& second = etl::get<1>(pair { T { 42 }, 143.0F });
-            assert((is_same_v<decltype(second), float&&>));
+            assert((is_same_v<decltype(etl::get<0>(pair { T { 42 }, 143.0F })), T&&>));
+            assert((is_same_v<decltype(etl::get<1>(pair { T { 42 }, 143.0F })), float&&>));
         }
     }
 
