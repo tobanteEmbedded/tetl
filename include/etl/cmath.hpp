@@ -52,4 +52,8 @@
 #include "etl/_cmath/typedefs.hpp"
 #include "etl/_math/abs.hpp"
 
+// Non-standard extensions
+#include "etl/_math/ilog2.hpp"
+#include "etl/_math/ipow.hpp"
+
 #endif // TETL_CMATH_HPP

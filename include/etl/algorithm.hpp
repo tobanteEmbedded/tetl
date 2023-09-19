@@ -88,7 +88,7 @@
 #include "etl/_algorithm/unique_copy.hpp"
 #include "etl/_algorithm/upper_bound.hpp"
 
-// extra sort algorithms
+// Non-standard extensions
 #include "etl/_algorithm/bubble_sort.hpp"
 #include "etl/_algorithm/exchange_sort.hpp"
 #include "etl/_algorithm/gnome_sort.hpp"
