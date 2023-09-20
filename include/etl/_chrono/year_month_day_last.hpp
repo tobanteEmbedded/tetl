@@ -30,7 +30,7 @@ namespace detail {
     };
 
     if (m == chrono::month { 2 } and y.is_leap()) { return chrono::day { 29 }; }
-    return last_days[(static_cast<uint32_t>(m) - 1) & 0xF];
+    return last_days[(static_cast<uint32_t>(m) - 1) & static_cast<uint32_t>(0xF)];
 }
 
 } // namespace detail

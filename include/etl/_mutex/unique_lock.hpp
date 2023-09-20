@@ -84,10 +84,8 @@ public:
 
     /// \brief Move constructor. Initializes the unique_lock with the contents
     /// of other. Leaves other with no associated mutex.
-    unique_lock(unique_lock&& u) noexcept
+    unique_lock(unique_lock&& u) noexcept : mutex_ { exchange(u.mutex_, nullptr) }, owns_ { exchange(u.owns_, false) }
     {
-        mutex_ = exchange(u.mutex_, nullptr);
-        owns_  = exchange(u.owns_, false);
     }
 
     /// \brief Move assignment operator. Replaces the contents with those of

@@ -3,13 +3,17 @@
 #include "etl/type_traits.hpp" // for enable_if
 #include "etl/cstdint.hpp"     // for uint16_t
 
+namespace {
+
 template <typename T>
 auto func(T val) -> etl::enable_if_t<etl::is_integral_v<T>, int>
 {
     return static_cast<int>(val);
 }
 
-static auto func(float val) -> float { return val; }
+auto func(float val) -> float { return val; }
+
+} // namespace
 
 auto main() -> int
 {

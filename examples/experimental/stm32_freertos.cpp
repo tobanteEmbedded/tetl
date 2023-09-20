@@ -32,7 +32,9 @@ struct example_task {
     }
 };
 
-static example_task<rtos::once> task {};
+namespace {
+example_task<rtos::once> task {};
+}
 
 auto main() -> int
 {

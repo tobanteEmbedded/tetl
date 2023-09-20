@@ -49,7 +49,7 @@ struct bitset {
         }
 
         /// \brief Returns the value of the referenced bit.
-        [[nodiscard]] constexpr operator bool() const noexcept { return (*data_ & (1 << position_)) != 0; }
+        [[nodiscard]] constexpr operator bool() const noexcept { return (*data_ & (1U << position_)) != 0; }
 
         /// \brief Returns the inverse of the referenced bit.
         [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
@@ -150,7 +150,7 @@ struct bitset {
         if (value) {
             auto& byte  = byte_for_position(pos);
             auto offset = offset_in_byte(pos);
-            byte |= (1 << offset);
+            byte |= (1U << offset);
             return *this;
         }
 
@@ -322,16 +322,16 @@ private:
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
     {
         TETL_ASSERT(pos < size());
-        return bits_[pos >> 3];
+        return bits_[pos >> 3U];
     }
 
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) -> uint8_t&
     {
         TETL_ASSERT(pos < size());
-        return bits_[pos >> 3];
+        return bits_[pos >> 3U];
     }
 
-    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t { return pos & 0x7; }
+    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t { return pos & 0x7U; }
 
     template <typename UInt>
     [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
@@ -345,7 +345,7 @@ private:
         return result;
     }
 
-    static constexpr size_t allocated_ = N >> 3;
+    static constexpr size_t allocated_ = N >> 3U;
     array<uint8_t, allocated_> bits_   = {};
 };
 

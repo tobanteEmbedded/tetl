@@ -9,8 +9,8 @@
 #include <etl/_vector/static_vector.hpp>
 
 namespace etl {
-template <typename It>
-using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<It>>::difference_type;
+template <typename Iter>
+using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<Iter>>::difference_type;
 
 /// \brief Format args according to the format string fmt, and write the result
 /// to the output iterator out.
