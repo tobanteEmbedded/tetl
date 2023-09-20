@@ -6,14 +6,6 @@
 
 #include "testing/testing.hpp"
 
-using etl::ratio;
-using etl::ratio_greater;
-using etl::ratio_greater_equal;
-using etl::ratio_greater_equal_v;
-using etl::ratio_greater_v;
-using etl::ratio_less_equal;
-using etl::ratio_less_equal_v;
-
 constexpr auto test() -> bool
 {
 
@@ -158,18 +150,18 @@ constexpr auto test() -> bool
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
-        assert((ratio_less_equal<one_half, etl::ratio<3, 4>>::value));
-        assert((ratio_less_equal_v<one_half, one_half>));
-        assert((ratio_less_equal_v<one_half, etl::ratio<2, 4>>));
-        assert((ratio_less_equal_v<one_half, etl::ratio<3, 6>>));
-        assert((ratio_less_equal_v<one_twelfth, one_twelfth>));
+        assert((etl::ratio_less_equal_v<one_half, etl::ratio<3, 4>>));
+        assert((etl::ratio_less_equal_v<one_half, one_half>));
+        assert((etl::ratio_less_equal_v<one_half, etl::ratio<2, 4>>));
+        assert((etl::ratio_less_equal_v<one_half, etl::ratio<3, 6>>));
+        assert((etl::ratio_less_equal_v<one_twelfth, one_twelfth>));
 
-        assert((ratio_less_equal_v<etl::ratio<10, 11>, etl::ratio<11, 12>>));
-        assert((ratio_less_equal_v<one_twelfth, one_half>));
-        assert((ratio_less_equal_v<one_twelfth, etl::ratio<2, 23>>));
-        assert((ratio_less_equal_v<one_twelfth, etl::ratio<3, 35>>));
+        assert((etl::ratio_less_equal_v<etl::ratio<10, 11>, etl::ratio<11, 12>>));
+        assert((etl::ratio_less_equal_v<one_twelfth, one_half>));
+        assert((etl::ratio_less_equal_v<one_twelfth, etl::ratio<2, 23>>));
+        assert((etl::ratio_less_equal_v<one_twelfth, etl::ratio<3, 35>>));
 
-        assert(!(ratio_less_equal_v<one_half, one_twelfth>));
+        assert(!(etl::ratio_less_equal_v<one_half, one_twelfth>));
     }
 
     {
@@ -195,17 +187,17 @@ constexpr auto test() -> bool
         using one_twelfth = etl::ratio<1, 12>;
         using one_half    = etl::ratio<1, 2>;
 
-        assert((ratio_greater_equal_v<one_half, one_half>));
-        assert((ratio_greater_equal_v<one_half, ratio<2, 4>>));
-        assert((ratio_greater_equal_v<one_half, ratio<3, 6>>));
-        assert((ratio_greater_equal_v<one_twelfth, one_twelfth>));
-        assert((ratio_greater_equal_v<one_twelfth, ratio<2, 24>>));
-        assert((ratio_greater_equal_v<one_twelfth, ratio<3, 36>>));
-        assert((ratio_greater_equal_v<one_half, one_twelfth>));
-        assert((ratio_greater_equal_v<ratio<2, 23>, one_twelfth>));
-        assert((ratio_greater_equal_v<ratio<3, 35>, one_twelfth>));
+        assert((etl::ratio_greater_equal_v<one_half, one_half>));
+        assert((etl::ratio_greater_equal_v<one_half, etl::ratio<2, 4>>));
+        assert((etl::ratio_greater_equal_v<one_half, etl::ratio<3, 6>>));
+        assert((etl::ratio_greater_equal_v<one_twelfth, one_twelfth>));
+        assert((etl::ratio_greater_equal_v<one_twelfth, etl::ratio<2, 24>>));
+        assert((etl::ratio_greater_equal_v<one_twelfth, etl::ratio<3, 36>>));
+        assert((etl::ratio_greater_equal_v<one_half, one_twelfth>));
+        assert((etl::ratio_greater_equal_v<etl::ratio<2, 23>, one_twelfth>));
+        assert((etl::ratio_greater_equal_v<etl::ratio<3, 35>, one_twelfth>));
 
-        assert(!(ratio_greater_equal_v<one_twelfth, one_half>));
+        assert(!(etl::ratio_greater_equal_v<one_twelfth, one_half>));
     }
 
     return true;

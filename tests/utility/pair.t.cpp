@@ -352,9 +352,9 @@ constexpr auto test() -> bool
         assert((is_same_v<T, typename decltype(seq2)::value_type>));
         assert((seq2.size() == 2));
 
-        auto seqI = etl::make_index_sequence<10> {};
-        assert((is_same_v<etl::size_t, typename decltype(seqI)::value_type>));
-        assert((seqI.size() == 10));
+        auto seqIdx = etl::make_index_sequence<10> {};
+        assert((is_same_v<etl::size_t, typename decltype(seqIdx)::value_type>));
+        assert((seqIdx.size() == 10));
     }
 
     return true;

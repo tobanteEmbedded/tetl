@@ -1,22 +1,61 @@
 Checks: >
   *-,
+
   bugprone-*,
   -bugprone-easily-swappable-parameters,
   -bugprone-macro-parentheses,
   -bugprone-forwarding-reference-overload,
   -bugprone-unhandled-self-assignment,
+
   -clang-analyzer-core.*,
   -clang-analyzer-cplusplus.PlacementNew,
+
   cert-*,
   -cert-oop54-cpp,
   -cert-err58-cpp,
+
   concurrency-*,
+
+  cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-const-or-ref-data-members,
+  -cppcoreguidelines-avoid-do-while,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-c-copy-assignment-signature,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-non-private-member-variables-in-classes,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-type-const-cast,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -cppcoreguidelines-pro-type-union-access,
+
+  hicpp-*,
+  -hicpp-deprecated-headers,
+  -hicpp-exception-baseclass,
+  -hicpp-explicit-conversions,
+  -hicpp-function-size,
+  -hicpp-no-array-decay,
+  -hicpp-no-assembler,
+  -hicpp-noexcept-move,
+  -hicpp-signed-bitwise,
+
+  misc-*,
+  -misc-const-correctness,
+  -misc-no-recursion,
+  -misc-non-private-member-variables-in-classes,
+  -misc-redundant-expression,
+  -misc-unconventional-assign-operator,
+  -misc-use-anonymous-namespace,
+
   modernize-*,
-  -modernize-avoid-c-arrays,
   -modernize-deprecated-headers,
-  -modernize-use-equals-default,
+
   performance-*,
   -performance-no-int-to-ptr,
+
   readability-*,
   -readability-container-size-empty,
   -readability-magic-numbers,
@@ -24,7 +63,14 @@ Checks: >
   -readability-suspicious-call-argument,
   -readability-function-size,
   -readability-identifier-naming,
-  -readability-identifier-length
+  -readability-identifier-length,
+
+  -*-avoid-c-arrays,
+  -*-member-init,
+  -*-use-equals-default,
+  -*-special-member-functions,
+  -*-vararg
+
 WarningsAsErrors: "*"
 FormatStyle: none
 CheckOptions:
