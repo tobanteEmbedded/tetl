@@ -13,32 +13,6 @@
 using etl::all_of;
 using etl::static_vector;
 
-namespace {
-template <typename T>
-struct Vertex {
-    constexpr Vertex() = default;
-    constexpr Vertex(T xInit, T yInit, T zInit) : x { xInit }, y { yInit }, z { zInit } { }
-
-    T x {};
-    T y {};
-    T z {};
-};
-
-template <typename T>
-[[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
-{
-    return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
-}
-
-// template <typename T>
-// [[nodiscard]] constexpr auto operator!=(
-//     Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
-// {
-//     return !(lhs == rhs);
-// }
-
-} // namespace
-
 template <typename T>
 constexpr auto test_cx() -> bool
 {

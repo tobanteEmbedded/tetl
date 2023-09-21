@@ -10,7 +10,6 @@
 
 #include "testing/testing.hpp"
 
-using etl::all_of;
 using etl::static_vector;
 
 namespace {
