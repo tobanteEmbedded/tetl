@@ -2,6 +2,10 @@ name: Linux X64
 
 on: [push, pull_request]
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     strategy:

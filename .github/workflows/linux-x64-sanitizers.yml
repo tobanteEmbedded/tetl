@@ -2,6 +2,10 @@ name: Sanitizers (ASAN/UBSAN)
 
 on: [push, pull_request]
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-22.04
