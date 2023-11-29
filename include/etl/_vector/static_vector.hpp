@@ -11,7 +11,9 @@
 #include "etl/_algorithm/rotate.hpp"
 #include "etl/_algorithm/transform.hpp"
 #include "etl/_array/array.hpp"
+#include "etl/_array/c_array.hpp"
 #include "etl/_cassert/macro.hpp"
+#include "etl/_concepts/same_as.hpp"
 #include "etl/_container/index.hpp"
 #include "etl/_container/smallest_size_t.hpp"
 #include "etl/_cstdint/uint_t.hpp"
@@ -488,8 +490,19 @@ public:
         unsafe_set_size(0);
     }
 
-    /// \brief Default constructor.
     constexpr static_vector() = default;
+
+    template <etl::same_as<empty_c_array> Source = empty_c_array>
+    constexpr static_vector(Source) noexcept
+    {
+    }
+
+    template <etl::size_t Size>
+        requires(Size <= Capacity)
+    constexpr static_vector(c_array<T, Size>&& source)
+    {
+        move_insert(begin(), etl::begin(source), etl::end(source));
+    }
 
     /// \brief Copy constructor.
     constexpr static_vector(static_vector const& other) noexcept(noexcept(insert(begin(), other.begin(), other.end())))

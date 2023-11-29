@@ -197,7 +197,7 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        etl::static_vector<T, 16> vec {};
+        etl::static_vector<T, 16> vec { {} };
         assert(vec.empty());
 
         vec.push_back(T { 1 });
@@ -240,11 +240,10 @@ constexpr auto test_cx() -> bool
 
     // free function
     {
-        auto lhs                 = etl::static_vector<T, 4> { 4 };
-        constexpr auto generator = [v = T {}]() mutable { return v += T(1); };
-
-        etl::generate(etl::begin(lhs), etl::end(lhs), generator);
+        auto lhs = etl::static_vector<T, 4> { { T(1), T(2), T(3), T(4) } };
         auto rhs = lhs;
+        assert(lhs.size() == 4);
+        assert(rhs.size() == 4);
 
         using ::etl::swap;
         swap(lhs, rhs);
