@@ -33,7 +33,7 @@ namespace etl {
 /// \tparam Capacity Capacity for basic_static_string
 /// \include string.cpp
 /// \headerfile etl/string.hpp
-template <typename CharT, etl::size_t UsableCapacity, typename Traits = etl::char_traits<CharT>>
+template <typename CharT, etl::size_t Capacity, typename Traits = etl::char_traits<CharT>>
 struct basic_static_string {
     // clang-format off
     template <typename T>
@@ -42,7 +42,7 @@ struct basic_static_string {
                           && !is_convertible_v<T const&, CharT const*>;
     // clang-format on
 
-    using internal_size_t = etl::smallest_size_t<UsableCapacity>;
+    using internal_size_t = etl::smallest_size_t<Capacity>;
 
 public:
     /// The character type used
@@ -78,9 +78,9 @@ public:
     /// \details Fails silently if input len is greater then capacity.
     constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
-        // TETL_ASSERT(len + 1 <= UsableCapacity);
+        // TETL_ASSERT(len + 1 <= Capacity);
 
-        if (str != nullptr && len + 1 < UsableCapacity) {
+        if (str != nullptr && len + 1 < Capacity) {
             clear_storage();
             unsafe_set_size(len);
             traits_type::copy(_storage.data(), str, len);
@@ -99,8 +99,8 @@ public:
     /// \details Fails silently if input length is greater then capacity.
     constexpr basic_static_string(size_type count, value_type ch) noexcept
     {
-        // TETL_ASSERT(count + 1 <= UsableCapacity);
-        if (count + 1 <= UsableCapacity) {
+        // TETL_ASSERT(count + 1 <= Capacity);
+        if (count + 1 <= Capacity) {
             clear_storage();
             fill(begin(), begin() + count, ch);
             unsafe_set_size(count);
@@ -349,11 +349,11 @@ public:
 
     /// \brief Returns the number of characters that can be held in allocated
     /// storage, NOT including the null terminator.
-    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return UsableCapacity; }
+    [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return Capacity; }
 
     /// \brief Returns the number of characters that can be held in allocated
     /// storage, NOT including the null terminator.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return UsableCapacity; }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Capacity; }
 
     /// \brief Reserve is deleted, since the capacity is fixed.
     constexpr auto reserve(size_type newCap) -> void = delete;
@@ -1268,7 +1268,7 @@ public:
 private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
-        // TETL_ASSERT(newSize <= UsableCapacity - 1);
+        // TETL_ASSERT(newSize <= Capacity - 1);
         _storage.set_size(newSize);
         unsafe_at(newSize) = '\0';
     }
@@ -1309,16 +1309,16 @@ private:
     constexpr auto clear_storage() noexcept -> void { etl::fill(begin(), end(), CharT(0)); }
 
     struct tiny_layout {
-        constexpr tiny_layout() { _buffer[UsableCapacity] = UsableCapacity; }
+        constexpr tiny_layout() { _buffer[Capacity] = Capacity; }
 
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return UsableCapacity - _buffer[UsableCapacity]; }
-        constexpr auto set_size(size_t size) noexcept { return _buffer[UsableCapacity] = UsableCapacity - size; }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(_buffer[Capacity]); }
+        constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = value_type(Capacity - size); }
 
     private:
-        etl::array<value_type, UsableCapacity + 1> _buffer {};
+        etl::array<value_type, Capacity + 1> _buffer {};
     };
 
     struct normal_layout {
@@ -1327,15 +1327,15 @@ private:
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return _size; }
-        constexpr auto set_size(size_t size) noexcept { return _size = size; }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return size_t(_size); }
+        constexpr auto set_size(size_t size) noexcept { return _size = internal_size_t(size); }
 
     private:
         internal_size_t _size {};
-        etl::array<value_type, UsableCapacity + 1> _buffer {};
+        etl::array<value_type, Capacity + 1> _buffer {};
     };
 
-    using layout_type = etl::conditional_t<(UsableCapacity < 16), tiny_layout, normal_layout>;
+    using layout_type = etl::conditional_t<(Capacity < 16), tiny_layout, normal_layout>;
     layout_type _storage {};
 };
 
