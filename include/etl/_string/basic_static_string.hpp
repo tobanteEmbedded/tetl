@@ -1307,8 +1307,8 @@ private:
 
     constexpr auto clear_storage() noexcept -> void { etl::fill(begin(), end(), CharT(0)); }
 
-    internal_size_t size_      = 0;
-    value_type data_[Capacity] = {};
+    internal_size_t size_ { 0 };
+    value_type data_[Capacity + 1] {};
 };
 
 /// \brief Returns a string containing characters from lhs followed by the
