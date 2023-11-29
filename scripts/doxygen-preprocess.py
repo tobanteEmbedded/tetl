@@ -14,7 +14,6 @@ headers = [
     'cmath',
     'complex',
     'concepts',
-    'cstdarg',
     'cstddef',
     'cstdint',
     'cstdlib',

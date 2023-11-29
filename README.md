@@ -198,7 +198,6 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 |              coroutine              |        Coroutines        |        :x:         |                                                                                                                        |
 |               csetjmp               |         Utility          |        :x:         |                                                                                                                        |
 |               csignal               |         Utility          |        :x:         |                                                                                                                        |
-|         [cstdarg](#cstdarg)         |         Utility          | :heavy_check_mark: |   [cstdarg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1280782172)   |
 |         [cstddef](#cstddef)         |         Utility          | :heavy_check_mark: |   [cstddef](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1660546405)   |
 |         [cstdint](#cstdint)         | Utility / Numeric Limits | :heavy_check_mark: |   [cstdint](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=2005735528)   |
 |          [cstdio](#cstdio)          |       Input/Output       | :heavy_check_mark: |   [cstdio](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1576270107)    |
@@ -404,15 +403,6 @@ build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
 - **Include:** [`etl/concepts.hpp`](./include/etl/concepts.hpp)
 - **Example:** TODO
 - **Implementation Progress:** [concepts](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=73781271)
-- **Changes:**
-  - None
-
-### cstdarg
-
-- **Library:** Utility
-- **Include:** [`etl/cstdarg.hpp`](./include/etl/cstdarg.hpp)
-- **Example:** TODO
-- **Implementation Progress:** [cstdarg](https://docs.google.com/spreadsheets/d/1-qwa7tFnjFdgY9XKBy2fAsDozAfG8lXsJXHwA_ITQqM/edit#gid=1280782172)
 - **Changes:**
   - None
 

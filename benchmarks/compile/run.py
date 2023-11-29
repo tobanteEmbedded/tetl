@@ -15,7 +15,6 @@ cxx17_headers = [
     'climits',
     'cmath',
     'complex',
-    'cstdarg',
     'cstddef',
     'cstdint',
     'cstdio',

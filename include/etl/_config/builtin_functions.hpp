@@ -107,9 +107,6 @@
     #define TETL_BUILTIN_HUGE_VALL (1.0L / 0.0L)
 #endif
 
-// VA LIST
-#define TETL_BUILTIN_VA_LIST __builtin_va_list
-
 // clang-format off
 #if defined(TETL_CLANG) or defined(TETL_MSVC)
     #define TETL_BUILTIN_INT_SEQ(T, N) __make_integer_seq<integer_sequence, T, N>

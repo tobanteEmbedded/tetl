@@ -15,7 +15,6 @@
 #include <etl/complex.hpp>
 #include <etl/concepts.hpp>
 #include <etl/coroutine.hpp>
-#include <etl/cstdarg.hpp>
 #include <etl/cstddef.hpp>
 #include <etl/cstdint.hpp>
 #include <etl/cstdio.hpp>
