@@ -872,7 +872,7 @@ template <typename T>
         auto str = string("");
         str.insert(0, str.capacity(), 'a');
         assert((str.full()));
-        assert((str.size() == str.capacity() - 1));
+        assert((str.size() == str.capacity()));
         assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
@@ -906,7 +906,7 @@ template <typename T>
         for (etl::size_t i = 0; i < str.capacity(); ++i) { str.insert(0, "a"); }
 
         assert((str.full()));
-        assert((str.size() == str.capacity() - 1));
+        assert((str.size() == str.capacity()));
         assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
@@ -940,7 +940,7 @@ template <typename T>
         for (etl::size_t i = 0; i < str.capacity(); ++i) { str.insert(0, "ab", 1); }
 
         assert((str.full()));
-        assert((str.size() == str.capacity() - 1));
+        assert((str.size() == str.capacity()));
         assert((etl::all_of(begin(str), end(str), [](auto ch) { return ch == 'a'; })));
     }
 
