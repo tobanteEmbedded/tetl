@@ -32,15 +32,13 @@ template <typename T>
 using native = detail::simd_abi_native_tag<T>;
 
 // TODO(tobi)
-#if 0
-template <typename T, size_t N, typename... Abis>
-struct deduce {
-    using type = /* see below */;
-};
+// template <typename T, size_t N, typename... Abis>
+// struct deduce {
+//     using type = /* see below */;
+// };
 
-template <typename T, size_t N, typename... Abis>
-using deduce_t = typename deduce<T, N, Abis...>::type;
-#endif
+// template <typename T, size_t N, typename... Abis>
+// using deduce_t = typename deduce<T, N, Abis...>::type;
 
 } // namespace etl::simd_abi
 
