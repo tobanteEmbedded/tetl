@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        cxx: [20, "2b"]
+        cxx: [20, 23]
       fail-fast: false
     steps:
       - name: Check out code
