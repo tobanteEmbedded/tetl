@@ -172,7 +172,7 @@ def run_all_benchmarks(cpp_std, o):
         results[hpp] = {'std': std, 'etl': etl}
         print_header_result(hpp, results[hpp])
 
-    if cpp_std in ['20', '2b']:
+    if cpp_std in ['20', '23']:
         for hpp in cxx20_headers:
             std = run_generated(f"std_{hpp}", make_hpp(f"{hpp}", True), opt)
             etl = run_generated(f"etl_{hpp}", make_hpp(f"{hpp}", False), opt)
@@ -182,12 +182,12 @@ def run_all_benchmarks(cpp_std, o):
 
 def main():
     if len(sys.argv) != 2:
-        print(f'Usage: {sys.argv[0]} [20,2b]')
+        print(f'Usage: {sys.argv[0]} [20,23]')
         exit(-1)
 
-    valid_cxx_std = ['20', '2b']
+    valid_cxx_std = ['20', '23']
     if sys.argv[1] not in valid_cxx_std:
-        print(f'Usage: {sys.argv[0]} [20,2b]')
+        print(f'Usage: {sys.argv[0]} [20,23]')
         exit(-1)
 
     run_all_benchmarks(sys.argv[1], 'O0')
