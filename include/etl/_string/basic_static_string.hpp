@@ -1313,10 +1313,10 @@ private:
     struct tiny_layout {
         constexpr tiny_layout() { _buffer[UsableCapacity] = UsableCapacity; }
 
-        constexpr auto data() noexcept { return _buffer.data(); }
-        constexpr auto data() const noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        constexpr auto get_size() const noexcept { return UsableCapacity - _buffer[UsableCapacity]; }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return UsableCapacity - _buffer[UsableCapacity]; }
         constexpr auto set_size(size_t size) noexcept { return _buffer[UsableCapacity] = UsableCapacity - size; }
 
     private:
@@ -1326,10 +1326,10 @@ private:
     struct normal_layout {
         constexpr normal_layout() = default;
 
-        constexpr auto data() noexcept { return _buffer.data(); }
-        constexpr auto data() const noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        constexpr auto get_size() const noexcept { return _size; }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return _size; }
         constexpr auto set_size(size_t size) noexcept { return _size = size; }
 
     private:

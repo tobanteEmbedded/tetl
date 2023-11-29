@@ -493,7 +493,7 @@ public:
     constexpr static_vector() = default;
 
     template <etl::same_as<empty_c_array> Source = empty_c_array>
-    constexpr static_vector(Source) noexcept
+    constexpr static_vector(Source /*unused*/) noexcept
     {
     }
 
