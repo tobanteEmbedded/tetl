@@ -56,7 +56,7 @@ cxx20_headers = [
     'bit',
     'compare',
     'concepts',
-    'coroutine',
+    # 'coroutine',
     # 'format',
     'ranges',
     'source_location',
