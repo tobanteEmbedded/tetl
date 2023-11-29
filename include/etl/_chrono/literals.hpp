@@ -6,10 +6,7 @@
 #include "etl/_chrono/day.hpp"
 #include "etl/_chrono/duration.hpp"
 
-namespace etl {
-
-inline namespace literals {
-inline namespace chrono_literals {
+namespace etl::inline literals::inline chrono_literals {
 
 /// \brief Forms a etl::chrono::day literal representing a day of the month in
 /// the calendar.
@@ -111,13 +108,10 @@ constexpr auto operator""_ns(long double m) -> etl::chrono::duration<long double
     return etl::chrono::duration<long double, etl::nano>(m);
 }
 
-} // namespace chrono_literals
-} // namespace literals
+} // namespace etl::inline literals::inline chrono_literals
 
-namespace chrono {
+namespace etL::chrono {
 using namespace etl::literals::chrono_literals;
-}
-
-} // namespace etl
+} // namespace etL::chrono
 
 #endif // TETL_CHRONO_LITERALS_HPP
