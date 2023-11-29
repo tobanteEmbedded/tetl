@@ -14,6 +14,8 @@
 #include "etl/_iterator/data.hpp"
 #include "etl/_iterator/distance.hpp"
 #include "etl/_iterator/end.hpp"
+#include "etl/_iterator/next.hpp"
+#include "etl/_iterator/prev.hpp"
 #include "etl/_iterator/rbegin.hpp"
 #include "etl/_iterator/rend.hpp"
 #include "etl/_iterator/size.hpp"
@@ -263,9 +265,6 @@ public:
         return *this;
     }
 
-    /// \brief Trivial defaulted destructor
-    ~basic_static_string() noexcept = default;
-
     /// \brief Accesses the specified character without bounds checking.
     constexpr auto operator[](size_type index) noexcept -> reference { return unsafe_at(index); }
 
@@ -282,10 +281,13 @@ public:
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
 
     /// \brief Returns an iterator to the end.
-    constexpr auto end() noexcept -> iterator { return begin() + size(); }
+    constexpr auto end() noexcept -> iterator { return etl::next(begin(), static_cast<ptrdiff_t>(size())); }
 
     /// \brief Returns an const iterator to the end.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return begin() + size(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator
+    {
+        return etl::next(begin(), static_cast<ptrdiff_t>(size()));
+    }
 
     /// \brief Returns an const iterator to the end.
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
@@ -321,16 +323,16 @@ public:
     [[nodiscard]] constexpr auto crend() const noexcept -> const_reverse_iterator { return rend(); }
 
     /// \brief Accesses the first character.
-    [[nodiscard]] constexpr auto front() noexcept -> reference { return unsafe_at(0); }
+    [[nodiscard]] constexpr auto front() noexcept -> reference { return *begin(); }
 
     /// \brief Accesses the first character.
-    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return unsafe_at(0); }
+    [[nodiscard]] constexpr auto front() const noexcept -> const_reference { return *begin(); }
 
     /// \brief Accesses the last character.
-    [[nodiscard]] constexpr auto back() noexcept -> reference { return unsafe_at(size() - 1); }
+    [[nodiscard]] constexpr auto back() noexcept -> reference { return *etl::prev(end()); }
 
     /// \brief Accesses the last character.
-    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return unsafe_at(size() - 1); }
+    [[nodiscard]] constexpr auto back() const noexcept -> const_reference { return *etl::prev(end()); }
 
     /// \brief Checks whether the string is empty.
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
@@ -339,10 +341,10 @@ public:
     [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == capacity(); }
 
     /// \brief Returns the number of characters.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return length(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _storage.get_size(); }
 
     /// \brief Returns the number of characters.
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return _storage.get_size(); }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size(); }
 
     /// \brief Returns the number of characters that can be held in allocated
     /// storage, NOT including the null terminator.
@@ -352,11 +354,11 @@ public:
     /// storage, NOT including the null terminator.
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return Capacity; }
 
-    /// \brief Reserve is deleted, since the capacity is fixed.
-    constexpr auto reserve(size_type newCap) -> void = delete;
+    /// \brief Reserve is a nop, since the capacity is fixed.
+    static constexpr auto reserve(size_type /*newCap*/) -> void { }
 
-    /// \brief Shrink to fit is deleted, since the capacity is fixed.
-    constexpr auto shrink_to_fit() -> void = delete;
+    /// \brief Shrink to fit is a nop, since the capacity is fixed.
+    static constexpr auto shrink_to_fit() -> void { }
 
     /// \brief Returns a pointer to the underlying array serving as character
     /// storage. The pointer is such that the range [data(); data() + size()) is
@@ -372,7 +374,7 @@ public:
     /// string.
     ///
     /// \details Always null-terminated.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return c_str(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _storage.data(); }
 
     /// \brief Returns a pointer to a null-terminated character array.
     ///
@@ -380,7 +382,7 @@ public:
     /// such that the range [c_str(); c_str() + size()] is valid and the values
     /// in it correspond to the values stored in the string with an additional
     /// null character after the last position.
-    [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer { return _storage.data(); }
+    [[nodiscard]] constexpr auto c_str() const noexcept -> const_pointer { return data(); }
 
     /// \brief Returns a etl::basic_string_view.
     [[nodiscard]] constexpr operator basic_string_view<value_type, traits_type>() const noexcept
@@ -392,8 +394,8 @@ public:
     /// overrides the buffer with zeros.
     constexpr auto clear() noexcept -> void
     {
+        *begin() = value_type(0);
         unsafe_set_size(0);
-        unsafe_at(0) = value_type(0);
     }
 
     /// \brief Removes min(count, size() - index) characters starting at index.
@@ -446,7 +448,7 @@ public:
     {
         auto const safeCount = etl::min(count, capacity() - size());
         auto const newSize   = size() + safeCount;
-        etl::fill(end(), etl::next(begin(), ptrdiff_t(newSize)), s);
+        etl::fill(end(), etl::next(begin(), static_cast<ptrdiff_t>(newSize)), s);
         unsafe_set_size(newSize);
         return *this;
     }
@@ -464,7 +466,7 @@ public:
     constexpr auto append(const_pointer str, size_type count) noexcept -> basic_static_string&
     {
         auto const safeCount = etl::min(count, capacity() - size());
-        etl::copy(str, etl::next(str, ptrdiff_t(safeCount)), end());
+        etl::copy(str, etl::next(str, static_cast<ptrdiff_t>(safeCount)), end());
         unsafe_set_size(size() + safeCount);
         return *this;
     }
