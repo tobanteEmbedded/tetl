@@ -12,7 +12,7 @@ inline namespace string_view_literals {
 
 /// \brief Forms a string view of a character literal. Returns
 /// etl::string_view{str, len}
-constexpr auto operator"" _sv(char const* str, etl::size_t len) noexcept -> etl::string_view { return { str, len }; }
+constexpr auto operator""_sv(char const* str, etl::size_t len) noexcept -> etl::string_view { return { str, len }; }
 
 } // namespace string_view_literals
 
