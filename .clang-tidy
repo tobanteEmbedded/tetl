@@ -21,6 +21,7 @@ Checks: >
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-c-copy-assignment-signature,
   -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-missing-std-forward,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
   -cppcoreguidelines-pro-bounds-constant-array-index,
@@ -28,6 +29,7 @@ Checks: >
   -cppcoreguidelines-pro-type-const-cast,
   -cppcoreguidelines-pro-type-reinterpret-cast,
   -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-rvalue-reference-param-not-moved,
 
   hicpp-*,
   -hicpp-deprecated-headers,
@@ -45,6 +47,7 @@ Checks: >
   -misc-redundant-expression,
   -misc-unconventional-assign-operator,
   -misc-use-anonymous-namespace,
+  -misc-include-cleaner,
 
   modernize-*,
   -modernize-deprecated-headers,
@@ -63,6 +66,7 @@ Checks: >
   -*-avoid-c-arrays,
   -*-magic-numbers,
   -*-member-init,
+  -*-noexcept-swap,
   -*-non-private-member-variables-in-classes,
   -*-use-equals-default,
   -*-special-member-functions,
