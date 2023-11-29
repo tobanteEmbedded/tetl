@@ -449,8 +449,9 @@ public:
     constexpr auto append(size_type const count, value_type const s) noexcept -> basic_static_string&
     {
         auto const safeCount = etl::min(count, capacity() - size() - 1);
-        for (size_type i = 0; i < safeCount; i++) { (*next(_storage.data(), size() + i)) = s; }
-        unsafe_set_size(size() + safeCount);
+        auto const newSize   = size() + safeCount;
+        etl::fill(end(), etl::next(begin(), ptrdiff_t(newSize)), s);
+        unsafe_set_size(newSize);
         return *this;
     }
 
@@ -462,12 +463,12 @@ public:
         return append(s, len);
     }
 
-    /// \brief Appends characters in the range [ s, s + count ). This range can
+    /// \brief Appends characters in the range [ str, str + count ). This range can
     /// contain null characters.
-    constexpr auto append(const_pointer s, size_type count) noexcept -> basic_static_string&
+    constexpr auto append(const_pointer str, size_type count) noexcept -> basic_static_string&
     {
         auto const safeCount = etl::min(count, capacity() - size() - 1);
-        for (size_type i = 0; i < safeCount; i++) { (*next(_storage.data(), size() + i)) = s[i]; }
+        etl::copy(str, etl::next(str, ptrdiff_t(safeCount)), end());
         unsafe_set_size(size() + safeCount);
         return *this;
     }
@@ -1269,22 +1270,20 @@ private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
         // TETL_ASSERT(newSize <= UsableCapacity - 1);
-        // size_        = static_cast<internal_size_t>(newSize);
-        // data_[size_] = '\0';
         _storage.set_size(newSize);
-        (*next(_storage.data(), newSize)) = '\0';
+        unsafe_at(newSize) = '\0';
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
     {
         // TETL_ASSERT(index < size_);
-        return *next(_storage.data(), index);
+        return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept -> const_reference
     {
         // TETL_ASSERT(index < size_);
-        return *next(_storage.data(), index);
+        return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     constexpr auto insert_impl(iterator pos, const_pointer text, size_type count) -> void
