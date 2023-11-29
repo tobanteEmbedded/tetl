@@ -13,6 +13,7 @@ jobs:
             { cc: clang-13, cxx: clang++-13 },
             { cc: clang-14, cxx: clang++-14 },
             { cc: clang-16, cxx: clang++-16 },
+            { cc: clang-17, cxx: clang++-17 },
           ]
         cxx_std: [20, 23]
       fail-fast: false
@@ -33,6 +34,13 @@ jobs:
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 16 all
+
+      - name: Install clang-17
+        if: matrix.config.cc == 'clang-17'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 17 all
 
       - name: CMake configure
         run: >
