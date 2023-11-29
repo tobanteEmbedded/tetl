@@ -9,7 +9,7 @@ on:
 jobs:
   benchmark:
     name: Benchmark
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         cxx: [20, "2b"]
