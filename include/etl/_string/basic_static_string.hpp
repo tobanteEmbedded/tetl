@@ -338,9 +338,8 @@ public:
     /// \brief Checks whether the string is empty.
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == 0; }
 
-    /// \brief Checks whether the string is full. Equals to capacity - 1, for
-    /// the null termination character.
-    [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == capacity() - 1; }
+    /// \brief Checks whether the string is full. i.e. size() == capacity()
+    [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == capacity(); }
 
     /// \brief Returns the number of characters.
     [[nodiscard]] constexpr auto size() const noexcept -> size_type { return length(); }
@@ -349,11 +348,11 @@ public:
     [[nodiscard]] constexpr auto length() const noexcept -> size_type { return _storage.get_size(); }
 
     /// \brief Returns the number of characters that can be held in allocated
-    /// storage, including the space for the null terminator.
+    /// storage, NOT including the null terminator.
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return UsableCapacity; }
 
     /// \brief Returns the number of characters that can be held in allocated
-    /// storage, including the space for the null terminator.
+    /// storage, NOT including the null terminator.
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return UsableCapacity; }
 
     /// \brief Reserve is deleted, since the capacity is fixed.
@@ -448,7 +447,7 @@ public:
     /// \brief Appends count copies of character s.
     constexpr auto append(size_type const count, value_type const s) noexcept -> basic_static_string&
     {
-        auto const safeCount = etl::min(count, capacity() - size() - 1);
+        auto const safeCount = etl::min(count, capacity() - size());
         auto const newSize   = size() + safeCount;
         etl::fill(end(), etl::next(begin(), ptrdiff_t(newSize)), s);
         unsafe_set_size(newSize);
@@ -467,7 +466,7 @@ public:
     /// contain null characters.
     constexpr auto append(const_pointer str, size_type count) noexcept -> basic_static_string&
     {
-        auto const safeCount = etl::min(count, capacity() - size() - 1);
+        auto const safeCount = etl::min(count, capacity() - size());
         etl::copy(str, etl::next(str, ptrdiff_t(safeCount)), end());
         unsafe_set_size(size() + safeCount);
         return *this;
