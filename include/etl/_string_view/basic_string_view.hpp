@@ -516,7 +516,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_last_of(basic_string_view v, size_type pos = npos) const noexcept -> size_type
     {
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
-        do {
+        do { // NOLINT(cppcoreguidelines-avoid-do-while)
             auto const current = unsafe_at(offset);
             for (auto const ch : v) {
                 if (ch == current) { return offset; }
@@ -573,7 +573,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_last_not_of(basic_string_view v, size_type pos = npos) const noexcept -> size_type
     {
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
-        do {
+        do { // NOLINT(cppcoreguidelines-avoid-do-while)
             auto equals = [&](auto ch) { return ch == unsafe_at(offset); };
             if (etl::none_of(v.begin(), v.end(), equals)) { return offset; }
         } while (offset-- != 0);

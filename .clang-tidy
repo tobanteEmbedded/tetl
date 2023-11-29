@@ -18,12 +18,9 @@ Checks: >
 
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-const-or-ref-data-members,
-  -cppcoreguidelines-avoid-do-while,
-  -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-c-copy-assignment-signature,
   -cppcoreguidelines-macro-usage,
-  -cppcoreguidelines-non-private-member-variables-in-classes,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
   -cppcoreguidelines-pro-bounds-constant-array-index,
@@ -45,7 +42,6 @@ Checks: >
   misc-*,
   -misc-const-correctness,
   -misc-no-recursion,
-  -misc-non-private-member-variables-in-classes,
   -misc-redundant-expression,
   -misc-unconventional-assign-operator,
   -misc-use-anonymous-namespace,
@@ -58,7 +54,6 @@ Checks: >
 
   readability-*,
   -readability-container-size-empty,
-  -readability-magic-numbers,
   -readability-function-cognitive-complexity,
   -readability-suspicious-call-argument,
   -readability-function-size,
@@ -66,7 +61,9 @@ Checks: >
   -readability-identifier-length,
 
   -*-avoid-c-arrays,
+  -*-magic-numbers,
   -*-member-init,
+  -*-non-private-member-variables-in-classes,
   -*-use-equals-default,
   -*-special-member-functions,
   -*-vararg
@@ -74,6 +71,8 @@ Checks: >
 WarningsAsErrors: "*"
 FormatStyle: none
 CheckOptions:
+  - key: cppcoreguidelines-avoid-do-while.IgnoreMacros
+    value: true
   - key: readability-identifier-naming.LocalVariableCase
     value: camelBack
   - key: readability-identifier-naming.NamespaceCase
