@@ -28,5 +28,6 @@ jobs:
 
       - uses: codecov/codecov-action@v3
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./cmake-build-coverage/coverage.xml
           fail_ci_if_error: true
