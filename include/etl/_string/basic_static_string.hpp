@@ -78,10 +78,8 @@ public:
     /// \details Fails silently if input len is greater then capacity.
     constexpr basic_static_string(const_pointer str, size_type const len) noexcept
     {
-        // TETL_ASSERT(len + 1 <= Capacity);
-
-        if (str != nullptr && len + 1 < Capacity) {
-            clear_storage();
+        // TETL_ASSERT(len <= Capacity);
+        if (str != nullptr && len <= Capacity) {
             unsafe_set_size(len);
             traits_type::copy(_storage.data(), str, len);
         }
@@ -99,9 +97,8 @@ public:
     /// \details Fails silently if input length is greater then capacity.
     constexpr basic_static_string(size_type count, value_type ch) noexcept
     {
-        // TETL_ASSERT(count + 1 <= Capacity);
-        if (count + 1 <= Capacity) {
-            clear_storage();
+        // TETL_ASSERT(count <= Capacity);
+        if (count <= Capacity) {
             fill(begin(), begin() + count, ch);
             unsafe_set_size(count);
         }
@@ -395,8 +392,8 @@ public:
     /// overrides the buffer with zeros.
     constexpr auto clear() noexcept -> void
     {
-        clear_storage();
         unsafe_set_size(0);
+        unsafe_at(0) = value_type(0);
     }
 
     /// \brief Removes min(count, size() - index) characters starting at index.
@@ -1268,20 +1265,20 @@ public:
 private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
-        // TETL_ASSERT(newSize <= Capacity - 1);
+        // TETL_ASSERT(newSize <= Capacity);
         _storage.set_size(newSize);
-        unsafe_at(newSize) = '\0';
+        unsafe_at(newSize) = CharT(0);
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
     {
-        // TETL_ASSERT(index < size_);
+        // TETL_ASSERT(index < size());
         return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept -> const_reference
     {
-        // TETL_ASSERT(index < size_);
+        // TETL_ASSERT(index < size());
         return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
@@ -1306,10 +1303,8 @@ private:
         return 0;
     }
 
-    constexpr auto clear_storage() noexcept -> void { etl::fill(begin(), end(), CharT(0)); }
-
     struct tiny_layout {
-        constexpr tiny_layout() { _buffer[Capacity] = Capacity; }
+        constexpr tiny_layout() noexcept { _buffer[Capacity] = Capacity; }
 
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
@@ -1322,7 +1317,7 @@ private:
     };
 
     struct normal_layout {
-        constexpr normal_layout() = default;
+        constexpr normal_layout() noexcept = default;
 
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
