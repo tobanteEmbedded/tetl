@@ -9,6 +9,7 @@
 #include "etl/_config/all.hpp"
 
 #include "etl/_array/array.hpp"
+#include "etl/_array/c_array.hpp"
 #include "etl/_array/to_array.hpp"
 
 #endif // TETL_ARRAY_HPP
