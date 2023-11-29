@@ -1268,9 +1268,9 @@ template <typename T>
 
 [[nodiscard]] constexpr auto test_all() -> bool
 {
-    assert(sizeof(etl::static_string<6>) == 8);     // internal size_type uint8
-    assert(sizeof(etl::static_string<7>) == 9);     // internal size_type uint8
-    assert(sizeof(etl::static_string<256>) == 260); // internal size_type uint16
+    assert(sizeof(etl::static_string<6>) == 7);   // tiny storage, size_type = uint8
+    assert(sizeof(etl::static_string<7>) == 8);   // tiny storage, size_type = uint8
+    assert(sizeof(etl::static_string<16>) == 18); // normal storage, size_type = uint8
 
     assert(test_1<etl::static_string<24>>());
     assert(test_1<etl::static_string<55>>());

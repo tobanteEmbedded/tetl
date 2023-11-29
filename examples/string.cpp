@@ -68,5 +68,9 @@ auto main() -> int
 
     // TODO: find & friends
 
+    // to_string
+    ::printf("to_string<8>(1): '%s'\n", etl::to_string<8>(1).c_str());
+    ::printf("to_string<8>(16384): '%s'\n", etl::to_string<8>(16384).c_str());
+
     return EXIT_SUCCESS;
 }
