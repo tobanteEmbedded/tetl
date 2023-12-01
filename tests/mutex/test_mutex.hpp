@@ -4,7 +4,7 @@
 #define TETL_TEST_MUTEX_TEST_MUTEX_HPP
 
 struct test_mutex {
-    constexpr test_mutex(bool failOnTryLock = false) noexcept : failOnTryLock_ { failOnTryLock } { }
+    constexpr test_mutex(bool failOnTryLock = false) noexcept : _failOnTryLock { failOnTryLock } { }
 
     ~test_mutex() noexcept = default;
 
@@ -16,13 +16,13 @@ struct test_mutex {
 
     constexpr auto lock() noexcept
     {
-        if (not isLocked_) { isLocked_ = true; }
+        if (not _isLocked) { _isLocked = true; }
     }
 
     constexpr auto try_lock() noexcept -> bool
     {
-        if (not isLocked_ && not failOnTryLock_) {
-            isLocked_ = true;
+        if (not _isLocked && not _failOnTryLock) {
+            _isLocked = true;
             return true;
         }
 
@@ -31,14 +31,14 @@ struct test_mutex {
 
     constexpr auto unlock() noexcept
     {
-        if (isLocked_) { isLocked_ = false; }
+        if (_isLocked) { _isLocked = false; }
     }
 
-    [[nodiscard]] constexpr auto is_locked() const noexcept { return isLocked_; }
+    [[nodiscard]] constexpr auto is_locked() const noexcept { return _isLocked; }
 
 private:
-    bool failOnTryLock_ { false };
-    bool isLocked_ = false;
+    bool _failOnTryLock { false };
+    bool _isLocked = false;
 };
 
 #endif // TETL_TEST_MUTEX_TEST_MUTEX_HPP

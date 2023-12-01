@@ -11,29 +11,29 @@ template <typename FuncT, typename PolicyT>
 struct scope_guard {
 public:
     template <typename Functor>
-    explicit constexpr scope_guard(Functor&& f) : func_ { etl::forward<Functor>(f) }
+    explicit constexpr scope_guard(Functor&& f) : _func { etl::forward<Functor>(f) }
     {
     }
 
     constexpr scope_guard(scope_guard&& rhs) noexcept
-        : func_ { etl::move(rhs.func_) }, policy_ { etl::move(rhs.policy_) }
+        : _func { etl::move(rhs._func) }, _policy { etl::move(rhs._policy) }
     {
     }
 
     ~scope_guard()
     {
-        if (policy_) { func_(); }
+        if (_policy) { _func(); }
     }
 
-    constexpr auto release() noexcept -> void { policy_.release(); }
+    constexpr auto release() noexcept -> void { _policy.release(); }
 
     scope_guard(scope_guard const&)                    = delete;
     auto operator=(scope_guard const&) -> scope_guard& = delete;
     auto operator=(scope_guard&&) -> scope_guard&      = delete;
 
 private:
-    FuncT func_;
-    PolicyT policy_ {};
+    FuncT _func;
+    PolicyT _policy {};
 };
 
 struct scope_exit_impl {

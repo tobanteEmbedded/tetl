@@ -9,40 +9,40 @@ namespace etl::chrono {
 
 struct year_month {
     year_month() = default;
-    constexpr year_month(chrono::year const& y, chrono::month const& m) noexcept : y_ { y }, m_ { m } { }
+    constexpr year_month(chrono::year const& y, chrono::month const& m) noexcept : _y { y }, _m { m } { }
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return y_; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return year().ok() and month().ok(); }
 
     constexpr auto operator+=(months const& dm) noexcept -> year_month&
     {
-        m_ += dm;
+        _m += dm;
         return *this;
     }
 
     constexpr auto operator-=(months const& dm) noexcept -> year_month&
     {
-        m_ -= dm;
+        _m -= dm;
         return *this;
     }
 
     constexpr auto operator+=(years const& dy) noexcept -> year_month&
     {
-        y_ += dy;
+        _y += dy;
         return *this;
     }
 
     constexpr auto operator-=(years const& dy) noexcept -> year_month&
     {
-        y_ -= dy;
+        _y -= dy;
         return *this;
     }
 
 private:
-    chrono::year y_;
-    chrono::month m_;
+    chrono::year _y;
+    chrono::month _m;
 };
 
 [[nodiscard]] constexpr auto operator==(year_month const& lhs, year_month const& rhs) noexcept -> bool

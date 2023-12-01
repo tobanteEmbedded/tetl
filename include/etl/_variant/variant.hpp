@@ -278,9 +278,9 @@ public:
     constexpr variant() noexcept(noexcept(is_nothrow_default_constructible_v<first_type>))
         requires(is_default_constructible_v<first_type>)
     {
-        auto tmpIndex = size_t { index_ };
-        data_.construct(in_place_type<first_type>, tmpIndex);
-        index_ = static_cast<internal_size_t>(tmpIndex);
+        auto tmpIndex = size_t { _index };
+        _data.construct(in_place_type<first_type>, tmpIndex);
+        _index = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief (4) Converting constructor.
@@ -290,9 +290,9 @@ public:
     template <typename T>
     explicit variant(T&& t)
     {
-        auto tmpIndex = size_t { index_ };
-        data_.construct(forward<T>(t), tmpIndex);
-        index_ = static_cast<internal_size_t>(tmpIndex);
+        auto tmpIndex = size_t { _index };
+        _data.construct(forward<T>(t), tmpIndex);
+        _index = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief (5) Constructs a variant with the specified alternative T and
@@ -310,9 +310,9 @@ public:
         requires(is_constructible_v<T, Args...>)
     constexpr explicit variant(in_place_type_t<T> tag, Args&&... args)
     {
-        auto tmpIndex = size_t { index_ };
-        data_.construct(tag, tmpIndex, forward<Args>(args)...);
-        index_ = static_cast<internal_size_t>(tmpIndex);
+        auto tmpIndex = size_t { _index };
+        _data.construct(tag, tmpIndex, forward<Args>(args)...);
+        _index = static_cast<internal_size_t>(tmpIndex);
     }
 
     /// \brief (7) Constructs a variant with the alternative T_i specified by
@@ -336,7 +336,7 @@ public:
     /// is_trivially_destructible_v<T_i> is true for all T_i in Types...
     ~variant()
     {
-        if (!valueless_by_exception()) { data_.destruct(index_); }
+        if (!valueless_by_exception()) { _data.destruct(_index); }
     }
 
     /// \brief Copy-assignment
@@ -352,7 +352,7 @@ public:
 
         // Same type
         if (index() && rhs.index()) {
-            data_ = rhs.data_;
+            _data = rhs._data;
             return *this;
         }
 
@@ -364,7 +364,7 @@ public:
     /// variant_npos.
     [[nodiscard]] constexpr auto index() const noexcept -> size_t
     {
-        return valueless_by_exception() ? variant_npos : index_;
+        return valueless_by_exception() ? variant_npos : _index;
     }
 
     /// \brief Returns false if and only if the variant holds a value. Currently
@@ -379,12 +379,12 @@ public:
     }
 
     /// \todo Remove & replace with friendship for get_if.
-    [[nodiscard]] auto _impl() const noexcept { return &data_; } // NOLINT
-    auto _impl() noexcept { return &data_; }                     // NOLINT
+    [[nodiscard]] auto _impl() const noexcept { return &_data; } // NOLINT
+    auto _impl() noexcept { return &_data; }                     // NOLINT
 
 private:
-    detail::variant_storage_for<Types...> data_;
-    internal_size_t index_ { 0 };
+    detail::variant_storage_for<Types...> _data;
+    internal_size_t _index { 0 };
 };
 
 /// \brief Overloads the swap algorithm for variant. Effectively calls

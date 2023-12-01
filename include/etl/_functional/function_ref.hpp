@@ -28,16 +28,16 @@ struct function_ref<R(Args...)> {
 private:
     using internal_signature_t = R (*)(void*, Args...);
 
-    void* obj_ { nullptr };
-    internal_signature_t callable_ { nullptr };
+    void* _obj { nullptr };
+    internal_signature_t _callable { nullptr };
 
 public:
     /// \brief Constructs a function_ref referring to f.
     template <typename F>
         requires(not is_same_v<decay_t<F>, function_ref> and is_invocable_r_v<R, F &&, Args...>)
     function_ref(F&& f) noexcept
-        : obj_(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
-        , callable_ {
+        : _obj(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
+        , _callable {
             +[](void* obj, Args... args) -> R {
                 auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
                 return invoke(*func, forward<Args>(args)...);
@@ -51,8 +51,8 @@ public:
         requires(is_invocable_r_v<R, F &&, Args...>)
     auto operator=(F&& f) noexcept -> function_ref&
     {
-        obj_      = reinterpret_cast<void*>(addressof(f));
-        callable_ = +[](void* obj, Args... args) {
+        _obj      = reinterpret_cast<void*>(addressof(f));
+        _callable = +[](void* obj, Args... args) {
             auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
             return invoke(*func, forward<Args>(args)...);
         };
@@ -68,14 +68,14 @@ public:
     auto swap(function_ref& other) noexcept -> void
     {
         using etl::swap;
-        swap(obj_, other.obj_);
-        swap(callable_, other.callable_);
+        swap(_obj, other._obj);
+        swap(_callable, other._callable);
     }
 
     ///  Equivalent to return invoke(f, forward<Args>(args)...);, where f is the
     ///  callable object referred to by *this, qualified with the same
     ///  cv-qualifiers as the function type Signature.
-    auto operator()(Args... args) const -> R { return callable_(obj_, forward<Args>(args)...); }
+    auto operator()(Args... args) const -> R { return _callable(_obj, forward<Args>(args)...); }
 };
 
 template <typename R, typename... Args>

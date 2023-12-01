@@ -14,26 +14,26 @@ struct mutable_buffer {
     mutable_buffer() noexcept = default;
 
     /// \brief Construct a buffer to represent a given memory range.
-    mutable_buffer(void* data, etl::size_t size) : data_ { data }, size_ { size } { }
+    mutable_buffer(void* data, etl::size_t size) : _data { data }, _size { size } { }
 
     /// \brief Get a pointer to the beginning of the memory range.
-    [[nodiscard]] auto data() const noexcept -> void* { return data_; }
+    [[nodiscard]] auto data() const noexcept -> void* { return _data; }
 
     /// \brief Get the size of the memory range.
-    [[nodiscard]] auto size() const noexcept -> etl::size_t { return size_; }
+    [[nodiscard]] auto size() const noexcept -> etl::size_t { return _size; }
 
     /// \brief Move the start of the buffer by the specified number of bytes.
     auto operator+=(etl::size_t n) noexcept -> mutable_buffer&
     {
-        auto const offset = n < size_ ? n : size_;
-        data_             = static_cast<char*>(data_) + offset;
-        size_ -= offset;
+        auto const offset = n < _size ? n : _size;
+        _data             = static_cast<char*>(_data) + offset;
+        _size -= offset;
         return *this;
     }
 
 private:
-    void* data_       = nullptr;
-    etl::size_t size_ = 0;
+    void* _data       = nullptr;
+    etl::size_t _size = 0;
 };
 
 /// \brief Create a new modifiable buffer that is offset from the start of

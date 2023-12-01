@@ -16,7 +16,7 @@ struct year_month_weekday {
     year_month_weekday() = default;
     constexpr year_month_weekday(
         chrono::year const& y, chrono::month const& m, chrono::weekday_indexed const& wdi) noexcept
-        : y_ { y }, m_ { m }, wdi_ { wdi }
+        : _y { y }, _m { m }, _wdi { wdi }
     {
     }
 
@@ -28,20 +28,20 @@ struct year_month_weekday {
     constexpr auto operator+=(years const& y) noexcept -> year_month_weekday&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_weekday&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return y_; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return wdi_.weekday(); }
-    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return wdi_.index(); }
-    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return wdi_; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wdi.weekday(); }
+    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return _wdi.index(); }
+    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
 
     [[nodiscard]] constexpr operator sys_days() const noexcept;
     [[nodiscard]] constexpr explicit operator local_days() const noexcept;
     [[nodiscard]] constexpr auto ok() const noexcept -> bool;
 
 private:
-    chrono::year y_;
-    chrono::month m_;
-    chrono::weekday_indexed wdi_;
+    chrono::year _y;
+    chrono::month _m;
+    chrono::weekday_indexed _wdi;
 };
 
 [[nodiscard]] constexpr auto operator==(year_month_weekday const& lhs, year_month_weekday const& rhs) noexcept -> bool

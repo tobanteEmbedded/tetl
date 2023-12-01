@@ -54,7 +54,7 @@ struct reference_wrapper {
     template <typename U, typename = decltype(detail::FUN<T>(declval<U>()),
                               enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
     constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(forward<U>(u))))
-        : ptr_(addressof(detail::FUN<T>(forward<U>(u))))
+        : _ptr(addressof(detail::FUN<T>(forward<U>(u))))
     {
     }
 
@@ -67,10 +67,10 @@ struct reference_wrapper {
     constexpr auto operator=(reference_wrapper const& x) noexcept -> reference_wrapper& = default;
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr operator type&() const noexcept { return *ptr_; }
+    [[nodiscard]] constexpr operator type&() const noexcept { return *_ptr; }
 
     /// \brief Returns the stored reference.
-    [[nodiscard]] constexpr auto get() const noexcept -> type& { return *ptr_; }
+    [[nodiscard]] constexpr auto get() const noexcept -> type& { return *_ptr; }
 
     /// \brief Calls the Callable object, reference to which is stored. This
     /// function is available only if the stored reference points to a Callable
@@ -85,7 +85,7 @@ struct reference_wrapper {
     }
 
 private:
-    type* ptr_;
+    type* _ptr;
 };
 
 // One deduction guide is provided for reference_wrapper to support

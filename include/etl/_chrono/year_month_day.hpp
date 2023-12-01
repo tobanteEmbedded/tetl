@@ -56,11 +56,11 @@ private:
 public:
     year_month_day() = default;
     constexpr year_month_day(chrono::year const& y, chrono::month const& m, chrono::day const& d) noexcept
-        : y_ { y }, m_ { m }, d_ { d }
+        : _y { y }, _m { m }, _d { d }
     {
     }
     constexpr year_month_day(year_month_day_last const& ymdl) noexcept
-        : y_ { ymdl.year() }, m_ { ymdl.month() }, d_ { ymdl.day() }
+        : _y { ymdl.year() }, _m { ymdl.month() }, _d { ymdl.day() }
     {
     }
 
@@ -79,9 +79,9 @@ public:
     constexpr auto operator+=(years const& y) noexcept -> year_month_day&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_day&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return y_; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
-    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return d_; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return _d; }
 
     [[nodiscard]] constexpr operator sys_days() const noexcept
     {
@@ -100,9 +100,9 @@ public:
     }
 
 private:
-    chrono::year y_;
-    chrono::month m_;
-    chrono::day d_;
+    chrono::year _y;
+    chrono::month _m;
+    chrono::day _d;
 };
 
 [[nodiscard]] constexpr auto operator==(year_month_day const& lhs, year_month_day const& rhs) noexcept -> bool

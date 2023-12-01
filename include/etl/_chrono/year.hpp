@@ -13,56 +13,56 @@ namespace etl::chrono {
 struct year {
     year() = default;
 
-    constexpr explicit year(int32_t y) noexcept : count_ { static_cast<int16_t>(y) } { }
+    constexpr explicit year(int32_t y) noexcept : _count { static_cast<int16_t>(y) } { }
 
     constexpr auto operator++() noexcept -> year&
     {
-        ++count_;
+        ++_count;
         return *this;
     }
 
-    constexpr auto operator++(int) noexcept -> year { return year { count_++ }; }
+    constexpr auto operator++(int) noexcept -> year { return year { _count++ }; }
 
     constexpr auto operator--() noexcept -> year&
     {
-        --count_;
+        --_count;
         return *this;
     }
 
-    constexpr auto operator--(int) noexcept -> year { return year { count_-- }; }
+    constexpr auto operator--(int) noexcept -> year { return year { _count-- }; }
 
     constexpr auto operator+=(years const& countS) noexcept -> year&
     {
 
-        count_ = static_cast<int16_t>(count_ + countS.count());
+        _count = static_cast<int16_t>(_count + countS.count());
         return *this;
     }
 
     constexpr auto operator-=(years const& countS) noexcept -> year&
     {
-        count_ = static_cast<int16_t>(count_ - countS.count());
+        _count = static_cast<int16_t>(_count - countS.count());
         return *this;
     }
 
     [[nodiscard]] constexpr auto operator+() const noexcept -> year { return *this; }
 
-    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year { -count_ }; }
+    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year { -_count }; }
 
     [[nodiscard]] constexpr auto is_leap() const noexcept -> bool
     {
-        return (count_ % 4 == 0) and (count_ % 100 != 0 or count_ % 400 == 0);
+        return (_count % 4 == 0) and (_count % 100 != 0 or _count % 400 == 0);
     }
 
-    [[nodiscard]] constexpr explicit operator int32_t() const noexcept { return count_; }
+    [[nodiscard]] constexpr explicit operator int32_t() const noexcept { return _count; }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return count_ != numeric_limits<int16_t>::min(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _count != numeric_limits<int16_t>::min(); }
 
     [[nodiscard]] static constexpr auto min() noexcept -> year { return year { -32767 }; }
 
     [[nodiscard]] static constexpr auto max() noexcept -> year { return year { 32767 }; }
 
 private:
-    int16_t count_ {};
+    int16_t _count {};
 };
 
 [[nodiscard]] constexpr auto operator==(year lhs, year rhs) noexcept -> bool

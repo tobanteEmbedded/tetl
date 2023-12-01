@@ -58,7 +58,7 @@ struct year_month_day_last {
     [[nodiscard]] constexpr explicit operator local_days() const noexcept;
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _y.ok() and _mdl.ok(); }
 
-public:
+private:
     chrono::year _y;
     chrono::month_day_last _mdl;
 };

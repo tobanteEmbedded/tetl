@@ -39,8 +39,8 @@ public:
         template <typename T>
         explicit handle(T&& val) noexcept;
 
-        void const* ptr_;
-        void (*format_)(basic_format_parse_context<char_type>&, Context&, void const*);
+        void const* _ptr;
+        void (*_format)(basic_format_parse_context<char_type>&, Context&, void const*);
     };
 
     basic_format_arg() noexcept = default;

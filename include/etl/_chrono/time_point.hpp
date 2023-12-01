@@ -38,7 +38,7 @@ struct time_point {
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point at Clock's epoch plus d.
-    constexpr explicit time_point(duration const& d) noexcept : d_ { d } { }
+    constexpr explicit time_point(duration const& d) noexcept : _d { d } { }
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point by converting t to duration. This
@@ -46,13 +46,13 @@ struct time_point {
     /// implicitly convertible to duration.
     template <typename Dur2>
         requires(is_convertible_v<Dur2, duration>)
-    constexpr time_point(time_point<clock, Dur2> const& t) : d_ { t.time_since_epch() }
+    constexpr time_point(time_point<clock, Dur2> const& t) : _d { t.time_since_epch() }
     {
     }
 
     /// \brief Returns a duration representing the amount of time between *this
     /// and the clock's epoch.
-    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return d_; }
+    [[nodiscard]] constexpr auto time_since_epoch() const noexcept -> duration { return _d; }
 
     /// \brief Modifies the time point by the given duration. Applies the offset
     /// d to pt. Effectively, d is added to the internally stored duration d_ as
@@ -60,7 +60,7 @@ struct time_point {
     /// += d.
     constexpr auto operator+=(duration const& d) noexcept -> time_point&
     {
-        d_ += d;
+        _d += d;
         return *this;
     }
 
@@ -69,7 +69,7 @@ struct time_point {
     /// internally stored duration d_ as d_ -= d.
     constexpr auto operator-=(duration const& d) noexcept -> time_point&
     {
-        d_ -= d;
+        _d -= d;
         return *this;
     }
 
@@ -77,25 +77,25 @@ struct time_point {
     /// duration.
     constexpr auto operator++() noexcept -> time_point&
     {
-        ++d_;
+        ++_d;
         return *this;
     }
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator++(int) noexcept -> time_point { return time_point(d_++); }
+    constexpr auto operator++(int) noexcept -> time_point { return time_point(_d++); }
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
     constexpr auto operator--() noexcept -> time_point&
     {
-        --d_;
+        --_d;
         return *this;
     }
 
     /// \brief Modifies the point in time *this represents by one tick of the
     /// duration.
-    constexpr auto operator--(int) noexcept -> time_point { return time_point(d_--); }
+    constexpr auto operator--(int) noexcept -> time_point { return time_point(_d--); }
 
     /// \brief Returns a time_point with the smallest possible duration,
     [[nodiscard]] static constexpr auto min() noexcept -> time_point { return time_point(duration::min()); }
@@ -104,7 +104,7 @@ struct time_point {
     [[nodiscard]] static constexpr auto max() noexcept -> time_point { return time_point(duration::max()); }
 
 private:
-    duration d_ {};
+    duration _d {};
 };
 
 /// \brief  Compares two time points. The comparison is done by comparing the

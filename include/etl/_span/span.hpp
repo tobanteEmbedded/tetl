@@ -80,7 +80,7 @@ struct span {
     /// and the conversion from etl::iter_reference_t<It> to element_type is at
     /// most a qualification conversion.
     template <typename It>
-    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : data_ { first }, size_ { count }
+    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data { first }, _size { count }
     {
     }
 
@@ -90,25 +90,25 @@ struct span {
 
     /// \brief Constructs a span. From a c style array.
     template <size_t N>
-    constexpr span(element_type (&arr)[N]) noexcept : data_ { &arr[0] }, size_ { N }
+    constexpr span(element_type (&arr)[N]) noexcept : _data { &arr[0] }, _size { N }
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size>.
     template <typename U, size_t N>
-    constexpr span(array<U, N>& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
+    constexpr span(array<U, N>& arr) noexcept : _data { arr.data() }, _size { arr.size() }
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size> const.
     template <typename U, size_t N>
-    constexpr span(array<U, N> const& arr) noexcept : data_ { arr.data() }, size_ { arr.size() }
+    constexpr span(array<U, N> const& arr) noexcept : _data { arr.data() }, _size { arr.size() }
     {
     }
 
     /// \brief Constructs a span.
     template <typename R>
-    explicit(extent != dynamic_extent) constexpr span(R&& r) : data_ { r.data() }, size_ { r.size() }
+    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data { r.data() }, _size { r.size() }
     {
     }
 
@@ -123,7 +123,7 @@ struct span {
 
     /// \brief Returns an iterator to the first element of the span. If the span
     /// is empty, the returned iterator will be equal to end().
-    [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return &data_[0]; }
+    [[nodiscard]] constexpr auto begin() const noexcept -> iterator { return &_data[0]; }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the span. This element acts as a placeholder; attempting to access it
@@ -155,10 +155,10 @@ struct span {
     [[nodiscard]] constexpr auto operator[](size_type idx) const -> reference { return data()[idx]; }
 
     /// \brief Returns a pointer to the beginning of the sequence.
-    [[nodiscard]] constexpr auto data() const noexcept -> pointer { return data_; }
+    [[nodiscard]] constexpr auto data() const noexcept -> pointer { return _data; }
 
     /// \brief Returns the number of elements in the span.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _size; }
 
     /// \brief Returns the number of elements in the span.
     [[nodiscard]] constexpr auto size_bytes() const noexcept -> size_type { return size() * sizeof(element_type); }
@@ -227,8 +227,8 @@ struct span {
     }
 
 private:
-    pointer data_   = nullptr;
-    size_type size_ = 0;
+    pointer _data   = nullptr;
+    size_type _size = 0;
 };
 
 // Deduction Guides. From raw array.

@@ -83,7 +83,7 @@ public:
         // TETL_ASSERT(len <= Capacity);
         if (str != nullptr && len <= Capacity) {
             unsafe_set_size(len);
-            traits_type::copy(storage_.data(), str, len);
+            traits_type::copy(_storage.data(), str, len);
         }
     }
 
@@ -341,7 +341,7 @@ public:
     [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == capacity(); }
 
     /// \brief Returns the number of characters.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return storage_.get_size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _storage.get_size(); }
 
     /// \brief Returns the number of characters.
     [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size(); }
@@ -366,7 +366,7 @@ public:
     /// string.
     ///
     /// \details Always null-terminated.
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return storage_.data(); }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return _storage.data(); }
 
     /// \brief Returns a pointer to the underlying array serving as character
     /// storage. The pointer is such that the range [data(); data() + size()) is
@@ -374,7 +374,7 @@ public:
     /// string.
     ///
     /// \details Always null-terminated.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return storage_.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _storage.data(); }
 
     /// \brief Returns a pointer to a null-terminated character array.
     ///
@@ -1268,20 +1268,20 @@ private:
     constexpr auto unsafe_set_size(size_type const newSize) noexcept -> void
     {
         // TETL_ASSERT(newSize <= Capacity);
-        storage_.set_size(newSize);
+        _storage.set_size(newSize);
         unsafe_at(newSize) = CharT(0);
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) noexcept -> reference
     {
         // TETL_ASSERT(index < size());
-        return *next(storage_.data(), static_cast<ptrdiff_t>(index));
+        return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     [[nodiscard]] constexpr auto unsafe_at(size_type const index) const noexcept -> const_reference
     {
         // TETL_ASSERT(index < size());
-        return *next(storage_.data(), static_cast<ptrdiff_t>(index));
+        return *next(_storage.data(), static_cast<ptrdiff_t>(index));
     }
 
     constexpr auto insert_impl(iterator pos, const_pointer text, size_type count) -> void
@@ -1306,34 +1306,34 @@ private:
     }
 
     struct tiny_layout {
-        constexpr tiny_layout() noexcept { buffer_[Capacity] = Capacity; }
+        constexpr tiny_layout() noexcept { _buffer[Capacity] = Capacity; }
 
-        [[nodiscard]] constexpr auto data() noexcept { return buffer_.data(); }
-        [[nodiscard]] constexpr auto data() const noexcept { return buffer_.data(); }
+        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(buffer_[Capacity]); }
-        constexpr auto set_size(size_t size) noexcept { return buffer_[Capacity] = value_type(Capacity - size); }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(_buffer[Capacity]); }
+        constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = value_type(Capacity - size); }
 
     private:
-        etl::array<value_type, Capacity + 1> buffer_ {};
+        etl::array<value_type, Capacity + 1> _buffer {};
     };
 
     struct normal_layout {
         constexpr normal_layout() noexcept = default;
 
-        [[nodiscard]] constexpr auto data() noexcept { return buffer_.data(); }
-        [[nodiscard]] constexpr auto data() const noexcept { return buffer_.data(); }
+        [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+        [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
-        [[nodiscard]] constexpr auto get_size() const noexcept { return size_t(size_); }
-        constexpr auto set_size(size_t size) noexcept { return size_ = internal_size_t(size); }
+        [[nodiscard]] constexpr auto get_size() const noexcept { return size_t(_size); }
+        constexpr auto set_size(size_t size) noexcept { return _size = internal_size_t(size); }
 
     private:
-        internal_size_t size_ {};
-        etl::array<value_type, Capacity + 1> buffer_ {};
+        internal_size_t _size {};
+        etl::array<value_type, Capacity + 1> _buffer {};
     };
 
     using layout_type = etl::conditional_t<(Capacity < 16), tiny_layout, normal_layout>;
-    layout_type storage_ {};
+    layout_type _storage {};
 };
 
 /// \brief Returns a string containing characters from lhs followed by the

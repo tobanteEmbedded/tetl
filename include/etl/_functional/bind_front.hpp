@@ -33,7 +33,7 @@ class bind_front_t {
 public:
     template <typename F, typename... BA>
         requires(!(sizeof...(BA) == 0 && is_base_of_v<bind_front_t, decay_t<F>>))
-    explicit bind_front_t(F&& f, BA&&... ba) : func_(forward<F>(f)), boundArgs_(forward<BA>(ba)...)
+    explicit bind_front_t(F&& f, BA&&... ba) : _func(forward<F>(f)), _boundArgs(forward<BA>(ba)...)
     {
     }
 
@@ -42,7 +42,7 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) & -> invoke_result_t<Func&, BoundArgs&..., CallArgs...>
     {
-        return bind_front_caller(func_, boundArgs_, forward<CallArgs>(callArgs)...);
+        return bind_front_caller(_func, _boundArgs, forward<CallArgs>(callArgs)...);
     }
 
     // TODO: Add noexcept(is_nothrow_invocable_v<Func const&, BoundArgs
@@ -50,7 +50,7 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const& -> invoke_result_t<Func const&, BoundArgs const&..., CallArgs...>
     {
-        return bind_front_caller(func_, boundArgs_, forward<CallArgs>(callArgs)...);
+        return bind_front_caller(_func, _boundArgs, forward<CallArgs>(callArgs)...);
     }
 
     // TODO: Add  noexcept(is_nothrow_invocable_v<Func, BoundArgs...,
@@ -58,7 +58,7 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) && -> invoke_result_t<Func, BoundArgs..., CallArgs...>
     {
-        return bind_front_caller(move(func_), move(boundArgs_), forward<CallArgs>(callArgs)...);
+        return bind_front_caller(move(_func), move(_boundArgs), forward<CallArgs>(callArgs)...);
     }
 
     // TODO: noexcept(is_nothrow_invocable_v<Func const, BoundArgs
@@ -66,12 +66,12 @@ public:
     template <typename... CallArgs>
     auto operator()(CallArgs&&... callArgs) const&& -> invoke_result_t<Func const, BoundArgs const..., CallArgs...>
     {
-        return bind_front_caller(move(func_), move(boundArgs_), forward<CallArgs>(callArgs)...);
+        return bind_front_caller(move(_func), move(_boundArgs), forward<CallArgs>(callArgs)...);
     }
 
 private:
-    Func func_;
-    tuple<BoundArgs...> boundArgs_;
+    Func _func;
+    tuple<BoundArgs...> _boundArgs;
 };
 
 } // namespace detail

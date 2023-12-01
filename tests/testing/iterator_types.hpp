@@ -13,22 +13,22 @@ struct InIter {
     using pointer           = It;
     using reference         = typename etl::iterator_traits<It>::reference;
 
-    [[nodiscard]] constexpr auto base() const -> It { return iter_; }
+    [[nodiscard]] constexpr auto base() const -> It { return _iter; }
 
-    constexpr InIter() : iter_() { }
-    explicit constexpr InIter(It it) : iter_(it) { }
+    constexpr InIter() : _iter() { }
+    explicit constexpr InIter(It it) : _iter(it) { }
 
     template <typename U>
-    constexpr InIter(InIter<U> const& u) : iter_(u.iter_)
+    constexpr InIter(InIter<U> const& u) : _iter(u.iter_)
     {
     }
 
-    constexpr auto operator*() const -> reference { return *iter_; }
-    constexpr auto operator->() const -> pointer { return iter_; }
+    constexpr auto operator*() const -> reference { return *_iter; }
+    constexpr auto operator->() const -> pointer { return _iter; }
 
     constexpr auto operator++() -> InIter&
     {
-        ++iter_;
+        ++_iter;
         return *this;
     }
     constexpr auto operator++(int) -> InIter
@@ -39,7 +39,7 @@ struct InIter {
     }
 
 private:
-    It iter_;
+    It _iter;
 
     template <typename U>
     friend struct InIter;
@@ -65,24 +65,24 @@ struct FwdIter {
     using pointer           = Iter;
     using reference         = typename etl::iterator_traits<Iter>::reference;
 
-    [[nodiscard]] constexpr auto base() const -> Iter { return iter_; }
+    [[nodiscard]] constexpr auto base() const -> Iter { return _iter; }
 
     constexpr FwdIter() = default;
 
-    explicit constexpr FwdIter(Iter it) : iter_ { it } { }
+    explicit constexpr FwdIter(Iter it) : _iter { it } { }
 
     template <typename U>
-    constexpr FwdIter(FwdIter<U> const& u) : iter_(u.iter_)
+    constexpr FwdIter(FwdIter<U> const& u) : _iter(u.iter_)
     {
     }
 
-    [[nodiscard]] constexpr auto operator*() const -> reference { return *iter_; }
+    [[nodiscard]] constexpr auto operator*() const -> reference { return *_iter; }
 
-    [[nodiscard]] constexpr auto operator->() const -> pointer { return iter_; }
+    [[nodiscard]] constexpr auto operator->() const -> pointer { return _iter; }
 
     constexpr auto operator++() -> FwdIter&
     {
-        ++iter_;
+        ++_iter;
         return *this;
     }
     [[nodiscard]] constexpr auto operator++(int) -> FwdIter
@@ -93,7 +93,7 @@ struct FwdIter {
     }
 
 private:
-    Iter iter_ {};
+    Iter _iter {};
 
     template <typename U>
     friend struct FwdIter;

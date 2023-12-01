@@ -22,22 +22,22 @@ struct small_ptr {
     small_ptr() = default;
 
     /// \brief Construct from nullptr.
-    small_ptr(nullptr_t null) : value_ { 0 } { ignore_unused(null); }
+    small_ptr(nullptr_t null) : _value { 0 } { ignore_unused(null); }
 
     /// \brief Construct from raw pointer.
-    small_ptr(Type* ptr) : value_ { compress(ptr) } { }
+    small_ptr(Type* ptr) : _value { compress(ptr) } { }
 
     /// \brief Returns a raw pointer to Type.
-    [[nodiscard]] auto get() noexcept -> Type* { return reinterpret_cast<Type*>(BaseAddress + value_); }
+    [[nodiscard]] auto get() noexcept -> Type* { return reinterpret_cast<Type*>(BaseAddress + _value); }
 
     /// \brief Returns a raw pointer to const Type.
     [[nodiscard]] auto get() const noexcept -> Type const*
     {
-        return reinterpret_cast<Type const*>(BaseAddress + value_);
+        return reinterpret_cast<Type const*>(BaseAddress + _value);
     }
 
     /// \brief Returns the compressed underlying integer address.
-    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return value_; }
+    [[nodiscard]] auto compressed_value() const noexcept -> StorageType { return _value; }
 
     /// \brief Returns a raw pointer to Type.
     [[nodiscard]] auto operator->() const -> Type* { return get(); }
@@ -54,7 +54,7 @@ struct small_ptr {
         auto temp = *this;
         auto* ptr = get();
         ++ptr;
-        value_ = compress(ptr);
+        _value = compress(ptr);
         return temp;
     }
 
@@ -63,7 +63,7 @@ struct small_ptr {
     {
         auto* ptr = get();
         ptr++;
-        value_ = compress(ptr);
+        _value = compress(ptr);
         return *this;
     }
 
@@ -73,7 +73,7 @@ struct small_ptr {
         auto temp = *this;
         auto* ptr = get();
         --ptr;
-        value_ = compress(ptr);
+        _value = compress(ptr);
         return temp;
     }
 
@@ -82,7 +82,7 @@ struct small_ptr {
     {
         auto* ptr = get();
         ptr--;
-        value_ = compress(ptr);
+        _value = compress(ptr);
         return *this;
     }
 
@@ -102,7 +102,7 @@ private:
         return StorageType(obj - BaseAddress);
     }
 
-    StorageType value_;
+    StorageType _value;
 };
 
 } // namespace etl

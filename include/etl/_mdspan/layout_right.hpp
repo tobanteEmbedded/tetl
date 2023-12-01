@@ -24,13 +24,13 @@ struct layout_right::mapping {
     constexpr mapping() noexcept               = default;
     constexpr mapping(mapping const&) noexcept = default;
 
-    constexpr mapping(extents_type const& ext) noexcept : extents_ { ext } { }
+    constexpr mapping(extents_type const& ext) noexcept : _extents { ext } { }
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(mapping<OtherExtents> const& other) noexcept
-        : extents_ { other.extents() }
+        : _extents { other.extents() }
     {
     }
 
@@ -38,7 +38,7 @@ struct layout_right::mapping {
         requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(layout_left::mapping<OtherExtents> const& other) noexcept
-        : extents_ { other.extents() }
+        : _extents { other.extents() }
     {
     }
 
@@ -48,7 +48,7 @@ struct layout_right::mapping {
     constexpr auto operator=(mapping const&) noexcept -> mapping& = default;
 
     // observers
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return extents_; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _extents; }
 
     [[nodiscard]] constexpr auto required_span_size() const noexcept -> index_type
     {
@@ -62,7 +62,7 @@ struct layout_right::mapping {
     {
         auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
             auto result = index_type(0);
-            ((result = static_cast<index_type>(is + extents_.extent(Is) * result)), ...);
+            ((result = static_cast<index_type>(is + _extents.extent(Is) * result)), ...);
             return result;
         };
 
@@ -86,7 +86,7 @@ struct layout_right::mapping {
     }
 
 private:
-    extents_type extents_ {};
+    extents_type _extents {};
 };
 
 } // namespace etl

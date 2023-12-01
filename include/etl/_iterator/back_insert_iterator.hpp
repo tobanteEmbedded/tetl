@@ -27,19 +27,19 @@ struct back_insert_iterator {
 
     /// \brief Initializes the underlying pointer to the container to
     /// etl::addressof(c).
-    constexpr explicit back_insert_iterator(Container& container) : container_ { etl::addressof(container) } { }
+    constexpr explicit back_insert_iterator(Container& container) : _container { etl::addressof(container) } { }
 
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type const& value) -> back_insert_iterator&
     {
-        container_->push_back(value);
+        _container->push_back(value);
         return *this;
     }
 
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type&& value) -> back_insert_iterator&
     {
-        container_->push_back(move(value));
+        _container->push_back(move(value));
         return *this;
     }
 
@@ -62,7 +62,7 @@ struct back_insert_iterator {
     constexpr auto operator++(int) -> back_insert_iterator { return *this; }
 
 private:
-    Container* container_ = nullptr;
+    Container* _container = nullptr;
 };
 
 /// back_inserter is a convenience function template that constructs a

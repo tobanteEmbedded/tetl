@@ -138,13 +138,13 @@ struct static_vector_trivial_storage {
     ~static_vector_trivial_storage() = default;
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return data_.data(); }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _data.data(); }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] constexpr auto data() noexcept -> pointer { return data_.data(); }
+    [[nodiscard]] constexpr auto data() noexcept -> pointer { return _data.data(); }
 
     /// \brief Number of elements in the storage.
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return size_; }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _size; }
 
     /// \brief Maximum number of elements that can be allocated in the
     /// storage.
@@ -162,7 +162,7 @@ struct static_vector_trivial_storage {
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
         TETL_ASSERT(!full());
-        index(data_, size()) = T(forward<Args>(args)...);
+        index(_data, size()) = T(forward<Args>(args)...);
         unsafe_set_size(static_cast<size_type>(size()) + 1U);
     }
 
@@ -180,7 +180,7 @@ protected:
     constexpr auto unsafe_set_size(size_t newSize) noexcept -> void
     {
         TETL_ASSERT(newSize <= Capacity);
-        size_ = size_type(newSize);
+        _size = size_type(newSize);
     }
 
     /// \brief (unsafe) Destroy elements in the range [begin, end).
@@ -200,9 +200,9 @@ private:
     // If the value_type is const, make a const array of
     // non-const elements:
     using data_t = conditional_t<!is_const_v<T>, array<T, Capacity>, array<remove_const_t<T>, Capacity> const>;
-    alignas(alignof(T)) data_t data_ {};
+    alignas(alignof(T)) data_t _data {};
 
-    size_type size_ = 0;
+    size_type _size = 0;
 };
 
 /// \brief Storage for non-trivial elements.
@@ -228,10 +228,10 @@ struct static_vector_non_trivial_storage {
     ~static_vector_non_trivial_storage() noexcept(is_nothrow_destructible_v<T>) { unsafe_destroy_all(); }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] auto data() const noexcept -> const_pointer { return reinterpret_cast<const_pointer>(data_); }
+    [[nodiscard]] auto data() const noexcept -> const_pointer { return reinterpret_cast<const_pointer>(_data); }
 
     /// \brief Direct access to the underlying storage.
-    [[nodiscard]] auto data() noexcept -> pointer { return reinterpret_cast<pointer>(data_); }
+    [[nodiscard]] auto data() noexcept -> pointer { return reinterpret_cast<pointer>(_data); }
 
     /// \brief Pointer to one-past-the-end.
     [[nodiscard]] auto end() const noexcept -> const_pointer { return data() + size(); }
@@ -240,7 +240,7 @@ struct static_vector_non_trivial_storage {
     [[nodiscard]] auto end() noexcept -> pointer { return data() + size(); }
 
     /// \brief Number of elements in the storage.
-    [[nodiscard]] auto size() const noexcept -> size_type { return size_; }
+    [[nodiscard]] auto size() const noexcept -> size_type { return _size; }
 
     /// \brief Maximum number of elements that can be allocated in the
     /// storage.
@@ -278,7 +278,7 @@ protected:
     auto unsafe_set_size(size_t newSize) noexcept -> void
     {
         TETL_ASSERT(newSize <= Capacity);
-        size_ = size_type(newSize);
+        _size = size_type(newSize);
     }
 
     /// \brief (unsafe) Destroy elements in the range [begin, end).
@@ -302,8 +302,8 @@ private:
     using aligned      = aligned_storage_t<sizeof(raw_type), alignof(raw_type)>;
     using storage_type = conditional_t<!is_const_v<T>, aligned, aligned const>;
 
-    alignas(alignof(T)) storage_type data_[Capacity];
-    size_type size_ = 0;
+    alignas(alignof(T)) storage_type _data[Capacity];
+    size_type _size = 0;
 };
 
 /// \brief Selects the vector storage.

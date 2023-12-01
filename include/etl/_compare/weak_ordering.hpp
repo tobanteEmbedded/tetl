@@ -19,43 +19,43 @@ struct weak_ordering {
 
     constexpr operator partial_ordering() const noexcept
     {
-        return value_ == 0 ? partial_ordering::equivalent
-                           : (value_ < 0 ? partial_ordering::less : partial_ordering::greater);
+        return _value == 0 ? partial_ordering::equivalent
+                           : (_value < 0 ? partial_ordering::less : partial_ordering::greater);
     }
 
     [[nodiscard]] friend constexpr auto operator==(weak_ordering, weak_ordering) noexcept -> bool = default;
 
     [[nodiscard]] friend constexpr auto operator==(weak_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.value_ == 0;
+        return v._value == 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool { return v.value_ < 0; }
+    [[nodiscard]] friend constexpr auto operator<(weak_ordering v, nullptr_t) noexcept -> bool { return v._value < 0; }
 
     [[nodiscard]] friend constexpr auto operator<=(weak_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.value_ <= 0;
+        return v._value <= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool { return v.value_ > 0; }
+    [[nodiscard]] friend constexpr auto operator>(weak_ordering v, nullptr_t) noexcept -> bool { return v._value > 0; }
 
     [[nodiscard]] friend constexpr auto operator>=(weak_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.value_ >= 0;
+        return v._value >= 0;
     }
 
-    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool { return 0 < v.value_; }
+    [[nodiscard]] friend constexpr auto operator<(nullptr_t, weak_ordering v) noexcept -> bool { return 0 < v._value; }
 
     [[nodiscard]] friend constexpr auto operator<=(nullptr_t, weak_ordering v) noexcept -> bool
     {
-        return 0 <= v.value_;
+        return 0 <= v._value;
     }
 
-    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool { return 0 > v.value_; }
+    [[nodiscard]] friend constexpr auto operator>(nullptr_t, weak_ordering v) noexcept -> bool { return 0 > v._value; }
 
     [[nodiscard]] friend constexpr auto operator>=(nullptr_t, weak_ordering v) noexcept -> bool
     {
-        return 0 >= v.value_;
+        return 0 >= v._value;
     }
 
     [[nodiscard]] friend constexpr auto operator<=>(weak_ordering v, nullptr_t) noexcept -> weak_ordering { return v; }
@@ -66,9 +66,9 @@ struct weak_ordering {
     }
 
 private:
-    explicit constexpr weak_ordering(detail::order_result v) noexcept : value_ { static_cast<int8_t>(v) } { }
+    explicit constexpr weak_ordering(detail::order_result v) noexcept : _value { static_cast<int8_t>(v) } { }
 
-    int8_t value_;
+    int8_t _value;
 };
 
 // clang-format off

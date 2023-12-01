@@ -17,15 +17,15 @@ template <typename MutexT>
 struct lock_guard {
     using mutex_type = MutexT;
 
-    explicit lock_guard(mutex_type& m) : mutex_ { m } { mutex_.lock(); }
-    lock_guard(mutex_type& m, adopt_lock_t /*tag*/) : mutex_ { m } { }
-    ~lock_guard() { mutex_.unlock(); }
+    explicit lock_guard(mutex_type& m) : _mutex { m } { _mutex.lock(); }
+    lock_guard(mutex_type& m, adopt_lock_t /*tag*/) : _mutex { m } { }
+    ~lock_guard() { _mutex.unlock(); }
 
     lock_guard(lock_guard const&)                    = delete;
     auto operator=(lock_guard const&) -> lock_guard& = delete;
 
 private:
-    mutex_type& mutex_;
+    mutex_type& _mutex;
 };
 
 } // namespace etl

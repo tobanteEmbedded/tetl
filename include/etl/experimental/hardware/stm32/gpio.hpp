@@ -64,7 +64,7 @@ struct port {
 private:
     explicit port() = default;
 
-    gpio_memory_layout memory_;
+    gpio_memory_layout _memory;
 };
 
 inline auto port::read(pin_number const pin) noexcept -> pin_state
@@ -76,15 +76,15 @@ inline auto port::read(pin_number const pin) noexcept -> pin_state
 inline auto port::write(pin_number const pin, pin_state const state) noexcept -> void
 {
     if (state == pin_state::reset) {
-        memory_.bit_set_reset = (1U << val(pin));
+        _memory.bit_set_reset = (1U << val(pin));
         return;
     }
-    memory_.bit_set_reset = (1U << (val(pin) + 16U));
+    _memory.bit_set_reset = (1U << (val(pin) + 16U));
 }
 
 inline auto port::toggle_pin(pin_number const pin) noexcept -> void
 {
-    memory_.output_data = memory_.output_data ^ (1U << val(pin));
+    _memory.output_data = _memory.output_data ^ (1U << val(pin));
 }
 
 inline auto port::place_at(void* addr) -> port& { return *new (addr) port; }

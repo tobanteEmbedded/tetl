@@ -13,14 +13,14 @@ template <typename CharT, typename... Args>
 struct basic_format_string {
     template <typename T>
         requires convertible_to<T const&, basic_string_view<CharT>>
-    consteval basic_format_string(T const& s) : str_(s)
+    consteval basic_format_string(T const& s) : _str(s)
     {
     }
 
-    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT> { return str_; }
+    [[nodiscard]] constexpr auto get() const noexcept -> basic_string_view<CharT> { return _str; }
 
 private:
-    basic_string_view<CharT> str_;
+    basic_string_view<CharT> _str;
 };
 
 template <typename... Args>

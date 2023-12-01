@@ -18,40 +18,40 @@ struct partial_ordering {
 
     friend constexpr auto operator==(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.isOrdered_ && v.value_ == 0;
+        return v._isOrdered && v._value == 0;
     }
     friend constexpr auto operator==(partial_ordering v, partial_ordering w) noexcept -> bool = default;
     friend constexpr auto operator<(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.isOrdered_ && v.value_ < 0;
+        return v._isOrdered && v._value < 0;
     }
     friend constexpr auto operator>(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.isOrdered_ && v.value_ > 0;
+        return v._isOrdered && v._value > 0;
     }
     friend constexpr auto operator<=(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.isOrdered_ && v.value_ <= 0;
+        return v._isOrdered && v._value <= 0;
     }
     friend constexpr auto operator>=(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v.isOrdered_ && v.value_ >= 0;
+        return v._isOrdered && v._value >= 0;
     }
     friend constexpr auto operator<(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v.isOrdered_ && 0 < v.value_;
+        return v._isOrdered && 0 < v._value;
     }
     friend constexpr auto operator>(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v.isOrdered_ && 0 > v.value_;
+        return v._isOrdered && 0 > v._value;
     }
     friend constexpr auto operator<=(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v.isOrdered_ && 0 <= v.value_;
+        return v._isOrdered && 0 <= v._value;
     }
     friend constexpr auto operator>=(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v.isOrdered_ && 0 >= v.value_;
+        return v._isOrdered && 0 >= v._value;
     }
     friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering { return v; }
     friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept -> partial_ordering
@@ -61,16 +61,16 @@ struct partial_ordering {
 
 private:
     constexpr explicit partial_ordering(detail::order_result v) noexcept
-        : value_ { static_cast<int8_t>(v) }, isOrdered_ { true }
+        : _value { static_cast<int8_t>(v) }, _isOrdered { true }
     {
     }
     constexpr explicit partial_ordering(detail::compare_result v) noexcept
-        : value_ { static_cast<int8_t>(v) }, isOrdered_ { false }
+        : _value { static_cast<int8_t>(v) }, _isOrdered { false }
     {
     }
 
-    int8_t value_;
-    bool isOrdered_;
+    int8_t _value;
+    bool _isOrdered;
 };
 
 // clang-format off

@@ -20,17 +20,17 @@ struct scaled_scalar
     constexpr explicit scaled_scalar(ScalingFactor const& scalingFactor, Reference const& reference)
         : proxy_reference<Reference, ReferenceValue,
             scaled_scalar<ScalingFactor, Reference, ReferenceValue>> { reference }
-        , scalingFactor_ { scalingFactor }
+        , _scalingFactor { scalingFactor }
     {
     }
 
     [[nodiscard]] constexpr auto to_value(Reference reference) const -> value_type
     {
-        return scalingFactor_ * ReferenceValue(reference);
+        return _scalingFactor * ReferenceValue(reference);
     }
 
 private:
-    ScalingFactor scalingFactor_;
+    ScalingFactor _scalingFactor;
 };
 
 } // namespace etl::linalg::detail

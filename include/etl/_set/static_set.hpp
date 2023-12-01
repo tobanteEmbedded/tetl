@@ -32,7 +32,7 @@ private:
     static_assert(is_default_constructible_v<Compare>);
 
     using storage_type = static_vector<Key, Capacity>;
-    storage_type memory_ {};
+    storage_type _memory {};
 
 public:
     using key_type               = typename storage_type::value_type;
@@ -82,21 +82,21 @@ public:
         -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return memory_.begin(); }
+    [[nodiscard]] constexpr auto begin() noexcept -> iterator { return _memory.begin(); }
 
     /// \brief Returns an iterator to the first element of the set.
-    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return memory_.begin(); }
+    [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _memory.begin(); }
 
     /// \brief Returns an iterator to the first element of the set.
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() noexcept -> iterator { return memory_.end(); }
+    [[nodiscard]] constexpr auto end() noexcept -> iterator { return _memory.end(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
-    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return memory_.end(); }
+    [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _memory.end(); }
 
     /// \brief Returns an iterator to the element following the last element of
     /// the set.
@@ -137,22 +137,22 @@ public:
 
     /// \brief Checks if the container has no elements, i.e. whether begin() ==
     /// end().
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return memory_.empty(); }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _memory.empty(); }
 
     /// \brief Checks if the container full, i.e. whether size() == Capacity.
-    [[nodiscard]] constexpr auto full() const noexcept -> bool { return memory_.full(); }
+    [[nodiscard]] constexpr auto full() const noexcept -> bool { return _memory.full(); }
 
     /// \brief Returns the number of elements in the container, i.e.
     /// distance(begin(), end()).
-    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return memory_.size(); }
+    [[nodiscard]] constexpr auto size() const noexcept -> size_type { return _memory.size(); }
 
     /// \brief Returns the maximum number of elements the container is able to
     /// hold.
-    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return memory_.max_size(); }
+    [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return _memory.max_size(); }
 
     /// \brief Erases all elements from the container. After this call, size()
     /// returns zero.
-    constexpr auto clear() noexcept -> void { memory_.clear(); }
+    constexpr auto clear() noexcept -> void { _memory.clear(); }
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
@@ -161,10 +161,10 @@ public:
     {
         if (!full()) {
             auto cmp = key_compare {};
-            auto* p  = etl::lower_bound(memory_.begin(), memory_.end(), value, cmp);
-            if (p == memory_.end() || *(p) != value) {
-                memory_.push_back(move(value));
-                auto* pos = rotate(p, memory_.end() - 1, memory_.end());
+            auto* p  = etl::lower_bound(_memory.begin(), _memory.end(), value, cmp);
+            if (p == _memory.end() || *(p) != value) {
+                _memory.push_back(move(value));
+                auto* pos = rotate(p, _memory.end() - 1, _memory.end());
                 return make_pair(pos, true);
             }
         }
@@ -207,7 +207,7 @@ public:
     /// https://en.cppreference.com/w/cpp/container/set/erase
     ///
     /// \returns Iterator following the last removed element.
-    constexpr auto erase(iterator pos) noexcept -> iterator { return memory_.erase(pos); }
+    constexpr auto erase(iterator pos) noexcept -> iterator { return _memory.erase(pos); }
 
     /// \brief Removes the elements in the range [first; last), which must be a
     /// valid range in *this.

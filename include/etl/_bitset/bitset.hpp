@@ -32,11 +32,11 @@ struct bitset {
         constexpr auto operator=(bool value) noexcept -> reference&
         {
             if (value) {
-                *data_ |= (1U << position_);
+                *_data |= (1U << _position);
                 return *this;
             }
 
-            *data_ &= ~(1U << position_);
+            *_data &= ~(1U << _position);
             return *this;
         }
 
@@ -49,7 +49,7 @@ struct bitset {
         }
 
         /// \brief Returns the value of the referenced bit.
-        [[nodiscard]] constexpr operator bool() const noexcept { return (*data_ & (1U << position_)) != 0; }
+        [[nodiscard]] constexpr operator bool() const noexcept { return (*_data & (1U << _position)) != 0; }
 
         /// \brief Returns the inverse of the referenced bit.
         [[nodiscard]] constexpr auto operator~() const noexcept -> bool { return !static_cast<bool>(*this); }
@@ -58,16 +58,16 @@ struct bitset {
         /// \returns *this
         constexpr auto flip() noexcept -> reference&
         {
-            *data_ ^= 1U << position_;
+            *_data ^= 1U << _position;
             return *this;
         }
 
     private:
-        constexpr explicit reference(uint8_t* data, uint8_t position) : data_ { data }, position_ { position } { }
+        constexpr explicit reference(uint8_t* data, uint8_t position) : _data { data }, _position { position } { }
 
         friend bitset;
-        uint8_t* data_;
-        uint8_t position_;
+        uint8_t* _data;
+        uint8_t _position;
     };
 
     /// \brief Constructs a bitset with all bits set to zero.
@@ -136,7 +136,7 @@ struct bitset {
     /// \brief Sets all bits to true.
     constexpr auto set() noexcept -> bitset<N>&
     {
-        for (auto& b : bits_) { b = etl::numeric_limits<uint8_t>::max(); }
+        for (auto& b : _bits) { b = etl::numeric_limits<uint8_t>::max(); }
         return *this;
     }
 
@@ -161,7 +161,7 @@ struct bitset {
     /// \brief Sets all bits to false.
     constexpr auto reset() noexcept -> bitset<N>&
     {
-        bits_.fill(0);
+        _bits.fill(0);
         return *this;
     }
 
@@ -180,7 +180,7 @@ struct bitset {
     /// \brief Flips all bits (like operator~, but in-place).
     constexpr auto flip() noexcept -> bitset<N>&
     {
-        for (auto& b : bits_) { b = ~b; }
+        for (auto& b : _bits) { b = ~b; }
         return *this;
     }
 
@@ -261,7 +261,7 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] &= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] &= other._bits[i]; }
         return *this;
     }
 
@@ -269,7 +269,7 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] |= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] |= other._bits[i]; }
         return *this;
     }
 
@@ -277,7 +277,7 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { bits_[i] ^= other.bits_[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] ^= other._bits[i]; }
         return *this;
     }
 
@@ -322,13 +322,13 @@ private:
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
     {
         TETL_ASSERT(pos < size());
-        return bits_[pos >> 3U];
+        return _bits[pos >> 3U];
     }
 
     [[nodiscard]] constexpr auto byte_for_position(size_t pos) -> uint8_t&
     {
         TETL_ASSERT(pos < size());
-        return bits_[pos >> 3U];
+        return _bits[pos >> 3U];
     }
 
     [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t { return pos & 0x7U; }
@@ -346,7 +346,7 @@ private:
     }
 
     static constexpr size_t allocated_ = N >> 3U;
-    array<uint8_t, allocated_> bits_   = {};
+    array<uint8_t, allocated_> _bits   = {};
 };
 
 /// \brief Performs binary AND between two bitsets, lhs and rhs.

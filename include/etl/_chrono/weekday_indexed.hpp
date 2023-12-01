@@ -10,20 +10,20 @@ namespace etl::chrono {
 struct weekday_indexed {
     weekday_indexed() = default;
     constexpr weekday_indexed(chrono::weekday const& wd, uint32_t index) noexcept
-        : wd_ { wd }, index_ { static_cast<uint8_t>(index) }
+        : _wd { wd }, _index { static_cast<uint8_t>(index) }
     {
     }
 
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return wd_; }
-    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return index_; }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wd; }
+    [[nodiscard]] constexpr auto index() const noexcept -> uint32_t { return _index; }
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
-        return weekday().ok() and ((index_ >= 1) and (index_ <= 5));
+        return weekday().ok() and ((_index >= 1) and (_index <= 5));
     }
 
 private:
-    chrono::weekday wd_;
-    uint8_t index_;
+    chrono::weekday _wd;
+    uint8_t _index;
 };
 
 [[nodiscard]] constexpr auto operator==(weekday_indexed const& lhs, weekday_indexed const& rhs) noexcept -> bool

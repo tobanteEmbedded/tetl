@@ -59,10 +59,10 @@ public:
         if constexpr (rank_dynamic() == 0) {
             return static_cast<size_type>(static_extent(i));
         } else if constexpr (rank_dynamic() == rank()) {
-            return extents_[static_cast<size_t>(i)];
+            return _extents[static_cast<size_t>(i)];
         } else {
             if (auto const ext = static_extent(i); ext != dynamic_extent) { return static_cast<size_type>(ext); }
-            return extents_[static_cast<size_t>(_dynamic_index(i))];
+            return _extents[static_cast<size_t>(_dynamic_index(i))];
         }
     }
 
@@ -81,7 +81,7 @@ public:
     {
         if constexpr (rank_dynamic() > 0) {
             for (rank_type i { 0 }; i < rank(); ++i) {
-                if (e.static_extent(i) == dynamic_extent) { extents_[_dynamic_index(i)] = e.extent(i); }
+                if (e.static_extent(i) == dynamic_extent) { _extents[_dynamic_index(i)] = e.extent(i); }
             }
         }
     }
@@ -95,7 +95,7 @@ public:
     explicit constexpr extents(OtherSizeTypes... es) noexcept
     {
         auto const ext = array<size_type, sizeof...(OtherSizeTypes)> { static_cast<size_type>(es)... };
-        copy(ext.begin(), ext.end(), extents_.begin());
+        copy(ext.begin(), ext.end(), _extents.begin());
     }
 
     template <typename OtherSizeType, size_t N>
@@ -122,7 +122,7 @@ private:
     struct empty_array_t { };
     using array_t = conditional_t<rank_dynamic() == 0, empty_array_t, array<size_type, rank_dynamic()>>;
 
-    array_t extents_ {};
+    array_t _extents {};
 };
 
 namespace detail {

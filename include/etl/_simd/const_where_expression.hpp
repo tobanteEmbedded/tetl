@@ -18,8 +18,8 @@ struct const_where_expression {
     auto copy_to(U* mem, Flags f) const&& -> void;
 
 private:
-    M const mask_;
-    T& data_;
+    M const _mask;
+    T& _data;
 };
 
 } // namespace etl

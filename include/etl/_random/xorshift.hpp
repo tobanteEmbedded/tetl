@@ -16,12 +16,12 @@ struct xorshift {
     static constexpr auto default_seed = result_type { 5489U };
 
     constexpr xorshift() = default;
-    explicit constexpr xorshift(result_type seed) noexcept : state_ { seed } { }
+    explicit constexpr xorshift(result_type seed) noexcept : _state { seed } { }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<result_type>::min(); }
     [[nodiscard]] static constexpr auto max() noexcept -> result_type { return numeric_limits<result_type>::max() - 1; }
 
-    constexpr auto seed(result_type value = default_seed) noexcept -> void { state_ = value; }
+    constexpr auto seed(result_type value = default_seed) noexcept -> void { _state = value; }
 
     constexpr auto discard(unsigned long long z) noexcept -> void
     {
@@ -30,16 +30,16 @@ struct xorshift {
 
     [[nodiscard]] constexpr auto operator()() noexcept -> result_type
     {
-        auto s = state_;
+        auto s = _state;
         s ^= s << result_type(X);
         s ^= s >> result_type(Y);
         s ^= s << result_type(Z);
-        return state_ = s;
+        return _state = s;
     }
 
     [[nodiscard]] friend constexpr auto operator==(xorshift const& lhs, xorshift const& rhs) noexcept -> bool
     {
-        return lhs.state_ == rhs.state_;
+        return lhs._state == rhs._state;
     }
 
     [[nodiscard]] friend constexpr auto operator!=(xorshift const& lhs, xorshift const& rhs) noexcept -> bool
@@ -48,7 +48,7 @@ struct xorshift {
     }
 
 private:
-    result_type state_ { default_seed };
+    result_type _state { default_seed };
 };
 
 /// \brief 16-bit pseudo number generator

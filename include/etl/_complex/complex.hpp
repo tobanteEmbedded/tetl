@@ -42,76 +42,76 @@ struct complex {
     constexpr auto operator/=(complex<X> const& val) -> complex<T>&;
 
 private:
-    value_type real_;
-    value_type imag_;
+    value_type _real;
+    value_type _imag;
 };
 
 template <typename T>
-constexpr complex<T>::complex(T const& re, T const& im) : real_ { re }, imag_ { im }
+constexpr complex<T>::complex(T const& re, T const& im) : _real { re }, _imag { im }
 {
 }
 
 template <typename T>
-constexpr complex<T>::complex(complex const& other) : real_ { other.real() }, imag_ { other.imag() }
+constexpr complex<T>::complex(complex const& other) : _real { other.real() }, _imag { other.imag() }
 {
 }
 
 template <typename T>
 template <typename X>
-constexpr complex<T>::complex(complex<X> const& other) : real_ { other.real() }, imag_ { other.imag() }
+constexpr complex<T>::complex(complex<X> const& other) : _real { other.real() }, _imag { other.imag() }
 {
 }
 
 template <typename T>
 constexpr auto complex<T>::operator=(complex const& other) -> complex&
 {
-    real_ = other.real_;
-    imag_ = other.imag_;
+    _real = other._real;
+    _imag = other._imag;
     return *this;
 }
 
 template <typename T>
 constexpr auto complex<T>::real() const -> T
 {
-    return real_;
+    return _real;
 }
 
 template <typename T>
 constexpr auto complex<T>::real(T const val) -> void
 {
-    real_ = val;
+    _real = val;
 }
 
 template <typename T>
 constexpr auto complex<T>::imag() const -> T
 {
-    return imag_;
+    return _imag;
 }
 
 template <typename T>
 constexpr auto complex<T>::imag(T const val) -> void
 {
-    imag_ = val;
+    _imag = val;
 }
 
 template <typename T>
 constexpr auto complex<T>::operator=(T const& val) -> complex<T>&
 {
-    real_ = val;
+    _real = val;
     return *this;
 }
 
 template <typename T>
 constexpr auto complex<T>::operator+=(T const& val) -> complex<T>&
 {
-    real_ += val;
+    _real += val;
     return *this;
 }
 
 template <typename T>
 constexpr auto complex<T>::operator-=(T const& val) -> complex<T>&
 {
-    real_ -= val;
+    _real -= val;
     return *this;
 }
 
@@ -133,8 +133,8 @@ template <typename T>
 template <typename X>
 constexpr auto complex<T>::operator+=(complex<X> const& val) -> complex<T>&
 {
-    real_ += val.real();
-    imag_ += val.imag();
+    _real += val.real();
+    _imag += val.imag();
     return *this;
 }
 
@@ -142,8 +142,8 @@ template <typename T>
 template <typename X>
 constexpr auto complex<T>::operator-=(complex<X> const& val) -> complex<T>&
 {
-    real_ -= val.real();
-    imag_ -= val.imag();
+    _real -= val.real();
+    _imag -= val.imag();
     return *this;
 }
 
@@ -151,9 +151,9 @@ template <typename T>
 template <typename X>
 constexpr auto complex<T>::operator*=(complex<X> const& val) -> complex<T>&
 {
-    auto const r = real_ * val.real() - imag_ * val.imag();
-    imag_        = real_ * val.imag() + imag_ * val.real();
-    real_        = r;
+    auto const r = _real * val.real() - _imag * val.imag();
+    _imag        = _real * val.imag() + _imag * val.real();
+    _real        = r;
     return *this;
 }
 
@@ -167,10 +167,10 @@ constexpr auto complex<T>::operator/=(complex<X> const& val) -> complex<T>&
         return x * x + y * y;
     };
 
-    auto const r = real_ * val.real() + imag_ * val.imag();
+    auto const r = _real * val.real() + _imag * val.imag();
     auto const n = norm(val);
-    imag_        = (imag_ * val.real() - real_ * val.imag()) / n;
-    real_        = r / n;
+    _imag        = (_imag * val.real() - _real * val.imag()) / n;
+    _real        = r / n;
     return *this;
 }
 

@@ -60,18 +60,18 @@ struct queue {
     [[nodiscard]] auto messages_waiting() const -> etl::uint32_t;
 
 private:
-    QueueHandle_t handle_ = nullptr;
+    QueueHandle_t _handle = nullptr;
 };
 
 template <typename T, etl::uint32_t Size>
-inline queue<T, Size>::queue() : handle_ { []() { return xQueueCreate(Size, sizeof(T)); }() }
+inline queue<T, Size>::queue() : _handle { []() { return xQueueCreate(Size, sizeof(T)); }() }
 {
 }
 
 template <typename T, etl::uint32_t Size>
 inline queue<T, Size>::~queue()
 {
-    if (handle_ != nullptr) { vQueueDelete(handle_); }
+    if (_handle != nullptr) { vQueueDelete(_handle); }
 }
 
 template <typename T, etl::uint32_t Size>
@@ -84,7 +84,7 @@ template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::send(T const& data, TickType_t ticksToWait) const -> bool
 {
     auto const* const rawData = static_cast<void const*>(&data);
-    auto const success        = xQueueSend(handle_, rawData, ticksToWait);
+    auto const success        = xQueueSend(_handle, rawData, ticksToWait);
     return static_cast<bool>(success);
 }
 
@@ -92,7 +92,7 @@ template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::receive(T& data, TickType_t ticksToWait) const -> bool
 {
     auto* const rawData = static_cast<void*>(&data);
-    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+    auto const success  = xQueueReceive(_handle, rawData, ticksToWait);
     return static_cast<bool>(success);
 }
 
@@ -101,21 +101,21 @@ inline auto queue<T, Size>::receive(TickType_t ticksToWait) const -> pair<bool, 
 {
     auto value          = T {};
     auto* const rawData = static_cast<void*>(&value);
-    auto const success  = xQueueReceive(handle_, rawData, ticksToWait);
+    auto const success  = xQueueReceive(_handle, rawData, ticksToWait);
     return { static_cast<bool>(success), value };
 }
 
 template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::reset() const -> bool
 {
-    auto const result = xQueueReset(handle_);
+    auto const result = xQueueReset(_handle);
     return static_cast<bool>(result);
 }
 
 template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::messages_waiting() const -> etl::uint32_t
 {
-    auto const result = uxQueueMessagesWaiting(handle_);
+    auto const result = uxQueueMessagesWaiting(_handle);
     return static_cast<etl::uint32_t>(result);
 }
 } // namespace etl::experimental::freertos

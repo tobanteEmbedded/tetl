@@ -8,13 +8,13 @@
 namespace etl::chrono {
 
 struct weekday_last {
-    constexpr explicit weekday_last(chrono::weekday const& wd) noexcept : wd_ { wd } { }
+    constexpr explicit weekday_last(chrono::weekday const& wd) noexcept : _wd { wd } { }
 
-    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return wd_; }
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return wd_.ok(); }
+    [[nodiscard]] constexpr auto weekday() const noexcept -> chrono::weekday { return _wd; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd.ok(); }
 
 private:
-    chrono::weekday wd_;
+    chrono::weekday _wd;
 };
 
 } // namespace etl::chrono

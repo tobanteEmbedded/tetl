@@ -57,7 +57,7 @@ struct mdspan {
             and is_default_constructible_v<mapping_type>
             and is_default_constructible_v<accessor_type>
         )
-        : acc_ {}, map_ {}, ptr_ {}
+        : _acc {}, _map {}, _ptr {}
     {
     }
 
@@ -71,7 +71,7 @@ struct mdspan {
             and is_default_constructible_v<accessor_type>
         )
     explicit constexpr mdspan(data_handle_type ptr, OtherSizeTypes... exts)
-        :  map_(extents_type(static_cast<size_type>(move(exts))...)),ptr_(move(ptr))
+        :  _map(extents_type(static_cast<size_type>(move(exts))...)),_ptr(move(ptr))
     {
     }
 
@@ -80,20 +80,20 @@ struct mdspan {
     // Constructor (5)
     constexpr mdspan(data_handle_type ptr, extents_type const& ext)
         requires(is_constructible_v<mapping_type, mapping_type const&> and is_default_constructible_v<accessor_type>)
-        : map_(ext), ptr_(move(ptr))
+        : _map(ext), _ptr(move(ptr))
     {
     }
 
     // Constructor (6)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m)
         requires(is_default_constructible_v<accessor_type>)
-        : map_(m), ptr_(move(ptr))
+        : _map(m), _ptr(move(ptr))
     {
     }
 
     // Constructor (7)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m, accessor_type const& a)
-        : acc_(a), map_(m), ptr_(move(ptr))
+        : _acc(a), _map(m), _ptr(move(ptr))
     {
     }
 
@@ -109,7 +109,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
-        return acc_.access(ptr_, map_(static_cast<index_type>(move(indices))...));
+        return _acc.access(_ptr, _map(static_cast<index_type>(move(indices))...));
     }
 
 #if defined(__cpp_multidimensional_subscript)
@@ -121,7 +121,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
     {
-        return acc_.access(ptr_, map_(static_cast<index_type>(move(indices))...));
+        return _acc.access(_ptr, _map(static_cast<index_type>(move(indices))...));
     }
 #endif
     // clang-format on
@@ -133,24 +133,24 @@ struct mdspan {
 
     [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type {}; }
 
-    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return map_.extents(); }
-    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return ptr_; }
-    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return map_; }
-    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return acc_; }
+    [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
+    [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
+    [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
+    [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
 
     static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
     static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
     static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
-    [[nodiscard]] constexpr auto is_unique() const -> bool { return map_.is_unique(); }
-    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return map_.is_exhaustive(); }
-    [[nodiscard]] constexpr auto is_strided() const -> bool { return map_.is_strided(); }
-    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return map_.stride(r); }
+    [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
+    [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
+    [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+    [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
 
 private:
-    accessor_type acc_;    // NOLINT(modernize-use-default-member-init)
-    mapping_type map_;     // NOLINT(modernize-use-default-member-init)
-    data_handle_type ptr_; // NOLINT(modernize-use-default-member-init)
+    accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
+    mapping_type _map;     // NOLINT(modernize-use-default-member-init)
+    data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)
 };
 
 template <typename CArray>

@@ -18,7 +18,7 @@ struct half {
     constexpr half(binary_t /*tag*/, storage_type bits);
 
 private:
-    storage_type bits_ { 0 };
+    storage_type _bits { 0 };
 };
 
 [[nodiscard]] constexpr auto isfinite(half arg) noexcept -> bool;
@@ -35,12 +35,12 @@ inline constexpr etl::half::storage_type inf_mask { 0b0111'1111'1111'1111 };
 inline constexpr etl::half::storage_type sign_mask { 0b1000'0000'0000'0000 };
 } // namespace detail
 
-constexpr half::half(binary_t /*tag*/, half::storage_type bits) : bits_ { bits }
+constexpr half::half(binary_t /*tag*/, half::storage_type bits) : _bits { bits }
 {
     // [tobi] This needs to be here, or clang will complain about an unused
     // member. All free functions use bit_cast to access the underlying bits of
     // the half float, so no "getter" method exists.
-    (void)bits_;
+    (void)_bits;
 }
 
 constexpr auto isfinite(half arg) noexcept -> bool

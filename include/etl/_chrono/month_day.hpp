@@ -11,10 +11,10 @@ namespace etl::chrono {
 
 struct month_day {
     month_day() = default;
-    constexpr month_day(chrono::month const& m, chrono::day const& d) noexcept : m_ { m }, d_ { d } { }
+    constexpr month_day(chrono::month const& m, chrono::day const& d) noexcept : _m { m }, _d { d } { }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
-    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return d_; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto day() const noexcept -> chrono::day { return _d; }
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
         constexpr auto maxDaysInMonth = array<uint8_t, 12> { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -24,8 +24,8 @@ struct month_day {
     }
 
 private:
-    chrono::month m_;
-    chrono::day d_;
+    chrono::month _m;
+    chrono::day _d;
 };
 
 } // namespace etl::chrono

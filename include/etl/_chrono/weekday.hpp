@@ -12,13 +12,13 @@ namespace etl::chrono {
 
 struct weekday {
     weekday() = default;
-    constexpr explicit weekday(uint32_t wd) noexcept : wd_ { static_cast<etl::uint8_t>(wd == 7 ? 0 : wd) } { }
+    constexpr explicit weekday(uint32_t wd) noexcept : _wd { static_cast<etl::uint8_t>(wd == 7 ? 0 : wd) } { }
     constexpr weekday(sys_days const& dp) noexcept
-        : wd_ { static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count())) }
+        : _wd { static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count())) }
     {
     }
     constexpr explicit weekday(local_days const& dp) noexcept
-        : wd_ { static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count())) }
+        : _wd { static_cast<uint8_t>(weekday_from_days(dp.time_since_epoch().count())) }
     {
     }
 
@@ -29,20 +29,20 @@ struct weekday {
 
     constexpr auto operator+=(days const& d) noexcept -> weekday&
     {
-        wd_ += d.count();
-        wd_ %= 7;
+        _wd += d.count();
+        _wd %= 7;
         return *this;
     }
     constexpr auto operator-=(days const& d) noexcept -> weekday&
     {
-        wd_ -= d.count();
-        wd_ %= 7;
+        _wd -= d.count();
+        _wd %= 7;
         return *this;
     }
 
-    [[nodiscard]] constexpr auto c_encoding() const noexcept -> uint32_t { return wd_; }
-    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> uint32_t { return wd_ == 0U ? 7U : wd_; }
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return wd_ < 7U; }
+    [[nodiscard]] constexpr auto c_encoding() const noexcept -> uint32_t { return _wd; }
+    [[nodiscard]] constexpr auto iso_encoding() const noexcept -> uint32_t { return _wd == 0U ? 7U : _wd; }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _wd < 7U; }
 
     // [[nodiscard]] constexpr auto operator[](uint32_t index) const noexcept -> weekday_indexed { }
     // [[nodiscard]] constexpr auto operator[](last_spec) const noexcept -> weekday_last { }
@@ -53,7 +53,7 @@ private:
         return static_cast<uint32_t>(tp >= -4 ? (tp + 4) % 7 : (tp + 5) % 7 + 6);
     }
 
-    etl::uint8_t wd_;
+    etl::uint8_t _wd;
 };
 
 [[nodiscard]] constexpr auto operator==(weekday const& lhs, weekday const& rhs) noexcept -> bool

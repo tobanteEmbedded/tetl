@@ -30,12 +30,12 @@ struct bernoulli_distribution {
 
     constexpr bernoulli_distribution() noexcept : bernoulli_distribution { 0.5 } { }
     explicit constexpr bernoulli_distribution(double p) noexcept : bernoulli_distribution { param_type { p } } { }
-    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : param_ { parm } { }
+    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : _param { parm } { }
 
-    [[nodiscard]] constexpr auto p() const noexcept -> double { return param_.p(); }
+    [[nodiscard]] constexpr auto p() const noexcept -> double { return _param.p(); }
 
-    constexpr auto param(param_type const& parm) noexcept -> void { param_ = parm; }
-    [[nodiscard]] constexpr auto param() const noexcept -> param_type { return param_; }
+    constexpr auto param(param_type const& parm) noexcept -> void { _param = parm; }
+    [[nodiscard]] constexpr auto param() const noexcept -> param_type { return _param; }
 
     [[nodiscard]] constexpr auto min() const noexcept -> result_type
     {
@@ -53,7 +53,7 @@ struct bernoulli_distribution {
     template <typename URBG>
     [[nodiscard]] constexpr auto operator()(URBG& g) noexcept(noexcept(g())) -> result_type
     {
-        return (*this)(g, param_);
+        return (*this)(g, _param);
     }
 
     template <typename URBG>
@@ -74,7 +74,7 @@ struct bernoulli_distribution {
     }
 
 private:
-    param_type param_;
+    param_type _param;
 };
 
 } // namespace etl

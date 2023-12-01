@@ -7,12 +7,12 @@ namespace etl {
 
 struct exception {
     constexpr exception() = default;
-    constexpr explicit exception(char const* what) : what_ { what } { }
+    constexpr explicit exception(char const* what) : _what { what } { }
 
-    [[nodiscard]] constexpr auto what() const noexcept -> char const* { return what_; }
+    [[nodiscard]] constexpr auto what() const noexcept -> char const* { return _what; }
 
 private:
-    char const* what_ { nullptr };
+    char const* _what { nullptr };
 };
 
 } // namespace etl

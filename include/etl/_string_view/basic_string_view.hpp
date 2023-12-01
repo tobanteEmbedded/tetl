@@ -68,14 +68,14 @@ struct basic_string_view {
     /// range (even though the constructor may not access any of the elements of
     /// this range). After construction, data() is equal to s, and size() is
     /// equal to count.
-    constexpr basic_string_view(CharType const* str, size_type size) : begin_ { str }, size_ { size } { }
+    constexpr basic_string_view(CharType const* str, size_type size) : _begin { str }, _size { size } { }
 
     /// \brief Constructs a view of the null-terminated character string pointed
     /// to by s, not including the terminating null character. The length of the
     /// view is determined as if by Traits::length(s). The behavior is undefined
     /// if [s, s+Traits::length(s)) is not a valid range. After construction,
     /// data() is equal to s, and size() is equal to Traits::length(s).
-    constexpr basic_string_view(CharType const* str) : begin_ { str }, size_ { traits_type::length(str) } { }
+    constexpr basic_string_view(CharType const* str) : _begin { str }, _size { traits_type::length(str) } { }
 
     constexpr basic_string_view(nullptr_t /*null*/) = delete;
 
@@ -99,7 +99,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return cbegin(); }
 
     /// \brief Returns an iterator to the first character of the view.
-    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin_; }
+    [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return _begin; }
 
     /// \brief Returns an iterator to the character following the last character
     /// of the view. This character acts as a placeholder, attempting to access
@@ -109,7 +109,7 @@ struct basic_string_view {
     /// \brief Returns an iterator to the character following the last character
     /// of the view. This character acts as a placeholder, attempting to access
     /// it results in undefined behavior.
-    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return begin_ + size_; }
+    [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return _begin + _size; }
 
     /// \brief Returns a reverse iterator to the first character of the reversed
     /// view. It corresponds to the last character of the non-reversed view.
@@ -152,12 +152,12 @@ struct basic_string_view {
 
     /// \brief Returns reference to the last character in the view. The behavior
     /// is undefined if empty() == true.
-    [[nodiscard]] constexpr auto back() const -> const_reference { return unsafe_at(size_ - 1); }
+    [[nodiscard]] constexpr auto back() const -> const_reference { return unsafe_at(_size - 1); }
 
     /// \brief Returns a pointer to the underlying character array. The pointer
     /// is such that the range [data(); data() + size()) is valid and the values
     /// in it correspond to the values of the view.
-    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return begin_; }
+    [[nodiscard]] constexpr auto data() const noexcept -> const_pointer { return _begin; }
 
     /// \brief Returns the number of CharT elements in the view, i.e.
     /// etl::distance(begin(), end()).
@@ -165,33 +165,33 @@ struct basic_string_view {
 
     /// \brief Returns the number of CharT elements in the view, i.e.
     /// etl::distance(begin(), end()).
-    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return size_; }
+    [[nodiscard]] constexpr auto length() const noexcept -> size_type { return _size; }
 
     /// \brief The largest possible number of char-like objects that can be
     /// referred to by a basic_string_view.
     [[nodiscard]] constexpr auto max_size() const noexcept -> size_type { return size_type(-1); }
 
     /// \brief Checks if the view has no characters, i.e. whether size() == 0.
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size_ == 0; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return _size == 0; }
 
     /// \brief Moves the start of the view forward by n characters. The behavior
     /// is undefined if n > size().
     constexpr auto remove_prefix(size_type n) -> void
     {
-        begin_ += n;
-        size_ -= n;
+        _begin += n;
+        _size -= n;
     }
 
     /// \brief Moves the end of the view back by n characters. The behavior is
     /// undefined if n > size().
-    constexpr auto remove_suffix(size_type n) -> void { size_ = size_ - n; }
+    constexpr auto remove_suffix(size_type n) -> void { _size = _size - n; }
 
     /// \brief Exchanges the view with that of v.
     constexpr void swap(basic_string_view& v) noexcept
     {
         using etl::swap;
-        swap(begin_, v.begin_);
-        swap(size_, v.size_);
+        swap(_begin, v._begin);
+        swap(_size, v._size);
     }
 
     /// \brief Copies the substring [pos, pos + rcount) to the character array
@@ -209,7 +209,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_string_view
     {
         auto const rcount = etl::min(count, size() - pos);
-        return basic_string_view { begin_ + pos, rcount };
+        return basic_string_view { _begin + pos, rcount };
     }
 
     /// \brief Compares two character sequences.
@@ -633,10 +633,10 @@ struct basic_string_view {
     static constexpr size_type npos = size_type(-1);
 
 private:
-    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference { return begin_[pos]; }
+    [[nodiscard]] constexpr auto unsafe_at(size_type pos) const -> const_reference { return _begin[pos]; }
 
-    const_pointer begin_ = nullptr;
-    size_type size_      = 0;
+    const_pointer _begin = nullptr;
+    size_type _size      = 0;
 };
 
 /// \brief Compares two views. All comparisons are done via the compare() member

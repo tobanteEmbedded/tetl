@@ -44,34 +44,34 @@ struct layout_transpose {
     struct mapping {
     private:
         using nested_mapping_t = typename Layout::template mapping<detail::transpose_extents_t<Extents>>;
-        nested_mapping_t nestedMapping_;
+        nested_mapping_t _nestedMapping;
 
     public:
         using extents_type = Extents;
         using size_type    = typename extents_type::size_type;
         using layout_type  = layout_transpose;
 
-        constexpr explicit mapping(nested_mapping_t const& map) : nestedMapping_ { map } { }
+        constexpr explicit mapping(nested_mapping_t const& map) : _nestedMapping { map } { }
 
-        [[nodiscard]] constexpr auto extents() const noexcept(noexcept(nestedMapping_.extents())) -> extents_type
+        [[nodiscard]] constexpr auto extents() const noexcept(noexcept(_nestedMapping.extents())) -> extents_type
         {
-            return detail::transpose_extents(nestedMapping_.extents());
+            return detail::transpose_extents(_nestedMapping.extents());
         }
 
-        [[nodiscard]] constexpr auto required_span_size() const noexcept(noexcept(nestedMapping_.required_span_size()))
+        [[nodiscard]] constexpr auto required_span_size() const noexcept(noexcept(_nestedMapping.required_span_size()))
             -> size_type
         {
-            return nestedMapping_.required_span_size();
+            return _nestedMapping.required_span_size();
         }
 
         template <typename IndexType, typename... Indices>
         [[nodiscard]] constexpr auto operator()(Indices... rest, IndexType i, IndexType j) const
-            noexcept(noexcept(nestedMapping_(rest..., j, i))) -> typename Extents::size_type
+            noexcept(noexcept(_nestedMapping(rest..., j, i))) -> typename Extents::size_type
         {
-            return nestedMapping_(rest..., j, i);
+            return _nestedMapping(rest..., j, i);
         }
 
-        [[nodiscard]] constexpr auto nested_mapping() const -> nested_mapping_t { return nestedMapping_; }
+        [[nodiscard]] constexpr auto nested_mapping() const -> nested_mapping_t { return _nestedMapping; }
 
         [[nodiscard]] static constexpr auto is_always_unique() -> bool { return nested_mapping_t::is_always_unique(); }
 
@@ -85,34 +85,34 @@ struct layout_transpose {
             return nested_mapping_t::is_always_strided();
         }
 
-        [[nodiscard]] constexpr auto is_unique() const noexcept(noexcept(nestedMapping_.is_unique())) -> bool
+        [[nodiscard]] constexpr auto is_unique() const noexcept(noexcept(_nestedMapping.is_unique())) -> bool
         {
-            return nestedMapping_.is_unique();
+            return _nestedMapping.is_unique();
         }
 
-        [[nodiscard]] constexpr auto is_contiguous() const noexcept(noexcept(nestedMapping_.is_contiguous())) -> bool
+        [[nodiscard]] constexpr auto is_contiguous() const noexcept(noexcept(_nestedMapping.is_contiguous())) -> bool
         {
-            return nestedMapping_.is_contiguous();
+            return _nestedMapping.is_contiguous();
         }
 
-        [[nodiscard]] constexpr auto is_strided() const noexcept(noexcept(nestedMapping_.is_strided())) -> bool
+        [[nodiscard]] constexpr auto is_strided() const noexcept(noexcept(_nestedMapping.is_strided())) -> bool
         {
-            return nestedMapping_.is_strided();
+            return _nestedMapping.is_strided();
         }
 
-        [[nodiscard]] constexpr auto stride(size_t r) const noexcept(noexcept(nestedMapping_.stride(r))) -> size_type
+        [[nodiscard]] constexpr auto stride(size_t r) const noexcept(noexcept(_nestedMapping.stride(r))) -> size_type
             requires(is_always_strided())
         {
-            if (r == Extents::rank() - 1) { return nestedMapping_.stride(r - 2); }
-            if (r == Extents::rank() - 2) { return nestedMapping_.stride(r - 1); }
-            return nestedMapping_.stride(r);
+            if (r == Extents::rank() - 1) { return _nestedMapping.stride(r - 2); }
+            if (r == Extents::rank() - 2) { return _nestedMapping.stride(r - 1); }
+            return _nestedMapping.stride(r);
         }
 
         template <typename OtherExtents>
             requires(Extents::rank() == OtherExtents::rank())
         friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool
         {
-            return lhs.nestedMapping_ == rhs.nested_mapping_;
+            return lhs._nestedMapping == rhs.nested_mapping_;
         }
     };
 };

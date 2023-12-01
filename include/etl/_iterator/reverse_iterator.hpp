@@ -35,18 +35,18 @@ struct reverse_iterator {
     /// value-initialized. Operations on the resulting iterator have defined
     /// behavior if and only if the corresponding operations on a
     /// value-initialized Iterator also have defined behavior.
-    constexpr reverse_iterator() : current_() { }
+    constexpr reverse_iterator() : _current() { }
 
     /// \brief Constructs a new iterator adaptor.
     ///
     /// \details The underlying iterator is initialized with x.
-    constexpr explicit reverse_iterator(Iter x) : current_(x) { }
+    constexpr explicit reverse_iterator(Iter x) : _current(x) { }
 
     /// \brief Constructs a new iterator adaptor.
     ///
     /// \details The underlying iterator is initialized with that of other.
     template <typename Other>
-    constexpr reverse_iterator(reverse_iterator<Other> const& other) : current_(other.base())
+    constexpr reverse_iterator(reverse_iterator<Other> const& other) : _current(other.base())
     {
     }
 
@@ -55,17 +55,17 @@ struct reverse_iterator {
     template <typename Other>
     constexpr auto operator=(reverse_iterator<Other> const& other) -> reverse_iterator&
     {
-        current_ = other.base();
+        _current = other.base();
         return *this;
     }
 
     /// \brief Returns the underlying base iterator.
-    [[nodiscard]] constexpr auto base() const -> Iter { return current_; }
+    [[nodiscard]] constexpr auto base() const -> Iter { return _current; }
 
     /// \brief Returns a reference to the element previous to current.
     constexpr auto operator*() const -> reference
     {
-        auto tmp = current_;
+        auto tmp = _current;
         return *--tmp;
     }
 
@@ -75,7 +75,7 @@ struct reverse_iterator {
     /// \brief Pre-increments by one respectively.
     constexpr auto operator++() -> reverse_iterator&
     {
-        --current_;
+        --_current;
         return *this;
     }
 
@@ -83,14 +83,14 @@ struct reverse_iterator {
     constexpr auto operator++(int) -> reverse_iterator
     {
         auto tmp(*this);
-        --current_;
+        --_current;
         return tmp;
     }
 
     /// \brief Pre-decrements by one respectively.
     constexpr auto operator--() -> reverse_iterator&
     {
-        ++current_;
+        ++_current;
         return *this;
     }
 
@@ -98,27 +98,27 @@ struct reverse_iterator {
     constexpr auto operator--(int) -> reverse_iterator
     {
         auto tmp(*this);
-        ++current_;
+        ++_current;
         return tmp;
     }
 
     /// \brief Returns an iterator which is advanced by n positions.
-    constexpr auto operator+(difference_type n) const -> reverse_iterator { return reverse_iterator(current_ - n); }
+    constexpr auto operator+(difference_type n) const -> reverse_iterator { return reverse_iterator(_current - n); }
 
     /// \brief Advances the iterator by n or -n positions respectively.
     constexpr auto operator+=(difference_type n) -> reverse_iterator&
     {
-        current_ -= n;
+        _current -= n;
         return *this;
     }
 
     /// \brief Returns an iterator which is advanced by -n positions.
-    constexpr auto operator-(difference_type n) const -> reverse_iterator { return reverse_iterator(current_ + n); }
+    constexpr auto operator-(difference_type n) const -> reverse_iterator { return reverse_iterator(_current + n); }
 
     /// \brief Advances the iterator by n or -n positions respectively.
     constexpr auto operator-=(difference_type n) -> reverse_iterator&
     {
-        current_ += n;
+        _current += n;
         return *this;
     }
 
@@ -127,7 +127,7 @@ struct reverse_iterator {
     constexpr auto operator[](difference_type n) const -> reference { return *(*this + n); }
 
 private:
-    Iter current_;
+    Iter _current;
 };
 
 /// \brief Convenience function template that constructs a etl::reverse_iterator

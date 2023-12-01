@@ -35,36 +35,36 @@ struct tuple_leaf {
     auto get_type(integral_constant<size_t, I> ic) -> T;
 
     template <typename... Args>
-    constexpr tuple_leaf(Args&&... args) : value_ { forward<Args>(args)... }
+    constexpr tuple_leaf(Args&&... args) : _value { forward<Args>(args)... }
     {
     }
 
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) & noexcept -> T& { return value_; }
+    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) & noexcept -> T& { return _value; }
 
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const& noexcept -> T const&
     {
-        return value_;
+        return _value;
     }
 
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) && noexcept -> T&&
     {
-        return etl::move(value_);
+        return etl::move(_value);
     }
 
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const&& noexcept -> T const&&
     {
-        return etl::move(value_);
+        return etl::move(_value);
     }
 
     constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/, T& other) noexcept(is_nothrow_swappable_v<T>)
         -> void
     {
         using etl::swap;
-        swap(value_, other);
+        swap(_value, other);
     }
 
 private:
-    T value_;
+    T _value;
 };
 
 template <typename... Ts>
@@ -136,61 +136,61 @@ private:
     // clang-format off
 
     using impl_t = detail::tuple_impl<detail::make_tuple_indices<sizeof...(Ts)>, Ts...>;
-    impl_t impl_; // NOLINT(modernize-use-default-member-init)
+    impl_t _impl; // NOLINT(modernize-use-default-member-init)
 
     template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) &  noexcept -> auto&
     {
-        return impl_.get_impl(ic);
+        return _impl.get_impl(ic);
     }
 
     template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&  noexcept -> auto const&
     {
-        return impl_.get_impl(ic);
+        return _impl.get_impl(ic);
     }
 
     template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) && noexcept -> auto&&
     {
-        return move(impl_).get_impl(ic);
+        return move(_impl).get_impl(ic);
     }
 
     template <size_t I>
     [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&&  noexcept -> auto const&&
     {
-        return move(impl_).get_impl(ic);
+        return move(_impl).get_impl(ic);
     }
 
     template <size_t I>
-    auto get_type(integral_constant<size_t, I> ic) -> decltype(impl_.get_type(ic));
+    auto get_type(integral_constant<size_t, I> ic) -> decltype(_impl.get_type(ic));
     // clang-format on
 
 public:
     // No. 1
     explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple()
         requires((is_default_constructible_v<Ts> and ...))
-        : impl_()
+        : _impl()
     {
     }
 
     explicit(not(is_convertible_v<Ts const&, Ts> && ...)) constexpr tuple(Ts const&... args)
         requires((is_copy_constructible_v<Ts> && ...) && (sizeof...(Ts) > 0))
-        : impl_(args...)
+        : _impl(args...)
     {
     }
 
     // No. 3
     template <typename... Args>
         requires((is_constructible_v<Ts, Args&&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
-    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : impl_ { forward<Args>(args)... }
+    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl { forward<Args>(args)... }
     {
     }
 
     constexpr tuple(tuple const&)     = default;
     constexpr tuple(tuple&&) noexcept = default;
 
-    constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void { impl_.swap(other.impl_); }
+    constexpr auto swap(tuple& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void { _impl.swap(other._impl); }
 };
 
 template <typename... Ts>

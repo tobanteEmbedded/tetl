@@ -10,17 +10,17 @@ namespace etl::chrono {
 
 struct month_weekday {
     constexpr month_weekday(chrono::month const& m, chrono::weekday_indexed const& wdi) noexcept
-        : m_ { m }, wdi_ { wdi }
+        : _m { m }, _wdi { wdi }
     {
     }
 
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return m_; }
-    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return wdi_; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
+    [[nodiscard]] constexpr auto weekday_indexed() const noexcept -> chrono::weekday_indexed { return _wdi; }
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok() and weekday_indexed().ok(); }
 
 private:
-    chrono::month m_;
-    chrono::weekday_indexed wdi_;
+    chrono::month _m;
+    chrono::weekday_indexed _wdi;
 };
 
 } // namespace etl::chrono

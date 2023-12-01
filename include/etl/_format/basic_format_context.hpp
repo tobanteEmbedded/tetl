@@ -23,20 +23,20 @@ struct basic_format_context {
     using iterator  = OutputIt;
     using char_type = CharT;
 
-    explicit constexpr basic_format_context(OutputIt pos) noexcept : pos_ { pos } { }
+    explicit constexpr basic_format_context(OutputIt pos) noexcept : _pos { pos } { }
 
     template <typename T>
     using formatter_type = formatter<T, CharT>;
 
     /// \brief Returns the iterator to the output buffer.
-    [[nodiscard]] constexpr auto out() noexcept -> iterator { return pos_; }
+    [[nodiscard]] constexpr auto out() noexcept -> iterator { return _pos; }
 
     /// \brief Sets the output iterator to it. After a call to advance_to,
     /// subsequent calls to out() will return a copy of it.
-    constexpr auto advance_to(iterator it) noexcept -> void { pos_ = it; }
+    constexpr auto advance_to(iterator it) noexcept -> void { _pos = it; }
 
 private:
-    OutputIt pos_;
+    OutputIt _pos;
 };
 
 /// \brief Provides access to formatting state consisting of the formatting

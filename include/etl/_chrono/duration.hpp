@@ -55,7 +55,7 @@ struct duration {
     /// count can be constructed from an integer value
     template <typename Rep2>
         requires(is_convertible_v<Rep2, rep> and (treat_as_floating_point_v<rep> or !treat_as_floating_point_v<Rep2>))
-    constexpr explicit duration(Rep2 const& r) noexcept : rep_(r)
+    constexpr explicit duration(Rep2 const& r) noexcept : _rep(r)
     {
     }
 
@@ -80,7 +80,7 @@ struct duration {
         requires(treat_as_floating_point_v<rep>
                  or (ratio_divide<Period2, period>::den == 1 and not treat_as_floating_point_v<Rep2>))
     constexpr duration(duration<Rep2, Period2> const& other) noexcept
-        : rep_(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
+        : _rep(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
     {
     }
 
@@ -88,7 +88,7 @@ struct duration {
     auto operator=(duration const& other) -> duration& = default;
 
     /// \brief Returns the number of ticks for this duration.
-    [[nodiscard]] constexpr auto count() const -> rep { return rep_; }
+    [[nodiscard]] constexpr auto count() const -> rep { return _rep; }
 
     /// \brief Returns a zero-length duration.
     [[nodiscard]] static constexpr auto zero() noexcept -> duration
@@ -117,38 +117,38 @@ struct duration {
     /// \brief Implements unary plus and unary minus for the durations.
     [[nodiscard]] constexpr auto operator-() const -> etl::common_type_t<duration>
     {
-        return etl::common_type_t<duration>(-rep_);
+        return etl::common_type_t<duration>(-_rep);
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
     /// Equivalent to ++rep_; return *this;
     constexpr auto operator++() -> duration&
     {
-        ++rep_;
+        ++_rep;
         return *this;
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
     /// Equivalent to return duration(rep_++)
-    constexpr auto operator++(int) -> duration { return duration(rep_++); }
+    constexpr auto operator++(int) -> duration { return duration(_rep++); }
 
     /// \brief Increments or decrements the number of ticks for this duration.
     /// Equivalent to --rep_; return *this;
     constexpr auto operator--() -> duration&
     {
-        --rep_;
+        --_rep;
         return *this;
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
     /// Equivalent to return duration(rep_--);
-    constexpr auto operator--(int) -> duration { return duration(rep_--); }
+    constexpr auto operator--(int) -> duration { return duration(_rep--); }
 
     /// \brief Performs compound assignments between two durations with the same
     /// period or between a duration and a tick count value.
     constexpr auto operator+=(duration const& d) noexcept -> duration&
     {
-        rep_ += d.count();
+        _rep += d.count();
         return *this;
     }
 
@@ -156,7 +156,7 @@ struct duration {
     /// period or between a duration and a tick count value.
     constexpr auto operator-=(duration const& d) noexcept -> duration&
     {
-        rep_ -= d.count();
+        _rep -= d.count();
         return *this;
     }
 
@@ -164,7 +164,7 @@ struct duration {
     /// period or between a duration and a tick count value.
     constexpr auto operator*=(rep const& rhs) noexcept -> duration&
     {
-        rep_ *= rhs;
+        _rep *= rhs;
         return *this;
     }
 
@@ -172,7 +172,7 @@ struct duration {
     /// period or between a duration and a tick count value.
     constexpr auto operator/=(rep const& rhs) noexcept -> duration&
     {
-        rep_ /= rhs;
+        _rep /= rhs;
         return *this;
     }
 
@@ -180,7 +180,7 @@ struct duration {
     /// period or between a duration and a tick count value.
     constexpr auto operator%=(rep const& rhs) noexcept -> duration&
     {
-        rep_ %= rhs;
+        _rep %= rhs;
         return *this;
     }
 
@@ -188,12 +188,12 @@ struct duration {
     /// period or between a duration and a tick count value.
     constexpr auto operator%=(duration const& rhs) noexcept -> duration&
     {
-        rep_ %= rhs.count();
+        _rep %= rhs.count();
         return *this;
     }
 
 private:
-    rep rep_ {};
+    rep _rep {};
 };
 
 /// \brief Performs basic arithmetic operations between two durations or between

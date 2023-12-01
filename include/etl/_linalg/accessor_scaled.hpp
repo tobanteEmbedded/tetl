@@ -18,28 +18,28 @@ struct accessor_scaled {
     using data_handle_type = typename Accessor::data_handle_type;
     using offset_policy    = accessor_scaled<ScalingFactor, typename Accessor::offset_policy>;
 
-    constexpr accessor_scaled(ScalingFactor const& s, Accessor const& a) : scalingFactor_ { s }, nestedAccessor_ { a }
+    constexpr accessor_scaled(ScalingFactor const& s, Accessor const& a) : _scalingFactor { s }, _nestedAccessor { a }
     {
     }
 
     [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference
     {
-        return reference(scalingFactor_, nestedAccessor_.access(p, i));
+        return reference(_scalingFactor, _nestedAccessor.access(p, i));
     }
 
     [[nodiscard]] constexpr auto offset(data_handle_type p, size_t i) const noexcept ->
         typename offset_policy::data_handle_type
     {
-        return nestedAccessor_.offset(p, i);
+        return _nestedAccessor.offset(p, i);
     }
 
-    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor { return scalingFactor_; }
+    [[nodiscard]] constexpr auto scaling_factor() const -> ScalingFactor { return _scalingFactor; }
 
-    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor { return nestedAccessor_; }
+    [[nodiscard]] constexpr auto nested_accessor() const -> Accessor { return _nestedAccessor; }
 
 private:
-    ScalingFactor scalingFactor_;
-    Accessor nestedAccessor_;
+    ScalingFactor _scalingFactor;
+    Accessor _nestedAccessor;
 };
 
 } // namespace etl::linalg
