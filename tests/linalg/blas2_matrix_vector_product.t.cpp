@@ -12,13 +12,13 @@ template <typename T>
 {
     {
         // zeros
-        auto const mat_data = etl::array<T, 4> { T(0), T(0), T(0), T(0) };
-        auto const vec_data = etl::array<T, 2> { T(0), T(0) };
-        auto out_data       = etl::array<T, 2> { T(0), T(0) };
+        auto const matData = etl::array<T, 4> { T(0), T(0), T(0), T(0) };
+        auto const vecData = etl::array<T, 2> { T(0), T(0) };
+        auto outData       = etl::array<T, 2> { T(0), T(0) };
 
-        auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(mat_data.data());
-        auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vec_data.data());
-        auto out = etl::mdspan<T, etl::extents<int, 2>>(out_data.data());
+        auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(matData.data());
+        auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vecData.data());
+        auto out = etl::mdspan<T, etl::extents<int, 2>>(outData.data());
 
         etl::linalg::matrix_vector_product(mat, vec, out);
         assert(out(0) == T(0));
@@ -35,13 +35,13 @@ template <typename T>
 
     {
         // ones
-        auto const mat_data = etl::array<T, 4> { T(1), T(1), T(1), T(1) };
-        auto const vec_data = etl::array<T, 2> { T(1), T(1) };
-        auto out_data       = etl::array<T, 2> { T(0), T(0) };
+        auto const matData = etl::array<T, 4> { T(1), T(1), T(1), T(1) };
+        auto const vecData = etl::array<T, 2> { T(1), T(1) };
+        auto outData       = etl::array<T, 2> { T(0), T(0) };
 
-        auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(mat_data.data());
-        auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vec_data.data());
-        auto out = etl::mdspan<T, etl::extents<int, 2>>(out_data.data());
+        auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(matData.data());
+        auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vecData.data());
+        auto out = etl::mdspan<T, etl::extents<int, 2>>(outData.data());
 
         etl::linalg::matrix_vector_product(mat, vec, out);
         assert(out(0) == T(2));

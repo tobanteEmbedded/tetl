@@ -15,8 +15,8 @@ struct basic_format_parse_context {
     using const_iterator = typename basic_string_view<CharT>::const_iterator;
     using iterator       = const_iterator;
 
-    constexpr explicit basic_format_parse_context(basic_string_view<CharT> fmt, size_t num_args = 0) noexcept
-        : begin_ { fmt.begin() }, end_ { fmt.end() }, num_args_ { num_args }
+    constexpr explicit basic_format_parse_context(basic_string_view<CharT> fmt, size_t numArgs = 0) noexcept
+        : begin_ { fmt.begin() }, end_ { fmt.end() }, numArgs_ { numArgs }
     {
     }
 
@@ -27,8 +27,8 @@ struct basic_format_parse_context {
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return end_; }
     constexpr auto advance_to(const_iterator it) -> void { begin_ = it; }
 
-    [[nodiscard]] constexpr auto next_arg_id() -> size_t { return static_cast<size_t>(next_arg_id_++); }
-    constexpr auto check_arg_id(size_t /*id*/) -> void { next_arg_id_ = -1; }
+    [[nodiscard]] constexpr auto next_arg_id() -> size_t { return static_cast<size_t>(nextArgId_++); }
+    constexpr auto check_arg_id(size_t /*id*/) -> void { nextArgId_ = -1; }
 
 private:
     // next_arg_id_  > 0 means automatic
@@ -37,8 +37,8 @@ private:
 
     iterator begin_;
     iterator end_;
-    size_t num_args_;
-    ptrdiff_t next_arg_id_ {};
+    size_t numArgs_;
+    ptrdiff_t nextArgId_ {};
 };
 
 using format_parse_context  = basic_format_parse_context<char>;

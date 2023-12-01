@@ -16,17 +16,17 @@ struct fmt_buffer {
 
     template <typename It>
     fmt_buffer(It out) noexcept
-        : it_ { addressof(out) }, push_back_ { [](void* ptr, CharType ch) { (*static_cast<It*>(ptr)) = ch; } }
+        : it_ { addressof(out) }, pushBack_ { [](void* ptr, CharType ch) { (*static_cast<It*>(ptr)) = ch; } }
     {
     }
 
-    auto push_back(CharType ch) -> void { (push_back_)(it_, ch); }
+    auto push_back(CharType ch) -> void { (pushBack_)(it_, ch); }
 
 private:
     using push_back_func_t = void (*)(void*, CharType);
 
     void* it_;
-    push_back_func_t push_back_;
+    push_back_func_t pushBack_;
 };
 
 } // namespace etl::detail

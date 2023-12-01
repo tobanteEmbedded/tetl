@@ -20,60 +20,60 @@ struct strong_ordering {
 
     [[nodiscard]] constexpr operator partial_ordering() const noexcept
     {
-        return _value == 0 ? partial_ordering::equivalent
-                           : (_value < 0 ? partial_ordering::less : partial_ordering::greater);
+        return value_ == 0 ? partial_ordering::equivalent
+                           : (value_ < 0 ? partial_ordering::less : partial_ordering::greater);
     }
 
     [[nodiscard]] constexpr operator weak_ordering() const noexcept
     {
-        return _value == 0 ? weak_ordering::equivalent : (_value < 0 ? weak_ordering::less : weak_ordering::greater);
+        return value_ == 0 ? weak_ordering::equivalent : (value_ < 0 ? weak_ordering::less : weak_ordering::greater);
     }
 
     [[nodiscard]] friend constexpr auto operator==(strong_ordering, strong_ordering) noexcept -> bool = default;
 
     [[nodiscard]] friend constexpr auto operator==(strong_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._value == 0;
+        return v.value_ == 0;
     }
 
     [[nodiscard]] friend constexpr auto operator<(strong_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._value < 0;
+        return v.value_ < 0;
     }
 
     [[nodiscard]] friend constexpr auto operator<=(strong_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._value <= 0;
+        return v.value_ <= 0;
     }
 
     [[nodiscard]] friend constexpr auto operator>(strong_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._value > 0;
+        return v.value_ > 0;
     }
 
     [[nodiscard]] friend constexpr auto operator>=(strong_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._value >= 0;
+        return v.value_ >= 0;
     }
 
     [[nodiscard]] friend constexpr auto operator<(nullptr_t, strong_ordering v) noexcept -> bool
     {
-        return 0 < v._value;
+        return 0 < v.value_;
     }
 
     [[nodiscard]] friend constexpr auto operator<=(nullptr_t, strong_ordering v) noexcept -> bool
     {
-        return 0 <= v._value;
+        return 0 <= v.value_;
     }
 
     [[nodiscard]] friend constexpr auto operator>(nullptr_t, strong_ordering v) noexcept -> bool
     {
-        return 0 > v._value;
+        return 0 > v.value_;
     }
 
     [[nodiscard]] friend constexpr auto operator>=(nullptr_t, strong_ordering v) noexcept -> bool
     {
-        return 0 >= v._value;
+        return 0 >= v.value_;
     }
 
     [[nodiscard]] friend constexpr auto operator<=>(strong_ordering v, nullptr_t) noexcept -> strong_ordering
@@ -87,8 +87,8 @@ struct strong_ordering {
     }
 
 private:
-    constexpr explicit strong_ordering(detail::order_result v) noexcept : _value { static_cast<int8_t>(v) } { }
-    int8_t _value;
+    constexpr explicit strong_ordering(detail::order_result v) noexcept : value_ { static_cast<int8_t>(v) } { }
+    int8_t value_;
 };
 
 // clang-format off

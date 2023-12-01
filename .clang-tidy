@@ -59,11 +59,11 @@ Checks: >
   -performance-noexcept-move-constructor,
 
   readability-*,
+  readability-identifier-naming,
   -readability-container-size-empty,
   -readability-function-cognitive-complexity,
   -readability-suspicious-call-argument,
   -readability-function-size,
-  -readability-identifier-naming,
   -readability-identifier-length,
 
   -*-avoid-c-arrays,
@@ -95,5 +95,7 @@ CheckOptions:
     value: camelBack
   - key: readability-identifier-naming.PrivateMemberSuffix
     value: _
+  # - key: readability-identifier-naming.PrivateMemberPrefix
+  #   value: _
   - key: readability-identifier-naming.TemplateParameterCase
     value: CamelCase

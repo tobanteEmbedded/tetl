@@ -65,14 +65,14 @@ constexpr auto test() -> bool
     assert(diff.imag() == T(-2));
 
     // scaled_mul
-    auto scaled_mul = diff * T(2);
-    assert(scaled_mul.real() == T(-2));
-    assert(scaled_mul.imag() == T(-4));
+    auto scaledMul = diff * T(2);
+    assert(scaledMul.real() == T(-2));
+    assert(scaledMul.imag() == T(-4));
 
     // scaled_div
-    auto scaled_div = scaled_mul / T(2);
-    assert(scaled_div.real() == T(-1));
-    assert(scaled_div.imag() == T(-2));
+    auto scaledDiv = scaledMul / T(2);
+    assert(scaledDiv.real() == T(-1));
+    assert(scaledDiv.imag() == T(-2));
 
     {
         using namespace etl::complex_literals;

@@ -14,7 +14,7 @@ namespace detail {
 
 [[nodiscard]] constexpr auto last_day_of_month(chrono::year const& y, chrono::month const& m) -> chrono::day
 {
-    constexpr chrono::day last_days[] = {
+    constexpr chrono::day lastDays[] = {
         chrono::day { 31 },
         chrono::day { 28 },
         chrono::day { 31 },
@@ -30,14 +30,14 @@ namespace detail {
     };
 
     if (m == chrono::month { 2 } and y.is_leap()) { return chrono::day { 29 }; }
-    return last_days[(static_cast<uint32_t>(m) - 1) & static_cast<uint32_t>(0xF)];
+    return lastDays[(static_cast<uint32_t>(m) - 1) & static_cast<uint32_t>(0xF)];
 }
 
 } // namespace detail
 
 struct year_month_day_last {
     constexpr year_month_day_last(chrono::year const& y, chrono::month_day_last const& mdl) noexcept
-        : y_ { y }, mdl_ { mdl }
+        : _y { y }, _mdl { mdl }
     {
     }
 
@@ -46,9 +46,9 @@ struct year_month_day_last {
     constexpr auto operator+=(years const& y) noexcept -> year_month_day_last&;
     constexpr auto operator-=(years const& y) noexcept -> year_month_day_last&;
 
-    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return y_; }
-    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return mdl_.month(); }
-    [[nodiscard]] constexpr auto month_day_last() const noexcept -> chrono::month_day_last { return mdl_; }
+    [[nodiscard]] constexpr auto year() const noexcept -> chrono::year { return _y; }
+    [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _mdl.month(); }
+    [[nodiscard]] constexpr auto month_day_last() const noexcept -> chrono::month_day_last { return _mdl; }
     [[nodiscard]] constexpr auto day() const noexcept -> chrono::day
     {
         return detail::last_day_of_month(year(), month());
@@ -56,11 +56,11 @@ struct year_month_day_last {
 
     [[nodiscard]] constexpr operator sys_days() const noexcept;
     [[nodiscard]] constexpr explicit operator local_days() const noexcept;
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return y_.ok() and mdl_.ok(); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _y.ok() and _mdl.ok(); }
 
 public:
-    chrono::year y_;
-    chrono::month_day_last mdl_;
+    chrono::year _y;
+    chrono::month_day_last _mdl;
 };
 
 [[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept

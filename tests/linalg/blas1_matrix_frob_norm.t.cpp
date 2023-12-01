@@ -15,18 +15,18 @@ template <typename T, typename IndexType>
 
     {
         // 2D static
-        auto const mat_zeros = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { zeros.data() };
-        auto const mat_ones  = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { ones.data() };
-        assert(etl::linalg::matrix_frob_norm(mat_zeros) == T(0));
-        assert(etl::linalg::matrix_frob_norm(mat_ones) == T(2));
+        auto const matZeros = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { zeros.data() };
+        auto const matOnes  = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { ones.data() };
+        assert(etl::linalg::matrix_frob_norm(matZeros) == T(0));
+        assert(etl::linalg::matrix_frob_norm(matOnes) == T(2));
     }
 
     {
         // 2D dynamic
-        auto const mat_zeros = etl::mdspan<T const, etl::dextents<IndexType, 2>> { zeros.data(), 2, 2 };
-        auto const mat_ones  = etl::mdspan<T const, etl::dextents<IndexType, 2>> { ones.data(), 2, 2 };
-        assert(etl::linalg::matrix_frob_norm(mat_zeros) == T(0));
-        assert(etl::linalg::matrix_frob_norm(mat_ones) == T(2));
+        auto const matZeros = etl::mdspan<T const, etl::dextents<IndexType, 2>> { zeros.data(), 2, 2 };
+        auto const matOnes  = etl::mdspan<T const, etl::dextents<IndexType, 2>> { ones.data(), 2, 2 };
+        assert(etl::linalg::matrix_frob_norm(matZeros) == T(0));
+        assert(etl::linalg::matrix_frob_norm(matOnes) == T(2));
     }
 
     return true;

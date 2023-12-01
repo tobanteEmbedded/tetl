@@ -31,16 +31,16 @@ struct year {
 
     constexpr auto operator--(int) noexcept -> year { return year { count_-- }; }
 
-    constexpr auto operator+=(years const& count_s) noexcept -> year&
+    constexpr auto operator+=(years const& countS) noexcept -> year&
     {
 
-        count_ = static_cast<int16_t>(count_ + count_s.count());
+        count_ = static_cast<int16_t>(count_ + countS.count());
         return *this;
     }
 
-    constexpr auto operator-=(years const& count_s) noexcept -> year&
+    constexpr auto operator-=(years const& countS) noexcept -> year&
     {
-        count_ = static_cast<int16_t>(count_ - count_s.count());
+        count_ = static_cast<int16_t>(count_ - countS.count());
         return *this;
     }
 

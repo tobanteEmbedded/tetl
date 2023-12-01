@@ -31,9 +31,9 @@ struct year_month_weekday_last {
     [[nodiscard]] constexpr auto ok() const noexcept -> bool;
 
 public:
-    chrono::year y_;
-    chrono::month m_;
-    chrono::weekday_last wdl_;
+    chrono::year y;
+    chrono::month m;
+    chrono::weekday_last wdl;
 };
 
 } // namespace etl::chrono

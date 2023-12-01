@@ -29,12 +29,12 @@ struct fixed_audio_buffer {
 
     [[nodiscard]] auto channel(size_type ch)
     {
-        return channel_type(etl::next(data(_buffer), static_cast<etl::ptrdiff_t>(ch * Frames)), Frames);
+        return channel_type(etl::next(data(buffer_), static_cast<etl::ptrdiff_t>(ch * Frames)), Frames);
     }
 
     [[nodiscard]] auto channel(size_type ch) const
     {
-        return const_channel_type(etl::next(data(_buffer), static_cast<etl::ptrdiff_t>(ch * Frames)), Frames);
+        return const_channel_type(etl::next(data(buffer_), static_cast<etl::ptrdiff_t>(ch * Frames)), Frames);
     }
 
     [[nodiscard]] auto operator()(size_type ch, size_type s) -> value_type& { return channel(ch)[s]; }
@@ -48,7 +48,7 @@ private:
         return frame;
     }
 
-    etl::array<value_type, static_cast<etl::size_t>(Channels* Frames)> _buffer {};
+    etl::array<value_type, static_cast<etl::size_t>(Channels* Frames)> buffer_ {};
 };
 
 auto main() -> int

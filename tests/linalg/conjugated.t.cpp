@@ -23,11 +23,11 @@ template <typename T, typename IndexType>
         assert(conjugated(2) == data[2]);
         assert(conjugated(3) == data[3]);
 
-        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
-        assert(scaled_conjugated(0) == data[0] * T(2));
-        assert(scaled_conjugated(1) == data[1] * T(2));
-        assert(scaled_conjugated(2) == data[2] * T(2));
-        assert(scaled_conjugated(3) == data[3] * T(2));
+        auto const scaledConjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaledConjugated(0) == data[0] * T(2));
+        assert(scaledConjugated(1) == data[1] * T(2));
+        assert(scaledConjugated(2) == data[2] * T(2));
+        assert(scaledConjugated(3) == data[3] * T(2));
     }
 
     {
@@ -39,11 +39,11 @@ template <typename T, typename IndexType>
         assert(conjugated(2) == data[2]);
         assert(conjugated(3) == data[3]);
 
-        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
-        assert(scaled_conjugated(0) == data[0] * T(2));
-        assert(scaled_conjugated(1) == data[1] * T(2));
-        assert(scaled_conjugated(2) == data[2] * T(2));
-        assert(scaled_conjugated(3) == data[3] * T(2));
+        auto const scaledConjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaledConjugated(0) == data[0] * T(2));
+        assert(scaledConjugated(1) == data[1] * T(2));
+        assert(scaledConjugated(2) == data[2] * T(2));
+        assert(scaledConjugated(3) == data[3] * T(2));
     }
 
     {
@@ -55,11 +55,11 @@ template <typename T, typename IndexType>
         assert(conjugated(1, 0) == data[2]);
         assert(conjugated(1, 1) == data[3]);
 
-        auto const scaled_conjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
-        assert(scaled_conjugated(0, 0) == data[0] * T(2));
-        assert(scaled_conjugated(0, 1) == data[1] * T(2));
-        assert(scaled_conjugated(1, 0) == data[2] * T(2));
-        assert(scaled_conjugated(1, 1) == data[3] * T(2));
+        auto const scaledConjugated = etl::linalg::conjugated(etl::linalg::scaled(T(2), vec));
+        assert(scaledConjugated(0, 0) == data[0] * T(2));
+        assert(scaledConjugated(0, 1) == data[1] * T(2));
+        assert(scaledConjugated(1, 0) == data[2] * T(2));
+        assert(scaledConjugated(1, 1) == data[3] * T(2));
     }
 
     return true;
@@ -77,53 +77,53 @@ template <typename T, typename IndexType>
 
     {
         // 1D static extents
-        auto const vec               = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 4>> { data.data() };
-        auto const conjugated        = etl::linalg::conjugated(vec);
-        auto const double_conjugated = etl::linalg::conjugated(conjugated);
+        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 4>> { data.data() };
+        auto const conjugated       = etl::linalg::conjugated(vec);
+        auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 
         assert(etl::complex<T>(conjugated(0)) == etl::conj(data[0]));
         assert(etl::complex<T>(conjugated(1)) == etl::conj(data[1]));
         assert(etl::complex<T>(conjugated(2)) == etl::conj(data[2]));
         assert(etl::complex<T>(conjugated(3)) == etl::conj(data[3]));
 
-        assert(double_conjugated(0) == data[0]);
-        assert(double_conjugated(1) == data[1]);
-        assert(double_conjugated(2) == data[2]);
-        assert(double_conjugated(3) == data[3]);
+        assert(doubleConjugated(0) == data[0]);
+        assert(doubleConjugated(1) == data[1]);
+        assert(doubleConjugated(2) == data[2]);
+        assert(doubleConjugated(3) == data[3]);
     }
 
     {
         // 1D dynamic extents
         auto const vec        = etl::mdspan<etl::complex<T> const, etl::dextents<IndexType, 1>> { data.data(), 4 };
         auto const conjugated = etl::linalg::conjugated(vec);
-        auto const double_conjugated = etl::linalg::conjugated(conjugated);
+        auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 
         assert(etl::complex<T>(conjugated(0)) == etl::conj(data[0]));
         assert(etl::complex<T>(conjugated(1)) == etl::conj(data[1]));
         assert(etl::complex<T>(conjugated(2)) == etl::conj(data[2]));
         assert(etl::complex<T>(conjugated(3)) == etl::conj(data[3]));
 
-        assert(double_conjugated(0) == data[0]);
-        assert(double_conjugated(1) == data[1]);
-        assert(double_conjugated(2) == data[2]);
-        assert(double_conjugated(3) == data[3]);
+        assert(doubleConjugated(0) == data[0]);
+        assert(doubleConjugated(1) == data[1]);
+        assert(doubleConjugated(2) == data[2]);
+        assert(doubleConjugated(3) == data[3]);
     }
 
     {
         // 2D static extents
-        auto const vec        = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 2, 2>> { data.data() };
-        auto const conjugated = etl::linalg::conjugated(vec);
-        auto const double_conjugated = etl::linalg::conjugated(conjugated);
+        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 2, 2>> { data.data() };
+        auto const conjugated       = etl::linalg::conjugated(vec);
+        auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 
         assert(etl::complex<T>(conjugated(0, 0)) == etl::conj(data[0]));
         assert(etl::complex<T>(conjugated(0, 1)) == etl::conj(data[1]));
         assert(etl::complex<T>(conjugated(1, 0)) == etl::conj(data[2]));
         assert(etl::complex<T>(conjugated(1, 1)) == etl::conj(data[3]));
 
-        assert(double_conjugated(0, 0) == data[0]);
-        assert(double_conjugated(0, 1) == data[1]);
-        assert(double_conjugated(1, 0) == data[2]);
-        assert(double_conjugated(1, 1) == data[3]);
+        assert(doubleConjugated(0, 0) == data[0]);
+        assert(doubleConjugated(0, 1) == data[1]);
+        assert(doubleConjugated(1, 0) == data[2]);
+        assert(doubleConjugated(1, 1) == data[3]);
     }
 
     return true;

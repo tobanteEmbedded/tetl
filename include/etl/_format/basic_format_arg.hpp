@@ -45,7 +45,7 @@ public:
 
     basic_format_arg() noexcept = default;
 
-    explicit operator bool() const noexcept { return holds_alternative<monostate>(value_); }
+    explicit operator bool() const noexcept { return holds_alternative<monostate>(value); }
 
     template <typename T>
     explicit basic_format_arg(T&& v) noexcept;
@@ -81,7 +81,7 @@ public:
         void const*,                  //
         handle                        //
         >
-        value_ { monostate {} };
+        value { monostate {} };
 };
 
 namespace detail {

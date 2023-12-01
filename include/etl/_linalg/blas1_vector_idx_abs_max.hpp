@@ -13,7 +13,7 @@ namespace etl::linalg {
 template <detail::in_vector InVec>
 constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
 {
-    auto get_value = [](auto val) {
+    auto getValue = [](auto val) {
         if constexpr (is_arithmetic_v<typename InVec::value_type>) {
             return detail::abs_if_needed(val);
         } else {
@@ -23,13 +23,13 @@ constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
         }
     };
 
-    auto idx   = numeric_limits<typename InVec::size_type>::max();
-    auto max_v = numeric_limits<decltype(get_value(v(0)))>::min();
+    auto idx  = numeric_limits<typename InVec::size_type>::max();
+    auto maxV = numeric_limits<decltype(getValue(v(0)))>::min();
 
     for (typename InVec::size_type i { 0 }; cmp_less(i, v.extent(0)); ++i) {
-        if (auto const val = get_value(v(i)); val > max_v) {
-            idx   = i;
-            max_v = val;
+        if (auto const val = getValue(v(i)); val > maxV) {
+            idx  = i;
+            maxV = val;
         }
     }
 

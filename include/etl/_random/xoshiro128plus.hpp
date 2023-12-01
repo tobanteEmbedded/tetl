@@ -17,12 +17,12 @@ struct xoshiro128plus {
     static constexpr auto default_seed = result_type { 5489U };
 
     constexpr xoshiro128plus() = default;
-    explicit constexpr xoshiro128plus(result_type seed) noexcept : _state { seed } { }
+    explicit constexpr xoshiro128plus(result_type seed) noexcept : state_ { seed } { }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<uint32_t>::min(); }
     [[nodiscard]] static constexpr auto max() noexcept -> result_type { return numeric_limits<uint32_t>::max() - 1; }
 
-    constexpr auto seed(result_type value = default_seed) noexcept -> void { _state[0] = value; }
+    constexpr auto seed(result_type value = default_seed) noexcept -> void { state_[0] = value; }
 
     constexpr auto discard(unsigned long long z) noexcept -> void
     {
@@ -31,16 +31,16 @@ struct xoshiro128plus {
 
     [[nodiscard]] constexpr auto operator()() noexcept -> result_type
     {
-        const uint32_t result = _state[0] + _state[3];
-        const uint32_t t      = _state[1] << 9;
+        const uint32_t result = state_[0] + state_[3];
+        const uint32_t t      = state_[1] << 9;
 
-        _state[2] ^= _state[0];
-        _state[3] ^= _state[1];
-        _state[1] ^= _state[2];
-        _state[0] ^= _state[3];
+        state_[2] ^= state_[0];
+        state_[3] ^= state_[1];
+        state_[1] ^= state_[2];
+        state_[0] ^= state_[3];
 
-        _state[2] ^= t;
-        _state[3] = rotl(_state[3], 11);
+        state_[2] ^= t;
+        state_[3] = rotl(state_[3], 11);
 
         return result;
     }
@@ -48,7 +48,7 @@ struct xoshiro128plus {
     [[nodiscard]] friend constexpr auto operator==(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept
         -> bool
     {
-        return equal(begin(lhs._state), end(lhs._state), begin(rhs._state), end(rhs._state));
+        return equal(begin(lhs.state_), end(lhs.state_), begin(rhs.state_), end(rhs.state_));
     }
 
     [[nodiscard]] friend constexpr auto operator!=(xoshiro128plus const& lhs, xoshiro128plus const& rhs) noexcept
@@ -58,7 +58,7 @@ struct xoshiro128plus {
     }
 
 private:
-    uint32_t _state[4] { default_seed };
+    uint32_t state_[4] { default_seed };
 };
 
 } // namespace etl

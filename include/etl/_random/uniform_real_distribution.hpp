@@ -17,21 +17,21 @@ struct uniform_real_distribution {
 
         constexpr param_type() noexcept = default;
         explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept
-            : _min { min }, _max { max }
+            : min_ { min }, max_ { max }
         {
         }
 
-        [[nodiscard]] constexpr auto a() const noexcept -> result_type { return _min; }
-        [[nodiscard]] constexpr auto b() const noexcept -> result_type { return _max; }
+        [[nodiscard]] constexpr auto a() const noexcept -> result_type { return min_; }
+        [[nodiscard]] constexpr auto b() const noexcept -> result_type { return max_; }
 
         [[nodiscard]] friend constexpr auto operator==(param_type const& lhs, param_type const& rhs) noexcept -> bool
         {
-            return (lhs._min == rhs._min) and (lhs._max == rhs._max);
+            return (lhs.min_ == rhs.min_) and (lhs.max_ == rhs.max_);
         }
 
     private:
-        result_type _min { 0 };
-        result_type _max { 1 };
+        result_type min_ { 0 };
+        result_type max_ { 1 };
     };
 
     constexpr uniform_real_distribution() : uniform_real_distribution { static_cast<RealType>(0) } { }
