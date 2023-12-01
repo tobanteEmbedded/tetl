@@ -63,7 +63,7 @@ struct bitset {
         }
 
     private:
-        constexpr explicit reference(uint8_t* data, uint8_t position) : _data { data }, _position { position } { }
+        constexpr explicit reference(uint8_t* data, uint8_t position) : _data {data}, _position {position} { }
 
         friend bitset;
         uint8_t* _data;
@@ -237,7 +237,7 @@ struct bitset {
     [[nodiscard]] constexpr auto count() const noexcept -> size_t
     {
         size_t count = 0;
-        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t { 1 } : 0; }
+        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t {1} : 0; }
         return count;
     }
 
@@ -297,7 +297,7 @@ struct bitset {
         // TODO: [tobi] This currently truncates the low bits, if the string is
         // large enough.
         auto str = basic_static_string<CharT, Capacity, Traits> {};
-        for (auto i { size() - 1U }; i != 0; --i) { str.push_back(test(i) ? one : zero); }
+        for (auto i {size() - 1U}; i != 0; --i) { str.push_back(test(i) ? one : zero); }
         str.push_back(test(0) ? one : zero);
         return str;
     }
@@ -339,7 +339,7 @@ private:
         constexpr auto digits = static_cast<UInt>(numeric_limits<UInt>::digits);
         auto const idx        = min<UInt>(static_cast<UInt>(size()), digits);
         UInt result {};
-        for (UInt i { 0 }; i != idx; ++i) {
+        for (UInt i {0}; i != idx; ++i) {
             if (test(i)) { result = set_bit(result, i); }
         }
         return result;

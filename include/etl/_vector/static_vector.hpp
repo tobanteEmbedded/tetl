@@ -119,7 +119,7 @@ protected:
 template <typename T, size_t Capacity>
 struct static_vector_trivial_storage {
     static_assert(etl::is_trivial_v<T>);
-    static_assert(Capacity != size_t { 0 });
+    static_assert(Capacity != size_t {0});
 
     using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
@@ -151,7 +151,7 @@ struct static_vector_trivial_storage {
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return Capacity; }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type { 0 }; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type {0}; }
 
     /// \brief Is the storage full?
     [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == Capacity; }
@@ -209,7 +209,7 @@ private:
 template <typename T, size_t Capacity>
 struct static_vector_non_trivial_storage {
     static_assert(!is_trivial_v<T>);
-    static_assert(Capacity != size_t { 0 });
+    static_assert(Capacity != size_t {0});
 
     using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
@@ -247,7 +247,7 @@ struct static_vector_non_trivial_storage {
     [[nodiscard]] auto capacity() const noexcept -> size_type { return Capacity; }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] auto empty() const noexcept -> bool { return size() == size_type { 0 }; }
+    [[nodiscard]] auto empty() const noexcept -> bool { return size() == size_type {0}; }
 
     /// \brief Is the storage full?
     [[nodiscard]] auto full() const noexcept -> bool { return size() == Capacity; }

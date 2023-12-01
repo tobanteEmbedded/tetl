@@ -12,11 +12,11 @@ template <typename T, typename IndexType>
 {
     {
         // 1D static
-        auto inData  = etl::array<T, 4> { T(0), T(1), T(2), T(3) };
+        auto inData  = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
         auto outData = etl::array<T, 4> {};
 
-        auto in  = etl::mdspan<T const, etl::extents<IndexType, 4>> { inData.data() };
-        auto out = etl::mdspan<T, etl::extents<IndexType, 4>> { outData.data() };
+        auto in  = etl::mdspan<T const, etl::extents<IndexType, 4>> {inData.data()};
+        auto out = etl::mdspan<T, etl::extents<IndexType, 4>> {outData.data()};
 
         etl::linalg::copy(in, out);
         assert(out(0) == in(0));
@@ -27,11 +27,11 @@ template <typename T, typename IndexType>
 
     {
         // 1D dynamic
-        auto inData  = etl::array<T, 4> { T(0), T(1), T(2), T(3) };
+        auto inData  = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
         auto outData = etl::array<T, 4> {};
 
-        auto in  = etl::mdspan<T const, etl::dextents<IndexType, 1>> { inData.data(), 4 };
-        auto out = etl::mdspan<T, etl::dextents<IndexType, 1>> { outData.data(), 4 };
+        auto in  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {inData.data(), 4};
+        auto out = etl::mdspan<T, etl::dextents<IndexType, 1>> {outData.data(), 4};
 
         etl::linalg::copy(in, out);
         assert(out(0) == in(0));
@@ -42,11 +42,11 @@ template <typename T, typename IndexType>
 
     {
         // 2D static
-        auto inData  = etl::array<T, 4> { T(0), T(1), T(2), T(3) };
+        auto inData  = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
         auto outData = etl::array<T, 4> {};
 
-        auto in  = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { inData.data() };
-        auto out = etl::mdspan<T, etl::extents<IndexType, 2, 2>> { outData.data() };
+        auto in  = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> {inData.data()};
+        auto out = etl::mdspan<T, etl::extents<IndexType, 2, 2>> {outData.data()};
 
         etl::linalg::copy(in, out);
         assert(out(0, 0) == in(0, 0));
@@ -57,11 +57,11 @@ template <typename T, typename IndexType>
 
     {
         // 2D dynamic
-        auto inData  = etl::array<T, 4> { T(0), T(1), T(2), T(3) };
+        auto inData  = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
         auto outData = etl::array<T, 4> {};
 
-        auto in  = etl::mdspan<T const, etl::dextents<IndexType, 2>> { inData.data(), 2, 2 };
-        auto out = etl::mdspan<T, etl::dextents<IndexType, 2>> { outData.data(), 2, 2 };
+        auto in  = etl::mdspan<T const, etl::dextents<IndexType, 2>> {inData.data(), 2, 2};
+        auto out = etl::mdspan<T, etl::dextents<IndexType, 2>> {outData.data(), 2, 2};
 
         etl::linalg::copy(in, out);
         assert(out(0, 0) == in(0, 0));

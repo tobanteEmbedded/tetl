@@ -20,9 +20,9 @@ namespace etl {
 /// \brief Payload for an assertion.
 struct assert_msg {
     int line {};
-    char const* file { nullptr };
-    char const* func { nullptr };
-    char const* expression { nullptr };
+    char const* file {nullptr};
+    char const* func {nullptr};
+    char const* expression {nullptr};
 };
 
 } // namespace etl

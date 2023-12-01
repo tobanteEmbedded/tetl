@@ -18,46 +18,46 @@ constexpr auto test_sort() -> bool
     // already sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     // empty range
@@ -70,22 +70,22 @@ constexpr auto test_sort() -> bool
 
     // already sorted
     {
-        auto src = etl::array<T, 4> { T { 1 }, T { 2 }, T { 3 }, T { 4 } };
+        auto src = etl::array<T, 4> {T {1}, T {2}, T {3}, T {4}};
         etl::stable_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
-        auto src = etl::array<T, 4> { T { 4 }, T { 3 }, T { 2 }, T { 1 } };
+        auto src = etl::array<T, 4> {T {4}, T {3}, T {2}, T {1}};
         etl::stable_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // empty range
@@ -98,18 +98,18 @@ constexpr auto test_sort() -> bool
 
     // already sorted
     {
-        auto src = etl::array<T, 4> { T { 1 }, T { 2 }, T { 3 }, T { 4 } };
+        auto src = etl::array<T, 4> {T {1}, T {2}, T {3}, T {4}};
         etl::partial_sort(begin(src), begin(src) + 2, end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
     }
 
     // reversed
     {
-        auto src = etl::array<T, 4> { T { 4 }, T { 3 }, T { 2 }, T { 1 } };
+        auto src = etl::array<T, 4> {T {4}, T {3}, T {2}, T {1}};
         etl::partial_sort(begin(src), begin(src) + 2, end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
     }
 
     // empty range
@@ -122,25 +122,25 @@ constexpr auto test_sort() -> bool
 
     // already sorted
     {
-        auto src = etl::array<T, 4> { T { 1 }, T { 2 }, T { 3 }, T { 4 } };
+        auto src = etl::array<T, 4> {T {1}, T {2}, T {3}, T {4}};
         etl::nth_element(begin(src), begin(src) + 1, end(src), etl::less<> {});
-        assert(src[1] == T { 2 });
+        assert(src[1] == T {2});
     }
 
     // reversed
     {
-        auto src = etl::array<T, 4> { T { 4 }, T { 3 }, T { 2 }, T { 1 } };
+        auto src = etl::array<T, 4> {T {4}, T {3}, T {2}, T {1}};
         etl::nth_element(begin(src), begin(src) + 1, end(src));
-        assert(src[1] == T { 2 });
+        assert(src[1] == T {2});
     }
 
     // already is_sorteded
     {
         auto src = etl::array<T, 4> {
-            T { 1 },
-            T { 2 },
-            T { 3 },
-            T { 4 },
+            T {1},
+            T {2},
+            T {3},
+            T {4},
         };
 
         assert(etl::is_sorted(begin(src), end(src), etl::less<T> {}));
@@ -149,10 +149,10 @@ constexpr auto test_sort() -> bool
     // reversed
     {
         auto src = etl::array<T, 4> {
-            T { 4 },
-            T { 3 },
-            T { 2 },
-            T { 1 },
+            T {4},
+            T {3},
+            T {2},
+            T {1},
         };
 
         assert(etl::is_sorted(begin(src), end(src), etl::greater<> {}));
@@ -162,10 +162,10 @@ constexpr auto test_sort() -> bool
     // custom compare
     {
         auto src = etl::array<T, 4> {
-            T { 1 },
-            T { 1 },
-            T { 56 },
-            T { 42 },
+            T {1},
+            T {1},
+            T {56},
+            T {42},
         };
 
         assert(!(etl::is_sorted(begin(src), end(src), etl::greater<> {})));
@@ -182,13 +182,13 @@ constexpr auto test_sort() -> bool
     {
         auto predicate = [](auto const& val) { return val < T(1); };
 
-        auto test1 = etl::array { T(2), T(2), T(2) };
+        auto test1 = etl::array {T(2), T(2), T(2)};
         assert(etl::is_partitioned(begin(test1), end(test1), predicate));
 
-        auto test2 = etl::array { T(0), T(0), T(2), T(3) };
+        auto test2 = etl::array {T(0), T(0), T(2), T(3)};
         assert(etl::is_partitioned(begin(test2), end(test2), predicate));
 
-        auto test3 = etl::array { T(1), T(1), T(2) };
+        auto test3 = etl::array {T(1), T(1), T(2)};
         assert(etl::is_partitioned(begin(test3), end(test3), predicate));
     }
 
@@ -196,10 +196,10 @@ constexpr auto test_sort() -> bool
     {
         auto predicate = [](auto const& val) { return val < T(1); };
 
-        auto test1 = etl::array { T(2), T(0), T(2) };
+        auto test1 = etl::array {T(2), T(0), T(2)};
         assert(!etl::is_partitioned(begin(test1), end(test1), predicate));
 
-        auto test2 = etl::array { T(0), T(0), T(2), T(0) };
+        auto test2 = etl::array {T(0), T(0), T(2), T(0)};
         assert(!etl::is_partitioned(begin(test2), end(test2), predicate));
     }
 
@@ -213,46 +213,46 @@ constexpr auto test_bubble_sort() -> bool
     // already bubble_sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::bubble_sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::bubble_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::bubble_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     return true;
@@ -265,46 +265,46 @@ constexpr auto test_insertion_sort() -> bool
     // already insertion_sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::insertion_sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::insertion_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::insertion_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     return true;
@@ -317,46 +317,46 @@ constexpr auto test_merge_sort() -> bool
     // already merge_sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::merge_sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::merge_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::merge_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     return true;
@@ -369,46 +369,46 @@ constexpr auto test_gnome_sort() -> bool
     // already gnome_sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::gnome_sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::gnome_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::gnome_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     return true;
@@ -421,46 +421,46 @@ constexpr auto test_exchange_sort() -> bool
     // already exchange_sorted
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 2 };
-        src[2]   = T { 3 };
-        src[3]   = T { 4 };
+        src[0]   = T {1};
+        src[1]   = T {2};
+        src[2]   = T {3};
+        src[3]   = T {4};
 
         etl::exchange_sort(begin(src), end(src), etl::less<T> {});
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // reversed
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 4 };
-        src[1]   = T { 3 };
-        src[2]   = T { 2 };
-        src[3]   = T { 1 };
+        src[0]   = T {4};
+        src[1]   = T {3};
+        src[2]   = T {2};
+        src[3]   = T {1};
 
         etl::exchange_sort(begin(src), end(src));
-        assert(src[0] == T { 1 });
-        assert(src[1] == T { 2 });
-        assert(src[2] == T { 3 });
-        assert(src[3] == T { 4 });
+        assert(src[0] == T {1});
+        assert(src[1] == T {2});
+        assert(src[2] == T {3});
+        assert(src[3] == T {4});
     }
 
     // custom compare
     {
         auto src = etl::array<T, 4> {};
-        src[0]   = T { 1 };
-        src[1]   = T { 1 };
-        src[2]   = T { 56 };
-        src[3]   = T { 42 };
+        src[0]   = T {1};
+        src[1]   = T {1};
+        src[2]   = T {56};
+        src[3]   = T {42};
 
         etl::exchange_sort(begin(src), end(src), [](auto const& lhs, auto const& rhs) { return lhs > rhs; });
-        assert(src[0] == T { 56 });
-        assert(src[1] == T { 42 });
-        assert(src[2] == T { 1 });
-        assert(src[3] == T { 1 });
+        assert(src[0] == T {56});
+        assert(src[1] == T {42});
+        assert(src[2] == T {1});
+        assert(src[3] == T {1});
     }
 
     return true;

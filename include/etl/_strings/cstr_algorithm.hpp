@@ -124,7 +124,7 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
 template <typename CharT, typename SizeT, bool InclusiveSearch>
 [[nodiscard]] constexpr auto str_span_impl(CharT const* dest, CharT const* src) noexcept -> SizeT
 {
-    auto result       = SizeT { 0 };
+    auto result       = SizeT {0};
     auto const length = strlen_impl<CharT, SizeT>(dest);
     auto const srcLen = strlen_impl<CharT, SizeT>(src);
     for (SizeT i = 0; i < length; ++i) {
@@ -191,7 +191,7 @@ constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> CharT*
 template <typename CharT, typename SizeT>
 constexpr auto memchr_impl(CharT* ptr, CharT ch, SizeT n) -> CharT*
 {
-    for (SizeT i { 0 }; i != n; ++i) {
+    for (SizeT i {0}; i != n; ++i) {
         if (ptr[i] == ch) { return ptr + i; }
     }
     return nullptr;

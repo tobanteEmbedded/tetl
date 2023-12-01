@@ -10,11 +10,11 @@
 
 template <typename T>
 struct S {
-    constexpr S(T d = T(0)) : data { d } { }
+    constexpr S(T d = T(0)) : data {d} { }
 
-    constexpr S(S const& s) : data { s.data }, copy { true } { }
+    constexpr S(S const& s) : data {s.data}, copy {true} { }
 
-    constexpr S(S&& s) noexcept : data { s.data }, move { true } { }
+    constexpr S(S&& s) noexcept : data {s.data}, move {true} { }
 
     constexpr auto operator=(S const& s) noexcept -> S&
     {
@@ -42,7 +42,7 @@ constexpr auto test() -> bool
     {
         // move
 
-        auto source = etl::array { S(T(1)), S(T(1)), S(T(1)) };
+        auto source = etl::array {S(T(1)), S(T(1)), S(T(1))};
         decltype(source) d {};
         etl::move(begin(source), end(source), begin(d));
 
@@ -57,7 +57,7 @@ constexpr auto test() -> bool
     // move backward
     {
         // move
-        auto source = etl::array { S(T(1)), S(T(2)), S(T(3)) };
+        auto source = etl::array {S(T(1)), S(T(2)), S(T(3))};
         decltype(source) d {};
         etl::move_backward(begin(source), end(source), end(d));
 

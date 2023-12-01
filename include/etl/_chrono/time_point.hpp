@@ -38,7 +38,7 @@ struct time_point {
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point at Clock's epoch plus d.
-    constexpr explicit time_point(duration const& d) noexcept : _d { d } { }
+    constexpr explicit time_point(duration const& d) noexcept : _d {d} { }
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point by converting t to duration. This
@@ -46,7 +46,7 @@ struct time_point {
     /// implicitly convertible to duration.
     template <typename Dur2>
         requires(is_convertible_v<Dur2, duration>)
-    constexpr time_point(time_point<clock, Dur2> const& t) : _d { t.time_since_epch() }
+    constexpr time_point(time_point<clock, Dur2> const& t) : _d {t.time_since_epch()}
     {
     }
 

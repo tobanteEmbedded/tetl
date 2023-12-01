@@ -10,10 +10,10 @@ constexpr auto test_uniform_int_distribution() -> bool
     constexpr auto minimum = IntType(5);
     constexpr auto maximum = IntType(100);
 
-    auto urng = URNG { 42 };
-    auto dist = etl::uniform_int_distribution<IntType> { minimum, maximum };
+    auto urng = URNG {42};
+    auto dist = etl::uniform_int_distribution<IntType> {minimum, maximum};
 
-    for (auto i { 0 }; i < 1000; ++i) {
+    for (auto i {0}; i < 1000; ++i) {
         auto const x = dist(urng);
         assert(x >= minimum);
         assert(x <= maximum);

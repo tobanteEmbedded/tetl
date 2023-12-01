@@ -31,7 +31,7 @@ constexpr auto test_one() -> bool
         assert(e.static_extent(0) == etl::dynamic_extent);
         assert(e.extent(0) == 42);
 
-        auto other = etl::extents<unsigned_t, etl::dynamic_extent> { e };
+        auto other = etl::extents<unsigned_t, etl::dynamic_extent> {e};
         assert(other.rank() == 1);
         assert(other.rank_dynamic() == 1);
         assert(other.static_extent(0) == etl::dynamic_extent);
@@ -42,7 +42,7 @@ constexpr auto test_one() -> bool
 
     {
         // rank 2, all dynamic
-        auto e = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent> { 42, 43 };
+        auto e = etl::extents<IndexType, etl::dynamic_extent, etl::dynamic_extent> {42, 43};
         assert(e.rank() == 2);
         assert(e.rank_dynamic() == 2);
         assert(e.static_extent(0) == etl::dynamic_extent);
@@ -50,7 +50,7 @@ constexpr auto test_one() -> bool
         assert(e.extent(0) == 42);
         assert(e.extent(1) == 43);
 
-        auto other = etl::extents<unsigned_t, etl::dynamic_extent, etl::dynamic_extent> { e };
+        auto other = etl::extents<unsigned_t, etl::dynamic_extent, etl::dynamic_extent> {e};
         assert(other.rank() == 2);
         assert(other.rank_dynamic() == 2);
         assert(other.static_extent(0) == etl::dynamic_extent);

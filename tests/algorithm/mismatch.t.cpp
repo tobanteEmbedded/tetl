@@ -13,8 +13,8 @@ constexpr auto test() -> bool
 {
     // first1,last1,first2
     {
-        auto lhs    = etl::array { T(0), T(1), T(2) };
-        auto rhs    = etl::array { T(0), T(1), T(3) };
+        auto lhs    = etl::array {T(0), T(1), T(2)};
+        auto rhs    = etl::array {T(0), T(1), T(3)};
         auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs));
         assert(*result.first == T(2));
         assert(*result.second == T(3));
@@ -22,8 +22,8 @@ constexpr auto test() -> bool
 
     // first1,last1,first2,last2
     {
-        auto lhs    = etl::array { T(0), T(1), T(2) };
-        auto rhs    = etl::array { T(0), T(1), T(4) };
+        auto lhs    = etl::array {T(0), T(1), T(2)};
+        auto rhs    = etl::array {T(0), T(1), T(4)};
         auto result = etl::mismatch(begin(lhs), end(lhs), begin(rhs), end(rhs));
         assert(*result.first == T(2));
         assert(*result.second == T(4));

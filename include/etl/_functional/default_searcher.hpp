@@ -27,10 +27,10 @@ struct default_searcher {
     {
         if (auto i = etl::detail::search_impl(f, l, _first, _last, _predicate); i != l) {
             auto j = etl::next(i, etl::distance(_first, _last));
-            return etl::pair<ForwardIter2, ForwardIter2> { i, j };
+            return etl::pair<ForwardIter2, ForwardIter2> {i, j};
         }
 
-        return etl::pair<ForwardIter2, ForwardIter2> { l, l };
+        return etl::pair<ForwardIter2, ForwardIter2> {l, l};
     }
 
 private:

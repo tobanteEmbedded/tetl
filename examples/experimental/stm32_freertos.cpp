@@ -24,7 +24,7 @@ struct example_task {
 
             rtos::this_task::sleep_for(1);
 
-            auto lastWake = etl::uint32_t { 0 };
+            auto lastWake = etl::uint32_t {0};
             rtos::this_task::sleep_until(lastWake, 1);
         }
 

@@ -16,7 +16,7 @@ template <typename ForwardIt, typename Compare>
     auto min = first;
     auto max = first;
 
-    if (first == last || ++first == last) { return { min, max }; }
+    if (first == last || ++first == last) { return {min, max}; }
 
     if (comp(*first, *min)) {
         min = first;
@@ -44,7 +44,7 @@ template <typename ForwardIt, typename Compare>
         }
     }
 
-    return { min, max };
+    return {min, max};
 }
 
 /// \brief Finds the smallest and greatest element in the range `[first, last)`.

@@ -121,7 +121,7 @@ struct char_traits<char> {
     /// \brief Converts a value of char_type to int_type.
     static constexpr auto to_int_type(char_type c) noexcept -> int_type
     {
-        return int_type { static_cast<unsigned char>(c) };
+        return int_type {static_cast<unsigned char>(c)};
     }
 
     /// \brief Checks whether two values of type int_type are equal.

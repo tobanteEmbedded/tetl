@@ -16,9 +16,9 @@ constexpr auto test() -> bool
     {
         assert(!(etl::optional<T> {}.has_value()));
         assert(!(etl::optional<T>(etl::nullopt).has_value()));
-        assert((etl::optional<T> { T {} }.has_value()));
-        assert((etl::optional<T> { T(1) }.has_value()));
-        auto opt = etl::optional<T> { etl::in_place, T {} };
+        assert((etl::optional<T> {T {}}.has_value()));
+        assert((etl::optional<T> {T(1)}.has_value()));
+        auto opt = etl::optional<T> {etl::in_place, T {}};
         assert((opt.has_value()));
     }
 
@@ -27,33 +27,33 @@ constexpr auto test() -> bool
         assert(!(opt.has_value()));
 
         // copy ctor
-        auto opt1 { opt };
+        auto opt1 {opt};
         assert(!(opt1.has_value()));
 
         // move ctor
-        auto opt2 { etl::move(opt) };
+        auto opt2 {etl::move(opt)};
         assert(!(opt2.has_value()));
 
-        auto opt3 { etl::optional<T> {} };
+        auto opt3 {etl::optional<T> {}};
         assert(!(opt3.has_value()));
     }
 
     {
-        auto opt = etl::optional<T> { T(1) };
+        auto opt = etl::optional<T> {T(1)};
         assert((opt.has_value()));
         assert((opt.value() == T(1)));
 
         // copy ctor
-        auto opt1 { opt };
+        auto opt1 {opt};
         assert((opt1.has_value()));
         assert((opt1.value() == T(1)));
 
         // move ctor
-        auto opt2 { etl::move(opt) };
+        auto opt2 {etl::move(opt)};
         assert((opt2.has_value()));
         assert((opt2.value() == T(1)));
 
-        auto opt3 { etl::optional<T> { T(1) } };
+        auto opt3 {etl::optional<T> {T(1)}};
         assert((opt3.has_value()));
         assert((opt3.value() == T(1)));
     }
@@ -74,7 +74,7 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> opt { T {} };
+        etl::optional<T> opt {T {}};
         assert((opt.has_value()));
         assert((opt.value() == T {}));
 
@@ -97,7 +97,7 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> opt { T(42) };
+        etl::optional<T> opt {T(42)};
         assert((opt.has_value()));
         assert((opt.value() == T(42)));
         opt = etl::optional<T> {};
@@ -107,7 +107,7 @@ constexpr auto test() -> bool
     {
         etl::optional<T> opt {};
         assert(!(opt.has_value()));
-        opt = etl::optional<T> { T(42) };
+        opt = etl::optional<T> {T(42)};
         assert((opt.has_value()));
         assert((opt.value() == T(42)));
     }
@@ -142,10 +142,10 @@ constexpr auto test() -> bool
     }
 
     {
-        auto opt = etl::optional<T> { T(1) };
+        auto opt = etl::optional<T> {T(1)};
         assert((static_cast<bool>(opt)));
 
-        auto const cOpt = etl::optional<T> { T(1) };
+        auto const cOpt = etl::optional<T> {T(1)};
         assert((static_cast<bool>(cOpt)));
     }
 
@@ -158,10 +158,10 @@ constexpr auto test() -> bool
     }
 
     {
-        auto opt = etl::optional<T> { T(1) };
+        auto opt = etl::optional<T> {T(1)};
         assert(!(opt.operator->() == nullptr));
 
-        auto const cOpt = etl::optional<T> { T(1) };
+        auto const cOpt = etl::optional<T> {T(1)};
         assert(!(cOpt.operator->() == nullptr));
     }
 
@@ -177,15 +177,15 @@ constexpr auto test() -> bool
     }
 
     {
-        auto opt = etl::optional<T> { T(1) };
+        auto opt = etl::optional<T> {T(1)};
         assert((opt.value_or(T(42)) == T(1)));
 
-        auto const cOpt = etl::optional<T> { T(1) };
+        auto const cOpt = etl::optional<T> {T(1)};
         assert((cOpt.value_or(T(42)) == T(1)));
 
-        assert((etl::optional<T> { T(1) }.value_or(T(42)) == T(1)));
+        assert((etl::optional<T> {T(1)}.value_or(T(42)) == T(1)));
 
-        assert((etl::move(etl::optional<T> { T(1) }).value_or(T(42)) == T(1)));
+        assert((etl::move(etl::optional<T> {T(1)}).value_or(T(42)) == T(1)));
     }
 
     {
@@ -196,7 +196,7 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> opt { T {} };
+        etl::optional<T> opt {T {}};
         assert((opt.has_value()));
         opt.reset();
         assert(!(opt.has_value()));
@@ -206,7 +206,7 @@ constexpr auto test() -> bool
         struct S {
             int& counter;
 
-            S(int& c) : counter { c } { }
+            S(int& c) : counter {c} { }
             ~S() { counter++; }
             S(S const& /*other*/)                        = default;
             S(S&& /*other*/) noexcept                    = default;
@@ -215,7 +215,7 @@ constexpr auto test() -> bool
         };
 
         auto counter = 0;
-        etl::optional<S> opt { etl::in_place, counter };
+        etl::optional<S> opt {etl::in_place, counter};
         assert((opt.has_value()));
         assert((counter == 0));
         opt.reset();
@@ -224,7 +224,7 @@ constexpr auto test() -> bool
     }
 
     struct SCTOR {
-        SCTOR(T xInit, T yInit) : x { xInit }, y { yInit } { }
+        SCTOR(T xInit, T yInit) : x {xInit}, y {yInit} { }
 
         T x;
         T y;
@@ -233,14 +233,14 @@ constexpr auto test() -> bool
     {
         etl::optional<T> opt {};
         assert(!(opt.has_value()));
-        opt.emplace(T { 1 });
+        opt.emplace(T {1});
         assert((opt.has_value()));
     }
 
     {
         etl::optional<SCTOR> opt {};
         assert(!(opt.has_value()));
-        opt.emplace(T { 1 }, T { 2 });
+        opt.emplace(T {1}, T {2});
         assert((opt.has_value()));
     }
 
@@ -259,21 +259,21 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> lhs1 { T { 42 } };
-        etl::optional<T> rhs1 { T { 42 } };
+        etl::optional<T> lhs1 {T {42}};
+        etl::optional<T> rhs1 {T {42}};
         assert((lhs1 == rhs1));
         assert(!(lhs1 != rhs1));
         assert(!(lhs1 == etl::nullopt));
         assert(!(etl::nullopt == lhs1));
 
-        etl::optional<T> lhs2 { T { 0 } };
-        etl::optional<T> rhs2 { T { 42 } };
+        etl::optional<T> lhs2 {T {0}};
+        etl::optional<T> rhs2 {T {42}};
         assert((lhs2 != rhs2));
         assert((lhs2 != etl::nullopt));
         assert((etl::nullopt != lhs2));
         assert(!(lhs2 == rhs2));
 
-        etl::optional<T> lhs3 { T { 0 } };
+        etl::optional<T> lhs3 {T {0}};
         etl::optional<T> rhs3(etl::nullopt);
         assert((lhs3 != rhs3));
         assert(!(lhs3 == rhs3));
@@ -292,18 +292,18 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> lhs1 { T { 42 } };
-        etl::optional<T> rhs1 { T { 42 } };
+        etl::optional<T> lhs1 {T {42}};
+        etl::optional<T> rhs1 {T {42}};
         assert(!(lhs1 < rhs1));
         assert(!(lhs1 < etl::nullopt));
         assert((etl::nullopt < rhs1));
 
-        etl::optional<T> lhs2 { T { 0 } };
-        etl::optional<T> rhs2 { T { 42 } };
+        etl::optional<T> lhs2 {T {0}};
+        etl::optional<T> rhs2 {T {42}};
         assert((lhs2 < rhs2));
 
         etl::optional<T> lhs3(etl::nullopt);
-        etl::optional<T> rhs3 { T { 42 } };
+        etl::optional<T> rhs3 {T {42}};
         assert((lhs3 < rhs3));
 
         assert((etl::nullopt < rhs3));
@@ -321,12 +321,12 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> lhs1 { T { 42 } };
-        etl::optional<T> rhs1 { T { 42 } };
+        etl::optional<T> lhs1 {T {42}};
+        etl::optional<T> rhs1 {T {42}};
         assert(!(lhs1 > rhs1));
 
-        etl::optional<T> lhs2 { T { 42 } };
-        etl::optional<T> rhs2 { T { 0 } };
+        etl::optional<T> lhs2 {T {42}};
+        etl::optional<T> rhs2 {T {0}};
         assert((lhs2 > rhs2));
     }
 
@@ -341,16 +341,16 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> lhs1 { T { 42 } };
-        etl::optional<T> rhs1 { T { 42 } };
+        etl::optional<T> lhs1 {T {42}};
+        etl::optional<T> rhs1 {T {42}};
         assert((lhs1 <= rhs1));
 
-        etl::optional<T> lhs2 { T { 0 } };
-        etl::optional<T> rhs2 { T { 42 } };
+        etl::optional<T> lhs2 {T {0}};
+        etl::optional<T> rhs2 {T {42}};
         assert((lhs2 <= rhs2));
 
         etl::optional<T> lhs3(etl::nullopt);
-        etl::optional<T> rhs3 { T { 42 } };
+        etl::optional<T> rhs3 {T {42}};
         assert((lhs3 <= rhs3));
     }
 
@@ -365,13 +365,13 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> lhs1 { T { 42 } };
-        etl::optional<T> rhs1 { T { 42 } };
+        etl::optional<T> lhs1 {T {42}};
+        etl::optional<T> rhs1 {T {42}};
         assert((lhs1 >= rhs1));
         assert((rhs1 >= lhs1));
 
-        etl::optional<T> lhs2 { T { 42 } };
-        etl::optional<T> rhs2 { T { 0 } };
+        etl::optional<T> lhs2 {T {42}};
+        etl::optional<T> rhs2 {T {0}};
         assert((lhs2 >= rhs2));
         assert(!(rhs2 >= lhs2));
     }
@@ -388,7 +388,7 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> opt1 { T { 1 } };
+        etl::optional<T> opt1 {T {1}};
         etl::optional<T> opt2 {};
         assert((opt1.has_value()));
         assert(!(opt2.has_value()));
@@ -399,7 +399,7 @@ constexpr auto test() -> bool
         assert((opt2.value() == 1));
 
         etl::optional<T> opt3 {};
-        etl::optional<T> opt4 { T { 1 } };
+        etl::optional<T> opt4 {T {1}};
         assert(!(opt3.has_value()));
         assert((opt4.has_value()));
 
@@ -410,8 +410,8 @@ constexpr auto test() -> bool
     }
 
     {
-        etl::optional<T> opt1 { T { 1 } };
-        etl::optional<T> opt2 { T { 2 } };
+        etl::optional<T> opt1 {T {1}};
+        etl::optional<T> opt2 {T {2}};
         assert((opt1.has_value()));
         assert((opt2.has_value()));
 
@@ -422,54 +422,54 @@ constexpr auto test() -> bool
         assert((opt2.value() == 1));
     }
 
-    auto opt1 = etl::make_optional(T { 42 });
+    auto opt1 = etl::make_optional(T {42});
     assert((etl::is_same_v<typename decltype(opt1)::value_type, T>));
 
     auto value2 = T {};
-    auto opt2   = etl::make_optional(T { value2 });
+    auto opt2   = etl::make_optional(T {value2});
     assert((etl::is_same_v<typename decltype(opt2)::value_type, T>));
 
     auto const value3 = T {};
-    auto const opt3   = etl::make_optional(T { value3 });
+    auto const opt3   = etl::make_optional(T {value3});
     assert((etl::is_same_v<typename decltype(opt3)::value_type, T>));
 
     struct SMO {
         T data_1;
         int data_2;
 
-        constexpr SMO(T d1, int d2) : data_1 { d1 }, data_2 { d2 } { }
+        constexpr SMO(T d1, int d2) : data_1 {d1}, data_2 {d2} { }
     };
 
-    auto const opt143 = etl::make_optional<SMO>(T { 42 }, 1);
+    auto const opt143 = etl::make_optional<SMO>(T {42}, 1);
     assert((etl::is_same_v<typename decltype(opt143)::value_type, SMO>));
 
-    assert((opt143.value().data_1 == T { 42 }));
+    assert((opt143.value().data_1 == T {42}));
     assert((opt143.value().data_2 == 1));
     using etl::is_same_v;
 
     {
-        etl::optional opt { T {} };
+        etl::optional opt {T {}};
         etl::ignore_unused(opt);
         assert((is_same_v<typename decltype(opt)::value_type, T>));
     }
 
     {
         T data {};
-        etl::optional opt { data };
+        etl::optional opt {data};
         etl::ignore_unused(opt);
         assert((is_same_v<typename decltype(opt)::value_type, T>));
     }
 
     {
-        T const data { 42 };
-        etl::optional opt44 { data };
+        T const data {42};
+        etl::optional opt44 {data};
         etl::ignore_unused(opt44);
         assert((is_same_v<typename decltype(opt44)::value_type, T>));
     }
 
     {
         T data[2];
-        etl::optional opt55 { data };
+        etl::optional opt55 {data};
         etl::ignore_unused(opt55);
         assert((is_same_v<typename decltype(opt55)::value_type, T*>));
     }

@@ -61,11 +61,11 @@ struct partial_ordering {
 
 private:
     constexpr explicit partial_ordering(detail::order_result v) noexcept
-        : _value { static_cast<int8_t>(v) }, _isOrdered { true }
+        : _value {static_cast<int8_t>(v)}, _isOrdered {true}
     {
     }
     constexpr explicit partial_ordering(detail::compare_result v) noexcept
-        : _value { static_cast<int8_t>(v) }, _isOrdered { false }
+        : _value {static_cast<int8_t>(v)}, _isOrdered {false}
     {
     }
 

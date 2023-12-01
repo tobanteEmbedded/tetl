@@ -14,13 +14,13 @@ namespace detail {
 template <typename T, size_t N, size_t... I>
 [[nodiscard]] constexpr auto to_array_impl(T (&a)[N], index_sequence<I...> /*unused*/) -> array<remove_cv_t<T>, N>
 {
-    return { { a[I]... } };
+    return {{a[I]...}};
 }
 
 template <typename T, size_t N, size_t... I>
 [[nodiscard]] constexpr auto to_array_impl(T (&&a)[N], index_sequence<I...> /*unused*/) -> array<remove_cv_t<T>, N>
 {
-    return { { move(a[I])... } };
+    return {{move(a[I])...}};
 }
 
 } // namespace detail

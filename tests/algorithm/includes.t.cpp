@@ -13,13 +13,13 @@ constexpr auto test() -> bool
 {
 
     {
-        auto const v1 = etl::array { 'a', 'b', 'c', 'f', 'h', 'x' };
-        auto const v2 = etl::array { 'a', 'b', 'c' };
-        auto const v3 = etl::array { 'a', 'c' };
-        auto const v4 = etl::array { 'a', 'a', 'b' };
-        auto const v5 = etl::array { 'g' };
-        auto const v6 = etl::array { 'a', 'c', 'g' };
-        auto const v7 = etl::array { 'A', 'B', 'C' };
+        auto const v1 = etl::array {'a', 'b', 'c', 'f', 'h', 'x'};
+        auto const v2 = etl::array {'a', 'b', 'c'};
+        auto const v3 = etl::array {'a', 'c'};
+        auto const v4 = etl::array {'a', 'a', 'b'};
+        auto const v5 = etl::array {'g'};
+        auto const v6 = etl::array {'a', 'c', 'g'};
+        auto const v7 = etl::array {'A', 'B', 'C'};
 
         auto noCase = [](char a, char b) { return etl::tolower(a) < etl::tolower(b); };
 
@@ -33,12 +33,12 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const v1 = etl::array { T(1), T(2), T(3), T(6), T(8), T(24) };
-        auto const v2 = etl::array { T(1), T(2), T(3) };
-        auto const v3 = etl::array { T(1), T(3) };
-        auto const v4 = etl::array { T(1), T(1), T(2) };
-        auto const v5 = etl::array { T(7) };
-        auto const v6 = etl::array { T(1), T(3), T(7) };
+        auto const v1 = etl::array {T(1), T(2), T(3), T(6), T(8), T(24)};
+        auto const v2 = etl::array {T(1), T(2), T(3)};
+        auto const v3 = etl::array {T(1), T(3)};
+        auto const v4 = etl::array {T(1), T(1), T(2)};
+        auto const v5 = etl::array {T(7)};
+        auto const v6 = etl::array {T(1), T(3), T(7)};
 
         assert(etl::includes(begin(v1), end(v1), v2.begin(), v2.end()));
         assert(etl::includes(begin(v1), end(v1), v3.begin(), v3.end()));

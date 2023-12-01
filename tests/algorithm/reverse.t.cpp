@@ -14,7 +14,7 @@ constexpr auto test() -> bool
     // built-in
     {
         auto data = etl::array<T, 4> {};
-        etl::iota(begin(data), end(data), T { 0 });
+        etl::iota(begin(data), end(data), T {0});
         etl::reverse(begin(data), end(data));
 
         assert(data[0] == 3);
@@ -30,8 +30,8 @@ constexpr auto test() -> bool
         };
 
         auto arr = etl::array {
-            S { T(1) },
-            S { T(2) },
+            S {T(1)},
+            S {T(2)},
         };
 
         etl::reverse(begin(arr), end(arr));
@@ -42,7 +42,7 @@ constexpr auto test() -> bool
     // built-in
     {
         auto source = etl::array<T, 4> {};
-        etl::iota(begin(source), end(source), T { 0 });
+        etl::iota(begin(source), end(source), T {0});
 
         auto destination = etl::array<T, 4> {};
         etl::reverse_copy(begin(source), end(source), begin(destination));
@@ -60,8 +60,8 @@ constexpr auto test() -> bool
         };
 
         auto source = etl::array {
-            S { T(1) },
-            S { T(2) },
+            S {T(1)},
+            S {T(2)},
         };
 
         decltype(source) destination {};

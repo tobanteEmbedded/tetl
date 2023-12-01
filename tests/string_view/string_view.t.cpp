@@ -77,7 +77,7 @@ constexpr auto test() -> bool
 
     {
         auto const sv = "test"_sv;
-        auto counter  = string_view::size_type { 0 };
+        auto counter  = string_view::size_type {0};
         for (auto c : sv) {
             etl::ignore_unused(c);
             counter++;
@@ -93,7 +93,7 @@ constexpr auto test() -> bool
         assert(sv1[2] == 's');
         assert(sv1[3] == 't');
 
-        auto sv2 = string_view { "tobi" };
+        auto sv2 = string_view {"tobi"};
         assert(sv2[0] == 't');
         assert(sv2[1] == 'o');
         assert(sv2[2] == 'b');
@@ -197,8 +197,8 @@ constexpr auto test() -> bool
     {
         auto const sv = "test"_sv;
         assert((sv.starts_with("t"_sv)));
-        assert((sv.starts_with(string_view { "te" })));
-        assert((sv.starts_with(string_view { "tes" })));
+        assert((sv.starts_with(string_view {"te"})));
+        assert((sv.starts_with(string_view {"tes"})));
         assert((sv.starts_with("test"_sv)));
     }
 
@@ -400,7 +400,7 @@ constexpr auto test() -> bool
         auto const sv = "test"_sv;
         assert(sv.find_last_not_of("t"_sv) == 2);
         assert(sv.find_last_not_of("est"_sv) == sv.npos);
-        assert(sv.find_last_not_of(etl::string_view { "s" }, 2) == 1);
+        assert(sv.find_last_not_of(etl::string_view {"s"}, 2) == 1);
     }
 
     {
@@ -491,9 +491,9 @@ constexpr auto test() -> bool
 
     {
         auto const sv  = "test"_sv;
-        auto const str = etl::static_string<16> { "test" };
+        auto const str = etl::static_string<16> {"test"};
         assert(!(sv < sv));
-        assert(etl::string_view { "" } < sv);
+        assert(etl::string_view {""} < sv);
         assert(sv.substr(0, 1) < sv);
         assert("abc"_sv < sv);
         assert(!(sv < str));
@@ -503,7 +503,7 @@ constexpr auto test() -> bool
     {
         auto const sv = "test"_sv;
         assert(sv <= sv);
-        assert(etl::string_view { "" } <= sv);
+        assert(etl::string_view {""} <= sv);
         assert(sv.substr(0, 1) <= sv);
         assert("abc"_sv <= sv);
     }
@@ -511,7 +511,7 @@ constexpr auto test() -> bool
     {
         auto const sv = "test"_sv;
         assert(!(sv > sv));
-        assert(etl::string_view { "xxxxxx" } > sv);
+        assert(etl::string_view {"xxxxxx"} > sv);
         assert(sv > sv.substr(0, 1));
         assert(sv > "abc"_sv);
     }
@@ -519,7 +519,7 @@ constexpr auto test() -> bool
     {
         auto const sv = "test"_sv;
         assert(sv >= sv);
-        assert(etl::string_view { "xxxxxx" } >= sv);
+        assert(etl::string_view {"xxxxxx"} >= sv);
         assert(sv >= sv.substr(0, 1));
         assert(sv >= "abc"_sv);
     }
@@ -534,11 +534,11 @@ constexpr auto test() -> bool
         assert(("foo"_sv == "foo"_sv));
         assert(("bar"_sv == "bar"_sv));
 
-        assert(!("foo"_sv == etl::static_string<16> { "baz" }));
-        assert(("bar"_sv == etl::static_string<16> { "bar" }));
+        assert(!("foo"_sv == etl::static_string<16> {"baz"}));
+        assert(("bar"_sv == etl::static_string<16> {"bar"}));
 
-        assert((etl::static_string<16> { "bar" } == "bar"_sv));
-        assert(!(etl::static_string<16> { "baz" } == "foo"_sv));
+        assert((etl::static_string<16> {"bar"} == "bar"_sv));
+        assert(!(etl::static_string<16> {"baz"} == "foo"_sv));
 
         assert(!("foo"_sv == "test"_sv));
         assert(!("test"_sv == "foo"_sv));

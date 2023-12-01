@@ -36,23 +36,23 @@ constexpr auto test_one(etl::array<ElementType, 2> elements) -> bool
 
 constexpr auto test_default_accessor() -> bool
 {
-    assert(test_one<char>({ 'a', 'b' }));
+    assert(test_one<char>({'a', 'b'}));
 
-    assert(test_one<etl::uint8_t>({ 0, 1 }));
-    assert(test_one<etl::uint16_t>({ 0, 1 }));
-    assert(test_one<etl::uint32_t>({ 0, 1 }));
-    assert(test_one<etl::uint64_t>({ 0, 1 }));
+    assert(test_one<etl::uint8_t>({0, 1}));
+    assert(test_one<etl::uint16_t>({0, 1}));
+    assert(test_one<etl::uint32_t>({0, 1}));
+    assert(test_one<etl::uint64_t>({0, 1}));
 
-    assert(test_one<etl::int8_t>({ 0, 1 }));
-    assert(test_one<etl::int16_t>({ 0, 1 }));
-    assert(test_one<etl::int32_t>({ 0, 1 }));
-    assert(test_one<etl::int64_t>({ 0, 1 }));
+    assert(test_one<etl::int8_t>({0, 1}));
+    assert(test_one<etl::int16_t>({0, 1}));
+    assert(test_one<etl::int32_t>({0, 1}));
+    assert(test_one<etl::int64_t>({0, 1}));
 
-    assert(test_one<etl::size_t>({ 0, 1 }));
-    assert(test_one<etl::ptrdiff_t>({ 0, 1 }));
+    assert(test_one<etl::size_t>({0, 1}));
+    assert(test_one<etl::ptrdiff_t>({0, 1}));
 
-    assert(test_one<float>({ 0.0F, 1.0F }));
-    assert(test_one<double>({ 0.0, 1.0 }));
+    assert(test_one<float>({0.0F, 1.0F}));
+    assert(test_one<double>({0.0, 1.0}));
 
     return true;
 }

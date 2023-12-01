@@ -180,17 +180,17 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        assert(etl::bitset<N> { 0U }.to_ulong() == 0UL);
-        assert(etl::bitset<N> { 0U }.to_ullong() == 0ULL);
+        assert(etl::bitset<N> {0U}.to_ulong() == 0UL);
+        assert(etl::bitset<N> {0U}.to_ullong() == 0ULL);
 
-        assert(etl::bitset<N> { 1U }.to_ulong() == 1UL);
-        assert(etl::bitset<N> { 1U }.to_ullong() == 1ULL);
+        assert(etl::bitset<N> {1U}.to_ulong() == 1UL);
+        assert(etl::bitset<N> {1U}.to_ullong() == 1ULL);
 
-        assert(etl::bitset<N> { 0b0000'1111U }.to_ulong() == 15UL);
-        assert(etl::bitset<N> { 0b0000'1111U }.to_ullong() == 15ULL);
+        assert(etl::bitset<N> {0b0000'1111U}.to_ulong() == 15UL);
+        assert(etl::bitset<N> {0b0000'1111U}.to_ullong() == 15ULL);
 
-        assert(etl::bitset<N> { 0b1111'1111U }.to_ulong() == 255UL);
-        assert(etl::bitset<N> { 0b1111'1111U }.to_ullong() == 255ULL);
+        assert(etl::bitset<N> {0b1111'1111U}.to_ulong() == 255UL);
+        assert(etl::bitset<N> {0b1111'1111U}.to_ullong() == 255ULL);
     }
 
     {
@@ -259,7 +259,7 @@ constexpr auto test_bitset() -> bool
 
     {
         // TODO [tobi] Test other sizes
-        auto const bits = etl::bitset<8> { 0b0010'1010 };
+        auto const bits = etl::bitset<8> {0b0010'1010};
         assert((bits.template to_string<16>() == "00101010"_sv));
         assert((bits.template to_string<16>('*') == "**1*1*1*"_sv));
         assert((bits.template to_string<16>('O', 'X') == "OOXOXOXO"_sv));

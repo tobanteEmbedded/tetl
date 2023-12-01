@@ -44,7 +44,7 @@ private:
     [[nodiscard]] auto make_frame(size_type s) const
     {
         auto frame = frame_type {};
-        for (size_type ch { 0 }; ch < size_channels(); ++ch) { frame[ch] = (*this)(ch, s); }
+        for (size_type ch {0}; ch < size_channels(); ++ch) { frame[ch] = (*this)(ch, s); }
         return frame;
     }
 

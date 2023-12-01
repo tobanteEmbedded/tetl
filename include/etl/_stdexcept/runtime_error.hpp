@@ -9,7 +9,7 @@ namespace etl {
 
 struct runtime_error : exception {
     constexpr runtime_error() = default;
-    constexpr explicit runtime_error(char const* what) : exception { what } { }
+    constexpr explicit runtime_error(char const* what) : exception {what} { }
 };
 
 } // namespace etl

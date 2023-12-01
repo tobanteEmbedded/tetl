@@ -24,7 +24,7 @@ constexpr auto test() -> bool
 
 #if __has_builtin(__builtin_is_constant_evaluated)
     if (!etl::is_constant_evaluated()) {
-        auto val = T { 42 };
+        auto val = T {42};
         assert(etl::hash<T*> {}(&val) != 0);
     }
 #endif

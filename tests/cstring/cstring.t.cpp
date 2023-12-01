@@ -16,7 +16,7 @@ constexpr auto test_str() -> bool
 {
     // "cstring: strcpy"
     {
-        char source[32] = { "test" };
+        char source[32] = {"test"};
         char dest[32] {};
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
@@ -27,7 +27,7 @@ constexpr auto test_str() -> bool
 
     // "cstring: strncpy"
     {
-        char source[32] = { "test" };
+        char source[32] = {"test"};
         char dest[32] {};
         etl::strncpy(dest, source, 2);
         assert((dest[0] == 't'));
@@ -41,11 +41,11 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        assert((string_view { str } == "Hello World!"_sv));
+        assert((string_view {str} == "Hello World!"_sv));
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, " Goodbye World!");
-        assert((string_view { str } == "Hello World! Goodbye World!"_sv));
+        assert((string_view {str} == "Hello World! Goodbye World!"_sv));
     }
 
     // "cstring: strncat"
@@ -55,9 +55,9 @@ constexpr auto test_str() -> bool
 
         // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy)
         etl::strcat(str, str2);
-        assert((string_view { str } == "Hello World!"_sv));
+        assert((string_view {str} == "Hello World!"_sv));
         etl::strncat(str, " Goodbye World!", 3);
-        assert((string_view { str } == "Hello World! Go"_sv));
+        assert((string_view {str} == "Hello World! Go"_sv));
     }
 
     // "cstring: strncmp"
@@ -78,7 +78,7 @@ constexpr auto test_str() -> bool
         assert((etl::strchr(txt, 'o') == etl::next(txt, 4)));
         assert((etl::strchr(txt, '\0') == etl::next(txt, 5)));
 
-        auto str = etl::static_string<16> { "Hello" };
+        auto str = etl::static_string<16> {"Hello"};
         assert((etl::strchr(str.data(), '0') == nullptr));
         assert((etl::strchr(str.data(), 'H') == str.data()));
         assert((etl::strchr(str.data(), 'e') == etl::next(str.data(), 1)));
@@ -99,7 +99,7 @@ constexpr auto test_str() -> bool
         assert((etl::strrchr(txt, 'o') == etl::next(txt, 4)));
         assert((etl::strrchr(txt, '\0') == etl::next(txt, 5)));
 
-        auto str = etl::static_string<16> { "Hello" };
+        auto str = etl::static_string<16> {"Hello"};
         assert((etl::strrchr(str.data(), '0') == nullptr));
         assert((etl::strrchr(str.data(), 'H') == str.data()));
         assert((etl::strrchr(str.data(), 'e') == etl::next(str.data(), 1)));
@@ -112,7 +112,7 @@ constexpr auto test_str() -> bool
     // "cstring: strspn"
     {
         auto const* lowAlpha = "qwertyuiopasdfghjklzxcvbnm";
-        auto const str       = etl::static_string<16> { "abcde312$#@" };
+        auto const str       = etl::static_string<16> {"abcde312$#@"};
         auto const span      = etl::strspn(str.c_str(), lowAlpha);
         assert(str.substr(span) == "312$#@");
     }
@@ -120,7 +120,7 @@ constexpr auto test_str() -> bool
     // "cstring: strcspn"
     {
         auto const* invalid = "*$#";
-        auto const str      = etl::static_string<16> { "abcde312$#@" };
+        auto const str      = etl::static_string<16> {"abcde312$#@"};
         assert(etl::strcspn(str.c_str(), invalid) == 8);
     }
 

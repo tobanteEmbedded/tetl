@@ -68,14 +68,14 @@ struct basic_string_view {
     /// range (even though the constructor may not access any of the elements of
     /// this range). After construction, data() is equal to s, and size() is
     /// equal to count.
-    constexpr basic_string_view(CharType const* str, size_type size) : _begin { str }, _size { size } { }
+    constexpr basic_string_view(CharType const* str, size_type size) : _begin {str}, _size {size} { }
 
     /// \brief Constructs a view of the null-terminated character string pointed
     /// to by s, not including the terminating null character. The length of the
     /// view is determined as if by Traits::length(s). The behavior is undefined
     /// if [s, s+Traits::length(s)) is not a valid range. After construction,
     /// data() is equal to s, and size() is equal to Traits::length(s).
-    constexpr basic_string_view(CharType const* str) : _begin { str }, _size { traits_type::length(str) } { }
+    constexpr basic_string_view(CharType const* str) : _begin {str}, _size {traits_type::length(str)} { }
 
     constexpr basic_string_view(nullptr_t /*null*/) = delete;
 
@@ -85,8 +85,7 @@ struct basic_string_view {
     /// \bug Improve SFINAE protection. See C++20 standard.
     template <typename Iter>
         requires(detail::RandomAccessIterator<Iter>)
-    constexpr basic_string_view(Iter first, Iter last)
-        : basic_string_view { first, static_cast<size_type>(last - first) }
+    constexpr basic_string_view(Iter first, Iter last) : basic_string_view {first, static_cast<size_type>(last - first)}
     {
     }
 
@@ -209,7 +208,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_string_view
     {
         auto const rcount = etl::min(count, size() - pos);
-        return basic_string_view { _begin + pos, rcount };
+        return basic_string_view {_begin + pos, rcount};
     }
 
     /// \brief Compares two character sequences.

@@ -22,22 +22,22 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const sec   = seconds { 1 };
-        auto const milli = milliseconds { sec };
+        auto const sec   = seconds {1};
+        auto const milli = milliseconds {sec};
         assert(milli.count() == 1'000);
     }
 
     {
-        auto const minute = minutes { 1 };
-        auto const sec    = seconds { minute };
+        auto const minute = minutes {1};
+        auto const sec    = seconds {minute};
         assert(sec.count() == 60);
     }
 
     {
         using seconds_f   = etl::chrono::duration<T, etl::ratio<1>>;
         using minutes_f   = etl::chrono::duration<T, etl::ratio<60>>;
-        auto const minute = minutes_f { T(1) };
-        auto const sec    = seconds_f { minute };
+        auto const minute = minutes_f {T(1)};
+        auto const sec    = seconds_f {minute};
         assert(sec.count() == T(60));
     }
 
@@ -49,7 +49,7 @@ constexpr auto test() -> bool
 
     {
         using duration_t = etl::chrono::duration<T>;
-        auto dur         = duration_t { T { 0 } };
+        auto dur         = duration_t {T {0}};
 
         auto o = dur++;
         assert(o.count() == 0);
@@ -93,35 +93,35 @@ constexpr auto test() -> bool
         using ms = etl::chrono::duration<T, etl::milli>;
         using s  = etl::chrono::duration<T, etl::ratio<1>>;
 
-        assert(s { T(1) } + s { T(0) } == s { T(1) });
-        assert(s { T(1) } + ms { T(0) } == s { T(1) });
-        assert(ms { T(1) } + s { T(0) } == ms { T(1) });
-        assert(ms { T(1) } + ms { T(0) } == ms { T(1) });
+        assert(s {T(1)} + s {T(0)} == s {T(1)});
+        assert(s {T(1)} + ms {T(0)} == s {T(1)});
+        assert(ms {T(1)} + s {T(0)} == ms {T(1)});
+        assert(ms {T(1)} + ms {T(0)} == ms {T(1)});
 
-        assert(s { T(1) } + ms { T(500) } == ms { T(1'500) });
-        assert(ms { T(500) } + s { T(1) } == ms { T(1'500) });
+        assert(s {T(1)} + ms {T(500)} == ms {T(1'500)});
+        assert(ms {T(500)} + s {T(1)} == ms {T(1'500)});
     }
 
     if constexpr (etl::is_integral_v<T>) {
         using ms  = etl::chrono::duration<T, etl::milli>;
         using sec = etl::chrono::duration<T, etl::ratio<1>>;
 
-        assert(sec { 1 } - sec { 0 } == sec { 1 });
-        assert(sec { 1 } - ms { 0 } == sec { 1 });
-        assert(ms { 1 } - sec { 0 } == ms { 1 });
-        assert(ms { 1 } - ms { 0 } == ms { 1 });
+        assert(sec {1} - sec {0} == sec {1});
+        assert(sec {1} - ms {0} == sec {1});
+        assert(ms {1} - sec {0} == ms {1});
+        assert(ms {1} - ms {0} == ms {1});
 
-        assert(sec { 1 } - ms { 500 } == ms { 500 });
-        assert(ms { 500 } - sec { 1 } == ms { -500 });
+        assert(sec {1} - ms {500} == ms {500});
+        assert(ms {500} - sec {1} == ms {-500});
     }
 
     if constexpr (etl::is_integral_v<T>) {
         using sec_t = etl::chrono::duration<T, etl::ratio<1>>;
 
-        assert(sec_t { T { 1 } } / sec_t { T { 1 } } == T { 1 });
-        assert(sec_t { T { 2 } } / sec_t { T { 1 } } == T { 2 });
-        assert(sec_t { T { 4 } } / sec_t { T { 1 } } == T { 4 });
-        assert(sec_t { T { 4 } } / sec_t { T { 2 } } == T { 2 });
+        assert(sec_t {T {1}} / sec_t {T {1}} == T {1});
+        assert(sec_t {T {2}} / sec_t {T {1}} == T {2});
+        assert(sec_t {T {4}} / sec_t {T {1}} == T {4});
+        assert(sec_t {T {4}} / sec_t {T {2}} == T {2});
     }
 
     if constexpr (etl::is_integral_v<T>) {
@@ -136,87 +136,87 @@ constexpr auto test() -> bool
         assert(sec_t(T(4)) % sec_t(T(3)) == sec_t(T(1)));
     }
 
-    assert(seconds { 1 } == seconds { 1 });
-    assert(milliseconds { 42 } == milliseconds { 42 });
-    assert(microseconds { 143 } == microseconds { 143 });
-    assert(seconds { 1 } == milliseconds { 1'000 });
+    assert(seconds {1} == seconds {1});
+    assert(milliseconds {42} == milliseconds {42});
+    assert(microseconds {143} == microseconds {143});
+    assert(seconds {1} == milliseconds {1'000});
 
-    assert(!(seconds { 1 } == seconds { 0 }));
-    assert(!(milliseconds { 42 } == milliseconds { 143 }));
-    assert(!(microseconds { 143 } == microseconds { 42 }));
+    assert(!(seconds {1} == seconds {0}));
+    assert(!(milliseconds {42} == milliseconds {143}));
+    assert(!(microseconds {143} == microseconds {42}));
 
-    assert(seconds { 1 } != seconds { 0 });
-    assert(milliseconds { 42 } != milliseconds { 143 });
-    assert(microseconds { 143 } != microseconds { 42 });
+    assert(seconds {1} != seconds {0});
+    assert(milliseconds {42} != milliseconds {143});
+    assert(microseconds {143} != microseconds {42});
 
-    assert(!(seconds { 1 } != seconds { 1 }));
-    assert(!(milliseconds { 42 } != milliseconds { 42 }));
-    assert(!(microseconds { 143 } != microseconds { 143 }));
-    assert(!(seconds { 1 } != milliseconds { 1'000 }));
+    assert(!(seconds {1} != seconds {1}));
+    assert(!(milliseconds {42} != milliseconds {42}));
+    assert(!(microseconds {143} != microseconds {143}));
+    assert(!(seconds {1} != milliseconds {1'000}));
 
-    assert(seconds { 0 } < seconds { 1 });
-    assert(milliseconds { 999 } < seconds { 1 });
-    assert(milliseconds { 42 } < milliseconds { 143 });
-    assert(microseconds { 143 } < microseconds { 1'000 });
+    assert(seconds {0} < seconds {1});
+    assert(milliseconds {999} < seconds {1});
+    assert(milliseconds {42} < milliseconds {143});
+    assert(microseconds {143} < microseconds {1'000});
 
-    assert(!(seconds { 1 } < seconds { 1 }));
-    assert(!(milliseconds { 42 } < milliseconds { 42 }));
-    assert(!(microseconds { 143 } < microseconds { 143 }));
-    assert(!(seconds { 1 } < milliseconds { 1'000 }));
+    assert(!(seconds {1} < seconds {1}));
+    assert(!(milliseconds {42} < milliseconds {42}));
+    assert(!(microseconds {143} < microseconds {143}));
+    assert(!(seconds {1} < milliseconds {1'000}));
 
-    assert(seconds { 0 } <= seconds { 1 });
-    assert(milliseconds { 999 } <= seconds { 1 });
-    assert(milliseconds { 1000 } <= seconds { 1 });
-    assert(milliseconds { 42 } <= milliseconds { 143 });
-    assert(microseconds { 143 } <= microseconds { 1'000 });
-    assert(seconds { 1 } <= seconds { 1 });
+    assert(seconds {0} <= seconds {1});
+    assert(milliseconds {999} <= seconds {1});
+    assert(milliseconds {1000} <= seconds {1});
+    assert(milliseconds {42} <= milliseconds {143});
+    assert(microseconds {143} <= microseconds {1'000});
+    assert(seconds {1} <= seconds {1});
 
-    assert(!(seconds { 0 } > seconds { 1 }));
-    assert(!(milliseconds { 999 } > seconds { 1 }));
-    assert(!(milliseconds { 42 } > milliseconds { 143 }));
-    assert(!(microseconds { 143 } > microseconds { 1'000 }));
+    assert(!(seconds {0} > seconds {1}));
+    assert(!(milliseconds {999} > seconds {1}));
+    assert(!(milliseconds {42} > milliseconds {143}));
+    assert(!(microseconds {143} > microseconds {1'000}));
 
-    assert(milliseconds { 1'000 } > milliseconds { 42 });
-    assert(microseconds { 144 } > microseconds { 143 });
-    assert(seconds { 1 } > milliseconds { 999 });
+    assert(milliseconds {1'000} > milliseconds {42});
+    assert(microseconds {144} > microseconds {143});
+    assert(seconds {1} > milliseconds {999});
 
-    assert(!(seconds { 0 } >= seconds { 1 }));
-    assert(!(milliseconds { 999 } >= seconds { 1 }));
-    assert(!(milliseconds { 42 } >= milliseconds { 143 }));
-    assert(!(microseconds { 143 } >= microseconds { 1'000 }));
+    assert(!(seconds {0} >= seconds {1}));
+    assert(!(milliseconds {999} >= seconds {1}));
+    assert(!(milliseconds {42} >= milliseconds {143}));
+    assert(!(microseconds {143} >= microseconds {1'000}));
 
-    assert(milliseconds { 1'000 } >= milliseconds { 42 });
-    assert(microseconds { 144 } >= microseconds { 143 });
-    assert(seconds { 1 } >= milliseconds { 1'000 });
+    assert(milliseconds {1'000} >= milliseconds {42});
+    assert(microseconds {144} >= microseconds {143});
+    assert(seconds {1} >= milliseconds {1'000});
 
-    assert(etl::chrono::abs(minutes { -10 }) == minutes { 10 });
-    assert(etl::chrono::abs(minutes { -143 }) == minutes { 143 });
+    assert(etl::chrono::abs(minutes {-10}) == minutes {10});
+    assert(etl::chrono::abs(minutes {-143}) == minutes {143});
 
     using etl::chrono::duration_cast;
-    assert(duration_cast<microseconds>(milliseconds { 1 }).count() == 1'000);
-    assert(duration_cast<seconds>(milliseconds { 1'000 }).count() == 1);
-    assert(duration_cast<microseconds>(milliseconds { 99 }).count() == 99'000);
+    assert(duration_cast<microseconds>(milliseconds {1}).count() == 1'000);
+    assert(duration_cast<seconds>(milliseconds {1'000}).count() == 1);
+    assert(duration_cast<microseconds>(milliseconds {99}).count() == 99'000);
 
     {
         using namespace etl::literals;
 
         auto const h = 1_h;
-        assert(h.count() == etl::chrono::hours { 1 }.count());
+        assert(h.count() == etl::chrono::hours {1}.count());
 
         auto const m = 1_min;
-        assert(m.count() == etl::chrono::minutes { 1 }.count());
+        assert(m.count() == etl::chrono::minutes {1}.count());
 
         auto const s = 1_s;
-        assert(s.count() == etl::chrono::seconds { 1 }.count());
+        assert(s.count() == etl::chrono::seconds {1}.count());
 
         auto const ms = 1_ms;
-        assert(ms.count() == etl::chrono::milliseconds { 1 }.count());
+        assert(ms.count() == etl::chrono::milliseconds {1}.count());
 
         auto const us = 10_us;
-        assert(us.count() == etl::chrono::microseconds { 10 }.count());
+        assert(us.count() == etl::chrono::microseconds {10}.count());
 
         auto const ns = 10_ns;
-        assert(ns.count() == etl::chrono::nanoseconds { 10 }.count());
+        assert(ns.count() == etl::chrono::nanoseconds {10}.count());
     }
 
     return true;

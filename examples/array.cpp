@@ -16,7 +16,7 @@ auto main() -> int
     using etl::array;
     using etl::copy;
 
-    auto src = array { 1, 2, 3, 4 }; // size & type are deduced
+    auto src = array {1, 2, 3, 4}; // size & type are deduced
     for (auto& item : src) { printf("%d\n", item); }
 
     src.fill(42);

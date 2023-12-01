@@ -60,7 +60,7 @@ struct flat_set {
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
     using container_type         = Container;
 
-    constexpr flat_set() : flat_set { Compare {} } { }
+    constexpr flat_set() : flat_set {Compare {}} { }
 
     /// \brief Initializes c with etl::move(cont), value-initializes compare,
     /// sorts the range [begin(),end()) with respect to compare, and finally
@@ -70,26 +70,26 @@ struct flat_set {
     /// otherwise N log N, where N is cont.size().
     explicit constexpr flat_set(container_type const& container)
         requires(detail::RandomAccessRange<container_type>)
-        : flat_set { etl::begin(container), etl::end(container), Compare() }
+        : flat_set {etl::begin(container), etl::end(container), Compare()}
     {
     }
 
     constexpr flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
-        : _container { etl::move(cont) }, _compare { Compare() }
+        : _container {etl::move(cont)}, _compare {Compare()}
     {
     }
 
     explicit constexpr flat_set(Compare const& comp) : _container {}, _compare(comp) { }
 
     template <typename InputIt>
-    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container {}, _compare { comp }
+    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container {}, _compare {comp}
     {
         insert(first, last);
     }
 
     template <typename InputIt>
     constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last, Compare const& comp = Compare())
-        : _container { first, last }, _compare { comp }
+        : _container {first, last}, _compare {comp}
     {
     }
 
@@ -142,7 +142,7 @@ struct flat_set {
     template <typename... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
-        auto key    = Key { etl::forward<Args>(args)... };
+        auto key    = Key {etl::forward<Args>(args)...};
         iterator it = lower_bound(key);
 
         if (it == end() || _compare(key, *it)) {

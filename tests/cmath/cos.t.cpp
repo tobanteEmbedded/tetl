@@ -10,7 +10,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::cos(short { 0 }) == 1.0);
+    assert(etl::cos(short {0}) == 1.0);
     assert(etl::cosl(0) == 1.0L);
     assert(etl::cos(T(0)) == T(1));
 

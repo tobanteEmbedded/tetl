@@ -14,7 +14,7 @@ struct const_buffer {
     const_buffer() noexcept = default;
 
     /// \brief Construct a buffer to represent a given memory range.
-    const_buffer(void const* data, etl::size_t size) : _data { data }, _size { size } { }
+    const_buffer(void const* data, etl::size_t size) : _data {data}, _size {size} { }
 
     /// \brief Get a pointer to the beginning of the memory range.
     [[nodiscard]] auto data() const noexcept -> void const* { return _data; }
@@ -44,7 +44,7 @@ inline auto operator+(const_buffer const& b, etl::size_t const n) noexcept -> co
     auto offset      = n < b.size() ? n : b.size();
     auto const* data = static_cast<char const*>(b.data()) + offset;
     auto size        = b.size() - offset;
-    return const_buffer { data, size };
+    return const_buffer {data, size};
 }
 
 /// \brief Create a new modifiable buffer that is offset from the start of

@@ -12,9 +12,9 @@ template <typename T>
 {
     {
         // zeros
-        auto const matData = etl::array<T, 4> { T(0), T(0), T(0), T(0) };
-        auto const vecData = etl::array<T, 2> { T(0), T(0) };
-        auto outData       = etl::array<T, 2> { T(0), T(0) };
+        auto const matData = etl::array<T, 4> {T(0), T(0), T(0), T(0)};
+        auto const vecData = etl::array<T, 2> {T(0), T(0)};
+        auto outData       = etl::array<T, 2> {T(0), T(0)};
 
         auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(matData.data());
         auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vecData.data());
@@ -35,9 +35,9 @@ template <typename T>
 
     {
         // ones
-        auto const matData = etl::array<T, 4> { T(1), T(1), T(1), T(1) };
-        auto const vecData = etl::array<T, 2> { T(1), T(1) };
-        auto outData       = etl::array<T, 2> { T(0), T(0) };
+        auto const matData = etl::array<T, 4> {T(1), T(1), T(1), T(1)};
+        auto const vecData = etl::array<T, 2> {T(1), T(1)};
+        auto outData       = etl::array<T, 2> {T(0), T(0)};
 
         auto mat = etl::mdspan<T const, etl::extents<int, 2, 2>>(matData.data());
         auto vec = etl::mdspan<T const, etl::extents<int, 2>>(vecData.data());

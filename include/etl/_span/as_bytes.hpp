@@ -23,7 +23,7 @@ inline constexpr etl::size_t span_as_bytes_size = N == etl::dynamic_extent ? etl
 template <typename T, size_t N>
 [[nodiscard]] auto as_bytes(span<T, N> s) noexcept -> span<byte const, detail::span_as_bytes_size<T, N>>
 {
-    return { reinterpret_cast<byte const*>(s.data()), s.size_bytes() };
+    return {reinterpret_cast<byte const*>(s.data()), s.size_bytes()};
 }
 
 /// \brief Obtains a view to the object representation of the elements of the
@@ -36,7 +36,7 @@ template <typename T, size_t N>
     requires(not is_const_v<T>)
 [[nodiscard]] auto as_writable_bytes(span<T, N> s) noexcept -> span<byte, detail::span_as_bytes_size<T, N>>
 {
-    return { reinterpret_cast<byte*>(s.data()), s.size_bytes() };
+    return {reinterpret_cast<byte*>(s.data()), s.size_bytes()};
 }
 
 } // namespace etl

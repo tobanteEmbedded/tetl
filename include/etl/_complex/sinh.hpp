@@ -16,7 +16,7 @@ template <typename T>
 {
     auto const x = z.real();
     auto const y = z.imag();
-    return { sinh(x) * cos(y), cosh(x) * sin(y) };
+    return {sinh(x) * cos(y), cosh(x) * sin(y)};
 }
 
 } // namespace etl

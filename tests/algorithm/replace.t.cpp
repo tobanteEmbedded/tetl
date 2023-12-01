@@ -21,7 +21,7 @@ constexpr auto test() -> bool
 
     // range
     {
-        auto data = etl::array { T(1), T(2), T(2), T(3) };
+        auto data = etl::array {T(1), T(2), T(2), T(3)};
         etl::replace(begin(data), end(data), T(2), T(1));
         assert(etl::count(begin(data), end(data), T(2)) == 0);
         assert(etl::count(begin(data), end(data), T(1)) == 3);

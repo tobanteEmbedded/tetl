@@ -16,7 +16,7 @@ struct basic_format_parse_context {
     using iterator       = const_iterator;
 
     constexpr explicit basic_format_parse_context(basic_string_view<CharT> fmt, size_t numArgs = 0) noexcept
-        : _begin { fmt.begin() }, _end { fmt.end() }, _numArgs { numArgs }
+        : _begin {fmt.begin()}, _end {fmt.end()}, _numArgs {numArgs}
     {
     }
 

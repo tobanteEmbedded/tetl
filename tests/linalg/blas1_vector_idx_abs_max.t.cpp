@@ -11,10 +11,10 @@
 template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_vector_idx_abs_max_real() -> bool
 {
-    auto const data = etl::array<T, 4> { T(0), T(1), T(2), T(3) };
+    auto const data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
     {
         // static extents
-        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>> {data.data()};
         using size_type = typename decltype(vec)::size_type;
 
         assert(etl::linalg::idx_abs_max(vec) == size_type(3));
@@ -23,7 +23,7 @@ template <typename T, typename IndexType>
 
     {
         // dynamic extents
-        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> { data.data(), 4 };
+        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
         using size_type = typename decltype(vec)::size_type;
 
         assert(etl::linalg::idx_abs_max(vec) == size_type(3));
@@ -31,8 +31,8 @@ template <typename T, typename IndexType>
     }
 
     if constexpr (etl::signed_integral<T>) {
-        auto const negative = etl::array<T, 4> { T(0), T(-1), T(-2), T(3) };
-        auto const vec      = etl::mdspan<T const, etl::dextents<IndexType, 1>> { negative.data(), 4 };
+        auto const negative = etl::array<T, 4> {T(0), T(-1), T(-2), T(3)};
+        auto const vec      = etl::mdspan<T const, etl::dextents<IndexType, 1>> {negative.data(), 4};
         using size_type     = typename decltype(vec)::size_type;
 
         assert(etl::linalg::idx_abs_max(vec) == size_type(3));
@@ -56,7 +56,7 @@ template <typename T, typename IndexType>
 
     {
         // static extents
-        auto const vec  = etl::mdspan<complex_t const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec  = etl::mdspan<complex_t const, etl::extents<IndexType, 4>> {data.data()};
         using size_type = typename decltype(vec)::size_type;
 
         assert(etl::linalg::idx_abs_max(vec) == size_type(1));
@@ -65,7 +65,7 @@ template <typename T, typename IndexType>
 
     {
         // dynamic extents
-        auto const vec  = etl::mdspan<complex_t const, etl::dextents<IndexType, 1>> { data.data(), 4 };
+        auto const vec  = etl::mdspan<complex_t const, etl::dextents<IndexType, 1>> {data.data(), 4};
         using size_type = typename decltype(vec)::size_type;
 
         assert(etl::linalg::idx_abs_max(vec) == size_type(1));

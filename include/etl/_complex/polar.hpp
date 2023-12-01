@@ -12,7 +12,7 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto polar(T const& r, T const& theta = T()) noexcept -> complex<T>
 {
-    return complex<T> { r * cos(theta), r * sin(theta) };
+    return complex<T> {r * cos(theta), r * sin(theta)};
 }
 
 } // namespace etl

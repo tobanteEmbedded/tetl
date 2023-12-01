@@ -16,7 +16,7 @@ struct year_month_weekday {
     year_month_weekday() = default;
     constexpr year_month_weekday(
         chrono::year const& y, chrono::month const& m, chrono::weekday_indexed const& wdi) noexcept
-        : _y { y }, _m { m }, _wdi { wdi }
+        : _y {y}, _m {m}, _wdi {wdi}
     {
     }
 
@@ -51,8 +51,8 @@ private:
 
 [[nodiscard]] constexpr auto operator+(year_month_weekday const& lhs, months const& rhs) noexcept -> year_month_weekday
 {
-    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
-    return { ym.year(), ym.month(), lhs.weekday_indexed() };
+    auto const ym = year_month {lhs.year(), lhs.month()} + rhs;
+    return {ym.year(), ym.month(), lhs.weekday_indexed()};
 }
 
 [[nodiscard]] constexpr auto operator+(months const& lhs, year_month_weekday const& rhs) noexcept -> year_month_weekday
@@ -67,7 +67,7 @@ private:
 
 [[nodiscard]] constexpr auto operator+(year_month_weekday const& lhs, years const& rhs) noexcept -> year_month_weekday
 {
-    return year_month_weekday { lhs.year() + rhs, lhs.month(), lhs.weekday_indexed() };
+    return year_month_weekday {lhs.year() + rhs, lhs.month(), lhs.weekday_indexed()};
 }
 
 [[nodiscard]] constexpr auto operator+(years const& lhs, year_month_weekday const& rhs) noexcept -> year_month_weekday

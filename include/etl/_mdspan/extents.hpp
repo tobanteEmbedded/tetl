@@ -27,7 +27,7 @@ struct extents {
 private:
     static constexpr auto _rank           = sizeof...(Extents);
     static constexpr auto _rank_dynamic   = ((rank_type(Extents == dynamic_extent)) + ... + 0);
-    static constexpr auto _static_extents = array<size_t, sizeof...(Extents)> { Extents... };
+    static constexpr auto _static_extents = array<size_t, sizeof...(Extents)> {Extents...};
 
     [[nodiscard]] static constexpr auto _dynamic_index(rank_type i) noexcept -> rank_type
     {
@@ -40,7 +40,7 @@ private:
     {
         // TODO: this is horrible!
         auto result = rank_type {};
-        for (rank_type r { 0 }; r < rank(); ++r) {
+        for (rank_type r {0}; r < rank(); ++r) {
             if (_dynamic_index(r) == i) { result = i; }
         }
         return result;
@@ -80,7 +80,7 @@ public:
         OtherExtents...> const& e) noexcept
     {
         if constexpr (rank_dynamic() > 0) {
-            for (rank_type i { 0 }; i < rank(); ++i) {
+            for (rank_type i {0}; i < rank(); ++i) {
                 if (e.static_extent(i) == dynamic_extent) { _extents[_dynamic_index(i)] = e.extent(i); }
             }
         }
@@ -94,7 +94,7 @@ public:
         }
     explicit constexpr extents(OtherSizeTypes... es) noexcept
     {
-        auto const ext = array<size_type, sizeof...(OtherSizeTypes)> { static_cast<size_type>(es)... };
+        auto const ext = array<size_type, sizeof...(OtherSizeTypes)> {static_cast<size_type>(es)...};
         copy(ext.begin(), ext.end(), _extents.begin());
     }
 

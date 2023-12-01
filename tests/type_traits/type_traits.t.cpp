@@ -175,10 +175,10 @@ constexpr auto test() -> bool
     assert((is_same_v<common_type_t<T, double>, double>));
 
     if constexpr (etl::is_integral_v<T>) {
-        auto const constant = etl::integral_constant<T, T { 0 }> {};
-        assert(decltype(constant)::value == T { 0 });
-        assert(constant() == T { 0 });
-        assert(static_cast<T>(constant) == T { 0 });
+        auto const constant = etl::integral_constant<T, T {0}> {};
+        assert(decltype(constant)::value == T {0});
+        assert(constant() == T {0});
+        assert(static_cast<T>(constant) == T {0});
         assert((etl::is_same_v<T, typename decltype(constant)::value_type>));
     }
 

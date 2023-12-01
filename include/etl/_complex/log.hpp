@@ -13,7 +13,7 @@ namespace etl {
 template <typename T>
 [[nodiscard]] constexpr auto log(complex<T> const& z) noexcept -> complex<T>
 {
-    return { log(abs(z)), arg(z) };
+    return {log(abs(z)), arg(z)};
 }
 
 } // namespace etl

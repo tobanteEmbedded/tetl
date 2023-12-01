@@ -22,10 +22,10 @@ struct small_ptr {
     small_ptr() = default;
 
     /// \brief Construct from nullptr.
-    small_ptr(nullptr_t null) : _value { 0 } { ignore_unused(null); }
+    small_ptr(nullptr_t null) : _value {0} { ignore_unused(null); }
 
     /// \brief Construct from raw pointer.
-    small_ptr(Type* ptr) : _value { compress(ptr) } { }
+    small_ptr(Type* ptr) : _value {compress(ptr)} { }
 
     /// \brief Returns a raw pointer to Type.
     [[nodiscard]] auto get() noexcept -> Type* { return reinterpret_cast<Type*>(BaseAddress + _value); }

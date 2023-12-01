@@ -22,28 +22,28 @@ template <bitmask_type T>
 [[nodiscard]] constexpr auto operator&(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
-    return T { static_cast<type>(static_cast<type>(x) & static_cast<type>(y)) };
+    return T {static_cast<type>(static_cast<type>(x) & static_cast<type>(y))};
 }
 
 template <bitmask_type T>
 [[nodiscard]] constexpr auto operator|(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
-    return T { static_cast<type>(static_cast<type>(x) | static_cast<type>(y)) };
+    return T {static_cast<type>(static_cast<type>(x) | static_cast<type>(y))};
 }
 
 template <bitmask_type T>
 [[nodiscard]] constexpr auto operator^(T x, T y) -> T
 {
     using type = underlying_type_t<T>;
-    return T { static_cast<type>(static_cast<type>(x) ^ static_cast<type>(y)) };
+    return T {static_cast<type>(static_cast<type>(x) ^ static_cast<type>(y))};
 }
 
 template <bitmask_type T>
 [[nodiscard]] constexpr auto operator~(T x) -> T
 {
     using type = underlying_type_t<T>;
-    return T { static_cast<type>(~static_cast<type>(x)) };
+    return T {static_cast<type>(~static_cast<type>(x))};
 }
 
 template <bitmask_type T>

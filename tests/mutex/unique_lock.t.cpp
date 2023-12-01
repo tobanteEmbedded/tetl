@@ -26,7 +26,7 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::unique_lock lock { mtx };
+            etl::unique_lock lock {mtx};
             assert(lock.mutex() == &mtx);
             assert(mtx.is_locked());
         }
@@ -35,18 +35,18 @@ static auto test() -> bool
 
     // "try_lock on construction"
     {
-        test_mutex success { false };
+        test_mutex success {false};
         assert(!success.is_locked());
         {
-            etl::unique_lock lock { success, etl::try_to_lock };
+            etl::unique_lock lock {success, etl::try_to_lock};
             assert(success.is_locked());
         }
         assert(!success.is_locked());
 
-        test_mutex fail { true };
+        test_mutex fail {true};
         assert(!fail.is_locked());
         {
-            etl::unique_lock lock { fail, etl::try_to_lock };
+            etl::unique_lock lock {fail, etl::try_to_lock};
             assert(!fail.is_locked());
         }
         assert(!fail.is_locked());
@@ -57,7 +57,7 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::unique_lock lock { mtx, etl::defer_lock };
+            etl::unique_lock lock {mtx, etl::defer_lock};
             assert(!mtx.is_locked());
         }
         assert(!mtx.is_locked());
@@ -69,7 +69,7 @@ static auto test() -> bool
         mtx.lock();
         assert(mtx.is_locked());
         {
-            etl::unique_lock lock { mtx, etl::adopt_lock };
+            etl::unique_lock lock {mtx, etl::adopt_lock};
             assert(mtx.is_locked());
         }
         assert(!mtx.is_locked());
@@ -80,11 +80,11 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::unique_lock l1 { mtx };
+            etl::unique_lock l1 {mtx};
             assert(l1.owns_lock());
             assert(mtx.is_locked());
 
-            etl::unique_lock l2 { etl::move(l1) };
+            etl::unique_lock l2 {etl::move(l1)};
             assert(!l1.owns_lock()); // NOLINT(clang-analyzer-cplusplus.Move)
             assert(l2.owns_lock());
             assert(mtx.is_locked());
@@ -103,7 +103,7 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::unique_lock l1 { mtx };
+            etl::unique_lock l1 {mtx};
             assert(l1.owns_lock());
             assert(mtx.is_locked());
 
@@ -124,7 +124,7 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::unique_lock lock { mtx };
+            etl::unique_lock lock {mtx};
             assert(lock.owns_lock());
             assert(mtx.is_locked());
 

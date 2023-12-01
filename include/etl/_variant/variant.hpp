@@ -55,7 +55,7 @@ constexpr auto variant_swap_func(Variant& lhs, Variant& rhs) -> void
 template <typename Variant, size_t... Indices>
 constexpr auto make_variant_swap_table(index_sequence<Indices...> /*is*/)
 {
-    return array { &variant_swap_func<Variant, Indices>... };
+    return array {&variant_swap_func<Variant, Indices>...};
 }
 
 template <typename Variant, typename... Ts>
@@ -74,7 +74,7 @@ constexpr auto variant_compare_func(Variant const& l, Variant const& r) -> bool
 template <typename Op, typename Variant, size_t... Indices>
 constexpr auto make_variant_compare_table(index_sequence<Indices...> /*is*/)
 {
-    return array { &variant_compare_func<Op, Variant, Indices>... };
+    return array {&variant_compare_func<Op, Variant, Indices>...};
 }
 
 template <typename Op, typename Variant, typename... Ts>
@@ -278,7 +278,7 @@ public:
     constexpr variant() noexcept(noexcept(is_nothrow_default_constructible_v<first_type>))
         requires(is_default_constructible_v<first_type>)
     {
-        auto tmpIndex = size_t { _index };
+        auto tmpIndex = size_t {_index};
         _data.construct(in_place_type<first_type>, tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -290,7 +290,7 @@ public:
     template <typename T>
     explicit variant(T&& t)
     {
-        auto tmpIndex = size_t { _index };
+        auto tmpIndex = size_t {_index};
         _data.construct(forward<T>(t), tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -310,7 +310,7 @@ public:
         requires(is_constructible_v<T, Args...>)
     constexpr explicit variant(in_place_type_t<T> tag, Args&&... args)
     {
-        auto tmpIndex = size_t { _index };
+        auto tmpIndex = size_t {_index};
         _data.construct(tag, tmpIndex, forward<Args>(args)...);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -384,7 +384,7 @@ public:
 
 private:
     detail::variant_storage_for<Types...> _data;
-    internal_size_t _index { 0 };
+    internal_size_t _index {0};
 };
 
 /// \brief Overloads the swap algorithm for variant. Effectively calls

@@ -11,8 +11,8 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto lhs = etl::array<T, 2> { T { 0 }, T { 1 } };
-    auto rhs = etl::array<T, 2> { T { 0 }, T { 1 } };
+    auto lhs = etl::array<T, 2> {T {0}, T {1}};
+    auto rhs = etl::array<T, 2> {T {0}, T {1}};
     auto cmp = etl::not_equal_to<> {};
 
     assert(etl::equal(begin(lhs), end(lhs), begin(rhs)));
@@ -21,7 +21,7 @@ constexpr auto test() -> bool
     assert(etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs)));
     assert(!etl::equal(begin(lhs), end(lhs), begin(rhs), end(rhs), cmp));
 
-    auto small = etl::array { T(1) };
+    auto small = etl::array {T(1)};
     assert(!etl::equal(begin(lhs), end(lhs), begin(small), end(small), cmp));
 
     return true;

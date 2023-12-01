@@ -22,13 +22,13 @@ template <typename Extents>
 
     if constexpr (isDynamicE0) {
         if constexpr (isDynamicE1) {
-            return transpose_extents_t<Extents> { e.extent(1), e.extent(0) };
+            return transpose_extents_t<Extents> {e.extent(1), e.extent(0)};
         } else {
-            return transpose_extents_t<Extents> { e.extent(0) };
+            return transpose_extents_t<Extents> {e.extent(0)};
         }
     } else {
         if constexpr (isDynamicE1) {
-            return transpose_extents_t<Extents> { e.extent(1) };
+            return transpose_extents_t<Extents> {e.extent(1)};
         } else {
             return transpose_extents_t<Extents> {};
         }
@@ -51,7 +51,7 @@ struct layout_transpose {
         using size_type    = typename extents_type::size_type;
         using layout_type  = layout_transpose;
 
-        constexpr explicit mapping(nested_mapping_t const& map) : _nestedMapping { map } { }
+        constexpr explicit mapping(nested_mapping_t const& map) : _nestedMapping {map} { }
 
         [[nodiscard]] constexpr auto extents() const noexcept(noexcept(_nestedMapping.extents())) -> extents_type
         {

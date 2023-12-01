@@ -11,7 +11,7 @@
 namespace {
 template <typename T>
 struct Foo {
-    constexpr Foo(T first, float second, bool third) : f { first }, s { second }, t { third } { }
+    constexpr Foo(T first, float second, bool third) : f {first}, s {second}, t {third} { }
 
     T f;
     float s;
@@ -24,13 +24,13 @@ constexpr auto test() -> bool
 {
 
     {
-        etl::tuple<T, float> t1 { T { 1 }, 2.0F };
+        etl::tuple<T, float> t1 {T {1}, 2.0F};
         etl::ignore_unused(t1);
     }
 
     {
-        auto t1 = etl::tuple<T, float> { T { 1 }, 2.0F };
-        assert(etl::get<0>(t1) == T { 1 });
+        auto t1 = etl::tuple<T, float> {T {1}, 2.0F};
+        assert(etl::get<0>(t1) == T {1});
         assert(etl::get<1>(t1) == 2.0F);
     }
 
@@ -63,8 +63,8 @@ constexpr auto test() -> bool
 
     {
 
-        auto t1 = etl::make_tuple(T { 1 }, 'a', true);
-        assert(etl::get<0>(t1) == T { 1 });
+        auto t1 = etl::make_tuple(T {1}, 'a', true);
+        assert(etl::get<0>(t1) == T {1});
         assert(etl::get<1>(t1) == 'a');
         assert(etl::get<2>(t1) == true);
     }
@@ -73,8 +73,8 @@ constexpr auto test() -> bool
         using etl::make_from_tuple;
         using etl::make_tuple;
 
-        auto foo = make_from_tuple<Foo<T>>(make_tuple(T { 1 }, 1.0F, true));
-        assert(foo.f == T { 1 });
+        auto foo = make_from_tuple<Foo<T>>(make_tuple(T {1}, 1.0F, true));
+        assert(foo.f == T {1});
         assert(foo.s == 1.0F);
         assert(foo.t);
     }
@@ -102,8 +102,8 @@ constexpr auto test() -> bool
         assert((etl::tuple_size_v<tuple<short, float, T>> == 3));
         assert((etl::tuple_size_v<tuple<short, float, T, int>> == 4));
 
-        auto t = etl::tuple<int, char> { 1, 'a' };
-        auto b = etl::tuple<int, char> { 2, 'b' };
+        auto t = etl::tuple<int, char> {1, 'a'};
+        auto b = etl::tuple<int, char> {2, 'b'};
         assert(etl::get<0>(t) == 1);
         assert(etl::get<1>(t) == 'a');
         assert(etl::get<0>(b) == 2);
@@ -121,7 +121,7 @@ constexpr auto test() -> bool
         assert(b == b);
         assert(t != b);
 
-        assert(etl::get<1>(etl::tuple<int, char> { 1, 'c' }) == 'c');
+        assert(etl::get<1>(etl::tuple<int, char> {1, 'c'}) == 'c');
     }
 
     return true;

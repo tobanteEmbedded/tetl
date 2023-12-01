@@ -19,7 +19,7 @@ using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<Iter>>::differe
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
-    auto ctx = format_context { out };
+    auto ctx = format_context {out};
 
     // Format leading text before the first argument.
     auto const slices = detail::split_at_next_argument(fmt);
@@ -74,7 +74,7 @@ auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Arg
     etl::ignore_unused(n);
 
     auto indices = etl::static_vector<etl::size_t, sizeof...(args)> {};
-    auto result  = format_to_n_result<OutputIter> { out, {} };
+    auto result  = format_to_n_result<OutputIter> {out, {}};
 
     auto writeChar = [&result](auto ch) {
         *result.out++ = ch;

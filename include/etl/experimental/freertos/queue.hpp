@@ -64,7 +64,7 @@ private:
 };
 
 template <typename T, etl::uint32_t Size>
-inline queue<T, Size>::queue() : _handle { []() { return xQueueCreate(Size, sizeof(T)); }() }
+inline queue<T, Size>::queue() : _handle {[]() { return xQueueCreate(Size, sizeof(T)); }()}
 {
 }
 
@@ -102,7 +102,7 @@ inline auto queue<T, Size>::receive(TickType_t ticksToWait) const -> pair<bool, 
     auto value          = T {};
     auto* const rawData = static_cast<void*>(&value);
     auto const success  = xQueueReceive(_handle, rawData, ticksToWait);
-    return { static_cast<bool>(success), value };
+    return {static_cast<bool>(success), value};
 }
 
 template <typename T, etl::uint32_t Size>

@@ -155,7 +155,7 @@ constexpr auto swap(pair<T1, T2>& lhs, pair<T1, T2>& rhs) noexcept(noexcept(lhs.
 template <typename T1, typename T2>
 [[nodiscard]] constexpr auto make_pair(T1&& t, T2&& u) -> pair<decay_t<T1>, decay_t<T2>>
 {
-    return { forward<T1>(t), forward<T2>(u) };
+    return {forward<T1>(t), forward<T2>(u)};
 }
 
 /// \brief Tests if both elements of lhs and rhs are equal, that is, compares

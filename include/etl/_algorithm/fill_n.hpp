@@ -13,7 +13,7 @@ namespace etl {
 template <typename OutputIt, typename Size, typename T>
 constexpr auto fill_n(OutputIt first, Size count, T const& value) -> OutputIt
 {
-    for (auto i = Size { 0 }; i < count; ++i) {
+    for (auto i = Size {0}; i < count; ++i) {
         *first = value;
         ++first;
     }

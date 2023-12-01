@@ -20,7 +20,7 @@ namespace etl {
 template <detail::bit_uint T>
 [[nodiscard]] constexpr auto bit_floor(T x) noexcept -> T
 {
-    if (x != 0) { return T { 1U } << (bit_width(x) - 1U); }
+    if (x != 0) { return T {1U} << (bit_width(x) - 1U); }
     return 0;
 }
 } // namespace etl

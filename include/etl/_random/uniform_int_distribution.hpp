@@ -16,7 +16,7 @@ struct uniform_int_distribution {
 
         constexpr param_type() noexcept = default;
         explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept
-            : _min { min }, _max { max }
+            : _min {min}, _max {max}
         {
         }
 
@@ -29,16 +29,16 @@ struct uniform_int_distribution {
         }
 
     private:
-        result_type _min { 0 };
-        result_type _max { numeric_limits<result_type>::max() };
+        result_type _min {0};
+        result_type _max {numeric_limits<result_type>::max()};
     };
 
-    constexpr uniform_int_distribution() : uniform_int_distribution { 0 } { }
+    constexpr uniform_int_distribution() : uniform_int_distribution {0} { }
 
-    explicit constexpr uniform_int_distribution(param_type const& parm) : _param { parm } { }
+    explicit constexpr uniform_int_distribution(param_type const& parm) : _param {parm} { }
 
     explicit constexpr uniform_int_distribution(IntType a, IntType b = numeric_limits<IntType>::max())
-        : uniform_int_distribution { param_type { a, b } }
+        : uniform_int_distribution {param_type {a, b}}
     {
     }
 

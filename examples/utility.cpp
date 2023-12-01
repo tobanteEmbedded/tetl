@@ -40,7 +40,7 @@ auto main() -> int
     static_assert(cmp_not_equal(42UL, 100UL));
 
     // PAIR construct
-    auto p1 = pair<int, float> { 1, 42.0F };
+    auto p1 = pair<int, float> {1, 42.0F};
     TETL_ASSERT(p1.first == 1);
 
     auto p2 = make_pair(2, 1.43F);

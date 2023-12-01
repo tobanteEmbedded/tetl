@@ -10,10 +10,10 @@ constexpr auto test_uniform_real_distribution() -> bool
     constexpr auto minimum = RealType(0);
     constexpr auto maximum = RealType(100);
 
-    auto urng = URNG { 42 };
-    auto dist = etl::uniform_real_distribution<RealType> { minimum, maximum };
+    auto urng = URNG {42};
+    auto dist = etl::uniform_real_distribution<RealType> {minimum, maximum};
 
-    for (auto i { 0 }; i < 1000; ++i) {
+    for (auto i {0}; i < 1000; ++i) {
         auto const x = dist(urng);
         assert(x >= minimum);
         assert(x < maximum);

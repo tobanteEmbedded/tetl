@@ -14,7 +14,7 @@ template <typename T>
 constexpr auto test() -> bool
 {
     {
-        auto data = etl::array { T(1), T(2), T(3), T(4) };
+        auto data = etl::array {T(1), T(2), T(3), T(4)};
         assert(data[0] == 1);
         etl::rotate(begin(data), begin(data) + 1, end(data));
         assert(data[0] == 2);
@@ -33,7 +33,7 @@ constexpr auto test() -> bool
 
     // cppreference example
     {
-        auto s      = etl::array { T(1), T(2), T(3), T(4), T(5) };
+        auto s      = etl::array {T(1), T(2), T(3), T(4), T(5)};
         auto* pivot = etl::find(begin(s), end(s), T(3));
 
         // From 1, 2, 3, 4, 5 to 3, 4, 5, 1, 2

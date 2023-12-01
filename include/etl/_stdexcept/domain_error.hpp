@@ -9,7 +9,7 @@ namespace etl {
 
 struct domain_error : logic_error {
     constexpr domain_error() = default;
-    constexpr explicit domain_error(char const* what) : logic_error { what } { }
+    constexpr explicit domain_error(char const* what) : logic_error {what} { }
 };
 
 } // namespace etl

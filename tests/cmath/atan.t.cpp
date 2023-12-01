@@ -11,7 +11,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::atan(short { 0 }) == 0.0);
+    assert(etl::atan(short {0}) == 0.0);
     assert(etl::atanl(0) == 0.0L);
     assert(etl::atan(T(0)) == T(0));
 

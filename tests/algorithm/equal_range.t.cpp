@@ -15,7 +15,7 @@ constexpr auto test() -> bool
     // cppreference.com example
 
     struct S {
-        constexpr S(T n, char na) : number { n }, name { na } { }
+        constexpr S(T n, char na) : number {n}, name {na} { }
 
         constexpr auto operator<(S const& s) const -> bool { return number < s.number; }
 
@@ -25,15 +25,15 @@ constexpr auto test() -> bool
 
     // note: not ordered, only partitioned w.r.t. S defined below
     auto vec = etl::array<S, 6> {
-        S { T(1), 'A' },
-        S { T(2), 'B' },
-        S { T(2), 'C' },
-        S { T(2), 'D' },
-        S { T(4), 'G' },
-        S { T(3), 'F' },
+        S {T(1), 'A'},
+        S {T(2), 'B'},
+        S {T(2), 'C'},
+        S {T(2), 'D'},
+        S {T(4), 'G'},
+        S {T(3), 'F'},
     };
 
-    auto const value = S { T(2), '?' };
+    auto const value = S {T(2), '?'};
     auto const p     = etl::equal_range(vec.begin(), vec.end(), value);
     assert(p.first->name == 'B');
 

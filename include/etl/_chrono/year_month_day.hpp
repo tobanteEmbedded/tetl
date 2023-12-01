@@ -33,9 +33,9 @@ private:
         uint32_t const m   = mp < 10 ? mp + 3 : mp - 9;
 
         return {
-            chrono::year { y + (m <= 2) },
-            chrono::month { m },
-            chrono::day { d },
+            chrono::year {y + (m <= 2)},
+            chrono::month {m},
+            chrono::day {d},
         };
     }
 
@@ -50,27 +50,27 @@ private:
         auto const yoe     = static_cast<uint32_t>(y - era * 400);            // [0, 399]
         uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
         uint32_t const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]
-        return days { era * 146097 + static_cast<Int>(doe) - 719468 };
+        return days {era * 146097 + static_cast<Int>(doe) - 719468};
     }
 
 public:
     year_month_day() = default;
     constexpr year_month_day(chrono::year const& y, chrono::month const& m, chrono::day const& d) noexcept
-        : _y { y }, _m { m }, _d { d }
+        : _y {y}, _m {m}, _d {d}
     {
     }
     constexpr year_month_day(year_month_day_last const& ymdl) noexcept
-        : _y { ymdl.year() }, _m { ymdl.month() }, _d { ymdl.day() }
+        : _y {ymdl.year()}, _m {ymdl.month()}, _d {ymdl.day()}
     {
     }
 
     constexpr year_month_day(sys_days const& dp) noexcept
-        : year_month_day { civil_from_days(dp.time_since_epoch().count()) }
+        : year_month_day {civil_from_days(dp.time_since_epoch().count())}
     {
     }
 
     constexpr explicit year_month_day(local_days const& dp) noexcept
-        : year_month_day { civil_from_days(dp.time_since_epoch().count()) }
+        : year_month_day {civil_from_days(dp.time_since_epoch().count())}
     {
     }
 
@@ -85,18 +85,18 @@ public:
 
     [[nodiscard]] constexpr operator sys_days() const noexcept
     {
-        return sys_days { days_from_civil(int32_t { year() }, uint32_t { month() }, uint32_t { day() }) };
+        return sys_days {days_from_civil(int32_t {year()}, uint32_t {month()}, uint32_t {day()})};
     }
 
     [[nodiscard]] constexpr explicit operator local_days() const noexcept
     {
-        return local_days { static_cast<sys_days>(*this).time_since_epoch() };
+        return local_days {static_cast<sys_days>(*this).time_since_epoch()};
     }
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool
     {
         if (not year().ok() or not month().ok()) { return false; }
-        return day() >= chrono::day { 1 } and day() <= detail::last_day_of_month(year(), month());
+        return day() >= chrono::day {1} and day() <= detail::last_day_of_month(year(), month());
     }
 
 private:
@@ -113,8 +113,8 @@ private:
 [[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::months const& rhs) noexcept
     -> chrono::year_month_day
 {
-    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
-    return { ym.year(), ym.month(), lhs.day() };
+    auto const ym = year_month {lhs.year(), lhs.month()} + rhs;
+    return {ym.year(), ym.month(), lhs.day()};
 }
 
 [[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day const& rhs) noexcept
@@ -126,7 +126,7 @@ private:
 [[nodiscard]] constexpr auto operator+(chrono::year_month_day const& lhs, chrono::years const& rhs) noexcept
     -> chrono::year_month_day
 {
-    return { lhs.year() + rhs, lhs.month(), lhs.day() };
+    return {lhs.year() + rhs, lhs.month(), lhs.day()};
 }
 
 [[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day const& rhs) noexcept

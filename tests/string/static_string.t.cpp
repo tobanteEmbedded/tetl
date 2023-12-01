@@ -28,7 +28,7 @@ template <typename T>
     {
         auto testCtorChar = [](etl::size_t size, char ch) {
             using string_t = T;
-            auto str       = string_t { size, ch };
+            auto str       = string_t {size, ch};
             assert(!str.empty());
             assert(!str.full());
             assert(str.size() == size);
@@ -49,12 +49,12 @@ template <typename T>
     {
         auto testCtorCharPointerSize = [](char const* s, etl::size_t size) {
             using string_t = T;
-            string_t str { s, size };
+            string_t str {s, size};
             assert(!str.full());
             assert(str.capacity() == str.max_size());
             assert(str.size() == size);
             assert(str.length() == size);
-            assert(str == etl::string_view { s });
+            assert(str == etl::string_view {s});
             return true;
         };
 
@@ -73,12 +73,12 @@ template <typename T>
     {
         auto testCtorCharPointers = [](char const* s, etl::size_t size) {
             using string_t = T;
-            string_t str { s, etl::next(s, static_cast<etl::ptrdiff_t>(size)) };
+            string_t str {s, etl::next(s, static_cast<etl::ptrdiff_t>(size))};
             assert(!str.full());
             assert(str.capacity() == str.max_size());
             assert(str.size() == size);
             assert(str.length() == size);
-            assert(str == etl::string_view { s });
+            assert(str == etl::string_view {s});
             return true;
         };
 
@@ -94,7 +94,7 @@ template <typename T>
     }
 
     {
-        string src { "testabc" };
+        string src {"testabc"};
 
         string dest1(src, 0, 2);
         assert((dest1 == "te"_sv));
@@ -107,8 +107,8 @@ template <typename T>
     }
 
     {
-        etl::string_view sv { "test" };
-        string dest { sv };
+        etl::string_view sv {"test"};
+        string dest {sv};
 
         assert(!dest.full());
         assert((dest.size() == etl::size_t(4)));
@@ -120,8 +120,8 @@ template <typename T>
     }
 
     {
-        etl::string_view sv { "test" };
-        string dest { sv, 2, 2 };
+        etl::string_view sv {"test"};
+        string dest {sv, 2, 2};
 
         assert(!dest.full());
         assert((dest.size() == etl::size_t(2)));
@@ -137,13 +137,13 @@ template <typename T>
         assert((str1.size() == 0));
         assert((str1.empty()));
 
-        string src2 { "test" };
+        string src2 {"test"};
         string str2 {};
         str2 = src2;
         assert((str2.size() == 4));
         assert((str2 == "test"_sv));
 
-        auto src3 = string { "abc" };
+        auto src3 = string {"abc"};
         string str3;
         str3 = src3;
         assert((str3.size() == 3));
@@ -184,7 +184,7 @@ template <typename T>
         str1 = src1;
         assert((str1.size() == 0));
 
-        etl::string_view src2 { "test" };
+        etl::string_view src2 {"test"};
         string str2 {};
         str2 = src2;
         assert((str2.size() == 4));
@@ -213,17 +213,17 @@ template <typename T>
         assert((dest.size() == 0));
         assert((dest.empty()));
 
-        auto const src2 = string { "test" };
+        auto const src2 = string {"test"};
         dest.assign(src2);
         assert((dest.size() == 4));
         assert((dest == "test"_sv));
 
-        auto src3 = string { "abc" };
+        auto src3 = string {"abc"};
         dest.assign(etl::move(src3));
         assert((dest.size() == 3));
         assert((dest == "abc"_sv));
 
-        auto const src4 = string { "abc" };
+        auto const src4 = string {"abc"};
         dest.assign(src4, 1, 1);
         assert((dest.size() == 1));
         assert((dest == "b"_sv));
@@ -256,7 +256,7 @@ template <typename T>
         assert((dest.size() == 1));
         assert((dest == "b"_sv));
 
-        auto const src = etl::static_string<8> { "abc" };
+        auto const src = etl::static_string<8> {"abc"};
         dest.assign(src);
         assert((dest.size() == 3));
         assert((dest == "abc"_sv));
@@ -305,21 +305,21 @@ template <typename T>
     }
 
     {
-        string str { "abc" };
+        string str {"abc"};
         assert(str[0] == 'a');
         assert(str[1] == 'b');
         assert(str[2] == 'c');
     }
 
     {
-        string str { "aaa" };
+        string str {"aaa"};
 
         etl::for_each(str.begin(), str.end(), [](auto& c) { assert(c == char('a')); });
         for (auto const& c : str) { assert(c == char('a')); }
     }
 
     {
-        string str { "aaa" };
+        string str {"aaa"};
 
         etl::for_each(str.cbegin(), str.cend(), [](auto const& c) { assert(c == char('a')); });
     }
@@ -402,47 +402,47 @@ template <typename T>
     }
 
     {
-        etl::string_view emptySrc { "" };
+        etl::string_view emptySrc {""};
 
         string empty {};
         empty.append(begin(emptySrc), end(emptySrc));
         assert((empty.empty()));
 
-        string str { "abc" };
+        string str {"abc"};
         str.append(begin(emptySrc), end(emptySrc));
         assert((str == "abc"_sv));
     }
 
     {
-        etl::string_view src { "_test" };
+        etl::string_view src {"_test"};
 
-        string dest { "abc" };
+        string dest {"abc"};
         dest.append(begin(src), end(src));
         assert((dest == "abc_test"_sv));
     }
 
     {
-        string emptySrc { "" };
+        string emptySrc {""};
 
         string empty {};
         empty.append(emptySrc);
         assert((empty.empty()));
 
-        string str { "abc" };
+        string str {"abc"};
         str.append(emptySrc);
         assert((str == "abc"_sv));
     }
 
     {
-        string src { "_test" };
+        string src {"_test"};
 
-        string dest { "abc" };
+        string dest {"abc"};
         dest.append(src);
         assert((dest == "abc_test"_sv));
     }
 
     {
-        auto str = string { "BCDEF" };
+        auto str = string {"BCDEF"};
 
         assert(str.find_first_not_of("ABC") == 2);
         assert(str.find_first_not_of("ABC", 4) == 4);
@@ -460,7 +460,7 @@ template <typename T>
         str = str + 't';
         assert((str == "test"));
 
-        str = str + string { "_foo" };
+        str = str + string {"_foo"};
         assert((str == "test_foo"));
 
         str = "__" + str;
@@ -502,15 +502,15 @@ template <typename T>
     }
 
     {
-        assert((string { "abc" } < "def"));
-        assert((string { "abc" } < string { "def" }));
-        assert((string { "abc" } < string { "defg" }));
+        assert((string {"abc"} < "def"));
+        assert((string {"abc"} < string {"def"}));
+        assert((string {"abc"} < string {"defg"}));
     }
 
     {
-        assert(!(string { "def" } < "a"));
-        assert(!(string { "def" } < etl::static_string<2> { "a" }));
-        assert((etl::static_string<2> { "a" } < string("test")));
+        assert(!(string {"def"} < "a"));
+        assert(!(string {"def"} < etl::static_string<2> {"a"}));
+        assert((etl::static_string<2> {"a"} < string("test")));
     }
 
     {
@@ -521,16 +521,16 @@ template <typename T>
     }
 
     {
-        assert((string { "abc" } <= "def"));
-        assert((string { "abc" } <= string { "def" }));
-        assert((string { "abc" } <= string { "defg" }));
-        assert((string { "abc" } <= string { "abc" }));
+        assert((string {"abc"} <= "def"));
+        assert((string {"abc"} <= string {"def"}));
+        assert((string {"abc"} <= string {"defg"}));
+        assert((string {"abc"} <= string {"abc"}));
     }
 
     {
-        assert(!(string { "def" } <= "a"));
-        assert(!(string { "def" } <= etl::static_string<2> { "a" }));
-        assert((etl::static_string<2> { "a" } <= string("test")));
+        assert(!(string {"def"} <= "a"));
+        assert(!(string {"def"} <= etl::static_string<2> {"a"}));
+        assert((etl::static_string<2> {"a"} <= string("test")));
     }
 
     {
@@ -541,15 +541,15 @@ template <typename T>
     }
 
     {
-        assert(!(string { "abc" } > "def"));
-        assert(!(string { "abc" } > string { "def" }));
-        assert(!(string { "abc" } > string { "defg" }));
-        assert(!(string { "abc" } > string { "abc" }));
+        assert(!(string {"abc"} > "def"));
+        assert(!(string {"abc"} > string {"def"}));
+        assert(!(string {"abc"} > string {"defg"}));
+        assert(!(string {"abc"} > string {"abc"}));
     }
 
     {
-        assert((string { "def" } > etl::static_string<2> { "a" }));
-        assert(!(etl::static_string<2> { "a" } > string("test")));
+        assert((string {"def"} > etl::static_string<2> {"a"}));
+        assert(!(etl::static_string<2> {"a"} > string("test")));
     }
 
     {
@@ -560,15 +560,15 @@ template <typename T>
     }
 
     {
-        assert((string { "abc" } >= "abc"));
-        assert((string { "abc" } >= string { "abc" }));
-        assert(!(string { "abc" } >= string { "def" }));
-        assert(!(string { "abc" } >= string { "defg" }));
+        assert((string {"abc"} >= "abc"));
+        assert((string {"abc"} >= string {"abc"}));
+        assert(!(string {"abc"} >= string {"def"}));
+        assert(!(string {"abc"} >= string {"defg"}));
     }
 
     {
-        assert((string { "def" } >= etl::static_string<2> { "a" }));
-        assert(!(etl::static_string<2> { "a" } >= string("test")));
+        assert((string {"def"} >= etl::static_string<2> {"a"}));
+        assert(!(etl::static_string<2> {"a"} >= string("test")));
     }
 
     {
@@ -598,7 +598,7 @@ template <typename T>
     {
         char destination[32] = {};
         auto const* src      = "abcd";
-        auto str             = string { src };
+        auto str             = string {src};
         assert((str.size() == 4));
 
         assert((str.copy(destination, 1, 0) == 1));
@@ -630,8 +630,8 @@ template <typename T>
     }
 
     {
-        auto lhs = string { "abc" };
-        auto rhs = string { "def" };
+        auto lhs = string {"abc"};
+        auto rhs = string {"def"};
         assert((lhs.size() == rhs.size()));
 
         etl::swap(lhs, rhs);
@@ -643,7 +643,7 @@ template <typename T>
 
     {
         auto lhs = string("foo");
-        auto rhs = string { "barbaz" };
+        auto rhs = string {"barbaz"};
         assert((lhs.size() != rhs.size()));
 
         lhs.swap(rhs);
@@ -697,41 +697,41 @@ template <typename T>
     }
 
     {
-        string emptySrc { "" };
+        string emptySrc {""};
 
         string empty {};
         empty.append(emptySrc, 0);
         assert((empty.empty()));
 
-        string str { "abc" };
+        string str {"abc"};
         str.append(emptySrc, 1);
         assert((str == "abc"_sv));
     }
 
     {
-        string src { "_test" };
+        string src {"_test"};
 
-        string dest { "abc" };
+        string dest {"abc"};
         dest.append(src, 2, 2);
         assert((dest == "abces"_sv));
     }
 
     {
-        etl::string_view emptySrc { "" };
+        etl::string_view emptySrc {""};
 
         string empty {};
         empty.append(emptySrc);
         assert((empty.empty()));
 
-        string str { "abc" };
+        string str {"abc"};
         str.append(emptySrc);
         assert((str == "abc"_sv));
     }
 
     {
-        etl::string_view src { "_test" };
+        etl::string_view src {"_test"};
 
-        string dest { "abc" };
+        string dest {"abc"};
         dest.append(src);
         assert((dest == "abc_test"_sv));
     }
@@ -745,44 +745,44 @@ template <typename T>
     }
 
     {
-        etl::string_view src { "_test" };
+        etl::string_view src {"_test"};
 
-        string dest { "abc" };
+        string dest {"abc"};
         dest.append(src, 2, 1);
         assert((dest == "abce"_sv));
     }
 
     {
-        string src { "_test" };
-        string dest { "abc" };
+        string src {"_test"};
+        string dest {"abc"};
         dest += src;
         assert((dest == "abc_test"_sv));
     }
 
     {
         auto src = 'a';
-        string dest { "abc" };
+        string dest {"abc"};
         dest += src;
         assert((dest == "abca"_sv));
     }
 
     {
         auto const* src = "_test";
-        string dest { "abc" };
+        string dest {"abc"};
         dest += src;
         assert((dest == "abc_test"_sv));
     }
 
     {
-        etl::string_view src { "_test" };
-        string dest { "abc" };
+        etl::string_view src {"_test"};
+        string dest {"abc"};
         dest += src;
         assert((dest == "abc_test"_sv));
     }
 
     {
         // setup
-        string str { "aaaaaa" };
+        string str {"aaaaaa"};
         etl::for_each(str.begin(), str.end(), [](auto& c) { c++; });
 
         // test
@@ -793,7 +793,7 @@ template <typename T>
     }
 
     {
-        string str { "junk" };
+        string str {"junk"};
         assert((str.front() == 'j'));
         assert((etl::as_const(str).front() == 'j'));
 
@@ -802,21 +802,21 @@ template <typename T>
     }
 
     {
-        string str { "junk" };
+        string str {"junk"};
         assert((str.data() == str.c_str()));
         assert((str.c_str() != nullptr));
         assert((str.c_str()[0] == 'j'));
     }
 
     {
-        string str { "junk" };
-        auto sv = etl::string_view { str };
+        string str {"junk"};
+        auto sv = etl::string_view {str};
         assert((sv.data()[0] == 'j'));
     }
 
     {
         // setup
-        string str { "junk" };
+        string str {"junk"};
         assert(str.empty() == false);
 
         // test
@@ -827,7 +827,7 @@ template <typename T>
     }
 
     {
-        string str { "" };
+        string str {""};
         str.push_back('a');
         str.push_back('b');
         assert(str == string("ab"));
@@ -835,7 +835,7 @@ template <typename T>
     }
 
     {
-        string str { "abc" };
+        string str {"abc"};
         str.pop_back();
         str.pop_back();
         assert(str == string("a"));
@@ -1016,7 +1016,7 @@ template <typename T>
         assert((str1.starts_with("foo")));
         assert((str1.starts_with('f')));
 
-        auto str2 = string { "foobar" };
+        auto str2 = string {"foobar"};
         assert((str2.starts_with("foo"_sv)));
         assert((str2.starts_with("foo")));
         assert((str2.starts_with('f')));
@@ -1064,7 +1064,7 @@ template <typename T>
         assert((lhs.compare(rhs) > 0));
         assert((rhs.compare("test"_sv) < 0));
 
-        auto other = etl::static_string<9> { "te" };
+        auto other = etl::static_string<9> {"te"};
         assert((lhs.compare(other) > 0));
         assert((other.compare(etl::string_view("te")) == 0));
     }
@@ -1073,21 +1073,21 @@ template <typename T>
         auto str = string();
         assert((str.find(string(), 0) == 0));
         assert((str.find(string(), 1) == string::npos));
-        assert((str.find(string { "" }) == 0));
+        assert((str.find(string {""}) == 0));
     }
 
     {
-        auto str = string { "def" };
-        assert((str.find(string { "abc" }, 0) == string::npos));
-        assert((str.find(string { "abc" }, 1) == string::npos));
-        assert((str.find(string { "abc" }) == string::npos));
+        auto str = string {"def"};
+        assert((str.find(string {"abc"}, 0) == string::npos));
+        assert((str.find(string {"abc"}, 1) == string::npos));
+        assert((str.find(string {"abc"}) == string::npos));
     }
 
     {
         auto str = string("abcd");
-        assert((str.find(string { "abc" }, 0) == 0));
-        assert((str.find(string { "bc" }, 1) == 1));
-        assert((str.find(string { "cd" }) == 2));
+        assert((str.find(string {"abc"}, 0) == 0));
+        assert((str.find(string {"bc"}, 1) == 1));
+        assert((str.find(string {"cd"}) == 2));
     }
 
     {
@@ -1098,7 +1098,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
+        auto str = string {"def"};
         assert((str.find("abc", 0) == string::npos));
         assert((str.find("abc", 1) == string::npos));
         assert((str.find("abc") == string::npos));
@@ -1119,7 +1119,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "bcdef" };
+        auto str = string {"bcdef"};
         assert((str.find('a', 0) == string::npos));
         assert((str.find('a', 1) == string::npos));
         assert((str.find('a') == string::npos));
@@ -1140,10 +1140,10 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
-        assert((str.rfind(string { "abc" }, 0) == string::npos));
-        assert((str.rfind(string { "abc" }, 1) == string::npos));
-        assert((str.rfind(string { "abc" }) == string::npos));
+        auto str = string {"def"};
+        assert((str.rfind(string {"abc"}, 0) == string::npos));
+        assert((str.rfind(string {"abc"}, 1) == string::npos));
+        assert((str.rfind(string {"abc"}) == string::npos));
     }
 
     {
@@ -1163,7 +1163,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
+        auto str = string {"def"};
         assert((str.rfind("abc", 0) == string::npos));
         assert((str.rfind("abc", 1) == string::npos));
         assert((str.rfind("abc") == string::npos));
@@ -1183,21 +1183,21 @@ template <typename T>
         auto str = string();
         assert((str.find_first_of(string(), 0) == string::npos));
         assert((str.find_first_of(string(), 1) == string::npos));
-        assert((str.find_first_of(string { "" }) == string::npos));
+        assert((str.find_first_of(string {""}) == string::npos));
     }
 
     {
-        auto str = string { "def" };
-        assert((str.find_first_of(string { "abc" }, 0) == string::npos));
-        assert((str.find_first_of(string { "abc" }, 1) == string::npos));
-        assert((str.find_first_of(string { "abc" }) == string::npos));
+        auto str = string {"def"};
+        assert((str.find_first_of(string {"abc"}, 0) == string::npos));
+        assert((str.find_first_of(string {"abc"}, 1) == string::npos));
+        assert((str.find_first_of(string {"abc"}) == string::npos));
     }
 
     {
         auto str = string("abcd");
-        assert((str.find_first_of(string { "abc" }, 0) == 0));
-        assert((str.find_first_of(string { "bc" }, 1) == 1));
-        assert((str.find_first_of(string { "cd" }) == 2));
+        assert((str.find_first_of(string {"abc"}, 0) == 0));
+        assert((str.find_first_of(string {"bc"}, 1) == 1));
+        assert((str.find_first_of(string {"cd"}) == 2));
     }
 
     {
@@ -1208,7 +1208,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
+        auto str = string {"def"};
         assert((str.find_first_of("abc", 0) == string::npos));
         assert((str.find_first_of("abc", 1) == string::npos));
         assert((str.find_first_of("abc") == string::npos));
@@ -1229,7 +1229,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
+        auto str = string {"def"};
         assert((str.find_first_of("abc"_sv, 0) == string::npos));
         assert((str.find_first_of("abc"_sv, 1) == string::npos));
         assert((str.find_first_of("abc"_sv) == string::npos));
@@ -1250,7 +1250,7 @@ template <typename T>
     }
 
     {
-        auto str = string { "def" };
+        auto str = string {"def"};
         assert((str.find_first_of('a', 0) == string::npos));
         assert((str.find_first_of('a', 1) == string::npos));
         assert((str.find_first_of('a') == string::npos));

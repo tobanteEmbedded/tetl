@@ -7,11 +7,11 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::abs<T>(0) == T { 0 });
-    assert(etl::abs<T>(1) == T { 1 });
-    assert(etl::abs<T>(-1) == T { 1 });
-    assert(etl::abs<T>(10) == T { 10 });
-    assert(etl::abs<T>(-10) == T { 10 });
+    assert(etl::abs<T>(0) == T {0});
+    assert(etl::abs<T>(1) == T {1});
+    assert(etl::abs<T>(-1) == T {1});
+    assert(etl::abs<T>(10) == T {10});
+    assert(etl::abs<T>(-10) == T {10});
     return true;
 }
 

@@ -9,7 +9,7 @@ namespace net  = etl::experimental::net;
 
 static auto test_all() -> bool
 {
-    auto sb = rtos::stream_buffer { 128, 1 };
+    auto sb = rtos::stream_buffer {128, 1};
     assert((sb.empty() == false));
     assert((sb.full() == false));
     assert((sb.bytes_available() == 0));

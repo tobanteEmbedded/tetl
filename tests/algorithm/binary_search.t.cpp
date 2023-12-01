@@ -19,7 +19,7 @@ constexpr auto test() -> bool
     assert(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
-    auto const data = etl::array { T(0), T(1), T(2) };
+    auto const data = etl::array {T(0), T(1), T(2)};
     assert(etl::binary_search(begin(data), end(data), T(0)));
     assert(etl::binary_search(begin(data), end(data), T(1)));
     assert(etl::binary_search(begin(data), end(data), T(2)));

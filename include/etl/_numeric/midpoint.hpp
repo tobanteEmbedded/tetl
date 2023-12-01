@@ -58,7 +58,7 @@ template <typename Ptr>
     requires(is_pointer_v<Ptr>)
 constexpr auto midpoint(Ptr a, Ptr b) noexcept -> Ptr
 {
-    return a + midpoint(ptrdiff_t { 0 }, b - a);
+    return a + midpoint(ptrdiff_t {0}, b - a);
 }
 
 } // namespace etl

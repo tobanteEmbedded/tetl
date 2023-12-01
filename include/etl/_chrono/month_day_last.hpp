@@ -8,7 +8,7 @@
 namespace etl::chrono {
 
 struct month_day_last {
-    constexpr explicit month_day_last(chrono::month const& m) noexcept : _m { m } { }
+    constexpr explicit month_day_last(chrono::month const& m) noexcept : _m {m} { }
 
     [[nodiscard]] constexpr auto month() const noexcept -> chrono::month { return _m; }
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return month().ok(); }

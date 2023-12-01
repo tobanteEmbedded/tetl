@@ -18,9 +18,7 @@ struct accessor_scaled {
     using data_handle_type = typename Accessor::data_handle_type;
     using offset_policy    = accessor_scaled<ScalingFactor, typename Accessor::offset_policy>;
 
-    constexpr accessor_scaled(ScalingFactor const& s, Accessor const& a) : _scalingFactor { s }, _nestedAccessor { a }
-    {
-    }
+    constexpr accessor_scaled(ScalingFactor const& s, Accessor const& a) : _scalingFactor {s}, _nestedAccessor {a} { }
 
     [[nodiscard]] constexpr auto access(data_handle_type p, size_t i) const noexcept -> reference
     {

@@ -67,7 +67,7 @@ static auto test() -> bool
     // default
     {
         struct S {
-            constexpr S() : x { 42 } { }
+            constexpr S() : x {42} { }
             int x; // NOLINT
         };
 
@@ -87,24 +87,24 @@ static auto test() -> bool
 
     // monostate
     {
-        auto var = variant<monostate, int, float> { monostate {} };
+        auto var = variant<monostate, int, float> {monostate {}};
         assert((etl::holds_alternative<monostate>(var)));
         assert((*etl::get_if<monostate>(&var) == monostate {}));
     }
 
     // int
     {
-        auto v1 = variant<monostate, int, float> { 42 };
+        auto v1 = variant<monostate, int, float> {42};
         assert((etl::holds_alternative<int>(v1)));
         assert((*etl::get_if<int>(&v1) == 42));
 
         auto i  = 143;
-        auto v2 = variant<monostate, int, float> { i };
+        auto v2 = variant<monostate, int, float> {i};
         assert((etl::holds_alternative<int>(v2)));
         assert((*etl::get_if<int>(&v2) == 143));
 
         auto const ic = 99;
-        auto v3       = variant<monostate, float, int> { ic };
+        auto v3       = variant<monostate, float, int> {ic};
         assert((etl::holds_alternative<int>(v3)));
         assert((*etl::get_if<int>(&v3) == 99));
         assert((*etl::get_if<2>(&v3) == 99));
@@ -112,7 +112,7 @@ static auto test() -> bool
 
     // float
     {
-        auto var = variant<monostate, int, float> { 143.0F };
+        auto var = variant<monostate, int, float> {143.0F};
         assert((etl::holds_alternative<float>(var)));
         assert((*etl::get_if<float>(&var) == 143.0F));
     }
@@ -120,9 +120,9 @@ static auto test() -> bool
     // in_place_type_t
     {
         struct Point {
-            constexpr Point(float initX, float initY) : x { initX }, y { initY } { }
-            float x { 0.0F };
-            float y { 0.0F };
+            constexpr Point(float initX, float initY) : x {initX}, y {initY} { }
+            float x {0.0F};
+            float y {0.0F};
         };
 
         auto v1 = variant<monostate, int, Point> {
@@ -148,34 +148,34 @@ static auto test() -> bool
 
     // 0
     {
-        auto var = variant<monostate, int, float> { monostate {} };
+        auto var = variant<monostate, int, float> {monostate {}};
         assert((var.index() == 0));
     }
 
     // 1
     {
-        auto var = variant<monostate, int, float> { 42 };
+        auto var = variant<monostate, int, float> {42};
         assert((var.index() == 1));
     }
 
     // 2
     {
-        auto var = variant<monostate, int, float> { 143.0F };
+        auto var = variant<monostate, int, float> {143.0F};
         assert((var.index() == 2));
     }
 
     // 3
     {
-        auto var = variant<monostate, int, float, double> { 143.0 };
+        auto var = variant<monostate, int, float, double> {143.0};
         assert((var.index() == 3));
     }
 
     {
-        auto var = variant<monostate, int, float> { 42 };
+        auto var = variant<monostate, int, float> {42};
         assert((etl::holds_alternative<int>(var)));
         assert((*etl::get_if<int>(&var) == 42));
 
-        auto var2 = variant<monostate, int, float> { 143 };
+        auto var2 = variant<monostate, int, float> {143};
         assert((etl::holds_alternative<int>(var2)));
         assert((*etl::get_if<int>(&var2) == 143));
         // var2 = var;
@@ -189,8 +189,8 @@ static auto test() -> bool
     }
 
     {
-        auto l = variant<int, float> { 42 };
-        auto r = variant<int, float> { 143 };
+        auto l = variant<int, float> {42};
+        auto r = variant<int, float> {143};
         assert((*etl::get_if<int>(&l) == 42));
         assert((*etl::get_if<int>(&r) == 143));
 
@@ -198,30 +198,30 @@ static auto test() -> bool
         assert((*etl::get_if<int>(&l) == 143));
         assert((*etl::get_if<int>(&r) == 42));
 
-        auto other = variant<int, float> { 999.0F };
+        auto other = variant<int, float> {999.0F};
         etl::swap(l, other);
         assert((etl::holds_alternative<int>(l)));
         assert((etl::holds_alternative<float>(other)));
     }
 
     {
-        assert(!(variant<int> { 41 } == variant<int> { 42 }));
-        assert((variant<int> { 42 } == variant<int> { 42 }));
+        assert(!(variant<int> {41} == variant<int> {42}));
+        assert((variant<int> {42} == variant<int> {42}));
 
-        assert((variant<int> { 41 } != variant<int> { 42 }));
-        assert((variant<int> { 41 } <= variant<int> { 42 }));
-        assert((variant<int> { 42 } >= variant<int> { 42 }));
-        assert((variant<int> { 42 } <= variant<int> { 42 }));
+        assert((variant<int> {41} != variant<int> {42}));
+        assert((variant<int> {41} <= variant<int> {42}));
+        assert((variant<int> {42} >= variant<int> {42}));
+        assert((variant<int> {42} <= variant<int> {42}));
 
-        assert(!(variant<int> { 41 } >= variant<int> { 42 }));
-        assert(!(variant<int> { 42 } != variant<int> { 42 }));
-        assert(!(variant<int> { 42 } < variant<int> { 42 }));
-        assert(!(variant<int> { 42 } > variant<int> { 42 }));
+        assert(!(variant<int> {41} >= variant<int> {42}));
+        assert(!(variant<int> {42} != variant<int> {42}));
+        assert(!(variant<int> {42} < variant<int> {42}));
+        assert(!(variant<int> {42} > variant<int> {42}));
     }
 
     // mutable
     {
-        auto var = variant<monostate, int, float, double> { 42 };
+        auto var = variant<monostate, int, float, double> {42};
         assert(etl::holds_alternative<int>(var));
         assert(!(etl::holds_alternative<monostate>(var)));
         assert(!(etl::holds_alternative<float>(var)));
@@ -230,7 +230,7 @@ static auto test() -> bool
 
     // const
     {
-        auto const var = variant<monostate, int, float, double> { 42.0F };
+        auto const var = variant<monostate, int, float, double> {42.0F};
         assert(etl::holds_alternative<float>(var));
         assert(!(etl::holds_alternative<int>(var)));
         assert(!(etl::holds_alternative<monostate>(var)));
@@ -238,7 +238,7 @@ static auto test() -> bool
     }
 
     {
-        auto v1 = variant<etl::monostate, int, float, double> { 42 };
+        auto v1 = variant<etl::monostate, int, float, double> {42};
         assert((etl::get_if<int>(&v1) != nullptr));
         assert((*etl::get_if<int>(&v1) == 42));
         assert((etl::get_if<1>(&v1) != nullptr));
@@ -251,7 +251,7 @@ static auto test() -> bool
         assert((etl::get_if<2>(&v1) == nullptr));
         assert((etl::get_if<3>(&v1) == nullptr));
 
-        auto const v2 = variant<monostate, int, float, double> { 42.0F };
+        auto const v2 = variant<monostate, int, float, double> {42.0F};
         assert((etl::get_if<float>(&v2) != nullptr));
         assert((*etl::get_if<float>(&v2) == 42.0F));
         assert((etl::get_if<2>(&v2) != nullptr));
@@ -265,11 +265,11 @@ static auto test() -> bool
         assert((etl::get_if<3>(&v2) == nullptr));
     }
     {
-        auto v1 = variant<monostate, int, float, double> { 42 };
+        auto v1 = variant<monostate, int, float, double> {42};
         assert((etl::get<1>(v1) == 42));
         assert((etl::get<int>(v1) == 42));
 
-        auto const v2 = variant<monostate, int, float, double> { 42 };
+        auto const v2 = variant<monostate, int, float, double> {42};
         assert((etl::get<int>(v2) == 42));
         assert((etl::get<1>(v2) == 42));
     }

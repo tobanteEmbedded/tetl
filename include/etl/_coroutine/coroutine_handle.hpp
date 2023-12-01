@@ -45,7 +45,7 @@ struct coroutine_handle<void> {
     auto destroy() const -> void { __builtin_coro_destroy(handle_); }
 
 protected:
-    void* handle_ { nullptr };
+    void* handle_ {nullptr};
 };
 
 template <typename T>

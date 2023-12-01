@@ -69,7 +69,7 @@ struct FwdIter {
 
     constexpr FwdIter() = default;
 
-    explicit constexpr FwdIter(Iter it) : _iter { it } { }
+    explicit constexpr FwdIter(Iter it) : _iter {it} { }
 
     template <typename U>
     constexpr FwdIter(FwdIter<U> const& u) : _iter(u.iter_)

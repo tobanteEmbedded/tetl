@@ -16,7 +16,7 @@ struct my_complex {
 
 [[maybe_unused]] static auto imag(my_complex const& cplx) -> float { return cplx.imag; }
 
-[[maybe_unused]] static auto conj(my_complex const& cplx) -> my_complex { return { cplx.real, -cplx.imag }; }
+[[maybe_unused]] static auto conj(my_complex const& cplx) -> my_complex { return {cplx.real, -cplx.imag}; }
 
 struct my_string { };
 

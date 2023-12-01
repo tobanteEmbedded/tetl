@@ -163,8 +163,8 @@ protected:
 
 private:
     fmtflags _fmtFlags {};
-    streamsize _precision { 6 };
-    streamsize _width { 0 };
+    streamsize _precision {6};
+    streamsize _width {0};
 };
 
 } // namespace etl

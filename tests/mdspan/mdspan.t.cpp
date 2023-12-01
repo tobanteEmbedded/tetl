@@ -31,8 +31,8 @@ template <typename ElementType, typename IndexType>
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> { ElementType(1) };
-        auto m      = etl::mdspan<ElementType, extents_t> { buffer.data(), buffer.size() };
+        auto buffer = etl::array<ElementType, 16> {ElementType(1)};
+        auto m      = etl::mdspan<ElementType, extents_t> {buffer.data(), buffer.size()};
         assert(m.rank() == 1);
         assert(m.rank_dynamic() == 1);
         assert(m.static_extent(0) == etl::dynamic_extent);
@@ -50,7 +50,7 @@ template <typename ElementType, typename IndexType>
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> { ElementType(1) };
+        auto buffer = etl::array<ElementType, 16> {ElementType(1)};
         auto m      = etl::mdspan(buffer.data(), 2, 8);
         assert(m.rank() == 2);
         assert(m.rank_dynamic() == 2);

@@ -11,8 +11,8 @@ constexpr auto test() -> bool
 {
     assert(etl::isnan(NAN));
 
-    assert(!etl::isnan(T { 0 }));
-    assert(!etl::isnan(T { 1 }));
+    assert(!etl::isnan(T {0}));
+    assert(!etl::isnan(T {1}));
     assert(!etl::isnan(INFINITY));
     assert(!etl::isnan(HUGE_VAL));
     assert(!etl::isnan(HUGE_VALF));

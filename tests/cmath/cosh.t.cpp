@@ -10,7 +10,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::cosh(short { 0 }) == 1.0);
+    assert(etl::cosh(short {0}) == 1.0);
     assert(etl::cosh(T(0)) == T(1));
 
     assert(approx(etl::cosh(T(0)), T(1)));

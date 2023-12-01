@@ -20,7 +20,7 @@ constexpr auto test() -> bool
 
     // "cppreference.com example"
     {
-        etl::array a { T(2), T(4), T(6) };
+        etl::array a {T(2), T(4), T(6)};
         adjacent_difference(a.begin(), a.end(), a.begin());
         assert(a[0] == 2);
         assert(a[1] == 2);
@@ -29,7 +29,7 @@ constexpr auto test() -> bool
 
     // "cppreference.com example fibonacci"
     {
-        etl::array<T, 4> a { T(1) };
+        etl::array<T, 4> a {T(1)};
         adjacent_difference(begin(a), prev(end(a)), next(begin(a)), plus<T> {});
         assert(a[0] == 1);
         assert(a[1] == 1);

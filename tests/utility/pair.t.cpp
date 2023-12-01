@@ -17,7 +17,7 @@ struct DummyStringView {
 struct DummyString {
     constexpr DummyString() = default;
     constexpr explicit DummyString(DummyStringView /*ignore*/) { }
-    constexpr operator DummyStringView() const noexcept { return { *this }; }
+    constexpr operator DummyStringView() const noexcept { return {*this}; }
 };
 constexpr DummyStringView::DummyStringView(DummyString const& /*ignore*/) { }
 
@@ -55,29 +55,29 @@ constexpr auto test() -> bool
     }
 
     {
-        auto p1 = etl::pair { T { 0 }, 143.0F };
+        auto p1 = etl::pair {T {0}, 143.0F};
         assert((is_same_v<T, decltype(p1.first)>));
         assert((is_same_v<float, decltype(p1.second)>));
         assert(p1.first == 0);
         assert(p1.second == 143.0);
 
-        auto p2 = etl::pair { 1.2, T { 42 } };
+        auto p2 = etl::pair {1.2, T {42}};
         assert((is_same_v<double, decltype(p2.first)>));
         assert((is_same_v<T, decltype(p2.second)>));
         assert(p2.first == 1.2);
-        assert(p2.second == T { 42 });
+        assert(p2.second == T {42});
 
-        auto p3 = etl::pair { T { 2 }, T { 42 } };
+        auto p3 = etl::pair {T {2}, T {42}};
         assert((is_same_v<T, decltype(p3.first)>));
         assert((is_same_v<T, decltype(p3.second)>));
-        assert(p3.first == T { 2 });
-        assert(p3.second == T { 42 });
+        assert(p3.first == T {2});
+        assert(p3.second == T {42});
     }
 
     // same types
     {
-        auto p = etl::make_pair(T { 0 }, 143.0F);
-        auto other { p };
+        auto p = etl::make_pair(T {0}, 143.0F);
+        auto other {p};
 
         assert((is_same_v<decltype(other.first), decltype(p.first)>));
         assert((is_same_v<decltype(other.second), decltype(p.second)>));
@@ -88,8 +88,8 @@ constexpr auto test() -> bool
 
     // different types
     {
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
-        auto other = etl::pair<T, double> { p };
+        auto p     = etl::make_pair(T {0}, 143.0F);
+        auto other = etl::pair<T, double> {p};
 
         assert((is_same_v<decltype(other.first), decltype(p.first)>));
         assert(!(is_same_v<decltype(other.second), decltype(p.second)>));
@@ -100,8 +100,8 @@ constexpr auto test() -> bool
 
     // same types
     {
-        auto p = etl::make_pair(T { 0 }, 143.0F);
-        auto other { etl::move(p) };
+        auto p = etl::make_pair(T {0}, 143.0F);
+        auto other {etl::move(p)};
 
         assert((is_same_v<decltype(other.first), decltype(p.first)>));
         assert((is_same_v<decltype(other.second), decltype(p.second)>));
@@ -112,8 +112,8 @@ constexpr auto test() -> bool
 
     // different types
     {
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
-        auto other = etl::pair<T, double> { etl::move(p) };
+        auto p     = etl::make_pair(T {0}, 143.0F);
+        auto other = etl::pair<T, double> {etl::move(p)};
 
         assert((is_same_v<decltype(other.first), decltype(p.first)>));
         assert(!(is_same_v<decltype(other.second), decltype(p.second)>));
@@ -124,7 +124,7 @@ constexpr auto test() -> bool
 
     // same types
     {
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
+        auto p     = etl::make_pair(T {0}, 143.0F);
         auto other = etl::pair<T, float> {};
         other      = p;
         assert(other.first == p.first);
@@ -132,7 +132,7 @@ constexpr auto test() -> bool
     }
     // different types
     {
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
+        auto p     = etl::make_pair(T {0}, 143.0F);
         auto other = etl::pair<T, double> {};
         other      = p;
 
@@ -145,7 +145,7 @@ constexpr auto test() -> bool
 
     // same types
     {
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
+        auto p     = etl::make_pair(T {0}, 143.0F);
         auto other = etl::pair<T, float> {};
         other      = etl::move(p);
         assert(other.first == p.first);
@@ -154,7 +154,7 @@ constexpr auto test() -> bool
     // different types
     {
         auto other = etl::pair<T, double> {};
-        auto p     = etl::make_pair(T { 0 }, 143.0F);
+        auto p     = etl::make_pair(T {0}, 143.0F);
         other      = etl::move(p);
 
         assert((is_same_v<decltype(other.first), decltype(p.first)>));
@@ -167,14 +167,14 @@ constexpr auto test() -> bool
     {
         T a[2] {};
         T b[3] {};
-        etl::pair p { a, b }; // explicit deduction guide is used in this case
+        etl::pair p {a, b}; // explicit deduction guide is used in this case
 
         assert((is_same_v<T*, decltype(p.first)>));
         assert((is_same_v<T*, decltype(p.second)>));
     }
 
     {
-        auto p = etl::make_pair(T { 0 }, 143.0F);
+        auto p = etl::make_pair(T {0}, 143.0F);
         assert((is_same_v<T, decltype(p.first)>));
         assert((is_same_v<float, decltype(p.second)>));
 
@@ -212,9 +212,9 @@ constexpr auto test() -> bool
         assert(rhs.second == 143);
     }
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {42}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(p1 == p2);
         assert(p2 == p1);
@@ -224,9 +224,9 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {42}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(!(p1 != p2));
         assert(!(p2 != p1));
@@ -236,9 +236,9 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {42}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(!(p1 < p2));
         assert(!(p2 < p1));
@@ -248,9 +248,9 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {42}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(p1 <= p2);
         assert(p2 <= p1);
@@ -260,9 +260,9 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 24 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {24}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(p1 > p2);
         assert(!(p2 > p1));
@@ -272,9 +272,9 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const p1 = etl::make_pair(T { 42 }, 143.0F);
-        auto const p2 = etl::make_pair(T { 24 }, 143.0F);
-        auto const p3 = etl::make_pair(T { 123 }, 143.0F);
+        auto const p1 = etl::make_pair(T {42}, 143.0F);
+        auto const p2 = etl::make_pair(T {24}, 143.0F);
+        auto const p3 = etl::make_pair(T {123}, 143.0F);
 
         assert(p1 >= p2);
         assert(!(p2 >= p1));
@@ -296,7 +296,7 @@ constexpr auto test() -> bool
 
     {
         using etl::tuple_element_t;
-        auto p = etl::pair<T, float> { T { 42 }, 143.0F };
+        auto p = etl::pair<T, float> {T {42}, 143.0F};
         assert((is_same_v<T, tuple_element_t<0, decltype(p)>>));
         assert((is_same_v<float, tuple_element_t<1, decltype(p)>>));
     }
@@ -306,11 +306,11 @@ constexpr auto test() -> bool
 
         // mutable lvalue ref
         {
-            auto p = pair<T, float> { T { 42 }, 143.0F };
+            auto p = pair<T, float> {T {42}, 143.0F};
 
             auto& first = etl::get<0>(p);
             assert((is_same_v<decltype(first), T&>));
-            assert(first == T { 42 });
+            assert(first == T {42});
 
             auto& second = etl::get<1>(p);
             assert((is_same_v<decltype(second), float&>));
@@ -319,11 +319,11 @@ constexpr auto test() -> bool
 
         // const lvalue ref
         {
-            auto const p = pair<T, float> { T { 42 }, 143.0F };
+            auto const p = pair<T, float> {T {42}, 143.0F};
 
             auto& first = etl::get<0>(p);
             assert((is_same_v<decltype(first), T const&>));
-            assert(first == T { 42 });
+            assert(first == T {42});
 
             auto& second = etl::get<1>(p);
             assert((is_same_v<decltype(second), float const&>));
@@ -332,8 +332,8 @@ constexpr auto test() -> bool
 
         // mutable rvalue ref
         {
-            assert((is_same_v<decltype(etl::get<0>(pair { T { 42 }, 143.0F })), T&&>));
-            assert((is_same_v<decltype(etl::get<1>(pair { T { 42 }, 143.0F })), float&&>));
+            assert((is_same_v<decltype(etl::get<0>(pair {T {42}, 143.0F})), T&&>));
+            assert((is_same_v<decltype(etl::get<1>(pair {T {42}, 143.0F})), float&&>));
         }
     }
 

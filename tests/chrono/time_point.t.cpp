@@ -22,7 +22,7 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto null = etl::chrono::time_point<null_clock<T>> {};
-    assert(null.time_since_epoch().count() == T { 0 });
+    assert(null.time_since_epoch().count() == T {0});
     return true;
 }
 

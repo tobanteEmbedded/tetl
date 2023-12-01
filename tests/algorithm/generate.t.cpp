@@ -13,20 +13,20 @@ template <typename T>
 constexpr auto test() -> bool
 {
     auto d = etl::array<T, 4> {};
-    etl::generate(begin(d), end(d), [n = T { 0 }]() mutable { return n++; });
+    etl::generate(begin(d), end(d), [n = T {0}]() mutable { return n++; });
     assert(d[0] == 0);
     assert(d[1] == 1);
     assert(d[2] == 2);
     assert(d[3] == 3);
 
     auto dn  = etl::static_vector<T, 4> {};
-    auto rng = []() { return T { 42 }; };
+    auto rng = []() { return T {42}; };
     etl::generate_n(etl::back_inserter(dn), 4, rng);
 
-    assert(dn[0] == T { 42 });
-    assert(dn[1] == T { 42 });
-    assert(dn[2] == T { 42 });
-    assert(dn[3] == T { 42 });
+    assert(dn[0] == T {42});
+    assert(dn[1] == T {42});
+    assert(dn[2] == T {42});
+    assert(dn[3] == T {42});
     return true;
 }
 

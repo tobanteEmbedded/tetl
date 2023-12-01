@@ -81,14 +81,14 @@ public:
         void const*,                  //
         handle                        //
         >
-        value { monostate {} };
+        value {monostate {}};
 };
 
 namespace detail {
 template <typename Context, typename T>
 [[nodiscard]] constexpr auto make_arg(T&& value) -> basic_format_arg<Context>
 {
-    return { forward<T>(value) };
+    return {forward<T>(value)};
 }
 } // namespace detail
 

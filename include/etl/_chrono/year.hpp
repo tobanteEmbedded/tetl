@@ -13,7 +13,7 @@ namespace etl::chrono {
 struct year {
     year() = default;
 
-    constexpr explicit year(int32_t y) noexcept : _count { static_cast<int16_t>(y) } { }
+    constexpr explicit year(int32_t y) noexcept : _count {static_cast<int16_t>(y)} { }
 
     constexpr auto operator++() noexcept -> year&
     {
@@ -21,7 +21,7 @@ struct year {
         return *this;
     }
 
-    constexpr auto operator++(int) noexcept -> year { return year { _count++ }; }
+    constexpr auto operator++(int) noexcept -> year { return year {_count++}; }
 
     constexpr auto operator--() noexcept -> year&
     {
@@ -29,7 +29,7 @@ struct year {
         return *this;
     }
 
-    constexpr auto operator--(int) noexcept -> year { return year { _count-- }; }
+    constexpr auto operator--(int) noexcept -> year { return year {_count--}; }
 
     constexpr auto operator+=(years const& countS) noexcept -> year&
     {
@@ -46,7 +46,7 @@ struct year {
 
     [[nodiscard]] constexpr auto operator+() const noexcept -> year { return *this; }
 
-    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year { -_count }; }
+    [[nodiscard]] constexpr auto operator-() const noexcept -> year { return year {-_count}; }
 
     [[nodiscard]] constexpr auto is_leap() const noexcept -> bool
     {
@@ -57,9 +57,9 @@ struct year {
 
     [[nodiscard]] constexpr auto ok() const noexcept -> bool { return _count != numeric_limits<int16_t>::min(); }
 
-    [[nodiscard]] static constexpr auto min() noexcept -> year { return year { -32767 }; }
+    [[nodiscard]] static constexpr auto min() noexcept -> year { return year {-32767}; }
 
-    [[nodiscard]] static constexpr auto max() noexcept -> year { return year { 32767 }; }
+    [[nodiscard]] static constexpr auto max() noexcept -> year { return year {32767}; }
 
 private:
     int16_t _count {};
@@ -97,7 +97,7 @@ private:
 
 [[nodiscard]] constexpr auto operator+(year const& lhs, years const& rhs) noexcept -> year
 {
-    return year { static_cast<int32_t>(lhs) + rhs.count() };
+    return year {static_cast<int32_t>(lhs) + rhs.count()};
 }
 
 [[nodiscard]] constexpr auto operator+(years const& lhs, year const& rhs) noexcept -> year { return rhs + lhs; }
@@ -106,7 +106,7 @@ private:
 
 [[nodiscard]] constexpr auto operator-(year const& lhs, year const& rhs) noexcept -> years
 {
-    return years { static_cast<int32_t>(lhs) - static_cast<int32_t>(rhs) };
+    return years {static_cast<int32_t>(lhs) - static_cast<int32_t>(rhs)};
 }
 
 } // namespace etl::chrono

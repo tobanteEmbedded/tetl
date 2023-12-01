@@ -10,7 +10,7 @@ namespace etl {
 template <typename... Args>
 constexpr auto tie(Args&... args) noexcept -> tuple<Args&...>
 {
-    return { args... };
+    return {args...};
 }
 
 } // namespace etl

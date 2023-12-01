@@ -16,7 +16,7 @@ struct basic_format_args {
     constexpr basic_format_args() noexcept = default;
 
     template <typename... Args>
-    constexpr basic_format_args(detail::format_arg_store<Context, Args...> const& store) noexcept : _args { store.args }
+    constexpr basic_format_args(detail::format_arg_store<Context, Args...> const& store) noexcept : _args {store.args}
     {
     }
 

@@ -16,7 +16,7 @@ namespace {
 template <typename T>
 struct Vertex {
     constexpr Vertex() = default;
-    constexpr Vertex(T xInit, T yInit, T zInit) : x { xInit }, y { yInit }, z { zInit } { }
+    constexpr Vertex(T xInit, T yInit, T zInit) : x {xInit}, y {yInit}, z {zInit} { }
 
     T x {};
     T y {};
@@ -48,14 +48,14 @@ auto test_runtime() -> bool
         assert(etl::crbegin(vec) == etl::crend(vec));
         assert(rbegin(as_const(vec)) == rend(as_const(vec)));
 
-        vec.push_back(T { 2 });
-        assert(*etl::rbegin(vec) == T { 2 });
+        vec.push_back(T {2});
+        assert(*etl::rbegin(vec) == T {2});
         assert(!(etl::rbegin(vec) == etl::rend(vec)));
         assert(!(etl::crbegin(vec) == etl::crend(vec)));
         assert(!(rbegin(as_const(vec)) == rend(as_const(vec))));
 
-        vec.push_back(T { 3 });
-        assert(*etl::rbegin(vec) == T { 3 });
+        vec.push_back(T {3});
+        assert(*etl::rbegin(vec) == T {3});
     }
 
     {
@@ -109,7 +109,7 @@ auto test_runtime() -> bool
 
     {
         etl::static_vector<Vertex<T>, 3> original {};
-        auto vertex = Vertex { T(1), T(2), T(3) };
+        auto vertex = Vertex {T(1), T(2), T(3)};
         original.push_back(vertex);
         assert(original.size() == 1);
         assert(original.front() == vertex);
@@ -124,7 +124,7 @@ auto test_runtime() -> bool
     {
         auto vec = etl::static_vector<Vertex<T>, 3> {};
         assert(vec.size() == 0);
-        auto vertex = Vertex { T(1.20F), T(1.00F), T(1.43F) };
+        auto vertex = Vertex {T(1.20F), T(1.00F), T(1.43F)};
         vec.insert(vec.begin(), vertex);
         vec.insert(vec.begin(), vertex);
         assert(vec.size() == 2);
@@ -133,14 +133,14 @@ auto test_runtime() -> bool
     {
         auto vec = etl::static_vector<Vertex<T>, 3> {};
         assert(vec.size() == 0);
-        vec.insert(vec.begin(), Vertex { T(1.20F), T(1.00F), T(1.43F) });
-        vec.insert(vec.begin(), Vertex { T(1.20F), T(1.00F), T(1.43F) });
+        vec.insert(vec.begin(), Vertex {T(1.20F), T(1.00F), T(1.43F)});
+        vec.insert(vec.begin(), Vertex {T(1.20F), T(1.00F), T(1.43F)});
         assert(vec.size() == 2);
     }
 
     {
-        auto a   = Vertex { T(1), T(1), T(1) };
-        auto b   = Vertex { T(2), T(2), T(2) };
+        auto a   = Vertex {T(1), T(1), T(1)};
+        auto b   = Vertex {T(2), T(2), T(2)};
         auto vec = etl::static_vector<Vertex<T>, 3> {};
         assert(vec.size() == 0);
 

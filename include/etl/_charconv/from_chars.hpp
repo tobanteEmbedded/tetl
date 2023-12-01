@@ -14,7 +14,7 @@ namespace etl {
 
 /// \brief Primitive numerical input conversion
 struct from_chars_result {
-    char const* ptr { nullptr };
+    char const* ptr {nullptr};
     etl::errc ec {};
 
     [[nodiscard]] friend constexpr auto operator==(from_chars_result const& l, from_chars_result const& r) noexcept
@@ -39,14 +39,14 @@ template <integral T>
     auto const [end, error, val] = detail::ascii_to_integer<T, false>(first, len, base);
 
     if (error == detail::ascii_to_integer_error::overflow) {
-        return from_chars_result { .ptr = first, .ec = errc::result_out_of_range };
+        return from_chars_result {.ptr = first, .ec = errc::result_out_of_range};
     }
     if (error == detail::ascii_to_integer_error::invalid_input) {
-        return from_chars_result { .ptr = first, .ec = errc::invalid_argument };
+        return from_chars_result {.ptr = first, .ec = errc::invalid_argument};
     }
 
     value = val;
-    return from_chars_result { .ptr = end, .ec = {} };
+    return from_chars_result {.ptr = end, .ec = {}};
 }
 
 } // namespace etl

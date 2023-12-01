@@ -15,7 +15,7 @@ template <typename To, typename Rep, typename Period>
     is_arithmetic_v<Rep>&& is_arithmetic_v<typename To::rep>) -> To
 {
     auto const low      = floor<To>(dur);
-    auto const high     = low + To { 1 };
+    auto const high     = low + To {1};
     auto const lowDiff  = dur - low;
     auto const highDiff = high - dur;
     if (lowDiff < highDiff) { return low; }
@@ -27,7 +27,7 @@ template <typename To, typename Clock, typename Duration>
     requires(detail::is_duration_v<To>)
 [[nodiscard]] constexpr auto round(time_point<Clock, Duration> const& tp) -> time_point<Clock, To>
 {
-    return time_point<Clock, To> { round<To>(tp.time_since_epoch()) };
+    return time_point<Clock, To> {round<To>(tp.time_since_epoch())};
 }
 
 } // namespace etl::chrono

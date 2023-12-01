@@ -11,10 +11,10 @@
 template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_vector_two_norm_real() -> bool
 {
-    auto const data = etl::array<T, 4> { T(2), T(2), T(2), T(2) };
+    auto const data = etl::array<T, 4> {T(2), T(2), T(2), T(2)};
     {
         // static extents
-        auto const vec = etl::mdspan<T const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec = etl::mdspan<T const, etl::extents<IndexType, 4>> {data.data()};
         assert(etl::linalg::vector_two_norm(vec) == T(4));
         assert(etl::linalg::vector_two_norm(etl::linalg::scaled(T(2), vec)) == T(8));
 

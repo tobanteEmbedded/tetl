@@ -16,7 +16,7 @@ constexpr auto test() -> bool
 {
     using etl::transform;
 
-    etl::array<T, 4> a { T(2), T(2), T(2), T(2) };
+    etl::array<T, 4> a {T(2), T(2), T(2), T(2)};
     auto func = [](auto v) { return static_cast<T>(v * 2); };
     transform(begin(a), end(a), begin(a), func);
     assert((etl::all_of(begin(a), end(a), [](auto v) { return v == 4; })));

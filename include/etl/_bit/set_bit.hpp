@@ -10,7 +10,7 @@ namespace etl {
 template <unsigned_integral T>
 [[nodiscard]] constexpr auto set_bit(T val, T bit) noexcept -> T
 {
-    return val | (T { 1 } << bit);
+    return val | (T {1} << bit);
 }
 
 } // namespace etl

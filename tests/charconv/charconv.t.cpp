@@ -33,15 +33,15 @@ constexpr auto test_chars_format() -> bool
 constexpr auto test_to_chars_result() -> bool
 {
     {
-        auto lhs = etl::to_chars_result { nullptr, etl::errc {} };
-        auto rhs = etl::to_chars_result { nullptr, etl::errc {} };
+        auto lhs = etl::to_chars_result {nullptr, etl::errc {}};
+        auto rhs = etl::to_chars_result {nullptr, etl::errc {}};
         assert(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::to_chars_result { buffer, etl::errc {} };
-        auto rhs        = etl::to_chars_result { buffer, etl::errc {} };
+        auto lhs        = etl::to_chars_result {buffer, etl::errc {}};
+        auto rhs        = etl::to_chars_result {buffer, etl::errc {}};
         assert(lhs == rhs);
     }
 
@@ -51,15 +51,15 @@ constexpr auto test_to_chars_result() -> bool
 constexpr auto test_from_chars_result() -> bool
 {
     {
-        auto lhs = etl::from_chars_result { nullptr, etl::errc {} };
-        auto rhs = etl::from_chars_result { nullptr, etl::errc {} };
+        auto lhs = etl::from_chars_result {nullptr, etl::errc {}};
+        auto rhs = etl::from_chars_result {nullptr, etl::errc {}};
         assert(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::from_chars_result { buffer, etl::errc {} };
-        auto rhs        = etl::from_chars_result { buffer, etl::errc {} };
+        auto lhs        = etl::from_chars_result {buffer, etl::errc {}};
+        auto rhs        = etl::from_chars_result {buffer, etl::errc {}};
         assert(lhs == rhs);
     }
 

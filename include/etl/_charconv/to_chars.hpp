@@ -14,7 +14,7 @@ namespace etl {
 
 /// \brief Primitive numerical output conversion.
 struct to_chars_result {
-    char const* ptr { nullptr };
+    char const* ptr {nullptr};
     etl::errc ec {};
 
     [[nodiscard]] friend constexpr auto operator==(to_chars_result const& l, to_chars_result const& r) noexcept -> bool
@@ -38,8 +38,8 @@ template <integral T>
 {
     auto const len = static_cast<etl::size_t>(etl::distance(f, l));
     auto const res = detail::int_to_ascii<T>(val, f, base, len);
-    if (res.error == detail::int_to_ascii_error::none) { return to_chars_result { res.end, {} }; }
-    return to_chars_result { l, errc::value_too_large };
+    if (res.error == detail::int_to_ascii_error::none) { return to_chars_result {res.end, {}}; }
+    return to_chars_result {l, errc::value_too_large};
 }
 
 [[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10) -> to_chars_result = delete;

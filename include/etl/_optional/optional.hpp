@@ -106,7 +106,7 @@ struct optional_destruct_base<T, true> {
         value_type internal_value;
     };
 
-    bool internal_has_value { false };
+    bool internal_has_value {false};
 };
 
 template <typename T, bool = etl::is_reference_v<T>>

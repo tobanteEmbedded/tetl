@@ -16,7 +16,7 @@ auto test() -> bool
             auto vec  = etl::static_vector<T, 5> {};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            iter = T { 1 };
+            iter = T {1};
             assert(vec.size() == 1);
         }
 
@@ -25,7 +25,7 @@ auto test() -> bool
             auto vec  = etl::static_vector<T, 5> {};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            auto const val = T { 42 };
+            auto const val = T {42};
             iter           = val;
             assert(vec.size() == 1);
         }
@@ -35,7 +35,7 @@ auto test() -> bool
             auto vec  = etl::static_vector<T, 5> {};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            auto const val = T { 42 };
+            auto const val = T {42};
             iter           = val;
             assert(vec.size() == 1);
             assert(&++iter == &iter); // NOLINT

@@ -11,7 +11,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::acos(short { 1 }) == 0.0);
+    assert(etl::acos(short {1}) == 0.0);
     assert(etl::acosl(1) == 0.0L);
     assert(etl::acos(T(1)) == T(0));
 

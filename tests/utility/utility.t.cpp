@@ -14,19 +14,19 @@ constexpr auto test() -> bool
 
     // exchange
     {
-        auto original = T { 42 };
-        auto const b  = etl::exchange(original, T { 43 });
-        assert(original == T { 43 });
-        assert(b == T { 42 });
+        auto original = T {42};
+        auto const b  = etl::exchange(original, T {43});
+        assert(original == T {43});
+        assert(b == T {42});
 
-        auto const c = etl::exchange(original, T { 44 });
-        assert(original == T { 44 });
-        assert(c == T { 43 });
+        auto const c = etl::exchange(original, T {44});
+        assert(original == T {44});
+        assert(c == T {43});
     }
 
     // as_const
     {
-        auto original = T { 42 };
+        auto original = T {42};
         assert(!(etl::is_const_v<decltype(original)>));
 
         auto const& ref = etl::as_const(original);
@@ -56,13 +56,13 @@ constexpr auto test() -> bool
         assert((is_same_v<decltype(to_underlying(c_enum::foo)), T>));
         assert((is_same_v<decltype(to_underlying(s_enum::foo)), T>));
 
-        assert((to_underlying(c_enum::foo) == T { 0 }));
-        assert((to_underlying(c_enum::bar) == T { 1 }));
-        assert((to_underlying(c_enum::baz) == T { 42 }));
+        assert((to_underlying(c_enum::foo) == T {0}));
+        assert((to_underlying(c_enum::bar) == T {1}));
+        assert((to_underlying(c_enum::baz) == T {42}));
 
-        assert((to_underlying(s_enum::foo) == T { 0 }));
-        assert((to_underlying(s_enum::bar) == T { 1 }));
-        assert((to_underlying(s_enum::baz) == T { 42 }));
+        assert((to_underlying(s_enum::foo) == T {0}));
+        assert((to_underlying(s_enum::bar) == T {1}));
+        assert((to_underlying(s_enum::baz) == T {42}));
     }
 
     {

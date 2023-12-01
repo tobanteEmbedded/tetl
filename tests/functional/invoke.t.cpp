@@ -31,10 +31,10 @@ constexpr auto test() -> bool
     assert(etl::invoke([]() { return T(42); }) == T(42));
 
     assert(etl::invoke(get_num<T>, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::get_num, Class<T> { 0 }, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::num, Class<T> { 2 }) == T(2));
+    assert(etl::invoke(&Class<T>::get_num, Class<T> {0}, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::num, Class<T> {2}) == T(2));
 
-    auto c   = Class<T> { 0 };
+    auto c   = Class<T> {0};
     auto ref = etl::ref(c);
     assert(etl::invoke(&Class<T>::get_num, ref, T(42)) == T(42));
     assert(etl::invoke(&Class<T>::num, ref) == T(0));

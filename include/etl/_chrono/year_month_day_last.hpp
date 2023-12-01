@@ -15,21 +15,21 @@ namespace detail {
 [[nodiscard]] constexpr auto last_day_of_month(chrono::year const& y, chrono::month const& m) -> chrono::day
 {
     constexpr chrono::day lastDays[] = {
-        chrono::day { 31 },
-        chrono::day { 28 },
-        chrono::day { 31 },
-        chrono::day { 30 },
-        chrono::day { 31 },
-        chrono::day { 30 },
-        chrono::day { 31 },
-        chrono::day { 31 },
-        chrono::day { 30 },
-        chrono::day { 31 },
-        chrono::day { 30 },
-        chrono::day { 31 },
+        chrono::day {31},
+        chrono::day {28},
+        chrono::day {31},
+        chrono::day {30},
+        chrono::day {31},
+        chrono::day {30},
+        chrono::day {31},
+        chrono::day {31},
+        chrono::day {30},
+        chrono::day {31},
+        chrono::day {30},
+        chrono::day {31},
     };
 
-    if (m == chrono::month { 2 } and y.is_leap()) { return chrono::day { 29 }; }
+    if (m == chrono::month {2} and y.is_leap()) { return chrono::day {29}; }
     return lastDays[(static_cast<uint32_t>(m) - 1) & static_cast<uint32_t>(0xF)];
 }
 
@@ -37,7 +37,7 @@ namespace detail {
 
 struct year_month_day_last {
     constexpr year_month_day_last(chrono::year const& y, chrono::month_day_last const& mdl) noexcept
-        : _y { y }, _mdl { mdl }
+        : _y {y}, _mdl {mdl}
     {
     }
 
@@ -66,8 +66,8 @@ private:
 [[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::months const& rhs) noexcept
     -> chrono::year_month_day_last
 {
-    auto const ym = year_month { lhs.year(), lhs.month() } + rhs;
-    return { ym.year(), month_day_last { ym.month() } };
+    auto const ym = year_month {lhs.year(), lhs.month()} + rhs;
+    return {ym.year(), month_day_last {ym.month()}};
 }
 
 [[nodiscard]] constexpr auto operator+(chrono::months const& lhs, chrono::year_month_day_last const& rhs) noexcept
@@ -85,7 +85,7 @@ private:
 [[nodiscard]] constexpr auto operator+(chrono::year_month_day_last const& lhs, chrono::years const& rhs) noexcept
     -> chrono::year_month_day_last
 {
-    return { lhs.year() + rhs, lhs.month_day_last() };
+    return {lhs.year() + rhs, lhs.month_day_last()};
 }
 
 [[nodiscard]] constexpr auto operator+(chrono::years const& lhs, chrono::year_month_day_last const& rhs) noexcept

@@ -24,13 +24,13 @@ struct layout_right::mapping {
     constexpr mapping() noexcept               = default;
     constexpr mapping(mapping const&) noexcept = default;
 
-    constexpr mapping(extents_type const& ext) noexcept : _extents { ext } { }
+    constexpr mapping(extents_type const& ext) noexcept : _extents {ext} { }
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(mapping<OtherExtents> const& other) noexcept
-        : _extents { other.extents() }
+        : _extents {other.extents()}
     {
     }
 
@@ -38,7 +38,7 @@ struct layout_right::mapping {
         requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(layout_left::mapping<OtherExtents> const& other) noexcept
-        : _extents { other.extents() }
+        : _extents {other.extents()}
     {
     }
 

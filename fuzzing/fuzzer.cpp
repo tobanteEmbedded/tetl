@@ -20,8 +20,8 @@ template <typename IntType>
     auto vec       = etl::static_vector<IntType, 128> {};
     etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
 
-    auto etlSet = etl::static_set<IntType, 128> { begin(vec), end(vec) };
-    auto stdSet = std::set<IntType> { begin(vec), end(vec) };
+    auto etlSet = etl::static_set<IntType, 128> {begin(vec), end(vec)};
+    auto stdSet = std::set<IntType> {begin(vec), end(vec)};
     if (etlSet.size() != stdSet.size()) { return 1; }
 
     etl::sort(begin(vec), end(vec));
@@ -37,8 +37,8 @@ template <typename FloatType>
     auto vec       = etl::static_vector<FloatType, 128> {};
     etl::generate_n(etl::back_inserter(vec), vec.capacity(), generator);
 
-    auto etlSet = etl::static_set<FloatType, 128> { begin(vec), end(vec) };
-    auto stdSet = std::set<FloatType> { begin(vec), end(vec) };
+    auto etlSet = etl::static_set<FloatType, 128> {begin(vec), end(vec)};
+    auto stdSet = std::set<FloatType> {begin(vec), end(vec)};
     if (etlSet.size() != stdSet.size()) { return 1; }
 
     etl::sort(begin(vec), end(vec));
@@ -119,7 +119,7 @@ template <typename IntType>
     auto etlString = etl::static_string<128> {};
     etl::copy(chars.begin(), chars.end(), etl::back_inserter(etlString));
 
-    auto stdString = std::string { chars.begin(), chars.end() };
+    auto stdString = std::string {chars.begin(), chars.end()};
 
     if (etlString.size() != stdString.size()) { return 1; }
     if (etl::strlen(chars.data()) != std::strlen(chars.data())) { return 1; }
@@ -135,7 +135,7 @@ template <typename IntType>
 extern "C" auto LLVMFuzzerTestOneInput(etl::uint8_t const* data, etl::size_t size) -> int
 {
     if (size == 0) { return 0; }
-    auto p = FuzzedDataProvider { data, size };
+    auto p = FuzzedDataProvider {data, size};
 
     RUN(test_sort_integers<etl::uint8_t>(p));
     RUN(test_sort_integers<etl::uint16_t>(p));

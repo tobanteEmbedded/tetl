@@ -13,8 +13,8 @@ using etl::size_t;
 using etl::string_view;
 #endif
 
-auto ctor_0(char const* str) -> string { return string { str }; }
-auto ctor_1(string_view str) -> string { return string { str }; }
+auto ctor_0(char const* str) -> string { return string {str}; }
+auto ctor_1(string_view str) -> string { return string {str}; }
 
 auto at(string_view str, size_t index) { return str[index]; }
 

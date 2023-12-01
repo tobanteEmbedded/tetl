@@ -18,7 +18,7 @@ struct half {
     constexpr half(binary_t /*tag*/, storage_type bits);
 
 private:
-    storage_type _bits { 0 };
+    storage_type _bits {0};
 };
 
 [[nodiscard]] constexpr auto isfinite(half arg) noexcept -> bool;
@@ -29,13 +29,13 @@ private:
 
 // IMPL
 namespace detail {
-inline constexpr etl::half::storage_type exp_mask { 0b0111'1100'0000'0000 };
-inline constexpr etl::half::storage_type man_mask { 0b0000'0011'1111'1111 };
-inline constexpr etl::half::storage_type inf_mask { 0b0111'1111'1111'1111 };
-inline constexpr etl::half::storage_type sign_mask { 0b1000'0000'0000'0000 };
+inline constexpr etl::half::storage_type exp_mask {0b0111'1100'0000'0000};
+inline constexpr etl::half::storage_type man_mask {0b0000'0011'1111'1111};
+inline constexpr etl::half::storage_type inf_mask {0b0111'1111'1111'1111};
+inline constexpr etl::half::storage_type sign_mask {0b1000'0000'0000'0000};
 } // namespace detail
 
-constexpr half::half(binary_t /*tag*/, half::storage_type bits) : _bits { bits }
+constexpr half::half(binary_t /*tag*/, half::storage_type bits) : _bits {bits}
 {
     // [tobi] This needs to be here, or clang will complain about an unused
     // member. All free functions use bit_cast to access the underlying bits of

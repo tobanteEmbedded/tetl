@@ -21,7 +21,7 @@ namespace etl {
 
 struct bad_function_call : exception {
     constexpr bad_function_call() = default;
-    constexpr explicit bad_function_call(char const* what) : exception { what } { }
+    constexpr explicit bad_function_call(char const* what) : exception {what} { }
 };
 
 namespace detail {
@@ -45,28 +45,28 @@ struct inplace_func_vtable {
     const destructor_ptr_t destructor_ptr;
 
     explicit constexpr inplace_func_vtable()
-        : invoke_ptr { [](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
+        : invoke_ptr {[](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
             etl::raise<etl::bad_function_call>("empty inplace_func_vtable");
-        } }
-        , copy_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {} }
-        , relocate_ptr { [](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {} }
-        , destructor_ptr { [](storage_ptr_t /*p*/) -> void {} }
+        }}
+        , copy_ptr {[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
+        , relocate_ptr {[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
+        , destructor_ptr {[](storage_ptr_t /*p*/) -> void {}}
     {
     }
 
     template <typename C>
     explicit constexpr inplace_func_vtable(wrapper<C> /*ignore*/)
-        : invoke_ptr { [](storage_ptr_t storagePtr, Args&&... args) -> R {
+        : invoke_ptr {[](storage_ptr_t storagePtr, Args&&... args) -> R {
             return (*static_cast<C*>(storagePtr))(static_cast<Args&&>(args)...);
-        } }
-        , copy_ptr { [](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C { (*static_cast<C*>(srcPtr)) };
-        } }
-        , relocate_ptr { [](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C { etl::move(*static_cast<C*>(srcPtr)) };
+        }}
+        , copy_ptr {[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C {(*static_cast<C*>(srcPtr))};
+        }}
+        , relocate_ptr {[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C {etl::move(*static_cast<C*>(srcPtr))};
             static_cast<C*>(srcPtr)->~C();
-        } }
-        , destructor_ptr { [](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); } }
+        }}
+        , destructor_ptr {[](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); }}
     {
     }
 
@@ -115,7 +115,7 @@ public:
     using alignment = integral_constant<size_t, Alignment>;
 
     /// \brief Creates an empty function.
-    inplace_function() noexcept : _vtable { addressof(detail::empty_vtable<R, Args...>) } { }
+    inplace_function() noexcept : _vtable {addressof(detail::empty_vtable<R, Args...>)} { }
 
     template <typename T, typename C = decay_t<T>>
         requires(!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>)
@@ -127,15 +127,15 @@ public:
         static_assert(Alignment % alignof(C) == 0,
             "inplace_function cannot be constructed from object with this (large) alignment");
 
-        static constexpr vtable_t const vt { detail::wrapper<C> {} };
+        static constexpr vtable_t const vt {detail::wrapper<C> {}};
         _vtable = addressof(vt);
 
-        ::new (addressof(_storage)) C { forward<T>(closure) };
+        ::new (addressof(_storage)) C {forward<T>(closure)};
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align> const& other)
-        : inplace_function { other._vtable, other._vtable->copy_ptr, addressof(other._storage) }
+        : inplace_function {other._vtable, other._vtable->copy_ptr, addressof(other._storage)}
     {
         static_assert(
             detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
@@ -143,7 +143,7 @@ public:
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align>&& other) noexcept
-        : inplace_function { other._vtable, other._vtable->relocate_ptr, addressof(other._storage) }
+        : inplace_function {other._vtable, other._vtable->relocate_ptr, addressof(other._storage)}
     {
         static_assert(
             detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
@@ -151,15 +151,15 @@ public:
     }
 
     /// \brief Creates an empty function.
-    inplace_function(nullptr_t /*ignore*/) noexcept : _vtable { addressof(detail::empty_vtable<R, Args...>) } { }
+    inplace_function(nullptr_t /*ignore*/) noexcept : _vtable {addressof(detail::empty_vtable<R, Args...>)} { }
 
-    inplace_function(inplace_function const& other) : _vtable { other._vtable }
+    inplace_function(inplace_function const& other) : _vtable {other._vtable}
     {
         _vtable->copy_ptr(addressof(_storage), addressof(other._storage));
     }
 
     inplace_function(inplace_function&& other) noexcept
-        : _vtable { exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>)) }
+        : _vtable {exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>))}
     {
         _vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
     }
@@ -212,7 +212,7 @@ public:
 private:
     inplace_function(
         vtable_ptr_t vtable, typename vtable_t::process_ptr_t process, typename vtable_t::storage_ptr_t storage)
-        : _vtable { vtable }
+        : _vtable {vtable}
     {
         process(addressof(_storage), storage);
     }

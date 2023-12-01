@@ -15,8 +15,8 @@ constexpr auto test() -> bool
 {
     // no overlap
     {
-        auto a = etl::array { T(0), T(0), T(0) };
-        auto b = etl::array { T(1), T(1), T(1) };
+        auto a = etl::array {T(0), T(0), T(0)};
+        auto b = etl::array {T(1), T(1), T(1)};
         assert((etl::is_sorted(begin(a), end(a))));
         assert((etl::is_sorted(begin(b), end(b))));
 
@@ -28,8 +28,8 @@ constexpr auto test() -> bool
 
     // with overlap
     {
-        auto a = etl::array { T(0), T(1), T(2) };
-        auto b = etl::array { T(1), T(2), T(3) };
+        auto a = etl::array {T(0), T(1), T(2)};
+        auto b = etl::array {T(1), T(2), T(3)};
         assert((etl::is_sorted(begin(a), end(a))));
         assert((etl::is_sorted(begin(b), end(b))));
 

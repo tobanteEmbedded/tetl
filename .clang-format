@@ -12,6 +12,7 @@ AllowShortLoopsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
 ColumnLimit: 120
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
+Cpp11BracedListStyle: true
 FixNamespaceComments: true
 IndentPPDirectives: BeforeHash
 Language: Cpp

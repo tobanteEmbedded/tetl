@@ -17,21 +17,21 @@ auto test() -> bool
     stack_type s {};
     assert(s.empty());
 
-    s.push(etl::make_pair(1, T { 2 }));
-    s.push(etl::make_pair(2, T { 6 }));
-    s.push(etl::make_pair(3, T { 51 }));
+    s.push(etl::make_pair(1, T {2}));
+    s.push(etl::make_pair(2, T {6}));
+    s.push(etl::make_pair(3, T {51}));
     assert(s.size() == 3);
-    assert(s.top().second == T { 51 });
+    assert(s.top().second == T {51});
     assert(s.size() == 3);
 
     s.pop();
-    assert(etl::as_const(s).top().second == T { 6 });
+    assert(etl::as_const(s).top().second == T {6});
     assert(s.size() == 2);
 
-    s.emplace(42, T { 1 });
+    s.emplace(42, T {1});
     assert(s.size() == 3);
     assert(s.top().first == 42);
-    assert(s.top().second == T { 1 });
+    assert(s.top().second == T {1});
 
     auto sCopy = s;
     assert(sCopy == s);

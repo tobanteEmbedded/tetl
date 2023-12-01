@@ -80,7 +80,7 @@ struct span {
     /// and the conversion from etl::iter_reference_t<It> to element_type is at
     /// most a qualification conversion.
     template <typename It>
-    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data { first }, _size { count }
+    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data {first}, _size {count}
     {
     }
 
@@ -90,25 +90,25 @@ struct span {
 
     /// \brief Constructs a span. From a c style array.
     template <size_t N>
-    constexpr span(element_type (&arr)[N]) noexcept : _data { &arr[0] }, _size { N }
+    constexpr span(element_type (&arr)[N]) noexcept : _data {&arr[0]}, _size {N}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size>.
     template <typename U, size_t N>
-    constexpr span(array<U, N>& arr) noexcept : _data { arr.data() }, _size { arr.size() }
+    constexpr span(array<U, N>& arr) noexcept : _data {arr.data()}, _size {arr.size()}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size> const.
     template <typename U, size_t N>
-    constexpr span(array<U, N> const& arr) noexcept : _data { arr.data() }, _size { arr.size() }
+    constexpr span(array<U, N> const& arr) noexcept : _data {arr.data()}, _size {arr.size()}
     {
     }
 
     /// \brief Constructs a span.
     template <typename R>
-    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data { r.data() }, _size { r.size() }
+    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data {r.data()}, _size {r.size()}
     {
     }
 
@@ -172,7 +172,7 @@ struct span {
     [[nodiscard]] constexpr auto first() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return span<element_type, Count> { data(), static_cast<size_type>(Count) };
+        return span<element_type, Count> {data(), static_cast<size_type>(Count)};
     }
 
     /// \brief Obtains a span that is a view over the first Count elements of
@@ -180,7 +180,7 @@ struct span {
     [[nodiscard]] constexpr auto first(size_type count) const -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(count > size()));
-        return { data(), static_cast<size_type>(count) };
+        return {data(), static_cast<size_type>(count)};
     }
 
     /// \brief Obtains a span that is a view over the last Count elements of
@@ -189,7 +189,7 @@ struct span {
     [[nodiscard]] constexpr auto last() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return span<element_type, Count> { data() + (size() - Count), static_cast<size_type>(Count) };
+        return span<element_type, Count> {data() + (size() - Count), static_cast<size_type>(Count)};
     }
 
     /// \brief Obtains a span that is a view over the last Count elements of
@@ -197,7 +197,7 @@ struct span {
     [[nodiscard]] constexpr auto last(size_type count) const -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(count > size()));
-        return { data() + (size() - count), static_cast<size_type>(count) };
+        return {data() + (size() - count), static_cast<size_type>(count)};
     }
 
     /// \brief Obtains a span that is a view over the Count elements of this
@@ -210,7 +210,7 @@ struct span {
         static_assert(!(Offset > Extent));
         static_assert(!(Count == dynamic_extent || Count <= Extent - Offset)); // NOLINT(*-simplify-boolean-expr)
         auto const sz = Count == dynamic_extent ? size() - Offset : Count;
-        return { data() + Offset, static_cast<size_type>(sz) };
+        return {data() + Offset, static_cast<size_type>(sz)};
     }
 
     /// \brief Obtains a span that is a view over the Count elements of this
@@ -223,7 +223,7 @@ struct span {
         TETL_ASSERT(!(offset > size()));
         TETL_ASSERT(!(count != dynamic_extent && count > size() - offset));
         auto const sz = count == dynamic_extent ? size() - offset : count;
-        return { data() + offset, static_cast<size_type>(sz) };
+        return {data() + offset, static_cast<size_type>(sz)};
     }
 
 private:

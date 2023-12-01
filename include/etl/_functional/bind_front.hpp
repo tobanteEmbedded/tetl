@@ -87,8 +87,8 @@ private:
 template <typename Func, typename... BoundArgs>
 constexpr auto bind_front(Func&& func, BoundArgs&&... boundArgs)
 {
-    return detail::bind_front_t<decay_t<Func>, unwrap_ref_decay_t<BoundArgs>...> { forward<Func>(func),
-        forward<BoundArgs>(boundArgs)... };
+    return detail::bind_front_t<decay_t<Func>, unwrap_ref_decay_t<BoundArgs>...> {
+        forward<Func>(func), forward<BoundArgs>(boundArgs)...};
 }
 
 } // namespace etl

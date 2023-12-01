@@ -22,7 +22,7 @@ private:
     using This       = string_constant<CharT, chars...>;
     using StringView = etl::basic_string_view<CharT>;
 
-    static constexpr etl::array<CharT, sizeof...(chars)> storage { chars... };
+    static constexpr etl::array<CharT, sizeof...(chars)> storage {chars...};
 };
 
 template <typename T, T... chars>

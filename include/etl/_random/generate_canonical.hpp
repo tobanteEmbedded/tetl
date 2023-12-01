@@ -19,10 +19,10 @@ namespace detail {
     if (bits == 0 || (gMax == numeric_limits<uint64_t>::max() && gMin == 0)) { return 1; }
 
     auto const range  = (gMax - gMin) + 1;
-    auto const target = ~uint64_t { 0 } >> (64 - bits);
+    auto const target = ~uint64_t {0} >> (64 - bits);
 
-    auto product = uint64_t { 1 };
-    auto ceiling = int { 0 };
+    auto product = uint64_t {1};
+    auto ceiling = int {0};
 
     while (product <= target) {
         ++ceiling;
@@ -42,11 +42,11 @@ template <typename Real, size_t Bits, typename RNG>
     constexpr auto digits  = static_cast<size_t>(numeric_limits<Real>::digits);
     constexpr auto minBits = static_cast<int>(digits < Bits ? digits : Bits);
 
-    auto const r = (static_cast<Real>(RNG::max()) - static_cast<Real>(RNG::min())) + Real { 1 };
+    auto const r = (static_cast<Real>(RNG::max()) - static_cast<Real>(RNG::min())) + Real {1};
     auto const k = detail::generate_canonical_iterations(minBits, RNG::min(), RNG::max());
 
-    auto result = Real { 0 };
-    auto factor = Real { 1 };
+    auto result = Real {0};
+    auto factor = Real {1};
 
     for (int i = 0; i < k; ++i) {
         result += (static_cast<Real>(g()) - RNG::min()) * factor;

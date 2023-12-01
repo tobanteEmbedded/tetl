@@ -11,7 +11,7 @@
 #include <stdlib.h> // for EXIT_SUCCESS
 
 struct Person {
-    constexpr Person(int a, int e) noexcept : age { a }, experience { e } { }
+    constexpr Person(int a, int e) noexcept : age {a}, experience {e} { }
     int age {};
     int experience {};
 };
@@ -30,7 +30,7 @@ auto main() -> int
     TETL_ASSERT(people.capacity() == 32);
 
     // You can push_back/emplace_back into the vector
-    people.push_back(Person { 20, 0 });
+    people.push_back(Person {20, 0});
     TETL_ASSERT(people.size() == 1);
     TETL_ASSERT(people.back().age == 20);
 

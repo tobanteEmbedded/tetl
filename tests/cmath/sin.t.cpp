@@ -11,7 +11,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::sin(short { 0 }) == 0.0);
+    assert(etl::sin(short {0}) == 0.0);
     assert(etl::sinl(0) == 0.0L);
     assert(etl::sin(T(0)) == T(0));
 

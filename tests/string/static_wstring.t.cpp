@@ -19,7 +19,7 @@ constexpr auto test() -> bool
     str = str + wchar_t('t');
     assert(str == L"test");
 
-    str = str + T { L"_foo" };
+    str = str + T {L"_foo"};
     assert(str == L"test_foo");
 
     str = L"__" + str;

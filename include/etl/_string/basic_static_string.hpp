@@ -117,13 +117,13 @@ public:
 
     /// Constructs the string with a substring [pos, pos+count) of other.
     constexpr basic_static_string(basic_static_string const& other, size_type pos, size_type count)
-        : basic_static_string { other.substr(pos, count) }
+        : basic_static_string {other.substr(pos, count)}
     {
     }
 
     /// Constructs the string with a substring [pos, other.size()).
     constexpr basic_static_string(basic_static_string const& other, size_type pos)
-        : basic_static_string { other.substr(pos, other.size()) }
+        : basic_static_string {other.substr(pos, other.size())}
     {
     }
 
@@ -143,7 +143,7 @@ public:
     template <typename T>
         requires(view_and_not_char_ptr<T>)
     explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
-        : basic_static_string { basic_string_view<value_type, traits_type> { t }.substr(pos, n) }
+        : basic_static_string {basic_string_view<value_type, traits_type> {t}.substr(pos, n)}
     {
     }
 
@@ -189,7 +189,7 @@ public:
     /// Replaces the contents with count copies of character ch.
     constexpr auto assign(size_type count, value_type ch) noexcept -> basic_static_string&
     {
-        (*this) = basic_static_string { count, ch };
+        (*this) = basic_static_string {count, ch};
         return *this;
     }
 
@@ -220,7 +220,7 @@ public:
     /// [ s, s + count ). This range can contain null characters.
     constexpr auto assign(const_pointer s, size_type count) noexcept -> basic_static_string&
     {
-        *this = basic_static_string { s, count };
+        *this = basic_static_string {s, count};
         return *this;
     }
 
@@ -228,7 +228,7 @@ public:
     /// string pointed to by s.
     constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
     {
-        *this = basic_static_string { s, traits_type::length(s) };
+        *this = basic_static_string {s, traits_type::length(s)};
         return *this;
     }
 
@@ -238,7 +238,7 @@ public:
         requires(detail::InputIterator<InputIt>)
     constexpr auto assign(InputIt first, InputIt last) noexcept -> basic_static_string&
     {
-        *this = basic_static_string { first, last };
+        *this = basic_static_string {first, last};
         return *this;
     }
 
@@ -248,7 +248,7 @@ public:
         requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t) noexcept -> basic_static_string&
     {
-        auto tmp = basic_static_string { basic_static_string { t } };
+        auto tmp = basic_static_string {basic_static_string {t}};
         *this    = tmp;
         return *this;
     }
@@ -260,7 +260,7 @@ public:
         requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
-        auto tmp = basic_static_string { basic_static_string { t, pos, count } };
+        auto tmp = basic_static_string {basic_static_string {t, pos, count}};
         *this    = tmp;
         return *this;
     }
@@ -1160,7 +1160,7 @@ public:
     [[nodiscard]] constexpr auto find_last_of(basic_static_string const& str, size_type pos = 0) const noexcept
         -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_of(str, pos);
     }
 
@@ -1170,7 +1170,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_of(c, pos);
     }
 
@@ -1180,7 +1180,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos, size_type count) const -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_of(s, pos, count);
     }
 
@@ -1190,7 +1190,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_of(s, pos);
     }
 
@@ -1201,7 +1201,7 @@ public:
     [[nodiscard]] constexpr auto find_last_not_of(basic_static_string const& str, size_type pos = 0) const noexcept
         -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(str, pos);
     }
 
@@ -1211,7 +1211,7 @@ public:
     /// returned.
     [[nodiscard]] constexpr auto find_last_not_of(value_type c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(c, pos);
     }
 
@@ -1222,7 +1222,7 @@ public:
     [[nodiscard]] constexpr auto find_last_not_of(value_type const* s, size_type pos, size_type count) const
         -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(s, pos, count);
     }
 
@@ -1232,28 +1232,28 @@ public:
     /// returned.
     [[nodiscard]] constexpr auto find_last_not_of(value_type const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(s, pos);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(etl::basic_string_view<CharT, Traits> sv) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(sv);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT c) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(c);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT const* s) const -> bool
     {
-        auto view = basic_string_view<value_type> { *this };
+        auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(s);
     }
 
@@ -1342,7 +1342,7 @@ template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
 [[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity1, Traits> const& lhs,
     basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity1, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity1, Traits> { lhs };
+    auto str = basic_static_string<CharT, Capacity1, Traits> {lhs};
     str.append(rhs);
     return str;
 }
@@ -1353,7 +1353,7 @@ template <typename CharT, typename Traits, size_t Capacity>
 [[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs,
     CharT const* rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
     str.append(rhs);
     return str;
 }
@@ -1364,7 +1364,7 @@ template <typename CharT, typename Traits, size_t Capacity>
 [[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT rhs) noexcept
     -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
     str.append(1, rhs);
     return str;
 }
@@ -1375,7 +1375,7 @@ template <typename CharT, typename Traits, size_t Capacity>
 [[nodiscard]] constexpr auto operator+(CharT const* lhs,
     basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> { lhs };
+    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
     str.append(rhs);
     return str;
 }
@@ -1386,7 +1386,7 @@ template <typename CharT, typename Traits, size_t Capacity>
 [[nodiscard]] constexpr auto operator+(CharT lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
     -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> { 1, lhs };
+    auto str = basic_static_string<CharT, Capacity, Traits> {1, lhs};
     str.append(rhs);
     return str;
 }

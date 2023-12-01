@@ -28,7 +28,7 @@ static auto test_all() -> bool
     {
         rtos::queue<int, 1> q1 {};
         // stub always returns false
-        auto i = int { 0 };
+        auto i = int {0};
         assert((q1.receive(i, 0) == false));
     }
     {

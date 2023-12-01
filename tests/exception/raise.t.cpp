@@ -13,7 +13,7 @@ auto main() -> int
         etl::raise<etl::exception>("should fail");
         assert(false);
     } catch (etl::exception const& e) {
-        assert(e.what() == etl::string_view { "should fail" });
+        assert(e.what() == etl::string_view {"should fail"});
     }
 #endif
     return 0;

@@ -17,10 +17,10 @@ constexpr auto test() -> bool
     // c array
     {
         T source[4] = {};
-        etl::fill(etl::begin(source), etl::end(source), T { 42 });
+        etl::fill(etl::begin(source), etl::end(source), T {42});
 
         auto const all42
-            = etl::all_of(etl::begin(source), etl::end(source), [](auto const& val) { return val == T { 42 }; });
+            = etl::all_of(etl::begin(source), etl::end(source), [](auto const& val) { return val == T {42}; });
 
         assert(all42);
     }
@@ -28,9 +28,9 @@ constexpr auto test() -> bool
     // etl::array
     {
         auto source = etl::array<T, 4> {};
-        etl::fill(begin(source), end(source), T { 42 });
+        etl::fill(begin(source), end(source), T {42});
 
-        auto const all42 = etl::all_of(begin(source), end(source), [](auto const& val) { return val == T { 42 }; });
+        auto const all42 = etl::all_of(begin(source), end(source), [](auto const& val) { return val == T {42}; });
 
         assert(all42);
     }
@@ -41,21 +41,21 @@ constexpr auto test() -> bool
         using etl::end;
 
         T t[4] = {};
-        etl::fill_n(begin(t), 4, T { 42 });
+        etl::fill_n(begin(t), 4, T {42});
         assert(all_of(begin(t), end(t), [](auto v) { return v == T(42); }));
     }
 
     // etl::array
     {
         auto tc0 = etl::array<T, 4> {};
-        assert(etl::fill_n(begin(tc0), 0, T { 42 }) == begin(tc0));
+        assert(etl::fill_n(begin(tc0), 0, T {42}) == begin(tc0));
 
         auto t1 = etl::array<T, 4> {};
-        assert(etl::fill_n(begin(t1), 4, T { 42 }) == end(t1));
+        assert(etl::fill_n(begin(t1), 4, T {42}) == end(t1));
         assert(all_of(begin(t1), end(t1), [](auto v) { return v == T(42); }));
 
         auto tc2   = etl::array<T, 4> {};
-        auto* res2 = etl::fill_n(begin(tc2), 2, T { 42 });
+        auto* res2 = etl::fill_n(begin(tc2), 2, T {42});
         assert(res2 != begin(tc2));
         assert(res2 != end(tc2));
         assert(tc2[0] == T(42));

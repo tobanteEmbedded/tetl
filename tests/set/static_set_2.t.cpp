@@ -18,7 +18,7 @@ auto test() -> bool // NOLINT(readability-function-size)
 {
 
     {
-        auto data = etl::array { T(1), T(2), T(3), T(4) };
+        auto data = etl::array {T(1), T(2), T(3), T(4)};
         auto set  = etl::static_set<T, 4>(begin(data), end(data));
 
         assert(set.contains(T(3)));
@@ -98,8 +98,8 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     // "same size"
     {
-        auto lhsData = etl::array { T(1), T(2), T(3) };
-        auto rhsData = etl::array { T(4), T(5), T(6) };
+        auto lhsData = etl::array {T(1), T(2), T(3)};
+        auto rhsData = etl::array {T(4), T(5), T(6)};
         auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
         auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
         assert(lhs.size() == rhs.size());
@@ -119,8 +119,8 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     // "different size"
     {
-        auto lhsData = etl::array { T(1), T(2), T(3) };
-        auto rhsData = etl::array { T(4), T(5) };
+        auto lhsData = etl::array {T(1), T(2), T(3)};
+        auto rhsData = etl::array {T(4), T(5)};
         auto lhs     = etl::static_set<T, 4>(begin(lhsData), end(lhsData));
         auto rhs     = etl::static_set<T, 4>(begin(rhsData), end(rhsData));
         assert(lhs.size() == 3);
@@ -150,18 +150,18 @@ auto test() -> bool // NOLINT(readability-function-size)
 
     // "full"
     {
-        auto data = etl::array { T(1), T(2), T(3), T(4) };
-        auto set  = etl::static_set<T, 4> { begin(data), end(data) };
-        assert(set.lower_bound(T { 1 }) == set.begin());
-        assert((set.upper_bound(T { 1 }) == etl::next(set.begin(), 1)));
+        auto data = etl::array {T(1), T(2), T(3), T(4)};
+        auto set  = etl::static_set<T, 4> {begin(data), end(data)};
+        assert(set.lower_bound(T {1}) == set.begin());
+        assert((set.upper_bound(T {1}) == etl::next(set.begin(), 1)));
     }
 
     {
         using namespace etl::literals::string_view_literals;
         using str_t = etl::static_string<32>;
 
-        auto data = etl::array { str_t { "test" }, str_t { "test" }, str_t { "test" } };
-        auto set  = etl::static_set<str_t, 4> { begin(data), end(data) };
+        auto data = etl::array {str_t {"test"}, str_t {"test"}, str_t {"test"}};
+        auto set  = etl::static_set<str_t, 4> {begin(data), end(data)};
         assert(set.lower_bound("test") == set.begin());
         assert(set.upper_bound("test") == etl::next(set.begin(), 1));
     }
@@ -184,7 +184,7 @@ auto test() -> bool // NOLINT(readability-function-size)
 
         // "equal"
         {
-            auto data = etl::array { T(1), T(2), T(3) };
+            auto data = etl::array {T(1), T(2), T(3)};
             auto lhs  = etl::static_set<T, 4>(begin(data), end(data));
             auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
 
@@ -201,7 +201,7 @@ auto test() -> bool // NOLINT(readability-function-size)
 
         // "not equal"
         {
-            auto data = etl::array { T(1), T(2), T(3) };
+            auto data = etl::array {T(1), T(2), T(3)};
             auto lhs  = etl::static_set<T, 4>(begin(data), end(data) - 1);
             auto rhs  = etl::static_set<T, 4>(begin(data), end(data));
 

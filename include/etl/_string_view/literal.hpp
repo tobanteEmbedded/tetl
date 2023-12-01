@@ -11,7 +11,7 @@ namespace etl::inline literals::inline string_view_literals {
 /// etl::string_view{str, len}
 [[nodiscard]] constexpr auto operator""_sv(char const* str, etl::size_t len) noexcept -> etl::string_view
 {
-    return { str, len };
+    return {str, len};
 }
 
 } // namespace etl::inline literals::inline string_view_literals

@@ -35,17 +35,17 @@ constexpr auto test() -> bool
 
     // no match
     {
-        auto const data = etl::array { T(0), T(1), T(2) };
+        auto const data = etl::array {T(0), T(1), T(2)};
         auto const* res = etl::adjacent_find(begin(data), end(data));
         assert(res == end(data));
     }
 
     // match
     {
-        auto const d1 = etl::array { T(0), T(0), T(2) };
+        auto const d1 = etl::array {T(0), T(0), T(2)};
         assert(etl::adjacent_find(begin(d1), end(d1)) == begin(d1));
 
-        auto const d2 = etl::array { T(0), T(2), T(2) };
+        auto const d2 = etl::array {T(0), T(2), T(2)};
         assert(etl::adjacent_find(begin(d2), end(d2)) == begin(d2) + 1);
     }
 
@@ -88,7 +88,7 @@ constexpr auto test() -> bool
     // empty range
     {
         auto tc   = etl::static_vector<T, 16> {};
-        auto s    = etl::array { T(2), T(42) };
+        auto s    = etl::array {T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc));
     }
@@ -103,23 +103,23 @@ constexpr auto test() -> bool
 
     // no matches
     {
-        auto tc   = etl::array { T(0), T(1) };
-        auto s    = etl::array { T(2), T(42) };
+        auto tc   = etl::array {T(0), T(1)};
+        auto s    = etl::array {T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc));
     }
 
     // same ranges
     {
-        auto tc   = etl::array { T(0), T(1) };
+        auto tc   = etl::array {T(0), T(1)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
         assert(res == begin(tc));
     }
 
     // matches
     {
-        auto tc   = etl::array { T(0), T(1), T(42) };
-        auto s    = etl::array { T(2), T(42) };
+        auto tc   = etl::array {T(0), T(1), T(42)};
+        auto s    = etl::array {T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc) - 1);
         assert(*res == T(42));

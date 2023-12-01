@@ -13,7 +13,7 @@ static auto test() -> bool
         test_mutex mtx {};
         assert(!mtx.is_locked());
         {
-            etl::lock_guard lock { mtx };
+            etl::lock_guard lock {mtx};
             assert(mtx.is_locked());
             etl::ignore_unused(lock);
         }
@@ -25,7 +25,7 @@ static auto test() -> bool
         test_mutex mtx {};
         mtx.lock();
         {
-            etl::lock_guard lock { mtx, etl::adopt_lock };
+            etl::lock_guard lock {mtx, etl::adopt_lock};
             assert(mtx.is_locked());
             etl::ignore_unused(lock);
         }

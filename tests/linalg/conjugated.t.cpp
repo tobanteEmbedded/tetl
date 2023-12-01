@@ -11,11 +11,11 @@
 template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_conjugated_real() -> bool
 {
-    auto const data = etl::array<T, 4> { T(2), T(2), T(2), T(2) };
+    auto const data = etl::array<T, 4> {T(2), T(2), T(2), T(2)};
 
     {
         // 1D static extents
-        auto const vec = etl::mdspan<T const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec = etl::mdspan<T const, etl::extents<IndexType, 4>> {data.data()};
 
         auto const conjugated = etl::linalg::conjugated(vec);
         assert(conjugated(0) == data[0]);
@@ -32,7 +32,7 @@ template <typename T, typename IndexType>
 
     {
         // 1D dynamic extents
-        auto const vec        = etl::mdspan<T const, etl::dextents<IndexType, 1>> { data.data(), 4 };
+        auto const vec        = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
         auto const conjugated = etl::linalg::conjugated(vec);
         assert(conjugated(0) == data[0]);
         assert(conjugated(1) == data[1]);
@@ -48,7 +48,7 @@ template <typename T, typename IndexType>
 
     {
         // 2D static extents
-        auto const vec        = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> { data.data() };
+        auto const vec        = etl::mdspan<T const, etl::extents<IndexType, 2, 2>> {data.data()};
         auto const conjugated = etl::linalg::conjugated(vec);
         assert(conjugated(0, 0) == data[0]);
         assert(conjugated(0, 1) == data[1]);
@@ -69,15 +69,15 @@ template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_conjugated_complex() -> bool
 {
     auto const data = etl::array {
-        etl::complex { T(0), T(0) },
-        etl::complex { T(1), T(1) },
-        etl::complex { T(2), T(2) },
-        etl::complex { T(3), T(3) },
+        etl::complex {T(0), T(0)},
+        etl::complex {T(1), T(1)},
+        etl::complex {T(2), T(2)},
+        etl::complex {T(3), T(3)},
     };
 
     {
         // 1D static extents
-        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 4>> { data.data() };
+        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 4>> {data.data()};
         auto const conjugated       = etl::linalg::conjugated(vec);
         auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 
@@ -94,8 +94,8 @@ template <typename T, typename IndexType>
 
     {
         // 1D dynamic extents
-        auto const vec        = etl::mdspan<etl::complex<T> const, etl::dextents<IndexType, 1>> { data.data(), 4 };
-        auto const conjugated = etl::linalg::conjugated(vec);
+        auto const vec              = etl::mdspan<etl::complex<T> const, etl::dextents<IndexType, 1>> {data.data(), 4};
+        auto const conjugated       = etl::linalg::conjugated(vec);
         auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 
         assert(etl::complex<T>(conjugated(0)) == etl::conj(data[0]));
@@ -111,7 +111,7 @@ template <typename T, typename IndexType>
 
     {
         // 2D static extents
-        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 2, 2>> { data.data() };
+        auto const vec              = etl::mdspan<etl::complex<T> const, etl::extents<IndexType, 2, 2>> {data.data()};
         auto const conjugated       = etl::linalg::conjugated(vec);
         auto const doubleConjugated = etl::linalg::conjugated(conjugated);
 

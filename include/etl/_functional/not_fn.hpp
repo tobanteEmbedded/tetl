@@ -47,7 +47,7 @@ struct not_fn_t {
 template <typename F>
 constexpr auto not_fn(F&& f) -> detail::not_fn_t<decay_t<F>>
 {
-    return { forward<F>(f) };
+    return {forward<F>(f)};
 }
 
 } // namespace etl

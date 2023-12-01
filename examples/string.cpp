@@ -34,7 +34,7 @@ auto main() -> int
     TETL_ASSERT(str.size() == 5);
     TETL_ASSERT(str == "Hello");
 
-    auto other = etl::string_view { " World" };
+    auto other = etl::string_view {" World"};
     str.append(other, 0);
     TETL_ASSERT(!str.empty());
     TETL_ASSERT(str.size() == 11);

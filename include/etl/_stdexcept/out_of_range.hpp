@@ -9,7 +9,7 @@ namespace etl {
 
 struct out_of_range : logic_error {
     constexpr out_of_range() = default;
-    constexpr explicit out_of_range(char const* what) : logic_error { what } { }
+    constexpr explicit out_of_range(char const* what) : logic_error {what} { }
 };
 
 } // namespace etl

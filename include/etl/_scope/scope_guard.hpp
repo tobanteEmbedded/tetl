@@ -11,12 +11,11 @@ template <typename FuncT, typename PolicyT>
 struct scope_guard {
 public:
     template <typename Functor>
-    explicit constexpr scope_guard(Functor&& f) : _func { etl::forward<Functor>(f) }
+    explicit constexpr scope_guard(Functor&& f) : _func {etl::forward<Functor>(f)}
     {
     }
 
-    constexpr scope_guard(scope_guard&& rhs) noexcept
-        : _func { etl::move(rhs._func) }, _policy { etl::move(rhs._policy) }
+    constexpr scope_guard(scope_guard&& rhs) noexcept : _func {etl::move(rhs._func)}, _policy {etl::move(rhs._policy)}
     {
     }
 
@@ -38,7 +37,7 @@ private:
 
 struct scope_exit_impl {
     constexpr scope_exit_impl() = default;
-    constexpr scope_exit_impl(scope_exit_impl&& rhs) noexcept : should_execute { rhs.should_execute } { rhs.release(); }
+    constexpr scope_exit_impl(scope_exit_impl&& rhs) noexcept : should_execute {rhs.should_execute} { rhs.release(); }
     constexpr auto release() noexcept -> void { should_execute = false; }
     explicit constexpr operator bool() const noexcept { return should_execute; }
     bool should_execute = true;

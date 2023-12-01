@@ -28,8 +28,8 @@ struct function_ref<R(Args...)> {
 private:
     using internal_signature_t = R (*)(void*, Args...);
 
-    void* _obj { nullptr };
-    internal_signature_t _callable { nullptr };
+    void* _obj {nullptr};
+    internal_signature_t _callable {nullptr};
 
 public:
     /// \brief Constructs a function_ref referring to f.
@@ -38,11 +38,11 @@ public:
     function_ref(F&& f) noexcept
         : _obj(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
         , _callable {
-            +[](void* obj, Args... args) -> R {
-                auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
-                return invoke(*func, forward<Args>(args)...);
-            },
-        }
+              +[](void* obj, Args... args) -> R {
+                  auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
+                  return invoke(*func, forward<Args>(args)...);
+              },
+          }
     {
     }
 

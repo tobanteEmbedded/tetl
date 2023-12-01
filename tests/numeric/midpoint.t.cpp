@@ -63,7 +63,7 @@ template <typename T>
 constexpr auto test_pointer() -> bool
 {
     {
-        T data[] = { T(1), T(2), T(3), T(4) };
+        T data[] = {T(1), T(2), T(3), T(4)};
         assert(*etl::midpoint(&data[0], &data[2]) == 2);
         assert(*etl::midpoint(&data[2], &data[0]) == 2);
         assert(*etl::midpoint(&data[0], &data[2]) == 2);
@@ -71,7 +71,7 @@ constexpr auto test_pointer() -> bool
     }
 
     {
-        T data[] = { T(1), T(2), T(3), T(4), T(5) };
+        T data[] = {T(1), T(2), T(3), T(4), T(5)};
         assert(*etl::midpoint(&data[0], &data[3]) == T(2));
         assert(*etl::midpoint(&data[0], &data[3]) == T(2));
 

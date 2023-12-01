@@ -21,8 +21,8 @@ enum struct ascii_to_integer_error : etl::uint8_t {
 
 template <typename IntegerType>
 struct ascii_to_integer_result {
-    char const* end { nullptr };
-    ascii_to_integer_error error { ascii_to_integer_error::none };
+    char const* end {nullptr};
+    ascii_to_integer_error error {ascii_to_integer_error::none};
     IntegerType value;
 };
 
@@ -100,8 +100,8 @@ enum struct int_to_ascii_error : etl::uint8_t {
 };
 
 struct int_to_ascii_result {
-    char* end { nullptr };
-    int_to_ascii_error error { int_to_ascii_error::none };
+    char* end {nullptr};
+    int_to_ascii_error error {int_to_ascii_error::none};
 };
 
 template <typename Int, bool TerminateWithNull = true>
@@ -124,11 +124,11 @@ template <typename Int, bool TerminateWithNull = true>
     etl::size_t i = 0;
     if (num == 0) {
         if (length < (1 + static_cast<size_t>(TerminateWithNull))) {
-            return { str + length, int_to_ascii_error::buffer_overflow };
+            return {str + length, int_to_ascii_error::buffer_overflow};
         }
         str[i++] = '0';
         if constexpr (TerminateWithNull) { str[i] = '\0'; }
-        return { &str[i] };
+        return {&str[i]};
     }
 
     bool isNegative = false;
@@ -144,7 +144,7 @@ template <typename Int, bool TerminateWithNull = true>
         str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
         num            = num / static_cast<Int>(base);
 
-        if (length <= i) { return { nullptr, int_to_ascii_error::buffer_overflow }; }
+        if (length <= i) { return {nullptr, int_to_ascii_error::buffer_overflow}; }
     }
 
     if constexpr (etl::is_signed_v<Int>) {
@@ -154,7 +154,7 @@ template <typename Int, bool TerminateWithNull = true>
     if constexpr (TerminateWithNull) { str[i] = '\0'; }
 
     reverseString(str, i);
-    return { &str[i] };
+    return {&str[i]};
 }
 
 /// \brief Interprets a floating point value in a byte string pointed to by str.
@@ -166,8 +166,8 @@ template <typename Int, bool TerminateWithNull = true>
 template <typename FloatT>
 [[nodiscard]] constexpr auto ascii_to_floating_point(char const* str, char const** last = nullptr) noexcept -> FloatT
 {
-    auto res               = FloatT { 0 };
-    auto div               = FloatT { 1 };
+    auto res               = FloatT {0};
+    auto div               = FloatT {1};
     auto afterDecimalPoint = false;
     auto leadingSpaces     = true;
 

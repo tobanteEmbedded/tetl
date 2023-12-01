@@ -33,7 +33,7 @@ constexpr auto test() -> bool
 
     // multiple elements
     {
-        auto const d = etl::array { T(0), T(1), T(2), T(3) };
+        auto const d = etl::array {T(0), T(1), T(2), T(3)};
         assert(upper_bound(begin(d), end(d), T(0)) == begin(d) + 1);
         assert(upper_bound(begin(d), end(d), T(1)) == begin(d) + 2);
         assert(upper_bound(begin(d), end(d), T(5)) == end(d));

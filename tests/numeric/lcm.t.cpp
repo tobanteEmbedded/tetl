@@ -7,10 +7,10 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::lcm(T { 10 }, T { 5 }) == T { 10 });
-    assert(etl::lcm(T { 4 }, T { 6 }) == T { 12 });
-    assert(etl::lcm(T { 6 }, T { 4 }) == T { 12 });
-    assert(etl::lcm(T { 30 }, T { 120 }) == T { 120 });
+    assert(etl::lcm(T {10}, T {5}) == T {10});
+    assert(etl::lcm(T {4}, T {6}) == T {12});
+    assert(etl::lcm(T {6}, T {4}) == T {12});
+    assert(etl::lcm(T {30}, T {120}) == T {120});
     return true;
 }
 
