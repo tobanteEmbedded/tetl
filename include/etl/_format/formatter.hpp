@@ -75,8 +75,8 @@ template <typename Integer, typename FormatContext>
 constexpr auto integer_format(Integer v, FormatContext& fc) -> decltype(fc.out())
 {
     char buf[32] {};
-    auto res = detail::int_to_ascii(v, begin(buf), 10, sizeof(buf));
-    if (res.error == detail::int_to_ascii_error::none) {
+    auto res = detail::integer_to_string(v, begin(buf), 10, sizeof(buf));
+    if (res.error == detail::integer_to_string_error::none) {
         auto str = string_view {begin(buf)};
         return formatter<string_view>().format(str, fc);
     }

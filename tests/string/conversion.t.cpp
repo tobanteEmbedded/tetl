@@ -18,13 +18,13 @@ using namespace etl::detail;
 template <typename T>
 constexpr auto test_floats() -> bool
 {
-    assert(approx(ascii_to_floating_point<T>("0"), T(0.0)));
-    assert(approx(ascii_to_floating_point<T>("10"), T(10.0)));
-    assert(approx(ascii_to_floating_point<T>("100.0"), T(100.0)));
-    assert(approx(ascii_to_floating_point<T>("1000.000"), T(1000.0)));
-    assert(approx(ascii_to_floating_point<T>("10000"), T(10000.0)));
-    assert(approx(ascii_to_floating_point<T>("999999.0"), T(999999.0)));
-    assert(approx(ascii_to_floating_point<T>("9999999"), T(9999999.0)));
+    assert(approx(string_to_floating_point<T>("0"), T(0.0)));
+    assert(approx(string_to_floating_point<T>("10"), T(10.0)));
+    assert(approx(string_to_floating_point<T>("100.0"), T(100.0)));
+    assert(approx(string_to_floating_point<T>("1000.000"), T(1000.0)));
+    assert(approx(string_to_floating_point<T>("10000"), T(10000.0)));
+    assert(approx(string_to_floating_point<T>("999999.0"), T(999999.0)));
+    assert(approx(string_to_floating_point<T>("9999999"), T(9999999.0)));
     return true;
 }
 
@@ -32,8 +32,8 @@ constexpr auto test_int() -> bool
 {
     auto test = [](int in, auto out) -> bool {
         char buf[12] = {};
-        auto res     = int_to_ascii(in, etl::begin(buf), 10, sizeof(buf));
-        assert(res.error == int_to_ascii_error::none);
+        auto res     = integer_to_string(in, etl::begin(buf), 10, sizeof(buf));
+        assert(res.error == integer_to_string_error::none);
         assert(etl::string_view {buf} == out);
         return true;
     };

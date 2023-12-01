@@ -4,11 +4,11 @@
 #define TETL_CHARCONV_TO_CHARS_HPP
 
 #include <etl/_concepts/integral.hpp>
+#include <etl/_concepts/same_as.hpp>
 #include <etl/_cstddef/size_t.hpp>
 #include <etl/_iterator/distance.hpp>
 #include <etl/_strings/conversion.hpp>
 #include <etl/_system_error/errc.hpp>
-#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 
@@ -17,10 +17,9 @@ struct to_chars_result {
     char const* ptr {nullptr};
     etl::errc ec {};
 
-    [[nodiscard]] friend constexpr auto operator==(to_chars_result const& l, to_chars_result const& r) noexcept -> bool
-    {
-        return l.ptr == r.ptr && l.ec == r.ec;
-    }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc {}; }
+
+    friend auto operator==(to_chars_result const&, to_chars_result const&) -> bool = default;
 };
 
 /// Converts value into a character string by successively filling the range
@@ -33,13 +32,13 @@ struct to_chars_result {
 /// overloads for all signed and unsigned integer types and for the type char as
 /// the type of the parameter value.
 template <integral T>
-    requires(not is_same_v<T, bool>)
-[[nodiscard]] constexpr auto to_chars(char* f, char* l, T val, int base = 10) -> to_chars_result
+    requires(not same_as<T, bool>)
+[[nodiscard]] constexpr auto to_chars(char* first, char* last, T val, int base = 10) -> to_chars_result
 {
-    auto const len = static_cast<etl::size_t>(etl::distance(f, l));
-    auto const res = detail::int_to_ascii<T>(val, f, base, len);
-    if (res.error == detail::int_to_ascii_error::none) { return to_chars_result {res.end, {}}; }
-    return to_chars_result {l, errc::value_too_large};
+    auto const len = static_cast<etl::size_t>(etl::distance(first, last));
+    auto const res = detail::integer_to_string<T>(val, first, base, len);
+    if (res.error == detail::integer_to_string_error::none) { return to_chars_result {res.end, {}}; }
+    return to_chars_result {last, errc::value_too_large};
 }
 
 [[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10) -> to_chars_result = delete;

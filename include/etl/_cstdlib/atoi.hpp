@@ -12,9 +12,9 @@ namespace etl {
 /// Discards any whitespace characters until the first non-whitespace character
 /// is found, then takes as many characters as possible to form a valid integer
 /// number representation and converts them to an integer value.
-[[nodiscard]] constexpr auto atoi(char const* string) noexcept -> int
+[[nodiscard]] constexpr auto atoi(char const* str) noexcept -> int
 {
-    auto const result = detail::ascii_to_integer<int, true>(string, strlen(string));
+    auto const result = detail::string_to_integer<int, detail::skip_whitespace::yes>(str, strlen(str));
     return result.value;
 }
 

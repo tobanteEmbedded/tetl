@@ -14,7 +14,7 @@ namespace etl {
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stof(static_string<Capacity> const& str, size_t* pos = nullptr) -> float
 {
-    return detail::ascii_to_floating_point<float>(str, pos);
+    return detail::string_to_floating_point<float>(str, pos);
 }
 
 /// \brief Interprets a floating point value in a string str.
@@ -24,7 +24,7 @@ template <size_t Capacity>
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stod(static_string<Capacity> const& str, size_t* pos = nullptr) -> double
 {
-    return detail::ascii_to_floating_point<double>(str, pos);
+    return detail::string_to_floating_point<double>(str, pos);
 }
 
 /// \brief Interprets a floating point value in a string str.
@@ -34,7 +34,7 @@ template <size_t Capacity>
 template <size_t Capacity>
 [[nodiscard]] constexpr auto stold(static_string<Capacity> const& str, size_t* pos = nullptr) -> long double
 {
-    return detail::ascii_to_floating_point<long double>(str, pos);
+    return detail::string_to_floating_point<long double>(str, pos);
 }
 
 } // namespace etl

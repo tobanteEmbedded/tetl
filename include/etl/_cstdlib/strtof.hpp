@@ -16,7 +16,7 @@ namespace etl {
 /// If no conversion can be performed, `0` is returned and *last is set to str.
 [[nodiscard]] constexpr auto strtof(char const* str, char const** last = nullptr) noexcept -> float
 {
-    return detail::ascii_to_floating_point<float>(str, last);
+    return detail::string_to_floating_point<float>(str, last);
 }
 
 } // namespace etl

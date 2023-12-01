@@ -14,8 +14,8 @@ constexpr auto to_string_impl(Int val) -> static_string<Capacity>
 {
     char buffer[Capacity] {};
     auto* first    = etl::begin(buffer);
-    auto const res = detail::int_to_ascii<Int>(val, first, 10, Capacity);
-    if (res.error == detail::int_to_ascii_error::none) { return static_string<Capacity> {first, res.end}; }
+    auto const res = detail::integer_to_string<Int>(val, first, 10, Capacity);
+    if (res.error == detail::integer_to_string_error::none) { return static_string<Capacity> {first, res.end}; }
     return {};
 }
 } // namespace detail
