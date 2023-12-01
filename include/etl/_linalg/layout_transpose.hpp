@@ -112,7 +112,7 @@ struct layout_transpose {
             requires(Extents::rank() == OtherExtents::rank())
         friend constexpr auto operator==(mapping const& lhs, mapping<OtherExtents> const& rhs) noexcept -> bool
         {
-            return lhs._nestedMapping == rhs.nested_mapping_;
+            return lhs._nestedMapping == rhs._nestedMapping;
         }
     };
 };

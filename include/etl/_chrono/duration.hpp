@@ -121,7 +121,7 @@ struct duration {
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
-    /// Equivalent to ++rep_; return *this;
+    /// Equivalent to ++_rep; return *this;
     constexpr auto operator++() -> duration&
     {
         ++_rep;
@@ -129,11 +129,11 @@ struct duration {
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
-    /// Equivalent to return duration(rep_++)
+    /// Equivalent to return duration(_rep++)
     constexpr auto operator++(int) -> duration { return duration(_rep++); }
 
     /// \brief Increments or decrements the number of ticks for this duration.
-    /// Equivalent to --rep_; return *this;
+    /// Equivalent to --_rep; return *this;
     constexpr auto operator--() -> duration&
     {
         --_rep;
@@ -141,7 +141,7 @@ struct duration {
     }
 
     /// \brief Increments or decrements the number of ticks for this duration.
-    /// Equivalent to return duration(rep_--);
+    /// Equivalent to return duration(_rep--);
     constexpr auto operator--(int) -> duration { return duration(_rep--); }
 
     /// \brief Performs compound assignments between two durations with the same

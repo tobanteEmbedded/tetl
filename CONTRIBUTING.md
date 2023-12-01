@@ -50,4 +50,4 @@ TODO
   - Checked via `clang-tidy`. See [.clang-tidy](./.clang-tidy) config.
   - Local variables & parameters are `camelBack`
   - Template arguments are `CamelCase`
-  - Private members have a "_" suffix. e.g. `int val_;`
+  - Private members have a "_" prefix. e.g. `int _val;`

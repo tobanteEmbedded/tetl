@@ -17,35 +17,35 @@ template <>
 struct coroutine_handle<void> {
     constexpr coroutine_handle() noexcept = default;
 
-    constexpr coroutine_handle(nullptr_t handle) noexcept : handle_(handle) { }
+    constexpr coroutine_handle(nullptr_t handle) noexcept : _handle(handle) { }
 
     constexpr auto operator=(nullptr_t) noexcept -> coroutine_handle&
     {
-        handle_ = nullptr;
+        _handle = nullptr;
         return *this;
     }
 
-    [[nodiscard]] constexpr auto address() const noexcept -> void* { return handle_; }
+    [[nodiscard]] constexpr auto address() const noexcept -> void* { return _handle; }
 
     [[nodiscard]] static constexpr auto from_address(void* addr) noexcept -> coroutine_handle
     {
         auto self    = coroutine_handle {};
-        self.handle_ = addr;
+        self._handle = addr;
         return self;
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return handle_ != nullptr; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return _handle != nullptr; }
 
-    [[nodiscard]] auto done() const noexcept -> bool { return __builtin_coro_done(handle_); }
+    [[nodiscard]] auto done() const noexcept -> bool { return __builtin_coro_done(_handle); }
 
     auto operator()() const -> void { resume(); }
 
-    auto resume() const -> void { __builtin_coro_resume(handle_); }
+    auto resume() const -> void { __builtin_coro_resume(_handle); }
 
-    auto destroy() const -> void { __builtin_coro_destroy(handle_); }
+    auto destroy() const -> void { __builtin_coro_destroy(_handle); }
 
 protected:
-    void* handle_ {nullptr};
+    void* _handle {nullptr};
 };
 
 template <typename T>

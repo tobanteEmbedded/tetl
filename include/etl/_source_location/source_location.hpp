@@ -20,28 +20,28 @@ struct source_location {
         char const* const function = TETL_BUILTIN_FUNCTION()) noexcept -> source_location
     {
         auto result      = source_location {};
-        result.line_     = line;
-        result.column_   = column;
-        result.file_     = file;
-        result.function_ = function;
+        result._line     = line;
+        result._column   = column;
+        result._file     = file;
+        result._function = function;
         return result;
     }
 
     constexpr source_location() noexcept = default;
 
-    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t { return line_; }
+    [[nodiscard]] constexpr auto line() const noexcept -> etl::uint_least32_t { return _line; }
 
-    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t { return column_; }
+    [[nodiscard]] constexpr auto column() const noexcept -> etl::uint_least32_t { return _column; }
 
-    [[nodiscard]] constexpr auto file_name() const noexcept -> char const* { return file_; }
+    [[nodiscard]] constexpr auto file_name() const noexcept -> char const* { return _file; }
 
-    [[nodiscard]] constexpr auto function_name() const noexcept -> char const* { return function_; }
+    [[nodiscard]] constexpr auto function_name() const noexcept -> char const* { return _function; }
 
 private:
-    etl::uint_least32_t line_ {};
-    etl::uint_least32_t column_ {};
-    char const* file_     = "";
-    char const* function_ = "";
+    etl::uint_least32_t _line {};
+    etl::uint_least32_t _column {};
+    char const* _file     = "";
+    char const* _function = "";
 };
 
 #endif
