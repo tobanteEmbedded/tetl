@@ -6,6 +6,7 @@
 #include "etl/_config/all.hpp"
 #include "etl/_exception/raise.hpp"
 #include "etl/_functional/hash.hpp"
+#include "etl/_functional/invoke.hpp"
 #include "etl/_memory/addressof.hpp"
 #include "etl/_new/operator.hpp"
 #include "etl/_optional/bad_optional_access.hpp"
@@ -14,6 +15,7 @@
 #include "etl/_type_traits/conjunction.hpp"
 #include "etl/_type_traits/decay.hpp"
 #include "etl/_type_traits/enable_if.hpp"
+#include "etl/_type_traits/invoke_result.hpp"
 #include "etl/_type_traits/is_assignable.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
@@ -750,6 +752,46 @@ public:
         this->reset();
         this->construct(etl::forward<Args>(args)...);
         return value();
+    }
+
+    template <typename F>
+    constexpr auto and_then(F&& f) &
+    {
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), **this);
+        } else {
+            return etl::remove_cvref_t<etl::invoke_result_t<F, T&>> {};
+        }
+    }
+
+    template <typename F>
+    constexpr auto and_then(F&& f) const&
+    {
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), **this);
+        } else {
+            return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>> {};
+        }
+    }
+
+    template <typename F>
+    constexpr auto and_then(F&& f) &&
+    {
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
+        } else {
+            return etl::remove_cvref_t<etl::invoke_result_t<F, T>> {};
+        }
+    }
+
+    template <typename F>
+    constexpr auto and_then(F&& f) const&&
+    {
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
+        } else {
+            return etl::remove_cvref_t<etl::invoke_result_t<F, T const>> {};
+        }
     }
 
     /// \brief Implementation detail. Do not use!

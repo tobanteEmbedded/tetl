@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/optional.hpp"
+#include <etl/optional.hpp>
 
-#include "etl/cstdint.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/utility.hpp>
+#include <etl/warning.hpp>
 
 #include "testing/exception.hpp"
 #include "testing/testing.hpp"
@@ -472,6 +473,19 @@ constexpr auto test() -> bool
         etl::optional opt55 {data};
         etl::ignore_unused(opt55);
         assert((is_same_v<typename decltype(opt55)::value_type, T*>));
+    }
+
+    {
+        auto to42 = [](auto) -> etl::optional<int> { return 42; };
+
+        auto empty = etl::optional<T> {};
+        assert(not static_cast<bool>(empty.and_then(to42)));
+        assert(not static_cast<bool>(etl::as_const(empty).and_then(to42)));
+
+        auto one = etl::optional<T> {T(1)};
+        assert(static_cast<bool>(one.and_then(to42)));
+        assert(static_cast<bool>(etl::as_const(one).and_then(to42)));
+        assert(static_cast<bool>(etl::optional<T>(T(1)).and_then(to42)));
     }
 
     return true;
