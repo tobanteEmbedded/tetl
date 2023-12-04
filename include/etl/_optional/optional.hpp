@@ -757,41 +757,29 @@ public:
     template <typename F>
     constexpr auto and_then(F&& f) &
     {
-        if (*this) {
-            return etl::invoke(etl::forward<F>(f), **this);
-        } else {
-            return etl::remove_cvref_t<etl::invoke_result_t<F, T&>> {};
-        }
+        if (*this) { return etl::invoke(etl::forward<F>(f), **this); }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T&>> {};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) const&
     {
-        if (*this) {
-            return etl::invoke(etl::forward<F>(f), **this);
-        } else {
-            return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>> {};
-        }
+        if (*this) { return etl::invoke(etl::forward<F>(f), **this); }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>> {};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) &&
     {
-        if (*this) {
-            return etl::invoke(etl::forward<F>(f), etl::move(**this));
-        } else {
-            return etl::remove_cvref_t<etl::invoke_result_t<F, T>> {};
-        }
+        if (*this) { return etl::invoke(etl::forward<F>(f), etl::move(**this)); }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T>> {};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) const&&
     {
-        if (*this) {
-            return etl::invoke(etl::forward<F>(f), etl::move(**this));
-        } else {
-            return etl::remove_cvref_t<etl::invoke_result_t<F, T const>> {};
-        }
+        if (*this) { return etl::invoke(etl::forward<F>(f), etl::move(**this)); }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T const>> {};
     }
 
     /// \brief Implementation detail. Do not use!
