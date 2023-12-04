@@ -9,7 +9,6 @@
 #include "etl/_type_traits/common_type.hpp"
 #include "etl/_type_traits/declval.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 // clang-format off
@@ -31,6 +30,5 @@ concept common_with =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_COMMON_WITH_HPP

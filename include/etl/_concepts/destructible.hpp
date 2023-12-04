@@ -5,7 +5,6 @@
 
 #include "etl/_type_traits/is_nothrow_destructible.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept destructible specifies the concept of all types whose
@@ -15,6 +14,5 @@ template <typename T>
 concept destructible = is_nothrow_destructible_v<T>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_DESTRUCTIBLE_HPP

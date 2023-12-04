@@ -6,7 +6,6 @@
 #include "etl/_concepts/convertible_to.hpp"
 #include "etl/_utility/forward.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 namespace detail {
@@ -24,6 +23,5 @@ concept boolean_testable =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_BOOLEAN_TESTABLE_HPP

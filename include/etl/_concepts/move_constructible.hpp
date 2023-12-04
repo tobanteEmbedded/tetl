@@ -6,7 +6,6 @@
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_concepts/convertible_to.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept move_constructible is satisfied if T is a reference type,
@@ -19,6 +18,5 @@ template <typename T>
 concept move_constructible = constructible_from<T, T> && convertible_to<T, T>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP

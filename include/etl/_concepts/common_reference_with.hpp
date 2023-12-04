@@ -7,7 +7,6 @@
 #include "etl/_concepts/same_as.hpp"
 #include "etl/_type_traits/common_reference.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 // clang-format off
@@ -19,6 +18,5 @@ concept common_reference_with =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_COMMON_REFERENCE_WITH_HPP

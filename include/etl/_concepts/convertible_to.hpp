@@ -6,7 +6,6 @@
 #include "etl/_type_traits/add_rvalue_reference.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept convertible_to<From, To> specifies that an expression of
@@ -18,6 +17,5 @@ concept convertible_to
     = is_convertible_v<From, To> && requires(add_rvalue_reference_t<From> (&f)()) { static_cast<To>(f()); };
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_CONVERTIBLE_TO_HPP

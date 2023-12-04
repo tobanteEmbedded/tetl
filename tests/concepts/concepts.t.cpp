@@ -6,8 +6,6 @@
 
 #include "testing/testing.hpp"
 
-#if defined(__cpp_concepts)
-
 namespace {
 constexpr auto floating_point_test(etl::floating_point auto /*v*/) { return true; }
 constexpr auto floating_point_test(auto /*v*/) { return false; }
@@ -102,7 +100,3 @@ auto main() -> int
     static_assert(test());
     return 0;
 }
-
-#else
-auto main() -> int { return 0; }
-#endif

@@ -7,8 +7,6 @@
 #include "etl/_type_traits/is_nothrow_convertible.hpp"
 #include "etl/_utility/forward.hpp"
 
-#if defined(__cpp_concepts)
-
 namespace etl {
 
 template <typename T>
@@ -18,7 +16,5 @@ constexpr auto decay_copy(T&& t) noexcept(is_nothrow_convertible_v<T, decay_t<T>
 }
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_RANGES_DECAY_COPY_HPP

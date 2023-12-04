@@ -6,7 +6,6 @@
 #include "etl/_concepts/destructible.hpp"
 #include "etl/_type_traits/is_constructible.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The constructible_from concept specifies that a variable of type T
@@ -15,6 +14,5 @@ template <typename T, typename... Args>
 concept constructible_from = destructible<T> && is_constructible_v<T, Args...>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_CONSTRUCTIBLE_FROM_HPP

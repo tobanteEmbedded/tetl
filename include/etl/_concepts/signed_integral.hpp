@@ -6,7 +6,6 @@
 #include "etl/_concepts/integral.hpp"
 #include "etl/_type_traits/is_signed.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept signed_integral<T> is satisfied if and only if T is an
@@ -15,6 +14,5 @@ template <typename T>
 concept signed_integral = integral<T> && is_signed_v<T>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_SIGNED_INTEGRAL_HPP

@@ -5,7 +5,6 @@
 
 #include "etl/_type_traits/is_integral.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept integral<T> is satisfied if and only if T is an integral
@@ -14,6 +13,5 @@ template <typename T>
 concept integral = is_integral_v<T>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_INTEGRAL_HPP

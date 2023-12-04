@@ -6,7 +6,6 @@
 #include "etl/_concepts/constructible_from.hpp"
 #include "etl/_new/operator.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The default_initializable concept checks whether variables of type T
@@ -24,6 +23,5 @@ concept default_initializable =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_DEFAULT_INITIALIZABLE_HPP

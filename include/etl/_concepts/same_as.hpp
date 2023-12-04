@@ -5,7 +5,6 @@
 
 #include "etl/_type_traits/is_same.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 namespace detail {
@@ -19,6 +18,5 @@ template <typename T, typename U>
 concept same_as = detail::same_helper<T, U> && detail::same_helper<U, T>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_SAME_AS_HPP

@@ -7,7 +7,6 @@
 #include "etl/_concepts/convertible_to.hpp"
 #include "etl/_concepts/move_constructible.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept copy_constructible is satisfied if T is an lvalue
@@ -25,6 +24,5 @@ concept copy_constructible =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_COPY_CONSTRUCTIBLE_HPP

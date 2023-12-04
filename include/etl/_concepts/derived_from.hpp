@@ -6,7 +6,6 @@
 #include "etl/_type_traits/is_base_of.hpp"
 #include "etl/_type_traits/is_convertible.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 /// \brief The concept derived_from<Derived, Base> is satisfied if and only if
@@ -17,6 +16,5 @@ template <typename Derived, typename Base>
 concept derived_from = is_base_of_v<Base, Derived> && is_convertible_v<const volatile Derived*, const volatile Base*>;
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_DERIVED_FROM_HPP
