@@ -3,6 +3,11 @@
 #ifndef TETL_COMPLEX_COMPLEX_HPP
 #define TETL_COMPLEX_COMPLEX_HPP
 
+#include "etl/_cstddef/size_t.hpp"
+#include "etl/_tuple/tuple_element.hpp"
+#include "etl/_tuple/tuple_size.hpp"
+#include "etl/_type_traits/integral_constant.hpp"
+
 namespace etl {
 
 /// \brief A complex number
@@ -44,6 +49,15 @@ struct complex {
 private:
     value_type _real;
     value_type _imag;
+};
+
+template <typename T>
+struct tuple_size<etl::complex<T>> : etl::integral_constant<etl::size_t, 2> { };
+
+template <size_t I, typename T>
+    requires(I < 2)
+struct tuple_element<I, etl::complex<T>> {
+    using type = T;
 };
 
 template <typename T>

@@ -10,6 +10,10 @@
 template <typename T>
 constexpr auto test() -> bool
 {
+    assert(etl::tuple_size_v<etl::complex<T>> == 2);
+    assert(etl::same_as<etl::tuple_element_t<0, etl::complex<T>>, T>);
+    assert(etl::same_as<etl::tuple_element_t<1, etl::complex<T>>, T>);
+
     auto tc = etl::complex<T> {};
     assert(tc.real() == T(0));
     assert(tc.imag() == T(0));
