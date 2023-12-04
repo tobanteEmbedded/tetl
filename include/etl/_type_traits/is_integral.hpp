@@ -31,9 +31,7 @@ inline constexpr bool is_integral_v = is_any_of_v<remove_cv_t<T>,
         signed char,
         unsigned char,
         wchar_t,
-    #ifdef __cpp_char8_t
         char8_t,
-    #endif
         char16_t,
         char32_t,
         short,

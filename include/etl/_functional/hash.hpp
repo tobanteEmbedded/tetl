@@ -42,7 +42,6 @@ struct hash<unsigned char> {
     }
 };
 
-#if defined(__cpp_char8_t)
 template <>
 struct hash<char8_t> {
     [[nodiscard]] constexpr auto operator()(char8_t val) const noexcept -> etl::size_t
@@ -50,7 +49,6 @@ struct hash<char8_t> {
         return static_cast<etl::size_t>(val);
     }
 };
-#endif
 
 template <>
 struct hash<char16_t> {

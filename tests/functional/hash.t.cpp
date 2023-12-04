@@ -29,9 +29,7 @@ constexpr auto test() -> bool
     }
 #endif
 
-#if defined(__cpp_char8_t)
     assert(etl::hash<char8_t> {}('a') != 0);
-#endif
 
     return true;
 }

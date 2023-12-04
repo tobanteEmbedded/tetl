@@ -235,7 +235,6 @@ struct numeric_limits<unsigned char> {
     static constexpr float_round_style round_style = round_toward_zero;
 };
 
-#ifdef __cpp_char8_t
 template <>
 struct numeric_limits<char8_t> {
     static constexpr bool is_specialized = true;
@@ -279,7 +278,6 @@ struct numeric_limits<char8_t> {
     static constexpr bool tinyness_before          = false;
     static constexpr float_round_style round_style = round_toward_zero;
 };
-#endif // __cpp_char8_t
 
 template <>
 struct numeric_limits<short> {
