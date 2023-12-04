@@ -15,6 +15,7 @@
 #include "etl/_concepts/default_initializable.hpp"
 #include "etl/_concepts/derived_from.hpp"
 #include "etl/_concepts/destructible.hpp"
+#include "etl/_concepts/equality_comparable.hpp"
 #include "etl/_concepts/equivalence_relation.hpp"
 #include "etl/_concepts/floating_point.hpp"
 #include "etl/_concepts/integral.hpp"
