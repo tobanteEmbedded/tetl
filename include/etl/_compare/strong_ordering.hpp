@@ -11,10 +11,10 @@
 namespace etl {
 
 struct strong_ordering {
-    static const strong_ordering less;
-    static const strong_ordering equal;
-    static const strong_ordering equivalent;
-    static const strong_ordering greater;
+    static strong_ordering const less;
+    static strong_ordering const equal;
+    static strong_ordering const equivalent;
+    static strong_ordering const greater;
 
     [[nodiscard]] constexpr operator partial_ordering() const noexcept
     {

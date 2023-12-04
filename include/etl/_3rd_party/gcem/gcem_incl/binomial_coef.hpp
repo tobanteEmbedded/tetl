@@ -24,7 +24,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto binomial_coef_recur(const T n, const T k) noexcept -> T
+constexpr auto binomial_coef_recur(T const n, T const k) noexcept -> T
 {
     return (                           // edge cases
         (k == T(0) || n == k) ? T(1) : // deals with 0 choose 0 case
@@ -35,13 +35,13 @@ constexpr auto binomial_coef_recur(const T n, const T k) noexcept -> T
 }
 
 template <typename T, typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
+constexpr auto binomial_coef_check(T const n, T const k) noexcept -> T
 {
     return binomial_coef_recur(n, k);
 }
 
 template <typename T, typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto binomial_coef_check(const T n, const T k) noexcept -> T
+constexpr auto binomial_coef_check(T const n, T const k) noexcept -> T
 {
     return ( // NaN check; removed due to MSVC problems; template not being
              // ignored in <int> cases (is_nan(n) || is_nan(k)) ?

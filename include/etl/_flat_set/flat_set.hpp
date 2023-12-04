@@ -205,7 +205,7 @@ struct flat_set {
     }
 
     constexpr auto swap(flat_set& other) noexcept(
-        etl::is_nothrow_swappable_v<Container>&& etl::is_nothrow_swappable_v<Compare>) -> void
+        etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>) -> void
     {
         using etl::swap;
         swap(_compare, other._compare);

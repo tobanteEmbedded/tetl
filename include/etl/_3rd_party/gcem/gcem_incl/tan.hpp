@@ -28,13 +28,13 @@
 namespace internal {
 
 template <typename T>
-constexpr auto tan_series_exp_long(const T z) noexcept -> T
+constexpr auto tan_series_exp_long(T const z) noexcept -> T
 { // this is based on a fourth-order expansion of tan(z) using Bernoulli numbers
     return (-1 / z + (z / 3 + (pow_integral(z, 3) / 45 + (2 * pow_integral(z, 5) / 945 + pow_integral(z, 7) / 4725))));
 }
 
 template <typename T>
-constexpr auto tan_series_exp(const T x) noexcept -> T
+constexpr auto tan_series_exp(T const x) noexcept -> T
 {
     return (etl::numeric_limits<T>::epsilon() > abs(x - T(GCEM_HALF_PI))
                 ? // the value tan(pi/2) is somewhat of a convention;
@@ -47,7 +47,7 @@ constexpr auto tan_series_exp(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tan_cf_recur(const T xx, int const depth, int const maxDepth) noexcept -> T
+constexpr auto tan_cf_recur(T const xx, int const depth, int const maxDepth) noexcept -> T
 {
     return (depth < maxDepth ? // if
                 T(2 * depth - 1) - xx / tan_cf_recur(xx, depth + 1, maxDepth)
@@ -57,7 +57,7 @@ constexpr auto tan_cf_recur(const T xx, int const depth, int const maxDepth) noe
 }
 
 template <typename T>
-constexpr auto tan_cf_main(const T x) noexcept -> T
+constexpr auto tan_cf_main(T const x) noexcept -> T
 {
     return ((x > T(1.55) && x < T(1.60)) ? tan_series_exp(x) : // deals with a singularity at tan(pi/2)
                                                                //
@@ -69,7 +69,7 @@ constexpr auto tan_cf_main(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tan_begin(const T x, int const count = 0) noexcept -> T
+constexpr auto tan_begin(T const x, int const count = 0) noexcept -> T
 {                                                                 // tan(x) = tan(x + pi)
     return (x > T(etl::numbers::pi) ?                             // if
                 count > 1 ? etl::numeric_limits<T>::quiet_NaN() : // protect against undefined behavior
@@ -80,7 +80,7 @@ constexpr auto tan_begin(const T x, int const count = 0) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tan_check(const T x) noexcept -> T
+constexpr auto tan_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -107,7 +107,7 @@ constexpr auto tan_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto tan(const T x) noexcept -> return_t<T>
+constexpr auto tan(T const x) noexcept -> return_t<T>
 {
     return internal::tan_check(static_cast<return_t<T>>(x));
 }

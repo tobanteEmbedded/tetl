@@ -28,13 +28,13 @@
 namespace internal {
 
 template <typename T>
-constexpr auto atanh_compute(const T x) noexcept -> T
+constexpr auto atanh_compute(T const x) noexcept -> T
 {
     return (log((T(1) + x) / (T(1) - x)) / T(2));
 }
 
 template <typename T>
-constexpr auto atanh_check(const T x) noexcept -> T
+constexpr auto atanh_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -60,7 +60,7 @@ constexpr auto atanh_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto atanh(const T x) noexcept -> return_t<T>
+constexpr auto atanh(T const x) noexcept -> return_t<T>
 {
     return internal::atanh_check(static_cast<return_t<T>>(x));
 }

@@ -24,13 +24,13 @@
 namespace internal {
 
 template <typename T>
-constexpr auto round_int(const T x) noexcept -> T
+constexpr auto round_int(T const x) noexcept -> T
 {
     return static_cast<T>(find_whole(x));
 }
 
 template <typename T>
-constexpr auto round_check(const T x) noexcept -> T
+constexpr auto round_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -54,7 +54,7 @@ constexpr auto round_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto round(const T x) noexcept -> return_t<T>
+constexpr auto round(T const x) noexcept -> return_t<T>
 {
     return internal::round_check(static_cast<return_t<T>>(x));
 }

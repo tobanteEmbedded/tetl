@@ -24,7 +24,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto lcm_compute(const T a, const T b) noexcept -> T
+constexpr auto lcm_compute(T const a, T const b) noexcept -> T
 {
     return abs(a * (b / gcd(a, b)));
 }

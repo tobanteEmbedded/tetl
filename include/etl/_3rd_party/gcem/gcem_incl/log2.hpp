@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto log2_check(const T x) noexcept -> T
+constexpr auto log2_check(T const x) noexcept -> T
 {
     return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                       // x < 0
@@ -58,7 +58,7 @@ constexpr auto log2_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto log2(const T x) noexcept -> return_t<T>
+constexpr auto log2(T const x) noexcept -> return_t<T>
 {
     return internal::log2_check(static_cast<return_t<T>>(x));
 }

@@ -24,13 +24,13 @@
 namespace internal {
 
 template <typename T>
-constexpr auto trunc_int(const T x) noexcept -> T
+constexpr auto trunc_int(T const x) noexcept -> T
 {
     return (T(static_cast<llint_t>(x)));
 }
 
 template <typename T>
-constexpr auto trunc_check(const T x) noexcept -> T
+constexpr auto trunc_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -55,7 +55,7 @@ constexpr auto trunc_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto trunc(const T x) noexcept -> return_t<T>
+constexpr auto trunc(T const x) noexcept -> return_t<T>
 {
     return internal::trunc_check(static_cast<return_t<T>>(x));
 }

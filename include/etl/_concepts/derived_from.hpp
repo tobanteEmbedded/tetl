@@ -13,7 +13,7 @@ namespace etl {
 /// of Derived, ignoring cv-qualifiers. Note that this behaviour is different to
 /// is_base_of when Base is a private or protected base of Derived.
 template <typename Derived, typename Base>
-concept derived_from = is_base_of_v<Base, Derived> && is_convertible_v<const volatile Derived*, const volatile Base*>;
+concept derived_from = is_base_of_v<Base, Derived> && is_convertible_v<Derived const volatile*, Base const volatile*>;
 
 } // namespace etl
 

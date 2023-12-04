@@ -34,13 +34,13 @@ constexpr auto incomplete_gamma_inv_decision(T value, T a, T p, T direc, T lgVal
 // initial value for Halley
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_t_val_1(const T p) noexcept -> T
+constexpr auto incomplete_gamma_inv_t_val_1(T const p) noexcept -> T
 { // a > 1.0
     return (p > T(0.5) ? sqrt(-2 * log(T(1) - p)) : sqrt(-2 * log(p)));
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_t_val_2(const T a) noexcept -> T
+constexpr auto incomplete_gamma_inv_t_val_2(T const a) noexcept -> T
 { // a <= 1.0
     return (T(1) - T(0.253) * a - T(0.12) * a * a);
 }
@@ -48,7 +48,7 @@ constexpr auto incomplete_gamma_inv_t_val_2(const T a) noexcept -> T
 //
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_initial_val_1_int_begin(const T tVal) noexcept -> T
+constexpr auto incomplete_gamma_inv_initial_val_1_int_begin(T const tVal) noexcept -> T
 { // internal for a > 1.0
     return (tVal
             - (T(2.515517L) + T(0.802853L) * tVal + T(0.010328L) * tVal * tVal)
@@ -56,19 +56,19 @@ constexpr auto incomplete_gamma_inv_initial_val_1_int_begin(const T tVal) noexce
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_initial_val_1_int_end(const T valueInp, const T a) noexcept -> T
+constexpr auto incomplete_gamma_inv_initial_val_1_int_end(T const valueInp, T const a) noexcept -> T
 { // internal for a > 1.0
     return max(T(1E-04), a * pow(T(1) - T(1) / (9 * a) - valueInp / (3 * sqrt(a)), 3));
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_initial_val_1(const T a, const T tVal, const T sgnTerm) noexcept -> T
+constexpr auto incomplete_gamma_inv_initial_val_1(T const a, T const tVal, T const sgnTerm) noexcept -> T
 { // a > 1.0
     return incomplete_gamma_inv_initial_val_1_int_end(sgnTerm * incomplete_gamma_inv_initial_val_1_int_begin(tVal), a);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_initial_val_2(const T a, const T p, const T tVal) noexcept -> T
+constexpr auto incomplete_gamma_inv_initial_val_2(T const a, T const p, T const tVal) noexcept -> T
 {                      // a <= 1.0
     return (p < tVal ? // if
                 pow(p / tVal, T(1) / a)
@@ -80,7 +80,7 @@ constexpr auto incomplete_gamma_inv_initial_val_2(const T a, const T p, const T 
 // initial value
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_initial_val(const T a, const T p) noexcept -> T
+constexpr auto incomplete_gamma_inv_initial_val(T const a, T const p) noexcept -> T
 {
     return (a > T(1) ? // if
                 incomplete_gamma_inv_initial_val_1(a, incomplete_gamma_inv_t_val_1(p), p > T(0.5) ? T(-1) : T(1))
@@ -93,44 +93,44 @@ constexpr auto incomplete_gamma_inv_initial_val(const T a, const T p) noexcept -
 // Halley recursion
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_err_val(const T value, const T a, const T p) noexcept -> T
+constexpr auto incomplete_gamma_inv_err_val(T const value, T const a, T const p) noexcept -> T
 { // err_val = f(x)
     return (incomplete_gamma(a, value) - p);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_deriv_1(const T value, const T a, const T lgVal) noexcept -> T
+constexpr auto incomplete_gamma_inv_deriv_1(T const value, T const a, T const lgVal) noexcept -> T
 { // derivative of the incomplete gamma function w.r.t. x
     return (exp(-value + (a - T(1)) * log(value) - lgVal));
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_deriv_2(const T value, const T a, const T deriv1) noexcept -> T
+constexpr auto incomplete_gamma_inv_deriv_2(T const value, T const a, T const deriv1) noexcept -> T
 { // second derivative of the incomplete gamma function w.r.t. x
     return (deriv1 * ((a - T(1)) / value - T(1)));
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_ratio_val_1(const T value, const T a, const T p, const T deriv1) noexcept -> T
+constexpr auto incomplete_gamma_inv_ratio_val_1(T const value, T const a, T const p, T const deriv1) noexcept -> T
 {
     return (incomplete_gamma_inv_err_val(value, a, p) / deriv1);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_ratio_val_2(const T value, const T a, const T deriv1) noexcept -> T
+constexpr auto incomplete_gamma_inv_ratio_val_2(T const value, T const a, T const deriv1) noexcept -> T
 {
     return (incomplete_gamma_inv_deriv_2(value, a, deriv1) / deriv1);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_halley(const T ratioVal1, const T ratioVal2) noexcept -> T
+constexpr auto incomplete_gamma_inv_halley(T const ratioVal1, T const ratioVal2) noexcept -> T
 {
     return (ratioVal1 / max(T(0.8), min(T(1.2), T(1) - T(0.5) * ratioVal1 * ratioVal2)));
 }
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_recur(
-    const T value, const T a, const T p, const T deriv1, const T lgVal, int const iterCount) noexcept -> T
+    T const value, T const a, T const p, T const deriv1, T const lgVal, int const iterCount) noexcept -> T
 {
     return incomplete_gamma_inv_decision(value, a, p,
         incomplete_gamma_inv_halley(
@@ -140,7 +140,7 @@ constexpr auto incomplete_gamma_inv_recur(
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_decision(
-    const T value, const T a, const T p, const T direc, const T lgVal, int const iterCount) noexcept -> T
+    T const value, T const a, T const p, T const direc, T const lgVal, int const iterCount) noexcept -> T
 {
     // return( abs(direc) > GCEM_INCML_GAMMA_INV_TOL ?
     // incomplete_gamma_inv_recur(value - direc, a, p,
@@ -154,13 +154,13 @@ constexpr auto incomplete_gamma_inv_decision(
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_begin(const T initialVal, const T a, const T p, const T lgVal) noexcept -> T
+constexpr auto incomplete_gamma_inv_begin(T const initialVal, T const a, T const p, T const lgVal) noexcept -> T
 {
     return incomplete_gamma_inv_recur(initialVal, a, p, incomplete_gamma_inv_deriv_1(initialVal, a, lgVal), lgVal, 1);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_inv_check(const T a, const T p) noexcept -> T
+constexpr auto incomplete_gamma_inv_check(T const a, T const p) noexcept -> T
 {
     return ( // NaN check
         any_nan(a, p) ? etl::numeric_limits<T>::quiet_NaN() :

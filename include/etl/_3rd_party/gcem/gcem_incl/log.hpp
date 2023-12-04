@@ -31,7 +31,7 @@ namespace internal {
 // see http://functions.wolfram.com/ElementaryFunctions/Log/10/0005/
 
 template <typename T>
-constexpr auto log_cf_main(const T xx, int const depth) noexcept -> T
+constexpr auto log_cf_main(T const xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_LOG_MAX_ITER_SMALL ? // if
                 T(2 * depth - 1) - T(depth * depth) * xx / log_cf_main(xx, depth + 1)
@@ -41,13 +41,13 @@ constexpr auto log_cf_main(const T xx, int const depth) noexcept -> T
 }
 
 template <typename T>
-constexpr auto log_cf_begin(const T x) noexcept -> T
+constexpr auto log_cf_begin(T const x) noexcept -> T
 {
     return (T(2) * x / log_cf_main(x * x, 1));
 }
 
 template <typename T>
-constexpr auto log_main(const T x) noexcept -> T
+constexpr auto log_main(T const x) noexcept -> T
 {
     return (log_cf_begin((x - T(1)) / (x + T(1))));
 }
@@ -67,20 +67,20 @@ constexpr auto log_mantissa_integer(int const x) noexcept -> long double
 }
 
 template <typename T>
-constexpr auto log_mantissa(const T x) noexcept -> T
+constexpr auto log_mantissa(T const x) noexcept -> T
 { // divide by the integer part of x, which will be in [1,10], then adjust using
   // tables
     return (log_main(x / T(static_cast<int>(x))) + T(log_mantissa_integer(static_cast<int>(x))));
 }
 
 template <typename T>
-constexpr auto log_breakup(const T x) noexcept -> T
+constexpr auto log_breakup(T const x) noexcept -> T
 { // x = a*b, where b = 10^c
     return (log_mantissa(mantissa(x)) + T(GCEM_LOG_10) * T(find_exponent(x, 0)));
 }
 
 template <typename T>
-constexpr auto log_check(const T x) noexcept -> T
+constexpr auto log_check(T const x) noexcept -> T
 {
     return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                       // x < 0
@@ -117,7 +117,7 @@ constexpr auto log_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto log(const T x) noexcept -> return_t<T>
+constexpr auto log(T const x) noexcept -> return_t<T>
 {
     return internal::log_check(static_cast<return_t<T>>(x));
 }

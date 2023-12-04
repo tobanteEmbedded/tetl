@@ -9,10 +9,10 @@
 namespace etl {
 
 struct partial_ordering {
-    static const partial_ordering less;
-    static const partial_ordering equivalent;
-    static const partial_ordering greater;
-    static const partial_ordering unordered;
+    static partial_ordering const less;
+    static partial_ordering const equivalent;
+    static partial_ordering const greater;
+    static partial_ordering const unordered;
 
     friend constexpr auto operator==(partial_ordering v, nullptr_t) noexcept -> bool
     {

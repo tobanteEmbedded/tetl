@@ -29,7 +29,7 @@
  */
 
 template <typename T>
-constexpr auto signbit(const T x) noexcept -> bool
+constexpr auto signbit(T const x) noexcept -> bool
 {
 #ifdef _MSC_VER
     return ((x == T(0)) ? (_fpclass(x) == _FPCLASS_NZ) : (x < T(0)));

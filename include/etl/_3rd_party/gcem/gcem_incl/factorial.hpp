@@ -30,7 +30,7 @@ namespace internal {
 // T should be int, long int, unsigned int, etc.
 
 template <typename T>
-constexpr auto factorial_table(const T x) noexcept -> T
+constexpr auto factorial_table(T const x) noexcept -> T
 { // table for x! when x = {2,...,16}
     return (x == T(2)   ? T(2)
             : x == T(3) ? T(6)
@@ -52,7 +52,7 @@ constexpr auto factorial_table(const T x) noexcept -> T
 }
 
 template <typename T, typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto factorial_recur(const T x) noexcept -> T
+constexpr auto factorial_recur(T const x) noexcept -> T
 {
     return (x == T(0)   ? T(1)
             : x == T(1) ? x
@@ -66,7 +66,7 @@ constexpr auto factorial_recur(const T x) noexcept -> T
 }
 
 template <typename T, typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto factorial_recur(const T x) noexcept -> T
+constexpr auto factorial_recur(T const x) noexcept -> T
 {
     return tgamma(x + 1);
 }
@@ -84,7 +84,7 @@ constexpr auto factorial_recur(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto factorial(const T x) noexcept -> T
+constexpr auto factorial(T const x) noexcept -> T
 {
     return internal::factorial_recur(x);
 }

@@ -39,10 +39,10 @@ struct inplace_func_vtable {
     using process_ptr_t    = void (*)(storage_ptr_t, storage_ptr_t);
     using destructor_ptr_t = void (*)(storage_ptr_t);
 
-    const invoke_ptr_t invoke_ptr;
-    const process_ptr_t copy_ptr;
-    const process_ptr_t relocate_ptr;
-    const destructor_ptr_t destructor_ptr;
+    invoke_ptr_t const invoke_ptr;
+    process_ptr_t const copy_ptr;
+    process_ptr_t const relocate_ptr;
+    destructor_ptr_t const destructor_ptr;
 
     explicit constexpr inplace_func_vtable()
         : invoke_ptr {[](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {

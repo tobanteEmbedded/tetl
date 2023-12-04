@@ -31,7 +31,7 @@ namespace internal {
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0007/
 
 template <typename T>
-constexpr auto erf_cf_large_recur(const T x, int const depth) noexcept -> T
+constexpr auto erf_cf_large_recur(T const x, int const depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 x + 2 * depth / erf_cf_large_recur(x, depth + 1)
@@ -41,7 +41,7 @@ constexpr auto erf_cf_large_recur(const T x, int const depth) noexcept -> T
 }
 
 template <typename T>
-constexpr auto erf_cf_large_main(const T x) noexcept -> T
+constexpr auto erf_cf_large_main(T const x) noexcept -> T
 {
     return (T(1) - T(2) * (exp(-x * x) / T(GCEM_SQRT_PI)) / erf_cf_large_recur(T(2) * x, 1));
 }
@@ -50,7 +50,7 @@ constexpr auto erf_cf_large_main(const T x) noexcept -> T
 // http://functions.wolfram.com/GammaBetaErf/Erf/10/01/0005/
 
 template <typename T>
-constexpr auto erf_cf_small_recur(const T xx, int const depth) noexcept -> T
+constexpr auto erf_cf_small_recur(T const xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_ERF_MAX_ITER ? // if
                 (2 * depth - 1) - 2 * xx + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)
@@ -60,7 +60,7 @@ constexpr auto erf_cf_small_recur(const T xx, int const depth) noexcept -> T
 }
 
 template <typename T>
-constexpr auto erf_cf_small_main(const T x) noexcept -> T
+constexpr auto erf_cf_small_main(T const x) noexcept -> T
 {
     return (T(2) * x * (exp(-x * x) / T(GCEM_SQRT_PI)) / erf_cf_small_recur(x * x, 1));
 }
@@ -68,7 +68,7 @@ constexpr auto erf_cf_small_main(const T x) noexcept -> T
 //
 
 template <typename T>
-constexpr auto erf_begin(const T x) noexcept -> T
+constexpr auto erf_begin(T const x) noexcept -> T
 {
     return (x > T(2.1) ? // if
                 erf_cf_large_main(x)
@@ -78,7 +78,7 @@ constexpr auto erf_begin(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto erf_check(const T x) noexcept -> T
+constexpr auto erf_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -109,7 +109,7 @@ constexpr auto erf_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto erf(const T x) noexcept -> return_t<T>
+constexpr auto erf(T const x) noexcept -> return_t<T>
 {
     return internal::erf_check(static_cast<return_t<T>>(x));
 }

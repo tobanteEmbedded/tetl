@@ -30,7 +30,7 @@
  */
 
 template <typename T>
-constexpr auto sgn(const T x) noexcept -> int
+constexpr auto sgn(T const x) noexcept -> int
 {
     return ( // positive
         x > T(0) ? 1 :

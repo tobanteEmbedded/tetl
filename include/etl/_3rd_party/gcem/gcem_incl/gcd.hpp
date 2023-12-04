@@ -24,19 +24,19 @@
 namespace internal {
 
 template <typename T>
-constexpr auto gcd_recur(const T a, const T b) noexcept -> T
+constexpr auto gcd_recur(T const a, T const b) noexcept -> T
 {
     return (b == T(0) ? a : gcd_recur(b, a % b));
 }
 
 template <typename T, typename etl::enable_if<etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto gcd_int_check(const T a, const T b) noexcept -> T
+constexpr auto gcd_int_check(T const a, T const b) noexcept -> T
 {
     return gcd_recur(a, b);
 }
 
 template <typename T, typename etl::enable_if<!etl::is_integral<T>::value>::type* = nullptr>
-constexpr auto gcd_int_check(const T a, const T b) noexcept -> T
+constexpr auto gcd_int_check(T const a, T const b) noexcept -> T
 {
     return gcd_recur(static_cast<ullint_t>(a), static_cast<ullint_t>(b));
 }

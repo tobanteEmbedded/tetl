@@ -24,7 +24,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto log_binomial_coef_compute(const T n, const T k) noexcept -> T
+constexpr auto log_binomial_coef_compute(T const n, T const k) noexcept -> T
 {
     return (lgamma(n + 1) - (lgamma(k + 1) + lgamma(n - k + 1)));
 }

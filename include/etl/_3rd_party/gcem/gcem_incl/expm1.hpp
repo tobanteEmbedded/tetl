@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto expm1_compute(const T x) noexcept -> T
+constexpr auto expm1_compute(T const x) noexcept -> T
 {
     // return x * ( T(1) + x * ( T(1)/T(2) + x * ( T(1)/T(6) + x * ( T(1)/T(24)
     // +  x/T(120) ) ) ) ); // O(x^6)
@@ -36,7 +36,7 @@ constexpr auto expm1_compute(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto expm1_check(const T x) noexcept -> T
+constexpr auto expm1_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -59,7 +59,7 @@ constexpr auto expm1_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto expm1(const T x) noexcept -> return_t<T>
+constexpr auto expm1(T const x) noexcept -> return_t<T>
 {
     return internal::expm1_check(static_cast<return_t<T>>(x));
 }

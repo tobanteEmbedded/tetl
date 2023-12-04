@@ -27,7 +27,7 @@
 
 namespace internal {
 
-constexpr auto is_even(const llint_t x) noexcept -> bool { return !is_odd(x); }
+constexpr auto is_even(llint_t const x) noexcept -> bool { return !is_odd(x); }
 
 } // namespace internal
 

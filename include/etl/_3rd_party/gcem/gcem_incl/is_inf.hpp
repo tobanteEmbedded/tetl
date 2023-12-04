@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto is_neginf(const T x) noexcept -> bool
+constexpr auto is_neginf(T const x) noexcept -> bool
 {
     return x == -etl::numeric_limits<T>::infinity();
 }
@@ -60,7 +60,7 @@ constexpr auto all_neginf(const T1 x, const T2 y, const T3 z) noexcept -> bool
 //
 
 template <typename T>
-constexpr auto is_posinf(const T x) noexcept -> bool
+constexpr auto is_posinf(T const x) noexcept -> bool
 {
     return x == etl::numeric_limits<T>::infinity();
 }
@@ -92,7 +92,7 @@ constexpr auto all_posinf(const T1 x, const T2 y, const T3 z) noexcept -> bool
 //
 
 template <typename T>
-constexpr auto is_inf(const T x) noexcept -> bool
+constexpr auto is_inf(T const x) noexcept -> bool
 {
     return (is_neginf(x) || is_posinf(x));
 }

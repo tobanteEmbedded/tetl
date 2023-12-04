@@ -24,19 +24,19 @@
 namespace internal {
 
 template <typename T>
-constexpr auto ceil_resid(const T x, const T xWhole) noexcept -> int
+constexpr auto ceil_resid(T const x, T const xWhole) noexcept -> int
 {
     return ((x > T(0)) && (x > xWhole));
 }
 
 template <typename T>
-constexpr auto ceil_int(const T x, const T xWhole) noexcept -> T
+constexpr auto ceil_int(T const x, T const xWhole) noexcept -> T
 {
     return (xWhole + static_cast<T>(ceil_resid(x, xWhole)));
 }
 
 template <typename T>
-constexpr auto ceil_check(const T x) noexcept -> T
+constexpr auto ceil_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -60,7 +60,7 @@ constexpr auto ceil_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto ceil(const T x) noexcept -> return_t<T>
+constexpr auto ceil(T const x) noexcept -> return_t<T>
 {
     return internal::ceil_check(static_cast<return_t<T>>(x));
 }

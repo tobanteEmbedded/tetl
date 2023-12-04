@@ -46,7 +46,7 @@ private:
         static_assert(etl::numeric_limits<uint32_t>::digits >= 18, "Not yet ported to a 16 bit unsigned integer");
         static_assert(etl::numeric_limits<Int>::digits >= 20, "Not yet ported to a 16 bit signed integer");
         y -= m <= 2;
-        const Int era      = (y >= 0 ? y : y - 399) / 400;
+        Int const era      = (y >= 0 ? y : y - 399) / 400;
         auto const yoe     = static_cast<uint32_t>(y - era * 400);            // [0, 399]
         uint32_t const doy = (153 * (m > 2 ? m - 3 : m + 9) + 2) / 5 + d - 1; // [0, 365]
         uint32_t const doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;           // [0, 146096]

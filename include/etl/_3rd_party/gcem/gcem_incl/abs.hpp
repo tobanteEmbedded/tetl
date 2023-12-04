@@ -29,7 +29,7 @@
  */
 
 template <typename T>
-constexpr auto abs(const T x) noexcept -> T
+constexpr auto abs(T const x) noexcept -> T
 {
     return ( // deal with signed-zeros
         x == T(0) ? T(0) :

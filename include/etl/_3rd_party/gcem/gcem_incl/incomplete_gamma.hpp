@@ -30,26 +30,26 @@ namespace internal {
 // 50 point Gauss-Legendre quadrature
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_inp_vals(const T lb, const T ub, int const counter) noexcept -> T
+constexpr auto incomplete_gamma_quad_inp_vals(T const lb, T const ub, int const counter) noexcept -> T
 {
     return (ub - lb) * gauss_legendre_50_points[counter] / T(2) + (ub + lb) / T(2);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_weight_vals(const T lb, const T ub, int const counter) noexcept -> T
+constexpr auto incomplete_gamma_quad_weight_vals(T const lb, T const ub, int const counter) noexcept -> T
 {
     return (ub - lb) * gauss_legendre_50_weights[counter] / T(2);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_fn(const T x, const T a, const T lgTerm) noexcept -> T
+constexpr auto incomplete_gamma_quad_fn(T const x, T const a, T const lgTerm) noexcept -> T
 {
     return exp(-x + (a - T(1)) * log(x) - lgTerm);
 }
 
 template <typename T>
 constexpr auto incomplete_gamma_quad_recur(
-    const T lb, const T ub, const T a, const T lgTerm, int const counter) noexcept -> T
+    T const lb, T const ub, T const a, T const lgTerm, int const counter) noexcept -> T
 {
     return (counter < 49 ? // if
                 incomplete_gamma_quad_fn(incomplete_gamma_quad_inp_vals(lb, ub, counter), a, lgTerm)
@@ -62,7 +62,7 @@ constexpr auto incomplete_gamma_quad_recur(
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_lb(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_quad_lb(T const a, T const z) noexcept -> T
 {
     return (a > T(1000) ? max(T(0), min(z, a) - 11 * sqrt(a)) : // break integration into ranges
                 a > T(800) ? max(T(0), min(z, a) - 11 * sqrt(a))
@@ -80,7 +80,7 @@ constexpr auto incomplete_gamma_quad_lb(const T a, const T z) noexcept -> T
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_ub(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_quad_ub(T const a, T const z) noexcept -> T
 {
     return (a > T(1000)  ? min(z, a + 10 * sqrt(a))
             : a > T(800) ? min(z, a + 10 * sqrt(a))
@@ -96,7 +96,7 @@ constexpr auto incomplete_gamma_quad_ub(const T a, const T z) noexcept -> T
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_quad(T const a, T const z) noexcept -> T
 {
     return incomplete_gamma_quad_recur(incomplete_gamma_quad_lb(a, z), incomplete_gamma_quad_ub(a, z), a, lgamma(a), 0);
 }
@@ -105,7 +105,7 @@ constexpr auto incomplete_gamma_quad(const T a, const T z) noexcept -> T
 // see: https://functions.wolfram.com/GammaBetaErf/Gamma2/10/0003/
 
 template <typename T>
-constexpr auto incomplete_gamma_cf_2_recur(const T a, const T z, int const depth) noexcept -> T
+constexpr auto incomplete_gamma_cf_2_recur(T const a, T const z, int const depth) noexcept -> T
 {
     return (depth < 100 ? // if
                 (1 + (depth - 1) * 2 - a + z) + depth * (a - depth) / incomplete_gamma_cf_2_recur(a, z, depth + 1)
@@ -115,7 +115,7 @@ constexpr auto incomplete_gamma_cf_2_recur(const T a, const T z, int const depth
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_cf_2(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_cf_2(T const a, T const z) noexcept -> T
 { // lower (regularized) incomplete gamma function
     return (T(1.0) - exp(a * log(z) - z - lgamma(a)) / incomplete_gamma_cf_2_recur(a, z, 1));
 }
@@ -124,13 +124,13 @@ constexpr auto incomplete_gamma_cf_2(const T a, const T z) noexcept -> T
 // see: http://functions.wolfram.com/GammaBetaErf/Gamma2/10/0009/
 
 template <typename T>
-constexpr auto incomplete_gamma_cf_1_coef(const T a, const T z, int const depth) noexcept -> T
+constexpr auto incomplete_gamma_cf_1_coef(T const a, T const z, int const depth) noexcept -> T
 {
     return (is_odd(depth) ? -(a - 1 + T(depth + 1) / T(2)) * z : T(depth) / T(2) * z);
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_cf_1_recur(const T a, const T z, int const depth) noexcept -> T
+constexpr auto incomplete_gamma_cf_1_recur(T const a, T const z, int const depth) noexcept -> T
 {
     return (depth < GCEM_INCML_GAMMA_MAX_ITER ? // if
                 (a + depth - 1) + incomplete_gamma_cf_1_coef(a, z, depth) / incomplete_gamma_cf_1_recur(a, z, depth + 1)
@@ -140,7 +140,7 @@ constexpr auto incomplete_gamma_cf_1_recur(const T a, const T z, int const depth
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_cf_1(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_cf_1(T const a, T const z) noexcept -> T
 { // lower (regularized) incomplete gamma function
     return (exp(a * log(z) - z - lgamma(a)) / incomplete_gamma_cf_1_recur(a, z, 1));
 }
@@ -148,7 +148,7 @@ constexpr auto incomplete_gamma_cf_1(const T a, const T z) noexcept -> T
 //
 
 template <typename T>
-constexpr auto incomplete_gamma_check(const T a, const T z) noexcept -> T
+constexpr auto incomplete_gamma_check(T const a, T const z) noexcept -> T
 {
     return ( // NaN check
         any_nan(a, z) ? etl::numeric_limits<T>::quiet_NaN() :

@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto tanh_cf(const T xx, int const depth) noexcept -> T
+constexpr auto tanh_cf(T const xx, int const depth) noexcept -> T
 {
     return (depth < GCEM_TANH_MAX_ITER ? // if
                 (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)
@@ -38,13 +38,13 @@ constexpr auto tanh_cf(const T xx, int const depth) noexcept -> T
 }
 
 template <typename T>
-constexpr auto tanh_begin(const T x) noexcept -> T
+constexpr auto tanh_begin(T const x) noexcept -> T
 {
     return (x / tanh_cf(x * x, 1));
 }
 
 template <typename T>
-constexpr auto tanh_check(const T x) noexcept -> T
+constexpr auto tanh_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -67,7 +67,7 @@ constexpr auto tanh_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto tanh(const T x) noexcept -> return_t<T>
+constexpr auto tanh(T const x) noexcept -> return_t<T>
 {
     return internal::tanh_check(static_cast<return_t<T>>(x));
 }

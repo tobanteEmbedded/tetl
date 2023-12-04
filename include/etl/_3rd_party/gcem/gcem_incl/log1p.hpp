@@ -31,7 +31,7 @@ namespace internal {
 // http://functions.wolfram.com/ElementaryFunctions/Log/06/01/04/01/0003/
 
 template <typename T>
-constexpr auto log1p_compute(const T x) noexcept -> T
+constexpr auto log1p_compute(T const x) noexcept -> T
 {
     // return x * ( T(1) + x * ( -T(1)/T(2) +  x * ( T(1)/T(3) +  x * (
     // -T(1)/T(4) + x/T(5) ) ) ) ); // O(x^6)
@@ -39,7 +39,7 @@ constexpr auto log1p_compute(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto log1p_check(const T x) noexcept -> T
+constexpr auto log1p_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -62,7 +62,7 @@ constexpr auto log1p_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto log1p(const T x) noexcept -> return_t<T>
+constexpr auto log1p(T const x) noexcept -> return_t<T>
 {
     return internal::log1p_check(static_cast<return_t<T>>(x));
 }

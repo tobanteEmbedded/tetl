@@ -27,7 +27,7 @@
 
 namespace internal {
 
-constexpr auto is_odd(const llint_t x) noexcept -> bool
+constexpr auto is_odd(llint_t const x) noexcept -> bool
 {
     // return( x % llint_t(2) == llint_t(0) ? false : true );
     return (x & 1U) != 0;

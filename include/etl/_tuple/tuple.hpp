@@ -89,7 +89,7 @@ public:
 
     // No. 3
     template <typename... Args>
-        requires((is_constructible_v<Ts, Args&&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
+        requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
     explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple_impl(Args&&... args)
         : tuple_leaf<Idx, Ts> {forward<Args>(args)}...
     {
@@ -182,7 +182,7 @@ public:
 
     // No. 3
     template <typename... Args>
-        requires((is_constructible_v<Ts, Args&&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
+        requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
     explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl {forward<Args>(args)...}
     {
     }

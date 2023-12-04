@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto pow_dbl(const T base, const T expTerm) noexcept -> T
+constexpr auto pow_dbl(T const base, T const expTerm) noexcept -> T
 {
     return exp(expTerm * log(base));
 }

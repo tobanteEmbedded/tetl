@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto acos_compute(const T x) noexcept -> T
+constexpr auto acos_compute(T const x) noexcept -> T
 {
     return ( // only defined on [-1,1]
         abs(x) > T(1) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -41,7 +41,7 @@ constexpr auto acos_compute(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto acos_check(const T x) noexcept -> T
+constexpr auto acos_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -64,7 +64,7 @@ constexpr auto acos_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto acos(const T x) noexcept -> return_t<T>
+constexpr auto acos(T const x) noexcept -> return_t<T>
 {
     return internal::acos_check(static_cast<return_t<T>>(x));
 }

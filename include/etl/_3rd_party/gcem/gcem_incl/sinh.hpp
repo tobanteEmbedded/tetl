@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto sinh_check(const T x) noexcept -> T
+constexpr auto sinh_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -50,7 +50,7 @@ constexpr auto sinh_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto sinh(const T x) noexcept -> return_t<T>
+constexpr auto sinh(T const x) noexcept -> return_t<T>
 {
     return internal::sinh_check(static_cast<return_t<T>>(x));
 }

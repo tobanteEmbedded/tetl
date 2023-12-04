@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto is_finite(const T x) noexcept -> bool
+constexpr auto is_finite(T const x) noexcept -> bool
 {
     return (!is_nan(x)) && (!is_inf(x));
 }

@@ -31,8 +31,8 @@ struct xoshiro128starstar {
 
     [[nodiscard]] constexpr auto operator()() noexcept -> result_type
     {
-        const uint32_t result = rotl(_state[1] * 5, 7) * 9;
-        const uint32_t t      = _state[1] << 9;
+        uint32_t const result = rotl(_state[1] * 5, 7) * 9;
+        uint32_t const t      = _state[1] << 9;
 
         _state[2] ^= _state[0];
         _state[3] ^= _state[1];

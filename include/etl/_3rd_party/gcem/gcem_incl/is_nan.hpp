@@ -30,7 +30,7 @@ namespace internal {
 // future: consider using __builtin_isnan(__x)
 
 template <typename T>
-constexpr auto is_nan(const T x) noexcept -> bool
+constexpr auto is_nan(T const x) noexcept -> bool
 {
     return x != x;
 }

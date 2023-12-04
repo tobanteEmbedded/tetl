@@ -47,7 +47,7 @@ inline auto vTaskStartScheduler() -> void { }
 
 inline auto vTaskDelay(TickType_t const xTicksToDelay) -> void { etl::ignore_unused(xTicksToDelay); }
 
-inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime, const TickType_t xTimeIncrement) -> void
+inline auto vTaskDelayUntil(TickType_t* const pxPreviousWakeTime, TickType_t const xTimeIncrement) -> void
 {
     etl::ignore_unused(pxPreviousWakeTime, xTimeIncrement);
 }

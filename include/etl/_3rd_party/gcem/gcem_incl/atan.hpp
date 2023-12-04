@@ -34,13 +34,13 @@ namespace internal {
 // Series
 
 template <typename T>
-constexpr auto atan_series_order_calc(const T x, const T xPow, const uint_t order) noexcept -> T
+constexpr auto atan_series_order_calc(T const x, T const xPow, uint_t const order) noexcept -> T
 {
     return (T(1) / (T((order - 1) * 4 - 1) * xPow) - T(1) / (T((order - 1) * 4 + 1) * xPow * x));
 }
 
 template <typename T>
-constexpr auto atan_series_order(const T x, const T xPow, const uint_t order, const uint_t maxOrder) noexcept -> T
+constexpr auto atan_series_order(T const x, T const xPow, uint_t const order, uint_t const maxOrder) noexcept -> T
 {
     return static_cast<T>(
         order == 1 ? GCEM_HALF_PI - T(1) / x + atan_series_order(x * x, pow(x, 3), order + 1, maxOrder) :
@@ -53,7 +53,7 @@ constexpr auto atan_series_order(const T x, const T xPow, const uint_t order, co
 }
 
 template <typename T>
-constexpr auto atan_series_main(const T x) noexcept -> T
+constexpr auto atan_series_main(T const x) noexcept -> T
 {
     return static_cast<T>(x < T(3) ? atan_series_order(x, x, 1U, 10U) : // O(1/x^39)
                               x < T(4) ? atan_series_order(x, x, 1U, 9U)
@@ -76,7 +76,7 @@ constexpr auto atan_series_main(const T x) noexcept -> T
 // CF
 
 template <typename T>
-constexpr auto atan_cf_recur(const T xx, const uint_t depth, const uint_t maxDepth) noexcept -> T
+constexpr auto atan_cf_recur(T const xx, uint_t const depth, uint_t const maxDepth) noexcept -> T
 {
     return (depth < maxDepth ? // if
                 T(2 * depth - 1) + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
@@ -86,7 +86,7 @@ constexpr auto atan_cf_recur(const T xx, const uint_t depth, const uint_t maxDep
 }
 
 template <typename T>
-constexpr auto atan_cf_main(const T x) noexcept -> T
+constexpr auto atan_cf_main(T const x) noexcept -> T
 {
     return (x < T(0.5)   ? x / atan_cf_recur(x * x, 1U, 15U)
             : x < T(1)   ? x / atan_cf_recur(x * x, 1U, 25U)
@@ -98,13 +98,13 @@ constexpr auto atan_cf_main(const T x) noexcept -> T
 //
 
 template <typename T>
-constexpr auto atan_begin(const T x) noexcept -> T
+constexpr auto atan_begin(T const x) noexcept -> T
 {
     return (x > T(2.5) ? atan_series_main(x) : atan_cf_main(x));
 }
 
 template <typename T>
-constexpr auto atan_check(const T x) noexcept -> T
+constexpr auto atan_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -127,7 +127,7 @@ constexpr auto atan_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto atan(const T x) noexcept -> return_t<T>
+constexpr auto atan(T const x) noexcept -> return_t<T>
 {
     return internal::atan_check(static_cast<return_t<T>>(x));
 }

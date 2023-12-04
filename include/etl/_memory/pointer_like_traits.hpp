@@ -28,13 +28,13 @@ template <typename T>
 struct pointer_like_traits<T const> {
     using non_const = pointer_like_traits<T>;
 
-    [[nodiscard]] static auto get_as_void_pointer(const T p) -> void const*
+    [[nodiscard]] static auto get_as_void_pointer(T const p) -> void const*
     {
         return non_const::get_as_void_pointer(p);
     }
 
     // NOLINTNEXTLINE(readability-const-return-type)
-    [[nodiscard]] static auto get_from_void_pointer(void const* p) -> const T
+    [[nodiscard]] static auto get_from_void_pointer(void const* p) -> T const
     {
         return non_const::get_from_void_pointer(const_cast<void*>(p));
     }

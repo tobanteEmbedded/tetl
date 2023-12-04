@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto exp_cf_recur(const T x, int const depth) noexcept -> T
+constexpr auto exp_cf_recur(T const x, int const depth) noexcept -> T
 {
     return (depth < GCEM_EXP_MAX_ITER_SMALL ? // if
                 depth == 1 ? T(1) - x / exp_cf_recur(x, depth + 1)
@@ -39,19 +39,19 @@ constexpr auto exp_cf_recur(const T x, int const depth) noexcept -> T
 }
 
 template <typename T>
-constexpr auto exp_cf(const T x) noexcept -> T
+constexpr auto exp_cf(T const x) noexcept -> T
 {
     return static_cast<T>(T(1) / exp_cf_recur(x, 1));
 }
 
 template <typename T>
-constexpr auto exp_split(const T x) noexcept -> T
+constexpr auto exp_split(T const x) noexcept -> T
 {
     return static_cast<T>(pow_integral(etl::numbers::e, find_whole(x)) * exp_cf(find_fraction(x)));
 }
 
 template <typename T>
-constexpr auto exp_check(const T x) noexcept -> T
+constexpr auto exp_check(T const x) noexcept -> T
 {
     return static_cast<T>(is_nan(x)                                    ? etl::numeric_limits<T>::quiet_NaN()
                           : is_neginf(x)                               ? T(0)
@@ -75,7 +75,7 @@ constexpr auto exp_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto exp(const T x) noexcept -> return_t<T>
+constexpr auto exp(T const x) noexcept -> return_t<T>
 {
     return internal::exp_check(static_cast<return_t<T>>(x));
 }

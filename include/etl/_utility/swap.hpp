@@ -21,7 +21,7 @@ namespace etl {
 /// \details https://en.cppreference.com/w/cpp/algorithm/swap
 template <typename T>
     requires(is_move_constructible_v<T> and is_move_assignable_v<T>)
-constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T>&& is_nothrow_move_assignable_v<T>) -> void
+constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>) -> void
 {
     T temp(move(a));
     a = move(b);

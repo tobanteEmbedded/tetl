@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto atan2_compute(const T y, const T x) noexcept -> T
+constexpr auto atan2_compute(T const y, T const x) noexcept -> T
 {
     return static_cast<T>( // NaN check
         any_nan(y, x) ? etl::numeric_limits<T>::quiet_NaN() :

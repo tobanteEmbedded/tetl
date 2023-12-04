@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto sqrt_recur(const T x, const T xn, int const count) noexcept -> T
+constexpr auto sqrt_recur(T const x, T const xn, int const count) noexcept -> T
 {
     return (abs(xn - x / xn) / (T(1) + xn) < etl::numeric_limits<T>::epsilon()
                 ? // if
@@ -39,7 +39,7 @@ constexpr auto sqrt_recur(const T x, const T xn, int const count) noexcept -> T
 }
 
 template <typename T>
-constexpr auto sqrt_check(const T x, const T mVal) noexcept -> T
+constexpr auto sqrt_check(T const x, T const mVal) noexcept -> T
 {
     return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                       //
@@ -67,7 +67,7 @@ constexpr auto sqrt_check(const T x, const T mVal) noexcept -> T
  */
 
 template <typename T>
-constexpr auto sqrt(const T x) noexcept -> return_t<T>
+constexpr auto sqrt(T const x) noexcept -> return_t<T>
 {
     return internal::sqrt_check(static_cast<return_t<T>>(x), return_t<T>(1));
 }

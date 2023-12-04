@@ -60,25 +60,25 @@ constexpr auto lgamma_coef_term(long double const x) noexcept -> long double
 }
 
 template <typename T>
-constexpr auto lgamma_term_2(const T x) noexcept -> T
+constexpr auto lgamma_term_2(T const x) noexcept -> T
 { //
     return (T(GCEM_LOG_SQRT_2PI) + log(T(lgamma_coef_term(x))));
 }
 
 template <typename T>
-constexpr auto lgamma_term_1(const T x) noexcept -> T
+constexpr auto lgamma_term_1(T const x) noexcept -> T
 { // note: 607/128 + 0.5 = 5.2421875
     return ((x + T(0.5)) * log(x + T(5.2421875L)) - (x + T(5.2421875L)));
 }
 
 template <typename T>
-constexpr auto lgamma_begin(const T x) noexcept -> T
+constexpr auto lgamma_begin(T const x) noexcept -> T
 { // returns lngamma(x+1)
     return (lgamma_term_1(x) + lgamma_term_2(x));
 }
 
 template <typename T>
-constexpr auto lgamma_check(const T x) noexcept -> T
+constexpr auto lgamma_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -107,7 +107,7 @@ constexpr auto lgamma_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto lgamma(const T x) noexcept -> return_t<T>
+constexpr auto lgamma(T const x) noexcept -> return_t<T>
 {
     return internal::lgamma_check(static_cast<return_t<T>>(x));
 }

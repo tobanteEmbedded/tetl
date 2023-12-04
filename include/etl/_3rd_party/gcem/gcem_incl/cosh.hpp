@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto cosh_compute(const T x) noexcept -> T
+constexpr auto cosh_compute(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -50,7 +50,7 @@ constexpr auto cosh_compute(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto cosh(const T x) noexcept -> return_t<T>
+constexpr auto cosh(T const x) noexcept -> return_t<T>
 {
     return internal::cosh_compute(static_cast<return_t<T>>(x));
 }

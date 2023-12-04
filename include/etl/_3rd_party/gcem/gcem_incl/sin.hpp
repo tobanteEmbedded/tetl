@@ -30,13 +30,13 @@
 namespace internal {
 
 template <typename T>
-constexpr auto sin_compute(const T x) noexcept -> T
+constexpr auto sin_compute(T const x) noexcept -> T
 {
     return T(2) * x / (T(1) + x * x);
 }
 
 template <typename T>
-constexpr auto sin_check(const T x) noexcept -> T
+constexpr auto sin_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -64,7 +64,7 @@ constexpr auto sin_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto sin(const T x) noexcept -> return_t<T>
+constexpr auto sin(T const x) noexcept -> return_t<T>
 {
     return internal::sin_check(static_cast<return_t<T>>(x));
 }

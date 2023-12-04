@@ -11,9 +11,9 @@ namespace etl {
 
 struct weak_ordering {
 
-    static const weak_ordering less;
-    static const weak_ordering equivalent;
-    static const weak_ordering greater;
+    static weak_ordering const less;
+    static weak_ordering const equivalent;
+    static weak_ordering const greater;
 
     constexpr operator partial_ordering() const noexcept
     {

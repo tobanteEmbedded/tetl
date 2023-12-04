@@ -25,7 +25,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto neg_zero(const T x) noexcept -> bool
+constexpr auto neg_zero(T const x) noexcept -> bool
 {
     return ((x == T(0.0)) && (copysign(T(1.0), x) == T(-1.0)));
 }

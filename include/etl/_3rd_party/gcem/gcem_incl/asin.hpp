@@ -28,7 +28,7 @@
 namespace internal {
 
 template <typename T>
-constexpr auto asin_compute(const T x) noexcept -> T
+constexpr auto asin_compute(T const x) noexcept -> T
 {
     return ( // only defined on [-1,1]
         x > T(1) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -41,7 +41,7 @@ constexpr auto asin_compute(const T x) noexcept -> T
 }
 
 template <typename T>
-constexpr auto asin_check(const T x) noexcept -> T
+constexpr auto asin_check(T const x) noexcept -> T
 {
     return ( // NaN check
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
@@ -61,7 +61,7 @@ constexpr auto asin_check(const T x) noexcept -> T
  */
 
 template <typename T>
-constexpr auto asin(const T x) noexcept -> return_t<T>
+constexpr auto asin(T const x) noexcept -> return_t<T>
 {
     return internal::asin_check(static_cast<return_t<T>>(x));
 }
