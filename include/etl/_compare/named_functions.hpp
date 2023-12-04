@@ -5,8 +5,6 @@
 
 #include "etl/_compare/partial_ordering.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 [[nodiscard]] constexpr auto is_eq(partial_ordering cmp) noexcept -> bool { return cmp == nullptr; }
@@ -17,7 +15,5 @@ namespace etl {
 [[nodiscard]] constexpr auto is_gteq(partial_ordering cmp) noexcept -> bool { return cmp >= nullptr; }
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_NAMED_FUNCTIONS_HPP

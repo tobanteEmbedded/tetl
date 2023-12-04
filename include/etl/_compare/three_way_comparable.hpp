@@ -11,8 +11,6 @@
 #include "etl/_concepts/weakly_equality_comparable_with.hpp"
 #include "etl/_type_traits/remove_reference.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 namespace detail {
 template <typename T, typename Cat>
@@ -44,7 +42,5 @@ concept three_way_comparable =
     };
 // clang-format on
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_THREE_WAY_COMPAREABLE_HPP

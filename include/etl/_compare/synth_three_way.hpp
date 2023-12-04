@@ -7,8 +7,6 @@
 #include "etl/_concepts/boolean_testable.hpp"
 #include "etl/_type_traits/declval.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 // // clang-format off
@@ -34,7 +32,5 @@ namespace etl {
 //     = decltype(synth_three_way(declval<T&>(), declval<U&>()));
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_SYNTH_THREE_WAY_HPP

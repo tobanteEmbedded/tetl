@@ -8,8 +8,6 @@
 #include "etl/_compare/weak_ordering.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 struct strong_ordering {
@@ -91,15 +89,11 @@ private:
     int8_t _value;
 };
 
-// clang-format off
-inline constexpr strong_ordering strong_ordering::less{detail::order_result::less};
-inline constexpr strong_ordering strong_ordering::equal{detail::order_result::equal};
-inline constexpr strong_ordering strong_ordering::equivalent{detail::order_result::equal};
-inline constexpr strong_ordering strong_ordering::greater{detail::order_result::greater};
-// clang-format on
+inline constexpr strong_ordering strong_ordering::less {detail::order_result::less};
+inline constexpr strong_ordering strong_ordering::equal {detail::order_result::equal};
+inline constexpr strong_ordering strong_ordering::equivalent {detail::order_result::equal};
+inline constexpr strong_ordering strong_ordering::greater {detail::order_result::greater};
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_STRONG_ORDERING_HPP

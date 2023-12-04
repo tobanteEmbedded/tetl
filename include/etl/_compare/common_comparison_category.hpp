@@ -8,8 +8,6 @@
 #include "etl/_compare/weak_ordering.hpp"
 #include "etl/_type_traits/is_same.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 namespace detail {
@@ -52,7 +50,5 @@ template <typename... Ts>
 using common_comparison_category_t = typename common_comparison_category<Ts...>::type;
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_COMMON_COMPARISON_CATEGORY_HPP

@@ -6,8 +6,6 @@
 #include "etl/_compare/detail.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 struct partial_ordering {
@@ -73,15 +71,11 @@ private:
     bool _isOrdered;
 };
 
-// clang-format off
-inline constexpr partial_ordering partial_ordering::less{detail::order_result::less};
-inline constexpr partial_ordering partial_ordering::equivalent{detail::order_result::equal};
-inline constexpr partial_ordering partial_ordering::greater{detail::order_result::greater};
-inline constexpr partial_ordering partial_ordering::unordered{detail::compare_result::unordered};
-// clang-format on
+inline constexpr partial_ordering partial_ordering::less {detail::order_result::less};
+inline constexpr partial_ordering partial_ordering::equivalent {detail::order_result::equal};
+inline constexpr partial_ordering partial_ordering::greater {detail::order_result::greater};
+inline constexpr partial_ordering partial_ordering::unordered {detail::compare_result::unordered};
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_PARTIAL_ORDERING_HPP

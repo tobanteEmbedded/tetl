@@ -7,8 +7,6 @@
 #include "etl/_compare/partial_ordering.hpp"
 #include "etl/_cstddef/nullptr_t.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 struct weak_ordering {
@@ -71,14 +69,10 @@ private:
     int8_t _value;
 };
 
-// clang-format off
-inline constexpr weak_ordering weak_ordering::less{detail::order_result::less};
-inline constexpr weak_ordering weak_ordering::equivalent{detail::order_result::equal};
-inline constexpr weak_ordering weak_ordering::greater{detail::order_result::greater};
-// clang-format on
+inline constexpr weak_ordering weak_ordering::less {detail::order_result::less};
+inline constexpr weak_ordering weak_ordering::equivalent {detail::order_result::equal};
+inline constexpr weak_ordering weak_ordering::greater {detail::order_result::greater};
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_WEAK_ORDERING_HPP

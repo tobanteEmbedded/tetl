@@ -6,8 +6,6 @@
 #include "etl/_type_traits/declval.hpp"
 #include "etl/_type_traits/remove_reference.hpp"
 
-#if defined(__cpp_impl_three_way_comparison)
-
 namespace etl {
 
 // recommended by Casey Carter
@@ -30,7 +28,5 @@ struct compare_three_way_result<T, U> {
 };
 
 } // namespace etl
-
-#endif
 
 #endif // TETL_COMPARE_COMMON_THREE_WAY_RESULT_HPP
