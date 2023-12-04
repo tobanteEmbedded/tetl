@@ -21,8 +21,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(float x, float y) noexcept -> float
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
+    if (etl::isinf(x) or etl::isinf(y)) { return TETL_BUILTIN_HUGE_VALF; }
+    if (etl::isnan(x) or etl::isnan(y)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -36,8 +36,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypotf(float x, float y) noexcept -> float
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
+    if (etl::isinf(x) or etl::isinf(y)) { return TETL_BUILTIN_HUGE_VALF; }
+    if (etl::isnan(x) or etl::isnan(y)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -51,8 +51,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(double x, double y) noexcept -> double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN(""); }
+    if (etl::isinf(x) or etl::isinf(y)) { return TETL_BUILTIN_HUGE_VAL; }
+    if (etl::isnan(x) or etl::isnan(y)) { return TETL_BUILTIN_NAN(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -66,8 +66,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(long double x, long double y) noexcept -> long double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
+    if (etl::isinf(x) or etl::isinf(y)) { return TETL_BUILTIN_HUGE_VALL; }
+    if (etl::isnan(x) or etl::isnan(y)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -81,8 +81,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypotl(long double x, long double y) noexcept -> long double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
+    if (etl::isinf(x) or etl::isinf(y)) { return TETL_BUILTIN_HUGE_VALL; }
+    if (etl::isnan(x) or etl::isnan(y)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y);
 }
 
@@ -96,8 +96,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(float x, float y, float z) noexcept -> float
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALF; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANF(""); }
+    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) { return TETL_BUILTIN_HUGE_VALF; }
+    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) { return TETL_BUILTIN_NANF(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 
@@ -111,8 +111,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(double x, double y, double z) noexcept -> double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VAL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NAN(""); }
+    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) { return TETL_BUILTIN_HUGE_VAL; }
+    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) { return TETL_BUILTIN_NAN(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 
@@ -126,8 +126,8 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/numeric/math/hypot
 [[nodiscard]] constexpr auto hypot(long double x, long double y, long double z) noexcept -> long double
 {
-    if (etl::isinf(x) || etl::isinf(x)) { return TETL_BUILTIN_HUGE_VALL; }
-    if (etl::isnan(x) || etl::isnan(x)) { return TETL_BUILTIN_NANL(""); }
+    if (etl::isinf(x) or etl::isinf(y) or etl::isinf(z)) { return TETL_BUILTIN_HUGE_VALL; }
+    if (etl::isnan(x) or etl::isnan(y) or etl::isnan(z)) { return TETL_BUILTIN_NANL(""); }
     return etl::sqrt(x * x + y * y + z * z);
 }
 
