@@ -7,7 +7,6 @@
 #include "etl/_concepts/convertible_to.hpp"
 #include "etl/_type_traits/remove_reference.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 // clang-format off
@@ -22,6 +21,5 @@ concept weakly_equality_comparable_with =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_WEAKLY_EQUALITY_COMPAREABLE_WITH_HPP

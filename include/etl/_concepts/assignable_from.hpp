@@ -9,7 +9,6 @@
 #include "etl/_type_traits/remove_reference.hpp"
 #include "etl/_utility/forward.hpp"
 
-#if defined(__cpp_concepts)
 namespace etl {
 
 // clang-format off
@@ -25,6 +24,5 @@ concept assignable_from =
 // clang-format on
 
 } // namespace etl
-#endif
 
 #endif // TETL_CONCEPTS_ASSIGNABLE_FROM_HPP
