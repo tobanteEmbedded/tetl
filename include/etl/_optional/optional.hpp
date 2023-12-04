@@ -3,6 +3,9 @@
 #ifndef TETL_OPTIONAL_OPTIONAL_HPP
 #define TETL_OPTIONAL_OPTIONAL_HPP
 
+#include "etl/_concepts/copy_constructible.hpp"
+#include "etl/_concepts/move_constructible.hpp"
+#include "etl/_concepts/same_as.hpp"
 #include "etl/_config/all.hpp"
 #include "etl/_exception/raise.hpp"
 #include "etl/_functional/hash.hpp"
@@ -780,6 +783,20 @@ public:
     {
         if (*this) { return etl::invoke(etl::forward<F>(f), etl::move(**this)); }
         return etl::remove_cvref_t<etl::invoke_result_t<F, T const>> {};
+    }
+
+    template <typename F>
+        requires(etl::copy_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
+    constexpr auto or_else(F&& f) const& -> optional
+    {
+        return *this ? *this : etl::forward<F>(f)();
+    }
+
+    template <typename F>
+        requires(etl::move_constructible<T> and etl::same_as<etl::remove_cvref_t<etl::invoke_result_t<F>>, optional>)
+    constexpr auto or_else(F&& f) && -> optional
+    {
+        return *this ? etl::move(*this) : etl::forward<F>(f)();
     }
 
     /// \brief Implementation detail. Do not use!

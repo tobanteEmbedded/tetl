@@ -475,17 +475,38 @@ constexpr auto test() -> bool
         assert((is_same_v<typename decltype(opt55)::value_type, T*>));
     }
 
+    // and_then
     {
         auto to42 = [](auto) -> etl::optional<int> { return 42; };
 
         auto empty = etl::optional<T> {};
         assert(not static_cast<bool>(empty.and_then(to42)));
         assert(not static_cast<bool>(etl::as_const(empty).and_then(to42)));
+        assert(not static_cast<bool>(etl::optional<T>().and_then(to42)));
 
         auto one = etl::optional<T> {T(1)};
         assert(static_cast<bool>(one.and_then(to42)));
         assert(static_cast<bool>(etl::as_const(one).and_then(to42)));
         assert(static_cast<bool>(etl::optional<T>(T(1)).and_then(to42)));
+    }
+
+    // or_else
+    {
+        // lvalue
+        auto empty = etl::optional<T> {};
+        auto zero  = etl::optional<T> {T(0)};
+        assert(not empty.or_else([] { return etl::optional<T>(); }).has_value());
+        assert(empty.or_else([] { return etl::optional<T>(T(0)); }).has_value());
+        assert(zero.or_else([] { return etl::optional<T>(); }).has_value());
+
+        assert(not etl::as_const(empty).or_else([] { return etl::optional<T>(); }).has_value());
+        assert(etl::as_const(empty).or_else([] { return etl::optional<T>(T(0)); }).has_value());
+        assert(etl::as_const(zero).or_else([] { return etl::optional<T>(); }).has_value());
+
+        // rvalue
+        assert(not etl::optional<T>().or_else([] { return etl::optional<T>(); }).has_value());
+        assert(etl::optional<T>(T(0)).or_else([] { return etl::optional<T>(); }).has_value());
+        assert(etl::optional<T>().or_else([] { return etl::optional<T>(0); }).has_value());
     }
 
     return true;
