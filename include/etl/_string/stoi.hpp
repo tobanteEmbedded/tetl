@@ -11,10 +11,11 @@ namespace etl {
 namespace detail {
 
 template <etl::integral Int>
-[[nodiscard]] constexpr auto sto_impl(etl::string_view str, size_t* pos, int base) -> Int
+[[nodiscard]] constexpr auto sto_impl(etl::string_view str, etl::size_t* pos, int base) -> Int
 {
-    auto const res = detail::string_to_integer<Int, detail::skip_whitespace::yes>(str.data(), str.size(), base);
-    if (pos != nullptr) { *pos = etl::distance(str.data(), res.end); }
+    constexpr auto trim = detail::skip_whitespace::yes;
+    auto const res      = detail::string_to_integer<Int, trim>(str.data(), str.size(), static_cast<Int>(base));
+    if (pos != nullptr) { *pos = static_cast<etl::size_t>(etl::distance(str.data(), res.end)); }
     return res.value;
 }
 
@@ -26,7 +27,7 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto stoi(etl::string_view str, size_t* pos = nullptr, int base = 10) -> int
+[[nodiscard]] constexpr auto stoi(etl::string_view str, etl::size_t* pos = nullptr, int base = 10) -> int
 {
     return detail::sto_impl<int>(str, pos, base);
 }
@@ -37,7 +38,7 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto stol(etl::string_view str, size_t* pos = nullptr, int base = 10) -> long
+[[nodiscard]] constexpr auto stol(etl::string_view str, etl::size_t* pos = nullptr, int base = 10) -> long
 {
     return detail::sto_impl<long>(str, pos, base);
 }
@@ -48,7 +49,7 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto stoll(etl::string_view str, size_t* pos = nullptr, int base = 10) -> long long
+[[nodiscard]] constexpr auto stoll(etl::string_view str, etl::size_t* pos = nullptr, int base = 10) -> long long
 {
     return detail::sto_impl<long long>(str, pos, base);
 }
@@ -59,7 +60,7 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto stoul(etl::string_view str, size_t* pos = nullptr, int base = 10) -> unsigned long
+[[nodiscard]] constexpr auto stoul(etl::string_view str, etl::size_t* pos = nullptr, int base = 10) -> unsigned long
 {
     return detail::sto_impl<unsigned long>(str, pos, base);
 }
@@ -70,7 +71,8 @@ template <etl::integral Int>
 /// processed.
 /// \param base The number base.
 /// \returns Integer value corresponding to the content of str.
-[[nodiscard]] constexpr auto stoull(etl::string_view str, size_t* pos = nullptr, int base = 10) -> unsigned long long
+[[nodiscard]] constexpr auto stoull(etl::string_view str, etl::size_t* pos = nullptr, int base = 10)
+    -> unsigned long long
 {
     return detail::sto_impl<unsigned long long>(str, pos, base);
 }
