@@ -1,18 +1,30 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/string.hpp"
-
-#include "etl/string_view.hpp"
+#include <etl/string.hpp>
 
 #include "testing/testing.hpp"
-
-using namespace etl::literals;
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert((etl::stoi(T {"0"}) == 0));
+    {
+        auto count = etl::size_t(0);
+        assert((etl::stoi(T {"0"}, &count, 10) == 0));
+        assert(count == 1);
+    }
+
+    {
+        auto count = etl::size_t(0);
+        assert((etl::stoi(T {" 123 "}, &count, 10) == 123));
+        assert(count == 4);
+    }
+
+    assert((etl::stoi(T {" 0"}) == 0));
+    assert((etl::stoi(T {" 0 "}) == 0));
     assert((etl::stoi(T {"1"}) == 1));
+    assert((etl::stoi(T {"-1"}) == -1));
+    assert((etl::stoi(T {" -1"}) == -1));
+    assert((etl::stoi(T {" -1 "}) == -1));
     assert((etl::stoi(T {"2"}) == 2));
     assert((etl::stoi(T {"3"}) == 3));
     assert((etl::stoi(T {"4"}) == 4));
@@ -25,6 +37,8 @@ constexpr auto test() -> bool
     assert((etl::stoi(T {"11"}) == 11));
     assert((etl::stoi(T {"99"}) == 99));
     assert((etl::stoi(T {"11123"}) == 11123));
+    assert((etl::stoi(T {" 11123"}) == 11123));
+    assert((etl::stoi(T {" 11123 "}) == 11123));
 
     assert((etl::stol(T {"0"}) == 0L));
     assert((etl::stol(T {"1"}) == 1L));
