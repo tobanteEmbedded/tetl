@@ -42,6 +42,17 @@ constexpr auto test() -> bool
     auto cref = etl::cref(c);
     assert(etl::invoke(&Class<T>::get_num, cref, T(42)) == T(42));
     assert(etl::invoke(&Class<T>::num, cref) == T(0));
+
+    // Using with a free function:
+    auto isSame   = [](T lhs, T rhs) { return etl::equal_to {}(lhs, rhs); };
+    auto isDiffer = etl::not_fn(isSame);
+    assert(isDiffer(8, 8) == false); // equivalent to: !isSame(8, 8) == false
+    assert(isDiffer(6, 9) == true);  // equivalent to: !isSame(8, 0) == true
+
+    auto isDifferStatic = etl::not_fn<isSame>();
+    assert(isDifferStatic(8, 8) == false); // equivalent to: !isSame(8, 8) == false
+    assert(isDifferStatic(6, 9) == true);  // equivalent to: !isSame(8, 0) == true
+
     return true;
 }
 
