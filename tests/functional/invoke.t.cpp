@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/functional.hpp"
+#include <etl/functional.hpp>
 
-#include "etl/cstdint.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/testing.hpp"
 
@@ -46,12 +47,14 @@ constexpr auto test() -> bool
     // Using with a free function:
     auto isSame   = [](T lhs, T rhs) { return etl::equal_to {}(lhs, rhs); };
     auto isDiffer = etl::not_fn(isSame);
-    assert(isDiffer(8, 8) == false); // equivalent to: !isSame(8, 8) == false
-    assert(isDiffer(6, 9) == true);  // equivalent to: !isSame(8, 0) == true
+    assert(isDiffer(T(6), T(9)));
+    assert(not isDiffer(T(8), T(8)));
+    assert(etl::as_const(isDiffer)(T(6), T(9)));
+    assert(not etl::as_const(isDiffer)(T(8), T(8)));
 
-    auto isDifferStatic = etl::not_fn<isSame>();
-    assert(isDifferStatic(8, 8) == false); // equivalent to: !isSame(8, 8) == false
-    assert(isDifferStatic(6, 9) == true);  // equivalent to: !isSame(8, 0) == true
+    auto isDifferStateless = etl::not_fn<isSame>();
+    assert(isDifferStateless(T(6), T(9)));
+    assert(not isDifferStateless(T(8), T(8)));
 
     return true;
 }
