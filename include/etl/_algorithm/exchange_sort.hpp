@@ -26,7 +26,7 @@ constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> voi
 template <typename RandomIt>
 constexpr auto exchange_sort(RandomIt first, RandomIt last) -> void
 {
-    exchange_sort(first, last, less<> {});
+    exchange_sort(first, last, less {});
 }
 
 } // namespace etl

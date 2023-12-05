@@ -25,7 +25,7 @@ constexpr auto merge_sort(BidirIt first, BidirIt last, Compare comp) -> void
 template <typename BidirIt>
 constexpr auto merge_sort(BidirIt first, BidirIt last) -> void
 {
-    merge_sort(first, last, less<> {});
+    merge_sort(first, last, less {});
 }
 
 } // namespace etl

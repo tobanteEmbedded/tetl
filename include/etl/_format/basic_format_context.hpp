@@ -47,8 +47,7 @@ private:
 /// Implementations are encouraged to use an iterator to type-erased buffer type
 /// that supports appending to any contiguous and resizable container.
 ///
-/// The behavior is undefined if OutputIt does not model output_iterator<const
-/// CharT&>.
+/// The behavior is undefined if OutputIt does not model output_iterator<const CharT&>.
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/basic_format_context
 using format_context  = basic_format_context<back_insert_iterator<detail::fmt_buffer<char>>, char>;

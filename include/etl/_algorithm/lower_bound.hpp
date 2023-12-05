@@ -43,7 +43,7 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {
-    return lower_bound(first, last, value, less<> {});
+    return lower_bound(first, last, value, less {});
 }
 
 } // namespace etl

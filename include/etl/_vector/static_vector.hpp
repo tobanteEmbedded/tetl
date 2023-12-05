@@ -736,7 +736,7 @@ constexpr auto swap(static_vector<T, Capacity>& lhs, static_vector<T, Capacity>&
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    if (size(lhs) == size(rhs)) { return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), equal_to<> {}); }
+    if (size(lhs) == size(rhs)) { return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), equal_to {}); }
 
     return false;
 }

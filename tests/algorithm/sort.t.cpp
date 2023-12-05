@@ -123,7 +123,7 @@ constexpr auto test_sort() -> bool
     // already sorted
     {
         auto src = etl::array<T, 4> {T {1}, T {2}, T {3}, T {4}};
-        etl::nth_element(begin(src), begin(src) + 1, end(src), etl::less<> {});
+        etl::nth_element(begin(src), begin(src) + 1, end(src), etl::less {});
         assert(src[1] == T {2});
     }
 
@@ -155,7 +155,7 @@ constexpr auto test_sort() -> bool
             T {1},
         };
 
-        assert(etl::is_sorted(begin(src), end(src), etl::greater<> {}));
+        assert(etl::is_sorted(begin(src), end(src), etl::greater {}));
         assert(!etl::is_sorted(begin(src), end(src)));
     }
 
@@ -168,7 +168,7 @@ constexpr auto test_sort() -> bool
             T {42},
         };
 
-        assert(!(etl::is_sorted(begin(src), end(src), etl::greater<> {})));
+        assert(!(etl::is_sorted(begin(src), end(src), etl::greater {})));
     }
 
     // empty range always returns true

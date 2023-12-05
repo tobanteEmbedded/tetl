@@ -29,7 +29,7 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> Forwar
 template <typename ForwardIt>
 constexpr auto unique(ForwardIt first, ForwardIt last) -> ForwardIt
 {
-    return unique(first, last, equal_to<> {});
+    return unique(first, last, equal_to {});
 }
 
 } // namespace etl

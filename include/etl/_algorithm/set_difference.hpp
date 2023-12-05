@@ -33,7 +33,7 @@ template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination)
     -> OutputIt
 {
-    return set_difference(first1, last1, first2, last2, destination, less<> {});
+    return set_difference(first1, last1, first2, last2, destination, less {});
 }
 
 } // namespace etl

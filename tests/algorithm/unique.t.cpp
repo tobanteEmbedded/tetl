@@ -23,7 +23,7 @@ constexpr auto test() -> bool
     // not_equal_to
     {
         auto data = etl::array<T, 5> {T(1), T(1), T(1), T(2), T(3)};
-        etl::unique(begin(data), end(data), etl::not_equal_to<> {});
+        etl::unique(begin(data), end(data), etl::not_equal_to {});
         assert(data[0] == T(1));
         assert(data[1] == T(1));
         assert(data[2] == T(1));
@@ -45,7 +45,7 @@ constexpr auto test() -> bool
         auto src = etl::array<T, 5> {T(1), T(1), T(1), T(2), T(3)};
         decltype(src) dest {};
 
-        auto cmp = etl::not_equal_to<> {};
+        auto cmp = etl::not_equal_to {};
         etl::unique_copy(begin(src), end(src), begin(dest), cmp);
         assert(dest[0] == T(1));
         assert(dest[1] == T(1));

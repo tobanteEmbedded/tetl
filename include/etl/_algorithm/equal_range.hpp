@@ -23,7 +23,7 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto equal_range(ForwardIt first, ForwardIt last, T const& value) -> pair<ForwardIt, ForwardIt>
 {
-    return equal_range(first, last, value, less<> {});
+    return equal_range(first, last, value, less {});
 }
 
 } // namespace etl

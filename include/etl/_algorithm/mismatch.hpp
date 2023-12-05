@@ -33,7 +33,7 @@ template <typename InputIt1, typename InputIt2, typename Predicate>
 template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2) -> pair<InputIt1, InputIt2>
 {
-    return mismatch(first1, last1, first2, equal_to<> {});
+    return mismatch(first1, last1, first2, equal_to {});
 }
 
 template <typename InputIt1, typename InputIt2, typename Predicate>
@@ -51,7 +51,7 @@ template <typename InputIt1, typename InputIt2>
 [[nodiscard]] constexpr auto mismatch(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
     -> pair<InputIt1, InputIt2>
 {
-    return mismatch(first1, last1, first2, last2, equal_to<> {});
+    return mismatch(first1, last1, first2, last2, equal_to {});
 }
 
 } // namespace etl

@@ -46,7 +46,7 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto upper_bound(ForwardIt first, ForwardIt last, T const& value) -> ForwardIt
 {
-    return upper_bound(first, last, value, less<> {});
+    return upper_bound(first, last, value, less {});
 }
 
 } // namespace etl

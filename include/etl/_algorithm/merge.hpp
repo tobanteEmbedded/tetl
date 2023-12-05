@@ -30,7 +30,7 @@ constexpr auto merge(
 template <typename InputIt1, typename InputIt2, typename OutputIt>
 constexpr auto merge(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination) -> OutputIt
 {
-    return merge(first1, last1, first2, last2, destination, less<> {});
+    return merge(first1, last1, first2, last2, destination, less {});
 }
 
 } // namespace etl

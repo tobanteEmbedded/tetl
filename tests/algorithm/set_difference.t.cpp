@@ -41,8 +41,8 @@ constexpr auto test() -> bool
     etl::array<T, 3> newOrders {T(2), T(5), T(7)};
     etl::static_vector<T, 2> cutOrders {};
 
-    set_difference(oldOrders.begin(), oldOrders.end(), newOrders.begin(), newOrders.end(), back_inserter(cutOrders),
-        etl::less<> {});
+    set_difference(
+        oldOrders.begin(), oldOrders.end(), newOrders.begin(), newOrders.end(), back_inserter(cutOrders), etl::less {});
 
     assert((oldOrders[0] == T {1}));
     assert((oldOrders[1] == T {2}));

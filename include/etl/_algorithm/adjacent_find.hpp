@@ -36,7 +36,7 @@ template <typename ForwardIt, typename Predicate>
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
 {
-    return adjacent_find(first, last, equal_to<> {});
+    return adjacent_find(first, last, equal_to {});
 }
 
 /// @}

@@ -24,7 +24,7 @@ constexpr auto bubble_sort(RandomIt first, RandomIt last, Compare comp) -> void
 template <typename RandomIt>
 constexpr auto bubble_sort(RandomIt first, RandomIt last) -> void
 {
-    bubble_sort(first, last, less<> {});
+    bubble_sort(first, last, less {});
 }
 
 } // namespace etl

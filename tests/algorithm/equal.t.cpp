@@ -13,7 +13,7 @@ constexpr auto test() -> bool
 {
     auto lhs = etl::array<T, 2> {T {0}, T {1}};
     auto rhs = etl::array<T, 2> {T {0}, T {1}};
-    auto cmp = etl::not_equal_to<> {};
+    auto cmp = etl::not_equal_to {};
 
     assert(etl::equal(begin(lhs), end(lhs), begin(rhs)));
     assert(!etl::equal(begin(lhs), end(lhs), begin(rhs), cmp));
