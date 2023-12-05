@@ -30,14 +30,14 @@ concept has_adl_begin = not has_member_begin<T> and ranges::detail::can_borrow<T
 
 struct begin_fn {
     template <typename T>
-        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
+        requires(sizeof(T) >= 0) // NOLINT(bugprone-sizeof-expression)
     [[nodiscard]] constexpr auto operator()(T (&t)[]) const noexcept
     {
         return t + 0;
     }
 
     template <typename T, etl::size_t Size>
-        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
+        requires(sizeof(T) >= 0) // NOLINT(bugprone-sizeof-expression)
     [[nodiscard]] constexpr auto operator()(T (&t)[Size]) const noexcept
     {
         return t + 0;

@@ -32,7 +32,7 @@ concept has_adl_end = not has_member_end<T> and ranges::detail::can_borrow<T> an
 
 struct end_fn {
     template <typename T, etl::size_t Size>
-        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
+        requires(sizeof(T) >= 0) // NOLINT(bugprone-sizeof-expression)
     [[nodiscard]] constexpr auto operator()(T (&t)[Size]) const noexcept
     {
         return t + Size;
