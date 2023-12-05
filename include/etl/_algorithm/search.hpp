@@ -43,8 +43,7 @@ template <typename ForwardIt1, typename ForwardIt2>
 [[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
     -> ForwardIt1
 {
-    auto const eq = [](auto const& l, auto const& r) { return l == r; };
-    return search(first, last, sFirst, sLast, eq);
+    return search(first, last, sFirst, sLast, [](auto const& lhs, auto const& rhs) { return lhs == rhs; });
 }
 
 template <typename ForwardIt, typename Searcher>

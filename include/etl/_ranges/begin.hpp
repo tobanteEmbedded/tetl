@@ -9,7 +9,7 @@
 
 namespace etl::ranges {
 
-namespace _begin {
+namespace adl_check {
 
 auto begin(auto&) -> void       = delete;
 auto begin(auto const&) -> void = delete;
@@ -21,48 +21,46 @@ concept has_member_begin = ranges::detail::can_borrow<T> and requires(T&& t) {
 };
 
 template <typename T>
-concept adl_begin = not has_member_begin<T> and ranges::detail::can_borrow<T> and requires(T&& t) {
+concept has_adl_begin = not has_member_begin<T> and ranges::detail::can_borrow<T> and requires(T&& t) {
     { decay_copy(begin(t)) } -> input_or_output_iterator;
 };
 // clang-format on
 
-struct fn {
+} // namespace adl_check
+
+struct begin_fn {
     template <typename T>
-        requires(sizeof(T) >= 0)
+        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
     [[nodiscard]] constexpr auto operator()(T (&t)[]) const noexcept
     {
         return t + 0;
     }
 
     template <typename T, etl::size_t Size>
-        requires(sizeof(T) >= 0)
+        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
     [[nodiscard]] constexpr auto operator()(T (&t)[Size]) const noexcept
     {
         return t + 0;
     }
 
     template <typename T>
-        requires has_member_begin<T>
+        requires adl_check::has_member_begin<T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(t.begin())))
     {
         return decay_copy(t.begin());
     }
 
     template <typename T>
-        requires adl_begin<T>
+        requires adl_check::has_adl_begin<T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(begin(t))))
     {
         return decay_copy(begin(t));
     }
 
-    void operator()(auto&&) const = delete;
+    auto operator()(auto&&) const -> void = delete;
 };
 
-} // namespace _begin
-
-inline namespace cpo {
-inline constexpr auto begin = _begin::fn {};
-} // namespace cpo
+inline constexpr auto begin = begin_fn {};
 
 } // namespace etl::ranges
 

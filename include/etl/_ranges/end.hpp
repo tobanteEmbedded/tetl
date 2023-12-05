@@ -11,7 +11,7 @@
 
 namespace etl::ranges {
 
-namespace _end {
+namespace adl_checks {
 
 auto end(auto&) -> void       = delete;
 auto end(auto const&) -> void = delete;
@@ -23,41 +23,39 @@ concept has_member_end = ranges::detail::can_borrow<T> and requires(T&& t) {
 };
 
 template <typename T>
-concept adl_end = not has_member_end<T> and ranges::detail::can_borrow<T> and requires(T&& t) {
+concept has_adl_end = not has_member_end<T> and ranges::detail::can_borrow<T> and requires(T&& t) {
     { decay_copy(end(t)) } -> etl::sentinel_for<etl::ranges::iterator_t<T>>;
 };
 // clang-format on
 
-struct fn {
+} // namespace adl_checks
+
+struct end_fn {
     template <typename T, etl::size_t Size>
-        requires(sizeof(T) >= 0)
+        requires(sizeof(T) >= 0) // bugprone-sizeof-expression
     [[nodiscard]] constexpr auto operator()(T (&t)[Size]) const noexcept
     {
         return t + Size;
     }
 
     template <typename T>
-        requires has_member_end<T>
+        requires adl_checks::has_member_end<T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(t.end())))
     {
         return decay_copy(t.end());
     }
 
     template <typename T>
-        requires adl_end<T>
+        requires adl_checks::has_adl_end<T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(end(t))))
     {
         return decay_copy(end(t));
     }
 
-    void operator()(auto&&) const = delete;
+    auto operator()(auto&&) const -> void = delete;
 };
 
-} // namespace _end
-
-inline namespace cpo {
-inline constexpr auto end = _end::fn {};
-} // namespace cpo
+inline constexpr auto end = end_fn {};
 
 } // namespace etl::ranges
 

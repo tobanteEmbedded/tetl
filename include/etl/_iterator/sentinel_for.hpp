@@ -9,8 +9,8 @@
 
 namespace etl {
 
-template <typename S, typename I>
-concept sentinel_for = semiregular<S> and input_or_output_iterator<I> and weakly_equality_comparable_with<S, I>;
+template <typename S, typename Iter>
+concept sentinel_for = semiregular<S> and input_or_output_iterator<Iter> and weakly_equality_comparable_with<S, Iter>;
 
 } // namespace etl
 
