@@ -10,7 +10,7 @@
 namespace etl::detail {
 
 // clang-format off
-template<class M>
+template<typename M>
 concept layout_mapping_alike = requires {                         // exposition only
   requires detail::is_extents<typename M::extents_type>;
   { M::is_always_strided() } -> same_as<bool>;

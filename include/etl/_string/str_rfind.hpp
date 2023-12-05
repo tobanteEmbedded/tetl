@@ -9,7 +9,7 @@
 
 namespace etl::detail {
 
-template <class CharT, class SizeT, class Traits, SizeT NPos>
+template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
 [[nodiscard]] constexpr auto str_rfind(CharT const* str, SizeT size, CharT c, SizeT pos) noexcept -> SizeT
 {
     if (size < 1) { return NPos; }
@@ -25,7 +25,7 @@ template <class CharT, class SizeT, class Traits, SizeT NPos>
     return NPos;
 }
 
-template <class CharT, class SizeT, class Traits, SizeT NPos>
+template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
 [[nodiscard]] constexpr auto str_rfind(CharT const* str, SizeT size, CharT const* s, SizeT pos, SizeT n) noexcept
     -> SizeT
 {

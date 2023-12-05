@@ -12,7 +12,7 @@
 namespace etl {
 
 // clang-format off
-template <class T, class U>
+template <typename T, typename U>
 concept common_with =
   same_as<common_type_t<T, U>, common_type_t<U, T>> &&
   requires {

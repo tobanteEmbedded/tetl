@@ -7,7 +7,7 @@
 
 namespace etl {
 
-template <class CharT>
+template <typename CharT>
 struct char_traits;
 template <>
 struct char_traits<char>;
