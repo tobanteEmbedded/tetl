@@ -4,6 +4,7 @@
 #define TETL_TYPE_TRAITS_COMMON_REFERENCE_HPP
 
 #include "etl/_type_traits/integral_constant.hpp"
+#include "etl/_type_traits/is_same.hpp"
 
 namespace etl {
 
@@ -27,6 +28,13 @@ struct common_reference<> { };
 // if sizeof...(T) is one
 template <typename T>
 struct common_reference<T> {
+    using type = T;
+};
+
+/// \todo Ugly hack to get started with ranges implementation
+template <typename T, typename U>
+    requires is_same_v<T, U>
+struct common_reference<T, U> {
     using type = T;
 };
 
