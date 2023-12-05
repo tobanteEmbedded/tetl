@@ -10,5 +10,6 @@
 #include <etl/_ranges/decay_copy.hpp>
 #include <etl/_ranges/enable_borrowed_range.hpp>
 #include <etl/_ranges/end.hpp>
+#include <etl/_ranges/range.hpp>
 
 #endif // TETL_RANGES_HPP

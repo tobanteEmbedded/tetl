@@ -12,14 +12,18 @@
 template <typename T>
 constexpr auto test() -> bool
 {
+    assert(etl::ranges::range<etl::string_view>);
+
     {
         T data[2] {T(1), T(2)};
+        assert(etl::ranges::range<decltype(data)>);
         assert(etl::ranges::begin(data) == etl::addressof(data[0]));
         assert(etl::ranges::end(data) == etl::next(etl::addressof(data[0]), 2));
     }
 
     {
         auto data = etl::to_array<T>({1, 2, 3});
+        assert(etl::ranges::range<decltype(data)>);
         assert(etl::ranges::begin(data) == data.begin());
         assert(etl::ranges::end(data) == data.end());
     }
@@ -29,8 +33,17 @@ constexpr auto test() -> bool
 
 constexpr auto test_all() -> bool
 {
+    assert(test<etl::uint8_t>());
+    assert(test<etl::int8_t>());
+    assert(test<etl::uint16_t>());
+    assert(test<etl::int16_t>());
+    assert(test<etl::uint32_t>());
+    assert(test<etl::int32_t>());
+    assert(test<etl::uint64_t>());
+    assert(test<etl::int64_t>());
     assert(test<float>());
     assert(test<double>());
+
     return true;
 }
 
