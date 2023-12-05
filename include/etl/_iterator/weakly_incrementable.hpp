@@ -11,11 +11,11 @@
 namespace etl {
 
 // clang-format off
-template <typename It>
-concept weakly_incrementable = etl::movable<It> && requires(It i) {
-    typename etl::iter_difference_t<It>;
-    requires etl::signed_integral<etl::iter_difference_t<It>>;
-    { ++i } -> etl::same_as<It&>;
+template <typename Iter>
+concept weakly_incrementable = etl::movable<Iter> && requires(Iter i) {
+    typename etl::iter_difference_t<Iter>;
+    requires etl::signed_integral<etl::iter_difference_t<Iter>>;
+    { ++i } -> etl::same_as<Iter&>;
     i++;
 };
 // clang-format on
