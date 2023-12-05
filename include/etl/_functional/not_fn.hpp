@@ -22,6 +22,7 @@ concept negate_invocable = requires(F&& f, Args&&... args) {
 
 template <typename F>
 struct not_fn_t {
+    F f;
 
     template <typename... Args>
         requires(negate_invocable<F&, Args...>)
@@ -70,8 +71,6 @@ struct not_fn_t {
     template <typename... Args>
         requires(not negate_invocable<F const, Args...>)
     auto operator()(Args&&...) const&& -> void = delete;
-
-    F f;
 };
 
 template <auto ConstFn>
