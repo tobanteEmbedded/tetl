@@ -26,6 +26,7 @@
 #include <etl/_iterator/rbegin.hpp>
 #include <etl/_iterator/rend.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
+#include <etl/_iterator/sentinel_for.hpp>
 #include <etl/_iterator/size.hpp>
 #include <etl/_iterator/tags.hpp>
 #include <etl/_iterator/weakly_incrementable.hpp>

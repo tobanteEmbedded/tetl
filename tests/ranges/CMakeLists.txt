@@ -1,3 +1,3 @@
 project(ranges)
 
-tetl_add_test(${PROJECT_NAME} begin)
+tetl_add_test(${PROJECT_NAME} access)
