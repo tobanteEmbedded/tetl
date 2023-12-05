@@ -506,7 +506,7 @@ constexpr auto test() -> bool
         // rvalue
         assert(not etl::optional<T>().or_else([] { return etl::optional<T>(); }).has_value());
         assert(etl::optional<T>(T(0)).or_else([] { return etl::optional<T>(); }).has_value());
-        assert(etl::optional<T>().or_else([] { return etl::optional<T>(0); }).has_value());
+        assert(etl::optional<T>().or_else([] { return etl::optional<T>(T(0)); }).has_value());
     }
 
     return true;
