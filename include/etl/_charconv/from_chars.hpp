@@ -28,13 +28,14 @@ struct from_chars_result {
 /// value is unmodified, otherwise the characters matching the pattern are
 /// interpreted as a text representation of an arithmetic value, which is stored
 /// in value.
-template <integral T>
-    requires(not same_as<T, bool>)
-[[nodiscard]] constexpr auto from_chars(char const* first, char const* last, T& value, int base = 10)
+template <integral Int>
+    requires(not same_as<Int, bool>)
+[[nodiscard]] constexpr auto from_chars(char const* first, char const* last, Int& value, int base = 10)
     -> from_chars_result
 {
+    constexpr auto skip        = detail::skip_whitespace::no;
     auto const length          = static_cast<etl::size_t>(etl::distance(first, last));
-    auto const [end, err, val] = detail::string_to_integer<T, detail::skip_whitespace::no>(first, length, base);
+    auto const [end, err, val] = detail::string_to_integer<Int, skip>(first, length, static_cast<Int>(base));
 
     if (err == detail::string_to_integer_error::overflow) {
         return from_chars_result {.ptr = first, .ec = errc::result_out_of_range};

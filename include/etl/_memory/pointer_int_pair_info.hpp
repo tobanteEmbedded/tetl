@@ -38,10 +38,13 @@ struct pointer_int_pair_info {
 
     [[nodiscard]] static auto get_pointer(intptr_t value) -> pointer_type
     {
-        return pointer_traits::get_from_void_pointer(bit_cast<void*>(value & ptr_mask));
+        return pointer_traits::get_from_void_pointer(bit_cast<void*>(static_cast<etl::uintptr_t>(value) & ptr_mask));
     }
 
-    [[nodiscard]] static auto get_int(intptr_t value) -> intptr_t { return (value >> int_shift) & int_mask; }
+    [[nodiscard]] static auto get_int(intptr_t value) -> intptr_t
+    {
+        return (static_cast<etl::uintptr_t>(value) >> int_shift) & int_mask;
+    }
 
     [[nodiscard]] static auto update_ptr(intptr_t originalValue, pointer_type ptr) -> intptr_t
     {
