@@ -6,6 +6,7 @@
 #include <etl/_config/all.hpp>
 
 #include <etl/_mdspan/default_accessor.hpp>
+#include <etl/_mdspan/layout_left.hpp>
 #include <etl/_mdspan/layout_right.hpp>
 #include <etl/_type_traits/extent.hpp>
 #include <etl/_type_traits/is_array.hpp>
