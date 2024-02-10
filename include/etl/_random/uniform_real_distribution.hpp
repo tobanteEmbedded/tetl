@@ -71,7 +71,7 @@ struct uniform_real_distribution {
         // x = a + u * (b - a)
         auto const a = parm.a();
         auto const b = parm.b();
-        auto const u = generate_canonical<RealType, minBits>(g);
+        auto const u = etl::generate_canonical<RealType, minBits>(g);
         return a + u * (b - a);
     }
 
