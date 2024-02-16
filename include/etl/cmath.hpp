@@ -32,6 +32,7 @@
 #include "etl/_cmath/lerp.hpp"
 #include "etl/_cmath/lgamma.hpp"
 #include "etl/_cmath/log.hpp"
+#include "etl/_cmath/log10.hpp"
 #include "etl/_cmath/log1p.hpp"
 #include "etl/_cmath/log2.hpp"
 #include "etl/_cmath/lrint.hpp"
