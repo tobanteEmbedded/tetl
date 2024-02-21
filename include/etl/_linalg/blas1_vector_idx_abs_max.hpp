@@ -10,7 +10,7 @@
 
 namespace etl::linalg {
 
-template <detail::in_vector InVec>
+template <in_vector InVec>
 constexpr auto idx_abs_max(InVec v) -> typename InVec::size_type
 {
     auto getValue = [](auto val) {

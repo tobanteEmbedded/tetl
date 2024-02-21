@@ -32,53 +32,6 @@ struct is_mdspan : false_type { };
 template <typename T, typename Extents, typename Layout, typename Accessor>
 struct is_mdspan<mdspan<T, Extents, Layout, Accessor>> : true_type { };
 
-template <typename T>
-concept in_vector = is_mdspan<T>::value && T::rank() == 1;
-
-template <typename T>
-concept out_vector
-    = is_mdspan<T>::value && T::rank() == 1
-      && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
-template <typename T>
-concept inout_vector
-    = is_mdspan<T>::value && T::rank() == 1
-      && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
-template <typename T>
-concept in_matrix = is_mdspan<T>::value && T::rank() == 2;
-
-template <typename T>
-concept out_matrix
-    = is_mdspan<T>::value && T::rank() == 2
-      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
-template <typename T>
-concept inout_matrix
-    = is_mdspan<T>::value && T::rank() == 2
-      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
-// template <typename T>
-// concept possibly_packed_inout_matrix =
-//     is_mdspan<T>::value && T::rank() == 2 &&
-//     is_same_v<remove_const_t<typename T::element_type>,
-//                    typename T::element_type> &&
-//     (T::is_always_unique() ||
-//      is_same_v<typename T::layout_type, layout_blas_packed>);
-
-template <typename T>
-concept in_object = is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2);
-
-template <typename T>
-concept out_object
-    = is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
-      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
-template <typename T>
-concept inout_object
-    = is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
-      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
-
 template <typename... Ts>
 using common_size_type_t = common_type_t<typename Ts::size_type...>;
 
@@ -163,5 +116,56 @@ inline constexpr auto imag_if_needed = []<typename T>(T const& val) {
 };
 
 } // namespace etl::linalg::detail
+
+namespace etl::linalg {
+
+template <typename T>
+concept in_vector = detail::is_mdspan<T>::value && T::rank() == 1;
+
+template <typename T>
+concept out_vector
+    = detail::is_mdspan<T>::value && T::rank() == 1
+      && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+template <typename T>
+concept inout_vector
+    = detail::is_mdspan<T>::value && T::rank() == 1
+      && same_as<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+template <typename T>
+concept in_matrix = detail::is_mdspan<T>::value && T::rank() == 2;
+
+template <typename T>
+concept out_matrix
+    = detail::is_mdspan<T>::value && T::rank() == 2
+      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+template <typename T>
+concept inout_matrix
+    = detail::is_mdspan<T>::value && T::rank() == 2
+      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+// template <typename T>
+// concept possibly_packed_inout_matrix =
+//     detail::is_mdspan<T>::value && T::rank() == 2 &&
+//     is_same_v<remove_const_t<typename T::element_type>,
+//                    typename T::element_type> &&
+//     (T::is_always_unique() ||
+//      is_same_v<typename T::layout_type, layout_blas_packed>);
+
+template <typename T>
+concept in_object = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2);
+
+template <typename T>
+concept out_object
+    = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
+      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+template <typename T>
+concept inout_object
+    = detail::is_mdspan<T>::value && (T::rank() == 1 || T::rank() == 2)
+      && is_same_v<remove_const_t<typename T::element_type>, typename T::element_type> && T::is_always_unique();
+
+} // namespace etl::linalg
 
 #endif // TETL_LINALG_CONCEPTS_HPP

@@ -10,7 +10,7 @@
 
 namespace etl::linalg {
 
-template <detail::in_vector InVec, typename Scalar>
+template <in_vector InVec, typename Scalar>
 constexpr auto vector_two_norm(InVec v, Scalar init) noexcept -> Scalar
 {
     auto sum = init;
@@ -24,7 +24,7 @@ constexpr auto vector_two_norm(InVec v, Scalar init) noexcept -> Scalar
     return static_cast<Scalar>(sqrt(sum));
 }
 
-template <detail::in_vector InVec>
+template <in_vector InVec>
 constexpr auto vector_two_norm(InVec v) noexcept -> typename InVec::value_type
 {
     using abs_type   = decltype(detail::abs_if_needed(declval<typename InVec::value_type>()));

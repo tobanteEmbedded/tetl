@@ -8,7 +8,7 @@
 
 namespace etl::linalg {
 
-template <detail::in_matrix InMat, detail::in_vector InVec, detail::out_vector OutVec>
+template <in_matrix InMat, in_vector InVec, out_vector OutVec>
 constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> void
 {
     // PRECONDITION(A.extent(1) == x.extent(0));

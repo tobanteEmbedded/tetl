@@ -8,7 +8,7 @@
 
 namespace etl::linalg {
 
-template <typename Scalar, detail::inout_object InOutObj>
+template <typename Scalar, inout_object InOutObj>
 constexpr auto scale(Scalar alpha, InOutObj x) -> void
 {
     using size_type = typename InOutObj::size_type;

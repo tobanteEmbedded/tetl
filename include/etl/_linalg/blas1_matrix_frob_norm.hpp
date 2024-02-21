@@ -10,7 +10,7 @@
 
 namespace etl::linalg {
 
-template <detail::in_matrix InMat, typename Scalar>
+template <in_matrix InMat, typename Scalar>
 [[nodiscard]] constexpr auto matrix_frob_norm(InMat a, Scalar init) -> Scalar
 {
     auto result = init;
@@ -24,7 +24,7 @@ template <detail::in_matrix InMat, typename Scalar>
     return static_cast<Scalar>(sqrt(result));
 }
 
-template <detail::in_matrix InMat>
+template <in_matrix InMat>
 [[nodiscard]] constexpr auto matrix_frob_norm(InMat a)
 {
     using abs_type    = decltype(detail::abs_if_needed(declval<typename InMat::value_type>()));
