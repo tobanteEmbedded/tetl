@@ -21,6 +21,11 @@
 #ifndef GCEM_HPP
 #define GCEM_HPP
 
+#if defined(__GNUC__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
+
 #include "gcem_incl/gcem_options.hpp"
 
 // clang-format off
@@ -101,5 +106,9 @@ namespace etl::detail::gcem {
 } // namespace etl::detail::gcem
 
 // clang-format on
+
+#if defined(__GNUC__)
+    #pragma GCC diagnostic pop
+#endif
 
 #endif
