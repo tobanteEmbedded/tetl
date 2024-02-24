@@ -34,4 +34,10 @@
     #define TETL_UNLIKELY(expr) (expr)
 #endif
 
+#if defined(_MSC_VER)
+    #define TETL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+#else
+    #define TETL_NO_UNIQUE_ADDRESS [[no_unique_address]]
+#endif
+
 #endif // TETL_CONFIG_ATTRIBUTES_HPP
