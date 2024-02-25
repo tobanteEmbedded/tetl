@@ -34,8 +34,11 @@
     #define TETL_UNLIKELY(expr) (expr)
 #endif
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) and not defined(__clang__)
     #define TETL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+#elif defined(_MSC_VER) and defined(__clang__)
+    // Reenable [[msvc::no_unique_address]] for clang v18
+    #define TETL_NO_UNIQUE_ADDRESS
 #else
     #define TETL_NO_UNIQUE_ADDRESS [[no_unique_address]]
 #endif
