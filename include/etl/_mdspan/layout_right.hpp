@@ -86,7 +86,7 @@ struct layout_right::mapping {
     }
 
 private:
-    extents_type _extents {};
+    TETL_NO_UNIQUE_ADDRESS extents_type _extents {};
 };
 
 } // namespace etl

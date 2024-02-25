@@ -122,7 +122,7 @@ private:
     struct empty_array_t { };
     using array_t = conditional_t<rank_dynamic() == 0, empty_array_t, array<size_type, rank_dynamic()>>;
 
-    array_t _extents {};
+    TETL_NO_UNIQUE_ADDRESS array_t _extents {};
 };
 
 namespace detail {

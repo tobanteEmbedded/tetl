@@ -149,9 +149,9 @@ struct mdspan {
     [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
 
 private:
-    accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
-    mapping_type _map;     // NOLINT(modernize-use-default-member-init)
-    data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS accessor_type _acc;    // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS mapping_type _map;     // NOLINT(modernize-use-default-member-init)
+    TETL_NO_UNIQUE_ADDRESS data_handle_type _ptr; // NOLINT(modernize-use-default-member-init)
 };
 
 template <typename CArray>
