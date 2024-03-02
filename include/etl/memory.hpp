@@ -10,6 +10,7 @@
 #include <etl/_memory/addressof.hpp>
 #include <etl/_memory/align.hpp>
 #include <etl/_memory/allocator_arg_t.hpp>
+#include <etl/_memory/allocator_traits.hpp>
 #include <etl/_memory/assume_aligned.hpp>
 #include <etl/_memory/construct_at.hpp>
 #include <etl/_memory/default_delete.hpp>
