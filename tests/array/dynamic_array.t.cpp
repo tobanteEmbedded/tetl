@@ -2,7 +2,6 @@
 
 #include <etl/array.hpp>
 
-#include <etl/array.hpp>
 #include <etl/concepts.hpp>
 #include <etl/memory.hpp>
 #include <etl/utility.hpp>
