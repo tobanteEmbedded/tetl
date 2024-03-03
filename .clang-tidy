@@ -65,6 +65,7 @@ Checks: >
   -readability-suspicious-call-argument,
   -readability-function-size,
   -readability-identifier-length,
+  -readability-qualified-auto,
 
   -*-avoid-c-arrays,
   -*-magic-numbers,
