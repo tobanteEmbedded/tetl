@@ -20,7 +20,7 @@ struct monotonic_allocator {
 
     [[nodiscard]] auto allocate(etl::size_t n) -> T*
     {
-        if (etl::align(alignof(T), sizeof(T) * n, _ptr, _sz)) {
+        if (etl::align(alignof(T), sizeof(T) * n, _ptr, _sz) != nullptr) {
             auto* result = reinterpret_cast<T*>(_ptr);
             _ptr         = reinterpret_cast<char*>(_ptr) + sizeof(T) * n;
             _sz -= sizeof(T) * n;

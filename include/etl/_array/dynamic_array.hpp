@@ -31,10 +31,9 @@ struct dynamic_array {
 
     explicit dynamic_array(Allocator const& alloc) : _alloc {alloc} { }
 
-    dynamic_array(etl::size_t n, T const& value, Allocator const& alloc = Allocator()) : _alloc {alloc}
+    dynamic_array(etl::size_t n, T const& value, Allocator const& alloc = Allocator()) : _size {n}, _alloc {alloc}
     {
-        _ptr  = etl::allocator_traits<Allocator>::allocate(_alloc, n);
-        _size = n;
+        _ptr = etl::allocator_traits<Allocator>::allocate(_alloc, n);
         etl::uninitialized_fill(begin(), end(), value);
     }
 
