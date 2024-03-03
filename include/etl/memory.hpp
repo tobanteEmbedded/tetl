@@ -17,13 +17,16 @@
 #include <etl/_memory/destroy.hpp>
 #include <etl/_memory/destroy_at.hpp>
 #include <etl/_memory/destroy_n.hpp>
-#include <etl/_memory/pointer_int_pair.hpp>
-#include <etl/_memory/pointer_int_pair_info.hpp>
 #include <etl/_memory/pointer_like_traits.hpp>
 #include <etl/_memory/pointer_traits.hpp>
-#include <etl/_memory/small_ptr.hpp>
 #include <etl/_memory/to_address.hpp>
 #include <etl/_memory/uninitialized_fill.hpp>
 #include <etl/_memory/uses_allocator.hpp>
+
+// Non-standard extensions
+#include <etl/_memory/monotonic_allocator.hpp>
+#include <etl/_memory/pointer_int_pair.hpp>
+#include <etl/_memory/pointer_int_pair_info.hpp>
+#include <etl/_memory/small_ptr.hpp>
 
 #endif // TETL_MEMORY_HPP
