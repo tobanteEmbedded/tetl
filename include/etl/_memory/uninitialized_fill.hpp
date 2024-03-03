@@ -18,7 +18,7 @@ auto uninitialized_fill(ForwardIt first, ForwardIt last, T const& value) -> void
     try {
         for (; current != last; ++current) { ::new (static_cast<void*>(etl::addressof(*current))) ValueType(value); }
     } catch (...) {
-        for (; first != current; ++first) { first->~V(); }
+        for (; first != current; ++first) { first->~ValueType(); }
         throw;
     }
 #else
