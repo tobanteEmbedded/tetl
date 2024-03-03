@@ -24,7 +24,7 @@ struct allocator_traits_pointer<Alloc> {
 template <typename Alloc>
 struct allocator_traits_const_pointer {
     using pointer = typename allocator_traits_pointer<Alloc>::type;
-    using type    = etl::pointer_traits<pointer>::template rebind<typename Alloc::value_type const>;
+    using type    = typename etl::pointer_traits<pointer>::template rebind<typename Alloc::value_type const>;
 };
 
 template <typename Alloc>
@@ -36,7 +36,7 @@ struct allocator_traits_const_pointer<Alloc> {
 template <typename Alloc>
 struct allocator_traits_void_pointer {
     using pointer = typename allocator_traits_pointer<Alloc>::type;
-    using type    = etl::pointer_traits<pointer>::template rebind<void>;
+    using type    = typename etl::pointer_traits<pointer>::template rebind<void>;
 };
 
 template <typename Alloc>
@@ -48,7 +48,7 @@ struct allocator_traits_void_pointer<Alloc> {
 template <typename Alloc>
 struct allocator_traits_const_void_pointer {
     using pointer = typename allocator_traits_pointer<Alloc>::type;
-    using type    = etl::pointer_traits<pointer>::template rebind<void const>;
+    using type    = typename etl::pointer_traits<pointer>::template rebind<void const>;
 };
 
 template <typename Alloc>
@@ -60,7 +60,7 @@ struct allocator_traits_const_void_pointer<Alloc> {
 template <typename Alloc>
 struct allocator_traits_difference_type {
     using pointer = typename allocator_traits_pointer<Alloc>::type;
-    using type    = etl::pointer_traits<pointer>::difference_type;
+    using type    = typename etl::pointer_traits<pointer>::difference_type;
 };
 
 template <typename Alloc>
