@@ -6,8 +6,9 @@
 /// \file This header is part of the container library.
 /// \example vector.cpp
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_vector/static_vector.hpp"
+#include <etl/_vector/static_vector.hpp>
+#include <etl/_vector/vector.hpp>
 
 #endif // TETL_VECTOR_HPP
