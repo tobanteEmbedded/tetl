@@ -12,13 +12,13 @@ namespace etl {
 template <typename ForwardIt, typename T>
 auto uninitialized_fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
-    using ValueType = typename etl::iterator_traits<ForwardIt>::value_type;
 
 #if defined(__cpp_exceptions)
     auto current = first;
     try {
         for (; current != last; ++current) { etl::construct_at(current, value); }
     } catch (...) {
+        using ValueType = typename etl::iterator_traits<ForwardIt>::value_type;
         for (; first != current; ++first) { first->~ValueType(); }
         throw;
     }
