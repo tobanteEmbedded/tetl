@@ -7,6 +7,7 @@
 
 #include <etl/_mdspan/default_accessor.hpp>
 #include <etl/_mdspan/extents.hpp>
+#include <etl/_mdspan/full_extent.hpp>
 #include <etl/_mdspan/is_extents.hpp>
 #include <etl/_mdspan/layout.hpp>
 #include <etl/_mdspan/layout_left.hpp>
