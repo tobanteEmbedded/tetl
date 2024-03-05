@@ -111,7 +111,7 @@ private:
     T* _ptr {nullptr};
     etl::size_t _size {0};
     etl::size_t _capacity {0};
-    [[no_unique_address]] Allocator _alloc;
+    TETL_NO_UNIQUE_ADDRESS Allocator _alloc;
 };
 
 } // namespace etl
