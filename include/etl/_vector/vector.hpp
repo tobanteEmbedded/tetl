@@ -65,23 +65,23 @@ struct vector {
         if (_ptr != nullptr) { deallocate(); }
     }
 
-    constexpr auto data() -> T* { return _ptr; }
-    constexpr auto data() const -> T const* { return _ptr; }
+    [[nodiscard]] constexpr auto data() -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto data() const -> T const* { return _ptr; }
 
-    constexpr auto begin() -> T* { return _ptr; }
-    constexpr auto begin() const -> T const* { return _ptr; }
+    [[nodiscard]] constexpr auto begin() -> T* { return _ptr; }
+    [[nodiscard]] constexpr auto begin() const -> T const* { return _ptr; }
 
-    constexpr auto end() -> T* { return etl::next(_ptr, size()); }
-    constexpr auto end() const -> T const* { return etl::next(_ptr, size()); }
+    [[nodiscard]] constexpr auto end() -> T* { return etl::next(_ptr, size()); }
+    [[nodiscard]] constexpr auto end() const -> T const* { return etl::next(_ptr, size()); }
 
-    constexpr auto empty() -> bool { return size() == 0; }
-    constexpr auto empty() const -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() -> bool { return size() == 0; }
+    [[nodiscard]] constexpr auto empty() const -> bool { return size() == 0; }
 
-    constexpr auto size() -> etl::size_t { return _size; }
-    constexpr auto size() const -> etl::size_t { return _size; }
+    [[nodiscard]] constexpr auto size() -> etl::size_t { return _size; }
+    [[nodiscard]] constexpr auto size() const -> etl::size_t { return _size; }
 
-    constexpr auto capacity() -> etl::size_t { return _capacity; }
-    constexpr auto capacity() const -> etl::size_t { return _capacity; }
+    [[nodiscard]] constexpr auto capacity() -> etl::size_t { return _capacity; }
+    [[nodiscard]] constexpr auto capacity() const -> etl::size_t { return _capacity; }
 
     constexpr auto clear() noexcept -> void
     {
