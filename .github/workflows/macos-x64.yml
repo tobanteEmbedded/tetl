@@ -16,7 +16,7 @@ jobs:
     name: C++${{ matrix.cxx }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install ninja
         run: brew install ninja
