@@ -13,5 +13,6 @@
 #include <etl/_mdspan/layout_mapping_alike.hpp>
 #include <etl/_mdspan/layout_right.hpp>
 #include <etl/_mdspan/mdspan.hpp>
+#include <etl/_mdspan/strided_slice.hpp>
 
 #endif // TETL_MDSPAN_HPP
