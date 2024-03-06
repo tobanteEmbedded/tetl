@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/random.hpp"
+#include <etl/random.hpp>
 
 #include "testing/testing.hpp"
 

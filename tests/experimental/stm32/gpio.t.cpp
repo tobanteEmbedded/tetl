@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
-#include "etl/experimental/hardware/stm32/gpio.hpp"
 
-#include "etl/bitset.hpp"
+#include <etl/experimental/hardware/stm32/gpio.hpp>
+
+#include <etl/bitset.hpp>
 
 #include "testing/testing.hpp"
 

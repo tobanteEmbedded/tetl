@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/vector.hpp"
+#include <etl/vector.hpp>
 
-#include "etl/algorithm.hpp"
-#include "etl/cstdint.hpp"
-#include "etl/numeric.hpp"
-#include "etl/type_traits.hpp"
-#include "etl/utility.hpp"
+#include <etl/algorithm.hpp>
+#include <etl/cstdint.hpp>
+#include <etl/numeric.hpp>
+#include <etl/type_traits.hpp>
+#include <etl/utility.hpp>
 
 #include "testing/testing.hpp"
 

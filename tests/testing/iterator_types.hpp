@@ -3,7 +3,7 @@
 #ifndef TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 #define TETL_TESTS_ALGORITHM_ITERATOR_TYPES_HPP
 
-#include "etl/iterator.hpp"
+#include <etl/iterator.hpp>
 
 template <typename It>
 struct InIter {

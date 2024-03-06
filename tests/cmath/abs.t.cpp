@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/cmath.hpp"
-
-#include "etl/cassert.hpp"
+#include <etl/cmath.hpp>
 
 #include "testing/testing.hpp"
 

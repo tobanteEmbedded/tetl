@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/memory.hpp"
+#include <etl/memory.hpp>
 
-#include "etl/array.hpp"
-#include "etl/cstddef.hpp"
-#include "etl/cstdint.hpp"
-#include "etl/new.hpp"
+#include <etl/array.hpp>
+#include <etl/cstddef.hpp>
+#include <etl/cstdint.hpp>
+#include <etl/new.hpp>
 
 #include "testing/testing.hpp"
 

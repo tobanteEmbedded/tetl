@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
-#include "etl/experimental/net/byte_order.hpp" // for hton, ntoh, net
 
-#include "etl/cstdint.hpp" // for int8_t, uint16_t, uin...
+#include <etl/experimental/net/byte_order.hpp> // for hton, ntoh, net
+
+#include <etl/cstdint.hpp> // for int8_t, uint16_t, uin...
 
 #include "testing/testing.hpp"
 

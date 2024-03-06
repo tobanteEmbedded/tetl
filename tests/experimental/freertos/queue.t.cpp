@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
+
 #define TETL_FREERTOS_USE_STUBS
-#include "etl/experimental/freertos/queue.hpp"
+#include <etl/experimental/freertos/queue.hpp>
 
 #include "testing/testing.hpp"
 

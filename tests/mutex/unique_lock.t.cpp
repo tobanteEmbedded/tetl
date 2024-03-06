@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/mutex.hpp"
-#include "etl/warning.hpp"
+#include <etl/mutex.hpp>
+#include <etl/warning.hpp>
 
 #include "test_mutex.hpp"
 #include "testing/testing.hpp"

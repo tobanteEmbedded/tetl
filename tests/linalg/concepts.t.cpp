@@ -2,8 +2,8 @@
 
 #include <etl/linalg.hpp>
 
-#include "etl/cassert.hpp"
-#include "etl/complex.hpp"
+#include <etl/complex.hpp>
+
 #include "testing/testing.hpp"
 
 namespace ns {

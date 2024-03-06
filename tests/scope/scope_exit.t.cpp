@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/scope.hpp"
+#include <etl/scope.hpp>
 
 #include "testing/testing.hpp"
 

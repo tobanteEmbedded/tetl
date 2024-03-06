@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSL-1.0
+
 #define TETL_FREERTOS_USE_STUBS
-#include "etl/experimental/freertos/stream_buffer.hpp"
+#include <etl/experimental/freertos/stream_buffer.hpp>
 
 #include "testing/testing.hpp"
 

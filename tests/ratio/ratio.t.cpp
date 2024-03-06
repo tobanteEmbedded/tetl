@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/ratio.hpp"
+#include <etl/ratio.hpp>
 
-#include "etl/warning.hpp"
+#include <etl/warning.hpp>
 
 #include "testing/testing.hpp"
 

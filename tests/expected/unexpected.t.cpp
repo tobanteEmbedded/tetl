@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/expected.hpp"
+#include <etl/expected.hpp>
 
-#include "etl/type_traits.hpp"
+#include <etl/type_traits.hpp>
 
 #include "testing/testing.hpp"
 

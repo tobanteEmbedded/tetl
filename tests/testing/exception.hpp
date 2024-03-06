@@ -3,12 +3,11 @@
 #ifndef TETL_TEST_EXCEPTION_HPP
 #define TETL_TEST_EXCEPTION_HPP
 
-#include "etl/cmath.hpp"
+#include <etl/cmath.hpp>
 
-#include "etl/cassert.hpp"
-#include "etl/exception.hpp"
-#include "etl/string_view.hpp"
-#include "etl/type_traits.hpp"
+#include <etl/exception.hpp>
+#include <etl/string_view.hpp>
+#include <etl/type_traits.hpp>
 
 #define TEST_EXCEPTION(type, base)                                                                                     \
     do {                                                                                                               \

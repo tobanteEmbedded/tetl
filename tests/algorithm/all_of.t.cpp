@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include "etl/algorithm.hpp"
+#include <etl/algorithm.hpp>
 
-#include "etl/array.hpp"
-#include "etl/cstdint.hpp"
-#include "etl/numeric.hpp"
-#include "etl/vector.hpp"
+#include <etl/array.hpp>
+#include <etl/cstdint.hpp>
+#include <etl/numeric.hpp>
+#include <etl/vector.hpp>
 
 #include "testing/iterator_types.hpp"
 #include "testing/testing.hpp"
@@ -18,40 +18,40 @@ constexpr auto test() -> bool
     auto const p2 = [](T a) { return etl::abs(a) > T(10); };
     auto const p3 = [](T a) { return a < T(10); };
 
-    assert(etl::all_of(data.begin(), data.end(), p1));
-    assert(!etl::all_of(data.begin(), data.end(), p2));
-    assert(etl::all_of(InIter(data.begin()), InIter(data.end()), p1));
+    ASSERT(etl::all_of(data.begin(), data.end(), p1));
+    ASSERT(!etl::all_of(data.begin(), data.end(), p2));
+    ASSERT(etl::all_of(InIter(data.begin()), InIter(data.end()), p1));
 
-    assert(etl::any_of(data.begin(), data.end(), p1));
-    assert(!etl::any_of(data.begin(), data.end(), p2));
-    assert(etl::any_of(InIter(data.begin()), InIter(data.end()), p1));
+    ASSERT(etl::any_of(data.begin(), data.end(), p1));
+    ASSERT(!etl::any_of(data.begin(), data.end(), p2));
+    ASSERT(etl::any_of(InIter(data.begin()), InIter(data.end()), p1));
 
-    assert(etl::none_of(data.begin(), data.end(), p2));
-    assert(!etl::none_of(data.begin(), data.end(), p3));
-    assert(etl::none_of(InIter(data.begin()), InIter(data.end()), p2));
+    ASSERT(etl::none_of(data.begin(), data.end(), p2));
+    ASSERT(!etl::none_of(data.begin(), data.end(), p3));
+    ASSERT(etl::none_of(InIter(data.begin()), InIter(data.end()), p2));
 
     return true;
 }
 
 constexpr auto test_all() -> bool
 {
-    assert(test<etl::uint8_t>());
-    assert(test<etl::int8_t>());
-    assert(test<etl::uint16_t>());
-    assert(test<etl::int16_t>());
-    assert(test<etl::uint32_t>());
-    assert(test<etl::int32_t>());
-    assert(test<etl::uint64_t>());
-    assert(test<etl::int64_t>());
-    assert(test<float>());
-    assert(test<double>());
+    ASSERT(test<etl::uint8_t>());
+    ASSERT(test<etl::int8_t>());
+    ASSERT(test<etl::uint16_t>());
+    ASSERT(test<etl::int16_t>());
+    ASSERT(test<etl::uint32_t>());
+    ASSERT(test<etl::int32_t>());
+    ASSERT(test<etl::uint64_t>());
+    ASSERT(test<etl::int64_t>());
+    ASSERT(test<float>());
+    ASSERT(test<double>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    ASSERT(test_all());
     static_assert(test_all());
     return 0;
 }

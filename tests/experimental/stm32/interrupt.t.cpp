@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: BSL-1.0
-#include "etl/experimental/hardware/stm32/interrupt.hpp"
+
+#include <etl/experimental/hardware/stm32/interrupt.hpp>
 
 #include "testing/testing.hpp"
 
