@@ -39,18 +39,46 @@ constexpr auto test() -> bool
     }
 
     {
-        auto b = etl::byte {1};
-        assert((etl::to_integer<int>(b << 1) == 2));
-        assert((etl::to_integer<int>(b << 2) == 4));
-        assert((etl::to_integer<int>(b << 3) == 8));
+        auto const b = etl::byte {1};
+
+        {
+            auto const c = b << 1;
+            assert((etl::to_integer<int>(c) == 2));
+        }
+
+        {
+            auto const c = b << 2;
+            assert((etl::to_integer<int>(c) == 4));
+        }
+
+        {
+            auto const c = b << 3;
+            assert((etl::to_integer<int>(c) == 8));
+        }
     }
 
     {
-        auto b = etl::byte {8};
-        assert((etl::to_integer<int>(b >> 0) == 8));
-        assert((etl::to_integer<int>(b >> 1) == 4));
-        assert((etl::to_integer<int>(b >> 2) == 2));
-        assert((etl::to_integer<int>(b >> 3) == 1));
+        auto const b = etl::byte {8};
+
+        {
+            auto const c = b >> 0;
+            assert((etl::to_integer<int>(c) == 8));
+        }
+
+        {
+            auto const c = b >> 1;
+            assert((etl::to_integer<int>(c) == 4));
+        }
+
+        {
+            auto const c = b >> 2;
+            assert((etl::to_integer<int>(c) == 2));
+        }
+
+        {
+            auto const c = b >> 3;
+            assert((etl::to_integer<int>(c) == 1));
+        }
     }
 
     {
