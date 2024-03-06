@@ -70,13 +70,13 @@ jobs:
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
-        run: cmake --build build --config "Debug"
+        run: cmake --build build --config "Debug" --parallel 2
 
       - name: Run tests -- Debug
         run: ctest --test-dir build -C Debug --output-on-failure
 
       - name: CMake build -- Release
-        run: cmake --build build --config "Release"
+        run: cmake --build build --config "Release" --parallel 2
 
       - name: Run tests -- Release
         run: ctest --test-dir build -C Release --output-on-failure
