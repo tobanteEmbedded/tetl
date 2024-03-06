@@ -5,6 +5,7 @@
 #include <etl/array.hpp>
 #include <etl/concepts.hpp>
 #include <etl/cstddef.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/span.hpp>
 
 #include "testing/testing.hpp"

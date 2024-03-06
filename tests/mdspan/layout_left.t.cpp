@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSL-1.0
 
-#include <etl/concepts.hpp>
 #include <etl/mdspan.hpp>
+
+#include <etl/concepts.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/type_traits.hpp>
 
 #include "testing/testing.hpp"

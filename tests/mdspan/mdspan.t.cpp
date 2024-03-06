@@ -19,54 +19,59 @@ template <typename ElementType, typename IndexType>
     static_assert(etl::same_as<typename mdspan_t::size_type, size_type>);
     static_assert(etl::same_as<typename mdspan_t::index_type, IndexType>);
 
+    ASSERT_NOEXCEPT(etl::declval<mdspan_t>().rank());
+    ASSERT_NOEXCEPT(etl::declval<mdspan_t>().rank_dynamic());
+    ASSERT_NOEXCEPT(etl::declval<mdspan_t>().static_extent(0));
+    ASSERT_NOEXCEPT(etl::declval<mdspan_t>().extent(0));
+
     {
         auto m = etl::mdspan<ElementType, extents_t> {};
-        assert(m.rank() == 1);
-        assert(m.rank_dynamic() == 1);
-        assert(m.static_extent(0) == etl::dynamic_extent);
-        assert(m.extent(0) == 0);
+        ASSERT(m.rank() == 1);
+        ASSERT(m.rank_dynamic() == 1);
+        ASSERT(m.static_extent(0) == etl::dynamic_extent);
+        ASSERT(m.extent(0) == 0);
 
-        assert(m.empty());
-        assert(m.size() == 0); // NOLINT
+        ASSERT(m.empty());
+        ASSERT(m.size() == 0); // NOLINT
     }
 
     {
         auto buffer = etl::array<ElementType, 16> {ElementType(1)};
         auto m      = etl::mdspan<ElementType, extents_t> {buffer.data(), buffer.size()};
-        assert(m.rank() == 1);
-        assert(m.rank_dynamic() == 1);
-        assert(m.static_extent(0) == etl::dynamic_extent);
-        assert(m.extent(0) == buffer.size());
+        ASSERT(m.rank() == 1);
+        ASSERT(m.rank_dynamic() == 1);
+        ASSERT(m.static_extent(0) == etl::dynamic_extent);
+        ASSERT(m.extent(0) == buffer.size());
 
-        assert(not m.empty());
-        assert(m.size() == buffer.size());
+        ASSERT(not m.empty());
+        ASSERT(m.size() == buffer.size());
 
-        assert(m(0) == ElementType(1));
-        assert(m(1) == ElementType(0));
+        ASSERT(m(0) == ElementType(1));
+        ASSERT(m(1) == ElementType(0));
 #if defined(__cpp_multidimensional_subscript)
-        assert(m[0] == ElementType(1));
-        assert(m[1] == ElementType(0));
+        ASSERT(m[0] == ElementType(1));
+        ASSERT(m[1] == ElementType(0));
 #endif
     }
 
     {
         auto buffer = etl::array<ElementType, 16> {ElementType(1)};
         auto m      = etl::mdspan(buffer.data(), 2, 8);
-        assert(m.rank() == 2);
-        assert(m.rank_dynamic() == 2);
-        assert(m.static_extent(0) == etl::dynamic_extent);
-        assert(m.static_extent(1) == etl::dynamic_extent);
-        assert(m.extent(0) == 2);
-        assert(m.extent(1) == 8);
+        ASSERT(m.rank() == 2);
+        ASSERT(m.rank_dynamic() == 2);
+        ASSERT(m.static_extent(0) == etl::dynamic_extent);
+        ASSERT(m.static_extent(1) == etl::dynamic_extent);
+        ASSERT(m.extent(0) == 2);
+        ASSERT(m.extent(1) == 8);
 
-        assert(not m.empty());
-        assert(m.size() == buffer.size());
+        ASSERT(not m.empty());
+        ASSERT(m.size() == buffer.size());
 
-        assert(m(0, 0) == ElementType(1));
-        assert(m(0, 1) == ElementType(0));
+        ASSERT(m(0, 0) == ElementType(1));
+        ASSERT(m(0, 1) == ElementType(0));
 #if defined(__cpp_multidimensional_subscript)
-        assert(m[0, 0] == ElementType(1));
-        assert(m[0, 1] == ElementType(0));
+        ASSERT(m[0, 0] == ElementType(1));
+        ASSERT(m[0, 1] == ElementType(0));
 #endif
     }
 
@@ -76,45 +81,45 @@ template <typename ElementType, typename IndexType>
 template <typename IndexType>
 [[nodiscard]] constexpr auto test_index_type() -> bool
 {
-    assert(test_mdspan<char, IndexType>());
-    assert(test_mdspan<char8_t, IndexType>());
-    assert(test_mdspan<char16_t, IndexType>());
-    assert(test_mdspan<char32_t, IndexType>());
+    ASSERT(test_mdspan<char, IndexType>());
+    ASSERT(test_mdspan<char8_t, IndexType>());
+    ASSERT(test_mdspan<char16_t, IndexType>());
+    ASSERT(test_mdspan<char32_t, IndexType>());
 
-    assert(test_mdspan<etl::uint8_t, IndexType>());
-    assert(test_mdspan<etl::uint16_t, IndexType>());
-    assert(test_mdspan<etl::uint32_t, IndexType>());
-    assert(test_mdspan<etl::uint64_t, IndexType>());
+    ASSERT(test_mdspan<etl::uint8_t, IndexType>());
+    ASSERT(test_mdspan<etl::uint16_t, IndexType>());
+    ASSERT(test_mdspan<etl::uint32_t, IndexType>());
+    ASSERT(test_mdspan<etl::uint64_t, IndexType>());
 
-    assert(test_mdspan<etl::int8_t, IndexType>());
-    assert(test_mdspan<etl::int16_t, IndexType>());
-    assert(test_mdspan<etl::int32_t, IndexType>());
-    assert(test_mdspan<etl::int64_t, IndexType>());
+    ASSERT(test_mdspan<etl::int8_t, IndexType>());
+    ASSERT(test_mdspan<etl::int16_t, IndexType>());
+    ASSERT(test_mdspan<etl::int32_t, IndexType>());
+    ASSERT(test_mdspan<etl::int64_t, IndexType>());
 
-    assert(test_mdspan<float, IndexType>());
-    assert(test_mdspan<double, IndexType>());
+    ASSERT(test_mdspan<float, IndexType>());
+    ASSERT(test_mdspan<double, IndexType>());
 
     return true;
 }
 
 [[nodiscard]] constexpr auto test_all() -> bool
 {
-    assert(test_index_type<etl::uint8_t>());
-    assert(test_index_type<etl::uint16_t>());
-    assert(test_index_type<etl::uint32_t>());
-    assert(test_index_type<etl::uint64_t>());
+    ASSERT(test_index_type<etl::uint8_t>());
+    ASSERT(test_index_type<etl::uint16_t>());
+    ASSERT(test_index_type<etl::uint32_t>());
+    ASSERT(test_index_type<etl::uint64_t>());
 
-    assert(test_index_type<etl::int8_t>());
-    assert(test_index_type<etl::int16_t>());
-    assert(test_index_type<etl::int32_t>());
-    assert(test_index_type<etl::int64_t>());
+    ASSERT(test_index_type<etl::int8_t>());
+    ASSERT(test_index_type<etl::int16_t>());
+    ASSERT(test_index_type<etl::int32_t>());
+    ASSERT(test_index_type<etl::int64_t>());
 
     return true;
 }
 
 auto main() -> int
 {
-    assert(test_all());
+    ASSERT(test_all());
     static_assert(test_all());
     return 0;
 }

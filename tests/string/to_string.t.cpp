@@ -3,6 +3,7 @@
 #include "etl/string.hpp"
 
 #include "etl/string_view.hpp"
+#include <etl/cstdint.hpp>
 
 #include "testing/testing.hpp"
 

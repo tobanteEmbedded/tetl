@@ -3,6 +3,7 @@
 #include <etl/array.hpp>
 
 #include <etl/concepts.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/memory.hpp>
 #include <etl/utility.hpp>
 

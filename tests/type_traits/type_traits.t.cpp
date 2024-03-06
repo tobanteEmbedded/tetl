@@ -3,6 +3,7 @@
 #include "etl/type_traits.hpp"
 
 #include "etl/version.hpp"
+#include <etl/cstdint.hpp>
 
 #include "testing/testing.hpp"
 #include "testing/types.hpp"

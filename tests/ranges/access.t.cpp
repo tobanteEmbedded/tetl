@@ -3,6 +3,7 @@
 #include <etl/ranges.hpp>
 
 #include <etl/array.hpp>
+#include <etl/cstdint.hpp>
 #include <etl/iterator.hpp>
 #include <etl/memory.hpp>
 #include <etl/string_view.hpp>
