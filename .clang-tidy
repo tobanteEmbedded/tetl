@@ -2,6 +2,7 @@ Checks: >
   *-,
 
   bugprone-*,
+  -bugprone-casting-through-void,
   -bugprone-easily-swappable-parameters,
   -bugprone-forwarding-reference-overload,
   -bugprone-inc-dec-in-conditions,

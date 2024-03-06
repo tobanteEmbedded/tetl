@@ -3,7 +3,6 @@
 #ifndef TETL_FORMAT_FMT_BUFFER_HPP
 #define TETL_FORMAT_FMT_BUFFER_HPP
 
-#include <etl/_format/basic_format_context.hpp>
 #include <etl/_format/format_arg_store.hpp>
 #include <etl/_memory/addressof.hpp>
 #include <etl/_utility/forward.hpp>
