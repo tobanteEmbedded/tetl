@@ -21,6 +21,7 @@ Checks: >
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-c-copy-assignment-signature,
   -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-macro-to-enum,
   -cppcoreguidelines-missing-std-forward,
   -cppcoreguidelines-noexcept-move-operations,
   -cppcoreguidelines-owning-memory,
@@ -52,14 +53,18 @@ Checks: >
 
   modernize-*,
   -modernize-deprecated-headers,
+  -modernize-use-constraints,
+  -modernize-use-std-numbers,
   -modernize-use-std-print,
 
   performance-*,
+  -performance-enum-size,
   -performance-no-int-to-ptr,
   -performance-noexcept-move-constructor,
 
   readability-*,
   readability-identifier-naming,
+  -readability-avoid-nested-conditional-operator,
   -readability-container-size-empty,
   -readability-function-cognitive-complexity,
   -readability-suspicious-call-argument,

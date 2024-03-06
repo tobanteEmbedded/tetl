@@ -13,7 +13,7 @@ namespace etl {
 /// constant-evaluated; otherwise returns false.
 ///
 /// https://en.cppreference.com/w/cpp/types/is_constant_evaluated
-[[nodiscard]] inline constexpr auto is_constant_evaluated() noexcept -> bool
+[[nodiscard]] constexpr auto is_constant_evaluated() noexcept -> bool
 {
 #if __has_builtin(__builtin_is_constant_evaluated)
     return __builtin_is_constant_evaluated();
