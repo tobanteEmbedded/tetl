@@ -3,8 +3,9 @@ Checks: >
 
   bugprone-*,
   -bugprone-easily-swappable-parameters,
-  -bugprone-macro-parentheses,
   -bugprone-forwarding-reference-overload,
+  -bugprone-inc-dec-in-conditions,
+  -bugprone-macro-parentheses,
   -bugprone-unhandled-self-assignment,
 
   -clang-analyzer-core.*,
@@ -67,9 +68,10 @@ Checks: >
   -readability-avoid-nested-conditional-operator,
   -readability-container-size-empty,
   -readability-function-cognitive-complexity,
-  -readability-suspicious-call-argument,
   -readability-function-size,
   -readability-identifier-length,
+  -readability-redundant-casting,
+  -readability-suspicious-call-argument,
   -readability-qualified-auto,
 
   -*-avoid-c-arrays,
