@@ -70,7 +70,7 @@ struct TriviallyConstructable {
 struct NonTriviallyConstructable {
     NonTriviallyConstructable(int& n) : ref {n} { }
 
-    int& ref;
+    int& ref; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };
 
 struct TrivialDtor { };

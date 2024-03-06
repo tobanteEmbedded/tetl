@@ -135,7 +135,7 @@ struct proxy_reference : proxy_reference_base {
 
 private:
     using this_type = proxy_reference<Reference, Value, Derived>;
-    Reference _reference;
+    Reference _reference; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };
 
 } // namespace etl::linalg::detail

@@ -205,7 +205,7 @@ constexpr auto test() -> bool
 
     {
         struct S {
-            int& counter;
+            int& counter; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
             S(int& c) : counter {c} { }
             ~S() { counter++; }

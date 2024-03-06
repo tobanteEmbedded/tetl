@@ -19,7 +19,6 @@ Checks: >
   concurrency-*,
 
   cppcoreguidelines-*,
-  -cppcoreguidelines-avoid-const-or-ref-data-members,
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-c-copy-assignment-signature,
   -cppcoreguidelines-macro-usage,

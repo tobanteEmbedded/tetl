@@ -13,7 +13,7 @@
 
 namespace {
 struct Counter {
-    int& value;
+    int& value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
     Counter(int& v) : value(v) { }
     ~Counter() { value++; }
 };

@@ -126,8 +126,8 @@ struct pair {
         swap(second, other.second);
     }
 
-    T1 first;  // NOLINT(modernize-use-default-member-init)
-    T2 second; // NOLINT(modernize-use-default-member-init)
+    T1 first;  // NOLINT(modernize-use-default-member-init,cppcoreguidelines-avoid-const-or-ref-data-members)
+    T2 second; // NOLINT(modernize-use-default-member-init,cppcoreguidelines-avoid-const-or-ref-data-members)
 
 }; // namespace etl
 
