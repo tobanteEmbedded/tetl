@@ -95,7 +95,7 @@ public:
     explicit constexpr extents(OtherSizeTypes... es) noexcept
     {
         auto const ext = array<size_type, sizeof...(OtherSizeTypes)> {static_cast<size_type>(es)...};
-        copy(ext.begin(), ext.end(), _extents.begin());
+        if constexpr (rank_dynamic() != 0) { copy(ext.begin(), ext.end(), _extents.begin()); }
     }
 
     template <typename OtherSizeType, size_t N>

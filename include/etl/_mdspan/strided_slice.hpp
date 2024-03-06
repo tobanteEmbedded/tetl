@@ -21,6 +21,16 @@ struct strided_slice {
 template <typename OffsetType, typename ExtentType, typename StrideType>
 strided_slice(OffsetType, ExtentType, StrideType) -> strided_slice<OffsetType, ExtentType, StrideType>;
 
+namespace detail {
+
+template <typename T>
+inline constexpr auto is_strided_slice = false;
+
+template <typename OT, typename ET, typename ST>
+inline constexpr auto is_strided_slice<etl::strided_slice<OT, ET, ST>> = true;
+
+} // namespace detail
+
 } // namespace etl
 
 #endif // TETL_MDSPAN_STRIDED_SLICE_HPP
