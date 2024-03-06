@@ -14,10 +14,12 @@ jobs:
           [
             { cc: gcc-11, cxx: g++-11 },
             { cc: gcc-12, cxx: g++-12 },
+            { cc: gcc-13, cxx: g++-13 },
             { cc: clang-13, cxx: clang++-13 },
             { cc: clang-14, cxx: clang++-14 },
             { cc: clang-16, cxx: clang++-16 },
             { cc: clang-17, cxx: clang++-17 },
+            { cc: clang-18, cxx: clang++-18 },
           ]
         cxx_std: [20, 23]
       fail-fast: false
@@ -45,6 +47,13 @@ jobs:
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 17 all
+
+      - name: Install clang-18
+        if: matrix.config.cc == 'clang-18'
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18 all
 
       - name: CMake configure
         run: >

@@ -25,7 +25,7 @@ jobs:
         run: |
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
-          sudo ./llvm.sh 17 all
+          sudo ./llvm.sh 18 all
 
       - name: CMake configure
         run: >
@@ -33,11 +33,11 @@ jobs:
           -G "Unix Makefiles"
           -B cmake-build-tidy
           -D CMAKE_BUILD_TYPE=Debug
-          -D CMAKE_C_COMPILER="clang-17"
-          -D CMAKE_CXX_COMPILER="clang++-17"
+          -D CMAKE_C_COMPILER="clang-18"
+          -D CMAKE_CXX_COMPILER="clang++-18"
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
           -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
           -D TETL_BUILD_WERROR=ON
 
       - name: Clang-Tidy check
-        run: CLANG_VERSION="-17" BUILD_DIR=cmake-build-tidy make tidy-check
+        run: CLANG_VERSION="-18" BUILD_DIR=cmake-build-tidy make tidy-check

@@ -96,7 +96,7 @@ def parse_trace_file(file: str):
 
 
 def execute_compiler(file: str, options, define=None):
-    compiler = 'clang++-17'
+    compiler = 'clang++-18'
     args = [
         compiler,
         '-c',
