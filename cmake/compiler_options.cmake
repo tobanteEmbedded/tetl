@@ -2,7 +2,7 @@ add_library(compiler_options INTERFACE)
 add_library(tetl::compiler_options ALIAS compiler_options)
 
 if(MSVC)
-  target_compile_options(compiler_options INTERFACE "/permissive-" "/Zc:__cplusplus")
+  target_compile_options(compiler_options INTERFACE "/permissive-")
 endif(MSVC)
 
 if(TETL_BUILD_ASAN AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

@@ -48,11 +48,17 @@ enum struct language_standard : unsigned char {
     return static_cast<unsigned char>(lhs) >= static_cast<unsigned char>(rhs);
 }
 
-#if __cplusplus > 202002L
+#if defined(_MSVC_LANG)
+    #define TETL_CPP_STANDARD_FULL _MSVC_LANG
+#else
+    #define TETL_CPP_STANDARD_FULL __cplusplus
+#endif
+
+#if TETL_CPP_STANDARD_FULL > 202002L
     #define TETL_CPP_STANDARD 23
 /// The currently configured C++ standard.
 inline constexpr auto current_standard = language_standard::cpp_23;
-#elif __cplusplus > 201703L
+#elif TETL_CPP_STANDARD_FULL > 201703L
     #define TETL_CPP_STANDARD 20
 /// The currently configured C++ standard.
 inline constexpr auto current_standard = language_standard::cpp_20;
