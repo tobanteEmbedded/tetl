@@ -3,10 +3,10 @@
 #ifndef TETL_HARDWARE_STM32_INTERRUPT_HPP
 #define TETL_HARDWARE_STM32_INTERRUPT_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/array.hpp"
-#include "etl/cstddef.hpp"
+#include <etl/array.hpp>
+#include <etl/cstddef.hpp>
 
 namespace etl::experimental::hardware::stm32 {
 // EXAMPLE

@@ -3,9 +3,9 @@
 #ifndef TETL_NET_BYTE_ORDER_HPP
 #define TETL_NET_BYTE_ORDER_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstdint.hpp"
+#include <etl/cstdint.hpp>
 
 namespace etl::experimental::net {
 template <typename T>

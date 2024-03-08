@@ -3,12 +3,12 @@
 #ifndef TETL_TYPE_TRAITS_TYPE_PACK_ELEMENT_HPP
 #define TETL_TYPE_TRAITS_TYPE_PACK_ELEMENT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/integral_constant.hpp"
-#include "etl/_utility/index_sequence.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_utility/index_sequence.hpp>
 
 namespace etl {
 

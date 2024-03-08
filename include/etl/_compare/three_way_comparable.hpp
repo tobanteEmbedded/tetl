@@ -3,13 +3,13 @@
 #ifndef TETL_COMPARE_THREE_WAY_COMPAREABLE_HPP
 #define TETL_COMPARE_THREE_WAY_COMPAREABLE_HPP
 
-#include "etl/_compare/common_comparison_category.hpp"
-#include "etl/_compare/partial_ordering.hpp"
-#include "etl/_compare/weak_ordering.hpp"
-#include "etl/_concepts/boolean_testable.hpp"
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_concepts/weakly_equality_comparable_with.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_compare/common_comparison_category.hpp>
+#include <etl/_compare/partial_ordering.hpp>
+#include <etl/_compare/weak_ordering.hpp>
+#include <etl/_concepts/boolean_testable.hpp>
+#include <etl/_concepts/same_as.hpp>
+#include <etl/_concepts/weakly_equality_comparable_with.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 namespace detail {

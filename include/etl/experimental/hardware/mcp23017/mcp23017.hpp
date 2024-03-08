@@ -3,10 +3,10 @@
 #ifndef TETL_HARDWARE_MCP23017_MCP23017_HPP
 #define TETL_HARDWARE_MCP23017_MCP23017_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstdint.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/warning.hpp>
 
 namespace etl::experimental::hardware::mcp23017 {
 // ports

@@ -3,10 +3,10 @@
 #ifndef TETL_NET_BUFFER_MUTABLE_HPP
 #define TETL_NET_BUFFER_MUTABLE_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/array.hpp"
-#include "etl/cstddef.hpp"
+#include <etl/array.hpp>
+#include <etl/cstddef.hpp>
 
 namespace etl::experimental::net {
 struct mutable_buffer {

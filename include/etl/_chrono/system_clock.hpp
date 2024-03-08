@@ -3,11 +3,11 @@
 #ifndef TETL_CHRONO_SYSTEM_CLOCK_HPP
 #define TETL_CHRONO_SYSTEM_CLOCK_HPP
 
-#include "etl/_chrono/duration.hpp"
-#include "etl/_chrono/duration_cast.hpp"
-#include "etl/_cstdint/int_t.hpp"
-#include "etl/_ctime/time_t.hpp"
-#include "etl/_ratio/ratio.hpp"
+#include <etl/_chrono/duration.hpp>
+#include <etl/_chrono/duration_cast.hpp>
+#include <etl/_cstdint/int_t.hpp>
+#include <etl/_ctime/time_t.hpp>
+#include <etl/_ratio/ratio.hpp>
 
 namespace etl::chrono {
 

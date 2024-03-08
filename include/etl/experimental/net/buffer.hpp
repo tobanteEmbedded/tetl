@@ -3,13 +3,13 @@
 #ifndef TETL_NET_BUFFER_HPP
 #define TETL_NET_BUFFER_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/array.hpp"
-#include "etl/vector.hpp"
+#include <etl/array.hpp>
+#include <etl/vector.hpp>
 
-#include "etl/experimental/net/buffer_const.hpp"
-#include "etl/experimental/net/buffer_mutable.hpp"
+#include <etl/experimental/net/buffer_const.hpp>
+#include <etl/experimental/net/buffer_mutable.hpp>
 
 namespace etl::experimental::net {
 inline auto make_buffer(void* data, size_t size) noexcept -> mutable_buffer { return mutable_buffer {data, size}; }

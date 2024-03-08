@@ -3,15 +3,15 @@
 #ifndef TETL_FREERTOS_STREAM_BUFFER_HPP
 #define TETL_FREERTOS_STREAM_BUFFER_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstdint.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/warning.hpp>
 
-#include "etl/experimental/net/buffer.hpp"
+#include <etl/experimental/net/buffer.hpp>
 
 #if defined(TETL_FREERTOS_USE_STUBS)
-    #include "etl/experimental/freertos/stubs.hpp"
+    #include <etl/experimental/freertos/stubs.hpp>
 #endif
 
 namespace etl::experimental::freertos {

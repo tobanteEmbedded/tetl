@@ -3,9 +3,9 @@
 #ifndef TETL_VARIANT_VARIANT_SIZE_HPP
 #define TETL_VARIANT_VARIANT_SIZE_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/integral_constant.hpp"
-#include "etl/_variant/variant_fwd.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_type_traits/integral_constant.hpp>
+#include <etl/_variant/variant_fwd.hpp>
 
 namespace etl {
 

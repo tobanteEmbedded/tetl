@@ -3,14 +3,14 @@
 #ifndef TETL_FREERTOS_QUEUE_HPP
 #define TETL_FREERTOS_QUEUE_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstdint.hpp"
-#include "etl/utility.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/utility.hpp>
+#include <etl/warning.hpp>
 
 #if defined(TETL_FREERTOS_USE_STUBS)
-    #include "etl/experimental/freertos/stubs.hpp"
+    #include <etl/experimental/freertos/stubs.hpp>
 #endif
 
 namespace etl::experimental::freertos {

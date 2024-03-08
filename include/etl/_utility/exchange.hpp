@@ -3,10 +3,10 @@
 #ifndef TETL_UTILITY_EXCHANGE_HPP
 #define TETL_UTILITY_EXCHANGE_HPP
 
-#include "etl/_type_traits/is_nothrow_move_assignable.hpp"
-#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_type_traits/is_nothrow_move_assignable.hpp>
+#include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

@@ -3,11 +3,11 @@
 #ifndef TETL_FREERTOS_STUBS_HPP
 #define TETL_FREERTOS_STUBS_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstddef.hpp"
-#include "etl/cstdint.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstddef.hpp>
+#include <etl/cstdint.hpp>
+#include <etl/warning.hpp>
 
 // BASE
 using BaseType_t             = long;

@@ -3,11 +3,11 @@
 #ifndef TETL_HARDWARE_STM32_GPIO_HPP
 #define TETL_HARDWARE_STM32_GPIO_HPP
 
-#include "etl/version.hpp"
+#include <etl/version.hpp>
 
-#include "etl/cstdint.hpp"
-#include "etl/new.hpp"
-#include "etl/warning.hpp"
+#include <etl/cstdint.hpp>
+#include <etl/new.hpp>
+#include <etl/warning.hpp>
 
 namespace etl::experimental::hardware::stm32 {
 enum struct pin_number : etl::uint16_t {
