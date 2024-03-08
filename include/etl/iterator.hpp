@@ -14,6 +14,7 @@
 #include <etl/_iterator/end.hpp>
 #include <etl/_iterator/front_insert_iterator.hpp>
 #include <etl/_iterator/full.hpp>
+#include <etl/_iterator/incrementable.hpp>
 #include <etl/_iterator/incrementable_traits.hpp>
 #include <etl/_iterator/indirectly_readable_traits.hpp>
 #include <etl/_iterator/input_or_output_iterator.hpp>
