@@ -3,9 +3,9 @@
 #ifndef TETL_RANGES_DECAY_COPY_HPP
 #define TETL_RANGES_DECAY_COPY_HPP
 
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/is_nothrow_convertible.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_type_traits/is_nothrow_convertible.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 

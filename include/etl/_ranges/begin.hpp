@@ -9,7 +9,7 @@
 
 namespace etl::ranges {
 
-namespace adl_check {
+namespace _begin {
 
 auto begin(auto&) -> void       = delete;
 auto begin(auto const&) -> void = delete;
@@ -26,9 +26,7 @@ concept has_adl_begin = not has_member_begin<T> and ranges::detail::can_borrow<T
 };
 // clang-format on
 
-} // namespace adl_check
-
-struct begin_fn {
+struct fn {
     template <typename T>
         requires(sizeof(T) >= 0) // NOLINT(bugprone-sizeof-expression)
     [[nodiscard]] constexpr auto operator()(T (&t)[]) const noexcept
@@ -43,15 +41,13 @@ struct begin_fn {
         return t + 0;
     }
 
-    template <typename T>
-        requires adl_check::has_member_begin<T>
+    template <has_member_begin T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(t.begin())))
     {
         return decay_copy(t.begin());
     }
 
-    template <typename T>
-        requires adl_check::has_adl_begin<T>
+    template <has_adl_begin T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(begin(t))))
     {
         return decay_copy(begin(t));
@@ -60,7 +56,11 @@ struct begin_fn {
     auto operator()(auto&&) const -> void = delete;
 };
 
-inline constexpr auto begin = begin_fn {};
+} // namespace _begin
+
+inline namespace _cpo {
+inline constexpr auto begin = _begin::fn {};
+} // namespace _cpo
 
 } // namespace etl::ranges
 

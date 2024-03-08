@@ -11,7 +11,7 @@
 
 namespace etl::ranges {
 
-namespace adl_checks {
+namespace _end {
 
 auto end(auto&) -> void       = delete;
 auto end(auto const&) -> void = delete;
@@ -28,9 +28,7 @@ concept has_adl_end = not has_member_end<T> and ranges::detail::can_borrow<T> an
 };
 // clang-format on
 
-} // namespace adl_checks
-
-struct end_fn {
+struct fn {
     template <typename T, etl::size_t Size>
         requires(sizeof(T) >= 0) // NOLINT(bugprone-sizeof-expression)
     [[nodiscard]] constexpr auto operator()(T (&t)[Size]) const noexcept
@@ -38,15 +36,13 @@ struct end_fn {
         return t + Size;
     }
 
-    template <typename T>
-        requires adl_checks::has_member_end<T>
+    template <has_member_end T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(t.end())))
     {
         return decay_copy(t.end());
     }
 
-    template <typename T>
-        requires adl_checks::has_adl_end<T>
+    template <has_adl_end T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept(noexcept(decay_copy(end(t))))
     {
         return decay_copy(end(t));
@@ -55,7 +51,11 @@ struct end_fn {
     auto operator()(auto&&) const -> void = delete;
 };
 
-inline constexpr auto end = end_fn {};
+} // namespace _end
+
+inline namespace _cpo {
+inline constexpr auto end = _end::fn {};
+} // namespace _cpo
 
 } // namespace etl::ranges
 
