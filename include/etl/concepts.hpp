@@ -23,6 +23,7 @@
 #include <etl/_concepts/movable.hpp>
 #include <etl/_concepts/move_constructible.hpp>
 #include <etl/_concepts/predicate.hpp>
+#include <etl/_concepts/regular.hpp>
 #include <etl/_concepts/regular_invocable.hpp>
 #include <etl/_concepts/relation.hpp>
 #include <etl/_concepts/same_as.hpp>
