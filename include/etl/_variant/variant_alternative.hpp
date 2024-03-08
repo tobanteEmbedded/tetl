@@ -3,11 +3,11 @@
 #ifndef TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 #define TETL_VARIANT_VARIANT_ALTERNATIVE_HPP
 
-#include "etl/_type_traits/add_const.hpp"
-#include "etl/_type_traits/add_cv.hpp"
-#include "etl/_type_traits/add_volatile.hpp"
-#include "etl/_type_traits/type_pack_element.hpp"
-#include "etl/_variant/variant_fwd.hpp"
+#include <etl/_type_traits/add_const.hpp>
+#include <etl/_type_traits/add_cv.hpp>
+#include <etl/_type_traits/add_volatile.hpp>
+#include <etl/_type_traits/type_pack_element.hpp>
+#include <etl/_variant/variant_fwd.hpp>
 
 namespace etl {
 

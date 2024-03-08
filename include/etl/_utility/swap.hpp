@@ -3,14 +3,14 @@
 #ifndef TETL_UTILITY_SWAP_HPP
 #define TETL_UTILITY_SWAP_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/is_move_assignable.hpp"
-#include "etl/_type_traits/is_move_constructible.hpp"
-#include "etl/_type_traits/is_nothrow_move_assignable.hpp"
-#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
-#include "etl/_type_traits/is_swappable.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_type_traits/is_move_assignable.hpp>
+#include <etl/_type_traits/is_move_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_move_assignable.hpp>
+#include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_type_traits/is_swappable.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

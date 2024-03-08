@@ -3,7 +3,7 @@
 #ifndef TETL_VERSION_LANGUAGE_STANDARD_HPP
 #define TETL_VERSION_LANGUAGE_STANDARD_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 namespace etl {
 

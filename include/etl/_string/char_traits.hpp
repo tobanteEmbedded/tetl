@@ -3,17 +3,17 @@
 #ifndef TETL_STRING_CHAR_TRAITS_HPP
 #define TETL_STRING_CHAR_TRAITS_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cwchar/wcslen.hpp"
-#include "etl/_cwchar/wint_t.hpp"
-#include "etl/_cwchar/wmemchr.hpp"
-#include "etl/_cwchar/wmemcmp.hpp"
-#include "etl/_cwchar/wmemcpy.hpp"
-#include "etl/_cwchar/wmemmove.hpp"
-#include "etl/_cwchar/wmemset.hpp"
-#include "etl/_ios/iosfwd.hpp"
-#include "etl/_ios/typedefs.hpp"
-#include "etl/_strings/cstr_algorithm.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_cwchar/wcslen.hpp>
+#include <etl/_cwchar/wint_t.hpp>
+#include <etl/_cwchar/wmemchr.hpp>
+#include <etl/_cwchar/wmemcmp.hpp>
+#include <etl/_cwchar/wmemcpy.hpp>
+#include <etl/_cwchar/wmemmove.hpp>
+#include <etl/_cwchar/wmemset.hpp>
+#include <etl/_ios/iosfwd.hpp>
+#include <etl/_ios/typedefs.hpp>
+#include <etl/_strings/cstr_algorithm.hpp>
 
 namespace etl {
 /// \brief The char_traits class is a traits class template that abstracts basic

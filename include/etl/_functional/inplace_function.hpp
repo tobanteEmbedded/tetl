@@ -3,19 +3,19 @@
 #ifndef TETL_FUNCTIONAL_INPLACE_FUNCTION_HPP
 #define TETL_FUNCTIONAL_INPLACE_FUNCTION_HPP
 
-#include "etl/_cstddef/nullptr_t.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_exception/exception.hpp"
-#include "etl/_exception/raise.hpp"
-#include "etl/_memory/addressof.hpp"
-#include "etl/_new/operator.hpp"
-#include "etl/_type_traits/aligned_storage.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_copy_constructible.hpp"
-#include "etl/_type_traits/is_invocable_r.hpp"
-#include "etl/_utility/exchange.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/swap.hpp"
+#include <etl/_cstddef/nullptr_t.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_exception/exception.hpp>
+#include <etl/_exception/raise.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_new/operator.hpp>
+#include <etl/_type_traits/aligned_storage.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_copy_constructible.hpp>
+#include <etl/_type_traits/is_invocable_r.hpp>
+#include <etl/_utility/exchange.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/swap.hpp>
 
 namespace etl {
 

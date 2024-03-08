@@ -3,12 +3,12 @@
 #ifndef TETL_TUPLE_APPLY_HPP
 #define TETL_TUPLE_APPLY_HPP
 
-#include "etl/_functional/invoke.hpp"
-#include "etl/_tuple/tuple.hpp"
-#include "etl/_tuple/tuple_size.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/index_sequence.hpp"
+#include <etl/_functional/invoke.hpp>
+#include <etl/_tuple/tuple.hpp>
+#include <etl/_tuple/tuple_size.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/index_sequence.hpp>
 
 namespace etl {
 

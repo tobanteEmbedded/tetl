@@ -3,13 +3,13 @@
 #ifndef TETL_TYPE_TRAITS_DECAY_HPP
 #define TETL_TYPE_TRAITS_DECAY_HPP
 
-#include "etl/_type_traits/add_pointer.hpp"
-#include "etl/_type_traits/conditional.hpp"
-#include "etl/_type_traits/is_array.hpp"
-#include "etl/_type_traits/is_function.hpp"
-#include "etl/_type_traits/remove_cv.hpp"
-#include "etl/_type_traits/remove_extent.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_type_traits/add_pointer.hpp>
+#include <etl/_type_traits/conditional.hpp>
+#include <etl/_type_traits/is_array.hpp>
+#include <etl/_type_traits/is_function.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
+#include <etl/_type_traits/remove_extent.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 

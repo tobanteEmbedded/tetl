@@ -3,15 +3,15 @@
 #ifndef TETL_CHRONO_DURATION_HPP
 #define TETL_CHRONO_DURATION_HPP
 
-#include "etl/_chrono/duration_values.hpp"
-#include "etl/_chrono/treat_as_floating_point.hpp"
-#include "etl/_cstdint/int_least_t.hpp"
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_numeric/lcm.hpp"
-#include "etl/_ratio/ratio.hpp"
-#include "etl/_ratio/ratio_divide.hpp"
-#include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
+#include <etl/_chrono/duration_values.hpp>
+#include <etl/_chrono/treat_as_floating_point.hpp>
+#include <etl/_cstdint/int_least_t.hpp>
+#include <etl/_numeric/gcd.hpp>
+#include <etl/_numeric/lcm.hpp>
+#include <etl/_ratio/ratio.hpp>
+#include <etl/_ratio/ratio_divide.hpp>
+#include <etl/_type_traits/common_type.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
 
 namespace etl::chrono {
 

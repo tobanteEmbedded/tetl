@@ -3,18 +3,18 @@
 #ifndef TETL_SET_STATIC_SET_HPP
 #define TETL_SET_STATIC_SET_HPP
 
-#include "etl/_algorithm/lexicographical_compare.hpp"
-#include "etl/_algorithm/lower_bound.hpp"
-#include "etl/_algorithm/rotate.hpp"
-#include "etl/_functional/less.hpp"
-#include "etl/_iterator/begin.hpp"
-#include "etl/_iterator/data.hpp"
-#include "etl/_iterator/end.hpp"
-#include "etl/_iterator/rbegin.hpp"
-#include "etl/_iterator/rend.hpp"
-#include "etl/_iterator/reverse_iterator.hpp"
-#include "etl/_iterator/size.hpp"
-#include "etl/_vector/static_vector.hpp"
+#include <etl/_algorithm/lexicographical_compare.hpp>
+#include <etl/_algorithm/lower_bound.hpp>
+#include <etl/_algorithm/rotate.hpp>
+#include <etl/_functional/less.hpp>
+#include <etl/_iterator/begin.hpp>
+#include <etl/_iterator/data.hpp>
+#include <etl/_iterator/end.hpp>
+#include <etl/_iterator/rbegin.hpp>
+#include <etl/_iterator/rend.hpp>
+#include <etl/_iterator/reverse_iterator.hpp>
+#include <etl/_iterator/size.hpp>
+#include <etl/_vector/static_vector.hpp>
 
 namespace etl {
 /// \brief static_set is an associative container that contains a sorted set

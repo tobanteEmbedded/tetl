@@ -3,10 +3,10 @@
 #ifndef TETL_TYPE_TRAITS_IS_TRIVIALLY_MOVE_ASSIGNABLE_HPP
 #define TETL_TYPE_TRAITS_IS_TRIVIALLY_MOVE_ASSIGNABLE_HPP
 
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/add_rvalue_reference.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_trivially_assignable.hpp"
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/add_rvalue_reference.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_trivially_assignable.hpp>
 
 namespace etl {
 

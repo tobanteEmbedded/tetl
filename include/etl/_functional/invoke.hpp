@@ -3,13 +3,13 @@
 #ifndef TETL_FUNCTIONAL_INVOKE_HPP
 #define TETL_FUNCTIONAL_INVOKE_HPP
 
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/invoke_result.hpp"
-#include "etl/_type_traits/is_base_of.hpp"
-#include "etl/_type_traits/is_function.hpp"
-#include "etl/_type_traits/is_member_pointer.hpp"
-#include "etl/_type_traits/is_object.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_type_traits/invoke_result.hpp>
+#include <etl/_type_traits/is_base_of.hpp>
+#include <etl/_type_traits/is_function.hpp>
+#include <etl/_type_traits/is_member_pointer.hpp>
+#include <etl/_type_traits/is_object.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 

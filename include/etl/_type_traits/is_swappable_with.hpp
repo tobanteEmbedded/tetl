@@ -3,16 +3,16 @@
 #ifndef TETL_TYPE_TRAITS_IS_SWAPPABLE_WITH_HPP
 #define TETL_TYPE_TRAITS_IS_SWAPPABLE_WITH_HPP
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/conjunction.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/is_move_assignable.hpp"
-#include "etl/_type_traits/is_move_constructible.hpp"
-#include "etl/_type_traits/is_nothrow_move_assignable.hpp"
-#include "etl/_type_traits/is_nothrow_move_constructible.hpp"
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/conjunction.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/is_move_assignable.hpp>
+#include <etl/_type_traits/is_move_constructible.hpp>
+#include <etl/_type_traits/is_nothrow_move_assignable.hpp>
+#include <etl/_type_traits/is_nothrow_move_constructible.hpp>
+#include <etl/_type_traits/void_t.hpp>
 
 namespace etl {
 

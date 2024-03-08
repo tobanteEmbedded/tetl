@@ -3,21 +3,21 @@
 #ifndef TETL_SPAN_SPAN_HPP
 #define TETL_SPAN_SPAN_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_array/array.hpp"
-#include "etl/_iterator/begin.hpp"
-#include "etl/_iterator/data.hpp"
-#include "etl/_iterator/end.hpp"
-#include "etl/_iterator/next.hpp"
-#include "etl/_iterator/rbegin.hpp"
-#include "etl/_iterator/rend.hpp"
-#include "etl/_iterator/reverse_iterator.hpp"
-#include "etl/_iterator/size.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_span/dynamic_extent.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/remove_pointer.hpp"
+#include <etl/_array/array.hpp>
+#include <etl/_iterator/begin.hpp>
+#include <etl/_iterator/data.hpp>
+#include <etl/_iterator/end.hpp>
+#include <etl/_iterator/next.hpp>
+#include <etl/_iterator/rbegin.hpp>
+#include <etl/_iterator/rend.hpp>
+#include <etl/_iterator/reverse_iterator.hpp>
+#include <etl/_iterator/size.hpp>
+#include <etl/_limits/numeric_limits.hpp>
+#include <etl/_span/dynamic_extent.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/remove_pointer.hpp>
 
 namespace etl {
 
