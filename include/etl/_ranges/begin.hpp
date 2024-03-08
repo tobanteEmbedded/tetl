@@ -9,7 +9,7 @@
 
 namespace etl::ranges {
 
-namespace _begin {
+namespace begin_cpo {
 
 auto begin(auto&) -> void       = delete;
 auto begin(auto const&) -> void = delete;
@@ -56,11 +56,11 @@ struct fn {
     auto operator()(auto&&) const -> void = delete;
 };
 
-} // namespace _begin
+} // namespace begin_cpo
 
-inline namespace _cpo {
-inline constexpr auto begin = _begin::fn {};
-} // namespace _cpo
+inline namespace cpo {
+inline constexpr auto begin = begin_cpo::fn {};
+} // namespace cpo
 
 } // namespace etl::ranges
 

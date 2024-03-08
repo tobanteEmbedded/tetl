@@ -11,7 +11,7 @@
 
 namespace etl::ranges {
 
-namespace _end {
+namespace end_cpo {
 
 auto end(auto&) -> void       = delete;
 auto end(auto const&) -> void = delete;
@@ -51,11 +51,11 @@ struct fn {
     auto operator()(auto&&) const -> void = delete;
 };
 
-} // namespace _end
+} // namespace end_cpo
 
-inline namespace _cpo {
-inline constexpr auto end = _end::fn {};
-} // namespace _cpo
+inline namespace cpo {
+inline constexpr auto end = end_cpo::fn {};
+} // namespace cpo
 
 } // namespace etl::ranges
 

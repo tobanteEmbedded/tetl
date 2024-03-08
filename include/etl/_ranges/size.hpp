@@ -12,7 +12,7 @@
 
 namespace etl::ranges {
 
-namespace _size {
+namespace size_cpo {
 
 auto size(auto&) -> void       = delete;
 auto size(auto const&) -> void = delete;
@@ -58,11 +58,11 @@ struct fn {
     auto operator()(auto&&) const -> void = delete;
 };
 
-} // namespace _size
+} // namespace size_cpo
 
-inline namespace _cpo {
-inline constexpr auto size = _size::fn {};
-} // namespace _cpo
+inline namespace cpo {
+inline constexpr auto size = size_cpo::fn {};
+} // namespace cpo
 
 } // namespace etl::ranges
 
