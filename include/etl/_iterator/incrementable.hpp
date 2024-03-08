@@ -10,9 +10,9 @@
 namespace etl {
 
 // clang-format off
-template <typename I>
-concept incrementable = etl::regular<I> and etl::weakly_incrementable<I> and requires(I i) {
-    { i++ } -> etl::same_as<I>;
+template <typename T>
+concept incrementable = etl::regular<T> and etl::weakly_incrementable<T> and requires(T i) {
+    { i++ } -> etl::same_as<T>;
 };
 // clang-format on
 
