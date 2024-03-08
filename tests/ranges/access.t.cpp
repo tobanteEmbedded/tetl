@@ -15,12 +15,14 @@ template <typename T>
 constexpr auto test() -> bool
 {
     assert(etl::ranges::range<etl::string_view>);
+    assert(etl::ranges::sized_range<etl::string_view>);
     assert(etl::same_as<etl::ranges::sentinel_t<etl::string_view>, etl::ranges::iterator_t<etl::string_view>>);
 
     {
         T data[2] {T(1), T(2)};
-        assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::range<decltype(data)>);
+        assert(etl::ranges::sized_range<decltype(data)>);
+        assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::size(data) == 2);
         assert(etl::ranges::begin(data) == etl::addressof(data[0]));
         assert(etl::ranges::end(data) == etl::next(etl::addressof(data[0]), 2));
@@ -28,8 +30,9 @@ constexpr auto test() -> bool
 
     {
         auto data = etl::to_array<T>({1, 2, 3});
-        assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::range<decltype(data)>);
+        assert(etl::ranges::sized_range<decltype(data)>);
+        assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::begin(data) == data.begin());
         assert(etl::ranges::end(data) == data.end());
     }

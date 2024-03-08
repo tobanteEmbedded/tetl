@@ -19,12 +19,12 @@ auto size(auto const&) -> void = delete;
 
 // clang-format off
 template <typename T>
-concept has_member_size = etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
+concept has_member_size = not etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
     { decay_copy(t.size()) } -> etl::integral;
 };
 
 template <typename T>
-concept has_adl_size = not has_member_size<T> and etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
+concept has_adl_size = not has_member_size<T> and not etl::ranges::disable_sized_range<etl::remove_cv_t<T>> and requires(T&& t) {
     { decay_copy(size(t)) } -> etl::integral;
 };
 

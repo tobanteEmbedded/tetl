@@ -14,5 +14,6 @@
 #include <etl/_ranges/range.hpp>
 #include <etl/_ranges/sentinel_t.hpp>
 #include <etl/_ranges/size.hpp>
+#include <etl/_ranges/sized_range.hpp>
 
 #endif // TETL_RANGES_HPP
