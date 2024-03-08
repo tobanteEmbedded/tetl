@@ -11,5 +11,6 @@
 #include <etl/_ranges/enable_borrowed_range.hpp>
 #include <etl/_ranges/end.hpp>
 #include <etl/_ranges/range.hpp>
+#include <etl/_ranges/sentinel_t.hpp>
 
 #endif // TETL_RANGES_HPP
