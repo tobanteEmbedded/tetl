@@ -139,9 +139,9 @@ struct mdspan {
     [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
     [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
 
-    static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
-    static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
-    static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
+    [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
+    [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
+    [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
     [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }

@@ -3,12 +3,15 @@
 #ifndef TETL_MDSPAN_LAYOUT_RIGHT_HPP
 #define TETL_MDSPAN_LAYOUT_RIGHT_HPP
 
-#include "etl/_mdspan/extents.hpp"
-#include "etl/_mdspan/is_extents.hpp"
-#include "etl/_mdspan/layout.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
-#include "etl/_type_traits/is_nothrow_constructible.hpp"
-#include "etl/_utility/index_sequence.hpp"
+#include <etl/_mdspan/extents.hpp>
+#include <etl/_mdspan/is_extents.hpp>
+#include <etl/_mdspan/layout.hpp>
+#include <etl/_mdspan/submdspan_extents.hpp>
+#include <etl/_mdspan/submdspan_mapping_result.hpp>
+#include <etl/_type_traits/always_false.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/is_nothrow_constructible.hpp>
+#include <etl/_utility/index_sequence.hpp>
 
 namespace etl {
 
@@ -86,6 +89,28 @@ struct layout_right::mapping {
     }
 
 private:
+    // template <typename... SliceSpecifiers>
+    // [[nodiscard]] constexpr auto submdspan_mapping_impl(SliceSpecifiers... slices) const
+    // {
+    //     auto sub_ext     = etl::submdspan_extents(extents(), slices...);
+    //     using SubExtents = decltype(sub_ext);
+    //     static_assert(sizeof(SubExtents) > 0);
+
+    //     // auto sub_strides = {};
+
+    //     if constexpr (Extents::rank() == 0) {
+    //         return etl::submdspan_mapping_result {*this, 0};
+    //     } else {
+    //         static_assert(etl::always_false<SliceSpecifiers...>);
+    //     }
+    // }
+
+    // template <typename... SliceSpecifiers>
+    // friend constexpr auto submdspan_mapping(mapping const& src, SliceSpecifiers... slices)
+    // {
+    //     return src.submdspan_mapping_impl(slices...);
+    // }
+
     TETL_NO_UNIQUE_ADDRESS extents_type _extents {};
 };
 

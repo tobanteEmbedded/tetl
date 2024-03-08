@@ -15,6 +15,7 @@
 #include <etl/_mdspan/layout_right.hpp>
 #include <etl/_mdspan/mdspan.hpp>
 #include <etl/_mdspan/strided_slice.hpp>
+#include <etl/_mdspan/submdspan.hpp>
 #include <etl/_mdspan/submdspan_extents.hpp>
 #include <etl/_mdspan/submdspan_mapping_result.hpp>
 
