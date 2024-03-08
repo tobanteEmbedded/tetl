@@ -4,8 +4,8 @@
 #define TETL_RANGES_RANGE_DIFFERENCE_T_HPP
 
 #include <etl/_iterator/iter_difference_t.hpp>
-#include <etl/_ranges/size.hpp>
-#include <etl/_ranges/sized_range.hpp>
+#include <etl/_ranges/iterator_t.hpp>
+#include <etl/_ranges/range.hpp>
 
 namespace etl::ranges {
 
