@@ -21,6 +21,7 @@ constexpr auto test() -> bool
         T data[2] {T(1), T(2)};
         assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::range<decltype(data)>);
+        assert(etl::ranges::size(data) == 2);
         assert(etl::ranges::begin(data) == etl::addressof(data[0]));
         assert(etl::ranges::end(data) == etl::next(etl::addressof(data[0]), 2));
     }
