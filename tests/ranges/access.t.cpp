@@ -19,6 +19,7 @@ constexpr auto test() -> bool
     assert(etl::same_as<etl::ranges::range_size_t<etl::string_view>, etl::size_t>);
     assert(etl::same_as<etl::ranges::range_difference_t<etl::string_view>, etl::ptrdiff_t>);
     assert(etl::same_as<etl::ranges::range_value_t<etl::string_view>, char>);
+    assert(etl::same_as<etl::ranges::range_reference_t<etl::string_view>, char const&>);
     assert(etl::same_as<etl::ranges::sentinel_t<etl::string_view>, etl::ranges::iterator_t<etl::string_view>>);
 
     {
@@ -28,6 +29,7 @@ constexpr auto test() -> bool
         assert(etl::same_as<etl::ranges::range_size_t<decltype(data)>, etl::size_t>);
         assert(etl::same_as<etl::ranges::range_difference_t<decltype(data)>, etl::ptrdiff_t>);
         assert(etl::same_as<etl::ranges::range_value_t<decltype(data)>, T>);
+        assert(etl::same_as<etl::ranges::range_reference_t<decltype(data)>, T&>);
         assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::size(data) == 2);
         assert(etl::ranges::begin(data) == etl::addressof(data[0]));
@@ -41,6 +43,7 @@ constexpr auto test() -> bool
         assert(etl::same_as<etl::ranges::range_size_t<decltype(data)>, etl::size_t>);
         assert(etl::same_as<etl::ranges::range_difference_t<decltype(data)>, etl::ptrdiff_t>);
         assert(etl::same_as<etl::ranges::range_value_t<decltype(data)>, T>);
+        assert(etl::same_as<etl::ranges::range_reference_t<decltype(data)>, T&>);
         assert(etl::same_as<etl::ranges::sentinel_t<decltype(data)>, etl::ranges::iterator_t<decltype(data)>>);
         assert(etl::ranges::size(data) == 3);
         assert(etl::ranges::begin(data) == data.begin());
