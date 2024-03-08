@@ -26,7 +26,7 @@ struct Vertex {
 template <typename T>
 [[nodiscard]] constexpr auto operator==(Vertex<T> const& lhs, Vertex<T> const& rhs) -> bool
 {
-    return (lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z);
+    return (lhs.x == rhs.x) and (lhs.y == rhs.y) and (lhs.z == rhs.z);
 }
 
 // template <typename T>

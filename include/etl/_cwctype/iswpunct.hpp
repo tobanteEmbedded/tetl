@@ -17,10 +17,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/wide/iswpunct
 [[nodiscard]] constexpr auto iswpunct(wint_t ch) noexcept -> int
 {
-    auto const sec1 = ch >= L'!' && ch <= L'/';
-    auto const sec2 = ch >= L':' && ch <= L'@';
-    auto const sec3 = ch >= L'[' && ch <= L'`';
-    auto const sec4 = ch >= L'{' && ch <= L'~';
+    auto const sec1 = ch >= L'!' and ch <= L'/';
+    auto const sec2 = ch >= L':' and ch <= L'@';
+    auto const sec3 = ch >= L'[' and ch <= L'`';
+    auto const sec4 = ch >= L'{' and ch <= L'~';
     return static_cast<int>(sec1 || sec2 || sec3 || sec4);
 }
 } // namespace etl

@@ -24,7 +24,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
 {
     auto left  = begin;
     auto right = mid;
-    while (left != mid && right != end) {
+    while (left != mid and right != end) {
         if (comp(*right, *left)) {
             auto value = move(*right);
             move_backward(left, mid, mid + 1);

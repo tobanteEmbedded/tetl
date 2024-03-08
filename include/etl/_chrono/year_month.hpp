@@ -47,7 +47,7 @@ private:
 
 [[nodiscard]] constexpr auto operator==(year_month const& lhs, year_month const& rhs) noexcept -> bool
 {
-    return lhs.year() == rhs.year() && lhs.month() == rhs.month();
+    return lhs.year() == rhs.year() and lhs.month() == rhs.month();
 }
 
 [[nodiscard]] constexpr auto operator+(chrono::year_month const& ym, chrono::years const& dy) noexcept

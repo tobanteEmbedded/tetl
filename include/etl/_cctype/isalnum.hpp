@@ -15,9 +15,9 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isalnum
 [[nodiscard]] constexpr auto isalnum(int ch) noexcept -> int
 {
-    auto isDigit = ch >= '0' && ch <= '9';
-    auto isLower = ch >= 'a' && ch <= 'z';
-    auto isUpper = ch >= 'A' && ch <= 'Z';
+    auto const isDigit = ch >= '0' and ch <= '9';
+    auto const isLower = ch >= 'a' and ch <= 'z';
+    auto const isUpper = ch >= 'A' and ch <= 'Z';
 
     return static_cast<int>(isDigit || isLower || isUpper);
 }

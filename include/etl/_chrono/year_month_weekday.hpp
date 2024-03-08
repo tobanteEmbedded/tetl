@@ -46,7 +46,7 @@ private:
 
 [[nodiscard]] constexpr auto operator==(year_month_weekday const& lhs, year_month_weekday const& rhs) noexcept -> bool
 {
-    return lhs.year() == rhs.year() && lhs.month() == rhs.month() && lhs.weekday_indexed() == rhs.weekday_indexed();
+    return lhs.year() == rhs.year() and lhs.month() == rhs.month() and lhs.weekday_indexed() == rhs.weekday_indexed();
 }
 
 [[nodiscard]] constexpr auto operator+(year_month_weekday const& lhs, months const& rhs) noexcept -> year_month_weekday

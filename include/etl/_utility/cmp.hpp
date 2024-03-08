@@ -17,11 +17,13 @@ template <typename T>
 struct is_integer_and_not_char
     : bool_constant<
         is_integral_v<T>
-        && (!is_same_v<T, bool>
-        && !is_same_v<T, char>
-        && !is_same_v<T, char16_t>
-        && !is_same_v<T, char32_t>
-        && !is_same_v<T, wchar_t>)>
+        and (
+                not is_same_v<T, bool>
+            and not is_same_v<T, char>
+            and not is_same_v<T, char16_t>
+            and not is_same_v<T, char32_t>
+            and not is_same_v<T, wchar_t>
+        )>
 {
 };
 

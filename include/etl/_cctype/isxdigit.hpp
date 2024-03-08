@@ -15,11 +15,11 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isxdigit
 [[nodiscard]] constexpr auto isxdigit(int ch) noexcept -> int
 {
-    auto const isDigit    = ch >= '0' && ch <= '9';
-    auto const isHexLower = ch >= 'a' && ch <= 'f';
-    auto const isHexUpper = ch >= 'A' && ch <= 'F';
+    auto const isDigit    = ch >= '0' and ch <= '9';
+    auto const isHexLower = ch >= 'a' and ch <= 'f';
+    auto const isHexUpper = ch >= 'A' and ch <= 'F';
 
-    return static_cast<int>(isDigit || isHexLower || isHexUpper);
+    return static_cast<int>(isDigit or isHexLower or isHexUpper);
 }
 } // namespace etl
 

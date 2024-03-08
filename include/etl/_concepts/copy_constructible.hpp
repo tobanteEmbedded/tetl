@@ -17,10 +17,10 @@ namespace etl {
 // clang-format off
 template <typename T>
 concept copy_constructible =
-  move_constructible<T> &&
-  constructible_from<T, T&> && convertible_to<T&, T> &&
-  constructible_from<T, const T&> && convertible_to<const T&, T> &&
-  constructible_from<T, const T> && convertible_to<const T, T>;
+  move_constructible<T> and
+  constructible_from<T, T&> and convertible_to<T&, T> and
+  constructible_from<T, const T&> and convertible_to<const T&, T> and
+  constructible_from<T, const T> and convertible_to<const T, T>;
 // clang-format on
 
 } // namespace etl

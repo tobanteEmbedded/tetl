@@ -13,7 +13,7 @@ namespace etl {
 /// otherwise.
 ///
 /// https://en.cppreference.com/w/cpp/string/byte/isdigit
-[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int { return static_cast<int>(ch >= '0' && ch <= '9'); }
+[[nodiscard]] constexpr auto isdigit(int ch) noexcept -> int { return static_cast<int>(ch >= '0' and ch <= '9'); }
 } // namespace etl
 
 #endif // TETL_CCTYPE_ISDIGIT_HPP

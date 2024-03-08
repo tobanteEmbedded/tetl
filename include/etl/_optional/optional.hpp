@@ -336,83 +336,83 @@ private:
     template<typename U>
     static constexpr bool enable_ctor_4_5_base =
             (!etl::is_constructible_v<T, etl::optional<U>&>)
-        &&  (!etl::is_constructible_v<T, etl::optional<U> const&>)
-        &&  (!etl::is_constructible_v<T, etl::optional<U>&&>)
-        &&  (!etl::is_constructible_v<T, etl::optional<U> const&&>)
-        &&  (!etl::is_convertible_v<etl::optional<U>&, T>)
-        &&  (!etl::is_convertible_v<etl::optional<U> const&, T>)
-        &&  (!etl::is_convertible_v<etl::optional<U>&&, T>)
-        &&  (!etl::is_convertible_v<etl::optional<U> const&&, T>);
+        and  (!etl::is_constructible_v<T, etl::optional<U> const&>)
+        and  (!etl::is_constructible_v<T, etl::optional<U>&&>)
+        and  (!etl::is_constructible_v<T, etl::optional<U> const&&>)
+        and  (!etl::is_convertible_v<etl::optional<U>&, T>)
+        and  (!etl::is_convertible_v<etl::optional<U> const&, T>)
+        and  (!etl::is_convertible_v<etl::optional<U>&&, T>)
+        and  (!etl::is_convertible_v<etl::optional<U> const&&, T>);
 
     template<typename U>
     using enable_ctor_4_implicit = etl::enable_if_t<
         etl::is_constructible_v<T, U const&>
-        && enable_ctor_4_5_base<U>
-        && etl::is_convertible_v<U const&, T>, int>;
+        and enable_ctor_4_5_base<U>
+        and etl::is_convertible_v<U const&, T>, int>;
 
     template<typename U>
     using enable_ctor_4_explicit = etl::enable_if_t<
         etl::is_constructible_v<T, U const&>
-        && enable_ctor_4_5_base<U>
-        && (!etl::is_convertible_v<U const&, T>), int>;
+        and enable_ctor_4_5_base<U>
+        and (!etl::is_convertible_v<U const&, T>), int>;
 
     template<typename U>
     using enable_ctor_5_implicit = etl::enable_if_t<
         etl::is_constructible_v<T, U&&>
-        && enable_ctor_4_5_base<U>
-        && etl::is_convertible_v<U&&, T>, int>;
+        and enable_ctor_4_5_base<U>
+        and etl::is_convertible_v<U&&, T>, int>;
 
     template<typename U>
     using enable_ctor_5_explicit = etl::enable_if_t<
         etl::is_constructible_v<T, U&&>
-        && enable_ctor_4_5_base<U>
-        && (!etl::is_convertible_v<U&&, T>), int>;
+        and enable_ctor_4_5_base<U>
+        and (!etl::is_convertible_v<U&&, T>), int>;
 
 
     template<typename ...Args>
     using enable_ctor_6 = etl::enable_if_t<etl::is_constructible_v<T, Args...>, int>;
 
     template<typename U>
-    static constexpr bool enable_ctor_8 = etl::is_constructible_v<T, U&&> && not_in_place_t<U> && not_self<U>;
+    static constexpr bool enable_ctor_8 = etl::is_constructible_v<T, U&&> and not_in_place_t<U> and not_self<U>;
     template<typename U>
-    using enable_ctor_8_implicit = etl::enable_if_t<enable_ctor_8<U> && etl::is_convertible_v<U&&, T>, int>;
+    using enable_ctor_8_implicit = etl::enable_if_t<enable_ctor_8<U> and etl::is_convertible_v<U&&, T>, int>;
     template<typename U>
-    using enable_ctor_8_explicit = etl::enable_if_t<enable_ctor_8<U> && (!etl::is_convertible_v<U&&, T>), int>;
+    using enable_ctor_8_explicit = etl::enable_if_t<enable_ctor_8<U> and (!etl::is_convertible_v<U&&, T>), int>;
 
     template <typename U>
     using enable_assign_forward = etl::enable_if_t<
             (!etl::is_same_v<optional<T>, etl::decay_t<U>>)
-        &&  (!etl::is_scalar_v<T>)
-        &&  (!etl::is_same_v<T, etl::decay_t<U>>)
-        &&    etl::is_constructible_v<T, U>
-        &&    etl::is_assignable_v<T&, U>, int>;
+        and  (!etl::is_scalar_v<T>)
+        and  (!etl::is_same_v<T, etl::decay_t<U>>)
+        and    etl::is_constructible_v<T, U>
+        and    etl::is_assignable_v<T&, U>, int>;
 
     template <typename U>
     static constexpr bool enable_assign_other =
             etl::is_constructible_v<T, etl::optional<U>&>
-        &&  etl::is_constructible_v<T, etl::optional<U> const&>
-        &&  etl::is_constructible_v<T, etl::optional<U>&&>
-        &&  etl::is_constructible_v<T, etl::optional<U> const&&>
-        &&  etl::is_convertible_v<etl::optional<U>&, T>
-        &&  etl::is_convertible_v<etl::optional<U> const&, T>
-        &&  etl::is_convertible_v<etl::optional<U>&&, T>
-        &&  etl::is_convertible_v<etl::optional<U> const&&, T>
-        &&  etl::is_assignable_v<T&, etl::optional<U>&>
-        &&  etl::is_assignable_v<T&, etl::optional<U> const&>
-        &&  etl::is_assignable_v<T&, etl::optional<U>&&>
-        &&  etl::is_assignable_v<T&, etl::optional<U> const&&>;
+        and  etl::is_constructible_v<T, etl::optional<U> const&>
+        and  etl::is_constructible_v<T, etl::optional<U>&&>
+        and  etl::is_constructible_v<T, etl::optional<U> const&&>
+        and  etl::is_convertible_v<etl::optional<U>&, T>
+        and  etl::is_convertible_v<etl::optional<U> const&, T>
+        and  etl::is_convertible_v<etl::optional<U>&&, T>
+        and  etl::is_convertible_v<etl::optional<U> const&&, T>
+        and  etl::is_assignable_v<T&, etl::optional<U>&>
+        and  etl::is_assignable_v<T&, etl::optional<U> const&>
+        and  etl::is_assignable_v<T&, etl::optional<U>&&>
+        and  etl::is_assignable_v<T&, etl::optional<U> const&&>;
 
     template <typename U>
     using enable_assign_other_copy = etl::enable_if_t<
             enable_assign_other<U>
-        &&  etl::is_constructible_v<T, U const&>
-        &&  etl::is_assignable_v<T&, U const&>, int>;
+        and  etl::is_constructible_v<T, U const&>
+        and  etl::is_assignable_v<T&, U const&>, int>;
 
     template <typename U>
     using enable_assign_other_move = etl::enable_if_t<
             enable_assign_other<U>
-        &&  etl::is_constructible_v<T, U>
-        &&  etl::is_assignable_v<T&, U>, int>;
+        and  etl::is_constructible_v<T, U>
+        and  etl::is_assignable_v<T&, U>, int>;
 
     // clang-format on
 

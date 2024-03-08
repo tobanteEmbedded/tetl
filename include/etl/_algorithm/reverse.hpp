@@ -13,7 +13,7 @@ namespace etl {
 template <typename BidirIt>
 constexpr auto reverse(BidirIt first, BidirIt last) -> void
 {
-    while ((first != last) && (first != --last)) { iter_swap(first++, last); }
+    while ((first != last) and (first != --last)) { iter_swap(first++, last); }
 }
 
 } // namespace etl

@@ -158,7 +158,7 @@ struct static_vector_trivial_storage {
 
     /// \brief Constructs an element in-place at the end of the storage.
     template <typename... Args>
-        requires(is_constructible_v<T, Args...> && is_assignable_v<value_type&, T>)
+        requires(is_constructible_v<T, Args...> and is_assignable_v<value_type&, T>)
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
         TETL_ASSERT(!full());
@@ -287,8 +287,8 @@ protected:
     template <typename InputIt>
     auto unsafe_destroy(InputIt first, InputIt last) noexcept(is_nothrow_destructible_v<T>) -> void
     {
-        TETL_ASSERT(first >= data() && first <= end());
-        TETL_ASSERT(last >= data() && last <= end());
+        TETL_ASSERT(first >= data() and first <= end());
+        TETL_ASSERT(last >= data() and last <= end());
         for (; first != last; ++first) { first->~T(); }
     }
 
@@ -353,8 +353,8 @@ public:
 
 private:
     constexpr auto emplace_n(size_type n) noexcept(
-        (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
-        || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>)) -> void
+        (is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
+        || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)) -> void
     {
         TETL_ASSERT(n <= capacity());
         while (n != size()) { emplace_back(T {}); }
@@ -388,7 +388,7 @@ public:
 
     /// \brief Appends value at the end of the vector.
     template <typename U>
-        requires(is_constructible_v<T, U> && is_assignable_v<reference, U &&>)
+        requires(is_constructible_v<T, U> and is_assignable_v<reference, U &&>)
     constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(forward<U>(value)))) -> void
     {
         TETL_ASSERT(!full());

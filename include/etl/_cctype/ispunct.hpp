@@ -19,10 +19,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/ispunct
 [[nodiscard]] constexpr auto ispunct(int ch) noexcept -> int
 {
-    auto const sec1 = ch >= '!' && ch <= '/';
-    auto const sec2 = ch >= ':' && ch <= '@';
-    auto const sec3 = ch >= '[' && ch <= '`';
-    auto const sec4 = ch >= '{' && ch <= '~';
+    auto const sec1 = ch >= '!' and ch <= '/';
+    auto const sec2 = ch >= ':' and ch <= '@';
+    auto const sec3 = ch >= '[' and ch <= '`';
+    auto const sec4 = ch >= '{' and ch <= '~';
 
     return static_cast<int>(sec1 || sec2 || sec3 || sec4);
 }

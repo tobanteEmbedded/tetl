@@ -190,7 +190,7 @@ struct array {
 
 // One deduction guide is provided for array to provide an equivalent of
 // experimental::make_array for construction of array from a variadic parameter
-// pack. The program is ill-formed if (is_same_v<T, U> && ...) is not true.
+// pack. The program is ill-formed if (is_same_v<T, U> and ...) is not true.
 // Note that it is true when sizeof...(U) is zero.
 template <typename T, typename... U>
 array(T, U...) -> array<T, 1 + sizeof...(U)>;

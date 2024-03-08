@@ -20,7 +20,7 @@ template <typename ForwardIt, typename T, typename Compare>
 [[nodiscard]] constexpr auto binary_search(ForwardIt first, ForwardIt last, T const& value, Compare comp) -> bool
 {
     first = lower_bound(first, last, value, comp);
-    return (!(first == last) && !(comp(value, *first)));
+    return (!(first == last) and !(comp(value, *first)));
 }
 
 template <typename ForwardIt, typename T>

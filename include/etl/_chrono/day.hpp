@@ -45,7 +45,7 @@ struct day {
 
     constexpr explicit operator uint32_t() const noexcept { return _count; }
 
-    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) && (_count < 32U); }
+    [[nodiscard]] constexpr auto ok() const noexcept -> bool { return (_count > 0U) and (_count < 32U); }
 
 private:
     uint8_t _count {};

@@ -29,7 +29,7 @@ template <typename T>
 [[nodiscard]] constexpr auto signbit(float arg) noexcept -> bool
 {
     if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
-#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);
@@ -46,7 +46,7 @@ template <typename T>
 [[nodiscard]] constexpr auto signbit(double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
-#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);
@@ -63,7 +63,7 @@ template <typename T>
 [[nodiscard]] constexpr auto signbit(long double arg) noexcept -> bool
 {
     if (is_constant_evaluated()) { return detail::signbit_fallback(arg); }
-#if __has_builtin(__builtin_signbit) && !defined(TETL_CLANG)
+#if __has_builtin(__builtin_signbit) and not defined(TETL_CLANG)
     return __builtin_signbit(arg);
 #else
     return detail::signbit_fallback(arg);

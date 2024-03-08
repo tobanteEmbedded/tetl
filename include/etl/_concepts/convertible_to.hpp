@@ -14,7 +14,7 @@ namespace etl {
 /// conversion are equivalent.
 template <typename From, typename To>
 concept convertible_to
-    = is_convertible_v<From, To> && requires(add_rvalue_reference_t<From> (&f)()) { static_cast<To>(f()); };
+    = etl::is_convertible_v<From, To> and requires(etl::add_rvalue_reference_t<From> (&f)()) { static_cast<To>(f()); };
 
 } // namespace etl
 

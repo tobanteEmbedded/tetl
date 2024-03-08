@@ -18,7 +18,7 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> Forwar
 
     auto result = first;
     while (++first != last) {
-        if (!pred(*result, *first) && ++result != first) { *result = move(*first); }
+        if (!pred(*result, *first) and ++result != first) { *result = move(*first); }
     }
     return ++result;
 }

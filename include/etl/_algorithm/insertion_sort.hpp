@@ -17,7 +17,7 @@ constexpr auto insertion_sort(RandomIt first, RandomIt last, Compare comp) -> vo
     for (auto i = first; i != last; ++i) {
         auto key = *i;
         auto j   = i;
-        while (j != first && comp(key, *(j - 1))) {
+        while (j != first and comp(key, *(j - 1))) {
             *j = *(j - 1);
             --j;
         }

@@ -16,40 +16,40 @@ struct partial_ordering {
 
     friend constexpr auto operator==(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._isOrdered && v._value == 0;
+        return v._isOrdered and v._value == 0;
     }
     friend constexpr auto operator==(partial_ordering v, partial_ordering w) noexcept -> bool = default;
     friend constexpr auto operator<(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._isOrdered && v._value < 0;
+        return v._isOrdered and v._value < 0;
     }
     friend constexpr auto operator>(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._isOrdered && v._value > 0;
+        return v._isOrdered and v._value > 0;
     }
     friend constexpr auto operator<=(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._isOrdered && v._value <= 0;
+        return v._isOrdered and v._value <= 0;
     }
     friend constexpr auto operator>=(partial_ordering v, nullptr_t) noexcept -> bool
     {
-        return v._isOrdered && v._value >= 0;
+        return v._isOrdered and v._value >= 0;
     }
     friend constexpr auto operator<(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v._isOrdered && 0 < v._value;
+        return v._isOrdered and 0 < v._value;
     }
     friend constexpr auto operator>(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v._isOrdered && 0 > v._value;
+        return v._isOrdered and 0 > v._value;
     }
     friend constexpr auto operator<=(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v._isOrdered && 0 <= v._value;
+        return v._isOrdered and 0 <= v._value;
     }
     friend constexpr auto operator>=(nullptr_t, partial_ordering v) noexcept -> bool
     {
-        return v._isOrdered && 0 >= v._value;
+        return v._isOrdered and 0 >= v._value;
     }
     friend constexpr auto operator<=>(partial_ordering v, nullptr_t) noexcept -> partial_ordering { return v; }
     friend constexpr auto operator<=>(nullptr_t, partial_ordering v) noexcept -> partial_ordering

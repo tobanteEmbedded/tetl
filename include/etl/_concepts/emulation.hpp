@@ -25,9 +25,9 @@ namespace etl::detail {
 template <typename T>
 inline constexpr bool is_movable_v
         = etl::is_object_v<T>
-        && etl::is_assignable_v<T&, T>
-        && etl::is_move_constructible_v<T>
-        && etl::is_swappable_v<T&>;
+        and etl::is_assignable_v<T&, T>
+        and etl::is_move_constructible_v<T>
+        and etl::is_swappable_v<T&>;
 
 template <typename Rng>
 using range_iterator_t = decltype(etl::begin(etl::declval<Rng>()));

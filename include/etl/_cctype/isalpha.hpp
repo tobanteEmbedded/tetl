@@ -15,10 +15,10 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/isalpha
 [[nodiscard]] constexpr auto isalpha(int ch) noexcept -> int
 {
-    auto isLower = ch >= 'a' && ch <= 'z';
-    auto isUpper = ch >= 'A' && ch <= 'Z';
+    auto const isLower = ch >= 'a' and ch <= 'z';
+    auto const isUpper = ch >= 'A' and ch <= 'Z';
 
-    return static_cast<int>(isLower || isUpper);
+    return static_cast<int>(isLower or isUpper);
 }
 } // namespace etl
 

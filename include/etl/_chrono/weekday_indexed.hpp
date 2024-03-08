@@ -28,7 +28,7 @@ private:
 
 [[nodiscard]] constexpr auto operator==(weekday_indexed const& lhs, weekday_indexed const& rhs) noexcept -> bool
 {
-    return lhs.weekday() == rhs.weekday() && lhs.index() == rhs.index();
+    return lhs.weekday() == rhs.weekday() and lhs.index() == rhs.index();
 }
 
 } // namespace etl::chrono

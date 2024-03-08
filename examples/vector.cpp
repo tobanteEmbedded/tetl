@@ -12,14 +12,12 @@
 
 struct Person {
     constexpr Person(int a, int e) noexcept : age {a}, experience {e} { }
+
+    friend constexpr auto operator==(Person lhs, Person rhs) noexcept -> bool = default;
+
     int age {};
     int experience {};
 };
-
-constexpr auto operator==(Person lhs, Person rhs) noexcept -> bool
-{
-    return lhs.age == rhs.age && lhs.experience == rhs.experience;
-}
 
 auto main() -> int
 {

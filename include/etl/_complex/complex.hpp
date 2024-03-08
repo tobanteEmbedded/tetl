@@ -275,7 +275,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] constexpr auto operator==(complex<T> const& lhs, complex<T> const& rhs) -> bool
 {
-    return lhs.real() == rhs.real() && lhs.imag() == rhs.imag();
+    return lhs.real() == rhs.real() and lhs.imag() == rhs.imag();
 }
 
 template <typename T>
