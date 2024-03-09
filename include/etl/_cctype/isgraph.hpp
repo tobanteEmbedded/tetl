@@ -3,10 +3,10 @@
 #ifndef TETL_CCTYPE_ISGRAPH_HPP
 #define TETL_CCTYPE_ISGRAPH_HPP
 
-#include "etl/_cctype/isdigit.hpp"
-#include "etl/_cctype/islower.hpp"
-#include "etl/_cctype/ispunct.hpp"
-#include "etl/_cctype/isupper.hpp"
+#include <etl/_cctype/isdigit.hpp>
+#include <etl/_cctype/islower.hpp>
+#include <etl/_cctype/ispunct.hpp>
+#include <etl/_cctype/isupper.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_FIND_END_HPP
 #define TETL_ALGORITHM_FIND_END_HPP
 
-#include "etl/_algorithm/search.hpp"
-#include "etl/_functional/equal_to.hpp"
+#include <etl/_algorithm/search.hpp>
+#include <etl/_functional/equal_to.hpp>
 
 namespace etl {
 

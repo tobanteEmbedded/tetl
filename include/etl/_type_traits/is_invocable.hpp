@@ -3,10 +3,10 @@
 #ifndef TETL_TYPE_TRAITS_IS_INVOCABLE_HPP
 #define TETL_TYPE_TRAITS_IS_INVOCABLE_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/invoke_result.hpp"
-#include "etl/_type_traits/is_void.hpp"
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/invoke_result.hpp>
+#include <etl/_type_traits/is_void.hpp>
+#include <etl/_type_traits/void_t.hpp>
 
 namespace etl {
 

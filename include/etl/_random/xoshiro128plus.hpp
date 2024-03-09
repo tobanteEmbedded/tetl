@@ -3,12 +3,12 @@
 #ifndef TETL_RANDOM_XORSHIFT128PLUS_HPP
 #define TETL_RANDOM_XORSHIFT128PLUS_HPP
 
-#include "etl/_algorithm/equal.hpp"
-#include "etl/_bit/rotl.hpp"
-#include "etl/_cstdint/uint_t.hpp"
-#include "etl/_iterator/begin.hpp"
-#include "etl/_iterator/end.hpp"
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_algorithm/equal.hpp>
+#include <etl/_bit/rotl.hpp>
+#include <etl/_cstdint/uint_t.hpp>
+#include <etl/_iterator/begin.hpp>
+#include <etl/_iterator/end.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 

@@ -3,10 +3,10 @@
 #ifndef TETL_CHRONO_WEEKDAY_HPP
 #define TETL_CHRONO_WEEKDAY_HPP
 
-#include "etl/_chrono/duration.hpp"
-#include "etl/_chrono/local_t.hpp"
-#include "etl/_chrono/system_clock.hpp"
-#include "etl/_cstdint/uint_t.hpp"
+#include <etl/_chrono/duration.hpp>
+#include <etl/_chrono/local_t.hpp>
+#include <etl/_chrono/system_clock.hpp>
+#include <etl/_cstdint/uint_t.hpp>
 
 namespace etl::chrono {
 

@@ -3,11 +3,11 @@
 #ifndef TETL_MEMORY_DEFAULT_DELETE_HPP
 #define TETL_MEMORY_DEFAULT_DELETE_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/is_convertible.hpp"
-#include "etl/_type_traits/is_function.hpp"
-#include "etl/_type_traits/is_void.hpp"
+#include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/is_function.hpp>
+#include <etl/_type_traits/is_void.hpp>
 
 namespace etl {
 

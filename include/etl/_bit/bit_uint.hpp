@@ -3,9 +3,9 @@
 #ifndef TETL_BIT_BIT_UINT_HPP
 #define TETL_BIT_BIT_UINT_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/disjunction.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/disjunction.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl::detail {
 

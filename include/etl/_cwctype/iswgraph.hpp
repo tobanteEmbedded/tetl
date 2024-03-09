@@ -3,12 +3,12 @@
 #ifndef TETL_CWCTYPE_ISWGRAPH_HPP
 #define TETL_CWCTYPE_ISWGRAPH_HPP
 
-#include "etl/_cassert/macro.hpp"
+#include <etl/_cassert/macro.hpp>
 
-#include "etl/_cwctype/iswdigit.hpp"
-#include "etl/_cwctype/iswlower.hpp"
-#include "etl/_cwctype/iswpunct.hpp"
-#include "etl/_cwctype/iswupper.hpp"
+#include <etl/_cwctype/iswdigit.hpp>
+#include <etl/_cwctype/iswlower.hpp>
+#include <etl/_cwctype/iswpunct.hpp>
+#include <etl/_cwctype/iswupper.hpp>
 
 namespace etl {
 

@@ -3,11 +3,11 @@
 #ifndef TETL_CONCEPTS_COMMON_WITH_HPP
 #define TETL_CONCEPTS_COMMON_WITH_HPP
 
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/common_reference.hpp"
-#include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/declval.hpp"
+#include <etl/_concepts/same_as.hpp>
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/common_reference.hpp>
+#include <etl/_type_traits/common_type.hpp>
+#include <etl/_type_traits/declval.hpp>
 
 namespace etl {
 

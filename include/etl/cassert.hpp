@@ -6,9 +6,9 @@
 /// \file This header is part of the error handling library.
 /// \example cassert.cpp
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_cassert/macro.hpp"
+#include <etl/_cassert/macro.hpp>
 
 #ifndef assert
     #define assert(...) TETL_ASSERT(__VA_ARGS__)

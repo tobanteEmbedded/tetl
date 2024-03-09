@@ -3,11 +3,11 @@
 #ifndef TETL_TYPE_TRAITS_IS_MEMBER_OBJECT_POINTER_HPP
 #define TETL_TYPE_TRAITS_IS_MEMBER_OBJECT_POINTER_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_member_function_pointer.hpp"
-#include "etl/_type_traits/is_member_pointer.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_member_function_pointer.hpp>
+#include <etl/_type_traits/is_member_pointer.hpp>
 
 namespace etl {
 

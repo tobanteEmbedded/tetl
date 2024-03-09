@@ -3,8 +3,8 @@
 #ifndef TETL_CONCEPTS_INVOCABLE_HPP
 #define TETL_CONCEPTS_INVOCABLE_HPP
 
-#include "etl/_functional/invoke.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_functional/invoke.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 

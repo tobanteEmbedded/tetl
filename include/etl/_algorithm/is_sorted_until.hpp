@@ -2,7 +2,7 @@
 #ifndef TETL_ALGORITHM_IS_SORTED_UNTIL_HPP
 #define TETL_ALGORITHM_IS_SORTED_UNTIL_HPP
 
-#include "etl/_functional/less.hpp"
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

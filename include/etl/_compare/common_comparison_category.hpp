@@ -3,10 +3,10 @@
 #ifndef TETL_COMPARE_COMMON_COMPARISON_CATEGORY_HPP
 #define TETL_COMPARE_COMMON_COMPARISON_CATEGORY_HPP
 
-#include "etl/_compare/partial_ordering.hpp"
-#include "etl/_compare/strong_ordering.hpp"
-#include "etl/_compare/weak_ordering.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_compare/partial_ordering.hpp>
+#include <etl/_compare/strong_ordering.hpp>
+#include <etl/_compare/weak_ordering.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

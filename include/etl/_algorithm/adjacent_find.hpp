@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_ADJACENT_FIND_HPP
 #define TETL_ALGORITHM_ADJACENT_FIND_HPP
 
-#include "etl/_functional/equal_to.hpp"
+#include <etl/_functional/equal_to.hpp>
 
 namespace etl {
 /// \ingroup algorithm-header

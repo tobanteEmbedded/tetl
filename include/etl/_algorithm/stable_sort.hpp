@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_STABLE_SORT_HPP
 #define TETL_ALGORITHM_STABLE_SORT_HPP
 
-#include "etl/_algorithm/insertion_sort.hpp"
-#include "etl/_functional/less.hpp"
+#include <etl/_algorithm/insertion_sort.hpp>
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

@@ -2,10 +2,10 @@
 #ifndef TETL_NUMERIC_REDUCE_HPP
 #define TETL_NUMERIC_REDUCE_HPP
 
-#include "etl/_functional/plus.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_numeric/accumulate.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_functional/plus.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_numeric/accumulate.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

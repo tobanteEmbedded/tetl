@@ -5,10 +5,10 @@
 #ifndef TETL_TUPLE_MAKE_TUPLE_HPP
 #define TETL_TUPLE_MAKE_TUPLE_HPP
 
-#include "etl/_functional/reference_wrapper.hpp"
-#include "etl/_tuple/tuple.hpp"
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_functional/reference_wrapper.hpp>
+#include <etl/_tuple/tuple.hpp>
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 namespace detail {

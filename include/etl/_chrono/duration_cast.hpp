@@ -3,11 +3,11 @@
 #ifndef TETL_CHRONO_DURATION_CAST_HPP
 #define TETL_CHRONO_DURATION_CAST_HPP
 
-#include "etl/_chrono/duration.hpp"
-#include "etl/_chrono/treat_as_floating_point.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/is_arithmetic.hpp"
+#include <etl/_chrono/duration.hpp>
+#include <etl/_chrono/treat_as_floating_point.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/common_type.hpp>
+#include <etl/_type_traits/is_arithmetic.hpp>
 
 namespace etl::chrono {
 

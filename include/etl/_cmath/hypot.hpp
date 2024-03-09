@@ -3,11 +3,11 @@
 #ifndef TETL_CMATH_HYPOT_HPP
 #define TETL_CMATH_HYPOT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_cmath/isinf.hpp"
-#include "etl/_cmath/isnan.hpp"
-#include "etl/_cmath/sqrt.hpp"
+#include <etl/_cmath/isinf.hpp>
+#include <etl/_cmath/isnan.hpp>
+#include <etl/_cmath/sqrt.hpp>
 
 namespace etl {
 

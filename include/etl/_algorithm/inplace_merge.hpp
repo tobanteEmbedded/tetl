@@ -3,9 +3,9 @@
 #ifndef TETL_ALGORITHM_INPLACE_MERGE_HPP
 #define TETL_ALGORITHM_INPLACE_MERGE_HPP
 
-#include "etl/_algorithm/move_backward.hpp"
-#include "etl/_functional/less.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_algorithm/move_backward.hpp>
+#include <etl/_functional/less.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

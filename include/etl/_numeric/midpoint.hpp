@@ -2,14 +2,14 @@
 #ifndef TETL_NUMERIC_MIDPOINT_HPP
 #define TETL_NUMERIC_MIDPOINT_HPP
 
-#include "etl/_cstddef/ptrdiff_t.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_numeric/abs.hpp"
-#include "etl/_type_traits/is_floating_point.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_pointer.hpp"
-#include "etl/_type_traits/is_same.hpp"
-#include "etl/_type_traits/make_unsigned.hpp"
+#include <etl/_cstddef/ptrdiff_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
+#include <etl/_numeric/abs.hpp>
+#include <etl/_type_traits/is_floating_point.hpp>
+#include <etl/_type_traits/is_integral.hpp>
+#include <etl/_type_traits/is_pointer.hpp>
+#include <etl/_type_traits/is_same.hpp>
+#include <etl/_type_traits/make_unsigned.hpp>
 
 namespace etl {
 

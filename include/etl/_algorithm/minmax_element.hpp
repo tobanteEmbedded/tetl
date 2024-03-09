@@ -3,9 +3,9 @@
 #ifndef TETL_ALGORITHM_MINMAX_ELEMENT_HPP
 #define TETL_ALGORITHM_MINMAX_ELEMENT_HPP
 
-#include "etl/_functional/less.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_utility/pair.hpp"
+#include <etl/_functional/less.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_utility/pair.hpp>
 
 namespace etl {
 

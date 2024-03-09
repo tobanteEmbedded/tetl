@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_BUBBLE_SORT_HPP
 #define TETL_ALGORITHM_BUBBLE_SORT_HPP
 
-#include "etl/_algorithm/iter_swap.hpp"
-#include "etl/_functional/less.hpp"
+#include <etl/_algorithm/iter_swap.hpp>
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

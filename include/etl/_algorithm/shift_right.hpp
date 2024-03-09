@@ -3,12 +3,12 @@
 #ifndef TETL_ALGORITHM_SHIFT_RIGHT_HPP
 #define TETL_ALGORITHM_SHIFT_RIGHT_HPP
 
-#include "etl/_algorithm/move.hpp"
-#include "etl/_concepts/emulation.hpp"
-#include "etl/_iterator/distance.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_iterator/next.hpp"
-#include "etl/_iterator/prev.hpp"
+#include <etl/_algorithm/move.hpp>
+#include <etl/_concepts/emulation.hpp>
+#include <etl/_iterator/distance.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_iterator/next.hpp>
+#include <etl/_iterator/prev.hpp>
 
 namespace etl {
 

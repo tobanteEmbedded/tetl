@@ -3,9 +3,9 @@
 #ifndef TETL_BIT_BIT_CEIL_HPP
 #define TETL_BIT_BIT_CEIL_HPP
 
-#include "etl/_bit/bit_uint.hpp"
-#include "etl/_bit/bit_width.hpp"
-#include "etl/_limits/numeric_limits.hpp"
+#include <etl/_bit/bit_uint.hpp>
+#include <etl/_bit/bit_width.hpp>
+#include <etl/_limits/numeric_limits.hpp>
 
 namespace etl {
 

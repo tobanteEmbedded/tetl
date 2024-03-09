@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_UNIQUE_COPY_HPP
 #define TETL_ALGORITHM_UNIQUE_COPY_HPP
 
-#include "etl/_functional/equal_to.hpp"
+#include <etl/_functional/equal_to.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_REMOVE_IF_HPP
 #define TETL_ALGORITHM_REMOVE_IF_HPP
 
-#include "etl/_algorithm/find_if.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_algorithm/find_if.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

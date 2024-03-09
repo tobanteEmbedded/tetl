@@ -3,11 +3,11 @@
 #ifndef TETL_FUNCTIONAL_NOT_FN_HPP
 #define TETL_FUNCTIONAL_NOT_FN_HPP
 
-#include "etl/_functional/invoke.hpp"
-#include "etl/_type_traits/is_member_pointer.hpp"
-#include "etl/_type_traits/is_pointer.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_functional/invoke.hpp>
+#include <etl/_type_traits/is_member_pointer.hpp>
+#include <etl/_type_traits/is_pointer.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

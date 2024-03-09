@@ -3,9 +3,9 @@
 #ifndef TETL_ALGORITHM_PARTITION_HPP
 #define TETL_ALGORITHM_PARTITION_HPP
 
-#include "etl/_algorithm/find_if_not.hpp"
-#include "etl/_algorithm/iter_swap.hpp"
-#include "etl/_iterator/next.hpp"
+#include <etl/_algorithm/find_if_not.hpp>
+#include <etl/_algorithm/iter_swap.hpp>
+#include <etl/_iterator/next.hpp>
 
 namespace etl {
 

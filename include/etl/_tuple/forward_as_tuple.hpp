@@ -5,8 +5,8 @@
 #ifndef TETL_TUPLE_FORWARD_AS_TUPLE_HPP
 #define TETL_TUPLE_FORWARD_AS_TUPLE_HPP
 
-#include "etl/_tuple/tuple.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_tuple/tuple.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 
@@ -15,9 +15,9 @@ namespace etl {
 /// data members when rvalues are used as arguments, and otherwise has lvalue
 /// reference data members.
 template <typename... Types>
-[[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept -> tuple<Types&&...>
+[[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept -> etl::tuple<Types&&...>
 {
-    return tuple<Types&&...> {forward<Types>(args)...};
+    return etl::tuple<Types&&...> {etl::forward<Types>(args)...};
 }
 
 } // namespace etl

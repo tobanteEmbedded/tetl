@@ -3,8 +3,8 @@
 #ifndef TETL_SCOPE_HPP
 #define TETL_SCOPE_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_scope/scope_exit.hpp"
+#include <etl/_scope/scope_exit.hpp>
 
 #endif // TETL_SCOPE_HPP

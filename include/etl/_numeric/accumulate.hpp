@@ -2,7 +2,7 @@
 #ifndef TETL_NUMERIC_ACCUMULATE_HPP
 #define TETL_NUMERIC_ACCUMULATE_HPP
 
-#include "etl/_utility/move.hpp"
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

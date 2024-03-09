@@ -3,10 +3,10 @@
 #ifndef TETL_RANDOM_XORSHIFT_HPP
 #define TETL_RANDOM_XORSHIFT_HPP
 
-#include "etl/_concepts/unsigned_integral.hpp"
-#include "etl/_cstdint/uint_t.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_concepts/unsigned_integral.hpp>
+#include <etl/_cstdint/uint_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

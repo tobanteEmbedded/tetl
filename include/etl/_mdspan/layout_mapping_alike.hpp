@@ -3,9 +3,9 @@
 #ifndef TETL_MDSPAN_LAYOUT_MAPPING_ALIKE_HPP
 #define TETL_MDSPAN_LAYOUT_MAPPING_ALIKE_HPP
 
-#include "etl/_concepts/same_as.hpp"
-#include "etl/_mdspan/is_extents.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
+#include <etl/_concepts/same_as.hpp>
+#include <etl/_mdspan/is_extents.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
 
 namespace etl::detail {
 

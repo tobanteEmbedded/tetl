@@ -2,7 +2,7 @@
 #ifndef TETL_NUMERIC_INNER_PRODUCT_HPP
 #define TETL_NUMERIC_INNER_PRODUCT_HPP
 
-#include "etl/_utility/move.hpp"
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

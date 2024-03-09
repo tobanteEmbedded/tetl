@@ -3,12 +3,12 @@
 #ifndef TETL_RANDOM_GENERATE_CANONICAL_HPP
 #define TETL_RANDOM_GENERATE_CANONICAL_HPP
 
-#include "etl/_algorithm/max.hpp"
-#include "etl/_algorithm/min.hpp"
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_cstdint/uint_t.hpp"
-#include "etl/_limits/numeric_limits.hpp"
-#include "etl/_math/log2.hpp"
+#include <etl/_algorithm/max.hpp>
+#include <etl/_algorithm/min.hpp>
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_cstdint/uint_t.hpp>
+#include <etl/_limits/numeric_limits.hpp>
+#include <etl/_math/log2.hpp>
 
 namespace etl {
 

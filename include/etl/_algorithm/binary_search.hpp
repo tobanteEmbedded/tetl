@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_BINARY_SEARCH_HPP
 #define TETL_ALGORITHM_BINARY_SEARCH_HPP
 
-#include "etl/_algorithm/lower_bound.hpp"
-#include "etl/_functional/less.hpp"
+#include <etl/_algorithm/lower_bound.hpp>
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

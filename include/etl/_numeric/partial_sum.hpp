@@ -2,8 +2,8 @@
 #ifndef TETL_NUMERIC_PARTIAL_SUM_HPP
 #define TETL_NUMERIC_PARTIAL_SUM_HPP
 
-#include "etl/_functional/plus.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_functional/plus.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_EQUAL_HPP
 #define TETL_ALGORITHM_EQUAL_HPP
 
-#include "etl/_functional/equal_to.hpp"
-#include "etl/_iterator/distance.hpp"
+#include <etl/_functional/equal_to.hpp>
+#include <etl/_iterator/distance.hpp>
 
 namespace etl {
 

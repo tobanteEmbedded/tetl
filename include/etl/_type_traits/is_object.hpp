@@ -3,13 +3,13 @@
 #ifndef TETL_TYPE_TRAITS_IS_OBJECT_HPP
 #define TETL_TYPE_TRAITS_IS_OBJECT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_array.hpp"
-#include "etl/_type_traits/is_class.hpp"
-#include "etl/_type_traits/is_scalar.hpp"
-#include "etl/_type_traits/is_union.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_array.hpp>
+#include <etl/_type_traits/is_class.hpp>
+#include <etl/_type_traits/is_scalar.hpp>
+#include <etl/_type_traits/is_union.hpp>
 
 namespace etl {
 

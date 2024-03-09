@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_UNIQUE_HPP
 #define TETL_ALGORITHM_UNIQUE_HPP
 
-#include "etl/_functional/equal_to.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_functional/equal_to.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

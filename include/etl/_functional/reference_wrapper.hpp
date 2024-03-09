@@ -3,13 +3,13 @@
 #ifndef TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
 #define TETL_FUNCTIONAL_REFERENCE_WRAPPER_HPP
 
-#include "etl/_memory/addressof.hpp"
-#include "etl/_type_traits/declval.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/invoke_result.hpp"
-#include "etl/_type_traits/is_same.hpp"
-#include "etl/_type_traits/remove_cvref.hpp"
-#include "etl/_utility/forward.hpp"
+#include <etl/_memory/addressof.hpp>
+#include <etl/_type_traits/declval.hpp>
+#include <etl/_type_traits/enable_if.hpp>
+#include <etl/_type_traits/invoke_result.hpp>
+#include <etl/_type_traits/is_same.hpp>
+#include <etl/_type_traits/remove_cvref.hpp>
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_FUNCTIONAL_EQUAL_TO_HPP
 #define TETL_FUNCTIONAL_EQUAL_TO_HPP
 
-#include "etl/_utility/forward.hpp"
+#include <etl/_utility/forward.hpp>
 
 namespace etl {
 

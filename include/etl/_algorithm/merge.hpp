@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_MERGE_HPP
 #define TETL_ALGORITHM_MERGE_HPP
 
-#include "etl/_algorithm/copy.hpp"
-#include "etl/_functional/less.hpp"
+#include <etl/_algorithm/copy.hpp>
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

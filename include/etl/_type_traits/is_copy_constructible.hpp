@@ -3,10 +3,10 @@
 #ifndef TETL_TYPE_TRAITS_IS_COPY_CONSTRUCTIBLE_HPP
 #define TETL_TYPE_TRAITS_IS_COPY_CONSTRUCTIBLE_HPP
 
-#include "etl/_type_traits/add_const.hpp"
-#include "etl/_type_traits/add_lvalue_reference.hpp"
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_constructible.hpp"
+#include <etl/_type_traits/add_const.hpp>
+#include <etl/_type_traits/add_lvalue_reference.hpp>
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_constructible.hpp>
 
 namespace etl {
 

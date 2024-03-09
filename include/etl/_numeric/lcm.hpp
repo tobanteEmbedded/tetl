@@ -2,10 +2,10 @@
 #ifndef TETL_NUMERIC_LCM_HPP
 #define TETL_NUMERIC_LCM_HPP
 
-#include "etl/_numeric/gcd.hpp"
-#include "etl/_type_traits/common_type.hpp"
-#include "etl/_type_traits/is_integral.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_numeric/gcd.hpp>
+#include <etl/_type_traits/common_type.hpp>
+#include <etl/_type_traits/is_integral.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

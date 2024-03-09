@@ -5,14 +5,14 @@
 #ifndef TETL_FUNCTIONAL_FUNCTION_REF_HPP
 #define TETL_FUNCTIONAL_FUNCTION_REF_HPP
 
-#include "etl/_functional/invoke.hpp"
-#include "etl/_memory/addressof.hpp"
-#include "etl/_type_traits/add_pointer.hpp"
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_type_traits/is_invocable_r.hpp"
-#include "etl/_type_traits/is_same.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/swap.hpp"
+#include <etl/_functional/invoke.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_type_traits/add_pointer.hpp>
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_type_traits/is_invocable_r.hpp>
+#include <etl/_type_traits/is_same.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/swap.hpp>
 
 namespace etl {
 

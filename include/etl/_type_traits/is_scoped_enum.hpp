@@ -3,10 +3,10 @@
 #ifndef TETL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
 #define TETL_TYPE_TRAITS_IS_SCOPED_ENUM_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
-#include "etl/_type_traits/is_enum.hpp"
-#include "etl/_type_traits/underlying_type.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/is_enum.hpp>
+#include <etl/_type_traits/underlying_type.hpp>
 
 namespace etl {
 

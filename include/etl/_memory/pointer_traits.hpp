@@ -3,10 +3,10 @@
 #ifndef TETL_MEMORY_POINTER_TRAITS_HPP
 #define TETL_MEMORY_POINTER_TRAITS_HPP
 
-#include "etl/_cstddef/ptrdiff_t.hpp"
-#include "etl/_memory/addressof.hpp"
-#include "etl/_type_traits/enable_if.hpp"
-#include "etl/_type_traits/is_void.hpp"
+#include <etl/_cstddef/ptrdiff_t.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_type_traits/enable_if.hpp>
+#include <etl/_type_traits/is_void.hpp>
 
 namespace etl {
 

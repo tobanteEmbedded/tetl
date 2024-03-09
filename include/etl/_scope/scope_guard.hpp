@@ -2,9 +2,9 @@
 #ifndef TETL_SCOPE_SCOPE_GUARD_HPP
 #define TETL_SCOPE_SCOPE_GUARD_HPP
 
-#include "etl/_type_traits/decay.hpp"
-#include "etl/_utility/forward.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_type_traits/decay.hpp>
+#include <etl/_utility/forward.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl::detail {
 template <typename FuncT, typename PolicyT>

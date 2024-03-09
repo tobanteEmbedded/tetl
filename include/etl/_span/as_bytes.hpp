@@ -3,10 +3,10 @@
 #ifndef TETL_SPAN_AS_BYTES_HPP
 #define TETL_SPAN_AS_BYTES_HPP
 
-#include "etl/_cstddef/byte.hpp"
-#include "etl/_span/dynamic_extent.hpp"
-#include "etl/_span/span.hpp"
-#include "etl/_type_traits/is_const.hpp"
+#include <etl/_cstddef/byte.hpp>
+#include <etl/_span/dynamic_extent.hpp>
+#include <etl/_span/span.hpp>
+#include <etl/_type_traits/is_const.hpp>
 
 namespace etl {
 

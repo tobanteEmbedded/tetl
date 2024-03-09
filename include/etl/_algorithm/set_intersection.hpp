@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_SET_INTERSECTION_HPP
 #define TETL_ALGORITHM_SET_INTERSECTION_HPP
 
-#include "etl/_functional/less.hpp"
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_SET_SYMMETRIC_DIFFERENCE_HPP
 #define TETL_ALGORITHM_SET_SYMMETRIC_DIFFERENCE_HPP
 
-#include "etl/_algorithm/copy.hpp"
-#include "etl/_functional/less.hpp"
+#include <etl/_algorithm/copy.hpp>
+#include <etl/_functional/less.hpp>
 
 namespace etl {
 

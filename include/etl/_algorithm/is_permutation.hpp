@@ -3,11 +3,11 @@
 #ifndef TETL_ALGORITHM_IS_PERMUTATION_HPP
 #define TETL_ALGORITHM_IS_PERMUTATION_HPP
 
-#include "etl/_algorithm/count.hpp"
-#include "etl/_algorithm/find.hpp"
-#include "etl/_algorithm/mismatch.hpp"
-#include "etl/_iterator/distance.hpp"
-#include "etl/_iterator/next.hpp"
+#include <etl/_algorithm/count.hpp>
+#include <etl/_algorithm/find.hpp>
+#include <etl/_algorithm/mismatch.hpp>
+#include <etl/_iterator/distance.hpp>
+#include <etl/_iterator/next.hpp>
 
 namespace etl {
 

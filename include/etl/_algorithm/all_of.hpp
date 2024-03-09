@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_ALL_OF_HPP
 #define TETL_ALGORITHM_ALL_OF_HPP
 
-#include "etl/_algorithm/find_if_not.hpp"
+#include <etl/_algorithm/find_if_not.hpp>
 
 namespace etl {
 /// \ingroup algorithm-header

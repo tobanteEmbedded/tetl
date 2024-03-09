@@ -3,9 +3,9 @@
 #ifndef TETL_MEMORY_USES_ALLOCATOR_HPP
 #define TETL_MEMORY_USES_ALLOCATOR_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
-#include "etl/_type_traits/void_t.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
+#include <etl/_type_traits/void_t.hpp>
 
 namespace etl {
 

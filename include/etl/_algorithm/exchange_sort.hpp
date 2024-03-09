@@ -3,10 +3,10 @@
 #ifndef TETL_ALGORITHM_EXCHANGE_SORT_HPP
 #define TETL_ALGORITHM_EXCHANGE_SORT_HPP
 
-#include "etl/_algorithm/iter_swap.hpp"
-#include "etl/_functional/less.hpp"
-#include "etl/_iterator/next.hpp"
-#include "etl/_iterator/prev.hpp"
+#include <etl/_algorithm/iter_swap.hpp>
+#include <etl/_functional/less.hpp>
+#include <etl/_iterator/next.hpp>
+#include <etl/_iterator/prev.hpp>
 
 namespace etl {
 

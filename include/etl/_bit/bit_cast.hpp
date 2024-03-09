@@ -3,12 +3,12 @@
 #ifndef TETL_BIT_BIT_CAST_HPP
 #define TETL_BIT_BIT_CAST_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_cstddef/size_t.hpp"
-#include "etl/_strings/cstr_algorithm.hpp"
-#include "etl/_type_traits/is_trivially_constructible.hpp"
-#include "etl/_type_traits/is_trivially_copyable.hpp"
+#include <etl/_cstddef/size_t.hpp>
+#include <etl/_strings/cstr_algorithm.hpp>
+#include <etl/_type_traits/is_trivially_constructible.hpp>
+#include <etl/_type_traits/is_trivially_copyable.hpp>
 
 namespace etl {
 

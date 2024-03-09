@@ -3,8 +3,8 @@
 #ifndef TETL_ALGORITHM_MINMAX_HPP
 #define TETL_ALGORITHM_MINMAX_HPP
 
-#include "etl/_functional/less.hpp"
-#include "etl/_utility/pair.hpp"
+#include <etl/_functional/less.hpp>
+#include <etl/_utility/pair.hpp>
 
 namespace etl {
 

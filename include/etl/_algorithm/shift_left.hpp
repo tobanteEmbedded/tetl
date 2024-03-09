@@ -3,9 +3,9 @@
 #ifndef TETL_ALGORITHM_SHIFT_LEFT_HPP
 #define TETL_ALGORITHM_SHIFT_LEFT_HPP
 
-#include "etl/_algorithm/move.hpp"
-#include "etl/_concepts/emulation.hpp"
-#include "etl/_iterator/iterator_traits.hpp"
+#include <etl/_algorithm/move.hpp>
+#include <etl/_concepts/emulation.hpp>
+#include <etl/_iterator/iterator_traits.hpp>
 
 namespace etl {
 

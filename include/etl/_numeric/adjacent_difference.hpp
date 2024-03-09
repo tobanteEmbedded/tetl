@@ -2,8 +2,8 @@
 #ifndef TETL_NUMERIC_ADJACENT_DIFFERENCE_HPP
 #define TETL_NUMERIC_ADJACENT_DIFFERENCE_HPP
 
-#include "etl/_iterator/iterator_traits.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_iterator/iterator_traits.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

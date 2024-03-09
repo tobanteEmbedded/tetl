@@ -3,7 +3,7 @@
 #ifndef TETL_ALGORITHM_MOVE_HPP
 #define TETL_ALGORITHM_MOVE_HPP
 
-#include "etl/_utility/move.hpp"
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

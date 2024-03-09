@@ -3,10 +3,10 @@
 #ifndef TETL_ARRAY_TO_ARRAY_HPP
 #define TETL_ARRAY_TO_ARRAY_HPP
 
-#include "etl/_array/array.hpp"
-#include "etl/_type_traits/remove_cv.hpp"
-#include "etl/_utility/index_sequence.hpp"
-#include "etl/_utility/move.hpp"
+#include <etl/_array/array.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
+#include <etl/_utility/index_sequence.hpp>
+#include <etl/_utility/move.hpp>
 
 namespace etl {
 

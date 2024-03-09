@@ -3,10 +3,10 @@
 #ifndef TETL_TYPE_TRAITS_IS_FUNDAMENTAL_HPP
 #define TETL_TYPE_TRAITS_IS_FUNDAMENTAL_HPP
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/is_arithmetic.hpp"
-#include "etl/_type_traits/is_null_pointer.hpp"
-#include "etl/_type_traits/is_void.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/is_arithmetic.hpp>
+#include <etl/_type_traits/is_null_pointer.hpp>
+#include <etl/_type_traits/is_void.hpp>
 
 namespace etl {
 

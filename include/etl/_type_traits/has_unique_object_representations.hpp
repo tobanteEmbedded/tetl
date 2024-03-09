@@ -3,11 +3,11 @@
 #ifndef TETL_TYPE_TRAITS_HAS_UNIQUE_OBJECT_REPRESENTATION_HPP
 #define TETL_TYPE_TRAITS_HAS_UNIQUE_OBJECT_REPRESENTATION_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/bool_constant.hpp"
-#include "etl/_type_traits/remove_all_extents.hpp"
-#include "etl/_type_traits/remove_cv.hpp"
+#include <etl/_type_traits/bool_constant.hpp>
+#include <etl/_type_traits/remove_all_extents.hpp>
+#include <etl/_type_traits/remove_cv.hpp>
 
 namespace etl {
 
