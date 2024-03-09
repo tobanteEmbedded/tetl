@@ -22,7 +22,7 @@
 
 // Non-standard extensions
 #include <etl/_bit/clear_bit.hpp>
+#include <etl/_bit/flip_bit.hpp>
 #include <etl/_bit/set_bit.hpp>
-#include <etl/_bit/toggle_bit.hpp>
 
 #endif // TETL_BIT_HPP
