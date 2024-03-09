@@ -118,11 +118,6 @@
 #include <etl/_type_traits/underlying_type.hpp>
 #include <etl/_type_traits/unwrap_reference.hpp>
 #include <etl/_type_traits/void_t.hpp>
-
-// Also include swap, because it's declaration is visible anyway (needed by
-// is_swappable and friends) and auto-complete will detect it, but the
-// definition would be missing and it would not compile. Leading to a bad user
-// experience.
 #include <etl/_utility/swap.hpp>
 
 // Non-standard extensions

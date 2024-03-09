@@ -13,12 +13,10 @@
 #include <etl/_functional/default_searcher.hpp>
 #include <etl/_functional/divides.hpp>
 #include <etl/_functional/equal_to.hpp>
-#include <etl/_functional/function_ref.hpp>
 #include <etl/_functional/greater.hpp>
 #include <etl/_functional/greater_equal.hpp>
 #include <etl/_functional/hash.hpp>
 #include <etl/_functional/identity.hpp>
-#include <etl/_functional/inplace_function.hpp>
 #include <etl/_functional/invoke.hpp>
 #include <etl/_functional/invoke_r.hpp>
 #include <etl/_functional/is_transparent.hpp>
@@ -37,5 +35,9 @@
 #include <etl/_functional/plus.hpp>
 #include <etl/_functional/reference_wrapper.hpp>
 #include <etl/_type_traits/unwrap_reference.hpp>
+
+// Non-standard extensions
+#include <etl/_functional/function_ref.hpp>
+#include <etl/_functional/inplace_function.hpp>
 
 #endif // TETL_FUNCTIONAL_HPP
