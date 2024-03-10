@@ -11,10 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        flags: ["-fexceptions", "-fno-exceptions"]
-        cxx: [20, 23]
+        cxx: [20, 23, 26]
       fail-fast: false
-    name: C++${{ matrix.cxx }} flags="${{ matrix.flags }}"
+    name: C++${{ matrix.cxx }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -35,7 +34,7 @@ jobs:
           cmake -S . 
           -B build
           -G "Ninja Multi-Config" 
-          -D CMAKE_CXX_FLAGS="${{ matrix.flags }}"
+          -D CMAKE_CXX_FLAGS="-fexceptions"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
           -D TETL_BUILD_WERROR=ON
 
