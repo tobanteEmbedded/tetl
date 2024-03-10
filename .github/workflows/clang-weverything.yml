@@ -22,6 +22,7 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt install -y ninja-build
+          cmake --version
 
       - name: Install LLVM
         run: |
