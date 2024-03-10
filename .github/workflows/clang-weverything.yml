@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        cxx: [20, 23]
+        cxx: [20, 23, 26]
       fail-fast: false
     steps:
       - name: Check out code
@@ -32,7 +32,9 @@ jobs:
 
       - name: CMake configure
         run: >
-          cmake -S . -G "Ninja Multi-Config" -B build
+          cmake -S . 
+          -B build
+          -G "Ninja Multi-Config" 
           -D CMAKE_C_COMPILER="clang-18"
           -D CMAKE_CXX_COMPILER="clang++-18"
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
