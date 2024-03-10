@@ -141,7 +141,7 @@ git submodule add https://github.com/tobanteEmbedded/tetl.git 3rd_party/tetl
 ### Command Line
 
 ```make
-CXXFLAGS += -std=c++20 -I3rd_party/tetl
+CXXFLAGS += -std=c++20 -I3rd_party/tetl/include
 ```
 
 ### CMake
@@ -165,7 +165,7 @@ Add `tetl` as a git submodule, then add these lines to your `platformio.ini`:
 ; Most Arduino code does not compile unless you have GNU extensions enabled.
 [env:yourenv]
 build_unflags = -std=gnu++11
-build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl
+build_flags = -std=gnu++20 -Wno-register -I 3rd_party/tetl/include
 ```
 
 ## Header Overview

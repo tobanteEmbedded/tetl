@@ -15,7 +15,7 @@ cd cmake-build-debug; ctest; cd -
 ```sh
 ├── 3rd_party   # Catch2 submodule
 ├── cmake       # Compiler config
-├── etl         # Actual source code
+├── include     # Source code
 ├── examples    # Simple demos which only require a libc & etl
 ├── fuzzing     # LLVM libFuzzer runner
 ├── scripts     # Coverage, clang-tidy & docs scripts
@@ -50,4 +50,4 @@ TODO
   - Checked via `clang-tidy`. See [.clang-tidy](./.clang-tidy) config.
   - Local variables & parameters are `camelBack`
   - Template arguments are `CamelCase`
-  - Private members have a "_" prefix. e.g. `int _val;`
+  - Private members have a "\_" prefix. e.g. `int _val;`
