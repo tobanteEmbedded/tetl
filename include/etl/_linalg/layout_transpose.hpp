@@ -59,7 +59,6 @@ struct layout_transpose {
         }
 
         [[nodiscard]] constexpr auto required_span_size() const noexcept(noexcept(_nestedMapping.required_span_size()))
-            -> size_type
         {
             return _nestedMapping.required_span_size();
         }

@@ -18,22 +18,22 @@
 
 namespace etl {
 
-template <typename IndexType, size_t... Extents>
+template <typename IndexType, etl::size_t... Extents>
 struct extents {
     using index_type = IndexType;
     using size_type  = make_unsigned_t<IndexType>;
-    using rank_type  = size_t;
+    using rank_type  = etl::size_t;
 
 private:
     static constexpr auto _rank           = sizeof...(Extents);
     static constexpr auto _rank_dynamic   = ((rank_type(Extents == dynamic_extent)) + ... + 0);
-    static constexpr auto _static_extents = array<size_t, sizeof...(Extents)> {Extents...};
+    static constexpr auto _static_extents = array<etl::size_t, sizeof...(Extents)> {Extents...};
 
     [[nodiscard]] static constexpr auto _dynamic_index(rank_type i) noexcept -> rank_type
     {
-        return []<size_t... Idxs>(size_t idx, integer_sequence<size_t, Idxs...>) {
+        return []<etl::size_t... Idxs>(etl::size_t idx, integer_sequence<etl::size_t, Idxs...>) {
             return (((Idxs < idx) ? (Extents == dynamic_extent ? 1 : 0) : 0) + ... + 0);
-        }(i, make_integer_sequence<size_t, rank()> {});
+        }(i, make_integer_sequence<etl::size_t, rank()> {});
     }
 
     [[nodiscard]] static constexpr auto _dynamic_index_inv(rank_type i) noexcept -> rank_type
@@ -52,24 +52,27 @@ private:
 public:
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return sizeof...(Extents); }
     [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return _rank_dynamic; }
-    [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> size_t { return _static_extents[i]; }
+    [[nodiscard]] static constexpr auto static_extent(rank_type i) noexcept -> etl::size_t
+    {
+        return _static_extents[i];
+    }
 
     [[nodiscard]] constexpr auto extent(rank_type i) const noexcept -> size_type
     {
         if constexpr (rank_dynamic() == 0) {
             return static_cast<size_type>(static_extent(i));
         } else if constexpr (rank_dynamic() == rank()) {
-            return _extents[static_cast<size_t>(i)];
+            return _extents[static_cast<etl::size_t>(i)];
         } else {
             if (auto const ext = static_extent(i); ext != dynamic_extent) { return static_cast<size_type>(ext); }
-            return _extents[static_cast<size_t>(_dynamic_index(i))];
+            return _extents[static_cast<etl::size_t>(_dynamic_index(i))];
         }
     }
 
     // [mdspan.extents.ctor], Constructors
     constexpr extents() noexcept = default;
 
-    template <typename OtherSizeType, size_t... OtherExtents>
+    template <typename OtherSizeType, etl::size_t... OtherExtents>
         requires requires {
             sizeof...(OtherExtents) == rank();
             ((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...);
@@ -98,15 +101,15 @@ public:
         if constexpr (rank_dynamic() != 0) { copy(ext.begin(), ext.end(), _extents.begin()); }
     }
 
-    template <typename OtherSizeType, size_t N>
+    template <typename OtherSizeType, etl::size_t N>
     explicit(N != rank_dynamic()) constexpr extents(span<OtherSizeType, N> e) noexcept;
 
-    template <typename OtherSizeType, size_t N>
+    template <typename OtherSizeType, etl::size_t N>
     explicit(N != rank_dynamic()) constexpr extents(array<OtherSizeType, N> const& e) noexcept;
 
-    template <typename OtherSizeType, size_t... OtherExtents>
-    friend constexpr auto operator==(extents const& lhs, extents<OtherSizeType, OtherExtents...> const& rhs) noexcept
-        -> bool
+    template <typename OtherSizeType, etl::size_t... OtherExtents>
+    friend constexpr auto operator==(
+        extents const& lhs, extents<OtherSizeType, OtherExtents...> const& rhs) noexcept -> bool
     {
         if constexpr (rank() != extents<OtherSizeType, OtherExtents...>::rank()) {
             return false;
@@ -135,7 +138,7 @@ template <typename Extents>
         return 1;
     } else {
         auto result = typename Extents::index_type(1);
-        for (auto e = size_t(0); e < i; ++e) { result *= exts.extent(e); }
+        for (auto e = etl::size_t(0); e < i; ++e) { result *= exts.extent(e); }
         return result;
     }
 }
@@ -152,7 +155,7 @@ template <typename Extents>
 template <typename IndexType, typename Integrals>
 struct dextents_impl;
 
-template <typename IndexType, size_t... Integrals>
+template <typename IndexType, etl::size_t... Integrals>
 struct dextents_impl<IndexType, index_sequence<Integrals...>> {
     using type = extents<IndexType, ((void)Integrals, dynamic_extent)...>;
 };
@@ -160,10 +163,10 @@ struct dextents_impl<IndexType, index_sequence<Integrals...>> {
 } // namespace detail
 
 template <typename... Integrals>
-    requires(is_convertible_v<Integrals, size_t> && ...)
-extents(Integrals...) -> extents<size_t, size_t((Integrals(), dynamic_extent))...>;
+    requires(is_convertible_v<Integrals, etl::size_t> && ...)
+extents(Integrals...) -> extents<etl::size_t, etl::size_t((Integrals(), dynamic_extent))...>;
 
-template <typename IndexType, size_t Rank>
+template <typename IndexType, etl::size_t Rank>
 using dextents = typename detail::dextents_impl<IndexType, make_index_sequence<Rank>>::type;
 
 } // namespace etl

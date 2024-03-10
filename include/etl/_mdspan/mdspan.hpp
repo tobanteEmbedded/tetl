@@ -110,7 +110,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
-        return _acc.access(_ptr, _map(static_cast<index_type>(move(indices))...));
+        return _acc.access(_ptr, _map(static_cast<index_type>(etl::move(indices))...));
     }
 
 #if defined(__cpp_multidimensional_subscript)
@@ -167,17 +167,17 @@ template <typename ElementType, typename... Integrals>
 explicit mdspan(ElementType*, Integrals...) -> mdspan<ElementType, dextents<size_t, sizeof...(Integrals)>>;
 
 template <typename ElementType, typename IndexType, size_t... ExtentsPack>
-mdspan(ElementType*, extents<IndexType, ExtentsPack...> const&)
-    -> mdspan<ElementType, extents<IndexType, ExtentsPack...>>;
+mdspan(
+    ElementType*, extents<IndexType, ExtentsPack...> const&) -> mdspan<ElementType, extents<IndexType, ExtentsPack...>>;
 
 template <typename ElementType, typename MappingType>
-mdspan(ElementType*, MappingType const&)
-    -> mdspan<ElementType, typename MappingType::extents_type, typename MappingType::layout_type>;
+mdspan(ElementType*,
+    MappingType const&) -> mdspan<ElementType, typename MappingType::extents_type, typename MappingType::layout_type>;
 
 template <typename MappingType, typename AccessorType>
-mdspan(typename AccessorType::data_handle_type const&, MappingType const&, AccessorType const&)
-    -> mdspan<typename AccessorType::element_type, typename MappingType::extents_type,
-        typename MappingType::layout_type, AccessorType>;
+mdspan(typename AccessorType::data_handle_type const&, MappingType const&,
+    AccessorType const&) -> mdspan<typename AccessorType::element_type, typename MappingType::extents_type,
+                             typename MappingType::layout_type, AccessorType>;
 
 } // namespace etl
 

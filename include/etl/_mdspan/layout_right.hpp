@@ -59,13 +59,13 @@ struct layout_right::mapping {
     }
 
     template <typename... Indices>
-        requires(sizeof...(Indices) == extents_type::rank()) && (is_convertible_v<Indices, index_type> && ...)
-                && (is_nothrow_constructible_v<index_type, Indices> && ...)
+        requires(sizeof...(Indices) == extents_type::rank()) and (is_convertible_v<Indices, index_type> and ...)
+                    and (is_nothrow_constructible_v<index_type, Indices> and ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {
         auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
             auto result = index_type(0);
-            ((result = static_cast<index_type>(is + _extents.extent(Is) * result)), ...);
+            ((result = static_cast<index_type>(is + static_cast<index_type>(_extents.extent(Is)) * result)), ...);
             return result;
         };
 
