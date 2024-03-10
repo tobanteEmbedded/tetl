@@ -1,0 +1,50 @@
+name: Emscripten
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cxx: [20, 23]
+      fail-fast: false
+    name: C++${{ matrix.cxx }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install ninja
+        run: |
+          sudo apt update -y
+          sudo apt install -y ninja-build
+
+      - name: Setup emsdk
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: latest
+
+      - name: CMake configure
+        run: >
+          emcmake 
+          cmake -S . 
+          -B build
+          -G "Ninja Multi-Config" 
+          -D CMAKE_CXX_FLAGS="-fexceptions"
+          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+
+      - name: CMake build -- Debug
+        run: cmake --build build --config Debug
+
+      - name: Run tests -- Debug
+        run: ctest --test-dir build -C Debug --output-on-failure
+
+      - name: CMake build -- Release
+        run: cmake --build build --config Release
+
+      - name: Run tests -- Release
+        run: ctest --test-dir build -C Release --output-on-failure
