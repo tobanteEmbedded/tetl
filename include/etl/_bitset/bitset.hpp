@@ -129,7 +129,7 @@ struct bitset {
         typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos, CharT zero = CharT('0'),
         CharT one = CharT('1'))
         : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str) : basic_string_view<CharT>(str, n),
-              0, n, zero, one)
+            0, n, zero, one)
     {
     }
 
@@ -291,8 +291,8 @@ struct bitset {
     /// character corresponds to the last (N-1th) bit and the last character
     /// corresponding to the first bit.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
-    [[nodiscard]] constexpr auto to_string(
-        CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
+    [[nodiscard]] constexpr auto to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const
+        -> basic_static_string<CharT, Capacity, Traits>
     {
         // TODO: [tobi] This currently truncates the low bits, if the string is
         // large enough.
@@ -319,34 +319,34 @@ struct bitset {
     }
 
 private:
-    [[nodiscard]] constexpr auto byte_for_position(size_t pos) const -> uint8_t const&
+    [[nodiscard]] constexpr auto byte_for_position(etl::size_t pos) const -> etl::uint8_t const&
     {
         TETL_ASSERT(pos < size());
         return _bits[pos >> 3U];
     }
 
-    [[nodiscard]] constexpr auto byte_for_position(size_t pos) -> uint8_t&
+    [[nodiscard]] constexpr auto byte_for_position(etl::size_t pos) -> etl::uint8_t&
     {
         TETL_ASSERT(pos < size());
         return _bits[pos >> 3U];
     }
 
-    [[nodiscard]] constexpr auto offset_in_byte(size_t pos) const noexcept -> uint8_t { return pos & 0x7U; }
+    [[nodiscard]] constexpr auto offset_in_byte(etl::size_t pos) const noexcept -> etl::uint8_t { return pos & 0x7U; }
 
     template <typename UInt>
     [[nodiscard]] constexpr auto to_unsigned_type() const noexcept -> UInt
     {
-        constexpr auto digits = static_cast<UInt>(numeric_limits<UInt>::digits);
-        auto const idx        = min<UInt>(static_cast<UInt>(size()), digits);
+        constexpr auto digits = static_cast<UInt>(etl::numeric_limits<UInt>::digits);
+        auto const idx        = etl::min<UInt>(static_cast<UInt>(size()), digits);
         UInt result {};
         for (UInt i {0}; i != idx; ++i) {
-            if (test(i)) { result = set_bit(result, i); }
+            if (test(static_cast<etl::size_t>(i))) { result = etl::set_bit(result, i); }
         }
         return result;
     }
 
-    static constexpr size_t allocated_ = N >> 3U;
-    array<uint8_t, allocated_> _bits   = {};
+    static constexpr etl::size_t allocated_    = N >> 3U;
+    etl::array<etl::uint8_t, allocated_> _bits = {};
 };
 
 /// \brief Performs binary AND between two bitsets, lhs and rhs.
