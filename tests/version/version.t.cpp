@@ -11,9 +11,11 @@ constexpr auto test() -> bool
     assert(language_standard::cpp_17 == language_standard::cpp_17);
     assert(language_standard::cpp_20 == language_standard::cpp_20);
     assert(language_standard::cpp_23 == language_standard::cpp_23);
+    assert(language_standard::cpp_26 == language_standard::cpp_26);
 
     assert(language_standard::cpp_17 < language_standard::cpp_20);
     assert(language_standard::cpp_17 < language_standard::cpp_23);
+    assert(language_standard::cpp_17 < language_standard::cpp_26);
 
     assert(language_standard::cpp_20 > language_standard::cpp_17);
     assert(language_standard::cpp_23 > language_standard::cpp_17);
@@ -28,6 +30,10 @@ constexpr auto test() -> bool
 
 #if TETL_CPP_STANDARD == 23
     assert(etl::current_standard == language_standard::cpp_23);
+#endif
+
+#if TETL_CPP_STANDARD == 26
+    assert(etl::current_standard == language_standard::cpp_26);
 #endif
 
     return true;

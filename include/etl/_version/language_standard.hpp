@@ -15,6 +15,7 @@ enum struct language_standard : unsigned char {
     cpp_17 = 17,
     cpp_20 = 20,
     cpp_23 = 23,
+    cpp_26 = 26,
 };
 
 /// \brief Compares language_standards
@@ -54,7 +55,11 @@ enum struct language_standard : unsigned char {
     #define TETL_CPP_STANDARD_FULL __cplusplus
 #endif
 
-#if TETL_CPP_STANDARD_FULL > 202002L
+#if TETL_CPP_STANDARD_FULL > 202302L
+    #define TETL_CPP_STANDARD 26
+/// The currently configured C++ standard.
+inline constexpr auto current_standard = language_standard::cpp_26;
+#elif TETL_CPP_STANDARD_FULL > 202002L
     #define TETL_CPP_STANDARD 23
 /// The currently configured C++ standard.
 inline constexpr auto current_standard = language_standard::cpp_23;
