@@ -256,7 +256,7 @@ template <typename... Ts>
 using variant_storage_for = detail::variant_storage<0, Ts...>;
 
 template <typename... Ts>
-inline constexpr auto enable_variant_swap = ((is_move_constructible_v<Ts> && is_swappable_v<Ts>)&&...);
+inline constexpr auto enable_variant_swap = ((is_move_constructible_v<Ts> && is_swappable_v<Ts>) && ...);
 
 } // namespace detail
 
@@ -372,8 +372,8 @@ public:
     [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool { return false; }
 
     /// \brief Swaps two variant objects.
-    constexpr auto swap(variant& rhs) noexcept(
-        ((is_nothrow_move_constructible_v<Types> && is_nothrow_swappable_v<Types>)&&...)) -> void
+    constexpr auto swap(variant& rhs)
+        noexcept(((is_nothrow_move_constructible_v<Types> && is_nothrow_swappable_v<Types>) && ...)) -> void
     {
         if (index() == rhs.index()) { detail::variant_swap_table<variant, Types...>[index()](*this, rhs); }
     }
@@ -531,8 +531,8 @@ constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<variant_a
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
 template <size_t I, typename... Types>
-constexpr auto get_if(variant<Types...> const* pv) noexcept
-    -> add_pointer_t<variant_alternative_t<I, variant<Types...>> const>
+constexpr auto get_if(
+    variant<Types...> const* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Types...>> const>
 {
     using alternative_t = variant_alternative_t<I, variant<Types...>>;
     return get_if<alternative_t>(pv);

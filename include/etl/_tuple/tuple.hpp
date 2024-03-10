@@ -56,8 +56,8 @@ struct tuple_leaf {
         return etl::move(_value);
     }
 
-    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/, T& other) noexcept(is_nothrow_swappable_v<T>)
-        -> void
+    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/, T& other)
+        noexcept(is_nothrow_swappable_v<T>) -> void
     {
         using etl::swap;
         swap(_value, other);

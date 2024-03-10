@@ -91,8 +91,8 @@ inline auto uxQueueMessagesWaiting(QueueHandle_t xQueue) -> UBaseType_t
 struct StreamBufferDef_t;
 using StreamBufferHandle_t = StreamBufferDef_t*;
 
-[[nodiscard]] inline auto xStreamBufferCreate(etl::size_t bufferSizeBytes, etl::size_t triggerLevelBytes)
-    -> StreamBufferHandle_t
+[[nodiscard]] inline auto xStreamBufferCreate(
+    etl::size_t bufferSizeBytes, etl::size_t triggerLevelBytes) -> StreamBufferHandle_t
 {
     etl::ignore_unused(bufferSizeBytes, triggerLevelBytes);
     return {};

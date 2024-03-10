@@ -252,9 +252,9 @@ struct optional_move_assign_base<T, false> : optional_copy_assign_base<T> {
 
     auto operator=(optional_move_assign_base const&) -> optional_move_assign_base& = default;
 
-    auto operator=(optional_move_assign_base&& opt) noexcept(
-        etl::is_nothrow_move_assignable_v<value_type> && etl::is_nothrow_move_constructible_v<value_type>)
-        -> optional_move_assign_base&
+    auto operator=(optional_move_assign_base&& opt)
+        noexcept(etl::is_nothrow_move_assignable_v<value_type>
+                 && etl::is_nothrow_move_constructible_v<value_type>) -> optional_move_assign_base&
     {
         this->assign_from(etl::move(opt));
         return *this;
@@ -717,8 +717,8 @@ public:
     }
 
     /// \brief Swaps the contents with those of other.
-    constexpr auto swap(optional& other) noexcept(
-        etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
+    constexpr auto swap(optional& other)
+        noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
     {
         // If neither *this nor other contain a value, the function has no
         // effect.

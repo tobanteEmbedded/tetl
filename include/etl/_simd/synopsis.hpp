@@ -184,17 +184,17 @@ struct where_expression;
 
 // 9.9.5, Where functions
 template <typename T, typename Abi>
-auto where(typename simd<T, Abi>::mask_type const&, simd<T, Abi>&) noexcept
-    -> where_expression<simd_mask<T, Abi>, simd<T, Abi>>;
+auto where(typename simd<T, Abi>::mask_type const&,
+    simd<T, Abi>&) noexcept -> where_expression<simd_mask<T, Abi>, simd<T, Abi>>;
 template <typename T, typename Abi>
-auto where(typename simd<T, Abi>::mask_type const&, simd<T, Abi> const&) noexcept
-    -> const_where_expression<simd_mask<T, Abi>, simd<T, Abi>>;
+auto where(typename simd<T, Abi>::mask_type const&,
+    simd<T, Abi> const&) noexcept -> const_where_expression<simd_mask<T, Abi>, simd<T, Abi>>;
 template <typename T, typename Abi>
-auto where(type_identity_t<simd_mask<T, Abit>> const&, simd_mask<T, Abi>&) noexcept
-    -> where_expression<simd_mask<T, Abi>, simd_mask<T, Abi>>;
+auto where(type_identity_t<simd_mask<T, Abit>> const&,
+    simd_mask<T, Abi>&) noexcept -> where_expression<simd_mask<T, Abi>, simd_mask<T, Abi>>;
 template <typename T, typename Abi>
-auto where(type_identity_t<simd_mask<T, Abit>> const&, simd_mask<T, Abi> const&) noexcept
-    -> const_where_expression<simd_mask<T, Abi>, simd_mask<T, Abi>>;
+auto where(type_identity_t<simd_mask<T, Abit>> const&,
+    simd_mask<T, Abi> const&) noexcept -> const_where_expression<simd_mask<T, Abi>, simd_mask<T, Abi>>;
 template <typename T>
 auto where(/* see below */ k, T& d) noexcept -> where_expression<bool, T>;
 template <typename T>
@@ -204,8 +204,8 @@ auto where(/* see below */ k, T const& d) noexcept -> const_where_expression<boo
 template <typename T, typename Abi, typename BinaryOperation = plus<>>
 auto reduce(simd<T, Abi> const&, BinaryOperation = {}) -> T;
 template <typename M, typename V, typename BinaryOperation>
-auto reduce(const_where_expression<M, V> const& x, typename V::value_type identity_element, BinaryOperation binary_op)
-    -> typename V::value_type;
+auto reduce(const_where_expression<M, V> const& x, typename V::value_type identity_element,
+    BinaryOperation binary_op) -> typename V::value_type;
 template <typename M, typename V>
 auto reduce(const_where_expression<M, V> const& x, plus<> binary_op = {}) noexcept -> typename V::value_type;
 template <typename M, typename V>

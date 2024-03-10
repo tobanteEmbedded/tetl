@@ -30,8 +30,8 @@ struct from_chars_result {
 /// in value.
 template <integral Int>
     requires(not same_as<Int, bool>)
-[[nodiscard]] constexpr auto from_chars(char const* first, char const* last, Int& value, int base = 10)
-    -> from_chars_result
+[[nodiscard]] constexpr auto from_chars(
+    char const* first, char const* last, Int& value, int base = 10) -> from_chars_result
 {
     constexpr auto skip        = detail::skip_whitespace::no;
     auto const length          = static_cast<etl::size_t>(etl::distance(first, last));

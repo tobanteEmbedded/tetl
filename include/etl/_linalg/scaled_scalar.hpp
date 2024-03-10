@@ -19,7 +19,7 @@ struct scaled_scalar
 
     constexpr explicit scaled_scalar(ScalingFactor const& scalingFactor, Reference const& reference)
         : proxy_reference<Reference, ReferenceValue,
-            scaled_scalar<ScalingFactor, Reference, ReferenceValue>> {reference}
+              scaled_scalar<ScalingFactor, Reference, ReferenceValue>> {reference}
         , _scalingFactor {scalingFactor}
     {
     }

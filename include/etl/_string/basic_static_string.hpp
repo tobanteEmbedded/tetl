@@ -202,8 +202,8 @@ public:
 
     /// Replaces the contents with a substring [ pos, pos + count )
     /// of str.
-    constexpr auto assign(basic_static_string const& str, size_type pos, size_type count = npos) noexcept
-        -> basic_static_string&
+    constexpr auto assign(
+        basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
         *this = str.substr(pos, count);
         return *this;
@@ -487,8 +487,8 @@ public:
     }
 
     /// \brief Appends a substring [ pos, pos + count ) of str.
-    constexpr auto append(basic_static_string const& str, size_type pos, size_type count = npos) noexcept
-        -> basic_static_string&
+    constexpr auto append(
+        basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
         return append(str.substr(pos, count));
     }
@@ -532,8 +532,8 @@ public:
     }
 
     /// \brief Inserts count copies of character ch at the position index.
-    constexpr auto insert(size_type const index, size_type const count, value_type const ch) noexcept
-        -> basic_static_string&
+    constexpr auto insert(
+        size_type const index, size_type const count, value_type const ch) noexcept -> basic_static_string&
     {
         for (size_type i = 0; i < count; ++i) { insert_impl(begin() + index, &ch, 1); }
         return *this;
@@ -549,8 +549,8 @@ public:
 
     /// \brief Inserts the characters in the range [s, s+count) at the position
     /// index. The range can contain null characters.
-    constexpr auto insert(size_type const index, const_pointer s, size_type const count) noexcept
-        -> basic_static_string&
+    constexpr auto insert(
+        size_type const index, const_pointer s, size_type const count) noexcept -> basic_static_string&
     {
         insert_impl(begin() + index, s, count);
         return *this;
@@ -785,8 +785,8 @@ public:
 
     /// \brief Replaces the part of the string indicated [first, last) with a
     /// new string.
-    constexpr auto replace(const_iterator first, const_iterator last, basic_static_string const& str)
-        -> basic_static_string&
+    constexpr auto replace(
+        const_iterator first, const_iterator last, basic_static_string const& str) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
@@ -822,8 +822,8 @@ public:
         return *this;
     }
 
-    constexpr auto replace(const_iterator first, const_iterator last, CharT const* str, size_type count2)
-        -> basic_static_string&
+    constexpr auto replace(
+        const_iterator first, const_iterator last, CharT const* str, size_type count2) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
@@ -862,8 +862,8 @@ public:
     //    return *this;
     //}
 
-    constexpr auto replace(const_iterator first, const_iterator last, size_type count2, CharT ch)
-        -> basic_static_string&
+    constexpr auto replace(
+        const_iterator first, const_iterator last, size_type count2, CharT ch) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = min(const_cast<iterator>(last), f + count2);
@@ -1057,8 +1057,8 @@ public:
     /// given character sequence. The search considers only the interval [pos,
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_first_of(basic_static_string const& str, size_type pos = 0) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto find_first_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(str.c_str(), pos, str.size());
     }
@@ -1110,8 +1110,8 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(basic_static_string const& str, size_type pos = 0) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
@@ -1146,8 +1146,8 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(value_type const* s, size_type pos, size_type count) const
-        -> size_type
+    [[nodiscard]] constexpr auto find_first_not_of(
+        value_type const* s, size_type pos, size_type count) const -> size_type
     {
         // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), s, pos, count);
@@ -1157,8 +1157,8 @@ public:
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto find_last_of(basic_static_string const& str, size_type pos = 0) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto find_last_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         auto view = basic_string_view<value_type> {*this};
         return view.find_last_of(str, pos);
@@ -1198,8 +1198,8 @@ public:
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(basic_static_string const& str, size_type pos = 0) const noexcept
-        -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(
+        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(str, pos);
@@ -1219,8 +1219,8 @@ public:
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(value_type const* s, size_type pos, size_type count) const
-        -> size_type
+    [[nodiscard]] constexpr auto find_last_not_of(
+        value_type const* s, size_type pos, size_type count) const -> size_type
     {
         auto view = basic_string_view<value_type> {*this};
         return view.find_last_not_of(s, pos, count);
@@ -1361,8 +1361,8 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT rhs) noexcept
-    -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs,
+    CharT rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
     auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
     str.append(1, rhs);
@@ -1383,8 +1383,8 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(CharT lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
-    -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(CharT lhs,
+    basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
 {
     auto str = basic_static_string<CharT, Capacity, Traits> {1, lhs};
     str.append(rhs);

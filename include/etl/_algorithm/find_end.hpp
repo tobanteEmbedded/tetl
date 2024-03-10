@@ -36,8 +36,8 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 }
 
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto find_end(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
-    -> ForwardIt1
+[[nodiscard]] constexpr auto find_end(
+    ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
 {
     return find_end(first, last, sFirst, sLast, equal_to {});
 }

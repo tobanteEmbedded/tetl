@@ -26,8 +26,8 @@ template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
 }
 
 template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
-[[nodiscard]] constexpr auto str_rfind(CharT const* str, SizeT size, CharT const* s, SizeT pos, SizeT n) noexcept
-    -> SizeT
+[[nodiscard]] constexpr auto str_rfind(
+    CharT const* str, SizeT size, CharT const* s, SizeT pos, SizeT n) noexcept -> SizeT
 {
     pos = etl::min(pos, size);
     if (n < size - pos) {

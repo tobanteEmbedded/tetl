@@ -40,8 +40,8 @@ template <typename ForwardIt1, typename ForwardIt2, typename Predicate>
 }
 
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto search(ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast)
-    -> ForwardIt1
+[[nodiscard]] constexpr auto search(
+    ForwardIt1 first, ForwardIt1 last, ForwardIt2 sFirst, ForwardIt2 sLast) -> ForwardIt1
 {
     return search(first, last, sFirst, sLast, [](auto const& lhs, auto const& rhs) { return lhs == rhs; });
 }

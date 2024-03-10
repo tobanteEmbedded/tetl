@@ -34,8 +34,8 @@ struct string_to_integer_result {
 };
 
 template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
-[[nodiscard]] constexpr auto string_to_integer(char const* str, size_t len, Int base = Int(10)) noexcept
-    -> string_to_integer_result<Int>
+[[nodiscard]] constexpr auto string_to_integer(
+    char const* str, size_t len, Int base = Int(10)) noexcept -> string_to_integer_result<Int>
 {
     if (*str == char(0)) {
         return {

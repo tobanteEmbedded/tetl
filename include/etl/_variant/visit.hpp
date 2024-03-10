@@ -49,8 +49,8 @@ template <etl::size_t I, etl::size_t... Is>
     return {};
 }
 
-[[nodiscard]] constexpr auto next_seq(etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/)
-    -> etl::index_sequence<>
+[[nodiscard]] constexpr auto next_seq(
+    etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/) -> etl::index_sequence<>
 {
     return {};
 }

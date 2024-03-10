@@ -30,8 +30,8 @@ constexpr auto set_intersection(
 }
 
 template <typename InputIt1, typename InputIt2, typename OutputIt>
-constexpr auto set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest)
-    -> OutputIt
+constexpr auto set_intersection(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest) -> OutputIt
 {
     return set_intersection(first1, last1, first2, last2, dest, less<>());
 }

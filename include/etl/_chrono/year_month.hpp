@@ -50,14 +50,14 @@ private:
     return lhs.year() == rhs.year() and lhs.month() == rhs.month();
 }
 
-[[nodiscard]] constexpr auto operator+(chrono::year_month const& ym, chrono::years const& dy) noexcept
-    -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(
+    chrono::year_month const& ym, chrono::years const& dy) noexcept -> chrono::year_month
 {
     return chrono::year_month {ym.year() + dy, ym.month()};
 }
 
-[[nodiscard]] constexpr auto operator+(chrono::years const& dy, chrono::year_month const& ym) noexcept
-    -> chrono::year_month
+[[nodiscard]] constexpr auto operator+(
+    chrono::years const& dy, chrono::year_month const& ym) noexcept -> chrono::year_month
 {
     return chrono::year_month {ym.year() + dy, ym.month()};
 }

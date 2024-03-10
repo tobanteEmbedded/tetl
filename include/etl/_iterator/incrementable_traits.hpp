@@ -14,7 +14,7 @@ namespace etl {
 namespace detail {
 template <typename T>
 concept has_difference_type = requires { typename T::difference_type; };
-}
+} // namespace detail
 
 template <typename I>
 struct incrementable_traits { };

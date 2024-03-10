@@ -68,8 +68,8 @@ struct format_to_n_result {
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/format_to_n
 template <typename OutputIter, typename... Args>
-auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args)
-    -> format_to_n_result<OutputIter>
+auto format_to_n(
+    OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args) -> format_to_n_result<OutputIter>
 {
     etl::ignore_unused(n);
 

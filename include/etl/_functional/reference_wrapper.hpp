@@ -78,8 +78,8 @@ struct reference_wrapper {
     ///
     /// \returns The return value of the called function.
     template <typename... Args>
-    constexpr auto operator()(Args&&... args) const noexcept(noexcept(invoke(get(), forward<Args>(args)...)))
-        -> invoke_result_t<T&, Args...>
+    constexpr auto operator()(Args&&... args) const
+        noexcept(noexcept(invoke(get(), forward<Args>(args)...))) -> invoke_result_t<T&, Args...>
     {
         return invoke(get(), forward<Args>(args)...);
     }

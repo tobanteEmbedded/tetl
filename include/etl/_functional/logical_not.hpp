@@ -20,8 +20,8 @@ struct logical_not<void> {
     using is_transparent = void;
 
     template <typename T>
-    [[nodiscard]] constexpr auto operator()(T&& arg) const noexcept(noexcept(!forward<T>(arg)))
-        -> decltype(!forward<T>(arg))
+    [[nodiscard]] constexpr auto operator()(T&& arg) const
+        noexcept(noexcept(!forward<T>(arg))) -> decltype(!forward<T>(arg))
     {
         return !forward<T>(arg);
     }

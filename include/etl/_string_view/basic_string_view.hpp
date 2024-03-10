@@ -256,8 +256,8 @@ struct basic_string_view {
 
     /// \brief Compares two character sequences. Equivalent to substr(pos1,
     /// count1).compare(basic_string_view(s, count2)).
-    [[nodiscard]] constexpr auto compare(size_type pos1, size_type count1, CharType const* s, size_type count2) const
-        -> int
+    [[nodiscard]] constexpr auto compare(
+        size_type pos1, size_type count1, CharType const* s, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s, count2));
     }

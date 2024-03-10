@@ -24,8 +24,8 @@ inline constexpr auto is_duration_v = is_duration<T>::value;
 template <typename ToDuration, typename CF, typename CR, bool NumIsOne = false, bool DenIsOne = false>
 struct duration_cast_impl {
     template <typename Rep, typename Period>
-    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-        is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration)
+        noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
     {
         using to_rep = typename ToDuration::rep;
         return ToDuration(static_cast<to_rep>(
@@ -36,8 +36,8 @@ struct duration_cast_impl {
 template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, true, false> {
     template <typename Rep, typename Period>
-    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-        is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration)
+        noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
     {
         using to_rep = typename ToDuration::rep;
         return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count()) / static_cast<CR>(CF::den)));
@@ -47,8 +47,8 @@ struct duration_cast_impl<ToDuration, CF, CR, true, false> {
 template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, false, true> {
     template <typename Rep, typename Period>
-    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-        is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration)
+        noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
     {
         using to_rep = typename ToDuration::rep;
         return ToDuration(static_cast<to_rep>(static_cast<CR>(duration.count()) * static_cast<CR>(CF::num)));
@@ -58,8 +58,8 @@ struct duration_cast_impl<ToDuration, CF, CR, false, true> {
 template <typename ToDuration, typename CF, typename CR>
 struct duration_cast_impl<ToDuration, CF, CR, true, true> {
     template <typename Rep, typename Period>
-    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration) noexcept(
-        is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
+    [[nodiscard]] static constexpr auto cast(duration<Rep, Period> const& duration)
+        noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDuration::rep>) -> ToDuration
     {
         using to_rep = typename ToDuration::rep;
         return ToDuration(static_cast<to_rep>(duration.count()));
@@ -71,8 +71,8 @@ struct duration_cast_impl<ToDuration, CF, CR, true, true> {
 /// \brief Converts a duration to a duration of different type ToDur.
 template <typename ToDur, typename Rep, typename Period>
     requires(detail::is_duration_v<ToDur>)
-[[nodiscard]] constexpr auto duration_cast(duration<Rep, Period> const& duration) noexcept(
-    is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDur::rep>) -> ToDur
+[[nodiscard]] constexpr auto duration_cast(duration<Rep, Period> const& duration)
+    noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename ToDur::rep>) -> ToDur
 {
     using detail::duration_cast_impl;
     using cf   = ratio_divide<Period, typename ToDur::period>;

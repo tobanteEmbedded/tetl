@@ -129,7 +129,7 @@ struct bitset {
         typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos, CharT zero = CharT('0'),
         CharT one = CharT('1'))
         : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str) : basic_string_view<CharT>(str, n),
-            0, n, zero, one)
+              0, n, zero, one)
     {
     }
 
@@ -291,8 +291,8 @@ struct bitset {
     /// character corresponds to the last (N-1th) bit and the last character
     /// corresponding to the first bit.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
-    [[nodiscard]] constexpr auto to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const
-        -> basic_static_string<CharT, Capacity, Traits>
+    [[nodiscard]] constexpr auto to_string(
+        CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
     {
         // TODO: [tobi] This currently truncates the low bits, if the string is
         // large enough.

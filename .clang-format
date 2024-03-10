@@ -1,5 +1,6 @@
 ---
 BasedOnStyle: WebKit
+AllowBreakBeforeNoexceptSpecifier: OnlyWithParen
 AlignConsecutiveAssignments: true
 AlignEscapedNewlines: Right
 AlignOperands: true

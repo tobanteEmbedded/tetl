@@ -352,9 +352,9 @@ public:
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
 private:
-    constexpr auto emplace_n(size_type n) noexcept(
-        (is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
-        || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)) -> void
+    constexpr auto emplace_n(size_type n)
+        noexcept((is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
+                 || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)) -> void
     {
         TETL_ASSERT(n <= capacity());
         while (n != size()) { emplace_back(T {}); }
@@ -397,8 +397,8 @@ public:
 
     template <typename InIt>
         requires(detail::InputIterator<InIt>)
-    constexpr auto move_insert(const_iterator position, InIt first, InIt last) noexcept(
-        noexcept(emplace_back(move(*first)))) -> iterator
+    constexpr auto move_insert(const_iterator position, InIt first, InIt last)
+        noexcept(noexcept(emplace_back(move(*first)))) -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -416,8 +416,8 @@ public:
 
     template <typename... Args>
         requires(is_constructible_v<T, Args...>)
-    constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
-        noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
+    constexpr auto emplace(const_iterator position, Args&&... args)
+        noexcept(noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);
@@ -428,8 +428,8 @@ public:
     /// \brief Data access
     using base_type::data;
 
-    constexpr auto insert(const_iterator position, value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1)))
-        -> iterator
+    constexpr auto insert(const_iterator position, value_type&& x)
+        noexcept(noexcept(move_insert(position, &x, &x + 1))) -> iterator
         requires(is_move_constructible_v<T>)
     {
         TETL_ASSERT(!full());
@@ -453,8 +453,8 @@ public:
         return writablePosition;
     }
 
-    constexpr auto insert(const_iterator position, const_reference x) noexcept(
-        noexcept(insert(position, size_type(1), x))) -> iterator
+    constexpr auto insert(const_iterator position, const_reference x)
+        noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
         requires(is_copy_constructible_v<T>)
     {
         TETL_ASSERT(!full());
@@ -463,8 +463,8 @@ public:
     }
 
     template <typename InputIt>
-    constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first)))
-        -> iterator
+    constexpr auto insert(const_iterator position, InputIt first, InputIt last)
+        noexcept(noexcept(emplace_back(*first))) -> iterator
         requires(
             detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
     {
@@ -521,27 +521,28 @@ public:
     }
 
     /// \brief Copy assignment.
-    constexpr auto operator=(static_vector const& other) noexcept(
-        noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end())))
-        -> static_vector& requires(is_assignable_v<reference, const_reference>) {
-            // Nothing to assert: size of other cannot exceed capacity because both
-            // vectors have the same type
-            clear();
-            insert(begin(), other.begin(), other.end());
-            return *this;
-        }
+    constexpr auto operator=(static_vector const& other)
+        noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))) -> static_vector&
+        requires(is_assignable_v<reference, const_reference>)
+    {
+        // Nothing to assert: size of other cannot exceed capacity because both
+        // vectors have the same type
+        clear();
+        insert(begin(), other.begin(), other.end());
+        return *this;
+    }
 
     /// \brief Move assignment.
-    constexpr auto
-    operator=(static_vector&& other) noexcept(
-        noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end())))
-        -> static_vector& requires(is_assignable_v<reference, reference>) {
-            // Nothing to assert: size of other cannot exceed capacity because both
-            // vectors have the same type
-            clear();
-            move_insert(begin(), other.begin(), other.end());
-            return *this;
-        }
+    constexpr auto operator=(static_vector&& other)
+        noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end()))) -> static_vector&
+        requires(is_assignable_v<reference, reference>)
+    {
+        // Nothing to assert: size of other cannot exceed capacity because both
+        // vectors have the same type
+        clear();
+        move_insert(begin(), other.begin(), other.end());
+        return *this;
+    }
 
     /// \brief Initializes vector with n default-constructed elements.
     explicit constexpr static_vector(size_type n) noexcept(noexcept(emplace_n(n)))
@@ -587,8 +588,8 @@ public:
     /// \brief assign
     template <typename InputIter>
         requires(detail::InputIterator<InputIter>)
-    constexpr auto assign(InputIter first, InputIter last) noexcept(
-        noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
+    constexpr auto assign(InputIter first, InputIter last)
+        noexcept(noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
             TETL_ASSERT(last - first >= 0);
@@ -667,9 +668,9 @@ public:
 
     /// \brief Resizes the container to contain sz elements. If elements need to
     /// be appended, these are move-constructed from `T{}` (or copy-constructed
-    constexpr auto resize(size_type sz) noexcept((is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
-                                                 || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>))
-        -> void
+    constexpr auto resize(size_type sz)
+        noexcept((is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
+                 || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>)) -> void
         requires(detail::is_movable_v<value_type>)
     {
         if (sz == size()) { return; }

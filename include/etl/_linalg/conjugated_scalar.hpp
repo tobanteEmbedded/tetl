@@ -12,9 +12,7 @@ namespace etl::linalg::detail {
 
 template <typename ReferenceValue>
 concept conjugatable = requires {
-    {
-        conj_if_needed(declval<ReferenceValue>())
-    } -> same_as<ReferenceValue>;
+    { conj_if_needed(declval<ReferenceValue>()) } -> same_as<ReferenceValue>;
 };
 
 template <typename Reference, conjugatable ReferenceValue>

@@ -26,8 +26,8 @@ template <typename InputIt1, typename InputIt2>
 }
 
 template <typename InputIt1, typename InputIt2, typename Predicate>
-[[nodiscard]] constexpr auto equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p)
-    -> bool
+[[nodiscard]] constexpr auto equal(
+    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Predicate p) -> bool
 {
     if (distance(first1, last1) != distance(first2, last2)) { return false; }
     return equal(first1, last1, first2, p);
