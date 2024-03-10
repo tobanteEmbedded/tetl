@@ -71,8 +71,8 @@ struct vector {
     [[nodiscard]] constexpr auto begin() -> T* { return _ptr; }
     [[nodiscard]] constexpr auto begin() const -> T const* { return _ptr; }
 
-    [[nodiscard]] constexpr auto end() -> T* { return etl::next(_ptr, size()); }
-    [[nodiscard]] constexpr auto end() const -> T const* { return etl::next(_ptr, size()); }
+    [[nodiscard]] constexpr auto end() -> T* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
+    [[nodiscard]] constexpr auto end() const -> T const* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
 
     [[nodiscard]] constexpr auto empty() -> bool { return size() == 0; }
     [[nodiscard]] constexpr auto empty() const -> bool { return size() == 0; }

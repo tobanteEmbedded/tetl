@@ -17,9 +17,9 @@ constexpr auto test_integer() -> bool
         assert(etl::midpoint<T>(-4, -3) == -4);
     }
 
-    assert(etl::midpoint<T>(0, 2) == 1);
-    assert(etl::midpoint<T>(0, 4) == 2);
-    assert(etl::midpoint<T>(0, 8) == 4);
+    assert(etl::midpoint(T(0), T(2)) == T(1));
+    assert(etl::midpoint(T(0), T(4)) == T(2));
+    assert(etl::midpoint(T(0), T(8)) == T(4));
     return true;
 }
 
