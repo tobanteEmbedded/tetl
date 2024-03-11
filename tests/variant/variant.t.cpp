@@ -356,6 +356,13 @@ constexpr auto test() -> bool
     struct non_trivial_alternative {
         explicit non_trivial_alternative(int& v) : value {&v} { *value = 143; }
         ~non_trivial_alternative() noexcept { *value = 42; }
+
+        non_trivial_alternative(non_trivial_alternative const&) = default;
+        non_trivial_alternative(non_trivial_alternative&&)      = default;
+
+        auto operator=(non_trivial_alternative const&) -> non_trivial_alternative& = default;
+        auto operator=(non_trivial_alternative&&) -> non_trivial_alternative&      = default;
+
         int* value;
     };
 
