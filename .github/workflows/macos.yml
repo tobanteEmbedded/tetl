@@ -11,11 +11,10 @@ jobs:
     runs-on: ${{ matrix.config.image }}
     strategy:
       matrix:
-        config:
-          [
-            { image: "macos-13", cxx: 20, xcode: "15.0.1" },
-            { image: "macos-14", cxx: 20, xcode: "15.2" },
-            { image: "macos-14", cxx: 23, xcode: "15.2" },
+        config: [
+            { image: "macos-13", cxx: 20, xcode: "15.0.1", werror: "ON" },
+            { image: "macos-14", cxx: 20, xcode: "15.2", werror: "ON" },
+            { image: "macos-14", cxx: 23, xcode: "15.2", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
           ]
       fail-fast: false
     name: Xcode ${{ matrix.config.xcode }} (C++${{ matrix.config.cxx }})
@@ -35,7 +34,7 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
-          -D TETL_BUILD_WERROR=ON
+          -D TETL_BUILD_WERROR=${{ matrix.config.werror }}
 
       - name: CMake build -- Debug
         run: cmake --build build --config Debug
