@@ -36,8 +36,9 @@
 
 #if defined(_MSC_VER) and not defined(__clang__)
     #define TETL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+#elif defined(_MSC_VER) and defined(__clang__) and (__clang_major__ >= 18)
+    #define TETL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
 #elif defined(_MSC_VER) and defined(__clang__)
-    // Reenable [[msvc::no_unique_address]] for clang v18
     #define TETL_NO_UNIQUE_ADDRESS
 #else
     #define TETL_NO_UNIQUE_ADDRESS [[no_unique_address]]
