@@ -8,12 +8,12 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: ${{ matrix.config.image }}
     strategy:
       matrix:
-        cxx: [20, 23]
+        config: [{ image: "macos-13", cxx: 20 }, { image: "macos-14", cxx: 23 }]
       fail-fast: false
-    name: C++${{ matrix.cxx }}
+    name: C++${{ matrix.config.cxx }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -26,8 +26,7 @@ jobs:
           cmake -S .
           -B build
           -G "Ninja Multi-Config"
-          -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
-          -D CMAKE_CXX_FLAGS="-Wno-pre-c++2b-compat"
+          -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
