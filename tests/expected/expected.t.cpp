@@ -7,6 +7,7 @@
 
 #include "testing/testing.hpp"
 
+namespace {
 struct error_class {
     constexpr error_class() = default;
     constexpr explicit error_class(int v) : value(v) { }
@@ -14,9 +15,10 @@ struct error_class {
 
     friend constexpr auto operator==(error_class ec, int v) { return ec.value == v; }
 };
+} // namespace
 
 template <typename T, typename E>
-auto test() -> bool
+static auto test() -> bool
 {
     using expected_t = etl::expected<T, E>;
 
@@ -66,7 +68,7 @@ auto test() -> bool
     return true;
 }
 
-auto test_all() -> bool
+static auto test_all() -> bool
 {
     // E == int
     assert(test<signed char, int>());
