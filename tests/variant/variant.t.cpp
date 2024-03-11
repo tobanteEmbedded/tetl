@@ -16,7 +16,7 @@ using etl::uint64_t;
 using etl::uint8_t;
 using etl::variant;
 
-static auto test() -> bool
+constexpr auto test() -> bool
 {
     TEST_EXCEPTION(etl::bad_variant_access, etl::exception);
 
@@ -200,8 +200,8 @@ static auto test() -> bool
 
         auto other = variant<int, float> {999.0F};
         etl::swap(l, other);
-        assert((etl::holds_alternative<int>(l)));
-        assert((etl::holds_alternative<float>(other)));
+        assert((etl::holds_alternative<float>(l)));
+        assert((etl::holds_alternative<int>(other)));
     }
 
     {
@@ -351,9 +351,34 @@ static auto test() -> bool
     return true;
 }
 
+[[nodiscard]] static auto test_non_trivial() -> bool
+{
+    struct non_trivial_alternative {
+        explicit non_trivial_alternative(int& v) : value {&v} { *value = 143; }
+        ~non_trivial_alternative() noexcept { *value = 42; }
+        int* value;
+    };
+
+    using variant_t = etl::variant<int, non_trivial_alternative>;
+
+    auto v = variant_t {};
+    assert(v.index() == 0);
+
+    auto value = 0;
+    v.emplace<non_trivial_alternative>(value);
+    assert(v.index() == 1);
+    assert(value == 143);
+
+    v = 99;
+    assert(value == 42);
+
+    return true;
+}
+
 auto main() -> int
 {
     assert(test());
+    assert(test_non_trivial());
     // static_assert(test());
     return 0;
 }

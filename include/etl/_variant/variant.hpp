@@ -13,6 +13,9 @@
 #include <etl/_functional/less.hpp>
 #include <etl/_functional/less_equal.hpp>
 #include <etl/_limits/numeric_limits.hpp>
+#include <etl/_memory/addressof.hpp>
+#include <etl/_memory/construct_at.hpp>
+#include <etl/_memory/destroy_at.hpp>
 #include <etl/_new/operator.hpp>
 #include <etl/_type_traits/add_pointer.hpp>
 #include <etl/_type_traits/aligned_storage.hpp>
@@ -23,6 +26,8 @@
 #include <etl/_type_traits/is_nothrow_move_constructible.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
 #include <etl/_type_traits/is_same.hpp>
+#include <etl/_type_traits/is_trivially_destructible.hpp>
+#include <etl/_type_traits/remove_cvref.hpp>
 #include <etl/_type_traits/type_pack_element.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/in_place_index.hpp>
@@ -35,6 +40,7 @@
 #include <etl/_variant/variant_alternative.hpp>
 #include <etl/_variant/variant_fwd.hpp>
 #include <etl/_variant/variant_size.hpp>
+#include <etl/_variant/visit.hpp>
 #include <etl/_warning/ignore_unused.hpp>
 
 namespace etl {
@@ -323,10 +329,10 @@ public:
     /// sizeof...(Types) and is_constructible_v<T_i, Args...> is true.
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
-    template <size_t I, typename... Args>
-        requires(I < sizeof...(Types)) && (is_constructible_v<variant_alternative_t<I, variant>, Args...>)
-    constexpr explicit variant(in_place_index_t<I> /*tag*/, Args&&... args)
-        : variant(in_place_type<variant_alternative_t<I, variant>>, forward<Args>(args)...)
+    template <etl::size_t I, typename... Args>
+        requires(I < sizeof...(Types) and etl::is_constructible_v<etl::variant_alternative_t<I, variant>, Args...>)
+    constexpr explicit variant(etl::in_place_index_t<I> /*tag*/, Args&&... args)
+        : variant(in_place_type<etl::variant_alternative_t<I, variant>>, etl::forward<Args>(args)...)
     {
     }
 
@@ -334,30 +340,41 @@ public:
     /// destroys the currently contained value.
     /// \todo This destructor is trivial if
     /// is_trivially_destructible_v<T_i> is true for all T_i in Types...
-    ~variant()
+    constexpr ~variant()
+        requires(etl::is_trivially_destructible_v<Types> and ...)
+    = default;
+
+    constexpr ~variant()
     {
-        if (!valueless_by_exception()) { _data.destruct(_index); }
+        etl::visit([](auto& v) { etl::destroy_at(etl::addressof(v)); }, *this);
     }
 
-    /// \brief Copy-assignment
-    /// \details  If both *this and rhs are valueless by exception, does
-    /// nothing. Otherwise, if rhs holds the same alternative as *this, assigns
-    /// the value contained in rhs to the value contained in *this. If an
-    /// exception is thrown, *this does not become valueless: the value depends
-    /// on the exception safety guarantee of the alternative's copy assignment.
     constexpr auto operator=(variant const& rhs) -> variant&
     {
         // Self assignment
         if (this == &rhs) { return *this; }
 
         // Same type
-        if (index() && rhs.index()) {
+        if (index() and rhs.index()) {
             _data = rhs._data;
             return *this;
         }
 
         return *this;
     }
+
+    template <typename T>
+        requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant>
+                    and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Types>) == 1)
+    constexpr auto operator=(T&& rhs) -> variant&
+    {
+        auto v = variant(etl::in_place_type<T>, etl::forward<T>(rhs));
+        v.swap(*this);
+        return *this;
+    }
+
+    template <typename T, typename... Args>
+    constexpr auto emplace(Args&&... args) -> T&;
 
     /// \brief Returns the zero-based index of the alternative that is currently
     /// held by the variant. If the variant is valueless_by_exception, returns
@@ -375,7 +392,9 @@ public:
     constexpr auto swap(variant& rhs)
         noexcept(((is_nothrow_move_constructible_v<Types> && is_nothrow_swappable_v<Types>) && ...)) -> void
     {
-        if (index() == rhs.index()) { detail::variant_swap_table<variant, Types...>[index()](*this, rhs); }
+        if (index() == rhs.index()) { return detail::variant_swap_table<variant, Types...>[index()](*this, rhs); }
+        etl::swap(_data, rhs._data);
+        etl::swap(_index, rhs._index);
     }
 
     /// \todo Remove & replace with friendship for get_if.
@@ -674,6 +693,15 @@ template <typename T, typename... Types>
 {
     if (holds_alternative<T>(v)) { return move(*get_if<T>(&v)); }
     raise<bad_variant_access>("");
+}
+
+template <typename... Types>
+template <typename T, typename... Args>
+constexpr auto variant<Types...>::emplace(Args&&... args) -> T&
+{
+    auto v = variant(etl::in_place_type<T>, etl::forward<Args>(args)...);
+    v.swap(*this);
+    return *etl::get_if<T>(this);
 }
 
 } // namespace etl

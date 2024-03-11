@@ -16,7 +16,7 @@
 #include <etl/_type_traits/void_t.hpp>
 #include <etl/_utility/forward.hpp>
 #include <etl/_utility/index_sequence.hpp>
-#include <etl/_variant/variant.hpp>
+#include <etl/_variant/variant_fwd.hpp>
 
 namespace etl {
 
@@ -49,8 +49,8 @@ template <etl::size_t I, etl::size_t... Is>
     return {};
 }
 
-[[nodiscard]] constexpr auto next_seq(
-    etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/) -> etl::index_sequence<>
+[[nodiscard]] constexpr auto next_seq(etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/)
+    -> etl::index_sequence<>
 {
     return {};
 }
