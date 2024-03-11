@@ -13,14 +13,19 @@ jobs:
       matrix:
         config:
           [
-            { image: "macos-13", cxx: 20, flags: "" },
-            { image: "macos-14", cxx: 23, flags: "-Wno-pre-c++2b-compat" },
+            { image: "macos-13", cxx: 20, xcode: "latest-stable" },
+            { image: "macos-14", cxx: 20, xcode: "latest" },
+            { image: "macos-14", cxx: 23, xcode: "latest" },
           ]
       fail-fast: false
-    name: Xcode (C++${{ matrix.config.cxx }})
+    name: Xcode ${{ matrix.config.xcode }} (C++${{ matrix.config.cxx }})
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: ${{ matrix.config.xcode }}
 
       - name: Install ninja
         run: brew install ninja
@@ -31,7 +36,6 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
-          -D CMAKE_CXX_FLAGS="${{ matrix.config.flags }}"
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug

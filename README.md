@@ -48,7 +48,7 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 | **Platform** |                                                                                  **Status**                                                                                   |              **Notes**              |
 | :----------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
 |  **Linux**   |        [![Linux](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml)         |    GCC 11/12/13 & Clang 16/17/18    |
-|  **macOS**   |        [![macOS](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml)         |             AppleClang              |
+|  **macOS**   |        [![macOS](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml)         |          Xcode x64 & ARM64          |
 | **Windows**  |     [![Windows](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml)      | Visual Studio 2022, ClangCL & Clang |
 | **JS/WASM**  | [![Emscripten](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml) |          Emscripten Latest          |
 
