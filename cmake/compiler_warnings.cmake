@@ -51,7 +51,6 @@ else ()
             -Weverything
             -Wno-c++98-compat-pedantic
             -Wno-c++20-compat
-            -Wno-pre-c++2b-compat
             -Wno-ctad-maybe-unsupported
             -Wno-documentation
             -Wno-documentation-unknown-command

@@ -27,6 +27,7 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.cxx }}
+          -D CMAKE_CXX_FLAGS="-Wno-pre-c++2b-compat"
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
