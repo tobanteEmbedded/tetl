@@ -12,18 +12,16 @@ jobs:
     strategy:
       matrix:
         config: [
-            { image: "macos-13", cxx: 20, xcode: "15.0.1", werror: "ON" },
-            { image: "macos-14", cxx: 20, xcode: "15.2", werror: "ON" },
-            { image: "macos-14", cxx: 23, xcode: "15.2", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
+            { image: "macos-13", cxx: 20, arch: "x64", werror: "ON" },
+            { image: "macos-13", cxx: 23, arch: "x64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
+            { image: "macos-14", cxx: 20, arch: "ARM64", werror: "ON" },
+            { image: "macos-14", cxx: 23, arch: "ARM64", werror: "OFF" }, # -Wpre-c++2b-compat causes issues
           ]
       fail-fast: false
-    name: Xcode ${{ matrix.config.xcode }} (C++${{ matrix.config.cxx }})
+    name: Xcode ${{ matrix.config.arch }} (C++${{ matrix.config.cxx }})
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_${{ matrix.config.xcode }}.app
 
       - name: Install ninja
         run: brew install ninja
