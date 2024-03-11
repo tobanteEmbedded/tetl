@@ -5,6 +5,7 @@
 
 #include <etl/_config/all.hpp>
 
+#include <etl/_expected/expected.hpp>
 #include <etl/_expected/unexpect.hpp>
 #include <etl/_expected/unexpected.hpp>
 
