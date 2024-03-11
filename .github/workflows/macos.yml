@@ -23,9 +23,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: "${{ matrix.config.xcode }}"
+      - name: Select Xcode
+        run: xcode-select -s /Applications/Xcode_${{ matrix.config.xcode }}.app
 
       - name: Install ninja
         run: brew install ninja
