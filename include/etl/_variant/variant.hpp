@@ -274,17 +274,17 @@ inline constexpr auto variant_npos = numeric_limits<size_t>::max();
 /// \brief The class template variant represents a type-safe union. An
 /// instance of variant at any given time either holds a value of one of
 /// its alternative types.
-template <typename... Types>
+template <typename... Ts>
 struct variant {
 private:
-    using internal_size_t = smallest_size_t<sizeof...(Types)>;
-    using first_type      = type_pack_element_t<0, Types...>;
+    using internal_size_t = etl::smallest_size_t<sizeof...(Ts)>;
+    using first_type      = etl::type_pack_element_t<0, Ts...>;
 
 public:
-    constexpr variant() noexcept(noexcept(is_nothrow_default_constructible_v<first_type>))
-        requires(is_default_constructible_v<first_type>)
+    constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))
+        requires(etl::is_default_constructible_v<first_type>)
     {
-        auto tmpIndex = size_t {_index};
+        auto tmpIndex = etl::size_t {_index};
         _data.construct(in_place_type<first_type>, tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -306,17 +306,17 @@ public:
     /// forward<Args>(args)....
     ///
     /// \details This overload participates in overload resolution only if there
-    /// is exactly one occurrence of T in Types... and
+    /// is exactly one occurrence of T in Ts... and
     /// is_constructible_v<T, Args...> is true.
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
     ///
     /// \bug Improve sfinae (single unique type in variant)
     template <typename T, typename... Args>
-        requires(is_constructible_v<T, Args...>)
-    constexpr explicit variant(in_place_type_t<T> tag, Args&&... args)
+        requires(etl::is_constructible_v<T, Args...>)
+    constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
     {
-        auto tmpIndex = size_t {_index};
+        auto tmpIndex = etl::size_t {_index};
         _data.construct(tag, tmpIndex, forward<Args>(args)...);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -326,11 +326,11 @@ public:
     /// forward<Args>(args)...
     ///
     /// \details This overload participates in overload resolution only if I <
-    /// sizeof...(Types) and is_constructible_v<T_i, Args...> is true.
+    /// sizeof...(Ts) and is_constructible_v<T_i, Args...> is true.
     ///
     /// https://en.cppreference.com/w/cpp/utility/variant/variant
     template <etl::size_t I, typename... Args>
-        requires(I < sizeof...(Types) and etl::is_constructible_v<etl::variant_alternative_t<I, variant>, Args...>)
+        requires(I < sizeof...(Ts) and etl::is_constructible_v<etl::variant_alternative_t<I, variant>, Args...>)
     constexpr explicit variant(etl::in_place_index_t<I> /*tag*/, Args&&... args)
         : variant(in_place_type<etl::variant_alternative_t<I, variant>>, etl::forward<Args>(args)...)
     {
@@ -338,10 +338,8 @@ public:
 
     /// \brief If valueless_by_exception is true, does nothing. Otherwise,
     /// destroys the currently contained value.
-    /// \todo This destructor is trivial if
-    /// is_trivially_destructible_v<T_i> is true for all T_i in Types...
     constexpr ~variant()
-        requires(etl::is_trivially_destructible_v<Types> and ...)
+        requires(etl::is_trivially_destructible_v<Ts> and ...)
     = default;
 
     constexpr ~variant()
@@ -365,7 +363,7 @@ public:
 
     template <typename T>
         requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant>
-                    and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Types>) == 1)
+                    and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Ts>) == 1)
     constexpr auto operator=(T&& rhs) -> variant&
     {
         auto v = variant(etl::in_place_type<T>, etl::forward<T>(rhs));
@@ -379,7 +377,7 @@ public:
     /// \brief Returns the zero-based index of the alternative that is currently
     /// held by the variant. If the variant is valueless_by_exception, returns
     /// variant_npos.
-    [[nodiscard]] constexpr auto index() const noexcept -> size_t
+    [[nodiscard]] constexpr auto index() const noexcept -> etl::size_t
     {
         return valueless_by_exception() ? variant_npos : _index;
     }
@@ -390,9 +388,9 @@ public:
 
     /// \brief Swaps two variant objects.
     constexpr auto swap(variant& rhs)
-        noexcept(((is_nothrow_move_constructible_v<Types> && is_nothrow_swappable_v<Types>) && ...)) -> void
+        noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
     {
-        if (index() == rhs.index()) { return detail::variant_swap_table<variant, Types...>[index()](*this, rhs); }
+        if (index() == rhs.index()) { return detail::variant_swap_table<variant, Ts...>[index()](*this, rhs); }
         etl::swap(_data, rhs._data);
         etl::swap(_index, rhs._index);
     }
@@ -402,7 +400,7 @@ public:
     auto _impl() noexcept { return &_data; }                     // NOLINT
 
 private:
-    detail::variant_storage_for<Types...> _data;
+    detail::variant_storage_for<Ts...> _data;
     internal_size_t _index {0};
 };
 
@@ -411,7 +409,7 @@ private:
 ///
 /// \details This overload participates in overload resolution only if
 /// is_move_constructible_v<T_i> and is_swappable_v<T_i> are both true for all
-/// T_i in Types...
+/// T_i in Ts...
 template <typename... Ts>
     requires(detail::enable_variant_swap<Ts...>)
 constexpr auto swap(variant<Ts...>& lhs, variant<Ts...>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
@@ -526,9 +524,9 @@ constexpr auto operator>=(variant<Ts...> const& lhs, variant<Ts...> const& rhs) 
 }
 
 /// \brief Checks if the variant v holds the alternative T. The call is
-/// ill-formed if T does not appear exactly once in Types...
-template <typename T, typename... Types>
-constexpr auto holds_alternative(variant<Types...> const& v) noexcept -> bool
+/// ill-formed if T does not appear exactly once in Ts...
+template <typename T, typename... Ts>
+constexpr auto holds_alternative(variant<Ts...> const& v) noexcept -> bool
 {
     using index_t = decltype(v._impl()->get_index(declval<T>()));
     return index_t::value == v.index();
@@ -538,10 +536,10 @@ constexpr auto holds_alternative(variant<Types...> const& v) noexcept -> bool
 /// pv->index() == I, returns a pointer to the value stored in the variant
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
-template <size_t I, typename... Types>
-constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Types...>>>
+template <size_t I, typename... Ts>
+constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>>>
 {
-    using alternative_t = variant_alternative_t<I, variant<Types...>>;
+    using alternative_t = variant_alternative_t<I, variant<Ts...>>;
     return get_if<alternative_t>(pv);
 }
 
@@ -549,18 +547,18 @@ constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<variant_a
 /// pv->index() == I, returns a pointer to the value stored in the variant
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
-template <size_t I, typename... Types>
+template <size_t I, typename... Ts>
 constexpr auto get_if(
-    variant<Types...> const* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Types...>> const>
+    variant<Ts...> const* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
 {
-    using alternative_t = variant_alternative_t<I, variant<Types...>>;
+    using alternative_t = variant_alternative_t<I, variant<Ts...>>;
     return get_if<alternative_t>(pv);
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
-/// a unique element of Types....
-template <typename T, typename... Types>
-constexpr auto get_if(variant<Types...>* v) noexcept -> add_pointer_t<T>
+/// a unique element of Ts....
+template <typename T, typename... Ts>
+constexpr auto get_if(variant<Ts...>* v) noexcept -> add_pointer_t<T>
 {
     using idx  = decltype((*v)._impl()->get_index(declval<T>()));
     using ic_t = integral_constant<size_t, idx::value>;
@@ -569,9 +567,9 @@ constexpr auto get_if(variant<Types...>* v) noexcept -> add_pointer_t<T>
 }
 
 /// \brief Type-based non-throwing accessor: The call is ill-formed if T is not
-/// a unique element of Types....
-template <typename T, typename... Types>
-constexpr auto get_if(variant<Types...> const* v) noexcept -> add_pointer_t<T const>
+/// a unique element of Ts....
+template <typename T, typename... Ts>
+constexpr auto get_if(variant<Ts...> const* v) noexcept -> add_pointer_t<T const>
 {
     using idx  = decltype((*v)._impl()->get_index(declval<T const>()));
     using ic_t = integral_constant<size_t, idx::value>;
@@ -586,10 +584,10 @@ constexpr auto get_if(variant<Types...> const* v) noexcept -> add_pointer_t<T co
 /// not a valid index in the variant.
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...>& v) -> variant_alternative_t<I, variant<Types...>>&
+template <size_t I, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...>& v) -> variant_alternative_t<I, variant<Ts...>>&
 {
-    static_assert(I < sizeof...(Types));
+    static_assert(I < sizeof...(Ts));
     if (v.index() == I) { return *get_if<I>(&v); }
     raise<bad_variant_access>("");
 }
@@ -601,10 +599,10 @@ template <size_t I, typename... Types>
 /// not a valid index in the variant.
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...>&& v) -> variant_alternative_t<I, variant<Types...>>&&
+template <size_t I, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> variant_alternative_t<I, variant<Ts...>>&&
 {
-    static_assert(I < sizeof...(Types));
+    static_assert(I < sizeof...(Ts));
     if (v.index() == I) { return move(*get_if<I>(&v)); }
     raise<bad_variant_access>("");
 }
@@ -616,10 +614,10 @@ template <size_t I, typename... Types>
 /// not a valid index in the variant.
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...> const& v) -> variant_alternative_t<I, variant<Types...>> const&
+template <size_t I, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> variant_alternative_t<I, variant<Ts...>> const&
 {
-    static_assert(I < sizeof...(Types));
+    static_assert(I < sizeof...(Ts));
     if (v.index() == I) { return *get_if<I>(&v); }
     raise<bad_variant_access>("");
 }
@@ -631,10 +629,10 @@ template <size_t I, typename... Types>
 /// not a valid index in the variant.
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <size_t I, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...> const&& v) -> variant_alternative_t<I, variant<Types...>> const&&
+template <size_t I, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> variant_alternative_t<I, variant<Ts...>> const&&
 {
-    static_assert(I < sizeof...(Types));
+    static_assert(I < sizeof...(Ts));
     if (v.index() == I) { return move(*get_if<I>(&v)); }
     raise<bad_variant_access>("");
 }
@@ -643,11 +641,11 @@ template <size_t I, typename... Types>
 ///
 /// \details If v holds the alternative T, returns a reference to the value
 /// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Types....
+/// ill-formed if T is not a unique element of Ts....
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...>& v) -> T&
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...>& v) -> T&
 {
     if (holds_alternative<T>(v)) { return *get_if<T>(&v); }
     raise<bad_variant_access>("");
@@ -657,11 +655,11 @@ template <typename T, typename... Types>
 ///
 /// \details If v holds the alternative T, returns a reference to the value
 /// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Types....
+/// ill-formed if T is not a unique element of Ts....
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...>&& v) -> T&&
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> T&&
 {
     if (holds_alternative<T>(v)) { return move(*get_if<T>(&v)); }
     raise<bad_variant_access>("");
@@ -671,11 +669,11 @@ template <typename T, typename... Types>
 ///
 /// \details If v holds the alternative T, returns a reference to the value
 /// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Types....
+/// ill-formed if T is not a unique element of Ts....
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...> const& v) -> T const&
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> T const&
 {
     if (holds_alternative<T>(v)) { return *get_if<T>(&v); }
     raise<bad_variant_access>("");
@@ -685,19 +683,19 @@ template <typename T, typename... Types>
 ///
 /// \details If v holds the alternative T, returns a reference to the value
 /// stored in v. Otherwise, throws bad_variant_access. The call is
-/// ill-formed if T is not a unique element of Types....
+/// ill-formed if T is not a unique element of Ts....
 ///
 /// https://en.cppreference.com/w/cpp/utility/variant/get
-template <typename T, typename... Types>
-[[nodiscard]] constexpr auto get(variant<Types...> const&& v) -> T const&&
+template <typename T, typename... Ts>
+[[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> T const&&
 {
     if (holds_alternative<T>(v)) { return move(*get_if<T>(&v)); }
     raise<bad_variant_access>("");
 }
 
-template <typename... Types>
+template <typename... Ts>
 template <typename T, typename... Args>
-constexpr auto variant<Types...>::emplace(Args&&... args) -> T&
+constexpr auto variant<Ts...>::emplace(Args&&... args) -> T&
 {
     auto v = variant(etl::in_place_type<T>, etl::forward<Args>(args)...);
     v.swap(*this);
