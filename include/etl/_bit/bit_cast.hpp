@@ -15,7 +15,7 @@ namespace etl {
 namespace detail {
 // clang-format off
 template <typename To, typename From>
-inline constexpr auto bit_castable_types = 
+inline constexpr auto bit_castable_types =
         (sizeof(To) == sizeof(From))
     and is_trivially_copyable_v<From>
     and is_trivially_copyable_v<To>;

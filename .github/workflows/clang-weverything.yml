@@ -32,9 +32,9 @@ jobs:
 
       - name: CMake configure
         run: >
-          cmake -S . 
+          cmake -S .
           -B build
-          -G "Ninja Multi-Config" 
+          -G "Ninja Multi-Config"
           -D CMAKE_C_COMPILER="clang-18"
           -D CMAKE_CXX_COMPILER="clang++-18"
           -D CMAKE_CXX_STANDARD="${{ matrix.cxx }}"
