@@ -11,7 +11,11 @@ jobs:
     runs-on: ${{ matrix.config.image }}
     strategy:
       matrix:
-        config: [{ image: "macos-13", cxx: 20 }, { image: "macos-14", cxx: 23 }]
+        config:
+          [
+            { image: "macos-13", cxx: 20, flags: "" },
+            { image: "macos-14", cxx: 23, flags: "-Wpre-c++2b-compat" },
+          ]
       fail-fast: false
     name: C++${{ matrix.config.cxx }}
     steps:
@@ -27,6 +31,7 @@ jobs:
           -B build
           -G "Ninja Multi-Config"
           -D CMAKE_CXX_STANDARD=${{ matrix.config.cxx }}
+          -D CMAKE_CXX_FLAGS="${{ matrix.config.flags }}"
           -D TETL_BUILD_WERROR=ON
 
       - name: CMake build -- Debug
