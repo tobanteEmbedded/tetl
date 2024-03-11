@@ -63,7 +63,14 @@ static auto test() -> bool
     assert(etl::as_const(ex3).error() == 143);
     assert(ex3.value_or(42.0F) == T(42));
     assert(etl::as_const(ex3).value_or(42.0F) == T(42));
-    assert(etl::move(ex3).value_or(42.0F) == T(42));
+
+    ex3.emplace(T(99));
+    assert(ex3.has_value());
+    assert(static_cast<bool>(ex3));
+    assert(ex3.value() == T(99));
+    assert(etl::as_const(ex3).value() == T(99));
+    assert(ex3.value_or(42.0F) == T(99));
+    assert(etl::as_const(ex3).value_or(42.0F) == T(99));
 
     return true;
 }

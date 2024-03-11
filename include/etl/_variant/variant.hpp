@@ -374,6 +374,9 @@ public:
     template <typename T, typename... Args>
     constexpr auto emplace(Args&&... args) -> T&;
 
+    template <etl::size_t I, typename... Args>
+    constexpr auto emplace(Args&&... args) -> etl::variant_alternative_t<I, variant>&;
+
     /// \brief Returns the zero-based index of the alternative that is currently
     /// held by the variant. If the variant is valueless_by_exception, returns
     /// variant_npos.
@@ -700,6 +703,15 @@ constexpr auto variant<Ts...>::emplace(Args&&... args) -> T&
     auto v = variant(etl::in_place_type<T>, etl::forward<Args>(args)...);
     v.swap(*this);
     return *etl::get_if<T>(this);
+}
+
+template <typename... Ts>
+template <etl::size_t I, typename... Args>
+constexpr auto variant<Ts...>::emplace(Args&&... args) -> etl::variant_alternative_t<I, variant>&
+{
+    auto v = variant(etl::in_place_index<I>, etl::forward<Args>(args)...);
+    v.swap(*this);
+    return *etl::get_if<I>(this);
 }
 
 } // namespace etl

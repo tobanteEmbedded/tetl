@@ -76,6 +76,14 @@ struct expected {
     [[nodiscard]] constexpr auto error() && -> E&& { return etl::get<1>(etl::move(_u)); }
     [[nodiscard]] constexpr auto error() const&& -> E const&& { return etl::get<1>(etl::move(_u)); }
 
+    template <typename... Args>
+        requires etl::is_nothrow_constructible_v<T, Args...>
+    constexpr auto emplace(Args&&... args) noexcept -> T&
+    {
+        _u.template emplace<0>(etl::forward<Args>(args)...);
+        return **this;
+    }
+
     template <typename U>
     [[nodiscard]] constexpr auto value_or(U&& fallback) const& -> T
     {
