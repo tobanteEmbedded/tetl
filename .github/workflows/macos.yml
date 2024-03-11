@@ -1,4 +1,4 @@
-name: macOS X64
+name: macOS
 
 on: [push, pull_request]
 
@@ -14,10 +14,10 @@ jobs:
         config:
           [
             { image: "macos-13", cxx: 20, flags: "" },
-            { image: "macos-14", cxx: 23, flags: "-Wpre-c++2b-compat" },
+            { image: "macos-14", cxx: 23, flags: "-Wno-pre-c++2b-compat" },
           ]
       fail-fast: false
-    name: C++${{ matrix.config.cxx }}
+    name: Xcode (C++${{ matrix.config.cxx }})
     steps:
       - name: Check out code
         uses: actions/checkout@v4

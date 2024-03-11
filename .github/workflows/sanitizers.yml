@@ -1,4 +1,4 @@
-name: Sanitizers (ASAN/UBSAN)
+name: ASAN/UBSAN
 
 on: [push, pull_request]
 

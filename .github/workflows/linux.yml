@@ -1,4 +1,4 @@
-name: Linux X64
+name: Linux
 
 on: [push, pull_request]
 
@@ -22,7 +22,7 @@ jobs:
         cxx_std: [20, 23]
       fail-fast: false
     runs-on: ubuntu-22.04
-    name: Linux x64 ${{ matrix.config.cc }} c++${{ matrix.cxx_std }}
+    name: ${{ matrix.config.cc }} (C++${{ matrix.cxx_std }})
     steps:
       - name: Check out code
         uses: actions/checkout@v4

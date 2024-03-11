@@ -45,29 +45,29 @@ For examples look at the [examples](./examples) subdirectory or the test files i
 
 ### Hosted
 
-| **Platform** |                                                                                    **Status**                                                                                    |              **Notes**              |
-| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
-|  **Linux**   |    [![Linux X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64.yml)    |    GCC 11/12/13 & Clang 16/17/18    |
-|  **macOS**   |    [![macOS X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos-x64.yml)    |             AppleClang              |
-| **Windows**  | [![Windows X64](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows-x64.yml) | Visual Studio 2022, ClangCL & Clang |
-| **JS/WASM**  |  [![Emscripten](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml)   |          Emscripten Latest          |
+| **Platform** |                                                                                  **Status**                                                                                   |              **Notes**              |
+| :----------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------: |
+|  **Linux**   |        [![Linux](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux.yml)         |    GCC 11/12/13 & Clang 16/17/18    |
+|  **macOS**   |        [![macOS](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/macos.yml)         |             AppleClang              |
+| **Windows**  |     [![Windows](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/windows.yml)      | Visual Studio 2022, ClangCL & Clang |
+| **JS/WASM**  | [![Emscripten](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/emscripten.yml) |          Emscripten Latest          |
 
 ### Freestanding
 
-| **Platform** |                                                                                                **Status**                                                                                                | **Notes** |
-| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|   **ARM**    |     [![ARM Freestanding](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      |  GCC 13   |
-|   **AVR**    |     [![AVR Freestanding](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 13   |
-|  **MSP430**  | [![MSP430 Freestanding](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |  GCC 13   |
+| **Platform** |                                                                                         **Status**                                                                                          | **Notes** |
+| :----------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|   **ARM**    |     [![ARM](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-arm.yml)      |  GCC 13   |
+|   **AVR**    |     [![AVR](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-avr.yml)      |  GCC 13   |
+|  **MSP430**  | [![MSP430](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/freestanding-msp430.yml) |  GCC 13   |
 
 ### Analysis
 
-|        **Type**        |                                                                                                   **Status**                                                                                                   | **Notes** |
-| :--------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
-|      **Coverage**      |                               [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                                |  GCC 11   |
-|     **Sanitizers**     | [![Sanitizers (ASAN/UBSAN)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/linux-x64-sanitizers.yml) | Clang 18  |
-|     **Clang-Tidy**     |                 [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml)                  | Clang 18  |
-| **Clang -Weverything** |      [![Clang -Weverything](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml)       | Clang 18  |
+|        **Type**        |                                                                                             **Status**                                                                                              | **Notes** |
+| :--------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: |
+|      **Coverage**      |                          [![codecov](https://codecov.io/gh/tobanteEmbedded/tetl/branch/main/graph/badge.svg?token=f1QAWTtpIo)](https://codecov.io/gh/tobanteEmbedded/tetl)                          |  GCC 11   |
+|     **Sanitizers**     |            [![ASAN/UBSAN](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/sanitizers.yml)            | Clang 18  |
+|     **Clang-Tidy**     |            [![Clang-Tidy](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-tidy.yml)            | Clang 18  |
+| **Clang -Weverything** | [![Clang -Weverything](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml/badge.svg)](https://github.com/tobanteEmbedded/tetl/actions/workflows/clang-weverything.yml) | Clang 18  |
 
 > **_NOTE:_** All test are compiled in debug and release mode with at least `-Wall -Wextra -Wpedantic -Werror` or `/W3 /WX`. The full list of warning flags can be found in the CMake configuration: [cmake/compiler_warnings.cmake](./cmake/compiler_warnings.cmake). Hosted platforms run all tests & examples, while freestanding builds only compile (ARM & AVR) and link (AVR) the example files.
 
