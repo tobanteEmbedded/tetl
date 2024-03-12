@@ -33,32 +33,25 @@ using make_tuple_indices = typename make_integer_sequence<size_t, Size>::to_tupl
 
 template <etl::size_t I, typename T>
 struct tuple_leaf {
-    auto get_type(integral_constant<size_t, I> ic) -> T;
+    auto get_type(index_constant<I> ic) -> T;
 
     template <typename... Args>
     constexpr tuple_leaf(Args&&... args) : _value{forward<Args>(args)...}
     {
     }
 
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) & noexcept -> T& { return _value; }
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) & noexcept -> T& { return _value; }
 
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const& noexcept -> T const&
-    {
-        return _value;
-    }
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const& noexcept -> T const& { return _value; }
 
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) && noexcept -> T&&
-    {
-        return etl::move(_value);
-    }
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) && noexcept -> T&& { return etl::move(_value); }
 
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> /*ignore*/) const&& noexcept -> T const&&
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> /*ic*/) const&& noexcept -> T const&&
     {
         return etl::move(_value);
     }
 
-    constexpr auto
-    swap_impl(integral_constant<size_t, I> /*ignore*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
+    constexpr auto swap_impl(index_constant<I> /*ic*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
     {
         using etl::swap;
         swap(_value, other);
@@ -104,11 +97,7 @@ public:
 
     constexpr auto swap(tuple_impl& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
     {
-        (tuple_leaf<Idx, Ts>::swap_impl(
-             integral_constant<size_t, Idx>{},
-             other.get_impl(integral_constant<size_t, Idx>{})
-         ),
-         ...);
+        (tuple_leaf<Idx, Ts>::swap_impl(index_c<Idx>, other.get_impl(index_c<Idx>)), ...);
     }
 };
 
@@ -142,31 +131,31 @@ private:
     impl_t _impl; // NOLINT(modernize-use-default-member-init)
 
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) &  noexcept -> auto&
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) &  noexcept -> auto&
     {
         return _impl.get_impl(ic);
     }
 
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&  noexcept -> auto const&
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) const&  noexcept -> auto const&
     {
         return _impl.get_impl(ic);
     }
 
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) && noexcept -> auto&&
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) && noexcept -> auto&&
     {
         return move(_impl).get_impl(ic);
     }
 
     template <size_t I>
-    [[nodiscard]] constexpr auto get_impl(integral_constant<size_t, I> ic) const&&  noexcept -> auto const&&
+    [[nodiscard]] constexpr auto get_impl(index_constant<I> ic) const&&  noexcept -> auto const&&
     {
         return move(_impl).get_impl(ic);
     }
 
     template <size_t I>
-    auto get_type(integral_constant<size_t, I> ic) -> decltype(_impl.get_type(ic));
+    auto get_type(index_constant<I> ic) -> decltype(_impl.get_type(ic));
     // clang-format on
 
 public:
@@ -206,34 +195,34 @@ template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(integral_constant<size_t, I>{});
+    return t.template get_impl<I>(index_c<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(integral_constant<size_t, I>{});
+    return t.template get_impl<I>(index_c<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>&& t) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(integral_constant<size_t, I>{});
+    return etl::move(t).template get_impl<I>(index_c<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const&& t) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(integral_constant<size_t, I>{});
+    return etl::move(t).template get_impl<I>(index_c<I>);
 }
 
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(integral_constant<size_t, I>{}));
+    using type = decltype(declval<tuple<Ts...>>().get_type(index_c<I>));
 };
 
 namespace detail {
