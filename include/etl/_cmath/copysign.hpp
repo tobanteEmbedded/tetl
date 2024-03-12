@@ -3,10 +3,10 @@
 #ifndef TETL_CMATH_COPYSIGN_HPP
 #define TETL_CMATH_COPYSIGN_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/is_constant_evaluated.hpp"
-#include "etl/_type_traits/is_same.hpp"
+#include <etl/_type_traits/is_constant_evaluated.hpp>
+#include <etl/_type_traits/is_same.hpp>
 
 namespace etl {
 

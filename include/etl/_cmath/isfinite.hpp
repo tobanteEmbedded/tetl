@@ -3,8 +3,8 @@
 #ifndef TETL_CMATH_ISFINITE_HPP
 #define TETL_CMATH_ISFINITE_HPP
 
-#include "etl/_cmath/isinf.hpp"
-#include "etl/_cmath/isnan.hpp"
+#include <etl/_cmath/isinf.hpp>
+#include <etl/_cmath/isnan.hpp>
 
 namespace etl {
 

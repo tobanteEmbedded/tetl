@@ -3,7 +3,7 @@
 #ifndef TETL_CASSERT_MACRO_HPP
 #define TETL_CASSERT_MACRO_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 #include "etl/_version/implementation.hpp"
 #include "etl/_warning/ignore_unused.hpp"

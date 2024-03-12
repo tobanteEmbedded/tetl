@@ -3,7 +3,7 @@
 #ifndef TETL_CMATH_TYPEDEFS_HPP
 #define TETL_CMATH_TYPEDEFS_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 #if defined(TETL_MSVC)
     #include <math.h>

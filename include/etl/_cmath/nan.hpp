@@ -3,7 +3,7 @@
 #ifndef TETL_CMATH_NAN_HPP
 #define TETL_CMATH_NAN_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 namespace etl {
 

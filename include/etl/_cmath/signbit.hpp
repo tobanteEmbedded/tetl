@@ -3,9 +3,9 @@
 #ifndef TETL_CMATH_SIGNBIT_HPP
 #define TETL_CMATH_SIGNBIT_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_type_traits/is_constant_evaluated.hpp"
+#include <etl/_type_traits/is_constant_evaluated.hpp>
 
 namespace etl {
 
