@@ -3,7 +3,7 @@
 #ifndef TETL_MATH_ILOG2_HPP
 #define TETL_MATH_ILOG2_HPP
 
-#include "etl/_concepts/integral.hpp"
+#include <etl/_concepts/integral.hpp>
 
 namespace etl {
 

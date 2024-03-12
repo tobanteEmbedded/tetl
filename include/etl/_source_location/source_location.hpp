@@ -3,10 +3,10 @@
 #ifndef TETL_SOURCE_LOCATION_SOURCE_LOCATION_HPP
 #define TETL_SOURCE_LOCATION_SOURCE_LOCATION_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
-#include "etl/_cstdint/uint_least_t.hpp"
-#include "etl/_version/language_standard.hpp"
+#include <etl/_cstdint/uint_least_t.hpp>
+#include <etl/_version/language_standard.hpp>
 
 namespace etl {
 

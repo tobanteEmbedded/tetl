@@ -3,7 +3,7 @@
 #ifndef TETL_NUMBERS_CONSTANTS_HPP
 #define TETL_NUMBERS_CONSTANTS_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 namespace etl::numbers {
 

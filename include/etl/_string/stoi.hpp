@@ -2,9 +2,9 @@
 #ifndef TETL_STRING_STOI_HPP
 #define TETL_STRING_STOI_HPP
 
-#include "etl/_concepts/integral.hpp"
-#include "etl/_string_view/string_view.hpp"
-#include "etl/_strings/conversion.hpp"
+#include <etl/_concepts/integral.hpp>
+#include <etl/_string_view/string_view.hpp>
+#include <etl/_strings/conversion.hpp>
 
 namespace etl {
 

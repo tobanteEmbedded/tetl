@@ -3,7 +3,7 @@
 #ifndef TETL_SIMD_SIMD_ABI_HPP
 #define TETL_SIMD_SIMD_ABI_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 namespace etl::simd_abi {
 
