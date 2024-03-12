@@ -88,7 +88,7 @@ namespace detail {
 template <typename Context, typename T>
 [[nodiscard]] constexpr auto make_arg(T&& value) -> basic_format_arg<Context>
 {
-    return {forward<T>(value)};
+    return {TETL_FORWARD(value)};
 }
 } // namespace detail
 

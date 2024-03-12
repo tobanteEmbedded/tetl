@@ -20,20 +20,20 @@ constexpr auto invoke_memptr(Pointed C::*f, T1&& t1, Args&&... args) -> decltype
 {
     if constexpr (is_function_v<Pointed>) {
         if constexpr (is_base_of_v<C, decay_t<T1>>) {
-            return (forward<T1>(t1).*f)(forward<Args>(args)...);
+            return (TETL_FORWARD(t1).*f)(TETL_FORWARD(args)...);
         } else if constexpr (is_reference_wrapper_v<decay_t<T1>>) {
-            return (t1.get().*f)(forward<Args>(args)...);
+            return (t1.get().*f)(TETL_FORWARD(args)...);
         } else {
-            return ((*forward<T1>(t1)).*f)(forward<Args>(args)...);
+            return ((*TETL_FORWARD(t1)).*f)(TETL_FORWARD(args)...);
         }
     } else {
         static_assert(is_object_v<Pointed> && sizeof...(args) == 0);
         if constexpr (is_base_of_v<C, decay_t<T1>>) {
-            return forward<T1>(t1).*f;
+            return TETL_FORWARD(t1).*f;
         } else if constexpr (is_reference_wrapper_v<decay_t<T1>>) {
             return t1.get().*f;
         } else {
-            return (*forward<T1>(t1)).*f;
+            return (*TETL_FORWARD(t1)).*f;
         }
     }
 }
@@ -44,9 +44,9 @@ template <typename F, typename... Args>
 constexpr auto invoke(F&& f, Args&&... args) -> invoke_result_t<F, Args...>
 {
     if constexpr (is_member_pointer_v<decay_t<F>>) {
-        return detail::invoke_memptr(f, forward<Args>(args)...);
+        return detail::invoke_memptr(f, TETL_FORWARD(args)...);
     } else {
-        return forward<F>(f)(forward<Args>(args)...);
+        return TETL_FORWARD(f)(TETL_FORWARD(args)...);
     }
 }
 

@@ -20,11 +20,10 @@ constexpr auto index(Rng&& rng, Index&& i) noexcept -> decltype(auto)
 {
     using etl::begin;
     using etl::end;
-    using etl::forward;
     using etl::ptrdiff_t;
 
     TETL_ASSERT(static_cast<ptrdiff_t>(i) < (end(rng) - begin(rng)));
-    return begin(forward<Rng>(rng))[forward<Index>(i)];
+    return begin(TETL_FORWARD(rng))[TETL_FORWARD(i)];
 }
 } // namespace etl::detail
 

@@ -136,7 +136,7 @@ public:
         static constexpr vtable_t const vt{detail::wrapper<C>{}};
         _vtable = addressof(vt);
 
-        ::new (addressof(_storage)) C{forward<T>(closure)};
+        ::new (addressof(_storage)) C{TETL_FORWARD(closure)};
     }
 
     template <size_t Cap, size_t Align>
@@ -198,7 +198,7 @@ public:
     /// \brief Invokes the stored callable function target with the parameters args.
     auto operator()(Args... args) const -> R
     {
-        return _vtable->invoke_ptr(addressof(_storage), forward<Args>(args)...);
+        return _vtable->invoke_ptr(addressof(_storage), TETL_FORWARD(args)...);
     }
 
     /// \brief Checks whether *this stores a callable function target, i.e. is not empty.

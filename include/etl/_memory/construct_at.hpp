@@ -12,7 +12,7 @@ namespace etl {
 template <typename T, typename... Args, typename = decltype(::new(declval<void*>()) T(declval<Args>()...))>
 constexpr auto construct_at(T* p, Args&&... args) -> T*
 {
-    return ::new (static_cast<void*>(p)) T(etl::forward<Args>(args)...);
+    return ::new (static_cast<void*>(p)) T(TETL_FORWARD(args)...);
 }
 
 } // namespace etl

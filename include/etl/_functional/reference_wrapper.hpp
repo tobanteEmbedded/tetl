@@ -40,7 +40,7 @@ struct reference_wrapper {
     using type = T;
 
     /// \brief Constructs a new reference wrapper. Converts x to T& as if by T&
-    /// t = forward<U>(x);, then stores a reference to t. This overload only
+    /// t = TETL_FORWARD(x);, then stores a reference to t. This overload only
     /// participates in overload resolution if `decay_t<U>` is not the same type
     /// as reference_wrapper and the expression `FUN(declval<U>())` is
     /// well-formed, where FUN names the set of imaginary functions:
@@ -55,8 +55,8 @@ struct reference_wrapper {
         typename U,
         typename
         = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
-    constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(forward<U>(u))))
-        : _ptr(addressof(detail::FUN<T>(forward<U>(u))))
+    constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(TETL_FORWARD(u))))
+        : _ptr(addressof(detail::FUN<T>(TETL_FORWARD(u))))
     {
     }
 
@@ -81,9 +81,9 @@ struct reference_wrapper {
     /// \returns The return value of the called function.
     template <typename... Args>
     constexpr auto operator()(Args&&... args) const
-        noexcept(noexcept(invoke(get(), forward<Args>(args)...))) -> invoke_result_t<T&, Args...>
+        noexcept(noexcept(invoke(get(), TETL_FORWARD(args)...))) -> invoke_result_t<T&, Args...>
     {
-        return invoke(get(), forward<Args>(args)...);
+        return invoke(get(), TETL_FORWARD(args)...);
     }
 
 private:

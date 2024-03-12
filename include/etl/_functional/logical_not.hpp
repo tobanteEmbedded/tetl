@@ -21,9 +21,9 @@ struct logical_not<void> {
 
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& arg) const
-        noexcept(noexcept(!forward<T>(arg))) -> decltype(!forward<T>(arg))
+        noexcept(noexcept(!TETL_FORWARD(arg))) -> decltype(!TETL_FORWARD(arg))
     {
-        return !forward<T>(arg);
+        return !TETL_FORWARD(arg);
     }
 };
 

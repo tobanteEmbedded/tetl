@@ -107,10 +107,10 @@ template <etl::size_t I, typename T>
 constexpr auto get(T&& t) -> decltype(auto)
 {
     if constexpr (is_variant_v<T>) {
-        return etl::get<I>(etl::forward<T>(t));
+        return etl::get<I>(TETL_FORWARD(t));
     } else {
         static_assert(I == 0);
-        return etl::forward<T>(t);
+        return TETL_FORWARD(t);
     }
 }
 
@@ -150,12 +150,12 @@ constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m,
 {
     constexpr auto n = next_seq(i, m);
     if constexpr (sum(n) == 0) {
-        return f(get<Is>(etl::forward<Vs>(vs))...);
+        return f(get<Is>(TETL_FORWARD(vs))...);
     } else {
         if (etl::tuple(detail::index(vs)...) == etl::tuple(Is...)) {
             return f(forward_like<Vs>(*get_if<Is>(&vs))...);
         }
-        return visit(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
+        return visit(n, m, TETL_FORWARD(f), TETL_FORWARD(vs)...);
     }
 }
 
@@ -183,8 +183,8 @@ constexpr auto visit(F&& f, Vs&&... vs)
         return detail::visit(
             etl::index_sequence<detail::zero<Vs>...>{},
             etl::index_sequence<detail::variant_size<Vs>()...>{},
-            etl::forward<F>(f),
-            etl::forward<Vs>(vs)...
+            TETL_FORWARD(f),
+            TETL_FORWARD(vs)...
         );
     }
 }

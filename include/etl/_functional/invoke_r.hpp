@@ -12,13 +12,13 @@ namespace etl {
 
 /// \todo Add noexcept(is_nothrow_invocable_r_v<R, F, Args...>)
 template <typename R, typename F, typename... Args>
-    requires(is_invocable_r_v<R, F, Args...>)
+    requires(etl::is_invocable_r_v<R, F, Args...>)
 constexpr auto invoke_r(F&& f, Args&&... args) -> R
 {
-    if constexpr (is_void_v<R>) {
-        invoke(forward<F>(f), forward<Args>(args)...);
+    if constexpr (etl::is_void_v<R>) {
+        etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...);
     } else {
-        return invoke(forward<F>(f), forward<Args>(args)...);
+        return etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...);
     }
 }
 

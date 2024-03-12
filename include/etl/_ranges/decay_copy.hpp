@@ -12,7 +12,7 @@ namespace etl {
 template <typename T>
 constexpr auto decay_copy(T&& t) noexcept(is_nothrow_convertible_v<T, decay_t<T>>) -> decay_t<T>
 {
-    return forward<T>(t);
+    return TETL_FORWARD(t);
 }
 
 } // namespace etl

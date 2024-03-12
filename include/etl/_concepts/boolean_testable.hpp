@@ -18,7 +18,7 @@ template<typename T>
 concept boolean_testable =
     detail::boolean_testable_impl<T> &&
     requires(T&& t) {
-        { !etl::forward<T>(t) } -> detail::boolean_testable_impl;
+        { not TETL_FORWARD(t) } -> detail::boolean_testable_impl;
     };
 // clang-format on
 

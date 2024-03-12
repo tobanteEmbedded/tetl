@@ -23,9 +23,9 @@ struct plus<void> {
     /// \brief Returns the sum of lhs and rhs.
     template <typename T, typename U>
     [[nodiscard]] constexpr auto operator()(T&& lhs, U&& rhs) const
-        noexcept(noexcept(forward<T>(lhs) + forward<U>(rhs))) -> decltype(forward<T>(lhs) + forward<U>(rhs))
+        noexcept(noexcept(TETL_FORWARD(lhs) + TETL_FORWARD(rhs))) -> decltype(TETL_FORWARD(lhs) + TETL_FORWARD(rhs))
     {
-        return forward<T>(lhs) + forward<U>(rhs);
+        return TETL_FORWARD(lhs) + TETL_FORWARD(rhs);
     }
 };
 

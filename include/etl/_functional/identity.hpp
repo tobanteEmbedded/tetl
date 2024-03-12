@@ -15,7 +15,7 @@ struct identity {
     template <typename T>
     [[nodiscard]] constexpr auto operator()(T&& t) const noexcept -> T&&
     {
-        return forward<T>(t);
+        return TETL_FORWARD(t);
     }
 };
 

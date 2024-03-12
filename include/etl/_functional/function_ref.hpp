@@ -40,7 +40,7 @@ public:
         , _callable{
               +[](void* obj, Args... args) -> R {
                   auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
-                  return invoke(*func, forward<Args>(args)...);
+                  return invoke(*func, TETL_FORWARD(args)...);
               },
           }
     {
@@ -54,7 +54,7 @@ public:
         _obj      = reinterpret_cast<void*>(addressof(f));
         _callable = +[](void* obj, Args... args) {
             auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
-            return invoke(*func, forward<Args>(args)...);
+            return invoke(*func, TETL_FORWARD(args)...);
         };
 
         return *this;
@@ -72,10 +72,10 @@ public:
         swap(_callable, other._callable);
     }
 
-    /// Equivalent to return invoke(f, forward<Args>(args)...);, where f is the
+    /// Equivalent to return invoke(f, TETL_FORWARD(args)...);, where f is the
     /// callable object referred to by *this, qualified with the same
     /// cv-qualifiers as the function type Signature.
-    auto operator()(Args... args) const -> R { return _callable(_obj, forward<Args>(args)...); }
+    auto operator()(Args... args) const -> R { return _callable(_obj, TETL_FORWARD(args)...); }
 };
 
 template <typename R, typename... Args>

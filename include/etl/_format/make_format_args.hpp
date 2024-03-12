@@ -12,13 +12,13 @@ namespace etl {
 template <typename Context = etl::format_context, typename... Args>
 auto make_format_args(Args&&... args) -> detail::format_arg_store<Context, Args...>
 {
-    return {forward<Args>(args)...};
+    return {TETL_FORWARD(args)...};
 }
 
 template <typename... Args>
 auto make_wformat_args(Args&&... args) -> detail::format_arg_store<wformat_context, Args...>
 {
-    return {forward<Args>(args)...};
+    return {TETL_FORWARD(args)...};
 }
 
 } // namespace etl

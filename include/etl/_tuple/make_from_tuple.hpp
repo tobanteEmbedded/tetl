@@ -20,7 +20,7 @@ template <typename T, typename Tuple, size_t... I>
 constexpr auto make_from_tuple_impl(Tuple&& t, index_sequence<I...> /*i*/) -> T
 {
     static_assert(is_constructible_v<T, decltype(get<I>(declval<Tuple>()))...>);
-    return T(get<I>(forward<Tuple>(t))...);
+    return T(get<I>(TETL_FORWARD(t))...);
 }
 
 } // namespace detail
@@ -29,7 +29,7 @@ template <typename T, typename Tuple>
 [[nodiscard]] constexpr auto make_from_tuple(Tuple&& t) -> T
 {
     return detail::make_from_tuple_impl<T>(
-        forward<Tuple>(t),
+        TETL_FORWARD(t),
         make_index_sequence<tuple_size_v<remove_reference_t<Tuple>>>{}
     );
 }

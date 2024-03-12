@@ -162,7 +162,7 @@ struct static_vector_trivial_storage {
     constexpr auto emplace_back(Args&&... args) noexcept -> void
     {
         TETL_ASSERT(!full());
-        index(_data, size()) = T(forward<Args>(args)...);
+        index(_data, size()) = T(TETL_FORWARD(args)...);
         unsafe_set_size(static_cast<size_type>(size()) + 1U);
     }
 
@@ -255,10 +255,10 @@ struct static_vector_non_trivial_storage {
     /// \brief Constructs an element in-place at the end of the embedded
     /// storage.
     template <typename... Args>
-    auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(forward<Args>(args)...))) -> void
+    auto emplace_back(Args&&... args) noexcept(noexcept(new(end()) T(TETL_FORWARD(args)...))) -> void
     {
         TETL_ASSERT(!full());
-        new (end()) T(forward<Args>(args)...);
+        new (end()) T(TETL_FORWARD(args)...);
         unsafe_set_size(static_cast<size_type>(size() + 1));
     }
 
@@ -407,10 +407,10 @@ public:
     /// \brief Appends value at the end of the vector.
     template <typename U>
         requires(is_constructible_v<T, U> and is_assignable_v<reference, U &&>)
-    constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(forward<U>(value)))) -> void
+    constexpr auto push_back(U&& value) noexcept(noexcept(emplace_back(TETL_FORWARD(value)))) -> void
     {
         TETL_ASSERT(!full());
-        emplace_back(forward<U>(value));
+        emplace_back(TETL_FORWARD(value));
     }
 
     template <typename InIt>
@@ -443,7 +443,7 @@ public:
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);
-        value_type a(forward<Args>(args)...);
+        value_type a(TETL_FORWARD(args)...);
         return move_insert(position, &a, &a + 1);
     }
 

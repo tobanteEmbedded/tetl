@@ -20,7 +20,7 @@ namespace detail {
 template <typename T>
 struct invoke_impl {
     template <typename F, typename... Args>
-    static auto call(F&& f, Args&&... args) -> decltype(forward<F>(f)(forward<Args>(args)...));
+    static auto call(F&& f, Args&&... args) -> decltype(TETL_FORWARD(f)(TETL_FORWARD(args)...));
 };
 
 template <typename B, typename MT>
@@ -32,17 +32,17 @@ struct invoke_impl<MT B::*> {
     static auto get(T&& t) -> decltype(t.get());
 
     template <typename T, typename Td = decay_t<T>, typename = enable_if_t<!is_base_of_v<B, Td>>, typename = enable_if_t<!is_reference_wrapper<Td>::value>>
-    static auto get(T&& t) -> decltype(*forward<T>(t));
+    static auto get(T&& t) -> decltype(*TETL_FORWARD(t));
 
     template <typename T, typename... Args, typename MT1, typename = enable_if_t<is_function_v<MT1>>>
-    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((invoke_impl::get(forward<T>(t)).*pmf)(forward<Args>(args)...));
+    static auto call(MT1 B::*pmf, T&& t, Args&&... args) -> decltype((invoke_impl::get(TETL_FORWARD(t)).*pmf)(TETL_FORWARD(args)...));
 
     template <typename T>
-    static auto call(MT B::*pmd, T&& t) -> decltype(invoke_impl::get(forward<T>(t)).*pmd);
+    static auto call(MT B::*pmd, T&& t) -> decltype(invoke_impl::get(TETL_FORWARD(t)).*pmd);
 };
 
 template <typename F, typename... Args, typename Fd = decay_t<F>>
-auto INVOKE(F&& f, Args&&... args) -> decltype(invoke_impl<Fd>::call(forward<F>(f), forward<Args>(args)...));
+auto INVOKE(F&& f, Args&&... args) -> decltype(invoke_impl<Fd>::call(TETL_FORWARD(f), TETL_FORWARD(args)...));
 
 template <typename AlwaysVoid, typename, typename...>
 struct invoke_result {};

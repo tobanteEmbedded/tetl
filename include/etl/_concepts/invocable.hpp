@@ -9,7 +9,7 @@
 namespace etl {
 
 template <typename F, typename... Args>
-concept invocable = requires(F&& f, Args&&... args) { etl::invoke(etl::forward<F>(f), etl::forward<Args>(args)...); };
+concept invocable = requires(F&& f, Args&&... args) { etl::invoke(TETL_FORWARD(f), TETL_FORWARD(args)...); };
 
 } // namespace etl
 

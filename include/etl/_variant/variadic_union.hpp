@@ -24,15 +24,14 @@ union variadic_union<T, Ts...> {
     explicit constexpr variadic_union(etl::uninitialized_union /*tag*/) { }
 
     template <typename... Args>
-    explicit constexpr variadic_union(etl::index_constant<0> /*index*/, Args&&... args)
-        : head(etl::forward<Args>(args)...)
+    explicit constexpr variadic_union(etl::index_constant<0> /*index*/, Args&&... args) : head(TETL_FORWARD(args)...)
     {
     }
 
     template <etl::size_t I, typename... Args>
         requires(I > 0)
     explicit constexpr variadic_union(etl::index_constant<I> /*index*/, Args&&... args)
-        : tail(etl::index_c<I - 1>, etl::forward<Args>(args)...)
+        : tail(etl::index_c<I - 1>, TETL_FORWARD(args)...)
     {
     }
 

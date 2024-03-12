@@ -36,7 +36,7 @@ struct tuple_leaf {
     auto get_type(index_constant<I> ic) -> T;
 
     template <typename... Args>
-    constexpr tuple_leaf(Args&&... args) : _value{forward<Args>(args)...}
+    constexpr tuple_leaf(Args&&... args) : _value{TETL_FORWARD(args)...}
     {
     }
 
@@ -85,7 +85,7 @@ public:
     template <typename... Args>
         requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
     explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple_impl(Args&&... args)
-        : tuple_leaf<Idx, Ts>{forward<Args>(args)}...
+        : tuple_leaf<Idx, Ts>{TETL_FORWARD(args)}...
     {
     }
 
@@ -175,7 +175,7 @@ public:
     // No. 3
     template <typename... Args>
         requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
-    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl{forward<Args>(args)...}
+    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl{TETL_FORWARD(args)...}
     {
     }
 
