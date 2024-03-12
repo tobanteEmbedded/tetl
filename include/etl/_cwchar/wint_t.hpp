@@ -3,7 +3,7 @@
 #ifndef TETL_CWCHAR_WINT_T_HPP
 #define TETL_CWCHAR_WINT_T_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 #if defined(TETL_MSVC)
     #include <wchar.h>
