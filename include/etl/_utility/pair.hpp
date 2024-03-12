@@ -3,6 +3,7 @@
 #ifndef TETL_UTILITY_PAIR_HPP
 #define TETL_UTILITY_PAIR_HPP
 
+#include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/decay.hpp>
@@ -145,6 +146,9 @@ struct pair {
 // arguments and array to pointer conversion.
 template <typename T1, typename T2>
 pair(T1, T2) -> pair<T1, T2>;
+
+template <typename T, typename U>
+inline constexpr auto is_tuple_like<etl::pair<T, U>> = true;
 
 /// \brief Swaps the contents of x and y. Equivalent to x.swap(y).
 template <typename T1, typename T2>

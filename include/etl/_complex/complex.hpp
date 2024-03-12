@@ -4,6 +4,7 @@
 #define TETL_COMPLEX_COMPLEX_HPP
 
 #include <etl/_cstddef/size_t.hpp>
+#include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/integral_constant.hpp>
@@ -50,6 +51,9 @@ private:
     value_type _real;
     value_type _imag;
 };
+
+template <typename T>
+inline constexpr auto is_tuple_like<etl::complex<T>> = true;
 
 template <typename T>
 struct tuple_size<etl::complex<T>> : etl::integral_constant<etl::size_t, 2> { };

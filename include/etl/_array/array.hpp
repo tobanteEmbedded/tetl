@@ -14,6 +14,7 @@
 #include <etl/_iterator/rend.hpp>
 #include <etl/_iterator/reverse_iterator.hpp>
 #include <etl/_iterator/size.hpp>
+#include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/is_nothrow_swappable.hpp>
@@ -211,6 +212,9 @@ constexpr auto swap(array<T, N>& lhs, array<T, N>& rhs) noexcept(noexcept(lhs.sw
 /// compile-time constant expression.
 template <typename T, size_t N>
 struct tuple_size<array<T, N>> : integral_constant<size_t, N> { };
+
+template <typename T, etl::size_t Size>
+inline constexpr auto is_tuple_like<etl::array<T, Size>> = true;
 
 /// \brief Provides compile-time indexed access to the type of the elements of
 /// the array using tuple-like interface.

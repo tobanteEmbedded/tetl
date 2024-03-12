@@ -18,4 +18,9 @@
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 
+// Non-standard extensions
+#include <etl/_tuple/is_tuple_like.hpp>
+#include <etl/_tuple/pair_like.hpp>
+#include <etl/_tuple/tuple_like.hpp>
+
 #endif // TETL_TUPLE_HPP

@@ -4,6 +4,7 @@
 #define TETL_TUPLE_TUPLE_HPP
 
 #include <etl/_tuple/ignore.hpp>
+#include <etl/_tuple/is_tuple_like.hpp>
 #include <etl/_tuple/tuple_element.hpp>
 #include <etl/_tuple/tuple_size.hpp>
 #include <etl/_type_traits/declval.hpp>
@@ -197,6 +198,9 @@ public:
 
 template <typename... Ts>
 struct tuple_size<tuple<Ts...>> : integral_constant<size_t, sizeof...(Ts)> { };
+
+template <typename... Ts>
+inline constexpr auto is_tuple_like<etl::tuple<Ts...>> = true;
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
