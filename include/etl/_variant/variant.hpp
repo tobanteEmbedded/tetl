@@ -110,24 +110,15 @@ struct variant_storage<Index, Head> {
 
     constexpr auto destruct(size_t /*unused*/) -> void { static_cast<Head*>(static_cast<void*>(&data))->~Head(); }
 
-    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const -> integral_constant<size_t, Index>
-    {
-        return {};
-    }
+    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const -> index_constant<Index> { return {}; }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) & -> Head& { return *to_ptr(); }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) & -> Head& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) const& -> Head const&
-    {
-        return *to_ptr();
-    }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const& -> Head const& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) && -> Head&&
-    {
-        return move(*to_ptr());
-    }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return move(*to_ptr()); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) const&& -> Head const&&
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const&& -> Head const&&
     {
         return move(*to_ptr());
     }
@@ -198,10 +189,7 @@ struct variant_storage<Index, Head, Tail...> {
         tail.destruct(index - 1);
     }
 
-    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const -> integral_constant<size_t, Index>
-    {
-        return {};
-    }
+    [[nodiscard]] constexpr auto get_index(Head const& /*head*/) const -> index_constant<Index> { return {}; }
 
     template <typename T>
     [[nodiscard]] constexpr auto get_index(T const& t) const
@@ -209,43 +197,37 @@ struct variant_storage<Index, Head, Tail...> {
         return tail.get_index(t);
     }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) & -> Head& { return *to_ptr(); }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) & -> Head& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) const& -> Head const&
-    {
-        return *to_ptr();
-    }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const& -> Head const& { return *to_ptr(); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) && -> Head&&
-    {
-        return move(*to_ptr());
-    }
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) && -> Head&& { return move(*to_ptr()); }
 
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, Index> /*ic*/) const&& -> Head const&&
+    [[nodiscard]] constexpr auto get_value(index_constant<Index> /*ic*/) const&& -> Head const&&
     {
         return move(*to_ptr());
     }
 
     template <size_t N>
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, N> ic) & -> auto&
+    [[nodiscard]] constexpr auto get_value(index_constant<N> ic) & -> auto&
     {
         return tail.get_value(ic);
     }
 
     template <size_t N>
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, N> ic) const& -> auto const&
+    [[nodiscard]] constexpr auto get_value(index_constant<N> ic) const& -> auto const&
     {
         return tail.get_value(ic);
     }
 
     template <size_t N>
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, N> ic) && -> auto&&
+    [[nodiscard]] constexpr auto get_value(index_constant<N> ic) && -> auto&&
     {
         return move(tail).get_value(ic);
     }
 
     template <size_t N>
-    [[nodiscard]] constexpr auto get_value(integral_constant<size_t, N> ic) const&& -> auto const&&
+    [[nodiscard]] constexpr auto get_value(index_constant<N> ic) const&& -> auto const&&
     {
         return move(tail).get_value(ic);
     }
@@ -599,10 +581,9 @@ constexpr auto get_if(variant<Ts...> const* pv
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...>* v) noexcept -> add_pointer_t<T>
 {
-    using idx  = decltype((*v)._impl()->get_index(declval<T>()));
-    using ic_t = integral_constant<size_t, idx::value>;
+    using idx = decltype((*v)._impl()->get_index(declval<T>()));
     if (holds_alternative<T>(*v)) {
-        return &(v->_impl()->get_value(ic_t{}));
+        return &(v->_impl()->get_value(index_c<idx::value>));
     }
     return nullptr;
 }
@@ -612,10 +593,9 @@ constexpr auto get_if(variant<Ts...>* v) noexcept -> add_pointer_t<T>
 template <typename T, typename... Ts>
 constexpr auto get_if(variant<Ts...> const* v) noexcept -> add_pointer_t<T const>
 {
-    using idx  = decltype((*v)._impl()->get_index(declval<T const>()));
-    using ic_t = integral_constant<size_t, idx::value>;
+    using idx = decltype((*v)._impl()->get_index(declval<T const>()));
     if (holds_alternative<T>(*v)) {
-        return &(v->_impl()->get_value(ic_t{}));
+        return &(v->_impl()->get_value(index_c<idx::value>));
     }
     return nullptr;
 }
