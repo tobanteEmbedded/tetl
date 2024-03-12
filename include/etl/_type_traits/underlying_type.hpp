@@ -3,7 +3,7 @@
 #ifndef TETL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
 #define TETL_TYPE_TRAITS_IS_UNDERLYING_TYPE_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 #include "etl/_type_traits/is_enum.hpp"
 
