@@ -264,12 +264,25 @@ using variant_storage_for = detail::variant_storage<0, Ts...>;
 template <typename... Ts>
 inline constexpr auto enable_variant_swap = ((is_move_constructible_v<Ts> && is_swappable_v<Ts>) && ...);
 
+template <typename T>
+struct variant_type_selector_type {
+    [[nodiscard]] static auto select(T /*t*/) -> T;
+};
+
+template <typename... Ts>
+struct variant_type_selector : variant_type_selector_type<Ts>... {
+    using variant_type_selector_type<Ts>::select...;
+};
+
+template <typename T, typename... Ts>
+using variant_type_selector_t = decltype(variant_type_selector<Ts...>::select(T()));
+
 } // namespace detail
 
 /// \brief This is a special value equal to the largest value representable by
 /// the type size_t, used as the return value of index() when
 /// valueless_by_exception() is true.
-inline constexpr auto variant_npos = numeric_limits<size_t>::max();
+inline constexpr auto variant_npos = etl::numeric_limits<etl::size_t>::max();
 
 /// \brief The class template variant represents a type-safe union. An
 /// instance of variant at any given time either holds a value of one of

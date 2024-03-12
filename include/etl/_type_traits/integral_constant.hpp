@@ -3,6 +3,8 @@
 #ifndef TETL_TYPE_TRAITS_INTEGRAL_CONSTANT_HPP
 #define TETL_TYPE_TRAITS_INTEGRAL_CONSTANT_HPP
 
+#include <etl/_cstddef/size_t.hpp>
+
 namespace etl {
 
 template <typename Type, Type Val>
@@ -13,6 +15,12 @@ struct integral_constant {
     constexpr operator value_type() const noexcept { return value; }
     constexpr auto operator()() const noexcept -> value_type { return value; }
 };
+
+template <etl::size_t I>
+using index_constant_t = etl::integral_constant<etl::size_t, I>;
+
+template <etl::size_t I>
+inline constexpr auto index_constant = etl::index_constant_t<I> {};
 
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto operator+(
