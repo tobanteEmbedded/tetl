@@ -3,7 +3,7 @@
 #ifndef TETL_CSTDINT_UINTMAX_T_HPP
 #define TETL_CSTDINT_UINTMAX_T_HPP
 
-#include "etl/_config/all.hpp"
+#include <etl/_config/all.hpp>
 
 namespace etl {
 
