@@ -25,17 +25,17 @@ constexpr auto test() -> bool
 
     ASSERT(not etl::is_trivially_destructible_v<non_trivial_union_t>);
 
-    auto u = trivial_union_t{etl::index_constant<0>, 42};
-    ASSERT(u[etl::index_constant<0>] == 42);
-    ASSERT(etl::as_const(u)[etl::index_constant<0>] == 42);
+    auto u = trivial_union_t{etl::index_c<0>, 42};
+    ASSERT(u[etl::index_c<0>] == 42);
+    ASSERT(etl::as_const(u)[etl::index_c<0>] == 42);
 
-    u = trivial_union_t{etl::index_constant<1>, 99L};
-    ASSERT(u[etl::index_constant<1>] == 99L);
-    ASSERT(etl::as_const(u)[etl::index_constant<1>] == 99L);
+    u = trivial_union_t{etl::index_c<1>, 99L};
+    ASSERT(u[etl::index_c<1>] == 99L);
+    ASSERT(etl::as_const(u)[etl::index_c<1>] == 99L);
 
-    u = trivial_union_t{etl::index_constant<2>, static_cast<char const*>(nullptr)};
-    ASSERT(u[etl::index_constant<2>] == nullptr);
-    ASSERT(etl::as_const(u)[etl::index_constant<2>] == nullptr);
+    u = trivial_union_t{etl::index_c<2>, static_cast<char const*>(nullptr)};
+    ASSERT(u[etl::index_c<2>] == nullptr);
+    ASSERT(etl::as_const(u)[etl::index_c<2>] == nullptr);
 
     return true;
 }

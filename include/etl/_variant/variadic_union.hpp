@@ -24,15 +24,15 @@ union variadic_union<T, Ts...> {
     explicit constexpr variadic_union(etl::uninitialized_union /*tag*/) { }
 
     template <typename... Args>
-    explicit constexpr variadic_union(etl::index_constant_t<0> /*index*/, Args&&... args)
+    explicit constexpr variadic_union(etl::index_constant<0> /*index*/, Args&&... args)
         : head(etl::forward<Args>(args)...)
     {
     }
 
     template <etl::size_t I, typename... Args>
         requires(I > 0)
-    explicit constexpr variadic_union(etl::index_constant_t<I> /*index*/, Args&&... args)
-        : tail(etl::index_constant<I - 1>, etl::forward<Args>(args)...)
+    explicit constexpr variadic_union(etl::index_constant<I> /*index*/, Args&&... args)
+        : tail(etl::index_c<I - 1>, etl::forward<Args>(args)...)
     {
     }
 
@@ -49,42 +49,42 @@ union variadic_union<T, Ts...> {
     constexpr ~variadic_union() { }
 
     template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant_t<I> const /*index*/) & -> auto&
+    constexpr auto operator[](etl::index_constant<I> /*index*/) & -> auto&
     {
         if constexpr (I == 0) {
             return head;
         } else {
-            return tail[etl::index_constant<I - 1>];
+            return tail[etl::index_c<I - 1>];
         }
     }
 
     template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant_t<I> const /*index*/) const& -> auto const&
+    constexpr auto operator[](etl::index_constant<I> /*index*/) const& -> auto const&
     {
         if constexpr (I == 0) {
             return head;
         } else {
-            return tail[etl::index_constant<I - 1>];
+            return tail[etl::index_c<I - 1>];
         }
     }
 
     template <etl::size_t I>
-    constexpr auto operator[](etl::index_constant_t<I> const /*index*/) && -> auto&&
+    constexpr auto operator[](etl::index_constant<I> /*index*/) && -> auto&&
     {
         if constexpr (I == 0) {
             return etl::move(head);
         } else {
-            return etl::move(tail[etl::index_constant<I - 1>]);
+            return etl::move(tail)[etl::index_c<I - 1>];
         }
     }
 
     template <etl::size_t I>
-    constexpr auto operator[](integral_constant<etl::size_t, I> const /*index*/) const&& -> auto const&&
+    constexpr auto operator[](etl::index_constant<I> /*index*/) const&& -> auto const&&
     {
         if constexpr (I == 0) {
             return etl::move(head);
         } else {
-            return etl::move(tail[etl::index_constant<I - 1>]);
+            return etl::move(tail)[etl::index_c<I - 1>];
         }
     }
 

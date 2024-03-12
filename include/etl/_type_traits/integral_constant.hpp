@@ -19,10 +19,10 @@ struct integral_constant {
 };
 
 template <etl::size_t I>
-using index_constant_t = etl::integral_constant<etl::size_t, I>;
+using index_constant = etl::integral_constant<etl::size_t, I>;
 
 template <etl::size_t I>
-inline constexpr auto index_constant = etl::index_constant_t<I>{};
+inline constexpr auto index_c = etl::index_constant<I>{};
 
 template <typename Rhs, Rhs R, typename Lhs, Lhs L>
 [[nodiscard]] constexpr auto
