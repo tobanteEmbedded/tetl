@@ -3,8 +3,8 @@
 #ifndef TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP
 #define TETL_CONCEPTS_MOVE_CONSTRUCTIBLE_HPP
 
-#include "etl/_concepts/constructible_from.hpp"
-#include "etl/_concepts/convertible_to.hpp"
+#include <etl/_concepts/constructible_from.hpp>
+#include <etl/_concepts/convertible_to.hpp>
 
 namespace etl {
 

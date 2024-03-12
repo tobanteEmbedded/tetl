@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_RELATION_HPP
 #define TETL_CONCEPTS_RELATION_HPP
 
-#include "etl/_concepts/predicate.hpp"
+#include <etl/_concepts/predicate.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_EQUALITY_COMPARABLE_HPP
 #define TETL_CONCEPTS_EQUALITY_COMPARABLE_HPP
 
-#include "etl/_concepts/weakly_equality_comparable_with.hpp"
+#include <etl/_concepts/weakly_equality_comparable_with.hpp>
 
 namespace etl {
 

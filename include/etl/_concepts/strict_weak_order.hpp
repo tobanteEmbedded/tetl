@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_STRICT_WEAK_ORDER_HPP
 #define TETL_CONCEPTS_STRICT_WEAK_ORDER_HPP
 
-#include "etl/_concepts/relation.hpp"
+#include <etl/_concepts/relation.hpp>
 
 namespace etl {
 

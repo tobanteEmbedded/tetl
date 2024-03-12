@@ -3,9 +3,9 @@
 #ifndef TETL_CONCEPTS_WEAKLY_EQUALITY_COMPAREABLE_WITH_HPP
 #define TETL_CONCEPTS_WEAKLY_EQUALITY_COMPAREABLE_WITH_HPP
 
-#include "etl/_concepts/boolean_testable.hpp"
-#include "etl/_concepts/convertible_to.hpp"
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_concepts/boolean_testable.hpp>
+#include <etl/_concepts/convertible_to.hpp>
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 

@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_INTEGRAL_HPP
 #define TETL_CONCEPTS_INTEGRAL_HPP
 
-#include "etl/_type_traits/is_integral.hpp"
+#include <etl/_type_traits/is_integral.hpp>
 
 namespace etl {
 

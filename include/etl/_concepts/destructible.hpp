@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_DESTRUCTIBLE_HPP
 #define TETL_CONCEPTS_DESTRUCTIBLE_HPP
 
-#include "etl/_type_traits/is_nothrow_destructible.hpp"
+#include <etl/_type_traits/is_nothrow_destructible.hpp>
 
 namespace etl {
 
@@ -11,7 +11,7 @@ namespace etl {
 /// instances can safely be destroyed at the end of their lifetime (including
 /// reference types).
 template <typename T>
-concept destructible = is_nothrow_destructible_v<T>;
+concept destructible = etl::is_nothrow_destructible_v<T>;
 
 } // namespace etl
 

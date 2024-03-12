@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_FLOATING_POINT_HPP
 #define TETL_CONCEPTS_FLOATING_POINT_HPP
 
-#include "etl/_type_traits/is_floating_point.hpp"
+#include <etl/_type_traits/is_floating_point.hpp>
 
 namespace etl {
 

@@ -3,9 +3,9 @@
 #ifndef TETL_CONCEPTS_COPYABLE_HPP
 #define TETL_CONCEPTS_COPYABLE_HPP
 
-#include "etl/_concepts/assignable_from.hpp"
-#include "etl/_concepts/copy_constructible.hpp"
-#include "etl/_concepts/movable.hpp"
+#include <etl/_concepts/assignable_from.hpp>
+#include <etl/_concepts/copy_constructible.hpp>
+#include <etl/_concepts/movable.hpp>
 
 namespace etl {
 

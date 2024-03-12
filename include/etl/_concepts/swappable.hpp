@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_SWAPPABLE_HPP
 #define TETL_CONCEPTS_SWAPPABLE_HPP
 
-#include "etl/_utility/swap.hpp"
+#include <etl/_utility/swap.hpp>
 
 namespace etl {
 

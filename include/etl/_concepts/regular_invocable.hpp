@@ -3,7 +3,7 @@
 #ifndef TETL_CONCEPTS_REGULAR_INVOCABLE_HPP
 #define TETL_CONCEPTS_REGULAR_INVOCABLE_HPP
 
-#include "etl/_concepts/invocable.hpp"
+#include <etl/_concepts/invocable.hpp>
 
 namespace etl {
 

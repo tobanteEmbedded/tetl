@@ -3,8 +3,8 @@
 #ifndef TETL_CONCEPTS_DERIVED_FROM_HPP
 #define TETL_CONCEPTS_DERIVED_FROM_HPP
 
-#include "etl/_type_traits/is_base_of.hpp"
-#include "etl/_type_traits/is_convertible.hpp"
+#include <etl/_type_traits/is_base_of.hpp>
+#include <etl/_type_traits/is_convertible.hpp>
 
 namespace etl {
 
