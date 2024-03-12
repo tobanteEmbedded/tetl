@@ -51,7 +51,10 @@ struct submdspan_extents_builder {
     static constexpr auto next(Extents const& ext, Slice const& /*unused*/, SlicesAndExtents... slicesAndExtents)
     {
         if constexpr (etl::is_convertible_v<Slice, etl::full_extent_t>) {
-            return submdspan_extents_builder<K - 1, Extents, Extents::static_extent(Extents::rank() - K),
+            return submdspan_extents_builder<
+                K - 1,
+                Extents,
+                Extents::static_extent(Extents::rank() - K),
                 NewExtents...>::next(ext, slicesAndExtents..., ext.extent(Extents::rank() - K));
         } else if constexpr (etl::is_convertible_v<Slice, etl::size_t>) {
             return submdspan_extents_builder<K - 1, Extents, NewExtents...>::next(ext, slicesAndExtents...);
@@ -60,7 +63,9 @@ struct submdspan_extents_builder {
         } else {
             constexpr auto newStaticExt = submdspan_static_extent<K, Extents, Slice>();
             return submdspan_extents_builder<K - 1, Extents, newStaticExt, NewExtents...>::next(
-                ext, slicesAndExtents...);
+                ext,
+                slicesAndExtents...
+            );
         }
     }
 };

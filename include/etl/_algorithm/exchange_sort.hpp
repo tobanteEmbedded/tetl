@@ -18,7 +18,9 @@ constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> voi
 {
     for (auto i = first; i < prev(last); ++i) {
         for (auto j = next(i); j < last; ++j) {
-            if (comp(*j, *i)) { iter_swap(i, j); }
+            if (comp(*j, *i)) {
+                iter_swap(i, j);
+            }
         }
     }
 }
@@ -26,7 +28,7 @@ constexpr auto exchange_sort(RandomIt first, RandomIt last, Compare comp) -> voi
 template <typename RandomIt>
 constexpr auto exchange_sort(RandomIt first, RandomIt last) -> void
 {
-    exchange_sort(first, last, less {});
+    exchange_sort(first, last, less{});
 }
 
 } // namespace etl

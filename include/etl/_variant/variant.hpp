@@ -61,11 +61,11 @@ constexpr auto variant_swap_func(Variant& lhs, Variant& rhs) -> void
 template <typename Variant, size_t... Indices>
 constexpr auto make_variant_swap_table(index_sequence<Indices...> /*is*/)
 {
-    return array {&variant_swap_func<Variant, Indices>...};
+    return array{&variant_swap_func<Variant, Indices>...};
 }
 
 template <typename Variant, typename... Ts>
-inline constexpr auto variant_swap_table = make_variant_swap_table<Variant>(index_sequence_for<Ts...> {});
+inline constexpr auto variant_swap_table = make_variant_swap_table<Variant>(index_sequence_for<Ts...>{});
 
 // compare
 template <typename Variant>
@@ -74,17 +74,17 @@ using variant_cmp_func_t = bool (*)(Variant const&, Variant const&);
 template <typename Op, typename Variant, size_t Index>
 constexpr auto variant_compare_func(Variant const& l, Variant const& r) -> bool
 {
-    return Op {}(*get_if<Index>(&l), *get_if<Index>(&r));
+    return Op{}(*get_if<Index>(&l), *get_if<Index>(&r));
 }
 
 template <typename Op, typename Variant, size_t... Indices>
 constexpr auto make_variant_compare_table(index_sequence<Indices...> /*is*/)
 {
-    return array {&variant_compare_func<Op, Variant, Indices>...};
+    return array{&variant_compare_func<Op, Variant, Indices>...};
 }
 
 template <typename Op, typename Variant, typename... Ts>
-inline constexpr auto variant_compare_table = make_variant_compare_table<Op, Variant>(index_sequence_for<Ts...> {});
+inline constexpr auto variant_compare_table = make_variant_compare_table<Op, Variant>(index_sequence_for<Ts...>{});
 
 template <size_t Index, typename...>
 struct variant_storage;
@@ -297,7 +297,7 @@ public:
     constexpr variant() noexcept(noexcept(etl::is_nothrow_default_constructible_v<first_type>))
         requires(etl::is_default_constructible_v<first_type>)
     {
-        auto tmpIndex = etl::size_t {_index};
+        auto tmpIndex = etl::size_t{_index};
         _data.construct(in_place_type<first_type>, tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -309,7 +309,7 @@ public:
     template <typename T>
     explicit variant(T&& t)
     {
-        auto tmpIndex = size_t {_index};
+        auto tmpIndex = size_t{_index};
         _data.construct(forward<T>(t), tmpIndex);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -329,7 +329,7 @@ public:
         requires(etl::is_constructible_v<T, Args...>)
     constexpr explicit variant(etl::in_place_type_t<T> tag, Args&&... args)
     {
-        auto tmpIndex = etl::size_t {_index};
+        auto tmpIndex = etl::size_t{_index};
         _data.construct(tag, tmpIndex, forward<Args>(args)...);
         _index = static_cast<internal_size_t>(tmpIndex);
     }
@@ -363,7 +363,9 @@ public:
     constexpr auto operator=(variant const& rhs) -> variant&
     {
         // Self assignment
-        if (this == &rhs) { return *this; }
+        if (this == &rhs) {
+            return *this;
+        }
 
         // Same type
         if (index() and rhs.index()) {
@@ -376,7 +378,7 @@ public:
 
     template <typename T>
         requires(not etl::is_same_v<etl::remove_cvref_t<T>, variant>
-                    and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Ts>) == 1)
+                 and (0 + ... + etl::is_same_v<etl::remove_cvref_t<T>, Ts>) == 1)
     constexpr auto operator=(T&& rhs) -> variant&
     {
         auto v = variant(etl::in_place_type<T>, etl::forward<T>(rhs));
@@ -403,21 +405,24 @@ public:
     [[nodiscard]] constexpr auto valueless_by_exception() const noexcept -> bool { return false; }
 
     /// \brief Swaps two variant objects.
-    constexpr auto swap(variant& rhs)
-        noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
+    constexpr auto swap(variant& rhs
+    ) noexcept(((is_nothrow_move_constructible_v<Ts> && is_nothrow_swappable_v<Ts>) && ...)) -> void
     {
-        if (index() == rhs.index()) { return detail::variant_swap_table<variant, Ts...>[index()](*this, rhs); }
+        if (index() == rhs.index()) {
+            return detail::variant_swap_table<variant, Ts...>[index()](*this, rhs);
+        }
         etl::swap(_data, rhs._data);
         etl::swap(_index, rhs._index);
     }
 
     /// \todo Remove & replace with friendship for get_if.
     [[nodiscard]] auto _impl() const noexcept { return &_data; } // NOLINT
-    auto _impl() noexcept { return &_data; }                     // NOLINT
+
+    auto _impl() noexcept { return &_data; } // NOLINT
 
 private:
     detail::variant_storage_for<Ts...> _data;
-    internal_size_t _index {0};
+    internal_size_t _index{0};
 };
 
 /// \brief Overloads the swap algorithm for variant. Effectively calls
@@ -441,7 +446,9 @@ template <typename... Ts>
 constexpr auto operator==(variant<Ts...> const& lhs, variant<Ts...> const& rhs) -> bool
 {
     auto const i = lhs.index();
-    if (i != rhs.index()) { return false; }
+    if (i != rhs.index()) {
+        return false;
+    }
     return detail::variant_compare_table<equal_to<>, variant<Ts...>, Ts...>[i](lhs, rhs);
 }
 
@@ -468,8 +475,12 @@ constexpr auto operator<(variant<Ts...> const& lhs, variant<Ts...> const& rhs) -
     // if (lhs.valueless_by_exception()) { return true; }
 
     auto const i = lhs.index();
-    if (i < rhs.index()) { return true; }
-    if (i > rhs.index()) { return false; }
+    if (i < rhs.index()) {
+        return true;
+    }
+    if (i > rhs.index()) {
+        return false;
+    }
 
     using var_t = variant<Ts...>;
     using cmp_t = less<>;
@@ -489,8 +500,12 @@ constexpr auto operator<=(variant<Ts...> const& lhs, variant<Ts...> const& rhs) 
     // if (rhs.valueless_by_exception()) { return false; }
 
     auto const i = lhs.index();
-    if (i < rhs.index()) { return true; }
-    if (i > rhs.index()) { return false; }
+    if (i < rhs.index()) {
+        return true;
+    }
+    if (i > rhs.index()) {
+        return false;
+    }
 
     using var_t = variant<Ts...>;
     using cmp_t = less<>;
@@ -510,8 +525,12 @@ constexpr auto operator>(variant<Ts...> const& lhs, variant<Ts...> const& rhs) -
     // if (rhs.valueless_by_exception()) { return true; }
 
     auto const i = lhs.index();
-    if (i > rhs.index()) { return true; }
-    if (i < rhs.index()) { return false; }
+    if (i > rhs.index()) {
+        return true;
+    }
+    if (i < rhs.index()) {
+        return false;
+    }
 
     using var_t = variant<Ts...>;
     using cmp_t = less<>;
@@ -531,8 +550,12 @@ constexpr auto operator>=(variant<Ts...> const& lhs, variant<Ts...> const& rhs) 
     // if (rhs.valueless_by_exception()) { return true; }
 
     auto const i = lhs.index();
-    if (i > rhs.index()) { return true; }
-    if (i < rhs.index()) { return false; }
+    if (i > rhs.index()) {
+        return true;
+    }
+    if (i < rhs.index()) {
+        return false;
+    }
 
     using var_t = variant<Ts...>;
     using cmp_t = less<>;
@@ -564,8 +587,8 @@ constexpr auto get_if(variant<Ts...>* pv) noexcept -> add_pointer_t<variant_alte
 /// pointed to by pv. Otherwise, returns a null pointer value. The call is
 /// ill-formed if I is not a valid index in the variant.
 template <size_t I, typename... Ts>
-constexpr auto get_if(
-    variant<Ts...> const* pv) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
+constexpr auto get_if(variant<Ts...> const* pv
+) noexcept -> add_pointer_t<variant_alternative_t<I, variant<Ts...>> const>
 {
     using alternative_t = variant_alternative_t<I, variant<Ts...>>;
     return get_if<alternative_t>(pv);
@@ -578,7 +601,9 @@ constexpr auto get_if(variant<Ts...>* v) noexcept -> add_pointer_t<T>
 {
     using idx  = decltype((*v)._impl()->get_index(declval<T>()));
     using ic_t = integral_constant<size_t, idx::value>;
-    if (holds_alternative<T>(*v)) { return &(v->_impl()->get_value(ic_t {})); }
+    if (holds_alternative<T>(*v)) {
+        return &(v->_impl()->get_value(ic_t{}));
+    }
     return nullptr;
 }
 
@@ -589,7 +614,9 @@ constexpr auto get_if(variant<Ts...> const* v) noexcept -> add_pointer_t<T const
 {
     using idx  = decltype((*v)._impl()->get_index(declval<T const>()));
     using ic_t = integral_constant<size_t, idx::value>;
-    if (holds_alternative<T>(*v)) { return &(v->_impl()->get_value(ic_t {})); }
+    if (holds_alternative<T>(*v)) {
+        return &(v->_impl()->get_value(ic_t{}));
+    }
     return nullptr;
 }
 
@@ -604,7 +631,9 @@ template <size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>& v) -> variant_alternative_t<I, variant<Ts...>>&
 {
     static_assert(I < sizeof...(Ts));
-    if (v.index() == I) { return *get_if<I>(&v); }
+    if (v.index() == I) {
+        return *get_if<I>(&v);
+    }
     raise<bad_variant_access>("");
 }
 
@@ -619,7 +648,9 @@ template <size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> variant_alternative_t<I, variant<Ts...>>&&
 {
     static_assert(I < sizeof...(Ts));
-    if (v.index() == I) { return move(*get_if<I>(&v)); }
+    if (v.index() == I) {
+        return move(*get_if<I>(&v));
+    }
     raise<bad_variant_access>("");
 }
 
@@ -634,7 +665,9 @@ template <size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> variant_alternative_t<I, variant<Ts...>> const&
 {
     static_assert(I < sizeof...(Ts));
-    if (v.index() == I) { return *get_if<I>(&v); }
+    if (v.index() == I) {
+        return *get_if<I>(&v);
+    }
     raise<bad_variant_access>("");
 }
 
@@ -649,7 +682,9 @@ template <size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> variant_alternative_t<I, variant<Ts...>> const&&
 {
     static_assert(I < sizeof...(Ts));
-    if (v.index() == I) { return move(*get_if<I>(&v)); }
+    if (v.index() == I) {
+        return move(*get_if<I>(&v));
+    }
     raise<bad_variant_access>("");
 }
 
@@ -663,7 +698,9 @@ template <size_t I, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>& v) -> T&
 {
-    if (holds_alternative<T>(v)) { return *get_if<T>(&v); }
+    if (holds_alternative<T>(v)) {
+        return *get_if<T>(&v);
+    }
     raise<bad_variant_access>("");
 }
 
@@ -677,7 +714,9 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...>&& v) -> T&&
 {
-    if (holds_alternative<T>(v)) { return move(*get_if<T>(&v)); }
+    if (holds_alternative<T>(v)) {
+        return move(*get_if<T>(&v));
+    }
     raise<bad_variant_access>("");
 }
 
@@ -691,7 +730,9 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const& v) -> T const&
 {
-    if (holds_alternative<T>(v)) { return *get_if<T>(&v); }
+    if (holds_alternative<T>(v)) {
+        return *get_if<T>(&v);
+    }
     raise<bad_variant_access>("");
 }
 
@@ -705,7 +746,9 @@ template <typename T, typename... Ts>
 template <typename T, typename... Ts>
 [[nodiscard]] constexpr auto get(variant<Ts...> const&& v) -> T const&&
 {
-    if (holds_alternative<T>(v)) { return move(*get_if<T>(&v)); }
+    if (holds_alternative<T>(v)) {
+        return move(*get_if<T>(&v));
+    }
     raise<bad_variant_access>("");
 }
 

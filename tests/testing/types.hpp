@@ -3,11 +3,26 @@
 #ifndef TETL_TEST_TYPE_TRAITS_TYPES_HPP
 #define TETL_TEST_TYPE_TRAITS_TYPES_HPP
 
-enum Enum { efoo, ebar, ebaz };
-enum EnumWithType : long { ewt1, ewt2 };
+enum Enum {
+    efoo,
+    ebar,
+    ebaz
+};
 
-enum struct ScopedEnum { foo, bar, baz };
-enum struct ScopedEnumWithType : long { v1, v2 };
+enum EnumWithType : long {
+    ewt1,
+    ewt2
+};
+
+enum struct ScopedEnum {
+    foo,
+    bar,
+    baz
+};
+enum struct ScopedEnumWithType : long {
+    v1,
+    v2
+};
 
 struct EmptyClass { };
 
@@ -68,7 +83,7 @@ struct TriviallyConstructable {
 };
 
 struct NonTriviallyConstructable {
-    NonTriviallyConstructable(int& n) : ref {n} { }
+    NonTriviallyConstructable(int& n) : ref{n} { }
 
     int& ref; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 };

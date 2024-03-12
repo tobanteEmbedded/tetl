@@ -18,7 +18,9 @@ template <typename ForwardIt, typename Predicate>
 
     if (first != last) {
         for (auto i = first; ++i != last;) {
-            if (!pred(*i)) { *first++ = move(*i); }
+            if (!pred(*i)) {
+                *first++ = move(*i);
+            }
         }
     }
 

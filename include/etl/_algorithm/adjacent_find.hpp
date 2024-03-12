@@ -21,13 +21,17 @@ namespace etl {
 template <typename ForwardIt, typename Predicate>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     auto next = first;
     ++next;
 
     for (; next != last; ++next, (void)++first) {
-        if (pred(*first, *next)) { return first; }
+        if (pred(*first, *next)) {
+            return first;
+        }
     }
 
     return last;
@@ -36,7 +40,7 @@ template <typename ForwardIt, typename Predicate>
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto adjacent_find(ForwardIt first, ForwardIt last) -> ForwardIt
 {
-    return adjacent_find(first, last, equal_to {});
+    return adjacent_find(first, last, equal_to{});
 }
 
 /// @}

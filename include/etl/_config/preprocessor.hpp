@@ -24,14 +24,14 @@
 #endif
 
 #define TETL_PP_EMPTY()
-#define TETL_PP_DEFER(id) id TETL_PP_EMPTY()
+#define TETL_PP_DEFER(id)   id TETL_PP_EMPTY()
 #define TETL_PP_EXPAND(...) __VA_ARGS__
 
 #define TETL_PP_STRINGIFY_IMPL(str) #str
-#define TETL_PP_STRINGIFY(str) TETL_PP_STRINGIFY_IMPL(str)
+#define TETL_PP_STRINGIFY(str)      TETL_PP_STRINGIFY_IMPL(str)
 
 #define TETL_PP_CONCAT_IMPL(s1, s2) s1##s2
-#define TETL_PP_CONCAT(s1, s2) TETL_PP_CONCAT_IMPL(s1, s2)
+#define TETL_PP_CONCAT(s1, s2)      TETL_PP_CONCAT_IMPL(s1, s2)
 
 #ifdef __COUNTER__
     #define TETL_PP_UNIQUE_NAME(name) TETL_PP_CONCAT(name, __COUNTER__)
@@ -61,7 +61,7 @@
 
 // clang-format on
 
-#define TETL_PP_COMMA(X) X,
+#define TETL_PP_COMMA(X)           X,
 #define TETL_PP_COMMA_STRINGIFY(X) TETL_PP_COMMA(TETL_PP_STRINGIFY(X))
 
 #define TETL_PP_STRING_VIEW_ARRAY(var_name, ...)                                                                       \

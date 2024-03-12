@@ -18,7 +18,9 @@ namespace etl {
 template <typename BidirIt1, typename BidirIt2>
 constexpr auto copy_backward(BidirIt1 first, BidirIt1 last, BidirIt2 dLast) -> BidirIt2
 {
-    while (first != last) { *(--dLast) = *(--last); }
+    while (first != last) {
+        *(--dLast) = *(--last);
+    }
     return dLast;
 }
 

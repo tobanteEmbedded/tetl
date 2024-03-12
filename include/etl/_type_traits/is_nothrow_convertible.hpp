@@ -23,6 +23,7 @@ template <typename From, typename To>
         { declval<void(&)(To) noexcept>()(declval<From>()) } noexcept;
     }
 struct is_nothrow_convertible<From, To> : true_type {};
+
 // clang-format on
 
 template <typename From, typename To>

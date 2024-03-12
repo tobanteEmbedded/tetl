@@ -15,7 +15,7 @@ struct nullopt_t {
 
 /// \brief etl::nullopt is a constant of type etl::nullopt_t that is used to
 /// indicate optional type with uninitialized state.
-inline constexpr auto nullopt = etl::nullopt_t {{}};
+inline constexpr auto nullopt = etl::nullopt_t{{}};
 
 } // namespace etl
 

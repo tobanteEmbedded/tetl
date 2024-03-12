@@ -29,7 +29,7 @@ struct coroutine_handle<void> {
 
     [[nodiscard]] static constexpr auto from_address(void* addr) noexcept -> coroutine_handle
     {
-        auto self    = coroutine_handle {};
+        auto self    = coroutine_handle{};
         self._handle = addr;
         return self;
     }
@@ -45,7 +45,7 @@ struct coroutine_handle<void> {
     auto destroy() const -> void { __builtin_coro_destroy(_handle); }
 
 protected:
-    void* _handle {nullptr};
+    void* _handle{nullptr};
 };
 
 template <typename T>

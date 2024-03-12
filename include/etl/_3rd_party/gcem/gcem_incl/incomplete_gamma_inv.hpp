@@ -50,9 +50,11 @@ constexpr auto incomplete_gamma_inv_t_val_2(T const a) noexcept -> T
 template <typename T>
 constexpr auto incomplete_gamma_inv_initial_val_1_int_begin(T const tVal) noexcept -> T
 { // internal for a > 1.0
-    return (tVal
-            - (T(2.515517L) + T(0.802853L) * tVal + T(0.010328L) * tVal * tVal)
-                  / (T(1) + T(1.432788L) * tVal + T(0.189269L) * tVal * tVal + T(0.001308L) * tVal * tVal * tVal));
+    return (
+        tVal
+        - (T(2.515517L) + T(0.802853L) * tVal + T(0.010328L) * tVal * tVal)
+              / (T(1) + T(1.432788L) * tVal + T(0.189269L) * tVal * tVal + T(0.001308L) * tVal * tVal * tVal)
+    );
 }
 
 template <typename T>
@@ -69,12 +71,14 @@ constexpr auto incomplete_gamma_inv_initial_val_1(T const a, T const tVal, T con
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_initial_val_2(T const a, T const p, T const tVal) noexcept -> T
-{                      // a <= 1.0
-    return (p < tVal ? // if
-                pow(p / tVal, T(1) / a)
-                     :
-                     // else
-                T(1) - log(T(1) - (p - tVal) / (T(1) - tVal)));
+{ // a <= 1.0
+    return (
+        p < tVal ? // if
+            pow(p / tVal, T(1) / a)
+                 :
+                 // else
+            T(1) - log(T(1) - (p - tVal) / (T(1) - tVal))
+    );
 }
 
 // initial value
@@ -82,11 +86,13 @@ constexpr auto incomplete_gamma_inv_initial_val_2(T const a, T const p, T const 
 template <typename T>
 constexpr auto incomplete_gamma_inv_initial_val(T const a, T const p) noexcept -> T
 {
-    return (a > T(1) ? // if
-                incomplete_gamma_inv_initial_val_1(a, incomplete_gamma_inv_t_val_1(p), p > T(0.5) ? T(-1) : T(1))
-                     :
-                     // else
-                incomplete_gamma_inv_initial_val_2(a, p, incomplete_gamma_inv_t_val_2(a)));
+    return (
+        a > T(1) ? // if
+            incomplete_gamma_inv_initial_val_1(a, incomplete_gamma_inv_t_val_1(p), p > T(0.5) ? T(-1) : T(1))
+                 :
+                 // else
+            incomplete_gamma_inv_initial_val_2(a, p, incomplete_gamma_inv_t_val_2(a))
+    );
 }
 
 //
@@ -130,27 +136,54 @@ constexpr auto incomplete_gamma_inv_halley(T const ratioVal1, T const ratioVal2)
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_recur(
-    T const value, T const a, T const p, T const deriv1, T const lgVal, int const iterCount) noexcept -> T
+    T const value,
+    T const a,
+    T const p,
+    T const deriv1,
+    T const lgVal,
+    int const iterCount
+) noexcept -> T
 {
-    return incomplete_gamma_inv_decision(value, a, p,
+    return incomplete_gamma_inv_decision(
+        value,
+        a,
+        p,
         incomplete_gamma_inv_halley(
-            incomplete_gamma_inv_ratio_val_1(value, a, p, deriv1), incomplete_gamma_inv_ratio_val_2(value, a, deriv1)),
-        lgVal, iterCount);
+            incomplete_gamma_inv_ratio_val_1(value, a, p, deriv1),
+            incomplete_gamma_inv_ratio_val_2(value, a, deriv1)
+        ),
+        lgVal,
+        iterCount
+    );
 }
 
 template <typename T>
 constexpr auto incomplete_gamma_inv_decision(
-    T const value, T const a, T const p, T const direc, T const lgVal, int const iterCount) noexcept -> T
+    T const value,
+    T const a,
+    T const p,
+    T const direc,
+    T const lgVal,
+    int const iterCount
+) noexcept -> T
 {
     // return( abs(direc) > GCEM_INCML_GAMMA_INV_TOL ?
     // incomplete_gamma_inv_recur(value - direc, a, p,
     // incomplete_gamma_inv_deriv_1(value,a,lg_val), lg_val) : value - direc );
-    return (iterCount <= GCEM_INCML_GAMMA_INV_MAX_ITER ? // if
-                incomplete_gamma_inv_recur(
-                    value - direc, a, p, incomplete_gamma_inv_deriv_1(value, a, lgVal), lgVal, iterCount + 1)
-                                                       :
-                                                       // else
-                value - direc);
+    return (
+        iterCount <= GCEM_INCML_GAMMA_INV_MAX_ITER ? // if
+            incomplete_gamma_inv_recur(
+                value - direc,
+                a,
+                p,
+                incomplete_gamma_inv_deriv_1(value, a, lgVal),
+                lgVal,
+                iterCount + 1
+            )
+                                                   :
+                                                   // else
+            value - direc
+    );
 }
 
 template <typename T>
@@ -173,7 +206,8 @@ constexpr auto incomplete_gamma_inv_check(T const a, T const p) noexcept -> T
             etl::numeric_limits<T>::epsilon() > a ? T(0)
                                                   :
                                                   // else
-            incomplete_gamma_inv_begin(incomplete_gamma_inv_initial_val(a, p), a, p, lgamma(a)));
+            incomplete_gamma_inv_begin(incomplete_gamma_inv_initial_val(a, p), a, p, lgamma(a))
+    );
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>

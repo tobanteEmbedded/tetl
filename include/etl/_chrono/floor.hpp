@@ -14,11 +14,13 @@ namespace etl::chrono {
 /// resolution unless ToDuration is an instance of etl::chrono::duration.
 template <typename To, typename Rep, typename Period>
     requires(detail::is_duration_v<To>)
-[[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d)
-    noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
+[[nodiscard]] constexpr auto floor(duration<Rep, Period> const& d
+) noexcept(is_arithmetic_v<Rep> and is_arithmetic_v<typename To::rep>) -> To
 {
-    auto const t {duration_cast<To>(d)};
-    if (t > d) { return To(t.count() - static_cast<typename To::rep>(1)); }
+    auto const t{duration_cast<To>(d)};
+    if (t > d) {
+        return To(t.count() - static_cast<typename To::rep>(1));
+    }
     return t;
 }
 

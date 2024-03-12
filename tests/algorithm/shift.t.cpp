@@ -14,7 +14,7 @@ constexpr auto test() -> bool
 {
 
     {
-        auto d = etl::array {T(1), T(2), T(3), T(4), T(5), T(6)};
+        auto d = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
         etl::shift_left(begin(d), end(d), 2);
         assert(d[0] == T(3));
         assert(d[1] == T(4));
@@ -23,7 +23,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto const src = etl::array {T(0), T(1), T(2), T(3)};
+        auto const src = etl::array{T(0), T(1), T(2), T(3)};
 
         auto t0 = src;
         etl::shift_right(begin(t0), end(t0), -1);

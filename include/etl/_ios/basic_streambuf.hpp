@@ -20,6 +20,7 @@ public:
     using traits_type = Traits;
     using int_type    = typename Traits::int_type;
     using off_type    = typename Traits::off_type;
+
     // using pos_type    = typename Traits::pos_type;
 
     auto pubsetbuf(char_type* str, streamsize n) -> basic_streambuf* { return self().setbuf(str, n); }
@@ -45,6 +46,7 @@ protected:
 
 private:
     [[nodiscard]] auto self() -> Child& { return static_cast<Child&>(*this); }
+
     [[nodiscard]] auto self() const -> Child const& { return static_cast<Child const&>(*this); }
 };
 

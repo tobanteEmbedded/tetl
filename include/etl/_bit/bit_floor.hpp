@@ -21,7 +21,9 @@ namespace etl {
 template <detail::bit_uint UInt>
 [[nodiscard]] constexpr auto bit_floor(UInt x) noexcept -> UInt
 {
-    if (x != 0) { return UInt(1) << (static_cast<UInt>(etl::bit_width(x)) - UInt(1)); }
+    if (x != 0) {
+        return UInt(1) << (static_cast<UInt>(etl::bit_width(x)) - UInt(1));
+    }
     return 0;
 }
 } // namespace etl

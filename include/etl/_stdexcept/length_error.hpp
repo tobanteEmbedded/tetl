@@ -9,7 +9,8 @@ namespace etl {
 
 struct length_error : logic_error {
     constexpr length_error() = default;
-    constexpr explicit length_error(char const* what) : logic_error {what} { }
+
+    constexpr explicit length_error(char const* what) : logic_error{what} { }
 };
 
 } // namespace etl

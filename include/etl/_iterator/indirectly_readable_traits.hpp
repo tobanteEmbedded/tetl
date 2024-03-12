@@ -56,8 +56,7 @@ template <detail::has_member_value_type T>
 struct indirectly_readable_traits<T> { };
 
 template <detail::has_member_value_type T>
-    requires(detail::has_member_element_type<T>
-             and etl::same_as<etl::remove_cv_t<typename T::element_type>, etl::remove_cv_t<typename T::value_type>>)
+    requires(detail::has_member_element_type<T> and etl::same_as<etl::remove_cv_t<typename T::element_type>, etl::remove_cv_t<typename T::value_type>>)
 struct indirectly_readable_traits<T> : detail::maybe_value_type<typename T::value_type> { };
 
 } // namespace etl

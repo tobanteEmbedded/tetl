@@ -23,7 +23,9 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/tolower
 [[nodiscard]] constexpr auto tolower(int ch) noexcept -> int
 {
-    if (isupper(ch) != 0) { return static_cast<int>(ch + 32); }
+    if (isupper(ch) != 0) {
+        return static_cast<int>(ch + 32);
+    }
     return static_cast<int>(ch);
 }
 } // namespace etl

@@ -19,7 +19,7 @@ template <typename T>
 template <typename Float>
 [[nodiscard]] constexpr auto imag(Float /*f*/) noexcept -> enable_if_t<is_floating_point_v<Float>, Float>
 {
-    return Float {};
+    return Float{};
 }
 
 template <typename Integer>

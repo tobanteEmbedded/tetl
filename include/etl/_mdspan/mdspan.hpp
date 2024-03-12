@@ -25,7 +25,10 @@
 
 namespace etl {
 
-template <typename ElementType, typename Extents, typename LayoutPolicy = layout_right,
+template <
+    typename ElementType,
+    typename Extents,
+    typename LayoutPolicy   = layout_right,
     typename AccessorPolicy = default_accessor<ElementType>>
 struct mdspan {
     using extents_type     = Extents;
@@ -41,11 +44,14 @@ struct mdspan {
     using reference        = typename accessor_type::reference;
 
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return extents_type::rank(); }
+
     [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return extents_type::rank_dynamic(); }
+
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return extents_type::static_extent(r);
     }
+
     [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
     // clang-format off
@@ -81,20 +87,24 @@ struct mdspan {
     // Constructor (5)
     constexpr mdspan(data_handle_type ptr, extents_type const& ext)
         requires(is_constructible_v<mapping_type, mapping_type const&> and is_default_constructible_v<accessor_type>)
-        : _map(ext), _ptr(move(ptr))
+        : _map(ext)
+        , _ptr(move(ptr))
     {
     }
 
     // Constructor (6)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m)
         requires(is_default_constructible_v<accessor_type>)
-        : _map(m), _ptr(move(ptr))
+        : _map(m)
+        , _ptr(move(ptr))
     {
     }
 
     // Constructor (7)
     constexpr mdspan(data_handle_type ptr, mapping_type const& m, accessor_type const& a)
-        : _acc(a), _map(m), _ptr(move(ptr))
+        : _acc(a)
+        , _map(m)
+        , _ptr(move(ptr))
     {
     }
 
@@ -132,20 +142,28 @@ struct mdspan {
         return detail::fwd_prod_of_extents(extents(), rank());
     }
 
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type {}; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{}; }
 
     [[nodiscard]] constexpr auto extents() const noexcept -> extents_type const& { return _map.extents(); }
+
     [[nodiscard]] constexpr auto data_handle() const noexcept -> data_handle_type const& { return _ptr; }
+
     [[nodiscard]] constexpr auto mapping() const noexcept -> mapping_type const& { return _map; }
+
     [[nodiscard]] constexpr auto accessor() const noexcept -> accessor_type const& { return _acc; }
 
     [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
+
     [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
+
     [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
+
     [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
+
     [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+
     [[nodiscard]] constexpr auto stride(rank_type r) const -> index_type { return _map.stride(r); }
 
 private:
@@ -167,17 +185,20 @@ template <typename ElementType, typename... Integrals>
 explicit mdspan(ElementType*, Integrals...) -> mdspan<ElementType, dextents<size_t, sizeof...(Integrals)>>;
 
 template <typename ElementType, typename IndexType, size_t... ExtentsPack>
-mdspan(
-    ElementType*, extents<IndexType, ExtentsPack...> const&) -> mdspan<ElementType, extents<IndexType, ExtentsPack...>>;
+mdspan(ElementType*, extents<IndexType, ExtentsPack...> const&)
+    -> mdspan<ElementType, extents<IndexType, ExtentsPack...>>;
 
 template <typename ElementType, typename MappingType>
-mdspan(ElementType*,
-    MappingType const&) -> mdspan<ElementType, typename MappingType::extents_type, typename MappingType::layout_type>;
+mdspan(ElementType*, MappingType const&)
+    -> mdspan<ElementType, typename MappingType::extents_type, typename MappingType::layout_type>;
 
 template <typename MappingType, typename AccessorType>
-mdspan(typename AccessorType::data_handle_type const&, MappingType const&,
-    AccessorType const&) -> mdspan<typename AccessorType::element_type, typename MappingType::extents_type,
-                             typename MappingType::layout_type, AccessorType>;
+mdspan(typename AccessorType::data_handle_type const&, MappingType const&, AccessorType const&)
+    -> mdspan<
+        typename AccessorType::element_type,
+        typename MappingType::extents_type,
+        typename MappingType::layout_type,
+        AccessorType>;
 
 } // namespace etl
 

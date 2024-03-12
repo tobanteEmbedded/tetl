@@ -49,28 +49,31 @@ constexpr auto atan_series_order(T const x, T const xPow, uint_t const order, ui
             ? atan_series_order_calc(x, xPow, order) + atan_series_order(x, xPow * x * x, order + 1, maxOrder)
             :
             // order == max_order
-            atan_series_order_calc(x, xPow, order));
+            atan_series_order_calc(x, xPow, order)
+    );
 }
 
 template <typename T>
 constexpr auto atan_series_main(T const x) noexcept -> T
 {
-    return static_cast<T>(x < T(3) ? atan_series_order(x, x, 1U, 10U) : // O(1/x^39)
-                              x < T(4) ? atan_series_order(x, x, 1U, 9U)
-                                       : // O(1/x^35)
-                              x < T(5) ? atan_series_order(x, x, 1U, 8U)
-                                       : // O(1/x^31)
-                              x < T(7) ? atan_series_order(x, x, 1U, 7U)
-                                       : // O(1/x^27)
-                              x < T(11) ? atan_series_order(x, x, 1U, 6U)
-                                        : // O(1/x^23)
-                              x < T(25) ? atan_series_order(x, x, 1U, 5U)
-                                        : // O(1/x^19)
-                              x < T(100) ? atan_series_order(x, x, 1U, 4U)
-                                         : // O(1/x^15)
-                              x < T(1000) ? atan_series_order(x, x, 1U, 3U)
-                                          :                     // O(1/x^11)
-                              atan_series_order(x, x, 1U, 2U)); // O(1/x^7)
+    return static_cast<T>(
+        x < T(3) ? atan_series_order(x, x, 1U, 10U) : // O(1/x^39)
+            x < T(4) ? atan_series_order(x, x, 1U, 9U)
+                     : // O(1/x^35)
+            x < T(5) ? atan_series_order(x, x, 1U, 8U)
+                     : // O(1/x^31)
+            x < T(7) ? atan_series_order(x, x, 1U, 7U)
+                     : // O(1/x^27)
+            x < T(11) ? atan_series_order(x, x, 1U, 6U)
+                      : // O(1/x^23)
+            x < T(25) ? atan_series_order(x, x, 1U, 5U)
+                      : // O(1/x^19)
+            x < T(100) ? atan_series_order(x, x, 1U, 4U)
+                       : // O(1/x^15)
+            x < T(1000) ? atan_series_order(x, x, 1U, 3U)
+                        : // O(1/x^11)
+            atan_series_order(x, x, 1U, 2U)
+    ); // O(1/x^7)
 }
 
 // CF
@@ -78,21 +81,25 @@ constexpr auto atan_series_main(T const x) noexcept -> T
 template <typename T>
 constexpr auto atan_cf_recur(T const xx, uint_t const depth, uint_t const maxDepth) noexcept -> T
 {
-    return (depth < maxDepth ? // if
-                T(2 * depth - 1) + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
-                             :
-                             // else
-                T(2 * depth - 1));
+    return (
+        depth < maxDepth ? // if
+            T(2 * depth - 1) + depth * depth * xx / atan_cf_recur(xx, depth + 1, maxDepth)
+                         :
+                         // else
+            T(2 * depth - 1)
+    );
 }
 
 template <typename T>
 constexpr auto atan_cf_main(T const x) noexcept -> T
 {
-    return (x < T(0.5)   ? x / atan_cf_recur(x * x, 1U, 15U)
-            : x < T(1)   ? x / atan_cf_recur(x * x, 1U, 25U)
-            : x < T(1.5) ? x / atan_cf_recur(x * x, 1U, 35U)
-            : x < T(2)   ? x / atan_cf_recur(x * x, 1U, 45U)
-                         : x / atan_cf_recur(x * x, 1U, 52U));
+    return (
+        x < T(0.5)   ? x / atan_cf_recur(x * x, 1U, 15U)
+        : x < T(1)   ? x / atan_cf_recur(x * x, 1U, 25U)
+        : x < T(1.5) ? x / atan_cf_recur(x * x, 1U, 35U)
+        : x < T(2)   ? x / atan_cf_recur(x * x, 1U, 45U)
+                     : x / atan_cf_recur(x * x, 1U, 52U)
+    );
 }
 
 //
@@ -113,7 +120,8 @@ constexpr auto atan_check(T const x) noexcept -> T
                                                        :
                                                        // negative or positive
             x < T(0) ? -atan_begin(-x)
-                     : atan_begin(x));
+                     : atan_begin(x)
+    );
 }
 
 } // namespace internal

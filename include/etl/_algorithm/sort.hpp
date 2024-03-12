@@ -20,7 +20,7 @@ constexpr auto sort(RandomIt first, RandomIt last, Compare comp) -> void
 template <typename RandomIt>
 constexpr auto sort(RandomIt first, RandomIt last) -> void
 {
-    sort(first, last, less {});
+    sort(first, last, less{});
 }
 
 } // namespace etl

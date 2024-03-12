@@ -18,7 +18,7 @@ struct ignore_t {
 /// \brief An object of unspecified type such that any value can be assigned to
 /// it with no effect. Intended for use with etl::tie when unpacking a
 /// etl::tuple, as a placeholder for the arguments that are not used.
-inline constexpr auto ignore = detail::ignore_t {};
+inline constexpr auto ignore = detail::ignore_t{};
 
 } // namespace etl
 

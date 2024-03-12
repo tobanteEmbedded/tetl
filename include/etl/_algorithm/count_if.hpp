@@ -26,9 +26,11 @@ template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto count_if(InputIt first, InputIt last, Predicate p) ->
     typename iterator_traits<InputIt>::difference_type
 {
-    auto result = typename iterator_traits<InputIt>::difference_type {0};
+    auto result = typename iterator_traits<InputIt>::difference_type{0};
     for (; first != last; ++first) {
-        if (p(*first)) { ++result; }
+        if (p(*first)) {
+            ++result;
+        }
     }
     return result;
 }

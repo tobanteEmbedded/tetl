@@ -9,7 +9,9 @@ namespace etl {
 template <typename ForwardIt, typename T>
 constexpr auto fill(ForwardIt first, ForwardIt last, T const& value) -> void
 {
-    for (; first != last; ++first) { *first = value; }
+    for (; first != last; ++first) {
+        *first = value;
+    }
 }
 
 } // namespace etl

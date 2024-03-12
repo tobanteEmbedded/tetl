@@ -21,14 +21,14 @@ auto test() -> bool
 
     {
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
-        auto ptr    = ptr_t {};
+        auto ptr    = ptr_t{};
         etl::ignore_unused(ptr);
         assert(true);
     }
 
     {
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
-        assert(ptr_t {nullptr}.compressed_value() == 0U);
+        assert(ptr_t{nullptr}.compressed_value() == 0U);
     }
 
     {
@@ -53,7 +53,7 @@ auto test() -> bool
     {
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto val    = T(1.43);
-        auto ptr    = ptr_t {&val};
+        auto ptr    = ptr_t{&val};
         assert(ptr.get() == &val);
     }
 
@@ -61,7 +61,7 @@ auto test() -> bool
     {
         using ptr_t    = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const val = T(1.43);
-        auto const ptr = ptr_t {&val};
+        auto const ptr = ptr_t{&val};
         assert(ptr.get() == &val);
     }
 
@@ -69,7 +69,7 @@ auto test() -> bool
     {
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
         auto val    = T(1.43);
-        auto ptr    = ptr_t {&val};
+        auto ptr    = ptr_t{&val};
         assert(*ptr == val);
     }
 
@@ -77,7 +77,7 @@ auto test() -> bool
     {
         using ptr_t    = etl::small_ptr<T const, 0, etl::uintptr_t>;
         auto const val = T(1.43);
-        auto const ptr = ptr_t {&val};
+        auto const ptr = ptr_t{&val};
         assert(*ptr == val);
     }
 
@@ -85,7 +85,7 @@ auto test() -> bool
         using ptr_t = etl::small_ptr<T, 0, etl::uintptr_t>;
 
         auto val  = T(1.43);
-        auto ptr  = ptr_t {&val};
+        auto ptr  = ptr_t{&val};
         auto func = [t = val](T* p) { assert(*p == t); };
         func(ptr);
     }
@@ -94,56 +94,56 @@ auto test() -> bool
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
 
         auto const val = T(1.43);
-        auto const ptr = ptr_t {&val};
+        auto const ptr = ptr_t{&val};
         auto func      = [t = val](T const* p) { assert(*p == t); };
         func(ptr);
     }
 
     {
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
-        auto data   = etl::array<T, 4> {};
-        assert(ptr_t {&data[1]} - ptr_t {&data[0]} == 1);
-        assert(ptr_t {&data[2]} - ptr_t {&data[0]} == 2);
-        assert(ptr_t {&data[3]} - ptr_t {&data[0]} == 3);
+        auto data   = etl::array<T, 4>{};
+        assert(ptr_t{&data[1]} - ptr_t{&data[0]} == 1);
+        assert(ptr_t{&data[2]} - ptr_t{&data[0]} == 2);
+        assert(ptr_t{&data[3]} - ptr_t{&data[0]} == 3);
     }
 
     // pre
     {
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
-        auto const data = etl::array<T, 4> {};
-        auto ptr        = ptr_t {&data[1]};
+        auto const data = etl::array<T, 4>{};
+        auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((--ptr).get() == ptr_t {&data[0]}.get());
+        assert((--ptr).get() == ptr_t{&data[0]}.get());
     }
 
     // post
     {
         using ptr_t = etl::small_ptr<T const, 0, etl::uintptr_t>;
 
-        auto const data = etl::array<T, 4> {};
-        auto ptr        = ptr_t {&data[1]};
+        auto const data = etl::array<T, 4>{};
+        auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((ptr--).get() == ptr_t {&data[1]}.get());
-        assert(ptr.get() == ptr_t {&data[0]}.get());
+        assert((ptr--).get() == ptr_t{&data[1]}.get());
+        assert(ptr.get() == ptr_t{&data[0]}.get());
     }
 
     // pre
     {
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
-        auto const data = etl::array<T, 4> {};
-        auto ptr        = ptr_t {&data[1]};
+        auto const data = etl::array<T, 4>{};
+        auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((++ptr).get() == ptr_t {&data[2]}.get());
+        assert((++ptr).get() == ptr_t{&data[2]}.get());
     }
 
     // post
     {
         using ptr_t     = etl::small_ptr<T const, 0, etl::uintptr_t>;
-        auto const data = etl::array<T, 4> {};
-        auto ptr        = ptr_t {&data[1]};
+        auto const data = etl::array<T, 4>{};
+        auto ptr        = ptr_t{&data[1]};
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        assert((ptr++).get() == ptr_t {&data[1]}.get());
-        assert(ptr.get() == ptr_t {&data[2]}.get());
+        assert((ptr++).get() == ptr_t{&data[1]}.get());
+        assert(ptr.get() == ptr_t{&data[2]}.get());
     }
 
     return true;

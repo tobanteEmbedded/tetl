@@ -19,7 +19,7 @@ using diff_t = typename etl::iterator_traits<etl::remove_cvref_t<Iter>>::differe
 template <typename OutputIt, typename... Args>
 auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> OutputIt
 {
-    auto ctx = format_context {out};
+    auto ctx = format_context{out};
 
     // Format leading text before the first argument.
     auto const slices = detail::split_at_next_argument(fmt);
@@ -30,19 +30,17 @@ auto format_to(OutputIt out, etl::string_view fmt, Args const&... args) -> Outpu
     auto rest = slices.second;
     etl::ignore_unused(rest);
 
-    (
-        [&] {
-            // Format argument
-            detail::format_argument(args, ctx);
+    ([&] {
+        // Format argument
+        detail::format_argument(args, ctx);
 
-            // Split format text at next argument
-            auto const restSlices = detail::split_at_next_argument(rest);
-            detail::format_escaped_sequences(restSlices.first, ctx);
+        // Split format text at next argument
+        auto const restSlices = detail::split_at_next_argument(rest);
+        detail::format_escaped_sequences(restSlices.first, ctx);
 
-            // Save rest of format string for the next arguments
-            rest = restSlices.second;
-        }(),
-        ...);
+        // Save rest of format string for the next arguments
+        rest = restSlices.second;
+    }(), ...);
 
     // Anything left over after the last argument.
     if (auto const trailing = detail::split_at_next_argument(rest); !trailing.first.empty()) {
@@ -68,21 +66,21 @@ struct format_to_n_result {
 ///
 /// https://en.cppreference.com/w/cpp/utility/format/format_to_n
 template <typename OutputIter, typename... Args>
-auto format_to_n(
-    OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args) -> format_to_n_result<OutputIter>
+auto format_to_n(OutputIter out, diff_t<OutputIter> n, etl::string_view fmt, Args const&... args)
+    -> format_to_n_result<OutputIter>
 {
     etl::ignore_unused(n);
 
-    auto indices = etl::static_vector<etl::size_t, sizeof...(args)> {};
-    auto result  = format_to_n_result<OutputIter> {out, {}};
+    auto indices = etl::static_vector<etl::size_t, sizeof...(args)>{};
+    auto result  = format_to_n_result<OutputIter>{out, {}};
 
     auto writeChar = [&result](auto ch) {
         *result.out++ = ch;
         result.size++;
     };
 
-    auto varStart = etl::size_t {};
-    for (decltype(fmt)::size_type i {}; i < fmt.size(); ++i) {
+    auto varStart = etl::size_t{};
+    for (decltype(fmt)::size_type i{}; i < fmt.size(); ++i) {
         auto ch = fmt[i];
         if (ch == '{') {
             if ((fmt.size() > i + 1) && (fmt[i + 1] == '{')) {
@@ -117,7 +115,7 @@ auto format_to_n(
             output[pos] = val;
         };
 
-        [[maybe_unused]] typename decltype(indices)::size_type i {};
+        [[maybe_unused]] typename decltype(indices)::size_type i{};
         (replaceCharAt(out, indices[i++], args), ...);
     }
 

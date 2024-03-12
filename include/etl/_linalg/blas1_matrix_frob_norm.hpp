@@ -14,8 +14,8 @@ template <in_matrix InMat, typename Scalar>
 [[nodiscard]] constexpr auto matrix_frob_norm(InMat a, Scalar init) -> Scalar
 {
     auto result = init;
-    for (typename InMat::size_type row {0}; cmp_less(row, a.extent(0)); ++row) {
-        for (typename InMat::size_type col {0}; cmp_less(col, a.extent(1)); ++col) {
+    for (typename InMat::size_type row{0}; cmp_less(row, a.extent(0)); ++row) {
+        for (typename InMat::size_type col{0}; cmp_less(col, a.extent(1)); ++col) {
             result += detail::abs_if_needed(a(row, col));
         }
     }
@@ -29,7 +29,7 @@ template <in_matrix InMat>
 {
     using abs_type    = decltype(detail::abs_if_needed(declval<typename InMat::value_type>()));
     using return_type = decltype(declval<abs_type>() * declval<abs_type>());
-    return matrix_frob_norm(a, return_type {});
+    return matrix_frob_norm(a, return_type{});
 }
 
 } // namespace etl::linalg

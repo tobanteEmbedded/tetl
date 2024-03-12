@@ -16,7 +16,9 @@ template <typename T>
 constexpr auto destroy_at(T* p) -> void
 {
     if constexpr (is_array_v<T>) {
-        for (auto& elem : *p) { destroy_at(addressof(elem)); }
+        for (auto& elem : *p) {
+            destroy_at(addressof(elem));
+        }
     } else {
         p->~T();
     }

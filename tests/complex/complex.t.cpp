@@ -14,15 +14,15 @@ constexpr auto test() -> bool
     assert(etl::same_as<etl::tuple_element_t<0, etl::complex<T>>, T>);
     assert(etl::same_as<etl::tuple_element_t<1, etl::complex<T>>, T>);
 
-    auto tc = etl::complex<T> {};
+    auto tc = etl::complex<T>{};
     assert(tc.real() == T(0));
     assert(tc.imag() == T(0));
 
-    auto re = etl::complex<T> {T(1)};
+    auto re = etl::complex<T>{T(1)};
     assert(re.real() == T(1));
     assert(re.imag() == T(0));
 
-    auto im = etl::complex<T> {T(1), T(2)};
+    auto im = etl::complex<T>{T(1), T(2)};
     assert(im.real() == T(1));
     assert(im.imag() == T(2));
 

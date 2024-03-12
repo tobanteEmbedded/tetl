@@ -14,10 +14,10 @@ namespace etl {
 
 /// \brief Primitive numerical output conversion.
 struct to_chars_result {
-    char const* ptr {nullptr};
-    etl::errc ec {};
+    char const* ptr{nullptr};
+    etl::errc ec{};
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc {}; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }
 
     friend auto operator==(to_chars_result const&, to_chars_result const&) -> bool = default;
 };
@@ -37,8 +37,10 @@ template <integral T>
 {
     auto const len = static_cast<etl::size_t>(etl::distance(first, last));
     auto const res = detail::integer_to_string<T>(val, first, base, len);
-    if (res.error == detail::integer_to_string_error::none) { return to_chars_result {res.end, {}}; }
-    return to_chars_result {last, errc::value_too_large};
+    if (res.error == detail::integer_to_string_error::none) {
+        return to_chars_result{res.end, {}};
+    }
+    return to_chars_result{last, errc::value_too_large};
 }
 
 [[nodiscard]] constexpr auto to_chars(char*, char*, bool, int = 10) -> to_chars_result = delete;

@@ -12,7 +12,9 @@ namespace etl {
 template <typename ForwardIt>
 constexpr auto destroy(ForwardIt first, ForwardIt last) -> void
 {
-    for (; first != last; ++first) { etl::destroy_at(etl::addressof(*first)); }
+    for (; first != last; ++first) {
+        etl::destroy_at(etl::addressof(*first));
+    }
 }
 
 } // namespace etl

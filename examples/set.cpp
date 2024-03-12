@@ -30,8 +30,8 @@ auto main() -> int
     TETL_ASSERT(set1.contains(5) == false);
 
     // Construct from range
-    auto data = array {1.0F, 2.0F, 3.0F};
-    auto set2 = static_set<float, 3> {begin(data), end(data)};
+    auto data = array{1.0F, 2.0F, 3.0F};
+    auto set2 = static_set<float, 3>{begin(data), end(data)};
 
     TETL_ASSERT(set2.full());
     TETL_ASSERT(set2.size() == 3);

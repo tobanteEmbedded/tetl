@@ -17,8 +17,8 @@ auto func(float val) -> float { return val; }
 
 auto main() -> int
 {
-    func(42);                // Calls template
-    func(etl::uint16_t {1}); // Calls template
-    func(3.0F);              // Does not call template
+    func(42);               // Calls template
+    func(etl::uint16_t{1}); // Calls template
+    func(3.0F);             // Does not call template
     return 0;
 }

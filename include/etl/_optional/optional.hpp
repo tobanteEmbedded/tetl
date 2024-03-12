@@ -61,14 +61,17 @@ struct optional_destruct_base<T, false> {
 
     ~optional_destruct_base()
     {
-        if (internal_has_value) { internal_value.~value_type(); }
+        if (internal_has_value) {
+            internal_value.~value_type();
+        }
     }
 
     constexpr optional_destruct_base() noexcept { }
 
     template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t /*tag*/, Args&&... args)
-        : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
+        : internal_value(etl::forward<Args>(args)...)
+        , internal_has_value(true)
     {
     }
 
@@ -81,7 +84,7 @@ struct optional_destruct_base<T, false> {
     }
 
     union {
-        char internal_null_state {};
+        char internal_null_state{};
         value_type internal_value;
     };
 
@@ -97,21 +100,24 @@ struct optional_destruct_base<T, true> {
 
     template <typename... Args>
     constexpr explicit optional_destruct_base(etl::in_place_t /*unused*/, Args&&... args)
-        : internal_value(etl::forward<Args>(args)...), internal_has_value(true)
+        : internal_value(etl::forward<Args>(args)...)
+        , internal_has_value(true)
     {
     }
 
     void reset() noexcept
     {
-        if (internal_has_value) { internal_has_value = false; }
+        if (internal_has_value) {
+            internal_has_value = false;
+        }
     }
 
     union {
-        char internal_null_state {};
+        char internal_null_state{};
         value_type internal_value;
     };
 
-    bool internal_has_value {false};
+    bool internal_has_value{false};
 };
 
 template <typename T, bool = etl::is_reference_v<T>>
@@ -144,14 +150,18 @@ struct optional_storage_base : optional_destruct_base<T> {
     template <typename U>
     void construct_from(U&& opt)
     {
-        if (opt.has_value()) { construct(etl::forward<U>(opt).get()); }
+        if (opt.has_value()) {
+            construct(etl::forward<U>(opt).get());
+        }
     }
 
     template <typename U>
     void assign_from(U&& opt)
     {
         if (this->internal_has_value == opt.has_value()) {
-            if (this->internal_has_value) { this->internal_value = etl::forward<U>(opt).get(); }
+            if (this->internal_has_value) {
+                this->internal_value = etl::forward<U>(opt).get();
+            }
         } else {
             if (this->internal_has_value) {
                 this->reset();
@@ -173,7 +183,7 @@ struct optional_copy_base<T, false> : optional_storage_base<T> {
 
     optional_copy_base() = default;
 
-    optional_copy_base(optional_copy_base const& opt) : optional_storage_base<T>::optional_storage_base {}
+    optional_copy_base(optional_copy_base const& opt) : optional_storage_base<T>::optional_storage_base{}
     {
         this->construct_from(opt);
     }
@@ -208,8 +218,10 @@ struct optional_move_base<T, false> : optional_copy_base<T> {
     auto operator=(optional_move_base&&) noexcept -> optional_move_base& = default;
 };
 
-template <typename T, bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_copy_constructible_v<T>
-                             && etl::is_trivially_copy_assignable_v<T>>
+template <
+    typename T,
+    bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_copy_constructible_v<T>
+        && etl::is_trivially_copy_assignable_v<T>>
 struct optional_copy_assign_base : optional_move_base<T> {
     using optional_move_base<T>::optional_move_base;
 };
@@ -233,8 +245,10 @@ struct optional_copy_assign_base<T, false> : optional_move_base<T> {
     auto operator=(optional_copy_assign_base&&) noexcept -> optional_copy_assign_base& = default;
 };
 
-template <typename T, bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_move_constructible_v<T>
-                             && etl::is_trivially_move_assignable_v<T>>
+template <
+    typename T,
+    bool = etl::is_trivially_destructible_v<T> && etl::is_trivially_move_constructible_v<T>
+        && etl::is_trivially_move_assignable_v<T>>
 struct optional_move_assign_base : optional_copy_assign_base<T> {
     using optional_copy_assign_base<T>::optional_copy_assign_base;
 };
@@ -252,9 +266,9 @@ struct optional_move_assign_base<T, false> : optional_copy_assign_base<T> {
 
     auto operator=(optional_move_assign_base const&) -> optional_move_assign_base& = default;
 
-    auto operator=(optional_move_assign_base&& opt)
-        noexcept(etl::is_nothrow_move_assignable_v<value_type>
-                 && etl::is_nothrow_move_constructible_v<value_type>) -> optional_move_assign_base&
+    auto operator=(optional_move_assign_base&& opt
+    ) noexcept(etl::is_nothrow_move_assignable_v<value_type> && etl::is_nothrow_move_constructible_v<value_type>)
+        -> optional_move_assign_base&
     {
         this->assign_from(etl::move(opt));
         return *this;
@@ -265,9 +279,9 @@ template <typename T>
 using optional_sfinae_ctor_base_t = sfinae_ctor_base<etl::is_copy_constructible_v<T>, etl::is_move_constructible_v<T>>;
 
 template <typename T>
-using optional_sfinae_assign_base_t
-    = sfinae_assign_base<(etl::is_copy_constructible_v<T> && etl::is_copy_assignable_v<T>),
-        (etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)>;
+using optional_sfinae_assign_base_t = sfinae_assign_base<
+    (etl::is_copy_constructible_v<T> && etl::is_copy_assignable_v<T>),
+    (etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)>;
 
 } // namespace detail
 
@@ -316,9 +330,10 @@ using optional_sfinae_assign_base_t
 /// \headerfile etl/optional.hpp
 /// \include optional.cpp
 template <typename T>
-struct optional : private detail::optional_move_assign_base<T>,
-                  private detail::optional_sfinae_ctor_base_t<T>,
-                  private detail::optional_sfinae_assign_base_t<T> {
+struct optional
+    : private detail::optional_move_assign_base<T>
+    , private detail::optional_sfinae_ctor_base_t<T>
+    , private detail::optional_sfinae_assign_base_t<T> {
 private:
     using base_type = detail::optional_move_assign_base<T>;
 
@@ -441,7 +456,9 @@ public:
     template <typename U, enable_ctor_4_implicit<U> = 0>
     constexpr optional(optional<U> const& other)
     {
-        if (other.has_value()) { this->construct(*other); }
+        if (other.has_value()) {
+            this->construct(*other);
+        }
     }
 
     /// \brief (4) Converting copy constructor: If other doesn't contain a
@@ -454,7 +471,9 @@ public:
     template <typename U, enable_ctor_4_explicit<U> = 0>
     explicit constexpr optional(optional<U> const& other)
     {
-        if (other.has_value()) { this->construct(*other); }
+        if (other.has_value()) {
+            this->construct(*other);
+        }
     }
 
     /// \brief (5) Converting move constructor: If other doesn't contain a
@@ -467,7 +486,9 @@ public:
     template <typename U, enable_ctor_5_implicit<U> = 0>
     constexpr optional(optional<U>&& other)
     {
-        if (other.has_value()) { this->construct(*etl::move(other)); }
+        if (other.has_value()) {
+            this->construct(*etl::move(other));
+        }
     }
 
     /// \brief (5) Converting move constructor: If other doesn't contain a
@@ -480,7 +501,9 @@ public:
     template <typename U, enable_ctor_5_explicit<U> = 0>
     explicit constexpr optional(optional<U>&& other)
     {
-        if (other.has_value()) { this->construct(*etl::move(other)); }
+        if (other.has_value()) {
+            this->construct(*etl::move(other));
+        }
     }
 
     /// \brief (6) Constructs an optional object that contains a value,
@@ -557,7 +580,9 @@ public:
             this->reset();
         }
 
-        if (other.has_value()) { this->construct(*other); }
+        if (other.has_value()) {
+            this->construct(*other);
+        }
         return *this;
     }
 
@@ -573,7 +598,9 @@ public:
             this->reset();
         }
 
-        if (other.has_value()) { this->construct(etl::move(*other)); }
+        if (other.has_value()) {
+            this->construct(etl::move(*other));
+        }
         return *this;
     }
 
@@ -594,7 +621,9 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() & -> value_type&
     {
-        if (TETL_LIKELY(has_value())) { return this->get(); }
+        if (TETL_LIKELY(has_value())) {
+            return this->get();
+        }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
     }
 
@@ -604,7 +633,9 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() const& -> value_type const&
     {
-        if (TETL_LIKELY(has_value())) { return this->get(); }
+        if (TETL_LIKELY(has_value())) {
+            return this->get();
+        }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
     }
 
@@ -614,7 +645,9 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() && -> value_type&&
     {
-        if (TETL_LIKELY(has_value())) { return etl::move(this->get()); }
+        if (TETL_LIKELY(has_value())) {
+            return etl::move(this->get());
+        }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
     }
 
@@ -624,7 +657,9 @@ public:
     /// https://en.cppreference.com/w/cpp/utility/optional/value
     [[nodiscard]] constexpr auto value() const&& -> value_type const&&
     {
-        if (TETL_LIKELY(has_value())) { return etl::move(this->get()); }
+        if (TETL_LIKELY(has_value())) {
+            return etl::move(this->get());
+        }
         etl::raise<etl::bad_optional_access>("called value() on empty optional");
     }
 
@@ -648,7 +683,9 @@ public:
     /// the optional is empty.
     [[nodiscard]] constexpr auto operator->() const -> value_type const*
     {
-        if (has_value()) { return &this->value(); }
+        if (has_value()) {
+            return &this->value();
+        }
         return nullptr;
     }
 
@@ -656,7 +693,9 @@ public:
     /// the optional is empty.
     [[nodiscard]] constexpr auto operator->() -> value_type*
     {
-        if (has_value()) { return &this->value(); }
+        if (has_value()) {
+            return &this->value();
+        }
         return nullptr;
     }
 
@@ -717,8 +756,8 @@ public:
     }
 
     /// \brief Swaps the contents with those of other.
-    constexpr auto swap(optional& other)
-        noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
+    constexpr auto swap(optional& other
+    ) noexcept(etl::is_nothrow_move_constructible_v<value_type> && etl::is_nothrow_swappable_v<value_type>) -> void
     {
         // If neither *this nor other contain a value, the function has no
         // effect.
@@ -727,7 +766,9 @@ public:
         // exchanged
         if (this->has_value() == other.has_value()) {
             using etl::swap;
-            if (this->has_value()) { swap(this->get(), other.get()); }
+            if (this->has_value()) {
+                swap(this->get(), other.get());
+            }
             return;
         }
 
@@ -760,29 +801,37 @@ public:
     template <typename F>
     constexpr auto and_then(F&& f) &
     {
-        if (*this) { return etl::invoke(etl::forward<F>(f), **this); }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T&>> {};
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), **this);
+        }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T&>>{};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) const&
     {
-        if (*this) { return etl::invoke(etl::forward<F>(f), **this); }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>> {};
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), **this);
+        }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T const&>>{};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) &&
     {
-        if (*this) { return etl::invoke(etl::forward<F>(f), etl::move(**this)); }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T>> {};
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
+        }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T>>{};
     }
 
     template <typename F>
     constexpr auto and_then(F&& f) const&&
     {
-        if (*this) { return etl::invoke(etl::forward<F>(f), etl::move(**this)); }
-        return etl::remove_cvref_t<etl::invoke_result_t<F, T const>> {};
+        if (*this) {
+            return etl::invoke(etl::forward<F>(f), etl::move(**this));
+        }
+        return etl::remove_cvref_t<etl::invoke_result_t<F, T const>>{};
     }
 
     template <typename F>
@@ -824,8 +873,12 @@ constexpr auto swap(optional<T>& lhs, optional<T>& rhs) noexcept(noexcept(lhs.sw
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator==(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return false; }
-    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return true; }
+    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) {
+        return false;
+    }
+    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) {
+        return true;
+    }
     return lhs.value() == rhs.value();
 }
 
@@ -833,8 +886,12 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator!=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) { return true; }
-    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) { return false; }
+    if (static_cast<bool>(lhs) != static_cast<bool>(rhs)) {
+        return true;
+    }
+    if (!static_cast<bool>(lhs) && !static_cast<bool>(rhs)) {
+        return false;
+    }
     return lhs.value() != rhs.value();
 }
 
@@ -842,8 +899,12 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(rhs)) { return false; }
-    if (!static_cast<bool>(lhs)) { return true; }
+    if (!static_cast<bool>(rhs)) {
+        return false;
+    }
+    if (!static_cast<bool>(lhs)) {
+        return true;
+    }
     return lhs.value() < rhs.value();
 }
 
@@ -851,8 +912,12 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(lhs)) { return false; }
-    if (!static_cast<bool>(rhs)) { return true; }
+    if (!static_cast<bool>(lhs)) {
+        return false;
+    }
+    if (!static_cast<bool>(rhs)) {
+        return true;
+    }
     return lhs.value() > rhs.value();
 }
 
@@ -860,8 +925,12 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator<=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(lhs)) { return true; }
-    if (!static_cast<bool>(rhs)) { return false; }
+    if (!static_cast<bool>(lhs)) {
+        return true;
+    }
+    if (!static_cast<bool>(rhs)) {
+        return false;
+    }
     return lhs.value() <= rhs.value();
 }
 
@@ -869,8 +938,12 @@ template <typename T, typename U>
 template <typename T, typename U>
 [[nodiscard]] constexpr auto operator>=(optional<T> const& lhs, optional<U> const& rhs) -> bool
 {
-    if (!static_cast<bool>(rhs)) { return true; }
-    if (!static_cast<bool>(lhs)) { return false; }
+    if (!static_cast<bool>(rhs)) {
+        return true;
+    }
+    if (!static_cast<bool>(lhs)) {
+        return false;
+    }
     return lhs.value() >= rhs.value();
 }
 
@@ -1150,7 +1223,7 @@ struct hash<etl::optional<T>> {
     {
         using type = etl::remove_const_t<T>;
         static_assert(etl::is_specialized_v<etl::hash, type>);
-        return static_cast<bool>(opt) ? etl::hash<type> {}(*opt) : 0;
+        return static_cast<bool>(opt) ? etl::hash<type>{}(*opt) : 0;
     }
 };
 } // namespace etl

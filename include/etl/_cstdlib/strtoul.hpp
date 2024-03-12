@@ -17,8 +17,13 @@ namespace etl {
 {
     auto const len = strlen(str);
     auto const res = detail::string_to_integer<unsigned long, detail::skip_whitespace::yes>(
-        str, len, static_cast<unsigned long>(base));
-    if (last != nullptr) { *last = res.end; }
+        str,
+        len,
+        static_cast<unsigned long>(base)
+    );
+    if (last != nullptr) {
+        *last = res.end;
+    }
     return res.value;
 }
 
@@ -29,8 +34,13 @@ namespace etl {
 {
     auto const len = strlen(str);
     auto const res = detail::string_to_integer<unsigned long long, detail::skip_whitespace::yes>(
-        str, len, static_cast<unsigned long long>(base));
-    if (last != nullptr) { *last = res.end; }
+        str,
+        len,
+        static_cast<unsigned long long>(base)
+    );
+    if (last != nullptr) {
+        *last = res.end;
+    }
     return res.value;
 }
 

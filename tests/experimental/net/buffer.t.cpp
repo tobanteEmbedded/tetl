@@ -11,24 +11,24 @@
 static auto test_all() -> bool
 {
     {
-        auto const buffer = etl::experimental::net::mutable_buffer {};
+        auto const buffer = etl::experimental::net::mutable_buffer{};
         assert((buffer.data() == nullptr));
         assert((buffer.size() == 0));
     }
     {
-        auto mem = etl::array<char, 32> {};
+        auto mem = etl::array<char, 32>{};
         auto buf = etl::experimental::net::make_buffer(mem.data(), mem.size());
         assert((mem.data() == buf.data()));
         assert((mem.size() == buf.size()));
     }
     {
-        auto mem = etl::array<char, 32> {};
+        auto mem = etl::array<char, 32>{};
         auto buf = etl::experimental::net::make_buffer(mem.data(), mem.size());
         buf += 4;
         assert((mem.data() != buf.data()));
     }
     {
-        auto mem = etl::array<char, 32> {};
+        auto mem = etl::array<char, 32>{};
         auto buf = etl::experimental::net::make_buffer(mem.data(), mem.size());
 
         {
@@ -42,18 +42,18 @@ static auto test_all() -> bool
         }
     }
     {
-        auto const buf = etl::experimental::net::const_buffer {};
+        auto const buf = etl::experimental::net::const_buffer{};
         assert((buf.data() == nullptr));
         assert((buf.size() == 0));
     }
     {
-        auto const mem = etl::array<char, 32> {};
+        auto const mem = etl::array<char, 32>{};
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
         assert((mem.data() == buf.data()));
         assert((mem.size() == buf.size()));
     }
     {
-        auto const mem = etl::array<char, 32> {};
+        auto const mem = etl::array<char, 32>{};
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
         buf += 4;
         assert((mem.data() != buf.data()));
@@ -61,7 +61,7 @@ static auto test_all() -> bool
     }
 
     {
-        auto const mem = etl::array<char, 32> {};
+        auto const mem = etl::array<char, 32>{};
         auto buf       = etl::experimental::net::make_buffer(mem.data(), mem.size());
 
         auto newBuf1 = buf + 4;

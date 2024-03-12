@@ -17,38 +17,46 @@
 #else
 
     #define TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION 1
-    #define TETL_DEBUG_TRAP_IMPL_BULTIN_TRAP 2
+    #define TETL_DEBUG_TRAP_IMPL_BULTIN_TRAP      2
     #define TETL_DEBUG_TRAP_IMPL_BULTIN_DEBUGTRAP 3
-    #define TETL_DEBUG_TRAP_IMPL_SIGTRAP 4
+    #define TETL_DEBUG_TRAP_IMPL_SIGTRAP          4
 
     #if defined(__i386__) || defined(__x86_64__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile("int $0x03"); }
     #elif defined(__thumb__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile(".inst 0xde01"); }
     #elif defined(__arm__) && !defined(__thumb__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile(".inst 0xe7f001f0"); }
     #elif defined(__aarch64__) && defined(__APPLE__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_BULTIN_DEBUGTRAP
     #elif defined(__aarch64__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile(".inst 0xd4200000"); }
     #elif defined(__powerpc__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x7d821008"); }
     #elif defined(__riscv)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { __asm__ volatile(".4byte 0x00100073"); }
     #elif defined(__AVR__)
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { }
     #elif defined(__STDC_HOSTED__) // hosted builds
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_SIGTRAP
     #else
         // TETL_DEBUG_TRAP is not supported on this target
         #define TETL_DEBUG_TRAP_IMPL TETL_DEBUG_TRAP_IMPL_TRAP_INSTRUCTION
+
 inline auto trap_inst() -> void { }
     #endif
 
@@ -62,6 +70,7 @@ inline auto TETL_DEBUG_TRAP() -> void { __builtin_debugtrap(); }
 inline auto TETL_DEBUG_TRAP() -> void { __builtin_trap(); }
     #elif TETL_DEBUG_TRAP_IMPL == TETL_DEBUG_TRAP_IMPL_SIGTRAP
         #include <signal.h>
+
 inline auto TETL_DEBUG_TRAP() -> void { ::raise(SIGTRAP); }
     #else
         #error "invalid TETL_DEBUG_TRAP_IMPL value"

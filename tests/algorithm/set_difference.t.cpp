@@ -17,44 +17,50 @@ constexpr auto test() -> bool
     using etl::set_difference;
 
     // empty ranges
-    auto e1 = etl::static_vector<T, 4> {};
-    auto e2 = etl::static_vector<T, 4> {};
-    auto d1 = etl::array<T, 4> {};
+    auto e1 = etl::static_vector<T, 4>{};
+    auto e2 = etl::static_vector<T, 4>{};
+    auto d1 = etl::array<T, 4>{};
     set_difference(begin(e1), end(e1), begin(e2), end(e2), begin(d1));
     assert(e1.empty());
     assert(e2.empty());
-    assert(d1[0] == T {0});
+    assert(d1[0] == T{0});
 
     // cppreference.com example #1
-    auto const v1 = etl::array {T(1), T(2), T(5), T(5), T(5), T(9)};
-    auto const v2 = etl::array {T(2), T(5), T(7)};
-    auto d2       = etl::static_vector<T, 4> {};
+    auto const v1 = etl::array{T(1), T(2), T(5), T(5), T(5), T(9)};
+    auto const v2 = etl::array{T(2), T(5), T(7)};
+    auto d2       = etl::static_vector<T, 4>{};
     set_difference(begin(v1), end(v1), begin(v2), end(v2), back_inserter(d2));
-    assert((d2[0] == T {1}));
-    assert((d2[1] == T {5}));
-    assert((d2[2] == T {5}));
-    assert((d2[3] == T {9}));
+    assert((d2[0] == T{1}));
+    assert((d2[1] == T{5}));
+    assert((d2[2] == T{5}));
+    assert((d2[3] == T{9}));
 
     // cppreference.com example #2
     // we want to know which orders "cut" between old and new states:
-    etl::array<T, 4> oldOrders {T(1), T(2), T(5), T(9)};
-    etl::array<T, 3> newOrders {T(2), T(5), T(7)};
-    etl::static_vector<T, 2> cutOrders {};
+    etl::array<T, 4> oldOrders{T(1), T(2), T(5), T(9)};
+    etl::array<T, 3> newOrders{T(2), T(5), T(7)};
+    etl::static_vector<T, 2> cutOrders{};
 
     set_difference(
-        oldOrders.begin(), oldOrders.end(), newOrders.begin(), newOrders.end(), back_inserter(cutOrders), etl::less {});
+        oldOrders.begin(),
+        oldOrders.end(),
+        newOrders.begin(),
+        newOrders.end(),
+        back_inserter(cutOrders),
+        etl::less{}
+    );
 
-    assert((oldOrders[0] == T {1}));
-    assert((oldOrders[1] == T {2}));
-    assert((oldOrders[2] == T {5}));
-    assert((oldOrders[3] == T {9}));
+    assert((oldOrders[0] == T{1}));
+    assert((oldOrders[1] == T{2}));
+    assert((oldOrders[2] == T{5}));
+    assert((oldOrders[3] == T{9}));
 
-    assert((newOrders[0] == T {2}));
-    assert((newOrders[1] == T {5}));
-    assert((newOrders[2] == T {7}));
+    assert((newOrders[0] == T{2}));
+    assert((newOrders[1] == T{5}));
+    assert((newOrders[2] == T{7}));
 
-    assert((cutOrders[0] == T {1}));
-    assert((cutOrders[1] == T {9}));
+    assert((cutOrders[0] == T{1}));
+    assert((cutOrders[1] == T{9}));
 
     return true;
 }

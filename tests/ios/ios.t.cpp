@@ -9,8 +9,8 @@ constexpr auto test() -> bool
     assert(etl::is_bitmask_type_v<etl::ios_base::openmode>);
     assert(etl::is_bitmask_type_v<etl::ios_base::fmtflags>);
     assert(etl::is_bitmask_type_v<etl::ios_base::iostate>);
-    etl::ignore_unused(etl::basic_stringbuf<char, 16> {});
-    etl::ignore_unused(etl::basic_stringbuf<wchar_t, 16> {});
+    etl::ignore_unused(etl::basic_stringbuf<char, 16>{});
+    etl::ignore_unused(etl::basic_stringbuf<wchar_t, 16>{});
     return true;
 }
 

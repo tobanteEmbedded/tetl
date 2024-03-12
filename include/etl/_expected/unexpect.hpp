@@ -9,7 +9,7 @@ struct unexpect_t {
     unexpect_t() = default;
 };
 
-inline constexpr auto unexpect = unexpect_t {};
+inline constexpr auto unexpect = unexpect_t{};
 
 } // namespace etl
 

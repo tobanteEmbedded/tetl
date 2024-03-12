@@ -13,7 +13,7 @@ struct destroying_delete_t {
 
 /// \brief Tag type used to identify the destroying delete form of operator
 /// delete.
-inline constexpr auto destroying_delete = destroying_delete_t {};
+inline constexpr auto destroying_delete = destroying_delete_t{};
 
 } // namespace etl
 

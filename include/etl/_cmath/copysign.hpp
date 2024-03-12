@@ -14,7 +14,9 @@ namespace detail {
 template <typename T>
 constexpr auto copysign_fallback(T x, T y) noexcept -> T
 {
-    if ((x < 0 and y > 0) or (x > 0 and y < 0)) { return -x; }
+    if ((x < 0 and y > 0) or (x > 0 and y < 0)) {
+        return -x;
+    }
     return x;
 }
 

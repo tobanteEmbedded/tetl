@@ -9,7 +9,7 @@
 template <typename T, typename U>
 constexpr auto test_roundtrip() -> bool
 {
-    auto original = T {42};
+    auto original = T{42};
     auto other    = etl::bit_cast<U>(original);
     assert(etl::bit_cast<T>(other) == original);
     return true;
@@ -31,6 +31,7 @@ constexpr auto test_all() -> bool
 
     return true;
 }
+
 auto main() -> int
 {
     assert(test_all());

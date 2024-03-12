@@ -13,21 +13,21 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto src = etl::array<T, 4> {};
-    etl::iota(begin(src), end(src), T {0});
+    auto src = etl::array<T, 4>{};
+    etl::iota(begin(src), end(src), T{0});
 
-    assert(etl::count(begin(src), end(src), T {0}) == 1);
-    assert(etl::count(begin(src), end(src), T {1}) == 1);
-    assert(etl::count(begin(src), end(src), T {2}) == 1);
-    assert(etl::count(begin(src), end(src), T {3}) == 1);
-    assert(etl::count(begin(src), end(src), T {4}) == 0);
+    assert(etl::count(begin(src), end(src), T{0}) == 1);
+    assert(etl::count(begin(src), end(src), T{1}) == 1);
+    assert(etl::count(begin(src), end(src), T{2}) == 1);
+    assert(etl::count(begin(src), end(src), T{3}) == 1);
+    assert(etl::count(begin(src), end(src), T{4}) == 0);
 
     // input iterator
     assert(etl::count(InIter(begin(src)), InIter(end(src)), T(0)) == 1);
     // forward iterator
     assert(etl::count(FwdIter(begin(src)), FwdIter(end(src)), T(0)) == 1);
 
-    auto p1 = [](auto val) { return val < T {2}; };
+    auto p1 = [](auto val) { return val < T{2}; };
     auto p2 = [](auto val) -> bool { return static_cast<int>(val) % 2; };
 
     assert(etl::count_if(begin(src), end(src), p1) == 2);

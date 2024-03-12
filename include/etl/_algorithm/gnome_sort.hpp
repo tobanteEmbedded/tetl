@@ -29,7 +29,7 @@ constexpr auto gnome_sort(BidirIt first, BidirIt last, Compare comp) -> void
 template <typename BidirIt>
 constexpr auto gnome_sort(BidirIt first, BidirIt last) -> void
 {
-    gnome_sort(first, last, less {});
+    gnome_sort(first, last, less{});
 }
 
 } // namespace etl

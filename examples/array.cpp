@@ -16,8 +16,10 @@ auto main() -> int
     using etl::array;
     using etl::copy;
 
-    auto src = array {1, 2, 3, 4}; // size & type are deduced
-    for (auto& item : src) { printf("%d\n", item); }
+    auto src = array{1, 2, 3, 4}; // size & type are deduced
+    for (auto& item : src) {
+        printf("%d\n", item);
+    }
 
     src.fill(42);
     TETL_ASSERT(all_of(begin(src), end(src), [](auto v) { return v == 42; }));

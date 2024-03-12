@@ -9,6 +9,7 @@
     struct S {
         int i = 42;
     };
+
     assert(etl::numeric_limits<S>::is_specialized == false);
     assert(etl::numeric_limits<S>::is_signed == false);
     assert(etl::numeric_limits<S>::is_integer == false);
@@ -55,12 +56,12 @@ template <typename T>
     assert(etl::numeric_limits<T>::is_bounded == true);
     assert(etl::numeric_limits<T>::lowest() == etl::numeric_limits<T>::min());
     assert(etl::numeric_limits<T>::max() > etl::numeric_limits<T>::min());
-    assert(etl::numeric_limits<T>::epsilon() == T {});
-    assert(etl::numeric_limits<T>::round_error() == T {});
-    assert(etl::numeric_limits<T>::infinity() == T {});
-    assert(etl::numeric_limits<T>::quiet_NaN() == T {});
-    assert(etl::numeric_limits<T>::signaling_NaN() == T {});
-    assert(etl::numeric_limits<T>::denorm_min() == T {});
+    assert(etl::numeric_limits<T>::epsilon() == T{});
+    assert(etl::numeric_limits<T>::round_error() == T{});
+    assert(etl::numeric_limits<T>::infinity() == T{});
+    assert(etl::numeric_limits<T>::quiet_NaN() == T{});
+    assert(etl::numeric_limits<T>::signaling_NaN() == T{});
+    assert(etl::numeric_limits<T>::denorm_min() == T{});
 
     using lc = etl::numeric_limits<T const>;
     assert(lc::is_specialized == true);
@@ -69,12 +70,12 @@ template <typename T>
     assert(lc::is_bounded == true);
     assert(lc::lowest() == lc::min());
     assert(lc::max() > lc::min());
-    assert(lc::epsilon() == T {});
-    assert(lc::round_error() == T {});
-    assert(lc::infinity() == T {});
-    assert(lc::quiet_NaN() == T {});
-    assert(lc::signaling_NaN() == T {});
-    assert(lc::denorm_min() == T {});
+    assert(lc::epsilon() == T{});
+    assert(lc::round_error() == T{});
+    assert(lc::infinity() == T{});
+    assert(lc::quiet_NaN() == T{});
+    assert(lc::signaling_NaN() == T{});
+    assert(lc::denorm_min() == T{});
 
     using lv = etl::numeric_limits<T volatile>;
     assert(lv::is_specialized == true);
@@ -83,12 +84,12 @@ template <typename T>
     assert(lv::is_bounded == true);
     assert(lv::lowest() == lv::min());
     assert(lv::max() > lv::min());
-    assert(lv::epsilon() == T {});
-    assert(lv::round_error() == T {});
-    assert(lv::infinity() == T {});
-    assert(lv::quiet_NaN() == T {});
-    assert(lv::signaling_NaN() == T {});
-    assert(lv::denorm_min() == T {});
+    assert(lv::epsilon() == T{});
+    assert(lv::round_error() == T{});
+    assert(lv::infinity() == T{});
+    assert(lv::quiet_NaN() == T{});
+    assert(lv::signaling_NaN() == T{});
+    assert(lv::denorm_min() == T{});
 
     using lcv = etl::numeric_limits<T const volatile>;
     assert(lcv::is_specialized == true);
@@ -97,12 +98,12 @@ template <typename T>
     assert(lcv::is_bounded == true);
     assert(lcv::lowest() == lcv::min());
     assert(lcv::max() > lcv::min());
-    assert(lcv::epsilon() == T {});
-    assert(lcv::round_error() == T {});
-    assert(lcv::infinity() == T {});
-    assert(lcv::quiet_NaN() == T {});
-    assert(lcv::signaling_NaN() == T {});
-    assert(lcv::denorm_min() == T {});
+    assert(lcv::epsilon() == T{});
+    assert(lcv::round_error() == T{});
+    assert(lcv::infinity() == T{});
+    assert(lcv::quiet_NaN() == T{});
+    assert(lcv::signaling_NaN() == T{});
+    assert(lcv::denorm_min() == T{});
     return true;
 }
 
@@ -116,12 +117,12 @@ template <typename T>
 
     assert(etl::numeric_limits<T>::lowest() == etl::numeric_limits<T>::min());
     assert(etl::numeric_limits<T>::max() > etl::numeric_limits<T>::min());
-    assert(etl::numeric_limits<T>::epsilon() == T {});
-    assert(etl::numeric_limits<T>::round_error() == T {});
-    assert(etl::numeric_limits<T>::infinity() == T {});
-    assert(etl::numeric_limits<T>::quiet_NaN() == T {});
-    assert(etl::numeric_limits<T>::signaling_NaN() == T {});
-    assert(etl::numeric_limits<T>::denorm_min() == T {});
+    assert(etl::numeric_limits<T>::epsilon() == T{});
+    assert(etl::numeric_limits<T>::round_error() == T{});
+    assert(etl::numeric_limits<T>::infinity() == T{});
+    assert(etl::numeric_limits<T>::quiet_NaN() == T{});
+    assert(etl::numeric_limits<T>::signaling_NaN() == T{});
+    assert(etl::numeric_limits<T>::denorm_min() == T{});
     return true;
 }
 

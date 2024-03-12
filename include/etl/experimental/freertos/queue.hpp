@@ -64,14 +64,16 @@ private:
 };
 
 template <typename T, etl::uint32_t Size>
-inline queue<T, Size>::queue() : _handle {[]() { return xQueueCreate(Size, sizeof(T)); }()}
+inline queue<T, Size>::queue() : _handle{[]() { return xQueueCreate(Size, sizeof(T)); }()}
 {
 }
 
 template <typename T, etl::uint32_t Size>
 inline queue<T, Size>::~queue()
 {
-    if (_handle != nullptr) { vQueueDelete(_handle); }
+    if (_handle != nullptr) {
+        vQueueDelete(_handle);
+    }
 }
 
 template <typename T, etl::uint32_t Size>
@@ -99,7 +101,7 @@ inline auto queue<T, Size>::receive(T& data, TickType_t ticksToWait) const -> bo
 template <typename T, etl::uint32_t Size>
 inline auto queue<T, Size>::receive(TickType_t ticksToWait) const -> pair<bool, T>
 {
-    auto value          = T {};
+    auto value          = T{};
     auto* const rawData = static_cast<void*>(&value);
     auto const success  = xQueueReceive(_handle, rawData, ticksToWait);
     return {static_cast<bool>(success), value};

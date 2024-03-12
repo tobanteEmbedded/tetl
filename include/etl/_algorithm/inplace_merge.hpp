@@ -14,9 +14,9 @@ namespace etl {
 ///
 /// \details A sequence [first, last) is said to be sorted with
 ///          respect to a comparator comp if for any iterator it pointing
-//           to the sequence and any non-negative integer n such that it + n
-//           is a valid iterator pointing to an element of the sequence,
-///          comp(*(it + n), *it) evaluates to false.
+// to the sequence and any non-negative integer n such that it + n
+// is a valid iterator pointing to an element of the sequence,
+/// comp(*(it + n), *it) evaluates to false.
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/inplace_merge
 template <typename BidirIt, typename Compare>
@@ -40,7 +40,7 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
 template <typename BidirIt>
 constexpr auto inplace_merge(BidirIt first, BidirIt mid, BidirIt last) -> void
 {
-    inplace_merge(first, mid, last, less {});
+    inplace_merge(first, mid, last, less{});
 }
 
 } // namespace etl

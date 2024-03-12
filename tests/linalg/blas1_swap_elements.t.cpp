@@ -10,16 +10,16 @@
 template <typename T, typename IndexType>
 [[nodiscard]] static constexpr auto test_linalg_swap_elements_real() -> bool
 {
-    auto const zeroData  = etl::array<T, 4> {};
-    auto const otherData = etl::array<T, 4> {T(1), T(2), T(3), T(4)};
+    auto const zeroData  = etl::array<T, 4>{};
+    auto const otherData = etl::array<T, 4>{T(1), T(2), T(3), T(4)};
 
     {
         // 1D static
         auto lhsData = zeroData;
         auto rhsData = otherData;
 
-        auto lhs = etl::mdspan<T, etl::extents<IndexType, 4>> {lhsData.data()};
-        auto rhs = etl::mdspan<T, etl::extents<IndexType, 4>> {rhsData.data()};
+        auto lhs = etl::mdspan<T, etl::extents<IndexType, 4>>{lhsData.data()};
+        auto rhs = etl::mdspan<T, etl::extents<IndexType, 4>>{rhsData.data()};
 
         etl::linalg::swap_elements(lhs, rhs);
         assert(lhs(0) == T(1));
@@ -49,8 +49,8 @@ template <typename T, typename IndexType>
         auto lhsData = zeroData;
         auto rhsData = otherData;
 
-        auto lhs = etl::mdspan<T, etl::dextents<IndexType, 1>> {lhsData.data(), 4};
-        auto rhs = etl::mdspan<T, etl::dextents<IndexType, 1>> {rhsData.data(), 4};
+        auto lhs = etl::mdspan<T, etl::dextents<IndexType, 1>>{lhsData.data(), 4};
+        auto rhs = etl::mdspan<T, etl::dextents<IndexType, 1>>{rhsData.data(), 4};
 
         etl::linalg::swap_elements(lhs, rhs);
         assert(lhs(0) == T(1));
@@ -80,8 +80,8 @@ template <typename T, typename IndexType>
         auto lhsData = zeroData;
         auto rhsData = otherData;
 
-        auto lhs = etl::mdspan<T, etl::extents<IndexType, 2, 2>> {lhsData.data()};
-        auto rhs = etl::mdspan<T, etl::extents<IndexType, 2, 2>> {rhsData.data()};
+        auto lhs = etl::mdspan<T, etl::extents<IndexType, 2, 2>>{lhsData.data()};
+        auto rhs = etl::mdspan<T, etl::extents<IndexType, 2, 2>>{rhsData.data()};
 
         etl::linalg::swap_elements(lhs, rhs);
         assert(lhs(0, 0) == T(1));
@@ -111,8 +111,8 @@ template <typename T, typename IndexType>
         auto lhsData = zeroData;
         auto rhsData = otherData;
 
-        auto lhs = etl::mdspan<T, etl::dextents<IndexType, 2>> {lhsData.data(), 2, 2};
-        auto rhs = etl::mdspan<T, etl::dextents<IndexType, 2>> {rhsData.data(), 2, 2};
+        auto lhs = etl::mdspan<T, etl::dextents<IndexType, 2>>{lhsData.data(), 2, 2};
+        auto rhs = etl::mdspan<T, etl::dextents<IndexType, 2>>{rhsData.data(), 2, 2};
 
         etl::linalg::swap_elements(lhs, rhs);
         assert(lhs(0, 0) == T(1));

@@ -17,7 +17,9 @@ namespace etl {
 template <typename OutputIt, typename SizeT, typename Generator>
 constexpr auto generate_n(OutputIt first, SizeT count, Generator g) -> OutputIt
 {
-    for (; count > 0; ++first, --count) { *first = g(); }
+    for (; count > 0; ++first, --count) {
+        *first = g();
+    }
     return first;
 }
 

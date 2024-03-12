@@ -28,7 +28,7 @@ constexpr auto insertion_sort(RandomIt first, RandomIt last, Compare comp) -> vo
 template <typename RandomIt>
 constexpr auto insertion_sort(RandomIt first, RandomIt last) -> void
 {
-    insertion_sort(first, last, less {});
+    insertion_sort(first, last, less{});
 }
 
 } // namespace etl

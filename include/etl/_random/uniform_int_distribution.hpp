@@ -15,12 +15,13 @@ struct uniform_int_distribution {
         using distribution_type = uniform_int_distribution;
 
         constexpr param_type() noexcept = default;
-        explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept
-            : _min {min}, _max {max}
+
+        explicit constexpr param_type(result_type min, result_type max = result_type(1)) noexcept : _min{min}, _max{max}
         {
         }
 
         [[nodiscard]] constexpr auto a() const noexcept -> result_type { return _min; }
+
         [[nodiscard]] constexpr auto b() const noexcept -> result_type { return _max; }
 
         [[nodiscard]] friend constexpr auto operator==(param_type const& lhs, param_type const& rhs) noexcept -> bool
@@ -29,26 +30,29 @@ struct uniform_int_distribution {
         }
 
     private:
-        result_type _min {0};
-        result_type _max {numeric_limits<result_type>::max()};
+        result_type _min{0};
+        result_type _max{numeric_limits<result_type>::max()};
     };
 
-    constexpr uniform_int_distribution() : uniform_int_distribution {0} { }
+    constexpr uniform_int_distribution() : uniform_int_distribution{0} { }
 
-    explicit constexpr uniform_int_distribution(param_type const& parm) : _param {parm} { }
+    explicit constexpr uniform_int_distribution(param_type const& parm) : _param{parm} { }
 
     explicit constexpr uniform_int_distribution(IntType a, IntType b = numeric_limits<IntType>::max())
-        : uniform_int_distribution {param_type {a, b}}
+        : uniform_int_distribution(param_type{a, b})
     {
     }
 
     constexpr auto param(param_type const& parm) -> void { _param = parm; }
+
     [[nodiscard]] constexpr auto param() const -> param_type { return _param; }
 
     [[nodiscard]] constexpr auto a() const -> result_type { return _param.a(); }
+
     [[nodiscard]] constexpr auto b() const -> result_type { return _param.b(); }
 
     [[nodiscard]] constexpr auto min() const -> result_type { return a(); }
+
     [[nodiscard]] constexpr auto max() const -> result_type { return b(); }
 
     constexpr auto reset() -> void { (void)this; }

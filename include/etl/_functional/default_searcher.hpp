@@ -18,7 +18,9 @@ namespace etl {
 template <typename ForwardIter, typename Predicate = equal_to<>>
 struct default_searcher {
     constexpr default_searcher(ForwardIter f, ForwardIter l, Predicate p = Predicate())
-        : _first(f), _last(l), _predicate(p)
+        : _first(f)
+        , _last(l)
+        , _predicate(p)
     {
     }
 
@@ -27,10 +29,10 @@ struct default_searcher {
     {
         if (auto i = etl::detail::search_impl(f, l, _first, _last, _predicate); i != l) {
             auto j = etl::next(i, etl::distance(_first, _last));
-            return etl::pair<ForwardIter2, ForwardIter2> {i, j};
+            return etl::pair<ForwardIter2, ForwardIter2>{i, j};
         }
 
-        return etl::pair<ForwardIter2, ForwardIter2> {l, l};
+        return etl::pair<ForwardIter2, ForwardIter2>{l, l};
     }
 
 private:

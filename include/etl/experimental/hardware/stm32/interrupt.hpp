@@ -40,7 +40,9 @@ struct isr {
 
     static auto call_checked(vector_t const& callbacks, isr_ids id) noexcept -> void
     {
-        if (callbacks[static_cast<size_t>(id)] != nullptr) { callbacks[static_cast<size_t>(id)](); }
+        if (callbacks[static_cast<size_t>(id)] != nullptr) {
+            callbacks[static_cast<size_t>(id)]();
+        }
     }
 };
 } // namespace etl::experimental::hardware::stm32

@@ -15,14 +15,14 @@ struct null_clock {
     using time_point                      = etl::chrono::time_point<null_clock>;
     static constexpr auto const is_steady = false;
 
-    [[nodiscard]] constexpr auto now() noexcept -> time_point { return time_point {}; }
+    [[nodiscard]] constexpr auto now() noexcept -> time_point { return time_point{}; }
 };
 
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto null = etl::chrono::time_point<null_clock<T>> {};
-    assert(null.time_since_epoch().count() == T {0});
+    auto null = etl::chrono::time_point<null_clock<T>>{};
+    assert(null.time_since_epoch().count() == T{0});
     return true;
 }
 

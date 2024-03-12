@@ -12,6 +12,7 @@ struct reference_wrapper;
 
 template <typename T>
 struct is_reference_wrapper : false_type { };
+
 template <typename U>
 struct is_reference_wrapper<reference_wrapper<U>> : true_type { };
 

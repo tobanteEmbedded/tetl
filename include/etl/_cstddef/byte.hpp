@@ -15,7 +15,8 @@ namespace etl {
 /// the only operators defined for it are the bitwise ones.
 ///
 /// https://en.cppreference.com/w/cpp/types/byte
-enum struct byte : unsigned char {};
+enum struct byte : unsigned char {
+};
 
 /// \brief Equivalent to: `return Int(b);`
 template <integral Int>

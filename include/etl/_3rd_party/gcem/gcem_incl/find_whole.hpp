@@ -30,11 +30,13 @@ namespace internal {
 template <typename T>
 constexpr auto find_whole(T const x) noexcept -> llint_t
 {
-    return (abs(x - internal::floor_check(x)) >= T(0.5) ? // if
-                static_cast<llint_t>(internal::floor_check(x) + sgn(x))
-                                                        :
-                                                        // else
-                static_cast<llint_t>(internal::floor_check(x)));
+    return (
+        abs(x - internal::floor_check(x)) >= T(0.5) ? // if
+            static_cast<llint_t>(internal::floor_check(x) + sgn(x))
+                                                    :
+                                                    // else
+            static_cast<llint_t>(internal::floor_check(x))
+    );
 }
 
 } // namespace internal

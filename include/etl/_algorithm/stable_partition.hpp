@@ -15,8 +15,12 @@ template <typename BidirIt, typename Predicate>
 constexpr auto stable_partition(BidirIt f, BidirIt l, Predicate p) -> BidirIt
 {
     auto const n = l - f;
-    if (n == 0) { return f; }
-    if (n == 1) { return f + p(*f); }
+    if (n == 0) {
+        return f;
+    }
+    if (n == 1) {
+        return f + p(*f);
+    }
     auto const m = f + (n / 2);
     return rotate(stable_partition(f, m, p), m, stable_partition(m, l, p));
 }

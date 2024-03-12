@@ -15,10 +15,10 @@ auto test() -> bool
 {
     using func_t = etl::inplace_function<T(T), sizeof(void*) * 2U>;
 
-    assert(!static_cast<bool>(etl::inplace_function<T(T)> {}));
-    assert(!static_cast<bool>(etl::inplace_function<T(T)> {nullptr}));
+    assert(!static_cast<bool>(etl::inplace_function<T(T)>{}));
+    assert(!static_cast<bool>(etl::inplace_function<T(T)>{nullptr}));
 
-    auto func = func_t {[](T x) { return x + T(1); }};
+    auto func = func_t{[](T x) { return x + T(1); }};
     assert(static_cast<bool>(func));
     assert(func != nullptr);
     assert(nullptr != func);
@@ -27,7 +27,7 @@ auto test() -> bool
     assert(func(T(41)) == T(42));
     assert(etl::invoke(func, T(41)) == T(42));
 
-    auto other = func_t {};
+    auto other = func_t{};
     assert(other == nullptr);
     assert(!static_cast<bool>(other));
     func.swap(other);
@@ -58,20 +58,20 @@ auto test() -> bool
     assert(static_cast<bool>(copy));
 
     using small_func_t = etl::inplace_function<T(T), sizeof(void*)>;
-    auto small         = small_func_t {[](T x) { return x + T(2); }};
+    auto small         = small_func_t{[](T x) { return x + T(2); }};
     copy               = small;
     assert(static_cast<bool>(copy));
     assert(copy(T(1)) == T(3));
 
-    auto move = func_t {};
+    auto move = func_t{};
     move      = etl::move(small);
     assert(static_cast<bool>(move));
     assert(move(T(1)) == T(3));
 
 #if defined(__cpp_exceptions)
     try {
-        auto empty = func_t {};
-        empty(T {});
+        auto empty = func_t{};
+        empty(T{});
         assert(false);
     } catch (etl::bad_function_call const& e) {
         assert(e.what() == "empty inplace_func_vtable"_sv);

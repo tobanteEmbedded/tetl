@@ -33,15 +33,15 @@ constexpr auto test_chars_format() -> bool
 constexpr auto test_to_chars_result() -> bool
 {
     {
-        auto lhs = etl::to_chars_result {nullptr, etl::errc {}};
-        auto rhs = etl::to_chars_result {nullptr, etl::errc {}};
+        auto lhs = etl::to_chars_result{nullptr, etl::errc{}};
+        auto rhs = etl::to_chars_result{nullptr, etl::errc{}};
         assert(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::to_chars_result {buffer, etl::errc {}};
-        auto rhs        = etl::to_chars_result {buffer, etl::errc {}};
+        auto lhs        = etl::to_chars_result{buffer, etl::errc{}};
+        auto rhs        = etl::to_chars_result{buffer, etl::errc{}};
         assert(lhs == rhs);
     }
 
@@ -51,15 +51,15 @@ constexpr auto test_to_chars_result() -> bool
 constexpr auto test_from_chars_result() -> bool
 {
     {
-        auto lhs = etl::from_chars_result {nullptr, etl::errc {}};
-        auto rhs = etl::from_chars_result {nullptr, etl::errc {}};
+        auto lhs = etl::from_chars_result{nullptr, etl::errc{}};
+        auto rhs = etl::from_chars_result{nullptr, etl::errc{}};
         assert(lhs == rhs);
     }
 
     {
         char buffer[16] = {};
-        auto lhs        = etl::from_chars_result {buffer, etl::errc {}};
-        auto rhs        = etl::from_chars_result {buffer, etl::errc {}};
+        auto lhs        = etl::from_chars_result{buffer, etl::errc{}};
+        auto rhs        = etl::from_chars_result{buffer, etl::errc{}};
         assert(lhs == rhs);
     }
 
@@ -72,7 +72,7 @@ constexpr auto test_from_chars() -> bool
     using namespace etl::string_view_literals;
 
     auto test = [](auto tc, T expected, int base) -> void {
-        auto val          = T {};
+        auto val          = T{};
         auto const result = etl::from_chars(tc.begin(), tc.end(), val, base);
         assert(static_cast<bool>(result));
         assert(result.ptr == tc.end());
@@ -80,7 +80,7 @@ constexpr auto test_from_chars() -> bool
     };
 
     {
-        auto val = T {};
+        auto val = T{};
 
         auto foo = "foo"_sv;
         assert(not static_cast<bool>(etl::from_chars(foo.begin(), foo.end(), val)));
@@ -91,7 +91,7 @@ constexpr auto test_from_chars() -> bool
         auto const result = etl::from_chars(fourfoo.begin(), fourfoo.end(), val);
         assert(static_cast<bool>(result));
         assert(result.ptr == etl::next(fourfoo.data()));
-        assert(result.ec == etl::errc {});
+        assert(result.ec == etl::errc{});
         assert(val == T(4));
     }
 
@@ -132,7 +132,7 @@ constexpr auto test_to_chars() -> bool
     using namespace etl::string_view_literals;
 
     auto test = [](T tc, etl::string_view expected) -> void {
-        auto buf          = etl::array<char, 16> {};
+        auto buf          = etl::array<char, 16>{};
         auto const result = etl::to_chars(buf.begin(), buf.end(), tc, 10);
         assert(static_cast<bool>(result));
         assert(result.ptr != nullptr);

@@ -119,7 +119,7 @@ protected:
 template <typename T, size_t Capacity>
 struct static_vector_trivial_storage {
     static_assert(etl::is_trivial_v<T>);
-    static_assert(Capacity != size_t {0});
+    static_assert(Capacity != size_t{0});
 
     using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
@@ -151,7 +151,7 @@ struct static_vector_trivial_storage {
     [[nodiscard]] constexpr auto capacity() const noexcept -> size_type { return Capacity; }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type {0}; }
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool { return size() == size_type{0}; }
 
     /// \brief Is the storage full?
     [[nodiscard]] constexpr auto full() const noexcept -> bool { return size() == Capacity; }
@@ -200,7 +200,7 @@ private:
     // If the value_type is const, make a const array of
     // non-const elements:
     using data_t = conditional_t<!is_const_v<T>, array<T, Capacity>, array<remove_const_t<T>, Capacity> const>;
-    alignas(alignof(T)) data_t _data {};
+    alignas(alignof(T)) data_t _data{};
 
     size_type _size = 0;
 };
@@ -209,7 +209,7 @@ private:
 template <typename T, size_t Capacity>
 struct static_vector_non_trivial_storage {
     static_assert(!is_trivial_v<T>);
-    static_assert(Capacity != size_t {0});
+    static_assert(Capacity != size_t{0});
 
     using size_type       = etl::smallest_size_t<Capacity>;
     using value_type      = T;
@@ -247,7 +247,7 @@ struct static_vector_non_trivial_storage {
     [[nodiscard]] auto capacity() const noexcept -> size_type { return Capacity; }
 
     /// \brief Is the storage empty?
-    [[nodiscard]] auto empty() const noexcept -> bool { return size() == size_type {0}; }
+    [[nodiscard]] auto empty() const noexcept -> bool { return size() == size_type{0}; }
 
     /// \brief Is the storage full?
     [[nodiscard]] auto full() const noexcept -> bool { return size() == Capacity; }
@@ -289,7 +289,9 @@ protected:
     {
         TETL_ASSERT(first >= data() and first <= end());
         TETL_ASSERT(last >= data() and last <= end());
-        for (; first != last; ++first) { first->~T(); }
+        for (; first != last; ++first) {
+            first->~T();
+        }
     }
 
     /// \brief (unsafe) Destroys all elements of the storage.
@@ -308,8 +310,12 @@ private:
 
 /// \brief Selects the vector storage.
 template <typename T, size_t Capacity>
-using static_vector_storage_type = conditional_t<Capacity == 0, static_vector_zero_storage<T>,
-    conditional_t<is_trivial_v<T>, static_vector_trivial_storage<T, Capacity>,
+using static_vector_storage_type = conditional_t<
+    Capacity == 0,
+    static_vector_zero_storage<T>,
+    conditional_t<
+        is_trivial_v<T>,
+        static_vector_trivial_storage<T, Capacity>,
         static_vector_non_trivial_storage<T, Capacity>>>;
 
 } // namespace detail
@@ -352,34 +358,46 @@ public:
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
 
 private:
-    constexpr auto emplace_n(size_type n)
-        noexcept((is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
-                 || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)) -> void
+    constexpr auto emplace_n(size_type n) noexcept(
+        (is_move_constructible_v<T> and is_nothrow_move_constructible_v<T>)
+        || (is_copy_constructible_v<T> and is_nothrow_copy_constructible_v<T>)
+    ) -> void
     {
         TETL_ASSERT(n <= capacity());
-        while (n != size()) { emplace_back(T {}); }
+        while (n != size()) {
+            emplace_back(T{});
+        }
     }
 
 public:
     [[nodiscard]] constexpr auto begin() noexcept -> iterator { return data(); }
+
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return data(); }
+
     [[nodiscard]] constexpr auto end() noexcept -> iterator { return data() + size(); }
+
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return data() + size(); }
 
     [[nodiscard]] constexpr auto rbegin() noexcept -> reverse_iterator { return reverse_iterator(end()); }
+
     [[nodiscard]] constexpr auto rbegin() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(end());
     }
+
     [[nodiscard]] constexpr auto rend() noexcept -> reverse_iterator { return reverse_iterator(begin()); }
+
     [[nodiscard]] constexpr auto rend() const noexcept -> const_reverse_iterator
     {
         return const_reverse_iterator(begin());
     }
 
     [[nodiscard]] constexpr auto cbegin() noexcept -> const_iterator { return begin(); }
+
     [[nodiscard]] constexpr auto cbegin() const noexcept -> const_iterator { return begin(); }
+
     [[nodiscard]] constexpr auto cend() noexcept -> const_iterator { return end(); }
+
     [[nodiscard]] constexpr auto cend() const noexcept -> const_iterator { return end(); }
 
     using base_type::emplace_back;
@@ -397,8 +415,9 @@ public:
 
     template <typename InIt>
         requires(detail::InputIterator<InIt>)
-    constexpr auto move_insert(const_iterator position, InIt first, InIt last)
-        noexcept(noexcept(emplace_back(move(*first)))) -> iterator
+    constexpr auto
+    move_insert(const_iterator position, InIt first, InIt last) noexcept(noexcept(emplace_back(move(*first)))
+    ) -> iterator
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -408,7 +427,9 @@ public:
         iterator b = end();
 
         // we insert at the end and then just rotate:
-        for (; first != last; ++first) { emplace_back(move(*first)); }
+        for (; first != last; ++first) {
+            emplace_back(move(*first));
+        }
         auto* writablePosition = begin() + (position - begin());
         rotate<iterator>(writablePosition, b, end());
         return writablePosition;
@@ -416,8 +437,9 @@ public:
 
     template <typename... Args>
         requires(is_constructible_v<T, Args...>)
-    constexpr auto emplace(const_iterator position, Args&&... args)
-        noexcept(noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))) -> iterator
+    constexpr auto emplace(const_iterator position, Args&&... args) noexcept(
+        noexcept(move_insert(position, declval<value_type*>(), declval<value_type*>()))
+    ) -> iterator
     {
         TETL_ASSERT(!full());
         assert_iterator_in_range(position);
@@ -428,8 +450,8 @@ public:
     /// \brief Data access
     using base_type::data;
 
-    constexpr auto insert(const_iterator position, value_type&& x)
-        noexcept(noexcept(move_insert(position, &x, &x + 1))) -> iterator
+    constexpr auto insert(const_iterator position, value_type&& x) noexcept(noexcept(move_insert(position, &x, &x + 1))
+    ) -> iterator
         requires(is_move_constructible_v<T>)
     {
         TETL_ASSERT(!full());
@@ -453,8 +475,8 @@ public:
         return writablePosition;
     }
 
-    constexpr auto insert(const_iterator position, const_reference x)
-        noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
+    constexpr auto
+    insert(const_iterator position, const_reference x) noexcept(noexcept(insert(position, size_type(1), x))) -> iterator
         requires(is_copy_constructible_v<T>)
     {
         TETL_ASSERT(!full());
@@ -463,10 +485,9 @@ public:
     }
 
     template <typename InputIt>
-    constexpr auto insert(const_iterator position, InputIt first, InputIt last)
-        noexcept(noexcept(emplace_back(*first))) -> iterator
-        requires(
-            detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
+    constexpr auto insert(const_iterator position, InputIt first, InputIt last) noexcept(noexcept(emplace_back(*first))
+    ) -> iterator
+        requires(detail::InputIterator<InputIt> && is_constructible_v<value_type, detail::iterator_reference_t<InputIt>>)
     {
         assert_iterator_in_range(position);
         assert_valid_iterator_pair(first, last);
@@ -476,7 +497,9 @@ public:
         auto* b = end();
 
         // insert at the end and then just rotate:
-        for (; first != last; ++first) { emplace_back(*first); }
+        for (; first != last; ++first) {
+            emplace_back(*first);
+        }
 
         auto* writablePosition = begin() + (position - begin());
         rotate(writablePosition, b, end());
@@ -521,8 +544,8 @@ public:
     }
 
     /// \brief Copy assignment.
-    constexpr auto operator=(static_vector const& other)
-        noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))) -> static_vector&
+    constexpr auto operator=(static_vector const& other
+    ) noexcept(noexcept(clear()) && noexcept(insert(begin(), other.begin(), other.end()))) -> static_vector&
         requires(is_assignable_v<reference, const_reference>)
     {
         // Nothing to assert: size of other cannot exceed capacity because both
@@ -533,8 +556,8 @@ public:
     }
 
     /// \brief Move assignment.
-    constexpr auto operator=(static_vector&& other)
-        noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end()))) -> static_vector&
+    constexpr auto operator=(static_vector&& other
+    ) noexcept(noexcept(clear()) and noexcept(move_insert(begin(), other.begin(), other.end()))) -> static_vector&
         requires(is_assignable_v<reference, reference>)
     {
         // Nothing to assert: size of other cannot exceed capacity because both
@@ -588,8 +611,9 @@ public:
     /// \brief assign
     template <typename InputIter>
         requires(detail::InputIterator<InputIter>)
-    constexpr auto assign(InputIter first, InputIter last)
-        noexcept(noexcept(clear()) and noexcept(insert(begin(), first, last))) -> void
+    constexpr auto assign(InputIter first, InputIter last) noexcept(
+        noexcept(clear()) and noexcept(insert(begin(), first, last))
+    ) -> void
     {
         if constexpr (detail::RandomAccessIterator<InputIter>) {
             TETL_ASSERT(last - first >= 0);
@@ -668,12 +692,15 @@ public:
 
     /// \brief Resizes the container to contain sz elements. If elements need to
     /// be appended, these are move-constructed from `T{}` (or copy-constructed
-    constexpr auto resize(size_type sz)
-        noexcept((is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
-                 || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>)) -> void
+    constexpr auto resize(size_type sz) noexcept(
+        (is_move_constructible_v<T> && is_nothrow_move_constructible_v<T>)
+        || (is_copy_constructible_v<T> && is_nothrow_copy_constructible_v<T>)
+    ) -> void
         requires(detail::is_movable_v<value_type>)
     {
-        if (sz == size()) { return; }
+        if (sz == size()) {
+            return;
+        }
 
         if (sz > size()) {
             emplace_n(sz);
@@ -686,7 +713,9 @@ public:
     constexpr auto resize(size_type sz, T const& value) noexcept(is_nothrow_copy_constructible_v<T>) -> void
         requires(is_copy_constructible_v<T>)
     {
-        if (sz == size()) { return; }
+        if (sz == size()) {
+            return;
+        }
         if (sz > size()) {
             TETL_ASSERT(sz <= capacity());
             insert(end(), sz - size(), value);
@@ -737,7 +766,9 @@ constexpr auto swap(static_vector<T, Capacity>& lhs, static_vector<T, Capacity>&
 template <typename T, size_t Capacity>
 constexpr auto operator==(static_vector<T, Capacity> const& lhs, static_vector<T, Capacity> const& rhs) noexcept -> bool
 {
-    if (size(lhs) == size(rhs)) { return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), equal_to {}); }
+    if (size(lhs) == size(rhs)) {
+        return equal(begin(lhs), end(lhs), begin(rhs), end(rhs), equal_to{});
+    }
 
     return false;
 }

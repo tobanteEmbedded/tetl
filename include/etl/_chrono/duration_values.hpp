@@ -15,7 +15,7 @@ template <typename Rep>
 struct duration_values {
 public:
     /// \brief Returns a zero-length representation.
-    [[nodiscard]] static constexpr auto zero() -> Rep { return Rep {}; }
+    [[nodiscard]] static constexpr auto zero() -> Rep { return Rep{}; }
 
     /// \brief Returns the smallest possible representation.
     [[nodiscard]] static constexpr auto min() -> Rep { return etl::numeric_limits<Rep>::lowest(); }

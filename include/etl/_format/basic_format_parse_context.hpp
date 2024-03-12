@@ -16,7 +16,9 @@ struct basic_format_parse_context {
     using iterator       = const_iterator;
 
     constexpr explicit basic_format_parse_context(basic_string_view<CharT> fmt, size_t numArgs = 0) noexcept
-        : _begin {fmt.begin()}, _end {fmt.end()}, _numArgs {numArgs}
+        : _begin{fmt.begin()}
+        , _end{fmt.end()}
+        , _numArgs{numArgs}
     {
     }
 
@@ -24,10 +26,13 @@ struct basic_format_parse_context {
     auto operator=(basic_format_parse_context const& other) -> basic_format_parse_context& = delete;
 
     [[nodiscard]] constexpr auto begin() const noexcept -> const_iterator { return _begin; }
+
     [[nodiscard]] constexpr auto end() const noexcept -> const_iterator { return _end; }
+
     constexpr auto advance_to(const_iterator it) -> void { _begin = it; }
 
     [[nodiscard]] constexpr auto next_arg_id() -> size_t { return static_cast<size_t>(_nextArgId++); }
+
     constexpr auto check_arg_id(size_t /*id*/) -> void { _nextArgId = -1; }
 
 private:
@@ -38,7 +43,7 @@ private:
     iterator _begin;
     iterator _end;
     size_t _numArgs;
-    ptrdiff_t _nextArgId {};
+    ptrdiff_t _nextArgId{};
 };
 
 using format_parse_context  = basic_format_parse_context<char>;

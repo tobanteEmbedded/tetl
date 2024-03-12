@@ -23,7 +23,7 @@ constexpr auto test() -> bool
     assert(etl::same_as<etl::ranges::sentinel_t<etl::string_view>, etl::ranges::iterator_t<etl::string_view>>);
 
     {
-        T data[2] {T(1), T(2)};
+        T data[2]{T(1), T(2)};
         assert(etl::ranges::range<decltype(data)>);
         assert(etl::ranges::sized_range<decltype(data)>);
         assert(etl::same_as<etl::ranges::range_size_t<decltype(data)>, etl::size_t>);

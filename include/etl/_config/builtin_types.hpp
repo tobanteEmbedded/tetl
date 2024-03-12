@@ -4,36 +4,36 @@
 #define TETL_CONFIG_BUILTIN_TYPES_HPP
 
 #if defined(TETL_MSVC)
-    #define TETL_BUILTIN_INT8 signed __int8
-    #define TETL_BUILTIN_INT16 signed __int16
-    #define TETL_BUILTIN_INT32 signed __int32
-    #define TETL_BUILTIN_INT64 signed __int64
-    #define TETL_BUILTIN_UINT8 unsigned __int8
+    #define TETL_BUILTIN_INT8   signed __int8
+    #define TETL_BUILTIN_INT16  signed __int16
+    #define TETL_BUILTIN_INT32  signed __int32
+    #define TETL_BUILTIN_INT64  signed __int64
+    #define TETL_BUILTIN_UINT8  unsigned __int8
     #define TETL_BUILTIN_UINT16 unsigned __int16
     #define TETL_BUILTIN_UINT32 unsigned __int32
     #define TETL_BUILTIN_UINT64 unsigned __int64
 
-    #define TETL_BUILTIN_INTPTR TETL_BUILTIN_INT64
+    #define TETL_BUILTIN_INTPTR  TETL_BUILTIN_INT64
     #define TETL_BUILTIN_UINTPTR TETL_BUILTIN_UINT64
-    #define TETL_BUILTIN_INTMAX TETL_BUILTIN_INT64
+    #define TETL_BUILTIN_INTMAX  TETL_BUILTIN_INT64
     #define TETL_BUILTIN_UINTMAX TETL_BUILTIN_UINT64
-    #define TETL_BUILTIN_SIZET decltype(sizeof(nullptr))
+    #define TETL_BUILTIN_SIZET   decltype(sizeof(nullptr))
     #define TETL_BUILTIN_PTRDIFF TETL_BUILTIN_INT64
 #else
-    #define TETL_BUILTIN_INT8 __INT8_TYPE__
-    #define TETL_BUILTIN_INT16 __INT16_TYPE__
-    #define TETL_BUILTIN_INT32 __INT32_TYPE__
-    #define TETL_BUILTIN_INT64 __INT64_TYPE__
-    #define TETL_BUILTIN_UINT8 __UINT8_TYPE__
+    #define TETL_BUILTIN_INT8   __INT8_TYPE__
+    #define TETL_BUILTIN_INT16  __INT16_TYPE__
+    #define TETL_BUILTIN_INT32  __INT32_TYPE__
+    #define TETL_BUILTIN_INT64  __INT64_TYPE__
+    #define TETL_BUILTIN_UINT8  __UINT8_TYPE__
     #define TETL_BUILTIN_UINT16 __UINT16_TYPE__
     #define TETL_BUILTIN_UINT32 __UINT32_TYPE__
     #define TETL_BUILTIN_UINT64 __UINT64_TYPE__
 
-    #define TETL_BUILTIN_INTPTR __INTPTR_TYPE__
+    #define TETL_BUILTIN_INTPTR  __INTPTR_TYPE__
     #define TETL_BUILTIN_UINTPTR __UINTPTR_TYPE__
-    #define TETL_BUILTIN_INTMAX __INTMAX_TYPE__
+    #define TETL_BUILTIN_INTMAX  __INTMAX_TYPE__
     #define TETL_BUILTIN_UINTMAX __UINTMAX_TYPE__
-    #define TETL_BUILTIN_SIZET __SIZE_TYPE__
+    #define TETL_BUILTIN_SIZET   __SIZE_TYPE__
     #define TETL_BUILTIN_PTRDIFF __PTRDIFF_TYPE__
 #endif
 

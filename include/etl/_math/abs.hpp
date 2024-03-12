@@ -14,7 +14,9 @@ template <typename T>
     // constexpr auto isLongLong = is_same_v<T, long long>;
     // static_assert(isInt || isLong || isLongLong);
 
-    if (n >= T(0)) { return n; }
+    if (n >= T(0)) {
+        return n;
+    }
     return n * T(-1);
 }
 

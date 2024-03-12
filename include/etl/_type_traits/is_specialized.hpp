@@ -14,7 +14,7 @@ template <template <typename...> typename, typename, typename = void>
 struct is_specialized : etl::false_type { };
 
 template <template <typename...> typename Template, typename T>
-struct is_specialized<Template, T, etl::void_t<decltype(Template<T> {})>> : etl::true_type { };
+struct is_specialized<Template, T, etl::void_t<decltype(Template<T>{})>> : etl::true_type { };
 
 template <template <typename...> typename Template, typename T, typename Tag = void>
 inline constexpr bool is_specialized_v = etl::is_specialized<Template, T, Tag>::value;

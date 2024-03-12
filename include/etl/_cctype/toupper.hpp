@@ -23,7 +23,9 @@ namespace etl {
 /// https://en.cppreference.com/w/cpp/string/byte/toupper
 [[nodiscard]] constexpr auto toupper(int ch) noexcept -> int
 {
-    if (islower(ch) != 0) { return static_cast<int>(ch - 32); }
+    if (islower(ch) != 0) {
+        return static_cast<int>(ch - 32);
+    }
     return static_cast<int>(ch);
 }
 } // namespace etl

@@ -14,7 +14,9 @@ namespace etl {
 template <typename BidirIt, typename OutputIt>
 constexpr auto reverse_copy(BidirIt first, BidirIt last, OutputIt destination) -> OutputIt
 {
-    for (; first != last; ++destination) { *(destination) = *(--last); }
+    for (; first != last; ++destination) {
+        *(destination) = *(--last);
+    }
     return destination;
 }
 

@@ -9,7 +9,7 @@ struct full_extent_t {
     explicit full_extent_t() = default;
 };
 
-inline constexpr auto full_extent = full_extent_t {};
+inline constexpr auto full_extent = full_extent_t{};
 
 } // namespace etl
 

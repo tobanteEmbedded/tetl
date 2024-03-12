@@ -48,51 +48,57 @@ constexpr auto incomplete_gamma_quad_fn(T const x, T const a, T const lgTerm) no
 }
 
 template <typename T>
-constexpr auto incomplete_gamma_quad_recur(
-    T const lb, T const ub, T const a, T const lgTerm, int const counter) noexcept -> T
+constexpr auto
+incomplete_gamma_quad_recur(T const lb, T const ub, T const a, T const lgTerm, int const counter) noexcept -> T
 {
-    return (counter < 49 ? // if
-                incomplete_gamma_quad_fn(incomplete_gamma_quad_inp_vals(lb, ub, counter), a, lgTerm)
-                        * incomplete_gamma_quad_weight_vals(lb, ub, counter)
-                    + incomplete_gamma_quad_recur(lb, ub, a, lgTerm, counter + 1)
-                         :
-                         // else
-                incomplete_gamma_quad_fn(incomplete_gamma_quad_inp_vals(lb, ub, counter), a, lgTerm)
-                    * incomplete_gamma_quad_weight_vals(lb, ub, counter));
+    return (
+        counter < 49 ? // if
+            incomplete_gamma_quad_fn(incomplete_gamma_quad_inp_vals(lb, ub, counter), a, lgTerm)
+                    * incomplete_gamma_quad_weight_vals(lb, ub, counter)
+                + incomplete_gamma_quad_recur(lb, ub, a, lgTerm, counter + 1)
+                     :
+                     // else
+            incomplete_gamma_quad_fn(incomplete_gamma_quad_inp_vals(lb, ub, counter), a, lgTerm)
+                * incomplete_gamma_quad_weight_vals(lb, ub, counter)
+    );
 }
 
 template <typename T>
 constexpr auto incomplete_gamma_quad_lb(T const a, T const z) noexcept -> T
 {
-    return (a > T(1000) ? max(T(0), min(z, a) - 11 * sqrt(a)) : // break integration into ranges
-                a > T(800) ? max(T(0), min(z, a) - 11 * sqrt(a))
-            : a > T(500)   ? max(T(0), min(z, a) - 10 * sqrt(a))
-            : a > T(300)   ? max(T(0), min(z, a) - 10 * sqrt(a))
-            : a > T(100)   ? max(T(0), min(z, a) - 9 * sqrt(a))
-            : a > T(90)    ? max(T(0), min(z, a) - 9 * sqrt(a))
-            : a > T(70)    ? max(T(0), min(z, a) - 8 * sqrt(a))
-            : a > T(50)    ? max(T(0), min(z, a) - 7 * sqrt(a))
-            : a > T(40)    ? max(T(0), min(z, a) - 6 * sqrt(a))
-            : a > T(30)    ? max(T(0), min(z, a) - 5 * sqrt(a))
-                           :
-                        // else
-                max(T(0), min(z, a) - 4 * sqrt(a)));
+    return (
+        a > T(1000) ? max(T(0), min(z, a) - 11 * sqrt(a)) : // break integration into ranges
+            a > T(800) ? max(T(0), min(z, a) - 11 * sqrt(a))
+        : a > T(500)   ? max(T(0), min(z, a) - 10 * sqrt(a))
+        : a > T(300)   ? max(T(0), min(z, a) - 10 * sqrt(a))
+        : a > T(100)   ? max(T(0), min(z, a) - 9 * sqrt(a))
+        : a > T(90)    ? max(T(0), min(z, a) - 9 * sqrt(a))
+        : a > T(70)    ? max(T(0), min(z, a) - 8 * sqrt(a))
+        : a > T(50)    ? max(T(0), min(z, a) - 7 * sqrt(a))
+        : a > T(40)    ? max(T(0), min(z, a) - 6 * sqrt(a))
+        : a > T(30)    ? max(T(0), min(z, a) - 5 * sqrt(a))
+                       :
+                    // else
+            max(T(0), min(z, a) - 4 * sqrt(a))
+    );
 }
 
 template <typename T>
 constexpr auto incomplete_gamma_quad_ub(T const a, T const z) noexcept -> T
 {
-    return (a > T(1000)  ? min(z, a + 10 * sqrt(a))
-            : a > T(800) ? min(z, a + 10 * sqrt(a))
-            : a > T(500) ? min(z, a + 9 * sqrt(a))
-            : a > T(300) ? min(z, a + 9 * sqrt(a))
-            : a > T(100) ? min(z, a + 8 * sqrt(a))
-            : a > T(90)  ? min(z, a + 8 * sqrt(a))
-            : a > T(70)  ? min(z, a + 7 * sqrt(a))
-            : a > T(50)  ? min(z, a + 6 * sqrt(a))
-                         :
-                        // else
-                min(z, a + 5 * sqrt(a)));
+    return (
+        a > T(1000)  ? min(z, a + 10 * sqrt(a))
+        : a > T(800) ? min(z, a + 10 * sqrt(a))
+        : a > T(500) ? min(z, a + 9 * sqrt(a))
+        : a > T(300) ? min(z, a + 9 * sqrt(a))
+        : a > T(100) ? min(z, a + 8 * sqrt(a))
+        : a > T(90)  ? min(z, a + 8 * sqrt(a))
+        : a > T(70)  ? min(z, a + 7 * sqrt(a))
+        : a > T(50)  ? min(z, a + 6 * sqrt(a))
+                     :
+                    // else
+            min(z, a + 5 * sqrt(a))
+    );
 }
 
 template <typename T>
@@ -107,11 +113,13 @@ constexpr auto incomplete_gamma_quad(T const a, T const z) noexcept -> T
 template <typename T>
 constexpr auto incomplete_gamma_cf_2_recur(T const a, T const z, int const depth) noexcept -> T
 {
-    return (depth < 100 ? // if
-                (1 + (depth - 1) * 2 - a + z) + depth * (a - depth) / incomplete_gamma_cf_2_recur(a, z, depth + 1)
-                        :
-                        // else
-                (1 + (depth - 1) * 2 - a + z));
+    return (
+        depth < 100 ? // if
+            (1 + (depth - 1) * 2 - a + z) + depth * (a - depth) / incomplete_gamma_cf_2_recur(a, z, depth + 1)
+                    :
+                    // else
+            (1 + (depth - 1) * 2 - a + z)
+    );
 }
 
 template <typename T>
@@ -132,11 +140,13 @@ constexpr auto incomplete_gamma_cf_1_coef(T const a, T const z, int const depth)
 template <typename T>
 constexpr auto incomplete_gamma_cf_1_recur(T const a, T const z, int const depth) noexcept -> T
 {
-    return (depth < GCEM_INCML_GAMMA_MAX_ITER ? // if
-                (a + depth - 1) + incomplete_gamma_cf_1_coef(a, z, depth) / incomplete_gamma_cf_1_recur(a, z, depth + 1)
-                                              :
-                                              // else
-                (a + depth - 1));
+    return (
+        depth < GCEM_INCML_GAMMA_MAX_ITER ? // if
+            (a + depth - 1) + incomplete_gamma_cf_1_coef(a, z, depth) / incomplete_gamma_cf_1_recur(a, z, depth + 1)
+                                          :
+                                          // else
+            (a + depth - 1)
+    );
 }
 
 template <typename T>
@@ -166,7 +176,8 @@ constexpr auto incomplete_gamma_check(T const a, T const z) noexcept -> T
         : (a < T(10)) || (z / a > T(3))    ? incomplete_gamma_cf_2(a, z)
                                            :
                                         // else
-            incomplete_gamma_quad(a, z));
+            incomplete_gamma_quad(a, z)
+    );
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>

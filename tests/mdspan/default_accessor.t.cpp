@@ -27,7 +27,7 @@ constexpr auto test_one(etl::array<ElementType, 2> elements) -> bool
     static_assert(etl::same_as<typename accessor_t::reference, ElementType&>);
     static_assert(etl::same_as<typename accessor_t::data_handle_type, ElementType*>);
 
-    auto accessor = accessor_t {};
+    auto accessor = accessor_t{};
     assert(accessor.access(elements.data(), 0) == elements[0]);
     assert(accessor.access(elements.data(), 1) == elements[1]);
     assert(accessor.offset(elements.data(), 0) == etl::next(elements.data(), 0));

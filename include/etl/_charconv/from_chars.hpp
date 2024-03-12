@@ -14,10 +14,10 @@ namespace etl {
 
 /// \brief Primitive numerical input conversion
 struct from_chars_result {
-    char const* ptr {nullptr};
-    etl::errc ec {};
+    char const* ptr{nullptr};
+    etl::errc ec{};
 
-    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc {}; }
+    [[nodiscard]] constexpr explicit operator bool() const noexcept { return ec == etl::errc{}; }
 
     friend auto operator==(from_chars_result const&, from_chars_result const&) -> bool = default;
 };
@@ -30,22 +30,22 @@ struct from_chars_result {
 /// in value.
 template <integral Int>
     requires(not same_as<Int, bool>)
-[[nodiscard]] constexpr auto from_chars(
-    char const* first, char const* last, Int& value, int base = 10) -> from_chars_result
+[[nodiscard]] constexpr auto
+from_chars(char const* first, char const* last, Int& value, int base = 10) -> from_chars_result
 {
     constexpr auto skip        = detail::skip_whitespace::no;
     auto const length          = static_cast<etl::size_t>(etl::distance(first, last));
     auto const [end, err, val] = detail::string_to_integer<Int, skip>(first, length, static_cast<Int>(base));
 
     if (err == detail::string_to_integer_error::overflow) {
-        return from_chars_result {.ptr = first, .ec = errc::result_out_of_range};
+        return from_chars_result{.ptr = first, .ec = errc::result_out_of_range};
     }
     if (err == detail::string_to_integer_error::invalid_input) {
-        return from_chars_result {.ptr = first, .ec = errc::invalid_argument};
+        return from_chars_result{.ptr = first, .ec = errc::invalid_argument};
     }
 
     value = val;
-    return from_chars_result {.ptr = end, .ec = {}};
+    return from_chars_result{.ptr = end, .ec = {}};
 }
 
 } // namespace etl

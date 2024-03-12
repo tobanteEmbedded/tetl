@@ -17,7 +17,7 @@ namespace etl {
 template <typename... Types>
 [[nodiscard]] constexpr auto forward_as_tuple(Types&&... args) noexcept -> etl::tuple<Types&&...>
 {
-    return etl::tuple<Types&&...> {etl::forward<Types>(args)...};
+    return etl::tuple<Types&&...>{etl::forward<Types>(args)...};
 }
 
 } // namespace etl

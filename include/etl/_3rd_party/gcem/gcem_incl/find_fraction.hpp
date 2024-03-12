@@ -30,11 +30,13 @@ namespace internal {
 template <typename T>
 constexpr auto find_fraction(T const x) noexcept -> T
 {
-    return (abs(x - internal::floor_check(x)) >= T(0.5) ? // if
-                x - internal::floor_check(x) - sgn(x)
-                                                        :
-                                                        // else
-                x - internal::floor_check(x));
+    return (
+        abs(x - internal::floor_check(x)) >= T(0.5) ? // if
+            x - internal::floor_check(x) - sgn(x)
+                                                    :
+                                                    // else
+            x - internal::floor_check(x)
+    );
 }
 
 } // namespace internal

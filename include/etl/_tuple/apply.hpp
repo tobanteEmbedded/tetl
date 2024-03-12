@@ -23,8 +23,11 @@ constexpr auto apply_impl(F&& f, Tuple&& t, etl::index_sequence<I...> /*is*/) ->
 template <typename F, typename Tuple>
 constexpr auto apply(F&& f, Tuple&& t) -> decltype(auto)
 {
-    return detail::apply_impl(etl::forward<F>(f), etl::forward<Tuple>(t),
-        etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Tuple>>> {});
+    return detail::apply_impl(
+        etl::forward<F>(f),
+        etl::forward<Tuple>(t),
+        etl::make_index_sequence<etl::tuple_size_v<etl::remove_reference_t<Tuple>>>{}
+    );
 }
 
 } // namespace etl

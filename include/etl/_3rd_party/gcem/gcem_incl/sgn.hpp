@@ -38,7 +38,8 @@ constexpr auto sgn(T const x) noexcept -> int
             x < T(0) ? -1
                      :
                      // else
-            0);
+            0
+    );
 }
 
 #endif

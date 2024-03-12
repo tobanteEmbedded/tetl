@@ -14,19 +14,23 @@ namespace etl {
 
 struct xoshiro128plusplus {
     using result_type                  = uint32_t;
-    static constexpr auto default_seed = result_type {5489U};
+    static constexpr auto default_seed = result_type{5489U};
 
     constexpr xoshiro128plusplus() = default;
-    explicit constexpr xoshiro128plusplus(result_type seed) noexcept : _state {seed} { }
+
+    explicit constexpr xoshiro128plusplus(result_type seed) noexcept : _state{seed} { }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<uint32_t>::min(); }
+
     [[nodiscard]] static constexpr auto max() noexcept -> result_type { return numeric_limits<uint32_t>::max() - 1; }
 
     constexpr auto seed(result_type value = default_seed) noexcept -> void { _state[0] = value; }
 
     constexpr auto discard(unsigned long long z) noexcept -> void
     {
-        for (auto i {0ULL}; i < z; ++i) { (void)(*this)(); }
+        for (auto i{0ULL}; i < z; ++i) {
+            (void)(*this)();
+        }
     }
 
     [[nodiscard]] constexpr auto operator()() noexcept -> result_type
@@ -46,20 +50,20 @@ struct xoshiro128plusplus {
         return result;
     }
 
-    [[nodiscard]] friend constexpr auto operator==(
-        xoshiro128plusplus const& lhs, xoshiro128plusplus const& rhs) noexcept -> bool
+    [[nodiscard]] friend constexpr auto
+    operator==(xoshiro128plusplus const& lhs, xoshiro128plusplus const& rhs) noexcept -> bool
     {
         return equal(begin(lhs._state), end(lhs._state), begin(rhs._state), end(rhs._state));
     }
 
-    [[nodiscard]] friend constexpr auto operator!=(
-        xoshiro128plusplus const& lhs, xoshiro128plusplus const& rhs) noexcept -> bool
+    [[nodiscard]] friend constexpr auto
+    operator!=(xoshiro128plusplus const& lhs, xoshiro128plusplus const& rhs) noexcept -> bool
     {
         return !(lhs == rhs);
     }
 
 private:
-    uint32_t _state[4] {default_seed};
+    uint32_t _state[4]{default_seed};
 };
 
 } // namespace etl

@@ -92,7 +92,8 @@ template <etl::size_t K, typename Extents, typename... SliceSpecifiers>
 }
 
 // template <typename IndexType, size_t N, typename... SliceSpecifiers>
-// [[nodiscard]] constexpr auto src_indices(array<IndexType, N> const& indices, SliceSpecifiers... slices)
+// [[nodiscard]] constexpr auto src_indices(array<IndexType, N> const& indices, SliceSpecifiers...
+// slices)
 //     -> array<IndexType, sizeof...(SliceSpecifiers)>
 // {
 // }

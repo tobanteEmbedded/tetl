@@ -18,7 +18,9 @@ template <typename T>
 [[nodiscard]] constexpr auto popcount_fallback(T val) noexcept -> int
 {
     auto c = 0;
-    for (; val != 0; val &= val - T(1)) { c++; }
+    for (; val != 0; val &= val - T(1)) {
+        c++;
+    }
     return c;
 }
 } // namespace detail
@@ -31,7 +33,9 @@ template <typename T>
 template <detail::bit_uint T>
 [[nodiscard]] constexpr auto popcount(T val) noexcept -> int
 {
-    if (is_constant_evaluated()) { return detail::popcount_fallback(val); }
+    if (is_constant_evaluated()) {
+        return detail::popcount_fallback(val);
+    }
 #if __has_builtin(__builtin_popcount)
     if constexpr (sizeof(T) == sizeof(unsigned long long)) {
         return static_cast<int>(__builtin_popcountll(val));

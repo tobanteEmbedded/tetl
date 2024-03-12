@@ -37,7 +37,8 @@ constexpr auto asin_compute(T const x) noexcept -> T
         : etl::numeric_limits<T>::epsilon() > abs(x)          ? T(0)
                                                               :
                                                      // else
-            atan(x / sqrt(T(1) - x * x)));
+            atan(x / sqrt(T(1) - x * x))
+    );
 }
 
 template <typename T>
@@ -47,7 +48,8 @@ constexpr auto asin_check(T const x) noexcept -> T
         is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
                   //
             x < T(0) ? -asin_compute(-x)
-                     : asin_compute(x));
+                     : asin_compute(x)
+    );
 }
 
 } // namespace internal

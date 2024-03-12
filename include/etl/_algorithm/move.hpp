@@ -23,7 +23,9 @@ namespace etl {
 template <typename InputIt, typename OutputIt>
 constexpr auto move(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
-    for (; first != last; ++first, (void)++destination) { *destination = move(*first); }
+    for (; first != last; ++first, (void)++destination) {
+        *destination = move(*first);
+    }
     return destination;
 }
 

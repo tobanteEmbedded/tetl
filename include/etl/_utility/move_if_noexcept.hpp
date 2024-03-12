@@ -22,8 +22,8 @@ inline constexpr auto move_if_noexcept_cond = is_nothrow_move_constructible_v<T>
 /// and the  type is copyable, in which case an lvalue-reference is returned
 /// instead.
 template <typename T>
-[[nodiscard]] constexpr auto move_if_noexcept(
-    T& x) noexcept -> conditional_t<detail::move_if_noexcept_cond<T>, T const&, T&&>
+[[nodiscard]] constexpr auto move_if_noexcept(T& x
+) noexcept -> conditional_t<detail::move_if_noexcept_cond<T>, T const&, T&&>
 {
     return etl::move(x);
 }

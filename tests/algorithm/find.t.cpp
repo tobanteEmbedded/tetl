@@ -28,24 +28,24 @@ constexpr auto test() -> bool
 
     // empty range
     {
-        auto data = etl::static_vector<T, 2> {};
+        auto data = etl::static_vector<T, 2>{};
         auto* res = etl::adjacent_find(begin(data), end(data));
         assert(res == end(data));
     }
 
     // no match
     {
-        auto const data = etl::array {T(0), T(1), T(2)};
+        auto const data = etl::array{T(0), T(1), T(2)};
         auto const* res = etl::adjacent_find(begin(data), end(data));
         assert(res == end(data));
     }
 
     // match
     {
-        auto const d1 = etl::array {T(0), T(0), T(2)};
+        auto const d1 = etl::array{T(0), T(0), T(2)};
         assert(etl::adjacent_find(begin(d1), end(d1)) == begin(d1));
 
-        auto const d2 = etl::array {T(0), T(2), T(2)};
+        auto const d2 = etl::array{T(0), T(2), T(2)};
         assert(etl::adjacent_find(begin(d2), end(d2)) == begin(d2) + 1);
     }
 
@@ -57,8 +57,9 @@ constexpr auto test() -> bool
         vec.push_back(T(4));
 
         // find_if
-        auto* res3 = etl::find_if(
-            vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(static_cast<int>(x) % 2); });
+        auto* res3 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool {
+            return static_cast<bool>(static_cast<int>(x) % 2);
+        });
         assert(!(res3 == vec.end()));
 
         auto* res4 = etl::find_if(vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(x == 100); });
@@ -72,8 +73,9 @@ constexpr auto test() -> bool
         vec.push_back(T(3));
         vec.push_back(T(4));
         // find_if_not
-        auto* result5 = etl::find_if_not(
-            vec.begin(), vec.end(), [](auto& x) -> bool { return static_cast<bool>(static_cast<int>(x) % 2); });
+        auto* result5 = etl::find_if_not(vec.begin(), vec.end(), [](auto& x) -> bool {
+            return static_cast<bool>(static_cast<int>(x) % 2);
+        });
         assert(!(result5 == vec.end()));
 
         auto* result6
@@ -87,39 +89,39 @@ constexpr auto test() -> bool
 
     // empty range
     {
-        auto tc   = etl::static_vector<T, 16> {};
-        auto s    = etl::array {T(2), T(42)};
+        auto tc   = etl::static_vector<T, 16>{};
+        auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc));
     }
 
     // empty matches
     {
-        auto tc   = etl::static_vector<T, 16> {};
-        auto s    = etl::static_vector<T, 16> {};
+        auto tc   = etl::static_vector<T, 16>{};
+        auto s    = etl::static_vector<T, 16>{};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc));
     }
 
     // no matches
     {
-        auto tc   = etl::array {T(0), T(1)};
-        auto s    = etl::array {T(2), T(42)};
+        auto tc   = etl::array{T(0), T(1)};
+        auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc));
     }
 
     // same ranges
     {
-        auto tc   = etl::array {T(0), T(1)};
+        auto tc   = etl::array{T(0), T(1)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(tc), end(tc));
         assert(res == begin(tc));
     }
 
     // matches
     {
-        auto tc   = etl::array {T(0), T(1), T(42)};
-        auto s    = etl::array {T(2), T(42)};
+        auto tc   = etl::array{T(0), T(1), T(42)};
+        auto s    = etl::array{T(2), T(42)};
         auto* res = etl::find_first_of(begin(tc), end(tc), begin(s), end(s));
         assert(res == end(tc) - 1);
         assert(*res == T(42));

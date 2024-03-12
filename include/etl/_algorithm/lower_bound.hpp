@@ -16,13 +16,13 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/lower_bound
 template <typename ForwardIt, typename T, typename Compare>
-[[nodiscard]] constexpr auto lower_bound(
-    ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept -> ForwardIt
+[[nodiscard]] constexpr auto
+lower_bound(ForwardIt first, ForwardIt last, T const& value, Compare comp) noexcept -> ForwardIt
 {
     using diff_t = typename iterator_traits<ForwardIt>::difference_type;
-    ForwardIt it {};
-    diff_t count {};
-    diff_t step {};
+    ForwardIt it{};
+    diff_t count{};
+    diff_t step{};
     count = distance(first, last);
 
     while (count > 0) {
@@ -43,7 +43,7 @@ template <typename ForwardIt, typename T, typename Compare>
 template <typename ForwardIt, typename T>
 [[nodiscard]] constexpr auto lower_bound(ForwardIt first, ForwardIt last, T const& value) noexcept -> ForwardIt
 {
-    return lower_bound(first, last, value, less {});
+    return lower_bound(first, last, value, less{});
 }
 
 } // namespace etl

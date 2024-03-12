@@ -20,6 +20,7 @@ struct hash<bool> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<char> {
     [[nodiscard]] constexpr auto operator()(char val) const noexcept -> etl::size_t
@@ -27,6 +28,7 @@ struct hash<char> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<signed char> {
     [[nodiscard]] constexpr auto operator()(signed char val) const noexcept -> etl::size_t
@@ -34,6 +36,7 @@ struct hash<signed char> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<unsigned char> {
     [[nodiscard]] constexpr auto operator()(unsigned char val) const noexcept -> etl::size_t
@@ -57,6 +60,7 @@ struct hash<char16_t> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<char32_t> {
     [[nodiscard]] constexpr auto operator()(char32_t val) const noexcept -> etl::size_t
@@ -64,6 +68,7 @@ struct hash<char32_t> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<wchar_t> {
     [[nodiscard]] constexpr auto operator()(wchar_t val) const noexcept -> etl::size_t
@@ -71,6 +76,7 @@ struct hash<wchar_t> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<short> {
     [[nodiscard]] constexpr auto operator()(short val) const noexcept -> etl::size_t
@@ -78,6 +84,7 @@ struct hash<short> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<unsigned short> {
     [[nodiscard]] constexpr auto operator()(unsigned short val) const noexcept -> etl::size_t
@@ -85,6 +92,7 @@ struct hash<unsigned short> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<int> {
     [[nodiscard]] constexpr auto operator()(int val) const noexcept -> etl::size_t
@@ -92,6 +100,7 @@ struct hash<int> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<unsigned int> {
     [[nodiscard]] constexpr auto operator()(unsigned int val) const noexcept -> etl::size_t
@@ -99,6 +108,7 @@ struct hash<unsigned int> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<long> {
     [[nodiscard]] constexpr auto operator()(long val) const noexcept -> etl::size_t
@@ -106,6 +116,7 @@ struct hash<long> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<long long> {
     [[nodiscard]] constexpr auto operator()(long long val) const noexcept -> etl::size_t
@@ -113,6 +124,7 @@ struct hash<long long> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<unsigned long> {
     [[nodiscard]] constexpr auto operator()(unsigned long val) const noexcept -> etl::size_t
@@ -120,6 +132,7 @@ struct hash<unsigned long> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<unsigned long long> {
     [[nodiscard]] constexpr auto operator()(unsigned long long val) const noexcept -> etl::size_t
@@ -127,6 +140,7 @@ struct hash<unsigned long long> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<float> {
     [[nodiscard]] constexpr auto operator()(float val) const noexcept -> etl::size_t
@@ -134,6 +148,7 @@ struct hash<float> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<double> {
     [[nodiscard]] constexpr auto operator()(double val) const noexcept -> etl::size_t
@@ -141,6 +156,7 @@ struct hash<double> {
         return static_cast<etl::size_t>(val);
     }
 };
+
 template <>
 struct hash<long double> {
     [[nodiscard]] constexpr auto operator()(long double val) const noexcept -> etl::size_t

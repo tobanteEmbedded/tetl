@@ -37,7 +37,8 @@ constexpr auto acos_compute(T const x) noexcept -> T
         : etl::numeric_limits<T>::epsilon() > abs(x)          ? T(GCEM_HALF_PI)
                                                               :
                                                      // else
-            atan(sqrt(T(1) - x * x) / x));
+            atan(sqrt(T(1) - x * x) / x)
+    );
 }
 
 template <typename T>
@@ -50,7 +51,8 @@ constexpr auto acos_check(T const x) noexcept -> T
             acos_compute(x)
                      :
                      // else
-            T(etl::numbers::pi) - acos_compute(-x));
+            T(etl::numbers::pi) - acos_compute(-x)
+    );
 }
 
 } // namespace internal

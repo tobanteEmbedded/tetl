@@ -18,7 +18,7 @@ auto test() -> bool
         using pointer_type = etl::pointer_int_pair<T*, 2>;
 
         auto ptrValue = T(42);
-        pointer_type ptr {&ptrValue, 1U};
+        pointer_type ptr{&ptrValue, 1U};
         assert(*ptr.get_pointer() == ptrValue);
         assert(ptr.get_int() == 1U);
 
@@ -34,18 +34,18 @@ auto test() -> bool
         using inner_type  = etl::pointer_int_pair<T*, 1, bool>;
         using outter_type = etl::pointer_int_pair<inner_type, 1, bool>;
 
-        auto innerValue = T {1};
-        auto inner      = inner_type {&innerValue};
-        auto outter     = outter_type {inner, true};
-        assert(*inner.get_pointer() == T {1});
+        auto innerValue = T{1};
+        auto inner      = inner_type{&innerValue};
+        auto outter     = outter_type{inner, true};
+        assert(*inner.get_pointer() == T{1});
         assert(inner.get_int() == false);
         assert(outter.get_int() == true);
 
-        *inner.get_pointer() = T {2};
+        *inner.get_pointer() = T{2};
         inner.set_int(true);
         outter.set_int(false);
 
-        assert(*inner.get_pointer() == T {2});
+        assert(*inner.get_pointer() == T{2});
         assert(inner.get_int() == true);
         assert(outter.get_int() == false);
 

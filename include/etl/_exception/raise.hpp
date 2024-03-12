@@ -13,18 +13,18 @@ namespace etl {
 
 #if defined(__cpp_consteval)
 template <typename Exception>
-[[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(
-    char const* msg, etl::source_location const loc = etl::source_location::current()) -> void
+[[noreturn]] TETL_NO_INLINE TETL_COLD auto
+raise(char const* msg, etl::source_location const loc = etl::source_location::current()) -> void
 {
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
     (void)loc;
-    etl::tetl_exception_handler(Exception {msg});
+    etl::tetl_exception_handler(Exception{msg});
     #else
-    detail::tetl_call_assert_handler(etl::assert_msg {
+    detail::tetl_call_assert_handler(etl::assert_msg{
         static_cast<int>(loc.line()),
         loc.file_name(),
         loc.function_name(),
-        Exception {msg}.what(),
+        Exception{msg}.what(),
     });
     #endif
 }
@@ -35,13 +35,13 @@ template <typename Exception>
 [[noreturn]] TETL_NO_INLINE TETL_COLD auto raise(char const* msg) -> void
 {
     #if defined(TETL_ENABLE_CUSTOM_EXCEPTION_HANDLER)
-    etl::tetl_exception_handler(Exception {msg});
+    etl::tetl_exception_handler(Exception{msg});
     #else
-    detail::tetl_call_assert_handler(etl::assert_msg {
+    detail::tetl_call_assert_handler(etl::assert_msg{
         0,
         nullptr,
         nullptr,
-        Exception {msg}.what(),
+        Exception{msg}.what(),
     });
     #endif
 }

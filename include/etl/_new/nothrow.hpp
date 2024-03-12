@@ -14,7 +14,7 @@ struct nothrow_t {
 /// \brief etl::nothrow is a constant of type etl::nothrow_t used to
 /// disambiguate the overloads of throwing and non-throwing allocation
 /// functions.
-inline constexpr auto nothrow = etl::nothrow_t {};
+inline constexpr auto nothrow = etl::nothrow_t{};
 
 } // namespace etl
 

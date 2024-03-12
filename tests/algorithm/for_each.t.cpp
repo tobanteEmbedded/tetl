@@ -10,10 +10,10 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    etl::array<T, 4> vec {T(1), T(2), T(3), T(4)};
+    etl::array<T, 4> vec{T(1), T(2), T(3), T(4)};
 
     // Check how often for_each calls the unary function
-    auto counter {0};
+    auto counter{0};
     auto incrementCounter = [&counter](auto& /*unused*/) { counter += 1; };
 
     // for_each

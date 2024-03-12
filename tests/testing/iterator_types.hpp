@@ -16,6 +16,7 @@ struct InIter {
     [[nodiscard]] constexpr auto base() const -> It { return _iter; }
 
     constexpr InIter() : _iter() { }
+
     explicit constexpr InIter(It it) : _iter(it) { }
 
     template <typename U>
@@ -24,6 +25,7 @@ struct InIter {
     }
 
     constexpr auto operator*() const -> reference { return *_iter; }
+
     constexpr auto operator->() const -> pointer { return _iter; }
 
     constexpr auto operator++() -> InIter&
@@ -31,6 +33,7 @@ struct InIter {
         ++_iter;
         return *this;
     }
+
     constexpr auto operator++(int) -> InIter
     {
         InIter tmp(*this);
@@ -69,7 +72,7 @@ struct FwdIter {
 
     constexpr FwdIter() = default;
 
-    explicit constexpr FwdIter(Iter it) : _iter {it} { }
+    explicit constexpr FwdIter(Iter it) : _iter{it} { }
 
     template <typename U>
     constexpr FwdIter(FwdIter<U> const& u) : _iter(u.iter_)
@@ -85,6 +88,7 @@ struct FwdIter {
         ++_iter;
         return *this;
     }
+
     [[nodiscard]] constexpr auto operator++(int) -> FwdIter
     {
         FwdIter tmp(*this);
@@ -93,7 +97,7 @@ struct FwdIter {
     }
 
 private:
-    Iter _iter {};
+    Iter _iter{};
 
     template <typename U>
     friend struct FwdIter;

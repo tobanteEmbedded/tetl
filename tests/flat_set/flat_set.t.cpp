@@ -14,7 +14,7 @@ constexpr auto test() -> bool
     using vec_t = etl::static_vector<T, 8>;
     using set_t = etl::flat_set<T, vec_t>;
 
-    auto s1 = set_t {};
+    auto s1 = set_t{};
     assert(s1.size() == 0); // NOLINT
     assert(s1.empty());
     assert(s1.begin() == s1.end());
@@ -22,7 +22,7 @@ constexpr auto test() -> bool
     assert(s1.cbegin() == s1.cend());
     assert(s1.max_size() == 8);
 
-    auto s2 = set_t {vec_t {}};
+    auto s2 = set_t{vec_t{}};
     assert(s2.size() == 0); // NOLINT
     assert(s2.begin() == s2.end());
     assert(s1.begin() != s2.begin());
@@ -41,7 +41,7 @@ constexpr auto test() -> bool
     assert(s2.size() == 1);
     assert(s2.find(T(42)) == etl::begin(s2));
 
-    auto v = etl::array<T, 3> {T(1), T(2), T(3)};
+    auto v = etl::array<T, 3>{T(1), T(2), T(3)};
     s2.insert(v.begin(), v.end());
     assert(s2.size() == 4);
 

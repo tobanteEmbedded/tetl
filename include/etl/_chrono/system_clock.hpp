@@ -27,7 +27,7 @@ struct system_clock {
 
     [[nodiscard]] static auto from_time_t(time_t t) noexcept -> time_point
     {
-        return time_point {seconds {static_cast<seconds::rep>(t)}};
+        return time_point{seconds{static_cast<seconds::rep>(t)}};
     }
 };
 

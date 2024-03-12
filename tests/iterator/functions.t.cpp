@@ -25,7 +25,7 @@ constexpr auto test() -> bool
 
     // "array"
     {
-        auto data = etl::array {T(1), T(2), T(3), T(4)};
+        auto data = etl::array{T(1), T(2), T(3), T(4)};
         assert(*etl::rbegin(data) == T(4));
         assert(*etl::rbegin(as_const(data)) == T(4));
         assert(*etl::crbegin(data) == T(4));
@@ -42,7 +42,7 @@ constexpr auto test() -> bool
 
     // "array"
     {
-        auto data = etl::array {T(0), T(0), T(0), T(0)};
+        auto data = etl::array{T(0), T(0), T(0), T(0)};
         auto cmp  = [](auto val) { return val == T(0); };
         assert(all_of(rbegin(data), rend(data), cmp));
         assert(all_of(crbegin(data), crend(data), cmp));
@@ -54,13 +54,13 @@ constexpr auto test() -> bool
         int carr[4] = {};
         assert(etl::size(carr) == 4);
 
-        auto arr = etl::array<int, 5> {};
+        auto arr = etl::array<int, 5>{};
         assert(etl::size(arr) == 5);
 
-        auto sv1 = etl::string_view {"test"};
+        auto sv1 = etl::string_view{"test"};
         assert(etl::size(sv1) == 4);
 
-        auto const sv2 = etl::string_view {};
+        auto const sv2 = etl::string_view{};
         assert(etl::size(sv2) == 0);
     }
 
@@ -69,13 +69,13 @@ constexpr auto test() -> bool
         int carr[4] = {};
         assert(!etl::empty(carr));
 
-        auto arr = etl::array<int, 5> {};
+        auto arr = etl::array<int, 5>{};
         assert(!etl::empty(arr));
 
-        auto sv1 = etl::string_view {"test"};
+        auto sv1 = etl::string_view{"test"};
         assert(!etl::empty(sv1));
 
-        auto const sv2 = etl::string_view {};
+        auto const sv2 = etl::string_view{};
         assert(etl::empty(sv2));
     }
 
@@ -84,19 +84,19 @@ constexpr auto test() -> bool
         int carr[4] = {};
         assert(etl::data(carr) != nullptr);
 
-        auto arr = etl::array<int, 5> {};
+        auto arr = etl::array<int, 5>{};
         assert(etl::data(arr) != nullptr);
 
-        auto sv1 = etl::string_view {"test"};
+        auto sv1 = etl::string_view{"test"};
         assert(etl::data(sv1) != nullptr);
 
-        auto const sv2 = etl::string_view {};
+        auto const sv2 = etl::string_view{};
         assert(etl::data(sv2) == nullptr);
     }
 
     // "random access iterator"
     {
-        auto arr = etl::array<T, 5> {};
+        auto arr = etl::array<T, 5>{};
         assert(etl::distance(begin(arr), begin(arr)) == 0);
         assert(etl::distance(end(arr), end(arr)) == 0);
         assert(etl::distance(begin(arr), begin(arr) + 2) == 2);
@@ -105,7 +105,7 @@ constexpr auto test() -> bool
 
     // "random access iterator"
     {
-        auto arr = etl::array<T, 5> {};
+        auto arr = etl::array<T, 5>{};
         auto* p  = arr.begin();
 
         etl::advance(p, 1);
@@ -118,7 +118,7 @@ constexpr auto test() -> bool
 
     // "random access iterator"
     {
-        auto arr = etl::array<T, 5> {};
+        auto arr = etl::array<T, 5>{};
         auto* p  = arr.begin();
         auto* n1 = etl::next(p);
         assert(n1 != begin(arr));
@@ -131,7 +131,7 @@ constexpr auto test() -> bool
 
     // "random access iterator"
     {
-        auto arr = etl::array<T, 5> {};
+        auto arr = etl::array<T, 5>{};
         auto* p  = arr.end();
         auto* n1 = etl::prev(p);
         assert(n1 != end(arr));

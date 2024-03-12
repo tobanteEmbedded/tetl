@@ -15,14 +15,17 @@ namespace etl {
 /// preserved. The resulting range cannot overlap with either of the input
 /// ranges.
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
-constexpr auto set_intersection(
-    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest, Compare comp) -> OutputIt
+constexpr auto
+set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest, Compare comp)
+    -> OutputIt
 {
     while (first1 != last1 and first2 != last2) {
         if (comp(*first1, *first2)) {
             ++first1;
         } else {
-            if (!comp(*first2, *first1)) { *dest++ = *first1++; }
+            if (!comp(*first2, *first1)) {
+                *dest++ = *first1++;
+            }
             ++first2;
         }
     }
@@ -30,8 +33,8 @@ constexpr auto set_intersection(
 }
 
 template <typename InputIt1, typename InputIt2, typename OutputIt>
-constexpr auto set_intersection(
-    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest) -> OutputIt
+constexpr auto
+set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt dest) -> OutputIt
 {
     return set_intersection(first1, last1, first2, last2, dest, less<>());
 }

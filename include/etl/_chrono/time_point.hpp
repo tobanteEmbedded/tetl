@@ -38,7 +38,7 @@ struct time_point {
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point at Clock's epoch plus d.
-    constexpr explicit time_point(duration const& d) noexcept : _d {d} { }
+    constexpr explicit time_point(duration const& d) noexcept : _d{d} { }
 
     /// \brief Constructs a new time_point from one of several optional data
     /// sources. Constructs a time_point by converting t to duration. This
@@ -46,7 +46,7 @@ struct time_point {
     /// implicitly convertible to duration.
     template <typename Dur2>
         requires(is_convertible_v<Dur2, duration>)
-    constexpr time_point(time_point<clock, Dur2> const& t) : _d {t.time_since_epch()}
+    constexpr time_point(time_point<clock, Dur2> const& t) : _d{t.time_since_epch()}
     {
     }
 
@@ -104,14 +104,14 @@ struct time_point {
     [[nodiscard]] static constexpr auto max() noexcept -> time_point { return time_point(duration::max()); }
 
 private:
-    duration _d {};
+    duration _d{};
 };
 
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator==(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() == rhs.time_since_epoch();
 }
@@ -119,8 +119,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator!=(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
@@ -128,8 +128,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() < rhs.time_since_epoch();
 }
@@ -137,8 +137,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator<=(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() <= rhs.time_since_epoch();
 }
@@ -146,8 +146,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() > rhs.time_since_epoch();
 }
@@ -155,8 +155,8 @@ template <typename Clock, typename Dur1, typename Dur2>
 /// \brief  Compares two time points. The comparison is done by comparing the
 /// results time_since_epoch() for the time points.
 template <typename Clock, typename Dur1, typename Dur2>
-[[nodiscard]] constexpr auto operator>=(
-    time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(time_point<Clock, Dur1> const& lhs, time_point<Clock, Dur2> const& rhs) noexcept -> bool
 {
     return lhs.time_since_epoch() >= rhs.time_since_epoch();
 }

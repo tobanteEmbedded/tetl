@@ -68,14 +68,14 @@ struct basic_string_view {
     /// range (even though the constructor may not access any of the elements of
     /// this range). After construction, data() is equal to s, and size() is
     /// equal to count.
-    constexpr basic_string_view(CharType const* str, size_type size) : _begin {str}, _size {size} { }
+    constexpr basic_string_view(CharType const* str, size_type size) : _begin{str}, _size{size} { }
 
     /// \brief Constructs a view of the null-terminated character string pointed
     /// to by s, not including the terminating null character. The length of the
     /// view is determined as if by Traits::length(s). The behavior is undefined
     /// if [s, s+Traits::length(s)) is not a valid range. After construction,
     /// data() is equal to s, and size() is equal to Traits::length(s).
-    constexpr basic_string_view(CharType const* str) : _begin {str}, _size {traits_type::length(str)} { }
+    constexpr basic_string_view(CharType const* str) : _begin{str}, _size{traits_type::length(str)} { }
 
     constexpr basic_string_view(nullptr_t /*null*/) = delete;
 
@@ -85,7 +85,7 @@ struct basic_string_view {
     /// \bug Improve SFINAE protection. See C++20 standard.
     template <typename Iter>
         requires(detail::RandomAccessIterator<Iter>)
-    constexpr basic_string_view(Iter first, Iter last) : basic_string_view {first, static_cast<size_type>(last - first)}
+    constexpr basic_string_view(Iter first, Iter last) : basic_string_view{first, static_cast<size_type>(last - first)}
     {
     }
 
@@ -208,7 +208,7 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_string_view
     {
         auto const rcount = etl::min(count, size() - pos);
-        return basic_string_view {_begin + pos, rcount};
+        return basic_string_view{_begin + pos, rcount};
     }
 
     /// \brief Compares two character sequences.
@@ -219,11 +219,19 @@ struct basic_string_view {
         auto const rlen = etl::min(size(), v.size());
         auto const res  = traits_type::compare(data(), v.data(), rlen);
 
-        if (res < 0) { return -1; }
-        if (res > 0) { return 1; }
+        if (res < 0) {
+            return -1;
+        }
+        if (res > 0) {
+            return 1;
+        }
 
-        if (size() < v.size()) { return -1; }
-        if (size() > v.size()) { return 1; }
+        if (size() < v.size()) {
+            return -1;
+        }
+        if (size() > v.size()) {
+            return 1;
+        }
 
         return 0;
     }
@@ -237,8 +245,8 @@ struct basic_string_view {
 
     /// \brief Compares two character sequences. Equivalent to substr(pos1,
     /// count1).compare(v.substr(pos2, count2))
-    [[nodiscard]] constexpr auto compare(
-        size_type pos1, size_type count1, basic_string_view v, size_type pos2, size_type count2) const -> int
+    [[nodiscard]] constexpr auto
+    compare(size_type pos1, size_type count1, basic_string_view v, size_type pos2, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(v.substr(pos2, count2));
     }
@@ -256,8 +264,8 @@ struct basic_string_view {
 
     /// \brief Compares two character sequences. Equivalent to substr(pos1,
     /// count1).compare(basic_string_view(s, count2)).
-    [[nodiscard]] constexpr auto compare(
-        size_type pos1, size_type count1, CharType const* s, size_type count2) const -> int
+    [[nodiscard]] constexpr auto
+    compare(size_type pos1, size_type count1, CharType const* s, size_type count2) const -> int
     {
         return substr(pos1, count1).compare(basic_string_view(s, count2));
     }
@@ -321,20 +329,26 @@ struct basic_string_view {
     /// if no such substring is found.
     [[nodiscard]] constexpr auto find(basic_string_view v, size_type pos = 0) const noexcept -> size_type
     {
-        if (v.size() > size() - pos) { return npos; }
+        if (v.size() > size() - pos) {
+            return npos;
+        }
 
         for (size_type outerIdx = pos; outerIdx < size(); ++outerIdx) {
             if (unsafe_at(outerIdx) == v.front()) {
                 auto found = [&] {
                     for (size_type innerIdx = 0; innerIdx < v.size(); ++innerIdx) {
                         auto offset = outerIdx + innerIdx;
-                        if (unsafe_at(offset) != v[innerIdx]) { return false; }
+                        if (unsafe_at(offset) != v[innerIdx]) {
+                            return false;
+                        }
                     }
 
                     return true;
                 }();
 
-                if (found) { return outerIdx; }
+                if (found) {
+                    return outerIdx;
+                }
             }
         }
 
@@ -409,7 +423,12 @@ struct basic_string_view {
     constexpr auto rfind(CharType const* s, size_type pos = npos) const noexcept -> size_type
     {
         return detail::str_rfind<value_type, size_type, traits_type, npos>(
-            begin(), size(), s, pos, traits_type::length(s));
+            begin(),
+            size(),
+            s,
+            pos,
+            traits_type::length(s)
+        );
     }
 
     /// \brief Finds the first character equal to any of the characters in the
@@ -422,7 +441,9 @@ struct basic_string_view {
     {
         for (size_type idx = pos; idx < size(); ++idx) {
             for (auto const c : v) {
-                if (c == unsafe_at(idx)) { return idx; }
+                if (c == unsafe_at(idx)) {
+                    return idx;
+                }
             }
         }
 
@@ -470,7 +491,12 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_first_not_of(basic_string_view sv, size_type pos = 0) const noexcept -> size_type
     {
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            data(), size(), sv.data(), pos, sv.size());
+            data(),
+            size(),
+            sv.data(),
+            pos,
+            sv.size()
+        );
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -501,7 +527,12 @@ struct basic_string_view {
     [[nodiscard]] constexpr auto find_first_not_of(CharType const* s, size_type pos = 0) const -> size_type
     {
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            data(), size(), s, pos, traits_type::length(s));
+            data(),
+            size(),
+            s,
+            pos,
+            traits_type::length(s)
+        );
     }
 
     /// \brief Finds the last character equal to one of characters in the given
@@ -518,7 +549,9 @@ struct basic_string_view {
         do { // NOLINT(cppcoreguidelines-avoid-do-while)
             auto const current = unsafe_at(offset);
             for (auto const ch : v) {
-                if (ch == current) { return offset; }
+                if (ch == current) {
+                    return offset;
+                }
             }
         } while (offset-- != 0);
 
@@ -574,7 +607,9 @@ struct basic_string_view {
         auto offset = etl::clamp<size_type>(pos, 0, size() - 1);
         do { // NOLINT(cppcoreguidelines-avoid-do-while)
             auto equals = [&](auto ch) { return ch == unsafe_at(offset); };
-            if (etl::none_of(v.begin(), v.end(), equals)) { return offset; }
+            if (etl::none_of(v.begin(), v.end(), equals)) {
+                return offset;
+            }
         } while (offset-- != 0);
 
         return npos;
@@ -645,26 +680,32 @@ private:
 /// each character in lhs has an equivalent character in rhs at the same
 /// position.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator==(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
-    if (lhs.size() != rhs.size()) { return false; }
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
     return lhs.compare(rhs) == 0;
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator==(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
-    if (lhs.size() != rhs.size()) { return false; }
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
     return lhs.compare(rhs) == 0;
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator==(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
-    if (lhs.size() != rhs.size()) { return false; }
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
     return lhs.compare(rhs) == 0;
 }
 
@@ -675,22 +716,22 @@ template <typename CharT, typename Traits, int = 2>
 /// each character in lhs has an equivalent character in rhs at the same
 /// position.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator!=(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator!=(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator!=(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
     return !(lhs == rhs);
 }
@@ -702,22 +743,22 @@ template <typename CharT, typename Traits, int = 2>
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator<(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator<(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator<(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
     return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
@@ -729,22 +770,22 @@ template <typename CharT, typename Traits, int = 2>
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator<=(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
     return (lhs < rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator<=(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
     return (lhs < rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator<=(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
     return (lhs < rhs) || (lhs == rhs);
 }
@@ -756,22 +797,22 @@ template <typename CharT, typename Traits, int = 2>
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator>(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
     return !(lhs < rhs) && !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator>(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
     return !(lhs < rhs) && !(lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator>(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
     return !(lhs < rhs) && !(lhs == rhs);
 }
@@ -783,22 +824,22 @@ template <typename CharT, typename Traits, int = 2>
 /// comparison is performed by a function equivalent to
 /// lexicographical_compare.
 template <typename CharType, typename Traits>
-[[nodiscard]] constexpr auto operator>=(
-    basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(basic_string_view<CharType, Traits> lhs, basic_string_view<CharType, Traits> rhs) noexcept -> bool
 {
     return (lhs > rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 1>
-[[nodiscard]] constexpr auto operator>=(
-    decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(decay_t<basic_string_view<CharT, Traits>> lhs, basic_string_view<CharT, Traits> rhs) noexcept -> bool
 {
     return (lhs > rhs) || (lhs == rhs);
 }
 
 template <typename CharT, typename Traits, int = 2>
-[[nodiscard]] constexpr auto operator>=(
-    basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(basic_string_view<CharT, Traits> lhs, decay_t<basic_string_view<CharT, Traits>> rhs) noexcept -> bool
 {
     return (lhs > rhs) || (lhs == rhs);
 }

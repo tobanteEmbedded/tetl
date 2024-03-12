@@ -61,18 +61,21 @@ struct tuple_element<I, etl::complex<T>> {
 };
 
 template <typename T>
-constexpr complex<T>::complex(T const& re, T const& im) : _real {re}, _imag {im}
+constexpr complex<T>::complex(T const& re, T const& im) : _real{re}
+                                                        , _imag{im}
 {
 }
 
 template <typename T>
-constexpr complex<T>::complex(complex const& other) : _real {other.real()}, _imag {other.imag()}
+constexpr complex<T>::complex(complex const& other) : _real{other.real()}
+                                                    , _imag{other.imag()}
 {
 }
 
 template <typename T>
 template <typename X>
-constexpr complex<T>::complex(complex<X> const& other) : _real {other.real()}, _imag {other.imag()}
+constexpr complex<T>::complex(complex<X> const& other) : _real{other.real()}
+                                                       , _imag{other.imag()}
 {
 }
 
@@ -132,14 +135,14 @@ constexpr auto complex<T>::operator-=(T const& val) -> complex<T>&
 template <typename T>
 constexpr auto complex<T>::operator*=(T const& val) -> complex<T>&
 {
-    (*this) *= complex<T> {val};
+    (*this) *= complex<T>{val};
     return *this;
 }
 
 template <typename T>
 constexpr auto complex<T>::operator/=(T const& val) -> complex<T>&
 {
-    (*this) /= complex<T> {val};
+    (*this) /= complex<T>{val};
     return *this;
 }
 

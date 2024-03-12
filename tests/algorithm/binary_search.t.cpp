@@ -14,12 +14,12 @@ template <typename T>
 constexpr auto test() -> bool
 {
     // epmty range
-    auto const e = etl::static_vector<T, 4> {};
+    auto const e = etl::static_vector<T, 4>{};
     ASSERT(!etl::binary_search(begin(e), end(e), T(0)));
     ASSERT(!etl::binary_search(FwdIter(begin(e)), FwdIter(end(e)), T(0)));
 
     // range
-    auto const data = etl::array {T(0), T(1), T(2)};
+    auto const data = etl::array{T(0), T(1), T(2)};
     ASSERT(etl::binary_search(begin(data), end(data), T(0)));
     ASSERT(etl::binary_search(begin(data), end(data), T(1)));
     ASSERT(etl::binary_search(begin(data), end(data), T(2)));

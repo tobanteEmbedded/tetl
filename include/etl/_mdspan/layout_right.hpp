@@ -27,13 +27,13 @@ struct layout_right::mapping {
     constexpr mapping() noexcept               = default;
     constexpr mapping(mapping const&) noexcept = default;
 
-    constexpr mapping(extents_type const& ext) noexcept : _extents {ext} { }
+    constexpr mapping(extents_type const& ext) noexcept : _extents{ext} { }
 
     template <typename OtherExtents>
         requires is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(mapping<OtherExtents> const& other) noexcept
-        : _extents {other.extents()}
+        : _extents{other.extents()}
     {
     }
 
@@ -41,7 +41,7 @@ struct layout_right::mapping {
         requires(extents_type::rank() <= 1) && is_constructible_v<extents_type, OtherExtents>
     constexpr explicit(!is_convertible_v<OtherExtents, extents_type>)
         mapping(layout_left::mapping<OtherExtents> const& other) noexcept
-        : _extents {other.extents()}
+        : _extents{other.extents()}
     {
     }
 
@@ -60,7 +60,7 @@ struct layout_right::mapping {
 
     template <typename... Indices>
         requires(sizeof...(Indices) == extents_type::rank()) and (is_convertible_v<Indices, index_type> and ...)
-                    and (is_nothrow_constructible_v<index_type, Indices> and ...)
+                and (is_nothrow_constructible_v<index_type, Indices> and ...)
     [[nodiscard]] constexpr auto operator()(Indices... indices) const noexcept -> index_type
     {
         auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
@@ -69,15 +69,19 @@ struct layout_right::mapping {
             return result;
         };
 
-        return impl(make_index_sequence<extents_type::rank()> {}, static_cast<index_type>(indices)...);
+        return impl(make_index_sequence<extents_type::rank()>{}, static_cast<index_type>(indices)...);
     }
 
     [[nodiscard]] static constexpr auto is_always_unique() noexcept -> bool { return true; }
+
     [[nodiscard]] static constexpr auto is_always_exhaustive() noexcept -> bool { return true; }
+
     [[nodiscard]] static constexpr auto is_always_strided() noexcept -> bool { return true; }
 
     [[nodiscard]] static constexpr auto is_unique() noexcept -> bool { return true; }
+
     [[nodiscard]] static constexpr auto is_exhaustive() noexcept -> bool { return true; }
+
     [[nodiscard]] static constexpr auto is_strided() noexcept -> bool { return true; }
 
     [[nodiscard]] constexpr auto stride(rank_type) const noexcept -> index_type;
@@ -96,13 +100,13 @@ private:
     //     using SubExtents = decltype(sub_ext);
     //     static_assert(sizeof(SubExtents) > 0);
 
-    //     // auto sub_strides = {};
+    // // auto sub_strides = {};
 
-    //     if constexpr (Extents::rank() == 0) {
-    //         return etl::submdspan_mapping_result {*this, 0};
-    //     } else {
-    //         static_assert(etl::always_false<SliceSpecifiers...>);
-    //     }
+    // if constexpr (Extents::rank() == 0) {
+    //     return etl::submdspan_mapping_result {*this, 0};
+    // } else {
+    //     static_assert(etl::always_false<SliceSpecifiers...>);
+    // }
     // }
 
     // template <typename... SliceSpecifiers>
@@ -111,7 +115,7 @@ private:
     //     return src.submdspan_mapping_impl(slices...);
     // }
 
-    TETL_NO_UNIQUE_ADDRESS extents_type _extents {};
+    TETL_NO_UNIQUE_ADDRESS extents_type _extents{};
 };
 
 } // namespace etl

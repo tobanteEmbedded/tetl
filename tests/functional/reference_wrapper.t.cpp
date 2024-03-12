@@ -11,14 +11,14 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto original = etl::array<T, 4> {
+    auto original = etl::array<T, 4>{
         T(4),
         T(3),
         T(2),
         T(1),
     };
 
-    auto sorted = etl::array<etl::reference_wrapper<T>, 4> {
+    auto sorted = etl::array<etl::reference_wrapper<T>, 4>{
         etl::ref(original[0]),
         etl::ref(original[1]),
         etl::ref(original[2]),
@@ -36,7 +36,9 @@ constexpr auto test() -> bool
     assert(sorted[2] == T(3));
     assert(sorted[3] == T(4));
 
-    for (T& i : original) { i *= T(2); }
+    for (T& i : original) {
+        i *= T(2);
+    }
     assert(sorted[0] == T(2));
     assert(sorted[1] == T(4));
     assert(sorted[2] == T(6));

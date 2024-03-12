@@ -16,7 +16,7 @@ inline constexpr auto token_end   = '}';
 template <typename ValueT, typename FormatContext>
 auto format_argument(ValueT const& val, FormatContext& fc) -> decltype(fc.out())
 {
-    auto f = formatter<ValueT, char> {};
+    auto f = formatter<ValueT, char>{};
     return f.format(val, fc);
 }
 
@@ -32,7 +32,7 @@ inline auto split_at_next_argument(etl::string_view str) -> etl::pair<etl::strin
         return etl::make_pair(first, second);
     }
 
-    return etl::make_pair(str, etl::string_view {});
+    return etl::make_pair(str, etl::string_view{});
 }
 
 template <typename FormatContext>
@@ -45,8 +45,8 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
         auto const* const openFirst = etl::find(first, end(str), token_begin);
         auto const* const openSec   = etl::next(openFirst);
         auto const escapeStart      = openFirst != end(str) //
-                                 && openSec != end(str)     //
-                                 && *openSec == token_begin;
+                              && openSec != end(str)        //
+                              && *openSec == token_begin;
 
         if (escapeStart) {
             // Copy upto {{
@@ -56,8 +56,8 @@ auto format_escaped_sequences(etl::string_view str, FormatContext& ctx) -> void
             auto const* closeFirst = etl::find(etl::next(openSec), end(str), token_end);
             auto const* closeSec   = etl::next(closeFirst);
             auto escapeClose       = closeFirst != end(str) //
-                               && closeSec != end(str)      //
-                               && *closeSec == token_end;
+                            && closeSec != end(str)         //
+                            && *closeSec == token_end;
 
             // Copy everything between {{ ... }}, but only one curly each.
             if (escapeClose) {

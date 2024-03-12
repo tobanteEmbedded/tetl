@@ -21,6 +21,7 @@ struct is_reference<T&> : true_type { };
 /// \exclude
 template <typename T>
 struct is_reference<T&&> : true_type { };
+
 template <typename T>
 inline constexpr bool is_reference_v = is_reference<T>::value;
 

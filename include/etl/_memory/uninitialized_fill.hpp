@@ -16,14 +16,20 @@ auto uninitialized_fill(ForwardIt first, ForwardIt last, T const& value) -> void
 #if defined(__cpp_exceptions)
     auto current = first;
     try {
-        for (; current != last; ++current) { etl::construct_at(current, value); }
+        for (; current != last; ++current) {
+            etl::construct_at(current, value);
+        }
     } catch (...) {
         using ValueType = typename etl::iterator_traits<ForwardIt>::value_type;
-        for (; first != current; ++first) { first->~ValueType(); }
+        for (; first != current; ++first) {
+            first->~ValueType();
+        }
         throw;
     }
 #else
-    for (auto current = first; current != last; ++current) { etl::construct_at(current, value); }
+    for (auto current = first; current != last; ++current) {
+        etl::construct_at(current, value);
+    }
 #endif
 }
 

@@ -13,14 +13,14 @@ constexpr auto test() -> bool
     assert(etl::is_same_v<etl::unexpect_t, etl::decay_t<decltype(etl::unexpect)>>);
     assert(etl::is_default_constructible_v<etl::unexpect_t>);
 
-    auto unex = etl::unexpected {T(42)};
+    auto unex = etl::unexpected{T(42)};
     assert(unex.error() == T(42));
     assert(etl::is_same_v<decltype(unex.error()), T&>);
     assert(etl::is_same_v<decltype(etl::as_const(unex).error()), T const&>);
     assert(etl::is_same_v<decltype(etl::move(unex).error()), T&&>);
     assert(etl::is_same_v<decltype(etl::move(etl::as_const(unex)).error()), T const&&>);
 
-    auto other = etl::unexpected {T(99)};
+    auto other = etl::unexpected{T(99)};
     assert(other.error() == T(99));
 
     swap(unex, other);

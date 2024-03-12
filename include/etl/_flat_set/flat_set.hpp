@@ -60,7 +60,7 @@ struct flat_set {
     using const_reverse_iterator = etl::reverse_iterator<const_iterator>;
     using container_type         = Container;
 
-    constexpr flat_set() : flat_set {Compare {}} { }
+    constexpr flat_set() : flat_set{Compare{}} { }
 
     /// \brief Initializes c with etl::move(cont), value-initializes compare,
     /// sorts the range [begin(),end()) with respect to compare, and finally
@@ -70,26 +70,29 @@ struct flat_set {
     /// otherwise N log N, where N is cont.size().
     explicit constexpr flat_set(container_type const& container)
         requires(detail::RandomAccessRange<container_type>)
-        : flat_set {etl::begin(container), etl::end(container), Compare()}
+        : flat_set{etl::begin(container), etl::end(container), Compare()}
     {
     }
 
     constexpr flat_set(etl::sorted_unique_t /*tag*/, container_type cont)
-        : _container {etl::move(cont)}, _compare {Compare()}
+        : _container{etl::move(cont)}
+        , _compare{Compare()}
     {
     }
 
-    explicit constexpr flat_set(Compare const& comp) : _container {}, _compare(comp) { }
+    explicit constexpr flat_set(Compare const& comp) : _container{}, _compare(comp) { }
 
     template <typename InputIt>
-    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container {}, _compare {comp}
+    constexpr flat_set(InputIt first, InputIt last, Compare const& comp = Compare()) : _container{}
+                                                                                     , _compare{comp}
     {
         insert(first, last);
     }
 
     template <typename InputIt>
     constexpr flat_set(etl::sorted_unique_t /*tag*/, InputIt first, InputIt last, Compare const& comp = Compare())
-        : _container {first, last}, _compare {comp}
+        : _container{first, last}
+        , _compare{comp}
     {
     }
 
@@ -142,7 +145,7 @@ struct flat_set {
     template <typename... Args>
     constexpr auto emplace(Args&&... args) -> etl::pair<iterator, bool>
     {
-        auto key    = Key {etl::forward<Args>(args)...};
+        auto key    = Key{etl::forward<Args>(args)...};
         iterator it = lower_bound(key);
 
         if (it == end() || _compare(key, *it)) {
@@ -199,13 +202,14 @@ struct flat_set {
     constexpr auto erase(const_iterator position) -> iterator { return _container.erase(position); }
 
     constexpr auto erase(key_type const& x) -> size_type;
+
     constexpr auto erase(const_iterator first, const_iterator last) -> iterator
     {
         return _container.erase(first, last);
     }
 
-    constexpr auto swap(flat_set& other)
-        noexcept(etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>) -> void
+    constexpr auto swap(flat_set& other
+    ) noexcept(etl::is_nothrow_swappable_v<Container> && etl::is_nothrow_swappable_v<Compare>) -> void
     {
         using etl::swap;
         swap(_compare, other._compare);
@@ -223,14 +227,18 @@ struct flat_set {
     [[nodiscard]] constexpr auto find(key_type const& key) -> iterator
     {
         iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) { return end(); }
+        if (it == end() || _compare(key, *it)) {
+            return end();
+        }
         return it;
     }
 
     [[nodiscard]] constexpr auto find(key_type const& key) const -> const_iterator
     {
         const_iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) { return end(); }
+        if (it == end() || _compare(key, *it)) {
+            return end();
+        }
         return it;
     }
 
@@ -239,7 +247,9 @@ struct flat_set {
     [[nodiscard]] constexpr auto find(K const& key) -> iterator
     {
         iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) { return end(); }
+        if (it == end() || _compare(key, *it)) {
+            return end();
+        }
         return it;
     }
 
@@ -248,7 +258,9 @@ struct flat_set {
     [[nodiscard]] constexpr auto find(K const& key) const -> const_iterator
     {
         const_iterator it = lower_bound(key);
-        if (it == end() || _compare(key, *it)) { return end(); }
+        if (it == end() || _compare(key, *it)) {
+            return end();
+        }
         return it;
     }
 
@@ -297,50 +309,50 @@ private:
 };
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator==(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator==(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return etl::equal(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator!=(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator!=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(x == y);
 }
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator<(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator<(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return etl::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());
 }
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator>(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator>(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return y < x;
 }
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator<=(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator<=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(y < x);
 }
 
 template <typename Key, typename Container, typename Compare>
-[[nodiscard]] constexpr auto operator>=(
-    flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
+[[nodiscard]] constexpr auto
+operator>=(flat_set<Key, Container, Compare> const& x, flat_set<Key, Container, Compare> const& y) -> bool
 {
     return !(x < y);
 }
 
 template <typename Key, typename Container, typename Compare>
-constexpr auto swap(flat_set<Key, Container, Compare>& x, flat_set<Key, Container, Compare>& y)
-    noexcept(noexcept(x.swap(y))) -> void
+constexpr auto
+swap(flat_set<Key, Container, Compare>& x, flat_set<Key, Container, Compare>& y) noexcept(noexcept(x.swap(y))) -> void
 {
     return x.swap(y);
 }

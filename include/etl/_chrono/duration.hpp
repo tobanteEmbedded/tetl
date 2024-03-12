@@ -77,8 +77,10 @@ struct duration {
     /// That is, either the duration uses floating-point ticks, or Period2 is
     /// exactly divisible by period
     template <typename Rep2, typename Period2>
-        requires(treat_as_floating_point_v<rep>
-                 or (ratio_divide<Period2, period>::den == 1 and not treat_as_floating_point_v<Rep2>))
+        requires(
+            treat_as_floating_point_v<rep>
+            or (ratio_divide<Period2, period>::den == 1 and not treat_as_floating_point_v<Rep2>)
+        )
     constexpr duration(duration<Rep2, Period2> const& other) noexcept
         : _rep(static_cast<Rep>(other.count() * ratio_divide<Period2, period>::num))
     {
@@ -193,7 +195,7 @@ struct duration {
     }
 
 private:
-    rep _rep {};
+    rep _rep{};
 };
 
 /// \brief Performs basic arithmetic operations between two durations or between
@@ -204,8 +206,8 @@ private:
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator+(duration<Rep1, Period1> const& lhs,
-    duration<Rep2, Period2> const& rhs) -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+[[nodiscard]] constexpr auto operator+(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
+    -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(CD(lhs).count() + CD(rhs).count());
@@ -220,8 +222,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator-(duration<Rep1, Period1> const& lhs,
-    duration<Rep2, Period2> const& rhs) -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+[[nodiscard]] constexpr auto operator-(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
+    -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(CD(lhs).count() - CD(rhs).count());
@@ -236,8 +238,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator/(
-    duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> common_type_t<Rep1, Rep2>
+[[nodiscard]] constexpr auto
+operator/(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs) -> common_type_t<Rep1, Rep2>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(lhs).count() / CD(rhs).count();
@@ -252,8 +254,8 @@ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
 ///
 /// https://en.cppreference.com/w/cpp/chrono/duration/operator_arith4
 template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-[[nodiscard]] constexpr auto operator%(duration<Rep1, Period1> const& lhs,
-    duration<Rep2, Period2> const& rhs) -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
+[[nodiscard]] constexpr auto operator%(duration<Rep1, Period1> const& lhs, duration<Rep2, Period2> const& rhs)
+    -> common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>
 {
     using CD = common_type_t<duration<Rep1, Period1>, duration<Rep2, Period2>>;
     return CD(CD(lhs).count() % CD(rhs).count());

@@ -48,15 +48,15 @@ constexpr auto test() -> bool
 
     {
         etl::static_vector<T, 16> vec;
-        vec.push_back(T {1});
-        vec.push_back(T {2});
-        vec.push_back(T {3});
-        vec.push_back(T {4});
-        vec.push_back(T {-5});
+        vec.push_back(T{1});
+        vec.push_back(T{2});
+        vec.push_back(T{3});
+        vec.push_back(T{4});
+        vec.push_back(T{-5});
 
         auto const cmp = [](auto a, auto b) -> bool { return etl::abs(a) < etl::abs(b); };
-        assert((*etl::min_element(vec.begin(), vec.end()) == T {-5}));
-        assert((*etl::min_element(vec.begin(), vec.end(), cmp) == T {1}));
+        assert((*etl::min_element(vec.begin(), vec.end()) == T{-5}));
+        assert((*etl::min_element(vec.begin(), vec.end(), cmp) == T{1}));
     }
 
     // in order
@@ -87,32 +87,32 @@ constexpr auto test() -> bool
     }
 
     {
-        auto test0 = etl::array {T(1), T(2), T(3)};
+        auto test0 = etl::array{T(1), T(2), T(3)};
         auto res0  = etl::minmax_element(begin(test0), end(test0));
         assert((*res0.first == T(1)));
         assert((*res0.second == T(3)));
 
-        auto test1 = etl::array {T(1), T(2), T(3), T(4), T(5), T(6)};
+        auto test1 = etl::array{T(1), T(2), T(3), T(4), T(5), T(6)};
         auto res1  = etl::minmax_element(begin(test1), end(test1));
         assert((*res1.first == T(1)));
         assert((*res1.second == T(6)));
 
-        auto test2 = etl::array {T(1), T(4), T(5), T(3), T(2)};
+        auto test2 = etl::array{T(1), T(4), T(5), T(3), T(2)};
         auto res2  = etl::minmax_element(begin(test2), end(test2));
         assert((*res2.first == T(1)));
         assert((*res2.second == T(5)));
 
-        auto test3 = etl::array {T(100), T(99), T(0)};
+        auto test3 = etl::array{T(100), T(99), T(0)};
         auto res3  = etl::minmax_element(begin(test3), end(test3));
         assert((*res3.first == T(0)));
         assert((*res3.second == T(100)));
     }
 
     {
-        assert((etl::clamp<T>(55, 0, 20) == T {20}));
-        assert((etl::clamp<T>(55, 0, 100) == T {55}));
-        assert((etl::clamp<T>(55, 0, 20) == T {20}));
-        assert((etl::clamp<T>(55, 0, 100) == T {55}));
+        assert((etl::clamp<T>(55, 0, 20) == T{20}));
+        assert((etl::clamp<T>(55, 0, 100) == T{55}));
+        assert((etl::clamp<T>(55, 0, 20) == T{20}));
+        assert((etl::clamp<T>(55, 0, 100) == T{55}));
     }
 
     return true;

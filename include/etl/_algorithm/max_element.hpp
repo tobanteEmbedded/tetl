@@ -10,12 +10,16 @@ namespace etl {
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     ForwardIt largest = first;
     ++first;
     for (; first != last; ++first) {
-        if (*largest < *first) { largest = first; }
+        if (*largest < *first) {
+            largest = first;
+        }
     }
     return largest;
 }
@@ -25,12 +29,16 @@ template <typename ForwardIt>
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto max_element(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     ForwardIt largest = first;
     ++first;
     for (; first != last; ++first) {
-        if (comp(*largest, *first)) { largest = first; }
+        if (comp(*largest, *first)) {
+            largest = first;
+        }
     }
     return largest;
 }

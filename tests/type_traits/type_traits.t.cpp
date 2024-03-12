@@ -13,7 +13,7 @@
 namespace {
 template <typename T>
 struct Foo {
-    T i {};
+    T i{};
 };
 
 struct IDS { };
@@ -176,16 +176,16 @@ constexpr auto test() -> bool
     assert((is_same_v<common_type_t<T, double>, double>));
 
     if constexpr (etl::is_integral_v<T>) {
-        auto const constant = etl::integral_constant<T, T {0}> {};
-        assert(decltype(constant)::value == T {0});
-        assert(constant() == T {0});
-        assert(static_cast<T>(constant) == T {0});
+        auto const constant = etl::integral_constant<T, T{0}>{};
+        assert(decltype(constant)::value == T{0});
+        assert(constant() == T{0});
+        assert(static_cast<T>(constant) == T{0});
         assert((etl::is_same_v<T, typename decltype(constant)::value_type>));
     }
 
     // false
     {
-        auto const constant = etl::bool_constant<false> {};
+        auto const constant = etl::bool_constant<false>{};
         assert((decltype(constant)::value == false));
         assert((constant() == false));
         assert((static_cast<bool>(constant) == false));
@@ -194,7 +194,7 @@ constexpr auto test() -> bool
 
     // true
     {
-        auto const constant = etl::bool_constant<true> {};
+        auto const constant = etl::bool_constant<true>{};
         assert((decltype(constant)::value == true));
         assert((constant() == true));
         assert((static_cast<bool>(constant) == true));

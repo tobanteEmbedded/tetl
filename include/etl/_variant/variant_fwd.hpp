@@ -30,11 +30,13 @@ template <typename T, typename... Types>
 constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<T const>; // NOLINT
 
 template <size_t I, typename... Types>
-constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<typename variant_alternative<I,
+constexpr auto get_if(variant<Types...>* pv) noexcept -> add_pointer_t<typename variant_alternative<
+                                                          I,
                                                           variant<Types...>>::type>; // NOLINT
 
 template <size_t I, typename... Types>
-constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<I,
+constexpr auto get_if(variant<Types...> const* pv) noexcept -> add_pointer_t<typename variant_alternative<
+                                                                I,
                                                                 variant<Types...>>::type const>; // NOLINT
 
 } // namespace etl

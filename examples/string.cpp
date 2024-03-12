@@ -15,7 +15,7 @@ auto main() -> int
 {
     // Unlike a std::string you will have to decide which maximum capacity you
     // need. Apart from that it behaves almost the same as the standard version.
-    etl::static_string<32> str {};
+    etl::static_string<32> str{};
     TETL_ASSERT(str.empty());
     static_assert(str.capacity() == 32);
 
@@ -34,7 +34,7 @@ auto main() -> int
     TETL_ASSERT(str.size() == 5);
     TETL_ASSERT(str == "Hello");
 
-    auto other = etl::string_view {" World"};
+    auto other = etl::string_view{" World"};
     str.append(other, 0);
     TETL_ASSERT(!str.empty());
     TETL_ASSERT(str.size() == 11);

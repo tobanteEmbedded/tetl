@@ -30,21 +30,23 @@ namespace internal {
 template <typename T>
 constexpr auto log2_check(T const x) noexcept -> T
 {
-    return (is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
-                      // x < 0
-                x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
-                         :
-                         // x ~= 0
-                etl::numeric_limits<T>::epsilon() > x ? -etl::numeric_limits<T>::infinity()
-                                                      :
-                                                      // indistinguishable from 1
-                etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
-                                                                  :
-                                                                  //
-                x == etl::numeric_limits<T>::infinity() ? etl::numeric_limits<T>::infinity()
-                                                        :
-                                                        // else: log_2(x) = ln(x) / ln(2)
-                T(log(x) / GCEM_LOG_2));
+    return (
+        is_nan(x) ? etl::numeric_limits<T>::quiet_NaN() :
+                  // x < 0
+            x < T(0) ? etl::numeric_limits<T>::quiet_NaN()
+                     :
+                     // x ~= 0
+            etl::numeric_limits<T>::epsilon() > x ? -etl::numeric_limits<T>::infinity()
+                                                  :
+                                                  // indistinguishable from 1
+            etl::numeric_limits<T>::epsilon() > abs(x - T(1)) ? T(0)
+                                                              :
+                                                              //
+            x == etl::numeric_limits<T>::infinity() ? etl::numeric_limits<T>::infinity()
+                                                    :
+                                                    // else: log_2(x) = ln(x) / ln(2)
+            T(log(x) / GCEM_LOG_2)
+    );
 }
 
 } // namespace internal

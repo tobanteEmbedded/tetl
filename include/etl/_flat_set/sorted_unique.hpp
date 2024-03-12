@@ -9,7 +9,7 @@ struct sorted_unique_t {
     explicit sorted_unique_t() = default;
 };
 
-inline constexpr auto sorted_unique = sorted_unique_t {};
+inline constexpr auto sorted_unique = sorted_unique_t{};
 
 } // namespace etl
 

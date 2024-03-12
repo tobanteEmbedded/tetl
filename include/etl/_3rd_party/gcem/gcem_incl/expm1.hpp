@@ -45,7 +45,8 @@ constexpr auto expm1_check(T const x) noexcept -> T
             exp(x) - T(1)
                               :
                               // else
-            expm1_compute(x));
+            expm1_compute(x)
+    );
 }
 
 } // namespace internal

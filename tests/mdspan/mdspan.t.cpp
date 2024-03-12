@@ -25,7 +25,7 @@ template <typename ElementType, typename IndexType>
     ASSERT_NOEXCEPT(etl::declval<mdspan_t>().extent(0));
 
     {
-        auto m = etl::mdspan<ElementType, extents_t> {};
+        auto m = etl::mdspan<ElementType, extents_t>{};
         ASSERT(m.rank() == 1);
         ASSERT(m.rank_dynamic() == 1);
         ASSERT(m.static_extent(0) == etl::dynamic_extent);
@@ -36,8 +36,8 @@ template <typename ElementType, typename IndexType>
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> {ElementType(1)};
-        auto m      = etl::mdspan<ElementType, extents_t> {buffer.data(), buffer.size()};
+        auto buffer = etl::array<ElementType, 16>{ElementType(1)};
+        auto m      = etl::mdspan<ElementType, extents_t>{buffer.data(), buffer.size()};
         ASSERT(m.rank() == 1);
         ASSERT(m.rank_dynamic() == 1);
         ASSERT(m.static_extent(0) == etl::dynamic_extent);
@@ -55,7 +55,7 @@ template <typename ElementType, typename IndexType>
     }
 
     {
-        auto buffer = etl::array<ElementType, 16> {ElementType(1)};
+        auto buffer = etl::array<ElementType, 16>{ElementType(1)};
         auto m      = etl::mdspan(buffer.data(), 2, 8);
         ASSERT(m.rank() == 2);
         ASSERT(m.rank_dynamic() == 2);

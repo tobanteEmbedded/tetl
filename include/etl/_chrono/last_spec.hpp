@@ -18,7 +18,7 @@ struct last_spec {
     explicit last_spec() = default;
 };
 
-inline constexpr auto last = last_spec {};
+inline constexpr auto last = last_spec{};
 
 } // namespace etl::chrono
 

@@ -28,8 +28,8 @@ struct function_ref<R(Args...)> {
 private:
     using internal_signature_t = R (*)(void*, Args...);
 
-    void* _obj {nullptr};
-    internal_signature_t _callable {nullptr};
+    void* _obj{nullptr};
+    internal_signature_t _callable{nullptr};
 
 public:
     /// \brief Constructs a function_ref referring to f.
@@ -37,7 +37,7 @@ public:
         requires(not is_same_v<decay_t<F>, function_ref> and is_invocable_r_v<R, F &&, Args...>)
     function_ref(F&& f) noexcept
         : _obj(const_cast<void*>(reinterpret_cast<void const*>(addressof(f))))
-        , _callable {
+        , _callable{
               +[](void* obj, Args... args) -> R {
                   auto* func = reinterpret_cast<add_pointer_t<F>>(obj);
                   return invoke(*func, forward<Args>(args)...);
@@ -72,9 +72,9 @@ public:
         swap(_callable, other._callable);
     }
 
-    ///  Equivalent to return invoke(f, forward<Args>(args)...);, where f is the
-    ///  callable object referred to by *this, qualified with the same
-    ///  cv-qualifiers as the function type Signature.
+    /// Equivalent to return invoke(f, forward<Args>(args)...);, where f is the
+    /// callable object referred to by *this, qualified with the same
+    /// cv-qualifiers as the function type Signature.
     auto operator()(Args... args) const -> R { return _callable(_obj, forward<Args>(args)...); }
 };
 

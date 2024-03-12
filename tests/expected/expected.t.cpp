@@ -10,8 +10,10 @@
 namespace {
 struct error_class {
     constexpr error_class() = default;
+
     constexpr explicit error_class(int v) : value(v) { }
-    int value {0};
+
+    int value{0};
 
     friend constexpr auto operator==(error_class ec, int v) { return ec.value == v; }
 };
@@ -33,7 +35,7 @@ static auto test() -> bool
     assert(noexcept(etl::declval<expected_t>().has_value()));
     assert(noexcept(static_cast<bool>(etl::declval<expected_t>())));
 
-    auto ex1 = expected_t {};
+    auto ex1 = expected_t{};
     assert(ex1.has_value());
     assert(static_cast<bool>(ex1));
     assert(etl::as_const(ex1).has_value());
@@ -44,7 +46,7 @@ static auto test() -> bool
     assert(etl::as_const(ex1).value_or(42.0F) == 0);
     assert(expected_t().value() == 0);
 
-    auto ex2 = expected_t {etl::in_place, T(42)};
+    auto ex2 = expected_t{etl::in_place, T(42)};
     assert(ex2.has_value());
     assert(static_cast<bool>(ex2));
     assert(etl::as_const(ex2).has_value());
@@ -54,7 +56,7 @@ static auto test() -> bool
     assert(*ex2 == T(42));
     assert(*etl::as_const(ex2) == T(42));
 
-    auto ex3 = expected_t {etl::unexpect, 143};
+    auto ex3 = expected_t{etl::unexpect, 143};
     assert(not ex3.has_value());
     assert(not static_cast<bool>(ex3));
     assert(not etl::as_const(ex3).has_value());

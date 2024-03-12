@@ -17,8 +17,10 @@ constexpr auto matrix_vector_product(InMat a, InVec x, OutVec y) noexcept -> voi
     using size_type = detail::common_size_type_t<InMat, InVec, OutVec>;
 
     for (size_type i(0); cmp_less(i, a.extent(0)); ++i) {
-        y(i) = typename OutVec::element_type {};
-        for (size_type j(0); cmp_less(j, a.extent(1)); ++j) { y(i) += a(i, j) * x(j); }
+        y(i) = typename OutVec::element_type{};
+        for (size_type j(0); cmp_less(j, a.extent(1)); ++j) {
+            y(i) += a(i, j) * x(j);
+        }
     }
 }
 

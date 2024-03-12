@@ -5,6 +5,7 @@
 
 #include "etl/_3rd_party/gcem/gcem.hpp"
 #include "etl/_concepts/integral.hpp"
+
 namespace etl {
 
 /// \brief Computes the inverse hyperbolic tangent of arg.

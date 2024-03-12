@@ -13,16 +13,21 @@ namespace etl {
 /// destination. Elements are compared using the given binary comparison
 /// function `comp` and the ranges must be sorted with respect to the same.
 template <typename InputIt1, typename InputIt2, typename OutputIt, typename Compare>
-constexpr auto set_difference(
-    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp) -> OutputIt
+constexpr auto
+set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination, Compare comp)
+    -> OutputIt
 {
     while (first1 != last1) {
-        if (first2 == last2) { return copy(first1, last1, destination); }
+        if (first2 == last2) {
+            return copy(first1, last1, destination);
+        }
 
         if (comp(*first1, *first2)) {
             *destination++ = *first1++;
         } else {
-            if (!comp(*first2, *first1)) { ++first1; }
+            if (!comp(*first2, *first1)) {
+                ++first1;
+            }
             ++first2;
         }
     }
@@ -30,10 +35,10 @@ constexpr auto set_difference(
 }
 
 template <typename InputIt1, typename InputIt2, typename OutputIt>
-constexpr auto set_difference(
-    InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination) -> OutputIt
+constexpr auto
+set_difference(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt destination) -> OutputIt
 {
-    return set_difference(first1, last1, first2, last2, destination, less {});
+    return set_difference(first1, last1, first2, last2, destination, less{});
 }
 
 } // namespace etl

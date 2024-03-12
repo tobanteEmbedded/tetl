@@ -12,8 +12,8 @@ template <typename T, typename IndexType>
 {
     {
         // 1D static extents
-        auto data   = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec    = etl::mdspan<T, etl::extents<IndexType, 4>> {data.data()};
+        auto data   = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec    = etl::mdspan<T, etl::extents<IndexType, 4>>{data.data()};
         auto scaled = etl::linalg::scaled(T(2), vec);
 
         assert(scaled(0) == T(0));
@@ -24,8 +24,8 @@ template <typename T, typename IndexType>
 
     {
         // 1D dynamic extents
-        auto data   = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec    = etl::mdspan<T, etl::dextents<IndexType, 1>> {data.data(), data.size()};
+        auto data   = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec    = etl::mdspan<T, etl::dextents<IndexType, 1>>{data.data(), data.size()};
         auto scaled = etl::linalg::scaled(T(2), vec);
 
         assert(scaled(0) == T(0));
@@ -36,8 +36,8 @@ template <typename T, typename IndexType>
 
     {
         // 2D static extents
-        auto data   = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec    = etl::mdspan<T, etl::extents<IndexType, 2, 2>> {data.data()};
+        auto data   = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec    = etl::mdspan<T, etl::extents<IndexType, 2, 2>>{data.data()};
         auto scaled = etl::linalg::scaled(T(2), vec);
 
         assert(scaled(0, 0) == T(0));
@@ -48,8 +48,8 @@ template <typename T, typename IndexType>
 
     {
         // 2D dynamic extents
-        auto data   = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec    = etl::mdspan<T, etl::dextents<IndexType, 2>> {data.data(), 2, 2};
+        auto data   = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec    = etl::mdspan<T, etl::dextents<IndexType, 2>>{data.data(), 2, 2};
         auto scaled = etl::linalg::scaled(T(2), vec);
 
         assert(scaled(0, 0) == T(0));

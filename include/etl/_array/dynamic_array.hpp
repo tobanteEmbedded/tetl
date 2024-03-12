@@ -30,23 +30,23 @@ struct dynamic_array {
         requires(etl::is_default_constructible_v<Allocator>)
     = default;
 
-    explicit dynamic_array(Allocator alloc) : _alloc {etl::move(alloc)} { }
+    explicit dynamic_array(Allocator alloc) : _alloc{etl::move(alloc)} { }
 
-    dynamic_array(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _size {n}, _alloc {etl::move(alloc)}
+    dynamic_array(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _size{n}, _alloc{etl::move(alloc)}
     {
         _ptr = etl::allocator_traits<Allocator>::allocate(_alloc, n);
         etl::uninitialized_fill(begin(), end(), value);
     }
 
-    explicit dynamic_array(etl::size_t n, Allocator alloc = Allocator()) : dynamic_array {n, T(), etl::move(alloc)} { }
+    explicit dynamic_array(etl::size_t n, Allocator alloc = Allocator()) : dynamic_array{n, T(), etl::move(alloc)} { }
 
     dynamic_array(dynamic_array const& other)                    = delete;
     auto operator=(dynamic_array const& other) -> dynamic_array& = delete;
 
     dynamic_array(dynamic_array&& other) noexcept
-        : _ptr {etl::exchange(other._ptr, nullptr)}
-        , _size {etl::exchange(other._size, 0)}
-        , _alloc {etl::exchange(other._alloc, Allocator {})}
+        : _ptr{etl::exchange(other._ptr, nullptr)}
+        , _size{etl::exchange(other._size, 0)}
+        , _alloc{etl::exchange(other._alloc, Allocator{})}
     {
     }
 
@@ -54,7 +54,7 @@ struct dynamic_array {
     {
         _ptr   = etl::exchange(other._ptr, nullptr);
         _size  = etl::exchange(other._size, 0);
-        _alloc = etl::exchange(other._alloc, Allocator {});
+        _alloc = etl::exchange(other._alloc, Allocator{});
         return *this;
     }
 
@@ -65,20 +65,24 @@ struct dynamic_array {
     }
 
     [[nodiscard]] auto size() -> etl::size_t { return _size; }
+
     [[nodiscard]] auto size() const -> etl::size_t { return _size; }
 
     [[nodiscard]] auto data() -> T* { return _ptr; }
+
     [[nodiscard]] auto data() const -> T const* { return _ptr; }
 
     [[nodiscard]] auto begin() -> T* { return _ptr; }
+
     [[nodiscard]] auto begin() const -> T const* { return _ptr; }
 
     [[nodiscard]] auto end() -> T* { return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size())); }
+
     [[nodiscard]] auto end() const -> T const* { return etl::next(_ptr, static_cast<etl::ptrdiff_t>(size())); }
 
 private:
-    T* _ptr {nullptr};
-    etl::size_t _size {0};
+    T* _ptr{nullptr};
+    etl::size_t _size{0};
     TETL_NO_UNIQUE_ADDRESS Allocator _alloc;
 };
 

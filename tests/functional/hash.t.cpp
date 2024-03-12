@@ -12,24 +12,24 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    assert(etl::hash<etl::nullptr_t> {}(nullptr) == 0);
+    assert(etl::hash<etl::nullptr_t>{}(nullptr) == 0);
 
-    assert(etl::hash<bool> {}(true) != 0);
-    assert(etl::hash<char16_t> {}('a') != 0);
-    assert(etl::hash<char32_t> {}('a') != 0);
-    assert(etl::hash<wchar_t> {}('a') != 0);
+    assert(etl::hash<bool>{}(true) != 0);
+    assert(etl::hash<char16_t>{}('a') != 0);
+    assert(etl::hash<char32_t>{}('a') != 0);
+    assert(etl::hash<wchar_t>{}('a') != 0);
 
-    assert(etl::hash<T> {}(42) != 0);
-    assert(etl::hash<T> {}(42) == etl::hash<T> {}(42));
+    assert(etl::hash<T>{}(42) != 0);
+    assert(etl::hash<T>{}(42) == etl::hash<T>{}(42));
 
 #if __has_builtin(__builtin_is_constant_evaluated)
     if (!etl::is_constant_evaluated()) {
-        auto val = T {42};
-        assert(etl::hash<T*> {}(&val) != 0);
+        auto val = T{42};
+        assert(etl::hash<T*>{}(&val) != 0);
     }
 #endif
 
-    assert(etl::hash<char8_t> {}('a') != 0);
+    assert(etl::hash<char8_t>{}('a') != 0);
 
     return true;
 }

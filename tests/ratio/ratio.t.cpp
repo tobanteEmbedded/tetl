@@ -10,7 +10,7 @@ constexpr auto test() -> bool
 {
 
     {
-        etl::ratio<1, 1> r {};
+        etl::ratio<1, 1> r{};
         etl::ignore_unused(r);
     }
 

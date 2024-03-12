@@ -27,7 +27,7 @@ template <typename InputIter>
 [[nodiscard]] constexpr auto reduce(InputIter first, InputIter last) ->
     typename etl::iterator_traits<InputIter>::value_type
 {
-    auto init = typename etl::iterator_traits<InputIter>::value_type {};
+    auto init = typename etl::iterator_traits<InputIter>::value_type{};
     return reduce(first, last, init);
 }
 

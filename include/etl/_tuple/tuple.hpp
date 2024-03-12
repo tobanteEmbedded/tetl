@@ -35,7 +35,7 @@ struct tuple_leaf {
     auto get_type(integral_constant<size_t, I> ic) -> T;
 
     template <typename... Args>
-    constexpr tuple_leaf(Args&&... args) : _value {forward<Args>(args)...}
+    constexpr tuple_leaf(Args&&... args) : _value{forward<Args>(args)...}
     {
     }
 
@@ -56,8 +56,8 @@ struct tuple_leaf {
         return etl::move(_value);
     }
 
-    constexpr auto swap_impl(integral_constant<size_t, I> /*ignore*/, T& other)
-        noexcept(is_nothrow_swappable_v<T>) -> void
+    constexpr auto
+    swap_impl(integral_constant<size_t, I> /*ignore*/, T& other) noexcept(is_nothrow_swappable_v<T>) -> void
     {
         using etl::swap;
         swap(_value, other);
@@ -76,7 +76,7 @@ private:
 public:
     explicit(not(is_implicit_default_constructible_v<Ts> && ...)) constexpr tuple_impl()
         requires((is_default_constructible_v<Ts> and ...))
-        : tuple_leaf<Idx, Ts> {}...
+        : tuple_leaf<Idx, Ts>{}...
     {
     }
 
@@ -91,7 +91,7 @@ public:
     template <typename... Args>
         requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
     explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple_impl(Args&&... args)
-        : tuple_leaf<Idx, Ts> {forward<Args>(args)}...
+        : tuple_leaf<Idx, Ts>{forward<Args>(args)}...
     {
     }
 
@@ -104,8 +104,10 @@ public:
     constexpr auto swap(tuple_impl& other) noexcept((is_nothrow_swappable_v<Ts> && ...)) -> void
     {
         (tuple_leaf<Idx, Ts>::swap_impl(
-             integral_constant<size_t, Idx> {}, other.get_impl(integral_constant<size_t, Idx> {})),
-            ...);
+             integral_constant<size_t, Idx>{},
+             other.get_impl(integral_constant<size_t, Idx>{})
+         ),
+         ...);
     }
 };
 
@@ -183,7 +185,7 @@ public:
     // No. 3
     template <typename... Args>
         requires((is_constructible_v<Ts, Args &&> && ...) && (sizeof...(Ts) > 0) && (sizeof...(Ts) == sizeof...(Args)))
-    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl {forward<Args>(args)...}
+    explicit(!(is_convertible_v<Args&&, Ts> && ...)) constexpr tuple(Args&&... args) : _impl{forward<Args>(args)...}
     {
     }
 
@@ -200,34 +202,34 @@ template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>& t) -> auto&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(integral_constant<size_t, I> {});
+    return t.template get_impl<I>(integral_constant<size_t, I>{});
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const& t) -> auto const&
 {
     static_assert(I < sizeof...(Ts));
-    return t.template get_impl<I>(integral_constant<size_t, I> {});
+    return t.template get_impl<I>(integral_constant<size_t, I>{});
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...>&& t) -> auto&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(integral_constant<size_t, I> {});
+    return etl::move(t).template get_impl<I>(integral_constant<size_t, I>{});
 }
 
 template <etl::size_t I, typename... Ts>
 [[nodiscard]] constexpr auto get(tuple<Ts...> const&& t) -> auto const&&
 {
     static_assert(I < sizeof...(Ts));
-    return etl::move(t).template get_impl<I>(integral_constant<size_t, I> {});
+    return etl::move(t).template get_impl<I>(integral_constant<size_t, I>{});
 }
 
 template <etl::size_t I, typename... Ts>
 struct tuple_element<I, tuple<Ts...>> {
     static_assert(I < sizeof...(Ts));
-    using type = decltype(declval<tuple<Ts...>>().get_type(integral_constant<size_t, I> {}));
+    using type = decltype(declval<tuple<Ts...>>().get_type(integral_constant<size_t, I>{}));
 };
 
 namespace detail {
@@ -243,7 +245,7 @@ constexpr auto tuple_equal(tuple<Ts...> const& l, tuple<Us...> const& r) -> bool
 {
     static_assert(sizeof...(Ts) != 0);
     static_assert(sizeof...(Ts) == sizeof...(Us));
-    return tuple_equal_impl(make_index_sequence<sizeof...(Ts)> {}, l, r);
+    return tuple_equal_impl(make_index_sequence<sizeof...(Ts)>{}, l, r);
 }
 } // namespace detail
 

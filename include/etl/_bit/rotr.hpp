@@ -15,7 +15,9 @@ constexpr auto rotr(T t, int s) noexcept -> T
 {
     auto const cnt    = static_cast<unsigned>(s);
     auto const digits = static_cast<unsigned>(etl::numeric_limits<T>::digits);
-    if ((cnt % digits) == 0) { return t; }
+    if ((cnt % digits) == 0) {
+        return t;
+    }
     return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
 }
 

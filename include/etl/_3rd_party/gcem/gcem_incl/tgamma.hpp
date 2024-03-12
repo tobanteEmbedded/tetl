@@ -44,7 +44,8 @@ constexpr auto tgamma_check(T const x) noexcept -> T
                      :
 
                      // else
-            exp(lgamma(x)));
+            exp(lgamma(x))
+    );
 }
 
 } // namespace internal

@@ -54,7 +54,7 @@ struct fn {
 } // namespace end_cpo
 
 inline namespace cpo {
-inline constexpr auto end = end_cpo::fn {};
+inline constexpr auto end = end_cpo::fn{};
 } // namespace cpo
 
 } // namespace etl::ranges

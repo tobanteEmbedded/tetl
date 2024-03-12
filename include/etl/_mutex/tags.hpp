@@ -30,13 +30,13 @@ struct adopt_lock_t {
 };
 
 /// \brief Instances of empty struct tag types. See defer_lock_t.
-inline constexpr defer_lock_t defer_lock {};
+inline constexpr defer_lock_t defer_lock{};
 
 /// \brief Instances of empty struct tag types. See try_to_lock_t.
-inline constexpr try_to_lock_t try_to_lock {};
+inline constexpr try_to_lock_t try_to_lock{};
 
 /// \brief Instances of empty struct tag types. See adopt_lock_t.
-inline constexpr adopt_lock_t adopt_lock {};
+inline constexpr adopt_lock_t adopt_lock{};
 
 } // namespace etl
 

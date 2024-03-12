@@ -35,7 +35,8 @@ constexpr auto abs(T const x) noexcept -> T
         x == T(0) ? T(0) :
                   // else
             x < T(0) ? -x
-                     : x);
+                     : x
+    );
 }
 
 #endif

@@ -12,7 +12,9 @@ namespace {
 template <typename T>
 struct Class {
     constexpr Class(T n) : num(n) { }
+
     [[nodiscard]] constexpr auto get_num(T i) const -> T { return num + i; }
+
     T num;
 };
 
@@ -32,10 +34,10 @@ constexpr auto test() -> bool
     assert(etl::invoke([]() { return T(42); }) == T(42));
 
     assert(etl::invoke(get_num<T>, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::get_num, Class<T> {0}, T(42)) == T(42));
-    assert(etl::invoke(&Class<T>::num, Class<T> {2}) == T(2));
+    assert(etl::invoke(&Class<T>::get_num, Class<T>{0}, T(42)) == T(42));
+    assert(etl::invoke(&Class<T>::num, Class<T>{2}) == T(2));
 
-    auto c   = Class<T> {0};
+    auto c   = Class<T>{0};
     auto ref = etl::ref(c);
     assert(etl::invoke(&Class<T>::get_num, ref, T(42)) == T(42));
     assert(etl::invoke(&Class<T>::num, ref) == T(0));
@@ -45,7 +47,7 @@ constexpr auto test() -> bool
     assert(etl::invoke(&Class<T>::num, cref) == T(0));
 
     // Using with a free function:
-    auto isSame   = [](T lhs, T rhs) { return etl::equal_to {}(lhs, rhs); };
+    auto isSame   = [](T lhs, T rhs) { return etl::equal_to{}(lhs, rhs); };
     auto isDiffer = etl::not_fn(isSame);
     assert(isDiffer(T(6), T(9)));
     assert(not isDiffer(T(8), T(8)));

@@ -11,7 +11,7 @@ using register_bits = etl::bitset<32>;
 
 static auto test_all() -> bool
 {
-    auto memory          = stm32::gpio_memory_layout {};
+    auto memory          = stm32::gpio_memory_layout{};
     memory.bit_set_reset = 0x0;
     auto& gpio           = stm32::port::place_at(&memory);
 

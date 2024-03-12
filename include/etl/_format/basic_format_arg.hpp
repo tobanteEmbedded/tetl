@@ -81,7 +81,7 @@ public:
         void const*,                  //
         handle                        //
         >
-        value {monostate {}};
+        value{monostate{}};
 };
 
 namespace detail {

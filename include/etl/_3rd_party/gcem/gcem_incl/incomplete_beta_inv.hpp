@@ -28,8 +28,8 @@
 namespace internal {
 
 template <typename T>
-constexpr auto incomplete_beta_inv_decision(
-    T value, T alphaPar, T betaPar, T p, T direc, T lbVal, int iterCount) noexcept -> T;
+constexpr auto
+incomplete_beta_inv_decision(T value, T alphaPar, T betaPar, T p, T direc, T lbVal, int iterCount) noexcept -> T;
 
 //
 // initial value for Halley
@@ -39,20 +39,24 @@ constexpr auto incomplete_beta_inv_decision(
 
 template <typename T>
 constexpr auto incomplete_beta_inv_initial_val_1_tval(T const p) noexcept -> T
-{                        // a > 1.0
-    return (p > T(0.5) ? // if
-                sqrt(-T(2) * log(T(1) - p))
-                       :
-                       // else
-                sqrt(-T(2) * log(p)));
+{ // a > 1.0
+    return (
+        p > T(0.5) ? // if
+            sqrt(-T(2) * log(T(1) - p))
+                   :
+                   // else
+            sqrt(-T(2) * log(p))
+    );
 }
 
 template <typename T>
 constexpr auto incomplete_beta_inv_initial_val_1_int_begin(T const tVal) noexcept -> T
 { // internal for a > 1.0
-    return (tVal
-            - (T(2.515517) + T(0.802853) * tVal + T(0.010328) * tVal * tVal)
-                  / (T(1) + T(1.432788) * tVal + T(0.189269) * tVal * tVal + T(0.001308) * tVal * tVal * tVal));
+    return (
+        tVal
+        - (T(2.515517) + T(0.802853) * tVal + T(0.010328) * tVal * tVal)
+              / (T(1) + T(1.432788) * tVal + T(0.189269) * tVal * tVal + T(0.001308) * tVal * tVal * tVal)
+    );
 }
 
 template <typename T>
@@ -78,8 +82,10 @@ constexpr auto incomplete_beta_inv_initial_val_1_int_w(T const value, T const ab
 {
     // return( value * sqrt(h_term + lambda)/h_term - ab_term_2*(lambda
     // + 5.0/6.0 -2.0/(3.0*h_term)) );
-    return (value * sqrt(hTerm + (value * value - T(3)) / T(6)) / hTerm
-            - abTerm2 * ((value * value - T(3)) / T(6) + T(5) / T(6) - T(2) / (T(3) * hTerm)));
+    return (
+        value * sqrt(hTerm + (value * value - T(3)) / T(6)) / hTerm
+        - abTerm2 * ((value * value - T(3)) / T(6) + T(5) / T(6) - T(2) / (T(3) * hTerm))
+    );
 }
 
 template <typename T>
@@ -89,13 +95,18 @@ constexpr auto incomplete_beta_inv_initial_val_1_int_end(T const alphaPar, T con
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_initial_val_1(
-    T const alphaPar, T const betaPar, T const tVal, T const sgnTerm) noexcept -> T
+constexpr auto
+incomplete_beta_inv_initial_val_1(T const alphaPar, T const betaPar, T const tVal, T const sgnTerm) noexcept -> T
 { // a > 1.0
-    return incomplete_beta_inv_initial_val_1_int_end(alphaPar, betaPar,
-        incomplete_beta_inv_initial_val_1_int_w(sgnTerm * incomplete_beta_inv_initial_val_1_int_begin(tVal),
+    return incomplete_beta_inv_initial_val_1_int_end(
+        alphaPar,
+        betaPar,
+        incomplete_beta_inv_initial_val_1_int_w(
+            sgnTerm * incomplete_beta_inv_initial_val_1_int_begin(tVal),
             incomplete_beta_inv_initial_val_1_int_ab2(alphaPar, betaPar),
-            incomplete_beta_inv_initial_val_1_int_h(incomplete_beta_inv_initial_val_1_int_ab1(alphaPar, betaPar))));
+            incomplete_beta_inv_initial_val_1_int_h(incomplete_beta_inv_initial_val_1_int_ab1(alphaPar, betaPar))
+        )
+    );
 }
 
 //
@@ -114,11 +125,13 @@ constexpr auto incomplete_beta_inv_initial_val_2_s2(T const alphaPar, T const be
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_initial_val_2(
-    T const alphaPar, T const betaPar, T const p, T const s1, T const s2) noexcept -> T
+constexpr auto
+incomplete_beta_inv_initial_val_2(T const alphaPar, T const betaPar, T const p, T const s1, T const s2) noexcept -> T
 {
-    return (p <= s1 / (s1 + s2) ? pow(p * (s1 + s2) * alphaPar, T(1) / alphaPar)
-                                : T(1) - pow(p * (s1 + s2) * betaPar, T(1) / betaPar));
+    return (
+        p <= s1 / (s1 + s2) ? pow(p * (s1 + s2) * alphaPar, T(1) / alphaPar)
+                            : T(1) - pow(p * (s1 + s2) * betaPar, T(1) / betaPar)
+    );
 }
 
 // initial value
@@ -126,23 +139,37 @@ constexpr auto incomplete_beta_inv_initial_val_2(
 template <typename T>
 constexpr auto incomplete_beta_inv_initial_val(T const alphaPar, T const betaPar, T const p) noexcept -> T
 {
-    return ((alphaPar > T(1) && betaPar > T(1)) ?
-                                                // if
-                incomplete_beta_inv_initial_val_1(
-                    alphaPar, betaPar, incomplete_beta_inv_initial_val_1_tval(p), p < T(0.5) ? T(1) : T(-1))
-                                                :
-                                                // else
-                p > T(0.5) ?
-                           // if
-                    T(1)
-                        - incomplete_beta_inv_initial_val_2(betaPar, alphaPar, T(1) - p,
-                            incomplete_beta_inv_initial_val_2_s1(betaPar, alphaPar),
-                            incomplete_beta_inv_initial_val_2_s2(betaPar, alphaPar))
-                           :
-                           // else
-                    incomplete_beta_inv_initial_val_2(alphaPar, betaPar, p,
-                        incomplete_beta_inv_initial_val_2_s1(alphaPar, betaPar),
-                        incomplete_beta_inv_initial_val_2_s2(alphaPar, betaPar)));
+    return (
+        (alphaPar > T(1) && betaPar > T(1)) ?
+                                            // if
+            incomplete_beta_inv_initial_val_1(
+                alphaPar,
+                betaPar,
+                incomplete_beta_inv_initial_val_1_tval(p),
+                p < T(0.5) ? T(1) : T(-1)
+            )
+                                            :
+                                            // else
+            p > T(0.5) ?
+                       // if
+                T(1)
+                    - incomplete_beta_inv_initial_val_2(
+                        betaPar,
+                        alphaPar,
+                        T(1) - p,
+                        incomplete_beta_inv_initial_val_2_s1(betaPar, alphaPar),
+                        incomplete_beta_inv_initial_val_2_s2(betaPar, alphaPar)
+                    )
+                       :
+                       // else
+                incomplete_beta_inv_initial_val_2(
+                    alphaPar,
+                    betaPar,
+                    p,
+                    incomplete_beta_inv_initial_val_2_s1(alphaPar, betaPar),
+                    incomplete_beta_inv_initial_val_2_s2(alphaPar, betaPar)
+                )
+    );
 }
 
 //
@@ -155,34 +182,36 @@ constexpr auto incomplete_beta_inv_err_val(T const value, T const alphaPar, T co
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_deriv_1(
-    T const value, T const alphaPar, T const betaPar, T const lbVal) noexcept -> T
+constexpr auto
+incomplete_beta_inv_deriv_1(T const value, T const alphaPar, T const betaPar, T const lbVal) noexcept -> T
 {            // derivative of the incomplete beta function w.r.t. x
     return ( // indistinguishable from zero or one
         etl::numeric_limits<T>::epsilon() > abs(value)          ? T(0)
         : etl::numeric_limits<T>::epsilon() > abs(T(1) - value) ? T(0)
                                                                 :
                                                                 // else
-            exp((alphaPar - T(1)) * log(value) + (betaPar - T(1)) * log(T(1) - value) - lbVal));
+            exp((alphaPar - T(1)) * log(value) + (betaPar - T(1)) * log(T(1) - value) - lbVal)
+    );
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_deriv_2(
-    T const value, T const alphaPar, T const betaPar, T const deriv1) noexcept -> T
+constexpr auto
+incomplete_beta_inv_deriv_2(T const value, T const alphaPar, T const betaPar, T const deriv1) noexcept -> T
 { // second derivative of the incomplete beta function w.r.t. x
     return (deriv1 * ((alphaPar - T(1)) / value - (betaPar - T(1)) / (T(1) - value)));
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_ratio_val_1(
-    T const value, T const alphaPar, T const betaPar, T const p, T const deriv1) noexcept -> T
+constexpr auto
+incomplete_beta_inv_ratio_val_1(T const value, T const alphaPar, T const betaPar, T const p, T const deriv1) noexcept
+    -> T
 {
     return (incomplete_beta_inv_err_val(value, alphaPar, betaPar, p) / deriv1);
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_ratio_val_2(
-    T const value, T const alphaPar, T const betaPar, T const deriv1) noexcept -> T
+constexpr auto
+incomplete_beta_inv_ratio_val_2(T const value, T const alphaPar, T const betaPar, T const deriv1) noexcept -> T
 {
     return (incomplete_beta_inv_deriv_2(value, alphaPar, betaPar, deriv1) / deriv1);
 }
@@ -194,39 +223,78 @@ constexpr auto incomplete_beta_inv_halley(T const ratioVal1, T const ratioVal2) 
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_recur(T const value, T const alphaPar, T const betaPar, T const p, T const deriv1,
-    T const lbVal, int const iterCount) noexcept -> T
+constexpr auto incomplete_beta_inv_recur(
+    T const value,
+    T const alphaPar,
+    T const betaPar,
+    T const p,
+    T const deriv1,
+    T const lbVal,
+    int const iterCount
+) noexcept -> T
 {
     return ( // derivative = 0
         etl::numeric_limits<T>::epsilon() > abs(deriv1)
             ? incomplete_beta_inv_decision(value, alphaPar, betaPar, p, T(0), lbVal, GCEM_INCML_BETA_INV_MAX_ITER + 1)
             :
             // else
-            incomplete_beta_inv_decision(value, alphaPar, betaPar, p,
-                incomplete_beta_inv_halley(incomplete_beta_inv_ratio_val_1(value, alphaPar, betaPar, p, deriv1),
-                    incomplete_beta_inv_ratio_val_2(value, alphaPar, betaPar, deriv1)),
-                lbVal, iterCount));
+            incomplete_beta_inv_decision(
+                value,
+                alphaPar,
+                betaPar,
+                p,
+                incomplete_beta_inv_halley(
+                    incomplete_beta_inv_ratio_val_1(value, alphaPar, betaPar, p, deriv1),
+                    incomplete_beta_inv_ratio_val_2(value, alphaPar, betaPar, deriv1)
+                ),
+                lbVal,
+                iterCount
+            )
+    );
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_decision(T const value, T const alphaPar, T const betaPar, T const p, T const direc,
-    T const lbVal, int const iterCount) noexcept -> T
+constexpr auto incomplete_beta_inv_decision(
+    T const value,
+    T const alphaPar,
+    T const betaPar,
+    T const p,
+    T const direc,
+    T const lbVal,
+    int const iterCount
+) noexcept -> T
 {
-    return (iterCount <= GCEM_INCML_BETA_INV_MAX_ITER ?
-                                                      // if
-                incomplete_beta_inv_recur(value - direc, alphaPar, betaPar, p,
-                    incomplete_beta_inv_deriv_1(value, alphaPar, betaPar, lbVal), lbVal, iterCount + 1)
-                                                      :
-                                                      // else
-                value - direc);
+    return (
+        iterCount <= GCEM_INCML_BETA_INV_MAX_ITER ?
+                                                  // if
+            incomplete_beta_inv_recur(
+                value - direc,
+                alphaPar,
+                betaPar,
+                p,
+                incomplete_beta_inv_deriv_1(value, alphaPar, betaPar, lbVal),
+                lbVal,
+                iterCount + 1
+            )
+                                                  :
+                                                  // else
+            value - direc
+    );
 }
 
 template <typename T>
-constexpr auto incomplete_beta_inv_begin(
-    T const initialVal, T const alphaPar, T const betaPar, T const p, T const lbVal) noexcept -> T
+constexpr auto
+incomplete_beta_inv_begin(T const initialVal, T const alphaPar, T const betaPar, T const p, T const lbVal) noexcept -> T
 {
     return incomplete_beta_inv_recur(
-        initialVal, alphaPar, betaPar, p, incomplete_beta_inv_deriv_1(initialVal, alphaPar, betaPar, lbVal), lbVal, 1);
+        initialVal,
+        alphaPar,
+        betaPar,
+        p,
+        incomplete_beta_inv_deriv_1(initialVal, alphaPar, betaPar, lbVal),
+        lbVal,
+        1
+    );
 }
 
 template <typename T>
@@ -240,7 +308,13 @@ constexpr auto incomplete_beta_inv_check(T const alphaPar, T const betaPar, T co
                                                             :
                                                             // else
             incomplete_beta_inv_begin(
-                incomplete_beta_inv_initial_val(alphaPar, betaPar, p), alphaPar, betaPar, p, lbeta(alphaPar, betaPar)));
+                incomplete_beta_inv_initial_val(alphaPar, betaPar, p),
+                alphaPar,
+                betaPar,
+                p,
+                lbeta(alphaPar, betaPar)
+            )
+    );
 }
 
 template <typename T1, typename T2, typename T3, typename TC = common_t<T1, T2, T3>>

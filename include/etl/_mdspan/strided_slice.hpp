@@ -13,9 +13,9 @@ struct strided_slice {
     using extent_type = ExtentType;
     using stride_type = StrideType;
 
-    TETL_NO_UNIQUE_ADDRESS OffsetType offset {};
-    TETL_NO_UNIQUE_ADDRESS ExtentType extent {};
-    TETL_NO_UNIQUE_ADDRESS StrideType stride {};
+    TETL_NO_UNIQUE_ADDRESS OffsetType offset{};
+    TETL_NO_UNIQUE_ADDRESS ExtentType extent{};
+    TETL_NO_UNIQUE_ADDRESS StrideType stride{};
 };
 
 template <typename OffsetType, typename ExtentType, typename StrideType>

@@ -18,14 +18,14 @@ constexpr auto test() -> bool
 
     // empty range
     {
-        auto const vec = etl::static_vector<T, 4> {};
+        auto const vec = etl::static_vector<T, 4>{};
         assert(lower_bound(begin(vec), end(vec), T(0)) == end(vec));
         assert(lower_bound(begin(vec), end(vec), T(0), greater) == end(vec));
     }
 
     // single element
     {
-        auto v = etl::static_vector<T, 4> {};
+        auto v = etl::static_vector<T, 4>{};
         v.push_back(T(0));
         assert(lower_bound(begin(v), end(v), T(0)) == begin(v));
         assert(lower_bound(begin(v), end(v), T(1)) == end(v));
@@ -43,7 +43,7 @@ constexpr auto test() -> bool
 
     // multiple elements
     {
-        auto const a = etl::array {T(0), T(1), T(2), T(3)};
+        auto const a = etl::array{T(0), T(1), T(2), T(3)};
         assert(lower_bound(begin(a), end(a), T(0)) == begin(a));
         assert(lower_bound(begin(a), end(a), T(1)) == begin(a) + 1);
         assert(lower_bound(begin(a), end(a), T(4)) == end(a));

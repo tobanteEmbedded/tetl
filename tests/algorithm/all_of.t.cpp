@@ -13,7 +13,7 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    auto data     = etl::array {T(1), T(2), T(3), T(4)};
+    auto data     = etl::array{T(1), T(2), T(3), T(4)};
     auto const p1 = [](T a) { return etl::abs(a) > T(0); };
     auto const p2 = [](T a) { return etl::abs(a) > T(10); };
     auto const p3 = [](T a) { return a < T(10); };

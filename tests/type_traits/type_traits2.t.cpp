@@ -32,6 +32,7 @@ struct IsPolymorphic_A {
 
 struct IsPolymorphic_B {
     virtual ~IsPolymorphic_B() = default;
+
     virtual void foo() { }
 };
 
@@ -49,6 +50,7 @@ struct IsFinal_A {
 
 struct IsFinal_B {
     virtual ~IsFinal_B() = default;
+
     virtual void foo() { } // NOLINT
 };
 
@@ -71,6 +73,7 @@ struct IsAbstract_A {
 
 struct IsAbstract_B {
     virtual ~IsAbstract_B() = default;
+
     virtual void foo() { }
 };
 

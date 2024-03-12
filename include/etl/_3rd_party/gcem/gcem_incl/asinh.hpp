@@ -36,7 +36,8 @@ constexpr auto asinh_compute(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
                                                        :
                                                        // else
-            log(x + sqrt(x * x + T(1))));
+            log(x + sqrt(x * x + T(1)))
+    );
 }
 
 } // namespace internal

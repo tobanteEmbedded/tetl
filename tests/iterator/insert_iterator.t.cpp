@@ -13,29 +13,29 @@ auto test() -> bool
     // back_inserter
     { // "insert rvalue"
         {
-            auto vec  = etl::static_vector<T, 5> {};
+            auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            iter = T {1};
+            iter = T{1};
             assert(vec.size() == 1);
         }
 
         // "insert lvalue"
         {
-            auto vec  = etl::static_vector<T, 5> {};
+            auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            auto const val = T {42};
+            auto const val = T{42};
             iter           = val;
             assert(vec.size() == 1);
         }
 
         // "increment/decrement/dereference should not change state (no-op)"
         {
-            auto vec  = etl::static_vector<T, 5> {};
+            auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::back_inserter(vec);
             assert(vec.size() == 0);
-            auto const val = T {42};
+            auto const val = T{42};
             iter           = val;
             assert(vec.size() == 1);
             assert(&++iter == &iter); // NOLINT
@@ -46,7 +46,7 @@ auto test() -> bool
 
         // front_inserter
         {
-            auto vec  = etl::static_vector<T, 5> {};
+            auto vec  = etl::static_vector<T, 5>{};
             auto iter = etl::front_inserter(vec);
             assert(&++iter == &iter);    // NOLINT
             assert(&++iter == &(*iter)); // NOLINT

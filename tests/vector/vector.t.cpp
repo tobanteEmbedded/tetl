@@ -23,8 +23,8 @@ constexpr auto test() -> bool
     static_assert(etl::same_as<typename Vector::const_pointer, T const*>);
 
     {
-        auto memory = etl::array<etl::byte, 64> {};
-        auto empty  = Vector {Alloc {memory}};
+        auto memory = etl::array<etl::byte, 64>{};
+        auto empty  = Vector{Alloc{memory}};
         assert(empty.size() == 0);
         assert(etl::as_const(empty).size() == 0);
         assert(empty.data() == nullptr);
@@ -36,8 +36,8 @@ constexpr auto test() -> bool
     }
 
     {
-        auto memory = etl::array<etl::byte, 64> {};
-        auto zeros  = Vector {2, Alloc {memory}};
+        auto memory = etl::array<etl::byte, 64>{};
+        auto zeros  = Vector{2, Alloc{memory}};
         assert(zeros.size() == 2);
         assert(etl::as_const(zeros).size() == 2);
         assert(zeros.data() != nullptr);
@@ -49,8 +49,8 @@ constexpr auto test() -> bool
     }
 
     {
-        auto memory = etl::array<etl::byte, 64> {};
-        auto ones   = Vector {4, T(1), Alloc {memory}};
+        auto memory = etl::array<etl::byte, 64>{};
+        auto ones   = Vector{4, T(1), Alloc{memory}};
         assert(ones.size() == 4);
         assert(etl::as_const(ones).size() == 4);
         assert(ones.data() != nullptr);

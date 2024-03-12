@@ -32,7 +32,9 @@ struct is_destructible_impl : try_is_destructible_impl {
     using type = decltype(test<T>(0));
 };
 
-template <typename T, bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>, etl::is_unbounded_array<T>>::value,
+template <
+    typename T,
+    bool = etl::disjunction<etl::is_void<T>, etl::is_function<T>, etl::is_unbounded_array<T>>::value,
     bool = etl::disjunction<etl::is_reference<T>, etl::is_scalar<T>>::value>
 struct is_destructible_safe;
 

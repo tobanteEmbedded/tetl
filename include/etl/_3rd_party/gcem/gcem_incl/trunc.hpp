@@ -41,7 +41,8 @@ constexpr auto trunc_check(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? x
                                                        :
                                                        // else
-            trunc_int(x));
+            trunc_int(x)
+    );
 }
 
 } // namespace internal

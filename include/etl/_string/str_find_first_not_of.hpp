@@ -6,13 +6,15 @@
 namespace etl::detail {
 
 template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
-[[nodiscard]] constexpr auto str_find_first_not_of(
-    CharT const* str, SizeT size, CharT const* search, SizeT pos, SizeT n) noexcept -> SizeT
+[[nodiscard]] constexpr auto
+str_find_first_not_of(CharT const* str, SizeT size, CharT const* search, SizeT pos, SizeT n) noexcept -> SizeT
 {
     if (pos < size) {
         auto const* last = str + size;
         for (auto const* s = str + pos; s != last; ++s) {
-            if (Traits::find(search, n, *s) == nullptr) { return static_cast<SizeT>(s - str); }
+            if (Traits::find(search, n, *s) == nullptr) {
+                return static_cast<SizeT>(s - str);
+            }
         }
     }
     return Npos;
@@ -24,7 +26,9 @@ template <typename CharT, typename SizeT, typename Traits, SizeT Npos>
     if (pos < size) {
         auto const* last = str + size;
         for (auto const* s = str + pos; s != last; ++s) {
-            if (!Traits::eq(*s, c)) { return static_cast<SizeT>(s - str); }
+            if (!Traits::eq(*s, c)) {
+                return static_cast<SizeT>(s - str);
+            }
         }
     }
     return Npos;

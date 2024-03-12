@@ -19,7 +19,9 @@ template <typename InIt, typename OutIt, typename Pred>
 constexpr auto copy_if(InIt first, InIt last, OutIt dFirst, Pred pred) -> OutIt
 {
     while (first != last) {
-        if (pred(*first)) { *dFirst++ = *first; }
+        if (pred(*first)) {
+            *dFirst++ = *first;
+        }
         ++first;
     }
     return dFirst;

@@ -14,24 +14,24 @@ auto test() -> bool
     using pair_type  = etl::pair<int, T>;
     using stack_type = etl::stack<pair_type, etl::static_vector<pair_type, 4>>;
 
-    stack_type s {};
+    stack_type s{};
     assert(s.empty());
 
-    s.push(etl::make_pair(1, T {2}));
-    s.push(etl::make_pair(2, T {6}));
-    s.push(etl::make_pair(3, T {51}));
+    s.push(etl::make_pair(1, T{2}));
+    s.push(etl::make_pair(2, T{6}));
+    s.push(etl::make_pair(3, T{51}));
     assert(s.size() == 3);
-    assert(s.top().second == T {51});
+    assert(s.top().second == T{51});
     assert(s.size() == 3);
 
     s.pop();
-    assert(etl::as_const(s).top().second == T {6});
+    assert(etl::as_const(s).top().second == T{6});
     assert(s.size() == 2);
 
-    s.emplace(42, T {1});
+    s.emplace(42, T{1});
     assert(s.size() == 3);
     assert(s.top().first == 42);
-    assert(s.top().second == T {1});
+    assert(s.top().second == T{1});
 
     auto sCopy = s;
     assert(sCopy == s);
@@ -45,7 +45,7 @@ auto test() -> bool
     assert(!(sCopy == s));
     assert(!(s == sCopy));
 
-    decltype(sCopy) sSwap {};
+    decltype(sCopy) sSwap{};
     sCopy.swap(sSwap);
 
     assert(sCopy.empty());

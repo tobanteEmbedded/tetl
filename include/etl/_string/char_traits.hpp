@@ -36,6 +36,7 @@ struct char_traits<char> {
     using char_type = char;
     using int_type  = int;
     using off_type  = streamoff;
+
     // using pos_type  = streampos;
     // using state_type          = mbstate_t;
     // using comparison_category = strong_ordering;
@@ -54,11 +55,17 @@ struct char_traits<char> {
     /// strings are considered equal.
     static constexpr auto compare(char_type const* lhs, char_type const* rhs, size_t count) -> int
     {
-        if (count == 0) { return 0; }
+        if (count == 0) {
+            return 0;
+        }
 
         for (size_t i = 0; i < count; ++i) {
-            if (lhs[i] < rhs[i]) { return -1; }
-            if (lhs[i] > rhs[i]) { return 1; }
+            if (lhs[i] < rhs[i]) {
+                return -1;
+            }
+            if (lhs[i] > rhs[i]) {
+                return 1;
+            }
         }
 
         return 0;
@@ -77,7 +84,9 @@ struct char_traits<char> {
     static constexpr auto find(char_type const* str, size_t count, char_type const& token) -> char_type const*
     {
         for (size_t i = 0; i < count; ++i) {
-            if (str[i] == token) { return &str[i]; }
+            if (str[i] == token) {
+                return &str[i];
+            }
         }
 
         return nullptr;
@@ -89,7 +98,9 @@ struct char_traits<char> {
     /// count).
     static constexpr auto move(char_type* dest, char_type const* source, size_t count) -> char_type*
     {
-        for (size_t i = 0; i < count; ++i) { dest[i] = source[i]; }
+        for (size_t i = 0; i < count; ++i) {
+            dest[i] = source[i];
+        }
         return dest;
     }
 
@@ -99,7 +110,9 @@ struct char_traits<char> {
     /// if copied character ranges overlap, i.e. src is in [dest, dest + count).
     static constexpr auto copy(char_type* dest, char_type const* source, size_t count) -> char_type*
     {
-        for (size_t i = 0; i < count; ++i) { assign(dest[i], source[i]); }
+        for (size_t i = 0; i < count; ++i) {
+            assign(dest[i], source[i]);
+        }
         return dest;
     }
 
@@ -107,7 +120,9 @@ struct char_traits<char> {
     /// character sequence pointed to by p.
     static constexpr auto assign(char_type* str, size_t count, char_type token) -> char_type*
     {
-        for (size_t i = 0; i < count; ++i) { assign(str[i], token); }
+        for (size_t i = 0; i < count; ++i) {
+            assign(str[i], token);
+        }
         return str;
     }
 
@@ -121,7 +136,7 @@ struct char_traits<char> {
     /// \brief Converts a value of char_type to int_type.
     static constexpr auto to_int_type(char_type c) noexcept -> int_type
     {
-        return int_type {static_cast<unsigned char>(c)};
+        return int_type{static_cast<unsigned char>(c)};
     }
 
     /// \brief Checks whether two values of type int_type are equal.
@@ -129,9 +144,15 @@ struct char_traits<char> {
     /// https://en.cppreference.com/w/cpp/string/char_traits/eq_int_type
     static constexpr auto eq_int_type(int_type lhs, int_type rhs) noexcept -> bool
     {
-        if (lhs == rhs) { return true; }
-        if ((lhs == eof()) && (rhs == eof())) { return true; }
-        if ((lhs == eof()) || (rhs == eof())) { return false; }
+        if (lhs == rhs) {
+            return true;
+        }
+        if ((lhs == eof()) && (rhs == eof())) {
+            return true;
+        }
+        if ((lhs == eof()) || (rhs == eof())) {
+            return false;
+        }
         return false;
     }
 
@@ -149,7 +170,9 @@ struct char_traits<char> {
     /// false
     static constexpr auto not_eof(int_type c) noexcept -> int_type
     {
-        if (!eq_int_type(c, eof())) { return c; }
+        if (!eq_int_type(c, eof())) {
+            return c;
+        }
         return 0;
     }
 };
@@ -159,6 +182,7 @@ struct char_traits<wchar_t> {
     using char_type = wchar_t;
     using int_type  = wint_t;
     using off_type  = streamoff;
+
     // using pos_type   = wstreampos;
     // using state_type = mbstate_t;
 
@@ -170,7 +194,9 @@ struct char_traits<wchar_t> {
 
     static constexpr auto compare(wchar_t const* lhs, wchar_t const* rhs, size_t count) -> int
     {
-        if (count == 0) { return 0; }
+        if (count == 0) {
+            return 0;
+        }
         return etl::wmemcmp(lhs, rhs, count);
     }
 
@@ -178,25 +204,33 @@ struct char_traits<wchar_t> {
 
     static constexpr auto find(wchar_t const* str, size_t count, wchar_t const& token) -> wchar_t const*
     {
-        if (count == 0) { return nullptr; }
+        if (count == 0) {
+            return nullptr;
+        }
         return etl::wmemchr(str, token, count);
     }
 
     static constexpr auto move(wchar_t* dest, wchar_t const* src, size_t count) -> wchar_t*
     {
-        if (count == 0) { return dest; }
+        if (count == 0) {
+            return dest;
+        }
         return etl::wmemmove(dest, src, count);
     }
 
     static constexpr auto copy(wchar_t* dest, wchar_t const* src, size_t count) -> wchar_t*
     {
-        if (count == 0) { return dest; }
+        if (count == 0) {
+            return dest;
+        }
         return etl::wmemcpy(dest, src, count);
     }
 
     static constexpr auto assign(wchar_t* str, size_t count, wchar_t token) -> wchar_t*
     {
-        if (count == 0) { return str; }
+        if (count == 0) {
+            return str;
+        }
         return etl::wmemset(str, token, count);
     }
 

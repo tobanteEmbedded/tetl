@@ -12,14 +12,18 @@ namespace etl {
 template <typename InputIt, typename Type>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init) noexcept -> Type
 {
-    for (; first != last; ++first) { init = move(init) + *first; }
+    for (; first != last; ++first) {
+        init = move(init) + *first;
+    }
     return init;
 }
 
 template <typename InputIt, typename Type, typename BinaryOperation>
 [[nodiscard]] constexpr auto accumulate(InputIt first, InputIt last, Type init, BinaryOperation op) noexcept -> Type
 {
-    for (; first != last; ++first) { init = op(move(init), *first); }
+    for (; first != last; ++first) {
+        init = op(move(init), *first);
+    }
     return init;
 }
 

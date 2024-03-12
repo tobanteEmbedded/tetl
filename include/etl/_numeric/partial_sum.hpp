@@ -21,7 +21,9 @@ namespace etl {
 template <typename InputIt, typename OutputIt, typename BinaryOperation>
 constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, BinaryOperation op) -> OutputIt
 {
-    if (first == last) { return destination; }
+    if (first == last) {
+        return destination;
+    }
 
     auto sum     = *first;
     *destination = sum;

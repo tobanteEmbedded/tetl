@@ -41,61 +41,71 @@ constexpr auto erf_inv_decision(T value, T p, T direc, int iterCount) noexcept -
 template <typename T>
 constexpr auto erf_inv_initial_val_coef_2(T const a, T const pTerm, int const order) noexcept -> T
 {
-    return (order == 1   ? T(-0.000200214257L)
-            : order == 2 ? T(0.000100950558L) + a * pTerm
-            : order == 3 ? T(0.00134934322L) + a * pTerm
-            : order == 4 ? T(-0.003673428440L) + a * pTerm
-            : order == 5 ? T(0.005739507730L) + a * pTerm
-            : order == 6 ? T(-0.00762246130L) + a * pTerm
-            : order == 7 ? T(0.009438870470L) + a * pTerm
-            : order == 8 ? T(1.001674060000L) + a * pTerm
-            : order == 9 ? T(2.83297682000L) + a * pTerm
-                         : pTerm);
+    return (
+        order == 1   ? T(-0.000200214257L)
+        : order == 2 ? T(0.000100950558L) + a * pTerm
+        : order == 3 ? T(0.00134934322L) + a * pTerm
+        : order == 4 ? T(-0.003673428440L) + a * pTerm
+        : order == 5 ? T(0.005739507730L) + a * pTerm
+        : order == 6 ? T(-0.00762246130L) + a * pTerm
+        : order == 7 ? T(0.009438870470L) + a * pTerm
+        : order == 8 ? T(1.001674060000L) + a * pTerm
+        : order == 9 ? T(2.83297682000L) + a * pTerm
+                     : pTerm
+    );
 }
 
 template <typename T>
 constexpr auto erf_inv_initial_val_case_2(T const a, T const pTerm, int const order) noexcept -> T
 {
-    return (order == 9 ? // if
-                erf_inv_initial_val_coef_2(a, pTerm, order)
-                       :
-                       // else
-                erf_inv_initial_val_case_2(a, erf_inv_initial_val_coef_2(a, pTerm, order), order + 1));
+    return (
+        order == 9 ? // if
+            erf_inv_initial_val_coef_2(a, pTerm, order)
+                   :
+                   // else
+            erf_inv_initial_val_case_2(a, erf_inv_initial_val_coef_2(a, pTerm, order), order + 1)
+    );
 }
 
 template <typename T>
 constexpr auto erf_inv_initial_val_coef_1(T const a, T const pTerm, int const order) noexcept -> T
 {
-    return (order == 1   ? T(2.81022636e-08L)
-            : order == 2 ? T(3.43273939e-07L) + a * pTerm
-            : order == 3 ? T(-3.5233877e-06L) + a * pTerm
-            : order == 4 ? T(-4.39150654e-06L) + a * pTerm
-            : order == 5 ? T(0.00021858087L) + a * pTerm
-            : order == 6 ? T(-0.00125372503L) + a * pTerm
-            : order == 7 ? T(-0.004177681640L) + a * pTerm
-            : order == 8 ? T(0.24664072700L) + a * pTerm
-            : order == 9 ? T(1.50140941000L) + a * pTerm
-                         : pTerm);
+    return (
+        order == 1   ? T(2.81022636e-08L)
+        : order == 2 ? T(3.43273939e-07L) + a * pTerm
+        : order == 3 ? T(-3.5233877e-06L) + a * pTerm
+        : order == 4 ? T(-4.39150654e-06L) + a * pTerm
+        : order == 5 ? T(0.00021858087L) + a * pTerm
+        : order == 6 ? T(-0.00125372503L) + a * pTerm
+        : order == 7 ? T(-0.004177681640L) + a * pTerm
+        : order == 8 ? T(0.24664072700L) + a * pTerm
+        : order == 9 ? T(1.50140941000L) + a * pTerm
+                     : pTerm
+    );
 }
 
 template <typename T>
 constexpr auto erf_inv_initial_val_case_1(T const a, T const pTerm, int const order) noexcept -> T
 {
-    return (order == 9 ? // if
-                erf_inv_initial_val_coef_1(a, pTerm, order)
-                       :
-                       // else
-                erf_inv_initial_val_case_1(a, erf_inv_initial_val_coef_1(a, pTerm, order), order + 1));
+    return (
+        order == 9 ? // if
+            erf_inv_initial_val_coef_1(a, pTerm, order)
+                   :
+                   // else
+            erf_inv_initial_val_case_1(a, erf_inv_initial_val_coef_1(a, pTerm, order), order + 1)
+    );
 }
 
 template <typename T>
 constexpr auto erf_inv_initial_val_int(T const a) noexcept -> T
 {
-    return (a < T(5) ? // if
-                erf_inv_initial_val_case_1(a - T(2.5), T(0), 1)
-                     :
-                     // else
-                erf_inv_initial_val_case_2(sqrt(a) - T(3), T(0), 1));
+    return (
+        a < T(5) ? // if
+            erf_inv_initial_val_case_1(a - T(2.5), T(0), 1)
+                 :
+                 // else
+            erf_inv_initial_val_case_2(sqrt(a) - T(3), T(0), 1)
+    );
 }
 
 template <typename T>
@@ -147,17 +157,23 @@ template <typename T>
 constexpr auto erf_inv_recur(T const value, T const p, T const deriv1, int const iterCount) noexcept -> T
 {
     return erf_inv_decision(
-        value, p, erf_inv_halley(erf_inv_ratio_val_1(value, p, deriv1), erf_inv_ratio_val_2(value, deriv1)), iterCount);
+        value,
+        p,
+        erf_inv_halley(erf_inv_ratio_val_1(value, p, deriv1), erf_inv_ratio_val_2(value, deriv1)),
+        iterCount
+    );
 }
 
 template <typename T>
 constexpr auto erf_inv_decision(T const value, T const p, T const direc, int const iterCount) noexcept -> T
 {
-    return (iterCount < GCEM_ERF_INV_MAX_ITER ? // if
-                erf_inv_recur(value - direc, p, erf_inv_deriv_1(value), iterCount + 1)
-                                              :
-                                              // else
-                value - direc);
+    return (
+        iterCount < GCEM_ERF_INV_MAX_ITER ? // if
+            erf_inv_recur(value - direc, p, erf_inv_deriv_1(value), iterCount + 1)
+                                          :
+                                          // else
+            value - direc
+    );
 }
 
 template <typename T>
@@ -181,7 +197,8 @@ constexpr auto erf_inv_begin(T const p) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(T(1) + p) ? -etl::numeric_limits<T>::infinity()
                                                               :
                                                               // else
-            erf_inv_recur_begin(erf_inv_initial_val(p), p));
+            erf_inv_recur_begin(erf_inv_initial_val(p), p)
+    );
 }
 
 } // namespace internal

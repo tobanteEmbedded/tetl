@@ -24,8 +24,8 @@ auto test() -> bool
     static_assert(etl::same_as<typename Traits::size_type, typename Alloc::size_type>);
     static_assert(etl::same_as<typename Traits::difference_type, typename Alloc::difference_type>);
 
-    auto buffer = etl::array<etl::byte, 64> {};
-    auto alloc  = Alloc {buffer};
+    auto buffer = etl::array<etl::byte, 64>{};
+    auto alloc  = Alloc{buffer};
     auto* ptr   = alloc.allocate(1);
     assert(ptr != nullptr);
     alloc.deallocate(ptr, 1);

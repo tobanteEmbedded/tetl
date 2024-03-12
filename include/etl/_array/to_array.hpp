@@ -31,13 +31,13 @@ template <typename T, size_t N, size_t... I>
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&a)[N]) -> array<remove_cv_t<T>, N>
 {
-    return detail::to_array_impl(a, make_index_sequence<N> {});
+    return detail::to_array_impl(a, make_index_sequence<N>{});
 }
 
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&&a)[N])
 {
-    return detail::to_array_impl(move(a), make_index_sequence<N> {});
+    return detail::to_array_impl(move(a), make_index_sequence<N>{});
 }
 
 } // namespace etl

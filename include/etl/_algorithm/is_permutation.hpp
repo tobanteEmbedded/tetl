@@ -27,10 +27,14 @@ template <typename ForwardIt1, typename ForwardIt2>
         auto last2 = next(fDiff2, distance(fDiff1, last));
         for (auto i = fDiff1; i != last; ++i) {
             // this *i has been checked
-            if (i != find(fDiff1, i, *i)) { continue; }
+            if (i != find(fDiff1, i, *i)) {
+                continue;
+            }
 
             auto m = count(fDiff2, last2, *i);
-            if (m == 0 || count(i, last, *i) != m) { return false; }
+            if (m == 0 || count(i, last, *i) != m) {
+                return false;
+            }
         }
     }
 
@@ -38,10 +42,12 @@ template <typename ForwardIt1, typename ForwardIt2>
 }
 
 template <typename ForwardIt1, typename ForwardIt2>
-[[nodiscard]] constexpr auto is_permutation(
-    ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool
+[[nodiscard]] constexpr auto
+is_permutation(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, ForwardIt2 last2) -> bool
 {
-    if (distance(first1, last1) != distance(first2, last2)) { return false; }
+    if (distance(first1, last1) != distance(first2, last2)) {
+        return false;
+    }
     return is_permutation(first1, last1, first2);
 }
 

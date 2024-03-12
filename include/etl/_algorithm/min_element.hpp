@@ -10,12 +10,16 @@ namespace etl {
 template <typename ForwardIt>
 [[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last) noexcept -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     ForwardIt smallest = first;
     ++first;
     for (; first != last; ++first) {
-        if (*first < *smallest) { smallest = first; }
+        if (*first < *smallest) {
+            smallest = first;
+        }
     }
     return smallest;
 }
@@ -25,12 +29,16 @@ template <typename ForwardIt>
 template <typename ForwardIt, typename Compare>
 [[nodiscard]] constexpr auto min_element(ForwardIt first, ForwardIt last, Compare comp) -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     ForwardIt smallest = first;
     ++first;
     for (; first != last; ++first) {
-        if (comp(*first, *smallest)) { smallest = first; }
+        if (comp(*first, *smallest)) {
+            smallest = first;
+        }
     }
     return smallest;
 }

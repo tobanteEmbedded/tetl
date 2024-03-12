@@ -21,7 +21,7 @@ struct in_place_index_t {
 };
 
 template <size_t I>
-inline constexpr auto in_place_index = in_place_index_t<I> {};
+inline constexpr auto in_place_index = in_place_index_t<I>{};
 
 } // namespace etl
 

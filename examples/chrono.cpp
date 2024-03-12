@@ -8,7 +8,7 @@ auto main() -> int
 {
     using namespace etl::literals;
     {
-        auto hour = etl::chrono::hours {1};
+        auto hour = etl::chrono::hours{1};
         printf("%ld\n", static_cast<long>(hour.count()));
     }
     {

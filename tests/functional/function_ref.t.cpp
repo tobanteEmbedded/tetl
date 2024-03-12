@@ -25,33 +25,33 @@ constexpr auto test() -> bool
 
     assert((sizeof(etl::function_ref<T(T)>) == sizeof(void*) * 2));
 
-    auto ref = etl::function_ref<T(T)> {lambda};
-    assert((ref(T {41}) == T {42}));
-    assert((etl::invoke(ref, T {41}) == T {42}));
+    auto ref = etl::function_ref<T(T)>{lambda};
+    assert((ref(T{41}) == T{42}));
+    assert((etl::invoke(ref, T{41}) == T{42}));
 
     ref = test_function_ref<T>;
-    assert((ref(T {41}) == T {82}));
-    assert((etl::invoke(ref, T {41}) == T {82}));
+    assert((ref(T{41}) == T{82}));
+    assert((etl::invoke(ref, T{41}) == T{82}));
 
     ref = lambda2;
-    assert((ref(T {41}) == T {41}));
-    assert((etl::invoke(ref, T {41}) == T {41}));
+    assert((ref(T{41}) == T{41}));
+    assert((etl::invoke(ref, T{41}) == T{41}));
 
-    auto other = etl::function_ref<T(T)> {test_function_ref<T>};
-    assert((other(T {41}) == T {82}));
-    assert((etl::invoke(other, T {41}) == T {82}));
+    auto other = etl::function_ref<T(T)>{test_function_ref<T>};
+    assert((other(T{41}) == T{82}));
+    assert((etl::invoke(other, T{41}) == T{82}));
 
     other.swap(ref);
-    assert((ref(T {41}) == T {82}));
-    assert((etl::invoke(ref, T {41}) == T {82}));
-    assert((other(T {41}) == T {41}));
-    assert((etl::invoke(other, T {41}) == T {41}));
+    assert((ref(T{41}) == T{82}));
+    assert((etl::invoke(ref, T{41}) == T{82}));
+    assert((other(T{41}) == T{41}));
+    assert((etl::invoke(other, T{41}) == T{41}));
 
     swap(other, ref);
-    assert((other(T {41}) == T {82}));
-    assert((etl::invoke(other, T {41}) == T {82}));
-    assert((ref(T {41}) == T {41}));
-    assert((etl::invoke(ref, T {41}) == T {41}));
+    assert((other(T{41}) == T{82}));
+    assert((etl::invoke(other, T{41}) == T{82}));
+    assert((ref(T{41}) == T{41}));
+    assert((etl::invoke(ref, T{41}) == T{41}));
 
     return true;
 }

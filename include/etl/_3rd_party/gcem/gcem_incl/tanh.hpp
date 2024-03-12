@@ -30,11 +30,13 @@ namespace internal {
 template <typename T>
 constexpr auto tanh_cf(T const xx, int const depth) noexcept -> T
 {
-    return (depth < GCEM_TANH_MAX_ITER ? // if
-                (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)
-                                       :
-                                       // else
-                T(2 * depth - 1));
+    return (
+        depth < GCEM_TANH_MAX_ITER ? // if
+            (2 * depth - 1) + xx / tanh_cf(xx, depth + 1)
+                                   :
+                                   // else
+            T(2 * depth - 1)
+    );
 }
 
 template <typename T>
@@ -53,7 +55,8 @@ constexpr auto tanh_check(T const x) noexcept -> T
                                                        :
                                                        // else
             x < T(0) ? -tanh_begin(-x)
-                     : tanh_begin(x));
+                     : tanh_begin(x)
+    );
 }
 
 } // namespace internal

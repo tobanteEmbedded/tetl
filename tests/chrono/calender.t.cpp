@@ -22,7 +22,7 @@
     assert(not etl::chrono::day(0).ok());
     assert(not etl::chrono::day(32).ok());
 
-    auto d = etl::chrono::day {};
+    auto d = etl::chrono::day{};
     assert(not d.ok());
     assert(static_cast<etl::uint32_t>(d) == 0U);
 
@@ -60,7 +60,7 @@
     assert(etl::chrono::month(11) == etl::chrono::November);
     assert(etl::chrono::month(12) == etl::chrono::December);
 
-    auto m = etl::chrono::month {};
+    auto m = etl::chrono::month{};
     assert(not m.ok());
     assert(static_cast<etl::uint32_t>(m) == 0U);
 
@@ -83,7 +83,7 @@
     assert(not etl::chrono::year(2023).is_leap());
     assert(not etl::chrono::year(1900).is_leap());
 
-    auto y = etl::chrono::year {};
+    auto y = etl::chrono::year{};
     assert(y.ok());
     assert(static_cast<etl::int32_t>(y) == 0U);
 

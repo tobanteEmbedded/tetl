@@ -20,6 +20,7 @@ inline constexpr auto bit_castable_types =
     and is_trivially_copyable_v<From>
     and is_trivially_copyable_v<To>;
 }
+
 // clang-format on
 
 /// \brief Obtain a value of type To by reinterpreting the object representation
@@ -45,7 +46,7 @@ constexpr auto bit_cast(From const& src) noexcept -> To
     // trivially constructible
     static_assert(is_trivially_constructible_v<To>);
 
-    To dst {};
+    To dst{};
     detail::memcpy_impl<char, etl::size_t>(&dst, &src, sizeof(To));
     return dst;
 #endif

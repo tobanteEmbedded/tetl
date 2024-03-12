@@ -50,7 +50,8 @@ constexpr auto sin_check(T const x) noexcept -> T
         : etl::numeric_limits<T>::epsilon() > abs(x + T(etl::numbers::pi)) ? -T(0)
                                                                            :
                                                                            // else
-            sin_compute(tan(x / T(2))));
+            sin_compute(tan(x / T(2)))
+    );
 }
 
 } // namespace internal

@@ -24,7 +24,10 @@ namespace etl {
 /// ... and the two bools will land in different bits.
 ///
 /// \include memory.cpp
-template <typename PointerT, unsigned IntBits, typename IntType = unsigned,
+template <
+    typename PointerT,
+    unsigned IntBits,
+    typename IntType   = unsigned,
     typename PtrTraits = pointer_like_traits<PointerT>,
     typename Info      = pointer_int_pair_info<PointerT, IntBits, PtrTraits>>
 struct pointer_int_pair {

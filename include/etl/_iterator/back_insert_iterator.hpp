@@ -27,7 +27,7 @@ struct back_insert_iterator {
 
     /// \brief Initializes the underlying pointer to the container to
     /// etl::addressof(c).
-    constexpr explicit back_insert_iterator(Container& container) : _container {etl::addressof(container)} { }
+    constexpr explicit back_insert_iterator(Container& container) : _container{etl::addressof(container)} { }
 
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type const& value) -> back_insert_iterator&

@@ -23,7 +23,7 @@ struct piecewise_construct_t {
 
 /// \brief The constant etl::piecewise_construct is an instance of an empty
 /// struct tag type etl::piecewise_construct_t.
-inline constexpr auto piecewise_construct = piecewise_construct_t {};
+inline constexpr auto piecewise_construct = piecewise_construct_t{};
 
 } // namespace etl
 

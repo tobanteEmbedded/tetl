@@ -7,11 +7,12 @@
 using namespace etl::experimental::hardware;
 
 static bool dummyHandler01_WasCalled = false;
+
 static void dummy_handler() { dummyHandler01_WasCalled = true; }
 
 static auto test_all() -> bool
 {
-    auto callbacks                                      = stm32::isr::vector_t {};
+    auto callbacks                                      = stm32::isr::vector_t{};
     callbacks[static_cast<size_t>(stm32::isr_ids::nmi)] = dummy_handler;
 
     assert(!dummyHandler01_WasCalled);

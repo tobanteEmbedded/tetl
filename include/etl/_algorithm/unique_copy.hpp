@@ -19,7 +19,9 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination, Pr
         *destination = *first;
 
         while (++first != last) {
-            if (!pred(*destination, *first)) { *++destination = *first; }
+            if (!pred(*destination, *first)) {
+                *++destination = *first;
+            }
         }
 
         ++destination;
@@ -36,7 +38,7 @@ constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination, Pr
 template <typename InputIt, typename OutputIt>
 constexpr auto unique_copy(InputIt first, InputIt last, OutputIt destination) -> OutputIt
 {
-    return unique_copy(first, last, destination, equal_to {});
+    return unique_copy(first, last, destination, equal_to{});
 }
 
 } // namespace etl

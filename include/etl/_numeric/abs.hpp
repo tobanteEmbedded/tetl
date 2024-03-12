@@ -12,7 +12,9 @@ template <typename Type>
 {
     using limits = numeric_limits<Type>;
     if constexpr (limits::is_signed || !limits::is_specialized) {
-        if (input < 0) { return static_cast<Type>(-input); }
+        if (input < 0) {
+            return static_cast<Type>(-input);
+        }
         return input;
     } else {
         return input;

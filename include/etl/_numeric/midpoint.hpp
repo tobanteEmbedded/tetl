@@ -45,9 +45,15 @@ constexpr auto midpoint(Float a, Float b) noexcept -> Float
     auto const lo = etl::numeric_limits<Float>::min() * 2;
     auto const hi = etl::numeric_limits<Float>::max() / 2;
 
-    if (etl::abs(a) <= hi and etl::abs(b) <= hi) { return (a + b) / 2; }
-    if (etl::abs(a) < lo) { return a + b / 2; }
-    if (etl::abs(b) < lo) { return a / 2 + b; }
+    if (etl::abs(a) <= hi and etl::abs(b) <= hi) {
+        return (a + b) / 2;
+    }
+    if (etl::abs(a) < lo) {
+        return a + b / 2;
+    }
+    if (etl::abs(b) < lo) {
+        return a / 2 + b;
+    }
 
     return a / 2 + b / 2;
 }

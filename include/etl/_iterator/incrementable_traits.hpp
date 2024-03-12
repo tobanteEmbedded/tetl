@@ -42,6 +42,7 @@ template <typename T>
 struct incrementable_traits<T> {
     using difference_type = etl::make_signed_t<decltype(etl::declval<T>() - etl::declval<T>())>;
 };
+
 // clang-format on
 
 } // namespace etl

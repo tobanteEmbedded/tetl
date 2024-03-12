@@ -13,14 +13,19 @@ namespace etl::linalg {
 
 template <typename Accessor>
 struct accessor_conjugate {
-    using reference
-        = conditional_t<is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>, typename Accessor::reference,
-            detail::conjugated_scalar<typename Accessor::reference, remove_cv_t<typename Accessor::element_type>>>;
-    using element_type     = add_const_t<conditional_t<is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>,
-            typename Accessor::element_type, typename reference::value_type>>;
+    using reference = conditional_t<
+        is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>,
+        typename Accessor::reference,
+        detail::conjugated_scalar<typename Accessor::reference, remove_cv_t<typename Accessor::element_type>>>;
+    using element_type     = add_const_t<conditional_t<
+            is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>,
+            typename Accessor::element_type,
+            typename reference::value_type>>;
     using data_handle_type = typename Accessor::data_handle_type;
-    using offset_policy    = conditional_t<is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>,
-           typename Accessor::offset_policy, accessor_conjugate<typename Accessor::offset_policy>>;
+    using offset_policy    = conditional_t<
+           is_arithmetic_v<remove_cv_t<typename Accessor::element_type>>,
+           typename Accessor::offset_policy,
+           accessor_conjugate<typename Accessor::offset_policy>>;
 
     constexpr accessor_conjugate(Accessor a) : _nestedAccessor(a) { }
 

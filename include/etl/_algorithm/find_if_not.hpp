@@ -16,7 +16,9 @@ template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto find_if_not(InputIt first, InputIt last, Predicate pred) noexcept -> InputIt
 {
     for (; first != last; ++first) {
-        if (!pred(*first)) { return first; }
+        if (!pred(*first)) {
+            return first;
+        }
     }
     return last;
 }

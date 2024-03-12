@@ -11,8 +11,10 @@ template <typename LoopType = rtos::once>
 struct example_task {
     auto run() -> void
     {
-        auto loopControl = LoopType {};
-        while (loopControl()) { rtos::this_task::yield(); }
+        auto loopControl = LoopType{};
+        while (loopControl()) {
+            rtos::this_task::yield();
+        }
 
         rtos::delete_task(nullptr);
     }
@@ -21,7 +23,7 @@ struct example_task {
 static auto test_all() -> bool
 {
 
-    auto task = example_task<rtos::once> {};
+    auto task = example_task<rtos::once>{};
 
     rtos::create_task(task, "test", 255);
     rtos::start_scheduler();

@@ -22,13 +22,15 @@ namespace etl {
 template <detail::bit_uint T>
 [[nodiscard]] constexpr auto bit_ceil(T x) noexcept -> T
 {
-    if (x <= 1U) { return T {1}; }
+    if (x <= 1U) {
+        return T{1};
+    }
     if constexpr (is_same_v<T, decltype(+x)>) {
-        return T {1U} << bit_width(T {x - 1U});
+        return T{1U} << bit_width(T{x - 1U});
     } else {
         // for types subject to integral promotion
         auto o = numeric_limits<unsigned>::digits - numeric_limits<T>::digits;
-        return T {1U << (bit_width(T {x - 1U}) + o) >> o};
+        return T{1U << (bit_width(T{x - 1U}) + o) >> o};
     }
 }
 

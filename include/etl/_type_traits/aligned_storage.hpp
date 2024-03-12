@@ -22,6 +22,7 @@ union aligned_storage_impl {
     struct double1 {
         double a;
     };
+
     struct double4 {
         double a[4];
     };

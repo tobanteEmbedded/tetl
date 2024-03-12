@@ -51,8 +51,10 @@ struct reference_wrapper {
     /// \endcode
     ///
     /// https://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/reference_wrapper
-    template <typename U, typename = decltype(detail::FUN<T>(declval<U>()),
-                              enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
+    template <
+        typename U,
+        typename
+        = decltype(detail::FUN<T>(declval<U>()), enable_if_t<!is_same_v<reference_wrapper, remove_cvref_t<U>>>())>
     constexpr reference_wrapper(U&& u) noexcept(noexcept(detail::FUN<T>(forward<U>(u))))
         : _ptr(addressof(detail::FUN<T>(forward<U>(u))))
     {

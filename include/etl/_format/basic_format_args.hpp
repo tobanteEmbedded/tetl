@@ -16,13 +16,15 @@ struct basic_format_args {
     constexpr basic_format_args() noexcept = default;
 
     template <typename... Args>
-    constexpr basic_format_args(detail::format_arg_store<Context, Args...> const& store) noexcept : _args {store.args}
+    constexpr basic_format_args(detail::format_arg_store<Context, Args...> const& store) noexcept : _args{store.args}
     {
     }
 
     [[nodiscard]] constexpr auto get(size_t i) const noexcept -> basic_format_arg<Context>
     {
-        if (i >= _args.size()) { return basic_format_arg<Context> {}; }
+        if (i >= _args.size()) {
+            return basic_format_arg<Context>{};
+        }
         return _args[i];
     }
 

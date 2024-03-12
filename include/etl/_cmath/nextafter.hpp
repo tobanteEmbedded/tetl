@@ -18,8 +18,12 @@ template <typename T>
     using U             = etl::conditional_t<sizeof(T) == 4U, etl::uint32_t, etl::uint64_t>;
     auto const fromBits = etl::bit_cast<U>(from);
     auto const toBits   = etl::bit_cast<U>(to);
-    if (toBits == fromBits) { return to; }
-    if (toBits > fromBits) { return etl::bit_cast<T>(fromBits + 1); }
+    if (toBits == fromBits) {
+        return to;
+    }
+    if (toBits > fromBits) {
+        return etl::bit_cast<T>(fromBits + 1);
+    }
     return etl::bit_cast<T>(fromBits - 1);
 }
 } // namespace detail

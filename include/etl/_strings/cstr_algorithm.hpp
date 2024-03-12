@@ -39,7 +39,9 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strcat_impl(CharT* dest, CharT const* src) -> CharT*
 {
     auto* ptr = dest + strlen_impl<CharT, SizeT>(dest);
-    while (*src != CharT(0)) { *ptr++ = *src++; }
+    while (*src != CharT(0)) {
+        *ptr++ = *src++;
+    }
     *ptr = CharT(0);
     return dest;
 }
@@ -62,7 +64,9 @@ template <typename CharT>
 [[nodiscard]] constexpr auto strcmp_impl(CharT const* lhs, CharT const* rhs) -> int
 {
     for (; *lhs != CharT(0); ++lhs, ++rhs) {
-        if (*lhs != *rhs) { break; }
+        if (*lhs != *rhs) {
+            break;
+        }
     }
     return static_cast<int>(*lhs) - static_cast<int>(*rhs);
 }
@@ -70,15 +74,19 @@ template <typename CharT>
 template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strncmp_impl(CharT const* lhs, CharT const* rhs, SizeT const count) -> int
 {
-    CharT u1 {};
-    CharT u2 {};
+    CharT u1{};
+    CharT u2{};
 
     auto localCount = count;
     while (localCount-- > 0) {
         u1 = static_cast<CharT>(*lhs++);
         u2 = static_cast<CharT>(*rhs++);
-        if (u1 != u2) { return static_cast<int>(u1 - u2); }
-        if (u1 == CharT(0)) { return 0; }
+        if (u1 != u2) {
+            return static_cast<int>(u1 - u2);
+        }
+        if (u1 == CharT(0)) {
+            return 0;
+        }
     }
 
     return 0;
@@ -87,26 +95,38 @@ template <typename CharT, typename SizeT>
 template <typename CharT>
 [[nodiscard]] constexpr auto strchr_impl(CharT* str, int ch) -> CharT*
 {
-    if (str == nullptr) { return nullptr; }
+    if (str == nullptr) {
+        return nullptr;
+    }
 
     while (*str != CharT(0)) {
-        if (*str == static_cast<CharT>(ch)) { return str; }
+        if (*str == static_cast<CharT>(ch)) {
+            return str;
+        }
         ++str;
     }
 
-    if (static_cast<CharT>(ch) == CharT(0)) { return str; }
+    if (static_cast<CharT>(ch) == CharT(0)) {
+        return str;
+    }
     return nullptr;
 }
 
 template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strrchr_impl(CharT* str, int ch) -> CharT*
 {
-    if (str == nullptr) { return nullptr; }
+    if (str == nullptr) {
+        return nullptr;
+    }
     auto len = strlen_impl<CharT, SizeT>(str);
-    if (static_cast<CharT>(ch) == CharT(0)) { return str + len; }
+    if (static_cast<CharT>(ch) == CharT(0)) {
+        return str + len;
+    }
 
     while (len-- != 0) {
-        if (str[len] == static_cast<CharT>(ch)) { return str + len; }
+        if (str[len] == static_cast<CharT>(ch)) {
+            return str + len;
+        }
     }
 
     return nullptr;
@@ -116,7 +136,9 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
 [[nodiscard]] constexpr auto is_legal_char_impl(CharT const* options, SizeT len, CharT ch) noexcept -> bool
 {
     for (SizeT i = 0; i < len; ++i) {
-        if (options[i] == ch) { return InclusiveSearch; }
+        if (options[i] == ch) {
+            return InclusiveSearch;
+        }
     }
     return !InclusiveSearch;
 }
@@ -124,11 +146,13 @@ template <typename CharT, typename SizeT, bool InclusiveSearch>
 template <typename CharT, typename SizeT, bool InclusiveSearch>
 [[nodiscard]] constexpr auto str_span_impl(CharT const* dest, CharT const* src) noexcept -> SizeT
 {
-    auto result       = SizeT {0};
+    auto result       = SizeT{0};
     auto const length = strlen_impl<CharT, SizeT>(dest);
     auto const srcLen = strlen_impl<CharT, SizeT>(src);
     for (SizeT i = 0; i < length; ++i) {
-        if (!is_legal_char_impl<CharT, SizeT, InclusiveSearch>(src, srcLen, dest[i])) { break; }
+        if (!is_legal_char_impl<CharT, SizeT, InclusiveSearch>(src, srcLen, dest[i])) {
+            break;
+        }
         ++result;
     }
 
@@ -139,8 +163,12 @@ template <typename CharT, typename SizeT>
 [[nodiscard]] constexpr auto strpbrk_impl(CharT* s, CharT* del) noexcept -> CharT*
 {
     auto const i = str_span_impl<CharT, SizeT, false>(s, del);
-    if (i != 0) { return s + i; }
-    if (is_legal_char_impl<CharT, SizeT, true>(del, strlen_impl<CharT, SizeT>(del), s[0])) { return s; }
+    if (i != 0) {
+        return s + i;
+    }
+    if (is_legal_char_impl<CharT, SizeT, true>(del, strlen_impl<CharT, SizeT>(del), s[0])) {
+        return s;
+    }
     return nullptr;
 }
 
@@ -148,7 +176,9 @@ template <typename CharT>
 [[nodiscard]] constexpr auto strstr_impl(CharT* haystack, CharT* needle) noexcept -> CharT*
 {
     while (*haystack != CharT(0)) {
-        if ((*haystack == *needle) && (strcmp_impl(haystack, needle) == 0)) { return haystack; }
+        if ((*haystack == *needle) && (strcmp_impl(haystack, needle) == 0)) {
+            return haystack;
+        }
         haystack++;
     }
     return nullptr;
@@ -159,7 +189,9 @@ constexpr auto memcpy_impl(void* dest, void const* src, SizeT n) -> void*
 {
     auto* dp       = static_cast<CharT*>(dest);
     auto const* sp = static_cast<CharT const*>(src);
-    while (n-- != CharT(0)) { *dp++ = *sp++; }
+    while (n-- != CharT(0)) {
+        *dp++ = *sp++;
+    }
     return dest;
 }
 
@@ -167,7 +199,9 @@ template <typename CharT, typename ValT, typename SizeT>
 constexpr auto memset_impl(CharT* const s, ValT const c, SizeT n) -> CharT*
 {
     auto* p = s;
-    while (n-- != CharT(0)) { *p++ = static_cast<CharT>(c); }
+    while (n-- != CharT(0)) {
+        *p++ = static_cast<CharT>(c);
+    }
     return s;
 }
 
@@ -180,9 +214,13 @@ constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> CharT*
     auto* pd       = static_cast<CharT*>(dest);
 
     if (ps < pd) {
-        for (pd += n, ps += n; n-- != CharT(0);) { *--pd = *--ps; }
+        for (pd += n, ps += n; n-- != CharT(0);) {
+            *--pd = *--ps;
+        }
     } else {
-        while (n-- != CharT(0)) { *pd++ = *ps++; }
+        while (n-- != CharT(0)) {
+            *pd++ = *ps++;
+        }
     }
 
     return static_cast<CharT*>(dest);
@@ -191,8 +229,10 @@ constexpr auto memmove_impl(void* dest, void const* src, SizeT n) -> CharT*
 template <typename CharT, typename SizeT>
 constexpr auto memchr_impl(CharT* ptr, CharT ch, SizeT n) -> CharT*
 {
-    for (SizeT i {0}; i != n; ++i) {
-        if (ptr[i] == ch) { return ptr + i; }
+    for (SizeT i{0}; i != n; ++i) {
+        if (ptr[i] == ch) {
+            return ptr + i;
+        }
     }
     return nullptr;
 }

@@ -14,7 +14,7 @@ template <in_vector InVec, typename Scalar>
 constexpr auto vector_two_norm(InVec v, Scalar init) noexcept -> Scalar
 {
     auto sum = init;
-    for (typename InVec::size_type i {0}; cmp_less(i, v.extent(0)); ++i) {
+    for (typename InVec::size_type i{0}; cmp_less(i, v.extent(0)); ++i) {
         auto const val    = detail::abs_if_needed(v(i));
         auto const square = val * val;
         sum += square;
@@ -29,7 +29,7 @@ constexpr auto vector_two_norm(InVec v) noexcept -> typename InVec::value_type
 {
     using abs_type   = decltype(detail::abs_if_needed(declval<typename InVec::value_type>()));
     using value_type = decltype(declval<abs_type>() * declval<abs_type>());
-    return vector_two_norm(v, value_type {});
+    return vector_two_norm(v, value_type{});
 }
 
 } // namespace etl::linalg

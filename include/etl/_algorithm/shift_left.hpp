@@ -17,17 +17,23 @@ namespace etl {
 /// the element originally at position first + n + i to position first + i. The
 /// moves are performed in increasing order of i starting from ​0​.
 template <typename ForwardIt>
-constexpr auto shift_left(
-    ForwardIt first, ForwardIt const last, typename iterator_traits<ForwardIt>::difference_type n) -> ForwardIt
+constexpr auto
+shift_left(ForwardIt first, ForwardIt const last, typename iterator_traits<ForwardIt>::difference_type n) -> ForwardIt
 {
-    if (n <= 0) { return last; }
+    if (n <= 0) {
+        return last;
+    }
     auto start = first;
     if constexpr (detail::RandomAccessIterator<ForwardIt>) {
-        if (n >= last - first) { return first; }
+        if (n >= last - first) {
+            return first;
+        }
         start += n;
     } else {
         for (; 0 < n; --n) {
-            if (start == last) { return first; }
+            if (start == last) {
+                return first;
+            }
             ++start;
         }
     }

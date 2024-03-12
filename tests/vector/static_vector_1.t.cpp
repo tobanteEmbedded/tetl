@@ -47,7 +47,7 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        auto zero = static_vector<T, 0> {};
+        auto zero = static_vector<T, 0>{};
         assert(zero.capacity() == zero.max_size());
         assert(zero.empty());
         assert(zero.size() == 0);
@@ -57,7 +57,7 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        static_vector<T, 16> lhs {};
+        static_vector<T, 16> lhs{};
         assert(lhs.empty());
         assert(lhs.size() == 0);
         assert(!(lhs.full()));
@@ -66,7 +66,7 @@ constexpr auto test_cx() -> bool
         assert(etl::cbegin(lhs) == etl::cend(lhs));
         assert(etl::begin(etl::as_const(lhs)) == etl::end(etl::as_const(lhs)));
 
-        static_vector<T, 16> rhs {};
+        static_vector<T, 16> rhs{};
         assert(rhs.empty());
         assert(rhs.size() == 0);
         assert(!(rhs.full()));
@@ -80,7 +80,7 @@ constexpr auto test_cx() -> bool
 
     {
         auto first  = static_vector<T, 4>(4);
-        auto second = static_vector<T, 4> {begin(first), end(first)};
+        auto second = static_vector<T, 4>{begin(first), end(first)};
         assert(first == second);
     }
 
@@ -98,13 +98,13 @@ constexpr auto test_cx() -> bool
 
     {
         auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> const& second {first};
+        static_vector<T, 4> const& second{first};
         assert(first == second);
     }
 
     {
         auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy {etl::move(first)};
+        static_vector<T, 4> copy{etl::move(first)};
 
         auto cmp = [](auto val) { return val == T(0); };
         assert(all_of(begin(copy), end(copy), cmp));
@@ -112,14 +112,14 @@ constexpr auto test_cx() -> bool
 
     {
         auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy {};
+        static_vector<T, 4> copy{};
         copy = first;
         assert(first == copy);
     }
 
     {
         auto first = static_vector<T, 4>(4);
-        static_vector<T, 4> copy {};
+        static_vector<T, 4> copy{};
         copy = etl::move(first);
 
         auto cmp = [](auto val) { return val == T(0); };
@@ -127,13 +127,13 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        etl::static_vector<T, 16> vec {};
+        etl::static_vector<T, 16> vec{};
         assert(vec.empty());
         assert(etl::begin(vec) == etl::end(vec));
         assert(etl::cbegin(vec) == etl::cend(vec));
         assert(etl::begin(etl::as_const(vec)) == etl::end(etl::as_const(vec)));
 
-        vec.push_back(T {2});
+        vec.push_back(T{2});
         assert(!(etl::begin(vec) == etl::end(vec)));
         assert(!(etl::cbegin(vec) == etl::cend(vec)));
         assert(!(begin(as_const(vec)) == end(as_const(vec))));
@@ -142,26 +142,26 @@ constexpr auto test_cx() -> bool
     {
         using etl::all_of;
 
-        auto vec = etl::static_vector<T, 4> {};
+        auto vec = etl::static_vector<T, 4>{};
         assert(vec.size() == 0);
 
         // grow
-        vec.resize(etl::size_t {2});
+        vec.resize(etl::size_t{2});
         assert(vec.size() == 2);
         assert(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // grow full capacity
-        vec.resize(etl::size_t {4});
+        vec.resize(etl::size_t{4});
         assert(vec.size() == 4);
         assert(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // same size
-        vec.resize(etl::size_t {4});
+        vec.resize(etl::size_t{4});
         assert(vec.size() == 4);
         assert(all_of(begin(vec), end(vec), [](auto x) { return x == T(); }));
 
         // shrink
-        vec.resize(etl::size_t {2});
+        vec.resize(etl::size_t{2});
         assert(vec.size() == 2);
     }
 
@@ -169,8 +169,8 @@ constexpr auto test_cx() -> bool
         using etl::all_of;
         using etl::as_const;
 
-        auto a = etl::static_vector<T, 4> {};
-        a.assign(4, T {42});
+        auto a = etl::static_vector<T, 4>{};
+        a.assign(4, T{42});
         assert(a.size() == 4);
         assert(a.front() == 42);
         assert(a.back() == 42);
@@ -179,7 +179,7 @@ constexpr auto test_cx() -> bool
         assert(as_const(a).back() == 42);
         assert(all_of(begin(a), end(a), [](auto val) { return val == T(42); }));
 
-        auto b = etl::static_vector<T, 4> {4};
+        auto b = etl::static_vector<T, 4>{4};
         b.assign(a.begin(), a.end());
         assert(b.size() == 4);
         assert(b.front() == 42);
@@ -188,7 +188,7 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        auto vec = etl::static_vector<T, 4> {};
+        auto vec = etl::static_vector<T, 4>{};
         assert(vec.size() == 0);
         vec.push_back(T(1));
         assert(vec.size() == 1);
@@ -197,18 +197,18 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        etl::static_vector<T, 16> vec {{}};
+        etl::static_vector<T, 16> vec{{}};
         assert(vec.empty());
 
-        vec.push_back(T {1});
+        vec.push_back(T{1});
         assert(!(vec.empty()));
-        assert(vec.front() == T {1});
-        assert(vec.back() == T {1});
+        assert(vec.front() == T{1});
+        assert(vec.back() == T{1});
 
-        vec.push_back(T {2});
+        vec.push_back(T{2});
         assert(!(vec.empty()));
-        assert(vec.front() == T {1});
-        assert(vec.back() == T {2});
+        assert(vec.front() == T{1});
+        assert(vec.back() == T{2});
 
         assert(!(etl::begin(vec) == etl::end(vec)));
         assert(!(etl::cbegin(vec) == etl::cend(vec)));
@@ -216,8 +216,8 @@ constexpr auto test_cx() -> bool
     }
 
     {
-        auto vec = etl::static_vector<T, 4> {4};
-        etl::generate(etl::begin(vec), etl::end(vec), [v = T {}]() mutable { return v += T(1); });
+        auto vec = etl::static_vector<T, 4>{4};
+        etl::generate(etl::begin(vec), etl::end(vec), [v = T{}]() mutable { return v += T(1); });
 
         assert(vec.front() == T(1));
         vec.erase(vec.begin());
@@ -226,8 +226,8 @@ constexpr auto test_cx() -> bool
 
     // method
     {
-        auto lhs       = etl::static_vector<T, 4> {4};
-        auto generator = [v = T {}]() mutable { return v += T(1); };
+        auto lhs       = etl::static_vector<T, 4>{4};
+        auto generator = [v = T{}]() mutable { return v += T(1); };
 
         etl::generate(etl::begin(lhs), etl::end(lhs), generator);
         auto rhs = lhs;
@@ -240,7 +240,9 @@ constexpr auto test_cx() -> bool
 
     // free function
     {
-        auto lhs = etl::static_vector<T, 4> {{T(1), T(2), T(3), T(4)}};
+        auto lhs = etl::static_vector<T, 4>{
+            {T(1), T(2), T(3), T(4)}
+        };
         auto rhs = lhs;
         assert(lhs.size() == 4);
         assert(rhs.size() == 4);
@@ -252,10 +254,10 @@ constexpr auto test_cx() -> bool
         assert(lhs == rhs);
     }
 
-    //  empty
+    // empty
     {
-        auto lhs1       = etl::static_vector<T, 4> {};
-        auto const rhs1 = etl::static_vector<T, 4> {};
+        auto lhs1       = etl::static_vector<T, 4>{};
+        auto const rhs1 = etl::static_vector<T, 4>{};
         assert(lhs1 == rhs1);
         assert(!(lhs1 != rhs1));
 
@@ -272,20 +274,20 @@ constexpr auto test_cx() -> bool
 
     // with elements
     {
-        auto lhs1 = etl::static_vector<T, 4> {};
+        auto lhs1 = etl::static_vector<T, 4>{};
         lhs1.push_back(T(1));
         lhs1.push_back(T(2));
-        auto rhs1 = etl::static_vector<T, 4> {};
+        auto rhs1 = etl::static_vector<T, 4>{};
         rhs1.push_back(T(1));
         rhs1.push_back(T(2));
 
         assert(lhs1 == rhs1);
         assert(!(lhs1 != rhs1));
 
-        auto lhs2 = etl::static_vector<T, 4> {};
+        auto lhs2 = etl::static_vector<T, 4>{};
         lhs2.push_back(T(1));
         lhs2.push_back(T(2));
-        auto rhs2 = etl::static_vector<T, 4> {};
+        auto rhs2 = etl::static_vector<T, 4>{};
         rhs2.push_back(T(1));
         rhs2.push_back(T(3));
 
@@ -349,7 +351,7 @@ constexpr auto test_cx() -> bool
 
     // range
     {
-        auto data = etl::array {T(0), T(0), T(1), T(2), T(0), T(2)};
+        auto data = etl::array{T(0), T(0), T(1), T(2), T(0), T(2)};
         auto vec  = etl::static_vector<T, 6>(begin(data), end(data));
         assert(vec.full());
         assert(etl::erase(vec, T(0)) == 3);

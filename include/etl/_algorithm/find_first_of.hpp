@@ -18,12 +18,14 @@ namespace etl {
 ///
 /// https://en.cppreference.com/w/cpp/algorithm/find_first_of
 template <typename InputIt, typename ForwardIt, typename Predicate>
-[[nodiscard]] constexpr auto find_first_of(
-    InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
+[[nodiscard]] constexpr auto
+find_first_of(InputIt first, InputIt last, ForwardIt sFirst, ForwardIt sLast, Predicate pred) -> InputIt
 {
     for (; first != last; ++first) {
         for (auto it = sFirst; it != sLast; ++it) {
-            if (pred(*first, *it)) { return first; }
+            if (pred(*first, *it)) {
+                return first;
+            }
         }
     }
 

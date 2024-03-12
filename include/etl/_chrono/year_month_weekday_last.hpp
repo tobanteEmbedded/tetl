@@ -14,7 +14,10 @@ namespace etl::chrono {
 
 struct year_month_weekday_last {
     constexpr year_month_weekday_last(
-        chrono::year const& y, chrono::month const& m, chrono::weekday_last const& wdl) noexcept;
+        chrono::year const& y,
+        chrono::month const& m,
+        chrono::weekday_last const& wdl
+    ) noexcept;
 
     constexpr auto operator+=(months const& m) noexcept -> year_month_weekday_last&;
     constexpr auto operator-=(months const& m) noexcept -> year_month_weekday_last&;

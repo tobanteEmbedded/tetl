@@ -27,8 +27,10 @@ struct is_unsigned : detail::is_unsigned<T>::type { };
 
 template <typename T>
 struct is_unsigned<T const> : detail::is_unsigned<T>::type { };
+
 template <typename T>
 struct is_unsigned<T volatile> : detail::is_unsigned<T>::type { };
+
 template <typename T>
 struct is_unsigned<T const volatile> : detail::is_unsigned<T>::type { };
 

@@ -15,11 +15,14 @@ namespace etl {
 /// \brief Source location
 /// \include source_location.cpp
 struct source_location {
-    [[nodiscard]] static consteval auto current(uint_least32_t const line = TETL_BUILTIN_LINE(),
-        uint_least32_t const column = TETL_BUILTIN_COLUMN(), char const* const file = TETL_BUILTIN_FILE(),
-        char const* const function = TETL_BUILTIN_FUNCTION()) noexcept -> source_location
+    [[nodiscard]] static consteval auto current(
+        uint_least32_t const line   = TETL_BUILTIN_LINE(),
+        uint_least32_t const column = TETL_BUILTIN_COLUMN(),
+        char const* const file      = TETL_BUILTIN_FILE(),
+        char const* const function  = TETL_BUILTIN_FUNCTION()
+    ) noexcept -> source_location
     {
-        auto result      = source_location {};
+        auto result      = source_location{};
         result._line     = line;
         result._column   = column;
         result._file     = file;
@@ -38,8 +41,8 @@ struct source_location {
     [[nodiscard]] constexpr auto function_name() const noexcept -> char const* { return _function; }
 
 private:
-    etl::uint_least32_t _line {};
-    etl::uint_least32_t _column {};
+    etl::uint_least32_t _line{};
+    etl::uint_least32_t _column{};
     char const* _file     = "";
     char const* _function = "";
 };

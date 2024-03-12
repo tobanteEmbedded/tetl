@@ -25,8 +25,12 @@ namespace detail {
 template <size_t Offset, size_t Count, size_t Extent>
 [[nodiscard]] TETL_CONSTEVAL auto subspan_extent() -> size_t
 {
-    if (Count != dynamic_extent) { return Count; }
-    if (Extent != dynamic_extent) { return Extent - Offset; }
+    if (Count != dynamic_extent) {
+        return Count;
+    }
+    if (Extent != dynamic_extent) {
+        return Extent - Offset;
+    }
     return dynamic_extent;
 }
 } // namespace detail
@@ -80,7 +84,8 @@ struct span {
     /// and the conversion from etl::iter_reference_t<It> to element_type is at
     /// most a qualification conversion.
     template <typename It>
-    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data {first}, _size {count}
+    explicit(extent != dynamic_extent) constexpr span(It first, size_type count) : _data{first}
+                                                                                 , _size{count}
     {
     }
 
@@ -90,25 +95,29 @@ struct span {
 
     /// \brief Constructs a span. From a c style array.
     template <size_t N>
-    constexpr span(element_type (&arr)[N]) noexcept : _data {&arr[0]}, _size {N}
+    constexpr span(element_type (&arr)[N]) noexcept : _data{&arr[0]}
+                                                    , _size{N}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size>.
     template <typename U, size_t N>
-    constexpr span(array<U, N>& arr) noexcept : _data {arr.data()}, _size {arr.size()}
+    constexpr span(array<U, N>& arr) noexcept : _data{arr.data()}
+                                              , _size{arr.size()}
     {
     }
 
     /// \brief Constructs a span. From a array<Type,Size> const.
     template <typename U, size_t N>
-    constexpr span(array<U, N> const& arr) noexcept : _data {arr.data()}, _size {arr.size()}
+    constexpr span(array<U, N> const& arr) noexcept : _data{arr.data()}
+                                                    , _size{arr.size()}
     {
     }
 
     /// \brief Constructs a span.
     template <typename R>
-    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data {r.data()}, _size {r.size()}
+    explicit(extent != dynamic_extent) constexpr span(R&& r) : _data{r.data()}
+                                                             , _size{r.size()}
     {
     }
 
@@ -172,7 +181,7 @@ struct span {
     [[nodiscard]] constexpr auto first() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return span<element_type, Count> {data(), static_cast<size_type>(Count)};
+        return span<element_type, Count>{data(), static_cast<size_type>(Count)};
     }
 
     /// \brief Obtains a span that is a view over the first Count elements of
@@ -189,7 +198,7 @@ struct span {
     [[nodiscard]] constexpr auto last() const -> span<element_type, Count>
     {
         static_assert(!(Count > Extent));
-        return span<element_type, Count> {data() + (size() - Count), static_cast<size_type>(Count)};
+        return span<element_type, Count>{data() + (size() - Count), static_cast<size_type>(Count)};
     }
 
     /// \brief Obtains a span that is a view over the last Count elements of
@@ -217,8 +226,8 @@ struct span {
     /// span starting at offset Offset. If Count is etl::dynamic_extent, the
     /// number of elements in the subspan is size() - offset (i.e., it ends at
     /// the end of *this.).
-    [[nodiscard]] constexpr auto subspan(
-        size_type offset, size_type count = dynamic_extent) const -> span<element_type, dynamic_extent>
+    [[nodiscard]] constexpr auto
+    subspan(size_type offset, size_type count = dynamic_extent) const -> span<element_type, dynamic_extent>
     {
         TETL_ASSERT(!(offset > size()));
         TETL_ASSERT(!(count != dynamic_extent && count > size() - offset));
@@ -248,7 +257,8 @@ template <typename Container, typename Element = etl::remove_pointer_t<decltype(
 span(Container&) -> span<Element>;
 
 // Deduction Guides. From Container const.
-template <typename Container,
+template <
+    typename Container,
     typename Element = etl::remove_pointer_t<decltype(etl::declval<Container const&>().data())>>
 span(Container const&) -> span<Element>;
 

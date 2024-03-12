@@ -27,10 +27,10 @@
 
 // EXPECT
 #if __has_builtin(__builtin_expect)
-    #define TETL_LIKELY(expr) __builtin_expect(static_cast<bool>(expr), true)
+    #define TETL_LIKELY(expr)   __builtin_expect(static_cast<bool>(expr), true)
     #define TETL_UNLIKELY(expr) __builtin_expect(static_cast<bool>(expr), false)
 #else
-    #define TETL_LIKELY(expr) (expr)
+    #define TETL_LIKELY(expr)   (expr)
     #define TETL_UNLIKELY(expr) (expr)
 #endif
 

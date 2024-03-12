@@ -9,7 +9,7 @@
 template <typename Int>
 constexpr auto test_strided_slice() -> bool
 {
-    auto slice = etl::strided_slice {Int(1), Int(2), Int(3)};
+    auto slice = etl::strided_slice{Int(1), Int(2), Int(3)};
     assert(etl::same_as<typename decltype(slice)::offset_type, Int>);
     assert(etl::same_as<typename decltype(slice)::extent_type, Int>);
     assert(etl::same_as<typename decltype(slice)::stride_type, Int>);
@@ -23,7 +23,7 @@ constexpr auto test_strided_slice() -> bool
 
 constexpr auto test_submdspan_extents() -> bool
 {
-    auto ext = etl::extents<int, 2, 3> {};
+    auto ext = etl::extents<int, 2, 3>{};
 
     auto col0Ext = etl::submdspan_extents(ext, etl::full_extent, 0);
     assert(col0Ext.rank() == 1);

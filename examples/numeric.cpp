@@ -21,10 +21,13 @@ struct fixed_audio_buffer {
     fixed_audio_buffer() = default;
 
     [[nodiscard]] auto size_channels() const -> size_type { return Channels; }
+
     [[nodiscard]] auto size_frames() const -> size_type { return Frames; }
+
     [[nodiscard]] auto size_samples() const -> size_type { return size_channels() * size_frames(); }
 
     [[nodiscard]] auto frame(size_type index) { return make_frame(index); }
+
     [[nodiscard]] auto frame(size_type index) const { return make_frame(index); }
 
     [[nodiscard]] auto channel(size_type ch)
@@ -38,17 +41,20 @@ struct fixed_audio_buffer {
     }
 
     [[nodiscard]] auto operator()(size_type ch, size_type s) -> value_type& { return channel(ch)[s]; }
+
     [[nodiscard]] auto operator()(size_type ch, size_type s) const -> value_type const& { return channel(ch)[s]; }
 
 private:
     [[nodiscard]] auto make_frame(size_type s) const
     {
-        auto frame = frame_type {};
-        for (size_type ch {0}; ch < size_channels(); ++ch) { frame[ch] = (*this)(ch, s); }
+        auto frame = frame_type{};
+        for (size_type ch{0}; ch < size_channels(); ++ch) {
+            frame[ch] = (*this)(ch, s);
+        }
         return frame;
     }
 
-    etl::array<value_type, static_cast<etl::size_t>(Channels* Frames)> _buffer {};
+    etl::array<value_type, static_cast<etl::size_t>(Channels* Frames)> _buffer{};
 };
 
 auto main() -> int
@@ -62,7 +68,7 @@ auto main() -> int
     auto sum = etl::accumulate(vec.begin(), vec.end(), 0.0);
     printf("%f\n", sum);
 
-    auto buffer = fixed_audio_buffer<float, 2, 32> {};
+    auto buffer = fixed_audio_buffer<float, 2, 32>{};
     printf("%zu\n", etl::size(buffer.channel(0)));
     return 0;
 }

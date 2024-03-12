@@ -54,7 +54,6 @@ enum struct fmtflags_type : etl::uint16_t {
     skipws    = 4096,
     unitbuf   = 8192,
     uppercase = 16384,
-
 };
 
 enum struct iostate_type : etl::uint16_t {
@@ -68,8 +67,10 @@ enum struct iostate_type : etl::uint16_t {
 
 template <>
 struct is_bitmask_type<detail::openmode_type> : true_type { };
+
 template <>
 struct is_bitmask_type<detail::fmtflags_type> : true_type { };
+
 template <>
 struct is_bitmask_type<detail::iostate_type> : true_type { };
 
@@ -162,9 +163,9 @@ protected:
     ios_base() = default;
 
 private:
-    fmtflags _fmtFlags {};
-    streamsize _precision {6};
-    streamsize _width {0};
+    fmtflags _fmtFlags{};
+    streamsize _precision{6};
+    streamsize _width{0};
 };
 
 } // namespace etl

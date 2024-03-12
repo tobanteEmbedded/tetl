@@ -16,7 +16,7 @@
 #include <stdlib.h> // for exit
 
 #if defined(TETL_MSVC)
-    #pragma warning(disable : 4127) // Conditional expression is constant
+    #pragma warning(disable: 4127) // Conditional expression is constant
 #endif
 
 namespace etl {
@@ -37,5 +37,5 @@ auto main() -> int
 }
 
 #if defined(TETL_MSVC)
-    #pragma warning(default : 4127) // Conditional expression is constant
+    #pragma warning(default: 4127) // Conditional expression is constant
 #endif

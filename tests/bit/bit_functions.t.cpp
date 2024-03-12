@@ -39,29 +39,29 @@ constexpr auto test_bit_floor() -> bool
 template <typename T>
 constexpr auto test_bit_width() -> bool
 {
-    assert(etl::bit_width(T {0}) == 0);
-    assert(etl::bit_width(T {1}) == 1);
-    assert(etl::bit_width(T {2}) == 2);
-    assert(etl::bit_width(T {3}) == 2);
-    assert(etl::bit_width(T {4}) == 3);
-    assert(etl::bit_width(T {5}) == 3);
-    assert(etl::bit_width(T {6}) == 3);
-    assert(etl::bit_width(T {7}) == 3);
+    assert(etl::bit_width(T{0}) == 0);
+    assert(etl::bit_width(T{1}) == 1);
+    assert(etl::bit_width(T{2}) == 2);
+    assert(etl::bit_width(T{3}) == 2);
+    assert(etl::bit_width(T{4}) == 3);
+    assert(etl::bit_width(T{5}) == 3);
+    assert(etl::bit_width(T{6}) == 3);
+    assert(etl::bit_width(T{7}) == 3);
     return true;
 }
 
 template <typename T>
 constexpr auto test_popcount() -> bool
 {
-    assert(etl::popcount(T {1}) == 1);
-    assert(etl::popcount(T {2}) == 1);
-    assert(etl::popcount(T {3}) == 2);
-    assert(etl::popcount(T {0b11111111}) == 8);
+    assert(etl::popcount(T{1}) == 1);
+    assert(etl::popcount(T{2}) == 1);
+    assert(etl::popcount(T{3}) == 2);
+    assert(etl::popcount(T{0b11111111}) == 8);
 
-    assert(etl::detail::popcount_fallback(T {1}) == 1);
-    assert(etl::detail::popcount_fallback(T {2}) == 1);
-    assert(etl::detail::popcount_fallback(T {3}) == 2);
-    assert(etl::detail::popcount_fallback(T {0b11111111}) == 8);
+    assert(etl::detail::popcount_fallback(T{1}) == 1);
+    assert(etl::detail::popcount_fallback(T{2}) == 1);
+    assert(etl::detail::popcount_fallback(T{3}) == 2);
+    assert(etl::detail::popcount_fallback(T{0b11111111}) == 8);
     return true;
 }
 
@@ -93,20 +93,20 @@ constexpr auto test_rotr() -> bool
 template <typename T>
 constexpr auto test_countl_zero() -> bool
 {
-    assert(etl::countl_zero(T {0}) == etl::numeric_limits<T>::digits);
+    assert(etl::countl_zero(T{0}) == etl::numeric_limits<T>::digits);
 
-    assert(etl::countl_zero(etl::uint8_t {0b1111'1111}) == 0);
-    assert(etl::countl_zero(etl::uint8_t {0b0111'1111}) == 1);
-    assert(etl::countl_zero(etl::uint8_t {0b0011'1111}) == 2);
-    assert(etl::countl_zero(etl::uint8_t {0b0001'1111}) == 3);
-    assert(etl::countl_zero(etl::uint8_t {0b0000'1111}) == 4);
-    assert(etl::countl_zero(etl::uint8_t {0b0000'0000}) == 8);
+    assert(etl::countl_zero(etl::uint8_t{0b1111'1111}) == 0);
+    assert(etl::countl_zero(etl::uint8_t{0b0111'1111}) == 1);
+    assert(etl::countl_zero(etl::uint8_t{0b0011'1111}) == 2);
+    assert(etl::countl_zero(etl::uint8_t{0b0001'1111}) == 3);
+    assert(etl::countl_zero(etl::uint8_t{0b0000'1111}) == 4);
+    assert(etl::countl_zero(etl::uint8_t{0b0000'0000}) == 8);
 
-    assert(etl::countl_zero(etl::uint16_t {0b1000'0000'1111'1111}) == 0);
-    assert(etl::countl_zero(etl::uint16_t {0b0100'0000'1111'1111}) == 1);
-    assert(etl::countl_zero(etl::uint16_t {0b0010'0000'1111'1111}) == 2);
-    assert(etl::countl_zero(etl::uint16_t {0b0001'0000'1111'1111}) == 3);
-    assert(etl::countl_zero(etl::uint16_t {0b0000'0000'0000'0001}) == 15);
+    assert(etl::countl_zero(etl::uint16_t{0b1000'0000'1111'1111}) == 0);
+    assert(etl::countl_zero(etl::uint16_t{0b0100'0000'1111'1111}) == 1);
+    assert(etl::countl_zero(etl::uint16_t{0b0010'0000'1111'1111}) == 2);
+    assert(etl::countl_zero(etl::uint16_t{0b0001'0000'1111'1111}) == 3);
+    assert(etl::countl_zero(etl::uint16_t{0b0000'0000'0000'0001}) == 15);
 
     return true;
 }
@@ -114,30 +114,30 @@ constexpr auto test_countl_zero() -> bool
 template <typename T>
 constexpr auto test_countl_one() -> bool
 {
-    assert(etl::countl_one(T {etl::numeric_limits<T>::max()}) == etl::numeric_limits<T>::digits);
+    assert(etl::countl_one(T{etl::numeric_limits<T>::max()}) == etl::numeric_limits<T>::digits);
 
-    assert(etl::countl_one(etl::uint8_t {0b0000'0000}) == 0);
-    assert(etl::countl_one(etl::uint8_t {0b1111'1111}) == 8);
-    assert(etl::countl_one(etl::uint8_t {0b1110'1111}) == 3);
+    assert(etl::countl_one(etl::uint8_t{0b0000'0000}) == 0);
+    assert(etl::countl_one(etl::uint8_t{0b1111'1111}) == 8);
+    assert(etl::countl_one(etl::uint8_t{0b1110'1111}) == 3);
 
-    assert(etl::countl_one(etl::uint16_t {0b1000'0000'1111'1111}) == 1);
-    assert(etl::countl_one(etl::uint16_t {0b1111'0000'1111'1111}) == 4);
+    assert(etl::countl_one(etl::uint16_t{0b1000'0000'1111'1111}) == 1);
+    assert(etl::countl_one(etl::uint16_t{0b1111'0000'1111'1111}) == 4);
     return true;
 }
 
 template <typename T>
 constexpr auto test_countr_zero() -> bool
 {
-    assert(etl::countr_zero(T {0}) == etl::numeric_limits<T>::digits);
+    assert(etl::countr_zero(T{0}) == etl::numeric_limits<T>::digits);
 
-    assert(etl::countr_zero(T {0b0000'0001}) == 0);
-    assert(etl::countr_zero(T {0b0000'0010}) == 1);
-    assert(etl::countr_zero(T {0b0000'0100}) == 2);
-    assert(etl::countr_zero(T {0b0000'1000}) == 3);
-    assert(etl::countr_zero(T {0b0001'0000}) == 4);
-    assert(etl::countr_zero(T {0b0010'0000}) == 5);
-    assert(etl::countr_zero(T {0b0100'0000}) == 6);
-    assert(etl::countr_zero(T {0b1000'0000}) == 7);
+    assert(etl::countr_zero(T{0b0000'0001}) == 0);
+    assert(etl::countr_zero(T{0b0000'0010}) == 1);
+    assert(etl::countr_zero(T{0b0000'0100}) == 2);
+    assert(etl::countr_zero(T{0b0000'1000}) == 3);
+    assert(etl::countr_zero(T{0b0001'0000}) == 4);
+    assert(etl::countr_zero(T{0b0010'0000}) == 5);
+    assert(etl::countr_zero(T{0b0100'0000}) == 6);
+    assert(etl::countr_zero(T{0b1000'0000}) == 7);
     return true;
 }
 
@@ -146,12 +146,12 @@ constexpr auto test_countr_one() -> bool
 {
     assert(etl::countr_one(etl::numeric_limits<T>::max()) == etl::numeric_limits<T>::digits);
 
-    assert(etl::countr_one(T {0b1111'1111}) == 8);
-    assert(etl::countr_one(T {0b0111'1111}) == 7);
-    assert(etl::countr_one(T {0b0011'1111}) == 6);
-    assert(etl::countr_one(T {0b0001'1111}) == 5);
-    assert(etl::countr_one(T {0b0000'1111}) == 4);
-    assert(etl::countr_one(T {0b0000'0000}) == 0);
+    assert(etl::countr_one(T{0b1111'1111}) == 8);
+    assert(etl::countr_one(T{0b0111'1111}) == 7);
+    assert(etl::countr_one(T{0b0011'1111}) == 6);
+    assert(etl::countr_one(T{0b0001'1111}) == 5);
+    assert(etl::countr_one(T{0b0000'1111}) == 4);
+    assert(etl::countr_one(T{0b0000'0000}) == 0);
 
     return true;
 }
@@ -159,15 +159,15 @@ constexpr auto test_countr_one() -> bool
 template <typename T>
 constexpr auto test_has_single_bit() -> bool
 {
-    assert(etl::has_single_bit(T {1 << 0}));
-    assert(etl::has_single_bit(T {1 << 1}));
-    assert(etl::has_single_bit(T {1 << 2}));
-    assert(etl::has_single_bit(T {1 << 3}));
-    assert(etl::has_single_bit(T {1 << 4}));
+    assert(etl::has_single_bit(T{1 << 0}));
+    assert(etl::has_single_bit(T{1 << 1}));
+    assert(etl::has_single_bit(T{1 << 2}));
+    assert(etl::has_single_bit(T{1 << 3}));
+    assert(etl::has_single_bit(T{1 << 4}));
 
-    assert(!etl::has_single_bit(T {0}));
-    assert(!etl::has_single_bit(T {3}));
-    assert(!etl::has_single_bit(T {3 << 4}));
+    assert(!etl::has_single_bit(T{0}));
+    assert(!etl::has_single_bit(T{3}));
+    assert(!etl::has_single_bit(T{3 << 4}));
 
     return true;
 }
@@ -222,6 +222,7 @@ constexpr auto test_all() -> bool
 
     return true;
 }
+
 auto main() -> int
 {
     assert(test_all());

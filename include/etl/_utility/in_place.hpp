@@ -19,7 +19,7 @@ struct in_place_t {
     explicit in_place_t() = default;
 };
 
-inline constexpr auto in_place = in_place_t {};
+inline constexpr auto in_place = in_place_t{};
 
 } // namespace etl
 

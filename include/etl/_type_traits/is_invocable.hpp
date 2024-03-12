@@ -30,6 +30,7 @@ struct is_invocable_impl<Result, Ret, false, etl::void_t<typename Result::type>>
 };
 
 } // namespace detail
+
 // clang-format on
 
 template <typename Fn, typename... ArgTypes>

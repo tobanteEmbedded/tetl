@@ -18,9 +18,8 @@ struct scaled_scalar
     using value_type = decltype(declval<ScalingFactor>() * ReferenceValue(declval<Reference>()));
 
     constexpr explicit scaled_scalar(ScalingFactor const& scalingFactor, Reference const& reference)
-        : proxy_reference<Reference, ReferenceValue,
-              scaled_scalar<ScalingFactor, Reference, ReferenceValue>> {reference}
-        , _scalingFactor {scalingFactor}
+        : proxy_reference<Reference, ReferenceValue, scaled_scalar<ScalingFactor, Reference, ReferenceValue>>{reference}
+        , _scalingFactor{scalingFactor}
     {
     }
 

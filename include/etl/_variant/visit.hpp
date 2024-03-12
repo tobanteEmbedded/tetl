@@ -49,8 +49,8 @@ template <etl::size_t I, etl::size_t... Is>
     return {};
 }
 
-[[nodiscard]] constexpr auto next_seq(
-    etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/) -> etl::index_sequence<>
+[[nodiscard]] constexpr auto
+next_seq(etl::index_sequence<> /*ignore*/, etl::index_sequence<> /*ignore*/) -> etl::index_sequence<>
 {
     return {};
 }
@@ -74,13 +74,15 @@ template <typename T, typename V>
 using copy_referenceness_t = typename copy_referenceness<T, V>::type;
 
 template <typename T, typename TSource>
-using as_if_forwarded = etl::conditional_t<!etl::is_reference<TSource> {},
-    etl::add_rvalue_reference_t<etl::remove_reference_t<T>>, copy_referenceness_t<T, TSource>>;
+using as_if_forwarded = etl::conditional_t<
+    !etl::is_reference<TSource>{},
+    etl::add_rvalue_reference_t<etl::remove_reference_t<T>>,
+    copy_referenceness_t<T, TSource>>;
 
 template <typename TLike, typename T>
 constexpr auto forward_like(T&& x) noexcept -> decltype(auto)
 {
-    static_assert(!(etl::is_rvalue_reference<decltype(x)> {} && etl::is_lvalue_reference<TLike> {}));
+    static_assert(!(etl::is_rvalue_reference<decltype(x)>{} && etl::is_lvalue_reference<TLike>{}));
 
     return static_cast<as_if_forwarded<T, TLike>>(x);
 }
@@ -89,9 +91,9 @@ template <etl::size_t I, etl::size_t... Is, etl::size_t J, etl::size_t... Js>
 constexpr auto next_seq(etl::index_sequence<I, Is...> /*ignore*/, etl::index_sequence<J, Js...> /*ignore*/)
 {
     if constexpr (I + 1 == J) {
-        return prepend<0>(next_seq(etl::index_sequence<Is...> {}, etl::index_sequence<Js...> {}));
+        return prepend<0>(next_seq(etl::index_sequence<Is...>{}, etl::index_sequence<Js...>{}));
     } else {
-        return etl::index_sequence<I + 1, Is...> {};
+        return etl::index_sequence<I + 1, Is...>{};
     }
 }
 
@@ -150,7 +152,9 @@ constexpr auto visit(etl::index_sequence<Is...> i, etl::index_sequence<Ms...> m,
     if constexpr (sum(n) == 0) {
         return f(get<Is>(etl::forward<Vs>(vs))...);
     } else {
-        if (etl::tuple(detail::index(vs)...) == etl::tuple(Is...)) { return f(forward_like<Vs>(*get_if<Is>(&vs))...); }
+        if (etl::tuple(detail::index(vs)...) == etl::tuple(Is...)) {
+            return f(forward_like<Vs>(*get_if<Is>(&vs))...);
+        }
         return visit(n, m, etl::forward<F>(f), etl::forward<Vs>(vs)...);
     }
 }
@@ -176,8 +180,12 @@ constexpr auto visit(F&& f, Vs&&... vs)
     if constexpr (((detail::variant_size<Vs>() == 1) && ...)) {
         return f(detail::forward_like<Vs>(*detail::get_if<0>(&vs))...);
     } else {
-        return detail::visit(etl::index_sequence<detail::zero<Vs>...> {},
-            etl::index_sequence<detail::variant_size<Vs>()...> {}, etl::forward<F>(f), etl::forward<Vs>(vs)...);
+        return detail::visit(
+            etl::index_sequence<detail::zero<Vs>...>{},
+            etl::index_sequence<detail::variant_size<Vs>()...>{},
+            etl::forward<F>(f),
+            etl::forward<Vs>(vs)...
+        );
     }
 }
 

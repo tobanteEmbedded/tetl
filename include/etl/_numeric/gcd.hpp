@@ -13,7 +13,9 @@ namespace etl {
 template <typename M, typename N>
 [[nodiscard]] constexpr auto gcd(M m, N n) noexcept -> etl::common_type_t<M, N>
 {
-    if (n == 0) { return m; }
+    if (n == 0) {
+        return m;
+    }
     return gcd<M, N>(n, m % n);
 }
 

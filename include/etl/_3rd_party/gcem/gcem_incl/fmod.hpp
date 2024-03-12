@@ -32,7 +32,8 @@ constexpr auto fmod_check(T const x, T const y) noexcept -> T
             !all_finite(x, y) ? etl::numeric_limits<T>::quiet_NaN()
                               :
                               // else
-            x - trunc(x / y) * y);
+            x - trunc(x / y) * y
+    );
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>

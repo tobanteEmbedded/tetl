@@ -32,7 +32,9 @@ template <typename T, size_t N>
     requires(is_swappable_v<T>)
 constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value) -> void
 {
-    for (size_t i = 0; i < N; ++i) { swap(a[i], b[i]); }
+    for (size_t i = 0; i < N; ++i) {
+        swap(a[i], b[i]);
+    }
 }
 
 } // namespace etl

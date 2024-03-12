@@ -21,7 +21,8 @@ namespace etl {
 
 struct bad_function_call : exception {
     constexpr bad_function_call() = default;
-    constexpr explicit bad_function_call(char const* what) : exception {what} { }
+
+    constexpr explicit bad_function_call(char const* what) : exception{what} { }
 };
 
 namespace detail {
@@ -45,28 +46,28 @@ struct inplace_func_vtable {
     destructor_ptr_t const destructor_ptr;
 
     explicit constexpr inplace_func_vtable()
-        : invoke_ptr {[](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
+        : invoke_ptr{[](storage_ptr_t /*p*/, Args&&... /*args*/) -> R {
             etl::raise<etl::bad_function_call>("empty inplace_func_vtable");
         }}
-        , copy_ptr {[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
-        , relocate_ptr {[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
-        , destructor_ptr {[](storage_ptr_t /*p*/) -> void {}}
+        , copy_ptr{[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
+        , relocate_ptr{[](storage_ptr_t /*p*/, storage_ptr_t /*p*/) -> void {}}
+        , destructor_ptr{[](storage_ptr_t /*p*/) -> void {}}
     {
     }
 
     template <typename C>
     explicit constexpr inplace_func_vtable(wrapper<C> /*ignore*/)
-        : invoke_ptr {[](storage_ptr_t storagePtr, Args&&... args) -> R {
+        : invoke_ptr{[](storage_ptr_t storagePtr, Args&&... args) -> R {
             return (*static_cast<C*>(storagePtr))(static_cast<Args&&>(args)...);
         }}
-        , copy_ptr {[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C {(*static_cast<C*>(srcPtr))};
+        , copy_ptr{[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C{(*static_cast<C*>(srcPtr))};
         }}
-        , relocate_ptr {[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C {etl::move(*static_cast<C*>(srcPtr))};
+        , relocate_ptr{[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
+            ::new (dstPtr) C{etl::move(*static_cast<C*>(srcPtr))};
             static_cast<C*>(srcPtr)->~C();
         }}
-        , destructor_ptr {[](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); }}
+        , destructor_ptr{[](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); }}
     {
     }
 
@@ -80,7 +81,7 @@ struct inplace_func_vtable {
 };
 
 template <typename R, typename... Args>
-inline constexpr auto empty_vtable = inplace_func_vtable<R, Args...> {};
+inline constexpr auto empty_vtable = inplace_func_vtable<R, Args...>{};
 
 template <size_t DstCap, size_t DstAlign, size_t SrcCap, size_t SrcAlign>
 struct is_valid_inplace_destination : etl::true_type {
@@ -96,6 +97,7 @@ struct inplace_function;
 namespace detail {
 template <typename>
 struct is_inplace_function : false_type { };
+
 template <typename Sig, size_t Cap, size_t Align>
 struct is_inplace_function<inplace_function<Sig, Cap, Align>> : etl::true_type { };
 } // namespace detail
@@ -115,7 +117,7 @@ public:
     using alignment = integral_constant<size_t, Alignment>;
 
     /// \brief Creates an empty function.
-    inplace_function() noexcept : _vtable {addressof(detail::empty_vtable<R, Args...>)} { }
+    inplace_function() noexcept : _vtable{addressof(detail::empty_vtable<R, Args...>)} { }
 
     template <typename T, typename C = decay_t<T>>
         requires(!detail::is_inplace_function<C>::value && is_invocable_r_v<R, C&, Args...>)
@@ -123,48 +125,57 @@ public:
     {
         static_assert(is_copy_constructible_v<C>, "inplace_function cannot be constructed from non-copyable type");
         static_assert(
-            sizeof(C) <= Capacity, "inplace_function cannot be constructed from object with this (large) size");
-        static_assert(Alignment % alignof(C) == 0,
-            "inplace_function cannot be constructed from object with this (large) alignment");
+            sizeof(C) <= Capacity,
+            "inplace_function cannot be constructed from object with this (large) size"
+        );
+        static_assert(
+            Alignment % alignof(C) == 0,
+            "inplace_function cannot be constructed from object with this (large) alignment"
+        );
 
-        static constexpr vtable_t const vt {detail::wrapper<C> {}};
+        static constexpr vtable_t const vt{detail::wrapper<C>{}};
         _vtable = addressof(vt);
 
-        ::new (addressof(_storage)) C {forward<T>(closure)};
+        ::new (addressof(_storage)) C{forward<T>(closure)};
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align> const& other)
-        : inplace_function {other._vtable, other._vtable->copy_ptr, addressof(other._storage)}
+        : inplace_function{other._vtable, other._vtable->copy_ptr, addressof(other._storage)}
     {
         static_assert(
-            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
+            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value,
+            "conversion not allowed"
+        );
     }
 
     template <size_t Cap, size_t Align>
     inplace_function(inplace_function<R(Args...), Cap, Align>&& other) noexcept
-        : inplace_function {other._vtable, other._vtable->relocate_ptr, addressof(other._storage)}
+        : inplace_function{other._vtable, other._vtable->relocate_ptr, addressof(other._storage)}
     {
         static_assert(
-            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value, "conversion not allowed");
+            detail::is_valid_inplace_destination<Capacity, Alignment, Cap, Align>::value,
+            "conversion not allowed"
+        );
         other._vtable = addressof(detail::empty_vtable<R, Args...>);
     }
 
     /// \brief Creates an empty function.
-    inplace_function(nullptr_t /*ignore*/) noexcept : _vtable {addressof(detail::empty_vtable<R, Args...>)} { }
+    inplace_function(nullptr_t /*ignore*/) noexcept : _vtable{addressof(detail::empty_vtable<R, Args...>)} { }
 
-    inplace_function(inplace_function const& other) : _vtable {other._vtable}
+    inplace_function(inplace_function const& other) : _vtable{other._vtable}
     {
         _vtable->copy_ptr(addressof(_storage), addressof(other._storage));
     }
 
     inplace_function(inplace_function&& other) noexcept
-        : _vtable {exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>))}
+        : _vtable{exchange(other._vtable, addressof(detail::empty_vtable<R, Args...>))}
     {
         _vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
     }
 
-    /// \brief Assigns a new target to etl::inplace_function. Drops the current target. *this is empty after the call.
+    /// \brief Assigns a new target to etl::inplace_function. Drops the current target. *this is empty
+    /// after the call.
     auto operator=(nullptr_t) noexcept -> inplace_function&
     {
         _vtable->destructor_ptr(addressof(_storage));
@@ -199,9 +210,11 @@ public:
     /// \brief Exchanges the stored callable objects of *this and other.
     auto swap(inplace_function& other) noexcept -> void
     {
-        if (this == addressof(other)) { return; }
+        if (this == addressof(other)) {
+            return;
+        }
 
-        auto tmp = storage_t {};
+        auto tmp = storage_t{};
         _vtable->relocate_ptr(addressof(tmp), addressof(_storage));
         other._vtable->relocate_ptr(addressof(_storage), addressof(other._storage));
         _vtable->relocate_ptr(addressof(other._storage), addressof(tmp));
@@ -211,8 +224,11 @@ public:
 
 private:
     inplace_function(
-        vtable_ptr_t vtable, typename vtable_t::process_ptr_t process, typename vtable_t::storage_ptr_t storage)
-        : _vtable {vtable}
+        vtable_ptr_t vtable,
+        typename vtable_t::process_ptr_t process,
+        typename vtable_t::storage_ptr_t storage
+    )
+        : _vtable{vtable}
     {
         process(addressof(_storage), storage);
     }
@@ -225,8 +241,10 @@ private:
 /// Exchanges the state of lhs with that of rhs. Effectively calls
 /// lhs.swap(rhs).
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
-auto swap(inplace_function<R(Args...), Capacity, Alignment>& lhs,
-    inplace_function<R(Args...), Capacity, Alignment>& rhs) noexcept -> void
+auto swap(
+    inplace_function<R(Args...), Capacity, Alignment>& lhs,
+    inplace_function<R(Args...), Capacity, Alignment>& rhs
+) noexcept -> void
 {
     lhs.swap(rhs);
 }
@@ -235,8 +253,8 @@ auto swap(inplace_function<R(Args...), Capacity, Alignment>& lhs,
 /// (that is, functions without a callable target) compare equal, non-empty
 /// functions compare non-equal.
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
-[[nodiscard]] constexpr auto operator==(
-    inplace_function<R(Args...), Capacity, Alignment> const& f, nullptr_t /*ignore*/) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(inplace_function<R(Args...), Capacity, Alignment> const& f, nullptr_t /*ignore*/) noexcept -> bool
 {
     return !static_cast<bool>(f);
 }
@@ -245,8 +263,8 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 /// (that is, functions without a callable target) compare equal, non-empty
 /// functions compare non-equal.
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
-[[nodiscard]] constexpr auto operator!=(
-    inplace_function<R(Args...), Capacity, Alignment> const& f, nullptr_t /*ignore*/) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(inplace_function<R(Args...), Capacity, Alignment> const& f, nullptr_t /*ignore*/) noexcept -> bool
 {
     return static_cast<bool>(f);
 }
@@ -255,8 +273,8 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 /// (that is, functions without a callable target) compare equal, non-empty
 /// functions compare non-equal.
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
-[[nodiscard]] constexpr auto operator==(
-    nullptr_t /*ignore*/, inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(nullptr_t /*ignore*/, inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
 {
     return !static_cast<bool>(f);
 }
@@ -265,8 +283,8 @@ template <typename R, typename... Args, size_t Capacity, size_t Alignment>
 /// (that is, functions without a callable target) compare equal, non-empty
 /// functions compare non-equal.
 template <typename R, typename... Args, size_t Capacity, size_t Alignment>
-[[nodiscard]] constexpr auto operator!=(
-    nullptr_t /*ignore*/, inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(nullptr_t /*ignore*/, inplace_function<R(Args...), Capacity, Alignment> const& f) noexcept -> bool
 {
     return static_cast<bool>(f);
 }

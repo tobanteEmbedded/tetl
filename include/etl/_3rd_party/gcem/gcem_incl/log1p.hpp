@@ -48,7 +48,8 @@ constexpr auto log1p_check(T const x) noexcept -> T
             log(T(1) + x)
                               :
                               // else
-            log1p_compute(x));
+            log1p_compute(x)
+    );
 }
 
 } // namespace internal

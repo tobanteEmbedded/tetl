@@ -28,24 +28,24 @@ enum struct string_to_integer_error : etl::uint8_t {
 
 template <typename Int>
 struct string_to_integer_result {
-    char const* end {nullptr};
-    string_to_integer_error error {string_to_integer_error::none};
+    char const* end{nullptr};
+    string_to_integer_error error{string_to_integer_error::none};
     Int value;
 };
 
 template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
-[[nodiscard]] constexpr auto string_to_integer(
-    char const* str, size_t len, Int base = Int(10)) noexcept -> string_to_integer_result<Int>
+[[nodiscard]] constexpr auto
+string_to_integer(char const* str, size_t len, Int base = Int(10)) noexcept -> string_to_integer_result<Int>
 {
     if (*str == char(0)) {
         return {
             .end   = str,
             .error = string_to_integer_error::invalid_input,
-            .value = Int {},
+            .value = Int{},
         };
     }
 
-    auto i = size_t {};
+    auto i = size_t{};
     if constexpr (Skip == skip_whitespace::yes) {
         while (isspace(static_cast<int>(str[i])) and (len != 0) and (str[i] != char(0))) {
             ++i;
@@ -66,10 +66,10 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
     auto const firstDigit = i;
 
     // loop over digits
-    auto value = Int {};
+    auto value = Int{};
     for (; (str[i] != char(0)) and (len != 0); ++i, --len) {
 
-        auto digit = Int {};
+        auto digit = Int{};
         if (isdigit(static_cast<int>(str[i]))) {
             digit = static_cast<Int>(str[i] - '0');
         } else if (isalpha(static_cast<int>(str[i]))) {
@@ -80,11 +80,13 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
         }
 
         if (digit >= base) {
-            if (i != firstDigit) { break; }
+            if (i != firstDigit) {
+                break;
+            }
             return {
                 .end   = str,
                 .error = string_to_integer_error::invalid_input,
-                .value = Int {},
+                .value = Int{},
             };
         }
 
@@ -92,7 +94,9 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
         value = static_cast<Int>(value * base + digit);
     }
 
-    if constexpr (is_signed_v<Int>) { value *= sign; }
+    if constexpr (is_signed_v<Int>) {
+        value *= sign;
+    }
 
     return {
         .end   = &str[i],
@@ -110,14 +114,16 @@ template <typename Int, skip_whitespace Skip = skip_whitespace::yes>
 template <typename FloatT>
 [[nodiscard]] constexpr auto string_to_floating_point(char const* str, char const** last = nullptr) noexcept -> FloatT
 {
-    auto res               = FloatT {0};
-    auto div               = FloatT {1};
+    auto res               = FloatT{0};
+    auto div               = FloatT{1};
     auto afterDecimalPoint = false;
     auto leadingSpaces     = true;
 
     auto const* ptr = str;
     for (; *ptr != '\0'; ++ptr) {
-        if (etl::isspace(*ptr) && leadingSpaces) { continue; }
+        if (etl::isspace(*ptr) && leadingSpaces) {
+            continue;
+        }
         leadingSpaces = false;
 
         if (etl::isdigit(*ptr)) {
@@ -135,7 +141,9 @@ template <typename FloatT>
         }
     }
 
-    if (last != nullptr) { *last = ptr; }
+    if (last != nullptr) {
+        *last = ptr;
+    }
 
     return res;
 }
@@ -146,13 +154,14 @@ enum struct integer_to_string_error : etl::uint8_t {
 };
 
 struct integer_to_string_result {
-    char* end {nullptr};
-    integer_to_string_error error {integer_to_string_error::none};
+    char* end{nullptr};
+    integer_to_string_error error{integer_to_string_error::none};
 };
 
 template <typename Int, bool TerminateWithNull = true>
-[[nodiscard]] constexpr auto integer_to_string(
-    Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max()) -> integer_to_string_result
+[[nodiscard]] constexpr auto
+integer_to_string(Int num, char* str, int base = 10, size_t length = etl::numeric_limits<size_t>::max())
+    -> integer_to_string_result
 {
     auto reverseString = [](char* string, etl::size_t len) {
         etl::size_t f = 0;
@@ -173,7 +182,9 @@ template <typename Int, bool TerminateWithNull = true>
             return {str + length, integer_to_string_error::overflow};
         }
         str[i++] = '0';
-        if constexpr (TerminateWithNull) { str[i] = '\0'; }
+        if constexpr (TerminateWithNull) {
+            str[i] = '\0';
+        }
         return {&str[i]};
     }
 
@@ -190,14 +201,20 @@ template <typename Int, bool TerminateWithNull = true>
         str[i++]       = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
         num            = num / static_cast<Int>(base);
 
-        if (length <= i) { return {nullptr, integer_to_string_error::overflow}; }
+        if (length <= i) {
+            return {nullptr, integer_to_string_error::overflow};
+        }
     }
 
     if constexpr (etl::is_signed_v<Int>) {
-        if (isNegative) { str[i++] = '-'; }
+        if (isNegative) {
+            str[i++] = '-';
+        }
     }
 
-    if constexpr (TerminateWithNull) { str[i] = '\0'; }
+    if constexpr (TerminateWithNull) {
+        str[i] = '\0';
+    }
 
     reverseString(str, i);
     return {&str[i]};

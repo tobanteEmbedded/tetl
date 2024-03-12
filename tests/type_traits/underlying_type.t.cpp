@@ -10,8 +10,14 @@
 template <typename T>
 constexpr auto test() -> bool
 {
-    enum E : T { foobar };
-    enum struct SE : T { a, b, c };
+    enum E : T {
+        foobar
+    };
+    enum struct SE : T {
+        a,
+        b,
+        c
+    };
 
     TEST_TRAIT_TYPE_CV(underlying_type, E, T);
     TEST_TRAIT_TYPE_CV(underlying_type, SE, T);

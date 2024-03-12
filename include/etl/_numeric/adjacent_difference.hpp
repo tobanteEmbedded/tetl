@@ -16,7 +16,9 @@ constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destina
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
-    if (first == last) { return destination; }
+    if (first == last) {
+        return destination;
+    }
 
     value_t acc  = *first;
     *destination = acc;
@@ -35,7 +37,9 @@ constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destina
 {
     using value_t = typename etl::iterator_traits<InputIt>::value_type;
 
-    if (first == last) { return destination; }
+    if (first == last) {
+        return destination;
+    }
 
     value_t acc  = *first;
     *destination = acc;

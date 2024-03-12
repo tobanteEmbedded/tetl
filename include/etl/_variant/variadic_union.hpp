@@ -45,6 +45,7 @@ union variadic_union<T, Ts...> {
     constexpr ~variadic_union()
         requires(etl::is_trivially_destructible_v<T> and ... and etl::is_trivially_destructible_v<Ts>)
     = default;
+
     constexpr ~variadic_union() { }
 
     template <etl::size_t I>

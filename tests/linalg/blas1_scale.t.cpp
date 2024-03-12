@@ -12,8 +12,8 @@ template <typename T, typename IndexType>
 {
     {
         // 1D static extents
-        auto data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec  = etl::mdspan<T, etl::extents<IndexType, 4>> {data.data()};
+        auto data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec  = etl::mdspan<T, etl::extents<IndexType, 4>>{data.data()};
         assert(vec(0) == T(0));
         assert(vec(1) == T(1));
         assert(vec(2) == T(2));
@@ -28,8 +28,8 @@ template <typename T, typename IndexType>
 
     {
         // 1D dynamic extents
-        auto data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec  = etl::mdspan<T, etl::dextents<IndexType, 1>> {data.data(), data.size()};
+        auto data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec  = etl::mdspan<T, etl::dextents<IndexType, 1>>{data.data(), data.size()};
         assert(vec(0) == T(0));
         assert(vec(1) == T(1));
         assert(vec(2) == T(2));
@@ -44,8 +44,8 @@ template <typename T, typename IndexType>
 
     {
         // 2D static extents
-        auto data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec  = etl::mdspan<T, etl::extents<IndexType, 2, 2>> {data.data()};
+        auto data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec  = etl::mdspan<T, etl::extents<IndexType, 2, 2>>{data.data()};
         assert(vec(0, 0) == T(0));
         assert(vec(0, 1) == T(1));
         assert(vec(1, 0) == T(2));
@@ -60,8 +60,8 @@ template <typename T, typename IndexType>
 
     {
         // 2D dynamic extents
-        auto data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto vec  = etl::mdspan<T, etl::dextents<IndexType, 2>> {data.data(), 2, 2};
+        auto data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto vec  = etl::mdspan<T, etl::dextents<IndexType, 2>>{data.data(), 2, 2};
         assert(vec(0, 0) == T(0));
         assert(vec(0, 1) == T(1));
         assert(vec(1, 0) == T(2));
@@ -84,15 +84,15 @@ template <typename T, typename IndexType>
 
     {
         // 1D static extents
-        auto data = etl::array<complex_t, 4> {
-            complex_t {T(0), T(0)},
-            complex_t {T(1), T(1)},
-            complex_t {T(2), T(2)},
-            complex_t {T(3), T(3)},
+        auto data = etl::array<complex_t, 4>{
+            complex_t{T(0), T(0)},
+            complex_t{T(1), T(1)},
+            complex_t{T(2), T(2)},
+            complex_t{T(3), T(3)},
         };
         auto const original = data;
 
-        auto vec = etl::mdspan<complex_t, etl::extents<IndexType, 4>> {data.data()};
+        auto vec = etl::mdspan<complex_t, etl::extents<IndexType, 4>>{data.data()};
         assert(vec(0) == original[0]);
         assert(vec(1) == original[1]);
         assert(vec(2) == original[2]);

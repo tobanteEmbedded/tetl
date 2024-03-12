@@ -14,11 +14,15 @@ namespace etl {
 template <typename ForwardIt, typename Predicate>
 constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> ForwardIt
 {
-    if (first == last) { return last; }
+    if (first == last) {
+        return last;
+    }
 
     auto result = first;
     while (++first != last) {
-        if (!pred(*result, *first) and ++result != first) { *result = move(*first); }
+        if (!pred(*result, *first) and ++result != first) {
+            *result = move(*first);
+        }
     }
     return ++result;
 }
@@ -29,7 +33,7 @@ constexpr auto unique(ForwardIt first, ForwardIt last, Predicate pred) -> Forwar
 template <typename ForwardIt>
 constexpr auto unique(ForwardIt first, ForwardIt last) -> ForwardIt
 {
-    return unique(first, last, equal_to {});
+    return unique(first, last, equal_to{});
 }
 
 } // namespace etl

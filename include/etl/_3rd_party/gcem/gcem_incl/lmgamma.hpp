@@ -39,7 +39,8 @@ constexpr auto lmgamma_recur(const T1 a, const T2 p) noexcept -> T1
         : p < T2(1)    ? etl::numeric_limits<T1>::quiet_NaN()
                        :
                     // else
-            T1(GCEM_LOG_PI) * (p - T1(1)) / T1(2) + lgamma(a) + lmgamma_recur(a - T1(0.5), p - T2(1)));
+            T1(GCEM_LOG_PI) * (p - T1(1)) / T1(2) + lgamma(a) + lmgamma_recur(a - T1(0.5), p - T2(1))
+    );
 }
 
 } // namespace internal

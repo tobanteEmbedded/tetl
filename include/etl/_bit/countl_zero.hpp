@@ -21,7 +21,9 @@ template <detail::bit_uint T>
 [[nodiscard]] constexpr auto countl_zero(T x) noexcept -> int
 {
     auto const totalBits = etl::numeric_limits<T>::digits;
-    if (x == T(0)) { return etl::numeric_limits<T>::digits; }
+    if (x == T(0)) {
+        return etl::numeric_limits<T>::digits;
+    }
 
     auto res = 0;
     while (!(x & (T(1) << (static_cast<T>(totalBits) - T(1))))) {

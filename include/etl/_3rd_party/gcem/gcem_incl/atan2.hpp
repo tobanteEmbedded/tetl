@@ -34,16 +34,17 @@ constexpr auto atan2_compute(T const y, T const x) noexcept -> T
         any_nan(y, x) ? etl::numeric_limits<T>::quiet_NaN() :
                       //
             etl::numeric_limits<T>::epsilon() > abs(x) ? //
-            etl::numeric_limits<T>::epsilon() > abs(y) ? neg_zero(y)   ? neg_zero(x) ? -T(etl::numbers::pi) : -T(0)
-                                                           : neg_zero(x) ? T(etl::numbers::pi)
-                                                                       : T(0)
+            etl::numeric_limits<T>::epsilon() > abs(y) ? neg_zero(y) ? neg_zero(x) ? -T(etl::numbers::pi) : -T(0)
+                                                       : neg_zero(x) ? T(etl::numbers::pi)
+                                                                     : T(0)
             : y > T(0) ? T(GCEM_HALF_PI)
                                                        : -T(GCEM_HALF_PI)
                                                        :
                                                        //
             x < T(0) ? y < T(0) ? atan(y / x) - T(etl::numbers::pi) : atan(y / x) + T(etl::numbers::pi) :
                      //
-                atan(y / x));
+                atan(y / x)
+    );
 }
 
 template <typename T1, typename T2, typename TC = common_return_t<T1, T2>>

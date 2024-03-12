@@ -11,8 +11,8 @@ constexpr auto test() -> bool
     assert(etl::isinf(HUGE_VALF));
     assert(etl::isinf(HUGE_VALL));
     assert(!etl::isinf(NAN));
-    assert(!etl::isinf(T {0}));
-    assert(!etl::isinf(T {1}));
+    assert(!etl::isinf(T{0}));
+    assert(!etl::isinf(T{1}));
     return true;
 }
 

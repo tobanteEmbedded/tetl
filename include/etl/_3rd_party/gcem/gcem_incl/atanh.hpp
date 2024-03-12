@@ -46,7 +46,8 @@ constexpr auto atanh_check(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
                                                        :
                                                        // else
-            atanh_compute(x));
+            atanh_compute(x)
+    );
 }
 
 } // namespace internal

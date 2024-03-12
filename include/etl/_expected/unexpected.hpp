@@ -38,8 +38,11 @@ struct unexpected {
     constexpr auto operator=(unexpected&&) -> unexpected&      = default;
 
     [[nodiscard]] constexpr auto error() const& noexcept -> E const& { return _unex; }
+
     [[nodiscard]] constexpr auto error() & noexcept -> E& { return _unex; }
+
     [[nodiscard]] constexpr auto error() const&& noexcept -> E const&& { return etl::move(_unex); }
+
     [[nodiscard]] constexpr auto error() && noexcept -> E&& { return etl::move(_unex); }
 
     constexpr auto swap(unexpected& other) noexcept(etl::is_nothrow_swappable_v<E>) -> void

@@ -8,10 +8,15 @@
 namespace etl {
 
 [[nodiscard]] constexpr auto is_eq(partial_ordering cmp) noexcept -> bool { return cmp == nullptr; }
+
 [[nodiscard]] constexpr auto is_neq(partial_ordering cmp) noexcept -> bool { return cmp != nullptr; }
+
 [[nodiscard]] constexpr auto is_lt(partial_ordering cmp) noexcept -> bool { return cmp < nullptr; }
+
 [[nodiscard]] constexpr auto is_lteq(partial_ordering cmp) noexcept -> bool { return cmp <= nullptr; }
+
 [[nodiscard]] constexpr auto is_gt(partial_ordering cmp) noexcept -> bool { return cmp > nullptr; }
+
 [[nodiscard]] constexpr auto is_gteq(partial_ordering cmp) noexcept -> bool { return cmp >= nullptr; }
 
 } // namespace etl

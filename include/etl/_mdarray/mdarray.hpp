@@ -28,11 +28,14 @@ struct mdarray {
     using const_reference   = typename container_type::const_reference;
 
     [[nodiscard]] static constexpr auto rank() noexcept -> rank_type { return Extents::rank(); }
+
     [[nodiscard]] static constexpr auto rank_dynamic() noexcept -> rank_type { return Extents::rank_dynamic(); }
+
     [[nodiscard]] static constexpr auto static_extent(rank_type r) noexcept -> size_t
     {
         return Extents::static_extent(r);
     }
+
     [[nodiscard]] constexpr auto extent(rank_type r) const noexcept -> index_type { return extents().extent(r); }
 
     // [mdarray.ctors], mdarray constructors
@@ -56,12 +59,12 @@ struct mdarray {
     // constexpr mdarray(extents_type const& ext, container_type&& c);
     // constexpr mdarray(mapping_type const& m, container_type&& c, );
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy, typename OtherContainer>
-    // explicit(see below) constexpr mdarray(
+    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
+    // typename OtherContainer> explicit(see below) constexpr mdarray(
     //     mdarray<OtherElementType, OtherExtents, OtherLayoutPolicy, OtherContainer> const& other);
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy, typename Accessor>
-    // explicit(see below) constexpr mdarray(
+    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
+    // typename Accessor> explicit(see below) constexpr mdarray(
     //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other);
 
     // // [mdarray.ctors.alloc], mdarray constructors with allocators
@@ -85,15 +88,19 @@ struct mdarray {
     // template <typename Alloc>
     // constexpr mdarray(mapping_type const& m, container_type&& c, Alloc const& a);
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy, typename OtherContainer,
+    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
+    // typename OtherContainer,
     //     typename Alloc>
     // explicit(see below) constexpr mdarray(
-    //     mdarray<OtherElementType, OtherExtents, OtherLayoutPolicy, OtherContainer> const& other, Alloc const& a);
+    //     mdarray<OtherElementType, OtherExtents, OtherLayoutPolicy, OtherContainer> const& other,
+    //     Alloc const& a);
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy, typename Accessor,
+    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutPolicy,
+    // typename Accessor,
     //     typename Alloc>
     // explicit(see below) constexpr mdarray(
-    //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other, Alloc const& a);
+    //     mdspan<OtherElementType, OtherExtents, OtherLayoutPolicy, Accessor> const& other, Alloc
+    //     const& a);
 
     // constexpr mdarray& operator=(mdarray const& rhs) = default;
     // constexpr mdarray& operator=(mdarray&& rhs)      = default;
@@ -119,12 +126,15 @@ struct mdarray {
     // friend constexpr void swap(mdarray& x, mdarray& y) noexcept;
 
     [[nodiscard]] constexpr auto extents() const -> extents_type const& { return _map.extents(); }
+
     [[nodiscard]] constexpr auto container_data() -> pointer { return to_address(_ctr.begin()); }
+
     [[nodiscard]] constexpr auto container_data() const -> const_pointer { return to_address(_ctr.cbegin()); }
+
     [[nodiscard]] constexpr auto mapping() const -> mapping_type const& { return _map; }
 
-    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutType, typename OtherAccessorType>
-    // constexpr operator mdspan() const;
+    // template <typename OtherElementType, typename OtherExtents, typename OtherLayoutType, typename
+    // OtherAccessorType> constexpr operator mdspan() const;
 
     // template <typename OtherAccessorType = default_accessor<element_type>>
     // constexpr mdspan<element_type, extents_type, layout_type, OtherAccessorType> to_mdspan(
@@ -136,12 +146,17 @@ struct mdarray {
     [[nodiscard]] auto extract_container() && -> container_type&& { return etl::move(_ctr); }
 
     [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
+
     [[nodiscard]] static constexpr auto is_always_exhaustive() -> bool { return mapping_type::is_always_exhaustive(); }
+
     [[nodiscard]] static constexpr auto is_always_strided() -> bool { return mapping_type::is_always_strided(); }
 
     [[nodiscard]] constexpr auto is_unique() const -> bool { return _map.is_unique(); }
+
     [[nodiscard]] constexpr auto is_exhaustive() const -> bool { return _map.is_exhaustive(); }
+
     [[nodiscard]] constexpr auto is_strided() const -> bool { return _map.is_strided(); }
+
     [[nodiscard]] constexpr auto stride(etl::size_t r) const -> index_type { return _map.stride(r); }
 
 private:

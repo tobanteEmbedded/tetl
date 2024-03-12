@@ -16,18 +16,22 @@ template <unsigned>
 struct common_cmpcat_base {
     using type = void;
 };
+
 template <>
 struct common_cmpcat_base<0U> {
     using type = strong_ordering;
 };
+
 template <>
 struct common_cmpcat_base<2U> {
     using type = partial_ordering;
 };
+
 template <>
 struct common_cmpcat_base<4U> {
     using type = weak_ordering;
 };
+
 template <>
 struct common_cmpcat_base<6U> {
     using type = partial_ordering;
@@ -36,7 +40,8 @@ struct common_cmpcat_base<6U> {
 } // namespace detail
 
 template <typename... Ts>
-struct common_comparison_category :
+struct common_comparison_category
+    :
     // clang-format off
     detail::common_cmpcat_base<(0U | ... |
         (is_same_v<Ts, strong_ordering>  ? 0U :

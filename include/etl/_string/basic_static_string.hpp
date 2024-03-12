@@ -117,13 +117,13 @@ public:
 
     /// Constructs the string with a substring [pos, pos+count) of other.
     constexpr basic_static_string(basic_static_string const& other, size_type pos, size_type count)
-        : basic_static_string {other.substr(pos, count)}
+        : basic_static_string{other.substr(pos, count)}
     {
     }
 
     /// Constructs the string with a substring [pos, other.size()).
     constexpr basic_static_string(basic_static_string const& other, size_type pos)
-        : basic_static_string {other.substr(pos, other.size())}
+        : basic_static_string{other.substr(pos, other.size())}
     {
     }
 
@@ -143,7 +143,7 @@ public:
     template <typename T>
         requires(view_and_not_char_ptr<T>)
     explicit constexpr basic_static_string(T const& t, size_type pos, size_type n)
-        : basic_static_string {basic_string_view<value_type, traits_type> {t}.substr(pos, n)}
+        : basic_static_string{basic_string_view<value_type, traits_type>{t}.substr(pos, n)}
     {
     }
 
@@ -189,7 +189,7 @@ public:
     /// Replaces the contents with count copies of character ch.
     constexpr auto assign(size_type count, value_type ch) noexcept -> basic_static_string&
     {
-        (*this) = basic_static_string {count, ch};
+        (*this) = basic_static_string{count, ch};
         return *this;
     }
 
@@ -202,8 +202,8 @@ public:
 
     /// Replaces the contents with a substring [ pos, pos + count )
     /// of str.
-    constexpr auto assign(
-        basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
+    constexpr auto
+    assign(basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
         *this = str.substr(pos, count);
         return *this;
@@ -220,7 +220,7 @@ public:
     /// [ s, s + count ). This range can contain null characters.
     constexpr auto assign(const_pointer s, size_type count) noexcept -> basic_static_string&
     {
-        *this = basic_static_string {s, count};
+        *this = basic_static_string{s, count};
         return *this;
     }
 
@@ -228,7 +228,7 @@ public:
     /// string pointed to by s.
     constexpr auto assign(const_pointer s) noexcept -> basic_static_string&
     {
-        *this = basic_static_string {s, traits_type::length(s)};
+        *this = basic_static_string{s, traits_type::length(s)};
         return *this;
     }
 
@@ -238,7 +238,7 @@ public:
         requires(detail::InputIterator<InputIt>)
     constexpr auto assign(InputIt first, InputIt last) noexcept -> basic_static_string&
     {
-        *this = basic_static_string {first, last};
+        *this = basic_static_string{first, last};
         return *this;
     }
 
@@ -248,7 +248,7 @@ public:
         requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t) noexcept -> basic_static_string&
     {
-        auto tmp = basic_static_string {basic_static_string {t}};
+        auto tmp = basic_static_string{basic_static_string{t}};
         *this    = tmp;
         return *this;
     }
@@ -260,8 +260,10 @@ public:
         requires(view_and_not_char_ptr<T>)
     constexpr auto assign(T const& t, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
-        auto tmp = basic_static_string {basic_static_string {t, pos, count}};
-        *this    = tmp;
+        auto tmp = basic_static_string{
+            basic_static_string{t, pos, count}
+        };
+        *this = tmp;
         return *this;
     }
 
@@ -433,14 +435,18 @@ public:
     constexpr auto push_back(value_type ch) noexcept -> void
     {
         // TETL_ASSERT(size() < capacity());
-        if (size() < capacity()) { append(1, ch); }
+        if (size() < capacity()) {
+            append(1, ch);
+        }
     }
 
     /// \brief Removes the last character from the string. Does nothing if the
     /// string is empty.
     constexpr auto pop_back() noexcept -> void
     {
-        if (!empty()) { unsafe_set_size(size() - 1); }
+        if (!empty()) {
+            unsafe_set_size(size() - 1);
+        }
     }
 
     /// \brief Appends count copies of character s.
@@ -476,7 +482,9 @@ public:
         requires(detail::InputIterator<InputIt>)
     constexpr auto append(InputIt first, InputIt last) noexcept -> basic_static_string&
     {
-        for (; first != last; ++first) { push_back(*first); }
+        for (; first != last; ++first) {
+            push_back(*first);
+        }
         return *this;
     }
 
@@ -487,8 +495,8 @@ public:
     }
 
     /// \brief Appends a substring [ pos, pos + count ) of str.
-    constexpr auto append(
-        basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
+    constexpr auto
+    append(basic_static_string const& str, size_type pos, size_type count = npos) noexcept -> basic_static_string&
     {
         return append(str.substr(pos, count));
     }
@@ -532,10 +540,12 @@ public:
     }
 
     /// \brief Inserts count copies of character ch at the position index.
-    constexpr auto insert(
-        size_type const index, size_type const count, value_type const ch) noexcept -> basic_static_string&
+    constexpr auto
+    insert(size_type const index, size_type const count, value_type const ch) noexcept -> basic_static_string&
     {
-        for (size_type i = 0; i < count; ++i) { insert_impl(begin() + index, &ch, 1); }
+        for (size_type i = 0; i < count; ++i) {
+            insert_impl(begin() + index, &ch, 1);
+        }
         return *this;
     }
 
@@ -549,8 +559,8 @@ public:
 
     /// \brief Inserts the characters in the range [s, s+count) at the position
     /// index. The range can contain null characters.
-    constexpr auto insert(
-        size_type const index, const_pointer s, size_type const count) noexcept -> basic_static_string&
+    constexpr auto
+    insert(size_type const index, const_pointer s, size_type const count) noexcept -> basic_static_string&
     {
         insert_impl(begin() + index, s, count);
         return *this;
@@ -565,8 +575,12 @@ public:
 
     /// \brief Inserts a string, obtained by str.substr(index_str, count) at the
     /// position index.
-    constexpr auto insert(size_type const index, basic_static_string const& str, size_type const indexStr,
-        size_type const count = npos) noexcept -> basic_static_string&
+    constexpr auto insert(
+        size_type const index,
+        basic_static_string const& str,
+        size_type const indexStr,
+        size_type const count = npos
+    ) noexcept -> basic_static_string&
     {
         using view_type = basic_string_view<value_type, traits_type>;
         auto sv         = view_type(str).substr(indexStr, count);
@@ -618,8 +632,9 @@ public:
     /// [index_str, index_str+count) of sv.
     template <typename T>
         requires(view_and_not_char_ptr<T>)
-    constexpr auto insert(size_type const index, T const& t, size_type const indexStr,
-        size_type const count = npos) noexcept -> basic_static_string&
+    constexpr auto
+    insert(size_type const index, T const& t, size_type const indexStr, size_type const count = npos) noexcept
+        -> basic_static_string&
     {
         basic_string_view<value_type, traits_type> sv = t;
 
@@ -636,16 +651,16 @@ public:
 
     /// \brief Compares this string to str with other capacity.
     template <size_type OtherCapacity>
-    [[nodiscard]] constexpr auto compare(
-        basic_static_string<value_type, OtherCapacity, traits_type> const& str) const noexcept -> int
+    [[nodiscard]] constexpr auto compare(basic_static_string<value_type, OtherCapacity, traits_type> const& str
+    ) const noexcept -> int
     {
         return compare_impl(data(), size(), str.data(), str.size());
     }
 
     /// \brief Compares a [pos, pos+count) substring of this string to str. If
     /// count > size() - pos the substring is [pos, size()).
-    [[nodiscard]] constexpr auto compare(
-        size_type const pos, size_type const count, basic_static_string const& str) const -> int
+    [[nodiscard]] constexpr auto
+    compare(size_type const pos, size_type const count, basic_static_string const& str) const -> int
     {
         auto const sz  = count > size() - pos ? size() : count;
         auto const sub = string_view(*this).substr(pos, sz);
@@ -656,8 +671,13 @@ public:
     /// substring [pos2, pos2+count2) of str. If count1 > size() - pos1 the
     /// first substring is [pos1, size()). Likewise, count2 > str.size() - pos2
     /// the second substring is [pos2, str.size()).
-    [[nodiscard]] constexpr auto compare(size_type const pos1, size_type const count1, basic_static_string const& str,
-        size_type const pos2, size_type const count2 = npos) const -> int
+    [[nodiscard]] constexpr auto compare(
+        size_type const pos1,
+        size_type const count1,
+        basic_static_string const& str,
+        size_type const pos2,
+        size_type const count2 = npos
+    ) const -> int
     {
         auto const sz1  = count1 > size() - pos1 ? size() : count1;
         auto const sub1 = string_view(*this).substr(pos1, sz1);
@@ -691,8 +711,8 @@ public:
     /// characters in the range [s, s + count2). If count1 > size() - pos1 the
     /// substring is [pos1, size()). (Note: the characters in the range [s, s +
     /// count2) may include null characters.)
-    [[nodiscard]] constexpr auto compare(
-        size_type const pos1, size_type const count1, const_pointer s, size_type const count2) const -> int
+    [[nodiscard]] constexpr auto
+    compare(size_type const pos1, size_type const count1, const_pointer s, size_type const count2) const -> int
     {
         auto const sz  = count1 > size() - pos1 ? size() : count1;
         auto const sub = string_view(*this).substr(pos1, sz);
@@ -726,8 +746,8 @@ public:
     /// of sv.
     template <typename T>
         requires(view_and_not_char_ptr<T>)
-    [[nodiscard]] constexpr auto compare(
-        size_type pos1, size_type count1, T const& t, size_type pos2, size_type count2 = npos) const noexcept -> int
+    [[nodiscard]] constexpr auto
+    compare(size_type pos1, size_type count1, T const& t, size_type pos2, size_type count2 = npos) const noexcept -> int
     {
         using view_type    = basic_string_view<CharT, Traits>;
         view_type const sv = t;
@@ -785,8 +805,8 @@ public:
 
     /// \brief Replaces the part of the string indicated [first, last) with a
     /// new string.
-    constexpr auto replace(
-        const_iterator first, const_iterator last, basic_static_string const& str) -> basic_static_string&
+    constexpr auto
+    replace(const_iterator first, const_iterator last, basic_static_string const& str) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
@@ -794,8 +814,9 @@ public:
         return *this;
     }
 
-    constexpr auto replace(size_type pos, size_type count, basic_static_string const& str, size_type pos2,
-        size_type count2 = npos) -> basic_static_string&
+    constexpr auto
+    replace(size_type pos, size_type count, basic_static_string const& str, size_type pos2, size_type count2 = npos)
+        -> basic_static_string&
     {
         // TETL_ASSERT(pos < size());
         // TETL_ASSERT(pos + count < size());
@@ -822,8 +843,8 @@ public:
         return *this;
     }
 
-    constexpr auto replace(
-        const_iterator first, const_iterator last, CharT const* str, size_type count2) -> basic_static_string&
+    constexpr auto
+    replace(const_iterator first, const_iterator last, CharT const* str, size_type count2) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = const_cast<iterator>(last);
@@ -862,8 +883,8 @@ public:
     //    return *this;
     //}
 
-    constexpr auto replace(
-        const_iterator first, const_iterator last, size_type count2, CharT ch) -> basic_static_string&
+    constexpr auto
+    replace(const_iterator first, const_iterator last, size_type count2, CharT ch) -> basic_static_string&
     {
         auto* f = const_cast<iterator>(first);
         auto* l = min(const_cast<iterator>(last), f + count2);
@@ -878,7 +899,9 @@ public:
     /// If pos is greater then size(), an empty string will be returned.
     [[nodiscard]] constexpr auto substr(size_type pos = 0, size_type count = npos) const -> basic_static_string
     {
-        if (pos > size()) { return {}; }
+        if (pos > size()) {
+            return {};
+        }
         return basic_static_string(data() + pos, etl::min(count, size() - pos));
     }
 
@@ -892,7 +915,9 @@ public:
     /// \returns Number of characters copied.
     constexpr auto copy(pointer destination, size_type count, size_type pos = 0) const -> size_type
     {
-        if (pos > size()) { return 0; }
+        if (pos > size()) {
+            return 0;
+        }
         auto const* first = data() + pos;
         auto const* last  = first + etl::min(count, size() - pos);
         auto const* dest  = destination;
@@ -907,8 +932,12 @@ public:
     /// greater than count, the string is reduced to its first count elements.
     constexpr auto resize(size_type count, value_type ch) noexcept -> void
     {
-        if (size() > count) { unsafe_set_size(count); }
-        if (size() < count) { append(count, ch); }
+        if (size() > count) {
+            unsafe_set_size(count);
+        }
+        if (size() < count) {
+            append(count, ch);
+        }
     }
 
     /// \brief Resizes the string to contain count characters.
@@ -953,7 +982,9 @@ public:
     [[nodiscard]] constexpr auto find(const_pointer s, size_type pos, size_type count) const noexcept -> size_type
     {
         // an empty substring is found at pos if and only if pos <= size()
-        if (count == 0 && pos <= size()) { return pos; }
+        if (count == 0 && pos <= size()) {
+            return pos;
+        }
 
         if (pos <= size() - count) {
             auto view = static_cast<basic_string_view<value_type>>(*this);
@@ -1002,7 +1033,12 @@ public:
     [[nodiscard]] constexpr auto rfind(basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         return detail::str_rfind<value_type, size_type, traits_type, npos>(
-            begin(), size(), str.begin(), pos, str.size());
+            begin(),
+            size(),
+            str.begin(),
+            pos,
+            str.size()
+        );
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1035,7 +1071,12 @@ public:
     [[nodiscard]] constexpr auto rfind(const_pointer s, size_type pos = 0) const noexcept -> size_type
     {
         return detail::str_rfind<value_type, size_type, traits_type, npos>(
-            begin(), size(), s, pos, traits_type::length(s));
+            begin(),
+            size(),
+            s,
+            pos,
+            traits_type::length(s)
+        );
     }
 
     /// \brief Finds the last substring equal to the given character sequence.
@@ -1057,8 +1098,8 @@ public:
     /// given character sequence. The search considers only the interval [pos,
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_first_of(
-        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto
+    find_first_of(basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(str.c_str(), pos, str.size());
     }
@@ -1099,8 +1140,8 @@ public:
     /// given character sequence. The search considers only the interval [pos,
     /// size()). If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_first_of(
-        basic_string_view<value_type, traits_type> str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto
+    find_first_of(basic_string_view<value_type, traits_type> str, size_type pos = 0) const noexcept -> size_type
     {
         return find_first_of(str.data(), pos, str.size());
     }
@@ -1110,12 +1151,17 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(
-        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto
+    find_first_not_of(basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
         // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            begin(), size(), str.begin(), pos, str.size());
+            begin(),
+            size(),
+            str.begin(),
+            pos,
+            str.size()
+        );
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1138,7 +1184,12 @@ public:
     {
         // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(
-            begin(), size(), s, pos, traits_type::length(s));
+            begin(),
+            size(),
+            s,
+            pos,
+            traits_type::length(s)
+        );
     }
 
     /// \brief Finds the first character not equal to any of the characters in
@@ -1146,8 +1197,8 @@ public:
     ///
     /// \return Position of the first character not equal to any of the
     /// characters in the given string, or npos if no such character is found.
-    [[nodiscard]] constexpr auto find_first_not_of(
-        value_type const* s, size_type pos, size_type count) const -> size_type
+    [[nodiscard]] constexpr auto
+    find_first_not_of(value_type const* s, size_type pos, size_type count) const -> size_type
     {
         // TETL_ASSERT(pos < size());
         return detail::str_find_first_not_of<value_type, size_type, traits_type, npos>(begin(), size(), s, pos, count);
@@ -1157,10 +1208,10 @@ public:
     /// character sequence. The exact search algorithm is not specified. The
     /// search considers only the interval [0, pos]. If the character is not
     /// present in the interval, npos will be returned.
-    [[nodiscard]] constexpr auto find_last_of(
-        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto
+    find_last_of(basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_of(str, pos);
     }
 
@@ -1170,7 +1221,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_of(c, pos);
     }
 
@@ -1180,7 +1231,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos, size_type count) const -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_of(s, pos, count);
     }
 
@@ -1190,7 +1241,7 @@ public:
     /// present in the interval, npos will be returned.
     [[nodiscard]] constexpr auto find_last_of(value_type const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_of(s, pos);
     }
 
@@ -1198,10 +1249,10 @@ public:
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(
-        basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
+    [[nodiscard]] constexpr auto
+    find_last_not_of(basic_static_string const& str, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(str, pos);
     }
 
@@ -1211,7 +1262,7 @@ public:
     /// returned.
     [[nodiscard]] constexpr auto find_last_not_of(value_type c, size_type pos = 0) const noexcept -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(c, pos);
     }
 
@@ -1219,10 +1270,10 @@ public:
     /// given character sequence. The search considers only the interval [0,
     /// pos]. If the character is not present in the interval, npos will be
     /// returned.
-    [[nodiscard]] constexpr auto find_last_not_of(
-        value_type const* s, size_type pos, size_type count) const -> size_type
+    [[nodiscard]] constexpr auto
+    find_last_not_of(value_type const* s, size_type pos, size_type count) const -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(s, pos, count);
     }
 
@@ -1232,28 +1283,28 @@ public:
     /// returned.
     [[nodiscard]] constexpr auto find_last_not_of(value_type const* s, size_type pos = 0) const -> size_type
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(s, pos);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(etl::basic_string_view<CharT, Traits> sv) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(sv);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT c) const noexcept -> bool
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(c);
     }
 
     /// \brief Checks if the string contains the given substring.
     [[nodiscard]] constexpr auto contains(CharT const* s) const -> bool
     {
-        auto view = basic_string_view<value_type> {*this};
+        auto view = basic_string_view<value_type>{*this};
         return view.find_last_not_of(s);
     }
 
@@ -1294,14 +1345,20 @@ private:
         etl::rotate(pos, currentEnd, end());
     }
 
-    [[nodiscard]] constexpr auto compare_impl(
-        const_pointer lhs, size_type lhsSize, const_pointer rhs, size_type rhsSize) const noexcept -> int
+    [[nodiscard]] constexpr auto
+    compare_impl(const_pointer lhs, size_type lhsSize, const_pointer rhs, size_type rhsSize) const noexcept -> int
     {
         auto const minSize = etl::min(lhsSize, rhsSize);
         auto const result  = traits_type::compare(lhs, rhs, minSize);
-        if (result != 0) { return result; }
-        if (lhsSize < rhsSize) { return -1; }
-        if (lhsSize > rhsSize) { return 1; }
+        if (result != 0) {
+            return result;
+        }
+        if (lhsSize < rhsSize) {
+            return -1;
+        }
+        if (lhsSize > rhsSize) {
+            return 1;
+        }
         return 0;
     }
 
@@ -1309,40 +1366,46 @@ private:
         constexpr tiny_layout() noexcept { _buffer[Capacity] = Capacity; }
 
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
         [[nodiscard]] constexpr auto get_size() const noexcept { return Capacity - size_type(_buffer[Capacity]); }
+
         constexpr auto set_size(size_t size) noexcept { return _buffer[Capacity] = value_type(Capacity - size); }
 
     private:
-        etl::array<value_type, Capacity + 1> _buffer {};
+        etl::array<value_type, Capacity + 1> _buffer{};
     };
 
     struct normal_layout {
         constexpr normal_layout() noexcept = default;
 
         [[nodiscard]] constexpr auto data() noexcept { return _buffer.data(); }
+
         [[nodiscard]] constexpr auto data() const noexcept { return _buffer.data(); }
 
         [[nodiscard]] constexpr auto get_size() const noexcept { return size_t(_size); }
+
         constexpr auto set_size(size_t size) noexcept { return _size = internal_size_t(size); }
 
     private:
-        internal_size_t _size {};
-        etl::array<value_type, Capacity + 1> _buffer {};
+        internal_size_t _size{};
+        etl::array<value_type, Capacity + 1> _buffer{};
     };
 
     using layout_type = etl::conditional_t<(Capacity < 16), tiny_layout, normal_layout>;
-    layout_type _storage {};
+    layout_type _storage{};
 };
 
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
-[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity1, Traits>
+[[nodiscard]] constexpr auto operator+(
+    basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept -> basic_static_string<CharT, Capacity1, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity1, Traits> {lhs};
+    auto str = basic_static_string<CharT, Capacity1, Traits>{lhs};
     str.append(rhs);
     return str;
 }
@@ -1350,10 +1413,11 @@ template <typename CharT, typename Traits, size_t Capacity1, size_t Capacity2>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs,
-    CharT const* rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto
+operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
+    auto str = basic_static_string<CharT, Capacity, Traits>{lhs};
     str.append(rhs);
     return str;
 }
@@ -1361,10 +1425,10 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs,
-    CharT rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(basic_static_string<CharT, Capacity, Traits> const& lhs, CharT rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
+    auto str = basic_static_string<CharT, Capacity, Traits>{lhs};
     str.append(1, rhs);
     return str;
 }
@@ -1372,10 +1436,11 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(CharT const* lhs,
-    basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto
+operator+(CharT const* lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> {lhs};
+    auto str = basic_static_string<CharT, Capacity, Traits>{lhs};
     str.append(rhs);
     return str;
 }
@@ -1383,10 +1448,10 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \brief Returns a string containing characters from lhs followed by the
 /// characters from rhs.
 template <typename CharT, typename Traits, size_t Capacity>
-[[nodiscard]] constexpr auto operator+(CharT lhs,
-    basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> basic_static_string<CharT, Capacity, Traits>
+[[nodiscard]] constexpr auto operator+(CharT lhs, basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept
+    -> basic_static_string<CharT, Capacity, Traits>
 {
-    auto str = basic_static_string<CharT, Capacity, Traits> {1, lhs};
+    auto str = basic_static_string<CharT, Capacity, Traits>{1, lhs};
     str.append(rhs);
     return str;
 }
@@ -1397,8 +1462,10 @@ template <typename CharT, typename Traits, size_t Capacity>
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator==(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator==(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept -> bool
 {
     return lhs.compare(rhs) == 0;
 }
@@ -1409,8 +1476,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity>
-[[nodiscard]] constexpr auto operator==(
-    etl::basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(etl::basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) == 0;
 }
@@ -1421,8 +1488,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity>
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity>
-[[nodiscard]] constexpr auto operator==(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator==(CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) == 0;
 }
@@ -1433,8 +1500,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity>
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator!=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto operator!=(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept -> bool
 {
     return lhs.compare(rhs) != 0;
 }
@@ -1445,8 +1514,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator!=(
-    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) != 0;
 }
@@ -1457,8 +1526,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 /// \details Two strings are equal if both the size of lhs and rhs are equal and
 /// each character in lhs has equivalent character in rhs at the same position.
 template <typename CharT, typename Traits, etl::size_t Capacity>
-[[nodiscard]] constexpr auto operator!=(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator!=(CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) != 0;
 }
@@ -1468,8 +1537,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator<(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
+[[nodiscard]] constexpr auto operator<(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept
 {
     return lhs.compare(rhs) < 0;
 }
@@ -1479,8 +1550,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator<(
-    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) < 0;
 }
@@ -1490,8 +1561,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator<(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<(CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) > 0;
 }
@@ -1501,8 +1572,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator<=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
+[[nodiscard]] constexpr auto operator<=(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept
 {
     return lhs.compare(rhs) <= 0;
 }
@@ -1512,8 +1585,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator<=(
-    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) <= 0;
 }
@@ -1523,8 +1596,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator<=(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator<=(CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) >= 0;
 }
@@ -1534,8 +1607,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator>(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
+[[nodiscard]] constexpr auto operator>(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept
 {
     return lhs.compare(rhs) > 0;
 }
@@ -1545,8 +1620,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator>(
-    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) > 0;
 }
@@ -1556,8 +1631,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1>
-[[nodiscard]] constexpr auto operator>(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>(CharT const* lhs, etl::basic_static_string<CharT, Capacity1, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) < 0;
 }
@@ -1567,8 +1642,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity1>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Capacity2>
-[[nodiscard]] constexpr auto operator>=(etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
-    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs) noexcept
+[[nodiscard]] constexpr auto operator>=(
+    etl::basic_static_string<CharT, Capacity1, Traits> const& lhs,
+    etl::basic_static_string<CharT, Capacity2, Traits> const& rhs
+) noexcept
 {
     return lhs.compare(rhs) >= 0;
 }
@@ -1578,8 +1655,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity1, etl::size_t Ca
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity>
-[[nodiscard]] constexpr auto operator>=(
-    etl::basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(etl::basic_static_string<CharT, Capacity, Traits> const& lhs, CharT const* rhs) noexcept -> bool
 {
     return lhs.compare(rhs) >= 0;
 }
@@ -1589,8 +1666,8 @@ template <typename CharT, typename Traits, etl::size_t Capacity>
 ///
 /// \details The ordering comparisons are done lexicographically.
 template <typename CharT, typename Traits, etl::size_t Capacity>
-[[nodiscard]] constexpr auto operator>=(
-    CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
+[[nodiscard]] constexpr auto
+operator>=(CharT const* lhs, etl::basic_static_string<CharT, Capacity, Traits> const& rhs) noexcept -> bool
 {
     return rhs.compare(lhs) <= 0;
 }
@@ -1598,8 +1675,10 @@ template <typename CharT, typename Traits, etl::size_t Capacity>
 /// \brief Specializes the etl::swap algorithm for etl::basic_static_string.
 /// Swaps the contents of lhs and rhs. Equivalent to lhs.swap(rhs).
 template <typename CharT, typename Traits, etl::size_t Capacity>
-constexpr auto swap(etl::basic_static_string<CharT, Capacity, Traits>& lhs,
-    etl::basic_static_string<CharT, Capacity, Traits>& rhs) noexcept(noexcept(lhs.swap(rhs))) -> void
+constexpr auto swap(
+    etl::basic_static_string<CharT, Capacity, Traits>& lhs,
+    etl::basic_static_string<CharT, Capacity, Traits>& rhs
+) noexcept(noexcept(lhs.swap(rhs))) -> void
 {
     lhs.swap(rhs);
 }

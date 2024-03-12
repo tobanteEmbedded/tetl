@@ -14,7 +14,7 @@ template <typename T>
 constexpr auto test() -> bool
 {
     {
-        auto a        = etl::array {T(1), T(2)};
+        auto a        = etl::array{T(1), T(2)};
         decltype(a) b = {};
 
         etl::swap_ranges(begin(a), end(a), begin(b));
@@ -25,7 +25,7 @@ constexpr auto test() -> bool
     }
 
     {
-        auto data = etl::array {T(1), T(2)};
+        auto data = etl::array{T(1), T(2)};
         etl::iter_swap(begin(data), begin(data) + 1);
         assert(data[0] == T(2));
         assert(data[1] == T(1));

@@ -13,19 +13,23 @@ namespace etl {
 template <unsigned_integral UInt, UInt X, UInt Y, UInt Z>
 struct xorshift {
     using result_type                  = UInt;
-    static constexpr auto default_seed = result_type {5489U};
+    static constexpr auto default_seed = result_type{5489U};
 
     constexpr xorshift() = default;
-    explicit constexpr xorshift(result_type seed) noexcept : _state {seed} { }
+
+    explicit constexpr xorshift(result_type seed) noexcept : _state{seed} { }
 
     [[nodiscard]] static constexpr auto min() noexcept -> result_type { return numeric_limits<result_type>::min(); }
+
     [[nodiscard]] static constexpr auto max() noexcept -> result_type { return numeric_limits<result_type>::max() - 1; }
 
     constexpr auto seed(result_type value = default_seed) noexcept -> void { _state = value; }
 
     constexpr auto discard(unsigned long long z) noexcept -> void
     {
-        for (auto i {0ULL}; i < z; ++i) { (void)(*this)(); }
+        for (auto i{0ULL}; i < z; ++i) {
+            (void)(*this)();
+        }
     }
 
     [[nodiscard]] constexpr auto operator()() noexcept -> result_type
@@ -48,7 +52,7 @@ struct xorshift {
     }
 
 private:
-    result_type _state {default_seed};
+    result_type _state{default_seed};
 };
 
 /// \brief 16-bit pseudo number generator

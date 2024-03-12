@@ -21,7 +21,7 @@ constexpr auto distance(It first, It last) -> typename iterator_traits<It>::diff
     if constexpr (is_base_of_v<random_access_iterator_tag, category>) {
         return last - first;
     } else {
-        auto result = typename iterator_traits<It>::difference_type {};
+        auto result = typename iterator_traits<It>::difference_type{};
         while (first != last) {
             ++first;
             ++result;

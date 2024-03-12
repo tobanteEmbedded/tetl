@@ -13,8 +13,8 @@ template <typename T, typename IndexType>
 {
     {
         // static extents
-        auto const data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>> {data.data()};
+        auto const data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>>{data.data()};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -23,8 +23,8 @@ template <typename T, typename IndexType>
 
     {
         // dynamic extents
-        auto const data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
+        auto const data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>>{data.data(), 4};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -32,8 +32,8 @@ template <typename T, typename IndexType>
     }
 
     if constexpr (etl::signed_integral<T>) {
-        auto const data = etl::array<T, 4> {T(0), T(-1), T(-2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
+        auto const data = etl::array<T, 4>{T(0), T(-1), T(-2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>>{data.data(), 4};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -47,8 +47,8 @@ template <typename T, typename IndexType>
 {
     {
         // static extents
-        auto const data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>> {data.data()};
+        auto const data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::extents<IndexType, 4>>{data.data()};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -57,8 +57,8 @@ template <typename T, typename IndexType>
 
     {
         // dynamic extents
-        auto const data = etl::array<T, 4> {T(0), T(1), T(2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
+        auto const data = etl::array<T, 4>{T(0), T(1), T(2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>>{data.data(), 4};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -67,8 +67,8 @@ template <typename T, typename IndexType>
 
     {
         // negative
-        auto const data = etl::array<T, 4> {T(0), T(-1), T(-2), T(3)};
-        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>> {data.data(), 4};
+        auto const data = etl::array<T, 4>{T(0), T(-1), T(-2), T(3)};
+        auto const vec  = etl::mdspan<T const, etl::dextents<IndexType, 1>>{data.data(), 4};
         assert(etl::linalg::vector_abs_sum(vec) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(6));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(7));
@@ -85,13 +85,13 @@ template <typename T, typename IndexType>
 
     {
         // static extents
-        auto const data = etl::array {
+        auto const data = etl::array{
             complex_t(T(0), T(0)),
             complex_t(T(1), T(1)),
             complex_t(T(2), T(2)),
             complex_t(T(3), T(3)),
         };
-        auto const vec = etl::mdspan<complex_t const, etl::extents<IndexType, 4>> {data.data()};
+        auto const vec = etl::mdspan<complex_t const, etl::extents<IndexType, 4>>{data.data()};
         assert(etl::linalg::vector_abs_sum(vec) == T(12));
         assert(etl::linalg::vector_abs_sum(vec, T(0)) == T(12));
         assert(etl::linalg::vector_abs_sum(vec, T(1)) == T(13));

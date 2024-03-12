@@ -15,7 +15,7 @@
         assert((etl::is_constructible_v<type, char const*>));                                                          \
         assert((etl::is_base_of_v<base, type>));                                                                       \
         assert((etl::is_base_of_v<etl::exception, type>));                                                             \
-        auto const e = type {"test"};                                                                                  \
+        auto const e = type{"test"};                                                                                   \
         assert(e.what() == etl::string_view("test"));                                                                  \
     } while (false)
 

@@ -13,18 +13,19 @@
 using BaseType_t             = long;
 using UBaseType_t            = unsigned long;
 using configSTACK_DEPTH_TYPE = etl::uint16_t;
-#define pdFALSE (static_cast<BaseType_t>(0))
-#define pdTRUE (static_cast<BaseType_t>(1))
-#define pdPASS (pdTRUE)
-#define pdFAIL (pdFALSE)
+#define pdFALSE        (static_cast<BaseType_t>(0))
+#define pdTRUE         (static_cast<BaseType_t>(1))
+#define pdPASS         (pdTRUE)
+#define pdFAIL         (pdFALSE)
 #define errQUEUE_EMPTY (static_cast<BaseType_t>(0))
-#define errQUEUE_FULL (static_cast<BaseType_t>(0))
+#define errQUEUE_FULL  (static_cast<BaseType_t>(0))
 
 // TICK
 using TickType_t = etl::uint32_t;
 
 // SCHEDULER
 inline auto vPortYield() -> void { }
+
 #define portYIELD() vPortYield()
 #define taskYIELD() portYIELD()
 
@@ -34,8 +35,14 @@ struct tskTaskControlBlock;
 using TaskHandle_t   = tskTaskControlBlock*;
 using TaskFunction_t = void (*)(void*);
 
-inline auto xTaskCreate(TaskFunction_t pvTaskCode, char const* const pcName, configSTACK_DEPTH_TYPE usStackDepth,
-    void* const pvParameters, UBaseType_t uxPriority, TaskHandle_t* const pxCreatedTask) -> BaseType_t
+inline auto xTaskCreate(
+    TaskFunction_t pvTaskCode,
+    char const* const pcName,
+    configSTACK_DEPTH_TYPE usStackDepth,
+    void* const pvParameters,
+    UBaseType_t uxPriority,
+    TaskHandle_t* const pxCreatedTask
+) -> BaseType_t
 {
     etl::ignore_unused(pvTaskCode, pcName, usStackDepth, pvParameters, uxPriority, pxCreatedTask);
     return pdFALSE;
@@ -91,36 +98,38 @@ inline auto uxQueueMessagesWaiting(QueueHandle_t xQueue) -> UBaseType_t
 struct StreamBufferDef_t;
 using StreamBufferHandle_t = StreamBufferDef_t*;
 
-[[nodiscard]] inline auto xStreamBufferCreate(
-    etl::size_t bufferSizeBytes, etl::size_t triggerLevelBytes) -> StreamBufferHandle_t
+[[nodiscard]] inline auto
+xStreamBufferCreate(etl::size_t bufferSizeBytes, etl::size_t triggerLevelBytes) -> StreamBufferHandle_t
 {
     etl::ignore_unused(bufferSizeBytes, triggerLevelBytes);
     return {};
 }
 
-[[nodiscard]] inline auto xStreamBufferSend(
-    StreamBufferHandle_t handle, void const* data, etl::size_t size, TickType_t ticksToWait) -> etl::size_t
+[[nodiscard]] inline auto
+xStreamBufferSend(StreamBufferHandle_t handle, void const* data, etl::size_t size, TickType_t ticksToWait)
+    -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, ticksToWait);
     return 0;
 }
 
-[[nodiscard]] inline auto xStreamBufferSendFromISR(
-    StreamBufferHandle_t handle, void const* data, etl::size_t size, BaseType_t* prio) -> etl::size_t
+[[nodiscard]] inline auto
+xStreamBufferSendFromISR(StreamBufferHandle_t handle, void const* data, etl::size_t size, BaseType_t* prio)
+    -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, prio);
     return 0;
 }
 
-[[nodiscard]] inline auto xStreamBufferReceive(
-    StreamBufferHandle_t handle, void* data, etl::size_t size, TickType_t ticks) -> etl::size_t
+[[nodiscard]] inline auto
+xStreamBufferReceive(StreamBufferHandle_t handle, void* data, etl::size_t size, TickType_t ticks) -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, ticks);
     return 0;
 }
 
-[[nodiscard]] inline auto xStreamBufferReceiveFromISR(
-    StreamBufferHandle_t handle, void* data, etl::size_t size, BaseType_t* prio) -> etl::size_t
+[[nodiscard]] inline auto
+xStreamBufferReceiveFromISR(StreamBufferHandle_t handle, void* data, etl::size_t size, BaseType_t* prio) -> etl::size_t
 {
     etl::ignore_unused(handle, data, size, prio);
     return 0;

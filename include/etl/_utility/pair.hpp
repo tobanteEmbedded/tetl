@@ -34,18 +34,22 @@ struct pair {
     using second_type = T2;
 
     /// \brief Default constructor. Value-initializes both elements.
-    explicit(
-        not is_implicit_default_constructible_v<T1> || not is_implicit_default_constructible_v<T2>) constexpr pair()
+    explicit(not is_implicit_default_constructible_v<T1> || not is_implicit_default_constructible_v<T2>) constexpr pair(
+    )
         requires(is_default_constructible_v<T1> and is_default_constructible_v<T2>)
-        : first {}, second {}
+        : first{}
+        , second{}
     {
     }
 
     /// \brief Initializes first with x and second with y.
     explicit(not is_convertible_v<T1 const&, T1> or not is_convertible_v<T2 const&, T2>) constexpr pair(
-        T1 const& t1, T2 const& t2)
+        T1 const& t1,
+        T2 const& t2
+    )
         requires(is_copy_constructible_v<T1> and is_copy_constructible_v<T2>)
-        : first(t1), second(t2)
+        : first(t1)
+        , second(t2)
     {
     }
 
@@ -53,7 +57,8 @@ struct pair {
     template <typename U1 = T1, typename U2 = T2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
     explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(U1&& x, U2&& y)
-        : first(forward<U1>(x)), second(forward<U2>(y))
+        : first(forward<U1>(x))
+        , second(forward<U2>(y))
     {
     }
 
@@ -61,8 +66,10 @@ struct pair {
     template <typename U1, typename U2>
         requires(is_constructible_v<T1, U1 const&> and is_constructible_v<T2, U2 const&>)
     explicit(not is_convertible_v<U1 const&, T1> or not is_convertible_v<U2 const&, T2>) constexpr pair(
-        pair<U1, U2> const& p)
-        : first(p.first), second(p.second)
+        pair<U1, U2> const& p
+    )
+        : first(p.first)
+        , second(p.second)
     {
     }
 
@@ -70,7 +77,8 @@ struct pair {
     template <typename U1, typename U2>
         requires(is_constructible_v<T1, U1 &&> and is_constructible_v<T2, U2 &&>)
     explicit(not is_convertible_v<U1&&, T1> || not is_convertible_v<U2&&, T2>) constexpr pair(pair<U1, U2>&& p)
-        : first(forward<U1>(p.first)), second(forward<U2>(p.second))
+        : first(forward<U1>(p.first))
+        , second(forward<U2>(p.second))
     {
     }
 
@@ -87,22 +95,24 @@ struct pair {
 
     constexpr auto operator=(pair const& p) -> pair&
     {
-        if (&p == this) { return *this; }
+        if (&p == this) {
+            return *this;
+        }
         first  = p.first;
         second = p.second;
         return *this;
     }
 
     template <typename U1, typename U2>
-    constexpr auto operator=(pair<U1, U2> const& p)
-        -> pair& requires(is_assignable_v<first_type&, U1 const&>and is_assignable_v<second_type&, U2 const&>) {
+    constexpr auto operator=(pair<U1, U2> const& p
+    ) -> pair& requires(is_assignable_v<first_type&, U1 const&>and is_assignable_v<second_type&, U2 const&>) {
         first  = p.first;
         second = p.second;
         return *this;
     }
 
-    constexpr auto operator=(
-        pair&& p) noexcept -> pair& requires(is_move_assignable_v<first_type>and is_move_assignable_v<second_type>) {
+    constexpr auto operator=(pair&& p
+    ) noexcept -> pair& requires(is_move_assignable_v<first_type>and is_move_assignable_v<second_type>) {
         first  = etl::move(p.first);
         second = etl::move(p.second);
         return *this;
@@ -117,8 +127,8 @@ struct pair {
         return *this;
     }
 
-    constexpr void swap(pair& other)
-        noexcept((is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
+    constexpr void swap(pair& other
+    ) noexcept((is_nothrow_swappable_v<first_type> and is_nothrow_swappable_v<second_type>))
     {
         using etl::swap;
         swap(first, other.first);
@@ -179,9 +189,15 @@ constexpr auto operator!=(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> b
 template <typename T1, typename T2>
 constexpr auto operator<(pair<T1, T2> const& lhs, pair<T1, T2> const& rhs) -> bool
 {
-    if (lhs.first < rhs.first) { return true; }
-    if (rhs.first < lhs.first) { return false; }
-    if (lhs.second < rhs.second) { return true; }
+    if (lhs.first < rhs.first) {
+        return true;
+    }
+    if (rhs.first < lhs.first) {
+        return false;
+    }
+    if (lhs.second < rhs.second) {
+        return true;
+    }
     return false;
 }
 

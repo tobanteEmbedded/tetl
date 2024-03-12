@@ -14,9 +14,12 @@
 namespace {
 struct Counter {
     int& value; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
+
     Counter(int& v) : value(v) { }
+
     ~Counter() { value++; }
 };
+
 auto some_function() -> void { }
 } // namespace
 
@@ -26,7 +29,7 @@ auto test() -> bool
     // "scalar"
     {
         auto deleter = etl::default_delete<T>();
-        auto* ptr    = ::new T {};
+        auto* ptr    = ::new T{};
         deleter(ptr);
     }
 
@@ -46,11 +49,15 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+        for (auto i = 0U; i < 8; ++i) {
+            new (buffer + sizeof(Counter) * i) Counter{counter};
+        }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
-        for (auto i = 0U; i < 8; ++i) { etl::destroy_at(ptr + i); }
+        for (auto i = 0U; i < 8; ++i) {
+            etl::destroy_at(ptr + i);
+        }
 
         assert(counter == 8);
     }
@@ -59,7 +66,9 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) { new (buffer + sizeof(Counter) * i) Counter {counter}; }
+        for (auto i = 0U; i < 8; ++i) {
+            new (buffer + sizeof(Counter) * i) Counter{counter};
+        }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);
@@ -72,7 +81,9 @@ auto test() -> bool
         alignas(Counter) etl::byte buffer[sizeof(Counter) * 8];
 
         auto counter = 0;
-        for (auto i = 0U; i < 8; ++i) { new (&buffer[0] + sizeof(Counter) * i) Counter {counter}; }
+        for (auto i = 0U; i < 8; ++i) {
+            new (&buffer[0] + sizeof(Counter) * i) Counter{counter};
+        }
         assert(counter == 0);
 
         auto* ptr = reinterpret_cast<Counter*>(&buffer[0]);

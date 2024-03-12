@@ -131,7 +131,7 @@ private:
 };
 
 inline stream_buffer::stream_buffer(size_t size, size_t triggerLevel) noexcept
-    : _handle {xStreamBufferCreate(size, triggerLevel)}
+    : _handle{xStreamBufferCreate(size, triggerLevel)}
 {
 }
 

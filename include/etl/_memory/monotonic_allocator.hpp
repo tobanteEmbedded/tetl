@@ -16,7 +16,7 @@ struct monotonic_allocator {
     using size_type       = etl::size_t;
     using difference_type = etl::ptrdiff_t;
 
-    explicit monotonic_allocator(etl::span<etl::byte> memory) : _memory {memory} { }
+    explicit monotonic_allocator(etl::span<etl::byte> memory) : _memory{memory} { }
 
     [[nodiscard]] auto allocate(etl::size_t n) -> T*
     {
@@ -33,8 +33,8 @@ struct monotonic_allocator {
 
 private:
     etl::span<etl::byte> _memory;
-    void* _ptr {_memory.data()};
-    etl::size_t _sz {_memory.size()};
+    void* _ptr{_memory.data()};
+    etl::size_t _sz{_memory.size()};
 };
 
 } // namespace etl

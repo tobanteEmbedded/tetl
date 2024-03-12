@@ -47,7 +47,8 @@ constexpr auto floor_check(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? x
                                                        :
                                                        // else
-            floor_int(x, T(static_cast<llint_t>(x))));
+            floor_int(x, T(static_cast<llint_t>(x)))
+    );
 }
 
 } // namespace internal

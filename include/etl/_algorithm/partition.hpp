@@ -17,7 +17,9 @@ template <typename ForwardIt, typename Predicate>
 constexpr auto partition(ForwardIt first, ForwardIt last, Predicate p) -> ForwardIt
 {
     first = find_if_not(first, last, p);
-    if (first == last) { return first; }
+    if (first == last) {
+        return first;
+    }
 
     for (ForwardIt i = next(first); i != last; ++i) {
         if (p(*i)) {

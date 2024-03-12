@@ -11,7 +11,8 @@ namespace etl {
 /// whose alignment requirement is greater than the default, pass that alignment
 /// requirement as an argument of type align_val_t to the selected
 /// allocation/deallocation function.
-enum struct align_val_t : etl::size_t {};
+enum struct align_val_t : etl::size_t {
+};
 
 } // namespace etl
 

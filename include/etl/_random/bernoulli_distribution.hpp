@@ -15,8 +15,9 @@ struct bernoulli_distribution {
     struct param_type {
         using distribution_type = bernoulli_distribution;
 
-        constexpr param_type() noexcept : param_type {0.5} { }
-        explicit constexpr param_type(double p) noexcept : probability {p} { }
+        constexpr param_type() noexcept : param_type{0.5} { }
+
+        explicit constexpr param_type(double p) noexcept : probability{p} { }
 
         [[nodiscard]] constexpr auto p() const noexcept -> double { return probability; }
 
@@ -28,13 +29,16 @@ struct bernoulli_distribution {
         double probability;
     };
 
-    constexpr bernoulli_distribution() noexcept : bernoulli_distribution {0.5} { }
-    explicit constexpr bernoulli_distribution(double p) noexcept : bernoulli_distribution {param_type {p}} { }
-    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : _param {parm} { }
+    constexpr bernoulli_distribution() noexcept : bernoulli_distribution{0.5} { }
+
+    explicit constexpr bernoulli_distribution(double p) noexcept : bernoulli_distribution{param_type{p}} { }
+
+    explicit constexpr bernoulli_distribution(param_type const& parm) noexcept : _param{parm} { }
 
     [[nodiscard]] constexpr auto p() const noexcept -> double { return _param.p(); }
 
     constexpr auto param(param_type const& parm) noexcept -> void { _param = parm; }
+
     [[nodiscard]] constexpr auto param() const noexcept -> param_type { return _param; }
 
     [[nodiscard]] constexpr auto min() const noexcept -> result_type
@@ -42,6 +46,7 @@ struct bernoulli_distribution {
         (void)this;
         return false;
     }
+
     [[nodiscard]] constexpr auto max() const noexcept -> result_type
     {
         (void)this;
@@ -60,15 +65,15 @@ struct bernoulli_distribution {
     [[nodiscard]] constexpr auto operator()(URBG& g, param_type const& parm) noexcept(noexcept(g())) -> result_type
     {
         constexpr auto digits  = static_cast<size_t>(numeric_limits<double>::digits);
-        constexpr auto bits    = ~size_t {0};
+        constexpr auto bits    = ~size_t{0};
         constexpr auto minBits = digits < bits ? digits : bits;
         static_assert(minBits <= 64);
 
         return generate_canonical<double, minBits>(g) < parm.p();
     }
 
-    [[nodiscard]] friend constexpr auto operator==(
-        bernoulli_distribution const& x, bernoulli_distribution const& y) noexcept -> bool
+    [[nodiscard]] friend constexpr auto
+    operator==(bernoulli_distribution const& x, bernoulli_distribution const& y) noexcept -> bool
     {
         return x.param() == y.param();
     }

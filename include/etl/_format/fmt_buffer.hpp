@@ -15,7 +15,8 @@ struct fmt_buffer {
 
     template <typename It>
     fmt_buffer(It out) noexcept
-        : _it {addressof(out)}, _pushBack {[](void* ptr, CharType ch) { (*static_cast<It*>(ptr)) = ch; }}
+        : _it{addressof(out)}
+        , _pushBack{[](void* ptr, CharType ch) { (*static_cast<It*>(ptr)) = ch; }}
     {
     }
 

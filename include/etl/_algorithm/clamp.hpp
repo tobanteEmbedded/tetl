@@ -18,6 +18,7 @@ template <typename Type>
 {
     return clamp(v, lo, hi, less<Type>());
 }
+
 template <typename Type, typename Compare>
 [[nodiscard]] constexpr auto clamp(Type const& v, Type const& lo, Type const& hi, Compare comp) -> Type const&
 {

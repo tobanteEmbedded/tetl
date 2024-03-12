@@ -30,23 +30,23 @@ struct vector {
 
     constexpr vector() = default;
 
-    explicit constexpr vector(Allocator alloc) : _alloc {etl::move(alloc)} { }
+    explicit constexpr vector(Allocator alloc) : _alloc{etl::move(alloc)} { }
 
-    constexpr vector(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _alloc {etl::move(alloc)}
+    constexpr vector(etl::size_t n, T const& value, Allocator alloc = Allocator()) : _alloc{etl::move(alloc)}
     {
         allocate_and_fill(n, value);
     }
 
-    explicit constexpr vector(etl::size_t n, Allocator alloc = Allocator()) : vector {n, T(), etl::move(alloc)} { }
+    explicit constexpr vector(etl::size_t n, Allocator alloc = Allocator()) : vector{n, T(), etl::move(alloc)} { }
 
     constexpr vector(vector const& o)                    = delete;
     constexpr auto operator=(vector const& o) -> vector& = delete;
 
     constexpr vector(vector&& other) noexcept
-        : _ptr {etl::exchange(other._ptr, nullptr)}
-        , _size {etl::exchange(other._size, 0)}
-        , _capacity {etl::exchange(other._capacity, 0)}
-        , _alloc {etl::exchange(other._alloc, Allocator {})}
+        : _ptr{etl::exchange(other._ptr, nullptr)}
+        , _size{etl::exchange(other._size, 0)}
+        , _capacity{etl::exchange(other._capacity, 0)}
+        , _alloc{etl::exchange(other._alloc, Allocator{})}
     {
     }
 
@@ -55,32 +55,40 @@ struct vector {
         _ptr      = etl::exchange(other._ptr, nullptr);
         _size     = etl::exchange(other._size, 0);
         _capacity = etl::exchange(other._capacity, 0);
-        _alloc    = etl::exchange(other._alloc, Allocator {});
+        _alloc    = etl::exchange(other._alloc, Allocator{});
         return *this;
     }
 
     constexpr ~vector() noexcept
     {
         clear();
-        if (_ptr != nullptr) { deallocate(); }
+        if (_ptr != nullptr) {
+            deallocate();
+        }
     }
 
     [[nodiscard]] constexpr auto data() -> T* { return _ptr; }
+
     [[nodiscard]] constexpr auto data() const -> T const* { return _ptr; }
 
     [[nodiscard]] constexpr auto begin() -> T* { return _ptr; }
+
     [[nodiscard]] constexpr auto begin() const -> T const* { return _ptr; }
 
     [[nodiscard]] constexpr auto end() -> T* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
+
     [[nodiscard]] constexpr auto end() const -> T const* { return etl::next(_ptr, etl::ptrdiff_t(size())); }
 
     [[nodiscard]] constexpr auto empty() -> bool { return size() == 0; }
+
     [[nodiscard]] constexpr auto empty() const -> bool { return size() == 0; }
 
     [[nodiscard]] constexpr auto size() -> etl::size_t { return _size; }
+
     [[nodiscard]] constexpr auto size() const -> etl::size_t { return _size; }
 
     [[nodiscard]] constexpr auto capacity() -> etl::size_t { return _capacity; }
+
     [[nodiscard]] constexpr auto capacity() const -> etl::size_t { return _capacity; }
 
     constexpr auto clear() noexcept -> void
@@ -108,9 +116,9 @@ private:
 
     constexpr auto deallocate() -> void { etl::allocator_traits<Allocator>::deallocate(_alloc, _ptr, capacity()); }
 
-    T* _ptr {nullptr};
-    etl::size_t _size {0};
-    etl::size_t _capacity {0};
+    T* _ptr{nullptr};
+    etl::size_t _size{0};
+    etl::size_t _capacity{0};
     TETL_NO_UNIQUE_ADDRESS Allocator _alloc;
 };
 

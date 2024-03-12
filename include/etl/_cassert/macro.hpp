@@ -19,10 +19,10 @@ inline auto exit(int /*ignore*/) -> void { }
 namespace etl {
 /// \brief Payload for an assertion.
 struct assert_msg {
-    int line {};
-    char const* file {nullptr};
-    char const* func {nullptr};
-    char const* expression {nullptr};
+    int line{};
+    char const* file{nullptr};
+    char const* func{nullptr};
+    char const* expression{nullptr};
 };
 
 } // namespace etl
@@ -69,7 +69,7 @@ namespace detail {
             do {                                                                                                       \
                 if (TETL_UNLIKELY(((__VA_ARGS__)) == false)) {                                                         \
                     /* TETL_DEBUG_TRAP(); */                                                                           \
-                    auto const msg = etl::assert_msg {                                                                 \
+                    auto const msg = etl::assert_msg{                                                                  \
                         __LINE__, /*line of assertion*/                                                                \
                         __FILE__, /*source file*/                                                                      \
                         etl::is_hosted() ? TETL_BUILTIN_FUNCTION() : nullptr,                                          \

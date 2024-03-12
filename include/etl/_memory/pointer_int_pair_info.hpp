@@ -39,8 +39,8 @@ struct pointer_int_pair_info {
 
     [[nodiscard]] static auto get_pointer(etl::intptr_t value) -> pointer_type
     {
-        return pointer_traits::get_from_void_pointer(
-            etl::bit_cast<void*>(static_cast<etl::uintptr_t>(value) & ptr_mask));
+        return pointer_traits::get_from_void_pointer(etl::bit_cast<void*>(static_cast<etl::uintptr_t>(value) & ptr_mask)
+        );
     }
 
     [[nodiscard]] static auto get_int(etl::intptr_t value) -> etl::intptr_t
@@ -61,7 +61,8 @@ struct pointer_int_pair_info {
         // Preserve all bits other than the ones we are updating.
         auto const uinteger = static_cast<etl::uintptr_t>(integer);
         return static_cast<etl::intptr_t>(
-            (static_cast<etl::uintptr_t>(value) & ~shifted_int_mask) | uinteger << int_shift);
+            (static_cast<etl::uintptr_t>(value) & ~shifted_int_mask) | uinteger << int_shift
+        );
     }
 };
 

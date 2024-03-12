@@ -36,7 +36,8 @@ constexpr auto sinh_check(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? T(0)
                                                        :
                                                        // else
-            (exp(x) - exp(-x)) / T(2));
+            (exp(x) - exp(-x)) / T(2)
+    );
 }
 
 } // namespace internal

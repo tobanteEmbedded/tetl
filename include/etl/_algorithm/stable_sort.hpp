@@ -22,7 +22,7 @@ constexpr auto stable_sort(RandomIt first, RandomIt last, Compare comp) -> void
 template <typename RandomIt>
 constexpr auto stable_sort(RandomIt first, RandomIt last) -> void
 {
-    stable_sort(first, last, less {});
+    stable_sort(first, last, less{});
 }
 
 } // namespace etl

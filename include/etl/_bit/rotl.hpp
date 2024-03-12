@@ -15,7 +15,9 @@ constexpr auto rotl(T t, int s) noexcept -> T
 {
     auto const c = static_cast<unsigned>(s);
     auto const d = static_cast<unsigned>(numeric_limits<T>::digits);
-    if ((c % d) == 0U) { return t; }
+    if ((c % d) == 0U) {
+        return t;
+    }
     return static_cast<T>((t << (c % d)) | (t >> (d - (c % d))));
 }
 

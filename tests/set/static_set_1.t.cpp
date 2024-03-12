@@ -78,7 +78,7 @@ auto test() -> bool // NOLINT(readability-function-size)
     }
 
     {
-        auto data = etl::array {T(2), T(1), T(0), T(1)};
+        auto data = etl::array{T(2), T(1), T(0), T(1)};
         auto set  = etl::static_set<T, 4>(begin(data), end(data));
         assert(set.size() == 3);
         assert(set.max_size() == 4);
@@ -97,7 +97,9 @@ auto test() -> bool // NOLINT(readability-function-size)
         assert(begin(etl::as_const(set)) != end(etl::as_const(set)));
         assert(cbegin(set) != cend(set));
 
-        for (auto& key : set) { assert(key == 0); }
+        for (auto& key : set) {
+            assert(key == 0);
+        }
         etl::for_each(begin(set), end(set), [](auto key) { assert(key == 0); });
     }
 

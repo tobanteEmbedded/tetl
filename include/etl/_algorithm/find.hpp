@@ -16,7 +16,9 @@ template <typename InputIt, typename T>
 [[nodiscard]] constexpr auto find(InputIt first, InputIt last, T const& value) noexcept -> InputIt
 {
     for (; first != last; ++first) {
-        if (*first == value) { return first; }
+        if (*first == value) {
+            return first;
+        }
     }
     return last;
 }

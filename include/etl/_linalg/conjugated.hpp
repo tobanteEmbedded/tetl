@@ -14,7 +14,7 @@ template <typename ElementType, typename Extents, typename Layout, typename Acce
 [[nodiscard]] constexpr auto conjugated(mdspan<ElementType, Extents, Layout, Accessor> a)
 {
     if constexpr (is_arithmetic_v<remove_cv_t<ElementType>>) {
-        return mdspan<ElementType, Extents, Layout, Accessor> {
+        return mdspan<ElementType, Extents, Layout, Accessor>{
             a.data_handle(),
             a.mapping(),
             a.accessor(),
@@ -23,7 +23,7 @@ template <typename ElementType, typename Extents, typename Layout, typename Acce
         using element_type  = typename accessor_conjugate<Accessor>::element_type;
         using accessor_type = accessor_conjugate<Accessor>;
 
-        return mdspan<element_type, Extents, Layout, accessor_type> {
+        return mdspan<element_type, Extents, Layout, accessor_type>{
             a.data_handle(),
             a.mapping(),
             accessor_type(a.accessor()),
@@ -37,7 +37,7 @@ template <typename ElementType, typename Extents, typename Layout, typename Nest
     using element_type  = typename NestedAccessor::element_type;
     using accessor_type = NestedAccessor;
 
-    return mdspan<element_type, Extents, Layout, accessor_type> {
+    return mdspan<element_type, Extents, Layout, accessor_type>{
         a.data_handle(),
         a.mapping(),
         a.accessor().nested_accessor(),

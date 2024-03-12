@@ -4,6 +4,7 @@
 #define TETL_ALGORITHM_ROTATE_HPP
 
 #include "etl/_algorithm/iter_swap.hpp"
+
 namespace etl {
 
 /// \brief Performs a left rotation on a range of elements.
@@ -14,15 +15,21 @@ namespace etl {
 template <typename ForwardIt>
 constexpr auto rotate(ForwardIt first, ForwardIt nFirst, ForwardIt last) -> ForwardIt
 {
-    if (first == nFirst) { return last; }
-    if (nFirst == last) { return first; }
+    if (first == nFirst) {
+        return last;
+    }
+    if (nFirst == last) {
+        return first;
+    }
 
     auto read     = nFirst;
     auto write    = first;
     auto nextRead = first;
 
     while (read != last) {
-        if (write == nextRead) { nextRead = read; }
+        if (write == nextRead) {
+            nextRead = read;
+        }
         iter_swap(write++, read++);
     }
 

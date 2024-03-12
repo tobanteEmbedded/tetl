@@ -61,7 +61,7 @@ struct fn {
 } // namespace size_cpo
 
 inline namespace cpo {
-inline constexpr auto size = size_cpo::fn {};
+inline constexpr auto size = size_cpo::fn{};
 } // namespace cpo
 
 } // namespace etl::ranges

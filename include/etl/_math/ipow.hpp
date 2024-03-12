@@ -11,7 +11,9 @@ template <integral Int>
 [[nodiscard]] constexpr auto ipow(Int base, Int exponent) noexcept -> Int
 {
     auto result = Int(1);
-    for (auto i = Int(0); i < exponent; ++i) { result *= base; }
+    for (auto i = Int(0); i < exponent; ++i) {
+        result *= base;
+    }
     return result;
 }
 

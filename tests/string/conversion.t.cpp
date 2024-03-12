@@ -34,7 +34,7 @@ constexpr auto test_int() -> bool
         char buf[12] = {};
         auto res     = integer_to_string(in, etl::begin(buf), 10, sizeof(buf));
         assert(res.error == integer_to_string_error::none);
-        assert(etl::string_view {buf} == out);
+        assert(etl::string_view{buf} == out);
         return true;
     };
 

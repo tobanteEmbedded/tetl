@@ -15,7 +15,8 @@ template <typename Iter, typename = etl::void_t<>>
 struct iterator_traits_impl { };
 
 template <typename Iter>
-struct iterator_traits_impl<Iter,
+struct iterator_traits_impl<
+    Iter,
     etl::void_t<                          //
         typename Iter::iterator_category, //
         typename Iter::value_type,        //

@@ -13,9 +13,9 @@ template <typename LoopType = rtos::forever>
 struct example_task {
     auto run() -> void
     {
-        auto loopControl = LoopType {};
+        auto loopControl = LoopType{};
         while (loopControl()) {
-            stm32::gpio_memory_layout memory {};
+            stm32::gpio_memory_layout memory{};
             auto& gpioPort = stm32::port::place_at(&memory);
             gpioPort.write(stm32::pin_number::pin_13, stm32::pin_state::reset);
             gpioPort.toggle_pin(stm32::pin_number::pin_13);
@@ -24,7 +24,7 @@ struct example_task {
 
             rtos::this_task::sleep_for(1);
 
-            auto lastWake = etl::uint32_t {0};
+            auto lastWake = etl::uint32_t{0};
             rtos::this_task::sleep_until(lastWake, 1);
         }
 
@@ -33,7 +33,7 @@ struct example_task {
 };
 
 namespace {
-example_task<rtos::once> task {};
+example_task<rtos::once> task{};
 }
 
 auto main() -> int

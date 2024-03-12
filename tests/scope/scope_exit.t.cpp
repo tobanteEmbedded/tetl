@@ -9,7 +9,7 @@ static auto test() -> bool
     {
         auto counter = 0;
         {
-            etl::scope_exit e {[&] { counter++; }};
+            etl::scope_exit e{[&] { counter++; }};
         }
         assert(counter == 1);
     }
@@ -17,9 +17,9 @@ static auto test() -> bool
     {
         auto counter = 0;
         {
-            etl::scope_exit e1 {[&] { counter++; }};
-            etl::scope_exit e2 {[&] { counter++; }};
-            etl::scope_exit e3 {[&] { counter++; }};
+            etl::scope_exit e1{[&] { counter++; }};
+            etl::scope_exit e2{[&] { counter++; }};
+            etl::scope_exit e3{[&] { counter++; }};
         }
         assert(counter == 3);
     }
@@ -27,9 +27,9 @@ static auto test() -> bool
     {
         auto counter = 0;
         {
-            auto e1 = etl::scope_exit {[&] { counter++; }};
+            auto e1 = etl::scope_exit{[&] { counter++; }};
             {
-                auto e2 {etl::move(e1)};
+                auto e2{etl::move(e1)};
                 assert(counter == 0);
             }
             assert(counter == 1);
@@ -40,7 +40,7 @@ static auto test() -> bool
     {
         auto counter = 0;
         {
-            etl::scope_exit e {[&] { counter++; }};
+            etl::scope_exit e{[&] { counter++; }};
             e.release();
         }
         assert(counter == 0);

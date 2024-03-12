@@ -74,15 +74,16 @@ namespace detail {
 template <typename Integer, typename FormatContext>
 constexpr auto integer_format(Integer v, FormatContext& fc) -> decltype(fc.out())
 {
-    char buf[32] {};
+    char buf[32]{};
     auto res = detail::integer_to_string(v, begin(buf), 10, sizeof(buf));
     if (res.error == detail::integer_to_string_error::none) {
-        auto str = string_view {begin(buf)};
+        auto str = string_view{begin(buf)};
         return formatter<string_view>().format(str, fc);
     }
     return formatter<string_view>().format("", fc);
 }
 } // namespace detail
+
 template <>
 struct formatter<short, char> {
     template <typename FormatContext>

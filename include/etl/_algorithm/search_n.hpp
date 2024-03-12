@@ -8,23 +8,29 @@ namespace etl {
 /// \brief Searches the range `[first, last)` for the first sequence of count
 /// identical elements, each equal to the given value.
 template <typename ForwardIt, typename Size, typename ValueT, typename Predicate>
-[[nodiscard]] constexpr auto search_n(
-    ForwardIt first, ForwardIt last, Size count, ValueT const& value, Predicate pred) -> ForwardIt
+[[nodiscard]] constexpr auto
+search_n(ForwardIt first, ForwardIt last, Size count, ValueT const& value, Predicate pred) -> ForwardIt
 {
-    if (count <= Size {}) { return first; }
+    if (count <= Size{}) {
+        return first;
+    }
 
-    auto localCounter = Size {};
+    auto localCounter = Size{};
     ForwardIt found   = nullptr;
 
     for (; first != last; ++first) {
         if (pred(*first, value)) {
             localCounter++;
-            if (found == nullptr) { found = first; }
+            if (found == nullptr) {
+                found = first;
+            }
         } else {
             localCounter = 0;
         }
 
-        if (localCounter == count) { return found; }
+        if (localCounter == count) {
+            return found;
+        }
     }
 
     return last;

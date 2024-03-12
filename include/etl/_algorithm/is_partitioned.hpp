@@ -13,11 +13,15 @@ template <typename InputIt, typename Predicate>
 [[nodiscard]] constexpr auto is_partitioned(InputIt first, InputIt last, Predicate p) -> bool
 {
     for (; first != last; ++first) {
-        if (!p(*first)) { break; }
+        if (!p(*first)) {
+            break;
+        }
     }
 
     for (; first != last; ++first) {
-        if (p(*first)) { return false; }
+        if (p(*first)) {
+            return false;
+        }
     }
 
     return true;

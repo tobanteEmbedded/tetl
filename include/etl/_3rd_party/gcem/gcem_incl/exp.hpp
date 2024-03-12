@@ -30,12 +30,14 @@ namespace internal {
 template <typename T>
 constexpr auto exp_cf_recur(T const x, int const depth) noexcept -> T
 {
-    return (depth < GCEM_EXP_MAX_ITER_SMALL ? // if
-                depth == 1 ? T(1) - x / exp_cf_recur(x, depth + 1)
-                           : T(1) + x / T(depth - 1) - x / depth / exp_cf_recur(x, depth + 1)
-                                            :
-                                            // else
-                T(1));
+    return (
+        depth < GCEM_EXP_MAX_ITER_SMALL ? // if
+            depth == 1 ? T(1) - x / exp_cf_recur(x, depth + 1)
+                       : T(1) + x / T(depth - 1) - x / depth / exp_cf_recur(x, depth + 1)
+                                        :
+                                        // else
+            T(1)
+    );
 }
 
 template <typename T>
@@ -53,12 +55,14 @@ constexpr auto exp_split(T const x) noexcept -> T
 template <typename T>
 constexpr auto exp_check(T const x) noexcept -> T
 {
-    return static_cast<T>(is_nan(x)                                    ? etl::numeric_limits<T>::quiet_NaN()
-                          : is_neginf(x)                               ? T(0)
-                          : etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
-                          : is_posinf(x)                               ? etl::numeric_limits<T>::infinity()
-                          : abs(x) < T(2)                              ? exp_cf(x)
-                                                                       : exp_split(x));
+    return static_cast<T>(
+        is_nan(x)                                    ? etl::numeric_limits<T>::quiet_NaN()
+        : is_neginf(x)                               ? T(0)
+        : etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
+        : is_posinf(x)                               ? etl::numeric_limits<T>::infinity()
+        : abs(x) < T(2)                              ? exp_cf(x)
+                                                     : exp_split(x)
+    );
 }
 
 } // namespace internal

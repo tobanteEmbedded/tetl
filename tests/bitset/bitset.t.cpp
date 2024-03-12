@@ -16,7 +16,7 @@ constexpr auto test_bitset() -> bool
 
     {
         // empty
-        auto bits = bitset<N> {};
+        auto bits = bitset<N>{};
         assert(bits.none());
         assert(!bits.test(0));
     }
@@ -92,7 +92,7 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto bits = bitset<N> {};
+        auto bits = bitset<N>{};
         bits.set();
         assert(bits.all());
         assert(bits.any());
@@ -101,7 +101,7 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto bits = bitset<N> {};
+        auto bits = bitset<N>{};
         for (etl::size_t i = 0; i < bits.size(); ++i) {
             bits.set(i);
             assert(bits.test(i));
@@ -113,7 +113,7 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto bits = etl::bitset<N> {};
+        auto bits = etl::bitset<N>{};
         assert(bits.none());
 
         bits.set(0);
@@ -130,7 +130,7 @@ constexpr auto test_bitset() -> bool
         assert(bits.none());
     }
     {
-        auto bits = etl::bitset<N> {};
+        auto bits = etl::bitset<N>{};
         assert(bits.none());
         bits.flip();
         assert(bits.all());
@@ -139,8 +139,8 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto lhs = etl::bitset<N> {};
-        auto rhs = etl::bitset<N> {};
+        auto lhs = etl::bitset<N>{};
+        auto rhs = etl::bitset<N>{};
         assert(rhs == lhs);
         assert(lhs == rhs);
         assert(!(rhs != lhs));
@@ -155,7 +155,7 @@ constexpr auto test_bitset() -> bool
 
     {
         using ref_type = typename etl::bitset<N>::reference;
-        auto bits      = etl::bitset<N> {};
+        auto bits      = etl::bitset<N>{};
 
         ref_type r1 = bits[0];
         assert(!(static_cast<bool>(r1)));
@@ -180,22 +180,22 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        assert(etl::bitset<N> {0U}.to_ulong() == 0UL);
-        assert(etl::bitset<N> {0U}.to_ullong() == 0ULL);
+        assert(etl::bitset<N>{0U}.to_ulong() == 0UL);
+        assert(etl::bitset<N>{0U}.to_ullong() == 0ULL);
 
-        assert(etl::bitset<N> {1U}.to_ulong() == 1UL);
-        assert(etl::bitset<N> {1U}.to_ullong() == 1ULL);
+        assert(etl::bitset<N>{1U}.to_ulong() == 1UL);
+        assert(etl::bitset<N>{1U}.to_ullong() == 1ULL);
 
-        assert(etl::bitset<N> {0b0000'1111U}.to_ulong() == 15UL);
-        assert(etl::bitset<N> {0b0000'1111U}.to_ullong() == 15ULL);
+        assert(etl::bitset<N>{0b0000'1111U}.to_ulong() == 15UL);
+        assert(etl::bitset<N>{0b0000'1111U}.to_ullong() == 15ULL);
 
-        assert(etl::bitset<N> {0b1111'1111U}.to_ulong() == 255UL);
-        assert(etl::bitset<N> {0b1111'1111U}.to_ullong() == 255ULL);
+        assert(etl::bitset<N>{0b1111'1111U}.to_ulong() == 255UL);
+        assert(etl::bitset<N>{0b1111'1111U}.to_ullong() == 255ULL);
     }
 
     {
-        auto rhs = etl::bitset<N> {};
-        auto lhs = etl::bitset<N> {};
+        auto rhs = etl::bitset<N>{};
+        auto lhs = etl::bitset<N>{};
         assert(rhs.none());
 
         rhs &= lhs;
@@ -211,8 +211,8 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto rhs = etl::bitset<N> {};
-        auto lhs = etl::bitset<N> {};
+        auto rhs = etl::bitset<N>{};
+        auto lhs = etl::bitset<N>{};
         assert(rhs.none());
 
         rhs |= lhs;
@@ -227,8 +227,8 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto rhs = etl::bitset<N> {};
-        auto lhs = etl::bitset<N> {};
+        auto rhs = etl::bitset<N>{};
+        auto lhs = etl::bitset<N>{};
         assert(rhs.none());
 
         rhs ^= lhs;
@@ -243,7 +243,7 @@ constexpr auto test_bitset() -> bool
     }
 
     {
-        auto bits = etl::bitset<N> {};
+        auto bits = etl::bitset<N>{};
         assert(bits.none());
         bits = ~bits;
         assert(bits.all());
@@ -259,7 +259,7 @@ constexpr auto test_bitset() -> bool
 
     {
         // TODO [tobi] Test other sizes
-        auto const bits = etl::bitset<8> {0b0010'1010};
+        auto const bits = etl::bitset<8>{0b0010'1010};
         assert((bits.template to_string<16>() == "00101010"_sv));
         assert((bits.template to_string<16>('*') == "**1*1*1*"_sv));
         assert((bits.template to_string<16>('O', 'X') == "OOXOXOXO"_sv));

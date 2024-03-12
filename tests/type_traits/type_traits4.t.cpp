@@ -128,6 +128,7 @@ constexpr auto test() -> bool
 
     public:
         Foo(T n) : v1(n), v2() { }
+
         Foo(T n, double f) noexcept : v1(n), v2(f) { }
     };
 

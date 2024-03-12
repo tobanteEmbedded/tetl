@@ -13,7 +13,8 @@ namespace etl {
 /// called to visit a variant that is valueless_by_exception
 struct bad_variant_access : exception {
     constexpr bad_variant_access() = default;
-    constexpr explicit bad_variant_access(char const* what) : exception {what} { }
+
+    constexpr explicit bad_variant_access(char const* what) : exception{what} { }
 };
 
 } // namespace etl

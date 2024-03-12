@@ -33,11 +33,13 @@ namespace internal {
 template <typename T>
 constexpr auto erf_cf_large_recur(T const x, int const depth) noexcept -> T
 {
-    return (depth < GCEM_ERF_MAX_ITER ? // if
-                x + 2 * depth / erf_cf_large_recur(x, depth + 1)
-                                      :
-                                      // else
-                x);
+    return (
+        depth < GCEM_ERF_MAX_ITER ? // if
+            x + 2 * depth / erf_cf_large_recur(x, depth + 1)
+                                  :
+                                  // else
+            x
+    );
 }
 
 template <typename T>
@@ -52,11 +54,13 @@ constexpr auto erf_cf_large_main(T const x) noexcept -> T
 template <typename T>
 constexpr auto erf_cf_small_recur(T const xx, int const depth) noexcept -> T
 {
-    return (depth < GCEM_ERF_MAX_ITER ? // if
-                (2 * depth - 1) - 2 * xx + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)
-                                      :
-                                      // else
-                (2 * depth - 1) - 2 * xx);
+    return (
+        depth < GCEM_ERF_MAX_ITER ? // if
+            (2 * depth - 1) - 2 * xx + 4 * depth * xx / erf_cf_small_recur(xx, depth + 1)
+                                  :
+                                  // else
+            (2 * depth - 1) - 2 * xx
+    );
 }
 
 template <typename T>
@@ -70,11 +74,13 @@ constexpr auto erf_cf_small_main(T const x) noexcept -> T
 template <typename T>
 constexpr auto erf_begin(T const x) noexcept -> T
 {
-    return (x > T(2.1) ? // if
-                erf_cf_large_main(x)
-                       :
-                       // else
-                erf_cf_small_main(x));
+    return (
+        x > T(2.1) ? // if
+            erf_cf_large_main(x)
+                   :
+                   // else
+            erf_cf_small_main(x)
+    );
 }
 
 template <typename T>
@@ -91,7 +97,8 @@ constexpr auto erf_check(T const x) noexcept -> T
                                                        :
                                                        // else
             x < T(0) ? -erf_begin(-x)
-                     : erf_begin(x));
+                     : erf_begin(x)
+    );
 }
 
 } // namespace internal

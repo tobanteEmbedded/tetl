@@ -36,7 +36,8 @@ constexpr auto cosh_compute(T const x) noexcept -> T
             etl::numeric_limits<T>::epsilon() > abs(x) ? T(1)
                                                        :
                                                        // else
-            (exp(x) + exp(-x)) / T(2));
+            (exp(x) + exp(-x)) / T(2)
+    );
 }
 
 } // namespace internal

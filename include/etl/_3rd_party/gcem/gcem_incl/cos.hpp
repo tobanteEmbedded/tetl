@@ -48,7 +48,8 @@ constexpr auto cos_check(T const x) noexcept -> T
         : etl::numeric_limits<T>::epsilon() > abs(x + T(etl::numbers::pi)) ? -T(1)
                                                                            :
                                                                            // else
-            cos_compute(tan(x / T(2))));
+            cos_compute(tan(x / T(2)))
+    );
 }
 
 } // namespace internal

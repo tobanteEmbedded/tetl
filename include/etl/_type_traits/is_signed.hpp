@@ -25,8 +25,10 @@ struct is_signed : detail::is_signed<T>::type { };
 
 template <typename T>
 struct is_signed<T const> : detail::is_signed<T>::type { };
+
 template <typename T>
 struct is_signed<T volatile> : detail::is_signed<T>::type { };
+
 template <typename T>
 struct is_signed<T const volatile> : detail::is_signed<T>::type { };
 

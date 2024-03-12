@@ -12,7 +12,9 @@ namespace etl::detail {
 template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
 [[nodiscard]] constexpr auto str_rfind(CharT const* str, SizeT size, CharT c, SizeT pos) noexcept -> SizeT
 {
-    if (size < 1) { return NPos; }
+    if (size < 1) {
+        return NPos;
+    }
 
     if (pos < size) {
         ++pos;
@@ -20,14 +22,16 @@ template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
         pos = size;
     }
     for (auto const* s = str + pos; s != str;) {
-        if (Traits::eq(*--s, c)) { return static_cast<SizeT>(s - str); }
+        if (Traits::eq(*--s, c)) {
+            return static_cast<SizeT>(s - str);
+        }
     }
     return NPos;
 }
 
 template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
-[[nodiscard]] constexpr auto str_rfind(
-    CharT const* str, SizeT size, CharT const* s, SizeT pos, SizeT n) noexcept -> SizeT
+[[nodiscard]] constexpr auto
+str_rfind(CharT const* str, SizeT size, CharT const* s, SizeT pos, SizeT n) noexcept -> SizeT
 {
     pos = etl::min(pos, size);
     if (n < size - pos) {
@@ -37,7 +41,9 @@ template <typename CharT, typename SizeT, typename Traits, SizeT NPos>
     }
 
     auto const* r = etl::find_end(str, str + pos, s, s + n, Traits::eq);
-    if (n > 0 && r == str + pos) { return NPos; }
+    if (n > 0 && r == str + pos) {
+        return NPos;
+    }
     return static_cast<SizeT>(r - str);
 }
 

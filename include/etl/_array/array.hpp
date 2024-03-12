@@ -172,7 +172,9 @@ struct array {
     /// \brief Assigns the given value value to all elements in the container.
     constexpr auto fill(const_reference value) -> void
     {
-        for (auto& item : (*this)) { item = value; }
+        for (auto& item : (*this)) {
+            item = value;
+        }
     }
 
     /// \brief Exchanges the contents of the container with those of other. Does
@@ -181,7 +183,9 @@ struct array {
     constexpr auto swap(array& other) noexcept(is_nothrow_swappable_v<Type>) -> void
     {
         using etl::swap;
-        for (auto i = size_type {0}; i < size(); ++i) { swap((*this)[i], other[i]); }
+        for (auto i = size_type{0}; i < size(); ++i) {
+            swap((*this)[i], other[i]);
+        }
     }
 
     /// \internal

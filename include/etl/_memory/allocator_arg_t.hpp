@@ -14,7 +14,7 @@ struct allocator_arg_t {
 /// \brief allocator_arg is a constant of type allocator_arg_t used to
 /// disambiguate, at call site, the overloads of the constructors and member
 /// functions of allocator-aware objects.
-inline constexpr allocator_arg_t allocator_arg {};
+inline constexpr allocator_arg_t allocator_arg{};
 
 } // namespace etl
 

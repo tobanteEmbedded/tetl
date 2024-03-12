@@ -12,7 +12,9 @@ template <typename ForwardIt, typename Compare>
     if (first != last) {
         ForwardIt next = first;
         while (++next != last) {
-            if (comp(*next, *first)) { return next; }
+            if (comp(*next, *first)) {
+                return next;
+            }
             first = next;
         }
     }

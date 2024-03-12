@@ -12,7 +12,7 @@ namespace etl {
 template <typename LayoutMapping>
 struct submdspan_mapping_result {
     TETL_NO_UNIQUE_ADDRESS LayoutMapping mapping = LayoutMapping();
-    etl::size_t offset {};
+    etl::size_t offset{};
 };
 
 } // namespace etl

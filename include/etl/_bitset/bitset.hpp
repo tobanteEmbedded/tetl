@@ -63,7 +63,7 @@ struct bitset {
         }
 
     private:
-        constexpr explicit reference(uint8_t* data, uint8_t position) : _data {data}, _position {position} { }
+        constexpr explicit reference(uint8_t* data, uint8_t position) : _data{data}, _position{position} { }
 
         friend bitset;
         uint8_t* _data;
@@ -84,7 +84,9 @@ struct bitset {
     {
         auto const n = min<size_t>(numeric_limits<decltype(val)>::digits, size());
         for (size_t i = 0; i < n; ++i) {
-            if (((val >> i) & 1U) == 1U) { set(i); }
+            if (((val >> i) & 1U) == 1U) {
+                set(i);
+            }
         }
     }
 
@@ -102,10 +104,13 @@ struct bitset {
     /// \param zero alternate character for set bits in str
     /// \param one alternate character for unset bits in str
     template <typename CharT, typename Traits>
-    explicit constexpr bitset(basic_string_view<CharT, Traits> const& str,
+    explicit constexpr bitset(
+        basic_string_view<CharT, Traits> const& str,
         typename basic_string_view<CharT, Traits>::size_type pos = 0,
         typename basic_string_view<CharT, Traits>::size_type n   = basic_string_view<CharT, Traits>::npos,
-        CharT zero = CharT('0'), CharT one = CharT('1'))
+        CharT zero                                               = CharT('0'),
+        CharT one                                                = CharT('1')
+    )
         : bitset(0ULL)
     {
         auto const len = min<decltype(pos)>(n, str.size() - pos);
@@ -113,8 +118,12 @@ struct bitset {
         TETL_ASSERT(len <= size());
 
         for (decltype(pos) i = 0; i < len; ++i) {
-            if (Traits::eq(str[i + pos], one)) { set(i, true); }
-            if (Traits::eq(str[i + pos], zero)) { set(i, false); }
+            if (Traits::eq(str[i + pos], one)) {
+                set(i, true);
+            }
+            if (Traits::eq(str[i + pos], zero)) {
+                set(i, false);
+            }
         }
     }
 
@@ -125,18 +134,28 @@ struct bitset {
     /// \param zero alternate character for set bits in str
     /// \param one alternate character for unset bits in str
     template <typename CharT>
-    explicit constexpr bitset(CharT const* str,
-        typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos, CharT zero = CharT('0'),
-        CharT one = CharT('1'))
-        : bitset(n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str) : basic_string_view<CharT>(str, n),
-              0, n, zero, one)
+    explicit constexpr bitset(
+        CharT const* str,
+        typename basic_string_view<CharT>::size_type n = basic_string_view<CharT>::npos,
+        CharT zero                                     = CharT('0'),
+        CharT one                                      = CharT('1')
+    )
+        : bitset(
+              n == basic_string_view<CharT>::npos ? basic_string_view<CharT>(str) : basic_string_view<CharT>(str, n),
+              0,
+              n,
+              zero,
+              one
+          )
     {
     }
 
     /// \brief Sets all bits to true.
     constexpr auto set() noexcept -> bitset<N>&
     {
-        for (auto& b : _bits) { b = etl::numeric_limits<uint8_t>::max(); }
+        for (auto& b : _bits) {
+            b = etl::numeric_limits<uint8_t>::max();
+        }
         return *this;
     }
 
@@ -180,7 +199,9 @@ struct bitset {
     /// \brief Flips all bits (like operator~, but in-place).
     constexpr auto flip() noexcept -> bitset<N>&
     {
-        for (auto& b : _bits) { b = ~b; }
+        for (auto& b : _bits) {
+            b = ~b;
+        }
         return *this;
     }
 
@@ -237,7 +258,9 @@ struct bitset {
     [[nodiscard]] constexpr auto count() const noexcept -> size_t
     {
         size_t count = 0;
-        for (size_t i = 0; i < size(); ++i) { count += test(i) ? size_t {1} : 0; }
+        for (size_t i = 0; i < size(); ++i) {
+            count += test(i) ? size_t{1} : 0;
+        }
         return count;
     }
 
@@ -248,7 +271,9 @@ struct bitset {
     [[nodiscard]] constexpr auto operator==(bitset<N> const& rhs) const noexcept -> bool
     {
         for (size_t i = 0; i < size(); ++i) {
-            if (test(i) != rhs.test(i)) { return false; }
+            if (test(i) != rhs.test(i)) {
+                return false;
+            }
         }
 
         return true;
@@ -261,7 +286,9 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator&=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] &= other._bits[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            _bits[i] &= other._bits[i];
+        }
         return *this;
     }
 
@@ -269,7 +296,9 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator|=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] |= other._bits[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            _bits[i] |= other._bits[i];
+        }
         return *this;
     }
 
@@ -277,7 +306,9 @@ struct bitset {
     /// of bits of *this and other.
     constexpr auto operator^=(bitset<N> const& other) noexcept -> bitset<N>&
     {
-        for (size_t i = 0; i < (size() >> 3); ++i) { _bits[i] ^= other._bits[i]; }
+        for (size_t i = 0; i < (size() >> 3); ++i) {
+            _bits[i] ^= other._bits[i];
+        }
         return *this;
     }
 
@@ -291,13 +322,15 @@ struct bitset {
     /// character corresponds to the last (N-1th) bit and the last character
     /// corresponding to the first bit.
     template <size_t Capacity, typename CharT = char, typename Traits = char_traits<CharT>>
-    [[nodiscard]] constexpr auto to_string(
-        CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
+    [[nodiscard]] constexpr auto
+    to_string(CharT zero = CharT('0'), CharT one = CharT('1')) const -> basic_static_string<CharT, Capacity, Traits>
     {
         // TODO: [tobi] This currently truncates the low bits, if the string is
         // large enough.
-        auto str = basic_static_string<CharT, Capacity, Traits> {};
-        for (auto i {size() - 1U}; i != 0; --i) { str.push_back(test(i) ? one : zero); }
+        auto str = basic_static_string<CharT, Capacity, Traits>{};
+        for (auto i{size() - 1U}; i != 0; --i) {
+            str.push_back(test(i) ? one : zero);
+        }
         str.push_back(test(0) ? one : zero);
         return str;
     }
@@ -338,9 +371,11 @@ private:
     {
         constexpr auto digits = static_cast<UInt>(etl::numeric_limits<UInt>::digits);
         auto const idx        = etl::min<UInt>(static_cast<UInt>(size()), digits);
-        UInt result {};
-        for (UInt i {0}; i != idx; ++i) {
-            if (test(static_cast<etl::size_t>(i))) { result = etl::set_bit(result, i); }
+        UInt result{};
+        for (UInt i{0}; i != idx; ++i) {
+            if (test(static_cast<etl::size_t>(i))) {
+                result = etl::set_bit(result, i);
+            }
         }
         return result;
     }

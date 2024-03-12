@@ -30,11 +30,13 @@ namespace internal {
 template <typename T>
 constexpr auto mantissa(T const x) noexcept -> T
 {
-    return (x < T(1)    ? mantissa(x * T(10))
-            : x > T(10) ? mantissa(x / T(10))
-                        :
-                        // else
-                x);
+    return (
+        x < T(1)    ? mantissa(x * T(10))
+        : x > T(10) ? mantissa(x / T(10))
+                    :
+                    // else
+            x
+    );
 }
 
 } // namespace internal

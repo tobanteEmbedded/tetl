@@ -16,7 +16,9 @@ namespace etl {
 template <typename ForwardIt, typename Generator>
 constexpr auto generate(ForwardIt first, ForwardIt last, Generator g) -> void
 {
-    for (; first != last; ++first) { *first = g(); }
+    for (; first != last; ++first) {
+        *first = g();
+    }
 }
 
 } // namespace etl

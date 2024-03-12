@@ -24,7 +24,7 @@ constexpr auto test_one() -> bool
     static_assert(etl::same_as<typename mapping_2d_t::layout_type, etl::layout_left>);
 
     {
-        auto const mapping = mapping_2d_t {};
+        auto const mapping = mapping_2d_t{};
         auto const copy    = mapping;
         assert(copy == mapping);
         static_assert(etl::is_nothrow_default_constructible_v<mapping_2d_t>);
@@ -32,8 +32,8 @@ constexpr auto test_one() -> bool
     }
 
     {
-        auto mapping = mapping_2d_t {};
-        auto copy    = mapping_2d_t {};
+        auto mapping = mapping_2d_t{};
+        auto copy    = mapping_2d_t{};
         copy         = mapping;
         assert(copy == mapping);
         static_assert(etl::is_nothrow_copy_assignable_v<mapping_2d_t>);

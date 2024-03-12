@@ -17,6 +17,7 @@ class Foo {
 
 public:
     Foo(T n) : v1(n), v2() { }
+
     Foo(T n, double f) noexcept : v1(n), v2(f) { }
 };
 
@@ -96,12 +97,15 @@ constexpr auto test() -> bool
         };
 
         struct TCB { // NOLINT
+
             TCB(TCB const& /*ignore*/) { }
         };
 
         struct TCD { // NOLINT
             TCD(TCD const& /*ignore*/) = default;
+
             TCD(int x) : m(x + 1) { }
+
             int m;
         };
 
@@ -131,6 +135,7 @@ constexpr auto test() -> bool
 
     struct S {
         auto operator()(char /*unused*/, int& /*unused*/) -> T { return T(2); }
+
         auto operator()(int /*unused*/) -> float { return 1.0F; }
     };
 

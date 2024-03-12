@@ -85,14 +85,15 @@ struct strong_ordering {
     }
 
 private:
-    constexpr explicit strong_ordering(detail::order_result v) noexcept : _value {static_cast<int8_t>(v)} { }
+    constexpr explicit strong_ordering(detail::order_result v) noexcept : _value{static_cast<int8_t>(v)} { }
+
     int8_t _value;
 };
 
-inline constexpr strong_ordering strong_ordering::less {detail::order_result::less};
-inline constexpr strong_ordering strong_ordering::equal {detail::order_result::equal};
-inline constexpr strong_ordering strong_ordering::equivalent {detail::order_result::equal};
-inline constexpr strong_ordering strong_ordering::greater {detail::order_result::greater};
+inline constexpr strong_ordering strong_ordering::less{detail::order_result::less};
+inline constexpr strong_ordering strong_ordering::equal{detail::order_result::equal};
+inline constexpr strong_ordering strong_ordering::equivalent{detail::order_result::equal};
+inline constexpr strong_ordering strong_ordering::greater{detail::order_result::greater};
 
 } // namespace etl
 

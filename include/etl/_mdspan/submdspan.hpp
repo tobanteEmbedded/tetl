@@ -7,8 +7,10 @@
 
 namespace etl {
 
-// template <typename T, typename Ext, typename Layout, typename Accessor, typename... SliceSpecifiers>
-// [[nodiscard]] constexpr auto submdspan(mdspan<T, Ext, Layout, Accessor> const& src, SliceSpecifiers... slices)
+// template <typename T, typename Ext, typename Layout, typename Accessor, typename...
+// SliceSpecifiers>
+// [[nodiscard]] constexpr auto submdspan(mdspan<T, Ext, Layout, Accessor> const& src,
+// SliceSpecifiers... slices)
 // {
 //     auto sub_mapping  = submdspan_mapping(src.mapping(), slices...);
 //     auto sub_accessor = typename Accessor::offset_policy(src.accessor());

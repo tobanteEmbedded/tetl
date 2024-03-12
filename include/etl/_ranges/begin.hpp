@@ -59,7 +59,7 @@ struct fn {
 } // namespace begin_cpo
 
 inline namespace cpo {
-inline constexpr auto begin = begin_cpo::fn {};
+inline constexpr auto begin = begin_cpo::fn{};
 } // namespace cpo
 
 } // namespace etl::ranges

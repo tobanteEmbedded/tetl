@@ -14,36 +14,36 @@ constexpr auto test() -> bool
 {
     // empty range
     {
-        auto data = etl::static_vector<T, 4> {};
-        auto* res = etl::remove(begin(data), end(data), T {1});
+        auto data = etl::static_vector<T, 4>{};
+        auto* res = etl::remove(begin(data), end(data), T{1});
         assert(res == end(data));
         assert(data.empty());
     }
 
     // found
     {
-        auto data = etl::static_vector<T, 4> {};
-        data.push_back(T {1});
-        data.push_back(T {0});
-        data.push_back(T {0});
-        data.push_back(T {0});
+        auto data = etl::static_vector<T, 4>{};
+        data.push_back(T{1});
+        data.push_back(T{0});
+        data.push_back(T{0});
+        data.push_back(T{0});
 
-        auto* res = etl::remove(begin(data), end(data), T {1});
+        auto* res = etl::remove(begin(data), end(data), T{1});
         assert(res == end(data) - 1);
         assert(data[0] == 0);
     }
     // empty range
     {
-        auto s = etl::static_vector<T, 4> {};
-        auto d = etl::static_vector<T, 4> {};
+        auto s = etl::static_vector<T, 4>{};
+        auto d = etl::static_vector<T, 4>{};
         etl::remove_copy(begin(s), end(s), etl::back_inserter(d), T(1));
         assert(d.empty());
     }
 
     // range
     {
-        auto s = etl::array {T(1), T(2), T(3), T(4)};
-        auto d = etl::static_vector<T, 4> {};
+        auto s = etl::array{T(1), T(2), T(3), T(4)};
+        auto d = etl::static_vector<T, 4>{};
         etl::remove_copy(begin(s), end(s), etl::back_inserter(d), T(1));
         assert(!d.empty());
         assert(d.size() == 3);

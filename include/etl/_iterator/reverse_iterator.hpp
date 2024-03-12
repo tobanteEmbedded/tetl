@@ -142,8 +142,8 @@ template <typename Iter>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator==(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator==(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() == rhs.base();
 }
@@ -151,8 +151,8 @@ template <typename Iter1, typename Iter2>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator!=(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator!=(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() != rhs.base();
 }
@@ -160,8 +160,8 @@ template <typename Iter1, typename Iter2>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator<(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator<(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() < rhs.base();
 }
@@ -169,8 +169,8 @@ template <typename Iter1, typename Iter2>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator<=(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator<=(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() <= rhs.base();
 }
@@ -178,8 +178,8 @@ template <typename Iter1, typename Iter2>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator>(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator>(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() > rhs.base();
 }
@@ -187,24 +187,27 @@ template <typename Iter1, typename Iter2>
 /// \brief Compares the underlying iterators. Inverse comparisons are applied in
 /// order to take into account that the iterator order is reversed.
 template <typename Iter1, typename Iter2>
-[[nodiscard]] constexpr auto operator>=(
-    etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
+[[nodiscard]] constexpr auto
+operator>=(etl::reverse_iterator<Iter1> const& lhs, etl::reverse_iterator<Iter2> const& rhs) -> bool
 {
     return lhs.base() >= rhs.base();
 }
 
 /// \brief Returns the iterator it incremented by n.
 template <typename Iter>
-[[nodiscard]] constexpr auto operator+(typename reverse_iterator<Iter>::difference_type n,
-    reverse_iterator<Iter> const& it) noexcept(noexcept(it.base() - n)) -> reverse_iterator<Iter>
+[[nodiscard]] constexpr auto operator+(
+    typename reverse_iterator<Iter>::difference_type n,
+    reverse_iterator<Iter> const& it
+) noexcept(noexcept(it.base() - n)) -> reverse_iterator<Iter>
 {
     return reverse_iterator<Iter>(it.base() - n);
 }
 
 /// \brief Returns the distance between two iterator adaptors.
 template <typename Iterator1, typename Iterator2>
-constexpr auto operator-(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs)
-    noexcept(noexcept(rhs.base() - lhs.base())) -> decltype(rhs.base() - lhs.base())
+constexpr auto operator-(reverse_iterator<Iterator1> const& lhs, reverse_iterator<Iterator2> const& rhs) noexcept(
+    noexcept(rhs.base() - lhs.base())
+) -> decltype(rhs.base() - lhs.base())
 {
     return rhs.base() - lhs.base();
 }

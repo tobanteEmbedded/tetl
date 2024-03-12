@@ -14,12 +14,18 @@ namespace etl {
 template <floating_point Float>
 [[nodiscard]] constexpr auto lerp(Float a, Float b, Float t) noexcept -> Float
 {
-    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) { return t * b + (1 - t) * a; }
+    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+        return t * b + (1 - t) * a;
+    }
 
-    if (t == 1) { return b; }
+    if (t == 1) {
+        return b;
+    }
 
     auto const x = a + t * (b - a);
-    if ((t > 1) == (b > a)) { return b < x ? x : b; }
+    if ((t > 1) == (b > a)) {
+        return b < x ? x : b;
+    }
     return x < b ? x : b;
 }
 

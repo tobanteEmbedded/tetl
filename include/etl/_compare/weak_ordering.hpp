@@ -64,14 +64,14 @@ struct weak_ordering {
     }
 
 private:
-    explicit constexpr weak_ordering(detail::order_result v) noexcept : _value {static_cast<int8_t>(v)} { }
+    explicit constexpr weak_ordering(detail::order_result v) noexcept : _value{static_cast<int8_t>(v)} { }
 
     int8_t _value;
 };
 
-inline constexpr weak_ordering weak_ordering::less {detail::order_result::less};
-inline constexpr weak_ordering weak_ordering::equivalent {detail::order_result::equal};
-inline constexpr weak_ordering weak_ordering::greater {detail::order_result::greater};
+inline constexpr weak_ordering weak_ordering::less{detail::order_result::less};
+inline constexpr weak_ordering weak_ordering::equivalent{detail::order_result::equal};
+inline constexpr weak_ordering weak_ordering::greater{detail::order_result::greater};
 
 } // namespace etl
 

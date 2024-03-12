@@ -13,7 +13,7 @@ namespace etl {
 
 #if defined(TETL_MSVC)
     // Qualifier applied to function has no meaning
-    #pragma warning(disable : 4180)
+    #pragma warning(disable: 4180)
 #endif
 
 template <typename T>
@@ -21,7 +21,7 @@ struct is_function : bool_constant<!is_const_v<T const> && !is_reference_v<T>> {
 
 #if defined(TETL_MSVC)
     // Qualifier applied to function has no meaning
-    #pragma warning(default : 4180)
+    #pragma warning(default: 4180)
 #endif
 
 /// \brief Checks whether T is a function type. Types like etl::function,

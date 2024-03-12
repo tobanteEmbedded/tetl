@@ -24,10 +24,12 @@ template <etl::size_t Idx, typename T>
 struct variant_alternative<Idx, T const> {
     using type = etl::add_const_t<variant_alternative_t<Idx, T>>;
 };
+
 template <etl::size_t Idx, typename T>
 struct variant_alternative<Idx, T volatile> {
     using type = etl::add_volatile_t<variant_alternative_t<Idx, T>>;
 };
+
 template <etl::size_t Idx, typename T>
 struct variant_alternative<Idx, T const volatile> {
     using type = etl::add_cv_t<variant_alternative_t<Idx, T>>;
