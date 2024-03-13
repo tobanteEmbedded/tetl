@@ -18,7 +18,7 @@ constexpr auto rotr(T t, int s) noexcept -> T
     if ((cnt % digits) == 0) {
         return t;
     }
-    return (t >> (cnt % digits)) | (t << (digits - (cnt % digits)));
+    return static_cast<T>((t >> (cnt % digits)) | (t << (digits - (cnt % digits))));
 }
 
 } // namespace etl

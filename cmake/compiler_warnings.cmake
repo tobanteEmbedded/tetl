@@ -35,7 +35,7 @@ else ()
           -Wbool-conversion
           -Wconditional-uninitialized
           -Wconstant-conversion
-          # -Wconversion
+          -Wconversion
           -Wextra-semi
           -Winconsistent-missing-destructor-override
           -Wint-conversion

@@ -20,7 +20,7 @@ struct proxy_reference : proxy_reference_base {
 
     constexpr operator value_type() const // NOLINT(readability-const-return-type)
     {
-        return static_cast<Derived const&>(*this).to_value(_reference);
+        return static_cast<value_type>(static_cast<Derived const&>(*this).to_value(_reference));
     }
 
     constexpr friend auto operator-(derived_type const& cs) { return -value_type(cs); }

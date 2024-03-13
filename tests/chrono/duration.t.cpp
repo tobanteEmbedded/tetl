@@ -106,13 +106,13 @@ constexpr auto test() -> bool
         using ms  = etl::chrono::duration<T, etl::milli>;
         using sec = etl::chrono::duration<T, etl::ratio<1>>;
 
-        assert(sec{1} - sec{0} == sec{1});
-        assert(sec{1} - ms{0} == sec{1});
-        assert(ms{1} - sec{0} == ms{1});
-        assert(ms{1} - ms{0} == ms{1});
+        assert(sec{T(1)} - sec{T(0)} == sec{T(1)});
+        assert(sec{T(1)} - ms{T(0)} == sec{T(1)});
+        assert(ms{T(1)} - sec{T(0)} == ms{T(1)});
+        assert(ms{T(1)} - ms{T(0)} == ms{T(1)});
 
-        assert(sec{1} - ms{500} == ms{500});
-        assert(ms{500} - sec{1} == ms{-500});
+        assert(sec{T(1)} - ms{T(500)} == ms{T(500)});
+        assert(ms{T(500)} - sec{T(1)} == ms{T(-500)});
     }
 
     if constexpr (etl::is_integral_v<T>) {
