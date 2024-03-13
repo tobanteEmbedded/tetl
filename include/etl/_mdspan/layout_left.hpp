@@ -63,7 +63,7 @@ struct layout_left::mapping {
         auto impl = [this]<typename... IT, size_t... Is>(index_sequence<Is...> /*seq*/, IT... is) {
             auto currentStride = index_type(1);
             auto result        = index_type(0);
-            (((result += is * currentStride), (currentStride *= _extents.extent(Is))), ...);
+            (((result += is * currentStride), (currentStride *= static_cast<index_type>(_extents.extent(Is)))), ...);
             return result;
         };
 

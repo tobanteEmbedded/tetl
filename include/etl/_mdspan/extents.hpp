@@ -32,6 +32,7 @@ private:
     [[nodiscard]] static constexpr auto _dynamic_index(rank_type i) noexcept -> rank_type
     {
         return []<etl::size_t... Idxs>(etl::size_t idx, integer_sequence<etl::size_t, Idxs...>) {
+            // NOLINTNEXTLINE(bugprone-misplaced-widening-cast)
             return static_cast<rank_type>((((Idxs < idx) ? (Extents == dynamic_extent ? 1 : 0) : 0) + ... + 0));
         }(i, make_integer_sequence<etl::size_t, rank()>{});
     }
@@ -152,7 +153,7 @@ template <typename Extents>
     } else {
         auto result = typename Extents::index_type(1);
         for (auto e = etl::size_t(0); e < i; ++e) {
-            result *= exts.extent(e);
+            result *= static_cast<typename Extents::index_type>(exts.extent(e));
         }
         return result;
     }
@@ -164,7 +165,7 @@ template <typename Extents>
 {
     auto result = typename Extents::index_type(1);
     for (auto e = i + 1; e < Extents::rank(); ++e) {
-        result *= exts.extent(e);
+        result *= static_cast<typename Extents::index_type>(exts.extent(e));
     }
     return result;
 }
