@@ -28,8 +28,8 @@ else ()
       -Wunreachable-code
       -Wunused-parameter
       -Wzero-as-null-pointer-constant
-      -Wno-sign-conversion
-      -Wno-zero-as-null-pointer-constant
+      -Wsign-conversion
+      -Wzero-as-null-pointer-constant
 
       $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Wbool-conversion
