@@ -16,7 +16,8 @@ namespace etl {
 /// \brief Returns half the sum of a + b. If the sum is odd, the result is
 /// rounded towards a.
 ///
-/// \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?”
+/// \details CppCon 2019: Marshall Clow "midpoint? How Hard Could it Be?"
+///          Integer version was updated to match implementation from libc++.
 ///
 /// https://www.youtube.com/watch?v=sBtAGxBh-XI)
 /// https://en.cppreference.com/w/cpp/numeric/midpoint
@@ -26,17 +27,12 @@ constexpr auto midpoint(Int a, Int b) noexcept -> Int
 {
     using UInt = etl::make_unsigned_t<Int>;
 
-    auto sign = 1;
-    auto m    = static_cast<UInt>(a);
-    auto n    = static_cast<UInt>(b);
+    auto const shift = static_cast<UInt>(etl::numeric_limits<UInt>::digits - 1);
+    auto const diff  = static_cast<UInt>(UInt(b) - UInt(a));
+    auto const sign  = static_cast<UInt>(b < a);
+    auto const half  = static_cast<UInt>((diff / 2) + (sign << shift) + (sign & diff));
 
-    if (a > b) {
-        sign = -1;
-        m    = static_cast<UInt>(b);
-        n    = static_cast<UInt>(a);
-    }
-
-    return static_cast<Int>(a + static_cast<Int>(sign * static_cast<Int>(UInt(n - m) >> 1)));
+    return a + static_cast<Int>(half);
 }
 
 template <etl::floating_point Float>
