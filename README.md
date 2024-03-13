@@ -21,13 +21,13 @@ Tobante's embedded template library. A STL-like C++ template library designed fo
 ## Quick Start
 
 ```cpp
-#include <etl/algorithm.hpp>  // for count_if
-#include <etl/array.hpp>      // for array
+#include <etl/algorithm.hpp>  
+#include <etl/array.hpp>      
 
 auto main() -> int {
   auto const numbers = etl::array{1, 2, 3, 4, 5};
   auto const greater_two = [] (auto const v) { return v > 2; };
-  return etl::count_if(begin(numbers), end(numbers), greater_two);
+  return etl::count_if(numbers.begin(), numbers.end(), greater_two);
 }
 ```
 
