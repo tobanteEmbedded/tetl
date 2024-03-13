@@ -26,6 +26,11 @@
     #pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
 
+#if defined(__clang__)
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+#endif
+
 #include "gcem_incl/gcem_options.hpp"
 
 // clang-format off
@@ -109,6 +114,10 @@ namespace etl::detail::gcem {
 
 #if defined(__GNUC__)
     #pragma GCC diagnostic pop
+#endif
+
+#if defined(__clang__)
+    #pragma clang diagnostic pop
 #endif
 
 #endif

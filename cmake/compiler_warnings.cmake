@@ -29,7 +29,6 @@ else ()
       -Wunused-parameter
       -Wzero-as-null-pointer-constant
       -Wsign-conversion
-      -Wzero-as-null-pointer-constant
 
       $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
           -Wbool-conversion
@@ -44,7 +43,6 @@ else ()
           -Wshift-sign-overflow
           -Wshorten-64-to-32
           -Wunused-private-field
-          -Wno-implicit-int-float-conversion # etl/_3rd_party/gcem cause some warnings
 
           # Internal testing only
           $<$<BOOL:${TETL_BUILD_WEVERYTHING}>:
