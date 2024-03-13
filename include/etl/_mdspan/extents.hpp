@@ -32,7 +32,7 @@ private:
     [[nodiscard]] static constexpr auto _dynamic_index(rank_type i) noexcept -> rank_type
     {
         return []<etl::size_t... Idxs>(etl::size_t idx, integer_sequence<etl::size_t, Idxs...>) {
-            return (((Idxs < idx) ? (Extents == dynamic_extent ? 1 : 0) : 0) + ... + 0);
+            return static_cast<rank_type>((((Idxs < idx) ? (Extents == dynamic_extent ? 1 : 0) : 0) + ... + 0));
         }(i, make_integer_sequence<etl::size_t, rank()>{});
     }
 
@@ -148,7 +148,7 @@ template <typename Extents>
 [[nodiscard]] constexpr auto fwd_prod_of_extents(Extents const& exts, typename Extents::rank_type i) noexcept
 {
     if constexpr (Extents::rank() == 0) {
-        return 1;
+        return typename Extents::index_type(1);
     } else {
         auto result = typename Extents::index_type(1);
         for (auto e = etl::size_t(0); e < i; ++e) {
