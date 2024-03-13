@@ -48,28 +48,6 @@ coverage-html: coverage
 coverage-xml: coverage
 	cd cmake-build-coverage && gcovr --xml-pretty --exclude-unreachable-branches -o coverage.xml  -r ../include -j ${shell nproc} -s .
 
-.PHONY: doxygen
-doxygen:
-	mkdir -p cmake-build-doxygen/etl
-	mkdir -p cmake-build-doxygen/pre
-	mkdir -p cmake-build-doxygen/out
-	python scripts/doxygen-preprocess.py
-	cp Doxyfile.in cmake-build-doxygen/
-	find cmake-build-doxygen/etl -iname '*.hpp' | xargs clang-format-12 -i
-	cd cmake-build-doxygen && doxygen Doxyfile.in
-
-.PHONY: standardese
-standardese:
-	rm -rf cmake-build-standardese
-	mkdir cmake-build-standardese
-	cd cmake-build-standardese && ${STANDARDESE_BIN} -I $(shell realpath .) --config $(shell realpath ./standardese.ini) -DTETL_FREERTOS_USE_STUBS=1 $(shell realpath ./include)
-	./scripts/standardese-md.py
-
-.PHONY: docs
-docs:
-	rm -rf build-doxygen
-	doxygen Doxyfile
-
 .PHONY: tidy-check
 tidy-check:
 	 ./scripts/run-clang-tidy.py ${CLANG_TIDY_ARGS} $(shell realpath ./examples)
