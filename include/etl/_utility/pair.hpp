@@ -114,8 +114,8 @@ struct pair {
 
     constexpr auto operator=(pair&& p
     ) noexcept -> pair& requires(is_move_assignable_v<first_type>and is_move_assignable_v<second_type>) {
-        first  = etl::move(p.first);
-        second = etl::move(p.second);
+        first  = TETL_MOVE(p.first);
+        second = TETL_MOVE(p.second);
         return *this;
     }
 
@@ -123,8 +123,8 @@ struct pair {
         requires(is_assignable_v<first_type&, U1> and is_assignable_v<second_type&, U2>)
     constexpr auto operator=(pair<U1, U2>&& p) -> pair&
     {
-        first  = etl::move(p.first);
-        second = etl::move(p.second);
+        first  = TETL_MOVE(p.first);
+        second = TETL_MOVE(p.second);
         return *this;
     }
 
@@ -289,9 +289,9 @@ template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2>&& p) noexcept -> tuple_element_t<I, pair<T1, T2>>&&
 {
     if constexpr (I == 0) {
-        return move(p.first);
+        return TETL_MOVE(p.first);
     } else {
-        return move(p.second);
+        return TETL_MOVE(p.second);
     }
 }
 
@@ -304,9 +304,9 @@ template <size_t I, typename T1, typename T2>
 [[nodiscard]] constexpr auto get(pair<T1, T2> const&& p) noexcept -> tuple_element_t<I, pair<T1, T2>> const&&
 {
     if constexpr (I == 0) {
-        return move(p.first);
+        return TETL_MOVE(p.first);
     } else {
-        return move(p.second);
+        return TETL_MOVE(p.second);
     }
 }
 

@@ -28,6 +28,7 @@ constexpr auto forward(remove_reference_t<T>&& param) noexcept -> T&&
 
 } // namespace etl
 
+// https://www.foonathan.net/2020/09/move-forward
 #define TETL_FORWARD(...) static_cast<decltype(__VA_ARGS__)&&>(__VA_ARGS__)
 
 #endif // TETL_UTILITY_FORWARD_HPP

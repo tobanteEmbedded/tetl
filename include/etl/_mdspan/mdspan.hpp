@@ -81,7 +81,7 @@ struct mdspan {
             and is_default_constructible_v<accessor_type>
         )
     explicit constexpr mdspan(data_handle_type ptr, OtherSizeTypes... exts)
-        :  _map(extents_type(static_cast<size_type>(move(exts))...)),_ptr(move(ptr))
+        :  _map(extents_type(static_cast<size_type>(TETL_MOVE(exts))...)),_ptr(TETL_MOVE(ptr))
     {
     }
 
@@ -91,7 +91,7 @@ struct mdspan {
     constexpr mdspan(data_handle_type ptr, extents_type const& ext)
         requires(is_constructible_v<mapping_type, mapping_type const&> and is_default_constructible_v<accessor_type>)
         : _map(ext)
-        , _ptr(move(ptr))
+        , _ptr(TETL_MOVE(ptr))
     {
     }
 
@@ -99,7 +99,7 @@ struct mdspan {
     constexpr mdspan(data_handle_type ptr, mapping_type const& m)
         requires(is_default_constructible_v<accessor_type>)
         : _map(m)
-        , _ptr(move(ptr))
+        , _ptr(TETL_MOVE(ptr))
     {
     }
 
@@ -107,7 +107,7 @@ struct mdspan {
     constexpr mdspan(data_handle_type ptr, mapping_type const& m, accessor_type const& a)
         : _acc(a)
         , _map(m)
-        , _ptr(move(ptr))
+        , _ptr(TETL_MOVE(ptr))
     {
     }
 
@@ -123,7 +123,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator()(OtherIndexTypes... indices) const -> reference
     {
-        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(etl::move(indices))...)));
+        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(TETL_MOVE(indices))...)));
     }
 
 #if defined(__cpp_multidimensional_subscript)
@@ -135,7 +135,7 @@ struct mdspan {
         )
     [[nodiscard]] constexpr auto operator[](OtherIndexTypes... indices) const -> reference
     {
-        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(move(indices))...)));
+        return _acc.access(_ptr, static_cast<etl::size_t>(_map(static_cast<index_type>(TETL_MOVE(indices))...)));
     }
 #endif
     // clang-format on

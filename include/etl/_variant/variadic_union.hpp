@@ -71,9 +71,9 @@ union variadic_union<T, Ts...> {
     constexpr auto operator[](etl::index_constant<I> /*index*/) && -> auto&&
     {
         if constexpr (I == 0) {
-            return etl::move(head);
+            return TETL_MOVE(head);
         } else {
-            return etl::move(tail)[etl::index_c<I - 1>];
+            return TETL_MOVE(tail)[etl::index_c<I - 1>];
         }
     }
 
@@ -81,9 +81,9 @@ union variadic_union<T, Ts...> {
     constexpr auto operator[](etl::index_constant<I> /*index*/) const&& -> auto const&&
     {
         if constexpr (I == 0) {
-            return etl::move(head);
+            return TETL_MOVE(head);
         } else {
-            return etl::move(tail)[etl::index_c<I - 1>];
+            return TETL_MOVE(tail)[etl::index_c<I - 1>];
         }
     }
 

@@ -38,7 +38,7 @@ shift_left(ForwardIt first, ForwardIt const last, typename iterator_traits<Forwa
         }
     }
 
-    first = move(start, last, first);
+    first = etl::move(start, last, first);
     return first;
 }
 

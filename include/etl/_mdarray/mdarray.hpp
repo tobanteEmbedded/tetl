@@ -143,7 +143,7 @@ struct mdarray {
     // constexpr mdspan<const element_type, extents_type, layout_type, OtherAccessorType> to_mdspan(
     //     OtherAccessorType const& a = default_accessor<const_element_type>()) const;
 
-    [[nodiscard]] auto extract_container() && -> container_type&& { return etl::move(_ctr); }
+    [[nodiscard]] auto extract_container() && -> container_type&& { return TETL_MOVE(_ctr); }
 
     [[nodiscard]] static constexpr auto is_always_unique() -> bool { return mapping_type::is_always_unique(); }
 

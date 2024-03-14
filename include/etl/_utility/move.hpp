@@ -3,7 +3,7 @@
 #ifndef TETL_UTILITY_MOVE_HPP
 #define TETL_UTILITY_MOVE_HPP
 
-#include "etl/_type_traits/remove_reference.hpp"
+#include <etl/_type_traits/remove_reference.hpp>
 
 namespace etl {
 
@@ -15,11 +15,14 @@ namespace etl {
 ///
 /// \returns `static_cast<remove_reference_t<T>&&>(t)`
 template <typename T>
-constexpr auto move(T&& t) noexcept -> remove_reference_t<T>&&
+constexpr auto move(T&& t) noexcept -> etl::remove_reference_t<T>&&
 {
-    return static_cast<remove_reference_t<T>&&>(t);
+    return static_cast<etl::remove_reference_t<T>&&>(t);
 }
 
 } // namespace etl
+
+// https://www.foonathan.net/2020/09/move-forward
+#define TETL_MOVE(...) static_cast<etl::remove_reference_t<decltype(__VA_ARGS__)>&&>(__VA_ARGS__)
 
 #endif // TETL_UTILITY_MOVE_HPP

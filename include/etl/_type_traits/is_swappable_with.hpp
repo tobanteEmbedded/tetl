@@ -24,12 +24,12 @@ struct is_nothrow_swappable;
 
 // clang-format off
 template <typename T>
-requires(is_move_constructible_v<T> && is_move_assignable_v<T>)
-constexpr auto swap(T& a, T& b) noexcept(is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>) -> void;
+requires(etl::is_move_constructible_v<T> && etl::is_move_assignable_v<T>)
+constexpr auto swap(T& a, T& b) noexcept(etl::is_nothrow_move_constructible_v<T> && etl::is_nothrow_move_assignable_v<T>) -> void;
 
-template<typename T, size_t N>
-requires(is_swappable<T>::value)
-constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(is_nothrow_swappable<T>::value) -> void;
+template<typename T, etl::size_t N>
+requires(etl::is_swappable<T>::value)
+constexpr auto swap(T (&a)[N], T (&b)[N]) noexcept(etl::is_nothrow_swappable<T>::value) -> void;
 
 // swap(declval<T>(), declval<U>()) is not valid
 template <typename T, typename U, typename = void>

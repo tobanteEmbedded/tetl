@@ -25,7 +25,7 @@ template <typename T>
 [[nodiscard]] constexpr auto move_if_noexcept(T& x
 ) noexcept -> conditional_t<detail::move_if_noexcept_cond<T>, T const&, T&&>
 {
-    return etl::move(x);
+    return TETL_MOVE(x);
 }
 
 } // namespace etl

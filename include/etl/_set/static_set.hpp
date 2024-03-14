@@ -72,13 +72,13 @@ public:
     constexpr static_set(static_set const& other) = default;
 
     /// \brief
-    constexpr static_set(static_set&& other) noexcept(noexcept(move(declval<storage_type>()))) = default;
+    constexpr static_set(static_set&& other) noexcept(noexcept(TETL_MOVE(declval<storage_type>()))) = default;
 
     /// \brief
     constexpr auto operator=(static_set const& other) -> static_set& = default;
 
     /// \brief
-    constexpr auto operator=(static_set&& other) noexcept(noexcept(move(declval<storage_type>()))
+    constexpr auto operator=(static_set&& other) noexcept(noexcept(TETL_MOVE(declval<storage_type>()))
     ) -> static_set& = default;
 
     /// \brief Returns an iterator to the first element of the set.
@@ -163,7 +163,7 @@ public:
             auto cmp = key_compare{};
             auto* p  = etl::lower_bound(_memory.begin(), _memory.end(), value, cmp);
             if (p == _memory.end() || *(p) != value) {
-                _memory.push_back(move(value));
+                _memory.push_back(TETL_MOVE(value));
                 auto* pos = rotate(p, _memory.end() - 1, _memory.end());
                 return make_pair(pos, true);
             }
@@ -174,12 +174,12 @@ public:
 
     /// \brief Inserts element into the container, if the container doesn't
     /// already contain an element with an equivalent key.
-    constexpr auto insert(value_type const& value) noexcept(noexcept(insert(move(declval<key_type>())))
+    constexpr auto insert(value_type const& value) noexcept(noexcept(insert(TETL_MOVE(declval<key_type>())))
     ) -> pair<iterator, bool>
         requires(is_copy_constructible_v<value_type>)
     {
         value_type tmp = value;
-        return insert(move(tmp));
+        return insert(TETL_MOVE(tmp));
     }
 
     /// \brief Inserts elements from range [first, last). If multiple elements
@@ -245,11 +245,9 @@ public:
     constexpr auto swap(static_set& other) noexcept(is_nothrow_swappable_v<key_type>) -> void
         requires(is_assignable_v<key_type&, key_type &&>)
     {
-        using etl::move;
-
-        static_set tmp = move(other);
-        other          = move(*this);
-        (*this)        = move(tmp);
+        static_set tmp = TETL_MOVE(other);
+        other          = TETL_MOVE(*this);
+        (*this)        = TETL_MOVE(tmp);
     }
 
     /// \brief Returns the number of elements with key that compares equivalent

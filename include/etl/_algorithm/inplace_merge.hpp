@@ -26,9 +26,9 @@ constexpr auto inplace_merge(BidirIt begin, BidirIt mid, BidirIt end, Compare co
     auto right = mid;
     while (left != mid and right != end) {
         if (comp(*right, *left)) {
-            auto value = move(*right);
+            auto value = TETL_MOVE(*right);
             move_backward(left, mid, mid + 1);
-            *left = move(value);
+            *left = TETL_MOVE(value);
             ++right;
             ++mid;
         } else {

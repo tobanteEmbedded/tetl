@@ -31,7 +31,7 @@ auto main() -> int
     TETL_ASSERT(static_cast<bool>(opt3));
 
     // assign move
-    auto const opt4 = move(opt2);
+    auto const opt4 = etl::move(opt2);
     TETL_ASSERT(opt4.has_value());
     TETL_ASSERT(static_cast<bool>(opt4));
 

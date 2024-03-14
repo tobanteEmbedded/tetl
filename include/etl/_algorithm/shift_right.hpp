@@ -36,7 +36,7 @@ constexpr auto shift_right(BidiIt first, BidiIt last, typename iterator_traits<B
     auto dest = prev(last);
     auto src  = prev(dest, n);
     for (; src != first; --dest, (void)--src) {
-        *dest = move(*src);
+        *dest = TETL_MOVE(*src);
     }
 
     // Elements outside the new range should be left in a valid but unspecified state.

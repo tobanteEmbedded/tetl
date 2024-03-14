@@ -288,14 +288,14 @@ template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size>&& array) noexcept -> T&&
 {
     static_assert(Index < Size, "array index out of range");
-    return move(array[Index]);
+    return TETL_MOVE(array[Index]);
 }
 
 template <size_t Index, typename T, size_t Size>
 [[nodiscard]] constexpr auto get(array<T, Size> const&& array) noexcept -> T const&&
 {
     static_assert(Index < Size, "array index out of range");
-    return move(array[Index]);
+    return TETL_MOVE(array[Index]);
 }
 
 } // namespace etl

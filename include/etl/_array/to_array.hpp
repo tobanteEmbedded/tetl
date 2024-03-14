@@ -20,7 +20,7 @@ template <typename T, size_t N, size_t... I>
 template <typename T, size_t N, size_t... I>
 [[nodiscard]] constexpr auto to_array_impl(T (&&a)[N], index_sequence<I...> /*unused*/) -> array<remove_cv_t<T>, N>
 {
-    return {{move(a[I])...}};
+    return {{TETL_MOVE(a[I])...}};
 }
 
 } // namespace detail
@@ -37,7 +37,7 @@ template <typename T, size_t N>
 template <typename T, size_t N>
 [[nodiscard]] constexpr auto to_array(T (&&a)[N])
 {
-    return detail::to_array_impl(move(a), make_index_sequence<N>{});
+    return detail::to_array_impl(TETL_MOVE(a), make_index_sequence<N>{});
 }
 
 } // namespace etl

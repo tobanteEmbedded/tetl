@@ -25,8 +25,8 @@ constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destina
 
     while (++first != last) {
         value_t val    = *first;
-        *++destination = op(val, move(acc));
-        acc            = move(val);
+        *++destination = op(val, TETL_MOVE(acc));
+        acc            = TETL_MOVE(val);
     }
 
     return ++destination;
@@ -46,8 +46,8 @@ constexpr auto adjacent_difference(InputIt first, InputIt last, OutputIt destina
 
     while (++first != last) {
         value_t val    = *first;
-        *++destination = val - move(acc);
-        acc            = move(val);
+        *++destination = val - TETL_MOVE(acc);
+        acc            = TETL_MOVE(val);
     }
 
     return ++destination;

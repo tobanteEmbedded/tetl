@@ -29,7 +29,7 @@ constexpr auto partial_sum(InputIt first, InputIt last, OutputIt destination, Bi
     *destination = sum;
 
     while (++first != last) {
-        sum            = op(etl::move(sum), *first);
+        sum            = op(TETL_MOVE(sum), *first);
         *++destination = sum;
     }
 

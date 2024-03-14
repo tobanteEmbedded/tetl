@@ -39,7 +39,7 @@ struct back_insert_iterator {
     /// \brief Inserts the given value value to the container.
     constexpr auto operator=(typename Container::value_type&& value) -> back_insert_iterator&
     {
-        _container->push_back(move(value));
+        _container->push_back(TETL_MOVE(value));
         return *this;
     }
 

@@ -64,7 +64,7 @@ struct inplace_func_vtable {
             ::new (dstPtr) C{(*static_cast<C*>(srcPtr))};
         }}
         , relocate_ptr{[](storage_ptr_t dstPtr, storage_ptr_t srcPtr) -> void {
-            ::new (dstPtr) C{etl::move(*static_cast<C*>(srcPtr))};
+            ::new (dstPtr) C{TETL_MOVE(*static_cast<C*>(srcPtr))};
             static_cast<C*>(srcPtr)->~C();
         }}
         , destructor_ptr{[](storage_ptr_t srcPtr) -> void { static_cast<C*>(srcPtr)->~C(); }}
@@ -196,10 +196,7 @@ public:
     ~inplace_function() { _vtable->destructor_ptr(addressof(_storage)); }
 
     /// \brief Invokes the stored callable function target with the parameters args.
-    auto operator()(Args... args) const -> R
-    {
-        return _vtable->invoke_ptr(addressof(_storage), TETL_FORWARD(args)...);
-    }
+    auto operator()(Args... args) const -> R { return _vtable->invoke_ptr(addressof(_storage), TETL_FORWARD(args)...); }
 
     /// \brief Checks whether *this stores a callable function target, i.e. is not empty.
     [[nodiscard]] explicit constexpr operator bool() const noexcept
