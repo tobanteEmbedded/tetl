@@ -48,10 +48,9 @@ template <auto CharArray>
     requires(etl::size(CharArray) > 0)
 consteval auto to_string_constant()
 {
-    return []<etl::size_t... Is>(etl::index_sequence<Is...> /*is*/
-           ) { return etl::string_constant<char, etl::get<Is>(CharArray)...>{}; }
-
-    (etl::make_index_sequence<etl::size(CharArray) - 1>{});
+    return []<etl::size_t... Is>(etl::index_sequence<Is...> /*i*/) {
+        return etl::string_constant<char, etl::get<Is>(CharArray)...>{};
+    }(etl::make_index_sequence<etl::size(CharArray) - 1>{});
 }
 
 } // namespace detail
